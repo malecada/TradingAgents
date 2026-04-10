@@ -84,6 +84,27 @@ class GraphSetup:
             delete_nodes["fundamentals"] = create_msg_delete()
             tool_nodes["fundamentals"] = self.tool_nodes["fundamentals"]
 
+        if "onchain" in selected_analysts:
+            analyst_nodes["onchain"] = create_onchain_analyst(
+                self.quick_thinking_llm
+            )
+            delete_nodes["onchain"] = create_msg_delete()
+            tool_nodes["onchain"] = self.tool_nodes["onchain"]
+
+        if "prediction" in selected_analysts:
+            analyst_nodes["prediction"] = create_prediction_analyst(
+                self.quick_thinking_llm
+            )
+            delete_nodes["prediction"] = create_msg_delete()
+            tool_nodes["prediction"] = self.tool_nodes["prediction"]
+
+        if "crypto_sentiment" in selected_analysts:
+            analyst_nodes["crypto_sentiment"] = create_crypto_sentiment_analyst(
+                self.quick_thinking_llm
+            )
+            delete_nodes["crypto_sentiment"] = create_msg_delete()
+            tool_nodes["crypto_sentiment"] = self.tool_nodes["crypto_sentiment"]
+
         # Create researcher and manager nodes
         bull_researcher_node = create_bull_researcher(
             self.quick_thinking_llm, self.bull_memory

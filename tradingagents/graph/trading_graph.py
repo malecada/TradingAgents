@@ -30,7 +30,24 @@ from tradingagents.agents.utils.agent_utils import (
     get_income_statement,
     get_news,
     get_insider_transactions,
-    get_global_news
+    get_global_news,
+    # Crypto-specific tools
+    get_crypto_data,
+    get_crypto_indicators,
+    get_funding_rates,
+    get_tvl_metrics,
+    get_stablecoin_metrics,
+    get_gas_metrics,
+    get_stablecoin_supply,
+    get_reddit_posts,
+    get_crypto_google_news,
+)
+
+# Prediction tools are defined in the prediction analyst module
+from tradingagents.agents.analysts.prediction_analyst import (
+    get_rf_forecast,
+    get_arima_forecast,
+    get_onchain_model_forecast,
 )
 
 from .conditional_logic import ConditionalLogic
@@ -121,7 +138,7 @@ class TradingAgentsGraph:
             self.conditional_logic,
         )
 
-        self.propagator = Propagator()
+        self.propagator = Propagator(max_recur_limit=self.config.get("max_recur_limit", 100))
         self.reflector = Reflector(self.quick_thinking_llm)
         self.signal_processor = SignalProcessor(self.quick_thinking_llm)
 
@@ -157,42 +174,45 @@ class TradingAgentsGraph:
 
     def _create_tool_nodes(self) -> Dict[str, ToolNode]:
         """Create tool nodes for different data sources using abstract methods."""
-        return {
-            "market": ToolNode(
-                [
-                    # Core stock data tools
-                    get_stock_data,
-                    # Technical indicators
-                    get_indicators,
-                ]
-            ),
-            "social": ToolNode(
-                [
-                    # News tools for social media analysis
-                    get_news,
-                ]
-            ),
-            "news": ToolNode(
-                [
-                    # News and insider information
-                    get_news,
-                    get_global_news,
-                    get_insider_transactions,
-                ]
-            ),
-            "fundamentals": ToolNode(
-                [
-                    # Fundamental analysis tools
-                    get_fundamentals,
-                    get_balance_sheet,
-                    get_cashflow,
-                    get_income_statement,
-                ]
-            ),
-        }
+        asset_class = self.config.get("asset_class", "stock")
+
+        nodes = {}
+
+        # Market analyst tools depend on asset class
+        if asset_class == "crypto":
+            nodes["market"] = ToolNode([get_crypto_data, get_crypto_indicators])
+        else:
+            nodes["market"] = ToolNode([get_stock_data, get_indicators])
+
+        # Stock-specific analyst tools
+        nodes["social"] = ToolNode([get_news])
+        nodes["news"] = ToolNode([get_news, get_global_news, get_insider_transactions])
+        nodes["fundamentals"] = ToolNode([
+            get_fundamentals, get_balance_sheet, get_cashflow, get_income_statement,
+        ])
+
+        # Crypto-specific analyst tools — only include Web3 tools when configured
+        onchain_tools = [get_funding_rates, get_tvl_metrics, get_stablecoin_metrics]
+        has_web3 = bool(
+            self.config.get("web3_provider_eth") or self.config.get("web3_provider_bsc")
+        )
+        if has_web3:
+            onchain_tools.extend([get_gas_metrics, get_stablecoin_supply])
+        nodes["onchain"] = ToolNode(onchain_tools)
+        nodes["prediction"] = ToolNode([
+            get_rf_forecast, get_arima_forecast, get_onchain_model_forecast,
+        ])
+        nodes["crypto_sentiment"] = ToolNode([
+            get_news, get_global_news, get_reddit_posts, get_crypto_google_news,
+        ])
+
+        return nodes
 
     def propagate(self, company_name, trade_date):
         """Run the trading agents graph for a company on a specific date."""
+        # Clear session cache from previous run to avoid stale data
+        from tradingagents.dataflows.coingecko_binance import clear_session_cache
+        clear_session_cache()
 
         self.ticker = company_name
 
@@ -205,11 +225,47 @@ class TradingAgentsGraph:
         if self.debug:
             # Debug mode with tracing
             trace = []
+            last_printed_msg_id = None
             for chunk in self.graph.stream(init_agent_state, **args):
                 if len(chunk["messages"]) == 0:
                     pass
                 else:
-                    chunk["messages"][-1].pretty_print()
+                    last_msg = chunk["messages"][-1]
+                    msg_id = getattr(last_msg, "id", None)
+                    # Only print when messages actually change
+                    if msg_id != last_printed_msg_id:
+                        last_msg.pretty_print()
+                        last_printed_msg_id = msg_id
+
+                    # Print debate state changes
+                    debate = chunk.get("investment_debate_state", {})
+                    if debate.get("current_response") and debate.get("count", 0) > 0:
+                        latest = debate["current_response"]
+                        if latest.startswith(("Bull", "Bear")):
+                            speaker = latest.split(":")[0] if ":" in latest else "Researcher"
+                            print(f"\n{'='*30} {speaker} {'='*30}")
+                            print(latest[:500] + ("..." if len(latest) > 500 else ""))
+                    if debate.get("judge_decision") and not debate["judge_decision"].startswith(
+                        trace[-1].get("investment_debate_state", {}).get("judge_decision", "NONE") if trace else "NONE"
+                    ):
+                        print(f"\n{'='*30} Research Manager Decision {'='*30}")
+                        print(debate["judge_decision"][:500] + ("..." if len(debate["judge_decision"]) > 500 else ""))
+
+                    risk = chunk.get("risk_debate_state", {})
+                    if risk.get("latest_speaker") and risk.get("count", 0) > 0:
+                        speaker_map = {
+                            "Aggressive": risk.get("current_aggressive_response", ""),
+                            "Conservative": risk.get("current_conservative_response", ""),
+                            "Neutral": risk.get("current_neutral_response", ""),
+                            "Judge": risk.get("judge_decision", ""),
+                        }
+                        speaker = risk["latest_speaker"]
+                        content = speaker_map.get(speaker, "")
+                        prev_risk = trace[-1].get("risk_debate_state", {}) if trace else {}
+                        if content and content != prev_risk.get(f"current_{speaker.lower()}_response", prev_risk.get("judge_decision", "")):
+                            print(f"\n{'='*30} {speaker} Risk Analyst {'='*30}")
+                            print(content[:500] + ("..." if len(content) > 500 else ""))
+
                     trace.append(chunk)
 
             final_state = trace[-1]
@@ -231,10 +287,12 @@ class TradingAgentsGraph:
         self.log_states_dict[str(trade_date)] = {
             "company_of_interest": final_state["company_of_interest"],
             "trade_date": final_state["trade_date"],
-            "market_report": final_state["market_report"],
-            "sentiment_report": final_state["sentiment_report"],
-            "news_report": final_state["news_report"],
-            "fundamentals_report": final_state["fundamentals_report"],
+            "market_report": final_state.get("market_report", ""),
+            "sentiment_report": final_state.get("sentiment_report", ""),
+            "news_report": final_state.get("news_report", ""),
+            "fundamentals_report": final_state.get("fundamentals_report", ""),
+            "onchain_report": final_state.get("onchain_report", ""),
+            "prediction_report": final_state.get("prediction_report", ""),
             "investment_debate_state": {
                 "bull_history": final_state["investment_debate_state"]["bull_history"],
                 "bear_history": final_state["investment_debate_state"]["bear_history"],

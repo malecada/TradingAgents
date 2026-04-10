@@ -9,12 +9,20 @@ from tradingagents.llm_clients.model_catalog import get_model_options
 console = Console()
 
 TICKER_INPUT_EXAMPLES = "Examples: SPY, CNC.TO, 7203.T, 0700.HK"
+CRYPTO_TICKER_EXAMPLES = "Examples: bitcoin, ethereum, solana, cardano, dogecoin"
 
 ANALYST_ORDER = [
     ("Market Analyst", AnalystType.MARKET),
     ("Social Media Analyst", AnalystType.SOCIAL),
     ("News Analyst", AnalystType.NEWS),
     ("Fundamentals Analyst", AnalystType.FUNDAMENTALS),
+]
+
+CRYPTO_ANALYST_ORDER = [
+    ("Market Analyst (crypto OHLCV + technical indicators)", AnalystType.MARKET),
+    ("On-Chain Analyst (funding rates, TVL, gas, stablecoins)", AnalystType.ONCHAIN),
+    ("Crypto Sentiment Analyst (Reddit, news, social media)", AnalystType.CRYPTO_SENTIMENT),
+    ("Prediction Model Analyst (RF + ARIMA forecasts)", AnalystType.PREDICTION),
 ]
 
 
@@ -36,6 +44,26 @@ def get_ticker() -> str:
         exit(1)
 
     return normalize_ticker_symbol(ticker)
+
+
+def get_crypto_ticker() -> str:
+    """Prompt the user to enter a cryptocurrency CoinGecko ID."""
+    ticker = questionary.text(
+        f"Enter the CoinGecko ID of the cryptocurrency ({CRYPTO_TICKER_EXAMPLES}):",
+        validate=lambda x: len(x.strip()) > 0 or "Please enter a valid CoinGecko ID.",
+        style=questionary.Style(
+            [
+                ("text", "fg:green"),
+                ("highlighted", "noinherit"),
+            ]
+        ),
+    ).ask()
+
+    if not ticker:
+        console.print("\n[red]No cryptocurrency ID provided. Exiting...[/red]")
+        exit(1)
+
+    return ticker.strip().lower()
 
 
 def normalize_ticker_symbol(ticker: str) -> str:
@@ -76,12 +104,36 @@ def get_analysis_date() -> str:
     return date.strip()
 
 
-def select_analysts() -> List[AnalystType]:
+def select_asset_class() -> str:
+    """Prompt the user to select asset class."""
+    choice = questionary.select(
+        "Select Asset Class:",
+        choices=[
+            questionary.Choice("Cryptocurrency", value="crypto"),
+            questionary.Choice("Stocks", value="stock"),
+        ],
+        instruction="\n- Use arrow keys to navigate\n- Press Enter to select",
+        style=questionary.Style(
+            [
+                ("selected", "fg:green noinherit"),
+                ("highlighted", "fg:green noinherit"),
+                ("pointer", "fg:green noinherit"),
+            ]
+        ),
+    ).ask()
+    if choice is None:
+        console.print("\n[red]No asset class selected. Exiting...[/red]")
+        exit(1)
+    return choice
+
+
+def select_analysts(asset_class: str = "stock") -> List[AnalystType]:
     """Select analysts using an interactive checkbox."""
+    order = CRYPTO_ANALYST_ORDER if asset_class == "crypto" else ANALYST_ORDER
     choices = questionary.checkbox(
         "Select Your [Analysts Team]:",
         choices=[
-            questionary.Choice(display, value=value) for display, value in ANALYST_ORDER
+            questionary.Choice(display, value=value) for display, value in order
         ],
         instruction="\n- Press Space to select/unselect analysts\n- Press 'a' to select/unselect all\n- Press Enter when done",
         validate=lambda x: len(x) > 0 or "You must select at least one analyst.",

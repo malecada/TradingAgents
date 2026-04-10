@@ -26,7 +26,7 @@ from rich.rule import Rule
 from tradingagents.graph.trading_graph import TradingAgentsGraph
 from tradingagents.default_config import DEFAULT_CONFIG
 from cli.models import AnalystType
-from cli.utils import *
+from cli.utils import *  # includes select_asset_class, get_crypto_ticker, etc.
 from cli.announcements import fetch_announcements, display_announcements
 from cli.stats_handler import StatsCallbackHandler
 
@@ -55,6 +55,9 @@ class MessageBuffer:
         "social": "Social Analyst",
         "news": "News Analyst",
         "fundamentals": "Fundamentals Analyst",
+        "onchain": "Onchain Analyst",
+        "prediction": "Prediction Analyst",
+        "crypto_sentiment": "Crypto_sentiment Analyst",
     }
 
     # Report section mapping: section -> (analyst_key for filtering, finalizing_agent)
@@ -65,6 +68,8 @@ class MessageBuffer:
         "sentiment_report": ("social", "Social Analyst"),
         "news_report": ("news", "News Analyst"),
         "fundamentals_report": ("fundamentals", "Fundamentals Analyst"),
+        "onchain_report": ("onchain", "Onchain Analyst"),
+        "prediction_report": ("prediction", "Prediction Analyst"),
         "investment_plan": (None, "Research Manager"),
         "trader_investment_plan": (None, "Trader"),
         "final_trade_decision": (None, "Portfolio Manager"),
@@ -173,6 +178,8 @@ class MessageBuffer:
                 "sentiment_report": "Social Sentiment",
                 "news_report": "News Analysis",
                 "fundamentals_report": "Fundamentals Analysis",
+                "onchain_report": "On-Chain Analysis",
+                "prediction_report": "Prediction Models",
                 "investment_plan": "Research Team Decision",
                 "trader_investment_plan": "Trading Team Plan",
                 "final_trade_decision": "Portfolio Management Decision",
@@ -188,7 +195,10 @@ class MessageBuffer:
         report_parts = []
 
         # Analyst Team Reports - use .get() to handle missing sections
-        analyst_sections = ["market_report", "sentiment_report", "news_report", "fundamentals_report"]
+        analyst_sections = [
+            "market_report", "sentiment_report", "news_report", "fundamentals_report",
+            "onchain_report", "prediction_report",
+        ]
         if any(self.report_sections.get(section) for section in analyst_sections):
             report_parts.append("## Analyst Team Reports")
             if self.report_sections.get("market_report"):
@@ -206,6 +216,14 @@ class MessageBuffer:
             if self.report_sections.get("fundamentals_report"):
                 report_parts.append(
                     f"### Fundamentals Analysis\n{self.report_sections['fundamentals_report']}"
+                )
+            if self.report_sections.get("onchain_report"):
+                report_parts.append(
+                    f"### On-Chain Analysis\n{self.report_sections['onchain_report']}"
+                )
+            if self.report_sections.get("prediction_report"):
+                report_parts.append(
+                    f"### Prediction Models\n{self.report_sections['prediction_report']}"
                 )
 
         # Research Team Reports
@@ -498,73 +516,92 @@ def get_user_selections():
             box_content += f"\n[dim]Default: {default}[/dim]"
         return Panel(box_content, border_style="blue", padding=(1, 2))
 
-    # Step 1: Ticker symbol
+    # Step 1: Asset class
     console.print(
         create_question_box(
-            "Step 1: Ticker Symbol",
-            "Enter the exact ticker symbol to analyze, including exchange suffix when needed (examples: SPY, CNC.TO, 7203.T, 0700.HK)",
-            "SPY",
+            "Step 1: Asset Class",
+            "Select whether to analyze cryptocurrencies or stocks",
         )
     )
-    selected_ticker = get_ticker()
+    asset_class = select_asset_class()
 
-    # Step 2: Analysis date
+    # Step 2: Ticker / CoinGecko ID
+    if asset_class == "crypto":
+        console.print(
+            create_question_box(
+                "Step 2: Cryptocurrency",
+                "Enter the CoinGecko ID of the cryptocurrency (examples: bitcoin, ethereum, solana, cardano)",
+                "bitcoin",
+            )
+        )
+        selected_ticker = get_crypto_ticker()
+    else:
+        console.print(
+            create_question_box(
+                "Step 2: Ticker Symbol",
+                "Enter the exact ticker symbol to analyze (examples: SPY, CNC.TO, 7203.T, 0700.HK)",
+                "SPY",
+            )
+        )
+        selected_ticker = get_ticker()
+
+    # Step 3: Analysis date
     default_date = datetime.datetime.now().strftime("%Y-%m-%d")
     console.print(
         create_question_box(
-            "Step 2: Analysis Date",
+            "Step 3: Analysis Date",
             "Enter the analysis date (YYYY-MM-DD)",
             default_date,
         )
     )
     analysis_date = get_analysis_date()
 
-    # Step 3: Output language
+    # Step 4: Output language
     console.print(
         create_question_box(
-            "Step 3: Output Language",
+            "Step 4: Output Language",
             "Select the language for analyst reports and final decision"
         )
     )
     output_language = ask_output_language()
 
-    # Step 4: Select analysts
+    # Step 5: Select analysts
     console.print(
         create_question_box(
-            "Step 4: Analysts Team", "Select your LLM analyst agents for the analysis"
+            "Step 5: Analysts Team", "Select your LLM analyst agents for the analysis"
         )
     )
-    selected_analysts = select_analysts()
+    selected_analysts = select_analysts(asset_class)
     console.print(
         f"[green]Selected analysts:[/green] {', '.join(analyst.value for analyst in selected_analysts)}"
     )
 
-    # Step 5: Research depth
+    # Step 6: Research depth
     console.print(
         create_question_box(
-            "Step 5: Research Depth", "Select your research depth level"
+            "Step 6: Research Depth", "Select your research depth level"
         )
     )
     selected_research_depth = select_research_depth()
 
-    # Step 6: LLM Provider
+    # Step 7: LLM Provider
     console.print(
         create_question_box(
-            "Step 6: LLM Provider", "Select your LLM provider"
+            "Step 7: LLM Provider", "Select your LLM provider"
         )
     )
     selected_llm_provider, backend_url = select_llm_provider()
 
-    # Step 7: Thinking agents
+    # Step 8: Thinking agents
     console.print(
         create_question_box(
-            "Step 7: Thinking Agents", "Select your thinking agents for analysis"
+            "Step 8: Thinking Agents", "Select your thinking agents for analysis"
         )
     )
     selected_shallow_thinker = select_shallow_thinking_agent(selected_llm_provider)
     selected_deep_thinker = select_deep_thinking_agent(selected_llm_provider)
 
-    # Step 8: Provider-specific thinking configuration
+    # Step 9: Provider-specific thinking configuration
     thinking_level = None
     reasoning_effort = None
     anthropic_effort = None
@@ -573,7 +610,7 @@ def get_user_selections():
     if provider_lower == "google":
         console.print(
             create_question_box(
-                "Step 8: Thinking Mode",
+                "Step 9: Thinking Mode",
                 "Configure Gemini thinking mode"
             )
         )
@@ -581,7 +618,7 @@ def get_user_selections():
     elif provider_lower == "openai":
         console.print(
             create_question_box(
-                "Step 8: Reasoning Effort",
+                "Step 9: Reasoning Effort",
                 "Configure OpenAI reasoning effort level"
             )
         )
@@ -589,7 +626,7 @@ def get_user_selections():
     elif provider_lower == "anthropic":
         console.print(
             create_question_box(
-                "Step 8: Effort Level",
+                "Step 9: Effort Level",
                 "Configure Claude effort level"
             )
         )
@@ -597,6 +634,7 @@ def get_user_selections():
 
     return {
         "ticker": selected_ticker,
+        "asset_class": asset_class,
         "analysis_date": analysis_date,
         "analysts": selected_analysts,
         "research_depth": selected_research_depth,
@@ -794,18 +832,24 @@ def update_research_team_status(status):
 
 
 # Ordered list of analysts for status transitions
-ANALYST_ORDER = ["market", "social", "news", "fundamentals"]
+ANALYST_ORDER = ["market", "social", "news", "fundamentals", "onchain", "prediction", "crypto_sentiment"]
 ANALYST_AGENT_NAMES = {
     "market": "Market Analyst",
     "social": "Social Analyst",
     "news": "News Analyst",
     "fundamentals": "Fundamentals Analyst",
+    "onchain": "Onchain Analyst",
+    "prediction": "Prediction Analyst",
+    "crypto_sentiment": "Crypto_sentiment Analyst",
 }
 ANALYST_REPORT_MAP = {
     "market": "market_report",
     "social": "sentiment_report",
     "news": "news_report",
     "fundamentals": "fundamentals_report",
+    "onchain": "onchain_report",
+    "prediction": "prediction_report",
+    "crypto_sentiment": "sentiment_report",
 }
 
 
@@ -942,6 +986,7 @@ def run_analysis():
     config["openai_reasoning_effort"] = selections.get("openai_reasoning_effort")
     config["anthropic_effort"] = selections.get("anthropic_effort")
     config["output_language"] = selections.get("output_language", "English")
+    config["asset_class"] = selections.get("asset_class", "stock")
 
     # Create stats callback handler for tracking LLM/tool calls
     stats_handler = StatsCallbackHandler()

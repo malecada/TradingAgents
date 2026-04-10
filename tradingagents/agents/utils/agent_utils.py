@@ -19,6 +19,23 @@ from tradingagents.agents.utils.news_data_tools import (
     get_global_news
 )
 
+# Crypto-specific tools
+from tradingagents.agents.utils.crypto_market_tools import (
+    get_crypto_data,
+    get_crypto_indicators,
+)
+from tradingagents.agents.utils.onchain_tools import (
+    get_funding_rates,
+    get_tvl_metrics,
+    get_stablecoin_metrics,
+    get_gas_metrics,
+    get_stablecoin_supply,
+)
+from tradingagents.agents.utils.crypto_sentiment_tools import (
+    get_reddit_posts,
+    get_crypto_google_news,
+)
+
 
 def get_language_instruction() -> str:
     """Return a prompt instruction for the configured output language.

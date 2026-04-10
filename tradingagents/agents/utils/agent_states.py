@@ -44,18 +44,21 @@ class RiskDebateState(TypedDict):
 
 
 class AgentState(MessagesState):
-    company_of_interest: Annotated[str, "Company that we are interested in trading"]
+    company_of_interest: Annotated[str, "Asset that we are interested in trading (company ticker or crypto CoinGecko ID)"]
     trade_date: Annotated[str, "What date we are trading at"]
 
     sender: Annotated[str, "Agent that sent this message"]
 
     # research step
     market_report: Annotated[str, "Report from the Market Analyst"]
-    sentiment_report: Annotated[str, "Report from the Social Media Analyst"]
+    sentiment_report: Annotated[str, "Report from the Social Media / Sentiment Analyst"]
     news_report: Annotated[
         str, "Report from the News Researcher of current world affairs"
     ]
     fundamentals_report: Annotated[str, "Report from the Fundamentals Researcher"]
+    # Crypto-specific analyst reports
+    onchain_report: Annotated[str, "Report from the On-Chain Analyst (blockchain metrics, funding rates, TVL)"]
+    prediction_report: Annotated[str, "Report from the Prediction Model Analyst (RF, ARIMA forecasts with confidence intervals)"]
 
     # researcher team discussion step
     investment_debate_state: Annotated[

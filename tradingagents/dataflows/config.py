@@ -6,10 +6,11 @@ _config: Optional[Dict] = None
 
 
 def initialize_config():
-    """Initialize the configuration with default values."""
+    """Initialize the configuration with default values and env var overrides."""
     global _config
     if _config is None:
         _config = default_config.DEFAULT_CONFIG.copy()
+        default_config.apply_env_overrides(_config)
 
 
 def set_config(config: Dict):

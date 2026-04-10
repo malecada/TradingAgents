@@ -12,17 +12,19 @@ def create_portfolio_manager(llm, memory):
         news_report = state["news_report"]
         fundamentals_report = state["fundamentals_report"]
         sentiment_report = state["sentiment_report"]
+        onchain_report = state.get("onchain_report", "")
+        prediction_report = state.get("prediction_report", "")
         research_plan = state["investment_plan"]
         trader_plan = state["trader_investment_plan"]
 
-        curr_situation = f"{market_research_report}\n\n{sentiment_report}\n\n{news_report}\n\n{fundamentals_report}"
+        curr_situation = f"{market_research_report}\n\n{sentiment_report}\n\n{news_report}\n\n{fundamentals_report}\n\n{onchain_report}\n\n{prediction_report}"
         past_memories = memory.get_memories(curr_situation, n_matches=2)
 
         past_memory_str = ""
         for i, rec in enumerate(past_memories, 1):
             past_memory_str += rec["recommendation"] + "\n\n"
 
-        prompt = f"""As the Portfolio Manager, synthesize the risk analysts' debate and deliver the final trading decision.
+        prompt = f"""As the Portfolio Manager for cryptocurrency trading, synthesize the risk analysts' debate and deliver the final trading decision.
 
 {instrument_context}
 
@@ -38,12 +40,14 @@ def create_portfolio_manager(llm, memory):
 **Context:**
 - Research Manager's investment plan: **{research_plan}**
 - Trader's transaction proposal: **{trader_plan}**
+- On-chain analysis report: **{onchain_report}**
+- Prediction model report: **{prediction_report}**
 - Lessons from past decisions: **{past_memory_str}**
 
 **Required Output Structure:**
 1. **Rating**: State one of Buy / Overweight / Hold / Underweight / Sell.
-2. **Executive Summary**: A concise action plan covering entry strategy, position sizing, key risk levels, and time horizon.
-3. **Investment Thesis**: Detailed reasoning anchored in the analysts' debate and past reflections.
+2. **Executive Summary**: A concise action plan covering entry strategy, position sizing, key risk levels, and time horizon. Factor in prediction model confidence intervals when sizing positions.
+3. **Investment Thesis**: Detailed reasoning anchored in the analysts' debate, on-chain metrics, prediction model outputs, and past reflections.
 
 ---
 

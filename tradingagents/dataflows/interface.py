@@ -24,6 +24,23 @@ from .alpha_vantage import (
 )
 from .alpha_vantage_common import AlphaVantageRateLimitError
 
+# Import crypto-specific vendor modules
+from .coingecko_binance import (
+    get_crypto_data as get_coingecko_crypto_data,
+    get_crypto_indicators as get_coingecko_crypto_indicators,
+)
+from .onchain import (
+    get_funding_rates as get_onchain_funding_rates,
+    get_tvl_metrics as get_onchain_tvl_metrics,
+    get_stablecoin_metrics as get_onchain_stablecoin_metrics,
+    get_gas_metrics as get_onchain_gas_metrics,
+    get_stablecoin_supply as get_onchain_stablecoin_supply,
+)
+from .crypto_sentiment import (
+    get_reddit_posts as get_crypto_reddit_posts,
+    get_crypto_google_news as get_crypto_google_news_impl,
+)
+
 # Configuration and routing logic
 from .config import get_config
 
@@ -57,12 +74,40 @@ TOOLS_CATEGORIES = {
             "get_global_news",
             "get_insider_transactions",
         ]
-    }
+    },
+    # Crypto-specific categories
+    "crypto_market_data": {
+        "description": "Cryptocurrency OHLCV price data",
+        "tools": [
+            "get_crypto_data",
+            "get_crypto_indicators",
+        ]
+    },
+    "onchain_data": {
+        "description": "On-chain blockchain metrics",
+        "tools": [
+            "get_funding_rates",
+            "get_tvl_metrics",
+            "get_stablecoin_metrics",
+            "get_gas_metrics",
+            "get_stablecoin_supply",
+        ]
+    },
+    "crypto_sentiment": {
+        "description": "Crypto-specific sentiment data sources",
+        "tools": [
+            "get_reddit_posts",
+            "get_crypto_google_news",
+        ]
+    },
 }
 
 VENDOR_LIST = [
     "yfinance",
     "alpha_vantage",
+    "coingecko_binance",
+    "onchain",
+    "crypto_sentiment",
 ]
 
 # Mapping of methods to their vendor-specific implementations
@@ -106,6 +151,36 @@ VENDOR_METHODS = {
     "get_insider_transactions": {
         "alpha_vantage": get_alpha_vantage_insider_transactions,
         "yfinance": get_yfinance_insider_transactions,
+    },
+    # Crypto market data
+    "get_crypto_data": {
+        "coingecko_binance": get_coingecko_crypto_data,
+    },
+    "get_crypto_indicators": {
+        "coingecko_binance": get_coingecko_crypto_indicators,
+    },
+    # On-chain data
+    "get_funding_rates": {
+        "onchain": get_onchain_funding_rates,
+    },
+    "get_tvl_metrics": {
+        "onchain": get_onchain_tvl_metrics,
+    },
+    "get_stablecoin_metrics": {
+        "onchain": get_onchain_stablecoin_metrics,
+    },
+    "get_gas_metrics": {
+        "onchain": get_onchain_gas_metrics,
+    },
+    "get_stablecoin_supply": {
+        "onchain": get_onchain_stablecoin_supply,
+    },
+    # Crypto sentiment
+    "get_reddit_posts": {
+        "crypto_sentiment": get_crypto_reddit_posts,
+    },
+    "get_crypto_google_news": {
+        "crypto_sentiment": get_crypto_google_news_impl,
     },
 }
 

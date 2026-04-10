@@ -1,5 +1,11 @@
 import os
 
+from dotenv import load_dotenv
+
+# Load .env files if present (project root or current directory)
+load_dotenv(override=False)
+load_dotenv(".env.trading", override=False)
+
 DEFAULT_CONFIG = {
     "project_dir": os.path.abspath(os.path.join(os.path.dirname(__file__), ".")),
     "results_dir": os.getenv("TRADINGAGENTS_RESULTS_DIR", "./results"),
@@ -30,9 +36,121 @@ DEFAULT_CONFIG = {
         "technical_indicators": "yfinance",  # Options: alpha_vantage, yfinance
         "fundamental_data": "yfinance",      # Options: alpha_vantage, yfinance
         "news_data": "yfinance",             # Options: alpha_vantage, yfinance
+        # Crypto-specific vendors
+        "crypto_market_data": "coingecko_binance",
+        "onchain_data": "onchain",
+        "crypto_sentiment": "crypto_sentiment",
     },
     # Tool-level configuration (takes precedence over category-level)
     "tool_vendors": {
         # Example: "get_stock_data": "alpha_vantage",  # Override category default
     },
+    # Asset class: "stock" or "crypto"
+    "asset_class": "crypto",
+    # Crypto-specific configuration
+    "binance_symbol_map": {},  # Optional overrides: {"coingecko_id": "BINANCE_SYMBOL"}
+    "web3_provider_eth": os.getenv("WEB3_PROVIDER_URI_ETH", ""),
+    "web3_provider_bsc": os.getenv("WEB3_PROVIDER_URI_BSC", ""),
+    "use_onchain": True,  # Enable on-chain data collection (degrades gracefully if no RPC)
+    # Prediction model configuration
+    "prediction_models": {
+        "rf_n_estimators": 1000,
+        "rf_max_depth": None,
+        "rf_min_samples_split": 5,
+        "rf_min_samples_leaf": 2,
+        "arima_order": [2, 1, 2],
+        "arima_max_iter": 500,
+        "onchain_n_estimators": 500,
+        "onchain_max_depth": 5,
+        "onchain_learning_rate": 0.1,
+        "lag_features": 7,
+        "lookback_days": 300,
+        "checkpoint_dir": "./data/checkpoints/",
+        "prediction_interval_alpha": 0.05,  # 95% confidence interval
+    },
+    # Execution configuration (safe defaults — testnet only)
+    "execution": {
+        "live_mode": False,  # Must be explicitly True for real money
+        "dry_run": False,    # When True, log trades but don't place orders
+        "max_position_pct": 0.02,
+        "stop_loss_pct": 0.03,
+        "max_daily_loss_pct": 0.05,
+        "max_open_positions": 3,
+        "min_confidence": "medium",  # "high" / "medium" / "low"
+        "position_sizing": "fixed_fraction",  # or "kelly"
+        "kelly_fraction": 0.5,  # half-Kelly when position_sizing="kelly"
+        "leverage": 1,
+    },
 }
+
+
+def apply_env_overrides(config: dict) -> dict:
+    """Apply environment variable overrides to config dict.
+
+    Supports the following env vars (matching Krypto-v0's pattern):
+
+    LLM:
+      TRADINGAGENTS_LLM_PROVIDER, TRADINGAGENTS_DEEP_THINK_LLM,
+      TRADINGAGENTS_QUICK_THINK_LLM, TRADINGAGENTS_BACKEND_URL
+
+    Crypto:
+      TRADINGAGENTS_ASSET_CLASS, WEB3_PROVIDER_URI_ETH, WEB3_PROVIDER_URI_BSC
+
+    Execution (safe defaults enforced):
+      LIVE_MODE, DRY_RUN, MAX_POSITION_PCT, STOP_LOSS_PCT,
+      MAX_DAILY_LOSS_PCT, MAX_OPEN_POSITIONS, MIN_CONFIDENCE,
+      POSITION_SIZING, LEVERAGE, TRADING_STRATEGY
+    """
+    # Top-level overrides
+    _env_str(config, "llm_provider", "TRADINGAGENTS_LLM_PROVIDER")
+    _env_str(config, "deep_think_llm", "TRADINGAGENTS_DEEP_THINK_LLM")
+    _env_str(config, "quick_think_llm", "TRADINGAGENTS_QUICK_THINK_LLM")
+    _env_str(config, "backend_url", "TRADINGAGENTS_BACKEND_URL")
+    _env_str(config, "asset_class", "TRADINGAGENTS_ASSET_CLASS")
+    _env_str(config, "web3_provider_eth", "WEB3_PROVIDER_URI_ETH")
+    _env_str(config, "web3_provider_bsc", "WEB3_PROVIDER_URI_BSC")
+    _env_bool(config, "use_onchain", "TRADINGAGENTS_USE_ONCHAIN")
+
+    # Execution overrides
+    exec_cfg = config.setdefault("execution", {})
+    _env_bool(exec_cfg, "live_mode", "LIVE_MODE")
+    _env_bool(exec_cfg, "dry_run", "DRY_RUN")
+    _env_float(exec_cfg, "max_position_pct", "MAX_POSITION_PCT")
+    _env_float(exec_cfg, "stop_loss_pct", "STOP_LOSS_PCT")
+    _env_float(exec_cfg, "max_daily_loss_pct", "MAX_DAILY_LOSS_PCT")
+    _env_int(exec_cfg, "max_open_positions", "MAX_OPEN_POSITIONS")
+    _env_str(exec_cfg, "min_confidence", "MIN_CONFIDENCE")
+    _env_str(exec_cfg, "position_sizing", "POSITION_SIZING")
+    _env_int(exec_cfg, "leverage", "LEVERAGE")
+
+    return config
+
+
+def _env_str(cfg: dict, key: str, env_var: str):
+    val = os.getenv(env_var)
+    if val is not None:
+        cfg[key] = val
+
+
+def _env_bool(cfg: dict, key: str, env_var: str):
+    val = os.getenv(env_var)
+    if val is not None:
+        cfg[key] = val.lower() in ("true", "1", "yes")
+
+
+def _env_float(cfg: dict, key: str, env_var: str):
+    val = os.getenv(env_var)
+    if val is not None:
+        try:
+            cfg[key] = float(val)
+        except ValueError:
+            pass
+
+
+def _env_int(cfg: dict, key: str, env_var: str):
+    val = os.getenv(env_var)
+    if val is not None:
+        try:
+            cfg[key] = int(val)
+        except ValueError:
+            pass

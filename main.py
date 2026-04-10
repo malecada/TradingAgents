@@ -1,3 +1,9 @@
+"""Example usage of TradingAgents for cryptocurrency analysis.
+
+This script demonstrates how to use the framework to analyze a cryptocurrency
+using the multi-agent debate architecture with crypto-specific analysts.
+"""
+
 from tradingagents.graph.trading_graph import TradingAgentsGraph
 from tradingagents.default_config import DEFAULT_CONFIG
 
@@ -6,26 +12,38 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
-# Create a custom config
+# Create a custom config for crypto trading
 config = DEFAULT_CONFIG.copy()
-config["deep_think_llm"] = "gpt-5.4-mini"  # Use a different model
-config["quick_think_llm"] = "gpt-5.4-mini"  # Use a different model
-config["max_debate_rounds"] = 1  # Increase debate rounds
 
-# Configure data vendors (default uses yfinance, no extra API keys needed)
-config["data_vendors"] = {
-    "core_stock_apis": "yfinance",           # Options: alpha_vantage, yfinance
-    "technical_indicators": "yfinance",      # Options: alpha_vantage, yfinance
-    "fundamental_data": "yfinance",          # Options: alpha_vantage, yfinance
-    "news_data": "yfinance",                 # Options: alpha_vantage, yfinance
-}
+# LLM configuration
+config["llm_provider"] = "openai"
+config["deep_think_llm"] = "gpt-4o"
+config["quick_think_llm"] = "gpt-4o-mini"
+config["max_debate_rounds"] = 1
 
-# Initialize with custom config
-ta = TradingAgentsGraph(debug=True, config=config)
+# Asset class: "crypto" for cryptocurrencies, "stock" for equities
+config["asset_class"] = "crypto"
 
-# forward propagate
-_, decision = ta.propagate("NVDA", "2024-05-10")
-print(decision)
+# Initialize with crypto analysts
+ta = TradingAgentsGraph(
+    selected_analysts=["market", "onchain", "crypto_sentiment", "prediction"],
+    debug=True,
+    config=config,
+)
 
-# Memorize mistakes and reflect
-# ta.reflect_and_remember(1000) # parameter is the position returns
+# Analyze Bitcoin
+_, decision = ta.propagate("bitcoin", "2026-04-09")
+print(f"\nFinal decision: {decision}")
+
+# Memorize mistakes and reflect (call after trade outcome is known)
+# ta.reflect_and_remember(returns_losses=1000)
+
+
+# --- Stock analysis example (for reference) ---
+# config["asset_class"] = "stock"
+# ta_stocks = TradingAgentsGraph(
+#     selected_analysts=["market", "social", "news", "fundamentals"],
+#     debug=True,
+#     config=config,
+# )
+# _, decision = ta_stocks.propagate("NVDA", "2025-01-15")
