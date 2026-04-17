@@ -143,15 +143,15 @@ def main():
         log.info("Fetching %s → %s", window_start.date(), window_end.date())
         for item in fetch_window(args.symbols, window_start, window_end, args.limit):
             row = normalize(item)
-            key = (row["event_ts"].year, row["event_ts"].month)
-            by_month.setdefault(key, []).append(row)
+            month_key = (row["event_ts"].year, row["event_ts"].month)
+            by_month.setdefault(month_key, []).append(row)
             total += 1
         for (y, m), rows in list(by_month.items()):
             if len(rows) >= 500:
                 sentiment_store.upsert_alpaca_rows(
                     pd.DataFrame(rows), year=y, month=m, root=out_dir)
                 log.info("Flushed %d rows to %d-%02d.parquet", len(rows), y, m)
-                by_month.pop(key, None)
+                by_month.pop((y, m), None)
 
     for (y, m), rows in by_month.items():
         if rows:
