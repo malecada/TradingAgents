@@ -39,6 +39,8 @@ def parse_args():
     p.add_argument("--analysts", nargs="+",
                     default=["market", "onchain", "prediction"],
                     help="Analyst types to include.")
+    p.add_argument("--sentiment-mode", choices=["live", "pit"], default="live",
+                    help="Select sentiment vendor: 'live' (today-relative) or 'pit' (Alpaca PIT).")
     p.add_argument("--llm-provider", default="openai")
     p.add_argument("--deep-think", default="gpt-5.4-mini")
     p.add_argument("--quick-think", default="gpt-5.4-nano")
@@ -62,6 +64,9 @@ def main():
     config["quick_think_llm"] = args.quick_think
     config["asset_class"] = "crypto"
     config["replay_cache"] = True
+    if args.sentiment_mode == "pit":
+        config["data_vendors"] = dict(config.get("data_vendors", {}))
+        config["data_vendors"]["crypto_sentiment"] = "crypto_sentiment_pit"
 
     print(f"\n{'=' * 60}")
     print(f"  Agent Signal Generation")
@@ -70,6 +75,7 @@ def main():
     print(f"  Period    : {args.start} -> {args.end}")
     print(f"  Analysts  : {', '.join(args.analysts)}")
     print(f"  LLM       : {args.deep_think} / {args.quick_think}")
+    print(f"  Sentiment : {args.sentiment_mode}")
     print(f"  Force run : {args.force}")
     print(f"  Output    : {args.output_dir}")
     print()
