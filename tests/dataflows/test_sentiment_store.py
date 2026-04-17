@@ -102,3 +102,71 @@ def test_symbol_filter_isolates_coin(tmp_path):
         root=tmp_path,
     )
     assert sorted(eth["id"].tolist()) == [2, 3]
+
+
+def test_wbtc_symbol_does_not_contaminate_btc_query(tmp_path):
+    """A row tagged only with WBTCUSD (Wrapped Bitcoin) must not appear
+    in a bitcoin query — previously the substring LIKE '%BTCUSD%' leaked it."""
+    rows = pd.DataFrame([
+        _row(datetime(2024, 1, 10, tzinfo=timezone.utc), 1, symbols="BTCUSD"),
+        _row(datetime(2024, 1, 11, tzinfo=timezone.utc), 2, symbols="WBTCUSD"),
+        _row(datetime(2024, 1, 12, tzinfo=timezone.utc), 3, symbols="BTCUSD,WBTCUSD"),
+    ])
+    sentiment_store.upsert_alpaca_rows(rows, year=2024, month=1, root=tmp_path)
+
+    btc = sentiment_store.query_news(
+        coin="bitcoin",
+        ts_start=datetime(2024, 1, 1, tzinfo=timezone.utc),
+        ts_end=datetime(2024, 1, 31, tzinfo=timezone.utc),
+        as_of=datetime(2024, 2, 1, tzinfo=timezone.utc),
+        root=tmp_path,
+    )
+    assert sorted(btc["id"].tolist()) == [1, 3], (
+        "WBTCUSD-only row must be excluded from bitcoin query"
+    )
+
+
+def test_revision_history_preserved_across_upserts(tmp_path):
+    """Two revisions of the same article id (same event_ts, different as_of_ts)
+    must both survive upsert. A query at an as_of between the two must return
+    the earlier revision, not the later one."""
+    event_time = datetime(2024, 1, 10, tzinfo=timezone.utc)
+    # v1: headline as published
+    v1 = pd.DataFrame([{
+        "event_ts": event_time,
+        "as_of_ts": datetime(2024, 1, 10, 12, 0, tzinfo=timezone.utc),
+        "id": 42, "headline": "v1 headline", "content": "",
+        "summary": "", "symbols": "BTCUSD", "source": "x", "author": "", "url": "",
+    }])
+    # v2: corrected headline, observed 5 days later
+    v2 = pd.DataFrame([{
+        "event_ts": event_time,
+        "as_of_ts": datetime(2024, 1, 15, 9, 0, tzinfo=timezone.utc),
+        "id": 42, "headline": "v2 corrected", "content": "",
+        "summary": "", "symbols": "BTCUSD", "source": "x", "author": "", "url": "",
+    }])
+    sentiment_store.upsert_alpaca_rows(v1, year=2024, month=1, root=tmp_path)
+    sentiment_store.upsert_alpaca_rows(v2, year=2024, month=1, root=tmp_path)
+
+    # At as_of between v1 and v2: only v1 should be visible
+    out_between = sentiment_store.query_news(
+        coin="bitcoin",
+        ts_start=datetime(2024, 1, 1, tzinfo=timezone.utc),
+        ts_end=datetime(2024, 1, 31, tzinfo=timezone.utc),
+        as_of=datetime(2024, 1, 12, tzinfo=timezone.utc),
+        root=tmp_path,
+    )
+    assert len(out_between) == 1
+    assert out_between["headline"].iloc[0] == "v1 headline"
+
+    # At as_of after v2: both revisions are visible; the later (v2) comes first due to ORDER BY event_ts DESC
+    # (same event_ts → order between them is unspecified but both must be present)
+    out_after = sentiment_store.query_news(
+        coin="bitcoin",
+        ts_start=datetime(2024, 1, 1, tzinfo=timezone.utc),
+        ts_end=datetime(2024, 1, 31, tzinfo=timezone.utc),
+        as_of=datetime(2024, 2, 1, tzinfo=timezone.utc),
+        root=tmp_path,
+    )
+    assert len(out_after) == 2
+    assert set(out_after["headline"].tolist()) == {"v1 headline", "v2 corrected"}

@@ -43,9 +43,9 @@ def upsert_alpaca_rows(df: pd.DataFrame, year: int, month: int,
     if target.exists():
         existing = pd.read_parquet(target)
         combined = pd.concat([existing, df[SCHEMA_COLS]], ignore_index=True)
-        combined = combined.drop_duplicates(subset=["id"], keep="last")
+        combined = combined.drop_duplicates(subset=["id", "as_of_ts"], keep="last")
     else:
-        combined = df[SCHEMA_COLS].drop_duplicates(subset=["id"], keep="last")
+        combined = df[SCHEMA_COLS].drop_duplicates(subset=["id", "as_of_ts"], keep="last")
     combined.to_parquet(target, index=False)
     return len(combined)
 
@@ -71,13 +71,13 @@ def query_news(coin: str, ts_start: datetime, ts_end: datetime,
         FROM news
         WHERE event_ts BETWEEN ? AND ?
           AND as_of_ts <= ?
-          AND symbols LIKE ?
+          AND list_contains(string_split(symbols, ','), ?)
         ORDER BY event_ts DESC
         LIMIT ?
         """
         return con.execute(
             sql,
-            [ts_start, ts_end, as_of, f"%{symbol}%", limit],
+            [ts_start, ts_end, as_of, symbol, limit],
         ).fetchdf()
     finally:
         con.close()
