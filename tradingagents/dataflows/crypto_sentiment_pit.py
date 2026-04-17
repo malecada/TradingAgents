@@ -9,6 +9,8 @@ from __future__ import annotations
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 
+import pandas as pd
+
 from tradingagents.dataflows import sentiment_store
 
 
@@ -19,9 +21,15 @@ def get_crypto_news_pit(
 ) -> str:
     """Fetch Alpaca News articles with strict PIT enforcement.
 
+    trade_date is treated as end-of-day UTC (consistent with the OHLCV
+    ``Date <= curr_date`` convention in ``coingecko_binance.py``, where the
+    midnight-keyed row for trade_date contains that day's close). Articles
+    published on trade_date itself are therefore visible; articles published
+    after 23:59:59.999999 UTC on trade_date are not.
+
     Returns raw headlines and article content for the LLM analyst to
-    interpret sentiment. Every row's as_of_ts <= trade_date, so there
-    is no look-ahead.
+    interpret sentiment. Every row satisfies as_of_ts <= end-of-day(trade_date),
+    so there is no look-ahead.
     """
     coin = coin_name.lower()
     try:
@@ -29,7 +37,8 @@ def get_crypto_news_pit(
     except ValueError:
         return f"Invalid trade_date format: {trade_date!r} (expected yyyy-mm-dd)."
 
-    ts_end = trade_dt
+    # End-of-day UTC: trade_date is inclusive of its own 23:59:59.999999.
+    ts_end = trade_dt + timedelta(days=1) - timedelta(microseconds=1)
     ts_start = trade_dt - timedelta(days=lookback_days)
 
     try:
@@ -37,7 +46,7 @@ def get_crypto_news_pit(
             coin=coin,
             ts_start=ts_start,
             ts_end=ts_end,
-            as_of=trade_dt,
+            as_of=ts_end,
             limit=50,
             root=sentiment_store.DEFAULT_ROOT,
         )
@@ -58,13 +67,14 @@ def get_crypto_news_pit(
         "",
     ]
     for i, row in enumerate(df.itertuples(index=False), 1):
+        event_ts_str = pd.Timestamp(row.event_ts).strftime("%Y-%m-%d %H:%M UTC")
         lines.append(f"### Article {i} — {row.source}")
-        lines.append(f"**Date:** {row.event_ts}")
+        lines.append(f"**Date:** {event_ts_str}")
         lines.append(f"**Headline:** {row.headline}")
         if row.summary:
             lines.append(f"**Summary:** {row.summary}")
         elif row.content:
-            body = (row.content or "")[:800]
+            body = row.content[:800]
             lines.append(f"**Content:** {body}")
         if row.url:
             lines.append(f"**URL:** {row.url}")

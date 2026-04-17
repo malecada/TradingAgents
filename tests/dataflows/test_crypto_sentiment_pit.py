@@ -4,7 +4,6 @@ from __future__ import annotations
 from datetime import datetime, timezone
 
 import pandas as pd
-import pytest
 
 from tradingagents.dataflows import sentiment_store, crypto_sentiment_pit
 
@@ -74,3 +73,30 @@ def test_get_reddit_posts_pit_stub_returns_disabled_message():
         coin_name="bitcoin", start_date="2024-01-01", end_date="2024-01-10",
     )
     assert "not available" in out.lower() or "disabled" in out.lower()
+
+
+def test_get_crypto_news_pit_respects_lookback_boundary(tmp_path, monkeypatch):
+    """An article older than lookback_days must not appear."""
+    monkeypatch.setattr(sentiment_store, "DEFAULT_ROOT", tmp_path)
+    rows = pd.DataFrame([
+        _row(datetime(2024, 1, 7, 23, 0, tzinfo=timezone.utc), 1, headline="too old"),
+        _row(datetime(2024, 1, 9, 12, 0, tzinfo=timezone.utc), 2, headline="inside window"),
+    ])
+    sentiment_store.upsert_alpaca_rows(rows, year=2024, month=1, root=tmp_path)
+
+    # trade_date=2024-01-15, lookback=7 => window start = 2024-01-08 (start-of-day) or 2024-01-08T23:59:59 (end-of-day)
+    # Either way, the 2024-01-07 article is outside the window and must NOT appear.
+    out = crypto_sentiment_pit.get_crypto_news_pit(
+        coin_name="bitcoin", trade_date="2024-01-15", lookback_days=7,
+    )
+    assert "inside window" in out
+    assert "too old" not in out
+
+
+def test_get_crypto_news_pit_unsupported_coin_returns_error_string(tmp_path, monkeypatch):
+    """An unsupported coin name must return an error string, not raise."""
+    monkeypatch.setattr(sentiment_store, "DEFAULT_ROOT", tmp_path)
+    out = crypto_sentiment_pit.get_crypto_news_pit(
+        coin_name="dogecoin", trade_date="2024-01-15", lookback_days=7,
+    )
+    assert "error" in out.lower() or "unsupported" in out.lower()
