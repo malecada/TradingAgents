@@ -67,6 +67,7 @@ def main():
     if args.sentiment_mode == "pit":
         config["data_vendors"] = dict(config.get("data_vendors", {}))
         config["data_vendors"]["crypto_sentiment"] = "crypto_sentiment_pit"
+        config["data_vendors"]["news_data"] = "news_data_pit"
 
     print(f"\n{'=' * 60}")
     print(f"  Agent Signal Generation")
