@@ -28,8 +28,8 @@ def test_get_crypto_news_pit_returns_formatted_markdown(tmp_path, monkeypatch):
 
     out = crypto_sentiment_pit.get_crypto_news_pit(
         coin_name="bitcoin",
-        trade_date="2024-01-15",
-        lookback_days=7,
+        start_date="2024-01-08",
+        end_date="2024-01-15",
     )
     assert "Alpaca" in out or "Benzinga" in out
     assert "BTC surges on ETF approval" in out
@@ -52,7 +52,7 @@ def test_get_crypto_news_pit_respects_pit_cutoff(tmp_path, monkeypatch):
     sentiment_store.upsert_alpaca_rows(rows, year=2024, month=1, root=tmp_path)
 
     out = crypto_sentiment_pit.get_crypto_news_pit(
-        coin_name="bitcoin", trade_date="2024-01-15", lookback_days=7,
+        coin_name="bitcoin", start_date="2024-01-08", end_date="2024-01-15",
     )
     assert "visible" in out
     assert "leaked future" not in out
@@ -61,7 +61,7 @@ def test_get_crypto_news_pit_respects_pit_cutoff(tmp_path, monkeypatch):
 def test_get_crypto_news_pit_empty_returns_notice(tmp_path, monkeypatch):
     monkeypatch.setattr(sentiment_store, "DEFAULT_ROOT", tmp_path)
     out = crypto_sentiment_pit.get_crypto_news_pit(
-        coin_name="bitcoin", trade_date="2024-01-15", lookback_days=7,
+        coin_name="bitcoin", start_date="2024-01-08", end_date="2024-01-15",
     )
     assert "No" in out  # "No Alpaca articles found" or "No cached sentiment"
 
@@ -84,10 +84,10 @@ def test_get_crypto_news_pit_respects_lookback_boundary(tmp_path, monkeypatch):
     ])
     sentiment_store.upsert_alpaca_rows(rows, year=2024, month=1, root=tmp_path)
 
-    # trade_date=2024-01-15, lookback=7 => window start = 2024-01-08 (start-of-day) or 2024-01-08T23:59:59 (end-of-day)
-    # Either way, the 2024-01-07 article is outside the window and must NOT appear.
+    # Window = [2024-01-08, 2024-01-15]. The 2024-01-07 article is outside
+    # the window and must NOT appear; the 2024-01-09 article must.
     out = crypto_sentiment_pit.get_crypto_news_pit(
-        coin_name="bitcoin", trade_date="2024-01-15", lookback_days=7,
+        coin_name="bitcoin", start_date="2024-01-08", end_date="2024-01-15",
     )
     assert "inside window" in out
     assert "too old" not in out
@@ -97,6 +97,6 @@ def test_get_crypto_news_pit_unsupported_coin_returns_error_string(tmp_path, mon
     """An unsupported coin name must return an error string, not raise."""
     monkeypatch.setattr(sentiment_store, "DEFAULT_ROOT", tmp_path)
     out = crypto_sentiment_pit.get_crypto_news_pit(
-        coin_name="dogecoin", trade_date="2024-01-15", lookback_days=7,
+        coin_name="dogecoin", start_date="2024-01-08", end_date="2024-01-15",
     )
     assert "error" in out.lower() or "unsupported" in out.lower()

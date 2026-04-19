@@ -16,30 +16,32 @@ from tradingagents.dataflows import sentiment_store
 
 def get_crypto_news_pit(
     coin_name: Annotated[str, "Cryptocurrency name (e.g., 'Bitcoin', 'Ethereum')"],
-    trade_date: Annotated[str, "Point-in-time date in yyyy-mm-dd format; no data after this date is returned"],
-    lookback_days: Annotated[int, "How many days back from trade_date to fetch"] = 7,
+    start_date: Annotated[str, "Start date yyyy-mm-dd (inclusive)"],
+    end_date: Annotated[str, "End date yyyy-mm-dd (inclusive); acts as PIT cutoff"],
 ) -> str:
     """Fetch Alpaca News articles with strict PIT enforcement.
 
-    trade_date is treated as end-of-day UTC (consistent with the OHLCV
-    ``Date <= curr_date`` convention in ``coingecko_binance.py``, where the
-    midnight-keyed row for trade_date contains that day's close). Articles
-    published on trade_date itself are therefore visible; articles published
-    after 23:59:59.999999 UTC on trade_date are not.
+    Signature matches the live ``get_crypto_google_news`` tool so the vendor
+    router can dispatch positionally. ``end_date`` is treated as end-of-day
+    UTC (inclusive of its own 23:59:59.999999) and is also used as the
+    ``as_of`` cutoff — no article with ``as_of_ts`` beyond end-of-day(end_date)
+    is returned. This is consistent with the OHLCV ``Date <= curr_date``
+    convention in ``coingecko_binance.py``.
 
     Returns raw headlines and article content for the LLM analyst to
-    interpret sentiment. Every row satisfies as_of_ts <= end-of-day(trade_date),
+    interpret sentiment. Every row satisfies as_of_ts <= end-of-day(end_date),
     so there is no look-ahead.
     """
     coin = coin_name.lower()
     try:
-        trade_dt = datetime.strptime(trade_date, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+        start_dt = datetime.strptime(start_date, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+        end_dt = datetime.strptime(end_date, "%Y-%m-%d").replace(tzinfo=timezone.utc)
     except ValueError:
-        return f"Invalid trade_date format: {trade_date!r} (expected yyyy-mm-dd)."
+        return f"Invalid date format: start={start_date!r} end={end_date!r} (expected yyyy-mm-dd)."
 
-    # End-of-day UTC: trade_date is inclusive of its own 23:59:59.999999.
-    ts_end = trade_dt + timedelta(days=1) - timedelta(microseconds=1)
-    ts_start = trade_dt - timedelta(days=lookback_days)
+    # End-of-day UTC: end_date is inclusive of its own 23:59:59.999999.
+    ts_end = end_dt + timedelta(days=1) - timedelta(microseconds=1)
+    ts_start = start_dt
 
     try:
         df = sentiment_store.query_news(
@@ -55,14 +57,14 @@ def get_crypto_news_pit(
 
     if df.empty:
         return (
-            f"No Alpaca articles found for {coin_name} in the "
-            f"{lookback_days}-day window before {trade_date}. "
+            f"No Alpaca articles found for {coin_name} in the window "
+            f"{start_date} → {end_date}. "
             f"(Ensure backfill_alpaca_news.py ran for this range.)"
         )
 
     lines: list[str] = [
         f"# Alpaca News (Benzinga): {coin_name}",
-        f"# Window: {ts_start.date()} → {trade_date}",
+        f"# Window: {start_date} → {end_date}",
         f"# Articles: {len(df)}",
         "",
     ]
