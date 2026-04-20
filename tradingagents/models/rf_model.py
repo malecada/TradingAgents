@@ -4,6 +4,8 @@ Ported from Krypto-v0/src/models/rf_model.py, adapted to use TradingAgents'
 config system and CoinGecko/Binance data vendor.
 """
 
+from __future__ import annotations
+
 import logging
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -150,7 +152,8 @@ def _forecast_from_df(df_all, save_checkpoint_flag=False):
     reframed_lags, df_final, first_day_future = prepare_data(df_all)
     target_col = "prices"
 
-    X_all = reframed_lags.drop(columns=target_col)
+    _drop_cols = [c for c in [target_col, "date"] if c in reframed_lags.columns]
+    X_all = reframed_lags.drop(columns=_drop_cols)
     y_all = reframed_lags[target_col].values.astype("float32")
 
     # Isolate training rows (all except the last future row) and drop NaN.
@@ -193,7 +196,11 @@ def _forecast_from_df(df_all, save_checkpoint_flag=False):
 # ── Public forecast_next (called by prediction analyst tools) ──────
 
 
-def forecast_next(symbol: str, lookback_days: Optional[int] = None) -> str:
+def forecast_next(
+    symbol: str,
+    lookback_days: Optional[int] = None,
+    trade_date: Optional[str] = None,
+) -> str:
     """Fetch data, train Random Forest model, and return a formatted prediction string.
 
     This is the entry point called by the prediction analyst tools.
@@ -201,6 +208,9 @@ def forecast_next(symbol: str, lookback_days: Optional[int] = None) -> str:
     Args:
         symbol: CoinGecko ID (e.g. "bitcoin", "ethereum").
         lookback_days: Number of days of historical data. Defaults to config value.
+        trade_date: Upper date boundary (YYYY-mm-dd) for backtesting.
+            Prevents look-ahead bias by ensuring the model only sees
+            data up to this date. Defaults to today for live usage.
 
     Returns:
         A formatted string with the prediction, confidence interval,
@@ -212,7 +222,7 @@ def forecast_next(symbol: str, lookback_days: Optional[int] = None) -> str:
             lookback_days = cfg.get("lookback_days", 300)
 
         # Fetch OHLCV data via the data vendor
-        df_model = mu.fetch_ohlcv_for_model(symbol, lookback_days)
+        df_model = mu.fetch_ohlcv_for_model(symbol, lookback_days, trade_date=trade_date)
         if df_model.empty:
             return (
                 f"[RandomForest] ERROR: No price data available for '{symbol}'. "
@@ -279,6 +289,7 @@ def walk_forward_evaluate(reframed_lags, min_train_window=None):
     guaranteeing no future information leaks into training.
     """
     target_col = "prices"
+    _non_feature_cols = [c for c in [target_col, "date"] if c in reframed_lags.columns]
 
     if min_train_window is not None:
         window_start = min(min_train_window, len(reframed_lags) - 1)
@@ -296,9 +307,9 @@ def walk_forward_evaluate(reframed_lags, min_train_window=None):
         train_slice = reframed_lags.iloc[:end_train]
         test_slice = reframed_lags.iloc[end_train: end_train + 1]
 
-        X_tr = train_slice.drop(columns=target_col).values.astype("float32")
+        X_tr = train_slice.drop(columns=_non_feature_cols).values.astype("float32")
         y_tr = train_slice[target_col].values.astype("float32")
-        X_te = test_slice.drop(columns=target_col).values.astype("float32")
+        X_te = test_slice.drop(columns=_non_feature_cols).values.astype("float32")
         y_te = test_slice[target_col].values.astype("float32")
 
         sc = MinMaxScaler(feature_range=(0, 1))
@@ -311,3 +322,136 @@ def walk_forward_evaluate(reframed_lags, min_train_window=None):
         actuals.append(y_te[0])
 
     return predictions, actuals, window_start
+
+
+def model_run(
+    df_all: pd.DataFrame,
+    min_train_window: int | None = None,
+    save_checkpoint_flag: bool = False,
+) -> tuple[pd.DataFrame, dict, pd.DataFrame]:
+    """Orchestrate prepare -> walk-forward evaluate -> metrics for RF.
+
+    Args:
+        df_all: Date-indexed model DataFrame (output of ohlcv_to_model_df).
+        min_train_window: Override for walk-forward training window.
+        save_checkpoint_flag: Save model checkpoint after full retrain.
+
+    Returns:
+        (df_forecast, metrics, result_df) where:
+        - df_forecast: full DataFrame with forecast row appended
+        - metrics: {r2, mae, rmse, mape}
+        - result_df: date-indexed DataFrame with 'prediction' and 'actual'
+    """
+    reframed_lags, df_final, first_day_future = prepare_data(df_all)
+
+    predictions, actuals, window_start = walk_forward_evaluate(
+        reframed_lags, min_train_window=min_train_window,
+    )
+
+    metrics = mu.compute_metrics(actuals, predictions)
+
+    eval_dates = df_final.index[window_start: window_start + len(predictions)]
+    result_df = pd.DataFrame(
+        {"prediction": predictions, "actual": actuals},
+        index=eval_dates,
+    )
+    result_df.index.name = "date"
+
+    # Full retrain + one-step-ahead forecast
+    prediction_obj = _forecast_from_df(df_all, save_checkpoint_flag=save_checkpoint_flag)
+    df_forecast = df_final.copy()
+    df_forecast.loc[df_forecast.index[-1], "prices"] = prediction_obj.value
+
+    return df_forecast, metrics, result_df
+
+
+# ── Pooled multi-coin multi-horizon walk-forward ───────────────────
+
+
+def model_run_pooled(
+    pooled_df: pd.DataFrame,
+    horizon: int,
+    min_train_window: int = 365,
+) -> tuple[pd.DataFrame, dict]:
+    """Walk-forward eval on a pooled multi-coin dataset at a given horizon.
+
+    Mirrors lgb_model.model_run_pooled() so the evaluate CLI can dispatch
+    uniformly across model types. Trains one RF per evaluation date on all
+    coin-rows < current date, predicts all coin-rows at current date.
+
+    Args:
+        pooled_df: DataFrame from build_pooled_dataset → data_transform per-coin →
+            concat. Must contain `coin_id`, `prices_h{horizon}`, and either a
+            DatetimeIndex or a `date` column.
+        horizon: Which `prices_h{h}` target column to predict.
+        min_train_window: Number of initial dates reserved for training only.
+
+    Returns:
+        (predictions_df, metrics_dict) — same contract as lgb_model.
+    """
+    from tradingagents.models import lgb_model
+
+    pooled_df = lgb_model._ensure_date_indexed(pooled_df)
+
+    target_col = f"prices_h{horizon}"
+    if target_col not in pooled_df.columns:
+        raise ValueError(
+            f"target column {target_col} not in pooled_df "
+            f"(have: {[c for c in pooled_df.columns if c.startswith('prices')]})"
+        )
+
+    exclude_cols = {"coin_id"}
+    for c in pooled_df.columns:
+        if c.startswith("prices_h"):
+            exclude_cols.add(c)
+    feature_cols = [c for c in pooled_df.columns if c not in exclude_cols]
+
+    coin_ids = sorted(pooled_df["coin_id"].unique())
+    coin_to_int = {c: i for i, c in enumerate(coin_ids)}
+    pooled_df = pooled_df.copy()
+    pooled_df["coin_int"] = pooled_df["coin_id"].map(coin_to_int).astype(int)
+    if "coin_int" not in feature_cols:
+        feature_cols.append("coin_int")
+
+    unique_dates = sorted(pooled_df.index.unique())
+    if len(unique_dates) <= min_train_window:
+        raise ValueError(
+            f"Need >{min_train_window} unique dates; got {len(unique_dates)}"
+        )
+
+    rows = []
+    for i in range(min_train_window, len(unique_dates)):
+        cur_date = unique_dates[i]
+        train = pooled_df.loc[pooled_df.index < cur_date].dropna(subset=[target_col])
+        test = pooled_df.loc[pooled_df.index == cur_date].dropna(subset=[target_col])
+        if train.empty or test.empty:
+            continue
+
+        X_tr = train[feature_cols].to_numpy(dtype=np.float32)
+        y_tr = train[target_col].to_numpy(dtype=np.float32)
+        X_te = test[feature_cols].to_numpy(dtype=np.float32)
+
+        scaler = MinMaxScaler()
+        X_tr_s = scaler.fit_transform(X_tr)
+        X_te_s = scaler.transform(X_te)
+
+        rf = _build_rf()
+        rf.fit(X_tr_s, y_tr)
+        preds = rf.predict(X_te_s)
+
+        for j in range(len(test)):
+            rows.append({
+                "date": cur_date,
+                "coin_id": test.iloc[j]["coin_id"],
+                "prediction": float(preds[j]),
+                "actual": float(test.iloc[j][target_col]),
+            })
+
+    pred_df = pd.DataFrame(rows)
+    if pred_df.empty:
+        metrics = {"r2": 0.0, "mae": 0.0, "rmse": 0.0, "mape": 0.0, "directional_accuracy": 0.0}
+        return pred_df, metrics
+
+    metrics = mu.compute_metrics(pred_df["actual"].values, pred_df["prediction"].values)
+    metrics["directional_accuracy"] = lgb_model._dir_acc(pred_df, pooled_df, horizon)
+    return pred_df, metrics

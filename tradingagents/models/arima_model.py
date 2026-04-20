@@ -9,6 +9,8 @@ In this port, since we only have OHLCV data from the CoinGecko/Binance vendor,
 the ARIMA model uses price-derived features as exogenous regressors instead.
 """
 
+from __future__ import annotations
+
 import logging
 import warnings
 from datetime import datetime, timedelta
@@ -212,7 +214,11 @@ def _forecast_from_df(df_all, save_checkpoint_flag=False):
 # ── Public forecast_next (called by prediction analyst tools) ──────
 
 
-def forecast_next(symbol: str, lookback_days: Optional[int] = None) -> str:
+def forecast_next(
+    symbol: str,
+    lookback_days: Optional[int] = None,
+    trade_date: Optional[str] = None,
+) -> str:
     """Fetch data, train ARIMA model, and return a formatted prediction string.
 
     This is the entry point called by the prediction analyst tools.
@@ -220,6 +226,9 @@ def forecast_next(symbol: str, lookback_days: Optional[int] = None) -> str:
     Args:
         symbol: CoinGecko ID (e.g. "bitcoin", "ethereum").
         lookback_days: Number of days of historical data. Defaults to config value.
+        trade_date: Upper date boundary (YYYY-mm-dd) for backtesting.
+            Prevents look-ahead bias by ensuring the model only sees
+            data up to this date. Defaults to today for live usage.
 
     Returns:
         A formatted string with the prediction, confidence interval,
@@ -231,7 +240,7 @@ def forecast_next(symbol: str, lookback_days: Optional[int] = None) -> str:
             lookback_days = cfg.get("lookback_days", 300)
 
         # Fetch OHLCV data via the data vendor
-        df_model = mu.fetch_ohlcv_for_model(symbol, lookback_days)
+        df_model = mu.fetch_ohlcv_for_model(symbol, lookback_days, trade_date=trade_date)
         if df_model.empty:
             return (
                 f"[ARIMA] ERROR: No price data available for '{symbol}'. "
@@ -337,5 +346,106 @@ def walk_forward_evaluate(df_with_date, min_train_window=None):
         )
         predictions.append(pred.values[0])
         actuals.append(test_slice[target_col].values[0])
+
+    return predictions, actuals, window_start
+
+
+def model_run(
+    df_all: pd.DataFrame,
+    min_train_window: int | None = None,
+    save_checkpoint_flag: bool = False,
+) -> tuple[pd.DataFrame, dict, pd.DataFrame]:
+    """Orchestrate prepare -> walk-forward evaluate -> metrics for ARIMA.
+
+    Returns:
+        (df_forecast, metrics, result_df) — same contract as rf_model.model_run.
+    """
+    df_with_date, reframed_lags, df_final, first_day_future = prepare_data(df_all)
+
+    predictions, actuals, window_start = walk_forward_evaluate(
+        df_with_date, min_train_window=min_train_window,
+    )
+
+    metrics = mu.compute_metrics(actuals, predictions)
+
+    eval_dates = df_with_date.index[window_start: window_start + len(predictions)]
+    result_df = pd.DataFrame(
+        {"prediction": predictions, "actual": actuals},
+        index=eval_dates,
+    )
+    result_df.index.name = "date"
+
+    prediction_obj = _forecast_from_df(df_all, save_checkpoint_flag=save_checkpoint_flag)
+    df_forecast = df_final.copy()
+    df_forecast.loc[df_forecast.index[-1], "prices"] = prediction_obj.value
+
+    return df_forecast, metrics, result_df
+
+
+# ── Multi-horizon walk-forward (for h > 1) ─────────────────────────
+
+
+def walk_forward_horizon(df_with_date, horizon: int, min_train_window=None):
+    """Rolling-window evaluation with h-step-ahead forecasts.
+
+    Same mechanics as walk_forward_evaluate() but uses ARIMA's native
+    forecast(steps=horizon). Future exogenous variables are held flat
+    (copied from the last known training row) since we don't have true
+    future values at prediction time.
+
+    Args:
+        df_with_date: Date-indexed DataFrame with `prices` plus ARIMA exog columns.
+        horizon: Forecast horizon in bars (1 = next bar, 7 = next week, etc.).
+        min_train_window: Optional override for where walk-forward begins.
+
+    Returns:
+        (predictions, actuals, window_start) — the prediction at step i is
+        the h-step-ahead forecast and `actuals` holds the realized price at
+        step i+h-1.
+    """
+    cfg = _cfg()
+    arima_order = tuple(cfg.get("arima_order", [2, 1, 2]))
+    max_iter = cfg.get("arima_max_iter", 500)
+
+    target_col = "prices"
+
+    if min_train_window is not None:
+        window_start = min(min_train_window, len(df_with_date) - horizon - 1)
+    elif len(df_with_date) > 500:
+        window_start = int(len(df_with_date) * 0.9)
+    elif len(df_with_date) > 200:
+        window_start = int(len(df_with_date) * 0.8)
+    else:
+        window_start = int(len(df_with_date) * 0.7)
+
+    predictions: list[float] = []
+    actuals: list[float] = []
+
+    for end_train in range(window_start, len(df_with_date) - horizon):
+        train_slice = df_with_date.iloc[:end_train]
+        # h-step-ahead actual is at index end_train + horizon - 1
+        actual_h = df_with_date.iloc[end_train + horizon - 1][target_col]
+
+        exog_train = train_slice.drop(columns=[target_col])
+        # Hold exog flat for future steps (last known row, repeated)
+        last_exog = exog_train.iloc[-1:].copy()
+        exog_future = pd.concat([last_exog] * horizon, ignore_index=True)
+        exog_future.index = df_with_date.index[end_train : end_train + horizon]
+
+        try:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", ConvergenceWarning)
+                warnings.filterwarnings("ignore", category=UserWarning, module="statsmodels")
+                arima_fit = ARIMA(
+                    train_slice[target_col],
+                    exog=exog_train,
+                    order=arima_order,
+                ).fit(method_kwargs={"maxiter": max_iter})
+            forecast = arima_fit.forecast(steps=horizon, exog=exog_future)
+            predictions.append(float(forecast.iloc[-1]))
+            actuals.append(float(actual_h))
+        except Exception as e:
+            logger.debug(f"ARIMA h={horizon} failed at step {end_train}: {e}")
+            continue
 
     return predictions, actuals, window_start

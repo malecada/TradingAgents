@@ -336,7 +336,11 @@ def _enrich_with_onchain_data(df_model: pd.DataFrame, symbol: str, lookback_days
 # ── Public forecast_next (called by prediction analyst tools) ──────
 
 
-def forecast_next(symbol: str, lookback_days: Optional[int] = None) -> str:
+def forecast_next(
+    symbol: str,
+    lookback_days: Optional[int] = None,
+    trade_date: Optional[str] = None,
+) -> str:
     """Fetch data, train Gradient Boosting model, and return a formatted prediction string.
 
     This is the entry point called by the prediction analyst tools.
@@ -346,6 +350,9 @@ def forecast_next(symbol: str, lookback_days: Optional[int] = None) -> str:
     Args:
         symbol: CoinGecko ID (e.g. "bitcoin", "ethereum").
         lookback_days: Number of days of historical data. Defaults to config value.
+        trade_date: Upper date boundary (YYYY-mm-dd) for backtesting.
+            Prevents look-ahead bias by ensuring the model only sees
+            data up to this date. Defaults to today for live usage.
 
     Returns:
         A formatted string with the prediction, confidence interval,
@@ -357,7 +364,7 @@ def forecast_next(symbol: str, lookback_days: Optional[int] = None) -> str:
             lookback_days = cfg.get("lookback_days", 300)
 
         # Fetch OHLCV data via the data vendor
-        df_model = mu.fetch_ohlcv_for_model(symbol, lookback_days)
+        df_model = mu.fetch_ohlcv_for_model(symbol, lookback_days, trade_date=trade_date)
         if df_model.empty:
             return (
                 f"[OnChainGBR] ERROR: No price data available for '{symbol}'. "
@@ -475,3 +482,42 @@ def walk_forward_evaluate(reframed_lags, min_train_window=None):
         actuals.append(y_te[0])
 
     return predictions, actuals, window_start
+
+
+def model_run(
+    df_all: pd.DataFrame,
+    min_train_window: int | None = None,
+    save_checkpoint_flag: bool = False,
+    symbol: str = "bitcoin",
+    lookback_days: int = 300,
+) -> tuple[pd.DataFrame, dict, pd.DataFrame]:
+    """Orchestrate prepare -> walk-forward evaluate -> metrics for GBR.
+
+    Optionally enriches with on-chain data before evaluation.
+
+    Returns:
+        (df_forecast, metrics, result_df) — same contract as rf_model.model_run.
+    """
+    # Enrich with on-chain features (degrades gracefully if unavailable)
+    df_enriched = _enrich_with_onchain_data(df_all.copy(), symbol, lookback_days)
+
+    reframed_lags, df_final, first_day_future = prepare_data(df_enriched)
+
+    predictions, actuals, window_start = walk_forward_evaluate(
+        reframed_lags, min_train_window=min_train_window,
+    )
+
+    metrics = mu.compute_metrics(actuals, predictions)
+
+    eval_dates = df_final.index[window_start: window_start + len(predictions)]
+    result_df = pd.DataFrame(
+        {"prediction": predictions, "actual": actuals},
+        index=eval_dates,
+    )
+    result_df.index.name = "date"
+
+    prediction_obj = _forecast_from_df(df_enriched, save_checkpoint_flag=save_checkpoint_flag)
+    df_forecast = df_final.copy()
+    df_forecast.loc[df_forecast.index[-1], "prices"] = prediction_obj.value
+
+    return df_forecast, metrics, result_df
