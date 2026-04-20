@@ -55,3 +55,31 @@ __all__ = [
     "Strategy",
     "ThresholdSignal",
 ]
+
+from tradingagents.backtesting.runner import (
+    ModelEvalResult,
+    evaluate_models,
+    generate_system_signals,
+    run_system_backtest,
+)
+from tradingagents.backtesting.reporting import (
+    print_summary_table,
+    plot_equity_curves,
+    plot_predictions_vs_actuals,
+    print_model_metrics,
+    save_results_json,
+)
+
+__all__ += [
+    # Runner
+    "ModelEvalResult",
+    "evaluate_models",
+    "generate_system_signals",
+    "run_system_backtest",
+    # Reporting
+    "print_summary_table",
+    "plot_equity_curves",
+    "plot_predictions_vs_actuals",
+    "print_model_metrics",
+    "save_results_json",
+]
