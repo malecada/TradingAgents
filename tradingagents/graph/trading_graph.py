@@ -45,9 +45,10 @@ from tradingagents.agents.utils.agent_utils import (
 
 # Prediction tools are defined in the prediction analyst module
 from tradingagents.agents.analysts.prediction_analyst import (
+    get_lgb_forecast,
     get_rf_forecast,
-    get_arima_forecast,
     get_onchain_model_forecast,
+    set_prediction_trade_date,
 )
 
 from .conditional_logic import ConditionalLogic
@@ -110,6 +111,13 @@ class TradingAgentsGraph:
 
         self.deep_thinking_llm = deep_client.get_llm()
         self.quick_thinking_llm = quick_client.get_llm()
+
+        # Optionally wrap LLMs with replay cache for deterministic backtesting
+        if self.config.get("replay_cache"):
+            from tradingagents.llm_clients.replay_cache import CachedChatModel
+            cache_db = self.config.get("replay_cache_db", "./data/llm_replay_cache.db")
+            self.deep_thinking_llm = CachedChatModel(self.deep_thinking_llm, db_path=cache_db)
+            self.quick_thinking_llm = CachedChatModel(self.quick_thinking_llm, db_path=cache_db)
         
         # Initialize memories
         self.bull_memory = FinancialSituationMemory("bull_memory", self.config)
@@ -200,7 +208,7 @@ class TradingAgentsGraph:
             onchain_tools.extend([get_gas_metrics, get_stablecoin_supply])
         nodes["onchain"] = ToolNode(onchain_tools)
         nodes["prediction"] = ToolNode([
-            get_rf_forecast, get_arima_forecast, get_onchain_model_forecast,
+            get_lgb_forecast, get_rf_forecast, get_onchain_model_forecast,
         ])
         nodes["crypto_sentiment"] = ToolNode([
             get_news, get_global_news, get_reddit_posts, get_crypto_google_news,
@@ -213,6 +221,10 @@ class TradingAgentsGraph:
         # Clear session cache from previous run to avoid stale data
         from tradingagents.dataflows.coingecko_binance import clear_session_cache
         clear_session_cache()
+
+        # Bind prediction models to this trade_date so they only see
+        # data up to this point (prevents look-ahead bias in backtests).
+        set_prediction_trade_date(str(trade_date))
 
         self.ticker = company_name
 
@@ -281,6 +293,23 @@ class TradingAgentsGraph:
 
         # Return decision and processed signal
         return final_state, self.process_signal(final_state["final_trade_decision"])
+
+    def propagate_with_confidence(self, company_name, trade_date):
+        """Like `propagate()` but also returns a confidence label.
+
+        Returns:
+            (final_state, signal, confidence, trader_text) tuple where
+            signal ∈ {BUY, OVERWEIGHT, HOLD, UNDERWEIGHT, SELL}
+            confidence ∈ {HIGH, MEDIUM, LOW, UNKNOWN}
+            trader_text is the raw final_trade_decision string for audit.
+        """
+        final_state, signal = self.propagate(company_name, trade_date)
+        trader_text = final_state.get("final_trade_decision", "") or ""
+        try:
+            confidence = self.signal_processor.extract_confidence(trader_text)
+        except Exception:
+            confidence = "UNKNOWN"
+        return final_state, signal, confidence, trader_text
 
     def _log_state(self, trade_date, final_state):
         """Log the final state to a JSON file."""
