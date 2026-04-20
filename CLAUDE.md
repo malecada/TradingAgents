@@ -2,6 +2,17 @@
 
 Multi-agent LLM framework for cryptocurrency trading decisions. Uses a trading firm hierarchy of specialized AI agents (analysts, researchers, risk managers) built on LangGraph + LangChain. Adapted from the original stock-focused TradingAgents (arxiv.org/abs/2412.20138) with crypto data sources, on-chain analytics, ML price forecasting, and Binance Futures execution.
 
+**IMPORTANT**: When new empirical findings are produced (model evaluations, backtest results, strategy comparisons), update `THESIS_FINDINGS.md` in the project root. That file is the persistent record of all experimental results for the master's thesis.
+
+## Baseline Strategy (Finalized)
+
+The quant baseline that the multi-agent LLM system must beat is `scripts/baseline_strategy_v2.py` with default settings:
+- **Signal**: LightGBM term structure consensus — h=7 and h=14 must agree on direction
+- **Training pool**: 2-coin (BTC+ETH) or 3-coin (BTC+ETH+target) — larger pools hurt due to altcoin noise
+- **Sizing**: Vol-targeted Kelly + confidence-weighted + conditional leverage (1-3x) + SMA30 trend filter (1.5x aligned, 0.5x against)
+- **Risk**: 7-day min hold with adaptive early exit, 3% stop-loss, 15% portfolio circuit breaker, 95th percentile vol cap
+- **Performance**: 2-coin portfolio Sharpe **2.69** (+106% return); 3-coin portfolio Sharpe 2.58 (+155% return)
+
 ## Architecture
 
 ```
@@ -19,7 +30,7 @@ Analysts (parallel data collection)
 - **Market** — crypto OHLCV from Binance/CoinGecko + 150+ technical indicators via stockstats (RSI, MACD, Bollinger, ATR, etc.)
 - **On-Chain** — funding rates (Binance Futures), TVL (DeFiLlama), gas prices + stablecoin supply (Web3/EVM)
 - **Crypto Sentiment** — multi-source: Alpha Vantage crypto news, Reddit crypto subreddits, Google News, global macro news. LLM-centric analysis (no HuggingFace NLP model)
-- **Prediction Model** — Random Forest + ARIMA(2,1,2) price forecasts with 95% confidence intervals, plus on-chain Gradient Boosting (observational)
+- **Prediction Model** — Random Forest + ARIMA(2,1,2) + LightGBM price forecasts with 95% confidence intervals, plus on-chain Gradient Boosting (observational). Supports multi-horizon prediction (h=1,3,7,14 days) and pooled multi-coin training.
 
 **Stock Analysts** (legacy, still available when `asset_class="stock"`):
 - Market, Social Media, News, Fundamentals
@@ -77,14 +88,17 @@ tradingagents/                    # Core package
     alpha_vantage*.py             # Alpha Vantage (stock mode + crypto news)
     stockstats_utils.py           # Technical indicator computation (works on any OHLCV data)
   models/
-    rf_model.py                   # Random Forest (1000 trees) with 95% CI; forecast_next() returns formatted string
-    arima_model.py                # ARIMA(2,1,2) with exogenous features; forecast_next() returns formatted string
-    onchain_model.py              # Gradient Boosting on on-chain features (observational only)
-    model_utils.py                # data_transform, fetch_ohlcv_for_model, compute_metrics
+    rf_model.py                   # Random Forest (1000 trees) with 95% CI; forecast_next() + model_run() + model_run_pooled()
+    arima_model.py                # ARIMA(2,1,2) with exogenous features; forecast_next() + model_run()
+    onchain_model.py              # Gradient Boosting on on-chain features; forecast_next() + model_run()
+    lgb_model.py                  # LightGBM for multi-horizon pooled prediction; model_run_pooled()
+    model_utils.py                # data_transform, fetch_ohlcv_for_model, build_pooled_dataset, compute_metrics
     prediction.py                 # Prediction dataclass with to_report_string()
   backtesting/
     engine.py                     # run_backtest() with 5-level signal support, realistic costs (fees, slippage, short borrowing)
     strategies.py                 # FiveLevelSignal, ThresholdSignal, ModelConsensus; SignalLevel enum
+    runner.py                     # evaluate_models(), generate_system_signals(), run_system_backtest()
+    reporting.py                  # print_summary_table(), plot_equity_curves(), save_results_json()
   execution/
     exchange.py                   # Binance Futures wrapper (testnet default); place_market_order, place_stop_loss
     risk.py                       # 4-tier pre-trade checks: confidence gate, daily loss limit, max positions, position sizing
@@ -92,6 +106,7 @@ tradingagents/                    # Core package
     logger.py                     # SQLite trade journal: trades, portfolio_snapshots, daily_summary, analyst_reports
   llm_clients/
     factory.py                    # LLM client factory (OpenAI, Anthropic, Google, xAI, OpenRouter, Ollama)
+    replay_cache.py               # CachedChatModel — SQLite-backed LLM response cache for deterministic backtests
     base_client.py, openai_client.py, anthropic_client.py, google_client.py
     model_catalog.py, validators.py
   default_config.py               # DEFAULT_CONFIG + apply_env_overrides()
@@ -99,13 +114,21 @@ cli/
   main.py                         # Typer CLI with asset class selection (crypto/stock)
   utils.py                        # get_crypto_ticker, select_asset_class, select_analysts(asset_class)
   models.py                       # AnalystType enum (market, social, news, fundamentals, onchain, prediction, crypto_sentiment)
+scripts/
+  evaluate_models.py              # Single-coin RF+ARIMA walk-forward eval (legacy)
+  evaluate_models_multi.py        # Multi-coin multi-horizon pooled eval (LGB+ARIMA+RF) with cross-asset features
+  backtest_models.py              # Simple strategy backtest on predictions (naive daily flip)
+  backtest_system.py              # Full multi-agent system backtest (propagate() over date range)
+  baseline_strategy.py            # V1 baseline: RF+ARIMA h=1 ensemble (superseded by V2)
+  baseline_strategy_v2.py         # V2 baseline (PRODUCTION): LGB h=7/h=14 term structure consensus + SMA30 trend filter + adaptive hold
 main.py                           # Example: crypto analysis of bitcoin
+THESIS_FINDINGS.md                # Persistent record of all experimental results (keep updated!)
 ```
 
 ## Development Commands
 
 ```bash
-# Install in development mode
+# Install in development mode (requires Python 3.10+; runtime uses 3.9 with __future__ annotations)
 pip install -e .
 
 # Run the interactive CLI
@@ -118,11 +141,36 @@ python main.py
 # Run tests
 python -m pytest tests/
 
-# Train prediction models (required before prediction analyst can run)
-python scripts/train_models.py --coin bitcoin --days 300
-
 # Docker
 docker compose run --rm tradingagents
+
+# ── Model Evaluation & Backtesting ──────────────────────────────────
+
+# === FINALIZED BASELINE PIPELINE ===
+# Step 1: Multi-horizon pooled evaluation (LGB only — ARIMA proven useless in pooled setting)
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum --horizons 1 3 7 14 \
+    --models lgb --days 730 --min-train 365 --output-dir data/multi_2coins_v2
+
+# Step 2: Run V2+trend baseline strategy (current best — Sharpe 2.69 on 2-coin portfolio)
+python scripts/baseline_strategy_v2.py --pred-dir data/multi_2coins_v2 --symmetric
+
+# For trading a target altcoin, use "2+1" pool (BTC+ETH+target)
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum binancecoin \
+    --horizons 1 3 7 14 --models lgb --output-dir data/multi_3coins_bnb
+python scripts/baseline_strategy_v2.py --pred-dir data/multi_3coins_bnb --symmetric
+
+# === LEGACY / DIAGNOSTIC ===
+# Single-coin evaluation (legacy, not used for production strategy)
+python scripts/evaluate_models.py --coin bitcoin --days 730 --models rf arima --min-train 365
+
+# Simple strategy backtest (naive daily flip, replaced by V2)
+python scripts/backtest_models.py --input data/eval_predictions.csv --threshold 0.01
+
+# V1 baseline (RF+ARIMA ensemble, h=1 only — superseded by V2)
+python scripts/baseline_strategy.py --input data/eval_predictions.csv
+
+# Full multi-agent system backtest (expensive — uses LLM API calls)
+python scripts/backtest_system.py --coin bitcoin --start 2024-05-01 --end 2025-03-01
 ```
 
 ## Python API Usage
@@ -160,16 +208,51 @@ runner = LiveRunner(config={
 signal, result = runner.run_single("bitcoin")
 ```
 
-### Backtesting
+### Backtesting (Agent Signal-Based)
 ```python
-from tradingagents.backtesting.engine import run_backtest
-from tradingagents.backtesting.strategies import FiveLevelSignal
+from tradingagents.backtesting import run_backtest, FiveLevelSignal
 
-# signals: list of ("BUY"/"SELL"/etc.) strings per day
-# prices: corresponding price series
-result = run_backtest(signals, prices, strategy=FiveLevelSignal())
+result = run_backtest(
+    dates=dates_series, actuals=price_array,
+    agent_signals=signals_list,  # ["BUY", "HOLD", "SELL", ...]
+    strategy=FiveLevelSignal(), ticker="BTC",
+)
 print(f"Sharpe: {result.metrics['sharpe_ratio']:.2f}")
 print(f"Max Drawdown: {result.metrics['max_drawdown']:.1%}")
+```
+
+### Model Evaluation (Walk-Forward)
+```python
+from tradingagents.backtesting.runner import evaluate_models
+
+results = evaluate_models(
+    coin="bitcoin", lookback_days=730, min_train_window=365,
+    models=["rf", "arima"], output_dir="data/",
+)
+# Returns dict[str, ModelEvalResult] with metrics + dated predictions
+```
+
+### Multi-Horizon Pooled Evaluation
+```bash
+# Best results: 2-coin pool (BTC+ETH), LGB, h=14 achieves 84.6% DirAcc for BTC
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum \
+    --horizons 1 3 7 14 --models lgb --output-dir data/multi_2coins_v2
+
+# 2+1 approach for trading altcoins: BTC+ETH+target
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum binancecoin \
+    --horizons 1 3 7 14 --models lgb --output-dir data/multi_3coins_bnb
+```
+
+### V2 Baseline Strategy (Production)
+```bash
+# 2-coin portfolio: Sharpe 2.69, return +106%, MaxDD 5.9%
+python scripts/baseline_strategy_v2.py --pred-dir data/multi_2coins_v2 --symmetric
+
+# 3-coin portfolio: Sharpe 2.58, return +156%, MaxDD 13%
+python scripts/baseline_strategy_v2.py --pred-dir data/multi_3coins_bnb --symmetric
+
+# Key defaults: h=7/h=14 consensus, SMA30 trend filter (1.5x multiplier), 7-day min hold
+# with adaptive early exit, 10% target vol, half-Kelly, 3x max leverage, 3% stop-loss
 ```
 
 ### Stock Analysis (legacy)
@@ -202,12 +285,14 @@ final_state, signal = ta.propagate("NVDA", "2025-01-15")
 - `data_vendors`: Category-level vendor selection (7 categories)
 - `web3_provider_eth`, `web3_provider_bsc`: Ethereum/BSC RPC URLs
 - `use_onchain`: Enable on-chain data (default True, degrades gracefully)
-- `prediction_models`: RF/ARIMA/GBR hyperparameters, checkpoint paths, lookback days
+- `prediction_models`: RF/ARIMA/GBR/LGB hyperparameters, checkpoint paths, lookback days
+- `replay_cache`: Enable LLM response caching for deterministic backtest reruns (default: False)
+- `replay_cache_db`: SQLite path for cached LLM responses (default: `./data/llm_replay_cache.db`)
 - `execution`: live_mode, dry_run, max_position_pct, stop_loss_pct, position_sizing, leverage
 
 ## Code Conventions
 
-- Python 3.10+ with type hints; `Annotated[type, "description"]` for tool parameters
+- Python 3.9+ with `from __future__ import annotations` for PEP 604 union syntax; `Annotated[type, "description"]` for tool parameters
 - `TypedDict` for LangGraph state schemas (see `agent_states.py`)
 - snake_case for functions/variables, CamelCase for classes
 - Google-style docstrings
@@ -225,6 +310,11 @@ final_state, signal = ta.propagate("NVDA", "2025-01-15")
 - **Env var overrides**: `apply_env_overrides()` in `default_config.py` overlays env vars on config at initialization
 - **Prediction tools bypass vendor routing**: Defined inline in `prediction_analyst.py`, call model code directly (documented exception to the vendor pattern)
 - **Graceful degradation**: On-chain data, Web3 metrics, Reddit all optional — system continues if any source is unavailable
+- **Look-ahead bias prevention**: `set_prediction_trade_date()` binds prediction models to backtest date; OHLCV cache uses `min(curr_date, today)` as fetch boundary; `data["Date"] <= curr_date` filter applied before returning
+- **LLM replay cache**: `CachedChatModel` wraps LangChain chat models with SQLite-backed prompt-hash caching. Enable via `config["replay_cache"] = True`. Mandatory for system backtests (determinism + cost control).
+- **Multi-horizon pooled prediction**: `model_utils.build_pooled_dataset()` creates cross-coin features; `lgb_model.model_run_pooled()` runs walk-forward on pooled data with horizon as parameter. Best result: 2-coin BTC+ETH pool, h=14, BTC 84.6% / ETH 75.8% directional accuracy.
+- **V2 strategy trend filter**: `scripts/baseline_strategy_v2.py` uses SMA30-based position scaling — 1.5x when aligned with trend, 0.5x when against. Single highest-impact improvement (Sharpe 1.88 → 2.69). Implemented in `apply_trend_filter()`.
+- **"2+1" pooling pattern**: For trading a target altcoin, use a 3-coin pool {BTC, ETH, target} instead of larger universes. Preserves BTC/ETH quality while giving near-optimal DirAcc for the target coin.
 
 ## Gotchas
 
@@ -239,8 +329,17 @@ final_state, signal = ta.propagate("NVDA", "2025-01-15")
 - **Confidence parsed from LLM output** — regex-based extraction of confidence level from portfolio manager text; can be brittle if output format drifts
 - **Max recursion limit** — with 4 crypto analysts + debates, the graph has many nodes; default `max_recur_limit=100` should suffice but increase if hitting limits
 
+- **Pooled training universe matters**: Adding altcoins beyond BTC+ETH degrades directional accuracy by 12-22 pp. Optimal universe is 2-coin (BTC+ETH). See THESIS_FINDINGS.md for full comparison.
+- **ARIMA R² is misleading**: ARIMA achieves R²>0.999 but ~50% directional accuracy (coin flip) in pooled settings. Always evaluate by directional accuracy and PnL, not regression metrics.
+- **RF is extremely slow for pooled walk-forward**: 1000 trees × 365 iterations × 10 coins = hours. Use LightGBM for pooled experiments.
+
 ## Results Output
 
 - **State logs**: `results/{ticker}/TradingAgentsStrategy_logs/full_states_log_{date}.json` (includes all analyst reports, debate state, final decision)
 - **Trade journal**: `data/trade_journal.db` (SQLite — trades, portfolio snapshots, daily summaries, full analyst reports)
 - **Model checkpoints**: `data/checkpoints/` (RF, ARIMA, GBR joblib/pkl files)
+- **Evaluation results (legacy, pre-DirAcc fix)**: `data/multi_2coins/`, `data/multi_5coins/`, `data/multi_full/`
+- **Evaluation results (current, with ref_price)**: `data/multi_2coins_v2/`, `data/multi_3coins_bnb/`, `data/multi_5coins_v2/`, `data/multi_6coins/`
+- **V2 strategy reports**: `data/multi_*/report_v2/` — per-universe detailed reports with per-coin plots, monthly returns, metrics.json
+- **Backtest plots**: `data/*/baseline_v2_equity.png` (current), `data/baseline_equity.png` (V1 legacy)
+- **Thesis findings**: `THESIS_FINDINGS.md` — persistent record of all experimental results (KEEP UPDATED)

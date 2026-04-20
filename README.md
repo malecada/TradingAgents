@@ -174,6 +174,17 @@ An interface will appear showing results as they load, letting you track the age
   <img src="assets/cli/cli_transaction.png" width="100%" style="display: inline-block; margin: 0 2%;">
 </p>
 
+### Streamlit UI (Crypto)
+
+A lightweight Streamlit dashboard is available for running crypto analyses interactively. Type a coin name or ticker, pick a trade date and analyst mix, then browse the final rating alongside every analyst report and debate transcript.
+
+```bash
+pip install -e .            # installs streamlit along with the other deps
+streamlit run app.py
+```
+
+The sidebar takes the coin name (e.g. `bitcoin`, `BTC`, `Solana` — resolved to a CoinGecko id via a one-shot LLM call), trade date, analyst selection, and LLM provider/model. The main panel shows the final BUY/HOLD/SELL badge with tabs for the portfolio-manager decision, trader plan, per-analyst reports, investment debate, and risk debate.
+
 ## TradingAgents Package
 
 ### Implementation Details
