@@ -9,6 +9,8 @@ Ported from Krypto-v0/src/scraping/onchain.py, adapted to TradingAgents'
 vendor interface (functions return formatted strings).
 """
 
+from __future__ import annotations
+
 import logging
 import time
 from concurrent.futures import ThreadPoolExecutor

@@ -7,6 +7,8 @@ Ported from Krypto-v0/src/scraping/coingecko_binance.py, adapted to match
 TradingAgents' vendor interface pattern.
 """
 
+from __future__ import annotations
+
 import logging
 import os
 import time
@@ -211,11 +213,15 @@ def _load_crypto_ohlcv(coingecko_id: str, curr_date: str) -> pd.DataFrame:
     config = get_config()
     curr_date_dt = pd.to_datetime(curr_date)
 
-    # Cache uses a rolling window to today
+    # Use curr_date (not today) as the upper fetch boundary so the disk
+    # cache never contains data beyond the requested date.  This prevents
+    # even the *cache file itself* from holding future prices — important
+    # for backtesting auditability.
     today = pd.Timestamp.today()
-    start_date = today - pd.DateOffset(years=2)
+    fetch_end = min(curr_date_dt, today)
+    start_date = fetch_end - pd.DateOffset(years=2)
     start_str = start_date.strftime("%Y-%m-%d")
-    end_str = today.strftime("%Y-%m-%d")
+    end_str = fetch_end.strftime("%Y-%m-%d")
 
     cache_dir = config.get("data_cache_dir", "dataflows/data_cache")
     os.makedirs(cache_dir, exist_ok=True)
@@ -229,7 +235,7 @@ def _load_crypto_ohlcv(coingecko_id: str, curr_date: str) -> pd.DataFrame:
     else:
         # Fetch from Binance (primary) or CoinGecko (fallback)
         dt_start = start_date.to_pydatetime()
-        dt_end = today.to_pydatetime()
+        dt_end = fetch_end.to_pydatetime()
         from_ms = int(time.mktime(dt_start.timetuple())) * 1000
         to_ms = int(time.mktime(dt_end.timetuple())) * 1000
 
