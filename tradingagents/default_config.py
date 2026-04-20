@@ -15,8 +15,8 @@ DEFAULT_CONFIG = {
     ),
     # LLM settings
     "llm_provider": "openai",
-    "deep_think_llm": "gpt-5.4",
-    "quick_think_llm": "gpt-5.4-mini",
+    "deep_think_llm": "gpt-5.4-mini",
+    "quick_think_llm": "gpt-5.4-nano",
     "backend_url": "https://api.openai.com/v1",
     # Provider-specific thinking configuration
     "google_thinking_level": None,      # "high", "minimal", etc.
@@ -63,11 +63,29 @@ DEFAULT_CONFIG = {
         "onchain_n_estimators": 500,
         "onchain_max_depth": 5,
         "onchain_learning_rate": 0.1,
+        # LightGBM (used by lgb_model for pooled multi-horizon prediction)
+        "lgb_n_estimators": 500,
+        "lgb_max_depth": -1,
+        "lgb_learning_rate": 0.05,
+        "lgb_num_leaves": 31,
+        "lgb_min_child": 20,
         "lag_features": 7,
         "lookback_days": 300,
         "checkpoint_dir": "./data/checkpoints/",
         "prediction_interval_alpha": 0.05,  # 95% confidence interval
     },
+    # Multi-horizon pooled prediction configuration
+    "coin_universe": [
+        "bitcoin", "ethereum", "binancecoin", "solana", "ripple",
+        "cardano", "avalanche-2", "chainlink", "polkadot", "matic-network",
+    ],
+    "model_horizons": [1, 3, 7, 14],
+    "pooled_lookback_days": 730,
+    "pooled_min_train_window": 365,
+    # LLM replay cache — enables deterministic backtest reruns by caching
+    # LLM responses keyed by prompt hash.  Disabled by default for live use.
+    "replay_cache": False,
+    "replay_cache_db": "./data/llm_replay_cache.db",
     # Execution configuration (safe defaults — testnet only)
     "execution": {
         "live_mode": False,  # Must be explicitly True for real money
