@@ -353,12 +353,14 @@ Testing whether adding target coin to a clean BTC+ETH pool (rather than pooling 
 - **Safe backtest period**: May 2024 onwards (~12 months of testable history)
 - **Rationale**: Any backtest overlapping with LLM training data is unfalsifiable due to memorization (GPT-4o can recall exact S&P 500 closing prices with <1% error within its training window — Lopez-Lira et al., 2025)
 
-### Sentiment exclusion
+### Sentiment exclusion → PIT sentiment (resolved, see Section 10)
 
-Reddit and Google News APIs cannot provide historical sentiment. Skipping sentiment in backtests is defensible because:
+**Original position (early thesis work)**: Reddit and Google News APIs cannot provide historical sentiment. Skipping sentiment in backtests is defensible because:
 1. The thesis contribution is multi-agent architecture, not sentiment analysis
 2. No free API provides point-in-time historical social media sentiment
 3. Paid alternatives (Santiment ~$49/mo, LunarCrush) were out of scope
+
+**Update (2026-04-20)**: Alpaca News API (Benzinga-sourced, free with any Alpaca account) provides PIT-consistent financial news with `created_at` timestamps, enabling honest historical sentiment backtests. Phase 1 of the PIT sentiment pipeline is now implemented (see Section 10). Reddit PIT remains deferred to Phase 3.
 
 ### Replay caching
 
@@ -425,6 +427,71 @@ The double-shift bug in `_dir_acc()` inflated h=1 DirAcc from 50% (true) to 72% 
 - [ ] Update baseline strategy to use h=7/h=14 signals instead of h=1 (which is now known to be noise)
 - [ ] Test whether BNB is worth adding to trading universe (69% DirAcc at h=14 may survive costs)
 - [ ] Fix `_dir_acc()` in `lgb_model.py` to use correct ref_price (currently double-shifted)
+
+---
+
+## 10. PIT Sentiment — Phase 1 (Alpaca News) — 2026-04-20
+
+**Motivation:** Section 6's original position was to exclude sentiment because no free API provided PIT-correct historical data. Discovery: **Alpaca News API (Benzinga-sourced)** is free with any Alpaca account and returns `created_at` timestamps — enabling honest bitemporal PIT storage.
+
+### Pipeline
+
+- **Store**: Bitemporal DuckDB + Parquet layout — `data/sentiment/alpaca/{year}/{month:02d}.parquet` with `(event_ts, as_of_ts)` on every row
+- **PIT rule**: `query_news()` enforces `event_ts ∈ [ts_start, ts_end] AND as_of_ts <= trade_date` — no look-ahead by construction
+- **Vendor routing**: New `crypto_sentiment_pit` vendor registered in `dataflows/interface.py`; `data_vendors["crypto_sentiment"] = "crypto_sentiment_pit"` swaps live → PIT implementation with zero prompt changes
+- **CLI flag**: `scripts/generate_agent_signals.py --sentiment-mode pit`
+- **Backfill**: `scripts/backfill_alpaca_news.py` — one-shot batch loader; 2023-10-01 → 2026-04-17 completed (41 monthly Parquet files, 13,453 articles, ~400-550/month)
+- **Reddit**: P1 stub returns explicit "not available" message; prevents silent fallback to live Reddit tool
+
+### 4-analyst backtest (BTC + ETH, 2026-01-16 → 2026-04-15)
+
+**Analysts**: market + onchain + prediction + **crypto_sentiment (PIT)**
+**Models**: GPT-4o-mini (deep + quick), `replay_cache=True`
+**Signal generation runtime**: 16,943 s (~4.7 h) for 180 coin-days (2 coins × 90 days × 4 analysts)
+
+**Signal distribution:**
+
+| Coin | HOLD | SELL | BUY | Confidence HIGH | MEDIUM | LOW | UNKNOWN |
+|---|---|---|---|---|---|---|---|
+| BTC | 54 | 34 | 2 | 25 | 8 | 0 | 57 |
+| ETH | 52 | 34 | 4 | 34 | 0 | 6 | 50 |
+
+**Backtest results (same V2 risk/cost pipeline: 7-day min hold, SMA30 trend filter ×1.5, 3% stop-loss, vol-targeted Kelly, 3× max leverage):**
+
+| Coin | Return | Ann. Ret | Sharpe | MaxDD | WinRate | #Trades | vs B&H |
+|---|---|---|---|---|---|---|---|
+| BTC | **+0.69%** | +1.99% | -0.12 | 2.94% | 53.7% | 13 | +23.11% |
+| ETH | **+6.93%** | +21.16% | **+1.70** | 2.77% | 54.4% | 16 | +36.48% |
+| **Portfolio (2-coin)** | **+3.81%** | — | **+0.79** | 2.70% | — | — | — |
+
+Buy & Hold over the same window: BTC **-22.42%**, ETH **-29.54%** (bearish regime, both coins deeply negative).
+
+**Plan-spec baseline (3-analyst, no sentiment)** for reference:
+- BTC -4.95%, Sharpe -1.64, WinRate 46.4%, 18 BUY / 67 SELL
+- ETH +0.44%, Sharpe -0.11, WinRate 43.5%, 23 BUY / 59 SELL
+- Portfolio -2.26%, Sharpe -0.89
+
+**Δ vs 3-analyst baseline:** BTC Sharpe -1.64 → -0.12 (+1.52), ETH Sharpe -0.11 → +1.70 (+1.81), Portfolio Sharpe -0.89 → +0.79 (**+1.68**). Both coins flipped from net-negative to positive. ETH the standout: near-zero returns became +6.93% with strong risk-adjusted performance.
+
+### Takeaways
+
+1. **Sentiment inclusion flipped the bearish bias.** Baseline's ~75% SELL signal rate collapsed; HOLD became dominant (54/52 of 90 days). In a bearish B&H regime (BTC -22%, ETH -30%), HOLD-heavy output preserved capital.
+2. **ETH benefits more than BTC from PIT news.** Plausible: ETH narrative is more sensitive to headline flow (ETF approvals, staking, ecosystem events); BTC regime is dominated by macro/flows.
+3. **Signal generation is the budget constraint.** 4.7 h for 180 coin-days. Replay cache kicked in only on reruns; first-pass cost dominates. Scaling to 1000+ coin-days needs parallelization or cheaper models.
+4. **Still below quant baseline.** V2 baseline portfolio Sharpe = 2.69; 4-analyst PIT = 0.79. Multi-agent LLM system does not yet beat the LGB term-structure consensus baseline — but this is the first run where it is *positive* and directionally competitive.
+5. **Confidence extraction is leaky.** UNKNOWN rates (63% BTC, 56% ETH) indicate the regex-based confidence parser is still missing a majority of portfolio-manager outputs. Improving this is low-hanging fruit before the next rerun.
+
+### Artifacts
+
+| Path | Contents |
+|---|---|
+| `data/sentiment/alpaca/*/*.parquet` | Bitemporal PIT sentiment store (2023-10 → 2026-04, 13,453 articles) |
+| `data/agent_signals_pit/bitcoin_2026-01-16_2026-04-15.csv` | BTC 4-analyst signals |
+| `data/agent_signals_pit/ethereum_2026-01-16_2026-04-15.csv` | ETH 4-analyst signals |
+| `data/agent_backtest_v2_pit/agent_v2_metrics_2026-01-16_2026-04-15.json` | Full backtest metrics |
+| `data/agent_backtest_v2_pit/agent_v2_equity_2026-01-16_2026-04-15.png` | Equity curves |
+| `docs/superpowers/specs/2026-04-17-pit-sentiment-p1-alpaca-design.md` | Design spec |
+| `docs/superpowers/plans/2026-04-17-pit-sentiment-p1-alpaca.md` | Implementation plan |
 
 ---
 

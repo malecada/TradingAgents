@@ -40,6 +40,14 @@ from .crypto_sentiment import (
     get_reddit_posts as get_crypto_reddit_posts,
     get_crypto_google_news as get_crypto_google_news_impl,
 )
+from .crypto_sentiment_pit import (
+    get_crypto_news_pit as get_crypto_news_pit_impl,
+    get_reddit_posts_pit_stub as get_reddit_posts_pit_impl,
+)
+from .news_data_pit import (
+    get_news_pit_stub as get_news_pit_impl,
+    get_global_news_pit_stub as get_global_news_pit_impl,
+)
 
 # Configuration and routing logic
 from .config import get_config
@@ -108,6 +116,8 @@ VENDOR_LIST = [
     "coingecko_binance",
     "onchain",
     "crypto_sentiment",
+    "crypto_sentiment_pit",
+    "news_data_pit",
 ]
 
 # Mapping of methods to their vendor-specific implementations
@@ -143,10 +153,12 @@ VENDOR_METHODS = {
     "get_news": {
         "alpha_vantage": get_alpha_vantage_news,
         "yfinance": get_news_yfinance,
+        "news_data_pit": get_news_pit_impl,
     },
     "get_global_news": {
         "yfinance": get_global_news_yfinance,
         "alpha_vantage": get_alpha_vantage_global_news,
+        "news_data_pit": get_global_news_pit_impl,
     },
     "get_insider_transactions": {
         "alpha_vantage": get_alpha_vantage_insider_transactions,
@@ -178,9 +190,11 @@ VENDOR_METHODS = {
     # Crypto sentiment
     "get_reddit_posts": {
         "crypto_sentiment": get_crypto_reddit_posts,
+        "crypto_sentiment_pit": get_reddit_posts_pit_impl,
     },
     "get_crypto_google_news": {
         "crypto_sentiment": get_crypto_google_news_impl,
+        "crypto_sentiment_pit": get_crypto_news_pit_impl,
     },
 }
 
