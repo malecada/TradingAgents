@@ -479,7 +479,40 @@ Buy & Hold over the same window: BTC **-22.42%**, ETH **-29.54%** (bearish regim
 2. **ETH benefits more than BTC from PIT news.** Plausible: ETH narrative is more sensitive to headline flow (ETF approvals, staking, ecosystem events); BTC regime is dominated by macro/flows.
 3. **Signal generation is the budget constraint.** 4.7 h for 180 coin-days. Replay cache kicked in only on reruns; first-pass cost dominates. Scaling to 1000+ coin-days needs parallelization or cheaper models.
 4. **Still below quant baseline.** V2 baseline portfolio Sharpe = 2.69; 4-analyst PIT = 0.79. Multi-agent LLM system does not yet beat the LGB term-structure consensus baseline — but this is the first run where it is *positive* and directionally competitive.
-5. **Confidence extraction is leaky.** UNKNOWN rates (63% BTC, 56% ETH) indicate the regex-based confidence parser is still missing a majority of portfolio-manager outputs. Improving this is low-hanging fruit before the next rerun.
+5. **Confidence extraction is leaky.** UNKNOWN rates (63% BTC, 56% ETH) indicate the regex-based confidence parser is still missing a majority of portfolio-manager outputs. Improving this is low-hanging fruit before the next rerun. **→ Resolved 2026-04-21, see §10.1 below.**
+
+### 10.1 Confidence-parser fix (rescored results, 2026-04-21)
+
+**Root cause of UNKNOWN leak:** The trader prompt instructs the LLM to emit a literal `Confidence: HIGH/MEDIUM/LOW` label, but the actual output omits that label in the majority of rows. The old `extract_confidence` relied on a label-extraction LLM call that correctly returned UNKNOWN when the literal was absent.
+
+**Fix:** Rewrote `SignalProcessor.extract_confidence` in `tradingagents/graph/signal_processing.py` to *infer* confidence from the conviction strength of the trader text using a rubric (strong directional commitment + no caveats → HIGH; clear lean with acknowledged counter-evidence → MEDIUM; hedged HOLD / "monitor closely" / "conflicting signals" → LOW). The LLM call now reads the full trader output against an explicit rubric rather than hunting for a label.
+
+**Re-scoring script:** `scripts/rescore_confidence.py` replays the new `extract_confidence` over existing signal CSVs (avoids re-running the ~5 h signal-generation pass). 4 min runtime for 180 rows.
+
+**Rescored distributions:**
+
+| Coin | Old (UNKNOWN / HIGH / MED / LOW) | New (HIGH / MED / LOW) |
+|---|---|---|
+| BTC | 57 / 25 / 8 / 0 | 23 / 12 / 55 |
+| ETH | 50 / 34 / 0 / 6 | 24 / 11 / 55 |
+
+UNKNOWN eliminated entirely. Most of the old UNKNOWNs were hedged HOLDs → now correctly LOW.
+
+**Rescored backtest (same V2 risk/cost pipeline):**
+
+| Coin | Return | Sharpe | MaxDD | WinRate | Original (pre-rescore) |
+|---|---|---|---|---|---|
+| BTC | +1.23% | +0.11 | 2.94% | 53.7% | +0.69% / -0.12 |
+| ETH | +3.07% | +0.66 | 2.91% | 52.9% | +6.93% / +1.70 |
+| **Portfolio** | **+2.15%** | **+0.22** | 2.86% | — | +3.81% / +0.79 |
+
+**Interpretation:** ETH's pre-rescore Sharpe of +1.70 was **inflated by systematic HIGH-substring over-matching** in the old label-extractor. 10 ETH rows labeled HIGH (of 34) were actually hedged or balanced — rescoring correctly downgrades them to MEDIUM/LOW, which cuts their position size under the confidence-weighted Kelly sizing schema. Rescored numbers are the defensible baseline.
+
+**Sensitivity check:** Setting `LOW` multiplier from 0.1x → 0.3x (matching the old UNKNOWN level) only nudges portfolio Sharpe from 0.22 → 0.26. Calibration is not the issue — the ETH Sharpe drop is explained by correct HIGH downgrades, not LOW over-penalization.
+
+**Updated takeaway vs baseline:** Portfolio Sharpe -0.89 (3-analyst baseline) → +0.22 (+PIT sentiment, honest confidences). Directional improvement of +1.11 Sharpe points, still well below V2 quant baseline (2.69) but with confidence labels that now reflect actual conviction strength.
+
+**Unit tests:** `tests/graph/test_signal_processing_confidence.py` extended from 4 → 7 tests covering trailing-punctuation, multi-word responses, and markdown-wrapped LLM outputs.
 
 ### Artifacts
 
@@ -488,8 +521,11 @@ Buy & Hold over the same window: BTC **-22.42%**, ETH **-29.54%** (bearish regim
 | `data/sentiment/alpaca/*/*.parquet` | Bitemporal PIT sentiment store (2023-10 → 2026-04, 13,453 articles) |
 | `data/agent_signals_pit/bitcoin_2026-01-16_2026-04-15.csv` | BTC 4-analyst signals |
 | `data/agent_signals_pit/ethereum_2026-01-16_2026-04-15.csv` | ETH 4-analyst signals |
-| `data/agent_backtest_v2_pit/agent_v2_metrics_2026-01-16_2026-04-15.json` | Full backtest metrics |
-| `data/agent_backtest_v2_pit/agent_v2_equity_2026-01-16_2026-04-15.png` | Equity curves |
+| `data/agent_backtest_v2_pit/agent_v2_metrics_2026-01-16_2026-04-15.json` | Full backtest metrics (pre-rescore) |
+| `data/agent_backtest_v2_pit/agent_v2_equity_2026-01-16_2026-04-15.png` | Equity curves (pre-rescore) |
+| `data/agent_signals_pit_rescored/*.csv` | **Rescored signal CSVs (honest confidences)** |
+| `data/agent_backtest_v2_pit_rescored/agent_v2_metrics_2026-01-16_2026-04-15.json` | **Rescored backtest metrics — canonical** |
+| `scripts/rescore_confidence.py` | Re-scoring utility (replays new extract_confidence over existing CSVs) |
 | `docs/superpowers/specs/2026-04-17-pit-sentiment-p1-alpaca-design.md` | Design spec |
 | `docs/superpowers/plans/2026-04-17-pit-sentiment-p1-alpaca.md` | Implementation plan |
 
