@@ -18,6 +18,10 @@ DEFAULT_ROOT = Path("data/sentiment/alpaca")
 COIN_TO_SYMBOL: dict[str, str] = {
     "bitcoin": "BTCUSD",
     "ethereum": "ETHUSD",
+    "binancecoin": "BNBUSD",
+    "solana": "SOLUSD",
+    "dogecoin": "DOGEUSD",
+    "cardano": "ADAUSD",
 }
 
 SCHEMA_COLS = [

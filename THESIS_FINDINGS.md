@@ -529,6 +529,40 @@ UNKNOWN eliminated entirely. Most of the old UNKNOWNs were hedged HOLDs → now 
 | `docs/superpowers/specs/2026-04-17-pit-sentiment-p1-alpaca-design.md` | Design spec |
 | `docs/superpowers/plans/2026-04-17-pit-sentiment-p1-alpaca.md` | Implementation plan |
 
+### 10.2 Generalization: 3-coin rerun (BTC+ETH+BNB, 2026-04-21)
+
+**Purpose:** Does PIT sentiment lift performance on an altcoin outside the BTC+ETH training pool, or is it BTC+ETH-specific?
+
+**Setup:**
+- Extended `COIN_TO_SYMBOL` in `sentiment_store.py` with `binancecoin → BNBUSD`, plus SOL/DOGE/ADA for future runs
+- Dedicated BNB backfill: 399 articles (2023-10 → 2026-04), ~8-18/month in the backtest window — sparse vs BTC's ~400-500/month
+- Signals reused for BTC+ETH (rescored CSVs); BNB generated fresh with new confidence parser
+- Runtime: 15,220 s (~4.2 h) for BNB alone (90 days × 4 analysts)
+
+**BNB signal distribution:** HOLD 53 / SELL 30 / BUY 7, with confidences LOW 53 / HIGH 33 / MEDIUM 4. Note the 7 BUYs — more than BTC (2) or ETH (4).
+
+**Results (same V2 risk/cost pipeline, 3-coin portfolio):**
+
+| Coin | Return | Ann. Ret | Sharpe | MaxDD | WinRate | #Trades | B&H | vs B&H |
+|---|---|---|---|---|---|---|---|---|
+| BTC | +1.23% | +3.55% | +0.11 | 2.94% | 53.7% | 13 | -22.42% | +23.64% |
+| ETH | +3.07% | +9.04% | +0.66 | 2.91% | 52.9% | 16 | -29.54% | +32.61% |
+| **BNB** | **+2.54%** | **+7.45%** | **+0.83** | 6.80% | 52.7% | 21 | -34.58% | +37.12% |
+| **Portfolio (3-coin)** | **+2.28%** | — | **+0.26** | 3.21% | — | — | — | — |
+
+**Findings:**
+
+1. **BNB achieved the highest individual Sharpe (+0.83)** among the three coins — despite sparse sentiment coverage (~10-15 articles/month vs BTC's ~400/month). This contradicts the intuition that news volume drives signal quality; the LLM appears to make good calls on BNB even with thin news flow, likely leaning on market + prediction analysts for BNB decisions.
+2. **BNB has the widest B&H outperformance** (+37.12 pp). In a bearish regime (B&H -34.58%), the agent pipeline made 7 BUYs (most among the three) that landed well.
+3. **Portfolio Sharpe only marginally improved** (2-coin 0.22 → 3-coin 0.26). Adding BNB lifts returns (+2.54% solo) but doesn't diversify the drawdown profile — BNB MaxDD 6.80% vs BTC/ETH ~2.9%.
+4. **Quant baseline gap persists.** V2 3-coin portfolio Sharpe = 2.58; LLM 3-coin = 0.26 — still nearly 10× below. PIT sentiment generalizes to altcoins but the LLM system's edge remains small.
+5. **BNB-specific sentiment thinness is a finding in itself.** For thesis defense: the PIT pipeline works mechanically for altcoins, but news coverage varies by ~30× across coins. Phase 2 (GDELT broadens macro-news coverage) should help sparse-coverage altcoins more than dense-coverage BTC/ETH.
+
+**Artifacts:**
+- `data/agent_signals_pit_3coin/binancecoin_2026-01-16_2026-04-15.csv` — BNB signals
+- `data/agent_backtest_v2_pit_3coin/agent_v2_metrics_2026-01-16_2026-04-15.json` — 3-coin metrics
+- `data/agent_backtest_v2_pit_3coin/agent_v2_equity_2026-01-16_2026-04-15.png` — 3-coin equity plot
+
 ---
 
 ## 9. Data Artifacts
