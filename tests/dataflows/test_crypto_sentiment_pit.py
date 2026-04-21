@@ -97,6 +97,6 @@ def test_get_crypto_news_pit_unsupported_coin_returns_error_string(tmp_path, mon
     """An unsupported coin name must return an error string, not raise."""
     monkeypatch.setattr(sentiment_store, "DEFAULT_ROOT", tmp_path)
     out = crypto_sentiment_pit.get_crypto_news_pit(
-        coin_name="dogecoin", start_date="2024-01-08", end_date="2024-01-15",
+        coin_name="zzznotarealcoin", start_date="2024-01-08", end_date="2024-01-15",
     )
     assert "error" in out.lower() or "unsupported" in out.lower()
