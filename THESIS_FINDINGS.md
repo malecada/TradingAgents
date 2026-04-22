@@ -563,6 +563,66 @@ UNKNOWN eliminated entirely. Most of the old UNKNOWNs were hedged HOLDs → now 
 - `data/agent_backtest_v2_pit_3coin/agent_v2_metrics_2026-01-16_2026-04-15.json` — 3-coin metrics
 - `data/agent_backtest_v2_pit_3coin/agent_v2_equity_2026-01-16_2026-04-15.png` — 3-coin equity plot
 
+### 10.3 Phase 2 data-source expansion: GDELT + Fear&Greed + HF corpus (2026-04-22)
+
+**Goal:** Broaden news coverage beyond Alpaca (Benzinga-only, ~400 articles/month for BTC, ~10-15/month for BNB). Test whether more data improves sentiment-analyst decisions, especially for coverage-starved altcoins.
+
+**Sources added:**
+
+| Source | Coverage | Monthly rate (BTC) | Notes |
+|---|---|---|---|
+| **GDELT 2.0 DOC API** | 2026-01-09 → 2026-04-16 (97 days, 22,059 articles) | ~5,000-7,000 | Title only (no body), broad query `bitcoin OR ethereum OR cryptocurrency`, retries on timeouts + per-day flush |
+| **Fear & Greed (alternative.me)** | 2018-02-01 → today (2,998 daily rows) | — | Single integer (0-100) + classification; trend over lookback window |
+| **HuggingFace edaschau/bitcoin_news** | 2011-06 → 2025-06 (100,010 rows) | ~800-1,400 | BTC-only; does NOT overlap 2026 backtest window. Thesis artifact for future longer runs |
+
+**Pipeline:** `crypto_sentiment_pit.get_crypto_news_pit` now queries all four stores (Alpaca + GDELT + HF + F&G), formats each source as its own section in the LLM prompt. Upfront coin-name validation prevents silent fallbacks.
+
+**Runtime:** 12.2 hours (Phase 1 was 4.7 h for 2 coins → 4.2 h/coin; Phase 2 was ~4h/coin across 3 coins). GDELT backfill: ~15 min. F&G: seconds.
+
+**Signal distributions (P2 clean):**
+
+| Coin | HOLD | SELL | BUY | HIGH | MED | LOW |
+|---|---|---|---|---|---|---|
+| BTC | 59 | 30 | 1 | 24 | 5 | 61 |
+| ETH | 48 | 37 | 5 | 32 | 8 | 50 |
+| BNB | 52 | 33 | 5 | 35 | 2 | 53 |
+
+Only 1 BTC BUY (was 2 in P1) — GDELT's noise drove the model even more hold-heavy on BTC. BNB increased from 33 to 35 HIGH confidences.
+
+**Backtest results (3-coin, same V2 pipeline):**
+
+| Coin | Return | Sharpe | MaxDD | WinRate | #Trades | Δ vs P1 rescored |
+|---|---|---|---|---|---|---|
+| BTC | **-1.59%** | **-1.09** | 2.43% | 52.9% | 11 | -2.82 pp / -1.20 Sharpe (worse) |
+| ETH | +2.10% | +0.47 | 4.14% | 57.1% | 18 | -0.97 pp / -0.19 Sharpe (slightly worse) |
+| BNB | **+11.38%** | **+2.74** | 4.33% | 56.7% | 18 | **+8.84 pp / +1.91 Sharpe** (much better) |
+| **Portfolio** | **+3.96%** | **+0.86** | 2.74% | — | — | **+1.68 pp / +0.60 Sharpe** |
+
+BNB Sharpe **+2.74** approaches the V2 quant 3-coin baseline (2.58) for the first time.
+
+**Key findings:**
+
+1. **Marginal value of news data depends on existing coverage density.** Alpaca already saturates BTC with ~400 curated articles/month, so GDELT's additional broad-query articles are mostly noise (off-topic macro, stocks, politics mentioning "bitcoin"). BTC PnL *degrades* when GDELT is added (+1.23% → -1.59%). BNB, with only ~10-15 Alpaca articles/month, benefits enormously: the GDELT + F&G breadth gives the LLM a signal it was otherwise starved of.
+2. **F&G trend as context works.** Adding a 7-day F&G trend (e.g. "Greed 71 → Neutral 52 [Δ-19]") gives the LLM a quantitative regime-change signal without article overhead. Can't cleanly isolate its contribution from GDELT in this run (would need an ablation), but BNB's jump is consistent with F&G's influence on a data-starved coin.
+3. **Portfolio-level result is positive.** Despite BTC degradation, BNB's gains + unchanged ETH lift portfolio Sharpe 0.26 → 0.86 (+0.60). First LLM-agent run where a coin approaches the quant baseline Sharpe.
+4. **GDELT query needs refinement for BTC.** Options: tighten the keyword filter, require headline-level coin mention (not fallback-to-BTC), or selectively disable GDELT for coins with dense Alpaca coverage.
+5. **API-error rows contaminate backtests.** Initial P2 gen had 28/90 BNB rows fail with `ERROR: Connection error.` (transient OpenAI). The runner was persisting `trader_text="ERROR: ..."` + `confidence="UNKNOWN"`, which the backtest then read at 0.3x sizing. Fixed by adding partial-CSV resume to `tradingagents/backtesting/runner.py`. Re-ran the missing 28 BNB dates — BNB Sharpe 0.24 → 2.74.
+
+### Open issues / next
+
+- **BTC: disable GDELT OR tighten filter.** Hypothesis: a per-coin GDELT policy (on for low-coverage altcoins, off for BTC) would retain BNB gains without the BTC cost.
+- **Ablation runs**: isolate F&G-only vs GDELT-only contributions.
+- **Same-coin GDELT noise audit**: inspect BTC signal rows where GDELT contributed and see whether the trader text cites off-topic headlines.
+- **Run on a bull window for external validity** — the 2026-01-16 → 2026-04-15 window was a deep drawdown; these results may not generalize to sideways/bull regimes.
+
+**Artifacts:**
+- `data/sentiment/gdelt/*/*.parquet` — GDELT crypto news (22,059 articles)
+- `data/sentiment/fng/fng.parquet` — Fear & Greed daily index (2,998 rows)
+- `data/sentiment/hf_btc/*/*.parquet` — HF bitcoin_news corpus (100,010 rows, pre-2026 window)
+- `data/agent_signals_pit_p2/` — Phase 2 3-coin signals
+- `data/agent_backtest_v2_pit_p2/agent_v2_metrics_2026-01-16_2026-04-15.json` — Phase 2 backtest metrics
+- `data/agent_backtest_v2_pit_p2/agent_v2_equity_2026-01-16_2026-04-15.png` — Phase 2 equity curves
+
 ---
 
 ## 9. Data Artifacts
