@@ -307,16 +307,28 @@ def generate_system_signals_v2(
         csv_path = output_dir / f"{coin}_{start_date}_{end_date}.csv"
 
         # Try cache first
+        cached_records: list[dict] = []
+        have_dates: set[str] = set()
         if csv_path.exists() and not force_rerun:
             cached = pd.read_csv(csv_path, parse_dates=["date"])
             if len(cached) >= len(dates):
                 logger.info(f"{coin}: loaded {len(cached)} cached signals from {csv_path}")
                 results[coin] = cached
                 continue
+            # Partial cache: keep the good rows, regenerate the missing dates.
+            cached_records = cached.to_dict(orient="records")
+            have_dates = {pd.Timestamp(d).strftime("%Y-%m-%d")
+                          for d in cached["date"].tolist()}
+            logger.info(
+                f"{coin}: resuming from partial cache with {len(cached_records)} rows "
+                f"({len(dates) - len(have_dates)} dates missing)"
+            )
 
-        logger.info(f"{coin}: generating signals for {len(dates)} dates")
-        records = []
-        for i, dt in enumerate(dates):
+        missing_dates = [dt for dt in dates
+                         if dt.strftime("%Y-%m-%d") not in have_dates]
+        logger.info(f"{coin}: generating signals for {len(missing_dates)} dates")
+        records = list(cached_records)
+        for i, dt in enumerate(missing_dates):
             date_str = dt.strftime("%Y-%m-%d")
             try:
                 _, signal, confidence, trader_text = ta.propagate_with_confidence(
@@ -334,11 +346,13 @@ def generate_system_signals_v2(
             })
 
             # Checkpoint every 10 dates so a crash doesn't lose all progress
-            if (i + 1) % 10 == 0 or (i + 1) == len(dates):
+            if (i + 1) % 10 == 0 or (i + 1) == len(missing_dates):
                 pd.DataFrame(records).to_csv(csv_path, index=False)
-                logger.info(f"{coin}: checkpoint {i + 1}/{len(dates)} -> {csv_path}")
+                logger.info(f"{coin}: checkpoint {i + 1}/{len(missing_dates)} -> {csv_path}")
 
         df = pd.DataFrame(records)
+        # Sort by date so the file remains chronological after a resume
+        df = df.sort_values("date").reset_index(drop=True)
         df.to_csv(csv_path, index=False)
         logger.info(f"{coin}: saved {len(df)} signals to {csv_path}")
         results[coin] = df
