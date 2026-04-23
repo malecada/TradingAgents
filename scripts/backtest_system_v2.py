@@ -65,6 +65,124 @@ CONFIDENCE_MULTIPLIER = {
 }
 
 
+def load_lgb_predictions(pred_dir: Path, horizons: list[int]) -> pd.DataFrame:
+    """Load per-coin LGB predictions at multiple horizons, merge on (coin_id, date).
+
+    Returns long-form DataFrame with columns:
+    [date, coin_id, ref_price, pred_h7, pred_h14, ...] depending on horizons.
+    """
+    merged: pd.DataFrame | None = None
+    for h in horizons:
+        path = Path(pred_dir) / f"preds_lgb_h{h}.csv"
+        if not path.exists():
+            raise FileNotFoundError(f"Missing LGB predictions: {path}")
+        df = pd.read_csv(path, parse_dates=["date"])
+        df = df.rename(columns={"prediction": f"pred_h{h}"})
+        keep = ["date", "coin_id", "ref_price", f"pred_h{h}"]
+        df = df[keep]
+        if merged is None:
+            merged = df
+        else:
+            merged = merged.merge(df[["date", "coin_id", f"pred_h{h}"]],
+                                  on=["date", "coin_id"], how="outer")
+    merged["date"] = pd.to_datetime(merged["date"], utc=True).dt.tz_localize(None)
+    return merged.sort_values(["coin_id", "date"]).reset_index(drop=True)
+
+
+def hybridize_confidence(
+    signals_df: pd.DataFrame,
+    preds_df: pd.DataFrame,
+    coin: str,
+    horizons: list[int],
+    confidence_ref: float,
+    agree_weight: float = 1.0,
+    disagree_weight: float = 0.5,
+    high_boost_applied_to_agreement: float = 1.0,
+    conf_cap: float = 1.5,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Override LLM confidence with LGB-derived magnitude when directions agree.
+
+    For each date in `signals_df`:
+      * look up LGB predictions at each horizon for `coin`
+      * compute LGB direction = sign(pred - ref_price), LGB magnitude = |pred - ref_price| / ref_price
+      * if LGB direction across horizons is unanimous and matches the LLM signal
+        direction: confidence = min(1, avg_magnitude / confidence_ref) * agree_weight
+      * if directions disagree: keep LLM confidence but multiply by disagree_weight
+
+    Returns (adj_signals, adj_confidence) aligned with signals_df rows.
+    """
+    sub = preds_df[preds_df["coin_id"] == coin].copy()
+    sub["date"] = pd.to_datetime(sub["date"], utc=True).dt.tz_localize(None)
+    sub = sub.set_index("date")
+
+    n = len(signals_df)
+    adj_sig = np.zeros(n)
+    adj_conf = np.zeros(n)
+
+    for i in range(n):
+        sig_str = str(signals_df["signal"].iloc[i]).strip().upper()
+        conf_str = str(signals_df["confidence"].iloc[i]).strip().upper()
+        base_pos = SIGNAL_BASE_POSITION.get(sig_str, 0.0)
+        llm_conf = CONFIDENCE_MULTIPLIER.get(conf_str, CONFIDENCE_MULTIPLIER["UNKNOWN"])
+        if sig_str in ("OVERWEIGHT", "UNDERWEIGHT"):
+            llm_conf *= 0.5
+
+        llm_dir = 1.0 if base_pos > 0 else (-1.0 if base_pos < 0 else 0.0)
+        adj_sig[i] = llm_dir
+
+        # Find LGB row for this date
+        try:
+            ts = pd.to_datetime(signals_df["date"].iloc[i])
+            if ts.tz is not None:
+                ts = ts.tz_localize(None)
+            row = sub.loc[ts]
+            if isinstance(row, pd.DataFrame):
+                row = row.iloc[0]
+        except KeyError:
+            adj_conf[i] = llm_conf
+            continue
+
+        ref = row.get("ref_price", np.nan)
+        if pd.isna(ref) or ref <= 0:
+            adj_conf[i] = llm_conf
+            continue
+
+        dirs = []
+        mags = []
+        for h in horizons:
+            pred = row.get(f"pred_h{h}", np.nan)
+            if pd.isna(pred):
+                continue
+            d = 1.0 if pred > ref else (-1.0 if pred < ref else 0.0)
+            dirs.append(d)
+            mags.append(abs(pred - ref) / ref)
+        if not dirs:
+            adj_conf[i] = llm_conf
+            continue
+
+        lgb_unanimous = len(set(dirs)) == 1
+        lgb_dir = dirs[0] if lgb_unanimous else 0.0
+        lgb_conf = min(1.0, float(np.mean(mags)) / confidence_ref)
+
+        if llm_dir == 0.0:
+            # LLM says HOLD. Keep LLM HOLD (don't override with LGB signal).
+            adj_conf[i] = llm_conf
+            continue
+
+        if lgb_unanimous and lgb_dir == llm_dir:
+            # Full agreement: use LGB magnitude as confidence.
+            adj_conf[i] = lgb_conf * agree_weight
+            # If the LLM itself said HIGH, stack that conviction on top.
+            if conf_str == "HIGH":
+                adj_conf[i] *= high_boost_applied_to_agreement
+            adj_conf[i] = min(adj_conf[i], conf_cap)
+        else:
+            # Disagreement or no LGB consensus: keep LLM confidence but penalise.
+            adj_conf[i] = llm_conf * disagree_weight
+
+    return adj_sig, adj_conf
+
+
 def load_signal_csv(signals_dir: Path, coin: str, start: str, end: str) -> pd.DataFrame:
     """Load the per-coin agent signal CSV produced by generate_agent_signals.py."""
     path = signals_dir / f"{coin}_{start}_{end}.csv"
@@ -102,6 +220,25 @@ def signals_to_positions_v2(
     raw_signals = np.zeros(n)
     confidence = np.zeros(n)
 
+    # Optional: hybrid sizing — use LGB magnitude when LLM+LGB agree.
+    hybrid_sig = None
+    hybrid_conf = None
+    if getattr(args, "hybrid_pred_dir", None):
+        coin = getattr(args, "_current_coin", None)
+        if coin is None:
+            raise RuntimeError("hybrid sizing requires args._current_coin to be set")
+        preds_df = load_lgb_predictions(
+            Path(args.hybrid_pred_dir), args.hybrid_horizons,
+        )
+        hybrid_sig, hybrid_conf = hybridize_confidence(
+            signals_df, preds_df, coin, args.hybrid_horizons,
+            confidence_ref=args.confidence_ref_return,
+            agree_weight=args.hybrid_agree_weight,
+            disagree_weight=args.hybrid_disagree_weight,
+            high_boost_applied_to_agreement=args.high_confidence_boost,
+            conf_cap=args.hybrid_conf_cap,
+        )
+
     for i in range(n):
         sig_str = str(signals_df["signal"].iloc[i]).strip().upper()
         conf_str = str(signals_df["confidence"].iloc[i]).strip().upper()
@@ -126,7 +263,18 @@ def signals_to_positions_v2(
         if sig_str in ("OVERWEIGHT", "UNDERWEIGHT"):
             conf_mult *= 0.5
 
+        # Apply HIGH-confidence boost so the LLM can express 1.0-1.5x sizing intent,
+        # matching what the quant baseline does via Kelly × leverage.
+        if conf_str == "HIGH" and getattr(args, "high_confidence_boost", 1.0) != 1.0:
+            conf_mult *= args.high_confidence_boost
+            conf_mult = min(conf_mult, 1.5)  # hard cap keeps Kelly sane
+
         confidence[i] = conf_mult
+
+    # Hybrid override: where LLM+LGB agree directionally, use LGB magnitude
+    if hybrid_sig is not None and hybrid_conf is not None:
+        confidence = hybrid_conf
+        # raw direction stays as the LLM's (we only rescale the magnitude)
 
     positions = build_positions_with_hold(
         raw_signals, vol_ok, confidence, realized_vol, prices,
@@ -192,6 +340,27 @@ def parse_args():
     p.add_argument("--trend-sma", type=int, default=30)
     p.add_argument("--trend-multiplier", type=float, default=1.5)
 
+    # --- Improvements: hybrid sizing + HIGH boost ---
+    p.add_argument("--high-confidence-boost", type=float, default=1.0,
+                    help="Multiplier applied to HIGH-confidence positions "
+                         "(e.g. 1.5 to size HIGH like a mildly leveraged quant position). "
+                         "Capped at 1.5 internally.")
+    p.add_argument("--hybrid-pred-dir", default=None,
+                    help="When set, replace LLM confidence with LGB magnitude "
+                         "where LLM+LGB agree directionally. Path to preds_lgb_h*.csv dir.")
+    p.add_argument("--hybrid-horizons", nargs="+", type=int, default=[7, 14],
+                    help="Horizons to require LGB unanimity across for the hybrid override.")
+    p.add_argument("--hybrid-agree-weight", type=float, default=1.0,
+                    help="Multiplier on LGB magnitude-derived confidence when LLM+LGB agree.")
+    p.add_argument("--hybrid-disagree-weight", type=float, default=0.5,
+                    help="Penalty applied to LLM confidence when LLM+LGB disagree.")
+    p.add_argument("--hybrid-conf-cap", type=float, default=1.5,
+                    help="Hard ceiling for hybrid confidence. Matches the "
+                         "implicit cap on the non-hybrid path.")
+    p.add_argument("--confidence-ref-return", type=float, default=0.02,
+                    help="Reference return magnitude — predicted |Δprice/price| at which "
+                         "LGB confidence saturates to 1.0. Matches baseline_strategy_v2 default.")
+
     # Cost params — IDENTICAL to baseline defaults
     p.add_argument("--fee-rate", type=float, default=0.001)
     p.add_argument("--slippage", type=float, default=0.001)
@@ -250,6 +419,7 @@ def main():
         vol_ok = vol_regime_mask(realized_vol, args.vol_cap_pct)
 
         # 4. Signals -> positions via full V2 pipeline
+        args._current_coin = coin
         positions = signals_to_positions_v2(merged, prices, realized_vol, vol_ok, args)
 
         # 5. Backtest (reuses baseline's run_coin_backtest)
