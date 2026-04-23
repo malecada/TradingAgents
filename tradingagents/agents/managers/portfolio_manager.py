@@ -46,8 +46,15 @@ def create_portfolio_manager(llm, memory):
 
 **Required Output Structure:**
 1. **Rating**: State one of Buy / Overweight / Hold / Underweight / Sell.
-2. **Executive Summary**: A concise action plan covering entry strategy, position sizing, key risk levels, and time horizon. Factor in prediction model confidence intervals when sizing positions.
-3. **Investment Thesis**: Detailed reasoning anchored in the analysts' debate, on-chain metrics, prediction model outputs, and past reflections.
+2. **Confidence (REQUIRED)**: A line formatted EXACTLY as `Confidence: NN/100` where NN is your honest 0-100 conviction score. Rubric:
+   - **85-100**: Strong multi-signal consensus (LGB h=7+h=14 agree, SMA30 trend aligned, sentiment and on-chain supportive), predicted move ≥ 2%, few caveats
+   - **65-84**: Clear lean with supporting evidence; one or more weaker signals or mild caveats
+   - **40-64**: Mixed — signal on at least one axis but meaningful counter-evidence; size lightly
+   - **20-39**: Low conviction — predominantly HOLD reasoning, conflicting signals
+   - **0-19**: No conviction — contradictions dominate; wait-and-see
+   Calibrate honestly: do NOT default to 50 when uncertain; pick 20-30 instead. Do NOT inflate past 85 without genuine multi-signal agreement.
+3. **Executive Summary**: A concise action plan covering entry strategy, position sizing, key risk levels, and time horizon. Factor in prediction model confidence intervals when sizing positions.
+4. **Investment Thesis**: Detailed reasoning anchored in the analysts' debate, on-chain metrics, prediction model outputs, and past reflections.
 
 ---
 
