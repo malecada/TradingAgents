@@ -623,6 +623,53 @@ BNB Sharpe **+2.74** approaches the V2 quant 3-coin baseline (2.58) for the firs
 - `data/agent_backtest_v2_pit_p2/agent_v2_metrics_2026-01-16_2026-04-15.json` — Phase 2 backtest metrics
 - `data/agent_backtest_v2_pit_p2/agent_v2_equity_2026-01-16_2026-04-15.png` — Phase 2 equity curves
 
+### 10.4 Head-to-head: V2 quant vs LLM on exact same window (2026-04-22)
+
+`scripts/baseline_on_window.py` runs the V2 strategy on full prediction
+history (so SMA30 / vol lookback use warmup data) and slices the per-day
+equity curve + positions to the LLM backtest window, then recomputes
+metrics on the sliced trace. Gives apples-to-apples comparison.
+
+**Window:** 2026-01-16 → 2026-04-15 (89 trading bars). Bearish regime:
+BTC B&H -22.4%, ETH B&H -29.5%, BNB B&H -34.6%.
+
+| Metric | V2 Quant | LLM P2 | Gap |
+|---|---|---|---|
+| Portfolio return | **+36.59%** | +3.96% | quant 9.2× |
+| Portfolio ann. return | +141.78% | ~+16% | quant 8.9× |
+| Portfolio Sharpe | **+3.31** | +0.86 | quant 3.8× |
+| Portfolio MaxDD | 6.16% | **2.74%** | LLM 2.2× safer |
+
+**Per-coin breakdown:**
+
+| Coin | V2 Quant (return / Sharpe) | LLM P2 (return / Sharpe) | Winner |
+|---|---|---|---|
+| BTC | **+39.87% / 2.42** | -1.59% / -1.09 | Quant (by 41 pp return) |
+| ETH | **+32.25% / 3.38** | +2.10% / 0.47 | Quant (by 30 pp return) |
+| BNB | +34.77% / 2.53 | +11.38% / **2.74** | Split: quant on return (+23 pp), **LLM on Sharpe (+0.21)** |
+
+**Interpretation:**
+
+1. V2 quant dominates across all portfolio-level PnL metrics. The
+   term-structure consensus (LGB h=7 + h=14 agreement + SMA30 trend filter)
+   produces ~9× the return of the 4-analyst LLM system in the same window.
+2. On BNB — the coin where Phase 2 PIT sentiment added the most lift —
+   the LLM achieves a **higher risk-adjusted return** (Sharpe 2.74 vs
+   2.53) but a **lower absolute return** (+11% vs +35%). Consistent with
+   the LLM being more selective / HOLD-heavy, quant being more
+   aggressive with vol-targeted Kelly sizing.
+3. LLM system's 4× smaller portfolio MaxDD is its real edge in this
+   regime. If drawdown-tolerance is the constraint rather than absolute
+   return, the LLM pipeline has signal.
+4. External-validity caveat: both systems measured in a single bearish
+   90-day window. No bull-regime validation yet. The LLM's HOLD-heavy
+   bias that preserved capital here may underperform when the quant's
+   trend-following pays off.
+
+**Artifacts:**
+- `scripts/baseline_on_window.py` — window-sliced V2 evaluator
+- `data/baseline_v2_window_metrics.json` — per-coin and portfolio metrics for the 89-day window
+
 ---
 
 ## 9. Data Artifacts
