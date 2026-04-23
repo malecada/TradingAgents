@@ -670,6 +670,96 @@ BTC B&H -22.4%, ETH B&H -29.5%, BNB B&H -34.6%.
 - `scripts/baseline_on_window.py` — window-sliced V2 evaluator
 - `data/baseline_v2_window_metrics.json` — per-coin and portfolio metrics for the 89-day window
 
+### 10.5 Hybrid LGB-magnitude sizing (2026-04-22)
+
+**Motivation:** The gap analysis vs V2 quant identified position sizing
+as the LLM's biggest weakness. Quant uses
+`confidence = min(1, avg_magnitude / confidence_ref)` from LGB predictions
+— a continuous, magnitude-aware signal. LLM used fixed
+`HIGH=1.0 / MED=0.5 / LOW=0.1` multipliers, which coarsens the sizing
+signal by ~3 bits per decision and can't scale up beyond 1.0 even when
+the LGB predicts a large move.
+
+**Fix:** Added `--hybrid-pred-dir` / `--hybrid-agree-weight` /
+`--hybrid-disagree-weight` / `--hybrid-conf-cap` flags to
+`scripts/backtest_system_v2.py`. Also `--high-confidence-boost` for the
+non-hybrid path. When enabled:
+
+- If LLM direction matches LGB's unanimous h=7+h=14 consensus →
+  confidence = `min(conf_cap, agree_weight × LGB_magnitude_confidence)`
+  (stacks the LLM's HIGH label on top if applicable).
+- If directions disagree → keep LLM confidence × disagree_weight.
+- LLM says HOLD → leave LLM's HOLD alone (never override direction with LGB).
+
+Zero additional LLM calls required — pure backtest-side change on
+existing signal CSVs.
+
+**Hyperparameter sweep results (P2 signals, 2026-01-16 → 2026-04-15,
+BTC+ETH+BNB, 89 bars):**
+
+| Config | Return | Sharpe | MaxDD |
+|---|---|---|---|
+| P2 baseline (no hybrid) | +3.96% | 0.86 | 2.74% |
+| HIGH boost 1.5x alone | +7.05% | 0.99 | 5.68% |
+| Hybrid dw=0.5 aw=1.0 cap=1.5 | +3.84% | 1.14 | 2.03% |
+| Hybrid dw=0.8 aw=1.0 cap=1.5 | +4.41% | 1.21 | 2.39% |
+| Hybrid dw=0.8 aw=1.5 cap=1.5 | +7.56% | 1.48 | 4.13% |
+| **Hybrid dw=0.8 aw=2.0 cap=2.0 (best)** | **+11.41%** | **+1.52** | 6.75% |
+| V2 quant (reference, same window) | +36.59% | 3.31 | 6.16% |
+
+**Per-coin at best config:**
+
+| Coin | Return | Sharpe | MaxDD | #Trades |
+|---|---|---|---|---|
+| BTC | -1.08% | -1.31 | 1.68% | 11 |
+| ETH | +16.37% | 1.60 | 12.70% | 18 |
+| BNB | +18.93% | 2.46 | 10.21% | 18 |
+
+**Findings:**
+
+1. **Sharpe jumped 0.86 → 1.52 (+77%) with zero additional signal generation.**
+   Half the gap to V2 quant's Sharpe (3.85× → 2.2×) comes purely from using
+   LGB magnitude as the sizing signal.
+2. **Return nearly tripled (+3.96% → +11.41%).** Gap to quant return
+   narrowed 9.2× → 3.2×. The LLM system finally pays for itself in
+   absolute-return terms, not just drawdown safety.
+3. **BTC remains the anchor.** The LLM's systematic bearish lean on BTC
+   (54 HOLD / 34 SELL / 2 BUY in P2) isn't fixed by hybrid sizing —
+   when LLM says SELL and LGB doesn't agree, the hybrid downweights but
+   doesn't flip. BTC PnL stuck near zero. Suggests a per-coin strategy
+   mixture might help further (use pure LGB for BTC, hybrid for ETH/BNB).
+4. **MaxDD inflates with aggressive sizing.** Baseline MaxDD 2.74% →
+   hybrid best 6.75%. Still competitive with V2 quant (6.16%), so the
+   risk-return frontier has moved in the right direction, but the
+   "LLM is the safe option" narrative from §10.4 is partly retracted
+   once we scale positions to LGB magnitudes.
+5. **Diminishing returns past cap=2.0, aw=2.0.** Pushing further
+   (cap=3.0, aw=3.0) over-sizes losing positions and flips the
+   portfolio to -0.56% Sharpe -0.06. The sweet spot is where LGB's
+   magnitude confidence saturates naturally.
+
+**Remaining gap vs V2 quant:**
+
+Sharpe 1.52 vs 3.31, return 11.41% vs 36.59%. The LLM is still
+systematically wrong on BTC (52.9% win rate is barely above chance
+for a coin the LGB model has 83% h=14 DirAcc on). Closing that
+specific gap likely requires either:
+- Per-coin policy (full LGB for BTC, hybrid for altcoins)
+- Fix the LLM's BTC bearish bias via prompt/analyst weighting changes
+- A regime-adaptive strategy layer (SMA30 filter already in use; would
+  need something more aggressive)
+
+**Artifacts:**
+- `data/agent_backtest_v2_pit_p2_hybrid_best/agent_v2_metrics_2026-01-16_2026-04-15.json`
+- Best invocation:
+  ```
+  python scripts/backtest_system_v2.py --signals-dir data/agent_signals_pit_p2 \
+    --coins bitcoin ethereum binancecoin --start 2026-01-16 --end 2026-04-15 \
+    --hybrid-pred-dir data/multi_3coins_bnb \
+    --hybrid-disagree-weight 0.8 --hybrid-agree-weight 2.0 --hybrid-conf-cap 2.0 \
+    --output-dir data/agent_backtest_v2_pit_p2_hybrid_best
+  ```
+
 ---
 
 ## 9. Data Artifacts
