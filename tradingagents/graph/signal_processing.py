@@ -33,25 +33,39 @@ class SignalProcessor:
         return self.quick_thinking_llm.invoke(messages).content
 
     def extract_confidence(self, full_signal: str) -> str:
-        """Infer confidence level (HIGH/MEDIUM/LOW) from trader output.
+        """Extract a 0-100 confidence score or HIGH/MEDIUM/LOW label from trader output.
 
-        The trader prompt asks for a HIGH/MEDIUM/LOW label but frequently
-        omits it. Rather than fall back to UNKNOWN, this method asks the
-        quick LLM to *infer* confidence from the conviction strength of
-        the text itself — strong directional commitment with clear
-        thesis = HIGH; hedged / "monitor closely" / "conflicting signals"
-        language = LOW; balanced reasoning with a clear lean = MEDIUM.
+        The trader prompt (see tradingagents/agents/trader/trader.py) now asks
+        for an explicit `Confidence: NN/100` line. This method first looks for
+        that literal numeric score via regex. If found, it is returned as a
+        zero-padded 3-digit string (e.g. "075"). Downstream consumers
+        (backtest_system_v2.py) detect the numeric format and use it as a
+        continuous [0, 1] confidence multiplier.
 
-        Rubric is applied to the full trader/portfolio-manager output, so
-        a missing literal label no longer forces UNKNOWN.
+        If the numeric line is absent, the method falls back to the
+        HIGH/MEDIUM/LOW rubric by delegating to the quick LLM as before —
+        maintaining backward compatibility with P2 signals that were generated
+        before the prompt change.
 
         Args:
             full_signal: Trader/portfolio-manager text.
 
         Returns:
-            One of {"HIGH", "MEDIUM", "LOW", "UNKNOWN"}. UNKNOWN is only
-            returned when the LLM response is malformed.
+            Either a 3-digit string "000"-"100" when a numeric confidence is
+            emitted, or one of {"HIGH", "MEDIUM", "LOW", "UNKNOWN"} when
+            falling back to rubric classification.
         """
+        # Fast path: look for an explicit numeric line like "Confidence: 75/100"
+        import re
+        num_match = re.search(
+            r"confidence\s*[:=]?\s*(\d{1,3})\s*(?:/\s*100)?",
+            full_signal, re.IGNORECASE,
+        )
+        if num_match:
+            score = int(num_match.group(1))
+            if 0 <= score <= 100:
+                return f"{score:03d}"
+
         messages = [
             (
                 "system",

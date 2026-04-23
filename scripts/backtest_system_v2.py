@@ -65,6 +65,23 @@ CONFIDENCE_MULTIPLIER = {
 }
 
 
+def parse_confidence(conf_str: str) -> float:
+    """Parse a confidence label to a [0, 1] multiplier.
+
+    The extract_confidence step in signal_processing.py may emit either a
+    3-digit string "000"-"100" (new continuous format from the updated
+    trader prompt) or one of HIGH/MEDIUM/LOW/UNKNOWN (legacy buckets).
+    This function handles both uniformly.
+    """
+    s = str(conf_str).strip().upper()
+    if s.isdigit() and len(s) <= 3:
+        # Numeric 0-100 → divide to get [0, 1]
+        score = int(s)
+        if 0 <= score <= 100:
+            return score / 100.0
+    return CONFIDENCE_MULTIPLIER.get(s, CONFIDENCE_MULTIPLIER["UNKNOWN"])
+
+
 def load_lgb_predictions(pred_dir: Path, horizons: list[int]) -> pd.DataFrame:
     """Load per-coin LGB predictions at multiple horizons, merge on (coin_id, date).
 
@@ -123,7 +140,7 @@ def hybridize_confidence(
         sig_str = str(signals_df["signal"].iloc[i]).strip().upper()
         conf_str = str(signals_df["confidence"].iloc[i]).strip().upper()
         base_pos = SIGNAL_BASE_POSITION.get(sig_str, 0.0)
-        llm_conf = CONFIDENCE_MULTIPLIER.get(conf_str, CONFIDENCE_MULTIPLIER["UNKNOWN"])
+        llm_conf = parse_confidence(conf_str)
         if sig_str in ("OVERWEIGHT", "UNDERWEIGHT"):
             llm_conf *= 0.5
 
@@ -172,8 +189,9 @@ def hybridize_confidence(
         if lgb_unanimous and lgb_dir == llm_dir:
             # Full agreement: use LGB magnitude as confidence.
             adj_conf[i] = lgb_conf * agree_weight
-            # If the LLM itself said HIGH, stack that conviction on top.
-            if conf_str == "HIGH":
+            # If the LLM itself said HIGH (bucket or numeric >= 0.85),
+            # stack that conviction on top.
+            if conf_str == "HIGH" or llm_conf >= 0.85:
                 adj_conf[i] *= high_boost_applied_to_agreement
             adj_conf[i] = min(adj_conf[i], conf_cap)
         else:
@@ -243,10 +261,10 @@ def signals_to_positions_v2(
         sig_str = str(signals_df["signal"].iloc[i]).strip().upper()
         conf_str = str(signals_df["confidence"].iloc[i]).strip().upper()
         base_pos = SIGNAL_BASE_POSITION.get(sig_str, 0.0)
-        conf_mult = CONFIDENCE_MULTIPLIER.get(conf_str, CONFIDENCE_MULTIPLIER["UNKNOWN"])
+        conf_mult = parse_confidence(conf_str)
 
         # Respect --drop-low-confidence filter
-        if conf_str == "LOW" and args.drop_low_confidence:
+        if (conf_str == "LOW" or (conf_mult < 0.2)) and args.drop_low_confidence:
             raw_signals[i] = 0.0
             confidence[i] = 0.0
             continue
@@ -265,7 +283,9 @@ def signals_to_positions_v2(
 
         # Apply HIGH-confidence boost so the LLM can express 1.0-1.5x sizing intent,
         # matching what the quant baseline does via Kelly × leverage.
-        if conf_str == "HIGH" and getattr(args, "high_confidence_boost", 1.0) != 1.0:
+        # Works for both bucket labels (HIGH) and numeric scores (>= 0.85).
+        is_high = conf_str == "HIGH" or (conf_mult >= 0.85)
+        if is_high and getattr(args, "high_confidence_boost", 1.0) != 1.0:
             conf_mult *= args.high_confidence_boost
             conf_mult = min(conf_mult, 1.5)  # hard cap keeps Kelly sane
 
