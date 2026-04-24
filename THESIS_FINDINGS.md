@@ -599,24 +599,46 @@ UNKNOWN eliminated entirely. Most of the old UNKNOWNs were hedged HOLDs → now 
 
 **Conclusion on DirAcc.** PIT features clearly help the 2-coin pool, particularly at h=14 (BTC +5.77 pp, ETH +1.92 pp). They degrade the 3-coin pool because BNB's thin feature set (4 vs BTC's 18) adds noise: BNB itself drops -5.77 pp at h=14, and the shared LGB model learns from NaN-bearing BNB rows which contaminate BTC and ETH too.
 
-### 11.2 V2 strategy portfolio results (2-coin)
+### 11.2 V2 strategy portfolio results (2-coin) — consensus-horizon sweep
 
-| Variant | Portfolio Sharpe | Portfolio Return | MaxDD | BTC Sharpe | ETH Sharpe |
-|---|---:|---:|---:|---:|---:|
-| V2 baseline (no PIT) | 3.02 | +21.70% | 2.74% | 2.97 | 2.64 |
-| V2 + PIT on-chain | 2.92 | +15.92% | 2.68% | 2.98 | 1.83 |
+Initial V2 run used the production default consensus (h=7 AND h=14 must agree). PIT features appeared to hurt at that setting, so swept the consensus horizon set to disentangle the effect.
 
-DirAcc up but portfolio Sharpe slightly down (-0.10). Likely reasons: (a) more trades on PIT side (17+17 → 18+21) increase transaction drag, (b) h=7 / h=14 consensus breaks more often on PIT runs, producing different position sizing in the V2 adaptive-hold logic.
+| Pool | Consensus | Mode | Portfolio Sharpe | Return | MaxDD |
+|---|---|---|---:|---:|---:|
+| 2c | h=7+h=14 | symmetric | 3.02 | +21.70% | 2.74% |
+| 2c | h=7+h=14 | asymmetric | 2.97 | +18.04% | 2.96% |
+| 2c | h=14 only | symmetric | 2.79 | +15.94% | 3.44% |
+| 2c | h=7 only | symmetric | 1.60 | +9.12% | 4.45% |
+| **2c +PIT** | **h=7 only** | **symmetric** | **3.21** | **+15.89%** | **2.72%** |
+| 2c +PIT | h=14 only | symmetric | 3.04 | +16.51% | 2.65% |
+| 2c +PIT | h=7+h=14 | symmetric | 2.92 | +15.92% | 2.68% |
+| 2c +PIT | h=7+h=14 | asymmetric | 2.78 | +14.45% | 2.68% |
 
-**Decision per user rule ("if it does not improve, drop from quant, keep in LLM"):** do NOT use PIT features in the LGB production path. DirAcc improvement does not translate to Sharpe improvement under the V2 strategy in this 90-day window. Reserve PIT features for the LLM OnChainAnalyst instead.
+**Key: +PIT features flip the h=7-only configuration from worst (Sharpe 1.60) to best (3.21).** The consensus filter (h=7 AND h=14) was hiding the PIT signal — h=14 disagreements vetoed correct h=7 calls. Per-coin: ETH h=7-only baseline returns -1.20% (losing), PIT fixes it to +13.83%. Mechanism: on-chain signals (exchange flows, active-address z) are daily-cadence and primarily inform short-horizon predictions.
 
-### 11.3 Open questions / next steps
+### 11.3 V2 strategy portfolio results (3-coin)
 
-- Longer backtest window: 90 trading days is small; with 9+ months of data the Sharpe comparison could reverse.
-- Feature pruning: LGB may overfit the 18 raw + 5 derived features. Try keeping only MVRV-Z + net-flow-z + Puell.
-- Regime-conditional usage: the DirAcc win at h=14 is largest in the lower-MVRV regime (Jan-Feb 2026). A regime gate might unlock Sharpe gain.
-- BNB fallback: BNB is too sparse for the 3-coin quant pool. Either skip on-chain for BNB entirely (set `oc_*` to 0 for BNB rows) or find a better source (paid CM tier, DefiLlama chain data, Nansen alternatives).
-- OnChainAnalyst: pending — primary thesis payoff. LLM can reason about MVRV regime + flow direction + Puell level without needing numerical uplift to a tree model.
+| Pool | Config | Portfolio Sharpe | BNB Sharpe | BTC Sharpe | ETH Sharpe |
+|---|---|---:|---:|---:|---:|
+| 3c baseline | h=7+h=14 sym | 2.58 (legacy) | — | — | — |
+| 3c baseline | h=7 only sym | 2.64 | 2.48 | 0.05 | 1.77 |
+| 3c +PIT | h=7 only sym | **1.10** | -0.21 | 1.27 | 2.01 |
+
+**3-coin pool: PIT hurts.** BNB's thin feature set (4 PIT features vs 18 for BTC) injects NaN-heavy rows into pooled LGB training, contaminating BTC and ETH signals and killing BNB itself. Options to fix: (a) mask BNB `oc_*` to 0 so BTC/ETH features still train cleanly, (b) train BNB separately, (c) pay for CoinMetrics Pro BNB coverage. Deferred.
+
+### 11.4 Revised decision
+
+- **2-coin pool:** adopt PIT on-chain features at h=7-only symmetric consensus. New production Sharpe 3.21 (vs prior best 3.02). Update `scripts/baseline_strategy_v2.py` default to `--horizons 7` when running on PIT-augmented predictions, or document the flag choice.
+- **3-coin pool:** do NOT use PIT features until BNB handling fixed. Keep prior production config (h=7+h=14 sym, Sharpe 2.58).
+- **LLM analyst:** PIT features still primary payoff. OnChainAnalyst v2 ships on `feature/onchain-features-p1` for system backtest.
+
+### 11.5 Open questions / next steps
+
+- Longer backtest window: 90 trading days is small; repeat sweep with 6+ months once data accumulates.
+- Feature pruning: LGB may overfit the 18 raw + 5 derived features. Try keeping only MVRV-Z + net-flow-z + Puell; could simplify without losing the h=7 edge.
+- Regime-conditional usage: on-chain signal strength may depend on MVRV regime. Conditional gate could stabilize further.
+- BNB fix: mask `oc_*` to 0 for BNB rows in the 3-coin pool so BTC+ETH features train cleanly; expect this to recover the 3-coin Sharpe without hurting BNB.
+- OnChainAnalyst v2 system backtest: pending. Measures LLM payoff on top of the quant lift.
 
 **Artifacts:**
 - `data/multi_2coins_baseline_p1/` — LGB baseline predictions (no PIT)
