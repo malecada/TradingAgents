@@ -30,6 +30,7 @@ from tradingagents.agents.utils.onchain_tools import (
     get_stablecoin_metrics,
     get_gas_metrics,
     get_stablecoin_supply,
+    get_onchain_pit,
 )
 from tradingagents.agents.utils.crypto_sentiment_tools import (
     get_reddit_posts,
