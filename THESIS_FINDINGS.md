@@ -599,7 +599,7 @@ UNKNOWN eliminated entirely. Most of the old UNKNOWNs were hedged HOLDs → now 
 
 **Conclusion on DirAcc.** PIT features clearly help the 2-coin pool, particularly at h=14 (BTC +5.77 pp, ETH +1.92 pp). They degrade the 3-coin pool because BNB's thin feature set (4 vs BTC's 18) adds noise: BNB itself drops -5.77 pp at h=14, and the shared LGB model learns from NaN-bearing BNB rows which contaminate BTC and ETH too.
 
-### 11.2 V2 strategy portfolio results (2-coin) — consensus-horizon sweep
+### 11.2a 90-day OOS consensus-horizon sweep (superseded by 11.2b)
 
 Initial V2 run used the production default consensus (h=7 AND h=14 must agree). PIT features appeared to hurt at that setting, so swept the consensus horizon set to disentangle the effect.
 
@@ -616,6 +616,44 @@ Initial V2 run used the production default consensus (h=7 AND h=14 must agree). 
 
 **Key: +PIT features flip the h=7-only configuration from worst (Sharpe 1.60) to best (3.21).** The consensus filter (h=7 AND h=14) was hiding the PIT signal — h=14 disagreements vetoed correct h=7 calls. Per-coin: ETH h=7-only baseline returns -1.20% (losing), PIT fixes it to +13.83%. Mechanism: on-chain signals (exchange flows, active-address z) are daily-cadence and primarily inform short-horizon predictions.
 
+**Caveat: 90-day OOS is statistically thin** (~20 trades per coin). Section 11.2b re-runs the full sweep on a 364-day OOS window after extending the on-chain backfill to 2024-01-01. The extended sample reverses the conclusion — see below.
+
+### 11.2b 364-day OOS consensus-horizon sweep (definitive)
+
+On-chain backfill extended to 2024-01-01 (20,061 rows spanning 836 days). Walk-forward `--days 836 --min-train 365 --trade-date 2026-04-15` yields 728 predictions per run (364 OOS days × 2 coins).
+
+**DirAcc (walk-forward, pooled LGB, 728 preds):**
+
+| Horizon | Baseline DirAcc | +PIT DirAcc | Δ |
+|---|---:|---:|---:|
+| h=7 | 78.02% | 80.77% | **+2.75pp** |
+| h=14 | 81.04% | 83.10% | **+2.07pp** |
+
+MAE also drops 10–13% with PIT features.
+
+**V2 strategy portfolio Sharpe (symmetric consensus, 2-coin pool):**
+
+| Consensus | Baseline | +PIT | Δ Sharpe | Baseline Return | +PIT Return |
+|---|---:|---:|---:|---:|---:|
+| **h=7+h=14 (default)** | **2.34** | **3.10** | **+0.76** | +113.63% | +131.72% |
+| h=7 only | 2.68 | 2.59 | -0.09 | +96.87% | +81.59% |
+| h=14 only | 1.98 | 2.10 | +0.12 | +51.00% | +58.40% |
+
+**Per-coin at default (h=7+h=14 sym):**
+
+| Coin | Baseline Sharpe | +PIT Sharpe | Baseline Return | +PIT Return | Baseline MaxDD | +PIT MaxDD |
+|---|---:|---:|---:|---:|---:|---:|
+| BTC | 2.07 | 2.32 | +110.00% | +125.84% | 12.06% | 12.06% |
+| ETH | 2.38 | 2.98 | +117.27% | +137.59% | 9.18% | **6.17%** |
+| Portfolio | 2.34 | **3.10** | +113.63% | **+131.72%** | 10.38% | **5.14%** |
+
+ETH is the primary beneficiary (Sharpe +0.60, MaxDD halved). BTC modest improvement. Portfolio MaxDD cut in half.
+
+**Why the 90-day and 364-day samples disagreed:**
+- 90-day window (section 11.2a) captured a narrow regime where h=7 PIT signals happened to be strongest and h=14 was noisy.
+- 364-day OOS spans multiple regimes (2025-04 → 2026-04), and the default consensus filter benefits consistently from PIT features across both horizons.
+- The reversal confirms the 90-day finding was sample-thin rather than robust. Stick with 364-day numbers for thesis defense.
+
 ### 11.3 V2 strategy portfolio results (3-coin)
 
 | Pool | Config | Portfolio Sharpe | BNB Sharpe | BTC Sharpe | ETH Sharpe |
@@ -626,11 +664,11 @@ Initial V2 run used the production default consensus (h=7 AND h=14 must agree). 
 
 **3-coin pool: PIT hurts.** BNB's thin feature set (4 PIT features vs 18 for BTC) injects NaN-heavy rows into pooled LGB training, contaminating BTC and ETH signals and killing BNB itself. Options to fix: (a) mask BNB `oc_*` to 0 so BTC/ETH features still train cleanly, (b) train BNB separately, (c) pay for CoinMetrics Pro BNB coverage. Deferred.
 
-### 11.4 Revised decision
+### 11.4 Revised decision (definitive after 364-day OOS)
 
-- **2-coin pool:** adopt PIT on-chain features at h=7-only symmetric consensus. New production Sharpe 3.21 (vs prior best 3.02). Update `scripts/baseline_strategy_v2.py` default to `--horizons 7` when running on PIT-augmented predictions, or document the flag choice.
-- **3-coin pool:** do NOT use PIT features until BNB handling fixed. Keep prior production config (h=7+h=14 sym, Sharpe 2.58).
-- **LLM analyst:** PIT features still primary payoff. OnChainAnalyst v2 ships on `feature/onchain-features-p1` for system backtest.
+- **2-coin pool:** adopt PIT on-chain features at the **default V2 consensus (h=7+h=14 symmetric)**. Portfolio Sharpe 3.10 (vs 2.34 baseline at same config, vs prior production best 2.69 from pre-PIT artifact). No config change needed — existing flags suffice: `--onchain-pit` at eval time, default V2 strategy args. ETH sees largest lift (Sharpe +0.60, MaxDD halved).
+- **3-coin pool:** still do NOT use PIT features until BNB handling fixed. Re-test once `oc_*` masking for thin-coverage coins ships.
+- **LLM analyst:** OnChainAnalyst v2 shipped on `feature/onchain-features-p1`. System backtest pending — now less critical since the quant baseline itself jumped to Sharpe 3.10, raising the bar the LLM must beat.
 
 ### 11.5 Open questions / next steps
 
