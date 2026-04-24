@@ -306,37 +306,65 @@ def generate_system_signals_v2(
     for coin in coins:
         csv_path = output_dir / f"{coin}_{start_date}_{end_date}.csv"
 
-        # Try cache first
+        # Try cache first.
         cached_records: list[dict] = []
         have_dates: set[str] = set()
         if csv_path.exists() and not force_rerun:
             cached = pd.read_csv(csv_path, parse_dates=["date"])
-            if len(cached) >= len(dates):
-                logger.info(f"{coin}: loaded {len(cached)} cached signals from {csv_path}")
-                results[coin] = cached
-                continue
-            # Partial cache: keep the good rows, regenerate the missing dates.
+            # Drop ERROR rows so they get refilled on resume.
+            mask_err = cached["trader_text"].astype(str).str.startswith("ERROR:")
+            n_err = int(mask_err.sum())
+            if n_err:
+                logger.info(f"{coin}: dropping {n_err} ERROR rows for refill")
+                cached = cached[~mask_err].copy()
+
             cached_records = cached.to_dict(orient="records")
             have_dates = {pd.Timestamp(d).strftime("%Y-%m-%d")
                           for d in cached["date"].tolist()}
+
+            if len(have_dates) >= len(dates):
+                logger.info(f"{coin}: loaded {len(cached_records)} cached signals from {csv_path}")
+                results[coin] = cached
+                continue
             logger.info(
-                f"{coin}: resuming from partial cache with {len(cached_records)} rows "
-                f"({len(dates) - len(have_dates)} dates missing)"
+                f"{coin}: resuming from partial cache with {len(cached_records)} good rows "
+                f"({len(dates) - len(have_dates)} dates to (re)generate)"
             )
 
         missing_dates = [dt for dt in dates
                          if dt.strftime("%Y-%m-%d") not in have_dates]
         logger.info(f"{coin}: generating signals for {len(missing_dates)} dates")
         records = list(cached_records)
+
+        # Per-row retry settings — survives transient OpenAI / connection hiccups.
+        import time as _time
+        max_row_attempts = int(config.get("propagate_max_attempts", 4))
+        base_backoff = float(config.get("propagate_backoff_seconds", 10.0))
+
         for i, dt in enumerate(missing_dates):
             date_str = dt.strftime("%Y-%m-%d")
-            try:
-                _, signal, confidence, trader_text = ta.propagate_with_confidence(
-                    coin, date_str,
-                )
-            except Exception as e:
-                logger.error(f"{coin} @ {date_str}: propagate failed: {e}")
-                signal, confidence, trader_text = "HOLD", "UNKNOWN", f"ERROR: {e}"
+            signal = confidence = trader_text = None
+            last_err: Exception | None = None
+            for attempt in range(1, max_row_attempts + 1):
+                try:
+                    _, signal, confidence, trader_text = ta.propagate_with_confidence(
+                        coin, date_str,
+                    )
+                    last_err = None
+                    break
+                except Exception as e:
+                    last_err = e
+                    if attempt >= max_row_attempts:
+                        break
+                    wait = base_backoff * (2 ** (attempt - 1))
+                    logger.warning(
+                        f"{coin} @ {date_str}: propagate failed (attempt {attempt}/{max_row_attempts}): {e} — "
+                        f"retry in {wait:.1f}s"
+                    )
+                    _time.sleep(wait)
+            if last_err is not None:
+                logger.error(f"{coin} @ {date_str}: giving up after {max_row_attempts} attempts: {last_err}")
+                signal, confidence, trader_text = "HOLD", "UNKNOWN", f"ERROR: {last_err}"
 
             records.append({
                 "date": dt,
@@ -345,15 +373,20 @@ def generate_system_signals_v2(
                 "trader_text": (trader_text or "")[:500],
             })
 
-            # Checkpoint every 10 dates so a crash doesn't lose all progress
+            # Checkpoint every row via atomic write (tmp file + rename) so a
+            # crash or PC shutdown never leaves a half-written CSV.
+            tmp_path = csv_path.with_suffix(".csv.tmp")
+            pd.DataFrame(records).to_csv(tmp_path, index=False)
+            tmp_path.replace(csv_path)
             if (i + 1) % 10 == 0 or (i + 1) == len(missing_dates):
-                pd.DataFrame(records).to_csv(csv_path, index=False)
                 logger.info(f"{coin}: checkpoint {i + 1}/{len(missing_dates)} -> {csv_path}")
 
         df = pd.DataFrame(records)
         # Sort by date so the file remains chronological after a resume
         df = df.sort_values("date").reset_index(drop=True)
-        df.to_csv(csv_path, index=False)
+        tmp_path = csv_path.with_suffix(".csv.tmp")
+        df.to_csv(tmp_path, index=False)
+        tmp_path.replace(csv_path)
         logger.info(f"{coin}: saved {len(df)} signals to {csv_path}")
         results[coin] = df
 
