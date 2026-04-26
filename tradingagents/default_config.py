@@ -38,7 +38,7 @@ DEFAULT_CONFIG = {
         "news_data": "yfinance",             # Options: alpha_vantage, yfinance
         # Crypto-specific vendors
         "crypto_market_data": "coingecko_binance",
-        "onchain_data": "onchain",
+        "onchain_data": "onchain",  # "onchain" = realtime (funding/TVL/gas), "onchain_pit" = PIT store
         "crypto_sentiment": "crypto_sentiment",
     },
     # Tool-level configuration (takes precedence over category-level)

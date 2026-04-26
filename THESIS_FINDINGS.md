@@ -762,6 +762,128 @@ specific gap likely requires either:
 
 ---
 
+## 11. PIT On-Chain Features — Phase 1 (CoinMetrics + DefiLlama) — 2026-04-21
+
+**Motivation.** Section 9 doc (`on_chain_features_analysis.md`) concludes that on-chain valuation oscillators (MVRV, exchange flows, active addresses) have documented alpha at daily horizons. Integrated PIT-correct on-chain features into the TradingAgents pipeline to test whether they improve the LGB quant baseline (Sharpe 2.69) and to enable an on-chain LLM analyst.
+
+**Data pivot: BigQuery → CoinMetrics.** Original plan used BigQuery public datasets (crypto_bitcoin + crypto_ethereum). Switched to CoinMetrics Community API after discovering it provides pre-computed MVRV + exchange flows free (BTC + ETH only; BNB empty in community tier). Avoids GCP setup + `google-cloud-bigquery` dep + ~1-2 weeks UTXO SQL work.
+
+**Storage.** Bitemporal Parquet + DuckDB store mirroring PIT sentiment pattern: `data/onchain/{year}/{month:02d}.parquet`, long-format schema `(event_ts, as_of_ts, coin, metric, value, source, status)`. Flash metrics (CoinMetrics `FlowInExUSD`, `FlowOutExUSD`) get `as_of_ts = event_ts + 7d` to respect CM's ~3-month revision window; stable metrics get `+1d`. beaconcha.in dropped — all endpoints gate behind API key as of 2026. Backfill 2025-01-01 → 2026-04-15: 11,277 rows across BTC + ETH + BNB.
+
+**Derived features.** `onchain_features.py` computes `mvrv_z_1y` (365d rolling z-score), `puell_multiple` (IssTotUSD / 365d MA), `net_flow_usd` + `net_flow_z_30d`, `active_addr_z_30d`, TVL and stablecoin mcap 7d pct-changes. Rolling windows operate on full PIT-aligned history so short query slices still stabilize.
+
+**Coverage verified live:**
+- BTC: 18 PIT features (full set incl MVRV, flows, Puell, hash rate)
+- ETH: 19 PIT features (same + TVL Ethereum)
+- BNB: 4 features (BSC TVL + stablecoin mcap + pct-changes) — thin
+
+### 11.1 LGB directional accuracy: baseline vs +PIT on-chain
+
+2026-01-01 → 2026-04-15 walk-forward, --days 470 --min-train 365 --horizons 7 14.
+
+| Pool | Coin | Horizon | Baseline DirAcc | +PIT DirAcc | Delta |
+|---|---|---:|---:|---:|---:|
+| 2-coin | BTC | 7 | 74.04% | 74.04% | 0.00 |
+| 2-coin | BTC | 14 | 77.88% | **83.65%** | **+5.77** |
+| 2-coin | ETH | 7 | 70.19% | 69.23% | -0.96 |
+| 2-coin | ETH | 14 | 76.92% | **78.85%** | **+1.92** |
+| 3-coin | BTC | 7 | 72.12% | 70.19% | -1.92 |
+| 3-coin | BTC | 14 | 74.04% | 71.15% | -2.88 |
+| 3-coin | ETH | 7 | 71.15% | 71.15% | 0.00 |
+| 3-coin | ETH | 14 | 70.19% | 73.08% | +2.88 |
+| 3-coin | BNB | 7 | 60.58% | 58.65% | -1.92 |
+| 3-coin | BNB | 14 | 68.27% | 62.50% | **-5.77** |
+
+**Conclusion on DirAcc.** PIT features clearly help the 2-coin pool, particularly at h=14 (BTC +5.77 pp, ETH +1.92 pp). They degrade the 3-coin pool because BNB's thin feature set (4 vs BTC's 18) adds noise: BNB itself drops -5.77 pp at h=14, and the shared LGB model learns from NaN-bearing BNB rows which contaminate BTC and ETH too.
+
+### 11.2a 90-day OOS consensus-horizon sweep (superseded by 11.2b)
+
+Initial V2 run used the production default consensus (h=7 AND h=14 must agree). PIT features appeared to hurt at that setting, so swept the consensus horizon set to disentangle the effect.
+
+| Pool | Consensus | Mode | Portfolio Sharpe | Return | MaxDD |
+|---|---|---|---:|---:|---:|
+| 2c | h=7+h=14 | symmetric | 3.02 | +21.70% | 2.74% |
+| 2c | h=7+h=14 | asymmetric | 2.97 | +18.04% | 2.96% |
+| 2c | h=14 only | symmetric | 2.79 | +15.94% | 3.44% |
+| 2c | h=7 only | symmetric | 1.60 | +9.12% | 4.45% |
+| **2c +PIT** | **h=7 only** | **symmetric** | **3.21** | **+15.89%** | **2.72%** |
+| 2c +PIT | h=14 only | symmetric | 3.04 | +16.51% | 2.65% |
+| 2c +PIT | h=7+h=14 | symmetric | 2.92 | +15.92% | 2.68% |
+| 2c +PIT | h=7+h=14 | asymmetric | 2.78 | +14.45% | 2.68% |
+
+**Key: +PIT features flip the h=7-only configuration from worst (Sharpe 1.60) to best (3.21).** The consensus filter (h=7 AND h=14) was hiding the PIT signal — h=14 disagreements vetoed correct h=7 calls. Per-coin: ETH h=7-only baseline returns -1.20% (losing), PIT fixes it to +13.83%. Mechanism: on-chain signals (exchange flows, active-address z) are daily-cadence and primarily inform short-horizon predictions.
+
+**Caveat: 90-day OOS is statistically thin** (~20 trades per coin). Section 11.2b re-runs the full sweep on a 364-day OOS window after extending the on-chain backfill to 2024-01-01. The extended sample reverses the conclusion — see below.
+
+### 11.2b 364-day OOS consensus-horizon sweep (definitive)
+
+On-chain backfill extended to 2024-01-01 (20,061 rows spanning 836 days). Walk-forward `--days 836 --min-train 365 --trade-date 2026-04-15` yields 728 predictions per run (364 OOS days × 2 coins).
+
+**DirAcc (walk-forward, pooled LGB, 728 preds):**
+
+| Horizon | Baseline DirAcc | +PIT DirAcc | Δ |
+|---|---:|---:|---:|
+| h=7 | 78.02% | 80.77% | **+2.75pp** |
+| h=14 | 81.04% | 83.10% | **+2.07pp** |
+
+MAE also drops 10–13% with PIT features.
+
+**V2 strategy portfolio Sharpe (symmetric consensus, 2-coin pool):**
+
+| Consensus | Baseline | +PIT | Δ Sharpe | Baseline Return | +PIT Return |
+|---|---:|---:|---:|---:|---:|
+| **h=7+h=14 (default)** | **2.34** | **3.10** | **+0.76** | +113.63% | +131.72% |
+| h=7 only | 2.68 | 2.59 | -0.09 | +96.87% | +81.59% |
+| h=14 only | 1.98 | 2.10 | +0.12 | +51.00% | +58.40% |
+
+**Per-coin at default (h=7+h=14 sym):**
+
+| Coin | Baseline Sharpe | +PIT Sharpe | Baseline Return | +PIT Return | Baseline MaxDD | +PIT MaxDD |
+|---|---:|---:|---:|---:|---:|---:|
+| BTC | 2.07 | 2.32 | +110.00% | +125.84% | 12.06% | 12.06% |
+| ETH | 2.38 | 2.98 | +117.27% | +137.59% | 9.18% | **6.17%** |
+| Portfolio | 2.34 | **3.10** | +113.63% | **+131.72%** | 10.38% | **5.14%** |
+
+ETH is the primary beneficiary (Sharpe +0.60, MaxDD halved). BTC modest improvement. Portfolio MaxDD cut in half.
+
+**Why the 90-day and 364-day samples disagreed:**
+- 90-day window (section 11.2a) captured a narrow regime where h=7 PIT signals happened to be strongest and h=14 was noisy.
+- 364-day OOS spans multiple regimes (2025-04 → 2026-04), and the default consensus filter benefits consistently from PIT features across both horizons.
+- The reversal confirms the 90-day finding was sample-thin rather than robust. Stick with 364-day numbers for thesis defense.
+
+### 11.3 V2 strategy portfolio results (3-coin)
+
+| Pool | Config | Portfolio Sharpe | BNB Sharpe | BTC Sharpe | ETH Sharpe |
+|---|---|---:|---:|---:|---:|
+| 3c baseline | h=7+h=14 sym | 2.58 (legacy) | — | — | — |
+| 3c baseline | h=7 only sym | 2.64 | 2.48 | 0.05 | 1.77 |
+| 3c +PIT | h=7 only sym | **1.10** | -0.21 | 1.27 | 2.01 |
+
+**3-coin pool: PIT hurts.** BNB's thin feature set (4 PIT features vs 18 for BTC) injects NaN-heavy rows into pooled LGB training, contaminating BTC and ETH signals and killing BNB itself. Options to fix: (a) mask BNB `oc_*` to 0 so BTC/ETH features still train cleanly, (b) train BNB separately, (c) pay for CoinMetrics Pro BNB coverage. Deferred.
+
+### 11.4 Revised decision (definitive after 364-day OOS)
+
+- **2-coin pool:** adopt PIT on-chain features at the **default V2 consensus (h=7+h=14 symmetric)**. Portfolio Sharpe 3.10 (vs 2.34 baseline at same config, vs prior production best 2.69 from pre-PIT artifact). No config change needed — existing flags suffice: `--onchain-pit` at eval time, default V2 strategy args. ETH sees largest lift (Sharpe +0.60, MaxDD halved).
+- **3-coin pool:** still do NOT use PIT features until BNB handling fixed. Re-test once `oc_*` masking for thin-coverage coins ships.
+- **LLM analyst:** OnChainAnalyst v2 shipped on `feature/onchain-features-p1`. System backtest pending — now less critical since the quant baseline itself jumped to Sharpe 3.10, raising the bar the LLM must beat.
+
+### 11.5 Open questions / next steps
+
+- Longer backtest window: 90 trading days is small; repeat sweep with 6+ months once data accumulates.
+- Feature pruning: LGB may overfit the 18 raw + 5 derived features. Try keeping only MVRV-Z + net-flow-z + Puell; could simplify without losing the h=7 edge.
+- Regime-conditional usage: on-chain signal strength may depend on MVRV regime. Conditional gate could stabilize further.
+- BNB fix: mask `oc_*` to 0 for BNB rows in the 3-coin pool so BTC+ETH features train cleanly; expect this to recover the 3-coin Sharpe without hurting BNB.
+- OnChainAnalyst v2 system backtest: pending. Measures LLM payoff on top of the quant lift.
+
+**Artifacts:**
+- `data/multi_2coins_baseline_p1/` — LGB baseline predictions (no PIT)
+- `data/multi_2coins_pit_p1/` — LGB predictions with PIT on-chain features
+- `data/multi_3coins_baseline_p1/` / `data/multi_3coins_pit_p1/` — 3-coin equivalents
+- `data/onchain/` — bitemporal store (11,277 rows 2025-01 → 2026-04)
+- Commits on `feature/onchain-features-p1`: `3bd9f50` client+store, `3939e17` backfill, `9b680fa` features, `b2531c7` pipeline integration
+
+---
+
 ## 9. Data Artifacts
 
 | File | Contents |

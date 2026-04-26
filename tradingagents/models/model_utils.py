@@ -368,6 +368,7 @@ def build_pooled_dataset(
     add_technical: bool = True,
     add_cross_asset: bool = True,
     add_onchain: bool = True,
+    add_onchain_pit: bool = False,
 ) -> pd.DataFrame:
     """Build a pooled multi-coin dataset enriched with optional features.
 
@@ -458,6 +459,31 @@ def build_pooled_dataset(
             coin_dfs_model[coin] = add_onchain_features(
                 df, coin, start_date.date(), end_date.date(),
             )
+
+    # PIT on-chain features from the bitemporal store (preferred; opt-in).
+    # When enabled this SUPPLEMENTS add_onchain with PIT-safe metrics
+    # (MVRV, exchange flows, active addresses, Puell, TVL). Leakage-safe.
+    if add_onchain_pit:
+        from tradingagents.dataflows.onchain_features import (
+            build_pit_onchain_features,
+        )
+        for coin, df in list(coin_dfs_model.items()):
+            try:
+                feats = build_pit_onchain_features(coin, df.index)
+            except Exception as e:  # pragma: no cover
+                logger.warning(f"PIT on-chain fetch failed for {coin}: {e}")
+                continue
+            if feats is None or feats.empty:
+                continue
+            # Align tz: model df indices are tz-naive (pandas Timestamp),
+            # PIT feature indices are tz-aware UTC. Strip tz on feats so
+            # reindex can join on the calendar day.
+            feats = feats.copy()
+            feats.index = feats.index.tz_convert("UTC").tz_localize(None)
+            feats = feats.reindex(df.index)
+            for col in feats.columns:
+                df[col] = feats[col].values
+            coin_dfs_model[coin] = df
 
     # Tag with coin_id and concat
     pooled_rows = []
