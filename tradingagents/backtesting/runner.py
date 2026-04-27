@@ -338,8 +338,25 @@ def generate_system_signals_v2(
 
         # Per-row retry settings — survives transient OpenAI / connection hiccups.
         import time as _time
+        import concurrent.futures as _cf
         max_row_attempts = int(config.get("propagate_max_attempts", 4))
         base_backoff = float(config.get("propagate_backoff_seconds", 10.0))
+        row_timeout = float(config.get("propagate_row_timeout", 600.0))  # 10 min hard cap
+
+        def _propagate_with_timeout(_coin: str, _date: str):
+            """Run ta.propagate_with_confidence with a hard wall-clock timeout.
+
+            A hung HTTP socket inside the LangGraph tool call would otherwise
+            leave the row indefinitely stuck. Using a daemon thread + future
+            ensures the outer process exits gracefully on timeout.
+            """
+            with _cf.ThreadPoolExecutor(max_workers=1) as pool:
+                fut = pool.submit(ta.propagate_with_confidence, _coin, _date)
+                try:
+                    return fut.result(timeout=row_timeout)
+                except _cf.TimeoutError as te:
+                    fut.cancel()
+                    raise TimeoutError(f"propagate exceeded {row_timeout:.0f}s") from te
 
         for i, dt in enumerate(missing_dates):
             date_str = dt.strftime("%Y-%m-%d")
@@ -347,7 +364,7 @@ def generate_system_signals_v2(
             last_err: Exception | None = None
             for attempt in range(1, max_row_attempts + 1):
                 try:
-                    _, signal, confidence, trader_text = ta.propagate_with_confidence(
+                    _, signal, confidence, trader_text = _propagate_with_timeout(
                         coin, date_str,
                     )
                     last_err = None
