@@ -882,6 +882,49 @@ ETH is the primary beneficiary (Sharpe +0.60, MaxDD halved). BTC modest improvem
 - `data/onchain/` — bitemporal store (11,277 rows 2025-01 → 2026-04)
 - Commits on `feature/onchain-features-p1`: `3bd9f50` client+store, `3939e17` backfill, `9b680fa` features, `b2531c7` pipeline integration
 
+### 10.6 Phase 3: continuous confidence + momentum context (2026-04-30, BTC+ETH)
+
+Three prompt-side improvements regenerated 2-coin signals (BTC+ETH only, BNB skipped to halve cost):
+
+1. **Continuous confidence (`Confidence: NN/100`)** — PM prompt rewritten with explicit 0-100 rubric (85-100 strong consensus, 0-19 no conviction). Parser regex extracts numeric score; falls back to HIGH/MED/LOW rubric when literal absent.
+2. **Short-term momentum context** — deterministic SMA30 direction + 3d/7d returns + RSI14 computed from cached OHLCV at trade_date, injected as a high-priority block in the trader's user prompt.
+3. **Backtest sizing accepts numeric** — `parse_confidence` maps `"NN"` → `NN/100` ∈ [0,1]; HIGH-boost trips on numeric ≥ 0.85 OR `HIGH` label.
+
+**Numeric extraction rate:** 75% (137/180 rows). PM still falls back to HIGH/LOW labels in 25%.
+
+**P3 raw backtest (no hybrid sizing):**
+
+| Coin | Return | Sharpe | MaxDD | WinRate |
+|---|---|---|---|---|
+| BTC | -1.13% | -0.33 | 6.85% | 44.9% |
+| ETH | +1.41% | +0.20 | 2.11% | 48.5% |
+| Portfolio | +0.14% | -0.48 | 4.34% | — |
+
+**P3 + hybrid (best: dw=0.8 aw=2.0 cap=2.0):**
+
+| Coin | Return | Sharpe | MaxDD | WinRate |
+|---|---|---|---|---|
+| BTC | -6.95% | -0.75 | 16.06% | 26.5% |
+| **ETH** | **+19.23%** | **+1.56** | 9.04% | 48.5% |
+| Portfolio | +6.14% | +0.57 | 12.56% | — |
+
+**ETH-only:** +19.23% / Sharpe 1.56 — best ETH result across all phases.
+
+**Findings:**
+
+1. **Momentum context helps ETH significantly.** ETH return +19.23% beats P2 hybrid ETH (+16.37%) by ~3 pp; Sharpe similar (1.56 vs 1.60). Better MaxDD (9.04% vs 12.70%). New deterministic short-horizon signal is extra signal ETH benefits from.
+2. **Momentum context catastrophic for BTC.** Win rate 52.9% (P2) → 26.5% (P3). Hypothesis: RSI14 + SMA30 deviation pulled the LLM into wrong-side SELL calls when BTC was overbought-but-still-trending. Or new prompt's emphasis on "deterministic momentum" pushed PM toward bearish reactions in a regime where BTC kept climbing modestly.
+3. **Portfolio Sharpe 0.57 vs P2 2-coin rescored 0.22 — improvement on BTC+ETH.** But below P2 3-coin (1.52, BNB-driven). Without BNB the gain comes entirely from ETH; BTC drags hard.
+4. **Numeric confidence works partially.** 75% extraction rate; remaining 25% bucket-fallback. PM occasionally ignores the `Confidence: NN/100` instruction. Prompt could be tightened or fallback rubric tuned. Net effect on sizing is positive vs label-only.
+
+**Recommended next step:** per-coin policy switch — disable momentum context for BTC (LLM systematically over-reacts), keep for ETH. Or rework momentum block to emphasize trend continuation, not RSI overbought signals.
+
+**Artifacts:**
+- `data/agent_signals_pit_p3/` — P3 2-coin signals
+- `data/agent_backtest_v2_pit_p3/agent_v2_metrics_2026-01-16_2026-04-15.json` — raw backtest
+- `data/agent_backtest_v2_pit_p3_hybrid/agent_v2_metrics_2026-01-16_2026-04-15.json` — hybrid
+- Commits: `5ae147c` continuous confidence + momentum, `6adf7d7` PM-side fix, `2139562` recovery improvements, `25f6c45` row-timeout
+
 ---
 
 ## 9. Data Artifacts
