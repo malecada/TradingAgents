@@ -947,6 +947,50 @@ Labelled each of the 1,684 OOS days by BTC drawdown from rolling 365-day high: *
 
 **Validates thesis narrative.** On-chain features behave per academic literature — useful at regime turns, noisy in chop. Strong defense armor against "are you sure PIT helps?" — the answer is "yes, conditionally, and the conditioning matches established theory."
 
+### 11.8 BNB-mask fix unlocks 3-coin pool
+
+Thin-coverage coins (BNB has only 4 PIT features vs BTC 18) were injecting NaN into the pooled LGB training matrix. Fix in `model_utils.build_pooled_dataset` computes the union of `oc_*` columns across all coins, then for each coin fills missing columns with **0.0** (not NaN). LGB treats 0 as "feature unobserved for this coin" — a clean null encoding for a tree model — instead of latching onto the NaN signal as a coin-identity proxy.
+
+**364-day OOS 3-coin (BTC+ETH+BNB) V2 strategy results:**
+
+| Config | Baseline Sharpe | PIT-masked Sharpe | Δ |
+|---|---:|---:|---:|
+| **h=7+14 sym (default)** | **1.90** | **2.76** | **+0.86** |
+| h=7 only sym | 2.63 | 2.44 | -0.19 |
+| h=14 only sym | 1.36 | 1.89 | +0.53 |
+
+**Per-coin at default (h=7+14 sym):**
+
+| Coin | Baseline Sharpe | PIT-masked Sharpe | Baseline Return | PIT Return | Baseline MaxDD | PIT MaxDD |
+|---|---:|---:|---:|---:|---:|---:|
+| BTC | 1.83 | 2.18 | +115.79% | +135.32% | 12.06% | 11.86% |
+| ETH | 2.09 | 2.66 | +162.22% | +192.12% | 12.77% | 8.69% |
+| BNB | 1.20 | **2.39** | +69.33% | **+172.34%** | 11.47% | 9.04% |
+| Portfolio | 1.90 | **2.76** | +115.78% | **+166.59%** | 11.46% | 9.51% |
+
+**Comparison to prior runs:**
+- Prior production 3-coin (no PIT): Sharpe 2.58 (per CLAUDE.md, pre-PIT-feature artifact)
+- 3-coin PIT WITHOUT mask (Section 11.2a): Sharpe **1.10** — disaster, BNB hit -0.21
+- 3-coin PIT WITH mask: Sharpe **2.76** — beats prior production by +0.18
+
+BNB itself was the biggest beneficiary: Sharpe 1.20 → 2.39 (almost doubled), Return +69% → +172%. PIT signal even with thin BNB-specific data lifts BNB performance via the BTC/ETH MVRV-Z and exchange-flow context the LGB pool now sees consistently.
+
+**DirAcc 3-coin masked:**
+
+| Horizon | Baseline DirAcc | PIT-masked DirAcc | Δ |
+|---|---:|---:|---:|
+| h=7 | 71.13% | 74.75% | **+3.62pp** |
+| h=14 | 74.54% | 79.36% | **+4.82pp** |
+
+DirAcc lift bigger than 2-coin (+2.75 / +2.07pp). The thin-coverage BNB rows benefit from the pool's BTC/ETH on-chain signal as a regime context.
+
+**Decision update:** adopt PIT + mask for both 2-coin and 3-coin pools. The mask is config-free — kicks in automatically when any coin's feature set is sparser than the union. 5.5yr 3-coin run pending to confirm robustness across regimes.
+
+**Artifacts:**
+- `data/multi_3c_ext_baseline/` — 3-coin LGB baseline (no PIT)
+- `data/multi_3c_ext_pit_masked/` — 3-coin LGB with PIT + BNB-mask
+- `data/multi_3c_5yr_*` — 5.5yr 3-coin runs (pending, queued in background)
+
 ### 11.5 Open questions / next steps
 
 - Longer backtest window: 90 trading days is small; repeat sweep with 6+ months once data accumulates.

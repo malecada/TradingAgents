@@ -467,22 +467,41 @@ def build_pooled_dataset(
         from tradingagents.dataflows.onchain_features import (
             build_pit_onchain_features,
         )
+        per_coin_feats: dict[str, pd.DataFrame] = {}
         for coin, df in list(coin_dfs_model.items()):
             try:
                 feats = build_pit_onchain_features(coin, df.index)
             except Exception as e:  # pragma: no cover
                 logger.warning(f"PIT on-chain fetch failed for {coin}: {e}")
-                continue
-            if feats is None or feats.empty:
-                continue
-            # Align tz: model df indices are tz-naive (pandas Timestamp),
-            # PIT feature indices are tz-aware UTC. Strip tz on feats so
-            # reindex can join on the calendar day.
-            feats = feats.copy()
-            feats.index = feats.index.tz_convert("UTC").tz_localize(None)
-            feats = feats.reindex(df.index)
-            for col in feats.columns:
-                df[col] = feats[col].values
+                feats = pd.DataFrame(index=df.index)
+            if feats is None:
+                feats = pd.DataFrame(index=df.index)
+            if not feats.empty:
+                # Align tz: model df indices are tz-naive (pandas Timestamp),
+                # PIT feature indices are tz-aware UTC. Strip tz on feats so
+                # reindex can join on the calendar day.
+                feats = feats.copy()
+                feats.index = feats.index.tz_convert("UTC").tz_localize(None)
+                feats = feats.reindex(df.index)
+            per_coin_feats[coin] = feats
+
+        # Pool-wide oc_* column union. For coins with thin coverage (e.g.
+        # BNB returning only tvl_bsc + stablecoin), fill the missing oc_*
+        # columns with 0 so pooled LGB sees a consistent schema across coins.
+        # Keeping NaN here pollutes the pool — LGB treats NaN as signal,
+        # which on a thin-coverage coin lets the model latch onto coin
+        # identity instead of feature semantics. 0 = "feature unobserved
+        # for this coin" is a cleaner null encoding for a tree model.
+        all_oc_cols: set[str] = set()
+        for f in per_coin_feats.values():
+            all_oc_cols.update(c for c in f.columns if c.startswith("oc_"))
+        for coin, df in list(coin_dfs_model.items()):
+            feats = per_coin_feats.get(coin, pd.DataFrame(index=df.index))
+            for col in sorted(all_oc_cols):
+                if col in feats.columns:
+                    df[col] = feats[col].values
+                else:
+                    df[col] = 0.0  # thin-coverage mask
             coin_dfs_model[coin] = df
 
     # Tag with coin_id and concat
