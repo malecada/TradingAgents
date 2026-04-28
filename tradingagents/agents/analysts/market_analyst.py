@@ -6,6 +6,7 @@ from tradingagents.agents.utils.agent_utils import (
     get_stock_data,
     get_crypto_data,
     get_crypto_indicators,
+    get_crypto_indicators_batch,
 )
 from tradingagents.dataflows.config import get_config
 
@@ -23,7 +24,8 @@ def create_market_analyst(llm):
         if asset_class == "crypto":
             tools = [
                 get_crypto_data,
-                get_crypto_indicators,
+                get_crypto_indicators_batch,  # PREFERRED — single call, full set
+                get_crypto_indicators,        # fallback for unusual indicators
             ]
         else:
             tools = [
@@ -57,7 +59,9 @@ Volatility Indicators:
 Volume-Based Indicators:
 - vwma: VWMA: A moving average weighted by volume. Usage: Confirm trends by integrating price action with volume data. Tips: Watch for skewed results from volume spikes; use in combination with other volume analyses.
 
-- Select indicators that provide diverse and complementary information. Avoid redundancy (e.g., do not select both rsi and stochrsi). Also briefly explain why they are suitable for the given market context. When you tool call, please use the exact name of the indicators provided above as they are defined parameters, otherwise your call will fail. Please make sure to call the data retrieval tool first (get_stock_data for stocks, or get_crypto_data for cryptocurrencies) to retrieve the OHLCV data. Then use the indicators tool (get_indicators or get_crypto_indicators) with the specific indicator names. Write a very detailed and nuanced report of the trends you observe. Provide specific, actionable insights with supporting evidence to help traders make informed decisions.
+**TOOL-CALL EFFICIENCY (IMPORTANT)**: For crypto, you MUST use `get_crypto_indicators_batch` (NOT `get_crypto_indicators`) as your first indicator-fetch call. The batch tool returns the complete standard indicator set — close_10_ema, close_50_sma, close_200_sma, rsi, macd, macds, mfi, boll, boll_ub, boll_lb, atr, vwma — in ONE call, eliminating the sequential per-indicator chain that dominates LLM cost. Only fall back to the single-indicator `get_crypto_indicators` tool if you need something the batch does not cover (e.g. close_30_sma, macdh).
+
+- Select indicators that provide diverse and complementary information. Avoid redundancy (e.g., do not select both rsi and stochrsi). Also briefly explain why they are suitable for the given market context. When you tool call, please use the exact name of the indicators provided above as they are defined parameters, otherwise your call will fail. Please make sure to call the data retrieval tool first (get_stock_data for stocks, or get_crypto_data for cryptocurrencies) to retrieve the OHLCV data. Then use `get_crypto_indicators_batch` (preferred) or `get_indicators`/`get_crypto_indicators` (fallback) for any indicators not in the batch. Write a very detailed and nuanced report of the trends you observe. Provide specific, actionable insights with supporting evidence to help traders make informed decisions.
 
 **REQUIRED — Trend Filter Analysis:**
 After computing your selected indicators, ALWAYS include a dedicated "Trend Filter" section at the top of your report:

@@ -23,6 +23,7 @@ from tradingagents.agents.utils.news_data_tools import (
 from tradingagents.agents.utils.crypto_market_tools import (
     get_crypto_data,
     get_crypto_indicators,
+    get_crypto_indicators_batch,
 )
 from tradingagents.agents.utils.onchain_tools import (
     get_funding_rates,
