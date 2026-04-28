@@ -34,6 +34,7 @@ from tradingagents.agents.utils.agent_utils import (
     # Crypto-specific tools
     get_crypto_data,
     get_crypto_indicators,
+    get_crypto_indicators_batch,
     get_funding_rates,
     get_tvl_metrics,
     get_stablecoin_metrics,
@@ -188,7 +189,11 @@ class TradingAgentsGraph:
 
         # Market analyst tools depend on asset class
         if asset_class == "crypto":
-            nodes["market"] = ToolNode([get_crypto_data, get_crypto_indicators])
+            nodes["market"] = ToolNode([
+                get_crypto_data,
+                get_crypto_indicators_batch,  # preferred
+                get_crypto_indicators,        # fallback
+            ])
         else:
             nodes["market"] = ToolNode([get_stock_data, get_indicators])
 

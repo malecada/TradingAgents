@@ -77,6 +77,11 @@ This trend filter was the single highest-impact factor in our baseline strategy 
             + get_language_instruction()
         )
 
+        # Prompt structure ordered for OpenAI auto-prompt-caching: stable
+        # global preamble → stable tool list → stable system_message →
+        # per-coin instrument_context → per-day current_date. The first
+        # ~3 sections are identical across every (coin, date) pair, so
+        # OpenAI caches the ≥1024-token prefix automatically.
         prompt = ChatPromptTemplate.from_messages(
             [
                 (
@@ -88,7 +93,8 @@ This trend filter was the single highest-impact factor in our baseline strategy 
                     " If you or any other assistant has the FINAL TRANSACTION PROPOSAL: **BUY/HOLD/SELL** or deliverable,"
                     " prefix your response with FINAL TRANSACTION PROPOSAL: **BUY/HOLD/SELL** so the team knows to stop."
                     " You have access to the following tools: {tool_names}.\n{system_message}"
-                    "For your reference, the current date is {current_date}. {instrument_context}",
+                    "\n\n{instrument_context}"
+                    "\n\nFor your reference, the current date is {current_date}.",
                 ),
                 MessagesPlaceholder(variable_name="messages"),
             ]
