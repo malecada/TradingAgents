@@ -219,7 +219,8 @@ def _load_crypto_ohlcv(coingecko_id: str, curr_date: str) -> pd.DataFrame:
     # for backtesting auditability.
     today = pd.Timestamp.today()
     fetch_end = min(curr_date_dt, today)
-    start_date = fetch_end - pd.DateOffset(years=2)
+    lookback_years = int(config.get("ohlcv_lookback_years", 7))
+    start_date = fetch_end - pd.DateOffset(years=lookback_years)
     start_str = start_date.strftime("%Y-%m-%d")
     end_str = fetch_end.strftime("%Y-%m-%d")
 

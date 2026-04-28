@@ -867,6 +867,54 @@ ETH is the primary beneficiary (Sharpe +0.60, MaxDD halved). BTC modest improvem
 - **3-coin pool:** still do NOT use PIT features until BNB handling fixed. Re-test once `oc_*` masking for thin-coverage coins ships.
 - **LLM analyst:** OnChainAnalyst v2 shipped on `feature/onchain-features-p1`. System backtest pending — now less critical since the quant baseline itself jumped to Sharpe 3.10, raising the bar the LLM must beat.
 
+### 11.6 5.5-year robustness check — 1,684 OOS days
+
+After Phase 1 merge, extended backfill from 2024-01-01 → 2020-09-01 (DefiLlama TVL coverage start). On-chain store now spans 2020-09 → 2026-04, **49,206 rows over 2,050 days**. Also raised the OHLCV cache lookback from a hard-coded 2 years to a config-driven 7 years (`config["ohlcv_lookback_years"]`, default 7) — earlier 364-day OOS run was capped by the 2-year price cache, not the on-chain store.
+
+Walk-forward `--days 2050 --min-train 365 --trade-date 2026-04-15`: **3,368 predictions per variant (1,684 OOS days × 2 coins), training pool 4,098 × 78/98 cols.**
+
+**DirAcc:**
+
+| Horizon | Baseline DirAcc | +PIT DirAcc | Δ |
+|---|---:|---:|---:|
+| h=7 | 75.74% | 76.31% | +0.56pp |
+| h=14 | 80.76% | 82.72% | +1.96pp |
+
+PIT lift is smaller than 364-day window (h=7 +2.75pp, h=14 +2.07pp) — concentrated in the recent regime where the on-chain signal was strongest. Sign and direction hold.
+
+**V2 strategy portfolio Sharpe (symmetric, 2-coin):**
+
+| Consensus | Baseline | +PIT | Δ Sharpe | Baseline Return | +PIT Return |
+|---|---:|---:|---:|---:|---:|
+| **h=7+h=14 (default)** | **2.83** | **2.96** | **+0.13** | +2,919.70% | +3,514.50% |
+| h=7 only | 2.92 | 2.84 | -0.08 | +2,095.15% | +2,390.18% |
+| h=14 only | 1.80 | 1.66 | -0.14 | +521.92% | +442.17% |
+
+**Per-coin at default (h=7+h=14 sym, 4.6 years):**
+
+| Coin | Baseline Sharpe | +PIT Sharpe | Baseline Return | +PIT Return | Baseline MaxDD | +PIT MaxDD |
+|---|---:|---:|---:|---:|---:|---:|
+| BTC | 2.56 | 2.56 | +2,666.66% | +2,840.16% | 8.84% | 12.10% |
+| ETH | 2.30 | **2.54** | +3,172.75% | **+4,188.85%** | 12.77% | 12.24% |
+| Portfolio | 2.83 | **2.96** | +2,919.70% | **+3,514.50%** | 6.74% | 7.58% |
+
+ETH again the primary beneficiary (Sharpe +0.24, Return +1,016pp). BTC Sharpe flat but return +173pp absolute. Portfolio MaxDD slightly worse (6.74% → 7.58%) — PIT increases trade frequency. Trade counts: BTC 257 → 271, ETH 265 → 263 (≈ same).
+
+**Cross-window comparison:**
+
+| Window | OOS Days | Preds | Δ Sharpe at default | Δ Return |
+|---|---:|---:|---:|---:|
+| 364-day | 364 | 728 | +0.76 | +18pp |
+| 5.5-year | 1,684 | 3,368 | +0.13 | +595pp |
+
+PIT lift attenuates over the longer window. Two non-exclusive explanations:
+- **Regime concentration**: PIT signal strongest in 2025-2026 chop; weaker in 2021 bull / 2022 bear / 2023 chop.
+- **Sample variance shrinks gain**: with 1,684 days of OOS the baseline LGB has more bars to refine its price-only prediction, narrowing the marginal contribution of on-chain features.
+
+**Decision unchanged.** PIT helps at the V2 default consensus on both windows. The ~+0.13 Sharpe over 4.6 years and ~+595pp absolute return on a baseline of +2,920% are non-trivial in absolute terms even if not as headline-grabbing as the 364-day +0.76 Sharpe. Adopt for production.
+
+**Bootstrapping / regime breakdown is the natural next robustness check** — split the 1,684 OOS days into bull / bear / sideways thirds, report per-regime Sharpe deltas. Likely shows PIT helping most in sideways-with-flow regimes, validating the doc's "exchange flows lead price at daily horizon" claim.
+
 ### 11.5 Open questions / next steps
 
 - Longer backtest window: 90 trading days is small; repeat sweep with 6+ months once data accumulates.
