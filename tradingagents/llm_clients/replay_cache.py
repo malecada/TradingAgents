@@ -88,6 +88,10 @@ class CachedChatModel(BaseChatModel):
 
     def _init_db(self):
         conn = self._get_conn()
+        # Enable WAL so multiple processes can read/write concurrently
+        # without "database is locked" errors during parallel signal gen.
+        conn.execute("PRAGMA journal_mode=WAL")
+        conn.execute("PRAGMA busy_timeout=10000")  # 10s before raising lock error
         conn.execute("""
             CREATE TABLE IF NOT EXISTS llm_cache (
                 cache_key TEXT PRIMARY KEY,
