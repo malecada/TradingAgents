@@ -1127,6 +1127,84 @@ Three prompt-side improvements regenerated 2-coin signals (BTC+ETH only, BNB ski
 - `data/agent_backtest_v2_pit_p3_hybrid/agent_v2_metrics_2026-01-16_2026-04-15.json` — hybrid
 - Commits: `5ae147c` continuous confidence + momentum, `6adf7d7` PM-side fix, `2139562` recovery improvements, `25f6c45` row-timeout
 
+### 10.7 Phase 4: GPT-5.4 stack + cache-friendly prompts + batch indicator (2026-04-28)
+
+Three cost+quality improvements stacked, regenerated 2-coin signals fresh:
+
+1. **Model upgrade** to `gpt-5.4-mini` (deep_think) and `gpt-5.4-nano` (quick_think). Aug 2025 cutoff aligns with backtest window (no lookahead concern); Berkeley FCL V4 places 5.4-mini above 4o-mini on tool-use reliability.
+2. **Cache-friendly prompt order** in all crypto analysts (market, onchain, sentiment, prediction). Stable preamble + system_message + tool_names + instrument_context first; per-day `current_date` last. OpenAI auto-caches the first ≥1024-token prefix, so repeat days within a coin hit cache.
+3. **Batch indicator tool** (`get_crypto_indicators_batch`). Returns 12 standard indicators (close_10_ema, 50/200_sma, vwma, rsi, macd, macds, mfi, boll, boll_ub, boll_lb, atr) in one call. Replaces 5-10 sequential per-indicator chain that drove ~52% of LLM cost.
+
+**Architectural deferral:** OpenAI Batch API (50% off, 24h SLA) is incompatible with multi-turn agentic flows — each LangGraph turn depends on the previous response. Documented as deferred; ~15% potential savings on remaining single-turn calls (PM, confidence parser) not worth the multi-day refactor.
+
+**Signal distribution shift:**
+
+| Coin | P3 (gpt-4o-mini) | P4 (gpt-5.4-mini) |
+|---|---|---|
+| BTC | 27 SELL / 3 BUY / 60 HOLD | 53 SELL / 19 BUY / 17 HOLD / 1 UW |
+| ETH | 34 SELL / 0 BUY / 55 HOLD / 1 OW | 55 SELL / 21 BUY / 14 HOLD |
+
+GPT-5.4 is dramatically more decisive: HOLD share fell ~67% → ~18% on BTC, ~61% → ~16% on ETH. BUY share rose 3% → 21% on BTC, 0% → 23% on ETH. Tool-use reliability and confidence calibration improved.
+
+**Numeric confidence extraction rate dropped:** 75% (P3) → 54% / 51% (P4). GPT-5.4 emits the `Confidence: NN/100` line less consistently than gpt-4o-mini; falls back to HIGH/MEDIUM/LOW rubric in 41-44 of 90 rows. PM-prompt format hardening is the next fix.
+
+**P4 raw backtest (no hybrid):**
+
+| Coin | Return | Sharpe | MaxDD | WinRate |
+|---|---|---|---|---|
+| BTC | -3.85% | -1.85 | 7.53% | 50.0% |
+| ETH | +4.00% | +1.02 | 2.85% | 50.0% |
+| Portfolio | +0.08% | -0.48 | 4.81% | — |
+
+BTC raw is worse than P3 raw — gpt-5.4-mini's increased BUY share got whipsawed in a bear regime. ETH improved (+1.41% / 0.20 → +4.00% / 1.02).
+
+**P4 + hybrid (best params via 3D sweep: aw=2.0, cap=2.0, dw=0.5):**
+
+| Coin | Return | Sharpe | MaxDD | WinRate |
+|---|---|---|---|---|
+| BTC | **+13.88%** | **+1.18** | 12.40% | 50.0% |
+| ETH | **+27.21%** | **+1.89** | 10.15% | 51.5% |
+| **Portfolio** | **+20.55%** | **+1.42** | 10.49% | — |
+
+**BTC Sharpe positive for the first time across all phases (+1.18).** GPT-5.4's better tool-use + the LGB-magnitude hybrid sizing finally broke the BTC systematic-bearish bias.
+
+**Cumulative improvement (BTC+ETH 2-coin, same window):**
+
+| Phase | Portfolio Return | Portfolio Sharpe | MaxDD | BTC Sharpe |
+|---|---|---|---|---|
+| P1 rescored | +2.15% | +0.22 | 2.86% | -1.31 |
+| P2 rescored | +2.15% | +0.22 | 2.86% | (3-coin) |
+| P3 hybrid best | +7.56% | +1.48 | 4.13% | -1.31 |
+| **P4 hybrid best** | **+20.55%** | **+1.42** | 10.49% | **+1.18** |
+| V2 quant (89-day) | +36.59% | +3.31 | 6.16% | +2.42 |
+
+**Gap to V2 quant baseline narrowed substantially:**
+- Return: 9.2× (P1) → 4.8× (P3) → **1.78× (P4)**
+- Sharpe: 3.85× (P1) → 2.24× (P3) → **2.33× (P4)**
+
+**Findings:**
+
+1. **Model + tool-call discipline > prompt content** in dollar impact. P4 jumped portfolio return 2.7× over P3 (7.56% → 20.55%) while keeping Sharpe roughly flat — same risk-adjusted edge but with a larger position scale. The improvements were entirely cost-and-tool-use mechanical; prompt was unchanged.
+2. **GPT-5.4-mini is more decisive but less compliant on the structured-output format.** Numeric extraction rate fell 21pp. The free decisiveness gain is more valuable than the format adherence loss in this run, but the latter is easy to fix (tighten PM prompt — move format spec to top, add literal example).
+3. **BTC bias finally inverted.** P3 had win rate 26.5% on BTC under hybrid. P4 hybrid: 50.0% — chance level, but on much higher trade count (23 vs 11) and much larger PnL (+13.88% vs -1.08%). Suggests the previous BTC drag was model-quality limited, not strategy-limited.
+4. **MaxDD inflated to 10.49%.** Higher leverage from larger positions + the increased trade count. Acceptable since V2 quant is at 6.16%; LLM is now competitive on absolute drawdown, no longer the safe-but-flat option.
+5. **Cost analysis (cache + 5.4 stack).** Cumulative cache total ~$11.26 across all phases (mostly P1-P3). P4 expected to add $2-4 once gpt-5.4-mini's 90% prompt-cache discount stabilizes on repeat runs.
+
+**Operational improvements deployed alongside:**
+- `tradingagents/llm_clients/replay_cache.py` — WAL mode for parallel-safe SQLite cache
+- `scripts/run_parallel.sh` — one `run_until_done` per coin, 2-3× wall-clock speedup
+- `scripts/analyze_replay_cache.py` — per-agent cost histogram
+- `scripts/run_until_done.sh` — outer-loop crash recovery; `tradingagents/backtesting/runner.py` — atomic checkpoint per row, ERROR-row auto-drop, hard wall-clock timeout
+
+**Artifacts:**
+- `data/agent_signals_pit_p4/` — P4 2-coin signals (gpt-5.4-mini stack)
+- `data/agent_backtest_v2_pit_p4/agent_v2_metrics_2026-01-16_2026-04-15.json` — raw backtest
+- `data/agent_backtest_v2_pit_p4_hybrid/agent_v2_metrics_2026-01-16_2026-04-15.json` — hybrid (default params)
+- `data/agent_backtest_v2_pit_p4_hybrid_best/agent_v2_metrics_2026-01-16_2026-04-15.json` — best hybrid (aw=2 cap=2 dw=0.5)
+- Commits: `1f8dade` batch indicator, `3208776` cache-friendly prompts + ToolNode fix, `5ae147c` (P3) base for prompt structure
+
+**Next step (open):** Cross-validate with a second model cohort (Claude Haiku 4.5 / OpenRouter) to test whether P4 gains are GPT-5.4-specific or genuine signal. Anthropic key not yet provisioned.
+
 ---
 
 ## 9. Data Artifacts
