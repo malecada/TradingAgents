@@ -217,6 +217,153 @@ def model_run_pooled(
     return walk_forward_pooled(pooled_df, horizon, min_train_window)
 
 
+# ── Live inference path: fit-once + predict ──────────────────────────
+
+
+def _select_feature_cols(pooled_df: pd.DataFrame) -> list[str]:
+    """Return the canonical feature column list matching walk_forward_pooled.
+
+    Drops `coin_id` and any `prices_h*` target columns. All remaining columns
+    are treated as features. Caller is responsible for adding coin_int
+    upstream if needed.
+    """
+    exclude_cols = {"coin_id"}
+    for c in pooled_df.columns:
+        if c.startswith("prices_h"):
+            exclude_cols.add(c)
+    return [c for c in pooled_df.columns if c not in exclude_cols]
+
+
+def fit_pooled_full(
+    pooled_df: pd.DataFrame,
+    horizon: int,
+    feature_cols: list[str] | None = None,
+) -> dict:
+    """Fit a single LGB regressor on the entire pooled dataset for one horizon.
+
+    Unlike model_run_pooled (walk-forward eval), this fits ONE model on all
+    available rows and returns it, so live inference can call .predict()
+    directly. Used by the live cycle's daily retrain step.
+
+    Hyperparameters and feature selection match `walk_forward_pooled` exactly:
+      - LGB params from `_build_lgb()` (config-driven; defaults n_estimators=500,
+        max_depth=-1, learning_rate=0.05, num_leaves=31, min_child_samples=20,
+        random_state=42, n_jobs=1)
+      - Features: all columns except `coin_id` and any `prices_h*` targets,
+        plus an integer-encoded `coin_int` derived from `coin_id` so the model
+        can learn per-coin offsets.
+      - Min-max scaling fitted on the training rows; the fitted scaler is
+        bundled so live inference applies the same transform.
+
+    Args:
+        pooled_df: Pooled DataFrame post-`data_transform` (must already have
+            the `prices_h{horizon}` target column).
+        horizon: Which `prices_h{h}` column to predict.
+        feature_cols: Optional override of the feature list. When None we
+            replicate walk_forward_pooled's selection rule.
+
+    Returns:
+        Dict with:
+          - 'booster': fitted sklearn-style LGBMRegressor
+          - 'feature_names': list of feature column names used (in fit order)
+          - 'horizon': echoed input
+          - 'target_col': e.g. 'prices_h7'
+          - 'n_train_rows': rows used after dropping NaN target rows
+          - 'scaler': fitted MinMaxScaler used at fit time
+          - 'coin_to_int': mapping of coin_id -> integer (for live encoding)
+
+    Raises:
+        ValueError: target column missing or no rows remain after NaN drop.
+    """
+    target_col = f"prices_h{horizon}"
+    if target_col not in pooled_df.columns:
+        raise ValueError(
+            f"target column {target_col} not in pooled_df "
+            f"(have: {[c for c in pooled_df.columns if c.startswith('prices')]})"
+        )
+
+    df = pooled_df.copy()
+
+    # Encode coin_id as integer to match walk_forward_pooled.
+    if "coin_id" in df.columns:
+        coin_ids = sorted(df["coin_id"].unique())
+        coin_to_int = {c: i for i, c in enumerate(coin_ids)}
+        df["coin_int"] = df["coin_id"].map(coin_to_int).astype(int)
+    else:
+        coin_to_int = {}
+
+    if feature_cols is None:
+        feature_cols = _select_feature_cols(df)
+        if "coin_int" in df.columns and "coin_int" not in feature_cols:
+            feature_cols.append("coin_int")
+
+    # Drop NaN rows in the target before fit.
+    train = df.dropna(subset=[target_col])
+    if train.empty:
+        raise ValueError(
+            f"No training rows after dropping NaN in {target_col}"
+        )
+
+    X = train[feature_cols].to_numpy(dtype=np.float32)
+    y = train[target_col].to_numpy(dtype=np.float32)
+
+    scaler = MinMaxScaler()
+    X_s = scaler.fit_transform(X)
+
+    booster = _build_lgb()
+    booster.fit(X_s, y)
+
+    return {
+        "booster": booster,
+        "feature_names": list(feature_cols),
+        "horizon": int(horizon),
+        "target_col": target_col,
+        "n_train_rows": int(len(train)),
+        "scaler": scaler,
+        "coin_to_int": coin_to_int,
+    }
+
+
+def predict_pooled(
+    bundle: dict,
+    feature_row: pd.DataFrame,
+) -> float:
+    """Predict y for a single feature row using a bundle from fit_pooled_full.
+
+    Applies the bundled MinMaxScaler before calling the booster, matching
+    the fit-time transform. If the bundle has a non-empty `coin_to_int`
+    mapping and the feature_row has a `coin_id` column but lacks `coin_int`,
+    the integer code is filled in automatically.
+
+    Args:
+        bundle: Output of `fit_pooled_full`.
+        feature_row: DataFrame with at least the columns in
+            bundle['feature_names']. Only the first row is used.
+
+    Returns:
+        The predicted target as a Python float.
+    """
+    feat_names = bundle["feature_names"]
+    row = feature_row.copy()
+
+    # Auto-fill coin_int when the bundle was fit with coin encoding and
+    # the caller passed coin_id without coin_int.
+    if (
+        "coin_int" in feat_names
+        and "coin_int" not in row.columns
+        and "coin_id" in row.columns
+        and bundle.get("coin_to_int")
+    ):
+        row["coin_int"] = row["coin_id"].map(bundle["coin_to_int"]).astype(int)
+
+    X = row[feat_names].to_numpy(dtype=np.float32)
+    scaler = bundle.get("scaler")
+    if scaler is not None:
+        X = scaler.transform(X)
+    pred = bundle["booster"].predict(X)
+    return float(pred[0])
+
+
 # ── Agent-facing single-date multi-horizon forecast ──────────────────
 
 

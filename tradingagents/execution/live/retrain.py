@@ -1,87 +1,45 @@
-"""Daily walk-forward retrain of pooled LGB model with PIT on-chain features.
+"""Daily fit-once-on-full-history retrain of pooled LGB models.
 
-Wraps `tradingagents.models.model_utils.build_pooled_dataset` and
-`tradingagents.models.lgb_model.model_run_pooled` so the live runner can
+Wraps `tradingagents.models.model_utils.build_pooled_dataset` +
+`tradingagents.models.lgb_model.fit_pooled_full` so the live runner can
 invoke them with the live module's vocabulary (`coins`, `asof`) and get back
-a versioned checkpoint plus a metrics summary.
+a versioned, joblib-persistable checkpoint plus a metrics summary.
 
-Two important shape adapters live here:
+Architecture note — why not `model_run_pooled`?
+   The upstream `model_run_pooled` is walk-forward EVAL: for each iteration
+   it fits a per-iteration model and throws it away, returning predictions +
+   metrics. That contract has no persistable booster usable by live
+   inference. The live cycle needs a "fit once on the full history → save →
+   .predict()" path, which is what `lgb_model.fit_pooled_full` provides.
+   This module is the integration glue.
 
-1. The upstream `build_pooled_dataset` uses kwargs `coin_universe`,
-   `lookback_days`, `horizons`, `trade_date`. This module accepts the
-   live runner's `coins`/`asof` names and translates.
+Per-horizon bundle layout on disk (joblib.dump of):
+    {
+        7:  {booster, feature_names, horizon, target_col, n_train_rows,
+              scaler, coin_to_int},
+        14: {... same shape ...},
+    }
 
-2. The upstream `lgb_model.model_run_pooled` is per-horizon — it takes a
-   single `horizon: int` and returns `(pred_df, metrics_dict)` where the
-   metrics dict has `directional_accuracy` (no per-horizon suffix). The
-   wrapper in this module accepts `horizons: list[int]`, runs the upstream
-   call once per horizon, packs the per-horizon `pred_df`s into a model
-   dict, and renames `directional_accuracy` to `dir_acc_h{h}` so the
-   artifact fields below are populated correctly.
-
-Tests patch `build_pooled_dataset` and `model_run_pooled` on this module,
-so the real upstream signatures are only exercised in live cycles.
+Tests patch `build_pooled_dataset`, `_transform_pooled`, and
+`fit_pooled_full` on this module; the real upstream signatures are only
+exercised in live cycles.
 """
 from __future__ import annotations
 
 import hashlib
 import logging
-import pickle
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
 import joblib
+import numpy as np
 import pandas as pd
 
-from tradingagents.models import lgb_model as _lgb_model
-from tradingagents.models.model_utils import build_pooled_dataset
+from tradingagents.models.lgb_model import fit_pooled_full
+from tradingagents.models.model_utils import build_pooled_dataset, data_transform
 
 logger = logging.getLogger(__name__)
-
-
-def model_run_pooled(
-    pooled_df: pd.DataFrame,
-    horizons: list[int],
-    min_train_window: int = 365,
-) -> tuple[dict[str, Any], dict[str, float]]:
-    """Multi-horizon wrapper around `lgb_model.model_run_pooled`.
-
-    The upstream is per-horizon and returns `(pred_df, metrics)` with a
-    single `directional_accuracy` key. Here we loop over `horizons`, pack
-    per-horizon predictions into a dict, and translate the metrics keys to
-    `dir_acc_h{h}` so callers can read them directly off the dict.
-
-    Args:
-        pooled_df: Date-indexed pooled DataFrame with `prices_h{h}` target
-            columns produced by `data_transform()`.
-        horizons: Forecast horizons to train (e.g. [7, 14]).
-        min_train_window: Walk-forward warm-up size.
-
-    Returns:
-        (model_obj, metrics) where model_obj is a dict with one entry per
-        horizon (`h{h}`) containing the per-horizon prediction DataFrame,
-        plus `horizons` (echoed input) and `feature_cols` (column list);
-        and metrics is a dict with `dir_acc_h{h}` per horizon.
-    """
-    model_obj: dict[str, Any] = {"horizons": list(horizons)}
-    metrics: dict[str, float] = {}
-    feature_cols: list[str] | None = None
-    for h in horizons:
-        pred_df, m = _lgb_model.model_run_pooled(pooled_df, h, min_train_window)
-        model_obj[f"h{h}"] = pred_df
-        metrics[f"dir_acc_h{h}"] = float(m.get("directional_accuracy", 0.0))
-        # Surface raw upstream metrics too (handy for diagnostics).
-        for k, v in m.items():
-            metrics[f"{k}_h{h}"] = float(v) if isinstance(v, (int, float)) else v
-        if feature_cols is None:
-            feature_cols = [
-                c for c in pooled_df.columns
-                if c != "coin_id" and not c.startswith("prices_h")
-            ]
-    if feature_cols is not None:
-        model_obj["feature_cols"] = feature_cols
-    return model_obj, metrics
 
 
 @dataclass
@@ -98,34 +56,96 @@ class TrainArtifact:
     is_fallback: bool = False
 
 
-def _persist_model(model_obj: Any, out_path: Path) -> None:
-    """Write the trained model to disk via joblib.
+def _transform_pooled(pooled_df: pd.DataFrame, horizons: list[int]) -> pd.DataFrame:
+    """Apply `data_transform` per coin so .shift() respects coin boundaries.
 
-    Some objects (e.g. unittest.mock.MagicMock used in tests) are not
-    picklable. In that case we fall back to writing a minimal sentinel
-    payload containing only the picklable bits so the checkpoint file
-    still exists on disk and downstream sha256 + path checks succeed.
+    Mirrors the canonical wiring in `scripts/evaluate_models_multi.py`
+    (`build_pooled_transformed`): split by coin, run the per-coin transform,
+    re-tag with `coin_id`, concat, and set the `date` column as index.
+
+    Args:
+        pooled_df: Raw output of `build_pooled_dataset` (date-indexed,
+            with a `coin_id` column).
+        horizons: Forecast horizons to materialize as `prices_h{h}` columns.
+
+    Returns:
+        Date-indexed pooled DataFrame with one `coin_id` column and
+        `prices_h{h}` target columns. Empty if no coin produced data.
     """
-    try:
-        joblib.dump(model_obj, out_path)
-        return
-    except (pickle.PicklingError, TypeError, AttributeError) as e:
-        logger.warning(
-            "joblib.dump could not serialize model object (%s); "
-            "writing sentinel payload at %s", e, out_path,
-        )
-    # Best-effort: keep only items we can repr/pickle cleanly.
-    sentinel: dict[str, Any] = {"_unpicklable": True}
-    if isinstance(model_obj, dict):
-        for k, v in model_obj.items():
-            try:
-                pickle.dumps(v)
-            except Exception:
-                sentinel[k] = repr(v)
-            else:
-                sentinel[k] = v
-    with open(out_path, "wb") as f:
-        pickle.dump(sentinel, f)
+    if pooled_df is None or len(pooled_df) == 0 or "coin_id" not in pooled_df.columns:
+        return pd.DataFrame()
+
+    pieces: list[pd.DataFrame] = []
+    for coin in pooled_df["coin_id"].unique():
+        sub = pooled_df[pooled_df["coin_id"] == coin].drop(columns=["coin_id"])
+        if sub.empty:
+            continue
+        first_future = sub.index.max() + pd.Timedelta(days=1)
+        try:
+            reframed, _ = data_transform(
+                sub, first_future, include_future_row=False, horizons=horizons,
+            )
+        except Exception as e:
+            logger.warning(f"data_transform failed for {coin}: {e}")
+            continue
+        reframed["coin_id"] = coin
+        pieces.append(reframed)
+
+    if not pieces:
+        return pd.DataFrame()
+
+    pooled = pd.concat(pieces, ignore_index=True)
+    pooled["date"] = pd.to_datetime(pooled["date"])
+    pooled = pooled.set_index("date").sort_index()
+    return pooled
+
+
+def _train_dir_acc(bundle: dict, transformed_df: pd.DataFrame) -> float:
+    """In-sample directional accuracy on the full training set.
+
+    Compares the sign of (predicted - prior_price) to (actual - prior_price)
+    where prior_price is the row's `prices` value (the spot at the time the
+    features were drawn). Returns 0.0 if the input lacks the required
+    columns.
+    """
+    target_col = bundle["target_col"]
+    if "prices" not in transformed_df.columns or target_col not in transformed_df.columns:
+        return 0.0
+
+    df = transformed_df.dropna(subset=[target_col]).copy()
+    if df.empty:
+        return 0.0
+
+    feat_names = bundle["feature_names"]
+    # Auto-fill coin_int from coin_id if needed.
+    if (
+        "coin_int" in feat_names
+        and "coin_int" not in df.columns
+        and "coin_id" in df.columns
+        and bundle.get("coin_to_int")
+    ):
+        df["coin_int"] = df["coin_id"].map(bundle["coin_to_int"]).astype(int)
+
+    missing = [c for c in feat_names if c not in df.columns]
+    if missing:
+        return 0.0
+
+    X = df[feat_names].to_numpy(dtype=np.float32)
+    scaler = bundle.get("scaler")
+    if scaler is not None:
+        X = scaler.transform(X)
+    preds = bundle["booster"].predict(X)
+
+    prior = df["prices"].to_numpy(dtype=float)
+    actual = df[target_col].to_numpy(dtype=float)
+    mask = prior > 0
+    if not mask.any():
+        return 0.0
+    pred_dir = np.where(preds[mask] > prior[mask], 1, -1)
+    actual_dir = np.where(actual[mask] > prior[mask], 1, -1)
+    correct = int(np.sum(pred_dir == actual_dir))
+    total = int(mask.sum())
+    return correct / total if total > 0 else 0.0
 
 
 def _sha256_of(path: Path) -> str:
@@ -161,21 +181,31 @@ def run_retrain(
     lookback_days: int = 730,
     min_train_window: int = 365,
 ) -> TrainArtifact:
-    """Build dataset, train pooled LGB, persist checkpoint, return artifact.
+    """Build dataset, fit one LGB per horizon on full history, persist.
+
+    Steps:
+      1. `build_pooled_dataset` with PIT on-chain features.
+      2. `_transform_pooled` to apply `data_transform` per coin → produces
+         `prices_h{h}` target columns.
+      3. For each horizon, `fit_pooled_full` returns a persistable bundle.
+      4. joblib.dump `{horizon: bundle}` to a versioned `.pkl`.
+      5. Compute in-sample DirAcc per horizon for diagnostics.
 
     Args:
-        coins: CoinGecko-style coin IDs to pool (e.g. ["bitcoin", "ethereum"]).
+        coins: CoinGecko coin IDs to pool (e.g. ["bitcoin", "ethereum"]).
         horizons: Forecast horizons in days (e.g. [7, 14]).
         asof: Upper-bound trade date (YYYY-mm-dd) for the training window.
         checkpoint_dir: Directory where the checkpoint pickle is written.
         lookback_days: How many days of history to load per coin.
-        min_train_window: Walk-forward warm-up window passed to LGB.
+        min_train_window: Kept in the signature for API compatibility with
+            the caller; not used here (full-fit has no walk-forward).
     """
+    del min_train_window  # API compatibility; full-fit has no walk-forward.
+
     checkpoint_dir = Path(checkpoint_dir)
     checkpoint_dir.mkdir(parents=True, exist_ok=True)
 
-    # Translate live-vocabulary kwargs to the upstream signature.
-    df = build_pooled_dataset(
+    raw = build_pooled_dataset(
         coin_universe=coins,
         lookback_days=lookback_days,
         horizons=horizons,
@@ -183,18 +213,25 @@ def run_retrain(
         add_onchain_pit=True,
     )
 
-    model_obj, metrics = model_run_pooled(
-        df, horizons=horizons, min_train_window=min_train_window
-    )
+    transformed = _transform_pooled(raw, horizons)
+    if transformed is None or len(transformed) == 0:
+        raise RuntimeError("Transformed pooled DataFrame is empty")
+
+    bundles: dict[int, dict[str, Any]] = {}
+    metrics: dict[str, float] = {}
+    for h in horizons:
+        bundle = fit_pooled_full(transformed, horizon=h)
+        bundles[h] = bundle
+        metrics[f"dir_acc_h{h}"] = _train_dir_acc(bundle, transformed)
 
     out_path = checkpoint_dir / f"lgb_{len(coins)}coin_pit_{asof}.pkl"
-    _persist_model(model_obj, out_path)
+    joblib.dump(bundles, out_path)
 
     return TrainArtifact(
         model_path=out_path,
-        train_window_start=_train_window_start(df),
+        train_window_start=_train_window_start(transformed),
         train_window_end=asof,
-        train_rows=len(df),
+        train_rows=int(len(transformed)),
         train_dir_acc_h7=float(metrics.get("dir_acc_h7", float("nan"))),
         train_dir_acc_h14=float(metrics.get("dir_acc_h14", float("nan"))),
         sha256=_sha256_of(out_path),
