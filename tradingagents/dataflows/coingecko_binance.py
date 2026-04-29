@@ -133,6 +133,33 @@ def _binance_klines_chunked(symbol_usdt: str, from_ms: int, to_ms: int) -> list:
     return all_klines
 
 
+def fetch_binance_daily(symbol: str, days: int = 2) -> pd.DataFrame:
+    """Fetch the most recent `days` daily Binance OHLCV bars for `symbol`.
+
+    Returns a DataFrame with columns date, open, high, low, close, volume.
+    Empty DataFrame on error.
+    """
+    if not symbol:
+        return pd.DataFrame()
+    now_ms = int(time.time() * 1000)
+    from_ms = now_ms - int(days) * 86_400_000
+    klines = _binance_klines_chunked(symbol, from_ms, now_ms)
+    if not klines:
+        return pd.DataFrame()
+    rows = [
+        {
+            "date": pd.to_datetime(k[0], unit="ms").strftime("%Y-%m-%d"),
+            "open": float(k[1]),
+            "high": float(k[2]),
+            "low": float(k[3]),
+            "close": float(k[4]),
+            "volume": float(k[5]),
+        }
+        for k in klines
+    ]
+    return pd.DataFrame(rows)
+
+
 # ── CoinGecko helpers (fallback) ─────────────────────────────────────
 
 _CG_MAX_RANGE_DAYS = 365

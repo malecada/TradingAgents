@@ -500,6 +500,132 @@ def get_gas_metrics(
         return f"Error fetching gas metrics for {chain}: {e}"
 
 
+# ── Incremental fetchers for live data refresh ──────────────────────
+# Thin wrappers that return canonical bitemporal long-format rows ready
+# for onchain_store.upsert_rows(). Used by
+# tradingagents.execution.live.data_refresh.
+
+_DEFILLAMA_CHAIN_BY_COIN = {"btc": [], "eth": ["Ethereum"], "bnb": ["BSC"]}
+_STABLE_LAG = timedelta(days=1)
+
+
+def fetch_coinmetrics_incremental(coins: list[str], since: str) -> pd.DataFrame:
+    """Fetch CoinMetrics rows with event_ts >= since (UTC, YYYY-MM-DD).
+
+    Returns canonical long-format frame: event_ts, as_of_ts, coin, metric,
+    value, source, status.
+    """
+    from . import coinmetrics as _cm
+
+    cm_metrics_btc = [
+        "AdrActCnt", "TxCnt", "HashRate", "CapMVRVCur", "CapMrktCurUSD",
+        "FeeTotNtv", "FlowInExUSD", "FlowOutExUSD", "IssTotUSD", "SplyCur",
+        "PriceUSD",
+    ]
+    cm_metrics_eth = [
+        "AdrActCnt", "TxCnt", "CapMVRVCur", "CapMrktCurUSD", "FeeTotNtv",
+        "FlowInExUSD", "FlowOutExUSD", "IssTotUSD", "SplyCur", "PriceUSD",
+    ]
+    cm_asset_map = {"btc": "btc", "eth": "eth", "bitcoin": "btc", "ethereum": "eth"}
+
+    start_dt = datetime.strptime(since, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+    end_dt = datetime.now(timezone.utc)
+
+    frames: list[pd.DataFrame] = []
+    for coin in coins:
+        asset = cm_asset_map.get(coin.lower())
+        if asset is None:
+            logger.warning("CM incremental: %s not supported, skipping", coin)
+            continue
+        metrics = cm_metrics_btc if asset == "btc" else cm_metrics_eth
+        df = _cm.fetch_asset_metrics_df(asset, metrics, start_dt, end_dt)
+        if df.empty:
+            continue
+        df["coin"] = asset
+        frames.append(df)
+    return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+
+
+def fetch_defillama_incremental(coins: list[str], since: str) -> pd.DataFrame:
+    """Fetch DefiLlama TVL + stablecoin rows with event_ts >= since.
+
+    Returns canonical long-format frame matching onchain_store SCHEMA_COLS.
+    """
+    from . import onchain_store as _store
+
+    start_dt = datetime.strptime(since, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+    end_dt = datetime.now(timezone.utc) + timedelta(days=1)
+
+    rows: list[dict] = []
+    for coin in coins:
+        chains = _DEFILLAMA_CHAIN_BY_COIN.get(coin.lower(), [])
+        for chain in chains:
+            try:
+                resp = _request_with_retry(
+                    f"{_DEFILLAMA_BASE_URL}/v2/historicalChainTvl/{chain}",
+                    label=f"DefiLlama {chain} TVL",
+                )
+                payload = resp.json()
+            except Exception as exc:
+                logger.warning("DefiLlama TVL %s fetch failed: %s", chain, exc)
+                continue
+            if not isinstance(payload, list):
+                continue
+            for item in payload:
+                ts = datetime.fromtimestamp(item["date"], tz=timezone.utc).replace(
+                    hour=0, minute=0, second=0, microsecond=0)
+                if not (start_dt <= ts < end_dt):
+                    continue
+                rows.append({
+                    "event_ts": ts,
+                    "as_of_ts": ts + _STABLE_LAG,
+                    "coin": coin.lower(),
+                    "metric": f"tvl_{chain.lower()}",
+                    "value": float(item["tvl"]),
+                    "source": "defillama",
+                    "status": "final",
+                })
+            time.sleep(0.3)
+
+    # Stablecoin market cap (global, written once)
+    try:
+        resp = _request_with_retry(
+            f"{_DEFILLAMA_STABLECOINS_URL}/stablecoincharts/all",
+            label="DefiLlama stablecoin history",
+        )
+        stable_payload = resp.json()
+    except Exception as exc:
+        logger.warning("DefiLlama stablecoin history fetch failed: %s", exc)
+        stable_payload = None
+    if isinstance(stable_payload, list):
+        for item in stable_payload:
+            try:
+                ts = datetime.fromtimestamp(int(item["date"]), tz=timezone.utc).replace(
+                    hour=0, minute=0, second=0, microsecond=0)
+            except (KeyError, ValueError, TypeError):
+                continue
+            if not (start_dt <= ts < end_dt):
+                continue
+            peg = item.get("totalCirculatingUSD")
+            if isinstance(peg, dict):
+                peg = peg.get("peggedUSD")
+            if peg is None:
+                continue
+            rows.append({
+                "event_ts": ts,
+                "as_of_ts": ts + _STABLE_LAG,
+                "coin": "global",
+                "metric": "stablecoin_mcap_total",
+                "value": float(peg),
+                "source": "defillama",
+                "status": "final",
+            })
+
+    if not rows:
+        return pd.DataFrame()
+    return pd.DataFrame.from_records(rows, columns=_store.SCHEMA_COLS)
+
+
 def get_stablecoin_supply(
     chain: Annotated[str, "Blockchain name: 'ethereum' or 'bsc'"],
     start_date: Annotated[str, "Start date in yyyy-mm-dd format"],
