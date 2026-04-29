@@ -18,6 +18,7 @@ from tradingagents.dataflows.onchain import (
     fetch_defillama_incremental,
 )
 from tradingagents.dataflows.coingecko_binance import fetch_binance_daily
+from tradingagents.execution.live.config import to_binance_symbol
 
 logger = logging.getLogger(__name__)
 
@@ -65,13 +66,35 @@ def refresh_defillama(coins: list[str], store_root: Path) -> None:
     logger.info("DefiLlama: upserted %d rows", n)
 
 
-def refresh_ohlcv(coin: str, cache_root: Path) -> None:
-    df = fetch_binance_daily(symbol=f"{coin}USDT", days=2)
+def refresh_ohlcv(coin: str, cache_root: Path, min_history: int = 60) -> None:
+    """Refresh OHLCV cache for ``coin`` (CoinGecko id or Binance base).
+
+    Cold-start backfill: when the cache is missing or shorter than
+    ``min_history`` rows, fetch ``min_history`` days; otherwise the cheap
+    incremental 2-day fetch. The 60-day default ensures the first cycle
+    after a fresh deploy has enough history for vol_lookback=20 and
+    SMA30 computations.
+    """
+    cache_root = Path(cache_root)
+    cache_root.mkdir(parents=True, exist_ok=True)
+    symbol = to_binance_symbol(coin)
+    out = cache_root / f"{symbol}_1d.parquet"
+    existing_rows = 0
+    if out.exists():
+        try:
+            existing_rows = len(pd.read_parquet(out))
+        except Exception:
+            existing_rows = 0
+    days = min_history if existing_rows < min_history else 2
+    df = fetch_binance_daily(symbol=symbol, days=days)
     if df.empty:
-        logger.warning("Binance OHLCV returned 0 rows for %s", coin)
+        logger.warning("Binance OHLCV returned 0 rows for %s", symbol)
         return
-    append_ohlcv(df, coin, cache_root)
-    logger.info("OHLCV: appended %d rows for %s", len(df), coin)
+    append_ohlcv(df, symbol.replace("USDT", ""), cache_root)
+    logger.info(
+        "OHLCV: appended %d rows for %s (cache had %d)",
+        len(df), symbol, existing_rows,
+    )
 
 
 def _yesterday_utc() -> str:

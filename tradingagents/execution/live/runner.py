@@ -135,6 +135,12 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                 horizons=cfg.horizons,
                 asof=asof_date,
             )
+        # Persist feature snapshots so any cycle's decision is reconstructible
+        # from the journal alone (spec guarantee). One row per (coin, feature).
+        for coin, p in preds.items():
+            j.log_feature_snapshot(cycle_id, coin, "ref_price", p["ref_price"], "OHLCV")
+            for h in cfg.horizons:
+                j.log_feature_snapshot(cycle_id, coin, f"pred_h{h}", p[f"pred_h{h}"], "LGB")
 
         ex = ExchangeClient(
             api_key=cfg.binance_api_key,
@@ -185,14 +191,22 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                     trend_multiplier=cfg.trend_multiplier,
                 )
                 # Log per-prediction (one row per horizon).
+                # signal_h7 / signal_h14 carry the per-horizon direction from
+                # the model (+1/-1/0); consensus_signal carries the V2
+                # term-structure consensus output. Both columns get the same
+                # values across horizon rows — they describe global state at
+                # decision time, not per-horizon.
+                dirs = sz.dirs_per_horizon or {}
+                sig_h7 = dirs.get(7)
+                sig_h14 = dirs.get(14)
                 for h in cfg.horizons:
                     j.log_prediction(
                         cycle_id=cycle_id, coin=coin, horizon=h,
                         model_path_sha=artifact.sha256,
                         pred_value=preds[coin][f"pred_h{h}"],
                         ref_price=preds[coin]["ref_price"],
-                        signal_h7=sz.signal if h == 7 else None,
-                        signal_h14=sz.signal if h == 14 else None,
+                        signal_h7=sig_h7,
+                        signal_h14=sig_h14,
                         consensus_signal=sz.signal,
                     )
                 j.log_sizing(
@@ -261,6 +275,37 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                     )
                 continue
 
+            # Frequency guard: skip if this coin already executed today.
+            import sqlite3
+            conn = sqlite3.connect(str(data_dir / "trade_journal.db"))
+            today_count = conn.execute(
+                "SELECT COUNT(*) FROM trades WHERE cycle_id = ? AND coin = ? "
+                "AND status='EXECUTED'",
+                (cycle_id, coin),
+            ).fetchone()[0]
+            conn.close()
+            ok_freq, why = risk.check_frequency_guard(coin, today_count)
+            j.log_risk_check(
+                cycle_id, coin, "frequency_guard", ok_freq, today_count, 0, why,
+            )
+            if not ok_freq:
+                continue
+
+            # Max positions: count coins with non-zero exposure on the exchange.
+            open_count = sum(
+                1 for c in cfg.coin_universe
+                if abs(ex.get_current_position(to_binance_symbol(c))) > 1e-9
+            )
+            ok_pos, why = risk.check_max_positions(
+                open_count, cfg.max_open_positions, opening_new=True,
+            )
+            j.log_risk_check(
+                cycle_id, coin, "max_positions", ok_pos, open_count,
+                cfg.max_open_positions, why,
+            )
+            if not ok_pos:
+                continue
+
             side = "BUY" if sz.final_size_notional > 0 else "SELL"
             qty = (
                 abs(sz.final_size_notional) * portfolio_before
@@ -286,6 +331,10 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                         exec_price = float(order.get(
                             "avgPrice", preds[coin]["ref_price"],
                         ))
+                        ref_px = preds[coin]["ref_price"]
+                        slippage = (
+                            (exec_price - ref_px) / ref_px if ref_px else 0.0
+                        )
                         stop_side = "SELL" if side == "BUY" else "BUY"
                         stop_price = (
                             exec_price * (1 - cfg.stop_loss_pct)
@@ -310,7 +359,7 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                         j.log_trade(
                             cycle_id=cycle_id, coin=coin, side=side, qty=qty,
                             entry_price=exec_price, exit_price=None,
-                            pnl=None, fees=None, slippage=None,
+                            pnl=None, fees=None, slippage=slippage,
                             order_id=order_id, stop_loss_id=stop_id,
                             status=status,
                         )

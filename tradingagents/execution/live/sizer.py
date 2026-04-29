@@ -32,6 +32,7 @@ class SizingResult:
     sma_multiplier: float
     final_size_notional: float
     vol_ok: bool
+    dirs_per_horizon: dict[int, int] | None = None
 
 
 def compute_size(
@@ -52,6 +53,18 @@ def compute_size(
     signal = int(signals[0])
     confidence = float(conf[0])
 
+    # Per-horizon directions (decoupled from the consensus): each prediction
+    # is +1 if pred>ref, -1 if pred<ref, 0 if equal/missing. Lets the journal
+    # record signal_h7 / signal_h14 distinctly from the consensus_signal.
+    dirs_per_horizon: dict[int, int] = {}
+    for h in horizons:
+        p = prediction[f"pred_h{h}"]
+        ref = prediction["ref_price"]
+        if pd.isna(p) or pd.isna(ref):
+            dirs_per_horizon[h] = 0
+        else:
+            dirs_per_horizon[h] = 1 if p > ref else (-1 if p < ref else 0)
+
     prices = price_history.sort_values("date")["close"].values
     vol_series = compute_realized_vol(prices, lookback=vol_lookback)
     realized_vol = float(vol_series[-1]) if len(vol_series) and not np.isnan(vol_series[-1]) else float("nan")
@@ -61,7 +74,8 @@ def compute_size(
     if not vol_ok or signal == 0:
         return SizingResult(coin=coin, signal=signal, confidence=confidence,
                              realized_vol=realized_vol, base_size=0.0, leverage=0.0,
-                             sma_multiplier=1.0, final_size_notional=0.0, vol_ok=vol_ok)
+                             sma_multiplier=1.0, final_size_notional=0.0, vol_ok=vol_ok,
+                             dirs_per_horizon=dirs_per_horizon)
 
     base = vol_targeted_size(signal, confidence, realized_vol, target_vol, kelly_fraction)
     sized = apply_leverage(base, confidence, max_leverage)
@@ -81,4 +95,5 @@ def compute_size(
         coin=coin, signal=signal, confidence=confidence, realized_vol=realized_vol,
         base_size=base, leverage=sized, sma_multiplier=sma_mult,
         final_size_notional=final_size, vol_ok=True,
+        dirs_per_horizon=dirs_per_horizon,
     )

@@ -65,6 +65,37 @@ def test_refresh_binance_ohlcv_appends_yesterday(tmp_path):
     with patch.object(data_refresh, "fetch_binance_daily",
                       return_value=fake_bar) as mock_f, \
          patch.object(data_refresh, "append_ohlcv") as mock_app:
-        data_refresh.refresh_ohlcv(coin="BTC", cache_root=tmp_path)
+        data_refresh.refresh_ohlcv(coin="bitcoin", cache_root=tmp_path)
         mock_f.assert_called_once()
         mock_app.assert_called_once()
+        # Cold-start: no cache file → fetches the full min_history window.
+        kwargs = mock_f.call_args.kwargs
+        assert kwargs.get("symbol") == "BTCUSDT"
+
+
+def test_refresh_binance_ohlcv_incremental_when_cache_warm(tmp_path):
+    """When cache has >= min_history rows, refresh fetches only 2 days."""
+    from tradingagents.execution.live import data_refresh
+
+    # Seed a warm cache with 100 rows (>= default min_history=60).
+    cache_file = tmp_path / "BTCUSDT_1d.parquet"
+    seed = pd.DataFrame({
+        "date": pd.date_range("2026-01-01", periods=100, freq="D"),
+        "open": [60000] * 100, "high": [61000] * 100,
+        "low": [59000] * 100, "close": [60500] * 100, "volume": [1000] * 100,
+    })
+    seed.to_parquet(cache_file, index=False)
+
+    fake_bar = pd.DataFrame({
+        "date": ["2026-05-11"], "open": [60000], "high": [61000],
+        "low": [59000], "close": [60500], "volume": [1000],
+    })
+    with patch.object(data_refresh, "fetch_binance_daily",
+                      return_value=fake_bar) as mock_f, \
+         patch.object(data_refresh, "append_ohlcv") as mock_app:
+        data_refresh.refresh_ohlcv(coin="bitcoin", cache_root=tmp_path)
+        mock_f.assert_called_once()
+        mock_app.assert_called_once()
+        kwargs = mock_f.call_args.kwargs
+        assert kwargs.get("days") == 2
+        assert kwargs.get("symbol") == "BTCUSDT"
