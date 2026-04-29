@@ -54,3 +54,8 @@ include = ["tradingagents*", "cli*"]
 
 [tool.setuptools.package-data]
 cli = ["static/*"]
+
+[tool.pytest.ini_options]
+markers = [
+    "online: requires external API access; opt-in via RUN_ONLINE_TESTS=1",
+]

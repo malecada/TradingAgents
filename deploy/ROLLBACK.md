@@ -15,8 +15,20 @@ Cycles will not run again until timers are re-enabled.
 ssh tabot@<host>
 sudo systemctl stop ta-cycle.timer ta-rebacktest.timer
 cd /opt/tradingagents/repo
-EnvironmentFile=/opt/tradingagents/secrets/.env.trading \
-  /opt/tradingagents/venv/bin/python -m tradingagents.execution.live.runner --kill-all
+set -a; source /opt/tradingagents/secrets/.env.trading; set +a
+/opt/tradingagents/venv/bin/python -m tradingagents.execution.live.runner --kill-all
+```
+
+## Weekly rebacktest is intentionally not enabled on first deploy
+
+`ta-rebacktest.timer` ships with the systemd units but `deploy.sh` does
+not enable it on first boot. The pred-dir input is currently hardcoded
+in `rebacktest.compute_backtest_metrics` (`BACKTEST_PRED_DIR`) and the
+weekly-comparison semantics need design work before turning it on. To
+re-enable manually once that work lands:
+
+```bash
+sudo systemctl enable --now ta-rebacktest.timer
 ```
 
 ## Roll back to previous git tag
