@@ -76,7 +76,7 @@ def generate_term_structure_signals(
     return signals, confidence
 
 
-# ── Reusable Components (from baseline_strategy.py v1) ───────────────
+# ── Volatility, Sizing, Leverage ─────────────────────────────────────
 
 
 def compute_realized_vol(prices: np.ndarray, lookback: int) -> np.ndarray:
