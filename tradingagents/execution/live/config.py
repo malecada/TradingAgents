@@ -5,6 +5,26 @@ import os
 from dataclasses import dataclass
 
 
+# CoinGecko id → Binance base symbol. The model code uses CoinGecko ids
+# (`bitcoin`, `ethereum`, `binancecoin`); the exchange uses Binance bases
+# (`BTC`, `ETH`, `BNB`) plus the `USDT` quote suffix.
+_COIN_TO_BINANCE_BASE = {
+    "bitcoin": "BTC",
+    "ethereum": "ETH",
+    "binancecoin": "BNB",
+}
+
+
+def to_binance_symbol(coin_id: str) -> str:
+    """Convert a CoinGecko coin id to its Binance Futures USDT-pair symbol.
+
+    Falls back to upper-casing the id if the coin is not in the known map —
+    callers passing already-base-cased symbols (e.g. `BTC`) get `BTCUSDT`.
+    """
+    base = _COIN_TO_BINANCE_BASE.get(coin_id.lower(), coin_id.upper())
+    return f"{base}USDT"
+
+
 @dataclass(frozen=True)
 class LiveConfig:
     live_mode: bool
@@ -82,7 +102,7 @@ def load_config() -> LiveConfig:
         symmetric=_bool("SYMMETRIC", "true"),
         arima_filter=_bool("ARIMA_FILTER", "false"),
         initial_capital=_float("INITIAL_CAPITAL", 10000.0),
-        coin_universe=[c.strip() for c in os.environ.get("COIN_UNIVERSE", "BTC,ETH,BNB").split(",") if c.strip()],
+        coin_universe=[c.strip() for c in os.environ.get("COIN_UNIVERSE", "bitcoin,ethereum,binancecoin").split(",") if c.strip()],
     )
     if cfg.max_leverage <= 0:
         raise ValueError(f"MAX_LEVERAGE must be > 0, got {cfg.max_leverage}")

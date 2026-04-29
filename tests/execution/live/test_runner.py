@@ -53,9 +53,9 @@ def test_dry_run_completes_full_pipeline(env_setup):
             is_fallback=False,
         )
         mock_pred.return_value = {
-            "BTC": {"ref_price": 60000.0, "pred_h7": 63000.0, "pred_h14": 66000.0},
-            "ETH": {"ref_price": 3000.0, "pred_h7": 2950.0, "pred_h14": 2900.0},
-            "BNB": {"ref_price": 400.0, "pred_h7": 410.0, "pred_h14": 405.0},
+            "bitcoin": {"ref_price": 60000.0, "pred_h7": 63000.0, "pred_h14": 66000.0},
+            "ethereum": {"ref_price": 3000.0, "pred_h7": 2950.0, "pred_h14": 2900.0},
+            "binancecoin": {"ref_price": 400.0, "pred_h7": 410.0, "pred_h14": 405.0},
         }
         mock_ex_cls.return_value.get_total_portfolio_value.return_value = 10000.0
         mock_ex_cls.return_value.get_usdt_balance.return_value = 10000.0
@@ -92,9 +92,9 @@ def test_run_cycle_logs_to_journal(env_setup):
             is_fallback=False,
         )
         mock_pred.return_value = {
-            "BTC": {"ref_price": 60000.0, "pred_h7": 63000.0, "pred_h14": 66000.0},
-            "ETH": {"ref_price": 3000.0, "pred_h7": 3050.0, "pred_h14": 3100.0},
-            "BNB": {"ref_price": 400.0, "pred_h7": 410.0, "pred_h14": 420.0},
+            "bitcoin": {"ref_price": 60000.0, "pred_h7": 63000.0, "pred_h14": 66000.0},
+            "ethereum": {"ref_price": 3000.0, "pred_h7": 3050.0, "pred_h14": 3100.0},
+            "binancecoin": {"ref_price": 400.0, "pred_h7": 410.0, "pred_h14": 420.0},
         }
         mock_ex_cls.return_value.get_total_portfolio_value.return_value = 10000.0
         mock_ex_cls.return_value.get_usdt_balance.return_value = 10000.0

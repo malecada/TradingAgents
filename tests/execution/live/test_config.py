@@ -27,7 +27,7 @@ def env_vars(monkeypatch):
     monkeypatch.setenv("SYMMETRIC", "true")
     monkeypatch.setenv("ARIMA_FILTER", "false")
     monkeypatch.setenv("INITIAL_CAPITAL", "10000")
-    monkeypatch.setenv("COIN_UNIVERSE", "BTC,ETH,BNB")
+    monkeypatch.setenv("COIN_UNIVERSE", "bitcoin,ethereum,binancecoin")
 
 
 def test_load_returns_typed_config(env_vars):
@@ -39,8 +39,20 @@ def test_load_returns_typed_config(env_vars):
     assert cfg.max_leverage == 3.0
     assert cfg.horizons == [7, 14]
     assert cfg.symmetric is True
-    assert cfg.coin_universe == ["BTC", "ETH", "BNB"]
+    assert cfg.coin_universe == ["bitcoin", "ethereum", "binancecoin"]
     assert cfg.initial_capital == 10000.0
+
+
+def test_to_binance_symbol_maps_known_coins():
+    from tradingagents.execution.live.config import to_binance_symbol
+    assert to_binance_symbol("bitcoin") == "BTCUSDT"
+    assert to_binance_symbol("ethereum") == "ETHUSDT"
+    assert to_binance_symbol("binancecoin") == "BNBUSDT"
+
+
+def test_to_binance_symbol_falls_back_to_uppercase():
+    from tradingagents.execution.live.config import to_binance_symbol
+    assert to_binance_symbol("dogecoin") == "DOGECOINUSDT"
 
 
 def test_missing_required_raises(monkeypatch):

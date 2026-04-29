@@ -33,6 +33,7 @@ from tradingagents.execution.live import (
     sizer,
     structured_log,
 )
+from tradingagents.execution.live.config import to_binance_symbol
 
 logger = logging.getLogger(__name__)
 
@@ -142,12 +143,23 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
         )
         portfolio_before = ex.get_total_portfolio_value()
 
+        # Daily PnL for the kill-switch gate. compute_live_metrics returns
+        # 0.0 when fewer than 2 snapshots exist (correct for cycle 1 of the day).
+        from datetime import date
+        today_str = date.today().isoformat()
+        try:
+            from tradingagents.execution.live.rebacktest import compute_live_metrics
+            intraday_metrics = compute_live_metrics(today_str, today_str)
+            pnl_today_pct = intraday_metrics.get("return_pct", 0.0)
+        except Exception:
+            pnl_today_pct = 0.0  # safe fallback if journal unavailable
+
         for coin in cfg.coin_universe:
             if _shutdown_requested:
                 break
             if coin not in preds:
                 continue
-            symbol = f"{coin}USDT"
+            symbol = to_binance_symbol(coin)
 
             cache = data_dir / "ohlcv_cache" / f"{symbol}_1d.parquet"
             history = pd.read_parquet(cache) if cache.exists() else pd.DataFrame()
@@ -207,7 +219,8 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                 if not ok_lev:
                     continue
 
-                pnl_today_pct = 0.0  # placeholder (computed in P12.2 wiring)
+                # pnl_today_pct was pre-computed from today's portfolio
+                # snapshots once per cycle (above the per-coin loop).
                 ok_loss, why = risk.check_daily_loss(
                     pnl_today_pct, cfg.max_daily_loss_pct,
                 )
@@ -349,7 +362,7 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
             cycle_id=cycle_id, total_value=portfolio_after,
             usdt_balance=ex.get_usdt_balance(),
             position_qty_per_coin={
-                c: ex.get_current_position(f"{c}USDT")
+                c: ex.get_current_position(to_binance_symbol(c))
                 for c in cfg.coin_universe
             },
             unrealized_pnl=portfolio_after - portfolio_before,
@@ -400,10 +413,13 @@ def replay_cycle(cycle_id: str) -> CycleResult:
     sizer.compute_size + shadow.compute_shadow_decision to verify they still
     produce the recorded values. Implementation deferred to a future phase.
     """
-    raise NotImplementedError(
-        "Replay reads predictions, sizing, risk_checks rows for cycle_id and "
-        "re-runs sizer.compute_size + shadow.compute_shadow_decision to verify "
-        "they still produce the recorded values."
+    logger.error(
+        "--replay is not implemented in live-v1.0; use the journal SQLite "
+        "DB to inspect cycle %s manually.", cycle_id,
+    )
+    return CycleResult(
+        cycle_id=cycle_id, status="error", n_executed=0,
+        error_msg="replay_cycle not implemented",
     )
 
 
@@ -415,7 +431,7 @@ def kill_all() -> None:
         testnet=not cfg.live_mode,
     )
     for coin in cfg.coin_universe:
-        symbol = f"{coin}USDT"
+        symbol = to_binance_symbol(coin)
         try:
             if hasattr(ex, "cancel_all_orders"):
                 ex.cancel_all_orders(symbol)
@@ -460,7 +476,7 @@ def main():
         sys.exit(0)
     if args.replay:
         replay_cycle(args.replay)
-        sys.exit(0)
+        sys.exit(2)  # 2 = not-implemented; distinct from cycle failure (1)
     result = run_cycle(cycle_id=args.cycle_id, dry_run=args.dry_run)
     sys.exit(0 if result.status == "ok" else 1)
 
