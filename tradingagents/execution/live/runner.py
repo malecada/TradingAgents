@@ -280,7 +280,7 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
             conn = sqlite3.connect(str(data_dir / "trade_journal.db"))
             today_count = conn.execute(
                 "SELECT COUNT(*) FROM trades WHERE cycle_id = ? AND coin = ? "
-                "AND status='EXECUTED'",
+                "AND status IN ('EXECUTED', 'UNPROTECTED', 'DRY_RUN')",
                 (cycle_id, coin),
             ).fetchone()[0]
             conn.close()
@@ -328,9 +328,18 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                     try:
                         order = ex.place_market_order(symbol, side, qty)
                         order_id = str(order.get("orderId", ""))
-                        exec_price = float(order.get(
-                            "avgPrice", preds[coin]["ref_price"],
-                        ))
+                        # Binance Futures MARKET orders return avgPrice="0.00"
+                        # in the placement response — fill price is only known
+                        # afterward. Try the response field; if it's zero or
+                        # missing, fall back to the live ticker price (close
+                        # enough for slippage telemetry on testnet).
+                        avg_price = float(order.get("avgPrice") or 0.0)
+                        if avg_price <= 0:
+                            try:
+                                avg_price = ex.get_ticker_price(symbol)
+                            except Exception:
+                                avg_price = preds[coin]["ref_price"]
+                        exec_price = avg_price
                         ref_px = preds[coin]["ref_price"]
                         slippage = (
                             (exec_price - ref_px) / ref_px if ref_px else 0.0
