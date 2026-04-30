@@ -87,11 +87,13 @@ def build_features_asof(
         .groupby("coin_id", as_index=False)
         .tail(1)
     )
-    # Normalize column name: backtest path calls it `prices`, live API uses
-    # `ref_price` everywhere else (sizer, journal, runner). _transform_pooled
-    # produces `prices`; alias it so callers see a single canonical name.
+    # Normalize column names: live API uses `ref_price`, but the trained
+    # checkpoint's feature_names includes `prices` (since fit_pooled_full
+    # treats it as a feature). Add `ref_price` as an alias and KEEP `prices`
+    # so predict_pooled can still find it.
     if "prices" in latest.columns and "ref_price" not in latest.columns:
-        latest = latest.rename(columns={"prices": "ref_price"})
+        latest = latest.copy()
+        latest["ref_price"] = latest["prices"]
     return latest
 
 
