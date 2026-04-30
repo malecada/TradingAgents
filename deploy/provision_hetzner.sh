@@ -28,8 +28,8 @@ $SSH "mkdir -p /home/tabot/.ssh && chmod 700 /home/tabot/.ssh"
 echo "→ copying SSH key from root to tabot"
 $SSH "cp /root/.ssh/authorized_keys /home/tabot/.ssh/ && chown -R tabot:tabot /home/tabot/.ssh && chmod 600 /home/tabot/.ssh/authorized_keys"
 
-echo "→ installing python3.11 + git + sqlite3"
-$SSH "apt-get install -y python3.11 python3.11-venv python3.11-dev git sqlite3 build-essential"
+echo "→ installing python3.12 + git + sqlite3"
+$SSH "apt-get install -y python3.12 python3.12-venv python3.12-dev git sqlite3 build-essential"
 
 echo "→ creating /opt/tradingagents"
 $SSH "mkdir -p /opt/tradingagents && chown tabot:tabot /opt/tradingagents"

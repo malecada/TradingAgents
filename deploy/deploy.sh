@@ -23,7 +23,7 @@ fi
 $SSH "cd /opt/tradingagents/repo && git fetch --tags && git checkout $TAG"
 
 echo "→ creating venv + installing"
-$SSH "[ -d /opt/tradingagents/venv ] || python3.11 -m venv /opt/tradingagents/venv"
+$SSH "[ -d /opt/tradingagents/venv ] || python3.12 -m venv /opt/tradingagents/venv"
 $SSH "/opt/tradingagents/venv/bin/pip install -U pip wheel && /opt/tradingagents/venv/bin/pip install -e /opt/tradingagents/repo"
 
 echo "→ ensuring data + log dirs"
