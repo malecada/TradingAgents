@@ -144,6 +144,15 @@ def normalize_rows(
         for m in metric_list:
             if m not in row:
                 continue
+            raw_val = row[m]
+            if raw_val is None or raw_val == "":
+                # CoinMetrics returns null for metrics not yet published or
+                # not applicable on a given date — skip silently.
+                continue
+            try:
+                value = float(raw_val)
+            except (TypeError, ValueError):
+                continue
             status = row.get(f"{m}-status", "final")
             lag_days = (
                 ingest_lag_days_flash
@@ -156,7 +165,7 @@ def normalize_rows(
                 "as_of_ts": as_of_ts.to_pydatetime() if isinstance(as_of_ts, pd.Timestamp) else as_of_ts,
                 "coin": asset.lower(),
                 "metric": m,
-                "value": float(row[m]),
+                "value": value,
                 "source": "coinmetrics_community",
                 "status": status,
             })
