@@ -306,11 +306,27 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
             if not ok_pos:
                 continue
 
-            side = "BUY" if sz.final_size_notional > 0 else "SELL"
-            qty = (
-                abs(sz.final_size_notional) * portfolio_before
+            # Target position is what V2 sizing says the book SHOULD look
+            # like after this cycle. Trade only the delta vs the current
+            # exchange position so we don't stack notional across days.
+            target_signed_qty = (
+                sz.final_size_notional * portfolio_before
                 / preds[coin]["ref_price"]
             )
+            try:
+                current_signed_qty = float(ex.get_current_position(symbol))
+            except Exception:
+                current_signed_qty = 0.0
+            delta_qty = target_signed_qty - current_signed_qty
+            if abs(delta_qty) < 1e-8:
+                structured.event(
+                    "execute", "no_change",
+                    {"coin": coin, "current": current_signed_qty,
+                     "target": target_signed_qty},
+                )
+                continue
+            side = "BUY" if delta_qty > 0 else "SELL"
+            qty = abs(delta_qty)
 
             with structured.step("execute", {"coin": coin}):
                 if dry_run:
