@@ -291,21 +291,6 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
             if not ok_freq:
                 continue
 
-            # Max positions: count coins with non-zero exposure on the exchange.
-            open_count = sum(
-                1 for c in cfg.coin_universe
-                if abs(ex.get_current_position(to_binance_symbol(c))) > 1e-9
-            )
-            ok_pos, why = risk.check_max_positions(
-                open_count, cfg.max_open_positions, opening_new=True,
-            )
-            j.log_risk_check(
-                cycle_id, coin, "max_positions", ok_pos, open_count,
-                cfg.max_open_positions, why,
-            )
-            if not ok_pos:
-                continue
-
             # Target position is what V2 sizing says the book SHOULD look
             # like after this cycle. Trade only the delta vs the current
             # exchange position so we don't stack notional across days.
@@ -327,6 +312,28 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                 continue
             side = "BUY" if delta_qty > 0 else "SELL"
             qty = abs(delta_qty)
+
+            # Max positions check: only blocks NEW entries (current was flat
+            # and target is non-flat). Modifying or closing existing
+            # positions is always allowed regardless of open count.
+            opening_new = (
+                abs(current_signed_qty) < 1e-9
+                and abs(target_signed_qty) > 1e-9
+            )
+            open_count = sum(
+                1 for c in cfg.coin_universe
+                if abs(ex.get_current_position(to_binance_symbol(c))) > 1e-9
+            )
+            ok_pos, why = risk.check_max_positions(
+                open_count, cfg.max_open_positions,
+                opening_new=opening_new,
+            )
+            j.log_risk_check(
+                cycle_id, coin, "max_positions", ok_pos, open_count,
+                cfg.max_open_positions, why,
+            )
+            if not ok_pos:
+                continue
 
             with structured.step("execute", {"coin": coin}):
                 if dry_run:
