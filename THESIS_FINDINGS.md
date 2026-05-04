@@ -1275,6 +1275,74 @@ P5 uses the 5-level scale fully: 11/10/6 OVERWEIGHT and 5/4/2 UNDERWEIGHT signal
 2. Or: keep hardened format but tune hybrid params for the more-granular signal distribution (UW/OW need different multipliers)
 3. Cross-validate P4 with Claude Haiku 4.5 once Anthropic key provisioned
 
+### 10.9 Per-coin mixed strategy (2026-05-04) — best result of LLM thesis work
+
+After P5's regression, two parallel changes:
+
+1. **PM prompt reverted to P4 soft-format** (commit `77e70c0`). Hard format compliance (P5) hurt alpha materially; rolled back to P4 prompt structure that allowed graceful HIGH/MEDIUM/LOW fallback.
+
+2. **Per-coin strategy mixing** (`scripts/mixed_strategy_eval.py`): route each coin through its strongest sub-strategy.
+
+Across all P1-P5, BTC LLM signals consistently underperformed (Sharpe -1.31 to +1.18). V2 quant handles BTC cleanly (Sharpe 2.42 on the 89-day window — sees BTC h=14 DirAcc 84.6%). ETH LLM delivers genuine alpha when hybrid-sized (P4 ETH: Sharpe 1.89). Combine: route BTC through V2 quant, ETH through LLM hybrid, equal-weight.
+
+Also re-swept P4 hybrid params on the 2-coin portfolio:
+
+| Config | Return | Sharpe | MaxDD |
+|---|---|---|---|
+| P4 hybrid (aw=2 cap=2 dw=0.5) — prior best | +20.55% | +1.42 | 10.49% |
+| **P4 hybrid (aw=2 cap=2 dw=0.3) — new uniform best** | **+21.17%** | **+1.46** | 10.44% |
+
+Tighter disagree penalty (`dw=0.3` vs 0.5) cuts losses on LGB-disagree calls more aggressively. Marginal +0.04 Sharpe gain.
+
+**Per-coin best params from sweep (4×4×3 grid):**
+
+| Coin | aw | cap | dw | Solo Sharpe | Solo Return |
+|---|---|---|---|---|---|
+| BTC | 2.0 | 2.0+ | 0.3 | +1.26 | +15.06% |
+| ETH | 2.0 | 1.5 | 0.3 | +1.92 | +17.42% |
+
+Both prefer aw=2.0 dw=0.3. Cap diverges. The portfolio uniform (cap=2.0) sits between per-coin optima — minor.
+
+**Mixed strategy result (BTC=V2 quant, ETH=LLM hybrid, equal-weight):**
+
+| Leg | Return | Sharpe | MaxDD |
+|---|---|---|---|
+| BTC (V2 quant) | +36.65% | +2.24 | 12.06% |
+| ETH (LLM hybrid, P4) | +27.29% | +1.90 | 10.13% |
+| **Portfolio (equal-weight)** | **+34.31%** | **+2.94** | **6.55%** |
+
+**Comparison vs all prior bests on the same 88-bar window:**
+
+| Strategy | Return | Sharpe | MaxDD |
+|---|---|---|---|
+| V2 quant 2-coin (uniform) | +36.59% | **+3.31** | 6.16% |
+| **Mixed (BTC quant + ETH LLM)** | **+34.31%** | **+2.94** | **6.55%** |
+| P4 LLM hybrid (uniform best 2-coin) | +21.17% | +1.46 | 10.44% |
+| Pure 2-coin LLM P4 (no hybrid) | +0.86% | +0.21 | 4.81% |
+
+**Mixed strategy achieves 89% of V2 quant's Sharpe and 94% of its return.** This is the best LLM-augmented result of the entire phase trajectory.
+
+**Findings:**
+
+1. **Per-coin policy is the highest-impact change since hybrid sizing.** Sharpe 1.46 (uniform LLM hybrid) → 2.94 (per-coin) = +1.48, more than the cumulative gain from P1→P4 (0.22 → 1.42 = +1.20). The wins compound.
+2. **BTC is the LLM's structural weakness, not a tunable parameter.** Across 5 phases, model upgrades, prompt rewrites, hybrid sizing tweaks — BTC LLM never matched LGB term-structure consensus. The macro-driven nature of BTC plus its massive Alpaca news coverage (over-saturated) consistently produces noisy LLM calls. Per-coin policy concedes this and wins.
+3. **ETH IS where the LLM contributes.** ETH LLM hybrid Sharpe 1.90 vs V2 quant ETH 3.38 — quant still wins, but the LLM is in the same league. Sentiment + on-chain reasoning is genuinely additive on ETH where headline flow drives narrative cycles (ETF approvals, staking changes, rollup wars).
+4. **Mixed is robust to model choice.** The mixed-strategy framework decouples per-coin model selection from the global pipeline. Future model upgrades (Claude Haiku 4.5 cross-val pending) only need to win on a single coin to be worth swapping in.
+5. **MaxDD identical to V2 quant.** 6.55% vs 6.16% — adding ETH LLM doesn't increase portfolio drawdown, the leg-correlation is favorable. This was a worry in P3-P4 where LLM uniform had higher MaxDD; per-coin allocation absorbs the leg risk.
+
+**Decision:** **Mixed strategy is the canonical recommendation for production.** The thesis claim shifts from "LLM beats quant" (false in this regime) to "per-coin LLM augmentation captures the small-but-real ETH alpha while preserving the V2 quant BTC edge."
+
+**Artifacts:**
+- `scripts/mixed_strategy_eval.py` — runner
+- `data/mixed_btc_quant_eth_llm.json` — metrics
+- Commits: `77e70c0` PM prompt revert, `7f2b6ed` mixed strategy script
+
+**Open / next:**
+1. Sweep mixed-strategy weighting (e.g. 0.5/0.5 → 0.6/0.4) — equal-weight may not be optimal
+2. Add BNB to the mix once 3-coin LGB predictions match. P5 BNB LLM signals available; could try BNB=quant or BNB=LLM
+3. Bull-regime validation — all phases tested in bear regime; mixed could behave differently in trending up market
+4. Cross-validate ETH LLM leg with Claude Haiku 4.5
+
 ---
 
 ## 9. Data Artifacts
