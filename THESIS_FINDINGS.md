@@ -1205,6 +1205,76 @@ BTC raw is worse than P3 raw — gpt-5.4-mini's increased BUY share got whipsawe
 
 **Next step (open):** Cross-validate with a second model cohort (Claude Haiku 4.5 / OpenRouter) to test whether P4 gains are GPT-5.4-specific or genuine signal. Anthropic key not yet provisioned.
 
+### 10.8 Phase 5: PM-prompt format hardening + 3-coin rerun (2026-05-04)
+
+Two changes, regenerated 3-coin signals fresh:
+
+1. **PM-prompt format hardening.** Moved `Confidence: NN/100` format spec to the TOP of the PM prompt with three concrete examples; required two-line literal output `Rating: ...` / `Confidence: NN/100` within the first 5 lines; marked non-compliance "invalid". Goal: push numeric extraction past P4's 54%.
+2. **3-coin scope.** Added BNB to extend P4 wins beyond BTC+ETH.
+
+**Numeric extraction: 100% (270/270 rows across 3 coins).** Hardening fully solved the format-compliance problem.
+
+**Bash watchdog deployed alongside.** P5 stalled for 2+ days with 6 procs alive but log mtime frozen — Python's `concurrent.futures` thread timeout couldn't kill a thread blocked on a TCP socket inside the OpenAI client retry loop. Bash-side watchdog in `run_until_done.sh` polls log mtime every 60s; SIGTERM/SIGKILL after 15min of staleness. `commit 0cc8661`.
+
+**Signal distribution (P5 vs P4):**
+
+| Coin | P4 (gpt-5.4-mini, soft format) | P5 (gpt-5.4-mini, hard format) |
+|---|---|---|
+| BTC | 53 SELL / 19 BUY / 17 HOLD / 1 UW | 44 SELL / 11 BUY / 19 HOLD / 11 OW / 5 UW |
+| ETH | 55 SELL / 21 BUY / 14 HOLD | 51 SELL / 13 BUY / 12 HOLD / 10 OW / 4 UW |
+| BNB | (not in P4) | 48 SELL / 22 BUY / 12 HOLD / 6 OW / 2 UW |
+
+P5 uses the 5-level scale fully: 11/10/6 OVERWEIGHT and 5/4/2 UNDERWEIGHT signals appear (P4 had 1 UW total). The strict-format prompt apparently pushed the PM to be more granular about position-sizing intent.
+
+**P5 raw backtest (3-coin):**
+
+| Coin | Return | Sharpe | MaxDD | WinRate |
+|---|---|---|---|---|
+| BTC | -5.44% | -2.87 | 7.70% | 42.4% |
+| ETH | -1.80% | -1.14 | 5.32% | 46.4% |
+| BNB | +3.51% | +0.94 | 3.59% | 47.1% |
+| Portfolio | -1.24% | -1.13 | 4.82% | — |
+
+**P5 + hybrid (best params via sweep, aw=2.0 cap=2.0 dw=0.3):**
+
+3-coin portfolio: +3.74% Sharpe **0.50** MaxDD ~10%
+2-coin (BTC+ETH only): +11.53% Sharpe **0.98** MaxDD ~9%
+
+**Compared to P4 hybrid best (2-coin, same window):**
+
+| Phase | Portfolio Return | Sharpe | MaxDD | Numeric extraction |
+|---|---|---|---|---|
+| **P4 hybrid best** | **+20.55%** | **+1.42** | 10.49% | 54% |
+| P5 hybrid best (2c) | +11.53% | +0.98 | ~9% | 100% |
+| P5 hybrid best (3c) | +3.74% | +0.50 | ~10% | 100% |
+
+**P5 lost ~0.44 Sharpe and ~9pp return vs P4** despite perfect numeric extraction. ETH is the standout regression: P4 ETH +27.21% / 1.89 → P5 ETH -7.89% / -0.85 under hybrid (3-coin run). 18.8% win rate on ETH and 25% on BNB suggest the hybrid sizing's directional disagreement penalty is amplifying wrong-direction calls that the strict-format prompt is now committing to with higher conviction.
+
+**Findings (the format-vs-alpha tradeoff):**
+
+1. **Format compliance ≠ alpha.** Pushing numeric extraction 54% → 100% via stricter prompt did NOT improve PnL — it materially hurt it. The hardened prompt apparently moved LLM attention toward output-format compliance and away from analytical depth.
+2. **More decisive ≠ more correct.** P5 used the OVERWEIGHT / UNDERWEIGHT levels heavily (P4 used them once total). The hybrid penalty multiplies these by their stronger LLM confidence, so when LGB disagrees on a high-conviction LLM call, the position is bigger and the loss is bigger.
+3. **The 75% extraction in P4 was good enough.** Bucket fallback (HIGH/MEDIUM/LOW) for the 25% non-compliant rows produced more conservative sizing that, in retrospect, was *protective* rather than lossy. The "fix" was a regression.
+4. **3-coin BNB drag.** Same pattern as P3 — BNB hurts the portfolio in this window once added. Phase 2's findings on BNB sentiment thinness still apply; the LLM's BNB calls are noisier.
+5. **Watchdog is essential infra.** 2+ day stall with no progress would have been a multi-day budget loss without monitoring. Bash watchdog catches what Python threading cannot.
+
+**Operational status:**
+- P5 numeric extraction lever proven (100%) but should not be used as default — preserve the P4-style "soft" format as the production prompt.
+- Watchdog infrastructure stays.
+
+**Decision: P4 hybrid (2-coin, aw=2.0 cap=2.0 dw=0.5) is the canonical best LLM result.** P5 documented as ablation showing the format-hardening regression.
+
+**Artifacts:**
+- `data/agent_signals_pit_p5/` — P5 3-coin signals (gpt-5.4-mini, hardened PM)
+- `data/agent_backtest_v2_pit_p5/agent_v2_metrics_2026-01-16_2026-04-15.json` — raw
+- `data/agent_backtest_v2_pit_p5_hybrid/agent_v2_metrics_2026-01-16_2026-04-15.json` — hybrid (default params)
+- Commits: `665552c` PM prompt hardening, `0cc8661` bash watchdog
+
+**Next:**
+1. Revert PM prompt to P4 soft-format style (or A/B-test more carefully)
+2. Or: keep hardened format but tune hybrid params for the more-granular signal distribution (UW/OW need different multipliers)
+3. Cross-validate P4 with Claude Haiku 4.5 once Anthropic key provisioned
+
 ---
 
 ## 9. Data Artifacts
