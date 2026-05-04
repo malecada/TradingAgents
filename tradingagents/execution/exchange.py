@@ -139,21 +139,28 @@ class ExchangeClient:
         stop_price: float,
         side: str = "SELL",
     ) -> dict:
-        """Place a futures STOP_MARKET order that closes the entire position.
+        """Place a futures STOP_MARKET order that reduces the position.
 
         *side* should be ``'SELL'`` for long positions and ``'BUY'`` for shorts.
-        Uses ``closePosition=true`` so the full position is closed regardless
-        of the exact quantity held.
+        Uses ``reduceOnly=true`` + explicit quantity instead of
+        ``closePosition=true`` so partial-position stops work and the order
+        avoids the TIF GTE position-presence check that ``closePosition``
+        triggers on testnet (APIError -4509).
         """
         stop_price = self.round_price(symbol, stop_price)
-        logger.info("FUTURES STOP_MARKET %s %s stop=%.2f", symbol, side, stop_price)
+        quantity = self.round_quantity(symbol, quantity)
+        logger.info(
+            "FUTURES STOP_MARKET %s %s qty=%.8f stop=%.2f",
+            symbol, side, quantity, stop_price,
+        )
         return self._retry(
             self._client.futures_create_order,
             symbol=symbol,
             side=side,
             type="STOP_MARKET",
             stopPrice=str(stop_price),
-            closePosition="true",
+            quantity=quantity,
+            reduceOnly="true",
         )
 
     def cancel_all_orders(self, symbol: str) -> list[dict]:
