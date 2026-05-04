@@ -360,27 +360,46 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                         slippage = (
                             (exec_price - ref_px) / ref_px if ref_px else 0.0
                         )
-                        stop_side = "SELL" if side == "BUY" else "BUY"
-                        stop_price = (
-                            exec_price * (1 - cfg.stop_loss_pct)
-                            if side == "BUY"
-                            else exec_price * (1 + cfg.stop_loss_pct)
-                        )
+                        # Stop direction must follow NET position, not the
+                        # delta order side. With delta-trade a SELL can be a
+                        # partial close that leaves a residual LONG — placing
+                        # a BUY stop above entry on a long would ADD to the
+                        # long instead of protecting it. Compute net position
+                        # explicitly and skip the stop if position is flat.
+                        net_position = current_signed_qty + delta_qty
+                        # Cancel any prior stop on this symbol before placing
+                        # a new one — closePosition=true stops can collide.
                         try:
-                            stop = ex.place_stop_loss(
-                                symbol, qty, stop_price, stop_side,
-                            )
-                            stop_id = str(stop.get("orderId", ""))
-                            status = "EXECUTED"
-                        except Exception as e:
+                            if hasattr(ex, "cancel_all_orders"):
+                                ex.cancel_all_orders(symbol)
+                        except Exception:
+                            pass
+                        if abs(net_position) < 1e-8:
                             stop_id = None
-                            status = "UNPROTECTED"
-                            notify.send_alert(
-                                bot_token=cfg.telegram_bot_token,
-                                chat_id=cfg.telegram_chat_id,
-                                severity="UNPROTECTED",
-                                message=f"{coin} stop-loss failed: {e}",
+                            status = "EXECUTED"
+                        else:
+                            stop_side = "SELL" if net_position > 0 else "BUY"
+                            stop_price = (
+                                exec_price * (1 - cfg.stop_loss_pct)
+                                if net_position > 0
+                                else exec_price * (1 + cfg.stop_loss_pct)
                             )
+                            try:
+                                stop = ex.place_stop_loss(
+                                    symbol, abs(net_position),
+                                    stop_price, stop_side,
+                                )
+                                stop_id = str(stop.get("orderId", ""))
+                                status = "EXECUTED"
+                            except Exception as e:
+                                stop_id = None
+                                status = "UNPROTECTED"
+                                notify.send_alert(
+                                    bot_token=cfg.telegram_bot_token,
+                                    chat_id=cfg.telegram_chat_id,
+                                    severity="UNPROTECTED",
+                                    message=f"{coin} stop-loss failed: {e}",
+                                )
                         j.log_trade(
                             cycle_id=cycle_id, coin=coin, side=side, qty=qty,
                             entry_price=exec_price, exit_price=None,
