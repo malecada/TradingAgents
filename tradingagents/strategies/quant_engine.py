@@ -23,6 +23,7 @@ import pandas as pd
 
 from tradingagents.dataflows.config import get_config
 from tradingagents.strategies.contracts import DirectionLabel, QuantSignal
+from tradingagents.strategies.deterministic_signals import compute_deterministic_pack
 from tradingagents.strategies.regime import detect_regime
 from tradingagents.strategies.v2_sizing import generate_term_structure_signals
 
@@ -104,6 +105,7 @@ def get_quant_signal(
     populates it.
     """
     pred = _load_pred_row(coin, date, base_dir)
+    pack = compute_deterministic_pack(coin, date)
     if pred is None:
         logger.warning(
             f"no LGB prediction for {coin} @ {date}; emitting flat QuantSignal"
@@ -116,7 +118,7 @@ def get_quant_signal(
             regime=regime,
             regime_confidence=regime_conf,
             hurst=hurst,
-            deterministic_signals={},
+            deterministic_signals=pack,
             as_of_date=date,
         )
 
@@ -137,6 +139,12 @@ def get_quant_signal(
     magnitude = s * c
 
     regime, regime_conf, hurst = detect_regime(coin, date)
+    pack.update({
+        "lgb_h7": pred["pred_h7"],
+        "lgb_h14": pred["pred_h14"],
+        "ref_price": pred["ref_price"],
+        "lgb_confidence": c,
+    })
     return QuantSignal(
         coin=coin,
         direction=_direction_label(s),
@@ -144,11 +152,6 @@ def get_quant_signal(
         regime=regime,
         regime_confidence=regime_conf,
         hurst=hurst,
-        deterministic_signals={
-            "lgb_h7": pred["pred_h7"],
-            "lgb_h14": pred["pred_h14"],
-            "ref_price": pred["ref_price"],
-            "lgb_confidence": c,
-        },
+        deterministic_signals=pack,
         as_of_date=date,
     )
