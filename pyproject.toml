@@ -43,6 +43,8 @@ dependencies = [
     "streamlit>=1.37.0",
     "duckdb>=1.0.0",
     "pyarrow>=14.0.0",
+    "lightgbm>=4.0.0",
+    "python-binance>=1.0.19",
 ]
 
 [project.scripts]
@@ -53,3 +55,8 @@ include = ["tradingagents*", "cli*"]
 
 [tool.setuptools.package-data]
 cli = ["static/*"]
+
+[tool.pytest.ini_options]
+markers = [
+    "online: requires external API access; opt-in via RUN_ONLINE_TESTS=1",
+]

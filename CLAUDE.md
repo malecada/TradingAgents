@@ -99,6 +99,8 @@ tradingagents/                    # Core package
     strategies.py                 # FiveLevelSignal, ThresholdSignal, ModelConsensus; SignalLevel enum
     runner.py                     # evaluate_models(), generate_system_signals(), run_system_backtest()
     reporting.py                  # print_summary_table(), plot_equity_curves(), save_results_json()
+  strategies/
+    v2_sizing.py                  # V2 sizing primitives — single source of truth for backtest + live (signals, vol, sizing, leverage, trend filter)
   execution/
     exchange.py                   # Binance Futures wrapper (testnet default); place_market_order, place_stop_loss
     risk.py                       # 4-tier pre-trade checks: confidence gate, daily loss limit, max positions, position sizing
@@ -313,7 +315,7 @@ final_state, signal = ta.propagate("NVDA", "2025-01-15")
 - **Look-ahead bias prevention**: `set_prediction_trade_date()` binds prediction models to backtest date; OHLCV cache uses `min(curr_date, today)` as fetch boundary; `data["Date"] <= curr_date` filter applied before returning
 - **LLM replay cache**: `CachedChatModel` wraps LangChain chat models with SQLite-backed prompt-hash caching. Enable via `config["replay_cache"] = True`. Mandatory for system backtests (determinism + cost control).
 - **Multi-horizon pooled prediction**: `model_utils.build_pooled_dataset()` creates cross-coin features; `lgb_model.model_run_pooled()` runs walk-forward on pooled data with horizon as parameter. Best result: 2-coin BTC+ETH pool, h=14, BTC 84.6% / ETH 75.8% directional accuracy.
-- **V2 strategy trend filter**: `scripts/baseline_strategy_v2.py` uses SMA30-based position scaling — 1.5x when aligned with trend, 0.5x when against. Single highest-impact improvement (Sharpe 1.88 → 2.69). Implemented in `apply_trend_filter()`.
+- **V2 strategy trend filter**: V2 sizing primitives (including `apply_trend_filter`) live in `tradingagents/strategies/v2_sizing.py`; `scripts/baseline_strategy_v2.py` imports them. SMA30-based position scaling — 1.5x when aligned with trend, 0.5x when against. Single highest-impact improvement (Sharpe 1.88 → 2.69).
 - **"2+1" pooling pattern**: For trading a target altcoin, use a 3-coin pool {BTC, ETH, target} instead of larger universes. Preserves BTC/ETH quality while giving near-optimal DirAcc for the target coin.
 
 ## Gotchas
