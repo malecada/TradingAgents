@@ -344,6 +344,21 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
             if not ok_pos:
                 continue
 
+            # Skip cleanly when delta is below the symbol's LOT_SIZE — rounded
+            # qty would be 0 and Binance rejects with -1013/-2010. This isn't
+            # a failure, just nothing to do.
+            try:
+                rounded_qty = float(ex.round_quantity(symbol, qty))
+            except (TypeError, Exception):
+                rounded_qty = qty
+            if rounded_qty <= 0:
+                structured.event(
+                    "execute", "below_lot_size",
+                    {"coin": coin, "delta": delta_qty,
+                     "rounded_qty": rounded_qty},
+                )
+                continue
+
             with structured.step("execute", {"coin": coin}):
                 if dry_run:
                     j.log_trade(
