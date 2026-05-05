@@ -420,7 +420,14 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                                     symbol, abs(net_position),
                                     stop_price, stop_side,
                                 )
-                                stop_id = str(stop.get("orderId", ""))
+                                # Binance Futures returns 'algoId' for
+                                # STOP_MARKET on the conditional-order API,
+                                # 'orderId' on the legacy path. Capture
+                                # whichever is present.
+                                stop_id = str(
+                                    stop.get("orderId")
+                                    or stop.get("algoId", "")
+                                )
                                 status = "EXECUTED"
                             except Exception as e:
                                 stop_id = None
