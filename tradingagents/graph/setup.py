@@ -126,6 +126,10 @@ class GraphSetup:
             self.quick_thinking_llm, n_samples=5, temperature=0.5
         )
 
+        # Phase 5 / Tier B7: Skeptic-Quant third debate agent
+        from tradingagents.agents.researchers.skeptic_quant import create_skeptic_quant
+        skeptic_quant_node = create_skeptic_quant(self.quick_thinking_llm)
+
         # Create risk analysis nodes
         aggressive_analyst = create_aggressive_debator(self.quick_thinking_llm)
         neutral_analyst = create_neutral_debator(self.quick_thinking_llm)
@@ -152,6 +156,7 @@ class GraphSetup:
         workflow.add_node("Regime Reflector", regime_reflector_node)
         workflow.add_node("Bull Researcher", bull_researcher_node)
         workflow.add_node("Bear Researcher", bear_researcher_node)
+        workflow.add_node("SkepticQuant", skeptic_quant_node)
         workflow.add_node("Research Manager", research_manager_node)
         workflow.add_node("Trader", trader_node)
         workflow.add_node("Modulator", modulator_node)
@@ -199,6 +204,7 @@ class GraphSetup:
             self.conditional_logic.should_continue_debate,
             {
                 "Bear Researcher": "Bear Researcher",
+                "SkepticQuant": "SkepticQuant",
                 "Research Manager": "Research Manager",
             },
         )
@@ -207,6 +213,16 @@ class GraphSetup:
             self.conditional_logic.should_continue_debate,
             {
                 "Bull Researcher": "Bull Researcher",
+                "SkepticQuant": "SkepticQuant",
+                "Research Manager": "Research Manager",
+            },
+        )
+        workflow.add_conditional_edges(
+            "SkepticQuant",
+            self.conditional_logic.should_continue_debate,
+            {
+                "Bull Researcher": "Bull Researcher",
+                "Bear Researcher": "Bear Researcher",
                 "Research Manager": "Research Manager",
             },
         )

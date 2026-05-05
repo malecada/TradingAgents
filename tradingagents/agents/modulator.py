@@ -28,6 +28,7 @@ from tradingagents.strategies.contracts import (
     ModulatorOutput,
     QuantSignal,
 )
+from tradingagents.strategies.calibration import load_or_identity
 from tradingagents.strategies.modulator import apply_modulator
 from tradingagents.strategies.quant_engine import get_quant_signal
 
@@ -147,9 +148,14 @@ def create_modulator(llm, n_samples: int = 5, temperature: float = 0.5):
         m_std = float(np.std(multipliers, ddof=1)) if len(multipliers) > 1 else 0.0
         narrative = samples[0].content if samples else "no LLM response"
 
+        # Tier B5: isotonic calibration on the verbalized confidence.
+        raw_conf = max(0.0, min(1.0, 1.0 - m_std))
+        cal = load_or_identity(coin)
+        calibrated_conf = cal.transform(raw_conf)
+
         llm_output = ModulatorOutput(
             multiplier=m_mean,
-            confidence=max(0.0, min(1.0, 1.0 - m_std)),
+            confidence=calibrated_conf,
             uncertainty=m_std,
             narrative=narrative[:500],
         )

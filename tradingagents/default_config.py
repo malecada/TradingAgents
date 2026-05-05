@@ -26,7 +26,7 @@ DEFAULT_CONFIG = {
     # Internal agent debate stays in English for reasoning quality
     "output_language": "English",
     # Debate and discussion settings
-    "max_debate_rounds": 1,
+    "max_debate_rounds": 2,  # Phase 5 / Tier B7: 3-way Bull/Bear/Skeptic-Quant rotation
     "max_risk_discuss_rounds": 1,
     "max_recur_limit": 100,
     # Data vendor configuration
