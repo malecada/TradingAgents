@@ -86,6 +86,22 @@ DEFAULT_CONFIG = {
     # LLM responses keyed by prompt hash.  Disabled by default for live use.
     "replay_cache": False,
     "replay_cache_db": "./data/llm_replay_cache.db",
+    # Hybrid quant+LLM modulator (Phase 0 scaffolding; Phase 4 wires into graph).
+    # Asset-agnostic single-path architecture — every coin runs the same Layer 1
+    # → Layer 2 → Layer 3 stack.  LLM influence is a derived quantity from
+    # (regime, uncertainty, rolling_llm_edge[coin], unlock_flag), NOT a per-coin
+    # config knob.  See plans/i-want-to-start-recursive-candy.md.
+    "regime_weighting": {
+        "bull":     [0.2, 0.3],
+        "sideways": [0.6, 0.8],
+        "bear":     [0.4, 0.4],
+    },
+    "rolling_edge_window_days": 30,
+    "uncertainty_dampener_k": 1.0,
+    "edge_dampener_k": 1.0,
+    "rolling_edge_min_trades": 10,  # cold-start threshold per coin
+    "quant_pred_dir": "data/multi_2coins_v2",
+    "regime_hmm_path_template": "data/checkpoints/regime_hmm_{coin}.pkl",
     # Execution configuration (safe defaults — testnet only)
     "execution": {
         "live_mode": False,  # Must be explicitly True for real money
