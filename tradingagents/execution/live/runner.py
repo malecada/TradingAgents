@@ -147,6 +147,15 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
             api_secret=cfg.binance_api_secret,
             testnet=not cfg.live_mode,
         )
+        # Pin Binance per-symbol leverage to MAX_LEVERAGE so margin
+        # consumption matches V2 sizing's leverage assumption. Default
+        # testnet leverage is 1x → 3x more margin than expected,
+        # exhausting account on multi-coin cycles.
+        for c in cfg.coin_universe:
+            try:
+                ex.set_leverage(to_binance_symbol(c), int(cfg.max_leverage))
+            except Exception as e:
+                logger.warning("set_leverage failed for %s: %s", c, e)
         portfolio_before = ex.get_total_portfolio_value()
 
         # Daily PnL for the kill-switch gate. compute_live_metrics returns
