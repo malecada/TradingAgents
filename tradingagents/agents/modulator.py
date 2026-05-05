@@ -22,6 +22,7 @@ import numpy as np
 
 from tradingagents.agents.utils.agent_utils import build_instrument_context
 from tradingagents.agents.utils.anonymizer import unmask
+from tradingagents.dataflows.beliefs_store import latest_belief
 from tradingagents.llm_clients.multi_sample import MultiSampleCachedChatModel
 from tradingagents.strategies.contracts import (
     ModulatedPosition,
@@ -57,6 +58,7 @@ def _build_prompt(
     factual_report: str,
     subjective_report: str,
     regime_note: str,
+    belief: str = "",
 ) -> list[dict]:
     pack = quant_signal.deterministic_signals
     det_block = "\n".join(
@@ -85,6 +87,10 @@ def _build_prompt(
         "4. The asset is intentionally referred to by an alias to reduce "
         "training-corpus bias. Treat it as one cryptocurrency among many."
     )
+    belief_block = (
+        f"\nLast week's investment belief (FinCon CVRF):\n{belief}\n"
+        if belief else ""
+    )
     user = (
         f"Asset: {coin_alias}\n"
         f"Layer 1 quant direction: {quant_signal.direction}\n"
@@ -93,7 +99,8 @@ def _build_prompt(
         f"(confidence {quant_signal.regime_confidence:.2f}, "
         f"Hurst {quant_signal.hurst:.2f})\n"
         f"Deterministic signals:\n{det_block}\n\n"
-        f"Regime reflector note: {regime_note}\n\n"
+        f"Regime reflector note: {regime_note}\n"
+        f"{belief_block}\n"
         f"Factual analyst summary:\n{factual_report}\n\n"
         f"Subjective analyst summary:\n{subjective_report}\n\n"
         f"Trader's proposal:\n{trader_plan}\n\n"
@@ -131,9 +138,10 @@ def create_modulator(llm, n_samples: int = 5, temperature: float = 0.5):
         # Use only the alias inside the prompt body so the LLM never sees raw name
         from tradingagents.agents.utils.anonymizer import is_enabled, mask
         coin_label = mask(coin) if is_enabled() else coin
+        belief = latest_belief(coin) or ""
         messages = _build_prompt(
             coin_label, quant_signal, trader_plan,
-            factual_report, subjective_report, regime_note,
+            factual_report, subjective_report, regime_note, belief,
         )
 
         samples = sampler.sample_n(messages)

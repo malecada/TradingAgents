@@ -107,6 +107,10 @@ DEFAULT_CONFIG = {
     # for all analyst + debate agents; the Portfolio Manager un-masks at
     # the Layer 3 boundary. Configurable so V4 ablation can toggle it.
     "anonymize_assets": False,
+    # Hybrid RAG (Tier B8) — extends BM25 memories with FAISS dense
+    # retrieval + reciprocal-rank-fusion. Off by default; enable per
+    # research-run since it requires sentence-transformers + faiss-cpu.
+    "hybrid_rag": False,
     # Execution configuration (safe defaults — testnet only)
     "execution": {
         "live_mode": False,  # Must be explicitly True for real money
