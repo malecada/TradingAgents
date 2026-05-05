@@ -22,6 +22,13 @@ from .managers.portfolio_manager import create_portfolio_manager
 
 from .trader.trader import create_trader
 
+# Phase 4 hybrid quant+LLM nodes
+from .quant_signal_ingest import create_quant_signal_ingest
+from .factual_agent import create_factual_agent
+from .subjective_agent import create_subjective_agent
+from .regime_reflector import create_regime_reflector
+from .modulator import create_modulator
+
 __all__ = [
     "FinancialSituationMemory",
     "AgentState",
@@ -43,4 +50,9 @@ __all__ = [
     "create_prediction_analyst",
     "create_crypto_sentiment_analyst",
     "create_trader",
+    "create_quant_signal_ingest",
+    "create_factual_agent",
+    "create_subjective_agent",
+    "create_regime_reflector",
+    "create_modulator",
 ]
