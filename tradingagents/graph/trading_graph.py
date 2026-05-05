@@ -227,6 +227,11 @@ class TradingAgentsGraph:
         from tradingagents.dataflows.coingecko_binance import clear_session_cache
         clear_session_cache()
 
+        # Reset asset-name anonymizer so multi-coin runs get stable but
+        # propagate-scoped aliases (Tier A4 / Phase 3).
+        from tradingagents.agents.utils.anonymizer import configure as _anon_configure
+        _anon_configure(bool(self.config.get("anonymize_assets", False)))
+
         # Bind prediction models to this trade_date so they only see
         # data up to this point (prevents look-ahead bias in backtests).
         set_prediction_trade_date(str(trade_date))

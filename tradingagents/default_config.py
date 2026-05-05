@@ -102,6 +102,11 @@ DEFAULT_CONFIG = {
     "rolling_edge_min_trades": 10,  # cold-start threshold per coin
     "quant_pred_dir": "data/multi_2coins_v2",
     "regime_hmm_path_template": "data/checkpoints/regime_hmm_{coin}.pkl",
+    # Asset-name anonymization (Tier A4 / Glasserman & Lin 2309.17322).
+    # When True, build_instrument_context masks the coin name to "Asset_X"
+    # for all analyst + debate agents; the Portfolio Manager un-masks at
+    # the Layer 3 boundary. Configurable so V4 ablation can toggle it.
+    "anonymize_assets": False,
     # Execution configuration (safe defaults — testnet only)
     "execution": {
         "live_mode": False,  # Must be explicitly True for real money

@@ -54,7 +54,25 @@ def get_language_instruction() -> str:
 
 
 def build_instrument_context(ticker: str) -> str:
-    """Describe the exact instrument so agents preserve exchange-qualified tickers."""
+    """Describe the exact instrument so agents preserve exchange-qualified tickers.
+
+    When asset-name anonymization is active (Phase 3 / A4), this returns
+    a context referring to the masked alias (``Asset_X``) instead of the
+    raw ticker. The Portfolio Manager re-attaches the real identity at
+    the Layer 3 boundary via ``anonymizer.unmask``. See
+    ``tradingagents/agents/utils/anonymizer.py`` for the rationale
+    (Glasserman & Lin 2309.17322; Choi et al. 2510.07517).
+    """
+    from tradingagents.agents.utils.anonymizer import is_enabled, mask
+
+    if is_enabled():
+        alias = mask(ticker)
+        return (
+            f"The instrument to analyze is referred to as `{alias}` "
+            "throughout this analysis (its real identity is intentionally "
+            "withheld to reduce LLM training-corpus bias). "
+            f"Use `{alias}` in every tool call, report, and recommendation."
+        )
     return (
         f"The instrument to analyze is `{ticker}`. "
         "Use this exact ticker in every tool call, report, and recommendation, "
