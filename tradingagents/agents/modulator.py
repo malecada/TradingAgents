@@ -122,7 +122,13 @@ def create_modulator(llm, n_samples: int = 5, temperature: float = 0.5):
         coin_alias = build_instrument_context(coin)  # masked alias context block
 
         try:
-            quant_signal: QuantSignal = state.get("quant_signal") or get_quant_signal(coin, trade_date)
+            qs_in = state.get("quant_signal")
+            if isinstance(qs_in, dict):
+                quant_signal = QuantSignal(**qs_in)
+            elif isinstance(qs_in, QuantSignal):
+                quant_signal = qs_in
+            else:
+                quant_signal = get_quant_signal(coin, trade_date)
         except Exception as exc:  # noqa: BLE001
             logger.warning(f"modulator: get_quant_signal failed: {exc}")
             return {
