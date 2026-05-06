@@ -373,7 +373,19 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                     )
                 else:
                     try:
-                        order = ex.place_market_order(symbol, side, qty)
+                        # If the trade is reducing or closing a same-direction
+                        # position (delta opposite-sign to current, magnitude
+                        # ≤ |current|) it can run as reduceOnly. This bypasses
+                        # the Binance MIN_NOTIONAL ($20) filter and prevents
+                        # accidental over-shoot if margin is tight.
+                        is_reduce_only = (
+                            abs(current_signed_qty) > 1e-9
+                            and current_signed_qty * delta_qty < 0
+                            and abs(delta_qty) <= abs(current_signed_qty) + 1e-9
+                        )
+                        order = ex.place_market_order(
+                            symbol, side, qty, reduce_only=is_reduce_only,
+                        )
                         order_id = str(order.get("orderId", ""))
                         # Binance Futures MARKET orders return avgPrice="0.00"
                         # in the placement response — fill price is only known

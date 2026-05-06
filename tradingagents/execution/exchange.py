@@ -120,17 +120,33 @@ class ExchangeClient:
 
     # -- Orders ----------------------------------------------------------------
 
-    def place_market_order(self, symbol: str, side: str, quantity: float) -> dict:
-        """Place a futures MARKET order.  *side* is ``'BUY'`` or ``'SELL'``."""
+    def place_market_order(
+        self,
+        symbol: str,
+        side: str,
+        quantity: float,
+        reduce_only: bool = False,
+    ) -> dict:
+        """Place a futures MARKET order.  *side* is ``'BUY'`` or ``'SELL'``.
+
+        When *reduce_only* is True, the order is constrained to reduce or
+        close the existing position. Binance allows below-min-notional
+        orders only when this flag is set.
+        """
         quantity = self.round_quantity(symbol, quantity)
-        logger.info("FUTURES MARKET %s %s qty=%.8f", side, symbol, quantity)
-        return self._retry(
-            self._client.futures_create_order,
+        logger.info(
+            "FUTURES MARKET %s %s qty=%.8f%s",
+            side, symbol, quantity, " reduceOnly" if reduce_only else "",
+        )
+        kwargs = dict(
             symbol=symbol,
             side=side,
             type="MARKET",
             quantity=quantity,
         )
+        if reduce_only:
+            kwargs["reduceOnly"] = "true"
+        return self._retry(self._client.futures_create_order, **kwargs)
 
     def place_stop_loss(
         self,
