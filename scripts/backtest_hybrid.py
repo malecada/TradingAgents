@@ -90,6 +90,10 @@ def _backtest_coin(coin: str, signals_csv: Path, start: str, end: str) -> dict:
         initial_capital=10_000.0,
         **COSTS,
     )
+    eq_arr = np.asarray(equity, dtype=float)
+    daily_returns = np.zeros_like(eq_arr)
+    if len(eq_arr) > 1:
+        daily_returns[1:] = eq_arr[1:] / eq_arr[:-1] - 1.0
     return {
         "coin": coin,
         "n_bars": int(len(merged)),
@@ -97,6 +101,7 @@ def _backtest_coin(coin: str, signals_csv: Path, start: str, end: str) -> dict:
         "dates": dates,
         "metrics": metrics,
         "positions": pos,
+        "daily_returns": daily_returns,
     }
 
 
@@ -126,26 +131,31 @@ def _baseline_coin(coin: str, baseline_pred_dir: Path, start: str, end: str) -> 
 
     rv = compute_realized_vol(px, lookback=20)
     mask = vol_regime_mask(rv, percentile_cap=0.95)
-
-    # Vol-targeted half-Kelly + 3x cap, same as baseline default
-    target_vol = 0.10
-    kelly = 0.5
-    raw_size = np.zeros_like(sig, dtype=float)
-    for i in range(len(sig)):
-        if not mask[i] or rv[i] <= 0 or np.isnan(rv[i]):
-            continue
-        raw_size[i] = sig[i] * conf[i] * kelly * (target_vol / rv[i])
-    raw_size = np.clip(raw_size, -3.0, 3.0)
-    raw_size = apply_trend_filter(raw_size, px, sma_period=30, multiplier=1.5)
-    pos = build_positions_with_hold(raw_size, prices=px, min_hold_days=7,
-                                    early_exit_threshold=-0.015, early_exit_min_bars=3)
+    pos = build_positions_with_hold(
+        signals=sig,
+        vol_ok=mask,
+        confidence=conf,
+        realized_vol=rv,
+        prices=px,
+        target_vol=0.10,
+        kelly_fraction=0.5,
+        max_leverage=3.0,
+        min_hold=7,
+        early_exit_loss=0.015,
+    )
+    pos = apply_trend_filter(pos, px, sma_period=30, multiplier=1.5)
 
     equity, metrics = run_coin_backtest(
         dates=merged["date"].values, prices=px, positions=pos,
         initial_capital=10_000.0, **COSTS,
     )
+    eq_arr = np.asarray(equity, dtype=float)
+    daily_returns = np.zeros_like(eq_arr)
+    if len(eq_arr) > 1:
+        daily_returns[1:] = eq_arr[1:] / eq_arr[:-1] - 1.0
     return {"coin": coin, "n_bars": int(len(m)), "equity": equity,
-            "dates": merged["date"].values, "metrics": metrics, "positions": pos}
+            "dates": merged["date"].values, "metrics": metrics, "positions": pos,
+            "daily_returns": daily_returns}
 
 
 def main():
@@ -195,6 +205,25 @@ def main():
 
     with open(out_dir / "summary.json", "w") as f:
         json.dump(summary, f, indent=2, default=str)
+
+    # Per-bar daily returns CSV for downstream bootstrap / DSR / ablations
+    rows = []
+    for coin in hybrid_results:
+        h = hybrid_results[coin]
+        b = baseline_results.get(coin) or {}
+        if "error" in h:
+            continue
+        n = min(len(h["dates"]), len(h["daily_returns"]))
+        b_ret = b.get("daily_returns", np.zeros(n))
+        for i in range(n):
+            rows.append({
+                "date": pd.Timestamp(h["dates"][i]).strftime("%Y-%m-%d"),
+                "coin": coin,
+                "hybrid_ret": float(h["daily_returns"][i]),
+                "baseline_ret": float(b_ret[i] if i < len(b_ret) else 0.0),
+                "hybrid_pos": float(h["positions"][i]) if i < len(h["positions"]) else 0.0,
+            })
+    pd.DataFrame(rows).to_csv(out_dir / "daily_returns.csv", index=False)
 
     # Plot equity curves
     fig, ax = plt.subplots(figsize=(12, 6))
