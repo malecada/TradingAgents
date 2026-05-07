@@ -66,14 +66,69 @@ def _to_signed_position(row) -> float:
     return float(sign * abs(pos))
 
 
-def _backtest_coin(coin: str, signals_csv: Path, start: str, end: str) -> dict:
+def _v2_sized_quant_positions(merged: pd.DataFrame) -> np.ndarray:
+    """Apply V2 sizing pipeline to the cached LGB direction × confidence.
+
+    Replaces the raw [-1, 1] magnitude with a vol-targeted Kelly +
+    leverage-capped + SMA30-trend-filtered position series. This is the
+    Layer 1 contract that the published V2 baseline (Sharpe 2.69) uses.
+    """
+    from tradingagents.strategies.v2_sizing import (
+        apply_trend_filter, build_positions_with_hold,
+        compute_realized_vol, vol_regime_mask,
+    )
+    n = len(merged)
+    sign = merged["quant_direction"].map(
+        {"long": 1, "short": -1, "flat": 0}
+    ).fillna(0).values
+    conf = merged["quant_magnitude"].abs().values
+    raw_signal = sign * np.sign(conf)
+    px = merged["Close"].astype(float).values[:n]
+    rv = compute_realized_vol(px, lookback=20)
+    mask = vol_regime_mask(rv, percentile_cap=0.95)
+    pos = build_positions_with_hold(
+        signals=raw_signal, vol_ok=mask, confidence=conf,
+        realized_vol=rv, prices=px,
+        target_vol=0.10, kelly_fraction=0.5, max_leverage=3.0,
+        min_hold=7, early_exit_loss=0.015,
+    )
+    return apply_trend_filter(pos, px, sma_period=30, multiplier=1.5)
+
+
+def _hybrid_sized_position(
+    merged: pd.DataFrame, v2_sizing: bool,
+) -> np.ndarray:
+    """Compose Layer 1 (optionally V2-sized) with Layer 2 modulator output.
+
+    final[t] = base[t] × (1 + effective_weight[t] × (multiplier[t] - 1))
+
+    where ``base`` is either:
+      - V2-sized position (when v2_sizing=True) — Layer 1 routes
+        direction × confidence through vol_targeting + SMA30 + 7d hold
+      - Raw signed magnitude from the cached signals CSV otherwise
+    """
+    n = len(merged)
+    if v2_sizing:
+        base = _v2_sized_quant_positions(merged)
+    else:
+        sign = merged["quant_direction"].map(
+            {"long": 1, "short": -1, "flat": 0}
+        ).fillna(0).values
+        base = sign * merged["quant_magnitude"].abs().values
+    base = base[:n]
+    mult = merged["llm_multiplier"].fillna(1.0).values[:n]
+    eff = merged["effective_weight"].fillna(0.0).values[:n]
+    return base * (1.0 + eff * (mult - 1.0))
+
+
+def _backtest_coin(coin: str, signals_csv: Path, start: str, end: str,
+                   v2_sizing: bool = False) -> dict:
     sig = pd.read_csv(signals_csv, parse_dates=["date"])
     sig["date"] = sig["date"].dt.tz_localize(None).dt.normalize()
     sig = sig[(sig["date"] >= start) & (sig["date"] <= end)]
     if sig.empty:
         return {"coin": coin, "error": "no signals in range"}
     sig = sig.dropna(subset=["position"]).copy()
-    sig["signed_pos"] = sig.apply(_to_signed_position, axis=1)
 
     prices = _load_prices(coin, end)
     merged = sig.merge(prices[["Date", "Close"]], left_on="date", right_on="Date", how="left")
@@ -81,7 +136,7 @@ def _backtest_coin(coin: str, signals_csv: Path, start: str, end: str) -> dict:
 
     dates = merged["date"].values
     px = merged["Close"].astype(float).values
-    pos = merged["signed_pos"].astype(float).values
+    pos = _hybrid_sized_position(merged, v2_sizing=v2_sizing)
 
     equity, metrics = run_coin_backtest(
         dates=dates,
@@ -166,6 +221,11 @@ def main():
     p.add_argument("--end", required=True)
     p.add_argument("--baseline-pred-dir", default="data/multi_2coins_v2")
     p.add_argument("--output-dir", default=None)
+    p.add_argument("--v2-sizing", action="store_true",
+                   help="Apply V2 sizing (vol target + Kelly + SMA30 + 7d hold) "
+                        "to the cached LGB direction*confidence before modulator "
+                        "scaling. Architecturally correct hybrid; default off "
+                        "for back-compat with prior P1 numbers.")
     args = p.parse_args()
 
     out_dir = Path(args.output_dir or f"{args.signals_dir}/backtest")
@@ -178,7 +238,8 @@ def main():
         if not sig_csv.exists():
             print(f"[skip] {coin}: no hybrid signals at {sig_csv}")
             continue
-        hybrid_results[coin] = _backtest_coin(coin, sig_csv, args.start, args.end)
+        hybrid_results[coin] = _backtest_coin(coin, sig_csv, args.start, args.end,
+                                              v2_sizing=args.v2_sizing)
         baseline_results[coin] = _baseline_coin(coin, Path(args.baseline_pred_dir), args.start, args.end)
 
     # Summary
