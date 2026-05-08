@@ -38,8 +38,15 @@ class V3Config:
     )
 
     def horizon_weights(self, mode: RegimeMode) -> dict[int, float]:
+        if set(self.horizons) != {3, 7, 14, 21}:
+            raise ValueError(
+                f"horizon_weights supports only default horizons (3,7,14,21); got {self.horizons}"
+            )
         if mode == "trending":
-            return {3: 0.10, 7: 0.20, 14: 0.35, 21: 0.35}
-        if mode == "mean_reverting":
-            return {3: 0.35, 7: 0.35, 14: 0.20, 21: 0.10}
-        return {3: 0.25, 7: 0.25, 14: 0.25, 21: 0.25}
+            weights = {3: 0.10, 7: 0.20, 14: 0.35, 21: 0.35}
+        elif mode == "mean_reverting":
+            weights = {3: 0.35, 7: 0.35, 14: 0.20, 21: 0.10}
+        else:
+            weights = {3: 0.25, 7: 0.25, 14: 0.25, 21: 0.25}
+        total = sum(weights.values())
+        return {k: v / total for k, v in weights.items()}

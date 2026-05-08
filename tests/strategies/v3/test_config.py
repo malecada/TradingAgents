@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from tradingagents.strategies.v3.config import V3Config
 
 
@@ -32,3 +34,18 @@ def test_v3_config_horizon_weights_default():
     assert weights_mr[3] + weights_mr[7] > weights_mr[14] + weights_mr[21]
     weights_neutral = cfg.horizon_weights("uncertain")
     assert all(abs(w - 0.25) < 1e-9 for w in weights_neutral.values())
+
+
+def test_v3_config_horizon_weights_rejects_nonstandard_horizons():
+    cfg = V3Config(horizons=(1, 3, 7, 14, 21))
+    with pytest.raises(ValueError, match="default horizons"):
+        cfg.horizon_weights("trending")
+
+
+def test_v3_config_horizon_weights_sum_to_one_all_modes():
+    cfg = V3Config()
+    for mode in ("trending", "mean_reverting", "uncertain"):
+        weights = cfg.horizon_weights(mode)
+        assert sum(weights.values()) == pytest.approx(1.0), (
+            f"{mode} sums to {sum(weights.values())}, not 1.0"
+        )
