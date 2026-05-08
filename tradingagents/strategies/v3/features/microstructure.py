@@ -141,3 +141,91 @@ def build_daily_microstructure_features(
     )
     df = df.drop(columns=["_buy_vol", "_sell_vol"])
     return df[["vpin_50", "vpin_50_z", "ofi_d", "ofi_d_w", "aggressor_ratio"]]
+
+
+import logging
+import time
+from pathlib import Path
+
+import requests
+
+logger = logging.getLogger(__name__)
+
+_BINANCE_AGGTRADES_URL = "https://api.binance.com/api/v3/aggTrades"
+
+
+class RateLimitError(RuntimeError):
+    pass
+
+
+def _fetch_one_day(symbol: str, start_ms: int, end_ms: int) -> pd.DataFrame:
+    """Pull one day of aggTrades. Paginates 1000 trades at a time."""
+    rows: list[dict] = []
+    cursor = start_ms
+    while cursor < end_ms:
+        resp = requests.get(
+            _BINANCE_AGGTRADES_URL,
+            params={
+                "symbol": symbol,
+                "startTime": cursor,
+                "endTime": min(cursor + 60 * 60 * 1000, end_ms),
+                "limit": 1000,
+            },
+            timeout=10,
+        )
+        if resp.status_code == 429:
+            raise RateLimitError("Binance 429 rate limit")
+        resp.raise_for_status()
+        data = resp.json()
+        if not data:
+            cursor += 60 * 60 * 1000
+            continue
+        for d in data:
+            rows.append(
+                {
+                    "ts": pd.Timestamp(d["T"], unit="ms", tz="UTC"),
+                    "price": float(d["p"]),
+                    "qty": float(d["q"]),
+                    "is_buyer_maker": bool(d["m"]),
+                }
+            )
+        last_ts = data[-1]["T"]
+        cursor = last_ts + 1
+    if not rows:
+        return pd.DataFrame(columns=["price", "qty", "is_buyer_maker"])
+    df = pd.DataFrame(rows).set_index("ts").sort_index()
+    return df
+
+
+def fetch_aggtrades(
+    symbol: str,
+    date: pd.Timestamp,
+    cache_dir: Path,
+    max_retries: int = 5,
+    base_backoff: float = 1.0,
+    max_backoff: float = 60.0,
+) -> pd.DataFrame:
+    """Fetch one day of Binance aggTrades, cached to parquet on disk.
+
+    On 429, retries with exponential backoff up to ``max_retries`` times.
+    """
+    cache_dir = Path(cache_dir)
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    day_str = date.strftime("%Y-%m-%d")
+    cache_file = cache_dir / f"{symbol}_{day_str}.parquet"
+    if cache_file.exists():
+        return pd.read_parquet(cache_file)
+
+    start_ms = int(date.normalize().timestamp() * 1000)
+    end_ms = start_ms + 24 * 60 * 60 * 1000
+
+    for attempt in range(max_retries):
+        try:
+            df = _fetch_one_day(symbol, start_ms, end_ms)
+            df.to_parquet(cache_file)
+            return df
+        except RateLimitError:
+            wait = min(base_backoff * (2**attempt), max_backoff)
+            logger.warning("Binance 429, sleeping %.1fs", wait)
+            time.sleep(wait)
+    raise RateLimitError(f"Failed after {max_retries} retries for {symbol} {day_str}")

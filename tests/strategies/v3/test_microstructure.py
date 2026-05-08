@@ -92,3 +92,65 @@ def test_build_daily_features_look_ahead_guard():
         trades, as_of=pd.Timestamp("2026-01-02 12:00", tz="UTC")
     )
     assert df.index.max() <= pd.Timestamp("2026-01-02 12:00", tz="UTC")
+
+
+def test_fetch_aggtrades_uses_cache(tmp_path, monkeypatch):
+    from tradingagents.strategies.v3.features.microstructure import fetch_aggtrades
+
+    cache_file = tmp_path / "BTCUSDT_2026-01-01.parquet"
+    df_cached = pd.DataFrame(
+        {
+            "price": [100.0],
+            "qty": [1.0],
+            "is_buyer_maker": [True],
+        },
+        index=pd.date_range("2026-01-01", periods=1, freq="min", tz="UTC"),
+    )
+    df_cached.to_parquet(cache_file)
+
+    def _fail_call(*args, **kwargs):
+        raise AssertionError("network must not be hit when cache present")
+
+    monkeypatch.setattr(
+        "tradingagents.strategies.v3.features.microstructure._fetch_one_day",
+        _fail_call,
+    )
+
+    out = fetch_aggtrades(
+        symbol="BTCUSDT",
+        date=pd.Timestamp("2026-01-01", tz="UTC"),
+        cache_dir=tmp_path,
+    )
+    assert len(out) == 1
+    assert out["price"].iloc[0] == 100.0
+
+
+def test_fetch_aggtrades_backoff_on_429(tmp_path, monkeypatch):
+    from tradingagents.strategies.v3.features import microstructure
+
+    calls = {"n": 0}
+
+    def _fake(symbol, start_ms, end_ms):
+        calls["n"] += 1
+        if calls["n"] < 3:
+            raise microstructure.RateLimitError("429")
+        return pd.DataFrame(
+            {
+                "price": [100.0],
+                "qty": [1.0],
+                "is_buyer_maker": [True],
+            },
+            index=pd.date_range("2026-01-01", periods=1, freq="min", tz="UTC"),
+        )
+
+    monkeypatch.setattr(microstructure, "_fetch_one_day", _fake)
+    monkeypatch.setattr(microstructure.time, "sleep", lambda _s: None)
+
+    out = microstructure.fetch_aggtrades(
+        symbol="BTCUSDT",
+        date=pd.Timestamp("2026-01-01", tz="UTC"),
+        cache_dir=tmp_path,
+        max_retries=5,
+    )
+    assert len(out) == 1
+    assert calls["n"] == 3
