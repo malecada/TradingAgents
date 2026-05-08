@@ -1,8 +1,8 @@
 """VPIN + Order Flow Imbalance from Binance aggTrades.
 
-Look-ahead-safety: every public function takes ``as_of: pd.Timestamp`` and
-slices its input to ``df.index <= as_of`` before any rolling op. Tests in
-``test_microstructure.py`` assert this property by injecting future-tagged rows.
+This module currently provides volume bucketing and the VPIN imbalance
+computation. The ``as_of`` look-ahead guard is added by the daily builder
+function in Task 9 (``build_daily_microstructure_features``).
 """
 
 from __future__ import annotations
