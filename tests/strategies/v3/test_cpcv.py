@@ -22,16 +22,15 @@ def test_cpcv_no_train_test_overlap():
 
 
 def test_cpcv_embargo_respected():
-    for split in cpcv_splits(n_samples=720, n_groups=8, test_groups=2, embargo=14):
+    embargo = 14
+    for split in cpcv_splits(n_samples=720, n_groups=8, test_groups=2, embargo=embargo):
         if len(split.test_idx) == 0 or len(split.train_idx) == 0:
             continue
-        for t in split.test_idx:
+        for gap_start, gap_end in split.embargo_gaps:
             for tr in split.train_idx:
-                if tr < t:
-                    assert t - tr > 14 or any(
-                        gap_start <= tr <= gap_end
-                        for gap_start, gap_end in split.embargo_gaps
-                    ) is False
+                assert not (gap_start <= tr < gap_end), (
+                    f"train idx {tr} fell inside embargo gap [{gap_start},{gap_end})"
+                )
 
 
 def test_cpcv_min_train_size():
