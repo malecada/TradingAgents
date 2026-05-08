@@ -95,3 +95,14 @@ def test_feature_bundle_round_trip():
     )
     assert bundle.price_features["sma_30"] == 64500.0
     assert bundle.microstructure_features["vpin_50"] == 0.42
+
+
+def test_regime_state_posterior_sum_validation():
+    with pytest.raises(ValidationError):
+        RegimeState(
+            label="bull",
+            confidence=0.5,
+            hurst=0.5,
+            changepoint_alert=False,
+            posterior={"bull": 0.5, "sideways": 0.5, "bear": 0.5},
+        )
