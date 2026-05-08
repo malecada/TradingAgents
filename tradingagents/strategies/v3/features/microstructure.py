@@ -78,3 +78,66 @@ def compute_vpin(trades: pd.DataFrame, n_buckets: int = 50) -> float:
     if not imbalances:
         return 0.0
     return float(np.mean(imbalances) / bucket_size)
+
+
+def build_daily_microstructure_features(
+    trades: pd.DataFrame,
+    as_of: pd.Timestamp,
+    bucket_count: int = 50,
+    z_window: int = 30,
+    weekly_window: int = 7,
+) -> pd.DataFrame:
+    """Aggregate tick-level ``trades`` into daily microstructure features.
+
+    Columns produced:
+      - ``vpin_50``         : VPIN over rolling daily window of trades
+      - ``vpin_50_z``       : ``z_window``-day Z-score of VPIN
+      - ``ofi_d``           : daily order flow imbalance
+      - ``ofi_d_w``         : ``weekly_window``-day volume-weighted OFI
+      - ``aggressor_ratio`` : share of taker-buy trades
+
+    Look-ahead guard: input is sliced to ``trades.index <= as_of`` first.
+    """
+    if not isinstance(as_of, pd.Timestamp):
+        raise TypeError("as_of must be a pandas Timestamp")
+
+    trades = trades[trades.index <= as_of].copy()
+    if trades.empty:
+        return pd.DataFrame(
+            columns=["vpin_50", "vpin_50_z", "ofi_d", "ofi_d_w", "aggressor_ratio"]
+        )
+
+    trades["date"] = trades.index.tz_convert("UTC").floor("D")
+    daily_groups = trades.groupby("date")
+
+    rows: list[dict[str, float]] = []
+    for date, group in daily_groups:
+        sell_vol = float(group.loc[group["is_buyer_maker"], "qty"].sum())
+        buy_vol = float(group.loc[~group["is_buyer_maker"], "qty"].sum())
+        total = sell_vol + buy_vol
+        ofi = (buy_vol - sell_vol) / total if total > 0 else 0.0
+        aggressor = buy_vol / total if total > 0 else 0.0
+        vpin = compute_vpin(group, n_buckets=bucket_count)
+        rows.append(
+            {
+                "date": date,
+                "vpin_50": vpin,
+                "ofi_d": ofi,
+                "aggressor_ratio": aggressor,
+                "_buy_vol": buy_vol,
+                "_sell_vol": sell_vol,
+            }
+        )
+
+    df = pd.DataFrame(rows).set_index("date").sort_index()
+    df["vpin_50_z"] = (
+        (df["vpin_50"] - df["vpin_50"].rolling(z_window).mean())
+        / df["vpin_50"].rolling(z_window).std()
+    )
+    weekly_buy = df["_buy_vol"].rolling(weekly_window).sum()
+    weekly_sell = df["_sell_vol"].rolling(weekly_window).sum()
+    df["ofi_d_w"] = (weekly_buy - weekly_sell) / (weekly_buy + weekly_sell).replace(
+        0.0, np.nan
+    )
+    df = df.drop(columns=["_buy_vol", "_sell_vol"])
+    return df[["vpin_50", "vpin_50_z", "ofi_d", "ofi_d_w", "aggressor_ratio"]]
