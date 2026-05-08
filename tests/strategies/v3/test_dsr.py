@@ -43,3 +43,26 @@ def test_dsr_low_when_observed_below_expected():
         se_sr=0.3,
     )
     assert dsr < 0.01
+
+
+def test_dsr_with_cpcv_pipeline(synthetic_ohlcv):
+    """Simulate evaluating a noise strategy on synthetic data via CPCV; DSR should be near 0.5."""
+    from tradingagents.strategies.v3.backtest.cpcv import cpcv_splits
+    from tradingagents.strategies.v3.backtest.dsr import (
+        variance_of_sr,
+    )
+
+    rng = np.random.default_rng(0)
+    rets = rng.normal(0.0, 0.02, size=len(synthetic_ohlcv))
+
+    sharpes = []
+    for split in cpcv_splits(n_samples=len(rets), n_groups=8, test_groups=2, embargo=14):
+        test_rets = rets[split.test_idx]
+        sharpes.append(np.mean(test_rets) / (np.std(test_rets) + 1e-9))
+
+    sr_obs = float(np.mean(sharpes))
+    var_sr = variance_of_sr(np.array(sharpes))
+    sr_exp = expected_max_sharpe(n_trials=12, var_sr=var_sr)
+    dsr = deflated_sharpe_ratio(sr_obs, sr_exp, np.sqrt(max(var_sr, 1e-9)))
+    # noise strategy → DSR should be < 0.95
+    assert dsr < 0.95
