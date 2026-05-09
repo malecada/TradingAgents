@@ -108,3 +108,47 @@ class MultiHorizonEnsemble:
     @property
     def fitted_horizons(self) -> tuple[int, ...]:
         return tuple(self._models.keys())
+
+
+from tradingagents.strategies.v3.contracts import RegimeState  # noqa: E402
+from tradingagents.strategies.v3.config import V3Config  # noqa: E402
+
+_DEADBAND = 0.05
+
+
+def _regime_mode(regime: RegimeState, config: V3Config) -> str:
+    if regime.hurst > config.hurst_trend_threshold:
+        return "trending"
+    if regime.hurst < config.hurst_mr_threshold:
+        return "mean_reverting"
+    return "uncertain"
+
+
+def consensus_signal(
+    probas: dict[int, float],
+    regime: RegimeState,
+    config: V3Config,
+    deadband: float = _DEADBAND,
+) -> tuple[int, float]:
+    """Combine per-horizon probabilities into a single (direction, confidence).
+
+    direction is +1/-1 if the weighted probability is more than ``deadband``
+    away from 0.5; 0 otherwise. confidence is ``2 * |p - 0.5|``.
+    """
+    mode = _regime_mode(regime, config)
+    weights = config.horizon_weights(mode)
+
+    # Restrict weights to horizons present in probas; renormalize.
+    active_weights = {h: w for h, w in weights.items() if h in probas}
+    total_w = sum(active_weights.values())
+    if total_w <= 0:
+        return 0, 0.0
+    normed_weights = {h: w / total_w for h, w in active_weights.items()}
+
+    weighted_p = sum(normed_weights[h] * probas[h] for h in normed_weights)
+    diff = weighted_p - 0.5
+    if abs(diff) <= deadband:
+        return 0, 0.0
+    direction = 1 if diff > 0 else -1
+    confidence = float(min(1.0, max(0.0, 2.0 * abs(diff))))
+    return direction, confidence

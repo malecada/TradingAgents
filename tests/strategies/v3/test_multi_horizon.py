@@ -73,3 +73,86 @@ def test_multi_horizon_predict_before_fit_raises():
     mhe = MultiHorizonEnsemble(horizons=(7,))
     with pytest.raises(RuntimeError):
         mhe.predict_proba(feats)
+
+
+def test_consensus_signal_trending_uses_long_horizons():
+    """In a trending regime (Hurst > 0.55), h=14/h=21 weights should
+    dominate the consensus."""
+    from tradingagents.strategies.v3.config import V3Config
+    from tradingagents.strategies.v3.contracts import RegimeState
+    from tradingagents.strategies.v3.models.multi_horizon import consensus_signal
+
+    cfg = V3Config()
+    regime = RegimeState(
+        label="bull",
+        confidence=0.8,
+        hurst=0.65,  # trending
+        changepoint_alert=False,
+        posterior={"bull": 0.8, "sideways": 0.15, "bear": 0.05},
+    )
+    # Short horizons disagree (predict down), long horizons agree (predict up)
+    probas = {3: 0.30, 7: 0.30, 14: 0.80, 21: 0.80}
+    direction, confidence = consensus_signal(probas, regime, cfg)
+    assert direction == 1  # long horizons win
+    assert confidence > 0.0
+
+
+def test_consensus_signal_mean_reverting_uses_short_horizons():
+    """Mean-reverting regime (Hurst < 0.45) → h=3/h=7 dominate."""
+    from tradingagents.strategies.v3.config import V3Config
+    from tradingagents.strategies.v3.contracts import RegimeState
+    from tradingagents.strategies.v3.models.multi_horizon import consensus_signal
+
+    cfg = V3Config()
+    regime = RegimeState(
+        label="sideways",
+        confidence=0.5,
+        hurst=0.30,  # mean-reverting
+        changepoint_alert=False,
+        posterior={"bull": 0.3, "sideways": 0.5, "bear": 0.2},
+    )
+    # Short horizons agree (up), long horizons disagree (down)
+    probas = {3: 0.80, 7: 0.80, 14: 0.30, 21: 0.30}
+    direction, confidence = consensus_signal(probas, regime, cfg)
+    assert direction == 1  # short horizons win
+    assert confidence > 0.0
+
+
+def test_consensus_signal_uncertain_equal_weights():
+    """Hurst between 0.45 and 0.55 → uncertain mode, equal 0.25 weights."""
+    from tradingagents.strategies.v3.config import V3Config
+    from tradingagents.strategies.v3.contracts import RegimeState
+    from tradingagents.strategies.v3.models.multi_horizon import consensus_signal
+
+    cfg = V3Config()
+    regime = RegimeState(
+        label="sideways",
+        confidence=0.4,
+        hurst=0.50,
+        changepoint_alert=False,
+        posterior={"bull": 0.34, "sideways": 0.33, "bear": 0.33},
+    )
+    probas = {3: 0.65, 7: 0.65, 14: 0.65, 21: 0.65}  # all agree up
+    direction, confidence = consensus_signal(probas, regime, cfg)
+    assert direction == 1
+    # weighted_p = 0.65 → confidence = 2 * 0.15 = 0.30
+    assert abs(confidence - 0.30) < 1e-6
+
+
+def test_consensus_signal_deadband_returns_zero():
+    """When weighted prob is within ±0.05 of 0.5, direction = 0."""
+    from tradingagents.strategies.v3.config import V3Config
+    from tradingagents.strategies.v3.contracts import RegimeState
+    from tradingagents.strategies.v3.models.multi_horizon import consensus_signal
+
+    cfg = V3Config()
+    regime = RegimeState(
+        label="sideways",
+        confidence=0.4,
+        hurst=0.50,
+        changepoint_alert=False,
+        posterior={"bull": 0.33, "sideways": 0.34, "bear": 0.33},
+    )
+    probas = {3: 0.52, 7: 0.51, 14: 0.49, 21: 0.51}  # very close to 0.5
+    direction, confidence = consensus_signal(probas, regime, cfg)
+    assert direction == 0
