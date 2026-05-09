@@ -27,6 +27,7 @@ from typing import Optional
 
 import numpy as np
 import pandas as pd
+from hmmlearn.hmm import GaussianHMM
 
 from tradingagents.strategies.v3.contracts import RegimeLabel
 
@@ -400,3 +401,101 @@ def update_posterior(
         # Fall back to predict-only step.
         return pred / pred.sum()
     return unnorm / total
+
+
+# ── NH-HMM bundle + training ────────────────────────────────────────
+
+
+@dataclass
+class NHHmmBundle:
+    """Pickled NH-HMM bundle: GaussianHMM + transition coefs + label map.
+
+    For Phase-4 v0 the NH transition is initialized with zero covariate
+    coefficients — i.e., the matrix is constant per timestep and equal to
+    ``hmm.transmat_``. Future work: fit real coefficients via L-BFGS on
+    smoothed posteriors.
+
+    Spec §4.3 deviation: zero-coef NH transitions; the transition matrix is
+    constant (homogeneous HMM), not truly non-homogeneous. This is a degenerate
+    NH-HMM that reduces to standard HMM. Real coefficient learning is deferred
+    to post-thesis work.
+    """
+
+    hmm: object  # hmmlearn.GaussianHMM (any to avoid circular import on type)
+    nh_transition: NHTransitionMatrix
+    state_to_label: dict[int, RegimeLabel]
+    feature_names: list[str]
+    n_states: int
+
+
+def train_nh_hmm(
+    prices,  # pd.Series of closing prices
+    covariates_df=None,  # optional pd.DataFrame of covariates aligned with features
+    n_states: int = 3,
+    n_iter: int = 200,
+    random_state: int = 42,
+) -> NHHmmBundle:
+    """Train a 3-state NH-HMM bundle on ``prices``.
+
+    Phase 4 v0 implementation: fits a standard GaussianHMM on the smoothed
+    regime features (log_return_smooth, realized_vol, abs_return_smooth) and
+    wraps it in an ``NHHmmBundle`` with zero-coef NH transitions (i.e., the
+    transition matrix is constant per timestep and equal to ``hmm.transmat_``).
+
+    Future versions can fit real NH-HMM coefficients via L-BFGS on smoothed
+    posteriors.
+
+    Args:
+        prices: pd.Series of closing prices (any timezone).
+        covariates_df: optional pd.DataFrame of covariates aligned with the
+            feature index. Currently unused (v0 degenerate path). If provided,
+            its column count sets ``n_covariates``; otherwise defaults to 2
+            per spec §4.3 (vol, funding).
+        n_states: number of HMM states (default 3: bull/sideways/bear).
+        n_iter: maximum EM iterations (default 200).
+        random_state: random seed for reproducibility.
+
+    Returns:
+        NHHmmBundle with fitted GaussianHMM and zero-coef NHTransitionMatrix.
+
+    Raises:
+        ValueError: if there are fewer than 50 samples after feature building.
+        RuntimeError: if GaussianHMM.fit raises (propagated after logging).
+    """
+    features = build_regime_features(prices)
+    X = features.values
+    if X.shape[0] < 50:
+        raise ValueError(f"Not enough samples to fit HMM (got {X.shape[0]})")
+
+    try:
+        hmm = GaussianHMM(
+            n_components=n_states,
+            covariance_type="full",
+            n_iter=n_iter,
+            random_state=random_state,
+        )
+        hmm.fit(X)
+    except Exception:
+        logger.exception("GaussianHMM fit failed; raising")
+        raise
+
+    # assign_labels(model, train_features) — train_features is unused in the body
+    state_to_label = assign_labels(hmm, features)
+
+    # Initialize NH transition with zero coefs and intercepts equal to
+    # log of the fitted (homogeneous) transition matrix. Number of covariates
+    # defaults to 2 per spec §4.3 (vol, funding) even though they're unused.
+    n_covariates = 2 if covariates_df is None else covariates_df.shape[1]
+    coefs = np.zeros((n_states, n_states, n_covariates))
+    # Use log of a smoothed transmat to avoid -inf when entries are zero.
+    transmat_safe = np.clip(hmm.transmat_, 1e-9, 1.0)
+    intercepts = np.log(transmat_safe)
+    nh = NHTransitionMatrix(coefs=coefs, intercepts=intercepts)
+
+    return NHHmmBundle(
+        hmm=hmm,
+        nh_transition=nh,
+        state_to_label=state_to_label,
+        feature_names=list(features.columns),
+        n_states=n_states,
+    )

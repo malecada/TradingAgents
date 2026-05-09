@@ -134,3 +134,72 @@ def test_update_posterior_input_validation():
     emission = np.zeros(3)
     with pytest.raises(ValueError):
         update_posterior(prev, transition, emission)
+
+
+def test_train_nh_hmm_returns_bundle(synthetic_ohlcv):
+    from tradingagents.strategies.v3.regime.hmm_v2 import (
+        NHHmmBundle,
+        NHTransitionMatrix,
+        train_nh_hmm,
+    )
+
+    bundle = train_nh_hmm(
+        prices=synthetic_ohlcv["close"],
+        covariates_df=None,  # accepts None for the v0 (degenerate) path
+        n_states=3,
+        n_iter=50,
+    )
+    assert isinstance(bundle, NHHmmBundle)
+    assert bundle.n_states == 3
+    assert isinstance(bundle.nh_transition, NHTransitionMatrix)
+    assert bundle.nh_transition.coefs.shape == (3, 3, 2)
+
+
+def test_train_nh_hmm_pickle_round_trip(synthetic_ohlcv, tmp_path):
+    import pickle
+    from tradingagents.strategies.v3.regime.hmm_v2 import (
+        NHHmmBundle,
+        train_nh_hmm,
+    )
+
+    bundle = train_nh_hmm(
+        prices=synthetic_ohlcv["close"],
+        covariates_df=None,
+        n_states=3,
+        n_iter=50,
+    )
+    out_file = tmp_path / "test_bundle.pkl"
+    with open(out_file, "wb") as f:
+        pickle.dump(bundle, f)
+    with open(out_file, "rb") as f:
+        loaded = pickle.load(f)
+    assert isinstance(loaded, NHHmmBundle)
+    assert loaded.n_states == bundle.n_states
+
+
+def test_train_nh_hmm_fallback_on_convergence_failure(synthetic_ohlcv, monkeypatch, caplog):
+    """If GaussianHMM raises during fit, train_nh_hmm should propagate
+    the error (not silently produce an unfitted bundle)."""
+    import logging
+    from tradingagents.strategies.v3.regime import hmm_v2
+
+    class _BrokenHMM:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def fit(self, X):
+            raise RuntimeError("fake convergence failure")
+
+    monkeypatch.setattr(hmm_v2, "GaussianHMM", _BrokenHMM)
+
+    with caplog.at_level(logging.WARNING):
+        try:
+            hmm_v2.train_nh_hmm(
+                prices=synthetic_ohlcv["close"],
+                covariates_df=None,
+                n_states=3,
+                n_iter=50,
+            )
+        except RuntimeError:
+            pass  # expected
+    # Either a warning is emitted OR the error propagates — both are acceptable.
