@@ -226,7 +226,16 @@ def main():
                         "to the cached LGB direction*confidence before modulator "
                         "scaling. Architecturally correct hybrid; default off "
                         "for back-compat with prior P1 numbers.")
+    p.add_argument("--quant-version", choices=("v2", "v3"), default="v2",
+                   help="Quant signal version used when generating the signals. "
+                        "v3 requires regime + multi-horizon bundles to have been "
+                        "injected via set_v3_provider_state() before any agent runs. "
+                        "Known limitation: v3 path is not yet fully plumbed through "
+                        "LangGraph agent nodes.")
     args = p.parse_args()
+
+    from tradingagents.strategies.quant_signal_provider import set_active_quant_version
+    set_active_quant_version(args.quant_version)
 
     out_dir = Path(args.output_dir or f"{args.signals_dir}/backtest")
     out_dir.mkdir(parents=True, exist_ok=True)

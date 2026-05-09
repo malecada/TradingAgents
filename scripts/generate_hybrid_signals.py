@@ -50,6 +50,11 @@ def parse_args():
     p.add_argument("--anonymize", action="store_true",
                    help="Enable asset-name anonymization (Tier A4)")
     p.add_argument("--force", action="store_true")
+    p.add_argument("--quant-version", choices=("v2", "v3"), default="v2",
+                   help="Quant signal version. v3 requires regime + multi-horizon bundles "
+                        "to be injected via set_v3_provider_state() before agent runs. "
+                        "Known limitation: v3 path is not yet fully plumbed through LangGraph "
+                        "agent nodes; agents still call get_quant_signal() (V2) directly.")
     return p.parse_args()
 
 
@@ -58,6 +63,9 @@ def main():
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
     log = logging.getLogger(__name__)
     t0 = time.time()
+
+    from tradingagents.strategies.quant_signal_provider import set_active_quant_version
+    set_active_quant_version(args.quant_version)
 
     from tradingagents.default_config import DEFAULT_CONFIG
     from tradingagents.graph.trading_graph import TradingAgentsGraph

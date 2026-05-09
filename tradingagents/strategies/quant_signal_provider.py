@@ -168,3 +168,72 @@ def build_provider(version: str, **kwargs) -> QuantSignalProvider:
             raise ValueError(f"V3QuantSignalProvider missing kwargs: {missing}")
         return V3QuantSignalProvider(**{k: kwargs[k] for k in required})
     raise ValueError(f"Unknown quant version: {version!r} (expected 'v2' or 'v3')")
+
+
+# ---------------------------------------------------------------------------
+# Module-level active version state
+# ---------------------------------------------------------------------------
+
+_ACTIVE_QUANT_VERSION: str = "v2"
+_V3_PROVIDER_STATE: dict | None = None
+
+
+def set_active_quant_version(version: str) -> None:
+    """Set the active quant version. Called at startup by hybrid scripts."""
+    global _ACTIVE_QUANT_VERSION
+    version = version.lower()
+    if version not in ("v2", "v3"):
+        raise ValueError(f"Unknown quant version: {version!r}")
+    _ACTIVE_QUANT_VERSION = version
+    logger.info("Active quant version set to %s", version)
+
+
+def get_active_quant_version() -> str:
+    return _ACTIVE_QUANT_VERSION
+
+
+def set_v3_provider_state(
+    *,
+    prices: pd.Series,
+    regime_bundle,
+    multi_horizon_bundle,
+    microstructure_features: pd.DataFrame,
+    derivatives_features: pd.DataFrame,
+    config,
+) -> None:
+    """Inject the per-coin V3 provider state for the active session."""
+    global _V3_PROVIDER_STATE
+    _V3_PROVIDER_STATE = {
+        "prices": prices,
+        "regime_bundle": regime_bundle,
+        "multi_horizon_bundle": multi_horizon_bundle,
+        "microstructure_features": microstructure_features,
+        "derivatives_features": derivatives_features,
+        "config": config,
+    }
+
+
+def clear_v3_provider_state() -> None:
+    global _V3_PROVIDER_STATE
+    _V3_PROVIDER_STATE = None
+
+
+def get_active_quant_signal(coin: str, as_of) -> QuantSignal:
+    """Dispatch to V2 or V3 based on the active version.
+
+    Note: agents (modulator.py, quant_signal_ingest.py) continue to call
+    get_quant_signal() directly for V2. This wrapper is the dispatch primitive
+    for the --quant-version flag; full agent plumbing is deferred to a later task.
+    """
+    version = _ACTIVE_QUANT_VERSION
+    as_of_ts = pd.Timestamp(as_of)
+    if version == "v2":
+        return V2QuantSignalProvider(base_dir=None).signal(coin=coin, as_of=as_of_ts)
+    if version == "v3":
+        if _V3_PROVIDER_STATE is None:
+            raise RuntimeError(
+                "V3 state not set; call set_v3_provider_state(...) at startup"
+            )
+        provider = V3QuantSignalProvider(**_V3_PROVIDER_STATE)
+        return provider.signal(coin=coin, as_of=as_of_ts)
+    raise ValueError(f"Unknown active quant version: {version!r}")
