@@ -242,3 +242,77 @@ def test_fetch_liquidations_uses_cache(tmp_path, monkeypatch):
     df = fetch_liquidations(symbol="BTCUSDT", cache_dir=tmp_path)
     assert len(df) == 1
     assert df["liq_asym_24h"].iloc[0] == 0.5
+
+
+def test_build_daily_derivatives_features_columns():
+    from tradingagents.strategies.v3.features.derivatives import (
+        build_daily_derivatives_features,
+    )
+
+    funding_idx = pd.date_range("2025-01-01", periods=200, freq="8h", tz="UTC")
+    funding_df = pd.DataFrame(
+        {"funding_rate": [0.0001 + 0.00001 * (i % 10) for i in range(200)]},
+        index=funding_idx,
+    )
+
+    oi_idx = pd.date_range("2025-01-01", periods=70, freq="D", tz="UTC")
+    oi_df = pd.DataFrame(
+        {
+            "open_interest": [1000.0 + 10.0 * i for i in range(70)],
+            "open_interest_value": [30000.0 + 300.0 * i for i in range(70)],
+        },
+        index=oi_idx,
+    )
+
+    liq_df = pd.DataFrame(
+        {"liq_asym_24h": [0.1 * (i % 5) for i in range(70)]},
+        index=oi_idx,
+    )
+
+    df = build_daily_derivatives_features(
+        funding_df=funding_df,
+        oi_df=oi_df,
+        liq_df=liq_df,
+        spot_price_series=pd.Series(
+            [50000.0 + 100.0 * i for i in range(70)], index=oi_idx
+        ),
+        perp_price_series=pd.Series(
+            [50050.0 + 100.0 * i for i in range(70)], index=oi_idx
+        ),
+        as_of=oi_idx.max(),
+    )
+    expected_cols = {
+        "funding_8h_level",
+        "funding_z_30",
+        "funding_slope_7",
+        "basis_annual",
+        "oi_change_1d",
+        "oi_change_7d",
+        "liq_asym_24h",
+    }
+    assert expected_cols.issubset(df.columns)
+    assert df.index.max() <= oi_idx.max()
+
+
+def test_build_daily_derivatives_look_ahead_guard():
+    from tradingagents.strategies.v3.features.derivatives import (
+        build_daily_derivatives_features,
+    )
+
+    idx = pd.date_range("2025-01-01", periods=50, freq="D", tz="UTC")
+    funding_idx = pd.date_range("2025-01-01", periods=150, freq="8h", tz="UTC")
+    df = build_daily_derivatives_features(
+        funding_df=pd.DataFrame({"funding_rate": [0.0001] * 150}, index=funding_idx),
+        oi_df=pd.DataFrame(
+            {
+                "open_interest": [1000.0] * 50,
+                "open_interest_value": [30000.0] * 50,
+            },
+            index=idx,
+        ),
+        liq_df=pd.DataFrame({"liq_asym_24h": [0.0] * 50}, index=idx),
+        spot_price_series=pd.Series([50000.0] * 50, index=idx),
+        perp_price_series=pd.Series([50050.0] * 50, index=idx),
+        as_of=pd.Timestamp("2025-01-25", tz="UTC"),
+    )
+    assert df.index.max() <= pd.Timestamp("2025-01-25", tz="UTC")

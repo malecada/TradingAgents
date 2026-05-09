@@ -292,3 +292,74 @@ def fetch_liquidations(
     df.attrs["proxy"] = False
     df.to_parquet(cache_file)
     return df
+
+
+def build_daily_derivatives_features(
+    funding_df: pd.DataFrame,
+    oi_df: pd.DataFrame,
+    liq_df: pd.DataFrame,
+    spot_price_series: pd.Series,
+    perp_price_series: pd.Series,
+    as_of: pd.Timestamp,
+    z_window: int = 30,
+    slope_window: int = 7,
+) -> pd.DataFrame:
+    """Aggregate raw derivative inputs into daily features.
+
+    Columns produced (per spec §4.2):
+      - ``funding_8h_level``  : last 8h funding rate (resampled to daily, last)
+      - ``funding_z_30``      : 30-day Z-score of daily funding
+      - ``funding_slope_7``   : current funding − 7-day mean
+      - ``basis_annual``      : (perp − spot) / spot × 365 (annualized)
+      - ``oi_change_1d``      : log change in OI vs previous day
+      - ``oi_change_7d``      : 7-day log change in OI
+      - ``liq_asym_24h``      : passthrough from ``liq_df``
+
+    Look-ahead guard: every input is sliced to ``df.index <= as_of`` before
+    rolling ops.
+    """
+    import numpy as np
+
+    if not isinstance(as_of, pd.Timestamp):
+        raise TypeError("as_of must be a pandas Timestamp")
+
+    funding_df = funding_df[funding_df.index <= as_of].copy()
+    oi_df = oi_df[oi_df.index <= as_of].copy()
+    liq_df = liq_df[liq_df.index <= as_of].copy()
+    spot_price_series = spot_price_series[spot_price_series.index <= as_of].copy()
+    perp_price_series = perp_price_series[perp_price_series.index <= as_of].copy()
+
+    # Resample 8h funding to daily (last value of day)
+    funding_daily = (
+        funding_df["funding_rate"]
+        .resample("D")
+        .last()
+        .rename("funding_8h_level")
+    )
+    funding_z = (
+        (funding_daily - funding_daily.rolling(z_window).mean())
+        / funding_daily.rolling(z_window).std()
+    ).rename("funding_z_30")
+    funding_slope = (
+        funding_daily - funding_daily.rolling(slope_window).mean()
+    ).rename("funding_slope_7")
+
+    # Basis (annualized perpetual premium)
+    basis = ((perp_price_series - spot_price_series) / spot_price_series) * 365.0
+    basis = basis.rename("basis_annual")
+
+    # OI changes (log)
+    oi = oi_df["open_interest"]
+    oi_log = np.log(oi.replace(0.0, np.nan))
+    oi_change_1d = oi_log.diff(1).rename("oi_change_1d")
+    oi_change_7d = oi_log.diff(7).rename("oi_change_7d")
+
+    # Liquidations passthrough (already daily, indexed by date)
+    liq = liq_df["liq_asym_24h"].rename("liq_asym_24h")
+
+    out = pd.concat(
+        [funding_daily, funding_z, funding_slope, basis, oi_change_1d, oi_change_7d, liq],
+        axis=1,
+    )
+    out = out.sort_index()
+    return out
