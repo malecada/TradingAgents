@@ -156,3 +156,58 @@ def test_consensus_signal_deadband_returns_zero():
     probas = {3: 0.52, 7: 0.51, 14: 0.49, 21: 0.51}  # very close to 0.5
     direction, confidence = consensus_signal(probas, regime, cfg)
     assert direction == 0
+
+
+def test_select_features_returns_subset_when_shap_available():
+    pytest.importorskip("shap")
+    from tradingagents.strategies.v3.models.multi_horizon import (
+        select_features_per_horizon,
+    )
+    from tradingagents.strategies.v3.models.ensemble import EnsembleModel
+
+    rng = np.random.default_rng(0)
+    X = rng.normal(size=(200, 5))
+    y = (X[:, 0] + 0.5 * X[:, 1] > 0).astype(int)
+    feature_names = ["a", "b", "c", "d", "e"]
+
+    model = EnsembleModel(horizon=7, members=("lgb",))
+    model.fit(X, y)
+
+    selected = select_features_per_horizon(
+        model, X[:50], feature_names, drop_bottom_pct=0.20
+    )
+    assert isinstance(selected, list)
+    assert "a" in selected  # most important feature should survive
+    assert len(selected) <= len(feature_names)
+    assert len(selected) >= 1
+
+
+def test_select_features_skips_when_shap_missing(monkeypatch, caplog):
+    """If shap import raises, return feature_names unchanged + warn."""
+    import logging
+    import sys
+
+    # Force shap import to fail by stashing a sentinel in sys.modules
+    monkeypatch.setitem(sys.modules, "shap", None)
+
+    from tradingagents.strategies.v3.models.multi_horizon import (
+        select_features_per_horizon,
+    )
+
+    feature_names = ["a", "b", "c"]
+    rng = np.random.default_rng(0)
+    X = rng.normal(size=(50, 3))
+
+    class _StubModel:
+        @property
+        def fitted_member_names(self):
+            return ("lgb",)
+
+        def predict_proba(self, X):
+            return np.tile([0.5, 0.5], (X.shape[0], 1))
+
+    with caplog.at_level(logging.WARNING):
+        out = select_features_per_horizon(_StubModel(), X, feature_names)
+    assert out == feature_names
+    # Warning logged about missing shap
+    assert "shap" in caplog.text.lower()

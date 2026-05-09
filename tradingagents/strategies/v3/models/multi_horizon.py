@@ -152,3 +152,60 @@ def consensus_signal(
     direction = 1 if diff > 0 else -1
     confidence = float(min(1.0, max(0.0, 2.0 * abs(diff))))
     return direction, confidence
+
+
+def select_features_per_horizon(
+    model: EnsembleModel | object,
+    X_holdout: np.ndarray,
+    feature_names: list[str],
+    drop_bottom_pct: float = 0.20,
+) -> list[str]:
+    """Drop bottom-quantile features by mean |SHAP value|.
+
+    Uses shap.TreeExplainer on the LGB member of an EnsembleModel (TreeExplainer
+    is fastest + works reliably on LGB). If shap is not installed, returns
+    ``feature_names`` unchanged with a warning.
+
+    ``drop_bottom_pct`` of features (rounded down) are dropped; remaining
+    features are returned in their original order.
+    """
+    try:
+        import shap
+        if shap is None:  # explicit None check for monkeypatch-stubbed path
+            raise ImportError("shap not available")
+    except ImportError:
+        logger.warning("shap not available — feature selection skipped")
+        return list(feature_names)
+
+    # Find the LGB member (TreeExplainer is fastest on LGB)
+    lgb_model = None
+    if isinstance(model, EnsembleModel):
+        lgb_model = model._fitted_members.get("lgb") if hasattr(model, "_fitted_members") else None
+    if lgb_model is None:
+        logger.warning("No LGB member available for SHAP — feature selection skipped")
+        return list(feature_names)
+
+    try:
+        explainer = shap.TreeExplainer(lgb_model)
+        shap_values = explainer.shap_values(X_holdout)
+        # For binary classifiers shap_values is a list [neg, pos] in older versions
+        # or a 2-D array in newer versions. Normalize to 2-D positive-class.
+        if isinstance(shap_values, list):
+            sv = np.asarray(shap_values[1])
+        else:
+            sv = np.asarray(shap_values)
+        if sv.ndim == 3:
+            # (n_samples, n_features, n_classes) — pick positive class
+            sv = sv[..., 1]
+        importance = np.abs(sv).mean(axis=0)
+    except Exception:
+        logger.exception("SHAP computation failed — feature selection skipped")
+        return list(feature_names)
+
+    n_drop = int(len(feature_names) * drop_bottom_pct)
+    if n_drop <= 0:
+        return list(feature_names)
+
+    # Indices of features to drop (lowest importance)
+    drop_idx = set(np.argsort(importance)[:n_drop].tolist())
+    return [name for i, name in enumerate(feature_names) if i not in drop_idx]
