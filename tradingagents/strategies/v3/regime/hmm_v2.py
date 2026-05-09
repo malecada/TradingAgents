@@ -345,3 +345,58 @@ class NHTransitionMatrix:
         max_per_row = logits.max(axis=1, keepdims=True)
         exp_l = np.exp(logits - max_per_row)
         return exp_l / exp_l.sum(axis=1, keepdims=True)
+
+
+# ── Online forward-algorithm posterior update ───────────────────────
+
+
+def update_posterior(
+    prev_posterior: np.ndarray,
+    transition_matrix: np.ndarray,
+    emission_logprobs: np.ndarray,
+) -> np.ndarray:
+    """One forward-algorithm step (look-ahead-safe online posterior update).
+
+    Math:
+      pred[j]         = sum_i prev_posterior[i] * transition_matrix[i, j]
+      unnorm[j]       = pred[j] * exp(emission_logprobs[j])
+      posterior[j]    = unnorm[j] / sum(unnorm)
+
+    Numerical stability: subtract the max log-prob before exponentiating so the
+    update remains stable even when all emission_logprobs are very negative.
+
+    Args:
+      prev_posterior: 1-D array of state probabilities (sums to 1.0).
+      transition_matrix: (n_states, n_states) row-stochastic matrix.
+      emission_logprobs: 1-D array of log-likelihoods, one per state.
+
+    Returns:
+      Updated 1-D posterior of shape (n_states,) summing to 1.0.
+
+    Raises:
+      ValueError: if shapes mismatch.
+    """
+    if prev_posterior.ndim != 1:
+        raise ValueError("prev_posterior must be 1-D")
+    n_states = prev_posterior.shape[0]
+    if transition_matrix.shape != (n_states, n_states):
+        raise ValueError(
+            f"transition_matrix shape {transition_matrix.shape} "
+            f"!= ({n_states}, {n_states})"
+        )
+    if emission_logprobs.shape != (n_states,):
+        raise ValueError(
+            f"emission_logprobs shape {emission_logprobs.shape} "
+            f"!= ({n_states},)"
+        )
+
+    pred = prev_posterior @ transition_matrix
+    # numerically stable update: shift max log-prob to 0
+    shifted = emission_logprobs - emission_logprobs.max()
+    unnorm = pred * np.exp(shifted)
+    total = unnorm.sum()
+    if total <= 0.0:
+        # Degenerate case: emission likelihood vanishes for all states.
+        # Fall back to predict-only step.
+        return pred / pred.sum()
+    return unnorm / total

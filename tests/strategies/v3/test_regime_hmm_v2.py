@@ -77,3 +77,60 @@ def test_nh_transition_matrix_high_vol_increases_bull_exit():
     M_high = nh.transition(np.array([1.0, 0.0]))
     assert M_high[0, 0] < M_low[0, 0]
     assert M_high[0, 1] + M_high[0, 2] > M_low[0, 1] + M_low[0, 2]
+
+
+def test_update_posterior_normalizes_to_one():
+    from tradingagents.strategies.v3.regime.hmm_v2 import update_posterior
+    import numpy as np
+
+    prev = np.array([1.0, 0.0, 0.0])
+    transition = np.array([
+        [0.7, 0.2, 0.1],
+        [0.3, 0.4, 0.3],
+        [0.1, 0.3, 0.6],
+    ])
+    emission_logprobs = np.array([-1.0, -2.0, -3.0])
+    new = update_posterior(prev, transition, emission_logprobs)
+    assert abs(new.sum() - 1.0) < 1e-9
+    assert (new >= 0).all()
+
+
+def test_update_posterior_concentrates_on_strong_likelihood():
+    from tradingagents.strategies.v3.regime.hmm_v2 import update_posterior
+    import numpy as np
+
+    prev = np.array([0.34, 0.33, 0.33])
+    transition = np.eye(3)  # stationary — posterior driven only by emission
+    emission_logprobs = np.array([0.0, -10.0, -10.0])  # state 0 vastly more likely
+    new = update_posterior(prev, transition, emission_logprobs)
+    assert new[0] > 0.99
+
+
+def test_update_posterior_after_long_bull_sequence():
+    """A long sequence of bull-favoring observations should drive the
+    posterior bull-mass to ~1.0 even from a uniform prior."""
+    from tradingagents.strategies.v3.regime.hmm_v2 import update_posterior
+    import numpy as np
+
+    posterior = np.array([0.34, 0.33, 0.33])
+    transition = np.array([
+        [0.95, 0.04, 0.01],
+        [0.05, 0.90, 0.05],
+        [0.01, 0.04, 0.95],
+    ])
+    bull_emission = np.array([0.0, -2.0, -5.0])  # bull state strongly preferred
+    for _ in range(50):
+        posterior = update_posterior(posterior, transition, bull_emission)
+    assert posterior[0] > 0.95
+
+
+def test_update_posterior_input_validation():
+    from tradingagents.strategies.v3.regime.hmm_v2 import update_posterior
+    import numpy as np
+    import pytest
+
+    prev = np.array([0.5, 0.5])  # wrong size — only 2 states
+    transition = np.eye(3)
+    emission = np.zeros(3)
+    with pytest.raises(ValueError):
+        update_posterior(prev, transition, emission)
