@@ -32,3 +32,48 @@ def test_hmm_v2_build_features_runs(synthetic_ohlcv):
         "realized_vol",
         "abs_return_smooth",
     ]
+
+
+def test_nh_transition_matrix_softmax_normalizes_rows():
+    from tradingagents.strategies.v3.regime.hmm_v2 import NHTransitionMatrix
+    import numpy as np
+
+    coefs = np.zeros((3, 3, 2))  # 3 from-states × 3 to-states × 2 covariates
+    intercepts = np.zeros((3, 3))
+    nh = NHTransitionMatrix(coefs=coefs, intercepts=intercepts)
+    cov = np.array([0.5, 0.0001])
+    M = nh.transition(cov)
+    assert M.shape == (3, 3)
+    np.testing.assert_allclose(M.sum(axis=1), [1.0, 1.0, 1.0], atol=1e-9)
+
+
+def test_nh_transition_matrix_zero_intercepts_uniform():
+    from tradingagents.strategies.v3.regime.hmm_v2 import NHTransitionMatrix
+    import numpy as np
+
+    coefs = np.zeros((3, 3, 2))
+    intercepts = np.zeros((3, 3))
+    nh = NHTransitionMatrix(coefs=coefs, intercepts=intercepts)
+    M = nh.transition(np.array([0.0, 0.0]))
+    np.testing.assert_allclose(M, np.full((3, 3), 1.0 / 3.0), atol=1e-9)
+
+
+def test_nh_transition_matrix_high_vol_increases_bull_exit():
+    """If the vol covariate has a positive coefficient on the
+    bull→sideways and bull→bear transitions, raising the vol input
+    should lower P(bull→bull) and raise P(bull→bear)+P(bull→sideways).
+    """
+    from tradingagents.strategies.v3.regime.hmm_v2 import NHTransitionMatrix
+    import numpy as np
+
+    coefs = np.zeros((3, 3, 2))
+    # bull is state 0, sideways state 1, bear state 2.
+    # Make leaving bull more likely under high vol (covariate index 0).
+    coefs[0, 1, 0] = 5.0  # bull→sideways gets boost from vol
+    coefs[0, 2, 0] = 5.0  # bull→bear gets boost from vol
+    intercepts = np.zeros((3, 3))
+    nh = NHTransitionMatrix(coefs=coefs, intercepts=intercepts)
+    M_low = nh.transition(np.array([0.0, 0.0]))
+    M_high = nh.transition(np.array([1.0, 0.0]))
+    assert M_high[0, 0] < M_low[0, 0]
+    assert M_high[0, 1] + M_high[0, 2] > M_low[0, 1] + M_low[0, 2]

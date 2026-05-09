@@ -293,3 +293,55 @@ def detect_regime(
         conf *= 0.7
 
     return label, max(0.0, min(1.0, conf)), h
+
+
+# ── NH-HMM transition matrix ────────────────────────────────────────
+
+
+@dataclass
+class NHTransitionMatrix:
+    """Non-homogeneous transition matrix for HMM-3.
+
+    For each (from_state, to_state) pair the unnormalized log-probability is:
+      ``logit[i, j] = intercepts[i, j] + coefs[i, j, :] @ covariates``
+    A row-wise softmax then yields a proper 3x3 stochastic matrix per timestep.
+
+    Shape conventions:
+      - ``coefs``      : (n_states, n_states, n_covariates)
+      - ``intercepts`` : (n_states, n_states)
+      - ``covariates`` (passed to ``transition``) : (n_covariates,)
+
+    Per spec §4.3, ``n_covariates = 2`` corresponding to
+    ``(realized_vol_21d, funding_rate_8h)``. The class itself is generic over
+    ``n_covariates`` so future feature additions don't require a rewrite.
+
+    Training of the coefficients is performed by ``train_nh_hmm`` (Task 20).
+    Online posterior updates use the matrix returned by ``transition`` in the
+    forward algorithm (Task 19).
+    """
+
+    coefs: np.ndarray
+    intercepts: np.ndarray
+
+    def __post_init__(self) -> None:
+        if self.coefs.shape[0] != self.coefs.shape[1]:
+            raise ValueError(
+                f"coefs leading dims must match (square transition); got {self.coefs.shape}"
+            )
+        if self.intercepts.shape != self.coefs.shape[:2]:
+            raise ValueError(
+                f"intercepts shape {self.intercepts.shape} != coefs[:2] {self.coefs.shape[:2]}"
+            )
+
+    def transition(self, covariates: np.ndarray) -> np.ndarray:
+        """Return the 3x3 transition matrix for the given covariate vector."""
+        if covariates.ndim != 1 or covariates.shape[0] != self.coefs.shape[2]:
+            raise ValueError(
+                f"covariates must be 1-D of length {self.coefs.shape[2]}; got {covariates.shape}"
+            )
+        # logit[i, j] = intercepts[i, j] + coefs[i, j, :] @ covariates
+        logits = self.intercepts + self.coefs @ covariates  # broadcasts to (n, n)
+        # row-wise softmax
+        max_per_row = logits.max(axis=1, keepdims=True)
+        exp_l = np.exp(logits - max_per_row)
+        return exp_l / exp_l.sum(axis=1, keepdims=True)
