@@ -160,3 +160,85 @@ def test_fetch_premium_index(monkeypatch):
     assert out["mark_price"] == 50000.0
     assert out["index_price"] == 49950.0
     assert out["basis"] == pytest.approx(50.0 / 49950.0, rel=1e-6)
+
+
+def test_fetch_liquidations_missing_api_key(tmp_path, monkeypatch, caplog):
+    import logging
+    from tradingagents.strategies.v3.features.derivatives import fetch_liquidations
+
+    monkeypatch.delenv("COINGLASS_API_KEY", raising=False)
+    with caplog.at_level(logging.WARNING):
+        df = fetch_liquidations(symbol="BTCUSDT", cache_dir=tmp_path)
+    assert "COINGLASS_API_KEY" in caplog.text
+    assert df.attrs.get("proxy") is True
+    assert "liq_asym_24h" in df.columns
+    assert (df["liq_asym_24h"] == 0.0).all()
+
+
+def test_fetch_liquidations_with_api_key(tmp_path, monkeypatch):
+    from tradingagents.strategies.v3.features import derivatives
+
+    monkeypatch.setenv("COINGLASS_API_KEY", "test-key")
+
+    pages = [
+        [
+            {
+                "t": 1735689600000,
+                "longLiquidationUsd": "1000000",
+                "shortLiquidationUsd": "500000",
+            },
+            {
+                "t": 1735776000000,
+                "longLiquidationUsd": "2000000",
+                "shortLiquidationUsd": "3000000",
+            },
+        ],
+        [],
+    ]
+    call_count = {"n": 0}
+
+    def _fake(symbol, start_ms, end_ms, api_key):
+        idx = call_count["n"]
+        call_count["n"] += 1
+        if idx < len(pages):
+            return pages[idx]
+        return []
+
+    monkeypatch.setattr(derivatives, "_fetch_liquidations_page", _fake)
+    df = derivatives.fetch_liquidations(
+        symbol="BTCUSDT",
+        cache_dir=tmp_path,
+        start=pd.Timestamp("2025-01-01", tz="UTC"),
+        end=pd.Timestamp("2025-01-03", tz="UTC"),
+    )
+    assert df.attrs.get("proxy") is False
+    assert len(df) == 2
+    # Day 0: long=1M, short=0.5M → asym = (1-0.5)/(1+0.5) = 0.333
+    # Day 1: long=2M, short=3M → asym = (2-3)/(2+3) = -0.2
+    assert df["liq_asym_24h"].iloc[0] == pytest.approx(1.0 / 3.0, rel=1e-3)
+    assert df["liq_asym_24h"].iloc[1] == pytest.approx(-0.2, rel=1e-3)
+
+
+def test_fetch_liquidations_uses_cache(tmp_path, monkeypatch):
+    from tradingagents.strategies.v3.features.derivatives import fetch_liquidations
+
+    monkeypatch.setenv("COINGLASS_API_KEY", "test-key")
+
+    cache_file = tmp_path / "BTCUSDT_liquidations.parquet"
+    df_cached = pd.DataFrame(
+        {"liq_asym_24h": [0.5]},
+        index=pd.date_range("2026-01-01", periods=1, freq="D", tz="UTC"),
+    )
+    df_cached.attrs["proxy"] = False
+    df_cached.to_parquet(cache_file)
+
+    def _fail(*args, **kwargs):
+        raise AssertionError("network must not be hit when cache present")
+
+    monkeypatch.setattr(
+        "tradingagents.strategies.v3.features.derivatives._fetch_liquidations_page",
+        _fail,
+    )
+    df = fetch_liquidations(symbol="BTCUSDT", cache_dir=tmp_path)
+    assert len(df) == 1
+    assert df["liq_asym_24h"].iloc[0] == 0.5
