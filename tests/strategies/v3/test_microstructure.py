@@ -154,3 +154,17 @@ def test_fetch_aggtrades_backoff_on_429(tmp_path, monkeypatch):
     )
     assert len(out) == 1
     assert calls["n"] == 3
+
+
+def test_proxy_features_from_klines(synthetic_ohlcv):
+    from tradingagents.strategies.v3.features.microstructure import (
+        build_proxy_microstructure_features,
+    )
+
+    df = build_proxy_microstructure_features(
+        synthetic_ohlcv, as_of=synthetic_ohlcv.index.max()
+    )
+    expected_cols = {"ofi_proxy", "ofi_proxy_w", "vol_dispersion"}
+    assert expected_cols.issubset(df.columns)
+    assert df.index.max() <= synthetic_ohlcv.index.max()
+    assert len(df) > 0

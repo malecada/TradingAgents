@@ -229,3 +229,33 @@ def fetch_aggtrades(
             logger.warning("Binance 429, sleeping %.1fs", wait)
             time.sleep(wait)
     raise RateLimitError(f"Failed after {max_retries} retries for {symbol} {day_str}")
+
+
+def build_proxy_microstructure_features(
+    klines: pd.DataFrame,
+    as_of: pd.Timestamp,
+    weekly_window: int = 7,
+) -> pd.DataFrame:
+    """Klines-derived crude OFI proxy used when aggTrades unavailable.
+
+    Required columns: ``open``, ``high``, ``low``, ``close``, ``volume``.
+    """
+    klines = klines[klines.index <= as_of].copy()
+    if klines.empty:
+        return pd.DataFrame(columns=["ofi_proxy", "ofi_proxy_w", "vol_dispersion"])
+
+    sign = np.sign(klines["close"] - klines["open"]).fillna(0.0)
+    proxy = (sign * klines["volume"]) / klines["volume"].replace(0.0, np.nan)
+    proxy_w = (
+        (sign * klines["volume"]).rolling(weekly_window).sum()
+        / klines["volume"].rolling(weekly_window).sum().replace(0.0, np.nan)
+    )
+    dispersion = (klines["high"] - klines["low"]) / klines["close"].replace(0.0, np.nan)
+    out = pd.DataFrame(
+        {
+            "ofi_proxy": proxy,
+            "ofi_proxy_w": proxy_w,
+            "vol_dispersion": dispersion,
+        }
+    )
+    return out
