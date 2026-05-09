@@ -211,3 +211,46 @@ def test_select_features_skips_when_shap_missing(monkeypatch, caplog):
     assert out == feature_names
     # Warning logged about missing shap
     assert "shap" in caplog.text.lower()
+
+
+def test_train_multi_horizon_e2e(tmp_path, synthetic_ohlcv):
+    """End-to-end: load fixture data, train, pickle, load back, predict."""
+    import pickle
+    from tradingagents.strategies.v3.models.multi_horizon import (
+        MultiHorizonEnsemble,
+        train_multi_horizon,
+    )
+
+    # Build features parquet from synthetic_ohlcv
+    features = pd.DataFrame(
+        {
+            "feat_a": synthetic_ohlcv["close"].pct_change().fillna(0.0),
+            "feat_b": synthetic_ohlcv["close"].pct_change().rolling(5).mean().fillna(0.0),
+            "feat_c": synthetic_ohlcv["volume"].pct_change().fillna(0.0),
+        },
+        index=synthetic_ohlcv.index,
+    )
+    features_file = tmp_path / "features.parquet"
+    features.to_parquet(features_file)
+
+    returns = synthetic_ohlcv["close"].pct_change().fillna(0.0)
+    returns_file = tmp_path / "returns.csv"
+    returns.to_csv(returns_file, header=True)
+
+    out_path = train_multi_horizon(
+        features_parquet=features_file,
+        returns_csv=returns_file,
+        out_dir=tmp_path,
+        coin="bitcoin",
+        horizons=(7,),  # one horizon for fast test
+        members=("lgb",),
+    )
+    assert out_path.exists()
+    assert out_path.name == "v3_models_bitcoin.pkl"
+
+    with open(out_path, "rb") as f:
+        bundle = pickle.load(f)
+    assert isinstance(bundle, MultiHorizonEnsemble)
+    assert 7 in bundle.fitted_horizons
+    out = bundle.predict_proba(features)
+    assert out[7].shape == (len(features),)

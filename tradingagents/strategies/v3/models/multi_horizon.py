@@ -110,6 +110,60 @@ class MultiHorizonEnsemble:
         return tuple(self._models.keys())
 
 
+import pickle
+from pathlib import Path
+
+
+def train_multi_horizon(
+    features_parquet: Path | str,
+    returns_csv: Path | str,
+    out_dir: Path | str,
+    coin: str,
+    horizons: tuple[int, ...] = (3, 7, 14, 21),
+    members: tuple[str, ...] = ("lgb", "xgb", "catboost"),
+    holdout_fraction: float = 0.20,
+) -> Path:
+    """Load features+returns, fit MultiHorizonEnsemble, pickle to disk.
+
+    Returns the pickle path.
+    """
+    features_parquet = Path(features_parquet)
+    returns_csv = Path(returns_csv)
+    out_dir = Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    features = pd.read_parquet(features_parquet)
+    returns_df = pd.read_csv(returns_csv, index_col=0, parse_dates=True)
+    if isinstance(returns_df, pd.DataFrame):
+        if returns_df.shape[1] == 1:
+            returns_series = returns_df.iloc[:, 0]
+        else:
+            raise ValueError(
+                f"returns_csv {returns_csv} must have exactly one data column"
+            )
+    else:
+        returns_series = returns_df
+
+    # Align indices
+    common_idx = features.index.intersection(returns_series.index)
+    features = features.loc[common_idx]
+    returns_series = returns_series.loc[common_idx]
+
+    mhe = MultiHorizonEnsemble(horizons=horizons, holdout_fraction=holdout_fraction)
+    mhe.fit(features, returns_series, members=members)
+
+    out_path = out_dir / f"v3_models_{coin}.pkl"
+    with open(out_path, "wb") as f:
+        pickle.dump(mhe, f)
+    logger.info(
+        "Wrote %s — horizons=%s members=%s",
+        out_path,
+        mhe.fitted_horizons,
+        members,
+    )
+    return out_path
+
+
 from tradingagents.strategies.v3.contracts import RegimeState  # noqa: E402
 from tradingagents.strategies.v3.config import V3Config  # noqa: E402
 
