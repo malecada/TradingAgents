@@ -64,7 +64,9 @@ def _load_required_pickle(path: Path):
 
 
 def _load_ohlcv_for_coin(coin: str, days: int = 2500) -> pd.DataFrame:
-    df = _load_crypto_ohlcv(coin=coin, days=days)
+    # _load_crypto_ohlcv takes coingecko_id + curr_date (not coin + days)
+    # Use end of eval window as curr_date so we get all needed history
+    df = _load_crypto_ohlcv(coingecko_id=coin, curr_date="2026-04-15")
     df["Date"] = pd.to_datetime(df["Date"])
     df = df.set_index("Date").sort_index()
     return df
