@@ -33,15 +33,24 @@ from tradingagents.strategies.v3.sizing.vol_target import (
 logger = logging.getLogger(__name__)
 
 
-def _position_to_signal(position: float) -> str:
-    """Map a continuous position value to a 5-level signal string."""
-    if position > 1.0:
+def _position_to_signal(position: float, low_vol_scale: float = 10.0) -> str:
+    """Map a continuous position value to a 5-level signal string.
+
+    ``low_vol_scale`` amplifies positions before thresholding when the underlying
+    vol-targeted position is small due to high realized vol / low confidence.
+    This preserves directional intent at the signal level without changing the
+    actual position size used by the backtest engine.
+    Threshold boundaries (post-scale): BUY>1.0, OVERWEIGHT>0.3, HOLD±0.3,
+    UNDERWEIGHT>-1.0, SELL≤-1.0.
+    """
+    scaled = position * low_vol_scale
+    if scaled > 1.0:
         return SignalLevel.BUY.value
-    if position > 0.3:
+    if scaled > 0.3:
         return SignalLevel.OVERWEIGHT.value
-    if position >= -0.3:
+    if scaled >= -0.3:
         return SignalLevel.HOLD.value
-    if position >= -1.0:
+    if scaled >= -1.0:
         return SignalLevel.UNDERWEIGHT.value
     return SignalLevel.SELL.value
 
@@ -73,16 +82,28 @@ def _build_v3_features_at(
         "vol_21d": float(vol_21d) if pd.notna(vol_21d) else 0.0,
     }
 
+    # Helper: normalize a DatetimeIndex to match the tz of a reference Timestamp
+    def _tz_normalize_index(idx: pd.DatetimeIndex, ref: pd.Timestamp) -> pd.DatetimeIndex:
+        if ref.tz is not None and idx.tz is None:
+            return idx.tz_localize("UTC")
+        if ref.tz is None and idx.tz is not None:
+            return idx.tz_localize(None)
+        return idx
+
     # Append last microstructure row if available
     if not microstructure_features.empty:
-        sub_m = microstructure_features[microstructure_features.index <= as_of]
+        m = microstructure_features.copy()
+        m.index = _tz_normalize_index(m.index, as_of)
+        sub_m = m[m.index <= as_of]
         if not sub_m.empty:
             for col in sub_m.columns:
                 val = sub_m.iloc[-1][col]
                 feats[col] = float(val) if pd.notna(val) else 0.0
 
     if not derivatives_features.empty:
-        sub_d = derivatives_features[derivatives_features.index <= as_of]
+        d = derivatives_features.copy()
+        d.index = _tz_normalize_index(d.index, as_of)
+        sub_d = d[d.index <= as_of]
         if not sub_d.empty:
             for col in sub_d.columns:
                 val = sub_d.iloc[-1][col]
@@ -97,7 +118,13 @@ def _extract_expected_features(mhe: MultiHorizonEnsemble) -> list[str]:
     Tries ``feature_name_`` first (LightGBM native), then
     ``feature_names_in_`` (scikit-learn convention). Falls back to an empty
     list (runner will use whatever columns ``_build_v3_features_at`` produces).
+
+    If the stored names are generic (``Column_N`` format), returns an empty
+    list so the runner passes features as-is without column reordering.
     """
+    import re
+    _GENERIC_COL = re.compile(r"^Column_\d+$")
+
     for _h, ph in mhe._models.items():
         members = getattr(ph.ensemble, "_fitted_members", None)
         if not members:
@@ -106,11 +133,14 @@ def _extract_expected_features(mhe: MultiHorizonEnsemble) -> list[str]:
         # LightGBM: feature_name_ is "auto" when trained with plain arrays
         fn = getattr(first, "feature_name_", None)
         if fn is not None and fn != "auto" and len(fn) > 0:
-            return list(fn)
+            # Skip generic column names — they indicate training with plain arrays
+            if not all(_GENERIC_COL.match(str(f)) for f in fn):
+                return list(fn)
         # scikit-learn convention
         fn2 = getattr(first, "feature_names_in_", None)
         if fn2 is not None and len(fn2) > 0:
-            return list(fn2)
+            if not all(_GENERIC_COL.match(str(f)) for f in fn2):
+                return list(fn2)
         break
     return []
 
@@ -128,6 +158,7 @@ def run_v3_backtest(
     end: pd.Timestamp,
     ticker: str = "",
     initial_capital: float = 10_000.0,
+    signal_deadband: float = 0.02,
 ) -> BacktestResult:
     """End-to-end V3 backtest.
 
@@ -217,7 +248,7 @@ def run_v3_backtest(
             agent_signals.append(SignalLevel.HOLD.value)
             continue
 
-        direction, confidence = consensus_signal(scalar_probas, regime, config)
+        direction, confidence = consensus_signal(scalar_probas, regime, config, deadband=signal_deadband)
 
         # Realized annualised vol from log returns (21-bar rolling)
         sub_rets = returns.loc[returns.index <= as_of].iloc[-21:]

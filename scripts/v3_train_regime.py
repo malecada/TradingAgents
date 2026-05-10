@@ -46,7 +46,7 @@ def main() -> None:
     # Pull OHLCV via existing dataflow
     from tradingagents.dataflows.coingecko_binance import _load_crypto_ohlcv
 
-    ohlcv = _load_crypto_ohlcv(coin=args.coin, days=2500)
+    ohlcv = _load_crypto_ohlcv(coingecko_id=args.coin, curr_date=args.through)
     ohlcv["Date"] = pd.to_datetime(ohlcv["Date"])
     ohlcv = ohlcv[ohlcv["Date"] <= pd.Timestamp(args.through)].copy()
     ohlcv = ohlcv.set_index("Date").sort_index()

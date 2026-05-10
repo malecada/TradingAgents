@@ -61,7 +61,7 @@ def _load_required_pickle(path: Path):
 
 
 def _load_ohlcv_for_coin(coin: str, days: int = 2500) -> pd.DataFrame:
-    df = _load_crypto_ohlcv(coin=coin, days=days)
+    df = _load_crypto_ohlcv(coingecko_id=coin, curr_date="2026-04-15")
     df["Date"] = pd.to_datetime(df["Date"])
     df = df.set_index("Date").sort_index()
     return df
@@ -80,6 +80,8 @@ def main() -> None:
     parser.add_argument("--initial-capital", type=float, default=10_000.0)
     parser.add_argument("--target-vol", type=float, default=0.15)
     parser.add_argument("--max-leverage", type=float, default=2.0)
+    parser.add_argument("--signal-deadband", type=float, default=0.02,
+                        help="Deadband for consensus signal (default 0.02 to allow realistic signal generation)")
     args = parser.parse_args()
 
     out_dir = Path(args.out_dir)
@@ -132,6 +134,7 @@ def main() -> None:
                 end=coin_end,
                 ticker=coin.upper(),
                 initial_capital=args.initial_capital,
+                signal_deadband=args.signal_deadband,
             )
             per_coin_results[coin] = result
             logger.info(
