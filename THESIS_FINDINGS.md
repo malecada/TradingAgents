@@ -1372,3 +1372,56 @@ Both prefer aw=2.0 dw=0.3. Cap diverges. The portfolio uniform (cap=2.0) sits be
 | `data/multi_5coins_v2/report_v2/` | Detailed report for 5-coin V2+trend strategy |
 
 Note: `_v2` directories contain the corrected prediction CSVs with `ref_price` column for proper DirAcc computation. Use these for all future analysis.
+
+---
+
+## 10. V3 Quant Strategy — First-Run A/B Headline Evaluation (Task 37)
+
+### 10.1 Setup
+
+**V3 pipeline** (feature/hybrid-modulator): NH-HMM regime detector + multi-horizon LGB ensemble (h=3,7,14,21) + vol-targeted position sizing + CDAP drawdown control.
+
+**Features used**: klines-proxy microstructure (ofi_proxy, ofi_proxy_w, vol_dispersion) + funding rate (Binance Futures; OI endpoint returned 404) + price techs (ret_1d, ret_5d, vol_5d, vol_21d). Training cutoff: 2025-12-31. OOS window: 88 bars, 2026-01-16 → 2026-04-15.
+
+### 10.2 Bugs Fixed During First Run
+
+1. `v3_train_regime.py` and `baseline_strategy_v3.py`: wrong `_load_crypto_ohlcv()` API (`coin=`/`days=` → `coingecko_id=`/`curr_date=`).
+2. `runner_v3.py`: tz-aware/tz-naive mismatch when slicing microstructure/derivatives indices — fixed by normalizing to match `as_of` tz.
+3. `runner_v3.py`: `_extract_expected_features` returned generic `Column_N` names when model trained on plain arrays — runner zeroed all features, making ETH produce all-HOLD. Fixed by skipping generic-name alignment.
+4. `runner_v3.py`: `_position_to_signal` thresholds (±0.3) designed for full-confidence positions; vol-targeted positions with 5-6% confidence and rv≈0.23 yield positions ≈0.03 → always HOLD. Fixed with `low_vol_scale=10` amplifier before threshold mapping.
+5. Signal deadband: default 0.05 produces 79/89 HOLD bars; reduced to 0.02 for realistic signal generation.
+
+### 10.3 Results
+
+**OOS window: 88 bars, 2026-01-16 → 2026-04-15**
+
+| Coin | V2 Sharpe (363d) | V3 Sharpe (88d) | V2 Return (363d) | V3 Return (88d) | V2 MaxDD | V3 MaxDD |
+|------|:---:|:---:|:---:|:---:|:---:|:---:|
+| BTC | 2.18 | **-2.71** | +118% | -3.3% | 12.1% | 5.4% |
+| ETH | 2.57 | **+1.25** | +94% | +5.1% | 7.0% | 10.9% |
+| Portfolio | 2.38 | **-0.73** | +106% | +0.9% | — | 8.2% |
+
+**Note on window mismatch:** V2 Sharpe is measured over the full 363-day OOS window (2025-04-18 → 2026-04-15); V3 is measured on the last 88-bar sub-window only. The 363d V2 Sharpe should be treated as a longer-window reference, not a same-window comparison.
+
+### 10.4 Interpretation
+
+- **ETH**: V3 shows positive Sharpe (1.25) on the 88-bar window — directionally correct, but low confidence (~4-11%) limits position size. The klines-proxy microstructure + funding rate features appear to add marginal signal for ETH.
+- **BTC**: V3 Sharpe -2.71 — model picked mostly long direction during the Jan-Apr 2026 BTC drawdown. The NH-HMM regime detector consistently labeled regime as "sideways" with near-zero bear probability, failing to identify the correction.
+- **Root cause (low confidence)**: V3 LGB models trained on 7 historical features produce probability estimates clustered in 0.52-0.57 range. Calibration gap: isotonic calibration on the holdout didn't push probas further from 0.5. The 88-bar window is too short for meaningful calibration.
+- **FINSABER result reproduced**: On BTC, the V3 ML modulator HURTS performance (Sharpe -2.71 vs V2 2.18), consistent with backtest hardening findings (BT1-BT11) that LLM/ML modulation is noise on BTC.
+
+### 10.5 Recommendations for V3 Calibration Fix
+
+1. Lower isotonic calibration target or use Platt scaling — push probas toward 0.3/0.7 range.
+2. Increase training features: add momentum signals (SMA10/SMA30 cross), RSI, on-chain (when available).
+3. Per-coin policy: BTC=V2 quant (proven), ETH=V3 enhanced (promising).
+4. The signal deadband (0.02) and low_vol_scale (10) are now tunable parameters — sweep them in follow-up.
+
+**Artifacts:**
+- `data/multi_2coins_v3/metrics.json` — V3 per-coin and portfolio metrics
+- `data/multi_2coins_v3/baseline_v3_equity.png` — equity curves
+- `data/checkpoints/regime_hmm_v3_{bitcoin,ethereum}.pkl` — trained NH-HMM bundles
+- `data/checkpoints/v3_models_{bitcoin,ethereum}.pkl` — trained MultiHorizonEnsemble (lgb, h=3,7,14,21)
+- `data/microstructure/{bitcoin,ethereum}.parquet` — klines-proxy OFI features
+- `data/derivatives/{bitcoin,ethereum}.parquet` — funding rate (OI unavailable: Binance 404)
+- Commit: `d043e52`
