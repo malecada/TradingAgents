@@ -13,6 +13,39 @@ The quant baseline that the multi-agent LLM system must beat is `scripts/baselin
 - **Risk**: 7-day min hold with adaptive early exit, 3% stop-loss, 15% portfolio circuit breaker, 95th percentile vol cap
 - **Performance**: 2-coin portfolio Sharpe **2.69** (+106% return); 3-coin portfolio Sharpe 2.58 (+155% return)
 
+### Quant V3 (Built, Underperforms V2)
+
+V3 (`tradingagents/strategies/v3/`) extends V2 with a Non-Homogeneous Hidden Markov Model (NH-HMM) regime detector, microstructure features (klines-proxy OFI, volume dispersion), open-interest and funding-rate derivatives, a multi-horizon LightGBM ensemble (h=3,7,14,21) in place of V2's h=7+h=14 consensus, CDAP drawdown-adaptive position control, vol-targeted Kelly sizing, and a Pydantic-typed signal contract layer. The architecture is complete (117+ unit tests, Pydantic contracts, CPCV harness) and V2 regression stays green throughout.
+
+**Empirical result**: V3 is systematically inferior to V2 on every metric and every evaluation window tested. An 88-bar OOS A/B (2026-01-16 → 2026-04-15) produced portfolio Sharpe -0.73 vs V2 2.38. A 28-split CPCV over 2024-05 → 2026-04 yielded BTC mean Sharpe -2.40 (0/28 positive splits) and ETH mean Sharpe -2.92 (1/28 positive splits); Deflated Sharpe Ratio ≈ 0 for both coins. A 5-variant component ablation confirms V3 architecture is internally well-engineered (each component—multi-horizon horizons, regime detector, vol-target/CDAP—contributes positively within V3), but the LGB signal quality is the binding constraint: LGB probability estimates cluster in the 0.52–0.57 range and do not generate alpha on this OOS window. This reproduces the BT11 finding that V2's alpha is ~90% sizing+momentum and sophisticated ML modulation hurts BTC.
+
+**Status**: V3 build complete; empirically inferior to V2 on current data. Architecture is sound (ablations confirm each component contributes positively), but LGB signal quality is the binding constraint. V2 remains the production quant baseline.
+
+**Reference documents**:
+- Spec: `docs/superpowers/specs/2026-05-08-quant-v3-design.md`
+- Plan: `docs/superpowers/plans/2026-05-08-quant-v3.md`
+- 88-bar A/B results: `data/multi_2coins_v3/metrics.json`
+- CPCV results: `data/v3_cpcv/bitcoin/summary.json`, `data/v3_cpcv/ethereum/summary.json`
+- Ablation results: `data/v3_ablations/ablations_metrics.json`
+- Full empirical findings: `THESIS_FINDINGS.md` Section 12
+
+**Reproduce V3 results**:
+```bash
+# 88-bar A/B evaluation
+python scripts/baseline_strategy_v3.py --coins bitcoin ethereum \
+    --start 2026-01-16 --end 2026-04-15 --output-dir data/multi_2coins_v3
+
+# CPCV (28 splits × 2 coins)
+python scripts/v3_cpcv.py --coins bitcoin ethereum \
+    --start 2024-05-01 --end 2026-04-30 --n-splits 28 \
+    --output-dir data/v3_cpcv
+
+# Component ablation (5 variants)
+python scripts/v3_ablation.py --coins bitcoin ethereum \
+    --start 2026-01-16 --end 2026-04-15 \
+    --output-dir data/v3_ablations
+```
+
 ## Architecture
 
 ```
@@ -101,6 +134,7 @@ tradingagents/                    # Core package
     reporting.py                  # print_summary_table(), plot_equity_curves(), save_results_json()
   strategies/
     v2_sizing.py                  # V2 sizing primitives — single source of truth for backtest + live (signals, vol, sizing, leverage, trend filter)
+    v3/                           # V3 quant stack (NH-HMM + microstructure + multi-horizon) — built, underperforms V2 (see THESIS_FINDINGS.md §12)
   execution/
     exchange.py                   # Binance Futures wrapper (testnet default); place_market_order, place_stop_loss
     risk.py                       # 4-tier pre-trade checks: confidence gate, daily loss limit, max positions, position sizing
