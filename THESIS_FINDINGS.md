@@ -1574,3 +1574,39 @@ After installing xgboost==3.2.0 and catboost==1.2.10, both coins were retrained 
 |------|----------|
 | `data/v3_cpcv_perfold/bitcoin/summary.json` | BTC per-fold-retrain CPCV 28-split summary |
 | `data/v3_cpcv_perfold/ethereum/summary.json` | ETH per-fold-retrain CPCV 28-split summary |
+
+### 12.10 Binance Vision aggTrades VPIN — Real Microstructure Rerun
+
+**Motivation**: §12.5 noted that all V3 microstructure experiments used klines-proxy OFI (derived from OHLCV open/close sign × volume) because the Binance REST API aggTrades endpoint is too expensive to paginate at multi-month scale. Binance Vision (`data.binance.vision/data/spot/daily/aggTrades/`) publishes pre-built daily CSVs (~28 MB compressed per coin per day), enabling efficient bulk download of real tick-level data. §12.10 tests whether replacing the klines proxy with real VPIN changes the V3 conclusion.
+
+**Implementation**: Added `fetch_aggtrades_vision()` and `compute_vpin_fast()` to `tradingagents/strategies/v3/features/microstructure.py`. The Vision fetcher downloads daily ZIPs, auto-detects ms/µs timestamp precision (Binance switched in late 2024), and caches daily parquets. `compute_vpin_fast()` is a vectorised NumPy replacement for the Python-loop `volume_buckets` iterator: assigns each trade to a bucket via `floor(cumvol / bucket_size)` (approximate, no fractional splitting), achieving ~1000x speedup (0.05s vs 69.7s per BTC day). Added `--use-vision` and `--no-raw-cache` flags to `scripts/build_microstructure_features.py`; the `--no-raw-cache` path processes one day at a time and discards raw trades immediately after aggregation, keeping peak disk usage to <100 MB.
+
+**Data**: Fetched 2025-12-01 → 2026-04-15 (136 days × 2 coins). BTC: 0 skipped, 136 days in 673s. ETH: 0 skipped, 136 days in 665s. Total fetch runtime: ~22 min. VPIN parquets: 136 rows each, vpin_50 all 136 non-null (mean BTC ~0.17, mean ETH ~0.17), vpin_50_z 107 non-null (first 29 NaN from 30-day rolling warmup — correct). No 404s (all dates published).
+
+**Training limitation**: The real VPIN exists only for 2025-12-01 → 2026-04-15. The training window runs through 2025-12-31, so only ~31 out of 2453 training rows have non-zero VPIN (the rest are zero-filled). The LGB model therefore learned "VPIN≈0 → signal" during training, but during the 88-bar eval window (Jan–Apr 2026), VPIN is genuinely non-zero. This creates a feature distribution shift that invalidates the trained model on the eval window.
+
+**88-bar A/B Results (2026-01-16 → 2026-04-15)**
+
+| Coin | V2 (363d) | V3-klines (proxy) | V3-vision (real VPIN) |
+|------|:---------:|:-----------------:|:---------------------:|
+| BTC Sharpe | +2.18 | -2.71 | -5.69 |
+| ETH Sharpe | +2.57 | +1.25 | -5.37 |
+| Portfolio Sharpe | +2.38 | -0.73 | -5.53 |
+| Portfolio Return | — | +0.86% | -8.20% |
+| Portfolio MaxDD | — | 8.15% | 10.68% |
+
+**Interpretation**: V3-vision is significantly worse than V3-klines (-5.53 vs -0.73 portfolio Sharpe). This is expected given the training limitation: the model saw VPIN=0 for 98.7% of training, then encountered non-zero VPIN in eval, causing severe prediction distribution shift. The result does not invalidate V3; it confirms the §12.5 limitation note: real VPIN cannot be used effectively without multi-year training data (≥2 years of tick-level aggTrades).
+
+**Final state**: Klines-proxy state restored as canonical (V3 remains at the previously reported -0.73 portfolio Sharpe). Real VPIN parquets preserved in `data/microstructure_vpin/` for future use when longer tick history is available.
+
+**Key technical contribution**: The Vision adapter + vectorised VPIN computation (`compute_vpin_fast`) makes future large-scale VPIN experiments feasible. At 5.3s/day per coin (vs ~70s with the REST API paginator + slow bucketing), a 2-year backfill for 2 coins would take ~2 hours (within a single session).
+
+| Path | Contents |
+|------|----------|
+| `data/microstructure_vpin/bitcoin.parquet` | Real VPIN: 136 rows, 2025-12-01 → 2026-04-15 |
+| `data/microstructure_vpin/ethereum.parquet` | Real VPIN: 136 rows, 2025-12-01 → 2026-04-15 |
+| `data/multi_2coins_v3_vision/metrics.json` | V3-vision 88-bar A/B metrics |
+| `data/checkpoints/v3_models_vision_{bitcoin,ethereum}.pkl` | Models trained with real VPIN (kept for reference) |
+| `tradingagents/strategies/v3/features/microstructure.py` | `fetch_aggtrades_vision`, `compute_vpin_fast` |
+| `scripts/build_microstructure_features.py` | `--use-vision`, `--no-raw-cache` flags |
+| `scripts/train_v3_vision.py` | Training script for vision VPIN models |

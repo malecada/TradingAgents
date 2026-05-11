@@ -168,3 +168,45 @@ def test_proxy_features_from_klines(synthetic_ohlcv):
     assert expected_cols.issubset(df.columns)
     assert df.index.max() <= synthetic_ohlcv.index.max()
     assert len(df) > 0
+
+
+def test_fetch_aggtrades_vision_uses_cache(tmp_path, monkeypatch):
+    from tradingagents.strategies.v3.features.microstructure import fetch_aggtrades_vision
+
+    cache_file = tmp_path / "BTCUSDT_2026-01-01.parquet"
+    df_cached = pd.DataFrame(
+        {"price": [100.0], "qty": [1.0], "is_buyer_maker": [True]},
+        index=pd.date_range("2026-01-01", periods=1, freq="min", tz="UTC"),
+    )
+    df_cached.to_parquet(cache_file)
+
+    def _fail(*args, **kwargs):
+        raise AssertionError("network must not be hit when cache present")
+    monkeypatch.setattr("requests.get", _fail)
+
+    df = fetch_aggtrades_vision(
+        symbol="BTCUSDT",
+        date=pd.Timestamp("2026-01-01", tz="UTC"),
+        cache_dir=tmp_path,
+    )
+    assert len(df) == 1
+    assert df["price"].iloc[0] == 100.0
+
+
+def test_fetch_aggtrades_vision_404_returns_empty(tmp_path, monkeypatch):
+    from tradingagents.strategies.v3.features.microstructure import fetch_aggtrades_vision
+
+    class FakeResp:
+        status_code = 404
+        content = b""
+        def raise_for_status(self):
+            raise RuntimeError("should not be called for 404")
+    monkeypatch.setattr("requests.get", lambda *a, **k: FakeResp())
+
+    df = fetch_aggtrades_vision(
+        symbol="BTCUSDT",
+        date=pd.Timestamp("2099-01-01", tz="UTC"),
+        cache_dir=tmp_path,
+    )
+    assert df.empty
+    assert list(df.columns) == ["price", "qty", "is_buyer_maker"]
