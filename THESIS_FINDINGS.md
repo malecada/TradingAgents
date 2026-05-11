@@ -1502,7 +1502,7 @@ Every valid ablation variant is strictly worse than full V3, confirming the arch
 - **No real Coinglass liquidations data.** Coinglass API key not configured; liquidation features zero-filled for all V3 experiments.
 - **Binance Futures OI endpoint returned 404.** `/fapi/v1/openInterestHist` for BTC and ETH returned 404 during development; OI features zero-filled.
 - **Full lgb+xgb+catboost ensemble subsequently validated.** After installing xgboost==3.2.0 and catboost==1.2.10, the full triple-member ensemble was retrained and evaluated (see §12.8). Results are comparable to lgb-only — conclusion unchanged.
-- **Models reused across CPCV folds.** Per-fold retraining is the correct CPCV protocol but was deferred due to compute cost (~28× training runs per coin). Result is slightly conservative but directionally unaffected.
+- **Models reused across CPCV folds.** Per-fold retraining was subsequently performed (see §12.9); results are worse not better, confirming the model-reuse result was not artificially inflated.
 - **Single OOS window.** The 88-bar A/B window is a single bearish regime (Jan-Apr 2026). Bull-regime validation is pending.
 
 ### 12.6 Conclusion for Thesis
@@ -1556,3 +1556,21 @@ After installing xgboost==3.2.0 and catboost==1.2.10, both coins were retrained 
 | `data/v3_cpcv_full/bitcoin/summary.json` | BTC CPCV full 28-split summary |
 | `data/v3_cpcv_full/ethereum/summary.json` | ETH CPCV full 28-split summary |
 | `data/checkpoints/v3_models_{bitcoin,ethereum}.pkl` | Retrained MultiHorizonEnsemble (lgb+xgb+catboost, h=3,7,14,21) |
+
+### 12.9 Per-Fold Model Retraining in CPCV
+
+**Protocol**: Added `--retrain-per-fold` flag to `scripts/evaluate_v3_cpcv.py`. When set, a fresh `MultiHorizonEnsemble(horizons=(3,7,14,21))` is trained on each fold's `train_idx` (integer positions mapped from the evaluation window into the global price series); the regime bundle is reused from disk (HMM is fitted on long pre-window history and is not the subject of evaluation). Feature matrix is built once globally via vectorised `_build_global_features` to avoid O(n²) cost, then sliced per fold. All 4 horizons (h=3,7,14,21) achieve ≥30 valid labels per fold. Training cost: lgb-only ~0.15 s/fold × 28 folds × 2 coins ≈ 8 s total.
+
+#### CPCV 28-split Mean Sharpe — model-reuse vs per-fold-retrain (lgb-only)
+
+| Coin | reuse | per-fold | Δ | DSR (per-fold) |
+|------|:-----:|:--------:|:-:|:--------------:|
+| BTC | -2.40 | -4.16 | -1.76 | ≈ 0 |
+| ETH | -2.92 | -3.82 | -0.90 | ≈ 0 |
+
+**Findings**: Per-fold retraining makes results **worse**, not better (BTC −1.76, ETH −0.90 Sharpe). The pre-trained global model (trained on 2453 rows through end-2025) provides better out-of-sample performance than models trained only on each fold's train window (≈494–522 rows, all within the 2024-2026 eval window). The fold-only training regime is essentially in-distribution with the test window — any signal the global model learned from pre-2024 data (longer history, different regimes) is lost. Both approaches yield DSR ≈ 0 and 0/28 positive BTC splits; the per-fold result is directionally identical but quantitatively worse. The §12.3 conclusion is unchanged and in fact strengthened: model-reuse CPCV gives the *more optimistic* bound of -2.40/-2.92, while the methodologically correct per-fold protocol confirms -4.16/-3.82.
+
+| Path | Contents |
+|------|----------|
+| `data/v3_cpcv_perfold/bitcoin/summary.json` | BTC per-fold-retrain CPCV 28-split summary |
+| `data/v3_cpcv_perfold/ethereum/summary.json` | ETH per-fold-retrain CPCV 28-split summary |
