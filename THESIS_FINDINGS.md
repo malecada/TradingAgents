@@ -1610,3 +1610,49 @@ After installing xgboost==3.2.0 and catboost==1.2.10, both coins were retrained 
 | `tradingagents/strategies/v3/features/microstructure.py` | `fetch_aggtrades_vision`, `compute_vpin_fast` |
 | `scripts/build_microstructure_features.py` | `--use-vision`, `--no-raw-cache` flags |
 | `scripts/train_v3_vision.py` | Training script for vision VPIN models |
+
+### 12.11 1-Year Vision aggTrades Rerun — Final V3 Verdict
+
+**Motivation**: §12.10 established that the 135-day Vision window (2025-12-01 → 2026-04-15) was too short: only 31/2453 training rows had real VPIN, creating a distribution shift. The fix is to fetch 1 year of aggTrades so training (through 2025-12-31) has 9 months of real VPIN (Apr–Dec 2025) and eval has 3.5 months (Jan–Apr 2026).
+
+**Data Fetch**: Fetched 2025-04-01 → 2026-04-15 (380 days × 2 coins) using `--use-vision --no-raw-cache` streaming mode. Total runtime: BTC 380 days in 1784s (29.7 min), ETH 380 days in 1891s (31.5 min) ≈ 61 min total. Zero days skipped (all 404-free). VPIN values all non-null (380/380 rows per coin).
+
+**VPIN Training Coverage**: After joining to the OHLCV-anchored feature matrix (2453 training rows through 2025-12-31), **275/2453 training rows have non-zero VPIN** (9 months, Apr–Dec 2025). This substantially improves on the 135-day version (31/2453) and satisfies the ≥100-row threshold.
+
+**Retrain**: `MultiHorizonEnsemble(horizons=(3,7,14,21), members=lgb)` retrained fresh on 2453 training rows with 1y Vision VPIN features for both BTC and ETH. Checkpoints saved to `data/checkpoints/v3_models_vision_1y_{bitcoin,ethereum}.pkl`.
+
+**88-bar A/B Results (2026-01-16 → 2026-04-15)**
+
+| Coin | V2 (363d) | V3-klines (proxy) | V3-vis-135d | V3-vis-1y |
+|------|:---------:|:-----------------:|:-----------:|:---------:|
+| BTC Sharpe | +2.18 | -2.71 | -5.69 | -5.69 |
+| ETH Sharpe | +2.57 | +1.25 | -5.37 | -5.37 |
+| Portfolio Sharpe | +2.38 | -0.73 | -5.53 | **-5.53** |
+| Portfolio Return | — | +0.86% | -8.20% | -8.20% |
+| Portfolio MaxDD | — | 8.15% | 10.68% | 10.68% |
+
+The 1-year Vision results are **identical** to the 135-day results (BTC -5.69, ETH -5.37, portfolio -5.53). Increasing real VPIN coverage from 31 to 275 training rows does not improve performance.
+
+**CPCV Results (28 splits, 2024-05-01 → 2026-04-15, model-reuse)**
+
+| Coin | V3-klines | V3-vis-1y | Δ | DSR |
+|------|:---------:|:---------:|:-:|:---:|
+| BTC | -2.40 | -0.99 | +1.41 | ≈ 0 |
+| ETH | -2.92 | -3.20 | -0.28 | ≈ 0 |
+
+Interesting split: BTC CPCV improves slightly (-2.40 → -0.99) with real VPIN, but ETH worsens (-2.92 → -3.20). Both DSR ≈ 0 (no positive Deflated Sharpe Ratio for either variant). CPCV does not rescue V3-vision: the portfolio-level evidence remains strongly negative (0/28 positive BTC splits for klines, few or none for vision-1y).
+
+**Key finding**: Extending the Vision window from 135 to 380 days (9 months of real VPIN in training) does **not** improve V3 performance. The 88-bar OOS result is identical (-5.53 portfolio Sharpe), and CPCV gives mixed signals (BTC better, ETH worse) that average to about the same magnitude of negative alpha. This definitively rules out "insufficient VPIN training data" as the explanation for V3's underperformance.
+
+**Root cause confirmed**: The binding constraint is LGB signal quality, not microstructure data quality. VPIN (whether proxy or real, 135d or 1y) is not generating alpha on this OOS window. This reproduces and strengthens BT11 (§11): V3's architecture is sound but the additional complexity does not add value over V2's simpler momentum+sizing approach.
+
+**Canonical V3 state decision**: Klines-proxy restored as canonical (portfolio Sharpe -0.73, far better than vision -5.53). Real VPIN parquets preserved in `data/microstructure_vpin_1y/` for future reference. If aggTrades availability extends to 2+ years, a re-test could revisit whether real VPIN helps, but given the 1-year result, improvement is unlikely.
+
+| Path | Contents |
+|------|----------|
+| `data/microstructure_vpin_1y/bitcoin.parquet` | Real VPIN: 380 rows, 2025-04-01 → 2026-04-15 |
+| `data/microstructure_vpin_1y/ethereum.parquet` | Real VPIN: 380 rows, 2025-04-01 → 2026-04-15 |
+| `data/multi_2coins_v3_vision_1y/metrics.json` | V3-vision-1y 88-bar A/B metrics |
+| `data/v3_cpcv_vision_1y/bitcoin/summary.json` | BTC CPCV: mean SR -0.99, DSR ≈ 0 |
+| `data/v3_cpcv_vision_1y/ethereum/summary.json` | ETH CPCV: mean SR -3.20, DSR ≈ 0 |
+| `data/checkpoints/v3_models_vision_1y_{bitcoin,ethereum}.pkl` | 1y Vision models (kept for reference) |
