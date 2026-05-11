@@ -31,7 +31,7 @@ from tradingagents.strategies.contracts import (
 )
 from tradingagents.strategies.calibration import load_or_identity
 from tradingagents.strategies.modulator import apply_modulator
-from tradingagents.strategies.quant_engine import get_quant_signal
+from tradingagents.strategies.quant_signal_provider import get_active_quant_signal
 
 logger = logging.getLogger(__name__)
 
@@ -128,9 +128,9 @@ def create_modulator(llm, n_samples: int = 5, temperature: float = 0.5):
             elif isinstance(qs_in, QuantSignal):
                 quant_signal = qs_in
             else:
-                quant_signal = get_quant_signal(coin, trade_date)
+                quant_signal = get_active_quant_signal(coin, trade_date)
         except Exception as exc:  # noqa: BLE001
-            logger.warning(f"modulator: get_quant_signal failed: {exc}")
+            logger.warning(f"modulator: get_active_quant_signal failed: {exc}")
             return {
                 "modulated_position": None,
                 "modulator_narrative": "Layer 1 unavailable — modulator skipped.",

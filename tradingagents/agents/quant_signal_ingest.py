@@ -15,7 +15,7 @@ import functools
 import logging
 
 from tradingagents.strategies.contracts import QuantSignal
-from tradingagents.strategies.quant_engine import get_quant_signal
+from tradingagents.strategies.quant_signal_provider import get_active_quant_signal
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ def create_quant_signal_ingest():
         coin = state["company_of_interest"]
         trade_date = state.get("trade_date", "")
         try:
-            sig: QuantSignal = get_quant_signal(coin, trade_date)
+            sig: QuantSignal = get_active_quant_signal(coin, trade_date)
             return {
                 "quant_signal": sig.model_dump(mode="json"),
                 "sender": name,

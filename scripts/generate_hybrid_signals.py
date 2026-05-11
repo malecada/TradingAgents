@@ -22,9 +22,11 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import pickle
 import sys
 import time
 from pathlib import Path
+from typing import Optional
 
 import pandas as pd
 
@@ -51,11 +53,125 @@ def parse_args():
                    help="Enable asset-name anonymization (Tier A4)")
     p.add_argument("--force", action="store_true")
     p.add_argument("--quant-version", choices=("v2", "v3"), default="v2",
-                   help="Quant signal version. v3 requires regime + multi-horizon bundles "
-                        "to be injected via set_v3_provider_state() before agent runs. "
-                        "Known limitation: v3 path is not yet fully plumbed through LangGraph "
-                        "agent nodes; agents still call get_quant_signal() (V2) directly.")
+                   help="Quant signal version. v3 requires per-coin regime + "
+                        "multi-horizon bundles (pickles) and OHLCV prices "
+                        "(parquet/CSV) to be present in --v3-state-dir.")
+    p.add_argument(
+        "--v3-state-dir",
+        default="data/checkpoints",
+        help="Directory containing V3 per-coin pickles: "
+             "regime_hmm_v3_{coin}.pkl and v3_models_{coin}.pkl. "
+             "Also searched for {coin}_ohlcv.parquet / prices.parquet for price series. "
+             "Only used when --quant-version v3.",
+    )
+    p.add_argument(
+        "--v3-micro-dir",
+        default="data/microstructure",
+        help="Directory for optional microstructure parquets ({coin}.parquet).",
+    )
+    p.add_argument(
+        "--v3-deriv-dir",
+        default="data/derivatives",
+        help="Directory for optional derivatives parquets ({coin}.parquet).",
+    )
     return p.parse_args()
+
+
+def _load_optional_parquet(path: Path) -> pd.DataFrame:
+    """Return parquet as DataFrame, or empty DataFrame if the file is missing."""
+    if path.exists():
+        return pd.read_parquet(path)
+    return pd.DataFrame()
+
+
+def _load_required_pickle(path: Path):
+    """Load a required pickle file; raises FileNotFoundError if missing."""
+    if not path.exists():
+        raise FileNotFoundError(
+            f"Required V3 bundle missing: {path}. "
+            "Run the V3 training pipeline first or pass --quant-version v2."
+        )
+    with open(path, "rb") as fh:
+        return pickle.load(fh)
+
+
+def _load_prices_for_coin(coin: str, state_dir: Path) -> pd.Series:
+    """Load close-price series for a coin from parquet or CSV.
+
+    Tried in order:
+      1. {state_dir}/{coin}_ohlcv.parquet  (multi-coin pipeline output)
+      2. {state_dir}/prices.parquet        (single-file store keyed by coin)
+      3. data/multi_2coins_v2/{coin}_predictions.parquet  (V2 side-effect)
+    Raises FileNotFoundError if none found.
+    """
+    candidates = [
+        state_dir / f"{coin}_ohlcv.parquet",
+        state_dir / "prices.parquet",
+        PROJECT_ROOT / "data" / "multi_2coins_v2" / f"{coin}_predictions.parquet",
+    ]
+    for path in candidates:
+        if not path.exists():
+            continue
+        df = pd.read_parquet(path)
+        if "close" in df.columns:
+            return df["close"]
+        if coin in df.columns:
+            return df[coin]
+        # prices.parquet may have per-coin columns
+        for col in df.columns:
+            if coin.lower() in col.lower() or col.lower() in ("close", "price"):
+                return df[col]
+    raise FileNotFoundError(
+        f"Could not find price series for coin={coin!r}. "
+        f"Searched: {[str(c) for c in candidates]}. "
+        "Provide OHLCV data in --v3-state-dir or use --quant-version v2."
+    )
+
+
+def _inject_v3_state_for_coins(
+    coins: list[str],
+    state_dir: str,
+    micro_dir: str,
+    deriv_dir: str,
+    log: logging.Logger,
+) -> None:
+    """Load V3 bundles per coin and register them in the module-level state.
+
+    Called once at startup when ``--quant-version v3`` is active.
+    """
+    from tradingagents.strategies.quant_signal_provider import set_v3_provider_state
+    from tradingagents.strategies.v3.config import V3Config
+
+    sd = Path(state_dir)
+    md = Path(micro_dir)
+    dd = Path(deriv_dir)
+
+    config = V3Config()
+
+    for coin in coins:
+        log.info("V3: loading state for coin=%s", coin)
+
+        regime_path = sd / f"regime_hmm_v3_{coin}.pkl"
+        models_path = sd / f"v3_models_{coin}.pkl"
+
+        regime_bundle = _load_required_pickle(regime_path)
+        mh_bundle = _load_required_pickle(models_path)
+
+        prices = _load_prices_for_coin(coin, sd)
+
+        micro = _load_optional_parquet(md / f"{coin}.parquet")
+        deriv = _load_optional_parquet(dd / f"{coin}.parquet")
+
+        set_v3_provider_state(
+            coin=coin,
+            prices=prices,
+            regime_bundle=regime_bundle,
+            multi_horizon_bundle=mh_bundle,
+            microstructure_features=micro,
+            derivatives_features=deriv,
+            config=config,
+        )
+        log.info("V3: registered state for coin=%s (prices len=%d)", coin, len(prices))
 
 
 def main():
@@ -66,6 +182,17 @@ def main():
 
     from tradingagents.strategies.quant_signal_provider import set_active_quant_version
     set_active_quant_version(args.quant_version)
+
+    # If V3 is requested, eagerly load per-coin bundles before any agent runs.
+    if args.quant_version == "v3":
+        log.info("V3 mode: loading per-coin state from %s", args.v3_state_dir)
+        _inject_v3_state_for_coins(
+            coins=args.coins,
+            state_dir=args.v3_state_dir,
+            micro_dir=args.v3_micro_dir,
+            deriv_dir=args.v3_deriv_dir,
+            log=log,
+        )
 
     from tradingagents.default_config import DEFAULT_CONFIG
     from tradingagents.graph.trading_graph import TradingAgentsGraph

@@ -74,6 +74,7 @@ def test_get_active_quant_signal_v3_path_with_state(synthetic_ohlcv):
     mhe.fit(features, returns, members=("lgb",))
 
     qsp.set_v3_provider_state(
+        coin="bitcoin",
         prices=prices,
         regime_bundle=regime_bundle,
         multi_horizon_bundle=mhe,
@@ -87,4 +88,92 @@ def test_get_active_quant_signal_v3_path_with_state(synthetic_ohlcv):
     assert sig.direction in ("long", "short", "flat")
     # Reset
     qsp.clear_v3_provider_state()
+    qsp.set_active_quant_version("v2")
+
+
+def test_v3_state_keyed_by_coin(monkeypatch):
+    """Per-coin state: dispatch picks the right state for each coin."""
+    from tradingagents.strategies.contracts import QuantSignal
+    from tradingagents.strategies import quant_signal_provider as qsp
+
+    # Build two minimal mock V3QuantSignalProviders that return distinguishable signals.
+    class _FakeProviderBitcoin:
+        def signal(self, coin, as_of):
+            return QuantSignal(
+                coin=coin, direction="long", magnitude=0.8,
+                regime="bull", regime_confidence=0.9, hurst=0.6,
+                deterministic_signals={"v3_quant": True},
+                as_of_date=pd.Timestamp(as_of).strftime("%Y-%m-%d"),
+            )
+
+    class _FakeProviderEthereum:
+        def signal(self, coin, as_of):
+            return QuantSignal(
+                coin=coin, direction="short", magnitude=-0.5,
+                regime="bear", regime_confidence=0.7, hurst=0.45,
+                deterministic_signals={"v3_quant": True},
+                as_of_date=pd.Timestamp(as_of).strftime("%Y-%m-%d"),
+            )
+
+    # Patch V3QuantSignalProvider constructor to return per-coin fakes.
+    _state_to_provider = {}
+
+    def _fake_v3_init(self, **kwargs):
+        # Identify which coin by inspecting prices identity stored in state
+        self._kwargs = kwargs
+
+    def _fake_v3_signal(self, coin, as_of):
+        return _state_to_provider[coin].signal(coin, as_of)
+
+    monkeypatch.setattr(
+        "tradingagents.strategies.quant_signal_provider.V3QuantSignalProvider.__init__",
+        _fake_v3_init,
+    )
+    monkeypatch.setattr(
+        "tradingagents.strategies.quant_signal_provider.V3QuantSignalProvider.signal",
+        _fake_v3_signal,
+    )
+
+    _state_to_provider["bitcoin"] = _FakeProviderBitcoin()
+    _state_to_provider["ethereum"] = _FakeProviderEthereum()
+
+    # Register dummy state for two coins (content doesn't matter — mocked above)
+    dummy_series = pd.Series([1.0], index=[pd.Timestamp("2026-01-01")])
+    dummy_df = pd.DataFrame(index=[pd.Timestamp("2026-01-01")])
+
+    qsp.clear_v3_provider_state()
+    for c in ("bitcoin", "ethereum"):
+        qsp.set_v3_provider_state(
+            coin=c,
+            prices=dummy_series,
+            regime_bundle=None,
+            multi_horizon_bundle=None,
+            microstructure_features=dummy_df,
+            derivatives_features=dummy_df,
+            config=None,
+        )
+
+    qsp.set_active_quant_version("v3")
+    ts = pd.Timestamp("2026-01-15")
+
+    sig_btc = qsp.get_active_quant_signal("bitcoin", ts)
+    sig_eth = qsp.get_active_quant_signal("ethereum", ts)
+
+    assert sig_btc.direction == "long", "bitcoin should dispatch to long signal"
+    assert sig_eth.direction == "short", "ethereum should dispatch to short signal"
+    assert sig_btc.coin == "bitcoin"
+    assert sig_eth.coin == "ethereum"
+
+    # Partial clear: remove only bitcoin; ethereum state must remain
+    qsp.clear_v3_provider_state(coin="bitcoin")
+    with pytest.raises(RuntimeError, match="V3 state not set"):
+        qsp.get_active_quant_signal("bitcoin", ts)
+    sig_eth2 = qsp.get_active_quant_signal("ethereum", ts)
+    assert sig_eth2.direction == "short"
+
+    # Full clear
+    qsp.clear_v3_provider_state()
+    with pytest.raises(RuntimeError, match="V3 state not set"):
+        qsp.get_active_quant_signal("ethereum", ts)
+
     qsp.set_active_quant_version("v2")

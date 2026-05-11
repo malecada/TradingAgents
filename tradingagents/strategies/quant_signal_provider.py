@@ -175,7 +175,11 @@ def build_provider(version: str, **kwargs) -> QuantSignalProvider:
 # ---------------------------------------------------------------------------
 
 _ACTIVE_QUANT_VERSION: str = "v2"
-_V3_PROVIDER_STATE: dict | None = None
+
+# Per-coin V3 provider state keyed by coin name.
+# Special key "__default__" is used when set_v3_provider_state is called
+# without a coin argument (single-coin convenience form).
+_V3_PROVIDER_STATES: dict[str, dict] = {}
 
 
 def set_active_quant_version(version: str) -> None:
@@ -200,10 +204,20 @@ def set_v3_provider_state(
     microstructure_features: pd.DataFrame,
     derivatives_features: pd.DataFrame,
     config,
+    coin: Optional[str] = None,
 ) -> None:
-    """Inject the per-coin V3 provider state for the active session."""
-    global _V3_PROVIDER_STATE
-    _V3_PROVIDER_STATE = {
+    """Inject per-coin V3 provider state.
+
+    Args:
+        coin: Coin identifier to key the state under.  When omitted (or
+              ``None``) the state is stored under the ``"__default__"`` key,
+              which ``get_active_quant_signal`` falls back to when no
+              coin-specific entry exists.  Pass ``coin`` explicitly when
+              registering state for multiple coins so each lookup dispatches to
+              the correct data.
+    """
+    key = coin if coin is not None else "__default__"
+    _V3_PROVIDER_STATES[key] = {
         "prices": prices,
         "regime_bundle": regime_bundle,
         "multi_horizon_bundle": multi_horizon_bundle,
@@ -211,29 +225,49 @@ def set_v3_provider_state(
         "derivatives_features": derivatives_features,
         "config": config,
     }
+    logger.debug("V3 provider state registered for coin=%r (key=%r)", coin, key)
 
 
-def clear_v3_provider_state() -> None:
-    global _V3_PROVIDER_STATE
-    _V3_PROVIDER_STATE = None
+def clear_v3_provider_state(coin: Optional[str] = None) -> None:
+    """Clear V3 provider state.
+
+    Args:
+        coin: If provided, remove only the entry for that coin.  If ``None``
+              (default), clear all registered states including ``"__default__"``.
+    """
+    global _V3_PROVIDER_STATES
+    if coin is None:
+        _V3_PROVIDER_STATES.clear()
+    else:
+        _V3_PROVIDER_STATES.pop(coin, None)
+        # Also remove __default__ when the caller clears without specifying coin=…
+        # No — only clear the specific key so partial clear is safe.
 
 
 def get_active_quant_signal(coin: str, as_of) -> QuantSignal:
     """Dispatch to V2 or V3 based on the active version.
 
-    Note: agents (modulator.py, quant_signal_ingest.py) continue to call
-    get_quant_signal() directly for V2. This wrapper is the dispatch primitive
-    for the --quant-version flag; full agent plumbing is deferred to a later task.
+    For V2 the coin argument is passed straight through to the V2 engine.
+
+    For V3 the per-coin state registered via ``set_v3_provider_state`` is used.
+    Lookup order: ``coin`` key first, then ``"__default__"``.  Raises
+    ``RuntimeError`` if neither is found.
+
+    Args:
+        coin: Coin identifier (e.g. ``"bitcoin"``).
+        as_of: Trade date as a ``pd.Timestamp`` or ISO date string.
     """
     version = _ACTIVE_QUANT_VERSION
     as_of_ts = pd.Timestamp(as_of)
     if version == "v2":
         return V2QuantSignalProvider(base_dir=None).signal(coin=coin, as_of=as_of_ts)
     if version == "v3":
-        if _V3_PROVIDER_STATE is None:
+        state = _V3_PROVIDER_STATES.get(coin) or _V3_PROVIDER_STATES.get("__default__")
+        if state is None:
             raise RuntimeError(
-                "V3 state not set; call set_v3_provider_state(...) at startup"
+                f"V3 state not set for coin={coin!r}; call "
+                "set_v3_provider_state(coin=...) at startup"
             )
-        provider = V3QuantSignalProvider(**_V3_PROVIDER_STATE)
+        provider = V3QuantSignalProvider(**state)
         return provider.signal(coin=coin, as_of=as_of_ts)
     raise ValueError(f"Unknown active quant version: {version!r}")
