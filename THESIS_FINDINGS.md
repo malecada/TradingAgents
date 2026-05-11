@@ -1501,7 +1501,7 @@ Every valid ablation variant is strictly worse than full V3, confirming the arch
 - **Binance aggTrades not used.** Pagination at scale (2 years × 2 coins × 1-min ticks) is prohibitively expensive via the REST API; klines-proxy OFI was used throughout. True tick-level microstructure may differ.
 - **No real Coinglass liquidations data.** Coinglass API key not configured; liquidation features zero-filled for all V3 experiments.
 - **Binance Futures OI endpoint returned 404.** `/fapi/v1/openInterestHist` for BTC and ETH returned 404 during development; OI features zero-filled.
-- **LGB-only ensemble.** XGBoost and CatBoost are optional dependencies and were not installed in the dev environment. The multi-model ensemble (xgb + catboost + lgb majority vote) was not tested.
+- **Full lgb+xgb+catboost ensemble subsequently validated.** After installing xgboost==3.2.0 and catboost==1.2.10, the full triple-member ensemble was retrained and evaluated (see §12.8). Results are comparable to lgb-only — conclusion unchanged.
 - **Models reused across CPCV folds.** Per-fold retraining is the correct CPCV protocol but was deferred due to compute cost (~28× training runs per coin). Result is slightly conservative but directionally unaffected.
 - **Single OOS window.** The 88-bar A/B window is a single bearish regime (Jan-Apr 2026). Bull-regime validation is pending.
 
@@ -1528,3 +1528,31 @@ The ablation study provides a positive result for the thesis: it demonstrates th
 | `data/derivatives/{bitcoin,ethereum}.parquet` | Funding rate features (OI zero-filled) |
 | `docs/superpowers/specs/2026-05-08-quant-v3-design.md` | V3 architecture specification |
 | `docs/superpowers/plans/2026-05-08-quant-v3.md` | V3 41-task implementation plan |
+
+### 12.8 Full Multi-Member Ensemble (lgb+xgb+catboost) Validation
+
+After installing xgboost==3.2.0 and catboost==1.2.10, both coins were retrained with all three ensemble members across all four horizons (h=3,7,14,21). The models are simple-average ensembles; calibration uses isotonic regression on the holdout set. Training data: 2453 rows per coin through 2025-12-31. All 4 horizons × 3 members confirmed fitted for both coins.
+
+#### 88-bar A/B Comparison (2026-01-16 → 2026-04-15)
+
+| Coin | V2 Sharpe (363d) | V3 lgb-only | V3 full (lgb+xgb+cb) |
+|------|:----------------:|:-----------:|:---------------------:|
+| BTC | +2.18 | -2.71 | -3.42 |
+| ETH | +2.57 | +1.25 | +1.81 |
+| Portfolio | +2.38 | -0.73 | -0.81 |
+
+#### CPCV 28-split Mean Sharpe (2024-05 → 2026-04)
+
+| Coin | V3 lgb-only mean | V3 full mean | DSR (full) |
+|------|:----------------:|:------------:|:----------:|
+| BTC | -2.40 | -2.58 | ≈ 0 |
+| ETH | -2.92 | -3.33 | ≈ 0 |
+
+**Findings**: The full three-member ensemble provides **no improvement** over lgb-only. BTC performance degrades on both 88-bar (-2.71 → -3.42) and CPCV (-2.40 → -2.58). ETH shows a small 88-bar improvement (+1.25 → +1.81) but CPCV worsens (-2.92 → -3.33). The simple-average aggregation of XGB and CatBoost predictions adds noise rather than complementary signal, consistent with high correlation among GBDT ensemble members on the same 9-feature dataset. The root cause is signal quality (probability estimates clustered near 0.5 for all three models), not the number of ensemble members. The §12.3 conclusion is unchanged: V3 is inferior to V2 on all metrics with or without the full ensemble.
+
+| Path | Contents |
+|------|----------|
+| `data/multi_2coins_v3_full/metrics.json` | V3-full 88-bar A/B per-coin metrics |
+| `data/v3_cpcv_full/bitcoin/summary.json` | BTC CPCV full 28-split summary |
+| `data/v3_cpcv_full/ethereum/summary.json` | ETH CPCV full 28-split summary |
+| `data/checkpoints/v3_models_{bitcoin,ethereum}.pkl` | Retrained MultiHorizonEnsemble (lgb+xgb+catboost, h=3,7,14,21) |
