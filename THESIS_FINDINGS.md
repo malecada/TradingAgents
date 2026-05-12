@@ -1709,3 +1709,53 @@ The calibration collapse is confirmed: h=7 canonical has std=0.005 (essentially 
 | `data/multi_2coins_v3_nocalib/metrics.json` | V3-nocalib 88-bar A/B metrics (portfolio Sharpe -2.07) |
 | `tradingagents/strategies/v3/models/multi_horizon.py` | `use_calibration` flag added (back-compat default=True) |
 | `tests/strategies/v3/test_multi_horizon.py` | Two new calibration flag tests added |
+
+### 12.13 Methodology Fix: Per-Bar Walk-Forward Retraining (Match V2 Protocol)
+
+**Motivation**: V2 retrains LGB at every evaluation bar via `walk_forward_pooled` in `tradingagents/models/lgb_model.py` (line 168: `for i in range(min_train_window, len(unique_dates))`). Each bar `i` predicts using a model trained on data through bar `i-1`. V3, by contrast, trained once at the 2025-12-31 cutoff and evaluated 88 frozen bars (Jan–Apr 2026). This is a methodology mismatch — V3's poor proba distribution (all bullish due to distribution shift on falling 2026 market) is partly a symptom of a stale model never updated with 2026 data.
+
+**Hypothesis**: If V3 retrains at each bar (matching V2's protocol), the distribution shift is corrected and V3 may recover alpha.
+
+**Implementation**:
+
+Added per-bar walk-forward retraining infrastructure to `runner_v3.py`:
+
+- `build_global_features(prices, micro, deriv)` — vectorised O(n) feature matrix builder (same 9 features as `_build_v3_features_at`, but computed once for the full history).
+- `train_walk_forward_mhe(global_features, returns, as_of, ...)` — trains a fresh `MultiHorizonEnsemble` on all data through `as_of - 21 days` (purge guard = `max(horizons)` to prevent h-step label leakage).
+- New parameters in `run_v3_backtest()`: `retrain_per_bar`, `retrain_cadence`, `retrain_members`, `retrain_use_calibration`.
+- New CLI flags in `scripts/baseline_strategy_v3.py`: `--retrain-per-bar`, `--retrain-cadence N`, `--retrain-members lgb`, `--no-retrain-calibration`.
+
+Training sizes grew correctly across the 88-bar window: bar 1 (2026-01-16): 2,448 rows; bar 18: 2,465; bar 52: 2,499; bar 86: 2,533.
+
+**88-bar A/B Results (2026-01-16 → 2026-04-15)**
+
+| Coin | V2 | V3-frozen (canonical) | V3-walk-forward (lgb-only, no-calib) |
+|------|:--:|:---------------------:|:------------------------------------:|
+| BTC Sharpe | **+2.18** | -2.71 | -4.00 |
+| ETH Sharpe | **+2.57** | +1.25 | -1.51 |
+| Portfolio Sharpe | **+2.38** | -0.73 | -2.76 |
+| BTC Return | — | — | -25.87% |
+| ETH Return | — | — | -12.13% |
+| BTC MaxDD | — | — | 30.22% |
+| ETH MaxDD | — | — | 23.03% |
+
+**Result: Walk-forward retraining DOES NOT fix V3. Results are significantly worse than frozen (-2.76 vs -0.73 portfolio Sharpe).**
+
+**Post-hoc analysis**: 
+
+The walk-forward retraining did correct the stale-model problem — proba spread widened substantially (std went from ~0.005–0.077 with frozen model to 0.128–0.181 with walk-forward). However, the probabilities point in the wrong direction: the LGB retrained on ~2,450 bars of largely-upward crypto history generates bullish proba biases (h=21: 60% bullish frequency, h=7: 41% bullish frequency) on a market that fell ~16% over the eval window. This is not a distribution shift artefact — it is genuine signal failure: LGB cannot learn the 2026 bear pattern quickly enough because the training set is dominated by 2019–2025 bull trends.
+
+Comparing the signal regimes:
+- Frozen V3-canonical: systematically bullish (calibration-collapsed), inadvertently provides some hedge by shrinking position sizes.
+- Walk-forward LGB-only no-calib: wider probas but still net bullish, AND larger position sizes due to missing calibration → larger losses.
+- V2: entirely different signal architecture (term-structure consensus h=7+h=14 with SMA30 trend filter), naturally adaptive because its walk-forward labels are 7/14-day cumulative returns, not 21-day horizon LGB probas.
+
+**Decision**: Walk-forward retraining is the methodologically correct approach but does not rescue V3 on this OOS window. The fundamental constraint is LGB signal quality — the feature set (price momentum + microstructure + derivatives) cannot generate alpha on the 2026 bear window regardless of training cutoff. **V3 remains empirically inferior to V2 under all protocol variants tested.**
+
+**New canonical state**: Unchanged — V3-canonical (frozen, lgb+xgb+catboost, isotonic calibration, portfolio Sharpe -0.73) is still the V3 reference result. Walk-forward results kept as additional negative evidence.
+
+| Path | Contents |
+|------|----------|
+| `data/multi_2coins_v3_walkforward/metrics.json` | V3-walkforward 88-bar A/B metrics (portfolio Sharpe -2.76) |
+| `tradingagents/strategies/v3/backtest/runner_v3.py` | `build_global_features`, `train_walk_forward_mhe`, new `retrain_*` params |
+| `scripts/baseline_strategy_v3.py` | `--retrain-per-bar`, `--retrain-cadence`, `--retrain-members`, `--no-retrain-calibration` flags |

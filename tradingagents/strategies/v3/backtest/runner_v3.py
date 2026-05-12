@@ -33,6 +33,127 @@ from tradingagents.strategies.v3.sizing.vol_target import (
 logger = logging.getLogger(__name__)
 
 
+# ---------------------------------------------------------------------------
+# Walk-forward feature builder (vectorised; avoids O(n²) per-bar cost)
+# ---------------------------------------------------------------------------
+
+
+def build_global_features(
+    prices: pd.Series,
+    microstructure_features: pd.DataFrame,
+    derivatives_features: pd.DataFrame,
+) -> pd.DataFrame:
+    """Build a full-history feature DataFrame aligned to ``prices.index``.
+
+    Produces the same columns that ``_build_v3_features_at`` generates per bar,
+    but computed once for the whole series (vectorised) so that walk-forward
+    retraining is O(n) rather than O(n²).
+
+    Rows with NaN (first 21 bars) are retained so integer-index slicing stays
+    aligned with ``prices.index``; callers must dropna() or handle NaN before
+    fitting.
+    """
+    idx = prices.index
+
+    def _tz_norm(other_idx: pd.DatetimeIndex) -> pd.DatetimeIndex:
+        if idx.tz is not None and other_idx.tz is None:
+            return other_idx.tz_localize("UTC")
+        if idx.tz is None and other_idx.tz is not None:
+            return other_idx.tz_localize(None)
+        return other_idx
+
+    ret_series = prices.pct_change()
+    df = pd.DataFrame(index=idx)
+    df["ret_1d"] = ret_series
+    df["ret_5d"] = prices.pct_change(5)
+    df["vol_5d"] = ret_series.rolling(5).std()
+    df["vol_21d"] = ret_series.rolling(21).std()
+
+    micro_cols = ["ofi_proxy", "ofi_proxy_w", "vol_dispersion"]
+    if not microstructure_features.empty:
+        m = microstructure_features.copy()
+        m.index = _tz_norm(m.index)
+        for col in micro_cols:
+            if col in m.columns:
+                df[col] = m[col].reindex(idx, method="ffill")
+            else:
+                df[col] = 0.0
+    else:
+        for col in micro_cols:
+            df[col] = 0.0
+
+    deriv_cols = ["funding_rate", "funding_rate_ma7"]
+    if not derivatives_features.empty:
+        d = derivatives_features.copy()
+        d.index = _tz_norm(d.index)
+        for col in deriv_cols:
+            if col in d.columns:
+                df[col] = d[col].reindex(idx, method="ffill")
+            else:
+                df[col] = 0.0
+    else:
+        for col in deriv_cols:
+            df[col] = 0.0
+
+    df = df.fillna(0.0)
+    return df
+
+
+def train_walk_forward_mhe(
+    global_features: pd.DataFrame,
+    returns_series: pd.Series,
+    as_of: pd.Timestamp,
+    horizons: tuple[int, ...] = (3, 7, 14, 21),
+    members: tuple[str, ...] = ("lgb",),
+    use_calibration: bool = False,
+    purge_horizon: int = 21,
+    min_train_rows: int = 252,
+) -> MultiHorizonEnsemble:
+    """Train a fresh MultiHorizonEnsemble on data strictly before ``as_of``.
+
+    Purges the last ``purge_horizon`` rows from the training tail so that
+    h-step-ahead labels computed inside ``MultiHorizonEnsemble.fit`` cannot
+    peek past ``as_of`` (label leakage guard).
+
+    Args:
+        global_features: Full-history feature DataFrame (price-index aligned).
+            Produced by ``build_global_features``.
+        returns_series: Simple-return Series aligned to ``global_features``.
+        as_of: Bar date.  Training data is bounded to
+            ``index <= as_of - purge_horizon days``.
+        horizons: Forecast horizons (days).
+        members: Ensemble members, e.g. ``("lgb",)``.
+        use_calibration: Whether to fit isotonic calibrator on holdout 20%.
+            Defaults to False — raw probs confirmed to yield wider spread and
+            better signal coverage post root-cause analysis.
+        purge_horizon: Number of days to purge from the train tail (should
+            equal ``max(horizons)`` = 21 to prevent label leakage).
+        min_train_rows: Minimum usable rows required; raises ValueError if
+            insufficient data exists.
+
+    Returns:
+        Fitted ``MultiHorizonEnsemble``.
+
+    Raises:
+        ValueError: If training data before the purge cutoff is shorter than
+            ``min_train_rows``.
+    """
+    cutoff = as_of - pd.Timedelta(days=purge_horizon)
+    train_mask = global_features.index <= cutoff
+    X_train = global_features.loc[train_mask].dropna()
+    y_train = returns_series.loc[X_train.index]
+
+    if len(X_train) < min_train_rows:
+        raise ValueError(
+            f"Insufficient train data ({len(X_train)} rows) at {as_of} "
+            f"(cutoff={cutoff}); need >= {min_train_rows}"
+        )
+
+    mhe = MultiHorizonEnsemble(horizons=horizons, holdout_fraction=0.20)
+    mhe.fit(X_train, y_train, members=members, use_calibration=use_calibration)
+    return mhe
+
+
 def _position_to_signal(position: float, low_vol_scale: float = 10.0) -> str:
     """Map a continuous position value to a 5-level signal string.
 
@@ -159,12 +280,19 @@ def run_v3_backtest(
     ticker: str = "",
     initial_capital: float = 10_000.0,
     signal_deadband: float = 0.02,
+    # Walk-forward retraining knobs
+    retrain_per_bar: bool = False,
+    retrain_cadence: int = 1,
+    retrain_members: tuple[str, ...] = ("lgb",),
+    retrain_use_calibration: bool = False,
 ) -> BacktestResult:
     """End-to-end V3 backtest.
 
     Per-bar loop (look-ahead-safe):
 
     1. For each ``as_of`` in ``[start, end]``:
+       - (Optional) Retrain ``MultiHorizonEnsemble`` on all data through
+         ``as_of - purge_horizon`` when ``retrain_per_bar=True``.
        - Slice all inputs to ``index <= as_of``.
        - Build price + microstructure + derivatives features (single row).
        - Update ``RegimeState`` via ``detect_regime_v3``.
@@ -186,12 +314,25 @@ def run_v3_backtest(
             (empty DataFrame accepted — runner falls back to price-only feats).
         derivatives_features: Optional derivatives feature DataFrame.
         regime_bundle: Fitted ``NHHmmBundle`` from ``train_nh_hmm``.
-        multi_horizon_bundle: Fitted ``MultiHorizonEnsemble``.
+        multi_horizon_bundle: Fitted ``MultiHorizonEnsemble`` (used as the
+            initial model; may be replaced each bar when ``retrain_per_bar``
+            is True).
         config: ``V3Config`` instance.
         start: First bar (inclusive) in the backtest window.
         end: Last bar (inclusive) in the backtest window.
         ticker: Ticker label stored in the result (defaults to ``coin.upper()``).
         initial_capital: Starting equity.
+        retrain_per_bar: When True, retrain a fresh ``MultiHorizonEnsemble``
+            at each bar (or every ``retrain_cadence`` bars) on all available
+            data through ``as_of - 21 days`` (label-leakage guard).  Matches
+            the V2 baseline's walk-forward retraining protocol.
+        retrain_cadence: Retrain interval in bars (default 1 = every bar).
+            Set to e.g. 7 to retrain weekly and reduce compute cost.
+        retrain_members: Ensemble members to train during walk-forward, e.g.
+            ``("lgb",)`` for LGB-only (fastest).
+        retrain_use_calibration: Whether to fit isotonic calibrator during
+            walk-forward retraining.  Defaults to False (raw probs better per
+            root-cause analysis).
 
     Returns:
         ``BacktestResult`` from the V2 engine.
@@ -207,12 +348,64 @@ def run_v3_backtest(
     # that case fall through and use whatever columns the builder produces.
     expected_features = _extract_expected_features(multi_horizon_bundle)
 
+    # Walk-forward setup: pre-compute vectorised feature matrix once (O(n))
+    # so per-bar retraining is cheap (only slice + fit, no re-building).
+    global_feats: pd.DataFrame | None = None
+    if retrain_per_bar:
+        logger.info(
+            "Walk-forward retraining enabled: cadence=%d bar(s), members=%s, calibration=%s",
+            retrain_cadence,
+            retrain_members,
+            retrain_use_calibration,
+        )
+        global_feats = build_global_features(
+            prices, microstructure_features, derivatives_features
+        )
+
+    # Track the last successfully retrained model so we can fall back to it
+    # if a bar lacks sufficient history.
+    current_mhe: MultiHorizonEnsemble = multi_horizon_bundle
+
     agent_signals: list[str] = []
     portfolio_dd_running = 0.0
     equity_high = float(initial_capital)
     equity_curr = float(initial_capital)
 
-    for as_of in bars:
+    for bar_i, as_of in enumerate(bars):
+        # -------------------------------------------------------------------
+        # Per-bar walk-forward retraining (when enabled)
+        # -------------------------------------------------------------------
+        if retrain_per_bar and global_feats is not None:
+            if bar_i % retrain_cadence == 0:
+                try:
+                    current_mhe = train_walk_forward_mhe(
+                        global_features=global_feats,
+                        returns_series=returns,
+                        as_of=as_of,
+                        horizons=(3, 7, 14, 21),
+                        members=retrain_members,
+                        use_calibration=retrain_use_calibration,
+                        purge_horizon=21,
+                        min_train_rows=252,
+                    )
+                    if bar_i == 0 or bar_i % max(1, len(bars) // 5) == 0:
+                        train_size = (global_feats.index <= as_of - pd.Timedelta(days=21)).sum()
+                        logger.info(
+                            "Retrained MHE at bar %d/%d (%s); train_size=%d",
+                            bar_i + 1,
+                            len(bars),
+                            as_of.date(),
+                            train_size,
+                        )
+                except ValueError as exc:
+                    logger.warning(
+                        "Walk-forward retrain failed at bar %d (%s): %s — using previous model",
+                        bar_i,
+                        as_of.date(),
+                        exc,
+                    )
+        # Use the live (possibly just-retrained) model
+        active_mhe = current_mhe
         feat_df = _build_v3_features_at(
             prices, microstructure_features, derivatives_features, as_of
         )
@@ -220,15 +413,24 @@ def run_v3_backtest(
             agent_signals.append(SignalLevel.HOLD.value)
             continue
 
+        # When walk-forward retraining is active, the freshly trained model
+        # uses vectorised global features (DataFrame columns) rather than
+        # plain numpy arrays, so expected_features alignment applies.
+        # When using the frozen bundle, fall back to the pre-computed list.
+        active_expected = expected_features
+        if retrain_per_bar and active_mhe is not multi_horizon_bundle:
+            # Walk-forward model was trained on global_feats — use its columns
+            active_expected = list(global_feats.columns) if global_feats is not None else expected_features
+
         # Align columns to training schema when we have explicit names.
-        if expected_features:
-            for col in expected_features:
+        if active_expected:
+            for col in active_expected:
                 if col not in feat_df.columns:
                     feat_df[col] = 0.0
-            feat_df = feat_df[expected_features]
+            feat_df = feat_df[active_expected]
 
         try:
-            probas_dict = multi_horizon_bundle.predict_proba(feat_df)
+            probas_dict = active_mhe.predict_proba(feat_df)
         except Exception:
             logger.exception("predict_proba failed at %s; falling back to HOLD", as_of)
             agent_signals.append(SignalLevel.HOLD.value)

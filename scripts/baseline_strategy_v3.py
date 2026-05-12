@@ -82,10 +82,29 @@ def main() -> None:
     parser.add_argument("--max-leverage", type=float, default=2.0)
     parser.add_argument("--signal-deadband", type=float, default=0.02,
                         help="Deadband for consensus signal (default 0.02 to allow realistic signal generation)")
+    # Walk-forward retraining flags (matches V2 walk_forward_pooled protocol)
+    parser.add_argument("--retrain-per-bar", action="store_true",
+                        help="Retrain MultiHorizonEnsemble at each bar (or cadence) using data through bar-1 with purge guard. Matches V2 methodology.")
+    parser.add_argument("--retrain-cadence", type=int, default=1,
+                        help="Retrain every N bars (default 1=every bar). Set to 7 for weekly retrain.")
+    parser.add_argument("--retrain-members", nargs="+", default=["lgb"],
+                        help="Ensemble members to train during walk-forward (default: lgb)")
+    parser.add_argument("--no-retrain-calibration", action="store_true",
+                        help="Disable isotonic calibration during walk-forward retraining (default: calibration off per diagnostic)")
     args = parser.parse_args()
 
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    if args.retrain_per_bar:
+        logger.info(
+            "Mode: WALK-FORWARD (retrain every %d bar(s), members=%s, calibration=%s)",
+            args.retrain_cadence,
+            args.retrain_members,
+            not args.no_retrain_calibration,
+        )
+    else:
+        logger.info("Mode: FROZEN model (no per-bar retraining)")
 
     cfg = V3Config(
         target_annual_vol=args.target_vol,
@@ -135,6 +154,10 @@ def main() -> None:
                 ticker=coin.upper(),
                 initial_capital=args.initial_capital,
                 signal_deadband=args.signal_deadband,
+                retrain_per_bar=args.retrain_per_bar,
+                retrain_cadence=args.retrain_cadence,
+                retrain_members=tuple(args.retrain_members),
+                retrain_use_calibration=not args.no_retrain_calibration,
             )
             per_coin_results[coin] = result
             logger.info(
