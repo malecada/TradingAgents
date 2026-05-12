@@ -1656,3 +1656,56 @@ Interesting split: BTC CPCV improves slightly (-2.40 → -0.99) with real VPIN, 
 | `data/v3_cpcv_vision_1y/bitcoin/summary.json` | BTC CPCV: mean SR -0.99, DSR ≈ 0 |
 | `data/v3_cpcv_vision_1y/ethereum/summary.json` | ETH CPCV: mean SR -3.20, DSR ≈ 0 |
 | `data/checkpoints/v3_models_vision_1y_{bitcoin,ethereum}.pkl` | 1y Vision models (kept for reference) |
+
+### 12.12 Root-Cause Fix: LGB-Only + No Isotonic Calibration
+
+**Motivation**: `data/diagnostics/v3_root_cause.md` identified two compounding failures in V3's multi-horizon ensemble:
+
+1. **Primary — Ensemble averaging destroys good signals** (H6 confirmed): 10/12 member-horizon combos have negative Sharpe on the 88-bar OOS window. XGB h=14 alone achieves Sharpe +2.73 and LGB h=3 alone achieves +1.53, but averaging with negative-Sharpe CatBoost and XGB members at other horizons cancels the signal.
+
+2. **Secondary — Isotonic calibration collapse** (H1 confirmed): The isotonic calibrator fitted on ~60–80 holdout samples maps raw ensemble probabilities [0.27, 0.85] to just 3 near-0.5 values {0.524, 0.542, 0.551}. This yields 100% of confidence values < 0.30, forcing vol-target positions ~0.026 (17× smaller than V2's 0.426).
+
+The recommended single fix from the diagnostic was: **LGB-only + remove isotonic calibration**.
+
+**Implementation**:
+
+Added `use_calibration: bool = True` to `MultiHorizonEnsemble.fit()` (back-compat default preserved). When `False`, `calibrator = None` is set unconditionally for all horizons. The 80/20 holdout split is retained but the holdout goes unused. Two new unit tests added:
+- `test_use_calibration_false_sets_all_calibrators_to_none` — asserts all `_PerHorizonModel.calibrator is None`
+- `test_use_calibration_true_fits_at_least_one_calibrator` — asserts default behaviour unchanged
+
+**Proba Distribution Comparison (BTC, 89 eval bars, 2026-01-16 → 2026-04-15)**
+
+| Horizon | V3-canonical (lgb+xgb+catboost, calibrated) | V3-nocalib (lgb-only, raw) |
+|---------|:-------------------------------------------:|:---------------------------:|
+| h=3 | median=0.563, std=0.077, pct_up=95.5% | median=0.499, std=0.128, pct_up=49.4% |
+| h=7 | median=0.551, std=0.005, **pct_up=100.0%** | median=0.469, std=0.127, pct_up=38.2% |
+| h=14 | median=0.543, std=0.020, pct_up=88.8% | median=0.424, std=0.181, pct_up=36.0% |
+| h=21 | median=0.480, std=0.045, pct_up=21.4% | median=0.474, std=0.165, pct_up=43.8% |
+
+The calibration collapse is confirmed: h=7 canonical has std=0.005 (essentially a constant near 0.55) and 100% bullish bias. V3-nocalib h=7 has std=0.127 and only 38.2% bullish — correctly bearish-leaning on the falling 88-bar market. The proba spread fix works as predicted.
+
+**88-bar A/B Results (2026-01-16 → 2026-04-15)**
+
+| Coin | V2 | V3-canonical (lgb+xgb+catboost, calib) | V3-nocalib (lgb-only, raw) |
+|------|:--:|:---------------------------------------:|:--------------------------:|
+| BTC Sharpe | +2.18 | -2.71 | **-4.62** |
+| ETH Sharpe | +2.57 | +1.25 | +0.48 |
+| Portfolio Sharpe | +2.38 | -0.73 | **-2.07** |
+
+**Result: the fix FAILED.** Despite correct proba spread, V3-nocalib is significantly WORSE than V3-canonical (portfolio Sharpe -2.07 vs -0.73). BTC degrades from -2.71 to -4.62.
+
+**Post-hoc diagnosis**: The nocalib probas have the right *spread* but wrong *direction*. The LGB-only model trained on the 2453-row history through 2025-12-31 is bullish-biased on its own — with 43–49% bullish frequency in the eval window for most horizons. But the market fell 16.4% over the 88-bar window, requiring ~35-40% bullish frequency for positive alpha. Calibration was previously suppressing the bullish bias; without it, the raw LGB overconfidently sizes into longs. The BTC result worsens because LGB alone has weak discriminative power on this OOS window (LGB h=7 alone: Sharpe -3.75 per root-cause table; LGB h=14 alone: Sharpe -0.17) — the ensemble averaging in canonical V3 was accidentally providing some noise-cancellation.
+
+**Theoretical interpretation**: This experiment confirms the root-cause analysis's CF3 finding: "V3 raw consensus, unit position (no calibration) → Sharpe -0.90 (vs canonical -2.05)." The improvement from removing calibration at unit position was +1.15 Sharpe, but this was measured with equal-weighted positioning. When vol-target sizing re-enters (as in the full backtest), the wider proba spread produces larger positions in the wrong direction (mostly long in a falling market), amplifying losses beyond the calibration-collapsed version.
+
+**Decision**: Do NOT adopt V3-nocalib as canonical. V3-canonical (lgb+xgb+catboost with isotonic calibration, portfolio Sharpe -0.73) remains the V3 reference. The calibration collapse, while mechanistically broken, was inadvertently providing a hedge by shrinking losing positions. The primary root cause — LGB signal quality on this OOS window — cannot be fixed by architecture alone.
+
+**Canonical state**: Restored to V3-canonical after the experiment (verified via file copy from `.canonical.bak` backups).
+
+| Path | Contents |
+|------|----------|
+| `data/checkpoints/v3_models_nocalib_bitcoin.pkl` | LGB-only no-calib BTC model (experiment artifact) |
+| `data/checkpoints/v3_models_nocalib_ethereum.pkl` | LGB-only no-calib ETH model (experiment artifact) |
+| `data/multi_2coins_v3_nocalib/metrics.json` | V3-nocalib 88-bar A/B metrics (portfolio Sharpe -2.07) |
+| `tradingagents/strategies/v3/models/multi_horizon.py` | `use_calibration` flag added (back-compat default=True) |
+| `tests/strategies/v3/test_multi_horizon.py` | Two new calibration flag tests added |

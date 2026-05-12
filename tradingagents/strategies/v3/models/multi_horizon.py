@@ -47,7 +47,24 @@ class MultiHorizonEnsemble:
         features_df: pd.DataFrame,
         returns_series: pd.Series,
         members: tuple[str, ...] = ("lgb", "xgb", "catboost"),
+        use_calibration: bool = True,
     ) -> "MultiHorizonEnsemble":
+        """Fit per-horizon ensemble models.
+
+        Args:
+            features_df: Feature DataFrame aligned with returns_series index.
+            returns_series: Daily returns series.
+            members: Ensemble member names to train. Use ``("lgb",)`` for
+                lgb-only (recommended after root-cause analysis in
+                data/diagnostics/v3_root_cause.md).
+            use_calibration: When True (default), fit an isotonic calibrator
+                on the holdout 20% and use it at predict time. When False, raw
+                model probabilities are used directly — confirmed to yield
+                wider proba spread and better short-signal coverage.
+                NOTE: the 80/20 split is retained even when use_calibration=False
+                (we train on first 80% and leave holdout unused), so train set
+                size is identical in both modes.
+        """
         if not features_df.index.equals(returns_series.index):
             raise ValueError("features_df and returns_series must share an index")
 
@@ -74,7 +91,7 @@ class MultiHorizonEnsemble:
             ensemble.fit(X_train, y_train)
 
             calibrator: Callable | None = None
-            if len(X_holdout) >= 10 and len(set(y_holdout)) == 2:
+            if use_calibration and len(X_holdout) >= 10 and len(set(y_holdout)) == 2:
                 try:
                     calibrator = calibrate_probabilities(
                         ensemble, X_holdout, y_holdout

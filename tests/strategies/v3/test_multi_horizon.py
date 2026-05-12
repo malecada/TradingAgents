@@ -213,6 +213,37 @@ def test_select_features_skips_when_shap_missing(monkeypatch, caplog):
     assert "shap" in caplog.text.lower()
 
 
+def test_use_calibration_false_sets_all_calibrators_to_none():
+    """When use_calibration=False every _PerHorizonModel.calibrator must be None."""
+    from tradingagents.strategies.v3.models.multi_horizon import MultiHorizonEnsemble
+
+    feats, returns = _make_synthetic_panel(n=400)
+    mhe = MultiHorizonEnsemble(horizons=(3, 7))
+    mhe.fit(feats, returns, members=("lgb",), use_calibration=False)
+    for h, ph in mhe._models.items():
+        assert ph.calibrator is None, (
+            f"Horizon {h}: expected calibrator=None when use_calibration=False, "
+            f"got {ph.calibrator!r}"
+        )
+
+
+def test_use_calibration_true_fits_at_least_one_calibrator():
+    """When use_calibration=True (default) at least one horizon should have a
+    calibrator, provided there is sufficient holdout data with both classes."""
+    from tradingagents.strategies.v3.models.multi_horizon import MultiHorizonEnsemble
+
+    feats, returns = _make_synthetic_panel(n=400)
+    mhe = MultiHorizonEnsemble(horizons=(3, 7, 14, 21), holdout_fraction=0.20)
+    mhe.fit(feats, returns, members=("lgb",), use_calibration=True)
+    calibrators_fitted = [
+        ph.calibrator is not None for ph in mhe._models.values()
+    ]
+    assert any(calibrators_fitted), (
+        "Expected at least one horizon to have a calibrator when "
+        f"use_calibration=True; got {calibrators_fitted}"
+    )
+
+
 def test_train_multi_horizon_e2e(tmp_path, synthetic_ohlcv):
     """End-to-end: load fixture data, train, pickle, load back, predict."""
     import pickle
