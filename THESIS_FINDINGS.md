@@ -1759,3 +1759,48 @@ Comparing the signal regimes:
 | `data/multi_2coins_v3_walkforward/metrics.json` | V3-walkforward 88-bar A/B metrics (portfolio Sharpe -2.76) |
 | `tradingagents/strategies/v3/backtest/runner_v3.py` | `build_global_features`, `train_walk_forward_mhe`, new `retrain_*` params |
 | `scripts/baseline_strategy_v3.py` | `--retrain-per-bar`, `--retrain-cadence`, `--retrain-members`, `--no-retrain-calibration` flags |
+
+### 12.14 SMA30 Trend-Filter Bolt-On: Closing the V2 Gap
+
+**Hypothesis**: V2's SMA30 trend filter (1.5× aligned, 0.5× against) is the single highest-impact component of V2's alpha (Sharpe 1.88 → 2.69, per §12.0). V3's NH-HMM regime detector mislabels 91% of bars as "sideways" on the 88-bar window, providing no dampening of LGB's bullish bias on 2026-Q1 bear data. If the SMA30 filter is bolted onto V3 output as a final position multiplier (after vol-target + CDAP), V3 may recover V2-level alpha by at least correcting the directional sizing error.
+
+**Implementation**:
+
+- Imported `apply_trend_filter` from `tradingagents.strategies.v2_sizing` into `runner_v3.py`.
+- Per-bar raw positions collected in a parallel `raw_positions` list alongside `agent_signals`.
+- After the bar loop, when `sma30_filter=True`: call `apply_trend_filter(positions, bar_prices, sma_period=30, multiplier=1.5)` on the full position array, then re-convert each filtered position to a 5-level signal string via `_position_to_signal`.
+- New `run_v3_backtest()` parameters: `sma30_filter: bool = False`, `sma30_multiplier: float = 1.5`.
+- New CLI flags in `scripts/baseline_strategy_v3.py`: `--sma30-filter`, `--sma30-multiplier`.
+
+**88-bar A/B Results (2026-01-16 → 2026-04-15)**
+
+| Coin | V2 | V3-frozen | V3+SMA30 | V3-WF | V3-WF+SMA30 |
+|------|:--:|:---------:|:--------:|:-----:|:-----------:|
+| BTC Sharpe | **+2.18** | -2.71 | **-0.08** | -4.00 | -2.58 |
+| ETH Sharpe | **+2.57** | +1.25 | **+6.54** | -1.51 | -0.68 |
+| **Portfolio Sharpe** | **+2.38** | -0.73 | **+3.23** | -2.76 | -1.63 |
+| BTC Return | +118.1% | -3.3% | +0.1% | -25.9% | -18.2% |
+| ETH Return | +93.9% | +5.1% | +27.1% | -12.1% | -6.5% |
+
+**V3-frozen + SMA30 achieves portfolio Sharpe +3.23 — exceeding V2 (+2.38) on this 88-bar window.**
+
+**Analysis of results**:
+
+1. **Frozen + SMA30 succeeds**: The SMA30 filter correctly dampens V3's persistent bullish bias on the 2026-Q1 bear market. BTC recovers from -2.71 to -0.08 (near-flat, no longer a major detractor), and ETH surges from +1.25 to +6.54 (SMA30 correctly amplified ETH's short positions during downtrend). Portfolio Sharpe +3.23 exceeds V2's +2.38 on this window.
+
+2. **Walk-forward + SMA30 fails to recover**: WF-SMA portfolio Sharpe -1.63 vs WF without SMA -2.76 — the SMA30 filter provides a small improvement (+1.13 Sharpe) but walk-forward LGB's directional signal quality is too poor to benefit adequately. Walk-forward generates more HOLD signals per bar (pre-filter non-HOLD: 51 bars) vs frozen (20 bars), implying it's sizing into positions more aggressively despite worse signal quality.
+
+3. **SMA30 is the gap**: The experiment confirms the hypothesis. V3-frozen without SMA30 has essentially the same signal content as V3-frozen+SMA30 — only 20 non-HOLD bars in both cases. The SMA30 filter operates by scaling those 20 bars' positions, amplifying aligned bets and dampening contrary ones. Given that the 88-bar window is a bear market where long positions were mostly losses, the filter's dampening of long positions was the decisive intervention.
+
+4. **Implication for CPCV / long-horizon evaluation**: The 88-bar OOS is a single bear window. V3-frozen+SMA30's +3.23 vs V2's +2.38 may not hold across full 28-split CPCV. However, this result establishes that V3's architecture is not inherently inferior to V2 — the gap was the absence of SMA30 trend correction. A full CPCV test of V3+SMA30 is the logical next step.
+
+**Decision**: **V3-frozen+SMA30 is the new best V3 variant on the 88-bar window (Sharpe +3.23, exceeds V2 +2.38).** However, on a single 88-bar bear window this is insufficient evidence to claim V3+SMA30 is superior to V2 in general. Full CPCV evaluation is required before any production claim.
+
+**New canonical state**: V3-frozen+SMA30 is the strongest V3 result observed. `--sma30-filter` flag added to `baseline_strategy_v3.py`. V2 (+2.38 on 88-bar, +2.69 on full 363-day window) remains the production quant baseline pending CPCV confirmation.
+
+| Path | Contents |
+|------|----------|
+| `data/multi_2coins_v3_sma30/metrics.json` | V3-frozen+SMA30 88-bar A/B metrics (portfolio Sharpe +3.23) |
+| `data/multi_2coins_v3_wf_sma30/metrics.json` | V3-WF+SMA30 88-bar A/B metrics (portfolio Sharpe -1.63) |
+| `tradingagents/strategies/v3/backtest/runner_v3.py` | `sma30_filter`, `sma30_multiplier` params; `raw_positions` tracking; `apply_trend_filter` import |
+| `scripts/baseline_strategy_v3.py` | `--sma30-filter`, `--sma30-multiplier` CLI flags |

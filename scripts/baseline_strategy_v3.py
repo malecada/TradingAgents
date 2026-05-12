@@ -91,6 +91,10 @@ def main() -> None:
                         help="Ensemble members to train during walk-forward (default: lgb)")
     parser.add_argument("--no-retrain-calibration", action="store_true",
                         help="Disable isotonic calibration during walk-forward retraining (default: calibration off per diagnostic)")
+    parser.add_argument("--sma30-filter", action="store_true",
+                        help="Apply V2-style SMA30 trend filter as final position multiplier (1.5x aligned, 0.5x against)")
+    parser.add_argument("--sma30-multiplier", type=float, default=1.5,
+                        help="Aligned-direction multiplier for SMA30 filter (default 1.5 matches V2)")
     args = parser.parse_args()
 
     out_dir = Path(args.out_dir)
@@ -105,6 +109,8 @@ def main() -> None:
         )
     else:
         logger.info("Mode: FROZEN model (no per-bar retraining)")
+    if args.sma30_filter:
+        logger.info("SMA30 trend filter ENABLED (multiplier=%.1fx aligned, %.1fx against)", args.sma30_multiplier, 1.0 / args.sma30_multiplier)
 
     cfg = V3Config(
         target_annual_vol=args.target_vol,
@@ -158,6 +164,8 @@ def main() -> None:
                 retrain_cadence=args.retrain_cadence,
                 retrain_members=tuple(args.retrain_members),
                 retrain_use_calibration=not args.no_retrain_calibration,
+                sma30_filter=args.sma30_filter,
+                sma30_multiplier=args.sma30_multiplier,
             )
             per_coin_results[coin] = result
             logger.info(

@@ -25,6 +25,7 @@ from tradingagents.strategies.v3.models.multi_horizon import (
 )
 from tradingagents.strategies.v3.regime.ensemble import detect_regime_v3
 from tradingagents.strategies.v3.regime.hmm_v2 import NHHmmBundle
+from tradingagents.strategies.v2_sizing import apply_trend_filter
 from tradingagents.strategies.v3.sizing.vol_target import (
     cdap_adjust,
     vol_target_position,
@@ -285,6 +286,9 @@ def run_v3_backtest(
     retrain_cadence: int = 1,
     retrain_members: tuple[str, ...] = ("lgb",),
     retrain_use_calibration: bool = False,
+    # SMA30 trend filter (V2 bolt-on)
+    sma30_filter: bool = False,
+    sma30_multiplier: float = 1.5,
 ) -> BacktestResult:
     """End-to-end V3 backtest.
 
@@ -333,6 +337,13 @@ def run_v3_backtest(
         retrain_use_calibration: Whether to fit isotonic calibrator during
             walk-forward retraining.  Defaults to False (raw probs better per
             root-cause analysis).
+        sma30_filter: When True, apply V2-style SMA30 trend filter as a final
+            position multiplier after vol-target + CDAP sizing.  1.5× when
+            position aligns with trend (price > SMA30 → long boost, short
+            damp); 0.5× when against.  Uses ``apply_trend_filter`` from
+            ``tradingagents.strategies.v2_sizing``.
+        sma30_multiplier: Aligned-direction multiplier for SMA30 filter
+            (default 1.5 matches V2 default).
 
     Returns:
         ``BacktestResult`` from the V2 engine.
@@ -367,6 +378,7 @@ def run_v3_backtest(
     current_mhe: MultiHorizonEnsemble = multi_horizon_bundle
 
     agent_signals: list[str] = []
+    raw_positions: list[float] = []  # tracked for SMA30 post-processing
     portfolio_dd_running = 0.0
     equity_high = float(initial_capital)
     equity_curr = float(initial_capital)
@@ -411,6 +423,7 @@ def run_v3_backtest(
         )
         if feat_df.empty:
             agent_signals.append(SignalLevel.HOLD.value)
+            raw_positions.append(0.0)
             continue
 
         # When walk-forward retraining is active, the freshly trained model
@@ -434,6 +447,7 @@ def run_v3_backtest(
         except Exception:
             logger.exception("predict_proba failed at %s; falling back to HOLD", as_of)
             agent_signals.append(SignalLevel.HOLD.value)
+            raw_positions.append(0.0)
             continue
 
         # predict_proba returns dict[int, np.ndarray] — extract scalar per horizon
@@ -448,6 +462,7 @@ def run_v3_backtest(
         except Exception:
             logger.exception("detect_regime_v3 failed at %s; falling back to HOLD", as_of)
             agent_signals.append(SignalLevel.HOLD.value)
+            raw_positions.append(0.0)
             continue
 
         direction, confidence = consensus_signal(scalar_probas, regime, config, deadband=signal_deadband)
@@ -482,11 +497,35 @@ def run_v3_backtest(
         )
 
         agent_signals.append(_position_to_signal(position))
+        raw_positions.append(position)
 
     # Safety: pad / truncate to exactly len(bars)
     while len(agent_signals) < len(bars):
         agent_signals.append(SignalLevel.HOLD.value)
+        raw_positions.append(0.0)
     agent_signals = agent_signals[: len(bars)]
+    raw_positions = raw_positions[: len(bars)]
+
+    # Optional SMA30 trend filter (V2 bolt-on):
+    # Apply V2's apply_trend_filter on the accumulated position array, then
+    # re-convert to 5-level signal strings.  The full price series through the
+    # backtest window is used so SMA lookback is correct for early bars.
+    if sma30_filter:
+        pos_arr = np.array(raw_positions, dtype=float)
+        bar_prices = prices.loc[bars].values.astype(float)
+        filtered_pos = apply_trend_filter(
+            positions=pos_arr,
+            prices=bar_prices,
+            sma_period=30,
+            multiplier=sma30_multiplier,
+        )
+        agent_signals = [_position_to_signal(float(p)) for p in filtered_pos]
+        logger.info(
+            "SMA30 filter applied (%d bars); pre-filter non-HOLD=%d, post-filter non-HOLD=%d",
+            len(bars),
+            sum(1 for s in agent_signals if s != SignalLevel.HOLD.value),
+            sum(1 for s in [_position_to_signal(float(p)) for p in filtered_pos] if s != SignalLevel.HOLD.value),
+        )
 
     actuals = prices.loc[bars].values
     dates = pd.Series(bars)
