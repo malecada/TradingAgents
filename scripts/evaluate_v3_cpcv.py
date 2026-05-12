@@ -209,6 +209,8 @@ def evaluate_coin_cpcv(
     n_trials_for_dsr: int = 12,
     retrain_per_fold: bool = False,
     retrain_members: tuple[str, ...] = ("lgb",),
+    sma30_filter: bool = False,
+    sma30_multiplier: tuple[float, float] = (1.5, 0.5),
 ) -> dict:
     """Run CPCV evaluation for one coin. Returns dict of per-split metrics + DSR."""
     ohlcv = _load_ohlcv_for_coin(coin)
@@ -314,6 +316,8 @@ def evaluate_coin_cpcv(
                 start=test_start,
                 end=test_end,
                 ticker=coin.upper(),
+                sma30_filter=sma30_filter,
+                sma30_multiplier=sma30_multiplier[0],
             )
             per_split_records.append({
                 "split_idx": split_idx,
@@ -357,6 +361,9 @@ def evaluate_coin_cpcv(
         "n_trials_for_dsr": n_trials_for_dsr,
         "retrain_per_fold": retrain_per_fold,
         "retrain_members": list(retrain_members),
+        "sma30_filter": sma30_filter,
+        "sma30_multiplier_aligned": sma30_multiplier[0],
+        "sma30_multiplier_against": sma30_multiplier[1],
     }
     if fold_train_times:
         summary["fold_train_time_mean_s"] = float(np.mean(fold_train_times))
@@ -400,6 +407,20 @@ def main() -> None:
         metavar="MEMBER",
         help="Ensemble members to use when --retrain-per-fold is set (default: lgb).",
     )
+    parser.add_argument(
+        "--sma30-filter",
+        action="store_true",
+        default=False,
+        help="Apply V2 SMA30 trend filter (1.5x aligned, 0.5x against) as final position multiplier.",
+    )
+    parser.add_argument(
+        "--sma30-multiplier",
+        type=float,
+        nargs=2,
+        default=[1.5, 0.5],
+        metavar=("ALIGNED_MULT", "AGAINST_MULT"),
+        help="SMA30 multipliers: aligned_mult against_mult (default: 1.5 0.5).",
+    )
     args = parser.parse_args()
 
     out_dir = Path(args.out_dir)
@@ -427,6 +448,8 @@ def main() -> None:
                 n_trials_for_dsr=args.n_trials_dsr,
                 retrain_per_fold=args.retrain_per_fold,
                 retrain_members=retrain_members,
+                sma30_filter=args.sma30_filter,
+                sma30_multiplier=tuple(args.sma30_multiplier),
             )
         except Exception:
             logger.exception("Failed coin %s", coin)

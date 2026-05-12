@@ -1804,3 +1804,58 @@ Comparing the signal regimes:
 | `data/multi_2coins_v3_wf_sma30/metrics.json` | V3-WF+SMA30 88-bar A/B metrics (portfolio Sharpe -1.63) |
 | `tradingagents/strategies/v3/backtest/runner_v3.py` | `sma30_filter`, `sma30_multiplier` params; `raw_positions` tracking; `apply_trend_filter` import |
 | `scripts/baseline_strategy_v3.py` | `--sma30-filter`, `--sma30-multiplier` CLI flags |
+
+### 12.15 CPCV Validation of V3+SMA30 (28-Split × 2-Coin, 2024-05 → 2026-04)
+
+**Motivation**: §12.14 showed V3-frozen+SMA30 achieved portfolio Sharpe +3.23 on the 88-bar 2026-Q1 bear window, exceeding V2's +2.38. However, the 88-bar window is a single bear episode. A 28-split CPCV over 2024-05 → 2026-04 is required to determine whether the result generalises or is window-specific.
+
+**Prior CPCV results (V3-no-SMA30, §12.4 / §12.9)**:
+- BTC: mean Sharpe -2.40, 0/28 positive splits, DSR ≈ 2.3e-8
+- ETH: mean Sharpe -2.92, 1/28 positive splits, DSR ≈ 1.5e-9
+
+**Implementation**: `--sma30-filter` flag added to `scripts/evaluate_v3_cpcv.py`. Threads `sma30_filter=True, sma30_multiplier=1.5` into `run_v3_backtest()` per CPCV split. Model reuse (no per-fold retraining), lgb-only, same 8-group/2-test-group/14-day-embargo CPCV structure as prior run. Runtime: ~28 minutes (wall clock).
+
+**CPCV Results (V3+SMA30, 28 splits each)**:
+
+| Coin | mean SR | median SR | std | min | max | positive splits | DSR |
+|------|:-------:|:---------:|:---:|:---:|:---:|:---------------:|:---:|
+| BTC no-SMA | -2.40 | -2.31 | 0.65 | -4.37 | -0.92 | 0/28 | 2.3e-8 |
+| BTC +SMA30 | **-0.52** | -0.46 | 0.54 | -1.98 | +0.45 | **4/28** | 1.8e-6 |
+| ETH no-SMA | -2.92 | -3.01 | 1.05 | -5.00 | +0.59 | 1/28 | 1.5e-9 |
+| ETH +SMA30 | **-1.67** | -2.02 | 1.38 | -3.81 | +2.60 | **3/28** | 1.5e-10 |
+
+**Portfolio (simple mean of coin SR means)**:
+- V3-no-SMA: -2.66 → V3+SMA30: **-1.09** (improvement: +1.57 Sharpe)
+
+**Analysis**:
+
+1. **SMA30 helps substantially**: BTC improves from -2.40 to -0.52 (+1.88 SR), ETH from -2.92 to -1.67 (+1.25 SR). The SMA30 filter is the largest single lever available for V3 improvement, consistent with §12.14's 88-bar finding.
+
+2. **Positive splits double but remain minority**: BTC 0/28 → 4/28 (14%); ETH 1/28 → 3/28 (11%). Combined 1/56 → 7/56 (12.5%). Far below 50% required to claim the strategy is reliably alpha-generating.
+
+3. **Mean SR remains negative**: -0.52 (BTC) and -1.67 (ETH). Even after SMA30 correction, both coins produce negative expected Sharpe across the CPCV distribution. DSR ≈ 0 for both coins confirms the strategy cannot be distinguished from noise under the López de Prado correction for multiple testing.
+
+4. **ETH behaves erratically under SMA30**: std increases from 1.05 to 1.38 and the DSR actually *decreases* from 1.5e-9 to 1.5e-10. SMA30 amplifies both the best ETH splits (max +2.60, up from +0.59) and leaves the worst splits largely negative (-3.81). This suggests SMA30 increases variance without improving the central tendency for ETH.
+
+5. **Gap with 88-bar result**: The 88-bar window (2026-Q1 bear) produced portfolio Sharpe +3.23 (+V2: +2.38). The 28-split CPCV produces portfolio mean Sharpe -1.09. The 88-bar result was a window-specific bear-market regime where SMA30's dampening of long positions happened to align perfectly with subsequent price falls. The CPCV evidence confirms this was overfit to that particular window.
+
+6. **V3 architecture still useful as partial component**: Within the CPCV, the BTC improvement (+1.88 SR) from SMA30 is real and persistent enough that V3+SMA30 avoids the catastrophic -2.40 mean seen without the filter. But it cannot generate positive expected alpha across diverse market regimes.
+
+**Decision**:
+
+- The 88-bar V3+SMA30 result (portfolio Sharpe +3.23) **does NOT validate under CPCV**.
+- 7/56 positive splits (12.5%) is far below the 50% threshold for a viable strategy candidate.
+- Mean CPCV portfolio Sharpe -1.09 is negative; DSR ≈ 0 for both coins.
+- **V3+SMA30 is not a production candidate. V2 remains the canonical production quant baseline.**
+- The SMA30 filter provides meaningful improvement within V3 (+1.57 CPCV portfolio SR) but is insufficient to overcome V3's fundamental signal quality deficit. This reinforces the BT11 / §12.4 conclusion: V2's alpha is 90% sizing+momentum; V3's ML modulation cannot add value on diverse regimes.
+
+**Final canonical state**:
+- Production baseline: V2 (Sharpe 2.69 on 363-day 2-coin window).
+- Best single-window V3 result: V3-frozen+SMA30, Sharpe +3.23 on 88-bar bear window (insufficient for production).
+- CPCV evidence: V3+SMA30 mean Sharpe -1.09 portfolio (7/56 positive splits, DSR ≈ 0). V3 build is complete and its negative result is now thoroughly documented across multiple evaluation protocols (§12.4–§12.15).
+
+| Path | Contents |
+|------|----------|
+| `data/v3_cpcv_sma30/bitcoin/summary.json` | CPCV V3+SMA30 BTC results (mean SR -0.52, 4/28 positive) |
+| `data/v3_cpcv_sma30/ethereum/summary.json` | CPCV V3+SMA30 ETH results (mean SR -1.67, 3/28 positive) |
+| `scripts/evaluate_v3_cpcv.py` | `--sma30-filter`, `--sma30-multiplier` CLI flags added |
