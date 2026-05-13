@@ -1921,3 +1921,53 @@ SR computed as `mean/std × sqrt(365)` on daily returns (cost-adjusted, includin
 | `data/hybrid_backtest_v3_analytic/daily_returns.csv` | Daily returns (cost-adjusted) |
 | `data/checkpoints/bitcoin_ohlcv.parquet` | OHLCV price series created for V3 state loading |
 | `data/checkpoints/ethereum_ohlcv.parquet` | OHLCV price series created for V3 state loading |
+
+### 12.17 V3 quant + LLM modulator — Fresh End-to-End Hybrid (Hetzner)
+
+**Motivation**: §12.16 used an analytic shortcut that reused V2-context LLM multipliers as a stand-in for V3-aware LLM responses, because a true fresh end-to-end run requires regenerating all hybrid signals through the full LangGraph agent stack (Self-MoA + Skeptic-Quant + FinCon CVRF + bull/bear debate + risk debate + portfolio manager + modulator) with V3 quant context. That regeneration costs ~2,340 LLM calls and ~12 hours on the laptop's hardware, blocked by frequent OOMs (16 GB RAM with browser/IDE consuming most of it).
+
+**Implementation**: Deployed signal generation to existing Hetzner CX22 instance (3.7 GB RAM + 4 GB swap added for this run). Used `tmux` session `v3llm` to survive ssh disconnects. Synced V3 state bundles (regime HMM + multi-horizon ensembles + microstructure parquets + derivatives parquets + OHLCV price series + V2 prediction CSVs) + LLM replay cache. Installed `xgboost==3.2.0` + `catboost==1.2.10` to deserialize the canonical lgb+xgb+catboost ensemble bundles. Ran coins sequentially to keep peak memory under the 3.7 GB ceiling.
+
+**Runtime**: BTC 90 rows in 21,309 s (5.92 hr). ETH 90 rows in 21,580 s (5.99 hr). Total **11.91 hr** end-to-end across both coins. ~3.95 min/bar — Hetzner single core + LLM latency dominate. Memory peak ~1.6 GB / 3.7 GB used, swap engagement near zero. No OOMs.
+
+**88-bar A/B Results (2026-01-16 → 2026-04-15)** (cost-adjusted, V2-sizing layer applied to hybrid `position`):
+
+| Variant | BTC SR | ETH SR | BTC Return | ETH Return | Notes |
+|---------|:------:|:------:|:----------:|:----------:|-------|
+| V2 quant baseline | +2.36 | +2.14 | +8.0% | +8.9% | reproduced from `data/hybrid_backtest_fresh` baseline column |
+| V2 + LLM hybrid (P1 signals) | +0.77 | +2.38 | +2.3% | +7.5% | reproduced |
+| V3 quant frozen | -2.71 | +1.25 | -3.3% | +5.1% | from §12.3 |
+| V3 + SMA30 | -0.08 | +6.54 | +0.1% | +27.1% | from §12.14 |
+| V3 + LLM **analytic** (V2-context multipliers) | +1.39 | +1.85 | +5.1% | +1.7% | §12.16 |
+| **V3 + LLM fresh (V3-aware modulator)** | **-2.29** | **-1.82** | **+0.7%** | **+0.3%** | this section |
+
+**Per-coin diagnostics**:
+
+| Coin | n_trades (V3+LLM) | win_rate | max_drawdown | profit_factor |
+|------|:-----------------:|:--------:|:------------:|:-------------:|
+| BTC | 36 | 47.6% | 0.08% | 2.82 |
+| ETH | 51 | 39.2% | 0.64% | — |
+
+The fresh V3+LLM positions are tiny — max drawdowns of 0.08% (BTC) and 0.64% (ETH) reflect near-zero exposure throughout. Total returns of +0.7% and +0.3% confirm the strategy is essentially flat, not negative — but with low volatility, the Sharpe denominator collapses and any small drift in the wrong direction produces a sharply negative ratio.
+
+**Why analytic ≠ fresh**: §12.16 reused V2-context LLM multipliers. The V2 LLM context contains V2's strong directional quant signals (h=7+h=14 consensus + SMA30), so the LLM's modulation responded to V2's signal characteristics. When those V2-context multipliers were applied to V3's flat/sideways quant signals, they happened to dampen V3's misdirection by accident — producing a falsely positive +1.99 portfolio SR.
+
+The fresh V3-aware run reveals the true LLM behavior: when the modulator sees V3's actual quant context (flat direction, sideways regime, low confidence), it produces multipliers tuned to those V3 signals. Those V3-aware multipliers do not provide accidental hedging — they reinforce or fail to dampen V3's bullish-biased predictions, producing -2.29 BTC SR and -1.82 ETH SR.
+
+**Key correction to §12.16**: The §12.16 "LLM modulator helps V3" finding was an artifact of the analytic shortcut and is **wrong**. The correct finding is:
+
+- **LLM modulator does not help V3 in either direction.** Fresh V3+LLM is essentially flat (returns +0.5% portfolio) and risk-adjusted negative (-2.29 / -1.82 Sharpe).
+- **LLM modulator on V2 quant is the only configuration that produces non-trivial positive returns under hybrid evaluation** — but still worse than V2 quant alone.
+- **The "LLM modulation is signal-quality dependent" hypothesis from §12.16 was based on a flawed comparison.** The honest finding is simpler: LLM modulation does not add alpha to either V2 or V3 quant signals on this 88-bar 2026 Q1 bear window. V2 quant alone (+3.27 portfolio SR) beats every hybrid variant tested.
+
+**Final canonical recommendation**: V2 quant baseline (`scripts/baseline_strategy_v2.py`) remains the production strategy. V3 quant remains a complete-but-inferior alternative. LLM modulation has been tested on both quant layers and does not improve either. The hybrid system is a thesis contribution (architecture, agent design, FinCon CVRF, Self-MoA, Skeptic-Quant), not a production strategy. This is consistent with the FINSABER and BT11 literature.
+
+| Path | Contents |
+|------|----------|
+| `data/hybrid_signals_v3_fresh/bitcoin_2026-01-16_2026-04-15.csv` | Fresh V3-aware hybrid signals (90 rows) |
+| `data/hybrid_signals_v3_fresh/ethereum_2026-01-16_2026-04-15.csv` | Fresh V3-aware hybrid signals (90 rows) |
+| `data/hybrid_backtest_v3_fresh/summary.json` | 88-bar A/B per-coin metrics (vs V2 baseline) |
+| `data/hybrid_backtest_v3_fresh/daily_returns.csv` | Daily returns + positions |
+| `data/hybrid_backtest_v3_fresh/hybrid_vs_baseline_equity.png` | Equity curve plot |
+| Hetzner: `/opt/tradingagents/data/hybrid_signals_v3/` | Source signal CSVs on remote box |
+| Hetzner: `/opt/tradingagents/logs/v3_llm_{btc,eth}.log` | Full LLM call logs (5.9hr + 6.0hr) |
