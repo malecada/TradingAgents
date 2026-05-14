@@ -289,6 +289,13 @@ def run_v3_backtest(
     # SMA30 trend filter (V2 bolt-on)
     sma30_filter: bool = False,
     sma30_multiplier: float = 1.5,
+    # Pluggable feature builders (override default 9-feature pipeline).
+    # ``global_features_override`` is a pre-built DataFrame aligned to
+    # prices.index, used in place of build_global_features(). When provided,
+    # ``features_at_builder`` (optional) extracts the single-bar feature row;
+    # default selects the row whose index == as_of (or the last row <= as_of).
+    global_features_override: pd.DataFrame | None = None,
+    features_at_builder=None,
 ) -> BacktestResult:
     """End-to-end V3 backtest.
 
@@ -369,9 +376,16 @@ def run_v3_backtest(
             retrain_members,
             retrain_use_calibration,
         )
-        global_feats = build_global_features(
-            prices, microstructure_features, derivatives_features
-        )
+        if global_features_override is not None:
+            global_feats = global_features_override
+            logger.info(
+                "Using global_features_override: shape=%s",
+                tuple(global_features_override.shape),
+            )
+        else:
+            global_feats = build_global_features(
+                prices, microstructure_features, derivatives_features
+            )
 
     # Track the last successfully retrained model so we can fall back to it
     # if a bar lacks sufficient history.
@@ -418,9 +432,16 @@ def run_v3_backtest(
                     )
         # Use the live (possibly just-retrained) model
         active_mhe = current_mhe
-        feat_df = _build_v3_features_at(
-            prices, microstructure_features, derivatives_features, as_of
-        )
+        if features_at_builder is not None and global_feats is not None:
+            feat_df = features_at_builder(global_feats, as_of)
+        elif global_features_override is not None:
+            # Default: take the row at as_of from the override matrix.
+            sub = global_features_override[global_features_override.index <= as_of]
+            feat_df = sub.iloc[[-1]] if not sub.empty else pd.DataFrame()
+        else:
+            feat_df = _build_v3_features_at(
+                prices, microstructure_features, derivatives_features, as_of
+            )
         if feat_df.empty:
             agent_signals.append(SignalLevel.HOLD.value)
             raw_positions.append(0.0)

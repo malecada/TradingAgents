@@ -33,18 +33,41 @@ _MIN_REQUEST_INTERVAL = 0.7  # ~8 req / 6s
 
 FLASH_METRICS = frozenset({"FlowInExUSD", "FlowOutExUSD"})
 
-# Supported community metrics per (asset, metric) confirmed by probe.
+# Supported community metrics per (asset, metric) confirmed by probe + catalog
+# (https://community-api.coinmetrics.io/v4/catalog/metrics, 1d frequency).
+# Both btc and eth expose the same 28 free metrics.
+_COMMON_COMMUNITY_METRICS = frozenset({
+    "AdrActCnt", "AdrBalCnt", "BlkCnt",
+    "CapMVRVCur", "CapMrktCurUSD", "CapMrktEstUSD",
+    "FeeTotNtv",
+    "FlowInExNtv", "FlowInExUSD", "FlowOutExNtv", "FlowOutExUSD",
+    "HashRate",
+    "IssTotNtv", "IssTotUSD",
+    "PriceBTC", "PriceUSD",
+    "ROI1yr", "ROI30d",
+    "SplyCur",
+    "SplyExNtv", "SplyExUSD", "SplyExpFut10yr",
+    "TxCnt", "TxTfrCnt",
+    "volume_reported_spot_usd_1d",
+})
+
 SUPPORTED = {
-    "btc": frozenset({
-        "AdrActCnt", "TxCnt", "HashRate", "CapMVRVCur", "CapMrktCurUSD",
-        "FeeTotNtv", "FlowInExUSD", "FlowOutExUSD", "IssTotUSD", "SplyCur",
-        "PriceUSD",
-    }),
-    "eth": frozenset({
-        "AdrActCnt", "TxCnt", "CapMVRVCur", "CapMrktCurUSD", "FeeTotNtv",
-        "FlowInExUSD", "FlowOutExUSD", "IssTotUSD", "SplyCur", "PriceUSD",
-    }),
+    "btc": _COMMON_COMMUNITY_METRICS,
+    "eth": _COMMON_COMMUNITY_METRICS,
 }
+
+# Stablecoin supply tracking via CM Community: SplyCur per chain-token reveals
+# mint/burn dynamics that historically would need direct Web3 log scraping.
+_STABLE_SUPPLY_METRICS = frozenset({"SplyCur", "PriceUSD"})
+STABLECOIN_SUPPORTED = {
+    "usdt": _STABLE_SUPPLY_METRICS,
+    "usdc": _STABLE_SUPPLY_METRICS,
+    "dai":  _STABLE_SUPPLY_METRICS,
+    "usdt_eth": _STABLE_SUPPLY_METRICS,
+    "usdc_eth": _STABLE_SUPPLY_METRICS,
+    "usdt_trx": _STABLE_SUPPLY_METRICS,
+}
+SUPPORTED.update(STABLECOIN_SUPPORTED)
 
 
 class CoinMetricsError(RuntimeError):
