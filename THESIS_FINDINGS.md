@@ -2798,3 +2798,44 @@ claim survives DSR, CPCV, regime, and cost stress-testing.
 | `scripts/validate_v5_robustness.py` | Regime decomposition + CPCV + cost sensitivity |
 | `data/v5_mix_production/{daily_returns.csv,summary.json}` | Production portfolio output |
 | `data/v5_validation/{v5_validation.json,placebo_sr_null.npy,v5_robustness.json}` | Validation artifacts |
+
+## 22. V5 MIX Live Deployment — Acceptance Targets (kelly=0.25)
+
+§17.7 / §6.2 of `docs/superpowers/specs/2026-05-15-v5-mix-live-deployment-design.md`
+requires the live deployment's acceptance target to come from a backtest re-run
+at the live's `kelly_fraction = 0.25` (not the canonical 0.5). Result of
+`scripts/baseline_v5_mix.py --kelly 0.25 --start 2021-11-07 --end 2026-04-15`:
+
+### Per-coin (4.5-yr walk-forward at kelly=0.25)
+
+| Coin | Feature set | Sharpe | Compounded Return | Max DD |
+|------|:-----------:|:------:|:-----------------:|:------:|
+| BTC  | 78f canonical | +1.97 | +109.6% | −3.4% |
+| ETH  | 193f extended | +2.06 | +168.8% | −4.4% |
+| BNB  | 78f canonical | +1.93 | +196.2% | −5.2% |
+| SOL  | 193f extended | +2.32 | +344.7% | −6.1% |
+
+### Portfolio (25% EW)
+
+| Metric | Backtest @ kelly=0.25 | Backtest @ kelly=0.5 (§20 canonical) |
+|--------|:---------------------:|:------------------------------------:|
+| Portfolio Sharpe | **+3.183** | +3.178 |
+| Compounded return | **+197.3%** | +764.6% |
+| Max drawdown | **−2.5%** | −4.9% |
+| Annualized vol | **5.4%** | 10.7% |
+
+Sharpe is leverage-invariant (+3.18 at both kelly values, within noise). The
+kelly scaling preserves risk-adjusted return while halving both gross exposure
+and drawdown — exactly the desired behavior for tighter margin envelope.
+
+### Live acceptance targets (90-day)
+
+| Metric | Backtest @ kelly=0.25 | Live target (90-day) |
+|--------|:---------------------:|:--------------------:|
+| Portfolio Sharpe | +3.183 | **≥ +2.86** (90% of backtest) |
+| Portfolio return | +197.3% (1619-bar / 4.5yr) | **≥ +18%** annualized × 90/252 ≈ +6.5% over 90 days |
+| Max drawdown | −2.5% | **≤ −4%** (1.6× backtest, allowing for slippage envelope) |
+
+Day 7 / 30 / 90 milestones from §6.3 + §8.6 reference these numbers. The
+parity-refetch check (§7) verifies model + sizing parity exact; the slippage
+allowance bounds realistic execution costs at <50bps cumulative.
