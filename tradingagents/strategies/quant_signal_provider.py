@@ -24,9 +24,9 @@ logger = logging.getLogger(__name__)
 
 
 # Indirection so tests can monkeypatch
-def _v2_get_quant_signal(coin, date, base_dir=None):
+def _v2_get_quant_signal(coin, date, base_dir=None, pool_map=None):
     from tradingagents.strategies.quant_engine import get_quant_signal as _impl
-    return _impl(coin, date, base_dir)
+    return _impl(coin, date, base_dir, pool_map=pool_map)
 
 
 class QuantSignalProvider(Protocol):
@@ -144,16 +144,43 @@ class V3QuantSignalProvider:
         )
 
 
+class V5QuantSignalProvider:
+    """V5 provider: V2 engine + per-coin pool_map (route each coin to its own LGB CSV)."""
+
+    def __init__(self, pool_map: dict[str, str], base_dir: Optional[str] = None) -> None:
+        if not pool_map:
+            raise ValueError("V5QuantSignalProvider requires non-empty pool_map")
+        self.pool_map = dict(pool_map)
+        self.base_dir = base_dir
+
+    def signal(self, coin: str, as_of: pd.Timestamp) -> QuantSignal:
+        date_str = pd.Timestamp(as_of).strftime("%Y-%m-%d")
+        return _v2_get_quant_signal(
+            coin=coin, date=date_str,
+            base_dir=self.base_dir, pool_map=self.pool_map,
+        )
+
+
 def build_provider(version: str, **kwargs) -> QuantSignalProvider:
-    """Factory: returns a V2 or V3 provider.
+    """Factory: returns a V2, V3, or V5 provider.
 
     For V2: pass ``base_dir`` (str | None).
     For V3: pass ``prices``, ``regime_bundle``, ``multi_horizon_bundle``,
             ``microstructure_features``, ``derivatives_features``, ``config``.
+    For V5: pass ``pool_map`` (dict[str, str]) and optionally ``base_dir``.
     """
     version = version.lower()
     if version == "v2":
         return V2QuantSignalProvider(base_dir=kwargs.get("base_dir"))
+    if version == "v5":
+        pool_map = kwargs.get("pool_map")
+        if not pool_map:
+            raise ValueError(
+                "V5QuantSignalProvider missing required kwarg: pool_map"
+            )
+        return V5QuantSignalProvider(
+            pool_map=pool_map, base_dir=kwargs.get("base_dir"),
+        )
     if version == "v3":
         required = (
             "prices",
@@ -167,7 +194,7 @@ def build_provider(version: str, **kwargs) -> QuantSignalProvider:
         if missing:
             raise ValueError(f"V3QuantSignalProvider missing kwargs: {missing}")
         return V3QuantSignalProvider(**{k: kwargs[k] for k in required})
-    raise ValueError(f"Unknown quant version: {version!r} (expected 'v2' or 'v3')")
+    raise ValueError(f"Unknown quant version: {version!r} (expected 'v2', 'v3', or 'v5')")
 
 
 # ---------------------------------------------------------------------------
@@ -181,15 +208,23 @@ _ACTIVE_QUANT_VERSION: str = "v2"
 # without a coin argument (single-coin convenience form).
 _V3_PROVIDER_STATES: dict[str, dict] = {}
 
+# V5 per-coin pool_map state
+_V5_POOL_MAP: Optional[dict[str, str]] = None
+_V5_BASE_DIR: Optional[str] = None
 
-def set_active_quant_version(version: str) -> None:
+
+def set_active_quant_version(version: str, *, pool_map=None, base_dir=None) -> None:
     """Set the active quant version. Called at startup by hybrid scripts."""
-    global _ACTIVE_QUANT_VERSION
+    global _ACTIVE_QUANT_VERSION, _V5_POOL_MAP, _V5_BASE_DIR
     version = version.lower()
-    if version not in ("v2", "v3"):
+    if version not in ("v2", "v3", "v5"):
         raise ValueError(f"Unknown quant version: {version!r}")
+    if version == "v5" and not pool_map:
+        raise ValueError("v5 requires pool_map={coin: pred_dir}")
     _ACTIVE_QUANT_VERSION = version
-    logger.info("Active quant version set to %s", version)
+    _V5_POOL_MAP = dict(pool_map) if pool_map else None
+    _V5_BASE_DIR = base_dir
+    logger.info("Active quant version set to %s (pool_map=%s)", version, _V5_POOL_MAP)
 
 
 def get_active_quant_version() -> str:
@@ -261,6 +296,10 @@ def get_active_quant_signal(coin: str, as_of) -> QuantSignal:
     as_of_ts = pd.Timestamp(as_of)
     if version == "v2":
         return V2QuantSignalProvider(base_dir=None).signal(coin=coin, as_of=as_of_ts)
+    if version == "v5":
+        return V5QuantSignalProvider(
+            pool_map=_V5_POOL_MAP or {}, base_dir=_V5_BASE_DIR,
+        ).signal(coin=coin, as_of=as_of_ts)
     if version == "v3":
         state = _V3_PROVIDER_STATES.get(coin) or _V3_PROVIDER_STATES.get("__default__")
         if state is None:
