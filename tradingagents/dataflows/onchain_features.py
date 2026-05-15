@@ -10,6 +10,7 @@ look-ahead leaks.
 """
 from __future__ import annotations
 
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable, Optional
@@ -127,9 +128,9 @@ def build_pit_onchain_features(
     include_stablecoin_context: bool = True,
     include_options: bool = True,
     include_derivatives: bool = True,
-    options_dir: Path = Path("data/options"),
-    derivatives_dir: Path = Path("data/derivatives"),
-    root: Path = onchain_store.DEFAULT_ROOT,
+    options_dir: Optional[Path] = None,
+    derivatives_dir: Optional[Path] = None,
+    root: Optional[Path] = None,
 ) -> pd.DataFrame:
     """Build a wide, date-indexed PIT on-chain feature frame for a coin.
 
@@ -137,7 +138,18 @@ def build_pit_onchain_features(
     Rolling derived features (z-scores, Puell Multiple) are computed on
     the full PIT-aligned series so long windows can stabilize even when
     the caller requests only a short slice of dates.
+
+    Path defaults honor the ``TRADINGAGENTS_DATA_ROOT`` env var at call
+    time when the corresponding parameter is None, so a single Python
+    process can switch sandboxes between calls (e.g. parity-replay).
     """
+    _data_root = Path(os.environ.get("TRADINGAGENTS_DATA_ROOT", "data"))
+    if options_dir is None:
+        options_dir = _data_root / "options"
+    if derivatives_dir is None:
+        derivatives_dir = _data_root / "derivatives"
+    if root is None:
+        root = onchain_store.DEFAULT_ROOT
     alias = COIN_ALIAS.get(coin.lower(), coin.lower())
     if metrics is None:
         metric_list = list(RAW_METRICS_BY_COIN.get(alias, []))
