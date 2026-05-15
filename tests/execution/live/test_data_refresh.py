@@ -150,3 +150,52 @@ def test_refresh_coinglass_raises_on_missing_key(tmp_path):
             coins=["bitcoin"], derivatives_dir=tmp_path / "d", raw_dir=tmp_path / "r",
             api_key="", structured_log=None,
         )
+
+
+def test_refresh_deribit_dvol_appends_yesterday(monkeypatch, tmp_path):
+    """One-day pull appends a single new row to the per-currency parquet."""
+    import pandas as pd
+    from tradingagents.execution.live import data_refresh
+
+    def fake_fetch_dvol(currency, start, end):
+        idx = pd.to_datetime(["2026-05-14"], utc=True)
+        return pd.DataFrame({
+            "dvol_open": [60.0], "dvol_high": [62.0],
+            "dvol_low": [59.0], "dvol_close": [61.5],
+        }, index=idx)
+
+    monkeypatch.setattr(
+        "scripts.fetch_deribit_dvol.fetch_dvol", fake_fetch_dvol
+    )
+
+    options_dir = tmp_path / "options"
+    options_dir.mkdir()
+
+    data_refresh.refresh_deribit_dvol(
+        currencies=["BTC"], options_dir=options_dir, structured_log=None,
+    )
+    out = pd.read_parquet(options_dir / "btc_dvol.parquet")
+    assert len(out) == 1
+    assert out["dvol_close"].iloc[0] == 61.5
+
+
+def test_refresh_deribit_dvol_idempotent(monkeypatch, tmp_path):
+    import pandas as pd
+    from tradingagents.execution.live import data_refresh
+
+    def fake_fetch_dvol(currency, start, end):
+        idx = pd.to_datetime(["2026-05-14"], utc=True)
+        return pd.DataFrame({
+            "dvol_open": [60.0], "dvol_high": [62.0],
+            "dvol_low": [59.0], "dvol_close": [61.5],
+        }, index=idx)
+
+    monkeypatch.setattr(
+        "scripts.fetch_deribit_dvol.fetch_dvol", fake_fetch_dvol
+    )
+    options_dir = tmp_path / "options"
+    options_dir.mkdir()
+    data_refresh.refresh_deribit_dvol(["BTC"], options_dir, None)
+    data_refresh.refresh_deribit_dvol(["BTC"], options_dir, None)
+    out = pd.read_parquet(options_dir / "btc_dvol.parquet")
+    assert len(out) == 1  # not 2

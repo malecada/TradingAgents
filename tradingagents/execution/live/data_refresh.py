@@ -180,3 +180,49 @@ def refresh_coinglass(
         else:
             out = merged_cg
         out.to_parquet(daily_file)
+
+
+def refresh_deribit_dvol(
+    currencies: list[str],
+    options_dir: Path,
+    structured_log: object | None,
+) -> None:
+    """Daily incremental refresh of Deribit DVOL parquets.
+
+    For each currency in ``currencies`` (e.g. ["BTC", "ETH"]) fetches yesterday's
+    DVOL row from the Deribit public API and appends it to
+    ``{options_dir}/{ccy_lower}_dvol.parquet``. Idempotent: existing rows
+    are deduped on index.
+    """
+    from scripts.fetch_deribit_dvol import fetch_dvol
+    import pandas as pd
+
+    options_dir = Path(options_dir)
+    options_dir.mkdir(parents=True, exist_ok=True)
+
+    end = pd.Timestamp.utcnow().tz_convert("UTC").normalize() + pd.Timedelta(days=1)
+    start = end - pd.Timedelta(days=3)  # 3-day window catches any small gaps
+
+    for ccy in currencies:
+        try:
+            new_df = fetch_dvol(ccy, start, end)
+        except Exception as exc:
+            if structured_log is not None:
+                structured_log.warn("dvol_fetch_failed", currency=ccy, err=str(exc))
+            raise
+
+        if new_df.empty:
+            continue
+        if new_df.index.tz is None:
+            new_df.index = pd.to_datetime(new_df.index).tz_localize("UTC")
+
+        out_file = options_dir / f"{ccy.lower()}_dvol.parquet"
+        if out_file.exists():
+            existing = pd.read_parquet(out_file)
+            if existing.index.tz is None:
+                existing.index = pd.to_datetime(existing.index).tz_localize("UTC")
+            combined = pd.concat([existing, new_df]).sort_index()
+            combined = combined[~combined.index.duplicated(keep="last")]
+        else:
+            combined = new_df
+        combined.to_parquet(out_file)
