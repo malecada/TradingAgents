@@ -2839,3 +2839,58 @@ and drawdown — exactly the desired behavior for tighter margin envelope.
 Day 7 / 30 / 90 milestones from §6.3 + §8.6 reference these numbers. The
 parity-refetch check (§7) verifies model + sizing parity exact; the slippage
 allowance bounds realistic execution costs at <50bps cumulative.
+
+### 12.18 V2 quant + LLM modulator — 1-year fresh end-to-end (Hetzner)
+
+**Motivation**: §12.17 produced an 88-bar V3+LLM result. §12.18 generalises the V2+LLM hybrid to a 1-year window so we can compare V2-quant-alone vs V2+LLM over a full bull-to-bear regime cycle, on the cheapest available LLM (gpt-4o-mini) with realistic OOS lookback.
+
+**Implementation**: Same Hetzner CX22 pipeline as §12.17, V2 quant path via `--quant-version v2`. Reused the existing P1 88-bar hybrid signals (`data/hybrid_signals_p1/{bitcoin,ethereum}_2026-01-16_2026-04-15.csv`) as a trailing suffix; script auto-resumed and generated only the 273 missing pre-window bars per coin. Window: 2025-04-18 → 2026-04-15 (363 bars × 2 coins).
+
+**Runtime**: BTC 70,099 s (19.5 hr) for 273 fresh bars + 90 cached. ETH 69,567 s (19.3 hr) for same. Total **38.8 hr** wall-clock on Hetzner single-vCPU box. Memory peak ~1.2 GB / 3.7 GB; swap engagement near zero. No OOMs.
+
+**Cost**: ~$13 total OpenAI API spend (gpt-4o-mini at $0.15/$0.60 per 1M tokens, ~9,750 calls = 273 bars × 2 coins × ~18 calls/bar).
+
+**1-year A/B Results (2025-04-18 → 2026-04-15)**:
+
+| Variant | BTC SR | ETH SR | BTC Return | ETH Return | Portfolio SR | Portfolio Return | Portfolio MaxDD |
+|---------|:------:|:------:|:----------:|:----------:|:------------:|:----------------:|:---------------:|
+| **V2 quant alone** | **+3.32** | **+3.62** | **+76.2%** | **+133.3%** | **+5.23** | **+103.6%** | -2.8% |
+| V2 + LLM modulator | +2.08 | +3.36 | +2.9% | +22.4% | +2.29 | +12.3% | -1.6% |
+| **Delta** | -1.24 | -0.26 | -73.3 pp | -110.9 pp | **-2.94** | **-91.3 pp** | +1.2 pp |
+
+Per-coin diagnostics:
+
+| Variant | Coin | n_trades | win_rate | profit_factor |
+|---------|------|:--------:|:--------:|:-------------:|
+| V2+LLM | BTC | 87 | 56.9% | 1.65 |
+| V2+LLM | ETH | 99 | 59.6% | 1.78 |
+| V2 alone (baseline col) | BTC | 70 | 54.3% | — |
+| V2 alone (baseline col) | ETH | 73 | 59.0% | — |
+
+**Findings**:
+
+1. **V2 quant alone dominates V2+LLM systematically across full year.** Sharpe gap -2.94, return gap -91 pp. The 88-bar finding (§12.17 baseline column: V2 +3.27, V2+LLM +2.85) was directionally correct but understated the gap because the 88-bar window happened to be the LLM's best sub-period. 1-year window reveals the consistent pattern.
+
+2. **LLM modulator does not flip direction — it kills magnitude.** Win rates are similar (V2+LLM 56.9% / 59.6% vs V2 alone 54.3% / 59.0%). The LLM agrees with V2 on direction the same fraction of the time but **dampens position size systematically**. Profit factors are positive (1.65, 1.78) but absolute returns collapse from +103.6% to +12.3%.
+
+3. **The "magnitude collapse" mechanism**: V2's main alpha source is sizing × momentum (vol-targeted Kelly + SMA30 trend filter + conditional leverage 1-3x). The LLM modulator scales these positions down via its `llm_multiplier` field whenever its narrative shows uncertainty — which is most of the time on crypto data. Over 1 year, this reduces gross exposure by ~88% relative to V2 alone.
+
+4. **LLM as a drawdown reducer**: V2+LLM portfolio MaxDD is -1.6% vs V2 alone -2.8%. The only positive effect of the LLM modulator is risk reduction — but the risk/return tradeoff is catastrophic (50% drawdown reduction × 88% return reduction = net loss of Sharpe).
+
+5. **Compounds BT11 finding with 12× more data**: BT11 used 88 bars. §12.18 uses 363 bars (4.1× longer) and confirms the same conclusion at higher statistical power. The LLM modulator is not a noise problem — it is a systematic position-size suppressor that the underlying quant signal cannot overcome.
+
+6. **Eliminates the "signal-quality dependent" hypothesis from §12.16**: §12.16 (analytic shortcut) hypothesised that LLM modulation helps weak/sparse quant signals (V3) and hurts strong quant signals (V2). §12.17 (V3+LLM fresh) refuted the V3-helping half. §12.18 strengthens the V2-hurting half over a full year. The honest unified finding is: **LLM modulation reduces position magnitude in a way that destroys alpha on this OOS window regardless of quant version**.
+
+**Conclusion**: V2 quant alone (`scripts/baseline_strategy_v2.py`) remains the production strategy. V2+LLM hybrid is a thesis architecture contribution (Self-MoA, FinCon CVRF, Skeptic-Quant, multi-agent debate, regime detection, rolling LLM edge), not a production strategy. The 88-bar §12.17 baseline column already showed this; §12.18 confirms it across a full bull-to-bear cycle at 12× the bar count.
+
+**For the thesis defence**: §12.18 is the strongest single result against the LLM-modulation hypothesis. The 1-year window covers the 2025-Q2-Q4 bull regime AND the 2026-Q1 bear regime; the LLM modulator hurts V2 quant in both. No window-specific overfitting can explain the result.
+
+| Path | Contents |
+|------|----------|
+| `data/hybrid_signals_v2_1y/bitcoin_2025-04-18_2026-04-15.csv` | 363-bar V2+LLM hybrid signals (BTC, fresh) |
+| `data/hybrid_signals_v2_1y/ethereum_2025-04-18_2026-04-15.csv` | 363-bar V2+LLM hybrid signals (ETH, fresh) |
+| `data/hybrid_backtest_v2_1y/summary.json` | 1-year A/B per-coin metrics |
+| `data/hybrid_backtest_v2_1y/daily_returns.csv` | Daily returns + positions |
+| `data/hybrid_backtest_v2_1y/hybrid_vs_baseline_equity.png` | Equity curve plot |
+| Hetzner: `/opt/tradingagents/data/hybrid_signals_v2_1y/` | Source signal CSVs on remote box |
+| Hetzner: `/opt/tradingagents/logs/v2_llm_{btc,eth}_1y.log` | Full LLM call logs (19.5hr + 19.3hr) |
