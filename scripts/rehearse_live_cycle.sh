@@ -29,7 +29,7 @@ echo "Cleanup: rm -rf $DATA_DIR $LOG_DIR"
 # === V5 invariant assertions (run once after the 7 cycles) ===
 set -e
 
-DB="${DB:-/tmp/rehearse_journal.db}"
+DB="${DB:-$DATA_DIR/trade_journal.db}"
 echo "=== V5 invariants ==="
 
 # 1. After cycle 1, composite must have 4 routes
