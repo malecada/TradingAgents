@@ -1,9 +1,12 @@
-"""V2 / V3 quant signal provider abstraction.
+"""V2 / V3 / V5 quant signal provider abstraction.
 
-Hybrid scripts pick a quant version via ``build_provider("v2")`` or
-``build_provider("v3", ...)``. Both providers emit the existing
+Hybrid scripts pick a quant version via ``build_provider("v2")``,
+``build_provider("v3", ...)``, or ``build_provider("v5", pool_map=...)``.
+All providers emit the existing
 ``tradingagents.strategies.contracts.QuantSignal`` so downstream modulator
-code is unchanged.
+code is unchanged. V5 reuses the V2 engine but routes each coin to its
+own LGB pred dir via a ``pool_map`` (e.g. BTC -> multi_2coins_v2,
+ETH -> multi_2coins_pit_wf for V5 MIX).
 """
 
 from __future__ import annotations
@@ -280,13 +283,17 @@ def clear_v3_provider_state(coin: Optional[str] = None) -> None:
 
 
 def get_active_quant_signal(coin: str, as_of) -> QuantSignal:
-    """Dispatch to V2 or V3 based on the active version.
+    """Dispatch to V2, V3, or V5 based on the active version.
 
     For V2 the coin argument is passed straight through to the V2 engine.
 
     For V3 the per-coin state registered via ``set_v3_provider_state`` is used.
     Lookup order: ``coin`` key first, then ``"__default__"``.  Raises
     ``RuntimeError`` if neither is found.
+
+    For V5 the module-level ``_V5_POOL_MAP`` (set via
+    ``set_active_quant_version("v5", pool_map=...)``) routes each coin to
+    its own LGB pred dir.
 
     Args:
         coin: Coin identifier (e.g. ``"bitcoin"``).
