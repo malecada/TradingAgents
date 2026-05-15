@@ -5,6 +5,8 @@ CREATE TABLE IF NOT EXISTS cycles (
     status TEXT,
     error_msg TEXT,
     git_commit_sha TEXT,
+    n_trades INTEGER,
+    notes TEXT,
     critical_data_fail_sources TEXT,
     supplementary_stale_sources TEXT
 );

@@ -13,6 +13,7 @@ def env_setup(monkeypatch, tmp_path):
     monkeypatch.setenv("BINANCE_API_KEY", "k")
     monkeypatch.setenv("BINANCE_API_SECRET", "s")
     monkeypatch.setenv("BINANCE_BASE_URL", "https://testnet.binancefuture.com")
+    monkeypatch.setenv("COINGLASS_API_KEY", "test")
     monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "t")
     monkeypatch.setenv("TELEGRAM_CHAT_ID", "1")
     monkeypatch.setenv("DATA_DIR", str(tmp_path / "data"))
@@ -38,9 +39,8 @@ def test_dry_run_completes_full_pipeline(env_setup):
     data_dir = env_setup / "data"
     _seed_ohlcv_cache(data_dir, seed=42)
 
-    with patch("tradingagents.execution.live.data_refresh.refresh_coinmetrics"), \
-         patch("tradingagents.execution.live.data_refresh.refresh_defillama"), \
-         patch("tradingagents.execution.live.data_refresh.refresh_ohlcv"), \
+    with patch("tradingagents.execution.live.data_refresh.refresh_all",
+                return_value={"critical_ok": True, "supplementary_failures": []}), \
          patch("tradingagents.execution.live.retrain.run_retrain_with_fallback") as mock_retrain, \
          patch("tradingagents.execution.live.predict.run_predict") as mock_pred, \
          patch("tradingagents.execution.live.runner.ExchangeClient") as mock_ex_cls, \
@@ -54,11 +54,20 @@ def test_dry_run_completes_full_pipeline(env_setup):
             train_window_start="2024-01-01",
             train_dir_acc=0.0,
         )
-        mock_pred.return_value = {
-            "bitcoin": {"ref_price": 60000.0, "pred_h7": 63000.0, "pred_h14": 66000.0},
-            "ethereum": {"ref_price": 3000.0, "pred_h7": 2950.0, "pred_h14": 2900.0},
-            "binancecoin": {"ref_price": 400.0, "pred_h7": 410.0, "pred_h14": 405.0},
-        }
+        mock_pred.return_value = pd.DataFrame([
+            {"coin": "bitcoin", "horizon": 7, "prediction": 63000.0,
+             "ref_price": 60000.0, "bundle_route": "bitcoin_78f"},
+            {"coin": "bitcoin", "horizon": 14, "prediction": 66000.0,
+             "ref_price": 60000.0, "bundle_route": "bitcoin_78f"},
+            {"coin": "ethereum", "horizon": 7, "prediction": 2950.0,
+             "ref_price": 3000.0, "bundle_route": "ethereum_193f"},
+            {"coin": "ethereum", "horizon": 14, "prediction": 2900.0,
+             "ref_price": 3000.0, "bundle_route": "ethereum_193f"},
+            {"coin": "binancecoin", "horizon": 7, "prediction": 410.0,
+             "ref_price": 400.0, "bundle_route": "binancecoin_78f"},
+            {"coin": "binancecoin", "horizon": 14, "prediction": 405.0,
+             "ref_price": 400.0, "bundle_route": "binancecoin_78f"},
+        ])
         mock_ex_cls.return_value.get_total_portfolio_value.return_value = 10000.0
         mock_ex_cls.return_value.get_usdt_balance.return_value = 10000.0
         mock_ex_cls.return_value.get_current_position.return_value = 0.0
@@ -79,9 +88,8 @@ def test_run_cycle_logs_to_journal(env_setup):
     data_dir = env_setup / "data"
     _seed_ohlcv_cache(data_dir, seed=7)
 
-    with patch("tradingagents.execution.live.data_refresh.refresh_coinmetrics"), \
-         patch("tradingagents.execution.live.data_refresh.refresh_defillama"), \
-         patch("tradingagents.execution.live.data_refresh.refresh_ohlcv"), \
+    with patch("tradingagents.execution.live.data_refresh.refresh_all",
+                return_value={"critical_ok": True, "supplementary_failures": []}), \
          patch("tradingagents.execution.live.retrain.run_retrain_with_fallback") as mock_retrain, \
          patch("tradingagents.execution.live.predict.run_predict") as mock_pred, \
          patch("tradingagents.execution.live.runner.ExchangeClient") as mock_ex_cls, \
@@ -95,11 +103,20 @@ def test_run_cycle_logs_to_journal(env_setup):
             train_window_start="2024-01-01",
             train_dir_acc=0.0,
         )
-        mock_pred.return_value = {
-            "bitcoin": {"ref_price": 60000.0, "pred_h7": 63000.0, "pred_h14": 66000.0},
-            "ethereum": {"ref_price": 3000.0, "pred_h7": 3050.0, "pred_h14": 3100.0},
-            "binancecoin": {"ref_price": 400.0, "pred_h7": 410.0, "pred_h14": 420.0},
-        }
+        mock_pred.return_value = pd.DataFrame([
+            {"coin": "bitcoin", "horizon": 7, "prediction": 63000.0,
+             "ref_price": 60000.0, "bundle_route": "bitcoin_78f"},
+            {"coin": "bitcoin", "horizon": 14, "prediction": 66000.0,
+             "ref_price": 60000.0, "bundle_route": "bitcoin_78f"},
+            {"coin": "ethereum", "horizon": 7, "prediction": 3050.0,
+             "ref_price": 3000.0, "bundle_route": "ethereum_193f"},
+            {"coin": "ethereum", "horizon": 14, "prediction": 3100.0,
+             "ref_price": 3000.0, "bundle_route": "ethereum_193f"},
+            {"coin": "binancecoin", "horizon": 7, "prediction": 410.0,
+             "ref_price": 400.0, "bundle_route": "binancecoin_78f"},
+            {"coin": "binancecoin", "horizon": 14, "prediction": 420.0,
+             "ref_price": 400.0, "bundle_route": "binancecoin_78f"},
+        ])
         mock_ex_cls.return_value.get_total_portfolio_value.return_value = 10000.0
         mock_ex_cls.return_value.get_usdt_balance.return_value = 10000.0
         mock_ex_cls.return_value.get_current_position.return_value = 0.0
@@ -121,3 +138,46 @@ def test_run_cycle_logs_to_journal(env_setup):
     ).fetchone()[0]
     assert snapshot_rows >= 1
     conn.close()
+
+
+def test_runner_uses_v5_routing(monkeypatch, tmp_path):
+    """Runner threads routing through retrain + predict."""
+    from tradingagents.execution.live import runner, data_refresh, retrain, predict
+    import pandas as pd
+
+    monkeypatch.setenv("COINGLASS_API_KEY", "test")
+    monkeypatch.setenv("BINANCE_API_KEY", "x")
+    monkeypatch.setenv("BINANCE_API_SECRET", "y")
+    monkeypatch.setenv("DATA_DIR", str(tmp_path / "data"))
+    monkeypatch.setenv("CHECKPOINT_DIR", str(tmp_path / "ckpt"))
+
+    monkeypatch.setattr(data_refresh, "refresh_all",
+                         lambda cfg, log: {"critical_ok": True, "supplementary_failures": []})
+
+    captured_routing = []
+
+    def fake_retrain_with_fallback(**kw):
+        captured_routing.append(kw.get("routing"))
+        from tradingagents.execution.live.retrain import CheckpointArtifact
+        from pathlib import Path
+        p = Path(tmp_path) / "ckpt" / "lgb_v5_mix_X.pkl"
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text("")
+        return CheckpointArtifact(
+            path=p, sha="x", retrain_id="x",
+            routes=["bitcoin_78f", "ethereum_193f", "binancecoin_78f", "solana_193f"],
+        )
+    monkeypatch.setattr(retrain, "run_retrain_with_fallback", fake_retrain_with_fallback)
+
+    captured_predict_routing = []
+
+    def fake_run_predict(**kw):
+        captured_predict_routing.append(kw.get("routing"))
+        return pd.DataFrame([])  # empty preds → no trades
+    monkeypatch.setattr(predict, "run_predict", fake_run_predict)
+
+    result = runner.run_cycle(cycle_id="20260514-test", dry_run=True)
+
+    assert captured_routing[0] is not None
+    assert set(captured_routing[0].keys()) == {"bitcoin", "ethereum", "binancecoin", "solana"}
+    assert captured_predict_routing[0] == captured_routing[0]

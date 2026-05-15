@@ -9,12 +9,13 @@ CLI entry: ``python -m tradingagents.execution.live.runner --once``
 from __future__ import annotations
 
 import argparse
+import json
 import logging
 import os
 import signal
 import subprocess
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -44,6 +45,7 @@ class CycleResult:
     status: str
     n_executed: int
     error_msg: str = ""
+    trades_executed: list[dict] = field(default_factory=list)
 
 
 _shutdown_requested = False
@@ -67,6 +69,10 @@ def _today_id() -> str:
     return datetime.now(timezone.utc).date().isoformat()
 
 
+def _utc_now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
 def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult:
     """Execute one full cycle. Returns a CycleResult — never raises."""
     cycle_id = cycle_id or _today_id()
@@ -86,26 +92,45 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
     trades_executed: list[dict] = []
     portfolio_before = 0.0
     portfolio_after = 0.0
+    start_ts = _utc_now_iso()
+    # Track supplementary-data freshness so we can stamp it on the terminal
+    # cycle row at the end of the success path.
+    stale_sources: str | None = None
 
     try:
-        # 1. data_refresh
-        with structured.step("fetch_onchain"):
-            data_refresh.refresh_coinmetrics(
-                coins=cfg.coin_universe,
-                store_root=data_dir / "onchain_store",
-            )
-            data_refresh.refresh_defillama(
-                coins=cfg.coin_universe,
-                store_root=data_dir / "onchain_store",
-            )
-        for coin in cfg.coin_universe:
-            with structured.step("fetch_ohlcv", {"coin": coin}):
-                data_refresh.refresh_ohlcv(
-                    coin=coin,
-                    cache_root=data_dir / "ohlcv_cache",
+        # 1. data_refresh — tiered (critical hard-fail, supplementary degrade)
+        with structured.step("data_refresh"):
+            try:
+                refresh_result = data_refresh.refresh_all(cfg, structured)
+            except data_refresh.CriticalDataRefreshError as exc:
+                end_ts = _utc_now_iso()
+                j.record_cycle(
+                    cycle_id=cycle_id, start_ts=start_ts, end_ts=end_ts,
+                    status="critical_data_fail", n_trades=0,
+                    notes=str(exc),
+                    critical_data_fail_sources=json.dumps(
+                        [s for s, _e in exc.failures]
+                    ),
+                )
+                try:
+                    notify.send_alert(
+                        bot_token=cfg.telegram_bot_token,
+                        chat_id=cfg.telegram_chat_id,
+                        severity="CRITICAL_DATA_FAIL",
+                        message=f"V5 cycle {cycle_id}: CRITICAL DATA FAIL — {exc}",
+                    )
+                except Exception:
+                    pass
+                return CycleResult(
+                    cycle_id=cycle_id, status="critical_data_fail",
+                    n_executed=0, trades_executed=[],
                 )
 
-        # 2. retrain
+        supp_failures = (refresh_result or {}).get("supplementary_failures", [])
+        if supp_failures:
+            stale_sources = json.dumps([s for s, _ in supp_failures])
+
+        # 2. retrain — V5 composite (routing-aware)
         asof_date = (
             datetime.now(timezone.utc).date() - timedelta(days=1)
         ).isoformat()
@@ -114,37 +139,75 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                 routing=cfg.routing,
                 horizons=cfg.horizons,
                 asof=asof_date,
-                checkpoint_dir=data_dir / "checkpoints",
+                checkpoint_dir=Path(cfg.data_root) / "checkpoints",
                 retrain_id=cycle_id,
+                lookback_days=getattr(cfg, "lookback_days", 730),
             )
-            # Task 9: minimum rename to keep journal call valid against the new
-            # CheckpointArtifact field names. Task 12 will redo the full journal
-            # wire-up for V5 (composite-aware columns).
-            j.log_model_artifact(
-                retrain_id=cycle_id,
-                model_path=str(artifact.path),
+            j.record_retrain(
+                retrain_id=cycle_id, cycle_id=cycle_id,
+                checkpoint_path=str(artifact.path),
+                checkpoint_sha=artifact.sha,
+                n_train_rows=artifact.n_train_rows,
                 train_window_start=artifact.train_window_start,
-                train_window_end=asof_date,
-                train_rows=artifact.n_train_rows,
-                train_dir_acc_h7=artifact.train_dir_acc,
-                train_dir_acc_h14=artifact.train_dir_acc,
-                sha256=artifact.sha,
+                train_dir_acc=artifact.train_dir_acc,
+                status="success",
+                routes=json.dumps(artifact.routes),
             )
 
-        # 3. predict
+        # 3. predict — V5 composite (routing-aware, majority-fail abort)
         with structured.step("predict"):
-            preds = predict.run_predict(
-                checkpoint_path=artifact.path,
-                coins=cfg.coin_universe,
-                horizons=cfg.horizons,
-                asof=asof_date,
-            )
+            try:
+                preds_df = predict.run_predict(
+                    coin_universe=cfg.coin_universe,
+                    routing=cfg.routing,
+                    ckpt_path=artifact.path,
+                    asof=asof_date,
+                    store_root=Path(cfg.data_root) / "onchain",
+                    ohlcv_cache=Path(cfg.data_root) / "cache",
+                    horizons=cfg.horizons,
+                )
+            except predict.PredictMajorityFail as exc:
+                end_ts = _utc_now_iso()
+                j.record_cycle(
+                    cycle_id=cycle_id, start_ts=start_ts, end_ts=end_ts,
+                    status="predict_majority_fail",
+                    n_trades=0, notes=str(exc),
+                    supplementary_stale_sources=stale_sources,
+                )
+                try:
+                    notify.send_alert(
+                        bot_token=cfg.telegram_bot_token,
+                        chat_id=cfg.telegram_chat_id,
+                        severity="PREDICT_MAJORITY_FAIL",
+                        message=f"V5 cycle {cycle_id}: PREDICT MAJORITY FAIL — {exc}",
+                    )
+                except Exception:
+                    pass
+                return CycleResult(
+                    cycle_id=cycle_id, status="predict_majority_fail",
+                    n_executed=0, trades_executed=[],
+                )
+            j.record_predictions(cycle_id=cycle_id, preds_df=preds_df)
+
+        # Reshape the V5 long-format preds DataFrame into the per-coin dict the
+        # downstream sizing/shadow loop expects: {coin: {ref_price, pred_h{h}}}.
+        preds: dict[str, dict] = {}
+        if preds_df is not None and len(preds_df) > 0:
+            for coin, group in preds_df.groupby("coin"):
+                row: dict[str, float] = {
+                    "ref_price": float(group["ref_price"].iloc[0]),
+                }
+                for _, r in group.iterrows():
+                    row[f"pred_h{int(r['horizon'])}"] = float(r["prediction"])
+                preds[str(coin)] = row
+
         # Persist feature snapshots so any cycle's decision is reconstructible
         # from the journal alone (spec guarantee). One row per (coin, feature).
         for coin, p in preds.items():
             j.log_feature_snapshot(cycle_id, coin, "ref_price", p["ref_price"], "OHLCV")
             for h in cfg.horizons:
-                j.log_feature_snapshot(cycle_id, coin, f"pred_h{h}", p[f"pred_h{h}"], "LGB")
+                if f"pred_h{h}" in p:
+                    j.log_feature_snapshot(cycle_id, coin, f"pred_h{h}", p[f"pred_h{h}"], "LGB")
 
         ex = ExchangeClient(
             api_key=cfg.binance_api_key,
@@ -519,8 +582,16 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                 agreement_rate=agreement,
             )
 
-        j.log_cycle_end(cycle_id, status="ok")
-        return CycleResult(cycle_id=cycle_id, status="ok", n_executed=n_executed)
+        end_ts = _utc_now_iso()
+        j.record_cycle(
+            cycle_id=cycle_id, start_ts=start_ts, end_ts=end_ts,
+            status="ok", n_trades=n_executed,
+            supplementary_stale_sources=stale_sources,
+        )
+        return CycleResult(
+            cycle_id=cycle_id, status="ok", n_executed=n_executed,
+            trades_executed=trades_executed,
+        )
 
     except Exception as e:
         logger.exception("Cycle failed")
