@@ -41,6 +41,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -85,14 +86,14 @@ def _load_preds(pred_dir: Path, coin: str) -> pd.DataFrame:
     return p7.merge(p14, on="date").sort_values("date").reset_index(drop=True)
 
 
-def _v2_positions(merged: pd.DataFrame) -> np.ndarray:
+def _v2_positions(merged: pd.DataFrame, kelly_fraction: float = 0.5) -> np.ndarray:
     sig, conf = generate_term_structure_signals(merged, [7, 14], 0.05, asymmetric=True)
     px = merged["Close"].astype(float).values
     rv = compute_realized_vol(px, lookback=20)
     mask = vol_regime_mask(rv, percentile_cap=0.95)
     pos = build_positions_with_hold(
         signals=sig, vol_ok=mask, confidence=conf, realized_vol=rv, prices=px,
-        target_vol=0.10, kelly_fraction=0.5, max_leverage=3.0,
+        target_vol=0.10, kelly_fraction=kelly_fraction, max_leverage=3.0,
         min_hold=7, early_exit_loss=0.015,
     )
     return apply_trend_filter(pos, px, sma_period=30, multiplier=1.5)
@@ -111,7 +112,8 @@ def _metrics(r: pd.Series) -> dict:
     }
 
 
-def run_coin(coin: str, pred_dir: Path, start: str, end: str) -> pd.Series:
+def run_coin(coin: str, pred_dir: Path, start: str, end: str,
+             kelly_fraction: float = 0.5) -> pd.Series:
     """Run V2 sizing on one coin's routed predictions → daily return series."""
     preds = _load_preds(pred_dir, coin)
     preds = preds[(preds["date"] >= start) & (preds["date"] <= end)]
@@ -123,7 +125,7 @@ def run_coin(coin: str, pred_dir: Path, start: str, end: str) -> pd.Series:
     merged = merged.dropna(subset=["Close"]).reset_index(drop=True)
     merged["ref_price"] = merged["Close"]
 
-    pos = _v2_positions(merged)
+    pos = _v2_positions(merged, kelly_fraction=kelly_fraction)
     equity, _m = run_coin_backtest(
         dates=merged["date"].values, prices=merged["Close"].values,
         positions=pos, initial_capital=10_000.0, **COSTS,
@@ -140,7 +142,16 @@ def main() -> None:
     p.add_argument("--output-dir", default="data/v5_mix_production")
     p.add_argument("--routing-json", default=None,
                    help="Optional JSON {coin: pred_dir} overriding DEFAULT_ROUTING")
+    p.add_argument("--kelly", type=float, default=0.5,
+                   help="Kelly fraction for V2 sizing (default 0.5 = backtest canonical, "
+                        "use 0.25 for live margin re-run)")
+    p.add_argument("--data-root", default=None,
+                   help="Override TRADINGAGENTS_DATA_ROOT for this run "
+                        "(sandbox parity replay)")
     args = p.parse_args()
+
+    if args.data_root:
+        os.environ["TRADINGAGENTS_DATA_ROOT"] = args.data_root
 
     routing = DEFAULT_ROUTING
     if args.routing_json:
@@ -156,7 +167,8 @@ def main() -> None:
 
     coin_rets: dict[str, pd.Series] = {}
     for coin, pdir in routing.items():
-        r = run_coin(coin, PROJECT_ROOT / pdir, args.start, args.end)
+        r = run_coin(coin, PROJECT_ROOT / pdir, args.start, args.end,
+                     kelly_fraction=args.kelly)
         coin_rets[coin] = r
         m = _metrics(r)
         feat = "193f extended" if "pit" in pdir else "78f canonical"
