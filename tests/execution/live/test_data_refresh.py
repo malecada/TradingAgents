@@ -99,3 +99,54 @@ def test_refresh_binance_ohlcv_incremental_when_cache_warm(tmp_path):
         kwargs = mock_f.call_args.kwargs
         assert kwargs.get("days") == 2
         assert kwargs.get("symbol") == "BTCUSDT"
+
+
+def test_refresh_coinglass_idempotent(monkeypatch, tmp_path):
+    """Two calls in one cycle produce identical parquet (no row duplication)."""
+    import pandas as pd
+    from tradingagents.execution.live import data_refresh
+
+    # Stub the underlying Coinglass fetch helpers — return a small known frame.
+    calls = []
+
+    def fake_fetch_oi_agg(symbol, key):
+        calls.append(("oi", symbol))
+        idx = pd.to_datetime(["2026-05-13", "2026-05-14"], utc=True)
+        return pd.DataFrame({
+            "oi_open": [1.0, 2.0], "oi_high": [1.0, 2.0],
+            "oi_low": [1.0, 2.0], "oi_close": [1.0, 2.0],
+        }, index=idx)
+
+    monkeypatch.setattr(
+        "scripts.fetch_coinglass_history.fetch_oi_agg", fake_fetch_oi_agg
+    )
+    # Stub other endpoints similarly (return empty DataFrames so the test stays focused)
+    for fn in ("fetch_liq_agg", "fetch_ls_ratio", "fetch_taker_vol", "fetch_funding_weighted"):
+        monkeypatch.setattr(f"scripts.fetch_coinglass_history.{fn}",
+                             lambda *a, **k: pd.DataFrame())
+
+    deriv_dir = tmp_path / "derivatives"
+    deriv_dir.mkdir()
+    raw_dir = tmp_path / "derivatives_raw"
+    raw_dir.mkdir()
+
+    data_refresh.refresh_coinglass(
+        coins=["bitcoin"], derivatives_dir=deriv_dir, raw_dir=raw_dir,
+        api_key="test", structured_log=None,
+    )
+    out1 = pd.read_parquet(deriv_dir / "bitcoin.parquet").copy()
+    data_refresh.refresh_coinglass(
+        coins=["bitcoin"], derivatives_dir=deriv_dir, raw_dir=raw_dir,
+        api_key="test", structured_log=None,
+    )
+    out2 = pd.read_parquet(deriv_dir / "bitcoin.parquet")
+    pd.testing.assert_frame_equal(out1, out2)
+
+
+def test_refresh_coinglass_raises_on_missing_key(tmp_path):
+    from tradingagents.execution.live import data_refresh
+    with pytest.raises(RuntimeError, match="COINGLASS_API_KEY"):
+        data_refresh.refresh_coinglass(
+            coins=["bitcoin"], derivatives_dir=tmp_path / "d", raw_dir=tmp_path / "r",
+            api_key="", structured_log=None,
+        )
