@@ -60,22 +60,62 @@ def test_retrain_writes_per_horizon_bundles(tmp_path):
     assert loaded["BTC_193f"][14]["target_col"] == "prices_h14"
 
 
-def test_retrain_falls_back_on_failure(tmp_path):
+def test_retrain_fallback_atomic(monkeypatch, tmp_path):
+    """If retrain raises, fallback returns the most recent prior composite."""
     from tradingagents.execution.live import retrain
 
-    prev = tmp_path / "lgb_3coin_pit_2026-05-10.pkl"
-    prev.write_bytes(b"fake-prev-checkpoint")
+    routing = {
+        "bitcoin": {"feature_set": "78f", "pool": ["bitcoin", "ethereum"]},
+    }
 
-    with patch.object(retrain, "build_pooled_dataset",
-                      side_effect=RuntimeError("CoinMetrics down")):
-        artifact = retrain.run_retrain_with_fallback(
-            coins=["BTC", "ETH", "BNB"],
-            horizons=[7, 14],
-            asof="2026-05-11",
-            checkpoint_dir=tmp_path,
-        )
-    assert artifact.model_path == prev
-    assert artifact.is_fallback is True
+    # Seed a prior composite on disk
+    prior_path = tmp_path / "lgb_v5_mix_20260513.pkl"
+    import joblib
+    joblib.dump({"bitcoin_78f": {7: {"x": 1}, 14: {"x": 2}}}, prior_path)
+
+    def fake_retrain(**kw):
+        raise RuntimeError("simulated training failure")
+
+    monkeypatch.setattr(retrain, "run_retrain", fake_retrain)
+
+    artifact = retrain.run_retrain_with_fallback(
+        routing=routing, horizons=[7, 14], asof="20260514",
+        checkpoint_dir=tmp_path, retrain_id="cycle-test",
+    )
+
+    assert artifact.path == prior_path  # fell back
+
+
+def test_retrain_atomic_no_half_file(monkeypatch, tmp_path):
+    """If joblib.dump raises after start, no .pkl is left behind."""
+    from tradingagents.execution.live import retrain
+    import pandas as pd
+
+    routing = {
+        "bitcoin": {"feature_set": "78f", "pool": ["bitcoin", "ethereum"]},
+    }
+
+    monkeypatch.setattr(retrain, "build_pooled_dataset",
+                         lambda **kw: pd.DataFrame({"prices": [1.0]},
+                                                    index=pd.to_datetime(["2026-01-01"])))
+    monkeypatch.setattr(retrain, "_transform_pooled",
+                         lambda df, h: df.assign(prices_h7=1.0, prices_h14=1.0, coin_id="bitcoin"))
+    monkeypatch.setattr(retrain, "fit_pooled_full",
+                         lambda df, horizon: {"horizon": horizon, "feature_names": ["prices"],
+                                                "booster": None, "scaler": None,
+                                                "coin_to_int": {"bitcoin": 0},
+                                                "n_train_rows": 1,
+                                                "target_col": f"prices_h{horizon}"})
+
+    def boom(*a, **k): raise RuntimeError("disk full")
+    monkeypatch.setattr("joblib.dump", boom)
+
+    with pytest.raises(RuntimeError):
+        retrain.run_retrain(routing=routing, horizons=[7, 14], asof="20260514",
+                              checkpoint_dir=tmp_path, retrain_id="x")
+    # No lgb_v5_mix_*.pkl left behind (only the tmp may exist transiently)
+    leftover = list(tmp_path.glob("lgb_v5_mix_*.pkl"))
+    assert leftover == [], f"unexpected files: {leftover}"
 
 
 def test_run_retrain_composite_four_routes(monkeypatch, tmp_path):

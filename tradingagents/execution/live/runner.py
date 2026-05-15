@@ -111,26 +111,30 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
         ).isoformat()
         with structured.step("retrain"):
             artifact = retrain.run_retrain_with_fallback(
-                coins=cfg.coin_universe,
+                routing=cfg.routing,
                 horizons=cfg.horizons,
                 asof=asof_date,
                 checkpoint_dir=data_dir / "checkpoints",
+                retrain_id=cycle_id,
             )
+            # Task 9: minimum rename to keep journal call valid against the new
+            # CheckpointArtifact field names. Task 12 will redo the full journal
+            # wire-up for V5 (composite-aware columns).
             j.log_model_artifact(
                 retrain_id=cycle_id,
-                model_path=str(artifact.model_path),
+                model_path=str(artifact.path),
                 train_window_start=artifact.train_window_start,
-                train_window_end=artifact.train_window_end,
-                train_rows=artifact.train_rows,
-                train_dir_acc_h7=artifact.train_dir_acc_h7,
-                train_dir_acc_h14=artifact.train_dir_acc_h14,
-                sha256=artifact.sha256,
+                train_window_end=asof_date,
+                train_rows=artifact.n_train_rows,
+                train_dir_acc_h7=artifact.train_dir_acc,
+                train_dir_acc_h14=artifact.train_dir_acc,
+                sha256=artifact.sha,
             )
 
         # 3. predict
         with structured.step("predict"):
             preds = predict.run_predict(
-                checkpoint_path=artifact.model_path,
+                checkpoint_path=artifact.path,
                 coins=cfg.coin_universe,
                 horizons=cfg.horizons,
                 asof=asof_date,
@@ -211,7 +215,7 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                 for h in cfg.horizons:
                     j.log_prediction(
                         cycle_id=cycle_id, coin=coin, horizon=h,
-                        model_path_sha=artifact.sha256,
+                        model_path_sha=artifact.sha,
                         pred_value=preds[coin][f"pred_h{h}"],
                         ref_price=preds[coin]["ref_price"],
                         signal_h7=sig_h7,

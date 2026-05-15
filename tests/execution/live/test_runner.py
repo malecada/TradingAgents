@@ -46,11 +46,13 @@ def test_dry_run_completes_full_pipeline(env_setup):
          patch("tradingagents.execution.live.runner.ExchangeClient") as mock_ex_cls, \
          patch("tradingagents.execution.live.notify.send_daily_summary") as mock_notify:
         mock_retrain.return_value = MagicMock(
-            model_path=Path("/tmp/m.pkl"),
-            train_dir_acc_h7=0.6, train_dir_acc_h14=0.65,
-            sha256="a" * 64, train_rows=100,
-            train_window_start="2024-01-01", train_window_end="2026-05-11",
-            is_fallback=False,
+            path=Path("/tmp/m.pkl"),
+            sha="a" * 64,
+            retrain_id="2026-05-12",
+            routes=["bitcoin_78f", "ethereum_193f", "binancecoin_78f"],
+            n_train_rows=100,
+            train_window_start="2024-01-01",
+            train_dir_acc=0.0,
         )
         mock_pred.return_value = {
             "bitcoin": {"ref_price": 60000.0, "pred_h7": 63000.0, "pred_h14": 66000.0},
@@ -85,11 +87,13 @@ def test_run_cycle_logs_to_journal(env_setup):
          patch("tradingagents.execution.live.runner.ExchangeClient") as mock_ex_cls, \
          patch("tradingagents.execution.live.notify.send_daily_summary"):
         mock_retrain.return_value = MagicMock(
-            model_path=Path("/tmp/m.pkl"),
-            train_dir_acc_h7=0.6, train_dir_acc_h14=0.65,
-            sha256="b" * 64, train_rows=100,
-            train_window_start="2024-01-01", train_window_end="2026-05-11",
-            is_fallback=False,
+            path=Path("/tmp/m.pkl"),
+            sha="b" * 64,
+            retrain_id="2026-05-12",
+            routes=["bitcoin_78f", "ethereum_193f", "binancecoin_78f"],
+            n_train_rows=100,
+            train_window_start="2024-01-01",
+            train_dir_acc=0.0,
         )
         mock_pred.return_value = {
             "bitcoin": {"ref_price": 60000.0, "pred_h7": 63000.0, "pred_h14": 66000.0},
