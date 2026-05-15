@@ -52,10 +52,19 @@ def parse_args():
     p.add_argument("--anonymize", action="store_true",
                    help="Enable asset-name anonymization (Tier A4)")
     p.add_argument("--force", action="store_true")
-    p.add_argument("--quant-version", choices=("v2", "v3"), default="v2",
+    p.add_argument("--quant-version", choices=("v2", "v3", "v5"), default="v2",
                    help="Quant signal version. v3 requires per-coin regime + "
                         "multi-horizon bundles (pickles) and OHLCV prices "
-                        "(parquet/CSV) to be present in --v3-state-dir.")
+                        "(parquet/CSV) to be present in --v3-state-dir. "
+                        "v5 requires --quant-pool-map COIN=PATH or --quant-pool-preset.")
+    p.add_argument("--quant-pool-map", nargs="+", default=None,
+                   help="(v5 only) Per-coin pred_dir overrides as COIN=PATH pairs. "
+                        "Example: --quant-pool-map bitcoin=data/multi_2coins_v2 "
+                        "ethereum=data/multi_2coins_pit_wf")
+    p.add_argument("--quant-pool-preset", choices=("v5_2coin", "v5_4coin"), default=None,
+                   help="(v5 only) Convenience preset for pool_map. "
+                        "v5_2coin = BTC->V2 78f, ETH->V4-B 193f. "
+                        "v5_4coin = adds BNB->V2 78f, SOL->V4-B 193f.")
     p.add_argument(
         "--v3-state-dir",
         default="data/checkpoints",
@@ -174,6 +183,43 @@ def _inject_v3_state_for_coins(
         log.info("V3: registered state for coin=%s (prices len=%d)", coin, len(prices))
 
 
+def _write_run_manifest(
+    output_dir: Path,
+    args: argparse.Namespace,
+    pool_map: Optional[dict[str, str]],
+) -> None:
+    """Persist run configuration to <output_dir>/run_manifest.json.
+
+    Records cmd_args, pool_map, quant_version, and started_at so that any
+    run can be reproduced or audited from its output directory alone.
+    """
+    import datetime
+
+    manifest = {
+        "started_at": datetime.datetime.utcnow().isoformat() + "Z",
+        "quant_version": args.quant_version,
+        "pool_map": pool_map,
+        "cmd_args": {
+            "coins": args.coins,
+            "start": args.start,
+            "end": args.end,
+            "analysts": args.analysts,
+            "llm_provider": args.llm_provider,
+            "deep_think": args.deep_think,
+            "quick_think": args.quick_think,
+            "output_dir": args.output_dir,
+            "anonymize": args.anonymize,
+            "force": args.force,
+            "quant_version": args.quant_version,
+            "quant_pool_map": args.quant_pool_map,
+            "quant_pool_preset": args.quant_pool_preset,
+        },
+    }
+    manifest_path = output_dir / "run_manifest.json"
+    with open(manifest_path, "w") as fh:
+        json.dump(manifest, fh, indent=2)
+
+
 def main():
     args = parse_args()
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -181,7 +227,40 @@ def main():
     t0 = time.time()
 
     from tradingagents.strategies.quant_signal_provider import set_active_quant_version
-    set_active_quant_version(args.quant_version)
+
+    pool_map: Optional[dict[str, str]] = None
+    if args.quant_version == "v5":
+        presets: dict[str, dict[str, str]] = {
+            "v5_2coin": {
+                "bitcoin": "data/multi_2coins_v2",
+                "ethereum": "data/multi_2coins_pit_wf",
+            },
+            "v5_4coin": {
+                "bitcoin": "data/multi_2coins_v2",
+                "ethereum": "data/multi_2coins_pit_wf",
+                "binancecoin": "data/multi_3coins_bnb",
+                "solana": "data/multi_3coins_sol_pit_wf",
+            },
+        }
+        if args.quant_pool_preset:
+            pool_map = dict(presets[args.quant_pool_preset])
+        else:
+            pool_map = {}
+        if args.quant_pool_map:
+            for item in args.quant_pool_map:
+                if "=" not in item:
+                    raise SystemExit(
+                        f"--quant-pool-map entry {item!r} must be COIN=PATH"
+                    )
+                k, v = item.split("=", 1)
+                pool_map[k.strip()] = v.strip()
+        if not pool_map:
+            raise SystemExit(
+                "--quant-version v5 requires --quant-pool-map or --quant-pool-preset"
+            )
+        set_active_quant_version("v5", pool_map=pool_map)
+    else:
+        set_active_quant_version(args.quant_version)
 
     # If V3 is requested, eagerly load per-coin bundles before any agent runs.
     if args.quant_version == "v3":
@@ -218,6 +297,7 @@ def main():
 
     out_dir = Path(args.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
+    _write_run_manifest(out_dir, args, pool_map)
 
     ta = TradingAgentsGraph(
         selected_analysts=args.analysts, debug=False, config=cfg,
