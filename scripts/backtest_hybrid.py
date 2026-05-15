@@ -213,6 +213,17 @@ def _baseline_coin(coin: str, baseline_pred_dir: Path, start: str, end: str) -> 
             "daily_returns": daily_returns}
 
 
+def _resolve_baseline_dir(coin: str, default_dir: str, pool_map: dict[str, str] | None) -> str:
+    """Return the pred_dir to use for *coin*'s pure-quant baseline.
+
+    If *pool_map* contains an entry for *coin*, that path wins (V5 MIX routing).
+    Otherwise falls back to *default_dir* (the legacy ``--baseline-pred-dir`` value).
+    """
+    if pool_map and coin in pool_map:
+        return pool_map[coin]
+    return default_dir
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--signals-dir", required=True)
@@ -220,6 +231,12 @@ def main():
     p.add_argument("--start", required=True)
     p.add_argument("--end", required=True)
     p.add_argument("--baseline-pred-dir", default="data/multi_2coins_v2")
+    p.add_argument("--baseline-pool-map", nargs="+", default=None,
+                   help="Per-coin pred_dir overrides for the pure-quant baseline "
+                        "equity curve. Format: COIN=PATH. If set, the baseline "
+                        "matches V5 MIX routing instead of a single base_dir.")
+    p.add_argument("--baseline-preset", choices=("v5_2coin", "v5_4coin"), default=None,
+                   help="Convenience preset for --baseline-pool-map.")
     p.add_argument("--output-dir", default=None)
     p.add_argument("--v2-sizing", action="store_true",
                    help="Apply V2 sizing (vol target + Kelly + SMA30 + 7d hold) "
@@ -233,6 +250,27 @@ def main():
                         "Known limitation: v3 path is not yet fully plumbed through "
                         "LangGraph agent nodes.")
     args = p.parse_args()
+
+    # ── Build per-coin baseline pool map (preset first, then CLI overrides) ──
+    presets = {
+        "v5_2coin": {
+            "bitcoin": "data/multi_2coins_v2",
+            "ethereum": "data/multi_2coins_pit_wf",
+        },
+        "v5_4coin": {
+            "bitcoin": "data/multi_2coins_v2",
+            "ethereum": "data/multi_2coins_pit_wf",
+            "binancecoin": "data/multi_3coins_bnb",
+            "solana": "data/multi_3coins_sol_pit_wf",
+        },
+    }
+    pool_map: dict[str, str] = dict(presets[args.baseline_preset]) if args.baseline_preset else {}
+    if args.baseline_pool_map:
+        for item in args.baseline_pool_map:
+            if "=" not in item:
+                raise SystemExit(f"--baseline-pool-map entry {item!r} must be COIN=PATH")
+            k, v = item.split("=", 1)
+            pool_map[k.strip()] = v.strip()
 
     from tradingagents.strategies.quant_signal_provider import set_active_quant_version
     set_active_quant_version(args.quant_version)
@@ -249,7 +287,8 @@ def main():
             continue
         hybrid_results[coin] = _backtest_coin(coin, sig_csv, args.start, args.end,
                                               v2_sizing=args.v2_sizing)
-        baseline_results[coin] = _baseline_coin(coin, Path(args.baseline_pred_dir), args.start, args.end)
+        resolved_dir = _resolve_baseline_dir(coin, args.baseline_pred_dir, pool_map)
+        baseline_results[coin] = _baseline_coin(coin, Path(resolved_dir), args.start, args.end)
 
     # Summary
     print(f"\n{'=' * 80}")
@@ -273,6 +312,10 @@ def main():
             print(f"    {k:<25} {hv:>12.4f} {bv:>12.4f}  {d:+.4f}")
         summary[coin] = {"hybrid": hm, "baseline": bm}
 
+    summary["_meta"] = {
+        "baseline_preset": args.baseline_preset,
+        "baseline_pool_map": pool_map,
+    }
     with open(out_dir / "summary.json", "w") as f:
         json.dump(summary, f, indent=2, default=str)
 
