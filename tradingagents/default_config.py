@@ -26,7 +26,7 @@ DEFAULT_CONFIG = {
     # Internal agent debate stays in English for reasoning quality
     "output_language": "English",
     # Debate and discussion settings
-    "max_debate_rounds": 1,
+    "max_debate_rounds": 2,  # Phase 5 / Tier B7: 3-way Bull/Bear/Skeptic-Quant rotation
     "max_risk_discuss_rounds": 1,
     "max_recur_limit": 100,
     # Data vendor configuration
@@ -86,6 +86,31 @@ DEFAULT_CONFIG = {
     # LLM responses keyed by prompt hash.  Disabled by default for live use.
     "replay_cache": False,
     "replay_cache_db": "./data/llm_replay_cache.db",
+    # Hybrid quant+LLM modulator (Phase 0 scaffolding; Phase 4 wires into graph).
+    # Asset-agnostic single-path architecture — every coin runs the same Layer 1
+    # → Layer 2 → Layer 3 stack.  LLM influence is a derived quantity from
+    # (regime, uncertainty, rolling_llm_edge[coin], unlock_flag), NOT a per-coin
+    # config knob.  See plans/i-want-to-start-recursive-candy.md.
+    "regime_weighting": {
+        "bull":     [0.2, 0.3],
+        "sideways": [0.6, 0.8],
+        "bear":     [0.4, 0.4],
+    },
+    "rolling_edge_window_days": 30,
+    "uncertainty_dampener_k": 1.0,
+    "edge_dampener_k": 1.0,
+    "rolling_edge_min_trades": 10,  # cold-start threshold per coin
+    "quant_pred_dir": "data/multi_2coins_v2",
+    "regime_hmm_path_template": "data/checkpoints/regime_hmm_{coin}.pkl",
+    # Asset-name anonymization (Tier A4 / Glasserman & Lin 2309.17322).
+    # When True, build_instrument_context masks the coin name to "Asset_X"
+    # for all analyst + debate agents; the Portfolio Manager un-masks at
+    # the Layer 3 boundary. Configurable so V4 ablation can toggle it.
+    "anonymize_assets": False,
+    # Hybrid RAG (Tier B8) — extends BM25 memories with FAISS dense
+    # retrieval + reciprocal-rank-fusion. Off by default; enable per
+    # research-run since it requires sentence-transformers + faiss-cpu.
+    "hybrid_rag": False,
     # Execution configuration (safe defaults — testnet only)
     "execution": {
         "live_mode": False,  # Must be explicitly True for real money

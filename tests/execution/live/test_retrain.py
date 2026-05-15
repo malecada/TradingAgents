@@ -36,39 +36,142 @@ def test_retrain_writes_per_horizon_bundles(tmp_path):
             "target_col": f"prices_h{horizon}",
             "n_train_rows": 300,
         }
+        # V5 API: single-coin routing dict — equivalent coverage to the
+        # legacy `coins=["BTC", "ETH", "BNB"]` call (one pool, one route).
         artifact = retrain.run_retrain(
-            coins=["BTC", "ETH", "BNB"],
+            routing={"BTC": {"feature_set": "193f",
+                              "pool": ["BTC", "ETH", "BNB"]}},
             horizons=[7, 14],
             asof="2026-05-11",
             checkpoint_dir=tmp_path,
         )
-    assert artifact.model_path.exists()
-    assert artifact.train_rows == 300
-    assert len(artifact.sha256) == 64
-    # Both horizons fit
+    assert artifact.path.exists()
+    assert artifact.n_train_rows == 300
+    assert len(artifact.sha) == 64
+    # Both horizons fit (one route × 2 horizons)
     assert mock_fit.call_count == 2
 
-    # Loaded checkpoint is a dict keyed by horizon, each value a bundle
+    # Loaded checkpoint is a composite: {route_id: {horizon: bundle}}.
     import joblib
-    loaded = joblib.load(artifact.model_path)
-    assert set(loaded.keys()) == {7, 14}
-    assert loaded[7]["target_col"] == "prices_h7"
-    assert loaded[14]["target_col"] == "prices_h14"
+    loaded = joblib.load(artifact.path)
+    assert set(loaded.keys()) == {"BTC_193f"}
+    assert set(loaded["BTC_193f"].keys()) == {7, 14}
+    assert loaded["BTC_193f"][7]["target_col"] == "prices_h7"
+    assert loaded["BTC_193f"][14]["target_col"] == "prices_h14"
 
 
-def test_retrain_falls_back_on_failure(tmp_path):
+def test_retrain_fallback_atomic(monkeypatch, tmp_path):
+    """If retrain raises, fallback returns the most recent prior composite."""
     from tradingagents.execution.live import retrain
 
-    prev = tmp_path / "lgb_3coin_pit_2026-05-10.pkl"
-    prev.write_bytes(b"fake-prev-checkpoint")
+    routing = {
+        "bitcoin": {"feature_set": "78f", "pool": ["bitcoin", "ethereum"]},
+    }
 
-    with patch.object(retrain, "build_pooled_dataset",
-                      side_effect=RuntimeError("CoinMetrics down")):
-        artifact = retrain.run_retrain_with_fallback(
-            coins=["BTC", "ETH", "BNB"],
-            horizons=[7, 14],
-            asof="2026-05-11",
-            checkpoint_dir=tmp_path,
-        )
-    assert artifact.model_path == prev
-    assert artifact.is_fallback is True
+    # Seed a prior composite on disk
+    prior_path = tmp_path / "lgb_v5_mix_20260513.pkl"
+    import joblib
+    joblib.dump({"bitcoin_78f": {7: {"x": 1}, 14: {"x": 2}}}, prior_path)
+
+    def fake_retrain(**kw):
+        raise RuntimeError("simulated training failure")
+
+    monkeypatch.setattr(retrain, "run_retrain", fake_retrain)
+
+    artifact = retrain.run_retrain_with_fallback(
+        routing=routing, horizons=[7, 14], asof="20260514",
+        checkpoint_dir=tmp_path, retrain_id="cycle-test",
+    )
+
+    assert artifact.path == prior_path  # fell back
+
+
+def test_retrain_atomic_no_half_file(monkeypatch, tmp_path):
+    """If joblib.dump raises after start, no .pkl is left behind."""
+    from tradingagents.execution.live import retrain
+    import pandas as pd
+
+    routing = {
+        "bitcoin": {"feature_set": "78f", "pool": ["bitcoin", "ethereum"]},
+    }
+
+    monkeypatch.setattr(retrain, "build_pooled_dataset",
+                         lambda **kw: pd.DataFrame({"prices": [1.0]},
+                                                    index=pd.to_datetime(["2026-01-01"])))
+    monkeypatch.setattr(retrain, "_transform_pooled",
+                         lambda df, h: df.assign(prices_h7=1.0, prices_h14=1.0, coin_id="bitcoin"))
+    monkeypatch.setattr(retrain, "fit_pooled_full",
+                         lambda df, horizon: {"horizon": horizon, "feature_names": ["prices"],
+                                                "booster": None, "scaler": None,
+                                                "coin_to_int": {"bitcoin": 0},
+                                                "n_train_rows": 1,
+                                                "target_col": f"prices_h{horizon}"})
+
+    def boom(*a, **k): raise RuntimeError("disk full")
+    monkeypatch.setattr("joblib.dump", boom)
+
+    with pytest.raises(RuntimeError):
+        retrain.run_retrain(routing=routing, horizons=[7, 14], asof="20260514",
+                              checkpoint_dir=tmp_path, retrain_id="x")
+    # No lgb_v5_mix_*.pkl left behind (only the tmp may exist transiently)
+    leftover = list(tmp_path.glob("lgb_v5_mix_*.pkl"))
+    assert leftover == [], f"unexpected files: {leftover}"
+
+
+def test_run_retrain_composite_four_routes(monkeypatch, tmp_path):
+    """run_retrain produces composite bundle with 4 routes."""
+    import pandas as pd
+    from tradingagents.execution.live import retrain
+
+    routing = {
+        "bitcoin":     {"feature_set": "78f",  "pool": ["bitcoin", "ethereum"]},
+        "ethereum":    {"feature_set": "193f", "pool": ["bitcoin", "ethereum"]},
+        "binancecoin": {"feature_set": "78f",  "pool": ["bitcoin", "ethereum", "binancecoin"]},
+        "solana":      {"feature_set": "193f", "pool": ["bitcoin", "ethereum", "solana"]},
+    }
+
+    calls = []
+
+    def fake_build_pooled_dataset(coin_universe, lookback_days, horizons, trade_date,
+                                    add_technical, add_cross_asset, add_onchain, add_onchain_pit):
+        calls.append({"pool": tuple(coin_universe), "pit": add_onchain_pit})
+        return pd.DataFrame({"prices": [1.0]}, index=pd.to_datetime(["2026-01-01"]))
+
+    def fake_transform_pooled(df, horizons):
+        df = df.copy()
+        for h in horizons:
+            df[f"prices_h{h}"] = 1.0
+        df["coin_id"] = "bitcoin"
+        return df
+
+    def fake_fit_pooled_full(df, horizon):
+        return {"horizon": horizon, "feature_names": ["prices"],
+                "booster": None, "scaler": None, "coin_to_int": {"bitcoin": 0},
+                "n_train_rows": 1, "target_col": f"prices_h{horizon}"}
+
+    monkeypatch.setattr(retrain, "build_pooled_dataset", fake_build_pooled_dataset)
+    monkeypatch.setattr(retrain, "_transform_pooled", fake_transform_pooled)
+    monkeypatch.setattr(retrain, "fit_pooled_full", fake_fit_pooled_full)
+
+    artifact = retrain.run_retrain(
+        routing=routing, horizons=[7, 14], asof="20260514",
+        checkpoint_dir=tmp_path, retrain_id="cycle-test",
+    )
+
+    # Verify composite layout
+    import joblib
+    composite = joblib.load(artifact.path)
+    assert set(composite.keys()) == {"bitcoin_78f", "ethereum_193f",
+                                       "binancecoin_78f", "solana_193f"}
+    assert set(composite["bitcoin_78f"].keys()) == {7, 14}
+
+    # Verify 4 pools fetched with correct add_onchain_pit flags
+    by_pool_pit = {(c["pool"], c["pit"]) for c in calls}
+    assert (("bitcoin", "ethereum"), False) in by_pool_pit
+    assert (("bitcoin", "ethereum"), True) in by_pool_pit
+    assert (("bitcoin", "ethereum", "binancecoin"), False) in by_pool_pit
+    assert (("bitcoin", "ethereum", "solana"), True) in by_pool_pit
+
+    # Atomic: file exists, naming matches lgb_v5_mix_{asof}.pkl
+    assert artifact.path.name == "lgb_v5_mix_20260514.pkl"
+    assert artifact.routes == sorted(composite.keys())

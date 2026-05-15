@@ -17,6 +17,7 @@ Schema:
 """
 from __future__ import annotations
 
+import os as _os
 from datetime import datetime
 from pathlib import Path
 from typing import Iterable, Optional
@@ -24,7 +25,8 @@ from typing import Iterable, Optional
 import duckdb
 import pandas as pd
 
-DEFAULT_ROOT = Path("data/onchain")
+_DATA_ROOT_ENV = _os.environ.get("TRADINGAGENTS_DATA_ROOT", "data")
+DEFAULT_ROOT = Path(_DATA_ROOT_ENV) / "onchain"
 
 SCHEMA_COLS = [
     "event_ts", "as_of_ts", "coin", "metric", "value", "source", "status",

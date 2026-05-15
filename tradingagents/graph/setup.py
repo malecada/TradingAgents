@@ -117,6 +117,19 @@ class GraphSetup:
         )
         trader_node = create_trader(self.quick_thinking_llm, self.trader_memory)
 
+        # Phase 4 hybrid quant+LLM modulator stack (asset-agnostic single path)
+        quant_ingest_node = create_quant_signal_ingest()
+        factual_node = create_factual_agent(self.quick_thinking_llm)
+        subjective_node = create_subjective_agent(self.quick_thinking_llm)
+        regime_reflector_node = create_regime_reflector()
+        modulator_node = create_modulator(
+            self.quick_thinking_llm, n_samples=5, temperature=0.5
+        )
+
+        # Phase 5 / Tier B7: Skeptic-Quant third debate agent
+        from tradingagents.agents.researchers.skeptic_quant import create_skeptic_quant
+        skeptic_quant_node = create_skeptic_quant(self.quick_thinking_llm)
+
         # Create risk analysis nodes
         aggressive_analyst = create_aggressive_debator(self.quick_thinking_llm)
         neutral_analyst = create_neutral_debator(self.quick_thinking_llm)
@@ -137,19 +150,25 @@ class GraphSetup:
             workflow.add_node(f"tools_{analyst_type}", tool_nodes[analyst_type])
 
         # Add other nodes
+        workflow.add_node("Quant Signal Ingest", quant_ingest_node)
+        workflow.add_node("Factual Agent", factual_node)
+        workflow.add_node("Subjective Agent", subjective_node)
+        workflow.add_node("Regime Reflector", regime_reflector_node)
         workflow.add_node("Bull Researcher", bull_researcher_node)
         workflow.add_node("Bear Researcher", bear_researcher_node)
+        workflow.add_node("SkepticQuant", skeptic_quant_node)
         workflow.add_node("Research Manager", research_manager_node)
         workflow.add_node("Trader", trader_node)
+        workflow.add_node("Modulator", modulator_node)
         workflow.add_node("Aggressive Analyst", aggressive_analyst)
         workflow.add_node("Neutral Analyst", neutral_analyst)
         workflow.add_node("Conservative Analyst", conservative_analyst)
         workflow.add_node("Portfolio Manager", portfolio_manager_node)
 
-        # Define edges
-        # Start with the first analyst
+        # Define edges — Layer 1 ingestion runs first, then analysts run as before.
+        workflow.add_edge(START, "Quant Signal Ingest")
         first_analyst = selected_analysts[0]
-        workflow.add_edge(START, f"{first_analyst.capitalize()} Analyst")
+        workflow.add_edge("Quant Signal Ingest", f"{first_analyst.capitalize()} Analyst")
 
         # Connect analysts in sequence
         for i, analyst_type in enumerate(selected_analysts):
@@ -165,12 +184,19 @@ class GraphSetup:
             )
             workflow.add_edge(current_tools, current_analyst)
 
-            # Connect to next analyst or to Bull Researcher if this is the last analyst
+            # Connect to next analyst or to the Factual/Subjective split when this
+            # is the last analyst. Factual + Subjective run sequentially (LangGraph
+            # parallel branches require fan-out edges; sequential keeps the state
+            # contract simple). Then Regime Reflector deterministically scores them.
             if i < len(selected_analysts) - 1:
                 next_analyst = f"{selected_analysts[i+1].capitalize()} Analyst"
                 workflow.add_edge(current_clear, next_analyst)
             else:
-                workflow.add_edge(current_clear, "Bull Researcher")
+                workflow.add_edge(current_clear, "Factual Agent")
+
+        workflow.add_edge("Factual Agent", "Subjective Agent")
+        workflow.add_edge("Subjective Agent", "Regime Reflector")
+        workflow.add_edge("Regime Reflector", "Bull Researcher")
 
         # Add remaining edges
         workflow.add_conditional_edges(
@@ -178,6 +204,7 @@ class GraphSetup:
             self.conditional_logic.should_continue_debate,
             {
                 "Bear Researcher": "Bear Researcher",
+                "SkepticQuant": "SkepticQuant",
                 "Research Manager": "Research Manager",
             },
         )
@@ -186,11 +213,23 @@ class GraphSetup:
             self.conditional_logic.should_continue_debate,
             {
                 "Bull Researcher": "Bull Researcher",
+                "SkepticQuant": "SkepticQuant",
+                "Research Manager": "Research Manager",
+            },
+        )
+        workflow.add_conditional_edges(
+            "SkepticQuant",
+            self.conditional_logic.should_continue_debate,
+            {
+                "Bull Researcher": "Bull Researcher",
+                "Bear Researcher": "Bear Researcher",
                 "Research Manager": "Research Manager",
             },
         )
         workflow.add_edge("Research Manager", "Trader")
-        workflow.add_edge("Trader", "Aggressive Analyst")
+        # Phase 4 wiring: Trader → Modulator → Risk debate → PM
+        workflow.add_edge("Trader", "Modulator")
+        workflow.add_edge("Modulator", "Aggressive Analyst")
         workflow.add_conditional_edges(
             "Aggressive Analyst",
             self.conditional_logic.should_continue_risk_analysis,

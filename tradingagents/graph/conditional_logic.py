@@ -68,14 +68,25 @@ class ConditionalLogic:
         return "Msg Clear Crypto_sentiment"
 
     def should_continue_debate(self, state: AgentState) -> str:
-        """Determine if debate should continue."""
+        """Determine if debate should continue.
 
-        if (
-            state["investment_debate_state"]["count"] >= 2 * self.max_debate_rounds
-        ):  # 3 rounds of back-and-forth between 2 agents
+        Phase 5 / Tier B7: 3-way rotation Bull → Bear → Skeptic-Quant
+        with the Skeptic-Quant only speaking once per debate round.
+        Rotation order is detected from the most recent persona prefix
+        in ``current_response`` so this remains independent of which
+        agent kicked the debate off.
+        """
+        debate = state["investment_debate_state"]
+        if debate["count"] >= 3 * self.max_debate_rounds:
             return "Research Manager"
-        if state["investment_debate_state"]["current_response"].startswith("Bull"):
+        last = (debate.get("current_response") or "").strip()
+        # Bull just spoke → Bear next
+        if last.startswith("Bull"):
             return "Bear Researcher"
+        # Bear just spoke → Skeptic-Quant next (once per round)
+        if last.startswith("Bear"):
+            return "SkepticQuant"
+        # Skeptic-Quant just spoke or starting fresh → Bull
         return "Bull Researcher"
 
     def should_continue_risk_analysis(self, state: AgentState) -> str:

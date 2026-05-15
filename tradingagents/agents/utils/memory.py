@@ -1,28 +1,107 @@
-"""Financial situation memory using BM25 for lexical similarity matching.
+"""Financial situation memory — hybrid BM25 + dense retrieval (Tier B8).
 
-Uses BM25 (Best Matching 25) algorithm for retrieval - no API calls,
-no token limits, works offline with any LLM provider.
+Default path remains BM25Okapi for full back-compat with existing
+backtest replays. When ``config["hybrid_rag"]=True`` the class also
+builds a dense FAISS index over sentence-transformers embeddings and
+fuses BM25 + dense ranks via reciprocal-rank-fusion (Akarsu et al.
+arXiv 2604.01733: hybrid + cross-encoder rerank wins R@5 = 0.816 on
+financial RAG benchmarks). Dense path lazy-imports
+sentence-transformers + faiss so it's optional.
 """
 
 from rank_bm25 import BM25Okapi
-from typing import List, Tuple
+from typing import List, Optional, Tuple
+import logging
 import re
+
+logger = logging.getLogger(__name__)
+
+
+class _DenseRetriever:
+    """Optional dense-vector retriever; lazy-imports sentence-transformers + faiss.
+
+    Falls back silently if either dependency is missing — the parent
+    ``FinancialSituationMemory`` then operates BM25-only as before.
+    """
+
+    def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2"):
+        self._model_name = model_name
+        self._model = None
+        self._index = None
+        self._enabled = False
+        try:
+            from sentence_transformers import SentenceTransformer  # noqa: F401
+            import faiss  # noqa: F401
+            self._enabled = True
+        except Exception as exc:  # noqa: BLE001
+            logger.info(f"hybrid_rag dense path disabled ({exc.__class__.__name__})")
+
+    def _ensure_model(self):
+        if self._model is None and self._enabled:
+            from sentence_transformers import SentenceTransformer
+            self._model = SentenceTransformer(self._model_name)
+
+    def build(self, docs: List[str]) -> None:
+        if not self._enabled or not docs:
+            self._index = None
+            return
+        try:
+            import faiss
+            import numpy as np
+            self._ensure_model()
+            embs = self._model.encode(docs, convert_to_numpy=True, normalize_embeddings=True)
+            dim = embs.shape[1]
+            index = faiss.IndexFlatIP(dim)
+            index.add(embs.astype("float32"))
+            self._index = index
+            self._dim = dim
+        except Exception as exc:  # noqa: BLE001
+            logger.warning(f"dense index build failed: {exc}")
+            self._index = None
+
+    def search(self, query: str, k: int) -> List[Tuple[int, float]]:
+        if not self._enabled or self._index is None:
+            return []
+        try:
+            import numpy as np
+            self._ensure_model()
+            q = self._model.encode([query], convert_to_numpy=True, normalize_embeddings=True)
+            scores, idx = self._index.search(q.astype("float32"), k)
+            return [(int(i), float(s)) for i, s in zip(idx[0], scores[0]) if i >= 0]
+        except Exception as exc:  # noqa: BLE001
+            logger.warning(f"dense search failed: {exc}")
+            return []
+
+
+def _reciprocal_rank_fusion(
+    rankings: List[List[int]],
+    k: int = 60,
+) -> List[Tuple[int, float]]:
+    """Standard RRF over multiple ranked lists. Higher score = better."""
+    scores: dict[int, float] = {}
+    for ranking in rankings:
+        for r, doc_id in enumerate(ranking):
+            scores[doc_id] = scores.get(doc_id, 0.0) + 1.0 / (k + r + 1)
+    return sorted(scores.items(), key=lambda x: x[1], reverse=True)
 
 
 class FinancialSituationMemory:
-    """Memory system for storing and retrieving financial situations using BM25."""
+    """Memory system — BM25-only by default; optional hybrid dense fusion.
 
-    def __init__(self, name: str, config: dict = None):
-        """Initialize the memory system.
+    ``config["hybrid_rag"] = True`` activates the dense path. Existing
+    callers see no behavior change.
+    """
 
-        Args:
-            name: Name identifier for this memory instance
-            config: Configuration dict (kept for API compatibility, not used for BM25)
-        """
+    def __init__(self, name: str, config: Optional[dict] = None):
         self.name = name
         self.documents: List[str] = []
         self.recommendations: List[str] = []
         self.bm25 = None
+        cfg = config or {}
+        self._hybrid = bool(cfg.get("hybrid_rag", False))
+        self._dense: Optional[_DenseRetriever] = (
+            _DenseRetriever() if self._hybrid else None
+        )
 
     def _tokenize(self, text: str) -> List[str]:
         """Tokenize text for BM25 indexing.
@@ -34,12 +113,14 @@ class FinancialSituationMemory:
         return tokens
 
     def _rebuild_index(self):
-        """Rebuild the BM25 index after adding documents."""
+        """Rebuild the BM25 (and optional dense) index after adding documents."""
         if self.documents:
             tokenized_docs = [self._tokenize(doc) for doc in self.documents]
             self.bm25 = BM25Okapi(tokenized_docs)
         else:
             self.bm25 = None
+        if self._dense is not None:
+            self._dense.build(self.documents)
 
     def add_situations(self, situations_and_advice: List[Tuple[str, str]]):
         """Add financial situations and their corresponding advice.
@@ -67,29 +148,46 @@ class FinancialSituationMemory:
         if not self.documents or self.bm25 is None:
             return []
 
-        # Tokenize query
+        # BM25 ranking
         query_tokens = self._tokenize(current_situation)
+        bm25_scores = self.bm25.get_scores(query_tokens)
+        bm25_ranking = sorted(
+            range(len(bm25_scores)), key=lambda i: bm25_scores[i], reverse=True
+        )
 
-        # Get BM25 scores for all documents
-        scores = self.bm25.get_scores(query_tokens)
+        # Hybrid fusion path
+        if self._dense is not None and self._dense._enabled and self._dense._index is not None:
+            dense_hits = self._dense.search(current_situation, k=min(20, len(self.documents)))
+            dense_ranking = [doc_id for doc_id, _ in dense_hits]
+            fused = _reciprocal_rank_fusion(
+                [bm25_ranking[: min(20, len(self.documents))], dense_ranking]
+            )
+            top = [doc_id for doc_id, _ in fused[:n_matches]]
+            results = []
+            max_fused = fused[0][1] if fused else 1.0
+            for doc_id, score in fused[:n_matches]:
+                results.append({
+                    "matched_situation": self.documents[doc_id],
+                    "recommendation": self.recommendations[doc_id],
+                    "similarity_score": float(score / max_fused) if max_fused else 0.0,
+                })
+            logger.info(
+                f"Hybrid retrieval: K_bm25={len(bm25_ranking)}, "
+                f"K_dense={len(dense_ranking)}, K_final={len(results)}"
+            )
+            return results
 
-        # Get top-n indices sorted by score (descending)
-        top_indices = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:n_matches]
-
-        # Build results
-        results = []
-        max_score = max(scores) if max(scores) > 0 else 1  # Normalize scores
-
-        for idx in top_indices:
-            # Normalize score to 0-1 range for consistency
-            normalized_score = scores[idx] / max_score if max_score > 0 else 0
-            results.append({
+        # BM25-only fallback (default)
+        top_indices = bm25_ranking[:n_matches]
+        max_score = max(bm25_scores) if max(bm25_scores) > 0 else 1
+        return [
+            {
                 "matched_situation": self.documents[idx],
                 "recommendation": self.recommendations[idx],
-                "similarity_score": normalized_score,
-            })
-
-        return results
+                "similarity_score": float(bm25_scores[idx] / max_score) if max_score else 0.0,
+            }
+            for idx in top_indices
+        ]
 
     def clear(self):
         """Clear all stored memories."""

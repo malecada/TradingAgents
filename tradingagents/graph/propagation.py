@@ -53,6 +53,15 @@ class Propagator:
             "news_report": "",
             "onchain_report": "",
             "prediction_report": "",
+            # Phase 4 hybrid quant+LLM fields
+            "quant_signal": None,
+            "factual_report": "",
+            "subjective_report": "",
+            "regime_reflector_note": "",
+            "factual_weight": 0.5,
+            "subjective_weight": 0.5,
+            "modulated_position": None,
+            "modulator_narrative": "",
         }
 
     def get_graph_args(self, callbacks: Optional[List] = None) -> Dict[str, Any]:

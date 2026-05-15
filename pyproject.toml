@@ -50,6 +50,12 @@ dependencies = [
 [project.scripts]
 tradingagents = "cli.main:app"
 
+[project.optional-dependencies]
+v3 = [
+    "xgboost>=2.0.0",
+    "catboost>=1.2.0",
+]
+
 [tool.setuptools.packages.find]
 include = ["tradingagents*", "cli*"]
 

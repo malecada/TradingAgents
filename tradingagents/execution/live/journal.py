@@ -28,6 +28,31 @@ class Journal:
     def close(self) -> None:
         self._conn.close()
 
+    def migrate(self) -> None:
+        """Apply additive V5 schema columns to an existing v1 DB. Idempotent."""
+        migrations = [
+            ("predictions", "bundle_route", "TEXT"),
+            ("retrains", "routes", "TEXT"),
+            ("cycles", "n_trades", "INTEGER"),
+            ("cycles", "notes", "TEXT"),
+            ("cycles", "critical_data_fail_sources", "TEXT"),
+            ("cycles", "supplementary_stale_sources", "TEXT"),
+        ]
+        conn = sqlite3.connect(self.db_path)
+        try:
+            for table, col, dtype in migrations:
+                existing = {r[1] for r in conn.execute(
+                    f"PRAGMA table_info({table})"
+                ).fetchall()}
+                if not existing:
+                    # Table doesn't exist on this DB — skip (additive, non-failing).
+                    continue
+                if col not in existing:
+                    conn.execute(f"ALTER TABLE {table} ADD COLUMN {col} {dtype}")
+            conn.commit()
+        finally:
+            conn.close()
+
     def log_cycle_start(self, cycle_id: str, *, git_sha: str) -> None:
         self._conn.execute(
             "INSERT OR IGNORE INTO cycles (cycle_id, start_ts, git_commit_sha) "
@@ -121,6 +146,79 @@ class Journal:
         )
         self._conn.commit()
 
+    # ── V5 record_* API (Task 12) ──────────────────────────────────────
+    # These complement the legacy log_* methods. The runner uses them for
+    # terminal cycle records (with status + n_trades + notes + V5 columns),
+    # retrain artifact summary (with routes), and per-prediction rows
+    # (with bundle_route). Backward compatible: every new column is optional.
+
+    def record_cycle(self, *, cycle_id: str, start_ts: str, end_ts: str,
+                      status: str, n_trades: int = 0, notes: str | None = None,
+                      critical_data_fail_sources: str | None = None,
+                      supplementary_stale_sources: str | None = None) -> None:
+        """Upsert a terminal cycle record. Uses INSERT OR REPLACE keyed on
+        cycle_id so calling record_cycle on a row already created by
+        log_cycle_start updates it in place.
+        """
+        # Preserve git_commit_sha if a prior log_cycle_start row exists.
+        existing = self._conn.execute(
+            "SELECT git_commit_sha FROM cycles WHERE cycle_id = ?",
+            (cycle_id,),
+        ).fetchone()
+        git_sha = existing[0] if existing else None
+        self._conn.execute(
+            "INSERT OR REPLACE INTO cycles (cycle_id, start_ts, end_ts, status, "
+            "error_msg, git_commit_sha, n_trades, notes, "
+            "critical_data_fail_sources, supplementary_stale_sources) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            (cycle_id, start_ts, end_ts, status, None, git_sha,
+             n_trades, notes,
+             critical_data_fail_sources, supplementary_stale_sources),
+        )
+        self._conn.commit()
+
+    def record_retrain(self, *, retrain_id: str, cycle_id: str,
+                        checkpoint_path: str, checkpoint_sha: str,
+                        n_train_rows: int, train_window_start: str,
+                        train_dir_acc: float, status: str,
+                        routes: str | None = None) -> None:
+        """Insert (or replace) a row in retrains capturing the V5 composite."""
+        self._conn.execute(
+            "INSERT OR REPLACE INTO retrains (retrain_id, cycle_id, "
+            "checkpoint_path, checkpoint_sha, n_train_rows, "
+            "train_window_start, train_dir_acc, status, routes) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            (retrain_id, cycle_id, checkpoint_path, checkpoint_sha,
+             n_train_rows, train_window_start, train_dir_acc, status, routes),
+        )
+        self._conn.commit()
+
+    def record_predictions(self, *, cycle_id: str, preds_df) -> None:
+        """Insert one row per (coin, horizon) from a V5 predict.run_predict
+        DataFrame. Expects columns: coin, horizon, prediction, ref_price,
+        bundle_route. Silently no-ops on an empty frame.
+        """
+        if preds_df is None or len(preds_df) == 0:
+            return
+        rows = [
+            (cycle_id, str(r["coin"]), int(r["horizon"]),
+             float(r["prediction"]), float(r["ref_price"]),
+             str(r["bundle_route"]) if "bundle_route" in r else None)
+            for _, r in preds_df.iterrows()
+        ]
+        # `predictions` columns: cycle_id, coin, horizon, model_path_sha,
+        # pred_value, pred_quantile_low, pred_quantile_high, ref_price,
+        # signal_h7, signal_h14, consensus_signal, bundle_route.
+        # V5 record path leaves quant/signal columns NULL — they are
+        # populated by log_prediction() during the per-coin sizing loop.
+        self._conn.executemany(
+            "INSERT INTO predictions (cycle_id, coin, horizon, pred_value, "
+            "ref_price, bundle_route) VALUES (?, ?, ?, ?, ?, ?)",
+            [(cid, coin, h, pred, ref, route)
+             for (cid, coin, h, pred, ref, route) in rows],
+        )
+        self._conn.commit()
+
     def log_shadow_decision(self, *, cycle_id, coin, live_signal, backtest_signal,
                              live_size, backtest_size) -> None:
         agree = 1 if live_signal == backtest_signal else 0
@@ -136,3 +234,24 @@ class Journal:
              live_size, backtest_size, size_delta_pct),
         )
         self._conn.commit()
+
+
+if __name__ == "__main__":
+    import argparse
+    import os
+    import sys
+
+    parser = argparse.ArgumentParser(description="V5 journal migration")
+    parser.add_argument("--migrate", action="store_true", required=True,
+                        help="Apply additive V5 schema columns to the configured journal DB")
+    parser.add_argument("--db", default=os.environ.get(
+        "JOURNAL_DB", "/opt/tradingagents/data/trade_journal.db"))
+    args = parser.parse_args()
+    if not os.path.exists(args.db):
+        print(f"ERROR: DB does not exist at {args.db}", file=sys.stderr)
+        print("If this is a fresh deployment, ensure the live runner has been started "
+              "at least once (which creates the DB via schema.sql) before running --migrate.",
+              file=sys.stderr)
+        sys.exit(2)
+    Journal(args.db).migrate()
+    print(f"V5 migration applied to {args.db}")

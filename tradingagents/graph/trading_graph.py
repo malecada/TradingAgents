@@ -227,6 +227,11 @@ class TradingAgentsGraph:
         from tradingagents.dataflows.coingecko_binance import clear_session_cache
         clear_session_cache()
 
+        # Reset asset-name anonymizer so multi-coin runs get stable but
+        # propagate-scoped aliases (Tier A4 / Phase 3).
+        from tradingagents.agents.utils.anonymizer import configure as _anon_configure
+        _anon_configure(bool(self.config.get("anonymize_assets", False)))
+
         # Bind prediction models to this trade_date so they only see
         # data up to this point (prevents look-ahead bias in backtests).
         set_prediction_trade_date(str(trade_date))
@@ -315,6 +320,22 @@ class TradingAgentsGraph:
         except Exception:
             confidence = "UNKNOWN"
         return final_state, signal, confidence, trader_text
+
+    def propagate_with_modulator(self, company_name, trade_date):
+        """Run the hybrid graph and return Phase 4 modulator output.
+
+        Returns:
+            (final_state, modulated_position, quant_signal, narrative)
+            where modulated_position and quant_signal are dicts (or None
+            if Layer 1 / Layer 2 failed for this row).
+        """
+        final_state, _signal = self.propagate(company_name, trade_date)
+        return (
+            final_state,
+            final_state.get("modulated_position"),
+            final_state.get("quant_signal"),
+            final_state.get("modulator_narrative", "") or "",
+        )
 
     def _log_state(self, trade_date, final_state):
         """Log the final state to a JSON file."""

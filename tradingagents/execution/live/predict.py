@@ -1,26 +1,31 @@
-"""Load latest checkpoint, build PIT features asof, predict per coin per horizon.
+"""Load V5 composite checkpoint, route each coin to its bundle, predict.
 
-Inference companion to `retrain.py`. Loads the per-horizon bundle dict that
-retrain wrote to disk, materializes the same PIT-aware feature frame the
-training pipeline used (via `build_pooled_dataset` + `_transform_pooled`),
-selects the latest row per coin, and calls `predict_pooled` once per
-(coin, horizon).
+Inference companion to ``retrain.py``. Loads the composite dict that
+``run_retrain`` wrote to disk — keyed by ``f"{coin}_{feature_set}"``, each
+value a per-horizon bundle dict — materializes a PIT-aware feature frame
+per route (one ``build_features_asof`` call per coin, since each coin has
+its own routed pool + feature set), and emits one row per (coin, horizon)
+in a tidy DataFrame.
 
-Output shape:
-    {
-        "BTC": {"ref_price": 60000.0, "pred_h7": 70000.0, "pred_h14": 72000.0},
-        "ETH": {...},
-        ...
-    }
+Output schema (DataFrame):
+    coin           — coin id (e.g. ``"bitcoin"``)
+    horizon        — int day-horizon (e.g. ``7``)
+    prediction     — float price prediction at that horizon
+    ref_price      — float reference (asof) price
+    bundle_route   — str route id (e.g. ``"bitcoin_78f"``) showing which
+                     composite bundle produced this row
+
+Per-coin failure isolation: if predict fails for one coin (data fetch,
+feature build, predict_pooled raising), that coin is skipped and the
+remaining coins continue. If a majority of coins fail (≥ 3 of 4 in a
+4-coin universe; configurable via the ``max(3, n-1)`` threshold), a
+``PredictMajorityFail`` is raised so the live runner can abort the cycle.
 
 Design note — feature parity with retrain:
-    `build_features_asof` lazily imports `_transform_pooled` from
-    `retrain.py`. The lazy import avoids any cycle at module load time, and
-    reusing the exact transform helper guarantees that live and backtest
-    paths see identical feature schemas. The equivalence test in
-    `tests/execution/live/test_predict_equivalence.py` is the contract
-    guarding this property — adding a feature in retrain without exposing
-    it through this transform will fail that test.
+    ``build_features_asof`` lazily imports ``_transform_pooled`` from
+    ``retrain.py``. The lazy import avoids any cycle at module load
+    time, and reusing the exact transform helper guarantees that live
+    and backtest paths see identical feature schemas.
 """
 from __future__ import annotations
 
@@ -35,31 +40,47 @@ from tradingagents.models.lgb_model import predict_pooled
 logger = logging.getLogger(__name__)
 
 
+class PredictMajorityFail(RuntimeError):
+    """≥ 3 of 4 coins failed predict — strategy cannot run."""
+
+
 def build_features_asof(
-    coins: list[str],
+    coin_pool: list[str],
     asof: str,
-    lookback_days: int = 730,
+    store_root: Path | None = None,
+    ohlcv_cache: Path | None = None,
+    add_onchain_pit: bool = True,
     horizons: list[int] = (7, 14),
+    lookback_days: int = 730,
 ) -> pd.DataFrame:
     """Build a feature frame for the asof date — one row per coin.
 
-    Reuses the same pipeline as retrain (`build_pooled_dataset` +
-    `_transform_pooled`) so live and backtest produce identical features.
-    The latest row per coin is selected — that row's features describe the
-    state of the world at asof, and the model predicts the next-period
-    target from them.
+    Reuses the same pipeline as retrain (``build_pooled_dataset`` +
+    ``_transform_pooled``) so live and backtest produce identical
+    features. The latest row per coin is selected — that row's features
+    describe the state of the world at asof, and the model predicts the
+    next-period target from them.
 
     Args:
-        coins: CoinGecko coin IDs to fetch (e.g. ["bitcoin", "ethereum"]).
+        coin_pool: CoinGecko coin IDs to fetch as the training pool
+            (e.g. ``["bitcoin", "ethereum"]``). For V5 routing, every
+            route's full pool is materialized so cross-asset features
+            line up with the bundle's training distribution.
         asof: Upper-bound trade date (YYYY-mm-dd).
+        store_root: PIT on-chain feature store root (forwarded to the
+            data-fetch layer when used by callers; kept as a parameter
+            for V5 composite compatibility).
+        ohlcv_cache: OHLCV cache directory (same rationale).
+        add_onchain_pit: Whether to include the PIT on-chain feature
+            set. ``True`` for 193f routes, ``False`` for 78f routes.
+        horizons: Forecast horizons to materialize as ``prices_h{h}``
+            columns (forwarded to ``_transform_pooled``).
         lookback_days: How many days of history to load per coin.
-        horizons: Forecast horizons to materialize as `prices_h{h}` columns
-            (forwarded to `_transform_pooled`).
 
     Returns:
-        DataFrame with `coin_id`, `ref_price`, and all feature columns —
-        one row per coin (the latest available date). Empty if no coin
-        produced data.
+        DataFrame with ``coin_id``, ``ref_price``, and all feature
+        columns — one row per coin (the latest available date). Empty
+        if no coin produced data.
     """
     from tradingagents.models.model_utils import build_pooled_dataset
     # Lazy import keeps `predict` independent of `retrain` at module load.
@@ -68,11 +89,11 @@ def build_features_asof(
     from tradingagents.execution.live.retrain import _transform_pooled
 
     pooled = build_pooled_dataset(
-        coin_universe=list(coins),
+        coin_universe=list(coin_pool),
         lookback_days=lookback_days,
         horizons=list(horizons),
         trade_date=asof,
-        add_onchain_pit=True,
+        add_onchain_pit=bool(add_onchain_pit),
     )
     transformed = _transform_pooled(pooled, list(horizons))
     if transformed is None or len(transformed) == 0:
@@ -98,51 +119,118 @@ def build_features_asof(
 
 
 def run_predict(
-    checkpoint_path: Path,
-    coins: list[str],
-    horizons: list[int],
+    coin_universe: list[str],
+    routing: dict[str, dict[str, object]],
+    ckpt_path: Path,
     asof: str,
-) -> dict:
-    """Load bundle dict, build PIT features asof, predict per coin per horizon.
+    store_root: Path,
+    ohlcv_cache: Path,
+    horizons: list[int],
+) -> pd.DataFrame:
+    """V5 composite predict — route each coin to its bundle.
+
+    For each coin in ``coin_universe``:
+      1. Resolve its route from ``routing[coin]`` — pool + feature_set.
+      2. ``build_features_asof`` with that pool and PIT toggle.
+      3. Select the row for ``coin`` in the resulting frame.
+      4. Look up the per-horizon bundles in the composite checkpoint
+         under ``f"{coin}_{feature_set}"`` and call ``predict_pooled``
+         once per horizon.
+
+    Per-coin failures (data missing, predict raising, etc.) are caught
+    and skipped — the remaining coins continue. If a majority of coins
+    fail (``≥ max(3, n-1)``) we raise ``PredictMajorityFail`` so the
+    live runner aborts the cycle cleanly. The ``max(3, n-1)`` threshold
+    means: in a 4-coin universe 3 failures trigger; in a 2-coin test
+    universe a single failure does NOT trigger (the threshold is 3).
 
     Args:
-        checkpoint_path: Path to the pickle written by `retrain.run_retrain`
-            (a dict keyed by horizon, each value a fit_pooled_full bundle).
-        coins: Coin IDs to predict for. Coins lacking features at asof are
-            silently skipped (warning logged).
-        horizons: Forecast horizons in days. Each must have a bundle in the
-            checkpoint or this raises.
+        coin_universe: Coin IDs to predict for, in priority order.
+        routing: ``{coin: {"feature_set": "78f"|"193f", "pool": [...]}}``
+            from V5 ROUTING config. Must contain every coin in
+            ``coin_universe``.
+        ckpt_path: Path to the composite ``.pkl`` written by
+            ``retrain.run_retrain``. The composite is a dict keyed by
+            ``f"{coin}_{feature_set}"``, each value a ``{horizon: bundle}``
+            dict produced by ``fit_pooled_full``.
         asof: Upper-bound trade date (YYYY-mm-dd).
+        store_root: PIT on-chain feature store root (forwarded into
+            ``build_features_asof``).
+        ohlcv_cache: OHLCV cache directory (forwarded into
+            ``build_features_asof``).
+        horizons: Forecast horizons in days. Each must have a bundle
+            for every route or that coin will fail and be skipped.
 
     Returns:
-        Dict keyed by coin id, each value a dict with `ref_price` plus
-        `pred_h{h}` for every requested horizon.
-    """
-    bundles = joblib.load(checkpoint_path)
-    if not isinstance(bundles, dict):
-        raise ValueError(
-            f"Checkpoint at {checkpoint_path} is not a dict-keyed-by-horizon"
-        )
-    for h in horizons:
-        if h not in bundles:
-            raise ValueError(
-                f"No bundle for horizon {h} in {checkpoint_path}"
-            )
+        Long-format DataFrame with one row per (coin, horizon) and
+        columns ``coin``, ``horizon``, ``prediction``, ``ref_price``,
+        ``bundle_route``.
 
-    features = build_features_asof(coins, asof, horizons=horizons)
-    out: dict = {}
-    for coin in coins:
-        if features.empty:
-            logger.warning("No features for %s asof %s — skipping", coin, asof)
-            continue
-        row = features[features["coin_id"] == coin]
-        if row.empty:
-            logger.warning("No features for %s asof %s — skipping", coin, asof)
-            continue
-        result: dict = {"ref_price": float(row["ref_price"].iloc[0])}
-        for h in horizons:
-            bundle = bundles[h]
-            pred = predict_pooled(bundle, row)
-            result[f"pred_h{h}"] = float(pred)
-        out[coin] = result
-    return out
+    Raises:
+        PredictMajorityFail: when ``≥ max(3, len(coin_universe) - 1)``
+            coins fail — strategy cannot run with that few signals.
+    """
+    composite = joblib.load(ckpt_path)
+
+    out_rows: list[dict] = []
+    failures: list[tuple[str, Exception]] = []
+
+    for coin in coin_universe:
+        route = routing[coin]
+        feature_set = str(route["feature_set"])
+        pool = list(route["pool"])
+        route_id = f"{coin}_{feature_set}"
+        use_pit = feature_set == "193f"
+
+        try:
+            feats = build_features_asof(
+                coin_pool=pool,
+                asof=asof,
+                store_root=store_root,
+                ohlcv_cache=ohlcv_cache,
+                add_onchain_pit=use_pit,
+                horizons=horizons,
+            )
+            row_df = feats[feats["coin_id"] == coin]
+            if row_df.empty:
+                raise ValueError(
+                    f"no feature row for {coin} in pool {pool}"
+                )
+            row = row_df.iloc[[0]]
+
+            if route_id not in composite:
+                raise KeyError(
+                    f"composite missing route {route_id}; "
+                    f"have {sorted(composite.keys())}"
+                )
+            pool_bundles = composite[route_id]
+
+            for h in horizons:
+                if h not in pool_bundles:
+                    raise KeyError(
+                        f"route {route_id} missing horizon {h}"
+                    )
+                bundle = pool_bundles[h]
+                pred = predict_pooled(bundle, row)
+                out_rows.append({
+                    "coin": coin,
+                    "horizon": h,
+                    "prediction": float(pred),
+                    "ref_price": float(row["ref_price"].iloc[0]),
+                    "bundle_route": route_id,
+                })
+        except Exception as exc:  # noqa: BLE001 — per-coin isolation
+            logger.warning(
+                "predict failed for %s asof %s (route=%s): %s",
+                coin, asof, route_id, exc,
+            )
+            failures.append((coin, exc))
+
+    threshold = max(3, len(coin_universe) - 1)
+    if len(failures) >= threshold:
+        raise PredictMajorityFail(
+            f"{len(failures)}/{len(coin_universe)} coins failed predict "
+            f"(threshold={threshold}): {failures}"
+        )
+
+    return pd.DataFrame(out_rows)

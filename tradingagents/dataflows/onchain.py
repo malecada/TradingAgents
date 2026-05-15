@@ -517,16 +517,13 @@ def fetch_coinmetrics_incremental(coins: list[str], since: str) -> pd.DataFrame:
     """
     from . import coinmetrics as _cm
 
-    cm_metrics_btc = [
-        "AdrActCnt", "TxCnt", "HashRate", "CapMVRVCur", "CapMrktCurUSD",
-        "FeeTotNtv", "FlowInExUSD", "FlowOutExUSD", "IssTotUSD", "SplyCur",
-        "PriceUSD",
-    ]
-    cm_metrics_eth = [
-        "AdrActCnt", "TxCnt", "CapMVRVCur", "CapMrktCurUSD", "FeeTotNtv",
-        "FlowInExUSD", "FlowOutExUSD", "IssTotUSD", "SplyCur", "PriceUSD",
-    ]
-    cm_asset_map = {"btc": "btc", "eth": "eth", "bitcoin": "btc", "ethereum": "eth"}
+    # Drive metric selection from the central SUPPORTED catalog so new free
+    # metrics added there are picked up automatically.
+    cm_asset_map = {
+        "btc": "btc", "eth": "eth", "bitcoin": "btc", "ethereum": "eth",
+        "usdt": "usdt", "usdc": "usdc", "dai": "dai",
+        "usdt_eth": "usdt_eth", "usdc_eth": "usdc_eth", "usdt_trx": "usdt_trx",
+    }
 
     start_dt = datetime.strptime(since, "%Y-%m-%d").replace(tzinfo=timezone.utc)
     end_dt = datetime.now(timezone.utc)
@@ -537,7 +534,10 @@ def fetch_coinmetrics_incremental(coins: list[str], since: str) -> pd.DataFrame:
         if asset is None:
             logger.warning("CM incremental: %s not supported, skipping", coin)
             continue
-        metrics = cm_metrics_btc if asset == "btc" else cm_metrics_eth
+        metrics = sorted(_cm.SUPPORTED.get(asset, frozenset()))
+        if not metrics:
+            logger.warning("CM incremental: no supported metrics for %s", asset)
+            continue
         df = _cm.fetch_asset_metrics_df(asset, metrics, start_dt, end_dt)
         if df.empty:
             continue

@@ -58,3 +58,40 @@ sudo systemctl start ta-cycle.timer
 scp /path/to/.env.trading tabot@<new-host>:/opt/tradingagents/secrets/.env.trading
 ./deploy/deploy.sh <new-host-ip> <git-tag>
 ```
+
+## V5 → V1 emergency rollback
+
+If V5 (live-v2.0) misbehaves after deploy, restore live-v1.0 in ~3 minutes.
+
+```bash
+# 1. Stop timers
+systemctl stop ta-cycle.timer ta-rebacktest.timer
+
+# 2. Kill any open positions under V5
+set -a; source /opt/tradingagents/secrets/.env.trading; set +a
+/opt/tradingagents/venv/bin/python -m tradingagents.execution.live.runner --kill-all
+
+# 3. Revert code to live-v1.0
+cd /opt/tradingagents
+sudo -u tabot git checkout live-v1.0
+sudo -u tabot /opt/tradingagents/venv/bin/pip install -e .
+
+# 4. Restore env (drop V5 keys, restore V1 kelly)
+sudo -u tabot sed -i '/^COINGLASS_API_KEY=/d; /^COIN_UNIVERSE=/d; /^KELLY_FRACTION=/d' \
+    /opt/tradingagents/secrets/.env.trading
+sudo -u tabot bash -c 'echo "KELLY_FRACTION=0.33" >> /opt/tradingagents/secrets/.env.trading'
+
+# 5. Schema rollback unnecessary — V5 columns are additive, V1 ignores them.
+
+# 6. Restart timers
+systemctl start ta-cycle.timer ta-rebacktest.timer
+systemctl status ta-cycle.timer
+```
+
+Journal backup from the deploy step lives at `/root/backup_pre_v5_YYYYMMDD.tar.gz`.
+Restore only if SQLite corruption suspected:
+```bash
+systemctl stop ta-cycle.timer
+tar xzf /root/backup_pre_v5_YYYYMMDD.tar.gz -C /
+systemctl start ta-cycle.timer
+```

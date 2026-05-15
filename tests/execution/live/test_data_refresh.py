@@ -99,3 +99,195 @@ def test_refresh_binance_ohlcv_incremental_when_cache_warm(tmp_path):
         kwargs = mock_f.call_args.kwargs
         assert kwargs.get("days") == 2
         assert kwargs.get("symbol") == "BTCUSDT"
+
+
+def test_refresh_coinglass_idempotent(monkeypatch, tmp_path):
+    """Two calls in one cycle produce identical parquet (no row duplication)."""
+    import pandas as pd
+    from tradingagents.execution.live import data_refresh
+
+    # Stub the underlying Coinglass fetch helpers — return a small known frame.
+    calls = []
+
+    def fake_fetch_oi_agg(symbol, key):
+        calls.append(("oi", symbol))
+        idx = pd.to_datetime(["2026-05-13", "2026-05-14"], utc=True)
+        return pd.DataFrame({
+            "oi_open": [1.0, 2.0], "oi_high": [1.0, 2.0],
+            "oi_low": [1.0, 2.0], "oi_close": [1.0, 2.0],
+        }, index=idx)
+
+    monkeypatch.setattr(
+        "scripts.fetch_coinglass_history.fetch_oi_agg", fake_fetch_oi_agg
+    )
+    # Stub other endpoints similarly (return empty DataFrames so the test stays focused)
+    for fn in ("fetch_liq_agg", "fetch_ls_ratio", "fetch_taker_vol", "fetch_funding_weighted"):
+        monkeypatch.setattr(f"scripts.fetch_coinglass_history.{fn}",
+                             lambda *a, **k: pd.DataFrame())
+
+    deriv_dir = tmp_path / "derivatives"
+    deriv_dir.mkdir()
+    raw_dir = tmp_path / "derivatives_raw"
+    raw_dir.mkdir()
+
+    data_refresh.refresh_coinglass(
+        coins=["bitcoin"], derivatives_dir=deriv_dir, raw_dir=raw_dir,
+        api_key="test", structured_log=None,
+    )
+    out1 = pd.read_parquet(deriv_dir / "bitcoin.parquet").copy()
+    data_refresh.refresh_coinglass(
+        coins=["bitcoin"], derivatives_dir=deriv_dir, raw_dir=raw_dir,
+        api_key="test", structured_log=None,
+    )
+    out2 = pd.read_parquet(deriv_dir / "bitcoin.parquet")
+    pd.testing.assert_frame_equal(out1, out2)
+
+
+def test_refresh_coinglass_raises_on_missing_key(tmp_path):
+    from tradingagents.execution.live import data_refresh
+    with pytest.raises(RuntimeError, match="COINGLASS_API_KEY"):
+        data_refresh.refresh_coinglass(
+            coins=["bitcoin"], derivatives_dir=tmp_path / "d", raw_dir=tmp_path / "r",
+            api_key="", structured_log=None,
+        )
+
+
+def test_refresh_deribit_dvol_appends_yesterday(monkeypatch, tmp_path):
+    """One-day pull appends a single new row to the per-currency parquet."""
+    import pandas as pd
+    from tradingagents.execution.live import data_refresh
+
+    def fake_fetch_dvol(currency, start, end):
+        idx = pd.to_datetime(["2026-05-14"], utc=True)
+        return pd.DataFrame({
+            "dvol_open": [60.0], "dvol_high": [62.0],
+            "dvol_low": [59.0], "dvol_close": [61.5],
+        }, index=idx)
+
+    monkeypatch.setattr(
+        "scripts.fetch_deribit_dvol.fetch_dvol", fake_fetch_dvol
+    )
+
+    options_dir = tmp_path / "options"
+    options_dir.mkdir()
+
+    data_refresh.refresh_deribit_dvol(
+        currencies=["BTC"], options_dir=options_dir, structured_log=None,
+    )
+    out = pd.read_parquet(options_dir / "btc_dvol.parquet")
+    assert len(out) == 1
+    assert out["dvol_close"].iloc[0] == 61.5
+
+
+def test_refresh_deribit_dvol_idempotent(monkeypatch, tmp_path):
+    import pandas as pd
+    from tradingagents.execution.live import data_refresh
+
+    def fake_fetch_dvol(currency, start, end):
+        idx = pd.to_datetime(["2026-05-14"], utc=True)
+        return pd.DataFrame({
+            "dvol_open": [60.0], "dvol_high": [62.0],
+            "dvol_low": [59.0], "dvol_close": [61.5],
+        }, index=idx)
+
+    monkeypatch.setattr(
+        "scripts.fetch_deribit_dvol.fetch_dvol", fake_fetch_dvol
+    )
+    options_dir = tmp_path / "options"
+    options_dir.mkdir()
+    data_refresh.refresh_deribit_dvol(["BTC"], options_dir, None)
+    data_refresh.refresh_deribit_dvol(["BTC"], options_dir, None)
+    out = pd.read_parquet(options_dir / "btc_dvol.parquet")
+    assert len(out) == 1  # not 2
+
+
+def test_refresh_perp_spot_basis_appends_basis(monkeypatch, tmp_path):
+    """Daily refresher adds basis_annual column to per-coin derivatives parquet."""
+    import pandas as pd
+    from tradingagents.execution.live import data_refresh
+
+    def fake_fetch_klines(url, symbol, start, end):
+        idx = pd.to_datetime(["2026-05-14"], utc=True)
+        return pd.DataFrame({
+            "open": [50000.0], "high": [50500.0],
+            "low": [49500.0], "close": [50100.0],
+            "volume": [1000.0],
+        }, index=idx)
+
+    monkeypatch.setattr(
+        "scripts.build_perp_spot_basis.fetch_klines", fake_fetch_klines
+    )
+    raw = tmp_path / "raw"
+    raw.mkdir()
+    daily = tmp_path / "daily"
+    daily.mkdir()
+
+    data_refresh.refresh_perp_spot_basis(
+        symbols=["BTCUSDT"], raw_dir=raw, daily_dir=daily,
+        structured_log=None,
+    )
+    out = pd.read_parquet(daily / "bitcoin.parquet")
+    assert "basis_annual" in out.columns
+    assert "perp_price" in out.columns
+    assert "spot_price" in out.columns
+
+
+def test_refresh_all_critical_fail_raises(monkeypatch, tmp_path):
+    """If OHLCV or CoinMetrics fail, refresh_all raises CriticalDataRefreshError."""
+    from tradingagents.execution.live import data_refresh
+    from tradingagents.execution.live.data_refresh import CriticalDataRefreshError
+
+    monkeypatch.setattr(data_refresh, "refresh_ohlcv",
+                         lambda *a, **k: (_ for _ in ()).throw(RuntimeError("OHLCV API down")))
+    monkeypatch.setattr(data_refresh, "refresh_coinmetrics", lambda *a, **k: None)
+    monkeypatch.setattr(data_refresh, "refresh_defillama", lambda *a, **k: None)
+    monkeypatch.setattr(data_refresh, "refresh_coinglass", lambda *a, **k: None)
+    monkeypatch.setattr(data_refresh, "refresh_deribit_dvol", lambda *a, **k: None)
+    monkeypatch.setattr(data_refresh, "refresh_perp_spot_basis", lambda *a, **k: None)
+
+    class FakeLog:
+        def __init__(self): self.events = []
+        def warn(self, event, **kw): self.events.append(("warn", event, kw))
+        def info(self, event, **kw): self.events.append(("info", event, kw))
+
+    cfg = _fake_cfg(tmp_path)
+    log = FakeLog()
+    with pytest.raises(CriticalDataRefreshError) as exc_info:
+        data_refresh.refresh_all(cfg, log)
+    assert "ohlcv" in str(exc_info.value)
+
+
+def test_refresh_all_supplementary_fail_continues(monkeypatch, tmp_path):
+    """Supplementary failure logs warning, does not raise."""
+    from tradingagents.execution.live import data_refresh
+
+    monkeypatch.setattr(data_refresh, "refresh_ohlcv", lambda *a, **k: None)
+    monkeypatch.setattr(data_refresh, "refresh_coinmetrics", lambda *a, **k: None)
+    monkeypatch.setattr(data_refresh, "refresh_defillama", lambda *a, **k: None)
+    monkeypatch.setattr(data_refresh, "refresh_coinglass",
+                         lambda *a, **k: (_ for _ in ()).throw(RuntimeError("Coinglass 429")))
+    monkeypatch.setattr(data_refresh, "refresh_deribit_dvol", lambda *a, **k: None)
+    monkeypatch.setattr(data_refresh, "refresh_perp_spot_basis", lambda *a, **k: None)
+
+    class FakeLog:
+        def __init__(self): self.warns = []
+        def warn(self, event, **kw): self.warns.append((event, kw))
+        def info(self, event, **kw): pass
+
+    cfg = _fake_cfg(tmp_path)
+    log = FakeLog()
+    result = data_refresh.refresh_all(cfg, log)
+    assert result["critical_ok"] is True
+    assert "coinglass" in [src for src, _err in result["supplementary_failures"]]
+    assert any(e[0] == "supplementary_data_stale" for e in log.warns)
+
+
+def _fake_cfg(tmp_path):
+    """Minimal LiveConfig-like for refresh_all tests."""
+    class C:
+        coin_universe = ["bitcoin", "ethereum", "binancecoin", "solana"]
+        coinmetrics_api_key = "k"
+        coinglass_api_key = "k"
+        data_root = str(tmp_path)
+        data_refresh_critical = {"ohlcv", "coinmetrics"}
+    return C()

@@ -36,6 +36,14 @@ class StructuredLogger:
         with open(self.path, "a") as f:
             f.write(json.dumps(rec) + "\n")
 
+    def info(self, event: str, **payload) -> None:
+        """Emit an informational JSONL record (used by data_refresh.refresh_all)."""
+        self.event(event, "info", payload or None)
+
+    def warn(self, event: str, **payload) -> None:
+        """Emit a warning JSONL record (used by data_refresh.refresh_all)."""
+        self.event(event, "warn", payload or None)
+
     @contextmanager
     def step(self, step: str, payload: dict | None = None):
         """Context manager that emits ok/error events bracketing a block."""
