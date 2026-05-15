@@ -70,3 +70,42 @@ def test_v1_rows_backward_compatible(tmp_path: Path) -> None:
         "FROM predictions WHERE cycle_id='20260101'"
     ).fetchone()
     assert row == ("20260101", "bitcoin", 7, 50000.0, 49500.0, None)
+
+
+def test_v1_retrains_row_survives_migration(tmp_path: Path) -> None:
+    """A v1 retrains row (no `routes` column) must survive ALTER TABLE migration.
+
+    This exercises the ALTER TABLE branch for `retrains` — the v1 seed creates
+    retrains WITHOUT `routes`, and `CREATE TABLE IF NOT EXISTS retrains` in
+    schema.sql is a no-op for the existing table, so migrate() must add `routes`
+    via ALTER TABLE for the row to expose the new column.
+    """
+    db = tmp_path / "j.db"
+    conn = sqlite3.connect(db)
+    for sql in _v1_schema_sqls():
+        conn.execute(sql)
+    # Insert a v1-shaped retrains row (only v1 columns — no `routes`).
+    conn.execute(
+        "INSERT INTO retrains (retrain_id, cycle_id, checkpoint_path, checkpoint_sha, "
+        "n_train_rows, train_window_start, train_dir_acc, status) "
+        "VALUES ('r1', '20260101', '/m.pkl', 'abc123', 1000, '2025-01-01', 0.62, 'ok')"
+    )
+    conn.commit()
+    conn.close()
+
+    Journal(str(db)).migrate()
+
+    # `routes` column must now exist on retrains.
+    cols = {r[1] for r in sqlite3.connect(db).execute(
+        "PRAGMA table_info(retrains)"
+    ).fetchall()}
+    assert "routes" in cols, f"`routes` column missing after migrate; got cols={cols}"
+
+    # The v1 row must survive with routes = NULL.
+    row = sqlite3.connect(db).execute(
+        "SELECT retrain_id, cycle_id, checkpoint_path, checkpoint_sha, n_train_rows, "
+        "train_window_start, train_dir_acc, status, routes "
+        "FROM retrains WHERE retrain_id='r1'"
+    ).fetchone()
+    assert row == ("r1", "20260101", "/m.pkl", "abc123", 1000,
+                   "2025-01-01", 0.62, "ok", None)

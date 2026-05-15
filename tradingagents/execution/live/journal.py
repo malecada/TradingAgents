@@ -164,6 +164,7 @@ class Journal:
 if __name__ == "__main__":
     import argparse
     import os
+    import sys
 
     parser = argparse.ArgumentParser(description="V5 journal migration")
     parser.add_argument("--migrate", action="store_true", required=True,
@@ -171,5 +172,11 @@ if __name__ == "__main__":
     parser.add_argument("--db", default=os.environ.get(
         "JOURNAL_DB", "/opt/tradingagents/data/trade_journal.db"))
     args = parser.parse_args()
+    if not os.path.exists(args.db):
+        print(f"ERROR: DB does not exist at {args.db}", file=sys.stderr)
+        print("If this is a fresh deployment, ensure the live runner has been started "
+              "at least once (which creates the DB via schema.sql) before running --migrate.",
+              file=sys.stderr)
+        sys.exit(2)
     Journal(args.db).migrate()
     print(f"V5 migration applied to {args.db}")
