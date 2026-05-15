@@ -167,8 +167,9 @@ def main() -> None:
     if not key:
         raise SystemExit("COINGLASS_API_KEY not set — add to .env")
 
-    cache_dir = Path("data/derivatives_raw"); cache_dir.mkdir(parents=True, exist_ok=True)
-    daily_dir = Path("data/derivatives"); daily_dir.mkdir(parents=True, exist_ok=True)
+    _data_root = Path(os.environ.get("TRADINGAGENTS_DATA_ROOT", "data"))
+    cache_dir = _data_root / "derivatives_raw"; cache_dir.mkdir(parents=True, exist_ok=True)
+    daily_dir = _data_root / "derivatives"; daily_dir.mkdir(parents=True, exist_ok=True)
     bak_suffix = pd.Timestamp.utcnow().strftime(".bak.cg.%Y%m%d")
 
     for coin, (sym_base, pair) in COIN_TO_SYMS.items():
