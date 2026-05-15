@@ -199,3 +199,34 @@ def test_refresh_deribit_dvol_idempotent(monkeypatch, tmp_path):
     data_refresh.refresh_deribit_dvol(["BTC"], options_dir, None)
     out = pd.read_parquet(options_dir / "btc_dvol.parquet")
     assert len(out) == 1  # not 2
+
+
+def test_refresh_perp_spot_basis_appends_basis(monkeypatch, tmp_path):
+    """Daily refresher adds basis_annual column to per-coin derivatives parquet."""
+    import pandas as pd
+    from tradingagents.execution.live import data_refresh
+
+    def fake_fetch_klines(url, symbol, start, end):
+        idx = pd.to_datetime(["2026-05-14"], utc=True)
+        return pd.DataFrame({
+            "open": [50000.0], "high": [50500.0],
+            "low": [49500.0], "close": [50100.0],
+            "volume": [1000.0],
+        }, index=idx)
+
+    monkeypatch.setattr(
+        "scripts.build_perp_spot_basis.fetch_klines", fake_fetch_klines
+    )
+    raw = tmp_path / "raw"
+    raw.mkdir()
+    daily = tmp_path / "daily"
+    daily.mkdir()
+
+    data_refresh.refresh_perp_spot_basis(
+        symbols=["BTCUSDT"], raw_dir=raw, daily_dir=daily,
+        structured_log=None,
+    )
+    out = pd.read_parquet(daily / "bitcoin.parquet")
+    assert "basis_annual" in out.columns
+    assert "perp_price" in out.columns
+    assert "spot_price" in out.columns

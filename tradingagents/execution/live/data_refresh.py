@@ -226,3 +226,84 @@ def refresh_deribit_dvol(
         else:
             combined = new_df
         combined.to_parquet(out_file)
+
+
+_PERP_URL = "https://fapi.binance.com/fapi/v1/klines"
+_SPOT_URL = "https://api.binance.com/api/v3/klines"
+_BASIS_SYM_TO_COIN = {
+    "BTCUSDT": "bitcoin", "ETHUSDT": "ethereum",
+    "BNBUSDT": "binancecoin", "SOLUSDT": "solana",
+}
+
+
+def refresh_perp_spot_basis(
+    symbols: list[str],
+    raw_dir: Path,
+    daily_dir: Path,
+    structured_log: object | None,
+) -> None:
+    """Daily incremental refresh of perp-spot basis.
+
+    For each Binance symbol in ``symbols``, fetches yesterday's perp + spot
+    daily klines, computes ``basis_annual = (perp_close - spot_close) /
+    spot_close * 365``, appends to ``{raw_dir}/{SYMBOL}_basis.parquet``, and
+    merges ``perp_price`` / ``spot_price`` / ``basis_annual`` columns into
+    ``{daily_dir}/{coin}.parquet`` for downstream PIT feature builders.
+    """
+    from scripts.build_perp_spot_basis import fetch_klines
+    import pandas as pd
+
+    raw_dir = Path(raw_dir)
+    daily_dir = Path(daily_dir)
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    daily_dir.mkdir(parents=True, exist_ok=True)
+
+    end = pd.Timestamp.utcnow().tz_convert("UTC").normalize() + pd.Timedelta(days=1)
+    start = end - pd.Timedelta(days=3)  # 3-day catch-up window
+
+    for sym in symbols:
+        coin = _BASIS_SYM_TO_COIN.get(sym)
+        if coin is None:
+            if structured_log is not None:
+                structured_log.warn("basis_symbol_unsupported", symbol=sym)
+            continue
+        perp = fetch_klines(_PERP_URL, sym, start, end)
+        spot = fetch_klines(_SPOT_URL, sym, start, end)
+        if perp.empty or spot.empty:
+            continue
+
+        basis = pd.concat([
+            perp["close"].rename("perp_price"),
+            spot["close"].rename("spot_price"),
+        ], axis=1).dropna()
+        basis["basis_annual"] = (
+            (basis["perp_price"] - basis["spot_price"]) / basis["spot_price"] * 365.0
+        )
+        if basis.index.tz is None:
+            basis.index = pd.to_datetime(basis.index).tz_localize("UTC")
+
+        raw_path = raw_dir / f"{sym}_basis.parquet"
+        # Append to raw cache
+        if raw_path.exists():
+            existing = pd.read_parquet(raw_path)
+            if existing.index.tz is None:
+                existing.index = pd.to_datetime(existing.index).tz_localize("UTC")
+            cached = pd.concat([existing, basis]).sort_index()
+            cached = cached[~cached.index.duplicated(keep="last")]
+        else:
+            cached = basis
+        cached.to_parquet(raw_path)
+
+        # Merge into daily aggregate (overwrite cols if present)
+        daily_file = daily_dir / f"{coin}.parquet"
+        merge_cols = basis[["perp_price", "spot_price", "basis_annual"]]
+        if daily_file.exists():
+            d = pd.read_parquet(daily_file)
+            if d.index.tz is None:
+                d.index = pd.to_datetime(d.index).tz_localize("UTC")
+            d = d.drop(columns=[c for c in ("perp_price", "spot_price", "basis_annual")
+                                  if c in d.columns])
+            out = d.join(merge_cols, how="outer").sort_index()
+        else:
+            out = merge_cols
+        out.to_parquet(daily_file)
