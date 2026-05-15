@@ -28,7 +28,7 @@ from __future__ import annotations
 
 import hashlib
 import logging
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
@@ -44,7 +44,11 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TrainArtifact:
-    """Metadata for a freshly trained (or fallback) checkpoint."""
+    """Metadata for a freshly trained (or fallback) single-pool checkpoint.
+
+    Legacy artifact used by `run_retrain_with_fallback` / `runner.py`. The V5
+    composite path uses `CheckpointArtifact` instead.
+    """
 
     model_path: Path
     train_window_start: str
@@ -54,6 +58,24 @@ class TrainArtifact:
     train_dir_acc_h14: float
     sha256: str
     is_fallback: bool = False
+
+
+@dataclass
+class CheckpointArtifact:
+    """V5 composite checkpoint metadata.
+
+    Wraps a single `.pkl` containing 4 per-route ``fit_pooled_full`` bundles
+    keyed by ``f"{coin}_{feature_set}"``. See ``run_retrain`` docstring for
+    the on-disk shape.
+    """
+
+    path: Path
+    sha: str
+    retrain_id: str
+    routes: list[str] = field(default_factory=list)
+    n_train_rows: int = 0
+    train_window_start: str = ""
+    train_dir_acc: float = 0.0
 
 
 def _transform_pooled(pooled_df: pd.DataFrame, horizons: list[int]) -> pd.DataFrame:
@@ -173,7 +195,7 @@ def _train_window_start(df: pd.DataFrame) -> str:
     return ""
 
 
-def run_retrain(
+def _run_retrain_legacy(
     coins: list[str],
     horizons: list[int],
     asof: str,
@@ -181,24 +203,10 @@ def run_retrain(
     lookback_days: int = 730,
     min_train_window: int = 365,
 ) -> TrainArtifact:
-    """Build dataset, fit one LGB per horizon on full history, persist.
+    """Legacy single-pool retrain — preserved for `run_retrain_with_fallback`.
 
-    Steps:
-      1. `build_pooled_dataset` with PIT on-chain features.
-      2. `_transform_pooled` to apply `data_transform` per coin → produces
-         `prices_h{h}` target columns.
-      3. For each horizon, `fit_pooled_full` returns a persistable bundle.
-      4. joblib.dump `{horizon: bundle}` to a versioned `.pkl`.
-      5. Compute in-sample DirAcc per horizon for diagnostics.
-
-    Args:
-        coins: CoinGecko coin IDs to pool (e.g. ["bitcoin", "ethereum"]).
-        horizons: Forecast horizons in days (e.g. [7, 14]).
-        asof: Upper-bound trade date (YYYY-mm-dd) for the training window.
-        checkpoint_dir: Directory where the checkpoint pickle is written.
-        lookback_days: How many days of history to load per coin.
-        min_train_window: Kept in the signature for API compatibility with
-            the caller; not used here (full-fit has no walk-forward).
+    Build dataset, fit one LGB per horizon on full history, persist as
+    `lgb_{N}coin_pit_{asof}.pkl`. See module docstring for the bundle layout.
     """
     del min_train_window  # API compatibility; full-fit has no walk-forward.
 
@@ -238,6 +246,74 @@ def run_retrain(
     )
 
 
+def run_retrain(
+    routing: dict[str, dict[str, object]],
+    horizons: list[int],
+    asof: str,
+    checkpoint_dir: Path,
+    retrain_id: str = "",
+    lookback_days: int = 730,
+) -> CheckpointArtifact:
+    """V5 composite retrain — 4 fit_pooled_full bundles in one .pkl.
+
+    For each (coin, route) in ``routing``:
+      1. ``build_pooled_dataset`` with route['pool'] and add_onchain_pit per
+         route['feature_set'].
+      2. ``_transform_pooled`` to add prices_h{h} target columns.
+      3. ``fit_pooled_full`` per horizon — bundle stored under
+         ``f"{coin}_{route['feature_set']}"``.
+
+    Final composite ``{route_id: {h: bundle}}`` is joblib.dump'd to
+    ``{checkpoint_dir}/lgb_v5_mix_{asof}.pkl``. Atomic: written via tmp
+    + rename to prevent half-files.
+    """
+    checkpoint_dir = Path(checkpoint_dir)
+    checkpoint_dir.mkdir(parents=True, exist_ok=True)
+
+    composite: dict[str, dict[int, dict]] = {}
+    for coin, route in routing.items():
+        pool = list(route["pool"])
+        use_pit = route["feature_set"] == "193f"
+        route_id = f"{coin}_{route['feature_set']}"
+
+        raw = build_pooled_dataset(
+            coin_universe=pool,
+            lookback_days=lookback_days,
+            horizons=horizons,
+            trade_date=asof,
+            add_technical=True,
+            add_cross_asset=True,
+            add_onchain=True,
+            add_onchain_pit=use_pit,
+        )
+        transformed = _transform_pooled(raw, horizons)
+
+        composite[route_id] = {}
+        for h in horizons:
+            composite[route_id][h] = fit_pooled_full(transformed, horizon=h)
+
+    out_tmp = checkpoint_dir / f"lgb_v5_mix_{asof}.pkl.tmp"
+    out_final = checkpoint_dir / f"lgb_v5_mix_{asof}.pkl"
+    try:
+        joblib.dump(composite, out_tmp)
+        out_tmp.rename(out_final)
+    except Exception:
+        if out_tmp.exists():
+            out_tmp.unlink()
+        raise
+
+    return CheckpointArtifact(
+        path=out_final,
+        sha=_sha256_of(out_final),
+        retrain_id=retrain_id,
+        routes=sorted(composite.keys()),
+        n_train_rows=sum(b[horizons[0]]["n_train_rows"]
+                          for b in composite.values()),
+        train_window_start=asof,
+        train_dir_acc=0.0,
+    )
+
+
 def run_retrain_with_fallback(
     coins: list[str],
     horizons: list[int],
@@ -253,7 +329,7 @@ def run_retrain_with_fallback(
     yesterday's model and surface the failure via `is_fallback=True`.
     """
     try:
-        return run_retrain(
+        return _run_retrain_legacy(
             coins, horizons, asof, checkpoint_dir,
             lookback_days=lookback_days,
             min_train_window=min_train_window,
