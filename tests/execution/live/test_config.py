@@ -28,6 +28,11 @@ def env_vars(monkeypatch):
     monkeypatch.setenv("ARIMA_FILTER", "false")
     monkeypatch.setenv("INITIAL_CAPITAL", "10000")
     monkeypatch.setenv("COIN_UNIVERSE", "bitcoin,ethereum,binancecoin")
+    # Set COINGLASS_API_KEY deterministically so existing tests don't
+    # depend on `.env` leaking the key from the worktree (CI runs in a
+    # clean env and would otherwise fail `load_config()`'s required-env
+    # check).
+    monkeypatch.setenv("COINGLASS_API_KEY", "test-key")
 
 
 def test_load_returns_typed_config(env_vars):
@@ -108,7 +113,17 @@ def test_v5_missing_coinglass_key_raises(monkeypatch) -> None:
     monkeypatch.delenv("COINGLASS_API_KEY", raising=False)
     from tradingagents.execution.live.config import LiveConfig
 
-    with pytest.raises(RuntimeError, match="COINGLASS_API_KEY"):
+    with pytest.raises(ValueError, match="COINGLASS_API_KEY"):
+        LiveConfig.from_env()
+
+
+def test_v5_coin_universe_routing_drift_raises(monkeypatch) -> None:
+    """COIN_UNIVERSE entry without routing entry raises clearly."""
+    _set_v5_min_env(monkeypatch)
+    monkeypatch.setenv("COIN_UNIVERSE", "bitcoin,ethereum,cardano")
+    monkeypatch.setenv("COINGLASS_API_KEY", "test-key")
+    from tradingagents.execution.live.config import LiveConfig
+    with pytest.raises(ValueError, match="cardano.*no routing entry"):
         LiveConfig.from_env()
 
 

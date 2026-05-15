@@ -1,6 +1,7 @@
 """Live trading configuration loaded from environment variables."""
 from __future__ import annotations
 
+import copy
 import os
 from dataclasses import dataclass, field
 
@@ -105,17 +106,37 @@ def _int(name: str, default: int) -> int:
 
 
 def load_config() -> LiveConfig:
+    # Binance creds are the most fundamental — check first so a fresh
+    # operator sees the missing-creds error before V5-specific failures.
+    binance_api_key = _required("BINANCE_API_KEY")
+    binance_api_secret = _required("BINANCE_API_SECRET")
+
+    # COINGLASS_API_KEY is V5-specific (193f-routed coins depend on
+    # Coinglass refresh). Raise ValueError to match `_required()`'s
+    # contract so `except ValueError` handles all required-env errors.
     coinglass_api_key = os.environ.get("COINGLASS_API_KEY", "").strip()
     if not coinglass_api_key:
-        raise RuntimeError(
+        raise ValueError(
             "COINGLASS_API_KEY env var required for V5 live deployment "
             "(193f-routed coins depend on Coinglass refresh)"
         )
 
+    coin_universe = [c.strip() for c in os.environ.get(
+        "COIN_UNIVERSE", "bitcoin,ethereum,binancecoin,solana").split(",") if c.strip()]
+
+    # Validate that every coin in the universe has a routing entry —
+    # otherwise downstream predict.py KeyErrors mid-cycle.
+    for c in coin_universe:
+        if c not in _V5_DEFAULT_ROUTING:
+            raise ValueError(
+                f"coin '{c}' in COIN_UNIVERSE has no routing entry — "
+                f"add to _V5_DEFAULT_ROUTING or remove from COIN_UNIVERSE"
+            )
+
     cfg = LiveConfig(
         live_mode=_bool("LIVE_MODE", "false"),
-        binance_api_key=_required("BINANCE_API_KEY"),
-        binance_api_secret=_required("BINANCE_API_SECRET"),
+        binance_api_key=binance_api_key,
+        binance_api_secret=binance_api_secret,
         binance_base_url=os.environ.get("BINANCE_BASE_URL", "https://testnet.binancefuture.com"),
         coinmetrics_api_key=os.environ.get("COINMETRICS_API_KEY", ""),
         telegram_bot_token=os.environ.get("TELEGRAM_BOT_TOKEN", ""),
@@ -137,9 +158,12 @@ def load_config() -> LiveConfig:
         symmetric=_bool("SYMMETRIC", "true"),
         arima_filter=_bool("ARIMA_FILTER", "false"),
         initial_capital=_float("INITIAL_CAPITAL", 10000.0),
-        coin_universe=[c.strip() for c in os.environ.get(
-            "COIN_UNIVERSE", "bitcoin,ethereum,binancecoin,solana").split(",") if c.strip()],
-        routing=_V5_DEFAULT_ROUTING,
+        coin_universe=coin_universe,
+        # Deep-copy: the module constant is shared mutable state.
+        # `@dataclass(frozen=True)` only freezes attribute rebinding;
+        # without deep-copy, mutations through `cfg.routing` would
+        # persist across cycles and corrupt subsequent loads.
+        routing=copy.deepcopy(_V5_DEFAULT_ROUTING),
         coinglass_api_key=coinglass_api_key,
         data_refresh_critical={"ohlcv", "coinmetrics"},
         data_root=os.environ.get("TRADINGAGENTS_DATA_ROOT", "data"),
