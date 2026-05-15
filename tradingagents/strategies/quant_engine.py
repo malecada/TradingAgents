@@ -33,8 +33,14 @@ _HORIZONS = [7, 14]
 _CONFIDENCE_REF = 0.05  # 5% expected return → confidence=1.0 (matches baseline V2 default)
 
 
-def _candidate_pred_dirs(coin: str, base_dir: Optional[str] = None) -> list[str]:
+def _candidate_pred_dirs(
+    coin: str,
+    base_dir: Optional[str] = None,
+    pool_map: Optional[dict[str, str]] = None,
+) -> list[str]:
     """Search order for precomputed LGB pools.
+
+    pool_map (per-coin override) wins over altcoin defaults wins over base_dir.
 
     Major coins (BTC/ETH) are in the 2-coin pool. Altcoins live in their
     "2+1" 3-coin pools. ``base_dir`` overrides the config default.
@@ -51,17 +57,24 @@ def _candidate_pred_dirs(coin: str, base_dir: Optional[str] = None) -> list[str]
     }
     if coin in altcoin_pools:
         candidates.insert(0, altcoin_pools[coin])
+    if pool_map and coin in pool_map:
+        candidates.insert(0, pool_map[coin])
     return candidates
 
 
-def _load_pred_row(coin: str, date: str, base_dir: Optional[str] = None) -> Optional[dict]:
+def _load_pred_row(
+    coin: str,
+    date: str,
+    base_dir: Optional[str] = None,
+    pool_map: Optional[dict[str, str]] = None,
+) -> Optional[dict]:
     """Find the row for (coin, date) in the precomputed LGB CSVs.
 
     Returns ``{"ref_price": float, "pred_h7": float, "pred_h14": float}``
     or ``None`` if not found.
     """
     target_date = pd.to_datetime(date).normalize()
-    for pred_dir in _candidate_pred_dirs(coin, base_dir):
+    for pred_dir in _candidate_pred_dirs(coin, base_dir, pool_map=pool_map):
         path7 = os.path.join(pred_dir, "preds_lgb_h7.csv")
         path14 = os.path.join(pred_dir, "preds_lgb_h14.csv")
         if not (os.path.exists(path7) and os.path.exists(path14)):
@@ -96,6 +109,7 @@ def get_quant_signal(
     coin: str,
     date: str,
     base_dir: Optional[str] = None,
+    pool_map: Optional[dict[str, str]] = None,
 ) -> QuantSignal:
     """Return a Layer 1 ``QuantSignal`` for ``(coin, date)``.
 
@@ -104,7 +118,7 @@ def get_quant_signal(
     detector. ``deterministic_signals`` is left empty here — Phase 2
     populates it.
     """
-    pred = _load_pred_row(coin, date, base_dir)
+    pred = _load_pred_row(coin, date, base_dir, pool_map=pool_map)
     pack = compute_deterministic_pack(coin, date)
     if pred is None:
         logger.warning(
