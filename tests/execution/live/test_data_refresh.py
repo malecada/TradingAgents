@@ -230,3 +230,64 @@ def test_refresh_perp_spot_basis_appends_basis(monkeypatch, tmp_path):
     assert "basis_annual" in out.columns
     assert "perp_price" in out.columns
     assert "spot_price" in out.columns
+
+
+def test_refresh_all_critical_fail_raises(monkeypatch, tmp_path):
+    """If OHLCV or CoinMetrics fail, refresh_all raises CriticalDataRefreshError."""
+    from tradingagents.execution.live import data_refresh
+    from tradingagents.execution.live.data_refresh import CriticalDataRefreshError
+
+    monkeypatch.setattr(data_refresh, "refresh_ohlcv",
+                         lambda *a, **k: (_ for _ in ()).throw(RuntimeError("OHLCV API down")))
+    monkeypatch.setattr(data_refresh, "refresh_coinmetrics", lambda *a, **k: None)
+    monkeypatch.setattr(data_refresh, "refresh_defillama", lambda *a, **k: None)
+    monkeypatch.setattr(data_refresh, "refresh_coinglass", lambda *a, **k: None)
+    monkeypatch.setattr(data_refresh, "refresh_deribit_dvol", lambda *a, **k: None)
+    monkeypatch.setattr(data_refresh, "refresh_perp_spot_basis", lambda *a, **k: None)
+
+    class FakeLog:
+        def __init__(self): self.events = []
+        def warn(self, event, **kw): self.events.append(("warn", event, kw))
+        def info(self, event, **kw): self.events.append(("info", event, kw))
+
+    cfg = _fake_cfg(tmp_path)
+    log = FakeLog()
+    with pytest.raises(CriticalDataRefreshError) as exc_info:
+        data_refresh.refresh_all(cfg, log)
+    assert "ohlcv" in str(exc_info.value)
+
+
+def test_refresh_all_supplementary_fail_continues(monkeypatch, tmp_path):
+    """Supplementary failure logs warning, does not raise."""
+    from tradingagents.execution.live import data_refresh
+
+    monkeypatch.setattr(data_refresh, "refresh_ohlcv", lambda *a, **k: None)
+    monkeypatch.setattr(data_refresh, "refresh_coinmetrics", lambda *a, **k: None)
+    monkeypatch.setattr(data_refresh, "refresh_defillama", lambda *a, **k: None)
+    monkeypatch.setattr(data_refresh, "refresh_coinglass",
+                         lambda *a, **k: (_ for _ in ()).throw(RuntimeError("Coinglass 429")))
+    monkeypatch.setattr(data_refresh, "refresh_deribit_dvol", lambda *a, **k: None)
+    monkeypatch.setattr(data_refresh, "refresh_perp_spot_basis", lambda *a, **k: None)
+
+    class FakeLog:
+        def __init__(self): self.warns = []
+        def warn(self, event, **kw): self.warns.append((event, kw))
+        def info(self, event, **kw): pass
+
+    cfg = _fake_cfg(tmp_path)
+    log = FakeLog()
+    result = data_refresh.refresh_all(cfg, log)
+    assert result["critical_ok"] is True
+    assert "coinglass" in [src for src, _err in result["supplementary_failures"]]
+    assert any(e[0] == "supplementary_data_stale" for e in log.warns)
+
+
+def _fake_cfg(tmp_path):
+    """Minimal LiveConfig-like for refresh_all tests."""
+    class C:
+        coin_universe = ["bitcoin", "ethereum", "binancecoin", "solana"]
+        coinmetrics_api_key = "k"
+        coinglass_api_key = "k"
+        data_root = str(tmp_path)
+        data_refresh_critical = {"ohlcv", "coinmetrics"}
+    return C()

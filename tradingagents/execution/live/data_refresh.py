@@ -307,3 +307,81 @@ def refresh_perp_spot_basis(
         else:
             out = merge_cols
         out.to_parquet(daily_file)
+
+
+class CriticalDataRefreshError(RuntimeError):
+    """Raised when any critical data source fails — cycle must abort."""
+
+    def __init__(self, failures: list[tuple[str, Exception]]):
+        self.failures = failures
+        msg = "; ".join(f"{src}: {err}" for src, err in failures)
+        super().__init__(f"critical data refresh failed: {msg}")
+
+
+def refresh_all(cfg, structured_log) -> dict:
+    """Run the 6 daily refreshers in two tiers.
+
+    CRITICAL  : ohlcv, coinmetrics — failure raises CriticalDataRefreshError.
+    SUPPLEMENTARY: defillama, coinglass, deribit_dvol, perp_spot_basis —
+                    failure logs ``supplementary_data_stale`` warning,
+                    cycle continues using last-good parquet.
+
+    Returns ``{"critical_ok": True, "supplementary_failures": [(src, err), ...]}``
+    on success. Raises on critical fail.
+    """
+    data_root = Path(cfg.data_root)
+    store_root = data_root / "onchain"
+    cache_root = data_root / "cache"
+    deriv_dir = data_root / "derivatives"
+    deriv_raw = data_root / "derivatives_raw"
+    options_dir = data_root / "options"
+
+    critical_failures: list[tuple[str, Exception]] = []
+    # 1. OHLCV
+    try:
+        for coin in cfg.coin_universe:
+            refresh_ohlcv(coin, cache_root=cache_root)
+        if structured_log is not None:
+            structured_log.info("refresh_ohlcv_ok", coins=cfg.coin_universe)
+    except Exception as e:
+        critical_failures.append(("ohlcv", e))
+
+    # 2. CoinMetrics
+    try:
+        refresh_coinmetrics(cfg.coin_universe, store_root)
+        if structured_log is not None:
+            structured_log.info("refresh_coinmetrics_ok")
+    except Exception as e:
+        critical_failures.append(("coinmetrics", e))
+
+    if critical_failures:
+        raise CriticalDataRefreshError(critical_failures)
+
+    # Supplementary
+    supplementary_failures: list[tuple[str, Exception]] = []
+
+    def _try(source: str, fn) -> None:
+        try:
+            fn()
+        except Exception as e:
+            supplementary_failures.append((source, e))
+            if structured_log is not None:
+                structured_log.warn("supplementary_data_stale", source=source, err=str(e))
+
+    _try("defillama", lambda: refresh_defillama(cfg.coin_universe, store_root))
+    _try("coinglass", lambda: refresh_coinglass(
+        coins=cfg.coin_universe, derivatives_dir=deriv_dir, raw_dir=deriv_raw,
+        api_key=cfg.coinglass_api_key, structured_log=structured_log,
+    ))
+    _try("deribit_dvol", lambda: refresh_deribit_dvol(
+        currencies=["BTC", "ETH"], options_dir=options_dir, structured_log=structured_log,
+    ))
+    coin_to_sym = {"bitcoin": "BTCUSDT", "ethereum": "ETHUSDT",
+                   "binancecoin": "BNBUSDT", "solana": "SOLUSDT"}
+    symbols = [coin_to_sym[c] for c in cfg.coin_universe if c in coin_to_sym]
+    _try("perp_spot_basis", lambda: refresh_perp_spot_basis(
+        symbols=symbols, raw_dir=deriv_raw, daily_dir=deriv_dir,
+        structured_log=structured_log,
+    ))
+
+    return {"critical_ok": True, "supplementary_failures": supplementary_failures}
