@@ -70,3 +70,61 @@ def test_validate_rejects_negative_leverage(env_vars, monkeypatch):
 
     with pytest.raises(ValueError, match="MAX_LEVERAGE"):
         load_config()
+
+
+def _set_v5_min_env(monkeypatch) -> None:
+    """Set the minimum env vars required by `LiveConfig.from_env()` so V5
+    tests can focus on the new V5 behaviour without re-asserting the existing
+    required-env-var contract."""
+    monkeypatch.setenv("BINANCE_API_KEY", "k")
+    monkeypatch.setenv("BINANCE_API_SECRET", "s")
+
+
+def test_v5_routing_defaults(monkeypatch) -> None:
+    """V5 default ROUTING + 4-coin universe + kelly=0.25."""
+    _set_v5_min_env(monkeypatch)
+    monkeypatch.delenv("COIN_UNIVERSE", raising=False)
+    monkeypatch.delenv("KELLY_FRACTION", raising=False)
+    monkeypatch.setenv("COINGLASS_API_KEY", "test-key")
+
+    from tradingagents.execution.live.config import LiveConfig
+    cfg = LiveConfig.from_env()
+
+    assert cfg.coin_universe == ["bitcoin", "ethereum", "binancecoin", "solana"]
+    assert cfg.kelly_fraction == 0.25
+    assert "bitcoin" in cfg.routing
+    assert cfg.routing["bitcoin"] == {"feature_set": "78f", "pool": ["bitcoin", "ethereum"]}
+    assert cfg.routing["ethereum"] == {"feature_set": "193f", "pool": ["bitcoin", "ethereum"]}
+    assert cfg.routing["binancecoin"] == {"feature_set": "78f",
+                                           "pool": ["bitcoin", "ethereum", "binancecoin"]}
+    assert cfg.routing["solana"] == {"feature_set": "193f",
+                                      "pool": ["bitcoin", "ethereum", "solana"]}
+    assert cfg.coinglass_api_key == "test-key"
+    assert cfg.data_refresh_critical == {"ohlcv", "coinmetrics"}
+
+
+def test_v5_missing_coinglass_key_raises(monkeypatch) -> None:
+    _set_v5_min_env(monkeypatch)
+    monkeypatch.delenv("COINGLASS_API_KEY", raising=False)
+    from tradingagents.execution.live.config import LiveConfig
+
+    with pytest.raises(RuntimeError, match="COINGLASS_API_KEY"):
+        LiveConfig.from_env()
+
+
+def test_v5_data_root_default(monkeypatch) -> None:
+    _set_v5_min_env(monkeypatch)
+    monkeypatch.delenv("TRADINGAGENTS_DATA_ROOT", raising=False)
+    monkeypatch.setenv("COINGLASS_API_KEY", "test-key")
+    from tradingagents.execution.live.config import LiveConfig
+    cfg = LiveConfig.from_env()
+    assert cfg.data_root == "data"
+
+
+def test_v5_data_root_env_override(monkeypatch) -> None:
+    _set_v5_min_env(monkeypatch)
+    monkeypatch.setenv("TRADINGAGENTS_DATA_ROOT", "/sandbox/data")
+    monkeypatch.setenv("COINGLASS_API_KEY", "test-key")
+    from tradingagents.execution.live.config import LiveConfig
+    cfg = LiveConfig.from_env()
+    assert cfg.data_root == "/sandbox/data"

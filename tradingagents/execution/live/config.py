@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 # CoinGecko id → Binance base symbol. The model code uses CoinGecko ids
@@ -12,6 +12,19 @@ _COIN_TO_BINANCE_BASE = {
     "bitcoin": "BTC",
     "ethereum": "ETH",
     "binancecoin": "BNB",
+    "solana": "SOL",
+}
+
+
+# V5 MIX per-coin feature-set routing (validated in THESIS_FINDINGS §17/§20).
+# BTC and BNB use the canonical 78-feature set; ETH and SOL use the extended
+# 193-feature set. The `pool` lists the coins included in each coin's
+# training universe (2+1 pattern for altcoins).
+_V5_DEFAULT_ROUTING: dict[str, dict[str, object]] = {
+    "bitcoin":     {"feature_set": "78f",  "pool": ["bitcoin", "ethereum"]},
+    "ethereum":    {"feature_set": "193f", "pool": ["bitcoin", "ethereum"]},
+    "binancecoin": {"feature_set": "78f",  "pool": ["bitcoin", "ethereum", "binancecoin"]},
+    "solana":      {"feature_set": "193f", "pool": ["bitcoin", "ethereum", "solana"]},
 }
 
 
@@ -52,7 +65,22 @@ class LiveConfig:
     arima_filter: bool
     initial_capital: float
     coin_universe: list[str]
+    # V5 routing fields (Task 3 — V5 MIX live deployment)
+    routing: dict[str, dict[str, object]] = field(default_factory=dict)
+    coinglass_api_key: str = ""
+    data_refresh_critical: set[str] = field(default_factory=set)
+    data_root: str = "data"
     signal_threshold: float = 0.0  # not used by V2 (kept for back-compat)
+
+    @classmethod
+    def from_env(cls) -> "LiveConfig":
+        """Load `LiveConfig` from environment variables (V5-aware).
+
+        Thin alias for `load_config()` — V5 callers (retrain, predict,
+        parity_refetch_and_replay) use this name to signal they expect the
+        V5 routing/coinglass/data_root fields to be populated.
+        """
+        return load_config()
 
 
 def _required(name: str) -> str:
@@ -77,6 +105,13 @@ def _int(name: str, default: int) -> int:
 
 
 def load_config() -> LiveConfig:
+    coinglass_api_key = os.environ.get("COINGLASS_API_KEY", "").strip()
+    if not coinglass_api_key:
+        raise RuntimeError(
+            "COINGLASS_API_KEY env var required for V5 live deployment "
+            "(193f-routed coins depend on Coinglass refresh)"
+        )
+
     cfg = LiveConfig(
         live_mode=_bool("LIVE_MODE", "false"),
         binance_api_key=_required("BINANCE_API_KEY"),
@@ -90,7 +125,7 @@ def load_config() -> LiveConfig:
         stop_loss_pct=_float("STOP_LOSS_PCT", 0.03),
         max_open_positions=_int("MAX_OPEN_POSITIONS", 3),
         target_vol=_float("TARGET_VOL", 0.10),
-        kelly_fraction=_float("KELLY_FRACTION", 0.5),
+        kelly_fraction=_float("KELLY_FRACTION", 0.25),
         vol_lookback=_int("VOL_LOOKBACK", 20),
         vol_cap_pct=_float("VOL_CAP_PCT", 0.95),
         confidence_ref_return=_float("CONFIDENCE_REF_RETURN", 0.02),
@@ -102,7 +137,12 @@ def load_config() -> LiveConfig:
         symmetric=_bool("SYMMETRIC", "true"),
         arima_filter=_bool("ARIMA_FILTER", "false"),
         initial_capital=_float("INITIAL_CAPITAL", 10000.0),
-        coin_universe=[c.strip() for c in os.environ.get("COIN_UNIVERSE", "bitcoin,ethereum,binancecoin").split(",") if c.strip()],
+        coin_universe=[c.strip() for c in os.environ.get(
+            "COIN_UNIVERSE", "bitcoin,ethereum,binancecoin,solana").split(",") if c.strip()],
+        routing=_V5_DEFAULT_ROUTING,
+        coinglass_api_key=coinglass_api_key,
+        data_refresh_critical={"ohlcv", "coinmetrics"},
+        data_root=os.environ.get("TRADINGAGENTS_DATA_ROOT", "data"),
     )
     if cfg.max_leverage <= 0:
         raise ValueError(f"MAX_LEVERAGE must be > 0, got {cfg.max_leverage}")
