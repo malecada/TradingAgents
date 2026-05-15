@@ -25,3 +25,62 @@ if [ "$mode" != "600" ]; then
     echo "preflight: secrets file mode $mode (expected 600) — aborting" >&2
     exit 1
 fi
+
+# === V5 preflight additions ===
+set -e
+
+echo "=== V5 preflight ==="
+
+# 1. COINGLASS_API_KEY present
+if [ -z "${COINGLASS_API_KEY:-}" ]; then
+    echo "FAIL: COINGLASS_API_KEY not set"
+    exit 1
+fi
+echo "  COINGLASS_API_KEY: set"
+
+# 2. Coin universe = 4 coins
+N_COINS=$(echo "${COIN_UNIVERSE:-bitcoin,ethereum,binancecoin,solana}" | tr ',' '\n' | wc -l)
+if [ "$N_COINS" -ne 4 ]; then
+    echo "FAIL: COIN_UNIVERSE must have 4 coins, got $N_COINS"
+    exit 1
+fi
+echo "  COIN_UNIVERSE: 4 coins"
+
+# 3. Kelly is set + reasonable (0.10 to 0.29 band)
+KELLY="${KELLY_FRACTION:-0.25}"
+case "$KELLY" in
+    0.[12][0-9]|0.[12]) ;;
+    *) echo "FAIL: KELLY_FRACTION=$KELLY out of [0.10, 0.29] band"; exit 1 ;;
+esac
+echo "  KELLY_FRACTION: $KELLY"
+
+# 4. Derivatives + options dirs writable
+DATA_ROOT="${TRADINGAGENTS_DATA_ROOT:-/opt/tradingagents/data}"
+for sub in derivatives derivatives_raw options onchain cache; do
+    DIR="$DATA_ROOT/$sub"
+    if [ ! -d "$DIR" ]; then
+        mkdir -p "$DIR" || { echo "FAIL: cannot create $DIR"; exit 1; }
+    fi
+    if [ ! -w "$DIR" ]; then
+        echo "FAIL: $DIR not writable"
+        exit 1
+    fi
+done
+echo "  data subdirs: writable"
+
+# 5. Can import V5 live modules
+python -c "
+from tradingagents.execution.live.config import LiveConfig
+from tradingagents.execution.live.data_refresh import refresh_all, CriticalDataRefreshError
+from tradingagents.execution.live.retrain import run_retrain_with_fallback
+from tradingagents.execution.live.predict import run_predict, PredictMajorityFail
+print('  V5 imports: OK')
+" || { echo "FAIL: V5 import error"; exit 1; }
+
+# 6. Sample Coinglass auth
+curl -s --max-time 8 -H "CG-API-KEY: $COINGLASS_API_KEY" \
+    "https://open-api-v4.coinglass.com/api/futures/supported-coins" \
+    | grep -q '"code":"0"' || { echo "FAIL: Coinglass auth"; exit 1; }
+echo "  Coinglass auth: OK"
+
+echo "V5 preflight: ALL OK"
