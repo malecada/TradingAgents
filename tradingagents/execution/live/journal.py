@@ -28,6 +28,29 @@ class Journal:
     def close(self) -> None:
         self._conn.close()
 
+    def migrate(self) -> None:
+        """Apply additive V5 schema columns to an existing v1 DB. Idempotent."""
+        migrations = [
+            ("predictions", "bundle_route", "TEXT"),
+            ("retrains", "routes", "TEXT"),
+            ("cycles", "critical_data_fail_sources", "TEXT"),
+            ("cycles", "supplementary_stale_sources", "TEXT"),
+        ]
+        conn = sqlite3.connect(self.db_path)
+        try:
+            for table, col, dtype in migrations:
+                existing = {r[1] for r in conn.execute(
+                    f"PRAGMA table_info({table})"
+                ).fetchall()}
+                if not existing:
+                    # Table doesn't exist on this DB — skip (additive, non-failing).
+                    continue
+                if col not in existing:
+                    conn.execute(f"ALTER TABLE {table} ADD COLUMN {col} {dtype}")
+            conn.commit()
+        finally:
+            conn.close()
+
     def log_cycle_start(self, cycle_id: str, *, git_sha: str) -> None:
         self._conn.execute(
             "INSERT OR IGNORE INTO cycles (cycle_id, start_ts, git_commit_sha) "
@@ -136,3 +159,17 @@ class Journal:
              live_size, backtest_size, size_delta_pct),
         )
         self._conn.commit()
+
+
+if __name__ == "__main__":
+    import argparse
+    import os
+
+    parser = argparse.ArgumentParser(description="V5 journal migration")
+    parser.add_argument("--migrate", action="store_true", required=True,
+                        help="Apply additive V5 schema columns to the configured journal DB")
+    parser.add_argument("--db", default=os.environ.get(
+        "JOURNAL_DB", "/opt/tradingagents/data/trade_journal.db"))
+    args = parser.parse_args()
+    Journal(args.db).migrate()
+    print(f"V5 migration applied to {args.db}")

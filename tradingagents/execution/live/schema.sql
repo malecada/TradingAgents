@@ -4,7 +4,9 @@ CREATE TABLE IF NOT EXISTS cycles (
     end_ts TEXT,
     status TEXT,
     error_msg TEXT,
-    git_commit_sha TEXT
+    git_commit_sha TEXT,
+    critical_data_fail_sources TEXT,
+    supplementary_stale_sources TEXT
 );
 
 CREATE TABLE IF NOT EXISTS predictions (
@@ -19,7 +21,8 @@ CREATE TABLE IF NOT EXISTS predictions (
     ref_price REAL,
     signal_h7 INTEGER,
     signal_h14 INTEGER,
-    consensus_signal INTEGER
+    consensus_signal INTEGER,
+    bundle_route TEXT
 );
 
 CREATE TABLE IF NOT EXISTS sizing (
@@ -92,6 +95,18 @@ CREATE TABLE IF NOT EXISTS model_artifacts (
     train_dir_acc_h7 REAL,
     train_dir_acc_h14 REAL,
     sha256 TEXT
+);
+
+CREATE TABLE IF NOT EXISTS retrains (
+    retrain_id TEXT PRIMARY KEY,
+    cycle_id TEXT,
+    checkpoint_path TEXT,
+    checkpoint_sha TEXT,
+    n_train_rows INTEGER,
+    train_window_start TEXT,
+    train_dir_acc REAL,
+    status TEXT,
+    routes TEXT
 );
 
 CREATE TABLE IF NOT EXISTS shadow_decisions (
