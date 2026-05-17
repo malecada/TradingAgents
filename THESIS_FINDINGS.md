@@ -2839,3 +2839,322 @@ and drawdown — exactly the desired behavior for tighter margin envelope.
 Day 7 / 30 / 90 milestones from §6.3 + §8.6 reference these numbers. The
 parity-refetch check (§7) verifies model + sizing parity exact; the slippage
 allowance bounds realistic execution costs at <50bps cumulative.
+
+## 23. V5 MIX — Per-coin Kelly Fraction Sweep (2026-05-16)
+
+### 23.1 Motivation
+
+§22 documents that Sharpe is approximately leverage-invariant between
+`kelly=0.25` (live) and `kelly=0.50` (backtest canonical): portfolio
+SR +3.183 vs +3.178 respectively. An open question from §19 of the
+thesis report is whether per-coin Kelly fractions might differ — in
+particular whether ETH and SOL (which carry the extended-feature alpha
+from §17 and §20) can sustain a higher Kelly than BTC and BNB.
+
+### 23.2 Protocol
+
+- Reuse existing walk-forward prediction CSVs (no retraining, no LLM calls)
+- 4 coins × 7 Kelly values = 28 per-coin backtests
+- Grid: `kelly ∈ {0.10, 0.20, 0.25, 0.35, 0.50, 0.75, 1.00}`
+- Same V2 sizing pipeline as §22 (term-structure consensus → vol-targeted
+  Kelly → SMA30 trend filter → max_leverage=3.0 → 3% stop-loss → 7-day
+  min hold). Only the `kelly_fraction` argument varies.
+- 4.5-yr walk-forward 2021-11-07 → 2026-04-15
+- Driver: `scripts/v5_kelly_sweep.py`
+
+### 23.3 Per-coin results
+
+| Coin | Feature set | kelly=0.10 | 0.25 | 0.50 | 0.75 | 1.00 |
+|------|-------------|:----------:|:----:|:----:|:----:|:----:|
+| BTC  | 78f canonical  | +1.972 | +1.972 | +1.968 | +1.962 | +1.955 |
+| ETH  | 193f extended  | +2.056 | +2.056 | +2.053 | +2.050 | +1.103 |
+| BNB  | 78f canonical  | +1.935 | +1.935 | +1.931 | +0.318 | +0.410 |
+| SOL  | 193f extended  | +2.324 | +2.324 | +2.322 | +0.965 | +0.964 |
+
+Per-coin Sharpe is **flat across `kelly ∈ [0.10, 0.50]`** for all 4 coins
+(differences < 0.005 SR). Past `kelly = 0.50`, Sharpe **collapses** for
+ETH, BNB, SOL but holds for BTC. BTC tolerates `kelly = 1.00` because
+its 20-day realised vol stays below the level where the `max_leverage = 3.0`
+cap binds. The altcoins hit the leverage cap at high Kelly, distorting
+the proportionality between target and realised position size.
+
+### 23.4 Portfolio results (25% equal-weight)
+
+| Kelly | Sharpe | Return | Max DD | Ann Vol |
+|:-----:|:------:|:------:|:------:|:-------:|
+| 0.10 | +3.184 | +55.0% | -1.0% | 2.2% |
+| 0.20 | +3.183 | +139.5% | -2.0% | 4.3% |
+| 0.25 | +3.183 | +197.3% | -2.5% | 5.4% |
+| 0.35 | +3.182 | +357.0% | -3.5% | 7.5% |
+| **0.50** | **+3.178** | **+764.6%** | **-4.9%** | **10.7%** |
+| 0.75 | +2.395 | +351.4% | -7.2% | 10.0% |
+| 1.00 | +1.904 | +284.0% | -9.2% | 11.3% |
+
+Portfolio Sharpe is flat at +3.18 for `kelly ∈ [0.10, 0.50]` — the
+leverage-invariance property of vol-targeted Kelly holds within that
+range. Beyond `kelly = 0.50` the leverage cap binds on more bars and
+portfolio Sharpe degrades to +2.40 (at 0.75) and +1.90 (at 1.00).
+
+### 23.5 Per-coin-optimal portfolio
+
+| Coin | Argmax-SR Kelly | SR at optimum |
+|------|:---------------:|:-------------:|
+| BTC | 0.10 | +1.972 |
+| ETH | 0.10 | +2.056 |
+| BNB | 0.10 | +1.935 |
+| SOL | 0.10 | +2.324 |
+
+All 4 coins prefer `kelly = 0.10` at the per-coin level — but only
+because the **SR surface is flat over 0.10–0.50 and the argmax is at
+the leftmost grid point**. The per-coin-optimal portfolio (each coin
+at its argmax-SR Kelly = 0.10) yields portfolio SR **+3.184**, a
+**Δ +0.005** improvement over the uniform-0.50 canonical (+3.178)
+— well within noise.
+
+### 23.6 Critical findings
+
+1. **Per-coin Kelly tuning does not add alpha.** The hypothesis that
+   ETH and SOL (extended-feature alpha coins) can sustain a higher
+   Kelly is **rejected**. All 4 coins are bounded by the same
+   `max_leverage = 3.0` cap, which kicks in at the same `kelly ≈ 0.50`
+   threshold for the altcoins. BTC tolerates higher Kelly because its
+   absolute vol is lower, not because its signal is stronger.
+
+2. **Sharpe leverage-invariance has a breakdown point.** §22's claim
+   "Sharpe is leverage-invariant between kelly=0.25 and kelly=0.50"
+   holds, but the property breaks at `kelly = 0.75` for altcoins and at
+   `kelly = 1.00` even for BTC (small but measurable drift). The
+   breakdown is caused by the interaction of vol-targeted sizing with
+   the hard leverage cap.
+
+3. **Live deployment kelly=0.25 is well-justified.** The live config
+   sits at the bottom of the flat Sharpe range. There is no meaningful
+   Sharpe loss vs canonical `kelly=0.50`, and drawdown is halved
+   (-2.5% vs -4.9%) — exactly the desired behaviour for tighter
+   margin envelope.
+
+4. **One TODO closed.** TODO-P1-2 in `THESIS_IMPLEMENTATION_TODO.md`
+   complete. The originally-flagged worry — that uniform Kelly might
+   underperform per-coin Kelly — does not survive the empirical test.
+
+### 23.7 Artifacts
+
+| Path | Contents |
+|------|----------|
+| `scripts/v5_kelly_sweep.py` | Driver — loops 4 coins × 7 kelly values |
+| `data/v5_kelly_sweep/per_coin.csv` | Long-format per-coin × per-kelly metrics |
+| `data/v5_kelly_sweep/portfolio_uniform.csv` | Per-uniform-kelly portfolio metrics |
+| `data/v5_kelly_sweep/summary.json` | Full structured summary |
+
+---
+
+## 24. V5 MIX — Per-regime CPCV Breakdown (2026-05-16)
+
+### 24.1 Motivation
+
+§21.5 reports 28-fold CPCV on V5 MIX portfolio returns: mean SR +3.23,
+100% folds SR > 2, PBO 0.000. The aggregate is clean but does not
+distinguish whether the positive performance is **uniform across
+regimes** or **concentrated in a particular regime cluster**. This
+breakdown classifies each test fold by its dominant heuristic regime
+(computed on BTC prices over the fold window) and aggregates fold
+Sharpes per regime class.
+
+### 24.2 Protocol
+
+- Reuse §21.5 CPCV setup: `n_groups=8, test_groups=2, embargo=14,
+  min_train=252` → 28 test folds.
+- Reuse `tradingagents/strategies/v3/regime/hmm_v2.heuristic_label`
+  (30-day log return + Hurst exponent + 20-day vol percentile).
+- For each fold: label every test-bar by BTC heuristic regime; the
+  fold's "dominant regime" is the modal label.
+- Aggregate fold Sharpes per dominant-regime class.
+- Driver: `scripts/v5_cpcv_per_regime.py`
+
+### 24.3 Fold-regime distribution
+
+Of 28 CPCV test folds (each ~404 bars):
+- **25 folds dominantly sideways** (BTC bull regime is only ~13% of all
+  4.5-yr bars; CPCV folds span large windows so are mixed and rarely
+  bull-dominant)
+- **3 folds dominantly bear**
+- **0 folds dominantly bull**
+
+The absence of bull-dominant folds is a property of the regime
+distribution (sideways = 56% of bars, bear = 30%, bull = 13%) combined
+with fold size (~404 bars each). A fold needs >200 bull-labelled bars
+to be classified as bull-dominant — that condition is never met in
+the 4.5-yr window.
+
+### 24.4 Per-regime fold aggregates
+
+| Regime | n_folds | mean SR | median SR | min SR | max SR | %SR>0 | %SR>2 |
+|--------|:-------:|:-------:|:---------:|:------:|:------:|:-----:|:-----:|
+| sideways | 25 | **+3.224** | +3.168 | +2.684 | +3.970 | 100% | 100% |
+| bear | 3 | **+3.308** | +3.306 | +3.221 | +3.398 | 100% | 100% |
+
+**Both regime classes are 100% positive and 100% Sharpe > 2.** The
+bear-dominant folds are marginally stronger (mean SR +3.31 vs +3.22
+for sideways) — consistent with the §18.3 (extended-report) finding
+that V5 MIX is regime-robust and its bear-regime performance is
+particularly strong on ETH's V4-B leg.
+
+### 24.5 Overall reproduction (matches §21.5)
+
+| Metric | Value (this run) | §21.5 reference |
+|--------|:----------------:|:----------------:|
+| mean SR | +3.233 | +3.23 |
+| median SR | +3.220 | +3.22 |
+| std SR | 0.288 | 0.29 |
+| min SR | +2.684 | +2.68 |
+| max SR | +3.970 | +3.97 |
+| % folds SR > 2 | 100% | 100% |
+
+Exact match — confirms the §21.5 CPCV result is reproducible from the
+canonical `data/v5_mix_production/daily_returns.csv` series.
+
+### 24.6 Findings
+
+1. **No regime-concentration risk.** Both regime-conditional fold
+   subsets are 100% positive and 100% Sharpe > 2. V5 MIX is not
+   exploiting a single regime.
+
+2. **Bear performance slightly exceeds sideways.** This is consistent
+   with §18.3 ETH V4-B bear-regime SR +2.11 finding. The extended
+   feature set's bear-regime alpha sources (smart-money divergence,
+   liquidation z-scores, OI z-scores, cross-exchange funding,
+   exchange net-flow) carry information during deleveraging cascades.
+
+3. **No bull-dominant fold testable on this 4.5-yr window.** A clean
+   bull-regime CPCV test would need either (a) a longer sample
+   covering more bull periods, or (b) smaller CPCV folds (which would
+   reduce statistical power per fold).
+
+4. **One TODO closed.** TODO-P2-5 in `THESIS_IMPLEMENTATION_TODO.md`
+   complete. The §21.5 CPCV headline is robust to regime-conditional
+   slicing.
+
+### 24.7 Artifacts
+
+| Path | Contents |
+|------|----------|
+| `scripts/v5_cpcv_per_regime.py` | Driver — extends §21.5 CPCV with regime labels |
+| `data/v5_validation/per_regime_cpcv.csv` | Per-fold detail (28 rows × {fold, dates, regime, share, SR, ret}) |
+| `data/v5_validation/per_regime_cpcv.json` | Per-regime aggregates + overall + window |
+
+## 25. Thesis Figures Batch Generation (2026-05-16)
+
+### 25.1 Motivation
+
+Defence-ready visuals derived from existing empirical artefacts. Required by
+the thesis assignment (visual support for §4.1-§4.5 of the assignment outline)
+and by the figures plan documented in `THESIS_FIGURES_PLAN.md`.
+
+### 25.2 Driver
+
+`scripts/generate_thesis_figures.py` — batch script producing both PNG
+(300 dpi, raster) and SVG (vector) for every figure with a confirmed data
+source. Single run generates all 19 plots; deterministic output via fixed
+matplotlib style + DejaVu Serif fonts matching thesis typesetting.
+
+### 25.3 Generated figures (19)
+
+| Figure | Section | Type | Source |
+|--------|---------|------|--------|
+| F-4.1.5 DirAcc hierarchy | §11.3 | horizontal bar | hardcoded from §3 numbers |
+| F-4.1.6 V4-B feature importance | §14.4 | grouped bar | `data/v4b_analysis/feature_importance.csv` |
+| F-4.2.1 SMA30 ablation | §11.4 | bar | hardcoded from §5 |
+| F-4.2.3 Per-coin Kelly sweep | §23 | line | `data/v5_kelly_sweep/per_coin.csv` |
+| F-4.3.1 LLM phases ramp | §12 | bar w/ ref line | hardcoded phase Sharpes |
+| F-4.4.4 V3 component ablation | §13 | grouped bar | `data/v3_ablations/ablations_metrics.json` |
+| F-4.4.5 NH-HMM bundle pathology | §16.4 (V4) | stacked bar | `data/walkforward_v4_2coin/regime_diagnostics.csv` |
+| F-4.4.6 V4-B asymmetry | §17 | grouped bar | hardcoded V4-B vs V2 SR |
+| F-4.4.7 V4-B per-regime heatmap | §18.3 | heatmap | `data/v4b_analysis/per_regime_decomposition.csv` |
+| F-4.4.9 V5 MIX 4-coin equity | §20 | log-scale line | `data/v5_mix_production/daily_returns.csv` |
+| F-4.4.10 V5 correlation heatmap | §20.6 | heatmap | same daily_returns.csv |
+| F-4.5.1 DSR sensitivity | §21.2 | line | `data/v5_validation/v5_validation.json` |
+| F-4.5.2 Placebo null distribution | §21.3 | histogram | `data/v5_validation/placebo_sr_null.npy` |
+| F-4.5.3 Per-regime decomposition | §21.4 | grouped bar | `data/v5_validation/v5_robustness.json` |
+| F-4.5.4 CPCV fold distribution | §21.5 | histogram | `data/v5_validation/per_regime_cpcv.csv` |
+| F-4.5.5 Per-regime CPCV breakdown | §24 | grouped bar | `data/v5_validation/per_regime_cpcv.json` |
+| F-4.5.6 Cost sensitivity | §21.6 | dual-axis line | `data/v5_validation/v5_robustness.json` |
+| F-4.6.2 Combined equity overlay | §18.3 | log-scale lines | composed from `v5_mix_production` + OHLCV |
+| F-5.1 Sharpe waterfall | §21.3 attribution | stacked bar | placebo decomposition |
+
+### 25.4 Verified outputs
+
+All 19 figures successfully render. Spot-check renders:
+- F-4.4.9 V5 equity: SOL highest individual leg; portfolio (black) tracks
+  smoothly between the four legs, confirming diversification benefit visible
+  in correlation matrix (§20.6).
+- F-4.5.2 Placebo: observed +3.178 sits inside upper tail of null distribution
+  (p=0.228); mechanics floor +2.870 dominates, signal +0.308 modest. Confirms
+  §21.3 "vol-targeted multi-asset momentum strategy with modest ML overlay"
+  characterisation.
+- F-4.2.3 Kelly sweep: Sharpe-flat region 0.10-0.50, altcoin collapse past
+  0.50 (leverage cap). Visual confirmation of §23 numerical finding.
+- F-4.4.5 NH-HMM pathology: stacked-bar visualises BTC bundle 0% bear
+  classification + ETH bundle 63% bear stuck-at-confidence-1.0 result from
+  §16.4. Single most compelling demonstration of NH-HMM training failure
+  for the thesis.
+
+### 25.5 Artifacts
+
+| Path | Contents |
+|------|----------|
+| `scripts/generate_thesis_figures.py` | Batch driver — 19 figures, PNG+SVG |
+| `data/figures/F-*.png` | Defence-deck raster (300 dpi) |
+| `data/figures/F-*.svg` | Thesis-PDF vector |
+
+### 25.6 Pending figures (require new compute or external work)
+
+| Figure | Blocked by |
+|--------|------------|
+| T-1.1, T-1.2, T-1.3 (literature tables) | Manual compilation, ~3 days writing |
+| F-2.1, F-2.2, F-2.3 (architecture diagrams) | TikZ / draw.io drawing, ~2 days |
+| F-4.3.6 / T-4.7.1 (per-analyst leave-one-out) | TODO-P0-1, ~18 h LLM gen + $30 |
+| F-4.4.3 (V3 calibration collapse histogram) | Needs V3 model state replay |
+| F-5.2 (innovation-mapping diagram) | TikZ / draw.io, ~1 day |
+
+## 26. Architecture Diagrams + Literature Tables (2026-05-16)
+
+### 26.1 Architecture diagrams (F-2.1, F-2.2, F-2.3)
+
+Three matplotlib-rendered architecture diagrams added to `scripts/generate_thesis_figures.py`. PNG (300 dpi) + SVG (vector) outputs for both thesis PDF and defence slides.
+
+**F-2.1 TradingAgents crypto-adapted graph topology** — block diagram of the 2-phase agent flow: parallel analyst layer (Market / On-Chain / Sentiment / Prediction) feeding sequential debate + decision layer (Bull/Bear → Research Manager → Trader → 3-way Risk → Portfolio Manager). Side captions identify the two phases plus final signal extraction.
+
+**F-2.2 Bitemporal point-in-time data layer** — schema diagram showing external sources (CoinMetrics, DefiLlama, Coinglass, Deribit, Alpaca/GDELT/F&G/HF) → Parquet partitions (`{store}/{year}/{month}.parquet` with `(event_ts, as_of_ts, coin, metric, value, source, status)`) → DuckDB engine → pooled feature matrix. Right panel shows the PIT query SQL (`as_of_ts <= :trade_date`). Bottom panel documents revision windows (CoinMetrics FlowIn/OutExUSD: `+7d`, all others: `+1d`).
+
+**F-2.3 Position sizing + risk pipeline** — flow diagram of V2 sizing primitives: 3 inputs (signal, magnitude confidence, realised vol) → multiplicative chain (× confidence → × vol target → × Kelly → × SMA30 trend filter → × leverage cap) → 7-day min hold → final position. Top row: risk overlays (3% stop-loss, 15% circuit breaker, 95th vol cap). Bottom caption: Sharpe leverage-invariance (§23), SMA30 highest-impact change (§11.4), single-source v2_sizing.py.
+
+### 26.2 Literature tables (T-1.1, T-1.2, T-1.3)
+
+Three tables written to `THESIS_LITERATURE_TABLES.md` (+ compiled to `THESIS_LITERATURE_TABLES.pdf`, 85K). Both markdown preview + LaTeX `booktabs` paste-ready versions. BibTeX stubs for 13 new references included.
+
+**T-1.1 Multi-agent LLM frameworks comparison** — 9 rows (AutoGen / MetaGPT / CAMEL / ChatDev / TradingAgents / FinMem / FinCon / FinAgent + V5 MIX). Columns: framework / year / debate mechanism / memory / output format / domain / cited section.
+
+**T-1.2 LLM trading systems Sharpe audit** — 10 rows (BloombergGPT / FinGPT / Lopez-Lira / FinMem / TradingAgents / FinCon / FINSABER audit median + 3 this-thesis rows). Audits each system against FINSABER criteria (post-LLM-cutoff window, realistic transaction costs). V5 MIX +3.18 is the strongest validated post-cutoff Sharpe under realistic costs in the surveyed literature.
+
+**T-1.3 On-chain feature literature** — 18 rows (MVRV Z, realised cap, exchange flows, active addresses, CDD, hash rate, Puell, TVL, stablecoin mcap, OI, funding rate, OI-weighted funding, long/short, liquidations, smart-money divergence, DVOL, perp-spot basis, net flow z). Maps each feature to source paper or vendor, asset coverage, documented predictive horizon, Dubey & Enke (2025) top-N rank, and availability in this thesis's §9 PIT pipeline.
+
+### 26.3 Files
+
+| Path | Contents |
+|------|----------|
+| `scripts/generate_thesis_figures.py` | +3 diagram functions (now 22 total figures) |
+| `data/figures/F-2.1-topology.{png,svg}` | Multi-agent topology |
+| `data/figures/F-2.2-bitemporal-schema.{png,svg}` | PIT data layer schema |
+| `data/figures/F-2.3-sizing-pipeline.{png,svg}` | Sizing + risk pipeline |
+| `THESIS_LITERATURE_TABLES.md` | 3 lit tables (markdown + LaTeX dual-format) + BibTeX stubs |
+| `THESIS_LITERATURE_TABLES.pdf` | Compiled (85K, xelatex, 10pt) |
+
+### 26.4 Pending TODOs from §25.6
+
+| Item | Status |
+|------|--------|
+| F-2.1, F-2.2, F-2.3 architecture diagrams | **DONE (§26.1)** |
+| T-1.1, T-1.2, T-1.3 literature tables | **DONE (§26.2)** |
+| F-4.3.6 / T-4.7.1 per-analyst leave-one-out | still pending TODO-P0-1 (~18 h LLM gen + $30) |
+| F-4.4.3 V3 calibration histograms | still pending V3 model state replay |
+| F-5.2 innovation-mapping diagram | still pending (~1 day TikZ/draw.io) |
