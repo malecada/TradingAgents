@@ -69,7 +69,12 @@ done
 echo "  data subdirs: writable"
 
 # 5. Can import V5 live modules
-python -c "
+# Use $PYTHON if set (deploy passes /opt/tradingagents/venv/bin/python via systemd
+# Environment=), else fall back to bare `python`. Service user has no venv on PATH
+# unless explicitly added.
+PYTHON_BIN="${PYTHON:-/opt/tradingagents/venv/bin/python}"
+[ -x "$PYTHON_BIN" ] || PYTHON_BIN="python"
+"$PYTHON_BIN" -c "
 from tradingagents.execution.live.config import LiveConfig
 from tradingagents.execution.live.data_refresh import refresh_all, CriticalDataRefreshError
 from tradingagents.execution.live.retrain import run_retrain_with_fallback

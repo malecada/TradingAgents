@@ -144,7 +144,7 @@ def load_config() -> LiveConfig:
         max_leverage=_float("MAX_LEVERAGE", 3.0),
         max_daily_loss_pct=_float("MAX_DAILY_LOSS_PCT", 0.15),
         stop_loss_pct=_float("STOP_LOSS_PCT", 0.03),
-        max_open_positions=_int("MAX_OPEN_POSITIONS", 3),
+        max_open_positions=_int("MAX_OPEN_POSITIONS", 4),
         target_vol=_float("TARGET_VOL", 0.10),
         kelly_fraction=_float("KELLY_FRACTION", 0.25),
         vol_lookback=_int("VOL_LOOKBACK", 20),

@@ -331,7 +331,7 @@ def refresh_all(cfg, structured_log) -> dict:
     """
     data_root = Path(cfg.data_root)
     store_root = data_root / "onchain"
-    cache_root = data_root / "cache"
+    cache_root = data_root / "ohlcv_cache"
     deriv_dir = data_root / "derivatives"
     deriv_raw = data_root / "derivatives_raw"
     options_dir = data_root / "options"
