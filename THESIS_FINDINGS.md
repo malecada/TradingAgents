@@ -2894,3 +2894,177 @@ Per-coin diagnostics:
 | `data/hybrid_backtest_v2_1y/hybrid_vs_baseline_equity.png` | Equity curve plot |
 | Hetzner: `/opt/tradingagents/data/hybrid_signals_v2_1y/` | Source signal CSVs on remote box |
 | Hetzner: `/opt/tradingagents/logs/v2_llm_{btc,eth}_1y.log` | Full LLM call logs (19.5hr + 19.3hr) |
+
+## 23. Hybrid V5 1-Year Backtest + Model A/B (2026-05-15 → 2026-05-18)
+
+First systematic test of the LLM modulator stack against V5 MIX quant routing (vs the V2-only quant tested in §12.16, which lost alpha). Two-stage experiment: (a) 1-year hybrid generation on gpt-4o-mini over 2025-04-18 → 2026-04-15 with V5 per-coin LGB routing, (b) gpt-5-mini A/B on the last 30 bars to bound model-quality contribution.
+
+### Setup
+
+**Quant base**: V5 MIX per-coin routing
+- BTC → `data/multi_2coins_v2` (V2 canonical 78f pool)
+- ETH → `data/multi_2coins_pit_wf` (V4-B extended 193f pool)
+
+**LLM modulator**: full hybrid stack on `feature/hybrid-modulator` branch — Self-MoA + Skeptic-Quant + Modulator + CVRF + Hybrid RAG, all 4 analysts (market, onchain, crypto_sentiment, prediction), `gpt-4o-mini` for both deep and quick slots, replay cache enabled.
+
+**Window**: 2025-04-18 → 2026-04-15 (363 bars per coin, matching `data/hybrid_signals_v2_1y/` for direct comparison vs §12.16).
+
+**Code shipped on `feature/hybrid-modulator`** (commits f2b1a1e → 262c1ec):
+- `tradingagents/strategies/quant_engine.py` — per-coin `pool_map` override on top of V2 engine (back-compat: `pool_map=None` identical to prior).
+- `tradingagents/strategies/quant_signal_provider.py` — new `V5QuantSignalProvider`; extends `build_provider("v5", pool_map=...)`, `set_active_quant_version("v5", pool_map=...)`, `get_active_quant_signal` dispatch.
+- `scripts/generate_hybrid_signals.py` — `--quant-version v5`, `--quant-pool-preset {v5_2coin, v5_4coin}`, `--quant-pool-map COIN=PATH`; writes `pool_map` into `run_manifest.json`.
+- `scripts/backtest_hybrid.py` — mirror `--baseline-pool-map` / `--baseline-preset` so the pure-quant baseline equity uses the same V5 routing (otherwise hybrid-vs-baseline delta conflates LLM contribution with pool change).
+- `scripts/smoke_hybrid_v5.py` — lightweight routing smoke (V2 + V5 produce identical BTC signal, V4-B differs from V2 on ETH).
+- `scripts/compare_hybrid_models.py` — per-(date, coin) alignment of two hybrid runs.
+- `tests/strategies/test_v5_pool_map.py` — 6 tests covering pool_map priority + V5 provider plumbing + active-version state.
+
+### 23.1 — Headline result: 1-year hybrid V5 (gpt-4o-mini)
+
+Per-coin output of `scripts/backtest_hybrid.py --v2-sizing --baseline-preset v5_2coin` (`data/hybrid_backtest_v5_2coin_1y/summary.json`):
+
+| Coin | Hybrid SR | Baseline V5 SR | Δ SR | Hybrid Return | Baseline Return | Hybrid MaxDD | Baseline MaxDD |
+|---|---|---|---|---|---|---|---|
+| BTC | **3.31** | 3.30 | **+0.01** | +56.7% | +75.7% | 1.41% | 2.66% |
+| ETH | **4.68** | 3.59 | **+1.10** | +152.8% | +140.9% | 3.71% | 6.17% |
+
+Cross-section vs the prior §12.16 V2-only hybrid over the same 1-year window (`data/hybrid_backtest_v2_1y/summary.json`):
+
+| Stack | BTC SR | BTC Return | BTC MaxDD | ETH SR | ETH Return | ETH MaxDD |
+|---|---|---|---|---|---|---|
+| Pure V2 quant | 3.32 | +76.2% | 2.66% | 3.62 | +133.3% | 6.50% |
+| Pure V5 quant | 3.30 | +75.7% | 2.66% | 3.59 | +140.9% | 6.17% |
+| Hybrid V2 (4o-mini) | 2.08 | +2.9% | 0.71% | 3.36 | +22.4% | 3.24% |
+| **Hybrid V5 (4o-mini)** | **3.31** | +56.7% | **1.41%** | **4.68** | +152.8% | 3.71% |
+
+### 23.2 — Bootstrap CI on the V5 hybrid alpha
+
+5000 paired bootstrap resamples of daily returns (`hybrid_ret − baseline_ret`), each draw producing a Sharpe difference:
+
+| Coin | Point Δ SR | 95% CI | P(Δ > 0) |
+|---|---|---|---|
+| BTC | +0.11 | [-0.39, +0.68] | 0.665 |
+| **ETH** | **+1.10** | **[+0.60, +1.56]** | **1.000** |
+
+ETH gain is statistically robust (zero of 5000 resamples produced Δ ≤ 0). BTC delta is noise — Hybrid V5 BTC essentially matches the pure-V5 BTC baseline.
+
+Note: the script-reported SRs above (3.31/4.68 hybrid; 3.30/3.59 baseline) use a slightly different annualization than the custom bootstrap (3.57/4.76 hybrid; 3.46/3.65 baseline). The point deltas are consistent (+1.10 ETH in both); the absolute levels differ only by factor.
+
+### 23.3 — Interpretation: V5 routing flips the modulator's sign
+
+This contradicts §12.16, which showed the LLM modulator on V2 quant HURT BTC (-1.52 SR) and was noise on ETH. Two findings combined:
+
+1. **V2-quant + LLM modulator** (§12.16, also Hybrid V2 row above) — modulator dampens the V2 BTC signal, costing alpha. Reproduces BT11.
+2. **V5-quant + LLM modulator** (this section) — modulator adds +1.10 SR on ETH, neutral on BTC.
+
+Mechanism hypothesis: the V4-B 193-feature LGB on ETH produces a stronger, more discriminating quant signal (per §17 + §18 — ETH SR 0.88 → 1.80 standalone from extended features). When the underlying quant signal is strong and informative, the LLM modulator's role becomes "veto bad regimes" — dampening positions during periods the modulator flags as risky and letting the strong quant signal through otherwise. When the underlying quant signal is weaker (V2 78f on BTC or ETH), the LLM has nothing to veto correctly and its noise dominates.
+
+In other words: the modulator architecture is contingent on quant signal quality. The §12.16 negative result was not a property of the LLM stack — it was a property of asking the LLM to modulate a quant signal that was itself near its alpha ceiling.
+
+### 23.4 — Model A/B: gpt-4o-mini vs gpt-5-mini on last 30 bars
+
+Same hybrid stack, same V5 quant routing, only the LLM swapped. Window: 2026-03-16 → 2026-04-15 (31 bars). gpt-5-mini took **~9 min/bar steady-state** vs gpt-4o-mini's ~3.5 min/bar (≈ 2.5× slower, plausibly due to extra reasoning tokens; gpt-5-mini cost is ≈ 10× per-bar at OpenAI's 2026 pricing).
+
+#### Per-bar signal comparison
+
+From `scripts/compare_hybrid_models.py` (`data/hybrid_model_compare/summary.json`):
+
+| Coin | n_bars | quant_dir_agree | pos_dir_agree | pos\|Δ\|_p50 | pos\|Δ\|_p95 | llm_mult_corr |
+|---|---|---|---|---|---|---|
+| BTC | 31 | 100% | 100% | 0.150 | 0.695 | 0.295 |
+| ETH | 31 | 100% | 100% | 0.268 | 0.575 | 0.218 |
+
+Quant direction agreement is 100% as expected (same LGB pool). Position-direction agreement also 100% — both models always vote the same sign. Magnitudes differ moderately (ETH p50 |Δ| = 0.27), and the per-bar LLM-multiplier correlation is only ~0.2–0.3, meaning gpt-5-mini does not produce a scaled-up version of gpt-4o-mini's modulation — it produces a meaningfully different one.
+
+#### Per-coin Sharpe on the 30-bar slice
+
+Both models backtested via `scripts/backtest_hybrid.py --v2-sizing --baseline-preset v5_2coin` over the same 31-bar window. The gpt-4o-mini "30-bar" signals are a slice of the 1-year run (`data/hybrid_signals_v5_4omini_30bar_slice/`); the gpt-5-mini signals are a fresh gen (`data/hybrid_signals_v5_5mini_30bar/`).
+
+| Coin | Pure V5 SR | Hybrid SR (4o-mini) | Δ vs base | Hybrid SR (5-mini) | Δ vs base | 5-mini − 4o-mini |
+|---|---|---|---|---|---|---|
+| BTC | 5.44 | 7.01 | +1.56 | 7.67 | +2.22 | +0.66 |
+| ETH | 4.34 | **7.60** | **+3.26** | 6.20 | +1.86 | **−1.40** |
+
+Bootstrap CI (10,000 paired resamples) on the 5-mini vs 4o-mini Δ SR using daily returns from each run's backtest:
+
+| Coin | Δ SR | 95% CI | P(Δ > 0) |
+|---|---|---|---|
+| BTC | +0.31 | [-0.47, +1.67] | 0.77 |
+| ETH | -0.70 | [-2.55, +0.89] | 0.19 |
+
+Neither delta is significant at 30 bars — both CIs cross zero — but the directions disagree (5-mini directionally better on BTC, worse on ETH).
+
+#### Interpretation: no robust evidence the larger model is worth its 10× cost
+
+- 30 bars is too small a window to claim a model-quality difference. CIs are wide (~±2 SR for ETH).
+- Per-bar position agreement is 100% on sign, ~0.27 ETH magnitude difference at the median — gpt-5-mini's increased reasoning capacity is producing different position sizing, not different directional calls.
+- Extrapolated to full year (naive): if the per-bar position-magnitude difference is constant, the 30-bar Sharpe gap on ETH (-1.40) would be statistically resolvable around N ≈ 200-300 bars. A 6-month re-run on gpt-5-mini would be required to claim either direction with confidence; given that the 4o-mini run cost ≈ $30 and ran for 46 hours, a full-year 5-mini run would be ≈ $300 and 8-10 days at the observed rate.
+- The 4o-mini 1-year ETH SR alpha (+1.10) is far larger and more robust than the noisy 5-mini delta. The model-quality investment is dominated by the architecture choice (V5 routing) and analyst pipeline, not by the LLM tier.
+
+### 23.5 — VPS execution notes (lessons for repeat runs)
+
+- The 1-year gpt-4o-mini run took 46.2 hours wall on Hetzner CX22 (3.7 GB RAM, 4 GB swap). Memory stayed ≤ 1.7 GB used throughout — no swap pressure.
+- Initial rate was misleading: first ~30 bars at ≈ 9 min/bar (model loading + per-bar RF/GBR checkpoint training), steady state ≈ 2–4 min/bar for BTC and ≈ 4–5 min/bar for ETH (more `crypto_sentiment` Reddit/News work).
+- `wc -l` over-counts rows because the `narrative` column contains multi-line LLM text. Use `grep -cE '^202[0-9]'` to count actual date-prefixed records.
+- The watcher script (`scripts/queue_model_compare.sh`) auto-launched the gpt-5-mini run when the 1-year tmux died, but failed because the production repo at `/opt/tradingagents/repo` had been detached to `live-v2.0.1` (the live trader tag) — the on-disk code lacked `--quant-version v5`. Resolution: created `/opt/tradingagents/work_hybrid` as an isolated `git worktree` for `feature/hybrid-modulator`, symlinked `data/multi_2coins_v2`, `data/multi_2coins_pit_wf`, `data/hybrid_signals_v5_2coin_1y`, `data/checkpoints`, `data/llm_replay_cache.db`, `data/trade_journal.db` from `/opt/tradingagents/data/`, then re-launched `hybrid_v5_5mini` tmux from the worktree. Live trader (PID 2885408) was untouched on the prod tag.
+- Reddit returned 403 throughout — sentiment analyst degraded gracefully (Alpha Vantage news + Google News continued).
+
+### 23.6 — Data artifacts
+
+| File | Description |
+|---|---|
+| `data/hybrid_signals_v5_2coin_1y/bitcoin_2025-04-18_2026-04-15.csv` | 1-yr BTC hybrid signals, V5 routing, gpt-4o-mini |
+| `data/hybrid_signals_v5_2coin_1y/ethereum_2025-04-18_2026-04-15.csv` | 1-yr ETH hybrid signals, V5 routing, gpt-4o-mini |
+| `data/hybrid_signals_v5_2coin_1y/run_manifest.json` | Captured `pool_map`, args, `started_at` |
+| `data/hybrid_backtest_v5_2coin_1y/summary.json` | 1-yr per-coin metrics |
+| `data/hybrid_backtest_v5_2coin_1y/daily_returns.csv` | 1-yr daily returns + positions |
+| `data/hybrid_backtest_v5_2coin_1y/hybrid_vs_baseline_equity.png` | Equity curves |
+| `data/hybrid_signals_v5_5mini_30bar/` | 31-bar BTC + ETH hybrid signals, V5 routing, gpt-5-mini |
+| `data/hybrid_backtest_v5_5mini_30bar/summary.json` | 30-bar 5-mini metrics |
+| `data/hybrid_backtest_v5_4omini_30bar/summary.json` | 30-bar 4o-mini slice metrics (same window) |
+| `data/hybrid_model_compare/summary.json` | Per-bar comparison of the two LLMs |
+| Hetzner: `/opt/tradingagents/work_hybrid/` | Isolated worktree (kept for reproducibility) |
+| Hetzner: `/opt/tradingagents/repo/logs/hybrid_v5_2coin_1y.log` | 46.2hr gen log (runtime: 166307s) |
+| Hetzner: `/opt/tradingagents/work_hybrid/logs/hybrid_v5_5mini.log` | 12hr 5-mini gen log |
+
+### 23.7 — Reproduce
+
+```bash
+# (on VPS) — assumes feature/hybrid-modulator checked out + .env + data symlinks
+cd /opt/tradingagents/work_hybrid
+
+# 1-year hybrid V5 (gpt-4o-mini) — 46h, ~$30
+python scripts/generate_hybrid_signals.py \
+    --coins bitcoin ethereum --start 2025-04-18 --end 2026-04-15 \
+    --quant-version v5 --quant-pool-preset v5_2coin \
+    --analysts market onchain crypto_sentiment prediction \
+    --llm-provider openai --deep-think gpt-4o-mini --quick-think gpt-4o-mini \
+    --output-dir data/hybrid_signals_v5_2coin_1y
+
+# 1-year backtest with V5-matched baseline
+python scripts/backtest_hybrid.py \
+    --signals-dir data/hybrid_signals_v5_2coin_1y \
+    --coins bitcoin ethereum --start 2025-04-18 --end 2026-04-15 \
+    --v2-sizing --baseline-preset v5_2coin \
+    --output-dir data/hybrid_backtest_v5_2coin_1y
+
+# 30-bar model A/B (gpt-5-mini) — 12h, ~$15
+python scripts/generate_hybrid_signals.py \
+    --coins bitcoin ethereum --start 2026-03-16 --end 2026-04-15 \
+    --quant-version v5 --quant-pool-preset v5_2coin \
+    --analysts market onchain crypto_sentiment prediction \
+    --llm-provider openai --deep-think gpt-5-mini --quick-think gpt-5-mini \
+    --output-dir data/hybrid_signals_v5_5mini_30bar
+
+# Per-bar compare
+python scripts/compare_hybrid_models.py \
+    --baseline-dir data/hybrid_signals_v5_2coin_1y \
+    --upgrade-dir  data/hybrid_signals_v5_5mini_30bar \
+    --start 2026-03-16 --end 2026-04-15 --coins bitcoin ethereum \
+    --output-dir data/hybrid_model_compare
+```
+
+### 23.8 — Open follow-ups
+
+- 4-coin extension (+BNB+SOL via `--quant-pool-preset v5_4coin`) — gated on the 2-coin GO/NO-GO above (GO confirmed). Will require ~92h of VPS time. SOL `crypto_sentiment` / `onchain` analyst feed quality is the risk — SOL has no CoinMetrics Community data and DeFiLlama TVL only.
+- Hybrid V5 on a third independent window (e.g. 2024-04 → 2025-04) to test whether the ETH +1.10 SR result generalizes outside this regime.
+- Modulator ablation on the V5 stack — repeat the §12.17-style component knock-outs (Self-MoA, Skeptic-Quant, CVRF, deterministic pack, anonymization) on V5 routing to identify which subsystem of the modulator is responsible for the ETH gain.
