@@ -584,6 +584,9 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                 sum(1 for _ in trades_executed) / max(len(trades_executed), 1)
                 if trades_executed else 1.0
             )
+            # All-time peak across portfolio_snapshots (includes the snapshot
+            # just written above, so peak is at worst equal to portfolio_after).
+            peak_value = j.peak_total_value()
             notify.send_daily_summary(
                 bot_token=cfg.telegram_bot_token,
                 chat_id=cfg.telegram_chat_id,
@@ -592,7 +595,24 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                 portfolio_after=portfolio_after,
                 trades=trades_executed,
                 agreement_rate=agreement,
+                peak_value=peak_value,
+                initial_capital=cfg.initial_capital,
             )
+            # Drawdown-from-peak alert: silent erosion was the bug that hid the
+            # V1 -52% loss for months — a single threshold catches it.
+            if peak_value > 0:
+                dd_from_peak = (portfolio_after - peak_value) / peak_value
+                if dd_from_peak <= -0.10:
+                    notify.send_alert(
+                        bot_token=cfg.telegram_bot_token,
+                        chat_id=cfg.telegram_chat_id,
+                        severity="DRAWDOWN",
+                        message=(
+                            f"Cycle {cycle_id}: portfolio {portfolio_after:.2f} "
+                            f"is {dd_from_peak:+.2%} from all-time peak "
+                            f"{peak_value:.2f}."
+                        ),
+                    )
 
         end_ts = _utc_now_iso()
         j.record_cycle(

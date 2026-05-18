@@ -124,6 +124,12 @@ class Journal:
         )
         self._conn.commit()
 
+    def peak_total_value(self) -> float:
+        row = self._conn.execute(
+            "SELECT MAX(total_value) FROM portfolio_snapshots"
+        ).fetchone()
+        return float(row[0]) if row and row[0] is not None else 0.0
+
     def log_feature_snapshot(self, cycle_id, coin, feature_name, value, source) -> None:
         self._conn.execute(
             "INSERT INTO feature_snapshots (cycle_id, coin, feature_name, value, source) "

@@ -24,15 +24,26 @@ def _post_telegram(*, token: str, chat_id: str, text: str):
 
 def send_daily_summary(*, bot_token, chat_id, cycle_id,
                         portfolio_before, portfolio_after, trades,
-                        agreement_rate) -> None:
+                        agreement_rate, peak_value=0.0,
+                        initial_capital=0.0) -> None:
     pnl = portfolio_after - portfolio_before
     pnl_pct = pnl / portfolio_before if portfolio_before else 0
+    # peak_value can be 0 on the very first cycle (no prior snapshot); treat
+    # the current value as the peak in that case so the drawdown line reads 0%.
+    peak = max(peak_value, portfolio_after)
+    dd_from_peak = (portfolio_after - peak) / peak if peak else 0
     lines = [
         f"*Cycle {cycle_id}*",
         f"Portfolio: {portfolio_before:.2f} → {portfolio_after:.2f} ({pnl_pct:+.2%})",
-        f"Trades: {len(trades)}",
-        f"Shadow agreement: {agreement_rate:.1%}",
+        f"Peak: {peak:.2f}  DD-from-peak: {dd_from_peak:+.2%}",
     ]
+    if initial_capital:
+        cum_pnl_pct = (portfolio_after - initial_capital) / initial_capital
+        lines.append(
+            f"Cumulative vs initial ({initial_capital:.0f}): {cum_pnl_pct:+.2%}"
+        )
+    lines.append(f"Trades: {len(trades)}")
+    lines.append(f"Shadow agreement: {agreement_rate:.1%}")
     for t in trades:
         lines.append(f"  {t['coin']} {t['side']} {t['qty']:.6f} @ {t['price']:.2f}")
     text = "\n".join(lines)
