@@ -63,6 +63,8 @@ include = ["tradingagents*", "cli*"]
 cli = ["static/*"]
 
 [tool.pytest.ini_options]
+addopts = "-m 'not slow'"
 markers = [
     "online: requires external API access; opt-in via RUN_ONLINE_TESTS=1",
+    "slow: marks tests that take >5s (deselect with -m \"not slow\")",
 ]

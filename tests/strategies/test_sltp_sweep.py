@@ -6,12 +6,21 @@ import sys
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
+import pytest
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.baseline_strategy_v2 import run_coin_backtest  # noqa: E402
+
+# Regression anchor for V5 MIX baseline (4.5-yr window 2021-11-07 → 2026-04-15).
+# §20 thesis figure was 3.25; current canonical run is 3.178 (verified 2026-05-19,
+# confirmed bit-identical after Task 3 refactor). Update after any deliberate
+# data/model change; tolerance ±0.05 is intentionally wide to absorb minor drift.
+_V5_ANCHOR_SR = 3.18
+_V5_ANCHOR_TOL = 0.05
 
 
 def test_take_profit_triggers_and_diverges_from_no_tp_path():
@@ -141,4 +150,35 @@ def test_stop_loss_still_fires_when_take_profit_enabled():
     np.testing.assert_array_equal(
         eq_sl_and_tp, eq_sl_only,
         err_msg="SL+TP path diverged from SL-only path: TP incorrectly suppressed or altered SL"
+    )
+
+
+@pytest.mark.slow
+def test_v5_baseline_reproduces_published_sharpe():
+    """V5 MIX baseline cell (SL=0.03, EE=0.015, TP=off) must reproduce the
+    canonical 4.5-yr WF Sharpe. Anchor + tolerance + rationale documented at
+    _V5_ANCHOR_SR. Slow (~30s wall). Invoke: pytest -m slow.
+    """
+    from scripts.baseline_v5_mix import (  # noqa: E402
+        COSTS, DEFAULT_ROUTING, run_coin,
+    )
+
+    start, end = "2021-11-07", "2026-04-15"
+    coin_rets = {}
+    for coin, pdir in DEFAULT_ROUTING.items():
+        coin_rets[coin] = run_coin(
+            coin, PROJECT_ROOT / pdir, start, end,
+            kelly_fraction=0.5,
+            early_exit_loss=0.015,
+            costs_override=dict(COSTS),  # canonical V5 cost config; COSTS sets take_profit=0.0
+        )
+
+    df = pd.DataFrame(coin_rets).dropna()
+    port = df.mean(axis=1)
+    ann = np.sqrt(252)
+    sr = float(port.mean() / port.std() * ann)
+
+    assert abs(sr - _V5_ANCHOR_SR) < _V5_ANCHOR_TOL, (
+        f"V5 baseline reproduction drifted: got SR={sr:.3f}, "
+        f"expected {_V5_ANCHOR_SR} ± {_V5_ANCHOR_TOL}"
     )
