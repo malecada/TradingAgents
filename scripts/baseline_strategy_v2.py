@@ -90,12 +90,20 @@ def run_coin_backtest(
     stop_loss: float,
     max_portfolio_dd: float,
     take_profit: float = 0.0,
+    intrabar: bool = False,
+    highs: np.ndarray | None = None,
+    lows: np.ndarray | None = None,
 ) -> tuple[list, dict]:
     """Run backtest for a single coin with full cost and risk model."""
+    if intrabar and (highs is None or lows is None):
+        raise ValueError(
+            "run_coin_backtest: intrabar=True requires both highs and lows arrays"
+        )
     equity = [initial_capital]
     daily_returns = []
     prev_pos = 0.0
     entry_equity = initial_capital
+    entry_price = 0.0
     peak_equity = initial_capital
     halted = False
 
@@ -119,10 +127,36 @@ def run_coin_backtest(
 
         if target_pos != prev_pos and target_pos != 0:
             entry_equity = equity[-1]
+            entry_price = p_prev  # opened this bar at prev close
         if target_pos == 0 and prev_pos != 0:
             entry_equity = equity[-1]
+            entry_price = 0.0     # closed
 
-        price_return = (p_curr - p_prev) / p_prev
+        # Intrabar SL/TP — runs before close-to-close return is computed.
+        intrabar_fill_price = None
+        if intrabar and target_pos != 0 and entry_price > 0:
+            # NaN wick → comparisons evaluate to False; falls back to close-only this bar.
+            hi = highs[i]
+            lo = lows[i]
+            if target_pos > 0:
+                sl_price = entry_price * (1 - stop_loss) if stop_loss > 0 else 0.0
+                tp_price = entry_price * (1 + take_profit) if take_profit > 0 else float("inf")
+                hit_sl = (sl_price > 0 and lo <= sl_price)
+                hit_tp = (take_profit > 0 and hi >= tp_price)
+            else:  # short
+                sl_price = entry_price * (1 + stop_loss) if stop_loss > 0 else float("inf")
+                tp_price = entry_price * (1 - take_profit) if take_profit > 0 else 0.0
+                hit_sl = (stop_loss > 0 and hi >= sl_price)
+                hit_tp = (take_profit > 0 and tp_price > 0 and lo <= tp_price)
+            if hit_sl:                              # SL-first pessimistic (also wins collision)
+                intrabar_fill_price = sl_price
+            elif hit_tp:
+                intrabar_fill_price = tp_price
+
+        if intrabar_fill_price is not None:
+            price_return = (intrabar_fill_price - p_prev) / p_prev
+        else:
+            price_return = (p_curr - p_prev) / p_prev
         gross_ret = target_pos * price_return
 
         fee_cost = (2 * fee_rate + slippage + 2 * spread) * trade_notional
@@ -140,6 +174,10 @@ def run_coin_backtest(
             trade_up = (new_equity - entry_equity) / entry_equity
             if take_profit > 0 and trade_up >= take_profit:
                 target_pos = 0.0
+
+        if intrabar_fill_price is not None:
+            target_pos = 0.0
+            entry_price = 0.0
 
         daily_returns.append(net_ret)
         equity.append(new_equity)
