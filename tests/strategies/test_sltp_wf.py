@@ -54,3 +54,15 @@ def test_orchestrator_smoke_produces_expected_files(smoke_dir):
     assert (out_dir / "wf_results.csv").exists()
     assert (out_dir / "wf_summary.json").exists()
     assert (out_dir / "wf_report.md").exists()
+
+
+def test_orchestrator_train_test_windows_do_not_overlap(smoke_dir):
+    """wf_summary.json train and test windows must be disjoint (test starts
+    strictly after train ends)."""
+    out_dir = smoke_dir
+    s = json.loads((out_dir / "wf_summary.json").read_text())
+    train_end = pd.Timestamp(s["windows"]["train"]["end"])
+    test_start = pd.Timestamp(s["windows"]["test"]["start"])
+    assert test_start > train_end, (
+        f"train_end={train_end} must be < test_start={test_start}"
+    )
