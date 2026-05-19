@@ -3414,4 +3414,106 @@ narrowed (the SL=0 winner suggests SL has small effect when EE is tight).
 **Spec + plan.**
 - Spec: `docs/superpowers/specs/2026-05-19-v5-sltp-intrabar-design.md`
 - Plan: `docs/superpowers/plans/2026-05-19-v5-sltp-intrabar.md`
+
+**Follow-up:** §31 walk-forward validates this OOS — verdict is FAIL/FAIL on both engines (train-best does not generalise; OOS-best is a different cell). §29-§30-§31 closes as controlled negative result.
+
+
+## 31. V5 MIX TP/SL Walk-Forward Parameter Split — §29 + §30 OOS Validation (2026-05-19)
+
+**Goal.** §29 (close-only sweep) and §30 (intrabar sweep) both produced
+single-window in-sample best cells. §30 partial-confirmed §29 only with a
+**different** parameter regime — wicks flipped the optimum. This study tests
+both engines' train-best cells out-of-sample on a held-out 2025-01 → 2026-04
+window.
+
+**Method.** Train window 2021-11-07 → 2024-12-31 (~3.15 yr); test window
+2025-01-01 → 2026-04-15 (~1.3 yr). For each engine (close-only, intrabar),
+the same 378-cell SL × EE × TP grid is swept on TRAIN and TEST. The
+train-best cell (highest IS Sharpe) is identified and its OOS Sharpe is
+compared to the OOS Sharpe of the V5 baseline cell (SL=0.03, EE=0.015,
+TP=off). Verdict per engine: **pass** if train-best OOS SR > baseline OOS SR,
+else **fail**.
+
+**Results — close-only engine.**
+
+| | Value |
+|---|---|
+| Train-best cell | SL = 0.1, EE = 1, TP = 0 |
+| IS SR (TRAIN) | 3.419 |
+| OOS SR (TEST) | 3.046 |
+| OOS DD | 4.5% |
+| Baseline OOS SR | 3.318 |
+| **Verdict** | **FAIL** |
+
+**Results — intrabar engine.**
+
+| | Value |
+|---|---|
+| Train-best cell | SL = 0, EE = 0.005, TP = 0.12 |
+| IS SR (TRAIN) | 3.427 |
+| OOS SR (TEST) | 2.994 |
+| OOS DD | 3.9% |
+| Baseline OOS SR | 3.192 |
+| **Verdict** | **FAIL** |
+
+**Joint outcome: FAIL / FAIL — controlled negative result.**
+
+Both engines reject the acceptance criterion. The train-best cell from each
+engine **underperforms the V5 baseline cell out-of-sample**. The §29 close-only
+finding ("loose SL + EE-disabled dominates") and the §30 intrabar finding
+("no SL + very tight EE + high TP") are both products of in-sample
+overfitting to the 2021-11 → 2024-12 window.
+
+**Overfitting diagnostic.** Both engines' OOS sweeps independently find
+profitable cells — they just are NOT the same cells as the train-best:
+
+| Engine | Train-best cell | Train-best OOS SR | OOS-best cell | OOS-best OOS SR |
+|---|---|---|---|---|
+| close-only | (0.1, 1, 0) | 3.046 | (0.05, 0.015, 0.0) | 3.320 |
+| intrabar | (0, 0.005, 0.12) | 2.994 | (0.05, 0.015, 0.12) | 3.611 |
+
+The OOS-best cells differ from the train-best cells in every parameter axis
+for both engines. Parameter instability across windows is the diagnostic
+signature of overfitting via grid search on a small number of OOS bars.
+
+**Implication for the §29-§30-§31 parameter-sweep family.**
+
+The parameter-sweep family is closed as a **controlled negative result**.
+§29 found an in-sample winner; §30 showed that winner was wick-fragile and
+proposed a different in-sample winner; §31 shows both in-sample winners
+fail to generalise OOS. The V5 baseline cell (SL=0.03, EE=0.015, TP=off)
+remains the safest choice — it outperforms both engines' train-best cells
+on the held-out window.
+
+**Limitations.**
+1. Single train/test split. Test window only 1.3 yr. A multi-fold or
+   bootstrap CI on the OOS delta could in principle distinguish "overfit"
+   from "small sample noise" — but the directional consistency (both
+   engines' OOS-best ≠ train-best) is strong enough that we treat the
+   fail/fail verdict as load-bearing.
+2. No embargo between train and test. PIT prediction CSVs + per-call
+   position reset means no leakage path, but the immediacy of the boundary
+   inherits any momentum from late-2024 into early-2025.
+3. Global tuple — same SL/EE/TP across 4 coins. Per-coin OOS may behave
+   differently and remains unexplored.
+4. The §21 attribution caveat (sizing dominates LGB signal) means a parameter
+   sweep was at best fishing in a low-signal layer. The negative result is
+   consistent with that prior expectation.
+
+**Live deployment.** No change recommended. The V5 production parameters
+(SL=0.03, EE=0.015, TP=off) remain the live configuration — and now have
+empirical OOS support against alternatives discovered by both close-only
+and intrabar grid search.
+
+**Artifacts.**
+- Joined per-cell IS/OOS results: `data/v5_sltp_wf/wf_results.csv`
+- Per-engine train-best + verdicts: `data/v5_sltp_wf/wf_summary.json`
+- Human-readable report: `data/v5_sltp_wf/wf_report.md`
+- Per-window per-engine raw sweeps: `data/v5_sltp_wf/{co,ib}_{train,test}/`
+- Run log: `data/v5_sltp_wf/wf_sweep.log`
+
+**Spec + plan.**
+- Spec: `docs/superpowers/specs/2026-05-19-v5-sltp-wf-split-design.md`
+- Plan: `docs/superpowers/plans/2026-05-19-v5-sltp-wf-split.md`
+- Branch: `feature/v5-sltp-wf-split`
 - Branch: `feature/v5-sltp-sweep-intrabar`
