@@ -119,3 +119,32 @@ def test_orchestrator_cell_join_matches_source_csvs(smoke_dir):
     assert abs(co["oos_sr"] - co_test_port["sharpe"]) < 1e-9, (
         f"oos_sr mismatch: wf_results={co['oos_sr']} vs co_test={co_test_port['sharpe']}"
     )
+
+
+@pytest.mark.slow
+def test_orchestrator_full_wf_completes_and_populates_verdicts(tmp_path):
+    """Full WF (378 cells × 4 sweeps) must complete in <300s and produce a
+    valid wf_summary.json with both engine verdicts populated."""
+    out_dir = tmp_path / "wf_full"
+    if out_dir.exists():
+        shutil.rmtree(out_dir)
+    import time as _time
+    t0 = _time.time()
+    subprocess.run(
+        [
+            sys.executable,
+            str(PROJECT_ROOT / "scripts" / "v5_sltp_wf_orchestrator.py"),
+            "--output-dir", str(out_dir),
+        ],
+        cwd=str(PROJECT_ROOT),
+        check=True,
+        timeout=300,
+    )
+    elapsed = _time.time() - t0
+    assert elapsed < 300, f"WF took {elapsed:.1f}s, expected <300s"
+
+    s = json.loads((out_dir / "wf_summary.json").read_text())
+    for engine in ("close_only", "intrabar"):
+        assert s[engine]["verdict"] in ("pass", "fail")
+        assert s[engine]["baseline_oos_sr"] is not None
+        assert s[engine]["train_best"]["is_sr"] > 0  # full sweep has a positive winner
