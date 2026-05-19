@@ -6,7 +6,6 @@ import sys
 from pathlib import Path
 
 import numpy as np
-import pytest
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
@@ -48,4 +47,98 @@ def test_take_profit_triggers_and_diverges_from_no_tp_path():
     assert eq_tp[-1] < eq_no_tp[-1], (
         f"TP final {eq_tp[-1]:.2f} should be < no-TP {eq_no_tp[-1]:.2f} "
         "(each TP-triggered round-trip costs fees)"
+    )
+
+
+def test_take_profit_zero_is_bit_identical_to_no_tp_kwarg():
+    """take_profit=0 must produce IDENTICAL equity to omitting the kwarg."""
+    rng = np.random.default_rng(42)
+    n = 200
+    dates = np.arange(n)
+    # synthetic price walk
+    rets = rng.normal(0.0005, 0.02, size=n)
+    prices = 100.0 * np.cumprod(1 + rets)
+    # positions: mostly +1, occasional flat, occasional -1
+    positions = rng.choice([-1.0, 0.0, 1.0], size=n, p=[0.3, 0.2, 0.5])
+
+    common = dict(
+        dates=dates, prices=prices, positions=positions,
+        initial_capital=10_000.0, stop_loss=0.03,
+        fee_rate=0.0004, slippage=0.0005, spread=0.0001,
+        price_impact=0.00005, funding_rate=0.0001 / 8,
+        max_portfolio_dd=0.15,
+    )
+
+    eq_no_kwarg, m_no = run_coin_backtest(**common)
+    eq_tp_zero, m_tp = run_coin_backtest(take_profit=0.0, **common)
+
+    np.testing.assert_array_equal(
+        np.asarray(eq_no_kwarg), np.asarray(eq_tp_zero),
+        err_msg="take_profit=0.0 changed equity vs no-kwarg path"
+    )
+    assert m_no == m_tp, "metrics dict diverged when take_profit=0.0"
+
+
+def test_stop_loss_still_fires_when_take_profit_enabled():
+    """With both SL and TP set, a falling position still exits via SL.
+
+    The engine uses one-bar-flatten-then-re-entry semantics: when SL fires at
+    bar i the full bar P&L is already credited, then prev_pos is set to 0.  If
+    positions[i+1] is still non-zero the position is re-entered at bar i+1,
+    paying an extra round-trip fee.  On a monotonically-falling price this
+    means the SL-on path ends LOWER than the SL-off path (extra re-entry fees).
+    The test therefore checks:
+      (a) SL fires → equity paths diverge (not identical)
+      (b) adding TP on top of SL does NOT suppress SL → SL+TP path == SL-only path
+    """
+    dates = np.arange(10)
+    # Price falls 5%/bar from 100. Long position throughout.
+    prices = 100.0 * (0.95 ** np.arange(10))
+    positions = np.ones(10)
+
+    costs = dict(
+        fee_rate=0.001, slippage=0.0, spread=0.0,
+        price_impact=0.0, funding_rate=0.0,
+        max_portfolio_dd=1.0,  # disabled
+    )
+
+    # Path A: SL disabled, TP active
+    eq_no_sl, _ = run_coin_backtest(
+        dates=dates, prices=prices, positions=positions,
+        initial_capital=10_000.0,
+        stop_loss=1.0,         # SL effectively disabled
+        take_profit=0.05,
+        **costs,
+    )
+    # Path B: SL active, TP also active
+    eq_sl_and_tp, _ = run_coin_backtest(
+        dates=dates, prices=prices, positions=positions,
+        initial_capital=10_000.0,
+        stop_loss=0.03,
+        take_profit=0.05,
+        **costs,
+    )
+    # Path C: SL active, TP disabled (baseline for SL-in-isolation)
+    eq_sl_only, _ = run_coin_backtest(
+        dates=dates, prices=prices, positions=positions,
+        initial_capital=10_000.0,
+        stop_loss=0.03,
+        take_profit=0.0,
+        **costs,
+    )
+    eq_no_sl = np.asarray(eq_no_sl)
+    eq_sl_and_tp = np.asarray(eq_sl_and_tp)
+    eq_sl_only = np.asarray(eq_sl_only)
+
+    # (a) SL fires: paths must diverge from the SL-off baseline.
+    assert not np.allclose(eq_sl_and_tp, eq_no_sl), (
+        "SL+TP path is identical to SL-disabled path — SL never fired"
+    )
+    # (b) TP does not suppress SL: SL+TP path must equal SL-only path on an
+    #     adverse (falling) price where TP can never trigger.
+    #     Guards against a future bug where the TP branch clobbers target_pos
+    #     even when trade_up < take_profit (missing >0 guard, sign flip, etc).
+    np.testing.assert_array_equal(
+        eq_sl_and_tp, eq_sl_only,
+        err_msg="SL+TP path diverged from SL-only path: TP incorrectly suppressed or altered SL"
     )
