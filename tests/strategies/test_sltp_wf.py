@@ -66,3 +66,23 @@ def test_orchestrator_train_test_windows_do_not_overlap(smoke_dir):
     assert test_start > train_end, (
         f"train_end={train_end} must be < test_start={test_start}"
     )
+
+
+def test_orchestrator_per_engine_verdict_present(smoke_dir):
+    """wf_summary.json must contain close_only.verdict and intrabar.verdict,
+    each in {pass, fail}."""
+    out_dir = smoke_dir
+    s = json.loads((out_dir / "wf_summary.json").read_text())
+
+    for engine in ("close_only", "intrabar"):
+        assert engine in s, f"missing engine block: {engine}"
+        block = s[engine]
+        assert block["engine"] == engine
+        assert "verdict" in block
+        assert block["verdict"] in ("pass", "fail"), (
+            f"{engine}.verdict must be pass|fail, got {block['verdict']}"
+        )
+        assert "train_best" in block
+        for k in ("sl", "ee", "tp", "is_sr", "oos_sr", "oos_dd", "oos_calmar"):
+            assert k in block["train_best"], f"missing train_best.{k}"
+        assert "baseline_oos_sr" in block
