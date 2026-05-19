@@ -179,3 +179,89 @@ def test_intrabar_true_without_highs_raises():
         run_coin_backtest(intrabar=True, highs=np.zeros(5), **common)
     with pytest.raises(ValueError, match="intrabar=True requires"):
         run_coin_backtest(intrabar=True, lows=np.zeros(5), **common)
+
+
+# Slow regression guards: V5 MIX 4.5-yr WF baseline cell under both engine paths.
+_CLOSE_ONLY_ANCHOR_SR = 3.18   # Reproduces §29 baseline; matches _V5_ANCHOR_SR.
+_CLOSE_ONLY_ANCHOR_TOL = 0.05
+# Intrabar baseline: NEW value we're discovering. Wide tolerance because we don't
+# yet know what it should be — only that it should be sane.
+_INTRABAR_ANCHOR_LOW = 2.5
+_INTRABAR_ANCHOR_HIGH = 3.5
+
+
+def _run_baseline(intrabar: bool) -> float:
+    """Run V5 MIX baseline cell (SL=0.03, EE=0.015, TP=off) on the canonical
+    4.5-yr WF window. Returns portfolio Sharpe."""
+    from scripts.baseline_strategy_v2 import run_coin_backtest  # noqa: E402
+    from scripts.baseline_v5_mix import (  # noqa: E402
+        COSTS, DEFAULT_ROUTING, _load_preds, _v2_positions,
+    )
+    from tradingagents.dataflows.coingecko_binance import _load_crypto_ohlcv  # noqa: E402
+
+    start, end = "2021-11-07", "2026-04-15"
+    coin_rets = {}
+    for coin, pdir in DEFAULT_ROUTING.items():
+        preds = _load_preds(PROJECT_ROOT / pdir, coin)
+        preds = preds[(preds["date"] >= start) & (preds["date"] <= end)]
+        ohlcv = _load_crypto_ohlcv(coin, end)
+        ohlcv["Date"] = pd.to_datetime(ohlcv["Date"]).dt.tz_localize(None).dt.normalize()
+        merged = preds.merge(
+            ohlcv[["Date", "Open", "High", "Low", "Close"]],
+            left_on="date", right_on="Date",
+        ).dropna(subset=["Close"]).reset_index(drop=True)
+        merged["ref_price"] = merged["Close"]
+
+        pos = _v2_positions(merged, kelly_fraction=0.5, early_exit_loss=0.015)
+        costs = dict(COSTS)
+        if intrabar:
+            equity, _m = run_coin_backtest(
+                dates=merged["date"].values,
+                prices=merged["Close"].values,
+                positions=pos, initial_capital=10_000.0,
+                intrabar=True,
+                highs=merged["High"].values, lows=merged["Low"].values,
+                **costs,
+            )
+        else:
+            equity, _m = run_coin_backtest(
+                dates=merged["date"].values,
+                prices=merged["Close"].values,
+                positions=pos, initial_capital=10_000.0,
+                **costs,
+            )
+        eq = np.asarray(equity, dtype=float)
+        rets = eq[1:] / eq[:-1] - 1.0
+        coin_rets[coin] = pd.Series(
+            rets, index=pd.to_datetime(merged["date"].values[1:]),
+        )
+    df = pd.DataFrame(coin_rets).dropna()
+    port = df.mean(axis=1)
+    return float(port.mean() / port.std() * np.sqrt(252))
+
+
+@pytest.mark.slow
+def test_close_only_baseline_still_reproduces_under_new_engine():
+    """The §29 close-only baseline cell must still reproduce SR ≈ 3.18 ± 0.05
+    after the intrabar engine path was added. Bit-identity regression at scale.
+    """
+    sr = _run_baseline(intrabar=False)
+    assert abs(sr - _CLOSE_ONLY_ANCHOR_SR) < _CLOSE_ONLY_ANCHOR_TOL, (
+        f"close-only baseline drift after intrabar add: "
+        f"got SR={sr:.3f}, expected {_CLOSE_ONLY_ANCHOR_SR} ± {_CLOSE_ONLY_ANCHOR_TOL}"
+    )
+
+
+@pytest.mark.slow
+def test_intrabar_baseline_produces_sane_sharpe():
+    """The intrabar baseline cell (SL=0.03, EE=0.015, TP=off, intrabar=True) is
+    a NEW value we're discovering. Assert it's in a sane range to catch obvious
+    bugs (e.g. ValueError-on-None highs, sign flips, etc). The discovered value
+    becomes the §30 reference baseline."""
+    sr = _run_baseline(intrabar=True)
+    assert _INTRABAR_ANCHOR_LOW < sr < _INTRABAR_ANCHOR_HIGH, (
+        f"intrabar baseline SR out of sane range: got {sr:.3f}, "
+        f"expected ({_INTRABAR_ANCHOR_LOW}, {_INTRABAR_ANCHOR_HIGH})"
+    )
+    # Print for visibility in slow-test runs — this is the §30 reference.
+    print(f"\n[intrabar baseline SR (§30 reference) = {sr:.3f}]")
