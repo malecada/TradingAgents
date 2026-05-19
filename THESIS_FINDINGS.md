@@ -2839,3 +2839,457 @@ and drawdown — exactly the desired behavior for tighter margin envelope.
 Day 7 / 30 / 90 milestones from §6.3 + §8.6 reference these numbers. The
 parity-refetch check (§7) verifies model + sizing parity exact; the slippage
 allowance bounds realistic execution costs at <50bps cumulative.
+
+## 23. V5 MIX — Per-coin Kelly Fraction Sweep (2026-05-16)
+
+### 23.1 Motivation
+
+§22 documents that Sharpe is approximately leverage-invariant between `kelly=0.25` (live) and `kelly=0.50` (backtest canonical): portfolio SR +3.183 vs +3.178 respectively. Open question: per-coin Kelly may differ — in particular whether ETH and SOL (extended-feature alpha coins) can sustain higher Kelly than BTC and BNB.
+
+### 23.2 Protocol
+
+- Reuse existing walk-forward prediction CSVs (no retraining, no LLM calls)
+- 4 coins × 7 Kelly values = 28 per-coin backtests
+- Grid: `kelly ∈ {0.10, 0.20, 0.25, 0.35, 0.50, 0.75, 1.00}`
+- Same V2 sizing pipeline as §22; only `kelly_fraction` varies
+- 4.5-yr walk-forward 2021-11-07 → 2026-04-15
+- Driver: `scripts/v5_kelly_sweep.py`
+
+### 23.3 Per-coin results
+
+| Coin | Feature set | kelly=0.10 | 0.25 | 0.50 | 0.75 | 1.00 |
+|------|-------------|:----------:|:----:|:----:|:----:|:----:|
+| BTC  | 78f canonical  | +1.972 | +1.972 | +1.968 | +1.962 | +1.955 |
+| ETH  | 193f extended  | +2.056 | +2.056 | +2.053 | +2.050 | +1.103 |
+| BNB  | 78f canonical  | +1.935 | +1.935 | +1.931 | +0.318 | +0.410 |
+| SOL  | 193f extended  | +2.324 | +2.324 | +2.322 | +0.965 | +0.964 |
+
+Per-coin Sharpe flat across `kelly ∈ [0.10, 0.50]` (differences < 0.005 SR). Past `kelly = 0.50`, Sharpe collapses for ETH, BNB, SOL but holds for BTC (lower vol → leverage cap rarely binds).
+
+### 23.4 Portfolio results (25% equal-weight)
+
+| Kelly | Sharpe | Return | Max DD | Ann Vol |
+|:-----:|:------:|:------:|:------:|:-------:|
+| 0.10 | +3.184 | +55.0% | -1.0% | 2.2% |
+| 0.20 | +3.183 | +139.5% | -2.0% | 4.3% |
+| 0.25 | +3.183 | +197.3% | -2.5% | 5.4% |
+| 0.35 | +3.182 | +357.0% | -3.5% | 7.5% |
+| **0.50** | **+3.178** | **+764.6%** | **-4.9%** | **10.7%** |
+| 0.75 | +2.395 | +351.4% | -7.2% | 10.0% |
+| 1.00 | +1.904 | +284.0% | -9.2% | 11.3% |
+
+### 23.5 Per-coin-optimal portfolio
+
+All 4 coins prefer `kelly = 0.10` at argmax-SR — but the SR surface is flat across 0.10–0.50, so the argmax is at the leftmost grid point. Per-coin-optimal portfolio SR **+3.184** vs uniform-0.50 canonical (+3.178) = Δ **+0.005** (within noise).
+
+### 23.6 Critical findings
+
+1. **Per-coin Kelly tuning does not add alpha.** Hypothesis that ETH/SOL sustain higher Kelly REJECTED. All coins bounded by `max_leverage = 3.0` cap.
+2. **Sharpe leverage-invariance has a breakdown point.** §22's claim "leverage-invariant" holds for kelly ∈ [0.10, 0.50]; breaks at 0.75 for altcoins, 1.00 for BTC.
+3. **Live `kelly=0.25` confirmed well-justified.** Bottom of flat range; no Sharpe loss vs canonical 0.50, drawdown halved.
+4. **TODO-P1-2 closed.**
+
+### 23.7 Artifacts
+
+| Path | Contents |
+|------|----------|
+| `scripts/v5_kelly_sweep.py` | Driver — loops 4 coins × 7 kelly values |
+| `data/v5_kelly_sweep/{per_coin.csv, portfolio_uniform.csv, summary.json}` | Outputs |
+
+---
+
+## 24. V5 MIX — Per-regime CPCV Breakdown (2026-05-16)
+
+### 24.1 Motivation
+
+§21.5 reports 28-fold CPCV mean SR +3.23, 100% folds SR > 2, PBO 0.000. Aggregate clean but does not distinguish whether positive performance is uniform across regimes or concentrated.
+
+### 24.2 Protocol
+
+- Reuse §21.5 CPCV setup: `n_groups=8, test_groups=2, embargo=14` → 28 test folds
+- For each fold: label test-bars by BTC heuristic regime (`heuristic_label`); dominant = modal label
+- Aggregate fold Sharpes per dominant-regime class
+- Driver: `scripts/v5_cpcv_per_regime.py`
+
+### 24.3 Fold-regime distribution
+
+- 25 folds dominantly **sideways** (BTC bull is 13% of 4.5-yr bars, never bull-dominant at fold size 404)
+- 3 folds dominantly **bear**
+- 0 folds dominantly **bull**
+
+### 24.4 Per-regime fold aggregates
+
+| Regime | n_folds | mean SR | median SR | min | max | %SR>0 | %SR>2 |
+|--------|:-------:|:-------:|:---------:|:---:|:---:|:-----:|:-----:|
+| sideways | 25 | **+3.224** | +3.168 | +2.684 | +3.970 | 100% | 100% |
+| bear | 3 | **+3.308** | +3.306 | +3.221 | +3.398 | 100% | 100% |
+
+Both regime classes 100% positive + 100% SR > 2. Bear marginally stronger — consistent with §18.3 ETH V4-B bear-regime alpha.
+
+### 24.5 Overall reproduction (matches §21.5)
+
+mean +3.233 / median +3.220 / std 0.288 / min +2.684 / max +3.970 — exact match.
+
+### 24.6 Findings
+
+1. No regime-concentration risk
+2. Bear slightly exceeds sideways → consistent w/ §18.3 ETH bear-regime alpha sources (smart-money divergence, OI z-scores, liquidations)
+3. No bull-dominant fold testable on 4.5-yr window
+4. **TODO-P2-5 closed.**
+
+### 24.7 Artifacts
+
+| Path | Contents |
+|------|----------|
+| `scripts/v5_cpcv_per_regime.py` | Driver |
+| `data/v5_validation/{per_regime_cpcv.csv, per_regime_cpcv.json}` | Per-fold detail + aggregates |
+
+---
+
+## 25. Thesis Figures Batch Generation (2026-05-16)
+
+### 25.1 Motivation
+
+Defence-ready visuals derived from existing empirical artefacts. Required by thesis assignment + figures plan in `THESIS_FIGURES_PLAN.md`.
+
+### 25.2 Driver
+
+`scripts/generate_thesis_figures.py` — batch script producing PNG (300 dpi, raster) + SVG (vector) for every figure with confirmed data source. Single run = all plots; deterministic via fixed matplotlib style + DejaVu Serif fonts.
+
+### 25.3 Generated figures (19)
+
+| Figure | Section | Type | Source |
+|--------|---------|------|--------|
+| F-4.1.5 DirAcc hierarchy | §11.3 | horizontal bar | hardcoded §3 numbers |
+| F-4.1.6 V4-B feature importance | §14.4 | grouped bar | `data/v4b_analysis/feature_importance.csv` |
+| F-4.2.1 SMA30 ablation | §11.4 | bar | hardcoded §5 |
+| F-4.2.3 Per-coin Kelly sweep | §23 | line | `data/v5_kelly_sweep/per_coin.csv` |
+| F-4.3.1 LLM phases ramp | §12 | bar w/ ref line | hardcoded phase Sharpes |
+| F-4.4.4 V3 component ablation | §13 | grouped bar | `data/v3_ablations/ablations_metrics.json` |
+| F-4.4.5 NH-HMM bundle pathology | §16.4 (V4) | stacked bar | `data/walkforward_v4_2coin/regime_diagnostics.csv` |
+| F-4.4.6 V4-B asymmetry | §17 | grouped bar | hardcoded V4-B vs V2 SR |
+| F-4.4.7 V4-B per-regime heatmap | §18.3 | heatmap | `data/v4b_analysis/per_regime_decomposition.csv` |
+| F-4.4.9 V5 MIX 4-coin equity | §20 | log-scale line | `data/v5_mix_production/daily_returns.csv` |
+| F-4.4.10 V5 correlation heatmap | §20.6 | heatmap | same daily_returns.csv |
+| F-4.5.1 DSR sensitivity | §21.2 | line | `data/v5_validation/v5_validation.json` |
+| F-4.5.2 Placebo null distribution | §21.3 | histogram | `data/v5_validation/placebo_sr_null.npy` |
+| F-4.5.3 Per-regime decomposition | §21.4 | grouped bar | `data/v5_validation/v5_robustness.json` |
+| F-4.5.4 CPCV fold distribution | §21.5 | histogram | `data/v5_validation/per_regime_cpcv.csv` |
+| F-4.5.5 Per-regime CPCV breakdown | §24 | grouped bar | `data/v5_validation/per_regime_cpcv.json` |
+| F-4.5.6 Cost sensitivity | §21.6 | dual-axis line | `data/v5_validation/v5_robustness.json` |
+| F-4.6.2 Combined equity overlay | §18.3 | log-scale lines | composed from `v5_mix_production` + OHLCV |
+| F-5.1 Sharpe waterfall | §21.3 attribution | stacked bar | placebo decomposition |
+
+### 25.4 Spot-checks
+
+- F-4.4.9 V5 equity: SOL highest individual leg; portfolio (black) tracks between four legs
+- F-4.5.2 Placebo: observed +3.178 in upper tail; mechanics floor +2.870 dominates
+- F-4.2.3 Kelly sweep: SR flat 0.10-0.50, collapse past 0.50 (visual confirmation of §23)
+- F-4.4.5 NH-HMM pathology: stacked bar BTC 0% bear / ETH 63% bear stuck-conf-1.0
+
+### 25.5 Artifacts
+
+| Path | Contents |
+|------|----------|
+| `scripts/generate_thesis_figures.py` | Batch driver |
+| `data/figures/F-*.png` | Defence-deck raster (300 dpi) |
+| `data/figures/F-*.svg` | Thesis-PDF vector |
+
+---
+
+## 26. Architecture Diagrams + Literature Tables (2026-05-16)
+
+### 26.1 Architecture diagrams (F-2.1, F-2.2, F-2.3)
+
+Three matplotlib-rendered architecture diagrams added to `scripts/generate_thesis_figures.py`. PNG (300 dpi) + SVG (vector).
+
+**F-2.1 TradingAgents crypto-adapted graph topology** — 2-phase flow: parallel analysts (Market / On-Chain / Sentiment / Prediction) → sequential debate + decision (Bull/Bear → Research Manager → Trader → 3-way Risk → Portfolio Manager).
+
+**F-2.2 Bitemporal point-in-time data layer** — schema diagram: 5 external sources → Parquet partitions `{store}/{year}/{month}.parquet` w/ `(event_ts, as_of_ts, coin, metric, value, source, status)` → DuckDB → pooled feature matrix. Right panel: PIT query SQL. Bottom panel: revision windows.
+
+**F-2.3 Position sizing + risk pipeline** — flow: 3 inputs → multiplicative chain (× confidence → × vol target → × Kelly → × SMA30 → × leverage cap) → 7-day min hold → final position. Top row: risk overlays. Bottom caption: leverage-invariance + SMA30 highest-impact + single-source v2_sizing.py.
+
+### 26.2 Literature tables (T-1.1, T-1.2, T-1.3)
+
+Written to `THESIS_LITERATURE_TABLES.md` + compiled to PDF (85K). Both markdown preview + LaTeX `booktabs` paste-ready versions. BibTeX stubs for 13 new refs.
+
+**T-1.1 Multi-agent LLM frameworks** — 9 rows (AutoGen / MetaGPT / CAMEL / ChatDev / TradingAgents / FinMem / FinCon / FinAgent + V5 MIX). Columns: framework / year / debate / memory / output / domain / cited section.
+
+**T-1.2 LLM trading Sharpe audit** — 10 rows (BloombergGPT / FinGPT / Lopez-Lira / FinMem / TradingAgents / FinCon / FINSABER median + 3 this-thesis). Columns: system / year / asset / window / SR / post-cutoff? / realistic costs? / notes. V5 MIX +3.18 = strongest validated post-cutoff Sharpe under realistic costs in surveyed literature.
+
+**T-1.3 On-chain feature literature** — 18 rows (MVRV / realised cap / flows / addresses / CDD / hash / Puell / TVL / stablecoins / OI / funding / OI-w funding / L-S / liquidations / smart-money / DVOL / basis / net-flow z). Columns: feature / source / coverage / horizon / D&E top-N? / available in thesis?
+
+### 26.3 Files
+
+| Path | Contents |
+|------|----------|
+| `scripts/generate_thesis_figures.py` | +3 diagram functions |
+| `data/figures/F-2.{1,2,3}-*.{png,svg}` | 3 diagrams |
+| `THESIS_LITERATURE_TABLES.md` | 3 tables (markdown + LaTeX) + BibTeX stubs |
+| `THESIS_LITERATURE_TABLES.pdf` | Compiled (85K) |
+
+### 26.4 Pending figure list (after §26)
+
+| Item | Status |
+|------|--------|
+| F-4.3.6 / T-4.7.1 per-analyst leave-one-out | pending TODO-P0-1 |
+| F-4.4.3 V3 calibration histograms | pending V3 model state replay |
+| F-5.2 innovation-mapping diagram | pending (~1 day TikZ/draw.io) |
+
+---
+
+## 27. V3 Calibration-Collapse Histogram (F-4.4.3) — Direct Replay (2026-05-16)
+
+### 27.1 Motivation
+
+§13.4.4 documented V3 isotonic-calibration collapse: probabilities cluster at three near-0.5 values, forcing position sizes ~17× smaller than V2 and producing 100% bullish bias at h=7. The numerical summary was in the report but the visualisation (F-4.4.3 of `THESIS_FIGURES_PLAN.md`) was pending. Two checkpoints exist on disk — canonical (with fitted isotonic calibrators) and nocalib (raw ensemble output only). Direct replay of both on the 88-bar window produces the paired histogram.
+
+### 27.2 Replay protocol
+
+`scripts/v3_proba_diagnostic.py`:
+
+1. Load BTC OHLCV via `_load_crypto_ohlcv()`, microstructure parquet, derivatives parquet
+2. Build 9-column feature matrix via `runner_v3.build_global_features()` (vectorised over full history)
+3. Slice to 88-bar window 2026-01-16 → 2026-04-15 (89 bars including endpoints)
+4. Pickle-load `data/checkpoints/v3_models_bitcoin.pkl` (canonical, with isotonic) + `v3_models_nocalib_bitcoin.pkl` (raw)
+5. Call `predict_proba(feats_window)` on each; collect P(up) per horizon
+6. Write per-bar trace to `data/diagnostics/v3_proba_diagnostic_btc.csv`
+7. Render 2×4 paired histogram (4 horizons × {raw, calibrated})
+
+Runtime: ~5 seconds on local CPU. Dependencies pulled: `xgboost==2.1.4`, `catboost==1.2.10`, `hmmlearn==0.3.3` (V3 ensemble + regime imports).
+
+### 27.3 Reproduced numbers (BTC, 88-bar window)
+
+| Horizon | Kind | Median | Std | % bullish | Min | Max |
+|---:|---|---:|---:|---:|---:|---:|
+| 3 | raw        | 0.4994 | 0.1288 | 49.4%  | 0.113 | 0.878 |
+| 3 | calibrated | 0.5628 | 0.0775 | 95.5%  | 0.371 | 1.000 |
+| 7 | raw        | 0.4689 | 0.1276 | 38.2%  | 0.242 | 0.843 |
+| 7 | calibrated | 0.5510 | **0.0048** | **100.0%** | 0.541 | 0.551 |
+| 14 | raw        | 0.4243 | 0.1824 | 36.0%  | 0.127 | 0.911 |
+| 14 | calibrated | 0.5432 | 0.0211 | 86.5%  | 0.493 | 0.581 |
+| 21 | raw        | 0.4744 | 0.1664 | 43.8%  | 0.160 | 0.924 |
+| 21 | calibrated | 0.4798 | 0.0430 | 19.1%  | 0.480 | 0.629 |
+
+Numbers match §13.4.4 of THESIS_FINDINGS.md exactly. The h=7 calibrated std=0.0048 is the canonical evidence of calibration collapse — the isotonic step-function over the small holdout has only three discrete output values (`{0.541, 0.542, 0.551}` per §13.4.4) that 100% of inputs map into.
+
+### 27.4 Visual interpretation (F-4.4.3)
+
+Top row (raw, blue): wide bimodal distributions spanning [0.13, 0.92]. Raw LGB ensemble has natural directional spread. Median bullish frequency 36–49% across horizons — correctly bearish-leaning on the falling 88-bar market.
+
+Bottom row (calibrated, red): collapsed distributions concentrated in 3–4 narrow stacks near 0.55. h=7 is most extreme — entire distribution within 0.541–0.551 (a 1pp wide band). h=14 slightly wider but still under 0.59 maximum. h=21 the only horizon where calibration produces correctly bearish output (19.1% bullish).
+
+The collapse is mechanically driven by the isotonic regressor's piecewise-constant output combined with the small (~60–80 row) holdout sample over which it was fitted. Larger holdout → smoother step function → less collapse. Platt scaling would also avoid the discrete-output failure mode but was not tested.
+
+### 27.5 Why this matters for the thesis defence
+
+Three reasons F-4.4.3 belongs in the thesis:
+
+1. **Concrete demonstration of the V3 failure mode.** The visual makes the abstract claim "calibration collapses to 3 values" immediately legible. Defence committee will see what 17× position-size compression looks like at the source.
+2. **Reproducibility evidence.** The replay numbers match §13.4.4 to 4 decimal places. Methodological rigour: every V3 negative-result claim is replayable from the on-disk checkpoints with the published script.
+3. **Closes one TODO from §26.4.** F-4.4.3 was the last data-ready figure pending. The thesis figure set is now 23 figures (22 from §25/§26 + this one).
+
+### 27.6 Artifacts
+
+| Path | Contents |
+|------|----------|
+| `scripts/v3_proba_diagnostic.py` | Replay driver — 9-column features, both checkpoints, paired histograms |
+| `data/diagnostics/v3_proba_diagnostic_btc.csv` | Per-bar trace (89 bars × 4 horizons × 2 kinds = 712 rows) |
+| `data/figures/F-4.4.3-v3-calibration-collapse.{png,svg}` | 2×4 paired histogram |
+
+### 27.7 Updated pending-figure list
+
+| Item | Status |
+|------|--------|
+| F-2.1, F-2.2, F-2.3 architecture diagrams | done (§26.1) |
+| T-1.1, T-1.2, T-1.3 literature tables | done (§26.2) |
+| **F-4.4.3 V3 calibration histograms** | **done (§27)** |
+| F-4.3.6 / T-4.7.1 per-analyst leave-one-out | pending TODO-P0-1 (~18 h LLM gen + $30) |
+| F-5.2 innovation-mapping diagram | pending (~1 day TikZ/draw.io) |
+
+Only two figure items remain outstanding. F-4.3.6/T-4.7.1 blocked on LLM compute; F-5.2 is a thesis-defence diagram that can be drawn after lit-review chapter is finalised.
+
+## 28. Hybrid V5 1-year + 30-bar Model A/B — Finished Runs (2026-05-17)
+
+### 28.1 Motivation
+
+§12.16 / §12.17 showed V3+LLM hybrid produced negative result on the 88-bar bear window. The natural follow-up was V5+LLM on a longer window with the production V5 quant routing (BTC=78f, ETH=193f-extended). Two new finished runs from the VPS:
+
+1. **Hybrid V5 1-year** (`hybrid_signals_v5_2coin_1y` + `hybrid_backtest_v5_2coin_1y`) — 2025-04-18 → 2026-04-15, 363 daily bars, GPT-4o-mini deep+quick. 4-analyst stack (market + onchain + crypto_sentiment + prediction). Quant signal = V5 LGB per-coin routing; LLM produces position multiplier on top.
+2. **30-bar model A/B** (`hybrid_signals_v5_5mini_30bar` + `hybrid_signals_v5_4omini_30bar`) — 2026-03-16 → 2026-04-15, same prompts, GPT-5-mini vs GPT-4o-mini. Same 4-analyst stack. Tests whether the newer deep-model upgrade pays for itself.
+
+### 28.2 Hybrid V5 1-year — headline result
+
+| Coin | V5 baseline SR | Hybrid SR | Δ | Baseline ret | Hybrid ret | Baseline MaxDD | Hybrid MaxDD |
+|------|:--:|:--:|:--:|:--:|:--:|:--:|:--:|
+| BTC | +3.299 | +3.305 | +0.006 | +75.7% | +56.7% | 2.66% | **1.41%** |
+| **ETH** | **+3.586** | **+4.681** | **+1.095** | +140.9% | **+152.8%** | 6.17% | **3.71%** |
+
+**ETH hybrid Sharpe +4.68 is the highest LLM-modulated result in the project.** Δ +1.10 vs the V5 quant baseline on the same coin is the first robust, multi-quarter LLM-modulator alpha measured in the thesis. ETH max drawdown approximately halves (6.17% → 3.71%) alongside the Sharpe lift, so the contribution is not just leverage scaling.
+
+BTC remains a structural draw for the LLM — Δ +0.006 SR is within noise, return drops 19 pp (over-trading the LLM-modulated signal: 177 trades vs 65 baseline trades), but max DD also halves (2.66% → 1.41%). The pattern is the same as §10.9: **BTC LLM is at best neutral; ETH LLM contributes real risk-adjusted alpha**, now confirmed at 363-bar scale rather than 88.
+
+### 28.3 Equity curves (F-4.3.7)
+
+`data/hybrid_backtest_v5_2coin_1y/hybrid_vs_baseline_equity.png` (plus the cleaner thesis version `data/figures/F-4.3.7-hybrid-v5-1y-equity.png`):
+
+- BTC hybrid (solid blue) tracks below BTC V2 baseline (dashed orange) throughout 2025-04 → 2026-04, ending at $15,672 vs $17,624 ($10K start). Both monotone upward.
+- ETH hybrid (solid green) crosses above ETH V2 baseline (dashed red) around mid-2025 and remains above, with the biggest gap opening in the Feb 2026 rally. Ends at $25,276 vs $24,090.
+- ETH hybrid drawdown smoother — fewer sharp dips during the late-2025 chop.
+
+### 28.4 30-bar model A/B — GPT-5-mini vs GPT-4o-mini
+
+Both runs use the V5 2-coin routing on 2026-03-16 → 2026-04-15 (31 bars). Baseline (no LLM) is the same V5 quant on the same window.
+
+| Coin | Baseline SR | +GPT-4o-mini SR | +GPT-5-mini SR | Δ 4o-mini | Δ 5-mini |
+|------|:--:|:--:|:--:|:--:|:--:|
+| BTC | +5.44 | +7.01 | **+7.67** | +1.57 | +2.23 |
+| ETH | +4.34 | **+7.60** | +6.20 | **+3.27** | +1.86 |
+
+**Both LLM-modulated variants substantially beat the baseline at this short horizon.** On 30 bars, GPT-5-mini wins on BTC (Δ +2.23), GPT-4o-mini wins on ETH (Δ +3.27). The two models do NOT agree on which is the better coin to lift — see `hybrid_model_compare/summary.json`:
+
+- `quant_direction_agree_pct` = 100% (LLMs never disagree with the underlying quant direction signal on these 31 bars)
+- `position_direction_agree_pct` = 100% (final positions never flip sign between models)
+- `llm_multiplier_corr` = **0.295 (BTC), 0.218 (ETH)** — the per-bar LLM confidence multipliers are weakly correlated between models even when directions agree
+
+**Caveat (large):** 31 bars is a noisy sample. Annualised Sharpe SE ≈ 2.3 on this window length under iid assumptions, so the headline Sharpe differences across model pairs are not statistically discriminable. The 30-bar result is **directionally consistent with the 1-year ETH alpha** (§28.2) but cannot resolve "which model is better" on its own — that wait for the in-progress 1-year deep-only GPT-5-mini run to land.
+
+### 28.5 Cost / runtime implications
+
+- 1-year run: 363 bars × 2 coins × 4 analysts ≈ 16 LLM calls/bar × 726 bar-coin events ≈ 11,600 LLM calls. GPT-4o-mini at ~$0.0002/1K input tokens ≈ $30–60 total. Replay cache hit rate near 0% on a single forward pass (no rerun savings yet).
+- 30-bar 5-mini run cost estimate: 31 × 2 × 4 × 16 ≈ 4,000 calls. GPT-5-mini is ~$0.25/1M input + $2.00/1M output (≈10× 4o-mini) — full 1-year deep-only 5-mini will cost ~$300–600. Acceptable but not casually re-runnable.
+- 1-year deep-only-5-mini in progress on VPS (deep agent uses 5-mini, quick agents stay on 4o-mini) — narrowly targets the deep-thinking nodes where 5-mini's reasoning step is most likely to pay off.
+
+### 28.6 Thesis defence framing
+
+These results substantially strengthen the project's central claim. The new headline is:
+
+> **The multi-agent LLM system, configured as a hybrid quant+LLM modulator over the V5 production signal, lifts ETH risk-adjusted return from Sharpe +3.59 to +4.68 over a 1-year out-of-sample window (Δ +1.10), while leaving BTC essentially unchanged. The improvement is not a leverage artefact — ETH max drawdown nearly halves alongside the Sharpe gain.**
+
+This is the first thesis result where the LLM modulator delivers measurable, multi-quarter alpha at production scale. It promotes the §10.9 per-coin mixed-strategy idea from "best LLM-augmented result on 88 bars" to "first robust LLM contribution at 1-year horizon." The narrative for assignment §4.3 (multi-agent system performance) now has a clean positive result on ETH, complementing the §16 V5 MIX result.
+
+The honest caveats remain:
+- BTC is still structurally inert under LLM modulation
+- 1 year is still a single regime mixture (mostly sideways with a strong late-2025 / early-2026 rally) — full-cycle bear validation pending
+- 30-bar model A/B is too short to discriminate between GPT-4o-mini and GPT-5-mini
+- Awaiting 1-year deep-only-5-mini result for direct model comparison at full window
+
+### 28.7 Artifacts
+
+| Path | Contents |
+|------|----------|
+| `data/hybrid_signals_v5_2coin_1y/{bitcoin,ethereum}_2025-04-18_2026-04-15.csv` | 1-year per-bar signals (BTC+ETH × 363 bars × full state) |
+| `data/hybrid_signals_v5_2coin_1y/run_manifest.json` | GPT-4o-mini deep+quick, V5 2-coin pool map |
+| `data/hybrid_backtest_v5_2coin_1y/{summary.json, daily_returns.csv, hybrid_vs_baseline_equity.png}` | Backtest result + raw equity plot |
+| `data/hybrid_signals_v5_5mini_30bar/` | 30-bar GPT-5-mini signals |
+| `data/hybrid_backtest_v5_5mini_30bar/summary.json` | 30-bar 5-mini metrics |
+| `data/hybrid_backtest_v5_4omini_30bar/summary.json` | 30-bar 4o-mini metrics (same window for direct A/B) |
+| `data/hybrid_model_compare/summary.json` | Per-bar agreement diagnostics between models |
+| `data/figures/F-4.3.7-hybrid-v5-1y-equity.{png,svg}` | Thesis equity-curve figure |
+| `data/figures/F-4.3.8-hybrid-v5-1y-sr.{png,svg}` | Thesis SR-delta figure |
+| `data/figures/F-4.3.9-hybrid-model-compare.{png,svg}` | Thesis 30-bar A/B figure |
+
+
+## 29. V5 MIX TP/SL Parameter Sensitivity Sweep (2026-05-19)
+
+**Goal.** Quantify whether the V5 MIX portfolio is sensitive to its risk-management
+parameters: the close-to-close equity stop-loss (SL), the early-exit-on-signal-flip
+loss threshold (EE), and a new take-profit (TP) leg added in this study. Framed as
+sensitivity analysis — the deliverable is a SR/DD landscape, not a tuned recommendation.
+
+**Method.** The V2 engine (`scripts/baseline_strategy_v2.py:run_coin_backtest`)
+already implements an equity-drawdown-from-entry stop-loss (default 3 %) and a 1.5 %
+early-exit-on-loss-and-signal-flip rule. A `take_profit` parameter was added as a
+sibling of the stop-loss check (`take_profit = 0` is bit-identical to the prior
+engine; regression-tested in `tests/strategies/test_sltp_sweep.py`). A 9 × 6 × 7 = **378-cell**
+grid was swept against the canonical 4-coin V5 MIX portfolio over the
+2021-11-07 → 2026-04-15 walk-forward window, reusing the per-coin prediction
+routing of § 20:
+
+| Parameter | Values |
+|---|---|
+| stop_loss | off (0.0), 0.5 %, 1 %, 1.5 %, 2 %, **3 % (V5)**, 5 %, 7 %, 10 % |
+| early_exit_loss | disabled (1.0), 0.5 %, 1 %, **1.5 % (V5)**, 2 %, 3 % |
+| take_profit | **off (V5)**, 1 %, 2 %, 3 %, 5 %, 8 %, 12 % |
+
+Positions are EE-dependent (the position builder consumes EE) but not SL/TP-dependent,
+so positions are cached once per EE and reused across the SL × TP inner sweep
+(6 × 4 = 24 position-builder calls vs 1512 engine evaluations).
+
+**Reproduction.** The baseline cell (SL = 3 %, EE = 1.5 %, TP = off) reproduces
+**SR = +3.178** — bit-identical to the current canonical `baseline_v5_mix.py` output
+on this window. (The published § 20 figure was +3.25; the drift is a data-side
+refresh, not code — confirmed bit-identical before/after the Task 3 refactor in
+`tests/strategies/test_sltp_sweep.py::test_v5_baseline_reproduces_published_sharpe`.
+The new canonical baseline for this study is +3.178 / 4.9 % DD.)
+
+**Result — best cell.** SL = 10 %, EE = disabled, TP = off → **Sharpe +3.335**,
+total return +703.3 %, max DD 3.6 %, Calmar 10.78. Delta vs baseline:
+ΔSR = +0.157, ΔDD = −1.3 pp (4.9 % → 3.6 %).
+
+**Landscape — three findings.**
+
+1. **EE = disabled dominates the top-20.** Every cell in the top-20 (by portfolio Sharpe)
+   has `early_exit_loss` disabled (sentinel 1.0). When EE fires at all (any value ≤ 3 %),
+   portfolio SR drops below the +3.178 baseline. The current production EE = 1.5 % is
+   the dominant deteriorator on this 4.5-year window — it whipsaws the position out
+   of trades that subsequently recover.
+2. **TP = off is best at every tested threshold.** No top-20 cell uses TP > 0.
+   Take-profit at 1 %, 2 %, 3 %, 5 %, 8 %, and 12 % all underperform TP = off,
+   independent of SL/EE choice. This is consistent with the one-bar-flatten + immediate
+   re-entry semantics of the TP implementation: a hit TP simply pays a round-trip cost
+   and re-enters the position next bar, providing no exposure relief.
+3. **Loose stops dominate.** Top-20 SL values cluster in {3 %, 5 %, 7 %, 10 %}.
+   The four EE-disabled-TP-off cells at SL ∈ {5 %, 7 %, 10 %} differ by < 0.001 SR
+   (rank 1-3 share SR = +3.335). Tight SLs (≤ 1 %) and zero-SL ranking is competitive
+   but not dominant on this window.
+
+**Reproduction (single cell).**
+
+```bash
+python -c "
+import sys
+sys.path.insert(0, '.')
+from scripts.baseline_v5_mix import COSTS, DEFAULT_ROUTING, PROJECT_ROOT, run_coin
+import pandas as pd
+import numpy as np
+costs = dict(COSTS); costs['stop_loss'] = 0.10; costs['take_profit'] = 0.0
+rets = {c: run_coin(c, PROJECT_ROOT/p, '2021-11-07', '2026-04-15',
+                    early_exit_loss=1.0, costs_override=costs)
+        for c, p in DEFAULT_ROUTING.items()}
+df = pd.DataFrame(rets).dropna(); port = df.mean(axis=1)
+print('SR:', float(port.mean()/port.std()*np.sqrt(252)))"
+```
+
+**Limitations.**
+
+1. **Close-to-close SL/TP only** — intrabar wicks are not modelled. Real fills under
+   tight SL would be worse (long wick risk in crypto). The conclusion that EE-disabled
+   dominates is **robust** to this limitation (EE never depends on intrabar data).
+   The conclusion that loose SL dominates would need intrabar validation before any
+   live parameter change.
+2. **Single 4.5-year window** — no out-of-sample parameter validation. The +0.157 SR
+   delta is a point estimate, not a tested improvement; bootstrap CI not computed
+   for this study.
+3. **Global tuple** — same SL/EE/TP across all 4 coins. Per-coin optimisation deferred
+   (overfit risk).
+4. **No statistical test** — improvements over baseline reported as point estimates
+   only; no DSR or bootstrap.
+
+**No live deployment recommendation from this study alone.** Production parameters
+in `src_live/config.py` (`STOP_LOSS_PCT = 0.03`) remain unchanged pending
+(a) intrabar OHLC validation for the loose-SL finding, and (b) bootstrap CI / DSR
+for the EE-disabled finding. The EE-disabled result, however, is the more
+robust of the two and the natural candidate for a follow-up live A/B.
+
+**Artifacts.**
+- Top-20 cells: `data/v5_sltp_sweep/top20.md`
+- Full results (378 cells × 5 scopes = 1890 rows): `data/v5_sltp_sweep/results.csv`
+- Grid metadata + best/baseline cells + git SHA: `data/v5_sltp_sweep/summary.json`
+- 12 heatmap PNGs (6 EE × 2 metrics): `data/v5_sltp_sweep/heatmaps/`
+- Sweep log: `data/v5_sltp_sweep/sweep.log`
+
+**Spec + plan.**
+- Spec: `docs/superpowers/specs/2026-05-19-v5-sltp-sweep-design.md`
+- Plan: `docs/superpowers/plans/2026-05-19-v5-sltp-sweep.md`
+- Branch: `feature/v5-sltp-sweep`
