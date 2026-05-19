@@ -89,6 +89,7 @@ def run_coin_backtest(
     funding_rate: float,
     stop_loss: float,
     max_portfolio_dd: float,
+    take_profit: float = 0.0,
 ) -> tuple[list, dict]:
     """Run backtest for a single coin with full cost and risk model."""
     equity = [initial_capital]
@@ -135,6 +136,9 @@ def run_coin_backtest(
         if target_pos != 0 and entry_equity > 0:
             trade_dd = (entry_equity - new_equity) / entry_equity
             if trade_dd >= stop_loss:
+                target_pos = 0.0
+            trade_up = (new_equity - entry_equity) / entry_equity
+            if take_profit > 0 and trade_up >= take_profit:
                 target_pos = 0.0
 
         daily_returns.append(net_ret)

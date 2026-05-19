@@ -63,8 +63,9 @@ ANN = np.sqrt(252)
 COSTS = dict(
     fee_rate=0.0004, slippage=0.0005, spread=0.0001,
     price_impact=0.00005, funding_rate=0.0001 / 8,
-    stop_loss=0.03, max_portfolio_dd=0.15,
+    stop_loss=0.03, take_profit=0.0, max_portfolio_dd=0.15,
 )
+EARLY_EXIT_DEFAULT = 0.015  # V2 canonical: matches build_positions_with_hold default
 
 # Per-coin feature routing → prediction directory (§20). The string after the
 # arrow documents the feature set; the directory is what's actually loaded.
@@ -86,7 +87,11 @@ def _load_preds(pred_dir: Path, coin: str) -> pd.DataFrame:
     return p7.merge(p14, on="date").sort_values("date").reset_index(drop=True)
 
 
-def _v2_positions(merged: pd.DataFrame, kelly_fraction: float = 0.5) -> np.ndarray:
+def _v2_positions(
+    merged: pd.DataFrame,
+    kelly_fraction: float = 0.5,
+    early_exit_loss: float = EARLY_EXIT_DEFAULT,
+) -> np.ndarray:
     sig, conf = generate_term_structure_signals(merged, [7, 14], 0.05, asymmetric=True)
     px = merged["Close"].astype(float).values
     rv = compute_realized_vol(px, lookback=20)
@@ -94,7 +99,7 @@ def _v2_positions(merged: pd.DataFrame, kelly_fraction: float = 0.5) -> np.ndarr
     pos = build_positions_with_hold(
         signals=sig, vol_ok=mask, confidence=conf, realized_vol=rv, prices=px,
         target_vol=0.10, kelly_fraction=kelly_fraction, max_leverage=3.0,
-        min_hold=7, early_exit_loss=0.015,
+        min_hold=7, early_exit_loss=early_exit_loss,
     )
     return apply_trend_filter(pos, px, sma_period=30, multiplier=1.5)
 
@@ -112,9 +117,21 @@ def _metrics(r: pd.Series) -> dict:
     }
 
 
-def run_coin(coin: str, pred_dir: Path, start: str, end: str,
-             kelly_fraction: float = 0.5) -> pd.Series:
-    """Run V2 sizing on one coin's routed predictions → daily return series."""
+def run_coin(
+    coin: str,
+    pred_dir: Path,
+    start: str,
+    end: str,
+    kelly_fraction: float = 0.5,
+    early_exit_loss: float = EARLY_EXIT_DEFAULT,
+    costs_override: dict[str, float] | None = None,
+) -> pd.Series:
+    """Run V2 sizing on one coin's routed predictions → daily return series.
+
+    Early exit loss is forwarded to the position builder.
+    Costs override (if supplied) replaces the COSTS dict passed to the engine —
+    callers can override stop_loss and take_profit per-call.
+    """
     preds = _load_preds(pred_dir, coin)
     preds = preds[(preds["date"] >= start) & (preds["date"] <= end)]
     if preds.empty:
@@ -125,10 +142,13 @@ def run_coin(coin: str, pred_dir: Path, start: str, end: str,
     merged = merged.dropna(subset=["Close"]).reset_index(drop=True)
     merged["ref_price"] = merged["Close"]
 
-    pos = _v2_positions(merged, kelly_fraction=kelly_fraction)
+    pos = _v2_positions(
+        merged, kelly_fraction=kelly_fraction, early_exit_loss=early_exit_loss,
+    )
+    costs = dict(COSTS if costs_override is None else costs_override)
     equity, _m = run_coin_backtest(
         dates=merged["date"].values, prices=merged["Close"].values,
-        positions=pos, initial_capital=10_000.0, **COSTS,
+        positions=pos, initial_capital=10_000.0, **costs,
     )
     eq = np.asarray(equity, dtype=float)
     rets = eq[1:] / eq[:-1] - 1.0
