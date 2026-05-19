@@ -61,3 +61,30 @@ def test_intrabar_sl_truncates_bar_return_at_sl_price():
         f"intrabar SL must reduce equity at bar 5 vs close-only path: "
         f"intrabar={eq[5]:.2f} close-only={eq_no_intrabar[5]:.2f}"
     )
+
+
+def test_intrabar_false_is_bit_identical_to_omitted_kwarg():
+    """intrabar=False with no highs/lows must produce IDENTICAL equity to
+    omitting the kwargs entirely. The most important property to preserve."""
+    rng = np.random.default_rng(11)
+    n = 200
+    dates = np.arange(n)
+    rets = rng.normal(0.0005, 0.02, size=n)
+    prices = 100.0 * np.cumprod(1 + rets)
+    positions = rng.choice([-1.0, 0.0, 1.0], size=n, p=[0.3, 0.2, 0.5])
+
+    common = dict(
+        dates=dates, prices=prices, positions=positions,
+        initial_capital=10_000.0, stop_loss=0.03, take_profit=0.0,
+        fee_rate=0.0004, slippage=0.0005, spread=0.0001,
+        price_impact=0.00005, funding_rate=0.0001 / 8,
+        max_portfolio_dd=0.15,
+    )
+    eq_omit, m_omit = run_coin_backtest(**common)
+    eq_false, m_false = run_coin_backtest(intrabar=False, **common)
+
+    np.testing.assert_array_equal(
+        np.asarray(eq_omit), np.asarray(eq_false),
+        err_msg="intrabar=False changed equity vs no-kwarg path"
+    )
+    assert m_omit == m_false, "metrics diverged with intrabar=False"
