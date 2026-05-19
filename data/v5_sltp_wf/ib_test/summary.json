@@ -1,0 +1,61 @@
+{
+  "grid": {
+    "sl": [
+      0.0,
+      0.005,
+      0.01,
+      0.015,
+      0.02,
+      0.03,
+      0.05,
+      0.07,
+      0.1
+    ],
+    "ee": [
+      1.0,
+      0.005,
+      0.01,
+      0.015,
+      0.02,
+      0.03
+    ],
+    "tp": [
+      0.0,
+      0.01,
+      0.02,
+      0.03,
+      0.05,
+      0.08,
+      0.12
+    ]
+  },
+  "window": {
+    "start": "2025-01-01",
+    "end": "2026-04-15"
+  },
+  "kelly_fraction": 0.5,
+  "intrabar_baseline_cell": {
+    "sl": 0.03,
+    "ee": 0.015,
+    "tp": 0.0,
+    "portfolio_sharpe": 3.1918767827166206
+  },
+  "close_only_published_baseline_sharpe": 3.178,
+  "best_cell": {
+    "sl": 0.05,
+    "ee": 0.015,
+    "tp": 0.12,
+    "portfolio_sharpe": 3.6112141817984105,
+    "total_return": 0.8775636243338987,
+    "max_drawdown": 0.028064394594045715,
+    "calmar": 14.390061813942879,
+    "n_intrabar_sl": 316,
+    "n_intrabar_tp": 146
+  },
+  "delta_sr_best_vs_intrabar_baseline": 0.4193373990817899,
+  "acceptance_threshold": 0.15,
+  "verdict": "confirm",
+  "n_cells": 378,
+  "wall_clock_sec": 7.200895071029663,
+  "git_sha": "45ab012d79bdbb9dfcfe12e995329b143748739b"
+}

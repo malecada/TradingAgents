@@ -1,0 +1,122 @@
+
+  V5 MIX TP/SL walk-forward
+  train  : 2021-11-07 → 2024-12-31
+  test   : 2025-01-01 → 2026-04-15
+  grid   : SL=9 EE=6 TP=7 = 378 cells × 4 sweeps
+  output : /home/malecada/master_thesis/TradingAgents/data/v5_sltp_wf
+
+
+  === co_train: 2021-11-07 → 2024-12-31 ===
+  Loaded 4 coins in 0.2s
+  cell 20/378  SL=0.010 EE=1.000 TP=0.080  port SR=+3.36  elapsed=1s  eta=19s
+  cell 40/378  SL=0.030 EE=1.000 TP=0.050  port SR=+3.39  elapsed=1s  eta=12s
+  cell 60/378  SL=0.100 EE=1.000 TP=0.030  port SR=+3.38  elapsed=2s  eta=9s
+  cell 80/378  SL=0.010 EE=0.005 TP=0.020  port SR=+3.15  elapsed=3s  eta=9s
+  cell 100/378  SL=0.030 EE=0.005 TP=0.010  port SR=+3.17  elapsed=3s  eta=8s
+  cell 120/378  SL=0.100 EE=0.005 TP=0.000  port SR=+3.28  elapsed=3s  eta=7s
+  cell 140/378  SL=0.005 EE=0.010 TP=0.120  port SR=+3.08  elapsed=4s  eta=7s
+  cell 160/378  SL=0.020 EE=0.010 TP=0.080  port SR=+3.12  elapsed=4s  eta=6s
+  cell 180/378  SL=0.070 EE=0.010 TP=0.050  port SR=+3.12  elapsed=5s  eta=5s
+  cell 200/378  SL=0.005 EE=0.015 TP=0.030  port SR=+2.99  elapsed=6s  eta=5s
+  cell 220/378  SL=0.020 EE=0.015 TP=0.020  port SR=+3.03  elapsed=6s  eta=4s
+  cell 240/378  SL=0.070 EE=0.015 TP=0.010  port SR=+3.03  elapsed=6s  eta=4s
+  cell 260/378  SL=0.005 EE=0.020 TP=0.000  port SR=+2.99  elapsed=7s  eta=3s
+  cell 280/378  SL=0.015 EE=0.020 TP=0.120  port SR=+3.01  elapsed=7s  eta=3s
+  cell 300/378  SL=0.050 EE=0.020 TP=0.080  port SR=+3.02  elapsed=8s  eta=2s
+  cell 320/378  SL=0.000 EE=0.030 TP=0.050  port SR=+2.88  elapsed=8s  eta=2s
+  cell 340/378  SL=0.015 EE=0.030 TP=0.030  port SR=+2.97  elapsed=9s  eta=1s
+  cell 360/378  SL=0.050 EE=0.030 TP=0.020  port SR=+2.98  elapsed=9s  eta=0s
+  cell 378/378  SL=0.100 EE=0.030 TP=0.120  port SR=+3.03  elapsed=9s  eta=0s
+
+  Wrote: /home/malecada/master_thesis/TradingAgents/data/v5_sltp_wf/co_train/results.csv  (1890 rows)
+  Wrote: /home/malecada/master_thesis/TradingAgents/data/v5_sltp_wf/co_train/summary.json
+  Baseline cell SR = +3.114 (current canonical V5 MIX = +3.178)
+  Best cell: SL=0.1 EE=1.0 TP=0.0  SR=+3.419  DD=3.5%
+
+  === co_test: 2025-01-01 → 2026-04-15 ===
+  Loaded 4 coins in 0.2s
+  cell 20/378  SL=0.010 EE=1.000 TP=0.080  port SR=+2.99  elapsed=1s  eta=10s
+  cell 40/378  SL=0.030 EE=1.000 TP=0.050  port SR=+3.01  elapsed=1s  eta=6s
+  cell 60/378  SL=0.100 EE=1.000 TP=0.030  port SR=+3.00  elapsed=1s  eta=5s
+  cell 80/378  SL=0.010 EE=0.005 TP=0.020  port SR=+2.80  elapsed=1s  eta=5s
+  cell 100/378  SL=0.030 EE=0.005 TP=0.010  port SR=+2.81  elapsed=1s  eta=4s
+  cell 120/378  SL=0.100 EE=0.005 TP=0.000  port SR=+2.94  elapsed=2s  eta=3s
+  cell 140/378  SL=0.005 EE=0.010 TP=0.120  port SR=+3.20  elapsed=2s  eta=3s
+  cell 160/378  SL=0.020 EE=0.010 TP=0.080  port SR=+3.23  elapsed=2s  eta=3s
+  cell 180/378  SL=0.070 EE=0.010 TP=0.050  port SR=+3.23  elapsed=2s  eta=2s
+  cell 200/378  SL=0.005 EE=0.015 TP=0.030  port SR=+3.16  elapsed=3s  eta=2s
+  cell 220/378  SL=0.020 EE=0.015 TP=0.020  port SR=+3.21  elapsed=3s  eta=2s
+  cell 240/378  SL=0.070 EE=0.015 TP=0.010  port SR=+3.21  elapsed=3s  eta=2s
+  cell 260/378  SL=0.005 EE=0.020 TP=0.000  port SR=+3.06  elapsed=3s  eta=1s
+  cell 280/378  SL=0.015 EE=0.020 TP=0.120  port SR=+3.08  elapsed=3s  eta=1s
+  cell 300/378  SL=0.050 EE=0.020 TP=0.080  port SR=+3.09  elapsed=4s  eta=1s
+  cell 320/378  SL=0.000 EE=0.030 TP=0.050  port SR=+2.90  elapsed=4s  eta=1s
+  cell 340/378  SL=0.015 EE=0.030 TP=0.030  port SR=+3.00  elapsed=4s  eta=0s
+  cell 360/378  SL=0.050 EE=0.030 TP=0.020  port SR=+3.01  elapsed=4s  eta=0s
+  cell 378/378  SL=0.100 EE=0.030 TP=0.120  port SR=+3.08  elapsed=4s  eta=0s
+
+  Wrote: /home/malecada/master_thesis/TradingAgents/data/v5_sltp_wf/co_test/results.csv  (1890 rows)
+  Wrote: /home/malecada/master_thesis/TradingAgents/data/v5_sltp_wf/co_test/summary.json
+  Baseline cell SR = +3.318 (current canonical V5 MIX = +3.178)
+  Best cell: SL=0.05 EE=0.015 TP=0.0  SR=+3.320  DD=4.0%
+
+  === ib_train: 2021-11-07 → 2024-12-31 ===
+  Loaded 4 coins (with OHLC) in 0.2s
+  cell 20/378  SL=0.010 EE=1.000 TP=0.080  port SR=+1.08  n_sl=2131 n_tp=1421  elapsed=1s  eta=22s
+  cell 40/378  SL=0.030 EE=1.000 TP=0.050  port SR=+2.14  n_sl=1941 n_tp=1030  elapsed=2s  eta=16s
+  cell 60/378  SL=0.100 EE=1.000 TP=0.030  port SR=+2.31  n_sl=1530 n_tp=926  elapsed=3s  eta=14s
+  cell 80/378  SL=0.010 EE=0.005 TP=0.020  port SR=-2.39  n_sl=2382 n_tp=2096  elapsed=4s  eta=14s
+  cell 100/378  SL=0.030 EE=0.005 TP=0.010  port SR=-2.00  n_sl=2400 n_tp=2069  elapsed=4s  eta=12s
+  cell 120/378  SL=0.100 EE=0.005 TP=0.000  port SR=+3.14  n_sl=228 n_tp=79  elapsed=5s  eta=11s
+  cell 140/378  SL=0.005 EE=0.010 TP=0.120  port SR=+0.30  n_sl=2214 n_tp=1671  elapsed=6s  eta=10s
+  cell 160/378  SL=0.020 EE=0.010 TP=0.080  port SR=+2.32  n_sl=1832 n_tp=943  elapsed=7s  eta=9s
+  cell 180/378  SL=0.070 EE=0.010 TP=0.050  port SR=+2.90  n_sl=1298 n_tp=689  elapsed=7s  eta=8s
+  cell 200/378  SL=0.005 EE=0.015 TP=0.030  port SR=-2.27  n_sl=2364 n_tp=2105  elapsed=9s  eta=8s
+  cell 220/378  SL=0.020 EE=0.015 TP=0.020  port SR=-1.56  n_sl=2383 n_tp=2081  elapsed=9s  eta=7s
+  cell 240/378  SL=0.070 EE=0.015 TP=0.010  port SR=+0.40  n_sl=2081 n_tp=1621  elapsed=10s  eta=6s
+  cell 260/378  SL=0.005 EE=0.020 TP=0.000  port SR=+1.05  n_sl=1992 n_tp=1413  elapsed=11s  eta=5s
+  cell 280/378  SL=0.015 EE=0.020 TP=0.120  port SR=+1.95  n_sl=1718 n_tp=951  elapsed=12s  eta=4s
+  cell 300/378  SL=0.050 EE=0.020 TP=0.080  port SR=+2.96  n_sl=1273 n_tp=565  elapsed=12s  eta=3s
+  cell 320/378  SL=0.000 EE=0.030 TP=0.050  port SR=+3.04  n_sl=1472 n_tp=689  elapsed=14s  eta=2s
+  cell 340/378  SL=0.015 EE=0.030 TP=0.030  port SR=-1.16  n_sl=2430 n_tp=1985  elapsed=14s  eta=2s
+  cell 360/378  SL=0.050 EE=0.030 TP=0.020  port SR=+0.91  n_sl=2060 n_tp=1365  elapsed=15s  eta=1s
+  cell 378/378  SL=0.100 EE=0.030 TP=0.120  port SR=+3.06  n_sl=522 n_tp=230  elapsed=16s  eta=0s
+
+  Wrote: /home/malecada/master_thesis/TradingAgents/data/v5_sltp_wf/ib_train/results.csv  (1890 rows)
+  Wrote: /home/malecada/master_thesis/TradingAgents/data/v5_sltp_wf/ib_train/summary.json
+  Intrabar baseline SR = +2.977 (close-only §29 = +3.178)
+  Best cell: SL=0.0 EE=0.005 TP=0.12  SR=+3.427  DD=4.9%  ΔSR=+0.450  verdict=CONFIRM
+
+  === ib_test: 2025-01-01 → 2026-04-15 ===
+  Loaded 4 coins (with OHLC) in 0.2s
+  cell 20/378  SL=0.010 EE=1.000 TP=0.080  port SR=+1.78  n_sl=798 n_tp=532  elapsed=1s  eta=12s
+  cell 40/378  SL=0.030 EE=1.000 TP=0.050  port SR=+2.59  n_sl=734 n_tp=392  elapsed=1s  eta=8s
+  cell 60/378  SL=0.100 EE=1.000 TP=0.030  port SR=+2.80  n_sl=534 n_tp=321  elapsed=1s  eta=7s
+  cell 80/378  SL=0.010 EE=0.005 TP=0.020  port SR=-1.77  n_sl=969 n_tp=714  elapsed=2s  eta=7s
+  cell 100/378  SL=0.030 EE=0.005 TP=0.010  port SR=-2.28  n_sl=917 n_tp=713  elapsed=2s  eta=6s
+  cell 120/378  SL=0.100 EE=0.005 TP=0.000  port SR=+2.79  n_sl=75 n_tp=22  elapsed=2s  eta=5s
+  cell 140/378  SL=0.005 EE=0.010 TP=0.120  port SR=+1.37  n_sl=810 n_tp=550  elapsed=3s  eta=5s
+  cell 160/378  SL=0.020 EE=0.010 TP=0.080  port SR=+3.13  n_sl=631 n_tp=365  elapsed=3s  eta=4s
+  cell 180/378  SL=0.070 EE=0.010 TP=0.050  port SR=+3.48  n_sl=457 n_tp=247  elapsed=4s  eta=4s
+  cell 200/378  SL=0.005 EE=0.015 TP=0.030  port SR=-1.31  n_sl=983 n_tp=696  elapsed=4s  eta=4s
+  cell 220/378  SL=0.020 EE=0.015 TP=0.020  port SR=-0.01  n_sl=940 n_tp=666  elapsed=4s  eta=3s
+  cell 240/378  SL=0.070 EE=0.015 TP=0.010  port SR=+0.76  n_sl=789 n_tp=540  elapsed=5s  eta=3s
+  cell 260/378  SL=0.005 EE=0.020 TP=0.000  port SR=+1.89  n_sl=696 n_tp=463  elapsed=5s  eta=2s
+  cell 280/378  SL=0.015 EE=0.020 TP=0.120  port SR=+2.93  n_sl=609 n_tp=342  elapsed=5s  eta=2s
+  cell 300/378  SL=0.050 EE=0.020 TP=0.080  port SR=+2.92  n_sl=416 n_tp=194  elapsed=6s  eta=1s
+  cell 320/378  SL=0.000 EE=0.030 TP=0.050  port SR=+2.92  n_sl=515 n_tp=252  elapsed=6s  eta=1s
+  cell 340/378  SL=0.015 EE=0.030 TP=0.030  port SR=+0.34  n_sl=931 n_tp=641  elapsed=7s  eta=1s
+  cell 360/378  SL=0.050 EE=0.030 TP=0.020  port SR=+1.57  n_sl=793 n_tp=495  elapsed=7s  eta=0s
+  cell 378/378  SL=0.100 EE=0.030 TP=0.120  port SR=+3.21  n_sl=182 n_tp=73  elapsed=7s  eta=0s
+
+  Wrote: /home/malecada/master_thesis/TradingAgents/data/v5_sltp_wf/ib_test/results.csv  (1890 rows)
+  Wrote: /home/malecada/master_thesis/TradingAgents/data/v5_sltp_wf/ib_test/summary.json
+  Intrabar baseline SR = +3.192 (close-only §29 = +3.178)
+  Best cell: SL=0.05 EE=0.015 TP=0.12  SR=+3.611  DD=2.8%  ΔSR=+0.419  verdict=CONFIRM
+
+  Wrote: /home/malecada/master_thesis/TradingAgents/data/v5_sltp_wf/wf_results.csv  (756 rows)
+  Wrote: /home/malecada/master_thesis/TradingAgents/data/v5_sltp_wf/wf_summary.json
+  Wrote: /home/malecada/master_thesis/TradingAgents/data/v5_sltp_wf/wf_report.md
+
+  CO verdict: FAIL  (train-best OOS SR=+3.046 vs baseline OOS SR=+3.318)
+  IB verdict: FAIL  (train-best OOS SR=+2.994 vs baseline OOS SR=+3.192)
