@@ -86,3 +86,36 @@ def test_orchestrator_per_engine_verdict_present(smoke_dir):
         for k in ("sl", "ee", "tp", "is_sr", "oos_sr", "oos_dd", "oos_calmar"):
             assert k in block["train_best"], f"missing train_best.{k}"
         assert "baseline_oos_sr" in block
+
+
+def test_orchestrator_cell_join_matches_source_csvs(smoke_dir):
+    """A sampled cell in wf_results.csv must match the same cell looked up
+    in the per-window per-engine source CSVs."""
+    out_dir = smoke_dir
+
+    wf = pd.read_csv(out_dir / "wf_results.csv")
+    # Pick the close-only baseline cell (always in smoke grid).
+    co_rows = wf[
+        (wf["engine"] == "close_only")
+        & (wf["sl"] == 0.03) & (wf["ee"] == 0.015) & (wf["tp"] == 0.0)
+    ]
+    assert len(co_rows) == 1, "expected exactly one CO baseline cell row"
+    co = co_rows.iloc[0]
+
+    co_train = pd.read_csv(out_dir / "co_train" / "results.csv")
+    co_train_port = co_train[
+        (co_train["scope"] == "portfolio")
+        & (co_train["sl"] == 0.03) & (co_train["ee"] == 0.015) & (co_train["tp"] == 0.0)
+    ].iloc[0]
+    co_test = pd.read_csv(out_dir / "co_test" / "results.csv")
+    co_test_port = co_test[
+        (co_test["scope"] == "portfolio")
+        & (co_test["sl"] == 0.03) & (co_test["ee"] == 0.015) & (co_test["tp"] == 0.0)
+    ].iloc[0]
+
+    assert abs(co["is_sr"] - co_train_port["sharpe"]) < 1e-9, (
+        f"is_sr mismatch: wf_results={co['is_sr']} vs co_train={co_train_port['sharpe']}"
+    )
+    assert abs(co["oos_sr"] - co_test_port["sharpe"]) < 1e-9, (
+        f"oos_sr mismatch: wf_results={co['oos_sr']} vs co_test={co_test_port['sharpe']}"
+    )
