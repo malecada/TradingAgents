@@ -88,3 +88,94 @@ def test_intrabar_false_is_bit_identical_to_omitted_kwarg():
         err_msg="intrabar=False changed equity vs no-kwarg path"
     )
     assert m_omit == m_false, "metrics diverged with intrabar=False"
+
+
+def test_intrabar_tp_truncates_bar_return_at_tp_price():
+    """Long position, price ramps up. On bar where high >= entry*(1+TP),
+    bar return must be TP%, not the full close-to-close gain (if smaller)."""
+    n = 10
+    dates = np.arange(n)
+    closes = np.array([100.0] * n)
+    closes[1:] = 100.0 * (1.005 ** np.arange(n - 1))  # +0.5%/bar = small
+    highs = closes.copy()
+    highs[5] = 108.0  # big upward wick (+8%) above TP=5% from entry close=100
+    lows = closes * 0.999
+    positions = np.ones(n)
+
+    eq_intrabar, _ = run_coin_backtest(
+        dates=dates, prices=closes, positions=positions,
+        initial_capital=10_000.0,
+        stop_loss=1.0, take_profit=0.05,
+        intrabar=True, highs=highs, lows=lows,
+        **_COSTS_NO,
+    )
+    eq_no_intrabar, _ = run_coin_backtest(
+        dates=dates, prices=closes, positions=positions,
+        initial_capital=10_000.0,
+        stop_loss=1.0, take_profit=0.05,
+        intrabar=False,
+        **_COSTS_NO,
+    )
+    eq_intrabar = np.asarray(eq_intrabar)
+    eq_no_intrabar = np.asarray(eq_no_intrabar)
+
+    # Intrabar TP captures the wick; close-only TP cannot (high never reaches
+    # close). So intrabar bar-5 equity must be strictly higher than close-only.
+    assert eq_intrabar[5] > eq_no_intrabar[5], (
+        f"intrabar TP must increase equity at bar 5 via wick capture: "
+        f"intrabar={eq_intrabar[5]:.2f} close-only={eq_no_intrabar[5]:.2f}"
+    )
+
+
+def test_intrabar_same_bar_collision_is_sl_first_pessimistic():
+    """When low <= SL_price AND high >= TP_price in the same bar, fill at SL."""
+    n = 5
+    dates = np.arange(n)
+    # Entry close at bar 1 = 100. Bar 2 has BOTH SL hit (low=94) AND TP hit
+    # (high=110). Close=100 (flat). SL-first pessimistic must pick SL.
+    closes = np.array([100.0, 100.0, 100.0, 100.0, 100.0])
+    highs = np.array([100.0, 100.0, 110.0, 100.0, 100.0])
+    lows = np.array([100.0, 100.0, 94.0, 100.0, 100.0])
+    positions = np.ones(n)
+
+    eq, _ = run_coin_backtest(
+        dates=dates, prices=closes, positions=positions,
+        initial_capital=10_000.0,
+        stop_loss=0.05, take_profit=0.08,
+        intrabar=True, highs=highs, lows=lows,
+        **_COSTS_NO,
+    )
+    eq = np.asarray(eq)
+
+    # Bar 2: entry_price = closes[1] = 100. SL_price = 95. TP_price = 108.
+    # Both lo=94 (≤95) and hi=110 (≥108) triggered. SL-first → fill at 95.
+    # Equity at bar 2 = equity[1] * (1 + 1.0 * (95 - 100)/100) = equity[1] * 0.95
+    # If TP-first were used (wrong), equity[2] = equity[1] * 1.08 (much higher).
+    assert eq[2] < eq[1], (
+        f"SL-first should reduce equity on collision bar: "
+        f"got eq[1]={eq[1]:.2f}, eq[2]={eq[2]:.2f}"
+    )
+    # Strong assertion: ratio close to 0.95 (SL fill), not 1.08 (TP fill)
+    ratio = eq[2] / eq[1]
+    assert 0.94 < ratio < 0.96, (
+        f"SL-first fill must produce ~5% loss on bar 2: ratio={ratio:.4f} "
+        f"(SL=0.95, TP=1.08); SL-first is the pessimistic choice"
+    )
+
+
+def test_intrabar_true_without_highs_raises():
+    """intrabar=True requires highs and lows; missing arrays must raise."""
+    dates = np.arange(5)
+    prices = np.array([100.0] * 5)
+    positions = np.ones(5)
+    common = dict(
+        dates=dates, prices=prices, positions=positions,
+        initial_capital=10_000.0, stop_loss=0.05, take_profit=0.0,
+        **_COSTS_NO,
+    )
+    with pytest.raises(ValueError, match="intrabar=True requires"):
+        run_coin_backtest(intrabar=True, **common)
+    with pytest.raises(ValueError, match="intrabar=True requires"):
+        run_coin_backtest(intrabar=True, highs=np.zeros(5), **common)
+    with pytest.raises(ValueError, match="intrabar=True requires"):
+        run_coin_backtest(intrabar=True, lows=np.zeros(5), **common)
