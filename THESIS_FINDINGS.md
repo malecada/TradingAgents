@@ -3293,3 +3293,125 @@ robust of the two and the natural candidate for a follow-up live A/B.
 - Spec: `docs/superpowers/specs/2026-05-19-v5-sltp-sweep-design.md`
 - Plan: `docs/superpowers/plans/2026-05-19-v5-sltp-sweep.md`
 - Branch: `feature/v5-sltp-sweep`
+
+**Follow-up:** §30 validates this under intrabar OHLC rules — the §29
+top-5 cluster does NOT survive wicks (ΔSR -0.06 to -0.27). Verdict:
+partial confirm; see §30 for the new winning regime.
+
+
+## 30. V5 MIX TP/SL Intrabar OHLC Sweep — §29 Wick-Risk Validation (2026-05-19)
+
+**Goal.** §29 (close-only sweep) found best cell SL=0.10, EE=disabled, TP=off →
+SR +3.335 / DD 3.6% (vs baseline +3.178 / 4.9%), a +0.157 SR / -1.3 pp DD
+delta. The §29 limitations flagged **intrabar wick risk** as the dominant
+unaddressed unknown: real fills under tight SL would be worse than close-only
+logic shows. This study re-runs the §29 378-cell grid with intrabar OHLC
+fills and reports whether the §29 finding survives.
+
+**Method.** Engine extended (`scripts/baseline_strategy_v2.py`) with opt-in
+`intrabar: bool = False` + `highs` / `lows` arrays. When enabled, per-bar:
+`hit_SL = low ≤ entry × (1 − SL%)`, `hit_TP = high ≥ entry × (1 + TP%)`,
+same-bar collision is **SL-first pessimistic**. Bar's gross return truncated
+at fill price. Default `intrabar=False` is bit-identical to the §29 engine
+(regression-tested in `tests/strategies/test_sltp_intrabar.py`). EE
+(close-only by construction) unchanged. Same 378-cell grid as §29:
+
+| Parameter | Values |
+|---|---|
+| stop_loss | off, 0.5%, 1%, 1.5%, 2%, 3% (V5), 5%, 7%, 10% |
+| early_exit_loss | disabled, 0.5%, 1%, 1.5% (V5), 2%, 3% |
+| take_profit | off (V5), 1%, 2%, 3%, 5%, 8%, 12% |
+
+Per-cell `n_intrabar_sl` and `n_intrabar_tp` counts capture how often the
+intrabar branch fired.
+
+**Intrabar baseline.** (SL=0.03, EE=0.015, TP=off, intrabar=True) →
+SR = +3.047. Close-only §29 baseline = +3.178. The −0.131 SR cost is the
+"wick tax" on the production parameters: tight SL triggers intrabar on
+wicks that close-only logic ignores.
+
+**Best cell — intrabar.** SL = 0.0 (disabled), EE = 0.005 (very tight),
+TP = 12% → Sharpe +3.391, total return +723.5%, max DD 4.9%, Calmar 7.88,
+intrabar SL fires = 687, intrabar TP fires = 296. ΔSR vs intrabar baseline =
++0.344 (well above the +0.15 acceptance threshold).
+
+**Verdict.** **PARTIAL CONFIRM.** The acceptance threshold is met
+(ΔSR = +0.344 ≫ +0.15), but the optimal parameter region **flipped
+completely** vs §29:
+
+| | §29 close-only winner | §30 intrabar winner |
+|---|---|---|
+| SL | 10% (loose) | disabled |
+| EE | disabled | 0.5% (very tight) |
+| TP | off | 12% |
+| SR | +3.335 | +3.391 |
+| DD | 3.6% | 4.9% |
+
+The §29 result that "EE-disabled + TP-off + loose SL dominates" does NOT
+survive intrabar wick rules. Under intrabar, the new winning regime is
+"no SL + very tight EE + high TP".
+
+**§29 top-5 re-scored under intrabar.** See
+`data/v5_sltp_sweep_intrabar/comparison.md`. All five §29 winners degrade
+materially under intrabar:
+
+| SL | EE | TP | CO SR | IB SR | ΔSR |
+|----|----|----|-------|-------|-----|
+| 0.10 | disabled | off | +3.335 | +3.062 | -0.274 |
+| 0.07 | disabled | off | +3.335 | +3.130 | -0.205 |
+| 0.05 | disabled | off | +3.335 | +3.179 | -0.156 |
+| 0.03 | disabled | off | +3.332 | +3.178 | -0.155 |
+| 0.10 | disabled | 12% | +3.326 | +3.270 | -0.056 |
+
+The §29-top-5 cluster shows ΔSR ≈ -0.05 to -0.27, confirming that
+EE-disabled + loose-SL is **wick-fragile**: the alpha is illusory in a
+close-only model and disappears (or partially disappears) when fills are
+forced to respect intrabar prices.
+
+**Interpretation.** Two distinct claims emerge:
+
+1. **§29's specific recommendation is rejected by intrabar.** "Disable EE,
+   loosen SL" loses 5-27% of its SR delta when wicks count. Not safe for
+   live deployment as originally framed.
+2. **A different parameter combination produces a bigger improvement under
+   intrabar.** "No SL, very tight EE, high TP" beats the production baseline
+   by +0.344 SR (vs §29's +0.157 close-only). This is a NEW finding worth
+   walk-forward validation.
+
+The big TP (12%) combined with very tight EE (0.005) suggests the new regime
+behaves like a wide-range profit-taking strategy that exits losers quickly
+on signal flip. Intrabar TP captures occasional wick spikes (296 fires over
+1100 bars). Whether this generalises OOS is the next question — see WF
+follow-up.
+
+**Limitations carried from §29.**
+1. Single 4.5-year window; no out-of-sample. The regime-flip finding is
+   especially exposed to this risk.
+2. Global tuple (same SL/EE/TP across 4 coins).
+3. Fills assumed at the exact trigger price (no slippage beyond the existing
+   `slippage` parameter).
+4. Same-bar collision logic is one fixed convention (SL-first); a TP-first
+   variant would yield an upper bound and is not run here.
+
+**Live deployment.** Still no recommendation. The §29 close-only result is
+demoted from "candidate for follow-up live A/B" to "wick-fragile, do not
+deploy". The §30 intrabar winner is the new candidate but is conditional on
+WF validation passing.
+
+**Next step.** Walk-forward parameter split spec: train on 2021-11 →
+2024-12, test OOS 2025-01 → 2026-04. Grid focused on EE on/off and
+TP magnitude (the two axes where the §29 → §30 regime flipped). SL grid
+narrowed (the SL=0 winner suggests SL has small effect when EE is tight).
+
+**Artifacts.**
+- Top-20 cells: `data/v5_sltp_sweep_intrabar/top20.md`
+- §29 vs §30 comparison (top-5): `data/v5_sltp_sweep_intrabar/comparison.md`
+- Full results: `data/v5_sltp_sweep_intrabar/results.csv`
+- Grid + verdict + git SHA: `data/v5_sltp_sweep_intrabar/summary.json`
+- 12 heatmaps: `data/v5_sltp_sweep_intrabar/heatmaps/`
+- Sweep log: `data/v5_sltp_sweep_intrabar/sweep.log`
+
+**Spec + plan.**
+- Spec: `docs/superpowers/specs/2026-05-19-v5-sltp-intrabar-design.md`
+- Plan: `docs/superpowers/plans/2026-05-19-v5-sltp-intrabar.md`
+- Branch: `feature/v5-sltp-sweep-intrabar`
