@@ -7,10 +7,15 @@ predictions / positions / PnL to the live journal.
 
 Spec: docs/superpowers/specs/2026-05-15-v5-mix-live-deployment-design.md §7.
 
+The replay regenerates the four V5 walk-forward prediction routes against
+the freshly-refetched sandbox data (the committed CSVs are frozen at
+backtest time and never cover post-deploy dates). This regeneration is the
+heavy step — four pooled LGB walk-forwards, tens of minutes to hours.
+
 Usage:
     python scripts/parity_refetch_and_replay.py \\
         --journal /opt/tradingagents/data/trade_journal.db \\
-        --start-cycle 20260516 --end-cycle 20260522 \\
+        --start-date 2026-05-16 --end-date 2026-05-22 \\
         --sandbox /home/malecada/parity_w1_sandbox \\
         --lookback-days 1500
 """
@@ -44,7 +49,8 @@ def _wipe_sandbox(sandbox: Path) -> None:
     if sandbox.exists():
         shutil.rmtree(sandbox)
     sandbox.mkdir(parents=True)
-    for sub in ("onchain", "derivatives", "derivatives_raw", "options", "cache"):
+    for sub in ("onchain", "derivatives", "derivatives_raw", "options",
+                "ohlcv_cache", "preds"):
         (sandbox / sub).mkdir(parents=True, exist_ok=True)
 
 
@@ -59,8 +65,12 @@ def _run_script(name: str, args: list[str], env_extra: dict[str, str]) -> None:
 
 
 def refetch_into_sandbox(sandbox: Path, start_date: str, lookback_days: int) -> None:
-    """Re-pull every historical data source needed for V5 MIX into sandbox."""
-    start_lookback = (datetime.strptime(start_date, "%Y%m%d")
+    """Re-pull every historical data source needed for V5 MIX into sandbox.
+
+    ``start_date`` is an ISO date ("YYYY-MM-DD") — the same format the live
+    runner writes into ``cycles.cycle_id``.
+    """
+    start_lookback = (datetime.strptime(start_date, "%Y-%m-%d")
                        - timedelta(days=lookback_days)).strftime("%Y-%m-%d")
     env_extra = {"TRADINGAGENTS_DATA_ROOT": str(sandbox)}
 
@@ -107,6 +117,53 @@ def refetch_into_sandbox(sandbox: Path, start_date: str, lookback_days: int) -> 
     _run_script("fetch_coinglass_history.py", [], env_extra)
 
 
+# V5 MIX per-coin routing — each coin's predictions come from a distinct
+# pooled walk-forward (see baseline_v5_mix.DEFAULT_ROUTING). To replay the
+# *live* window we must regenerate these CSVs against the freshly-refetched
+# sandbox data; the committed CSVs are frozen at backtest time and never
+# cover post-deploy dates.
+_PARITY_ROUTES = {
+    "bitcoin":     dict(slug="bitcoin",     coins=["bitcoin", "ethereum"],                 pit=False),
+    "ethereum":    dict(slug="ethereum",    coins=["bitcoin", "ethereum"],                 pit=True),
+    "binancecoin": dict(slug="binancecoin", coins=["bitcoin", "ethereum", "binancecoin"],  pit=False),
+    "solana":      dict(slug="solana",      coins=["bitcoin", "ethereum", "solana"],       pit=True),
+}
+
+
+def regenerate_predictions(sandbox: Path, end_date: str,
+                            lookback_days: int) -> dict[str, str]:
+    """Walk-forward-regenerate the four V5 routes against sandbox data.
+
+    Runs ``evaluate_models_multi.py`` once per route with
+    ``TRADINGAGENTS_DATA_ROOT`` pointed at the sandbox, so predictions are
+    produced from the freshly-refetched data and extend through ``end_date``
+    (the live window). Returns a routing dict {coin: absolute pred dir}
+    suitable for ``baseline_v5_mix.py --routing-json``.
+
+    This is the heavy step — four pooled LGB walk-forwards. Budget tens of
+    minutes to a couple of hours depending on ``lookback_days``.
+    """
+    env_extra = {"TRADINGAGENTS_DATA_ROOT": str(sandbox)}
+    routing: dict[str, str] = {}
+    for coin, route in _PARITY_ROUTES.items():
+        out_dir = (sandbox / "preds" / route["slug"]).resolve()
+        out_dir.mkdir(parents=True, exist_ok=True)
+        args = [
+            "--coins", *route["coins"],
+            "--horizons", "7", "14",
+            "--models", "lgb",
+            "--days", str(lookback_days),
+            "--trade-date", end_date,
+            "--output-dir", str(out_dir),
+        ]
+        if route["pit"]:
+            args.append("--onchain-pit")
+        logger.info("Regenerating predictions: %s route → %s", coin, out_dir)
+        _run_script("evaluate_models_multi.py", args, env_extra)
+        routing[coin] = str(out_dir)
+    return routing
+
+
 def load_live_journal_rows(journal_db: str, start_cycle: str, end_cycle: str) -> dict:
     """Pull predictions, decisions, trades, portfolio_snapshots for [start, end]."""
     conn = sqlite3.connect(journal_db)
@@ -133,19 +190,27 @@ def load_live_journal_rows(journal_db: str, start_cycle: str, end_cycle: str) ->
     return {"cycles": cycles, "predictions": preds, "decisions": decisions, "trades": trades}
 
 
-def run_replay(sandbox: Path, start_cycle: str, end_cycle: str, kelly: float) -> Path:
-    """Run baseline_v5_mix.py against sandbox; return its output dir."""
+def run_replay(sandbox: Path, start_date: str, end_date: str, kelly: float,
+               routing: dict[str, str]) -> Path:
+    """Run baseline_v5_mix.py against sandbox; return its output dir.
+
+    ``start_date`` / ``end_date`` are ISO dates. ``routing`` is the
+    {coin: pred_dir} map from :func:`regenerate_predictions`; it is written
+    to a JSON file and passed via ``--routing-json`` so the replay consumes
+    the freshly-regenerated predictions instead of the frozen committed CSVs.
+    """
     out = sandbox / "replay"
     out.mkdir(exist_ok=True)
+    routing_json = sandbox / "parity_routing.json"
+    routing_json.write_text(json.dumps(routing, indent=2))
     env = os.environ.copy()
     env["TRADINGAGENTS_DATA_ROOT"] = str(sandbox)
-    start_iso = f"{start_cycle[:4]}-{start_cycle[4:6]}-{start_cycle[6:]}"
-    end_iso = f"{end_cycle[:4]}-{end_cycle[4:6]}-{end_cycle[6:]}"
     cmd = [
         sys.executable, str(PROJECT_ROOT / "scripts" / "baseline_v5_mix.py"),
-        "--start", start_iso, "--end", end_iso,
+        "--start", start_date, "--end", end_date,
         "--kelly", str(kelly),
         "--data-root", str(sandbox),
+        "--routing-json", str(routing_json),
         "--output-dir", str(out),
     ]
     subprocess.run(cmd, env=env, cwd=PROJECT_ROOT, check=True)
@@ -204,12 +269,18 @@ def main() -> None:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--journal", required=True,
                     help="Path to live trade journal SQLite DB")
-    p.add_argument("--start-cycle", required=True, help="YYYYMMDD")
-    p.add_argument("--end-cycle", required=True, help="YYYYMMDD")
+    p.add_argument("--start-date", required=True,
+                    help="ISO date YYYY-MM-DD (matches live cycle_id format)")
+    p.add_argument("--end-date", required=True,
+                    help="ISO date YYYY-MM-DD (matches live cycle_id format)")
     p.add_argument("--sandbox", required=True, help="Sandbox directory (will be wiped)")
     p.add_argument("--lookback-days", type=int, default=1500)
     p.add_argument("--kelly", type=float, default=0.25,
                     help="Kelly fraction for replay (default 0.25 = V5 live)")
+    p.add_argument("--skip-regen", action="store_true",
+                    help="Skip the heavy walk-forward prediction regeneration "
+                         "and replay from committed CSVs (debug only — will "
+                         "not cover post-deploy live dates).")
     args = p.parse_args()
 
     sandbox = Path(args.sandbox)
@@ -217,13 +288,27 @@ def main() -> None:
     logger.info("Sandbox: %s  (will be wiped)", sandbox)
 
     _wipe_sandbox(sandbox)
-    refetch_into_sandbox(sandbox, args.start_cycle, args.lookback_days)
+    refetch_into_sandbox(sandbox, args.start_date, args.lookback_days)
 
-    live = load_live_journal_rows(args.journal, args.start_cycle, args.end_cycle)
+    live = load_live_journal_rows(args.journal, args.start_date, args.end_date)
     logger.info("Live journal: %d cycles, %d predictions",
                 len(live["cycles"]), len(live["predictions"]))
 
-    replay_dir = run_replay(sandbox, args.start_cycle, args.end_cycle, args.kelly)
+    if args.skip_regen:
+        logger.warning("--skip-regen: replaying from committed CSVs (will not "
+                        "cover post-deploy live dates)")
+        # Mirror of baseline_v5_mix.DEFAULT_ROUTING — committed frozen CSVs.
+        routing = {
+            "bitcoin":     str(PROJECT_ROOT / "data" / "multi_2coins_walkforward"),
+            "ethereum":    str(PROJECT_ROOT / "data" / "multi_2coins_pit_wf"),
+            "binancecoin": str(PROJECT_ROOT / "data" / "multi_3coins_bnb_wf"),
+            "solana":      str(PROJECT_ROOT / "data" / "multi_3coins_sol_pit_wf"),
+        }
+    else:
+        routing = regenerate_predictions(sandbox, args.end_date, args.lookback_days)
+
+    replay_dir = run_replay(sandbox, args.start_date, args.end_date,
+                            args.kelly, routing)
     logger.info("Replay output: %s", replay_dir)
 
     report = sandbox / "parity_report.md"

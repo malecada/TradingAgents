@@ -86,8 +86,8 @@ def run_weekly_parity(*, week_end, live_start_date, live_end_date,
 
     Args:
         week_end: ISO week label, e.g. "2026-W21".
-        live_start_date / live_end_date: ISO dates ("YYYY-MM-DD"); converted
-            to the parity script's YYYYMMDD cycle-id arguments.
+        live_start_date / live_end_date: ISO dates ("YYYY-MM-DD"), passed
+            straight through as the parity script's --start-date/--end-date.
         output_dir: where the `parity_<week_end>.json` summary is written.
         journal_db: live trade journal; defaults to `$DATA_DIR/trade_journal.db`.
         sandbox: scratch dir the parity script wipes + refetches into;
@@ -110,18 +110,17 @@ def run_weekly_parity(*, week_end, live_start_date, live_end_date,
     journal_db = Path(journal_db) if journal_db else data_root / "trade_journal.db"
     sandbox = Path(sandbox) if sandbox else data_root / "parity_sandbox"
 
-    start_cycle = live_start_date.replace("-", "")
-    end_cycle = live_end_date.replace("-", "")
-
     live = compute_live_metrics(live_start_date, live_end_date)
 
     script = _REPO_ROOT / "scripts" / "parity_refetch_and_replay.py"
     # sys.executable, not bare "python" — the service user has no venv on PATH.
+    # ISO dates: the parity script's --start-date/--end-date match the live
+    # runner's cycle_id format directly (no YYYYMMDD conversion).
     cmd = [
         sys.executable, str(script),
         "--journal", str(journal_db),
-        "--start-cycle", start_cycle,
-        "--end-cycle", end_cycle,
+        "--start-date", live_start_date,
+        "--end-date", live_end_date,
         "--sandbox", str(sandbox),
         "--kelly", str(kelly),
         "--lookback-days", str(lookback_days),

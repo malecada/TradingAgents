@@ -51,8 +51,8 @@ def test_run_weekly_parity_parses_verdict(tmp_path, monkeypatch):
     assert data["live"]["return_pct"] == pytest.approx(0.03)
 
 
-def test_run_weekly_parity_uses_sys_executable_and_cycle_ids(tmp_path, monkeypatch):
-    """Subprocess launches via sys.executable; ISO dates → YYYYMMDD cycles."""
+def test_run_weekly_parity_uses_sys_executable_and_iso_dates(tmp_path, monkeypatch):
+    """Subprocess launches via sys.executable; ISO dates passed straight through."""
     monkeypatch.setenv("DATA_DIR", str(tmp_path))
     from tradingagents.execution.live import rebacktest
 
@@ -73,8 +73,9 @@ def test_run_weekly_parity_uses_sys_executable_and_cycle_ids(tmp_path, monkeypat
     assert cmd[0] == sys.executable
     assert cmd[0] != "python"
     assert "parity_refetch_and_replay.py" in cmd[1]
-    assert "--start-cycle" in cmd and "20260513" in cmd
-    assert "--end-cycle" in cmd and "20260520" in cmd
+    # ISO dates match the live runner cycle_id format — no YYYYMMDD conversion.
+    assert "--start-date" in cmd and "2026-05-13" in cmd
+    assert "--end-date" in cmd and "2026-05-20" in cmd
 
 
 def test_run_weekly_parity_writes_error_summary_on_failure(tmp_path, monkeypatch):
