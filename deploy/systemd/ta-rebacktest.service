@@ -1,5 +1,5 @@
 [Unit]
-Description=TradingAgents weekly re-backtest
+Description=TradingAgents weekly V5 parity drift check
 After=network-online.target
 
 [Service]
@@ -8,6 +8,6 @@ User=tabot
 WorkingDirectory=/opt/tradingagents/repo
 EnvironmentFile=/opt/tradingagents/secrets/.env.trading
 Environment=DATA_DIR=/opt/tradingagents/data
-ExecStart=/opt/tradingagents/venv/bin/python -c "from tradingagents.execution.live.rebacktest import run_weekly_report; from datetime import date, timedelta; from pathlib import Path; today=date.today(); start=today-timedelta(days=7); run_weekly_report(week_end=today.strftime('%%Y-W%%V'), live_start_date=start.isoformat(), live_end_date=today.isoformat(), output_dir=Path('/opt/tradingagents/data/reports'))"
+ExecStart=/opt/tradingagents/venv/bin/python -c "from tradingagents.execution.live.rebacktest import run_weekly_parity; from datetime import date, timedelta; from pathlib import Path; today=date.today(); start=today-timedelta(days=7); run_weekly_parity(week_end=today.strftime('%%Y-W%%V'), live_start_date=start.isoformat(), live_end_date=today.isoformat(), output_dir=Path('/opt/tradingagents/data/reports'))"
 TimeoutStartSec=3600
 Nice=10

@@ -1,4 +1,11 @@
-"""Weekly re-backtest: re-run V2 from live_start through prior day, diff to live."""
+"""Weekly V5 drift check — live journal metrics + parity refetch-and-replay.
+
+`compute_live_metrics` summarises the live `portfolio_snapshots` table.
+`run_weekly_parity` shells `scripts/parity_refetch_and_replay.py`, which
+refetches every data source fresh into a sandbox, replays V5 MIX over the
+live cycle window, and diffs against the live journal — the V5-correct
+successor to the retired V1 `baseline_strategy_v2` re-backtest.
+"""
 from __future__ import annotations
 
 import json
@@ -7,10 +14,12 @@ import os
 import re
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
+
+# repo root: tradingagents/execution/live/rebacktest.py → parents[3]
+_REPO_ROOT = Path(__file__).resolve().parents[3]
 
 
 def compute_live_metrics(live_start_date, live_end_date) -> dict:
@@ -66,95 +75,83 @@ def compute_live_metrics(live_start_date, live_end_date) -> dict:
     }
 
 
-def compute_backtest_metrics(start_date, end_date) -> dict:
-    """Re-run `scripts/baseline_strategy_v2.py` and parse its stdout.
+def run_weekly_parity(*, week_end, live_start_date, live_end_date,
+                       output_dir, journal_db=None, sandbox=None,
+                       kelly: float = 0.25, lookback_days: int = 1500) -> Path:
+    """Run the V5 parity refetch-and-replay check and capture its verdict.
 
-    The strategy script prints a per-coin table plus an Equal-Weight
-    Portfolio summary. We parse the portfolio summary for sharpe / return /
-    max_dd, and aggregate per-coin lines for n_trades / win_rate. Output
-    format is fixed by `scripts/baseline_strategy_v2.py`; if that changes,
-    the regex parsing below must change with it.
+    Shells `scripts/parity_refetch_and_replay.py`, which prints a
+    ``VERDICT: PASS|INVESTIGATE|FAIL`` line and the path to a markdown
+    parity report. We persist a JSON summary alongside the live metrics.
 
     Args:
-        start_date / end_date: Currently unused — `baseline_strategy_v2`
-            runs over the full prediction CSV range. Kept in the signature
-            for forward-compat with a date-bounded runner.
+        week_end: ISO week label, e.g. "2026-W21".
+        live_start_date / live_end_date: ISO dates ("YYYY-MM-DD"); converted
+            to the parity script's YYYYMMDD cycle-id arguments.
+        output_dir: where the `parity_<week_end>.json` summary is written.
+        journal_db: live trade journal; defaults to `$DATA_DIR/trade_journal.db`.
+        sandbox: scratch dir the parity script wipes + refetches into;
+            defaults to `$DATA_DIR/parity_sandbox`.
+        kelly: Kelly fraction for the replay (0.25 = V5 live).
+        lookback_days: feature-history depth for the refetch.
+
+    Returns:
+        Path to the JSON summary.
+
+    Note:
+        The parity replay runs `baseline_v5_mix.py`, which consumes the four
+        pre-generated walk-forward prediction CSV dirs (see that script's
+        DEFAULT_ROUTING). Those must exist under the repo `data/` dir or the
+        replay subprocess fails with `Missing prediction file`.
     """
-    del start_date, end_date  # baseline_strategy_v2 spans full pred dir
-
-    out_dir = Path(tempfile.mkdtemp())
-    pred_dir = os.environ.get("BACKTEST_PRED_DIR", "data/multi_3coins_bnb")
-    # sys.executable, not bare "python" — under systemd the service user has no
-    # venv on PATH, so "python" raises FileNotFoundError.
-    cmd = [
-        sys.executable, "scripts/baseline_strategy_v2.py",
-        "--pred-dir", pred_dir,
-        "--symmetric",
-        "--output-plot", str(out_dir / "equity.png"),
-    ]
-    result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-    text = result.stdout
-
-    # Equal-Weight Portfolio block (preferred). Falls back to NaN if missing.
-    sharpe_m = re.search(r"Sharpe\s*:\s*([+-]?[0-9.]+)", text)
-    ret_m = re.search(r"Return\s*:\s*([+-]?[0-9.]+)%", text)
-    dd_m = re.search(r"Max DD\s*:\s*([+-]?[0-9.]+)%", text)
-
-    sharpe = float(sharpe_m.group(1)) if sharpe_m else float("nan")
-    return_pct = float(ret_m.group(1)) / 100 if ret_m else float("nan")
-    max_dd = float(dd_m.group(1)) / 100 if dd_m else float("nan")
-
-    # Per-coin rows like:
-    #   bitcoin        +111.65%    +68.53%     2.16   12.06%    53.1%       61    +124.39%
-    coin_row_re = re.compile(
-        r"^\s+(\S+)\s+([+-][\d.]+)%\s+([+-][\d.]+)%\s+([+-]?[\d.]+)\s+"
-        r"([\d.]+)%\s+([\d.]+)%\s+(\d+)\s+([+-][\d.]+)%\s*$",
-        re.MULTILINE,
-    )
-    rows = coin_row_re.findall(text)
-    if rows:
-        # Aggregate trade count + size-weighted (equal here) win rate across coins.
-        n_trades = sum(int(r[6]) for r in rows)
-        win_rates = [float(r[5]) for r in rows]
-        win_rate = sum(win_rates) / (len(win_rates) * 100.0)
-    else:
-        n_trades = 0
-        win_rate = 0.0
-
-    return {
-        "sharpe": sharpe,
-        "return_pct": return_pct,
-        "max_dd": max_dd,
-        "n_trades": n_trades,
-        "win_rate": win_rate,
-    }
-
-
-def classify_verdict(delta: dict) -> str:
-    sharpe_delta = delta.get("sharpe", 0)
-    if abs(sharpe_delta) <= 0.3:
-        return "CONVERGING"
-    if abs(sharpe_delta) > 1.0:
-        return "BROKEN"
-    return "DIVERGING"
-
-
-def run_weekly_report(*, week_end, live_start_date, live_end_date, output_dir: Path) -> Path:
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+    data_root = Path(os.environ.get("DATA_DIR", "data"))
+    journal_db = Path(journal_db) if journal_db else data_root / "trade_journal.db"
+    sandbox = Path(sandbox) if sandbox else data_root / "parity_sandbox"
+
+    start_cycle = live_start_date.replace("-", "")
+    end_cycle = live_end_date.replace("-", "")
 
     live = compute_live_metrics(live_start_date, live_end_date)
-    bt = compute_backtest_metrics(live_start_date, live_end_date)
-    delta = {k: live[k] - bt[k] for k in live if k in bt}
+
+    script = _REPO_ROOT / "scripts" / "parity_refetch_and_replay.py"
+    # sys.executable, not bare "python" — the service user has no venv on PATH.
+    cmd = [
+        sys.executable, str(script),
+        "--journal", str(journal_db),
+        "--start-cycle", start_cycle,
+        "--end-cycle", end_cycle,
+        "--sandbox", str(sandbox),
+        "--kelly", str(kelly),
+        "--lookback-days", str(lookback_days),
+    ]
+    verdict = "ERROR"
+    parity_report = ""
+    stdout_tail = ""
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        stdout_tail = result.stdout[-2000:]
+        verdict_m = re.search(r"VERDICT:\s*(\w+)", result.stdout)
+        report_m = re.search(r"REPORT:\s*(\S+)", result.stdout)
+        verdict = verdict_m.group(1) if verdict_m else "UNKNOWN"
+        parity_report = report_m.group(1) if report_m else ""
+    except subprocess.CalledProcessError as e:
+        # Never raise: a failed parity run must still write a summary so the
+        # operator sees ERROR rather than a silent missing report.
+        stdout_tail = ((e.stdout or "") + "\n--- stderr ---\n" + (e.stderr or ""))[-2000:]
+        logger.error("Parity script failed (exit %s)", e.returncode)
+
     report = {
         "week_end": week_end,
         "live_start_date": live_start_date,
         "live_end_date": live_end_date,
         "live": live,
-        "backtest": bt,
-        "delta": delta,
-        "verdict": classify_verdict(delta),
+        "verdict": verdict,
+        "parity_report": parity_report,
+        "stdout_tail": stdout_tail,
     }
-    out_path = output_dir / f"rebacktest_{week_end}.json"
+    out_path = output_dir / f"parity_{week_end}.json"
     out_path.write_text(json.dumps(report, indent=2))
+    logger.info("Weekly parity %s → verdict %s", week_end, verdict)
     return out_path

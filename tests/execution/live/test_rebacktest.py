@@ -1,4 +1,3 @@
-from pathlib import Path
 import json
 import sys
 from types import SimpleNamespace
@@ -7,34 +6,26 @@ from unittest.mock import patch
 import pytest
 
 
-def test_compute_weekly_report_writes_json(tmp_path):
-    from tradingagents.execution.live import rebacktest
-
-    fake_live = {"sharpe": 2.4, "return_pct": 0.04, "max_dd": 0.03,
-                  "n_trades": 18, "win_rate": 0.61}
-    fake_bt = {"sharpe": 2.6, "return_pct": 0.05, "max_dd": 0.025,
-                "n_trades": 18, "win_rate": 0.67}
-
-    with patch.object(rebacktest, "compute_live_metrics", return_value=fake_live), \
-         patch.object(rebacktest, "compute_backtest_metrics", return_value=fake_bt):
-        report_path = rebacktest.run_weekly_report(
-            week_end="2026-W18",
-            live_start_date="2026-04-29",
-            live_end_date="2026-05-12",
-            output_dir=tmp_path,
+def _seed_journal(db_path):
+    """Two portfolio snapshots so compute_live_metrics returns real numbers."""
+    from tradingagents.execution.live.journal import Journal
+    j = Journal(str(db_path))
+    j.log_cycle_start("2026-05-13", git_sha="abc")
+    for day, val in [("2026-05-13", 10000), ("2026-05-20", 10300)]:
+        j._conn.execute(
+            "INSERT INTO portfolio_snapshots (cycle_id, ts, total_value, "
+            "usdt_balance, position_qty_per_coin, unrealized_pnl) "
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            (day, f"{day}T00:05:00+00:00", val, val, "{}", 0),
         )
-    assert report_path.exists()
-    data = json.loads(report_path.read_text())
-    assert data["week_end"] == "2026-W18"
-    assert data["live"]["sharpe"] == 2.4
-    assert data["backtest"]["sharpe"] == 2.6
-    assert data["delta"]["sharpe"] == pytest.approx(-0.2)
+    j._conn.commit()
+    j.close()
 
 
-def test_compute_backtest_metrics_uses_sys_executable():
-    """Regression: the subprocess must launch via sys.executable, not bare
-    "python" — under systemd the service user has no venv on PATH and bare
-    "python" raised FileNotFoundError, killing ta-rebacktest.service."""
+def test_run_weekly_parity_parses_verdict(tmp_path, monkeypatch):
+    """run_weekly_parity captures the parity script's VERDICT line."""
+    monkeypatch.setenv("DATA_DIR", str(tmp_path))
+    _seed_journal(tmp_path / "trade_journal.db")
     from tradingagents.execution.live import rebacktest
 
     captured = {}
@@ -42,24 +33,65 @@ def test_compute_backtest_metrics_uses_sys_executable():
     def fake_run(cmd, *args, **kwargs):
         captured["cmd"] = cmd
         return SimpleNamespace(
-            stdout="Sharpe : 2.50\nReturn : 12.0%\nMax DD : 3.0%\n",
-            returncode=0,
+            stdout="...\nVERDICT: PASS\nREPORT: /tmp/sandbox/parity_report.md\n",
+            stderr="", returncode=0,
         )
 
     with patch.object(rebacktest.subprocess, "run", side_effect=fake_run):
-        rebacktest.compute_backtest_metrics("2026-05-13", "2026-05-20")
+        out = rebacktest.run_weekly_parity(
+            week_end="2026-W21",
+            live_start_date="2026-05-13", live_end_date="2026-05-20",
+            output_dir=tmp_path / "reports",
+        )
 
-    assert captured["cmd"][0] == sys.executable
-    assert captured["cmd"][0] != "python"
+    data = json.loads(out.read_text())
+    assert data["week_end"] == "2026-W21"
+    assert data["verdict"] == "PASS"
+    assert data["parity_report"] == "/tmp/sandbox/parity_report.md"
+    assert data["live"]["return_pct"] == pytest.approx(0.03)
 
 
-def test_verdict_diverging_when_sharpe_delta_large():
+def test_run_weekly_parity_uses_sys_executable_and_cycle_ids(tmp_path, monkeypatch):
+    """Subprocess launches via sys.executable; ISO dates → YYYYMMDD cycles."""
+    monkeypatch.setenv("DATA_DIR", str(tmp_path))
     from tradingagents.execution.live import rebacktest
-    delta = {"sharpe": -0.7}
-    assert rebacktest.classify_verdict(delta) == "DIVERGING"
+
+    captured = {}
+
+    def fake_run(cmd, *args, **kwargs):
+        captured["cmd"] = cmd
+        return SimpleNamespace(stdout="VERDICT: PASS\n", stderr="", returncode=0)
+
+    with patch.object(rebacktest.subprocess, "run", side_effect=fake_run):
+        rebacktest.run_weekly_parity(
+            week_end="2026-W21",
+            live_start_date="2026-05-13", live_end_date="2026-05-20",
+            output_dir=tmp_path / "reports",
+        )
+
+    cmd = captured["cmd"]
+    assert cmd[0] == sys.executable
+    assert cmd[0] != "python"
+    assert "parity_refetch_and_replay.py" in cmd[1]
+    assert "--start-cycle" in cmd and "20260513" in cmd
+    assert "--end-cycle" in cmd and "20260520" in cmd
 
 
-def test_verdict_converging_when_close():
+def test_run_weekly_parity_writes_error_summary_on_failure(tmp_path, monkeypatch):
+    """A failed parity subprocess still produces a JSON summary with ERROR."""
+    monkeypatch.setenv("DATA_DIR", str(tmp_path))
     from tradingagents.execution.live import rebacktest
-    delta = {"sharpe": -0.1}
-    assert rebacktest.classify_verdict(delta) == "CONVERGING"
+
+    err = rebacktest.subprocess.CalledProcessError(
+        returncode=1, cmd=["x"], output="partial out", stderr="boom",
+    )
+    with patch.object(rebacktest.subprocess, "run", side_effect=err):
+        out = rebacktest.run_weekly_parity(
+            week_end="2026-W21",
+            live_start_date="2026-05-13", live_end_date="2026-05-20",
+            output_dir=tmp_path / "reports",
+        )
+
+    data = json.loads(out.read_text())
+    assert data["verdict"] == "ERROR"
+    assert "boom" in data["stdout_tail"]
