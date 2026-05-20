@@ -6,6 +6,7 @@ import logging
 import os
 import re
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -83,8 +84,10 @@ def compute_backtest_metrics(start_date, end_date) -> dict:
 
     out_dir = Path(tempfile.mkdtemp())
     pred_dir = os.environ.get("BACKTEST_PRED_DIR", "data/multi_3coins_bnb")
+    # sys.executable, not bare "python" — under systemd the service user has no
+    # venv on PATH, so "python" raises FileNotFoundError.
     cmd = [
-        "python", "scripts/baseline_strategy_v2.py",
+        sys.executable, "scripts/baseline_strategy_v2.py",
         "--pred-dir", pred_dir,
         "--symmetric",
         "--output-plot", str(out_dir / "equity.png"),

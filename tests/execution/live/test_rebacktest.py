@@ -1,5 +1,7 @@
 from pathlib import Path
 import json
+import sys
+from types import SimpleNamespace
 from unittest.mock import patch
 
 import pytest
@@ -27,6 +29,28 @@ def test_compute_weekly_report_writes_json(tmp_path):
     assert data["live"]["sharpe"] == 2.4
     assert data["backtest"]["sharpe"] == 2.6
     assert data["delta"]["sharpe"] == pytest.approx(-0.2)
+
+
+def test_compute_backtest_metrics_uses_sys_executable():
+    """Regression: the subprocess must launch via sys.executable, not bare
+    "python" — under systemd the service user has no venv on PATH and bare
+    "python" raised FileNotFoundError, killing ta-rebacktest.service."""
+    from tradingagents.execution.live import rebacktest
+
+    captured = {}
+
+    def fake_run(cmd, *args, **kwargs):
+        captured["cmd"] = cmd
+        return SimpleNamespace(
+            stdout="Sharpe : 2.50\nReturn : 12.0%\nMax DD : 3.0%\n",
+            returncode=0,
+        )
+
+    with patch.object(rebacktest.subprocess, "run", side_effect=fake_run):
+        rebacktest.compute_backtest_metrics("2026-05-13", "2026-05-20")
+
+    assert captured["cmd"][0] == sys.executable
+    assert captured["cmd"][0] != "python"
 
 
 def test_verdict_diverging_when_sharpe_delta_large():
