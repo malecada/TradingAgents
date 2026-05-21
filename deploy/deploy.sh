@@ -33,13 +33,24 @@ echo "→ checking secrets file exists"
 $SSH "[ -f /opt/tradingagents/secrets/.env.trading ] || (echo 'ERROR: scp secrets/.env.trading manually before re-running'; exit 1)"
 $SSH "chmod 600 /opt/tradingagents/secrets/.env.trading"
 
+echo "→ checking monitor secrets file exists"
+$SSH "[ -f /opt/tradingagents/secrets/.env.monitor ] || (echo 'WARNING: /opt/tradingagents/secrets/.env.monitor missing — create it with TA_MONITOR_PASSWORD before monitor UI starts'; true)"
+
 echo "→ installing systemd units (root)"
 $SSH_ROOT "cp /opt/tradingagents/repo/deploy/systemd/*.service /etc/systemd/system/"
 $SSH_ROOT "cp /opt/tradingagents/repo/deploy/systemd/*.timer /etc/systemd/system/"
 $SSH_ROOT "systemctl daemon-reload"
 $SSH_ROOT "systemctl enable --now ta-cycle.timer ta-rebacktest.timer"
+$SSH_ROOT "systemctl enable --now ta-monitor.service"
 
 echo "→ verifying timers"
 $SSH_ROOT "systemctl list-timers ta-cycle.timer ta-rebacktest.timer --no-pager"
+
+echo "→ verifying monitor UI service"
+$SSH_ROOT "systemctl is-active ta-monitor.service || true"
+echo "    monitor UI running on 127.0.0.1:8800 (reverse-proxy terminates TLS)"
+echo "    NOTE: create /opt/tradingagents/secrets/.env.monitor with"
+echo "          TA_MONITOR_PASSWORD before first start, and install Caddy"
+echo "          with deploy/Caddyfile for public HTTPS access."
 
 echo "✓ deploy complete; pinned tag: $TAG"

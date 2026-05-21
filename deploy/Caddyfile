@@ -1,0 +1,6 @@
+# TradingAgents live monitor — automatic HTTPS via Let's Encrypt.
+# Replace monitor.example.com with the real VPS hostname before deploy.
+monitor.example.com {
+    encode gzip
+    reverse_proxy 127.0.0.1:8800
+}
