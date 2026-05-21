@@ -105,14 +105,14 @@ Data-generation task (long-running scripts, not a unit-test cycle). Each new coi
 
 - [ ] **Step 1: Run the 78f walk-forward evaluation, one per new coin**
 
-Run (4 separate runs):
+Run (4 separate runs). `--days 3000` is required — it spans the full candle history (~2557 days from 2019-05) so the walk-forward produces OOS predictions back to ~2020-05, covering the 4.5-yr 2021-11-07 window. The default `--days 730` only yields ~1 year of predictions.
 ```bash
-python scripts/evaluate_models_multi.py --coins bitcoin ethereum ripple   --horizons 7 14 --models lgb --output-dir data/multi_3coins_xrp_wf
-python scripts/evaluate_models_multi.py --coins bitcoin ethereum dogecoin --horizons 7 14 --models lgb --output-dir data/multi_3coins_doge_wf
-python scripts/evaluate_models_multi.py --coins bitcoin ethereum cardano  --horizons 7 14 --models lgb --output-dir data/multi_3coins_ada_wf
-python scripts/evaluate_models_multi.py --coins bitcoin ethereum tron     --horizons 7 14 --models lgb --output-dir data/multi_3coins_trx_wf
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum ripple   --horizons 7 14 --models lgb --days 3000 --output-dir data/multi_3coins_xrp_wf
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum dogecoin --horizons 7 14 --models lgb --days 3000 --output-dir data/multi_3coins_doge_wf
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum cardano  --horizons 7 14 --models lgb --days 3000 --output-dir data/multi_3coins_ada_wf
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum tron     --horizons 7 14 --models lgb --days 3000 --output-dir data/multi_3coins_trx_wf
 ```
-Expected: each completes without error; prints a per-horizon walk-forward summary.
+Expected: each completes without error; prints a per-horizon walk-forward summary with ~2000 predictions per coin.
 
 - [ ] **Step 2: Verify each prediction set covers its target coin**
 
@@ -300,12 +300,12 @@ Same "2+1" per-coin pooling as Task 2, with the `--onchain-pit` flag added for t
 
 - [ ] **Step 1: Run the 193f walk-forward evaluation, one per new coin**
 
-Run (4 separate runs):
+Run (4 separate runs). `--days 3000` required for full 4.5-yr walk-forward coverage (see Task 2).
 ```bash
-python scripts/evaluate_models_multi.py --coins bitcoin ethereum ripple   --horizons 7 14 --models lgb --onchain-pit --output-dir data/multi_3coins_xrp_pit_wf
-python scripts/evaluate_models_multi.py --coins bitcoin ethereum dogecoin --horizons 7 14 --models lgb --onchain-pit --output-dir data/multi_3coins_doge_pit_wf
-python scripts/evaluate_models_multi.py --coins bitcoin ethereum cardano  --horizons 7 14 --models lgb --onchain-pit --output-dir data/multi_3coins_ada_pit_wf
-python scripts/evaluate_models_multi.py --coins bitcoin ethereum tron     --horizons 7 14 --models lgb --onchain-pit --output-dir data/multi_3coins_trx_pit_wf
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum ripple   --horizons 7 14 --models lgb --days 3000 --onchain-pit --output-dir data/multi_3coins_xrp_pit_wf
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum dogecoin --horizons 7 14 --models lgb --days 3000 --onchain-pit --output-dir data/multi_3coins_doge_pit_wf
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum cardano  --horizons 7 14 --models lgb --days 3000 --onchain-pit --output-dir data/multi_3coins_ada_pit_wf
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum tron     --horizons 7 14 --models lgb --days 3000 --onchain-pit --output-dir data/multi_3coins_trx_pit_wf
 ```
 The `--onchain-pit` flag pulls PIT on-chain + Coinglass derivatives features (see `build_pit_onchain_features`, which reads `data/derivatives/<coin>.parquet`).
 Expected: each completes; prints a per-horizon walk-forward summary.
