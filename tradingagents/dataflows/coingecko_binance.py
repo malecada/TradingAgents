@@ -43,6 +43,7 @@ _KNOWN_SYMBOLS = {
     "ripple": "XRPUSDT",
     "cardano": "ADAUSDT",
     "dogecoin": "DOGEUSDT",
+    "tron": "TRXUSDT",
     "polkadot": "DOTUSDT",
     "avalanche-2": "AVAXUSDT",
     "chainlink": "LINKUSDT",
