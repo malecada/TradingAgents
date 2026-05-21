@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>V5 MIX Live Monitor</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <script src="/static/chart.umd.min.js"></script>
+</head>
+<body>
+  <header id="topbar">
+    <strong>V5 MIX Live</strong>
+    <span id="status-dot" class="dot">&#9679;</span>
+    <span id="status-text">loading…</span>
+    <span id="equity-summary"></span>
+  </header>
+  <nav id="tabs">
+    <button class="tab active" data-tab="performance">Performance</button>
+    <button class="tab" data-tab="trades">Trades</button>
+    <button class="tab" data-tab="decisions">Predictions &amp; decisions</button>
+    <button class="tab" data-tab="health">System health</button>
+  </nav>
+  <main id="content"><p class="muted">Loading…</p></main>
+  <div id="banner" class="banner hidden"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

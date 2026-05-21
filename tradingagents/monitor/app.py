@@ -60,7 +60,7 @@ def create_app(
 
     @app.get("/")
     def index(request: Request, _: str = Depends(require_auth)):
-        return templates.TemplateResponse("base.html", {"request": request})
+        return templates.TemplateResponse(request, "base.html")
 
     @app.get("/api/performance")
     def api_performance(_: str = Depends(require_auth)):

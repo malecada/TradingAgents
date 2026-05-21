@@ -1,0 +1,41 @@
+:root { --bg:#0e1117; --panel:#161b22; --border:#2a2f3a; --fg:#d6dae0;
+        --muted:#8b949e; --green:#3fb950; --red:#f85149; --blue:#58a6ff;
+        --amber:#d29922; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg);
+       font:13px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; }
+#topbar { display:flex; align-items:center; gap:14px; padding:12px 16px;
+          background:var(--panel); border-bottom:1px solid var(--border); }
+#topbar strong { font-size:15px; }
+#equity-summary { margin-left:auto; text-align:right; }
+.dot { font-size:11px; }
+.dot.ok { color:var(--green); } .dot.stale { color:var(--amber); }
+.dot.fail { color:var(--red); }
+#tabs { display:flex; gap:4px; padding:8px 16px 0; background:var(--panel);
+        border-bottom:1px solid var(--border); }
+.tab { padding:6px 14px; background:none; border:1px solid transparent;
+       color:var(--muted); cursor:pointer; border-radius:6px 6px 0 0;
+       font-size:13px; }
+.tab.active { background:var(--bg); border-color:var(--border);
+              border-bottom-color:var(--bg); color:var(--fg); }
+main { padding:16px; }
+.cards { display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
+.card { flex:1; min-width:140px; background:var(--panel);
+        border:1px solid var(--border); border-radius:8px; padding:10px; }
+.card .label { color:var(--muted); font-size:11px; text-transform:uppercase; }
+.card .value { font-size:17px; font-weight:700; }
+.panel { background:var(--panel); border:1px solid var(--border);
+         border-radius:8px; padding:12px; margin-bottom:14px; }
+.panel h3 { margin:0 0 8px; font-size:11px; text-transform:uppercase;
+            color:var(--muted); font-weight:600; }
+table { width:100%; border-collapse:collapse; font-size:12px; }
+th { text-align:left; color:var(--muted); padding:4px 6px; }
+td { padding:5px 6px; border-top:1px solid var(--border); }
+.pos { color:var(--green); } .neg { color:var(--red); }
+.muted { color:var(--muted); }
+.pass { color:var(--green); } .failv { color:var(--red); }
+select { background:var(--panel); color:var(--fg);
+         border:1px solid var(--border); border-radius:6px; padding:4px 8px; }
+.banner { position:fixed; bottom:0; left:0; right:0; padding:8px 16px;
+          background:var(--red); color:#fff; text-align:center; }
+.hidden { display:none; }
