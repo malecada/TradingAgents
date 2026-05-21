@@ -16,6 +16,8 @@
 
 - CoinGecko IDs used throughout: `bitcoin ethereum binancecoin solana ripple dogecoin cardano tron`.
 - Core coins: `bitcoin ethereum binancecoin solana`. Satellite coins: `ripple dogecoin cardano tron`.
+- **Pooling — "2+1" pattern.** Each new coin is trained in its own 3-coin pool `{bitcoin, ethereum, <newcoin>}`, never an 8-coin mega-pool. `CLAUDE.md` documents that pooling beyond BTC+ETH degrades directional accuracy 12-22pp; §20's V5 routing used 3-coin pools per coin (`multi_3coins_bnb_wf`, `multi_3coins_sol_pit_wf`). The existing 4 coins keep their frozen prediction dirs.
+- Dir naming: 78f = `data/multi_3coins_<sym>_wf`, 193f = `data/multi_3coins_<sym>_pit_wf`, where `<sym>` ∈ `xrp doge ada trx`.
 - Backtest window: `--start 2021-11-07 --end 2026-04-15` (the 4.5-yr V5 walk-forward window).
 - All work happens on branch `feature/v5-8coin-expansion`. Create it before Task 1 if not already on it:
   `git checkout -b feature/v5-8coin-expansion`
@@ -28,8 +30,8 @@
 | `tradingagents/dataflows/coingecko_binance.py` | OHLCV + Binance symbol map | Modify — add `tron` → `TRXUSDT` |
 | `scripts/baseline_v5_mix.py` | V5 MIX strategy: routing, cost tiers, portfolio weighting | Modify — add cost-tier fn, weighting fn, 8-coin routing, CLI flags |
 | `tests/strategies/test_v5_8coin.py` | Unit tests for cost tiers + core/satellite weighting | Create |
-| `data/v5_8coin_78f/` | Pooled 78f WF predictions, 8-coin pool | Created by script run |
-| `data/v5_8coin_pit193f/` | Pooled 193f WF predictions, 8-coin pool | Created by script run |
+| `data/multi_3coins_{xrp,doge,ada,trx}_wf/` | 78f WF predictions, per-coin {BTC,ETH,coin} pool | Created by script run |
+| `data/multi_3coins_{xrp,doge,ada,trx}_pit_wf/` | 193f WF predictions, per-coin {BTC,ETH,coin} pool | Created by script run |
 | `data/derivatives/{ripple,dogecoin,cardano,tron}.parquet` | Coinglass derivatives per new coin | Created by script run |
 | `data/v5_8coin_production/` | Final 8-coin backtest output (`daily_returns.csv`, `summary.json`) | Created by script run |
 | `docs/superpowers/specs/2026-05-21-v5-8coin-routing.json` | Per-new-coin routing decisions from Task 7 | Create |
@@ -94,67 +96,70 @@ git add tradingagents/dataflows/coingecko_binance.py tests/strategies/test_v5_8c
 git commit -m "feat(data): add TRX/TRON to Binance symbol map"
 ```
 
-### Task 2: Generate 78f pooled walk-forward predictions for all 8 coins
+### Task 2: Generate 78f walk-forward predictions for the 4 new coins (per-coin 3-coin pools)
 
 **Files:**
-- Created by run: `data/v5_8coin_78f/preds_lgb_h7.csv`, `data/v5_8coin_78f/preds_lgb_h14.csv`
+- Created by run: `data/multi_3coins_{xrp,doge,ada,trx}_wf/preds_lgb_h{7,14}.csv`
 
-This is a data-generation task (a long-running script, not a unit-test cycle). The 8-coin pool includes the existing 4 so the new coins learn from cross-asset structure; only the new-4 predictions from this dir will be consumed (existing 4 keep their frozen dirs).
+Data-generation task (long-running scripts, not a unit-test cycle). Each new coin is trained in its own "2+1" pool `{bitcoin, ethereum, <newcoin>}` — see Conventions; an 8-coin mega-pool would degrade directional accuracy 12-22pp. The existing 4 coins keep their frozen prediction dirs.
 
-- [ ] **Step 1: Run the pooled 78f walk-forward evaluation**
+- [ ] **Step 1: Run the 78f walk-forward evaluation, one per new coin**
+
+Run (4 separate runs):
+```bash
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum ripple   --horizons 7 14 --models lgb --output-dir data/multi_3coins_xrp_wf
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum dogecoin --horizons 7 14 --models lgb --output-dir data/multi_3coins_doge_wf
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum cardano  --horizons 7 14 --models lgb --output-dir data/multi_3coins_ada_wf
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum tron     --horizons 7 14 --models lgb --output-dir data/multi_3coins_trx_wf
+```
+Expected: each completes without error; prints a per-horizon walk-forward summary.
+
+- [ ] **Step 2: Verify each prediction set covers its target coin**
 
 Run:
 ```bash
-python scripts/evaluate_models_multi.py \
-    --coins bitcoin ethereum binancecoin solana ripple dogecoin cardano tron \
-    --horizons 7 14 --models lgb \
-    --output-dir data/v5_8coin_78f
+python -c "
+import pandas as pd
+for sym, coin in [('xrp','ripple'),('doge','dogecoin'),('ada','cardano'),('trx','tron')]:
+    d = pd.read_csv(f'data/multi_3coins_{sym}_wf/preds_lgb_h7.csv')
+    print(sym, coin, 'rows:', int((d['coin_id'] == coin).sum()))
+"
 ```
-Expected: completes without error; prints per-horizon walk-forward summary.
-
-- [ ] **Step 2: Verify the prediction CSVs exist and cover all 8 coins**
-
-Run:
-```bash
-python -c "import pandas as pd; \
-d = pd.read_csv('data/v5_8coin_78f/preds_lgb_h7.csv'); \
-print(sorted(d['coin_id'].unique())); \
-print('rows per coin:'); print(d.groupby('coin_id').size())"
-```
-Expected: 8 coin IDs listed including `ripple dogecoin cardano tron`; each coin has a non-trivial row count (hundreds of dates spanning 2021→2026). If a new coin has zero or very few rows, stop — its OHLCV/feature build failed; diagnose before continuing.
+Expected: each new coin has a non-trivial row count (hundreds of dates spanning 2021→2026). If a coin has zero or very few rows, stop — its OHLCV/feature build failed; diagnose before continuing.
 
 - [ ] **Step 3: Commit the prediction artifacts**
 
 ```bash
-git add data/v5_8coin_78f/
-git commit -m "data: 78f pooled walk-forward predictions for 8-coin universe"
+git add data/multi_3coins_xrp_wf/ data/multi_3coins_doge_wf/ data/multi_3coins_ada_wf/ data/multi_3coins_trx_wf/
+git commit -m "data: 78f walk-forward predictions for XRP/DOGE/ADA/TRX (3-coin pools)"
 ```
-(If `data/` is gitignored, instead record the run in the commit message of Task 3 and skip this step — check `git status` first.)
+(If `data/` is gitignored, skip the `git add` and check `git status` first.)
 
 ---
 
 ## Phase P2 — sanity gate
 
-### Task 3: 8-coin all-78f sanity-gate backtest
+### Task 3: 8-coin sanity-gate backtest (new coins on 78f)
 
 **Files:**
 - Created by run: `data/v5_8coin_sanity/daily_returns.csv`, `data/v5_8coin_sanity/summary.json`
+- Create: `data/v5_8coin_sanity_routing.json`
 
-Purpose: catch a degenerate new coin (dead/flat signal, blown fills) before spending effort on data ingestion. This uses a routing JSON that points **all 8 coins** at the 78f dir — a temporary check, not the final routing.
+Purpose: catch a degenerate new coin (dead/flat signal, blown fills) before spending effort on data ingestion. New coins use their 78f 3-coin-pool predictions from Task 2; the existing 4 use their frozen dirs.
 
 - [ ] **Step 1: Write the sanity routing JSON**
 
 Create `data/v5_8coin_sanity_routing.json`:
 ```json
 {
-  "bitcoin": "data/v5_8coin_78f",
-  "ethereum": "data/v5_8coin_78f",
-  "binancecoin": "data/v5_8coin_78f",
-  "solana": "data/v5_8coin_78f",
-  "ripple": "data/v5_8coin_78f",
-  "dogecoin": "data/v5_8coin_78f",
-  "cardano": "data/v5_8coin_78f",
-  "tron": "data/v5_8coin_78f"
+  "bitcoin": "data/multi_2coins_walkforward",
+  "ethereum": "data/multi_2coins_pit_wf",
+  "binancecoin": "data/multi_3coins_bnb_wf",
+  "solana": "data/multi_3coins_sol_pit_wf",
+  "ripple": "data/multi_3coins_xrp_wf",
+  "dogecoin": "data/multi_3coins_doge_wf",
+  "cardano": "data/multi_3coins_ada_wf",
+  "tron": "data/multi_3coins_trx_wf"
 }
 ```
 
@@ -286,38 +291,43 @@ git commit -m "data: CoinMetrics on-chain PIT store for XRP/DOGE/ADA/TRX"
 ```
 (If `data/` is gitignored, skip and check `git status`.)
 
-### Task 6: Generate 193f pooled walk-forward predictions for all 8 coins
+### Task 6: Generate 193f walk-forward predictions for the 4 new coins (per-coin 3-coin pools)
 
 **Files:**
-- Created by run: `data/v5_8coin_pit193f/preds_lgb_h7.csv`, `data/v5_8coin_pit193f/preds_lgb_h14.csv`
+- Created by run: `data/multi_3coins_{xrp,doge,ada,trx}_pit_wf/preds_lgb_h{7,14}.csv`
 
-- [ ] **Step 1: Run the pooled 193f walk-forward evaluation**
+Same "2+1" per-coin pooling as Task 2, with the `--onchain-pit` flag added for the 193f extended feature pool.
 
-Run:
+- [ ] **Step 1: Run the 193f walk-forward evaluation, one per new coin**
+
+Run (4 separate runs):
 ```bash
-python scripts/evaluate_models_multi.py \
-    --coins bitcoin ethereum binancecoin solana ripple dogecoin cardano tron \
-    --horizons 7 14 --models lgb --onchain-pit \
-    --output-dir data/v5_8coin_pit193f
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum ripple   --horizons 7 14 --models lgb --onchain-pit --output-dir data/multi_3coins_xrp_pit_wf
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum dogecoin --horizons 7 14 --models lgb --onchain-pit --output-dir data/multi_3coins_doge_pit_wf
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum cardano  --horizons 7 14 --models lgb --onchain-pit --output-dir data/multi_3coins_ada_pit_wf
+python scripts/evaluate_models_multi.py --coins bitcoin ethereum tron     --horizons 7 14 --models lgb --onchain-pit --output-dir data/multi_3coins_trx_pit_wf
 ```
 The `--onchain-pit` flag pulls PIT on-chain + Coinglass derivatives features (see `build_pit_onchain_features`, which reads `data/derivatives/<coin>.parquet`).
-Expected: completes; prints per-horizon walk-forward summary.
+Expected: each completes; prints a per-horizon walk-forward summary.
 
-- [ ] **Step 2: Verify the prediction CSVs cover all 8 coins**
+- [ ] **Step 2: Verify each prediction set covers its target coin**
 
 Run:
 ```bash
-python -c "import pandas as pd; \
-d = pd.read_csv('data/v5_8coin_pit193f/preds_lgb_h7.csv'); \
-print(sorted(d['coin_id'].unique())); print(d.groupby('coin_id').size())"
+python -c "
+import pandas as pd
+for sym, coin in [('xrp','ripple'),('doge','dogecoin'),('ada','cardano'),('trx','tron')]:
+    d = pd.read_csv(f'data/multi_3coins_{sym}_pit_wf/preds_lgb_h7.csv')
+    print(sym, coin, 'rows:', int((d['coin_id'] == coin).sum()))
+"
 ```
-Expected: 8 coin IDs, each with a non-trivial row count.
+Expected: each new coin has a non-trivial row count.
 
 - [ ] **Step 3: Commit**
 
 ```bash
-git add data/v5_8coin_pit193f/
-git commit -m "data: 193f pooled walk-forward predictions for 8-coin universe"
+git add data/multi_3coins_xrp_pit_wf/ data/multi_3coins_doge_pit_wf/ data/multi_3coins_ada_pit_wf/ data/multi_3coins_trx_pit_wf/
+git commit -m "data: 193f walk-forward predictions for XRP/DOGE/ADA/TRX (3-coin pools)"
 ```
 (If `data/` is gitignored, skip and check `git status`.)
 
@@ -334,20 +344,21 @@ For each new coin, run a standalone single-coin V5 backtest with the 78f predict
 
 - [ ] **Step 1: Run each new coin standalone on both feature pools**
 
-For each `COIN` in `ripple dogecoin cardano tron`, run twice:
+For each `(COIN, SYM)` in `ripple/xrp dogecoin/doge cardano/ada tron/trx`, run twice — once on the 78f dir, once on the 193f dir:
 ```bash
+# example for ripple/xrp — repeat for doge, ada, trx
 python scripts/baseline_v5_mix.py --start 2021-11-07 --end 2026-04-15 \
-    --routing-json <(echo "{\"$COIN\": \"data/v5_8coin_78f\"}") \
-    --output-dir data/v5_route_${COIN}_78f
+    --routing-json <(echo '{"ripple": "data/multi_3coins_xrp_wf"}') \
+    --output-dir data/v5_route_xrp_78f
 python scripts/baseline_v5_mix.py --start 2021-11-07 --end 2026-04-15 \
-    --routing-json <(echo "{\"$COIN\": \"data/v5_8coin_pit193f\"}") \
-    --output-dir data/v5_route_${COIN}_193f
+    --routing-json <(echo '{"ripple": "data/multi_3coins_xrp_pit_wf"}') \
+    --output-dir data/v5_route_xrp_193f
 ```
-Each run prints a per-coin SR line. Record the Sharpe from each.
+Each run prints a per-coin SR line. Record the Sharpe from each (8 runs total).
 
 - [ ] **Step 2: Record the routing decisions**
 
-For each new coin, pick the dir (`data/v5_8coin_78f` or `data/v5_8coin_pit193f`) with the higher standalone Sharpe. Create `docs/superpowers/specs/2026-05-21-v5-8coin-routing.json` with the existing 4 frozen routes plus the 4 chosen routes, e.g.:
+For each new coin, pick the dir (`data/multi_3coins_<sym>_wf` or `data/multi_3coins_<sym>_pit_wf`) with the higher standalone Sharpe. Create `docs/superpowers/specs/2026-05-21-v5-8coin-routing.json` with the existing 4 frozen routes plus the 4 chosen routes, e.g.:
 
 ```json
 {
@@ -355,13 +366,13 @@ For each new coin, pick the dir (`data/v5_8coin_78f` or `data/v5_8coin_pit193f`)
   "ethereum": "data/multi_2coins_pit_wf",
   "binancecoin": "data/multi_3coins_bnb_wf",
   "solana": "data/multi_3coins_sol_pit_wf",
-  "ripple": "data/v5_8coin_78f",
-  "dogecoin": "data/v5_8coin_78f",
-  "cardano": "data/v5_8coin_pit193f",
-  "tron": "data/v5_8coin_78f"
+  "ripple": "data/multi_3coins_xrp_wf",
+  "dogecoin": "data/multi_3coins_doge_wf",
+  "cardano": "data/multi_3coins_ada_pit_wf",
+  "tron": "data/multi_3coins_trx_wf"
 }
 ```
-(The four new-coin values are whichever pool won in Step 1 — the example above is illustrative, not prescriptive.)
+(The four new-coin values are whichever pool won in Step 1 — `_wf` for 78f or `_pit_wf` for 193f. The example above is illustrative, not prescriptive.)
 
 - [ ] **Step 3: Commit**
 
@@ -548,10 +559,10 @@ DEFAULT_ROUTING = {
     "ethereum":    "data/multi_2coins_pit_wf",        # 193f extended (frozen)
     "binancecoin": "data/multi_3coins_bnb_wf",        # 78f canonical (frozen)
     "solana":      "data/multi_3coins_sol_pit_wf",    # 193f extended (frozen)
-    "ripple":      "data/v5_8coin_78f",               # routed in Task 7
-    "dogecoin":    "data/v5_8coin_78f",               # routed in Task 7
-    "cardano":     "data/v5_8coin_pit193f",           # routed in Task 7
-    "tron":        "data/v5_8coin_78f",               # routed in Task 7
+    "ripple":      "data/multi_3coins_xrp_wf",        # routed in Task 7 (_wf or _pit_wf)
+    "dogecoin":    "data/multi_3coins_doge_wf",        # routed in Task 7 (_wf or _pit_wf)
+    "cardano":     "data/multi_3coins_ada_pit_wf",     # routed in Task 7 (_wf or _pit_wf)
+    "tron":        "data/multi_3coins_trx_wf",         # routed in Task 7 (_wf or _pit_wf)
 }
 ```
 
