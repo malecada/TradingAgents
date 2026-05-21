@@ -179,7 +179,13 @@ function renderHealth(d) {
     }
     html += "</table>";
   } else { html += "<p class='muted'>No cycles logged yet.</p>"; }
-  html += "</div><div class='panel'><h3>Recent errors</h3>";
+  html += "</div>";
+  html += "<div class='panel'><h3>Pipeline steps (latest cycle log)</h3>";
+  html += d.steps.length
+    ? table(d.steps, ["ts", "step", "status", "duration_ms"])
+    : "<p class='muted'>No step records in latest cycle log.</p>";
+  html += "</div>";
+  html += "<div class='panel'><h3>Recent errors</h3>";
   html += d.errors.length
     ? table(d.errors, ["ts", "cycle_id", "step", "status"])
     : "<p class='muted'>No errors in latest cycle log.</p>";
