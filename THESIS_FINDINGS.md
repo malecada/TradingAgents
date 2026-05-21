@@ -3068,3 +3068,50 @@ python scripts/compare_hybrid_models.py \
 - 4-coin extension (+BNB+SOL via `--quant-pool-preset v5_4coin`) — gated on the 2-coin GO/NO-GO above (GO confirmed). Will require ~92h of VPS time. SOL `crypto_sentiment` / `onchain` analyst feed quality is the risk — SOL has no CoinMetrics Community data and DeFiLlama TVL only.
 - Hybrid V5 on a third independent window (e.g. 2024-04 → 2025-04) to test whether the ETH +1.10 SR result generalizes outside this regime.
 - Modulator ablation on the V5 stack — repeat the §12.17-style component knock-outs (Self-MoA, Skeptic-Quant, CVRF, deterministic pack, anonymization) on V5 routing to identify which subsystem of the modulator is responsible for the ETH gain.
+
+### 23.9 — Deep-slot model upgrade: full-year A/B (gpt-5-mini synthesis tier)
+
+The 30-bar A/B in §23.4 swapped both LLM slots and was inconclusive. This section isolates the **synthesis tier**: a full 1-year hybrid V5 generation with `deep_think = gpt-5-mini`, `quick_think = gpt-4o-mini`. Only `research_manager` (debate synthesis) and `portfolio_manager` (final 5-level rating) run on the deep slot — all 4 analysts, both researchers, trader, modulator (Self-MoA N=5), Skeptic-Quant and the 3 risk debators stay on gpt-4o-mini.
+
+Hypothesis under test: the two synthesis nodes compress the entire graph's reasoning into the final decision; upgrading just them might capture most of a frontier model's benefit at ~10% of the cost.
+
+**Setup**: same window (2025-04-18 → 2026-04-15), same V5 quant routing, same analyst stack. VPS isolated worktree `/opt/tradingagents/work_hybrid`, `replay_cache=True`. Runtime ≈ 71 hours (started 2026-05-18 05:45 UTC, finished 2026-05-21).
+
+**Result** (`scripts/backtest_hybrid.py --v2-sizing --baseline-preset v5_2coin`, `data/hybrid_backtest_v5_deep5mini_1y/summary.json`):
+
+| Stack | BTC SR | ETH SR |
+|---|---|---|
+| Pure V5 quant | 3.46 | 3.65 |
+| Hybrid V5, gpt-4o-mini both slots (§23.1) | 3.57 | 4.76 |
+| **Hybrid V5, deep=gpt-5-mini / quick=gpt-4o-mini** | **3.21** | **4.27** |
+
+(SRs from the custom annualized-Sharpe bootstrap, consistent basis with §23.2.)
+
+**Bootstrap CI** (10,000 paired resamples of daily returns):
+
+| Comparison | Coin | Δ SR | 95% CI | P(Δ > 0) |
+|---|---|---|---|---|
+| deep-5-mini vs pure-V5 quant | BTC | -0.25 | [-0.73, +0.25] | 0.166 |
+| deep-5-mini vs pure-V5 quant | ETH | +0.62 | [+0.07, +1.12] | 0.986 |
+| **deep-5-mini vs gpt-4o-mini-both hybrid** | BTC | -0.36 | [-1.04, +0.25] | 0.137 |
+| **deep-5-mini vs gpt-4o-mini-both hybrid** | ETH | **-0.49** | **[-1.05, -0.04]** | **0.014** |
+
+**Verdict: upgrading the synthesis tier to gpt-5-mini degrades the modulator.** The deep-5-mini stack still beats pure quant on ETH (+0.62 SR, robust) — the modulator architecture continues to add alpha — but it captures only ~56% of the gpt-4o-mini-both stack's +1.10 SR ETH gain. The ETH loss vs the all-4o-mini hybrid is statistically significant (P = 0.014, only 1.4% of resamples favored gpt-5-mini). BTC trends worse too but within noise.
+
+This is the third consecutive piece of evidence that a larger LLM does **not** help this hybrid:
+1. §23.4 — 30-bar A/B, both slots on gpt-5-mini: no significant Δ, ETH directionally worse.
+2. §23.9 (this) — 1-year, synthesis tier on gpt-5-mini: ETH significantly worse (P = 0.014).
+3. Consistent with §12.16's earlier P5 PM-hardening regression (a "smarter, more careful PM" lowered Sharpe 1.42 → 0.98).
+
+**Interpretation**: the portfolio_manager's job in the hybrid stack is narrow — convert a debate transcript into a 5-level rating that the modulator then maps to a multiplier. gpt-5-mini's additional reasoning budget appears to make the PM *more conservative / more equivocal* (consistent with §12.16's PM-hardening finding), which dampens the position magnitudes that the V5 quant signal earns. When the underlying quant signal is good (ETH on V4-B 193f), a hedging synthesis layer subtracts value. The all-gpt-4o-mini configuration is the recommended production setting; do not pay for a frontier model at the synthesis tier.
+
+**Cost note**: despite `replay_cache=True` and only 2 of ~14 agent roles changing model, the run cost ≈ $15-25 (not the ≈ $5 first estimated). The BM25 + FAISS memory module (`tradingagents/agents/utils/memory.py`) writes each agent's decisions into per-agent memory; on subsequent bars every agent retrieves different past situations, so a 2-agent model change cascades into a near-total cache miss across the whole graph. Replay cache amortizes *identical* reruns, not model-variation experiments.
+
+### 23.10 — Data artifacts (deep-only)
+
+| File | Description |
+|---|---|
+| `data/hybrid_signals_v5_deep5mini_1y/` | 1-yr BTC + ETH hybrid signals, V5 routing, deep=gpt-5-mini quick=gpt-4o-mini |
+| `data/hybrid_backtest_v5_deep5mini_1y/summary.json` | 1-yr per-coin metrics |
+| `data/hybrid_backtest_v5_deep5mini_1y/daily_returns.csv` | Daily returns + positions |
+| Hetzner: `/opt/tradingagents/work_hybrid/logs/hybrid_v5_deep5mini_1y.log` | 71hr gen log |
