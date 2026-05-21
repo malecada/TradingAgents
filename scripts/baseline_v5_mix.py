@@ -67,6 +67,50 @@ COSTS = dict(
 )
 EARLY_EXIT_DEFAULT = 0.015  # V2 canonical: matches build_positions_with_hold default
 
+# --- 8-coin expansion: coin tiers + per-coin cost function -----------------
+CORE_COINS = ("bitcoin", "ethereum", "binancecoin", "solana")
+SATELLITE_COINS = ("ripple", "dogecoin", "cardano", "tron")
+SATELLITE_HAIRCUT = 1.5            # conservative slippage/impact multiplier
+SATELLITE_COST_KEYS = ("slippage", "price_impact")
+
+
+def costs_for_coin(coin: str, sat_haircut: float = SATELLITE_HAIRCUT) -> dict:
+    """Return the cost dict for a coin.
+
+    Core coins get the legacy ``COSTS`` verbatim. Satellite coins get
+    ``slippage`` and ``price_impact`` scaled by ``sat_haircut`` (default 1.5,
+    a margin-of-safety for lower-cap perps). All other cost keys are shared.
+    """
+    c = dict(COSTS)
+    if coin in SATELLITE_COINS:
+        for k in SATELLITE_COST_KEYS:
+            c[k] = COSTS[k] * sat_haircut
+    return c
+
+
+# --- 8-coin expansion: core/satellite portfolio weights --------------------
+# Core coins 15% each (60% total), satellites 10% each (40% total).
+PORTFOLIO_WEIGHTS = {
+    "bitcoin": 0.15, "ethereum": 0.15, "binancecoin": 0.15, "solana": 0.15,
+    "ripple": 0.10, "dogecoin": 0.10, "cardano": 0.10, "tron": 0.10,
+}
+
+
+def portfolio_return(df: pd.DataFrame, weights: dict) -> pd.Series:
+    """Weighted daily portfolio return series.
+
+    ``df`` columns are per-coin daily return series. Weights are restricted
+    to the columns present in ``df`` and renormalized to sum to 1, so a
+    subset run (e.g. a 4-core-coin regression check) still produces a valid
+    portfolio — and an equal-weight subset reproduces ``df.mean(axis=1)``.
+    """
+    cols = [c for c in weights if c in df.columns]
+    if not cols:
+        raise ValueError("no weighted coins present in df")
+    w = pd.Series({c: weights[c] for c in cols}, dtype=float)
+    w = w / w.sum()
+    return (df[cols] * w).sum(axis=1)
+
 # Per-coin feature routing → prediction directory (§20). The string after the
 # arrow documents the feature set; the directory is what's actually loaded.
 DEFAULT_ROUTING = {
