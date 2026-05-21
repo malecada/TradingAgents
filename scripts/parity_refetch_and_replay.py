@@ -190,24 +190,36 @@ def load_live_journal_rows(journal_db: str, start_cycle: str, end_cycle: str) ->
     return {"cycles": cycles, "predictions": preds, "decisions": decisions, "trades": trades}
 
 
+# V5 sizing needs lookback history before it produces any position:
+# realized-vol lookback=20, SMA30 trend filter, min_hold=7, vol-regime
+# percentile mask. Replaying only the bare live window leaves every
+# indicator NaN and every position 0. Replay from this many days before
+# the live window so the sizing layer is warmed up by live_start.
+_REPLAY_WARMUP_DAYS = 90
+
+
 def run_replay(sandbox: Path, start_date: str, end_date: str, kelly: float,
                routing: dict[str, str]) -> Path:
     """Run baseline_v5_mix.py against sandbox; return its output dir.
 
-    ``start_date`` / ``end_date`` are ISO dates. ``routing`` is the
-    {coin: pred_dir} map from :func:`regenerate_predictions`; it is written
-    to a JSON file and passed via ``--routing-json`` so the replay consumes
-    the freshly-regenerated predictions instead of the frozen committed CSVs.
+    ``start_date`` / ``end_date`` are ISO dates bounding the live window.
+    The replay actually starts ``_REPLAY_WARMUP_DAYS`` *before* ``start_date``
+    so V5 sizing indicators are warmed up by the time the live window begins;
+    :func:`compare` slices the result back to the live window. ``routing`` is
+    the {coin: pred_dir} map from :func:`regenerate_predictions`, written to
+    JSON and passed via ``--routing-json``.
     """
     out = sandbox / "replay"
     out.mkdir(exist_ok=True)
     routing_json = sandbox / "parity_routing.json"
     routing_json.write_text(json.dumps(routing, indent=2))
+    replay_start = (datetime.strptime(start_date, "%Y-%m-%d")
+                    - timedelta(days=_REPLAY_WARMUP_DAYS)).strftime("%Y-%m-%d")
     env = os.environ.copy()
     env["TRADINGAGENTS_DATA_ROOT"] = str(sandbox)
     cmd = [
         sys.executable, str(PROJECT_ROOT / "scripts" / "baseline_v5_mix.py"),
-        "--start", start_date, "--end", end_date,
+        "--start", replay_start, "--end", end_date,
         "--kelly", str(kelly),
         "--data-root", str(sandbox),
         "--routing-json", str(routing_json),
@@ -217,11 +229,46 @@ def run_replay(sandbox: Path, start_date: str, end_date: str, kelly: float,
     return out
 
 
-def compare(live: dict, replay_dir: Path, out_report: Path) -> str:
-    """Generate parity_report.md. Returns verdict: PASS / INVESTIGATE / FAIL."""
+def _window_metrics(returns: pd.Series) -> dict:
+    """Sharpe / total return / max DD for a daily-return series."""
+    r = returns.dropna()
+    if len(r) < 2:
+        return {"sharpe": float("nan"), "total_return": float("nan"),
+                "max_drawdown": float("nan"), "n_bars": int(len(r))}
+    sd = r.std(ddof=1)
+    eq = (1 + r).cumprod()
+    dd = float((eq / eq.cummax() - 1).min())
+    return {
+        "sharpe": float(r.mean() / sd * (252 ** 0.5)) if sd > 0 else 0.0,
+        "total_return": float(eq.iloc[-1] - 1.0),
+        "max_drawdown": dd,
+        "n_bars": int(len(r)),
+    }
+
+
+def compare(live: dict, replay_dir: Path, out_report: Path,
+            live_start: str, live_end: str) -> str:
+    """Generate parity_report.md. Returns verdict: PASS / INVESTIGATE / FAIL.
+
+    The replay spans a warmup window before ``live_start``; metrics are
+    recomputed on the slice [``live_start``, ``live_end``] so they line up
+    with the live journal window.
+    """
     live_preds = live["predictions"]
-    replay_summary = json.loads((replay_dir / "summary.json").read_text())
-    replay_daily = pd.read_csv(replay_dir / "daily_returns.csv", parse_dates=["date"])
+    # baseline_v5_mix writes daily_returns.csv with an unnamed DatetimeIndex —
+    # index_col=0 reads it back without assuming a "date" column name.
+    replay_daily = pd.read_csv(replay_dir / "daily_returns.csv",
+                                index_col=0, parse_dates=True)
+    # Slice the warmed-up replay back to the live window for an apples-to-
+    # apples comparison against the live journal.
+    window = replay_daily.loc[
+        (replay_daily.index >= pd.Timestamp(live_start))
+        & (replay_daily.index <= pd.Timestamp(live_end))
+    ]
+    replay_port = (_window_metrics(window["portfolio"])
+                   if "portfolio" in window.columns and not window.empty
+                   else {"sharpe": float("nan"), "total_return": float("nan"),
+                         "max_drawdown": float("nan"), "n_bars": 0})
 
     pred_lines = []
     if not live_preds.empty:
@@ -232,7 +279,6 @@ def compare(live: dict, replay_dir: Path, out_report: Path) -> str:
     live_status_summary = (live["cycles"]["status"].value_counts().to_dict()
                             if not live["cycles"].empty else {})
 
-    replay_port = replay_summary.get("portfolio", {})
     cycle_min = live['cycles']['cycle_id'].min() if not live['cycles'].empty else '?'
     cycle_max = live['cycles']['cycle_id'].max() if not live['cycles'].empty else '?'
     lines = [
@@ -240,7 +286,8 @@ def compare(live: dict, replay_dir: Path, out_report: Path) -> str:
         "",
         f"## Refetch summary",
         f"- Sandbox: `{replay_dir.parent}`",
-        f"- Replay daily bars: {len(replay_daily)}",
+        f"- Replay daily bars (incl. {_REPLAY_WARMUP_DAYS}d warmup): {len(replay_daily)}",
+        f"- Live-window bars (sliced): {replay_port['n_bars']}",
         "",
         f"## Live journal summary",
         f"- Cycles: {len(live['cycles'])}",
@@ -250,15 +297,24 @@ def compare(live: dict, replay_dir: Path, out_report: Path) -> str:
         f"## Prediction parity",
         *pred_lines,
         "",
-        f"## Aggregate metrics (replay)",
+        f"## Aggregate metrics (replay, live window only)",
         f"- Replay portfolio Sharpe: {replay_port.get('sharpe', float('nan')):.3f}",
         f"- Replay portfolio return: {replay_port.get('total_return', float('nan')):+.1%}",
         f"- Replay portfolio max DD: {replay_port.get('max_drawdown', float('nan')):.1%}",
         "",
     ]
-    verdict = "PASS" if (replay_port.get("sharpe", 0) > 1.0
-                          and "predict_majority_fail" not in live_status_summary
-                          and "critical_data_fail" not in live_status_summary) else "INVESTIGATE"
+    # A handful of bars is too few for a stable Sharpe — don't PASS/fail a
+    # week-1 parity on noise; flag it for human read instead.
+    sharpe = replay_port.get("sharpe", 0)
+    if replay_port["n_bars"] < 10:
+        verdict = "INSUFFICIENT_WINDOW"
+    elif ("predict_majority_fail" in live_status_summary
+          or "critical_data_fail" in live_status_summary):
+        verdict = "INVESTIGATE"
+    elif sharpe == sharpe and sharpe > 1.0:  # not-NaN and > 1
+        verdict = "PASS"
+    else:
+        verdict = "INVESTIGATE"
     lines.append(f"## Verdict: {verdict}")
     out_report.write_text("\n".join(lines))
     return verdict
@@ -312,7 +368,7 @@ def main() -> None:
     logger.info("Replay output: %s", replay_dir)
 
     report = sandbox / "parity_report.md"
-    verdict = compare(live, replay_dir, report)
+    verdict = compare(live, replay_dir, report, args.start_date, args.end_date)
     logger.info("Verdict: %s", verdict)
     logger.info("Report: %s", report)
     print(f"\nVERDICT: {verdict}\nREPORT: {report}\n")

@@ -5,6 +5,7 @@ The script is not an importable package module, so it is loaded by path.
 import importlib.util
 import json
 import sys
+from datetime import datetime, timedelta
 from pathlib import Path
 from unittest.mock import patch
 
@@ -63,7 +64,7 @@ def test_regenerate_predictions_builds_routing_to_sandbox(tmp_path):
     assert sum(pit_flags) == 2
 
 
-def test_run_replay_writes_routing_json_and_uses_sys_executable(tmp_path):
+def test_run_replay_writes_routing_json_and_warms_up_start(tmp_path):
     parity = _load_parity()
     (tmp_path / "replay").mkdir(parents=True, exist_ok=True)
     routing = {"bitcoin": str(tmp_path / "preds" / "bitcoin")}
@@ -85,5 +86,33 @@ def test_run_replay_writes_routing_json_and_uses_sys_executable(tmp_path):
     assert cmd[0] == sys.executable
     assert "baseline_v5_mix.py" in cmd[1]
     assert "--routing-json" in cmd
-    assert "--start" in cmd and "2026-05-13" in cmd
+    # Replay --start is warmed up _REPLAY_WARMUP_DAYS before the live window;
+    # --end is the live-window end unchanged.
+    start_idx = cmd.index("--start") + 1
+    end_idx = cmd.index("--end") + 1
+    assert cmd[start_idx] < "2026-05-13"   # warmed-up start is earlier
+    assert cmd[end_idx] == "2026-05-20"
+    expected_start = (
+        datetime.strptime("2026-05-13", "%Y-%m-%d")
+        - timedelta(days=parity._REPLAY_WARMUP_DAYS)
+    ).strftime("%Y-%m-%d")
+    assert cmd[start_idx] == expected_start
     assert out == tmp_path / "replay"
+
+
+def test_window_metrics_slices_and_computes():
+    """_window_metrics returns finite Sharpe/return/DD for a real series,
+    NaN for a degenerate one."""
+    parity = _load_parity()
+    import pandas as pd
+
+    good = pd.Series([0.01, -0.005, 0.02, 0.0, 0.015])
+    m = parity._window_metrics(good)
+    assert m["n_bars"] == 5
+    assert m["sharpe"] == m["sharpe"]  # not NaN
+    assert m["total_return"] == m["total_return"]
+
+    degenerate = pd.Series([0.01])
+    d = parity._window_metrics(degenerate)
+    assert d["n_bars"] == 1
+    assert d["sharpe"] != d["sharpe"]  # NaN — too few bars
