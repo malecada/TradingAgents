@@ -52,7 +52,7 @@ def test_all_trades(journal_path):
     conn = db.open_journal(journal_path)
     trades = db.all_trades(conn)
     assert len(trades) == 3
-    assert trades[0]["status"] == "open"  # newest first
+    assert trades[0]["status"] == "FAILED"  # newest first
     conn.close()
 
 

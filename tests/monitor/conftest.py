@@ -59,10 +59,13 @@ def journal_path(tmp_path) -> str:
     conn.executemany(
         "INSERT INTO trades (cycle_id, coin, side, qty, entry_price, exit_price, "
         "pnl, fees, slippage, order_id, status) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+        # The live runner logs one row per executed order; exit_price/pnl/fees
+        # are never back-filled (V5 is a rebalancing strategy). Real status
+        # values are EXECUTED / FAILED / UNPROTECTED.
         [
-            ("c1", "bitcoin", "BUY", 0.05, 65000.0, 67000.0, 100.0, 3.2, 1.1, "o1", "closed"),
-            ("c1", "ethereum", "BUY", 1.0, 3600.0, 3650.0, 50.0, 1.8, 0.6, "o2", "closed"),
-            ("c2", "bitcoin", "BUY", 0.06, 68000.0, None, 0.0, 4.0, 1.4, "o3", "open"),
+            ("c1", "bitcoin", "BUY", 0.05, 65000.0, None, None, None, 1.1, "o1", "EXECUTED"),
+            ("c1", "ethereum", "SELL", 1.0, 3600.0, None, None, None, 0.6, "o2", "EXECUTED"),
+            ("c2", "bitcoin", "BUY", 0.06, 68000.0, None, None, None, 1.4, "o3", "FAILED"),
         ],
     )
     conn.executemany(
@@ -70,7 +73,7 @@ def journal_path(tmp_path) -> str:
         "position_qty_per_coin, unrealized_pnl) VALUES (?,?,?,?,?,?)",
         [
             ("c1", "2026-05-19T07:05:00+00:00", 10150.0, 6000.0, '{"bitcoin": 0.05}', 0.0),
-            ("c2", "2026-05-20T07:05:00+00:00", 10280.0, 4000.0, '{"bitcoin": 0.06}', 80.0),
+            ("c2", "2026-05-20T07:05:00+00:00", 10280.0, 4000.0, '{"bitcoin": 0.06, "ethereum": 1.4}', 80.0),
         ],
     )
     conn.executemany(

@@ -54,17 +54,18 @@ def test_api_performance(client):
     r = client.get("/api/performance", headers=_auth_header())
     assert r.status_code == 200
     body = r.json()
-    assert body["cards"]["open_positions"] == 1
+    # Holdings come from the latest snapshot's position_qty_per_coin map.
+    assert body["cards"]["open_positions"] == 2
     assert len(body["equity"]) == 2
-    assert len(body["per_coin"]) >= 1
+    assert {h["coin"] for h in body["holdings"]} == {"bitcoin", "ethereum"}
 
 
 def test_api_trades(client):
     r = client.get("/api/trades", headers=_auth_header())
     assert r.status_code == 200
     body = r.json()
-    assert len(body["trades"]) == 3
-    assert len(body["open_positions"]) == 1
+    assert len(body["executions"]) == 3
+    assert body["executions"][0]["status"] == "FAILED"  # newest first
 
 
 def test_api_cycles(client):
@@ -99,7 +100,7 @@ def test_api_empty_db_returns_empty_states(empty_client):
     assert body["cards"]["open_positions"] == 0
 
     r = empty_client.get("/api/trades", headers=_auth_header())
-    assert r.json()["trades"] == []
+    assert r.json()["executions"] == []
 
 
 def test_api_missing_db_returns_503(log_dir, monkeypatch):

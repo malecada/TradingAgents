@@ -8,7 +8,6 @@ function fmtMoney(v) {
   return "$" + Number(v).toLocaleString(undefined, {minimumFractionDigits: 2,
     maximumFractionDigits: 2});
 }
-function pnlClass(v) { return Number(v) >= 0 ? "pos" : "neg"; }
 
 async function getJSON(path) {
   const r = await fetch(path);
@@ -47,24 +46,21 @@ function renderPerformance(d) {
     card("Equity", fmtMoney(c.equity)) +
     card("Live Sharpe (ann.)", c.sharpe) +
     card("Max drawdown", (c.max_drawdown * 100).toFixed(1) + "%") +
-    card("Open positions", c.open_positions) + "</div>";
+    card("Holdings", c.open_positions) + "</div>";
   html += "<div class='panel'><h3>Equity curve · backtest anchor SR " +
     d.backtest_anchor_sharpe + "</h3>";
   html += d.equity.length
     ? "<canvas id='equity-canvas' height='90'></canvas>"
     : "<p class='muted'>No equity data yet.</p>";
   html += "</div>";
-  html += "<div class='panel'><h3>Per-coin PnL</h3>";
-  if (d.per_coin.length) {
-    html += "<table><tr><th>Coin</th><th>Position</th><th>Realized PnL</th></tr>";
-    for (const p of d.per_coin) {
-      html += "<tr><td>" + p.coin + "</td><td>" +
-        (p.open ? "open" : "flat") + "</td><td class='" +
-        pnlClass(p.realized_pnl) + "'>" + fmtMoney(p.realized_pnl) +
-        "</td></tr>";
+  html += "<div class='panel'><h3>Current holdings</h3>";
+  if (d.holdings.length) {
+    html += "<table><tr><th>Coin</th><th>Position qty</th></tr>";
+    for (const p of d.holdings) {
+      html += "<tr><td>" + p.coin + "</td><td>" + p.qty + "</td></tr>";
     }
     html += "</table>";
-  } else { html += "<p class='muted'>No trades yet.</p>"; }
+  } else { html += "<p class='muted'>No open positions.</p>"; }
   html += "</div>";
   document.getElementById("content").innerHTML = html;
   if (d.equity.length) drawEquity(d.equity);
@@ -84,28 +80,28 @@ function drawEquity(equity) {
   });
 }
 
-function renderTrades(d) {
-  let html = "<div class='panel'><h3>Open positions</h3>";
-  html += d.open_positions.length ? tradeTable(d.open_positions)
-    : "<p class='muted'>No open positions.</p>";
-  html += "</div><div class='panel'><h3>Trade log</h3>";
-  html += d.trades.length ? tradeTable(d.trades)
-    : "<p class='muted'>No trades yet.</p>";
+function renderExecutions(d) {
+  let html = "<div class='panel'><h3>Execution log</h3>";
+  html += d.executions.length ? executionTable(d.executions)
+    : "<p class='muted'>No executions yet.</p>";
   html += "</div>";
   document.getElementById("content").innerHTML = html;
 }
 
-function tradeTable(rows) {
+function statusClass(status) {
+  if (status === "FAILED") return "failv";
+  if (status === "UNPROTECTED") return "warn";
+  return "muted";
+}
+
+function executionTable(rows) {
   let h = "<table><tr><th>Cycle</th><th>Coin</th><th>Side</th><th>Qty</th>" +
-    "<th>Entry</th><th>Exit</th><th>PnL</th><th>Fees</th><th>Slippage</th>" +
-    "<th>Status</th></tr>";
+    "<th>Entry price</th><th>Slippage</th><th>Status</th></tr>";
   for (const t of rows) {
     h += "<tr><td>" + t.cycle_id + "</td><td>" + t.coin + "</td><td>" +
       (t.side || "—") + "</td><td>" + (t.qty ?? "—") + "</td><td>" +
-      (t.entry_price ?? "—") + "</td><td>" + (t.exit_price ?? "—") +
-      "</td><td class='" + pnlClass(t.pnl ?? 0) + "'>" +
-      (t.pnl == null ? "—" : fmtMoney(t.pnl)) + "</td><td>" +
-      (t.fees ?? "—") + "</td><td>" + (t.slippage ?? "—") + "</td><td>" +
+      (t.entry_price ?? "—") + "</td><td>" + (t.slippage ?? "—") +
+      "</td><td class='" + statusClass(t.status) + "'>" +
       (t.status || "—") + "</td></tr>";
   }
   return h + "</table>";
@@ -222,7 +218,7 @@ async function refresh() {
     hideBanner();
     renderTopbar(perf, health);
     if (activeTab === "performance") renderPerformance(perf);
-    else if (activeTab === "trades") renderTrades(await getJSON("/api/trades"));
+    else if (activeTab === "executions") renderExecutions(await getJSON("/api/trades"));
     else if (activeTab === "decisions") await renderDecisions();
     else if (activeTab === "health") renderHealth(health);
   } catch (e) {

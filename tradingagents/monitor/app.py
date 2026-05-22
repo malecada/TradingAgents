@@ -6,6 +6,7 @@ journal: empty DBs yield empty payloads, an unreadable DB yields HTTP 503.
 """
 from __future__ import annotations
 
+import json
 import os
 import secrets
 import sqlite3
@@ -72,41 +73,46 @@ def create_app(
             conn.close()
         equity = metrics.equity_series(snaps, trades, start_capital)
         values = [pt["value"] for pt in equity]
-        open_trades = [t for t in trades if t.get("status") == "open"]
 
-        per_coin: dict[str, dict] = {}
-        for t in trades:
-            c = per_coin.setdefault(
-                t["coin"], {"coin": t["coin"], "realized_pnl": 0.0,
-                            "open": False})
-            if t.get("pnl") is not None:
-                c["realized_pnl"] += t["pnl"]
-            if t.get("status") == "open":
-                c["open"] = True
+        # Current holdings come from the latest portfolio snapshot's
+        # position_qty_per_coin JSON map. The V5 bot is a rebalancing
+        # strategy — it never journals round-trip trades, so per-trade
+        # PnL does not exist; the equity curve is the realized-PnL story.
+        holdings: list[dict] = []
+        if snaps:
+            raw = snaps[-1].get("position_qty_per_coin")
+            try:
+                qty_map = json.loads(raw) if raw else {}
+            except (json.JSONDecodeError, TypeError):
+                qty_map = {}
+            holdings = [
+                {"coin": coin, "qty": qty}
+                for coin, qty in sorted(qty_map.items())
+                if qty
+            ]
 
         return {
             "cards": {
                 "equity": values[-1] if values else start_capital,
                 "sharpe": round(metrics.sharpe(values), 2),
                 "max_drawdown": round(metrics.max_drawdown(values), 4),
-                "open_positions": len(open_trades),
+                "open_positions": len(holdings),
             },
             "equity": equity,
             "backtest_anchor_sharpe": 3.18,
-            "per_coin": list(per_coin.values()),
+            "holdings": holdings,
         }
 
     @app.get("/api/trades")
     def api_trades(_: str = Depends(require_auth)):
+        """Execution log. The journal records one row per executed order;
+        exit_price/pnl/fees are never back-filled (rebalancing strategy)."""
         conn = _journal()
         try:
-            trades = db.all_trades(conn)
+            executions = db.all_trades(conn)
         finally:
             conn.close()
-        return {
-            "trades": trades,
-            "open_positions": [t for t in trades if t.get("status") == "open"],
-        }
+        return {"executions": executions}
 
     @app.get("/api/cycles")
     def api_cycles(_: str = Depends(require_auth)):

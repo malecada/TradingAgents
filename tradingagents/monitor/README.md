@@ -29,7 +29,10 @@ TA_MONITOR_PASSWORD=somepw python -m tradingagents.monitor
 
 ## Tabs
 
-- **Performance** — equity curve vs backtest anchor (SR 3.18), Sharpe, drawdown, per-coin PnL
-- **Trades** — full trade log + open positions
+- **Performance** — equity curve vs backtest anchor (SR 3.18), Sharpe, drawdown, current holdings
+- **Executions** — order execution log (entry price, slippage, status). V5 is a
+  rebalancing strategy — the journal records executions only, never round-trip
+  trades, so per-trade exit price / PnL / fees do not exist; realized PnL is the
+  equity curve on the Performance tab.
 - **Predictions & decisions** — per-cycle LGB predictions, sizing, risk checks, shadow decisions
 - **System health** — cycle timeline, pipeline-step timings, recent errors, retrain history
