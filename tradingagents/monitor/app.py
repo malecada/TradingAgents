@@ -69,6 +69,14 @@ def create_app(
         try:
             snaps = db.portfolio_snapshots(conn)
             trades = db.all_trades(conn)
+            # Latest cycle's predictions carry a ref_price per coin — the
+            # journal-native price used to value current holdings in USD.
+            latest = db.latest_cycle(conn)
+            ref_prices: dict[str, float] = {}
+            if latest:
+                for p in db.cycle_detail(conn, latest["cycle_id"])["predictions"]:
+                    if p.get("ref_price") is not None:
+                        ref_prices[p["coin"]] = p["ref_price"]
         finally:
             conn.close()
         equity = metrics.equity_series(snaps, trades, start_capital)
@@ -78,6 +86,7 @@ def create_app(
         # position_qty_per_coin JSON map. The V5 bot is a rebalancing
         # strategy — it never journals round-trip trades, so per-trade
         # PnL does not exist; the equity curve is the realized-PnL story.
+        # usd values qty at the last-cycle ref price (signed — shorts < 0).
         holdings: list[dict] = []
         if snaps:
             raw = snaps[-1].get("position_qty_per_coin")
@@ -85,11 +94,18 @@ def create_app(
                 qty_map = json.loads(raw) if raw else {}
             except (json.JSONDecodeError, TypeError):
                 qty_map = {}
-            holdings = [
-                {"coin": coin, "qty": qty}
-                for coin, qty in sorted(qty_map.items())
-                if qty
-            ]
+            for coin, qty in sorted(qty_map.items()):
+                if not qty:
+                    continue
+                price = ref_prices.get(coin)
+                holdings.append({
+                    "coin": coin,
+                    "qty": qty,
+                    "usd": qty * price if price is not None else None,
+                })
+        holdings_usd_total = sum(
+            h["usd"] for h in holdings if h["usd"] is not None
+        )
 
         return {
             "cards": {
@@ -101,6 +117,7 @@ def create_app(
             "equity": equity,
             "backtest_anchor_sharpe": 3.18,
             "holdings": holdings,
+            "holdings_usd_total": holdings_usd_total,
         }
 
     @app.get("/api/trades")

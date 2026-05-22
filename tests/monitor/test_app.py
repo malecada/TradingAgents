@@ -54,10 +54,15 @@ def test_api_performance(client):
     r = client.get("/api/performance", headers=_auth_header())
     assert r.status_code == 200
     body = r.json()
-    # Holdings come from the latest snapshot's position_qty_per_coin map.
+    # Holdings come from the latest snapshot's position_qty_per_coin map;
+    # usd values qty at the latest cycle's prediction ref_price.
     assert body["cards"]["open_positions"] == 2
     assert len(body["equity"]) == 2
     assert {h["coin"] for h in body["holdings"]} == {"bitcoin", "ethereum"}
+    usd = {h["coin"]: h["usd"] for h in body["holdings"]}
+    assert usd["bitcoin"] == 0.06 * 68000.0
+    assert usd["ethereum"] == 1.4 * 3800.0
+    assert body["holdings_usd_total"] == 0.06 * 68000.0 + 1.4 * 3800.0
 
 
 def test_api_trades(client):

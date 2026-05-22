@@ -53,12 +53,15 @@ function renderPerformance(d) {
     ? "<canvas id='equity-canvas' height='90'></canvas>"
     : "<p class='muted'>No equity data yet.</p>";
   html += "</div>";
-  html += "<div class='panel'><h3>Current holdings</h3>";
+  html += "<div class='panel'><h3>Current holdings · valued at last-cycle ref price</h3>";
   if (d.holdings.length) {
-    html += "<table><tr><th>Coin</th><th>Position qty</th></tr>";
+    html += "<table><tr><th>Coin</th><th>Position qty</th><th>Value (USD)</th></tr>";
     for (const p of d.holdings) {
-      html += "<tr><td>" + p.coin + "</td><td>" + p.qty + "</td></tr>";
+      html += "<tr><td>" + p.coin + "</td><td>" + p.qty + "</td><td>" +
+        (p.usd == null ? "—" : fmtMoney(p.usd)) + "</td></tr>";
     }
+    html += "<tr><td><strong>Total</strong></td><td></td><td><strong>" +
+      fmtMoney(d.holdings_usd_total) + "</strong></td></tr>";
     html += "</table>";
   } else { html += "<p class='muted'>No open positions.</p>"; }
   html += "</div>";
@@ -96,11 +99,15 @@ function statusClass(status) {
 
 function executionTable(rows) {
   let h = "<table><tr><th>Cycle</th><th>Coin</th><th>Side</th><th>Qty</th>" +
-    "<th>Entry price</th><th>Slippage</th><th>Status</th></tr>";
+    "<th>Entry price</th><th>Value (USD)</th><th>Slippage</th><th>Status</th></tr>";
   for (const t of rows) {
+    const val = (t.qty != null && t.entry_price != null)
+      ? t.qty * t.entry_price : null;
     h += "<tr><td>" + t.cycle_id + "</td><td>" + t.coin + "</td><td>" +
       (t.side || "—") + "</td><td>" + (t.qty ?? "—") + "</td><td>" +
-      (t.entry_price ?? "—") + "</td><td>" + (t.slippage ?? "—") +
+      (t.entry_price ?? "—") + "</td><td>" +
+      (val == null ? "—" : fmtMoney(val)) + "</td><td>" +
+      (t.slippage ?? "—") +
       "</td><td class='" + statusClass(t.status) + "'>" +
       (t.status || "—") + "</td></tr>";
   }
