@@ -21,7 +21,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from tradingagents.execution.exchange import ExchangeClient
+from tradingagents.execution.exchange import BinanceIPBan, ExchangeClient
 from tradingagents.execution.live import (
     config,
     data_refresh,
@@ -623,6 +623,34 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
         return CycleResult(
             cycle_id=cycle_id, status="ok", n_executed=n_executed,
             trades_executed=trades_executed,
+        )
+
+    except BinanceIPBan as e:
+        # Binance -1003: don't retry, don't crash the service. Alert + exit clean
+        # so systemd timer fires the next cycle on schedule (after ban expires).
+        from datetime import datetime as _dt, timezone as _tz
+        until_iso = (
+            _dt.fromtimestamp(e.until_ms / 1000.0, tz=_tz.utc).isoformat()
+            if e.until_ms else "unknown"
+        )
+        msg = (
+            f"Binance IP banned until {until_iso} "
+            f"(~{e.seconds_remaining / 60:.1f} min remaining). "
+            f"Cycle skipped; next attempt at scheduled timer fire."
+        )
+        logger.error(msg)
+        j.log_cycle_end(cycle_id, status="banned", error_msg=msg)
+        try:
+            notify.send_alert(
+                bot_token=cfg.telegram_bot_token,
+                chat_id=cfg.telegram_chat_id,
+                severity="BAN", message=msg,
+            )
+        except Exception:
+            pass
+        return CycleResult(
+            cycle_id=cycle_id, status="banned",
+            n_executed=n_executed, error_msg=msg,
         )
 
     except Exception as e:

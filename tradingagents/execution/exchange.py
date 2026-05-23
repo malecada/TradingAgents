@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import math
 import os
+import re
 import time
 import logging
 from typing import Optional
@@ -22,6 +23,27 @@ logger = logging.getLogger(__name__)
 
 _MAX_RETRIES = 3
 _RETRY_DELAY_S = 2  # exponential backoff base
+
+# Match "banned until <ms-timestamp>" anywhere in the -1003 message body.
+_BAN_UNTIL_RE = re.compile(r"banned until (\d{10,16})")
+
+
+class BinanceIPBan(Exception):
+    """Raised when Binance returns -1003 (IP banned). Carries ban-expiry epoch (ms).
+
+    The retry loop does NOT retry on this — repeated requests during a ban
+    extend the cooldown. Callers (e.g. runner.run_cycle) catch this, alert,
+    and exit cleanly so systemd does not enter a restart loop.
+    """
+
+    def __init__(self, until_ms: int, raw_message: str = ""):
+        self.until_ms = int(until_ms)
+        self.raw_message = raw_message
+        self.seconds_remaining = max(0.0, self.until_ms / 1000.0 - time.time())
+        super().__init__(
+            f"Binance IP banned until {self.until_ms} "
+            f"(~{self.seconds_remaining:.0f}s remaining): {raw_message}"
+        )
 
 
 class ExchangeClient:
@@ -242,11 +264,22 @@ class ExchangeClient:
 
     @staticmethod
     def _retry(func, *args, max_retries: int = _MAX_RETRIES, **kwargs):
-        """Call *func* with exponential backoff on retryable errors."""
+        """Call *func* with exponential backoff on retryable errors.
+
+        On Binance error -1003 (IP banned, HTTP 418/429 + "banned until ..."),
+        parse the ban-expiry timestamp and raise BinanceIPBan immediately
+        without retrying — additional requests during a ban extend it.
+        """
         for attempt in range(max_retries + 1):
             try:
                 return func(*args, **kwargs)
             except BinanceAPIException as e:
+                if getattr(e, "code", None) == -1003 or "-1003" in str(e):
+                    m = _BAN_UNTIL_RE.search(str(e))
+                    if m:
+                        raise BinanceIPBan(until_ms=int(m.group(1)), raw_message=str(e))
+                    # -1003 without parsable timestamp: still surface as ban.
+                    raise BinanceIPBan(until_ms=0, raw_message=str(e))
                 if e.status_code in (429, 500, 502, 503, 504) and attempt < max_retries:
                     delay = _RETRY_DELAY_S * (2 ** attempt)
                     logger.warning(

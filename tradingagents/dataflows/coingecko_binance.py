@@ -254,24 +254,68 @@ def _load_crypto_ohlcv(coingecko_id: str, curr_date: str) -> pd.DataFrame:
 
     cache_dir = config.get("data_cache_dir", "dataflows/data_cache")
     os.makedirs(cache_dir, exist_ok=True)
-    data_file = os.path.join(
-        cache_dir,
-        f"{coingecko_id}-crypto-{start_str}-{end_str}.csv",
-    )
+    # Canonical, date-independent cache filename. Append-only updates so
+    # every cycle does NOT redownload the full history (previous behavior
+    # tripped Binance -1003 IP-ban on cumulative klines weight).
+    data_file = os.path.join(cache_dir, f"{coingecko_id}-crypto-ohlcv.csv")
+    legacy_glob = f"{coingecko_id}-crypto-"
 
+    data = pd.DataFrame()
     if os.path.exists(data_file):
-        data = pd.read_csv(data_file, on_bad_lines="skip")
+        try:
+            data = pd.read_csv(data_file, on_bad_lines="skip")
+        except Exception as e:
+            logger.warning(f"Cache read failed for {data_file}: {e}; refetching")
+            data = pd.DataFrame()
     else:
-        # Fetch from Binance (primary) or CoinGecko (fallback)
-        dt_start = start_date.to_pydatetime()
+        # One-time seed from legacy dated cache files (largest range wins).
+        try:
+            candidates = [
+                f for f in os.listdir(cache_dir)
+                if f.startswith(legacy_glob) and f.endswith(".csv")
+            ]
+            if candidates:
+                candidates.sort(key=lambda f: os.path.getsize(os.path.join(cache_dir, f)),
+                                reverse=True)
+                seed = os.path.join(cache_dir, candidates[0])
+                data = pd.read_csv(seed, on_bad_lines="skip")
+                data.to_csv(data_file, index=False)
+                logger.info(f"Seeded canonical cache {data_file} from {seed} "
+                            f"({len(data)} rows)")
+        except Exception as e:
+            logger.debug(f"Legacy cache seed skipped: {e}")
+
+    if not data.empty and "Date" in data.columns:
+        data["Date"] = pd.to_datetime(data["Date"], errors="coerce")
+        data = data.dropna(subset=["Date"]).sort_values("Date").reset_index(drop=True)
+        cache_last = data["Date"].max()
+    else:
+        cache_last = None
+
+    need_fetch_start = start_date
+    if cache_last is not None and cache_last >= fetch_end:
+        # Cache already covers the requested end → no network call.
+        logger.debug(f"OHLCV cache covers {coingecko_id} through {cache_last.date()}, "
+                     f"skipping fetch")
+    else:
+        if cache_last is not None:
+            # Incremental: only fetch bars strictly after the last cached date.
+            need_fetch_start = cache_last + pd.Timedelta(days=1)
+            if need_fetch_start > fetch_end:
+                need_fetch_start = fetch_end  # no-op; loop below will exit
+
+        dt_start = need_fetch_start.to_pydatetime() if hasattr(need_fetch_start, "to_pydatetime") else need_fetch_start
         dt_end = fetch_end.to_pydatetime()
         from_ms = int(time.mktime(dt_start.timetuple())) * 1000
-        to_ms = int(time.mktime(dt_end.timetuple())) * 1000
+        # `to_ms` is exclusive in Binance's chunked loop (`while cursor < to_ms`),
+        # so push it past midnight of fetch_end to include that day's own bar.
+        # The post-fetch `data["Date"] <= curr_date_dt` filter trims any overshoot.
+        to_ms = int(time.mktime(dt_end.timetuple())) * 1000 + 86_400_000
 
         binance_symbol = _resolve_binance_symbol(coingecko_id)
         dates, opens, highs, lows, closes, volumes = [], [], [], [], [], []
 
-        if binance_symbol:
+        if binance_symbol and from_ms < to_ms:
             klines = _binance_klines_chunked(binance_symbol, from_ms, to_ms)
             for k in klines:
                 dates.append(pd.to_datetime(k[0], unit="ms"))
@@ -281,9 +325,10 @@ def _load_crypto_ohlcv(coingecko_id: str, curr_date: str) -> pd.DataFrame:
                 closes.append(float(k[4]))
                 volumes.append(float(k[5]))
             if dates:
-                logger.info(f"Binance: fetched {len(dates)} daily candles for {binance_symbol}")
+                kind = "appended" if cache_last is not None else "fetched"
+                logger.info(f"Binance: {kind} {len(dates)} daily candles for {binance_symbol}")
 
-        if not dates:
+        if not dates and cache_last is None:
             logger.info(f"Binance unavailable, trying CoinGecko for {coingecko_id}...")
             try:
                 lookback_days = (dt_end - dt_start).days
@@ -300,25 +345,26 @@ def _load_crypto_ohlcv(coingecko_id: str, curr_date: str) -> pd.DataFrame:
                     lows.append(p)
                 for ts_ms, vol in cg_data.get("total_volumes", []):
                     volumes.append(vol)
-                # Pad volumes if lengths don't match
                 while len(volumes) < len(dates):
                     volumes.append(0)
                 logger.info(f"CoinGecko: fetched {len(dates)} daily prices for {coingecko_id}")
             except Exception as e:
                 logger.error(f"CoinGecko historical also failed: {e}")
 
-        if not dates:
+        if dates:
+            new_rows = pd.DataFrame({
+                "Date": dates, "Open": opens, "High": highs, "Low": lows,
+                "Close": closes, "Volume": volumes,
+            })
+            if data.empty:
+                data = new_rows
+            else:
+                data = pd.concat([data, new_rows], ignore_index=True)
+                data = (data.drop_duplicates(subset="Date", keep="last")
+                            .sort_values("Date").reset_index(drop=True))
+            data.to_csv(data_file, index=False)
+        elif data.empty:
             return pd.DataFrame()
-
-        data = pd.DataFrame({
-            "Date": dates,
-            "Open": opens,
-            "High": highs,
-            "Low": lows,
-            "Close": closes,
-            "Volume": volumes,
-        })
-        data.to_csv(data_file, index=False)
 
     data = _clean_dataframe(data)
 
