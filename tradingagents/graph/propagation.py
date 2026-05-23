@@ -50,6 +50,7 @@ class Propagator:
             "market_report": "",
             "fundamentals_report": "",
             "sentiment_report": "",
+            "sentiment_features": {},
             "news_report": "",
             "onchain_report": "",
             "prediction_report": "",
