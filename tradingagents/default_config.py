@@ -107,6 +107,14 @@ DEFAULT_CONFIG = {
     # for all analyst + debate agents; the Portfolio Manager un-masks at
     # the Layer 3 boundary. Configurable so V4 ablation can toggle it.
     "anonymize_assets": False,
+    # Sentiment analyst pipeline mode (Tier B1 / sentiment v3 implementation).
+    # "legacy" = free-text crypto_sentiment_analyst (current default)
+    # "v3" = structured-snapshot sentiment pipeline (new)
+    "sentiment_mode": "legacy",
+    # Sentiment anonymization (Tier A4 / Glasserman & Lin look-ahead mitigation).
+    # When True, masks BTC/ETH/exchange names in LLM prompts during backtest.
+    # Prevents LLM from leveraging memorable coin names as proxies for price info.
+    "sentiment_anonymize": True,
     # Hybrid RAG (Tier B8) — extends BM25 memories with FAISS dense
     # retrieval + reciprocal-rank-fusion. Off by default; enable per
     # research-run since it requires sentence-transformers + faiss-cpu.
@@ -139,6 +147,9 @@ def apply_env_overrides(config: dict) -> dict:
     Crypto:
       TRADINGAGENTS_ASSET_CLASS, WEB3_PROVIDER_URI_ETH, WEB3_PROVIDER_URI_BSC
 
+    Sentiment:
+      TRADINGAGENTS_SENTIMENT_MODE, TRADINGAGENTS_SENTIMENT_ANONYMIZE
+
     Execution (safe defaults enforced):
       LIVE_MODE, DRY_RUN, MAX_POSITION_PCT, STOP_LOSS_PCT,
       MAX_DAILY_LOSS_PCT, MAX_OPEN_POSITIONS, MIN_CONFIDENCE,
@@ -153,6 +164,10 @@ def apply_env_overrides(config: dict) -> dict:
     _env_str(config, "web3_provider_eth", "WEB3_PROVIDER_URI_ETH")
     _env_str(config, "web3_provider_bsc", "WEB3_PROVIDER_URI_BSC")
     _env_bool(config, "use_onchain", "TRADINGAGENTS_USE_ONCHAIN")
+
+    # Sentiment overrides
+    _env_str(config, "sentiment_mode", "TRADINGAGENTS_SENTIMENT_MODE")
+    _env_bool(config, "sentiment_anonymize", "TRADINGAGENTS_SENTIMENT_ANONYMIZE")
 
     # Execution overrides
     exec_cfg = config.setdefault("execution", {})
