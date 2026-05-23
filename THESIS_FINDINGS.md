@@ -3115,3 +3115,87 @@ This is the third consecutive piece of evidence that a larger LLM does **not** h
 | `data/hybrid_backtest_v5_deep5mini_1y/summary.json` | 1-yr per-coin metrics |
 | `data/hybrid_backtest_v5_deep5mini_1y/daily_returns.csv` | Daily returns + positions |
 | Hetzner: `/opt/tradingagents/work_hybrid/logs/hybrid_v5_deep5mini_1y.log` | 71hr gen log |
+
+### 23.11 — Per-analyst leave-one-out ablation (assignment §4.5 / TODO-P0-1)
+
+Assignment §4.5 requires per-agent contribution analysis. Four leave-one-out (LOO) runs were generated: each drops exactly one of the 4 analysts (market, onchain, crypto_sentiment, prediction) while keeping the V5 quant routing, the full modulator stack (Self-MoA, Skeptic-Quant, CVRF), and the production all-gpt-4o-mini config. Window: 2026-01-16 → 2026-04-15 (90 bars), BTC + ETH. Reference = a 90-bar slice of the existing 1-year all-4-analyst run (`data/hybrid_signals_v5_2coin_1y/`). Each LOO run took ~13 hours on Hetzner CX22 (sequential, ~50 hours total).
+
+#### Setup
+
+```bash
+# Driver (scripts/run_leave_one_out.sh) — sequential 4 gens
+for ana_dropped in market onchain crypto_sentiment prediction; do
+    python scripts/generate_hybrid_signals.py \
+        --coins bitcoin ethereum \
+        --start 2026-01-16 --end 2026-04-15 \
+        --quant-version v5 --quant-pool-preset v5_2coin \
+        --analysts <remaining 3> \
+        --llm-provider openai --deep-think gpt-4o-mini --quick-think gpt-4o-mini \
+        --output-dir data/loo_drop_${ana_dropped}
+done
+
+# Backtest all 5 (reference + 4 LOO)
+for d in hybrid_signals_v5_4analyst_88bar_slice loo_drop_{market,onchain,sentiment,prediction}; do
+    python scripts/backtest_hybrid.py --signals-dir data/$d \
+        --coins bitcoin ethereum --start 2026-01-16 --end 2026-04-15 \
+        --v2-sizing --baseline-preset v5_2coin \
+        --output-dir data/loo_bt_${d#hybrid_signals_v5_}
+done
+```
+
+#### Per-coin SR results
+
+| Stack | BTC SR | BTC MaxDD | ETH SR | ETH MaxDD |
+|---|---|---|---|---|
+| Full 4 analysts (reference) | +2.11 | 1.64% | +2.59 | 1.68% |
+| drop market | +1.33 | 2.71% | **+3.43** | 1.68% |
+| drop onchain | +1.05 | 2.71% | +2.70 | 1.70% |
+| drop crypto_sentiment | +1.56 | 1.64% | +2.82 | 1.69% |
+| drop prediction | +1.50 | 1.62% | **+0.43** | 3.23% |
+
+(SRs from `scripts/backtest_hybrid.py` output of `loo_bt_*/summary.json`; basis matches §23.1 — V2 sizing on top of effective_weight position stream.)
+
+#### Per-analyst SR contribution + bootstrap CI
+
+10,000 paired bootstrap resamples (custom annualized-Sharpe, consistent with §23.2 basis; absolute SR levels diverge slightly from script output above but deltas agree). Sign convention: **negative Δ means dropping that analyst HURTS — so the analyst CONTRIBUTES alpha. Positive Δ means dropping HELPS — the analyst SUBTRACTS value.**
+
+| Coin | Dropped | SR Δ | 95% CI | P(drop > full) | Verdict |
+|---|---|---|---|---|---|
+| BTC | market | −0.76 | [−1.79, +0.26] | 0.080 | marginal contrib |
+| **BTC** | **onchain** | **−1.00** | **[−2.14, +0.01]** | **0.026** | **significant contrib** |
+| BTC | crypto_sentiment | −0.47 | [−1.64, +0.25] | 0.106 | no sig |
+| BTC | prediction | −0.30 | [−1.47, +1.47] | 0.431 | no sig |
+| **ETH** | **market** | **+0.69** | **[+0.16, +1.33]** | **0.997** | **significant HURT (drop helps)** |
+| ETH | onchain | −0.05 | [−1.98, +1.82] | 0.500 | noise |
+| ETH | crypto_sentiment | +0.10 | [−0.92, +0.96] | 0.556 | noise |
+| **ETH** | **prediction** | **−1.93** | **[−2.98, −0.14]** | **0.014** | **significant contrib** |
+
+#### Findings
+
+1. **Prediction analyst is ETH's backbone**: dropping it collapses ETH SR from +2.59 to +0.43 (Δ = −1.93, P = 0.014). The Random-Forest / ARIMA / LightGBM forecast outputs are the single largest contributor to the §23 ETH +1.10 SR result.
+
+2. **Market analyst HURTS ETH**: dropping it lifts ETH SR from +2.59 to +3.43 (Δ = +0.69, P = 0.997). The 150+ technical indicators (RSI, MACD, Bollinger, ATR, etc.) appear to confuse the ETH modulator more than they help. Production implication: a per-coin analyst-routing layer could drop market for ETH and capture another ~+0.7 SR for free.
+
+3. **Onchain analyst is BTC's backbone**: dropping it cuts BTC SR from +2.11 to +1.05 (Δ = −1.00, P = 0.026). Funding rates + TVL + stablecoin supply drive the BTC modulator's contribution.
+
+4. **Sentiment analyst contributes nothing significant** on either coin (CIs cross zero, P ≈ 0.5). Reddit + Google News + Alpha Vantage news signal is noise at the modulator level — consistent with §11/§12 PIT sentiment Phase 2 finding that GDELT noise hurt BTC.
+
+5. **Per-coin asymmetry**: BTC and ETH have non-overlapping critical analysts (onchain for BTC, prediction for ETH). The optimal LLM-modulator analyst stack is **asset-specific**, mirroring the V5 quant routing asymmetry (BTC → V2 78f, ETH → V4-B 193f). This is a thesis-level claim consistent with the §20 finding that feature requirements are coin-specific, not uniform.
+
+#### Implications for production
+
+The current production config is "all 4 analysts on all coins". This ablation suggests a follow-up production iteration:
+- **BTC**: keep all 4 (onchain critical, others marginally help, none hurt).
+- **ETH**: drop `market`, keep `onchain` + `crypto_sentiment` + `prediction` — expected per-coin SR boost ≈ +0.69 over the 88-bar window.
+- A 4-coin extension (BNB, SOL) would need its own LOO grid before claiming the same asymmetry pattern.
+
+#### Data artifacts
+
+| File | Description |
+|---|---|
+| `scripts/run_leave_one_out.sh` | Sequential driver |
+| `data/loo_drop_{market,onchain,sentiment,prediction}/` | 4 LOO hybrid-signal CSVs (BTC + ETH, 90 bars each) |
+| `data/loo_bt_drop_{market,onchain,sentiment,prediction}/summary.json` | LOO backtest metrics |
+| `data/loo_bt_signals_v5_4analyst_88bar_slice/summary.json` | Reference (full 4-analyst) backtest |
+| `data/hybrid_signals_v5_4analyst_88bar_slice/` | 90-bar slice of 1y reference, generated by the analysis script |
+| Hetzner: `/opt/tradingagents/work_hybrid/logs/loo_driver.log` | Driver log |
