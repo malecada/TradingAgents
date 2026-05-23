@@ -9,3 +9,6 @@ from tradingagents.sentiment.snapshot import (
 )
 
 __all__ = ["CryptoEventType", "EventFlag", "SentimentSnapshot"]
+
+from tradingagents.sentiment.snapshot import build_snapshot  # noqa: E402
+__all__.append("build_snapshot")

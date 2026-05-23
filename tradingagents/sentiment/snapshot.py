@@ -147,3 +147,228 @@ class SentimentSnapshot(BaseModel):
             f"(95% CI [{self.agg_signal_lo95:+.3f}, {self.agg_signal_hi95:+.3f}])"
         )
         return "\n".join(lines)
+
+
+# --- Orchestrator -----------------------------------------------------------
+
+import logging
+from datetime import timedelta
+from pathlib import Path
+from typing import Optional
+
+import pandas as pd
+
+logger = logging.getLogger(__name__)
+
+MODEL_VERSION = "v3-2026-05"
+
+
+def _coin_to_asset(coin: str) -> str:
+    c = coin.upper()
+    if c in {"BTC", "BITCOIN"}: return "BTC"
+    if c in {"ETH", "ETHEREUM"}: return "ETH"
+    return "MULTI"
+
+
+def _query_alpaca_headlines(coin: str, trade_date: datetime,
+                             lookback_days: int) -> pd.DataFrame:
+    from tradingagents.dataflows import sentiment_store
+    start = trade_date - timedelta(days=lookback_days)
+    ts_end = trade_date + timedelta(days=1) - timedelta(microseconds=1)
+    coin_l = coin.lower()
+    if coin_l not in sentiment_store.COIN_TO_SYMBOL:
+        return pd.DataFrame()
+    try:
+        return sentiment_store.query_news(
+            coin=coin_l, ts_start=start, ts_end=ts_end, as_of=trade_date,
+            limit=100, root=sentiment_store.DEFAULT_ROOT,
+        )
+    except Exception as e:
+        logger.warning("Alpaca query failed: %s", e)
+        return pd.DataFrame()
+
+
+def _query_gdelt_rows(coin: str, trade_date: datetime,
+                      lookback_days: int) -> pd.DataFrame:
+    from tradingagents.dataflows import sentiment_store
+    from tradingagents.dataflows.crypto_sentiment_pit import GDELT_ROOT
+    start = trade_date - timedelta(days=lookback_days)
+    ts_end = trade_date + timedelta(days=1) - timedelta(microseconds=1)
+    coin_l = coin.lower()
+    if not Path(GDELT_ROOT).exists():
+        return pd.DataFrame()
+    try:
+        df = sentiment_store.query_news(
+            coin=coin_l, ts_start=start, ts_end=ts_end, as_of=trade_date,
+            limit=200, root=GDELT_ROOT,
+        )
+        # The GDELT store also carries themes if it was ingested with them.
+        return df
+    except Exception as e:
+        logger.warning("GDELT query failed: %s", e)
+        return pd.DataFrame()
+
+
+def _query_fng_series(trade_date: datetime, lookback_days: int) -> pd.DataFrame:
+    from tradingagents.dataflows import fng_store
+    try:
+        return fng_store.query_fng(
+            trade_date=trade_date, lookback_days=lookback_days,
+            root=fng_store.DEFAULT_ROOT,
+        )
+    except Exception as e:
+        logger.warning("F&G query failed: %s", e)
+        return pd.DataFrame()
+
+
+def _query_gtrends_rows(coin: str, trade_date: datetime,
+                        lookback_days: int) -> pd.DataFrame:
+    from tradingagents.dataflows import gtrends_store
+    try:
+        return gtrends_store.query_attention(
+            coin=coin.lower(), trade_date=trade_date,
+            lookback_days=lookback_days, root=gtrends_store.DEFAULT_ROOT,
+        )
+    except Exception as e:
+        logger.warning("gtrends query failed: %s", e)
+        return pd.DataFrame()
+
+
+def _score_polarity(texts: list[str], scorer) -> tuple[float, int]:
+    if not texts:
+        return 0.0, 0
+    probs = scorer.score(texts)
+    if probs.shape[0] == 0:
+        return 0.0, 0
+    direction = probs[:, 2] - probs[:, 0]
+    return float(direction.mean()), int(probs.shape[0])
+
+
+def _fng_extreme_flag(level: float) -> int:
+    return int(level < 25 or level > 75)
+
+
+def _bootstrap_ci(values: list[float], n_boot: int = 200,
+                  alpha: float = 0.05) -> tuple[float, float]:
+    import numpy as np
+    if not values:
+        return -0.5, 0.5
+    arr = np.asarray(values, dtype=float)
+    rng = np.random.default_rng(42)
+    boots = [arr[rng.integers(0, len(arr), len(arr))].mean()
+             for _ in range(n_boot)]
+    lo = float(np.quantile(boots, alpha / 2))
+    hi = float(np.quantile(boots, 1 - alpha / 2))
+    return lo, hi
+
+
+def _get_cryptobert_default():
+    from tradingagents.sentiment.scorers import get_cryptobert as _gc
+    return _gc()
+
+
+def _get_finbert_crypto_default():
+    from tradingagents.sentiment.scorers import get_finbert_crypto as _gf
+    return _gf()
+
+
+# Module-level references so tests can patch snap_mod.get_cryptobert / get_finbert_crypto
+get_cryptobert = _get_cryptobert_default
+get_finbert_crypto = _get_finbert_crypto_default
+
+
+def build_snapshot(
+    coin: str,
+    trade_date: datetime,
+    horizon_days: int = 14,
+) -> SentimentSnapshot:
+    """Assemble a SentimentSnapshot for one (coin, trade_date) tuple.
+
+    All queries are PIT-locked. Returns a zero-default snapshot if every
+    upstream source is empty.
+    """
+    from tradingagents.sentiment.attention import compute_attention_features
+    from tradingagents.sentiment.events import extract_events
+    import tradingagents.sentiment.snapshot as _self
+    _get_cryptobert = _self.get_cryptobert
+    _get_finbert_crypto = _self.get_finbert_crypto
+
+    lookback = max(horizon_days * 4, 30)
+
+    alpaca_df = _query_alpaca_headlines(coin, trade_date, lookback)
+    gdelt_df = _query_gdelt_rows(coin, trade_date, lookback)
+    fng_df = _query_fng_series(trade_date, lookback_days=24 * 7)  # 24 weeks for EMA
+    gtrends_df = _query_gtrends_rows(coin, trade_date, lookback)
+
+    # Polarity — news (CryptoBERT scorer)
+    cryptobert = _get_cryptobert()
+    news_texts: list[str] = []
+    if not alpaca_df.empty:
+        news_texts.extend(
+            f"{h} {s or ''}".strip()
+            for h, s in zip(alpaca_df["headline"], alpaca_df.get("summary", [""] * len(alpaca_df)))
+        )
+    if not gdelt_df.empty:
+        news_texts.extend(gdelt_df["headline"].tolist())
+    pol_news, pol_news_n = _score_polarity(news_texts, cryptobert)
+
+    # Polarity — social (placeholder; Reddit PIT not built in P3)
+    pol_social, pol_social_n = 0.0, 0
+
+    # Attention
+    att = compute_attention_features(gtrends_df, coin, trade_date)
+
+    # Regime — F&G
+    if not fng_df.empty:
+        fng_level = float(fng_df["value"].iloc[-1])
+        # 24w EMA
+        fng_ema24w = float(fng_df["value"].ewm(span=24 * 7, adjust=False).mean().iloc[-1])
+    else:
+        fng_level, fng_ema24w = 50.0, 50.0
+    fng_extreme = _fng_extreme_flag(fng_level)
+
+    # Events
+    events = extract_events(gdelt_df, coin=coin, as_of=trade_date)
+
+    # Aggregate signal — simple weighted combination
+    polarity_event = (
+        sum(e.direction_hint * e.severity * e.confidence for e in events)
+        / max(len(events), 1)
+    )
+    agg = (
+        0.30 * pol_news
+        + 0.20 * polarity_event
+        + 0.20 * att["google_search_z"]
+        - 0.20 * att["google_neg_attention_ratio"]
+        + 0.10 * (fng_level - 50.0) / 50.0
+    )
+    component_values = [
+        pol_news,
+        polarity_event,
+        att["google_search_z"],
+        -att["google_neg_attention_ratio"],
+        (fng_level - 50.0) / 50.0,
+    ]
+    lo, hi = _bootstrap_ci(component_values)
+
+    return SentimentSnapshot(
+        asset=_coin_to_asset(coin),
+        as_of_ts=trade_date,
+        trade_date=trade_date,
+        horizon_days=horizon_days,
+        polarity_news=pol_news,
+        polarity_social=pol_social,
+        polarity_news_n=pol_news_n,
+        polarity_social_n=pol_social_n,
+        google_search_z=att["google_search_z"],
+        google_neg_attention_ratio=att["google_neg_attention_ratio"],
+        twitter_volume_z=att["twitter_volume_z"],
+        fng_level=fng_level,
+        fng_ema24w=fng_ema24w,
+        fng_extreme_flag=fng_extreme,
+        events=events,
+        agg_signal=agg,
+        agg_signal_lo95=lo,
+        agg_signal_hi95=hi,
+        model_version=MODEL_VERSION,
+    )

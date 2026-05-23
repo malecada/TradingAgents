@@ -119,3 +119,64 @@ def test_snapshot_to_prompt_table_returns_markdown():
     md = snap.to_prompt_table()
     assert "|" in md
     assert "Polarity" in md or "polarity" in md
+
+
+from unittest.mock import patch
+
+import numpy as np
+import pandas as pd
+
+
+def test_build_snapshot_with_empty_stores(tmp_path, monkeypatch):
+    from tradingagents.sentiment import snapshot as snap_mod
+
+    monkeypatch.setenv("SENTIMENT_SCORER_CACHE", str(tmp_path / "scorer.sqlite"))
+
+    with patch.object(snap_mod, "_query_alpaca_headlines", return_value=pd.DataFrame()), \
+         patch.object(snap_mod, "_query_gdelt_rows", return_value=pd.DataFrame()), \
+         patch.object(snap_mod, "_query_fng_series", return_value=pd.DataFrame()), \
+         patch.object(snap_mod, "_query_gtrends_rows", return_value=pd.DataFrame()):
+        out = snap_mod.build_snapshot(
+            coin="bitcoin",
+            trade_date=_now(),
+            horizon_days=14,
+        )
+    assert out.asset == "BTC"
+    assert out.polarity_news == 0.0
+    assert out.polarity_news_n == 0
+    assert out.events == []
+    assert out.fng_level == 50.0
+
+
+def test_build_snapshot_scores_alpaca_news(tmp_path, monkeypatch):
+    from tradingagents.sentiment import snapshot as snap_mod
+
+    monkeypatch.setenv("SENTIMENT_SCORER_CACHE", str(tmp_path / "scorer.sqlite"))
+
+    alpaca = pd.DataFrame([
+        {"headline": "Bitcoin surges 10%",
+         "summary": "BTC reaches new high",
+         "event_ts": _now(), "as_of_ts": _now(), "source": "alpaca"},
+        {"headline": "Crypto regulation tightens",
+         "summary": "SEC issues new rules",
+         "event_ts": _now(), "as_of_ts": _now(), "source": "alpaca"},
+    ])
+    fake_probs = np.array([[0.1, 0.2, 0.7], [0.6, 0.3, 0.1]], dtype=np.float32)
+
+    class FakeScorer:
+        def score(self, texts):
+            return fake_probs[: len(texts)]
+
+    with patch.object(snap_mod, "_query_alpaca_headlines", return_value=alpaca), \
+         patch.object(snap_mod, "_query_gdelt_rows", return_value=pd.DataFrame()), \
+         patch.object(snap_mod, "_query_fng_series", return_value=pd.DataFrame()), \
+         patch.object(snap_mod, "_query_gtrends_rows", return_value=pd.DataFrame()), \
+         patch.object(snap_mod, "get_cryptobert", return_value=FakeScorer()):
+        out = snap_mod.build_snapshot(
+            coin="bitcoin",
+            trade_date=_now(),
+            horizon_days=14,
+        )
+    # polarity_news = mean(p_bull - p_bear) = mean(0.7-0.1, 0.1-0.6) = mean(0.6, -0.5) = 0.05
+    assert abs(out.polarity_news - 0.05) < 0.01
+    assert out.polarity_news_n == 2
