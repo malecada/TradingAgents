@@ -6,6 +6,7 @@ Google News integration uses the GoogleNews library.
 These functions return raw text data (posts, article titles/summaries)
 for the LLM analyst to interpret sentiment — no dedicated NLP model needed.
 """
+from __future__ import annotations
 
 import logging
 import time
