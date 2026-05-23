@@ -51,6 +51,12 @@ def parse_args():
     p.add_argument("--output-dir", default="data/hybrid_signals_p1")
     p.add_argument("--anonymize", action="store_true",
                    help="Enable asset-name anonymization (Tier A4)")
+    p.add_argument("--sentiment-mode", choices=["legacy", "v3"], default="legacy",
+                   help="Sentiment analyst pipeline: legacy free-text or v3 structured snapshot")
+    p.add_argument("--sentiment-anonymize", action="store_true",
+                   help="Mask coin/exchange names in LLM prompts during backtest")
+    p.add_argument("--sentiment-skip-llm", action="store_true",
+                   help="In v3 mode, skip narrow LLM analyst (variant C: structured-only)")
     p.add_argument("--force", action="store_true")
     p.add_argument("--quant-version", choices=("v2", "v3", "v5"), default="v2",
                    help="Quant signal version. v3 requires per-coin regime + "
@@ -209,6 +215,9 @@ def _write_run_manifest(
             "quick_think": args.quick_think,
             "output_dir": args.output_dir,
             "anonymize": args.anonymize,
+            "sentiment_mode": args.sentiment_mode,
+            "sentiment_anonymize": args.sentiment_anonymize,
+            "sentiment_skip_llm": args.sentiment_skip_llm,
             "force": args.force,
             "quant_version": args.quant_version,
             "quant_pool_map": args.quant_pool_map,
@@ -283,6 +292,9 @@ def main():
     cfg["asset_class"] = "crypto"
     cfg["replay_cache"] = True
     cfg["anonymize_assets"] = bool(args.anonymize)
+    cfg["sentiment_mode"] = args.sentiment_mode
+    cfg["sentiment_anonymize"] = args.sentiment_anonymize or (args.sentiment_mode == "v3")
+    cfg["sentiment_v3_skip_llm"] = args.sentiment_skip_llm
 
     print(f"\n{'=' * 60}")
     print(f"  Hybrid Signal Generation (Layer 1 + Modulator)")
