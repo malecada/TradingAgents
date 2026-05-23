@@ -3293,3 +3293,98 @@ robust of the two and the natural candidate for a follow-up live A/B.
 - Spec: `docs/superpowers/specs/2026-05-19-v5-sltp-sweep-design.md`
 - Plan: `docs/superpowers/plans/2026-05-19-v5-sltp-sweep.md`
 - Branch: `feature/v5-sltp-sweep`
+
+## 30. Hybrid V5 1-year — Deep-Model A/B: GPT-5-mini Deep Slot (2026-05-21)
+
+**Goal.** §28 measured the Hybrid V5 1-year result with GPT-4o-mini in both the deep and quick LLM slots. The §28.4 30-bar A/B suggested GPT-5-mini might help but was statistically underpowered. This section settles the question at full 1-year scale: replace the **deep** thinking slot with GPT-5-mini (quick slot stays GPT-4o-mini) and re-run the full 363-bar window.
+
+**Setup.** Run `hybrid_signals_v5_deep5mini_1y` — deep_think=`gpt-5-mini`, quick_think=`gpt-4o-mini`, 2025-04-18 → 2026-04-15, 4-analyst stack, V5 2-coin routing (BTC=`multi_2coins_v2`, ETH=`multi_2coins_pit_wf`). Same prompts, same window, same quant signal as §28 — only the deep LLM slot changes.
+
+**Result.**
+
+| Coin | V5 baseline | Hybrid all-4o-mini (§28) | Hybrid deep-5-mini | Δ deep-5-mini vs all-4o-mini |
+|------|:--:|:--:|:--:|:--:|
+| BTC | +3.299 | +3.305 | **+2.922** | **−0.38** |
+| ETH | +3.586 | +4.681 | **+4.166** | **−0.51** |
+
+The deep-model upgrade **degrades both coins.** ETH alpha over the V5 baseline shrinks from Δ +1.10 (all-4o-mini) to Δ +0.58 (deep-5-mini). BTC turns net-negative vs the quant baseline (+2.92 vs +3.30).
+
+**Significance.** Block-bootstrap (block length 20, 2000 resamples, seed 42) on the per-bar return difference deep-5-mini minus all-4o-mini:
+
+| Coin | Mean ΔSR | CI95 | P(deep-5-mini worse) |
+|------|:--:|:--:|:--:|
+| BTC | −0.351 | [−0.864, +0.190] | 0.906 |
+| ETH | −0.493 | [−1.101, −0.088] | **0.996** |
+
+ETH degradation is statistically significant — the CI95 lies entirely below zero, P(worse) = 0.996. BTC degradation is directional but not significant.
+
+**Interpretation.** GPT-5-mini in the deep slot does **not** pay for itself. At ~10× the per-token cost of GPT-4o-mini, it produces a significantly worse ETH result and a directionally worse BTC result. Plausible mechanism: the deep slot drives the bull/bear research synthesis and the trader proposal; a stronger reasoner there produces more confident — but not more accurate — directional calls, which the hybrid LGB-magnitude sizing then scales up. The §28.4 30-bar A/B was misleading noise; the 1-year window resolves it.
+
+**Decision.** **Production stays all-GPT-4o-mini** (§28 config). The §28 headline — Hybrid V5 1-year ETH Sharpe +4.68, Δ +1.10 vs baseline — remains the canonical LLM-modulator result. This A/B is a clean negative result that closes the "should the deep slot use a stronger model" question and reinforces the [[feedback_cost_model_pref]] preference: upgrade the model only once the structure is reliable, and here the structure does not benefit.
+
+**Cost.** ~$300–600 for the deep-5-mini 1-year run (GPT-5-mini ≈ 10× GPT-4o-mini token cost; deep slot is ~1 of every 4 analyst calls plus the research/trader nodes). The all-4o-mini §28 run was ~$30–60. The deep upgrade cost ≈ 10× for a worse result.
+
+**Artifacts.**
+
+| Path | Contents |
+|------|----------|
+| `data/hybrid_signals_v5_deep5mini_1y/{bitcoin,ethereum}_2025-04-18_2026-04-15.csv` | Deep-5-mini per-bar signals (363 bars × 2 coins) |
+| `data/hybrid_signals_v5_deep5mini_1y/run_manifest.json` | deep=gpt-5-mini, quick=gpt-4o-mini |
+| `data/hybrid_backtest_v5_deep5mini_1y/{summary.json, daily_returns.csv, hybrid_vs_baseline_equity.png}` | Backtest result |
+| `data/figures/F-4.3.10-hybrid-deep-model-ab.{png,svg}` | Thesis 3-way bar (baseline / all-4o-mini / deep-5-mini) |
+
+**Thesis framing.** For assignment §4.3 (multi-agent system performance), this is a supporting negative result that strengthens the §28 headline by ruling out the obvious "use a better model" objection. The LLM-modulator alpha on ETH is real and is delivered by the **cheap** model — the contribution comes from the multi-agent architecture and the hybrid sizing design, not from raw LLM capability. Combined with §29 (SL/TP sweep — risk-parameter landscape is flat-topped near the V5 defaults), the V5 production configuration is now empirically pinned on every tunable axis: feature routing (§20), portfolio weights (§19), Kelly fraction (§23), risk parameters (§29), and LLM model choice (§30).
+
+## 31. Per-analyst Leave-One-Out Ablation — Assignment §4.5 (2026-05-23)
+
+**Closes TODO-P0-1.** The thesis assignment chapter §4.5 (per-agent contribution analysis) was the last outstanding experiment from `THESIS_IMPLEMENTATION_TODO.md`. The cumulative-ramp evidence in §10-12 gave a single lower bound (drop sentiment → SR -0.89 → +0.22, Δ +1.11). A full 4-cell leave-one-out resolves which analyst carries the alpha per coin.
+
+**Protocol.**
+- Same 88-bar window as §28 (2026-01-16 → 2026-04-15, V5 2-coin routing)
+- Reuse hybrid sizing pipeline (V5 quant signal + LLM modulator + LGB-magnitude confidence)
+- 4 dropped-analyst runs + full 4-analyst reference, signals generated fresh per variant
+- Block-bootstrap (block=10, K=2000, seed=42) on per-bar return differences to test significance
+- Driver: separate signal-generation runs on VPS; results synced to `data/loo_bt_drop_*`
+
+**Per-coin ΔSR vs full 4-analyst hybrid (88-bar window):**
+
+| Variant | BTC ΔSR | BTC CI95 | BTC P(worse) | ETH ΔSR | ETH CI95 | ETH P(worse) |
+|---------|:--:|:--:|:--:|:--:|:--:|:--:|
+| Drop Market     | **-0.77*** | [-1.43, +0.03] | 0.973 | **+0.69*** | [+0.16, +1.39] | 0.003 (P=0.997 *improves*) |
+| Drop On-Chain   | **-1.00*** | [-1.96, -0.40] | **0.996** | +0.02 | [-0.88, +1.23] | 0.254 |
+| Drop Sentiment  | -0.48*     | [-1.92, +0.05] | 0.964 | +0.11 | [-0.47, +1.09] | 0.125 |
+| Drop Prediction | -0.30      | [-1.15, +1.71] | 0.631 | **-1.94*** | [-2.56, -0.21] | **0.987** |
+
+\* = bootstrap P ≥ 0.95 (one-sided). Reference cell: full 4-analyst hybrid SR = +2.11 (BTC), +2.59 (ETH).
+
+**Findings.**
+
+1. **Per-coin backbone identification (significant cells):**
+   - BTC backbone = **On-Chain analyst** (drop ΔSR -1.00, P=0.996). Without on-chain, BTC hybrid collapses by half on this window. Consistent with §14 V4-B feature-importance: BTC's signal lives in on-chain features (exchange flows, MVRV, hash rate).
+   - ETH backbone = **Prediction analyst** (drop ΔSR -1.94, P=0.987). The LGB term-structure predictor is what carries ETH alpha; without it the hybrid loses ~75% of its Sharpe. Consistent with §28 finding that ETH hybrid lifts SR via LGB-magnitude confidence stacking on top of LLM direction.
+
+2. **ETH market analyst is HARMFUL (drop ΔSR +0.69, P=0.997):** Removing the market analyst from ETH **improves** the hybrid. The market analyst over-reacts to technical signals on ETH and drowns out the prediction layer's term-structure consensus. This is the cleanest case-study finding from the project — multi-agent systems are not strictly additive; some analyst contributions are negative.
+
+3. **Sentiment is noise (P=0.125 ETH, 0.964 BTC borderline):** Drop ΔSR small and statistically weak on ETH; BTC borderline. Consistent with §10.9 / §28 framing — sentiment was the seed that flipped 3-analyst baseline from negative to positive (P1, §10), but at hybrid stage with LGB-magnitude sizing the marginal contribution shrinks to noise.
+
+4. **Per-coin asymmetry confirmed at analyst level:**
+   - BTC: on-chain dominates (+1.00 SR), market modest (+0.77), prediction inert (-0.30)
+   - ETH: prediction dominates (+1.94 SR), market negative (-0.69), on-chain inert (+0.02), sentiment inert (+0.11)
+   - **No analyst is universally important** across coins. The §15-20 per-coin feature-routing principle generalises to per-coin analyst-routing.
+
+**Production implication.** Current production is all-4-analyst hybrid. A per-coin analyst-routed variant — drop market on ETH, keep all on BTC — would predict ETH SR +3.43 (vs +2.59 full4) and BTC SR +2.11 (unchanged). Net portfolio Sharpe would lift ~+0.4 on the 88-bar window. **Not yet validated on the 1-year window** — adding to `THESIS_IMPLEMENTATION_TODO.md` as TODO-P1-7 once compute available.
+
+**Thesis defence framing.** This is the single experiment that directly answers assignment §4.5. The findings are stronger than expected:
+- Confirms the per-coin asymmetry thesis across data layer (§20), modulator layer (§28), and analyst layer (§31)
+- Provides causal attribution: which analyst delivers the alpha per coin, not just which feature set
+- Documents a negative-contribution case (ETH market analyst) — multi-agent systems can have analysts that hurt, not just add
+
+**Artifacts.**
+
+| Path | Contents |
+|------|----------|
+| `data/loo_bt_signals_v5_4analyst_88bar_slice/` | Full 4-analyst reference (88-bar) |
+| `data/loo_bt_drop_{market,onchain,sentiment,prediction}/` | Per-variant signals + backtest summary + equity PNG |
+| `/tmp/loo_bootstrap.json` | Bootstrap CIs + P-values per (variant, coin) |
+| `data/figures/F-4.5.7-loo-ablation.{png,svg}` | Thesis heatmap (4 analysts × 2 coins, ΔSR-coloured) |
+| Memory: [[project_loo_ablation]] | Project-level summary |

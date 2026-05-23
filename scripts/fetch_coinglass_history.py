@@ -51,6 +51,10 @@ COIN_TO_SYMS = {
     "ethereum":    ("ETH", "ETHUSDT"),
     "binancecoin": ("BNB", "BNBUSDT"),
     "solana":      ("SOL", "SOLUSDT"),
+    "ripple":      ("XRP", "XRPUSDT"),
+    "dogecoin":    ("DOGE", "DOGEUSDT"),
+    "cardano":     ("ADA", "ADAUSDT"),
+    "tron":        ("TRX", "TRXUSDT"),
 }
 
 # Cross-exchange list used for liquidation aggregation.

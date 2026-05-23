@@ -523,6 +523,8 @@ def fetch_coinmetrics_incremental(coins: list[str], since: str) -> pd.DataFrame:
         "btc": "btc", "eth": "eth", "bitcoin": "btc", "ethereum": "eth",
         "usdt": "usdt", "usdc": "usdc", "dai": "dai",
         "usdt_eth": "usdt_eth", "usdc_eth": "usdc_eth", "usdt_trx": "usdt_trx",
+        "xrp": "xrp", "ripple": "xrp", "doge": "doge", "dogecoin": "doge",
+        "ada": "ada", "cardano": "ada", "trx": "trx", "tron": "trx",
     }
 
     start_dt = datetime.strptime(since, "%Y-%m-%d").replace(tzinfo=timezone.utc)

@@ -27,6 +27,14 @@ COIN_ALIAS = {
     "eth": "eth",
     "binancecoin": "bnb",
     "bnb": "bnb",
+    "ripple": "xrp",
+    "xrp": "xrp",
+    "dogecoin": "doge",
+    "doge": "doge",
+    "cardano": "ada",
+    "ada": "ada",
+    "tron": "trx",
+    "trx": "trx",
 }
 
 # Raw metrics pulled per coin (what we expect to exist in the store).
@@ -44,10 +52,34 @@ _CM_COMMON_RAW = [
     "volume_reported_spot_usd_1d",
 ]
 
+# 8-coin expansion altcoins: community-tier metric subsets (probe-confirmed),
+# intersected with _CM_COMMON_RAW so only metrics the feature builder already
+# handles are requested. No exchange-flow metrics on the community tier.
+_XRP_RAW = [
+    "AdrActCnt", "AdrBalCnt", "BlkCnt", "CapMVRVCur", "CapMrktCurUSD",
+    "CapMrktEstUSD", "FeeTotNtv", "PriceUSD", "ROI1yr", "ROI30d", "SplyCur",
+    "TxCnt", "TxTfrCnt", "volume_reported_spot_usd_1d",
+]
+_DOGE_RAW = _XRP_RAW + ["HashRate", "IssTotNtv", "IssTotUSD"]
+_ADA_RAW = [
+    "AdrActCnt", "AdrBalCnt", "BlkCnt", "CapMVRVCur", "CapMrktCurUSD",
+    "CapMrktEstUSD", "FeeTotNtv", "IssTotNtv", "IssTotUSD", "PriceUSD",
+    "ROI1yr", "ROI30d", "SplyCur", "TxCnt", "TxTfrCnt",
+    "volume_reported_spot_usd_1d",
+]
+_TRX_RAW = [
+    "AdrActCnt", "BlkCnt", "CapMrktEstUSD", "PriceUSD", "ROI1yr", "ROI30d",
+    "TxCnt", "TxTfrCnt", "volume_reported_spot_usd_1d",
+]
+
 RAW_METRICS_BY_COIN = {
     "btc": list(_CM_COMMON_RAW),
     "eth": list(_CM_COMMON_RAW) + ["tvl_ethereum"],
     "bnb": ["tvl_bsc"],
+    "xrp": _XRP_RAW,
+    "doge": _DOGE_RAW,
+    "ada": _ADA_RAW,
+    "trx": _TRX_RAW,
 }
 
 GLOBAL_METRICS = [
@@ -231,7 +263,11 @@ def build_pit_onchain_features(
                     wide = _add_derivatives_derived(wide)
 
     # Return only the dates the caller asked for, but with all columns.
-    return wide.reindex(idx)
+    # Sanitize inf → NaN: pct_change features blow up to inf when a prior
+    # value is 0 (e.g. early-2019 stablecoin supply, thin-coverage alt
+    # metrics). LGB tolerates NaN but not inf/float32-overflow.
+    out = wide.reindex(idx)
+    return out.replace([float("inf"), float("-inf")], float("nan"))
 
 
 def _add_derived(df: pd.DataFrame, alias: str) -> pd.DataFrame:

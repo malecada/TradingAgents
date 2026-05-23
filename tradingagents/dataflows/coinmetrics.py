@@ -51,9 +51,37 @@ _COMMON_COMMUNITY_METRICS = frozenset({
     "volume_reported_spot_usd_1d",
 })
 
+# Per-coin community metric sets for the 8-coin expansion altcoins, confirmed
+# by live probe of /v4/timeseries/asset-metrics (2026-05). Account-model and
+# alt chains expose narrower sets than BTC/ETH; none serve exchange-flow
+# (FlowIn/Out) metrics on the community tier.
+_XRP_COMMUNITY_METRICS = frozenset({
+    "AdrActCnt", "AdrBalCnt", "BlkCnt", "CapMVRVCur", "CapMrktCurUSD",
+    "CapMrktEstUSD", "FeeTotNtv", "PriceBTC", "PriceUSD", "ROI1yr", "ROI30d",
+    "SplyCur", "SplyExpFut10yr", "TxCnt", "TxTfrCnt",
+    "volume_reported_spot_usd_1d",
+})
+_DOGE_COMMUNITY_METRICS = _XRP_COMMUNITY_METRICS | frozenset({
+    "HashRate", "IssTotNtv", "IssTotUSD",
+})
+_ADA_COMMUNITY_METRICS = frozenset({
+    "AdrActCnt", "AdrBalCnt", "BlkCnt", "CapMVRVCur", "CapMrktCurUSD",
+    "CapMrktEstUSD", "FeeTotNtv", "IssTotNtv", "IssTotUSD", "PriceBTC",
+    "PriceUSD", "ROI1yr", "ROI30d", "SplyCur", "TxCnt", "TxTfrCnt",
+    "volume_reported_spot_usd_1d",
+})
+_TRX_COMMUNITY_METRICS = frozenset({
+    "AdrActCnt", "BlkCnt", "CapMrktEstUSD", "PriceBTC", "PriceUSD", "ROI1yr",
+    "ROI30d", "TxCnt", "TxTfrCnt", "volume_reported_spot_usd_1d",
+})
+
 SUPPORTED = {
     "btc": _COMMON_COMMUNITY_METRICS,
     "eth": _COMMON_COMMUNITY_METRICS,
+    "xrp": _XRP_COMMUNITY_METRICS,
+    "doge": _DOGE_COMMUNITY_METRICS,
+    "ada": _ADA_COMMUNITY_METRICS,
+    "trx": _TRX_COMMUNITY_METRICS,
 }
 
 # Stablecoin supply tracking via CM Community: SplyCur per chain-token reveals
