@@ -249,6 +249,12 @@ def main():
                         "injected via set_v3_provider_state() before any agent runs. "
                         "Known limitation: v3 path is not yet fully plumbed through "
                         "LangGraph agent nodes.")
+    p.add_argument("--sentiment-mode", choices=["legacy", "v3"], default="legacy",
+                   help="Sentiment analyst version to use in LLM modulation analysis.")
+    p.add_argument("--sentiment-anonymize", action="store_true",
+                   help="Anonymize analyst identities in sentiment reports.")
+    p.add_argument("--sentiment-skip-llm", action="store_true",
+                   help="Skip LLM-based sentiment analysis; use only raw sentiment scores.")
     args = p.parse_args()
 
     # ── Build per-coin baseline pool map (preset first, then CLI overrides) ──
@@ -274,6 +280,13 @@ def main():
 
     from tradingagents.strategies.quant_signal_provider import set_active_quant_version
     set_active_quant_version(args.quant_version)
+
+    # Configure sentiment analysis parameters
+    config = {
+        "sentiment_mode": args.sentiment_mode,
+        "sentiment_anonymize": args.sentiment_anonymize or (args.sentiment_mode == "v3"),
+        "sentiment_v3_skip_llm": args.sentiment_skip_llm,
+    }
 
     out_dir = Path(args.output_dir or f"{args.signals_dir}/backtest")
     out_dir.mkdir(parents=True, exist_ok=True)
