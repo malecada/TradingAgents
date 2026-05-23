@@ -114,10 +114,14 @@ def portfolio_return(df: pd.DataFrame, weights: dict) -> pd.Series:
 # Per-coin feature routing → prediction directory (§20). The string after the
 # arrow documents the feature set; the directory is what's actually loaded.
 DEFAULT_ROUTING = {
-    "bitcoin":     "data/multi_2coins_walkforward",   # 78f canonical
-    "ethereum":    "data/multi_2coins_pit_wf",        # 193f extended
-    "binancecoin": "data/multi_3coins_bnb_wf",        # 78f canonical
-    "solana":      "data/multi_3coins_sol_pit_wf",    # 193f extended
+    "bitcoin":     "data/multi_2coins_walkforward",   # 78f canonical  (frozen §20)
+    "ethereum":    "data/multi_2coins_pit_wf",        # 193f extended  (frozen §20)
+    "binancecoin": "data/multi_3coins_bnb_wf",        # 78f canonical  (frozen §20)
+    "solana":      "data/multi_3coins_sol_pit_wf",    # 193f extended  (frozen §20)
+    "ripple":      "data/multi_3coins_xrp_wf",        # 78f canonical  (T7 routed)
+    "dogecoin":    "data/multi_3coins_doge_wf",       # 78f canonical  (T7 routed)
+    "cardano":     "data/multi_3coins_ada_pit_wf",    # 193f extended  (T7 routed)
+    "tron":        "data/multi_3coins_trx_wf",        # 78f canonical  (T7 routed)
 }
 
 
@@ -212,6 +216,9 @@ def main() -> None:
     p.add_argument("--data-root", default=None,
                    help="Override TRADINGAGENTS_DATA_ROOT for this run "
                         "(sandbox parity replay)")
+    p.add_argument("--sat-haircut", type=float, default=SATELLITE_HAIRCUT,
+                   help="Satellite-coin slippage/impact multiplier "
+                        "(default 1.5; sweep 1.0/1.5/2.0 for sensitivity)")
     args = p.parse_args()
 
     if args.data_root:
@@ -225,26 +232,28 @@ def main() -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
 
     print(f"\n{'=' * 78}")
-    print(f"  V5 MIX — canonical 4-coin production strategy")
-    print(f"  window: {args.start} → {args.end}")
+    print(f"  V5 MIX — {len(routing)}-coin portfolio (core/satellite weighted)")
+    print(f"  window: {args.start} → {args.end}   sat-haircut: {args.sat_haircut:.2f}x")
     print(f"{'=' * 78}\n")
 
     coin_rets: dict[str, pd.Series] = {}
     for coin, pdir in routing.items():
         r = run_coin(coin, PROJECT_ROOT / pdir, args.start, args.end,
-                     kelly_fraction=args.kelly)
+                     kelly_fraction=args.kelly,
+                     costs_override=costs_for_coin(coin, args.sat_haircut))
         coin_rets[coin] = r
         m = _metrics(r)
         feat = "193f extended" if "pit" in pdir else "78f canonical"
-        print(f"  {coin:12s} [{feat:14s}]  SR={m['sharpe']:+.2f}  "
+        tier = "satellite" if coin in SATELLITE_COINS else "core     "
+        print(f"  {coin:12s} [{feat:14s}] [{tier}] SR={m['sharpe']:+.2f}  "
               f"ret={m['total_return']:+8.1%}  maxDD={m['max_drawdown']:6.1%}  ({pdir})")
 
     df = pd.DataFrame(coin_rets).dropna().sort_index()
-    port = df.mean(axis=1)  # 25% equal-weight
+    port = portfolio_return(df, PORTFOLIO_WEIGHTS)  # core/satellite weighted
     pm = _metrics(port)
 
     print(f"\n  {'-' * 74}")
-    print(f"  4-coin V5 MIX portfolio (25% equal-weight, {pm['n_bars']} bars):")
+    print(f"  {len(coin_rets)}-coin V5 MIX portfolio (core/satellite weighted, {pm['n_bars']} bars):")
     print(f"    Sharpe            : {pm['sharpe']:+.3f}")
     print(f"    Compounded return : {pm['total_return']:+.1%}")
     print(f"    Max drawdown      : {pm['max_drawdown']:.1%}")
