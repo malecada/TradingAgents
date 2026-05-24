@@ -56,7 +56,7 @@ def main():
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     start = datetime.fromisoformat(args.start).replace(tzinfo=timezone.utc)
     end = datetime.fromisoformat(args.end).replace(tzinfo=timezone.utc)
-    as_of = datetime.now(timezone.utc)
+    pull_ts = datetime.now(timezone.utc)
 
     cursor = start
     accum = []
@@ -69,7 +69,9 @@ def main():
                 if df.empty:
                     continue
                 df["event_ts"] = pd.to_datetime(df["event_ts"], utc=True)
-                df["as_of_ts"] = as_of
+                # Backfill PIT: as_of_ts = event_ts + 1 day (data becomes available the day after observation).
+                # Capped at the pull timestamp so future rows (if any) carry the real pull time.
+                df["as_of_ts"] = (df["event_ts"] + pd.Timedelta(days=1)).clip(upper=pull_ts)
                 df["value_z90"] = _zscore(df["value"], 90)
                 df["value_z365"] = _zscore(df["value"], 365)
                 df = df.fillna({"value_z90": 0.0, "value_z365": 0.0})
