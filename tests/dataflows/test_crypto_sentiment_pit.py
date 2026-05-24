@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 
 import pandas as pd
 
-from tradingagents.dataflows import sentiment_store, crypto_sentiment_pit
+from tradingagents.dataflows import sentiment_store, crypto_sentiment_pit, fng_store
 
 
 def _row(ts, article_id, symbols="BTCUSD", headline="H", content="body"):
@@ -60,6 +60,7 @@ def test_get_crypto_news_pit_respects_pit_cutoff(tmp_path, monkeypatch):
 
 def test_get_crypto_news_pit_empty_returns_notice(tmp_path, monkeypatch):
     monkeypatch.setattr(sentiment_store, "DEFAULT_ROOT", tmp_path)
+    monkeypatch.setattr(fng_store, "DEFAULT_ROOT", tmp_path / "fng")
     out = crypto_sentiment_pit.get_crypto_news_pit(
         coin_name="bitcoin", start_date="2024-01-08", end_date="2024-01-15",
     )
