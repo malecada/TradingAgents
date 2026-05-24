@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Annotated
+from typing import Annotated, Optional
 from typing_extensions import TypedDict
 from langgraph.graph import MessagesState
 
@@ -73,7 +73,7 @@ class AgentState(MessagesState):
 
     # Hybrid quant+LLM modulator (Phase 4 / Tier A2 + A5)
     quant_signal: Annotated[
-        dict | None,
+        Optional[dict],
         "Layer 1 QuantSignal as a dict (model_dump). Populated by the Layer 1 ingestion node before the LLM modulator runs.",
     ]
     factual_report: Annotated[
@@ -91,7 +91,7 @@ class AgentState(MessagesState):
     factual_weight: Annotated[float, "Factual lens weight in [0,1]."]
     subjective_weight: Annotated[float, "Subjective lens weight in [0,1]."]
     modulated_position: Annotated[
-        dict | None,
+        Optional[dict],
         "Layer 2 ModulatedPosition as a dict; emitted by the Modulator node and consumed by Risk debate + PM.",
     ]
     modulator_narrative: Annotated[
