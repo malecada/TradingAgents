@@ -23,8 +23,9 @@ def _configure_pit():
 
 def test_route_get_crypto_google_news_positional_pit(tmp_path, monkeypatch):
     """Must accept positional (coin, start_date, end_date) like the LangChain tool."""
-    from tradingagents.dataflows import sentiment_store
+    from tradingagents.dataflows import sentiment_store, fng_store
     monkeypatch.setattr(sentiment_store, "DEFAULT_ROOT", tmp_path)
+    monkeypatch.setattr(fng_store, "DEFAULT_ROOT", tmp_path / "fng")
     _configure_pit()
     out = route_to_vendor("get_crypto_google_news", "bitcoin", "2024-01-08", "2024-01-15")
     assert isinstance(out, str)

@@ -108,6 +108,8 @@ def test_empty_store_returns_empty_cols(tmp_path):
     dates = [datetime(2025, 12, 1, tzinfo=timezone.utc)]
     feats = onchain_features.build_pit_onchain_features(
         "btc", dates, include_global=False, include_derived=False,
+        include_options=False, include_derivatives=False,
+        include_stablecoin_context=False,
         root=tmp_path / "nonexistent",
     )
     # All columns present but all NaN (no data).
