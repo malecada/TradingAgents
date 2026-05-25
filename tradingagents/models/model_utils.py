@@ -323,8 +323,19 @@ def data_transform(
     # After shift(), row 0 is all-NaN -- drop it.
     df_with_future = df_with_future.iloc[1:]
 
-    # Forward-fill, then fill remaining NaN with 0.
-    df_final = df_with_future.infer_objects(copy=False).ffill().fillna(0)
+    # Forward-fill, then fill remaining NaN with 0. Target columns
+    # (`prices_h{h}`) are intentionally excluded — the last h rows have no
+    # future price label, and downstream `walk_forward_pooled` /
+    # `fit_pooled_full` rely on `dropna(subset=[target_col])` to skip them.
+    # Filling targets here masks the NaN, the dropna no-ops, and the model
+    # produces predictions for dates it shouldn't (e.g. SOL 2026-05-25
+    # walk-forward extrapolated to -10.04 in the V5 parity check).
+    target_cols = [c for c in df_with_future.columns if c.startswith("prices_h")]
+    non_target_cols = [c for c in df_with_future.columns if c not in target_cols]
+    df_final = df_with_future.copy()
+    df_final[non_target_cols] = (
+        df_final[non_target_cols].infer_objects(copy=False).ffill().fillna(0)
+    )
 
     # Name/dummy encoding
     if "id" in df_final.columns:

@@ -58,3 +58,57 @@ def test_idempotent_cycle_start(journal):
     journal.log_cycle_start("2026-05-12", git_sha="abc")  # safe re-call
     rows = journal._conn.execute("SELECT COUNT(*) FROM cycles").fetchone()
     assert rows[0] == 1
+
+
+# ── Trade fill reconciliation (V5 parity gap #2) ──────────────────────
+
+
+def test_log_trade_returns_inserted_row_id(journal):
+    """log_trade must return the autoincrement id so callers can later
+    update fees/realized_pnl once Binance reports fills."""
+    journal.log_cycle_start("2026-05-18", git_sha="abc")
+    trade_id = journal.log_trade(
+        cycle_id="2026-05-18", coin="bitcoin", side="BUY", qty=0.001,
+        entry_price=77000.0, exit_price=None, pnl=None, fees=None,
+        slippage=0.0, order_id="orderA", stop_loss_id=None, status="EXECUTED",
+    )
+    assert isinstance(trade_id, int) and trade_id > 0
+    row = journal._conn.execute(
+        "SELECT id, coin FROM trades WHERE id=?", (trade_id,)
+    ).fetchone()
+    assert row == (trade_id, "bitcoin")
+
+
+def test_update_trade_fills_writes_fees_and_realized_pnl(journal):
+    """update_trade_fills must populate fees + pnl for an existing trade row
+    and leave all other columns unchanged."""
+    journal.log_cycle_start("2026-05-18", git_sha="abc")
+    trade_id = journal.log_trade(
+        cycle_id="2026-05-18", coin="bitcoin", side="BUY", qty=0.001,
+        entry_price=77000.0, exit_price=None, pnl=None, fees=None,
+        slippage=0.0042, order_id="orderA", stop_loss_id="stopA",
+        status="EXECUTED",
+    )
+
+    journal.update_trade_fills(trade_id, fees=0.0782, realized_pnl=2.31)
+
+    row = journal._conn.execute(
+        "SELECT coin, side, qty, entry_price, slippage, order_id, "
+        "stop_loss_id, status, fees, pnl FROM trades WHERE id=?",
+        (trade_id,),
+    ).fetchone()
+    coin, side, qty, entry_price, slippage, order_id, stop_loss_id, status, fees, pnl = row
+    assert (coin, side, status) == ("bitcoin", "BUY", "EXECUTED")
+    assert qty == 0.001 and entry_price == 77000.0
+    assert slippage == 0.0042
+    assert (order_id, stop_loss_id) == ("orderA", "stopA")
+    assert fees == 0.0782
+    assert pnl == 2.31
+
+
+def test_update_trade_fills_unknown_id_does_not_raise(journal):
+    """SQL UPDATE on a non-existent trade_id should be a no-op (callers may
+    race with a journal that was rotated/migrated)."""
+    journal.update_trade_fills(99999, fees=0.1, realized_pnl=0.0)
+    n = journal._conn.execute("SELECT COUNT(*) FROM trades").fetchone()[0]
+    assert n == 0

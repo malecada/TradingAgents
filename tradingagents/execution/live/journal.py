@@ -104,13 +104,39 @@ class Journal:
         self._conn.commit()
 
     def log_trade(self, *, cycle_id, coin, side, qty, entry_price, exit_price,
-                   pnl, fees, slippage, order_id, stop_loss_id, status) -> None:
-        self._conn.execute(
+                   pnl, fees, slippage, order_id, stop_loss_id, status) -> int:
+        """Insert a trade row and return its autoincrement id.
+
+        The id lets callers later backfill realized PnL + commission via
+        :meth:`update_trade_fills` once Binance has reported fills for the
+        order (the placement response does not include them).
+        """
+        cur = self._conn.execute(
             "INSERT INTO trades (cycle_id, coin, side, qty, entry_price, exit_price, "
             "pnl, fees, slippage, order_id, stop_loss_id, status) "
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             (cycle_id, coin, side, qty, entry_price, exit_price, pnl, fees,
              slippage, order_id, stop_loss_id, status),
+        )
+        self._conn.commit()
+        return int(cur.lastrowid)
+
+    def update_trade_fills(self, trade_id: int, *, fees: float,
+                            realized_pnl: float) -> None:
+        """Backfill `fees` and `pnl` for an existing trade row by id.
+
+        The live runner records trades at entry time with `fees=None,
+        pnl=None`; Binance Futures only exposes the per-fill `commission`
+        and `realizedPnl` via `/fapi/v1/userTrades?orderId=...` after the
+        order has filled. After a successful `place_market_order` the
+        runner sums those fields across the fills and calls this method.
+
+        No-op when `trade_id` does not exist (e.g. journal rotated between
+        insert and update).
+        """
+        self._conn.execute(
+            "UPDATE trades SET fees=?, pnl=? WHERE id=?",
+            (fees, realized_pnl, int(trade_id)),
         )
         self._conn.commit()
 

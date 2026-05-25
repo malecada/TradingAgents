@@ -201,6 +201,23 @@ class ExchangeClient:
             reduceOnly="true",
         )
 
+    def get_user_trades(self, symbol: str, order_id) -> list[dict]:
+        """Return Binance Futures fills for one order (`/fapi/v1/userTrades`).
+
+        Each fill carries `commission` (with `commissionAsset`) and
+        `realizedPnl` which the placement response does NOT include. The
+        live runner calls this immediately after a successful
+        :meth:`place_market_order` and feeds the summed values into
+        ``journal.update_trade_fills`` so `trades.fees` + `trades.pnl`
+        stop being NULL.
+
+        `order_id` may be ``str`` (the journal stores it as text) or ``int``.
+        """
+        return list(self._retry(
+            self._client.futures_account_trades,
+            symbol=symbol, orderId=int(order_id),
+        ))
+
     def cancel_all_orders(self, symbol: str) -> list[dict]:
         """Cancel all open futures orders for *symbol*."""
         open_orders = self._retry(

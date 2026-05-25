@@ -48,6 +48,44 @@ class CycleResult:
     trades_executed: list[dict] = field(default_factory=list)
 
 
+def _reconcile_fills(ex, journal, *, symbol: str, order_id: str,
+                      trade_id: int) -> None:
+    """Backfill `trades.fees` + `trades.pnl` from Binance fills.
+
+    `place_market_order` returns only the order envelope; the per-fill
+    `commission` and `realizedPnl` are exposed via
+    `/fapi/v1/userTrades?orderId=...`. We sum across fills (negative
+    commission rebates are taken as magnitude — the operator metric is
+    "fees paid") and call `journal.update_trade_fills`.
+
+    Failures are swallowed: the trade row already exists and the worst
+    outcome is a NULL fees/pnl pair the operator can see in the journal.
+    """
+    if not order_id or order_id == "dry-run":
+        return
+    try:
+        fills = ex.get_user_trades(symbol, order_id)
+    except Exception as e:  # noqa: BLE001
+        logger.warning(
+            "fill reconciliation: get_user_trades(%s, %s) failed: %s",
+            symbol, order_id, e,
+        )
+        return
+    if not fills:
+        return
+    total_fees = sum(abs(float(f.get("commission", 0) or 0)) for f in fills)
+    total_pnl = sum(float(f.get("realizedPnl", 0) or 0) for f in fills)
+    try:
+        journal.update_trade_fills(
+            trade_id, fees=total_fees, realized_pnl=total_pnl,
+        )
+    except Exception as e:  # noqa: BLE001
+        logger.warning(
+            "fill reconciliation: update_trade_fills(%s) failed: %s",
+            trade_id, e,
+        )
+
+
 _shutdown_requested = False
 
 
@@ -517,12 +555,18 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                                     severity="UNPROTECTED",
                                     message=f"{coin} stop-loss failed: {e}",
                                 )
-                        j.log_trade(
+                        trade_id = j.log_trade(
                             cycle_id=cycle_id, coin=coin, side=side, qty=qty,
                             entry_price=exec_price, exit_price=None,
                             pnl=None, fees=None, slippage=slippage,
                             order_id=order_id, stop_loss_id=stop_id,
                             status=status,
+                        )
+                        # Backfill realized PnL + fees from Binance fills —
+                        # the placement response above does not include them.
+                        _reconcile_fills(
+                            ex, j, symbol=symbol, order_id=order_id,
+                            trade_id=trade_id,
                         )
                         n_executed += 1
                         trades_executed.append({
