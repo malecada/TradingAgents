@@ -12,7 +12,8 @@ from typing import Dict
 
 import numpy as np
 import pandas as pd
-from stockstats import StockDataFrame
+
+from tradingagents.market._stockstats_utils import to_stockstats
 
 INDICATOR_WHITELIST = [
     "close_30_sma", "close_50_sma", "close_200_sma", "close_10_ema",
@@ -42,26 +43,13 @@ _RSI_HIGH = 55.0
 _RSI_LOW = 45.0
 
 
-def _ohlcv_to_stockstats(df: pd.DataFrame) -> StockDataFrame:
-    cols = {c.lower(): c for c in df.columns}
-    rename = {
-        cols.get("open", "Open"):   "open",
-        cols.get("high", "High"):   "high",
-        cols.get("low",  "Low"):    "low",
-        cols.get("close","Close"):  "close",
-        cols.get("volume","Volume"):"volume",
-    }
-    sdf = df.rename(columns=rename).copy()
-    return StockDataFrame.retype(sdf)
-
-
 def compute_indicator_values(df: pd.DataFrame) -> Dict[str, float]:
     """Compute the 13 whitelist indicator values at the most recent bar.
 
     Caller is responsible for filtering ``df`` to ``Date <= trade_date``
     upstream (the existing OHLCV loaders already do this).
     """
-    sdf = _ohlcv_to_stockstats(df)
+    sdf = to_stockstats(df)
     out: Dict[str, float] = {}
     for name in INDICATOR_WHITELIST:
         try:
@@ -74,7 +62,7 @@ def compute_indicator_values(df: pd.DataFrame) -> Dict[str, float]:
 
 
 def _atr_percentile(df: pd.DataFrame, window: int = _ATR_PCT_WINDOW) -> float:
-    sdf = _ohlcv_to_stockstats(df)
+    sdf = to_stockstats(df)
     atr_series = sdf["atr"]
     tail = atr_series.tail(window).dropna()
     if len(tail) < 10 or not np.isfinite(atr_series.iloc[-1]):
