@@ -21,7 +21,11 @@ from pathlib import Path
 
 import pandas as pd
 
-from tradingagents.execution.exchange import BinanceIPBan, ExchangeClient
+from tradingagents.execution.exchange import (
+    BinanceIPBan,
+    BinanceOrderTimeoutUnknown,
+    ExchangeClient,
+)
 from tradingagents.execution.live import (
     config,
     data_refresh,
@@ -573,6 +577,29 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                             "coin": coin, "side": side,
                             "qty": qty, "price": exec_price,
                         })
+                    except BinanceOrderTimeoutUnknown as e:
+                        # -1007 + reconciliation could not confirm fill or
+                        # cancel cleanly. Log a distinct status so the next
+                        # cycle's position-reconcile path can detect the
+                        # ambiguous state, and emit RECONCILE_NEEDED so a
+                        # human checks before more orders fire for this coin.
+                        j.log_trade(
+                            cycle_id=cycle_id, coin=coin, side=side, qty=qty,
+                            entry_price=preds[coin]["ref_price"],
+                            exit_price=None, pnl=None, fees=None, slippage=None,
+                            order_id=None, stop_loss_id=None,
+                            status=f"TIMEOUT_{e.state.upper()}",
+                        )
+                        notify.send_alert(
+                            bot_token=cfg.telegram_bot_token,
+                            chat_id=cfg.telegram_chat_id,
+                            severity="RECONCILE_NEEDED",
+                            message=(
+                                f"{coin} order -1007 timeout, state={e.state}: "
+                                f"{e.side} qty={e.qty}. "
+                                f"Verify positions before next cycle."
+                            ),
+                        )
                     except Exception as e:
                         j.log_trade(
                             cycle_id=cycle_id, coin=coin, side=side, qty=qty,
