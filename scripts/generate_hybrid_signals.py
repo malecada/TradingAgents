@@ -354,6 +354,7 @@ def main():
                 log.error(f"{coin} @ {ds}: {exc}")
                 rows.append({"date": dt, "coin": coin, "error": str(exc)[:200]})
                 continue
+            mfeat = (final_state or {}).get("market_features") or {}
             row = {
                 "date": dt,
                 "coin": coin,
@@ -369,6 +370,12 @@ def main():
                 "position": (mp or {}).get("position"),
                 "unlock_flag": (mp or {}).get("unlock_flag"),
                 "rolling_llm_edge": (mp or {}).get("rolling_llm_edge"),
+                "market_llm_direction": mfeat.get("market_llm_direction"),
+                "market_llm_conviction_raw": mfeat.get("market_llm_conviction_raw"),
+                "market_llm_conviction_calibrated": mfeat.get("market_llm_conviction_calibrated"),
+                "market_conflict_score": mfeat.get("market_conflict_score"),
+                "market_default_direction": mfeat.get("market_default_direction"),
+                "market_regime": mfeat.get("market_regime"),
                 "narrative": (narrative or "")[:500],
             }
             rows.append(row)
