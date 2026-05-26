@@ -89,13 +89,17 @@ def _run_v3(state, llm, cfg) -> Dict[str, Any]:
     features = snap.to_modulator_features()
 
     if skip_llm:
-        # Variant C: structured-only — no narrative LLM call.
+        # Variant C: structured-only — no narrative LLM call. Emit an empty-content
+        # AIMessage stub so downstream routing (which inspects last message's
+        # tool_calls) doesn't trip on the human message left in state.
+        from langchain_core.messages import AIMessage
         sentiment_report = (
             f"# Sentiment v3 (structured-only) — {snap.asset} {state['trade_date']}\n\n"
             f"{snapshot_md}\n"
         )
+        stub = AIMessage(content=sentiment_report)
         return {
-            "messages": [],
+            "messages": [stub],
             "sentiment_report": sentiment_report,
             "sentiment_features": features,
         }
