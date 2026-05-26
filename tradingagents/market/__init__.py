@@ -1,3 +1,4 @@
+from tradingagents.market.build_snapshot import build_market_snapshot
 from tradingagents.market.snapshot import (
     DirectionLabel,
     IndicatorReading,
@@ -14,4 +15,5 @@ __all__ = [
     "MarketCategory",
     "MarketSnapshot",
     "RegimeLabel",
+    "build_market_snapshot",
 ]
