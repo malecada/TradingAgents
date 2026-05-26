@@ -115,6 +115,21 @@ DEFAULT_CONFIG = {
     # When True, masks BTC/ETH/exchange names in LLM prompts during backtest.
     # Prevents LLM from leveraging memorable coin names as proxies for price info.
     "sentiment_anonymize": True,
+    # Market analyst pipeline mode (asset-agnostic v2 implementation).
+    # "legacy"  = free-text market_analyst (current default; 150+ indicators)
+    # "v2"      = structured-snapshot market analyst with Pydantic-typed
+    #             output, conflict_score gating, asymmetric default direction,
+    #             and per-coin isotonic calibration.
+    "market_mode": "legacy",
+    # Anonymize coin name in the market analyst prompt (Glasserman & Lin).
+    # Independent of sentiment_anonymize so they can be toggled separately.
+    "market_anonymize": True,
+    # Variant C of the A/B harness: structured-only mode that skips the
+    # narrow LLM call and emits the snapshot table as the report. Used in
+    # ablation to isolate the contribution of the LLM interpretation.
+    "market_skip_llm": False,
+    # Horizon used in the market analyst's reasoning prompt (days).
+    "market_horizon_days": 7,
     # Hybrid RAG (Tier B8) — extends BM25 memories with FAISS dense
     # retrieval + reciprocal-rank-fusion. Off by default; enable per
     # research-run since it requires sentence-transformers + faiss-cpu.
@@ -168,6 +183,12 @@ def apply_env_overrides(config: dict) -> dict:
     # Sentiment overrides
     _env_str(config, "sentiment_mode", "TRADINGAGENTS_SENTIMENT_MODE")
     _env_bool(config, "sentiment_anonymize", "TRADINGAGENTS_SENTIMENT_ANONYMIZE")
+
+    # Market analyst overrides
+    _env_str(config, "market_mode", "TRADINGAGENTS_MARKET_MODE")
+    _env_bool(config, "market_anonymize", "TRADINGAGENTS_MARKET_ANONYMIZE")
+    _env_bool(config, "market_skip_llm", "TRADINGAGENTS_MARKET_SKIP_LLM")
+    _env_int(config, "market_horizon_days", "TRADINGAGENTS_MARKET_HORIZON_DAYS")
 
     # Execution overrides
     exec_cfg = config.setdefault("execution", {})
