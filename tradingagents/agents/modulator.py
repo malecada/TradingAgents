@@ -61,6 +61,7 @@ def _build_prompt(
     belief: str = "",
     *,
     sentiment_features: Optional[dict] = None,
+    market_features: Optional[dict] = None,
 ) -> list[dict]:
     pack = quant_signal.deterministic_signals
     det_block = "\n".join(
@@ -76,6 +77,12 @@ def _build_prompt(
         lines = "\n".join(f"- {k}: {v}" for k, v in sentiment_features.items())
         sentiment_block = (
             "\n\nLayer-2 SentimentSnapshot features (deterministic):\n" + lines
+        )
+    market_block = ""
+    if market_features:
+        lines = "\n".join(f"- {k}: {v}" for k, v in market_features.items())
+        market_block = (
+            "\n\nLayer-2 MarketSnapshot features (deterministic):\n" + lines
         )
     sys = (
         "You are the Layer 2 LLM modulator in a hybrid quant+LLM trading "
@@ -94,7 +101,7 @@ def _build_prompt(
         "the quant signal is wrong, return Multiplier: 0.0 and explain.\n"
         "4. The asset is intentionally referred to by an alias to reduce "
         "training-corpus bias. Treat it as one cryptocurrency among many."
-        + sentiment_block
+        + sentiment_block + market_block
     )
     belief_block = (
         f"\nLast week's investment belief (FinCon CVRF):\n{belief}\n"
@@ -158,6 +165,7 @@ def create_modulator(llm, n_samples: int = 5, temperature: float = 0.5):
             coin_label, quant_signal, trader_plan,
             factual_report, subjective_report, regime_note, belief,
             sentiment_features=state.get("sentiment_features") or None,
+            market_features=state.get("market_features") or None,
         )
 
         samples = sampler.sample_n(messages)
