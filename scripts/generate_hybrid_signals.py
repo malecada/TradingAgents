@@ -57,6 +57,14 @@ def parse_args():
                    help="Mask coin/exchange names in LLM prompts during backtest")
     p.add_argument("--sentiment-skip-llm", action="store_true",
                    help="In v3 mode, skip narrow LLM analyst (variant C: structured-only)")
+    p.add_argument("--market-mode", choices=["legacy", "v2"], default="legacy",
+                   help="Market analyst pipeline: legacy free-text or v2 structured snapshot")
+    p.add_argument("--market-anonymize", action="store_true",
+                   help="Mask coin name in market analyst prompt (default-on under --market-mode v2)")
+    p.add_argument("--market-skip-llm", action="store_true",
+                   help="In v2 mode, skip narrow LLM analyst (variant C: structured snapshot only)")
+    p.add_argument("--market-horizon-days", type=int, default=7,
+                   help="Horizon used in the market analyst's reasoning prompt (days)")
     p.add_argument("--force", action="store_true")
     p.add_argument("--quant-version", choices=("v2", "v3", "v5"), default="v2",
                    help="Quant signal version. v3 requires per-coin regime + "
@@ -218,6 +226,10 @@ def _write_run_manifest(
             "sentiment_mode": args.sentiment_mode,
             "sentiment_anonymize": args.sentiment_anonymize,
             "sentiment_skip_llm": args.sentiment_skip_llm,
+            "market_mode": args.market_mode,
+            "market_anonymize": args.market_anonymize,
+            "market_skip_llm": args.market_skip_llm,
+            "market_horizon_days": args.market_horizon_days,
             "force": args.force,
             "quant_version": args.quant_version,
             "quant_pool_map": args.quant_pool_map,
@@ -295,6 +307,10 @@ def main():
     cfg["sentiment_mode"] = args.sentiment_mode
     cfg["sentiment_anonymize"] = args.sentiment_anonymize or (args.sentiment_mode == "v3")
     cfg["sentiment_v3_skip_llm"] = args.sentiment_skip_llm
+    cfg["market_mode"] = args.market_mode
+    cfg["market_anonymize"] = args.market_anonymize or (args.market_mode == "v2")
+    cfg["market_skip_llm"] = bool(args.market_skip_llm)
+    cfg["market_horizon_days"] = int(args.market_horizon_days)
 
     print(f"\n{'=' * 60}")
     print(f"  Hybrid Signal Generation (Layer 1 + Modulator)")
