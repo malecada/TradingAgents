@@ -3285,3 +3285,40 @@ This per-coin routing is a Phase-2 follow-up requiring a TradingAgentsGraph conf
 | Local: `/tmp/v3ab_bootstrap.json` | 10k-bootstrap CI per pair per coin |
 | Branch: `feature/sentiment-analyst-v3` @ `f910855` | 24-commit v3 implementation + fixes |
 | Hetzner: `tabot@46.225.169.184:~/sentiment-v3-backtest/` | Clone + venv + run state |
+
+#### Production policy (cross-cutting, supersedes earlier sentiment iterations)
+
+Combining the three independent runs that touched the sentiment analyst:
+
+| Run | Window | Verdict on sentiment |
+|---|---|---|
+| §11/§12 PIT Sentiment P2 | 2-coin / 4-coin walk-forward | Coin-asymmetric: GDELT hurts BTC, lifts BNB |
+| §23.11 per-analyst LOO | 90 bars BTC+ETH | Noise on both (P ≈ 0.5) |
+| §23.12 v3 4-variant A/B | 90 bars BTC+ETH, bootstrap 10k CI | Legacy ≈ none; v3 SIGNIFICANTLY hurts ETH |
+
+**Policy decision for BTC + ETH daily-frequency hybrid quant+LLM:**
+
+→ **Drop `crypto_sentiment` analyst from production `selected_analysts`** (live runner + backtest defaults).
+
+Recommended live config:
+```python
+selected_analysts = ["market", "onchain", "prediction"]   # 3 analysts, no sentiment
+```
+
+Rationale:
+- Saves ~25 % LLM generation time per bar (§23.11 measured: sentiment scraping dominates analyst latency).
+- Saves $40+/validation run + ongoing live LLM cost.
+- Eliminates Reddit 403 noise, GDELT BigQuery cost, Google-Trends rate-limit issues.
+- Loses no detectable Sharpe at 90-bar BTC+ETH window.
+- Simplifies failure surface (one fewer scraping path, no PIT-sentiment store dependency at trade time).
+
+The PIT sentiment store (Alpaca + GDELT + F&G + gtrends) and the v3 code on `feature/sentiment-analyst-v3` are retained for thesis reproducibility and future re-test (e.g. if/when CryptoBERT continued pretraining or Liu-Tsyvinski post-ETF recalibration is done).
+
+**Do NOT extrapolate "drop sentiment" to:**
+1. Higher frequency (intraday — sentiment may matter more in event windows).
+2. Pure event-driven strategies (ETF approval, hack, regulatory — sentiment IS the signal there).
+3. Weaker quant baselines (sentiment relative contribution larger).
+4. Other coins — BNB / SOL untested with v3, and §11/§12 PIT P2 showed BNB liked GDELT under legacy. Re-test before claim.
+
+**Thesis framing (preferred sentence):**
+> "Sentiment as a modulator-level analyst contributes no incremental Sharpe over a strong quant + LLM-modulator baseline on BTC/ETH at daily frequency, and actively harms ETH when delivered as either a free-text legacy analyst, a structured Pydantic snapshot, or a narrow LLM event extractor. The result reproduces the FINSABER negative finding on crypto-LLM modulation and Liu-Tsyvinski (2021)'s observation that crypto social sentiment is dominated by price-following and manipulation rather than predictive signal."
