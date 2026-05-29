@@ -412,9 +412,14 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
             # Target position is what V2 sizing says the book SHOULD look
             # like after this cycle. Trade only the delta vs the current
             # exchange position so we don't stack notional across days.
-            target_signed_qty = (
-                sz.final_size_notional * portfolio_before
-                / preds[coin]["ref_price"]
+            # Scale by the coin's renormalized portfolio weight (C1 fix):
+            # final_size_notional is a full-equity sleeve fraction, so without
+            # the weight an N-coin book runs ~N x the validated gross exposure.
+            target_signed_qty = sizer.target_position_qty(
+                size_fraction=sz.final_size_notional,
+                portfolio_value=portfolio_before,
+                weight=cfg.portfolio_weights[coin],
+                ref_price=preds[coin]["ref_price"],
             )
             try:
                 current_signed_qty = float(ex.get_current_position(symbol))

@@ -29,6 +29,40 @@ _V5_DEFAULT_ROUTING: dict[str, dict[str, object]] = {
 }
 
 
+# V5 MIX core/satellite portfolio weights — canonical source is
+# scripts/baseline_v5_mix.py:PORTFOLIO_WEIGHTS (the run that produced the
+# published SR +3.18). Core coins 15% each, satellites 10% each. These are
+# renormalized over the active universe by `compute_portfolio_weights`, so a
+# 4-core-coin book becomes 25% equal-weight — matching baseline_v5_mix's
+# `portfolio_return`, which does `w = w / w.sum()` over present columns.
+# A parity test (tests/execution/live/test_portfolio_weights.py) asserts this
+# stays equal to the backtest constant.
+_V5_PORTFOLIO_WEIGHTS: dict[str, float] = {
+    "bitcoin": 0.15, "ethereum": 0.15, "binancecoin": 0.15, "solana": 0.15,
+    "ripple": 0.10, "dogecoin": 0.10, "cardano": 0.10, "tron": 0.10,
+}
+
+
+def compute_portfolio_weights(universe: list[str]) -> dict[str, float]:
+    """Per-coin portfolio weights renormalized over the active universe.
+
+    Mirrors `scripts.baseline_v5_mix.portfolio_return`: restrict the canonical
+    core/satellite weights to the coins actually traded, then divide by their
+    sum so the live book allocates exactly the same fraction of equity to each
+    coin as the validated backtest combines its per-coin sleeves. Without this,
+    converting each coin's full-equity size fraction to a quantity over-levers
+    the shared-margin account by ~N (one full sleeve per coin).
+    """
+    present = {c: _V5_PORTFOLIO_WEIGHTS[c] for c in universe if c in _V5_PORTFOLIO_WEIGHTS}
+    total = sum(present.values())
+    if total <= 0:
+        raise ValueError(
+            f"no weighted coins in universe {universe!r} "
+            f"(known: {sorted(_V5_PORTFOLIO_WEIGHTS)})"
+        )
+    return {c: w / total for c, w in present.items()}
+
+
 def to_binance_symbol(coin_id: str) -> str:
     """Convert a CoinGecko coin id to its Binance Futures USDT-pair symbol.
 
@@ -68,6 +102,11 @@ class LiveConfig:
     coin_universe: list[str]
     # V5 routing fields (Task 3 — V5 MIX live deployment)
     routing: dict[str, dict[str, object]] = field(default_factory=dict)
+    # Per-coin portfolio weights renormalized over `coin_universe` (C1 fix).
+    # The runner scales each coin's size fraction by its weight before
+    # converting to a quantity, so the shared-margin book matches the
+    # validated backtest's combined gross exposure instead of running ~N x.
+    portfolio_weights: dict[str, float] = field(default_factory=dict)
     coinglass_api_key: str = ""
     data_refresh_critical: set[str] = field(default_factory=set)
     data_root: str = "data"
@@ -164,6 +203,7 @@ def load_config() -> LiveConfig:
         # without deep-copy, mutations through `cfg.routing` would
         # persist across cycles and corrupt subsequent loads.
         routing=copy.deepcopy(_V5_DEFAULT_ROUTING),
+        portfolio_weights=compute_portfolio_weights(coin_universe),
         coinglass_api_key=coinglass_api_key,
         data_refresh_critical={"ohlcv", "coinmetrics"},
         data_root=os.environ.get("TRADINGAGENTS_DATA_ROOT", "data"),

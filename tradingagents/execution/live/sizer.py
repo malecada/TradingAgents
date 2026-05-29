@@ -35,6 +35,26 @@ class SizingResult:
     dirs_per_horizon: dict[int, int] | None = None
 
 
+def target_position_qty(
+    *, size_fraction: float, portfolio_value: float,
+    weight: float, ref_price: float,
+) -> float:
+    """Convert a per-coin size fraction to a signed target quantity.
+
+    ``size_fraction`` is ``SizingResult.final_size_notional`` — a fraction of
+    equity on a full-portfolio basis (matching one of the backtest's per-coin
+    sleeves, bounded by ``max_leverage``). ``weight`` is the coin's
+    renormalized portfolio weight (see ``config.compute_portfolio_weights``).
+    Folding the weight in here reproduces ``baseline_v5_mix.portfolio_return``:
+    the live book allocates ``weight * equity`` to each coin's sleeve rather
+    than the full equity, so an N-coin shared-margin account no longer runs
+    ~N x the validated gross exposure.
+    """
+    if ref_price <= 0:
+        return 0.0
+    return size_fraction * portfolio_value * weight / ref_price
+
+
 def compute_size(
     *, coin, prediction, price_history,
     horizons, symmetric,
