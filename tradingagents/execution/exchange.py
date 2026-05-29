@@ -407,6 +407,23 @@ class ExchangeClient:
             symbol=symbol, orderId=int(order_id),
         ))
 
+    def list_open_stops(self, symbol: str) -> list[dict]:
+        """Open reduceOnly STOP_MARKET orders for *symbol* (the protective stops).
+
+        Used by :func:`tradingagents.execution.live.stops.arm_stop_loss` to do
+        place-then-cancel replacement without a naked window.
+        """
+        orders = self._retry(
+            self._client.futures_get_open_orders, symbol=symbol,
+        )
+        return [o for o in orders if o.get("type") == "STOP_MARKET"]
+
+    def cancel_order(self, symbol: str, order_id) -> dict:
+        """Cancel a single open futures order by id."""
+        return self._retry(
+            self._client.futures_cancel_order, symbol=symbol, orderId=order_id,
+        )
+
     def cancel_all_orders(self, symbol: str) -> list[dict]:
         """Cancel all open futures orders for *symbol*."""
         open_orders = self._retry(

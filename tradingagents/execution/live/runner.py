@@ -37,6 +37,7 @@ from tradingagents.execution.live import (
     risk,
     shadow,
     sizer,
+    stops,
     structured_log,
 )
 from tradingagents.execution.live.config import to_binance_symbol
@@ -573,14 +574,13 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                         # long instead of protecting it. Compute net position
                         # explicitly and skip the stop if position is flat.
                         net_position = current_signed_qty + delta_qty
-                        # Cancel any prior stop on this symbol before placing
-                        # a new one — closePosition=true stops can collide.
-                        try:
-                            if hasattr(ex, "cancel_all_orders"):
-                                ex.cancel_all_orders(symbol)
-                        except Exception:
-                            pass
                         if abs(net_position) < 1e-8:
+                            # Flat after the trade — clear any resting stop.
+                            try:
+                                if hasattr(ex, "cancel_all_orders"):
+                                    ex.cancel_all_orders(symbol)
+                            except Exception:
+                                pass
                             stop_id = None
                             status = "EXECUTED"
                         else:
@@ -590,28 +590,19 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                                 if net_position > 0
                                 else exec_price * (1 + cfg.stop_loss_pct)
                             )
-                            try:
-                                stop = ex.place_stop_loss(
-                                    symbol, abs(net_position),
-                                    stop_price, stop_side,
-                                )
-                                # Binance Futures returns 'algoId' for
-                                # STOP_MARKET on the conditional-order API,
-                                # 'orderId' on the legacy path. Capture
-                                # whichever is present.
-                                stop_id = str(
-                                    stop.get("orderId")
-                                    or stop.get("algoId", "")
-                                )
-                                status = "EXECUTED"
-                            except Exception as e:
-                                stop_id = None
-                                status = "UNPROTECTED"
+                            # R1/R5: place-then-cancel + monotonic stop. Never
+                            # leaves the position naked on a failed swap, and
+                            # won't ratchet the stop looser cycle-over-cycle.
+                            stop_id, status = stops.arm_stop_loss(
+                                ex, symbol=symbol, net_position=net_position,
+                                stop_price=stop_price, stop_side=stop_side,
+                            )
+                            if status == "UNPROTECTED":
                                 notify.send_alert(
                                     bot_token=cfg.telegram_bot_token,
                                     chat_id=cfg.telegram_chat_id,
                                     severity="UNPROTECTED",
-                                    message=f"{coin} stop-loss failed: {e}",
+                                    message=f"{coin} stop-loss failed — position UNPROTECTED",
                                 )
                         trade_id = j.log_trade(
                             cycle_id=cycle_id, coin=coin, side=side, qty=qty,
