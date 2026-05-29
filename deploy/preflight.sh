@@ -54,6 +54,22 @@ case "$KELLY" in
 esac
 echo "  KELLY_FRACTION: $KELLY"
 
+# 3b. Signal config must match the canonical backtest (P2/P3 parity). The
+# published SR +3.18 run used confidence_ref=0.05 + asymmetric (SYMMETRIC=false);
+# any other value silently trades a different signal/size than was validated.
+CONF_REF="${CONFIDENCE_REF_RETURN:-0.05}"
+if [ "$CONF_REF" != "0.05" ]; then
+    echo "FAIL: CONFIDENCE_REF_RETURN=$CONF_REF != canonical 0.05 (backtest parity)"
+    exit 1
+fi
+echo "  CONFIDENCE_REF_RETURN: $CONF_REF"
+SYM_LC=$(echo "${SYMMETRIC:-false}" | tr '[:upper:]' '[:lower:]')
+case "$SYM_LC" in
+    false|0|no) ;;
+    *) echo "FAIL: SYMMETRIC=$SYM_LC must be false (canonical V5 MIX is asymmetric)"; exit 1 ;;
+esac
+echo "  SYMMETRIC: $SYM_LC"
+
 # 4. Derivatives + options dirs writable
 DATA_ROOT="${TRADINGAGENTS_DATA_ROOT:-/opt/tradingagents/data}"
 for sub in derivatives derivatives_raw options onchain cache; do

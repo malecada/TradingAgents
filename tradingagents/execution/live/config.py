@@ -190,13 +190,15 @@ def load_config() -> LiveConfig:
         kelly_fraction=_float("KELLY_FRACTION", 0.25),
         vol_lookback=_int("VOL_LOOKBACK", 20),
         vol_cap_pct=_float("VOL_CAP_PCT", 0.95),
-        confidence_ref_return=_float("CONFIDENCE_REF_RETURN", 0.02),
+        # Canonical V5 MIX signal config (matches scripts/baseline_v5_mix.py
+        # V5_CONFIDENCE_REF / V5_ASYMMETRIC — the published SR +3.18 run).
+        confidence_ref_return=_float("CONFIDENCE_REF_RETURN", 0.05),
         early_exit_loss=_float("EARLY_EXIT_LOSS", 0.015),
         min_hold=_int("MIN_HOLD", 7),
         trend_sma=_int("TREND_SMA", 30),
         trend_multiplier=_float("TREND_MULTIPLIER", 1.5),
         horizons=[int(x) for x in os.environ.get("HORIZONS", "7,14").split(",") if x.strip()],
-        symmetric=_bool("SYMMETRIC", "true"),
+        symmetric=_bool("SYMMETRIC", "false"),
         arima_filter=_bool("ARIMA_FILTER", "false"),
         initial_capital=_float("INITIAL_CAPITAL", 10000.0),
         coin_universe=coin_universe,

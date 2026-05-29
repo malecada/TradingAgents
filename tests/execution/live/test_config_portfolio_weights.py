@@ -10,6 +10,21 @@ def _set_min_env(monkeypatch, universe="bitcoin,ethereum,binancecoin,solana"):
     monkeypatch.setenv("COIN_UNIVERSE", universe)
 
 
+def test_signal_defaults_match_backtest_canonical(monkeypatch):
+    """P2/P3: live confidence_ref + symmetric defaults must equal the published
+    V5 MIX backtest config (confidence_ref=0.05, asymmetric=True). Drift here
+    means live trades a different signal/size than the validated SR +3.18 run."""
+    _set_min_env(monkeypatch)
+    from tradingagents.execution.live.config import load_config
+    from scripts.baseline_v5_mix import V5_CONFIDENCE_REF, V5_ASYMMETRIC
+
+    cfg = load_config()
+    assert cfg.confidence_ref_return == V5_CONFIDENCE_REF == 0.05
+    # sizer passes asymmetric=not symmetric, so canonical asymmetric=True
+    # requires symmetric=False.
+    assert cfg.symmetric is (not V5_ASYMMETRIC) is False
+
+
 def test_load_config_max_portfolio_dd_default(monkeypatch):
     """L1: drawdown-from-peak halt threshold, default 0.15 (matches the
     backtest portfolio circuit breaker)."""

@@ -95,6 +95,12 @@ PORTFOLIO_WEIGHTS = {
     "ripple": 0.10, "dogecoin": 0.10, "cardano": 0.10, "tron": 0.10,
 }
 
+# Canonical signal config that produced the published SR +3.18 (single source
+# of truth for live parity — tests/execution/live assert the live LiveConfig
+# defaults equal these).
+V5_CONFIDENCE_REF = 0.05
+V5_ASYMMETRIC = True
+
 
 def portfolio_return(df: pd.DataFrame, weights: dict) -> pd.Series:
     """Weighted daily portfolio return series.
@@ -140,7 +146,9 @@ def _v2_positions(
     kelly_fraction: float = 0.5,
     early_exit_loss: float = EARLY_EXIT_DEFAULT,
 ) -> np.ndarray:
-    sig, conf = generate_term_structure_signals(merged, [7, 14], 0.05, asymmetric=True)
+    sig, conf = generate_term_structure_signals(
+        merged, [7, 14], V5_CONFIDENCE_REF, asymmetric=V5_ASYMMETRIC,
+    )
     px = merged["Close"].astype(float).values
     rv = compute_realized_vol(px, lookback=20)
     mask = vol_regime_mask(rv, percentile_cap=0.95)
