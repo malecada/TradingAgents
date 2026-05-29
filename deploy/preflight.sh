@@ -71,7 +71,8 @@ esac
 echo "  SYMMETRIC: $SYM_LC"
 
 # 4. Derivatives + options dirs writable
-DATA_ROOT="${TRADINGAGENTS_DATA_ROOT:-/opt/tradingagents/data}"
+# P5: mirror config.load_config precedence — explicit root, else DATA_DIR.
+DATA_ROOT="${TRADINGAGENTS_DATA_ROOT:-${DATA_DIR:-/opt/tradingagents/data}}"
 for sub in derivatives derivatives_raw options onchain cache; do
     DIR="$DATA_ROOT/$sub"
     if [ ! -d "$DIR" ]; then

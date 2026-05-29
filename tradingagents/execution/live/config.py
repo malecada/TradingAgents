@@ -164,6 +164,21 @@ def load_config() -> LiveConfig:
     coin_universe = [c.strip() for c in os.environ.get(
         "COIN_UNIVERSE", "bitcoin,ethereum,binancecoin,solana").split(",") if c.strip()]
 
+    # P5: single data-root source of truth. The runner reads the OHLCV cache +
+    # journal from $DATA_DIR, while data_refresh / retrain WRITE to data_root.
+    # If those diverge the read-side cache silently goes stale (observed live:
+    # frozen /opt/.../data/ohlcv_cache vs fresh repo/data). Fall back to DATA_DIR
+    # when TRADINGAGENTS_DATA_ROOT is unset, and refuse to start if both are set
+    # and disagree.
+    _explicit_root = os.environ.get("TRADINGAGENTS_DATA_ROOT", "").strip()
+    _data_dir = os.environ.get("DATA_DIR", "").strip()
+    if _explicit_root and _data_dir and _explicit_root != _data_dir:
+        raise ValueError(
+            f"TRADINGAGENTS_DATA_ROOT ({_explicit_root!r}) != DATA_DIR ({_data_dir!r}) "
+            f"— set them equal or unset one (runner reads DATA_DIR, refresh writes data_root)"
+        )
+    data_root = _explicit_root or _data_dir or "data"
+
     # Validate that every coin in the universe has a routing entry —
     # otherwise downstream predict.py KeyErrors mid-cycle.
     for c in coin_universe:
@@ -210,7 +225,7 @@ def load_config() -> LiveConfig:
         portfolio_weights=compute_portfolio_weights(coin_universe),
         coinglass_api_key=coinglass_api_key,
         data_refresh_critical={"ohlcv", "coinmetrics"},
-        data_root=os.environ.get("TRADINGAGENTS_DATA_ROOT", "data"),
+        data_root=data_root,
     )
     if cfg.max_leverage <= 0:
         raise ValueError(f"MAX_LEVERAGE must be > 0, got {cfg.max_leverage}")
