@@ -324,6 +324,10 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
 
             cache = data_dir / "ohlcv_cache" / f"{symbol}_1d.parquet"
             history = pd.read_parquet(cache) if cache.exists() else pd.DataFrame()
+            # P4: drop today's in-progress daily bar so vol/SMA use only
+            # complete bars through asof (yesterday's close — same vintage as
+            # the prediction).
+            history = sizer.bars_through(history, asof_date)
             if len(history) < cfg.vol_lookback:
                 structured.event("skip_coin", "insufficient_history", {"coin": coin})
                 continue
