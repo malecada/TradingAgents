@@ -178,16 +178,25 @@ def load_live_journal_rows(journal_db: str, start_cycle: str, end_cycle: str) ->
     tables = pd.read_sql(
         "SELECT name FROM sqlite_master WHERE type='table'", conn,
     )["name"].values
-    decisions = pd.read_sql(
-        "SELECT * FROM decisions WHERE cycle_id BETWEEN ? AND ?",
+    # The live journal records sizing decisions in `sizing` (there is no
+    # `decisions` table — the old name silently yielded an empty frame).
+    sizing = pd.read_sql(
+        "SELECT * FROM sizing WHERE cycle_id BETWEEN ? AND ?",
         conn, params=(start_cycle, end_cycle),
-    ) if "decisions" in tables else pd.DataFrame()
+    ) if "sizing" in tables else pd.DataFrame()
     trades = pd.read_sql(
         "SELECT * FROM trades WHERE cycle_id BETWEEN ? AND ?",
         conn, params=(start_cycle, end_cycle),
     ) if "trades" in tables else pd.DataFrame()
+    # Portfolio snapshots drive the live-vs-replay equity-curve diff.
+    snaps = pd.read_sql(
+        "SELECT ts, total_value FROM portfolio_snapshots "
+        "WHERE date(ts) BETWEEN ? AND ?",
+        conn, params=(start_cycle, end_cycle),
+    ) if "portfolio_snapshots" in tables else pd.DataFrame()
     conn.close()
-    return {"cycles": cycles, "predictions": preds, "decisions": decisions, "trades": trades}
+    return {"cycles": cycles, "predictions": preds, "sizing": sizing,
+            "trades": trades, "portfolio_snapshots": snaps}
 
 
 # V5 sizing needs lookback history before it produces any position:
@@ -246,21 +255,50 @@ def _window_metrics(returns: pd.Series) -> dict:
     }
 
 
+# Divergence thresholds for the live-vs-replay equity-curve diff. The verdict
+# is driven by how far the LIVE equity curve drifts from the REPLAY of the same
+# strategy over the same window — that is the actual parity question, and it
+# captures every sizing/signal/cost divergence as its net effect on returns.
+_GAP_FAIL = 0.10        # cumulative-return gap (10 pp) -> FAIL
+_GAP_INVESTIGATE = 0.03
+_CORR_FAIL = 0.5        # daily-return correlation below this -> FAIL
+_CORR_INVESTIGATE = 0.8
+_MIN_PARITY_BARS = 10
+
+
+def _live_daily_returns(snapshots: pd.DataFrame, live_start: str,
+                        live_end: str) -> pd.Series:
+    """Daily portfolio returns from portfolio_snapshots over the live window."""
+    if snapshots is None or snapshots.empty or "total_value" not in snapshots:
+        return pd.Series(dtype=float)
+    s = snapshots.copy()
+    # Snapshots are UTC-stamped (tz-aware); coerce to tz-naive UTC dates so they
+    # compare against the tz-naive replay index / window bounds.
+    s["date"] = pd.to_datetime(s["ts"], utc=True).dt.tz_localize(None).dt.normalize()
+    s = s[(s["date"] >= pd.Timestamp(live_start))
+          & (s["date"] <= pd.Timestamp(live_end))]
+    if s.empty:
+        return pd.Series(dtype=float)
+    s = (s.sort_values("date").drop_duplicates("date", keep="last")
+          .set_index("date")["total_value"].astype(float))
+    return s.pct_change().dropna()
+
+
 def compare(live: dict, replay_dir: Path, out_report: Path,
             live_start: str, live_end: str) -> str:
-    """Generate parity_report.md. Returns verdict: PASS / INVESTIGATE / FAIL.
+    """Generate parity_report.md. Returns PASS / INVESTIGATE / FAIL /
+    INSUFFICIENT_WINDOW.
 
-    The replay spans a warmup window before ``live_start``; metrics are
-    recomputed on the slice [``live_start``, ``live_end``] so they line up
-    with the live journal window.
+    The verdict is driven by the divergence between the LIVE equity curve
+    (portfolio_snapshots) and the REPLAY of the same strategy over the same
+    window — not by the replay's own Sharpe. The replay spans a warmup window
+    before ``live_start``; it is sliced back to [``live_start``, ``live_end``]
+    to line up with the live journal.
     """
-    live_preds = live["predictions"]
     # baseline_v5_mix writes daily_returns.csv with an unnamed DatetimeIndex —
     # index_col=0 reads it back without assuming a "date" column name.
     replay_daily = pd.read_csv(replay_dir / "daily_returns.csv",
                                 index_col=0, parse_dates=True)
-    # Slice the warmed-up replay back to the live window for an apples-to-
-    # apples comparison against the live journal.
     window = replay_daily.loc[
         (replay_daily.index >= pd.Timestamp(live_start))
         & (replay_daily.index <= pd.Timestamp(live_end))
@@ -270,10 +308,30 @@ def compare(live: dict, replay_dir: Path, out_report: Path,
                    else {"sharpe": float("nan"), "total_return": float("nan"),
                          "max_drawdown": float("nan"), "n_bars": 0})
 
-    pred_lines = []
-    if not live_preds.empty:
-        pred_lines.append("(prediction-level comparison requires the replay to emit "
-                            "per-cycle predictions; deferred to a future follow-up.)")
+    # --- live-vs-replay equity-curve diff (the parity check proper) ---
+    live_rets = _live_daily_returns(
+        live.get("portfolio_snapshots", pd.DataFrame()), live_start, live_end)
+    replay_rets = (window["portfolio"].copy()
+                   if "portfolio" in window.columns else pd.Series(dtype=float))
+    if len(replay_rets):
+        replay_rets.index = pd.to_datetime(replay_rets.index).normalize()
+    aligned = pd.DataFrame({"live": live_rets, "replay": replay_rets}).dropna()
+    n_common = len(aligned)
+    if n_common >= 2:
+        cum_live = float((1 + aligned["live"]).prod() - 1)
+        cum_replay = float((1 + aligned["replay"]).prod() - 1)
+        cum_gap = abs(cum_live - cum_replay)
+        # Correlation is only meaningful when both curves actually move; a flat
+        # curve's "correlation" is FP noise. Below this daily-vol floor, judge
+        # parity on the cumulative-return gap alone (corr left NaN).
+        _vol_floor = 1e-4
+        if aligned["live"].std() > _vol_floor and aligned["replay"].std() > _vol_floor:
+            corr = float(aligned["live"].corr(aligned["replay"]))
+        else:
+            corr = float("nan")
+        daily_mae = float((aligned["live"] - aligned["replay"]).abs().mean())
+    else:
+        cum_live = cum_replay = cum_gap = corr = daily_mae = float("nan")
 
     live_total_trades = int(live["cycles"]["n_trades"].sum()) if not live["cycles"].empty else 0
     live_status_summary = (live["cycles"]["status"].value_counts().to_dict()
@@ -294,8 +352,12 @@ def compare(live: dict, replay_dir: Path, out_report: Path,
         f"- Total trades executed: {live_total_trades}",
         f"- Status counts: {live_status_summary}",
         "",
-        f"## Prediction parity",
-        *pred_lines,
+        f"## Live-vs-replay equity diff ({n_common} aligned bars)",
+        f"- Live cumulative return:   {cum_live:+.2%}" if n_common >= 2 else "- Live cumulative return:   n/a",
+        f"- Replay cumulative return: {cum_replay:+.2%}" if n_common >= 2 else "- Replay cumulative return: n/a",
+        f"- Cumulative-return gap:    {cum_gap:.2%}" if n_common >= 2 else "- Cumulative-return gap:    n/a",
+        f"- Daily-return correlation: {corr:.3f}" if n_common >= 2 else "- Daily-return correlation: n/a",
+        f"- Daily-return MAE:         {daily_mae:.4f}" if n_common >= 2 else "- Daily-return MAE:         n/a",
         "",
         f"## Aggregate metrics (replay, live window only)",
         f"- Replay portfolio Sharpe: {replay_port.get('sharpe', float('nan')):.3f}",
@@ -303,18 +365,19 @@ def compare(live: dict, replay_dir: Path, out_report: Path,
         f"- Replay portfolio max DD: {replay_port.get('max_drawdown', float('nan')):.1%}",
         "",
     ]
-    # A handful of bars is too few for a stable Sharpe — don't PASS/fail a
-    # week-1 parity on noise; flag it for human read instead.
-    sharpe = replay_port.get("sharpe", 0)
-    if replay_port["n_bars"] < 10:
+
+    data_fail = any(k in live_status_summary
+                    for k in ("predict_majority_fail", "critical_data_fail", "error"))
+    if n_common < _MIN_PARITY_BARS:
         verdict = "INSUFFICIENT_WINDOW"
-    elif ("predict_majority_fail" in live_status_summary
-          or "critical_data_fail" in live_status_summary):
+    elif cum_gap > _GAP_FAIL or (corr == corr and corr < _CORR_FAIL):
+        verdict = "FAIL"
+    elif data_fail:
         verdict = "INVESTIGATE"
-    elif sharpe == sharpe and sharpe > 1.0:  # not-NaN and > 1
-        verdict = "PASS"
+    elif cum_gap > _GAP_INVESTIGATE or (corr == corr and corr < _CORR_INVESTIGATE):
+        verdict = "INVESTIGATE"
     else:
-        verdict = "INVESTIGATE"
+        verdict = "PASS"
     lines.append(f"## Verdict: {verdict}")
     out_report.write_text("\n".join(lines))
     return verdict
