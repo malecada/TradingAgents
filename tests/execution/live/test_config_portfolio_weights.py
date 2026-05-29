@@ -10,6 +10,16 @@ def _set_min_env(monkeypatch, universe="bitcoin,ethereum,binancecoin,solana"):
     monkeypatch.setenv("COIN_UNIVERSE", universe)
 
 
+def test_load_config_max_portfolio_dd_default(monkeypatch):
+    """L1: drawdown-from-peak halt threshold, default 0.15 (matches the
+    backtest portfolio circuit breaker)."""
+    _set_min_env(monkeypatch)
+    from tradingagents.execution.live.config import load_config
+    assert load_config().max_portfolio_dd == 0.15
+    monkeypatch.setenv("MAX_PORTFOLIO_DD", "0.10")
+    assert load_config().max_portfolio_dd == 0.10
+
+
 def test_load_config_populates_renormalized_weights(monkeypatch):
     _set_min_env(monkeypatch)
     from tradingagents.execution.live.config import (

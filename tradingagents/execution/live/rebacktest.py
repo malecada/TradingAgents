@@ -75,6 +75,65 @@ def compute_live_metrics(live_start_date, live_end_date) -> dict:
     }
 
 
+def _journal_db() -> Path:
+    """The live trade journal path ($DATA_DIR/trade_journal.db)."""
+    return Path(os.environ.get("DATA_DIR", "data")) / "trade_journal.db"
+
+
+def compute_daily_pnl_pct(current_value: float, asof_date: str) -> float:
+    """Today's PnL fraction vs the most recent snapshot *before* asof_date.
+
+    L1 fix: the old kill-switch fed `compute_live_metrics(today, today)`, which
+    only saw today's single snapshot and always returned 0.0. Here we compare
+    the live current equity (`current_value`, which the runner already reads as
+    `portfolio_before`) against the prior-day close so a real intraday loss is
+    visible to `check_daily_loss`. Returns 0.0 when there is no prior snapshot
+    or the values are non-positive (safe: no false kill on day one).
+    """
+    import sqlite3
+
+    db = _journal_db()
+    if not db.exists() or current_value <= 0:
+        return 0.0
+    conn = sqlite3.connect(db)
+    row = conn.execute(
+        "SELECT total_value FROM portfolio_snapshots WHERE date(ts) < ? "
+        "ORDER BY ts DESC LIMIT 1",
+        (asof_date,),
+    ).fetchone()
+    conn.close()
+    if not row or row[0] is None or row[0] <= 0:
+        return 0.0
+    prior = float(row[0])
+    return (current_value - prior) / prior
+
+
+def compute_drawdown_from_peak(current_value: float, asof_date: str) -> float:
+    """Drawdown fraction of current equity from the running peak.
+
+    Peak is the max snapshot value on or before asof_date, combined with the
+    live current value (so a fresh high reports 0.0 drawdown). Mirrors the
+    backtest's portfolio-level circuit breaker (max_portfolio_dd). Returns 0.0
+    when there is no history.
+    """
+    import sqlite3
+
+    db = _journal_db()
+    if not db.exists() or current_value <= 0:
+        return 0.0
+    conn = sqlite3.connect(db)
+    row = conn.execute(
+        "SELECT MAX(total_value) FROM portfolio_snapshots WHERE date(ts) <= ?",
+        (asof_date,),
+    ).fetchone()
+    conn.close()
+    hist_peak = float(row[0]) if row and row[0] is not None else 0.0
+    peak = max(hist_peak, current_value)
+    if peak <= 0:
+        return 0.0
+    return (peak - current_value) / peak
+
+
 def run_weekly_parity(*, week_end, live_start_date, live_end_date,
                        output_dir, journal_db=None, sandbox=None,
                        kelly: float = 0.25, lookback_days: int = 1500) -> Path:

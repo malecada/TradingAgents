@@ -29,6 +29,7 @@ from tradingagents.execution.exchange import (
 from tradingagents.execution.live import (
     config,
     data_refresh,
+    halt,
     journal,
     notify,
     predict,
@@ -123,6 +124,34 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
     data_dir = Path(os.environ.get("DATA_DIR", "data"))
     log_dir = Path(os.environ.get("LOG_DIR", "logs"))
     data_dir.mkdir(parents=True, exist_ok=True)
+
+    # R4: refuse to trade while a persistent halt sentinel is set (written by a
+    # KILL_SWITCH trip or --kill-all). The operator clears it with --resume
+    # after investigating, so a tripped halt never silently auto-resumes on the
+    # next systemd timer fire. Checked before data refresh / exchange access.
+    if halt.is_halted(data_dir=data_dir):
+        reason = halt.halt_reason(data_dir=data_dir)
+        logger.error("Cycle %s skipped — trading halted: %s", cycle_id, reason)
+        jh = journal.Journal(str(data_dir / "trade_journal.db"))
+        try:
+            jh.log_cycle_start(cycle_id, git_sha=_git_sha(Path(__file__).resolve().parents[3]))
+            jh.log_cycle_end(cycle_id, status="halted", error_msg=reason)
+        finally:
+            jh.close()
+        try:
+            notify.send_alert(
+                bot_token=cfg.telegram_bot_token,
+                chat_id=cfg.telegram_chat_id,
+                severity="HALTED",
+                message=(f"Cycle {cycle_id} skipped — trading halted: {reason}. "
+                         f"Investigate, then clear with --resume."),
+            )
+        except Exception:
+            pass
+        return CycleResult(
+            cycle_id=cycle_id, status="halted", n_executed=0, error_msg=reason,
+        )
+
     log_path = log_dir / f"cycle_{cycle_id}.jsonl"
     structured = structured_log.StructuredLogger(log_path, cycle_id)
 
@@ -267,16 +296,23 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                 logger.warning("set_leverage failed for %s: %s", c, e)
         portfolio_before = ex.get_total_portfolio_value()
 
-        # Daily PnL for the kill-switch gate. compute_live_metrics returns
-        # 0.0 when fewer than 2 snapshots exist (correct for cycle 1 of the day).
-        from datetime import date
-        today_str = date.today().isoformat()
+        # Daily PnL + drawdown for the kill-switch gate (L1 fix). The old gate
+        # fed compute_live_metrics(today, today) — only today's single snapshot
+        # (<2 rows) -> return_pct=0.0, so the daily-loss check never fired.
+        # Compare the live current equity against the prior-day close, and
+        # track drawdown from the running peak. _today_id() is the UTC date,
+        # aligning with the UTC-stamped portfolio_snapshots (local date() would
+        # misalign the window near midnight).
+        today_str = _today_id()
         try:
-            from tradingagents.execution.live.rebacktest import compute_live_metrics
-            intraday_metrics = compute_live_metrics(today_str, today_str)
-            pnl_today_pct = intraday_metrics.get("return_pct", 0.0)
+            from tradingagents.execution.live.rebacktest import (
+                compute_daily_pnl_pct, compute_drawdown_from_peak,
+            )
+            pnl_today_pct = compute_daily_pnl_pct(portfolio_before, today_str)
+            dd_from_peak = compute_drawdown_from_peak(portfolio_before, today_str)
         except Exception:
             pnl_today_pct = 0.0  # safe fallback if journal unavailable
+            dd_from_peak = 0.0
 
         for coin in cfg.coin_universe:
             if _shutdown_requested:
@@ -351,8 +387,8 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                 if not ok_lev:
                     continue
 
-                # pnl_today_pct was pre-computed from today's portfolio
-                # snapshots once per cycle (above the per-coin loop).
+                # pnl_today_pct / dd_from_peak were pre-computed once per cycle
+                # (above the per-coin loop) from the live equity vs the journal.
                 ok_loss, why = risk.check_daily_loss(
                     pnl_today_pct, cfg.max_daily_loss_pct,
                 )
@@ -360,11 +396,24 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                     cycle_id, coin, "daily_loss", ok_loss,
                     pnl_today_pct, -cfg.max_daily_loss_pct, why,
                 )
-                if not ok_loss:
+                ok_dd, why_dd = risk.check_drawdown(
+                    dd_from_peak, cfg.max_portfolio_dd,
+                )
+                j.log_risk_check(
+                    cycle_id, coin, "portfolio_drawdown", ok_dd,
+                    dd_from_peak, cfg.max_portfolio_dd, why_dd,
+                )
+                if not ok_loss or not ok_dd:
+                    kill_reason = why if not ok_loss else why_dd
+                    # R4: persist the halt so the next cycle stays down until an
+                    # operator clears it with --resume.
+                    halt.write_halt(
+                        f"cycle {cycle_id}: {kill_reason}", data_dir=data_dir,
+                    )
                     notify.send_alert(
                         bot_token=cfg.telegram_bot_token,
                         chat_id=cfg.telegram_chat_id,
-                        severity="KILL_SWITCH", message=why,
+                        severity="KILL_SWITCH", message=kill_reason,
                     )
                     break
 
@@ -768,6 +817,10 @@ def replay_cycle(cycle_id: str) -> CycleResult:
 def kill_all() -> None:
     """Cancel all open orders, close all open positions, halt cycle execution."""
     cfg = config.load_config()
+    # R4: persist the halt first, so even if the close-out below partially
+    # fails the next cycle still refuses to trade until an operator --resumes.
+    data_dir = Path(os.environ.get("DATA_DIR", "data"))
+    halt.write_halt("operator --kill-all", data_dir=data_dir)
     ex = ExchangeClient(
         api_key=cfg.binance_api_key, api_secret=cfg.binance_api_secret,
         testnet=not cfg.live_mode,
@@ -809,10 +862,17 @@ def main():
                         help="reconstruct decision for past cycle from journal")
     parser.add_argument("--kill-all", action="store_true",
                         help="cancel all orders + close all positions, halt")
+    parser.add_argument("--resume", action="store_true",
+                        help="clear a persistent trading halt, then exit")
     args = parser.parse_args()
 
     signal.signal(signal.SIGTERM, _handle_sigterm)
 
+    if args.resume:
+        data_dir = Path(os.environ.get("DATA_DIR", "data"))
+        cleared = halt.clear_halt(data_dir=data_dir)
+        logger.info("Halt %s", "cleared" if cleared else "was not set")
+        sys.exit(0)
     if args.kill_all:
         kill_all()
         sys.exit(0)

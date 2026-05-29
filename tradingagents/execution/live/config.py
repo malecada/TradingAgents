@@ -84,6 +84,7 @@ class LiveConfig:
     telegram_chat_id: str
     max_leverage: float
     max_daily_loss_pct: float
+    max_portfolio_dd: float
     stop_loss_pct: float
     max_open_positions: int
     target_vol: float
@@ -182,6 +183,7 @@ def load_config() -> LiveConfig:
         telegram_chat_id=os.environ.get("TELEGRAM_CHAT_ID", ""),
         max_leverage=_float("MAX_LEVERAGE", 3.0),
         max_daily_loss_pct=_float("MAX_DAILY_LOSS_PCT", 0.15),
+        max_portfolio_dd=_float("MAX_PORTFOLIO_DD", 0.15),
         stop_loss_pct=_float("STOP_LOSS_PCT", 0.03),
         max_open_positions=_int("MAX_OPEN_POSITIONS", 4),
         target_vol=_float("TARGET_VOL", 0.10),
