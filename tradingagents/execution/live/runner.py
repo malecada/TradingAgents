@@ -30,6 +30,7 @@ from tradingagents.execution.live import (
     config,
     data_refresh,
     halt,
+    hold_sizer,
     journal,
     notify,
     predict,
@@ -41,6 +42,7 @@ from tradingagents.execution.live import (
     structured_log,
 )
 from tradingagents.execution.live.config import to_binance_symbol
+from tradingagents.execution.live.hold_sizer import HoldState, step_hold_state
 
 logger = logging.getLogger(__name__)
 
@@ -426,14 +428,62 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                     final_size_notional=sz.final_size_notional,
                 )
 
+            # 5b. P1 stateful min-hold. Runs for EVERY coin every cycle (so
+            # bars_held bookkeeping + early-exit/flip fire reliably, even on a
+            # no-signal hold bar). Derives the held PRE-trend base from prior
+            # state (frozen during the 7-day hold, refreshed on entry/flip/early-
+            # exit), then re-applies THIS cycle's SMA multiplier — matching the
+            # backtest's build_positions_with_hold + apply_trend_filter ordering.
+            # On an entry/flip bar held_fraction == sz.final_size_notional
+            # (identical to the old stateless path). All downstream gates and
+            # the target-qty conversion use held_fraction, not final_size_notional.
+            try:
+                prev = j.get_hold_state(coin)
+                prev_state = HoldState(
+                    current_dir=prev["current_dir"] if prev else 0,
+                    bars_held=prev["bars_held"] if prev else 0,
+                    entry_price=prev["entry_price"] if prev else 0.0,
+                    entry_base=prev["entry_base"] if prev else 0.0,
+                )
+                new_state, base_target = step_hold_state(
+                    prev_state, sig=sz.signal, vol_ok=sz.vol_ok,
+                    fresh_base=sz.leverage,  # pre-trend sized position
+                    price=preds[coin]["ref_price"],
+                    min_hold=cfg.min_hold, early_exit_loss=cfg.early_exit_loss,
+                )
+                j.upsert_hold_state(
+                    coin=coin, current_dir=new_state.current_dir,
+                    bars_held=new_state.bars_held, entry_price=new_state.entry_price,
+                    entry_base=new_state.entry_base, entry_cycle=cycle_id,
+                )
+                # Re-apply this bar's trend multiplier to the (possibly frozen)
+                # base. On a no-signal/vol-capped hold bar compute_size returns
+                # sma_multiplier=1.0, so the trend mult is not re-applied that
+                # bar (documented minor parity gap, bounded by the 0.5-1.5x band);
+                # the position is still maintained at the frozen base.
+                held_fraction = base_target * sz.sma_multiplier
+            except Exception as e:
+                structured.event("hold_state", "fallback_stateless",
+                                 {"coin": coin, "err": str(e)})
+                try:
+                    notify.send_alert(
+                        bot_token=cfg.telegram_bot_token, chat_id=cfg.telegram_chat_id,
+                        severity="HOLD_STATE_FALLBACK", message=f"{coin}: {e}",
+                    )
+                except Exception:
+                    pass
+                held_fraction = sz.final_size_notional
+
             # 6. risk_check
             with structured.step("risk_check", {"coin": coin}):
+                # Check the actual intended (min-hold-adjusted) sleeve, not the
+                # raw stateless size — held_fraction is what becomes the target.
                 ok_lev, why = risk.check_leverage(
-                    sz.final_size_notional, cfg.max_leverage,
+                    held_fraction, cfg.max_leverage,
                 )
                 j.log_risk_check(
                     cycle_id, coin, "leverage_cap", ok_lev,
-                    abs(sz.final_size_notional), cfg.max_leverage, why,
+                    abs(held_fraction), cfg.max_leverage, why,
                 )
                 if not ok_lev:
                     continue
@@ -468,8 +518,11 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                     )
                     break
 
-            # 7. execute (or shadow-only when no trade)
-            if sz.final_size_notional == 0:
+            # 7. execute (or shadow-only when no trade). Branch on the min-hold
+            # target: a flat/exited coin (held_fraction == 0) trades nothing,
+            # but a held position with no fresh signal still has a nonzero
+            # held_fraction and proceeds to the delta-trade below.
+            if held_fraction == 0:
                 with structured.step("shadow_replay", {"coin": coin}):
                     shadow_dec = shadow.compute_shadow_decision(
                         coin=coin, prediction=preds[coin],
@@ -488,7 +541,7 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                         cycle_id=cycle_id, coin=coin,
                         live_signal=sz.signal,
                         backtest_signal=shadow_dec.signal,
-                        live_size=sz.final_size_notional,
+                        live_size=held_fraction,
                         backtest_size=shadow_dec.size,
                     )
                 continue
@@ -509,14 +562,15 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
             if not ok_freq:
                 continue
 
-            # Target position is what V2 sizing says the book SHOULD look
-            # like after this cycle. Trade only the delta vs the current
-            # exchange position so we don't stack notional across days.
-            # Scale by the coin's renormalized portfolio weight (C1 fix):
-            # final_size_notional is a full-equity sleeve fraction, so without
-            # the weight an N-coin book runs ~N x the validated gross exposure.
+            # Target position is what V2 sizing (with stateful min-hold, applied
+            # above) says the book SHOULD look like after this cycle. Trade only
+            # the delta vs the current exchange position so we don't stack
+            # notional across days. `held_fraction` is scaled by the coin's
+            # renormalized portfolio weight (C1 fix) — the sleeve is a
+            # full-equity fraction, so without the weight an N-coin shared-margin
+            # book runs ~N x the validated gross exposure.
             target_signed_qty = sizer.target_position_qty(
-                size_fraction=sz.final_size_notional,
+                size_fraction=held_fraction,
                 portfolio_value=portfolio_before,
                 weight=cfg.portfolio_weights[coin],
                 ref_price=preds[coin]["ref_price"],
@@ -728,7 +782,7 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                     cycle_id=cycle_id, coin=coin,
                     live_signal=sz.signal,
                     backtest_signal=shadow_dec.signal,
-                    live_size=sz.final_size_notional,
+                    live_size=held_fraction,
                     backtest_size=shadow_dec.size,
                 )
 
