@@ -200,5 +200,9 @@ def test_runner_uses_v5_routing(monkeypatch, tmp_path):
     result = runner.run_cycle(cycle_id="20260514-test", dry_run=True)
 
     assert captured_routing[0] is not None
-    assert set(captured_routing[0].keys()) == {"bitcoin", "ethereum", "binancecoin", "solana"}
+    # Default universe is the 8-coin V5 MIX (4 core + 4 satellite).
+    assert set(captured_routing[0].keys()) == {
+        "bitcoin", "ethereum", "binancecoin", "solana",
+        "ripple", "dogecoin", "cardano", "tron",
+    }
     assert captured_predict_routing[0] == captured_routing[0]
