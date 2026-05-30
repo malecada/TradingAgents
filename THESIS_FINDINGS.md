@@ -3337,3 +3337,31 @@ Proof by re-run: rebuilt 4-coin V5 MIX (`--kelly 0.25`, 4-coin routing-json) wit
 
 ### Not done (deferred backlog)
 ~23 MED/LOW items (real `agreement_rate`, dead-man's-switch, retrain quality gate, funding-cost journaling, alpha A1–A3) + un-audited surface (exchange margin-mode one-way check, monitor Sharpe metric backing the go/no-go, retrain/predict train-serve skew).
+
+## Section 31: V5 MIX 8-coin Live Promotion + Min-Hold + Residual P0/P1 (2026-05-30)
+
+**Branch**: `feature/v5-8coin-live` (off `fix/c1-portfolio-weight`); merged to `main`, tagged `live-v2.2.0`.
+**Goal**: promote the validated 8-coin V5 MIX (BTC/ETH/BNB/SOL core + XRP/DOGE/ADA/TRX satellite) to the live bot, with the full P0/P1 hardening set including a newly-implemented stateful min-hold, so the live system reproduces the validated backtest. Testnet (`LIVE_MODE=false`).
+
+**Validation**: `tests/execution/` **152 passed / 3 skipped / 0 failures** (live suite 135 pass; +16 new tests). 8-coin backtest reproduced at the live Kelly=0.25 (committed `baseline_v5_mix.py`, symlinked WF dirs): **portfolio SR +3.913**, return +247.0%, MaxDD −2.4%, vol 5.0% over 1619 bars. SR ≈ the published +3.966 (small data-refresh drift); the lower return/vol/DD vs the published +1053%/−4.8% are purely the Kelly=0.25-vs-0.5 effect (SR leverage-invariant). Per-coin SRs reproduce (ada +2.49, sol +2.32, xrp +2.19, eth, doge +1.97, btc, bnb, trx +1.93).
+
+### P1 — Stateful min-hold (the headline gap §30 left open)
+`§30` shipped 8 fixes but left P1 (min-hold) as "Tier-3, deferred": live re-sized statelessly every cycle, so it churned positions the backtest holds ≥7 bars — and BT11 credits ~90% of V5's alpha to exactly this V2 sizing + hold discipline, i.e. the deployed strategy was not the validated one. Closed here:
+- **`hold_state` journal table** (per-coin `current_dir, bars_held, entry_price, entry_base`) carried across daily cycles.
+- **`hold_sizer.step_hold_state`** — a pure single-bar transcription of `v2_sizing.build_positions_with_hold` (7-day min-hold + adaptive early-exit). A **golden test asserts byte-for-byte parity** (`np.allclose atol=1e-12`) over 8 random seeds × 150 bars plus the early-exit-then-same-bar-reentry edge case.
+- **Runner wiring**: the hold step runs for every coin every cycle (so `bars_held` bookkeeping + early-exit/flip fire even on no-signal bars); execution and the leverage cap branch on the hold-adjusted `held_fraction`; the entry sleeve is frozen during a hold and re-scaled by the current bar's SMA multiplier. Identity with the prior stateless path on entry/flip bars. Stateless fallback + alert on any hold-state error (never blocks a cycle).
+- **Documented minor residual**: on a no-signal/vol-capped hold bar `compute_size` returns `sma_multiplier=1.0`, so that bar does not re-apply the daily trend multiplier to the frozen base (bounded by the 0.5–1.5× band; the position is still maintained). The weekly S1 parity job quantifies it on the box.
+
+### Residual P0/P1 not in the §30 stack (found by code inspection here)
+| ID | Sev | Defect | Fix |
+|----|-----|--------|-----|
+| S3265 | **P0** | `get_total_portfolio_value` returned `account.get("totalMarginBalance", 0.0)` → a garbled response sized every coin to 0 and flattened the whole book, no alert | Raise on a missing key; add `min_capital_floor` (default 100) guard in the runner that aborts the cycle + alerts before the sizing loop |
+| J1 | P1 | Journal opened with only `foreign_keys=ON` → "database is locked" risk across the runner's 2nd connection + monitor + rebacktest (worse with the new `hold_state` writes) | `PRAGMA journal_mode=WAL` + `busy_timeout=10000` |
+| PF1 | P1 | `preflight.sh` `set -e` aborted the whole trading day on a supplementary-source (Coinglass/DefiLlama) failure; also hard-failed on `COIN_UNIVERSE != 4` (blocked 8-coin) | Demote Coinglass auth to a WARN; replace the fixed coin-count with a routing-completeness check (supports 4 or 8) |
+| AL1 | P1 | Telegram 4xx (bad token / Markdown) returned silently (no raise → no log); DD/heartbeat only on the success path | `_post_telegram` `raise_for_status()` so 4xx is logged; per-cycle dead-man heartbeat file written in the cycle `finally` (success/abort/error) |
+
+### 8-coin live config
+`config.py`: `_V5_DEFAULT_ROUTING` +4 satellites (XRP/DOGE/TRX=78f, ADA=193f; 2+1 pools, feature sets from `baseline_v5_mix.DEFAULT_ROUTING`); `_COIN_TO_BINANCE_BASE` +XRP/DOGE/ADA/TRX; `COIN_UNIVERSE` default → 8 coins; `MAX_OPEN_POSITIONS` → 8. C1 `compute_portfolio_weights` already renormalized core 0.15×4 / sat 0.10×4 → these now activate. `data_refresh` `coin_to_sym` + `_BASIS_SYM_TO_COIN` maps extended. `predict` majority-fail threshold `max(3, n-1)` scales to 7 for 8 coins. Live retrains all 8 routes daily from OHLCV — no pre-generated WF dirs needed on the box.
+
+### Deferred (now smaller)
+Dead-man **timer** (the heartbeat file exists; the systemd `OnCalendar` alerter is the operator follow-up), richer alert channel, the trend-on-hold residual above, and the still-open §30 backlog (retrain quality gate, margin-mode check, monitor-Sharpe definition). The full live equity-vs-replay parity (S1) gate runs on the box during the 90-day window (needs Binance refetch). Acceptance: SR ≥ +2.86, report vs the live-Kelly 8-coin SR ≈ +3.91. Deploy steps: `docs/superpowers/plans/2026-05-30-v5-8coin-live-DEPLOY-HANDOFF.md`.
