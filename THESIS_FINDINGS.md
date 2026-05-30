@@ -3293,3 +3293,75 @@ robust of the two and the natural candidate for a follow-up live A/B.
 - Spec: `docs/superpowers/specs/2026-05-19-v5-sltp-sweep-design.md`
 - Plan: `docs/superpowers/plans/2026-05-19-v5-sltp-sweep.md`
 - Branch: `feature/v5-sltp-sweep`
+
+
+## Section 30: Live Pipeline Audit + Remediation (V5 MIX, testnet) (2026-05-29/30)
+
+**Branch**: `fix/c1-portfolio-weight` (worktree; 8 fix commits + this doc, ahead of `live-v2.1.5` @ 9cf436d)
+**Status**: All audited critical/high fixes implemented + tested; NOT merged, NOT deployed
+**Scope**: Live execution pipeline (`tradingagents/execution/live/*`) + parity tooling + deploy config. Backtest core untouched.
+
+**Method.** Multi-agent audit workflow (98 subagents, 80 findings raised → 70 confirmed / 10 rejected by adversarial verification) over the deployed V5 MIX bot (live + backtest-parity + LLM-hybrid + ops), then VPS read-only runtime sampling to separate active from latent, then TDD remediation of the confirmed critical/high set.
+
+**Runtime ground-truth** (VPS `pck-preds-1`, read-only sample 2026-05-29): `LIVE_MODE=false` (testnet) — no real-money loss. Equity bleeding (4768→4709 / 8 d), i.e. NOT the SR +3.18 curve, because live ran a *different* strategy than the backtest. Confirmed-active on the box: P2 (`CONFIDENCE_REF_RETURN=0.02`), P3 (`SYMMETRIC=true`), P5 (two `ohlcv_cache` dirs — `/opt/.../data` frozen 12 d vs `repo/data` fresh). R1/R5 had already bitten twice (ETH UNPROTECTED naked, May 2 + May 4); one whole cycle FAILED (May 26, R3); one cycle silently missing (May 23, dead-man gap). `retrain.train_dir_acc=0.0` every cycle (dead quality gate). `ta-rebacktest.timer` IS enabled (ROLLBACK.md was wrong) — but the check was vacuous (S1).
+
+### Findings fixed (8 commits; full suite 347 pass / 0 regress; +35 tests)
+
+| ID | Sev | Defect | Fix | Commit |
+|----|-----|--------|-----|--------|
+| C1 | CRIT | Per-coin sizing × full equity, no 1/N weight → book ~N× (4×, 12× worst) over-leveraged; only per-coin leverage cap, never aggregate | `compute_portfolio_weights` (renormalized, mirrors `baseline_v5_mix.PORTFOLIO_WEIGHTS`) + `LiveConfig.portfolio_weights` + `sizer.target_position_qty` | `58d8254` |
+| L1 | HIGH | 15% daily-loss kill switch dead under once-daily cadence (`compute_live_metrics(today,today)` <2 snapshots → `return_pct≡0.0`) | `compute_daily_pnl_pct` (live equity vs prior-day close) + `compute_drawdown_from_peak` + `risk.check_drawdown` + `MAX_PORTFOLIO_DD` | `dafb5ce` |
+| R4 | HIGH | No halt persistence — kill/`--kill-all` then next timer re-opens | `halt.py` sentinel; `run_cycle` refuses while set; `--resume` clears | `dafb5ce` |
+| R2 | HIGH | `-1007` reconcile matched fills by side+qty → partial/multi-level fill missed → retry → double position | Deterministic `newClientOrderId` + `futures_get_order(origClientOrderId)`; `executedQty` recognizes partials | `c2a645b` |
+| R3 | HIGH | Network errors on create bypass reconcile → unrecorded naked fill | Route transport errors through the same reconciliation as -1007 | `c2a645b` |
+| R1 | HIGH | Stop cancelled before new placed → naked ~24 h window on failure | `stops.arm_stop_loss`: place new first, cancel old by id on success; keep old if new fails | `aba6909` |
+| R5 | HIGH | Stop re-placed each cycle re-anchored to current price → ratchets looser | Monotonic: keep existing same-size stop if already ≥ as protective | `aba6909` |
+| P2/P3 | HIGH | Live `confidence_ref=0.02`/`symmetric=true` vs backtest `0.05`/asymmetric → ~2.5× size + different signal set | Config defaults → 0.05 / symmetric=false; `V5_CONFIDENCE_REF`/`V5_ASYMMETRIC` constants; golden test; preflight hard-gate | `0c26f15` |
+| P5 | HIGH | `data_root` (write) vs `DATA_DIR` (read) diverge → stale read-side cache | `data_root` falls back to `DATA_DIR`; hard-fail if both set & differ | `5f2c98c` |
+| P4 | HIGH | vol/SMA on today's in-progress 00:05 bar | `sizer.bars_through(history, asof)` drops bars after asof | `26e780e` |
+| S1 | HIGH | Weekly parity never diffed live vs replay (read nonexistent `decisions`; verdict = replay Sharpe>1) | Load `sizing`+`portfolio_snapshots`; `compare()` diffs live equity vs replay (gap + correlation verdict) | `e4fefdb` |
+
+### Backtest validity — VERIFIED not invalidated
+
+Backtest core (`v2_sizing.py`, `models/`, `baseline_strategy_v2.py`, `walkforward_v2.py`) = **0 lines changed**. The only backtest-path edit is `baseline_v5_mix.py` P2/P3 = a literal-substitution refactor (`0.05`→`V5_CONFIDENCE_REF`, `True`→`V5_ASYMMETRIC`, same values).
+
+Proof by re-run: rebuilt 4-coin V5 MIX (`--kelly 0.25`, 4-coin routing-json) with the refactored code vs the committed `data/v5_mix_kelly_025/summary.json`:
+- **Portfolio Sharpe bit-identical: `3.1828946397645765` == `3.1828946397645765`** (16 digits).
+- 37 / 41 numeric keys identical. The 4 diffs are all `per_coin.bitcoin`, tracing to `n_bars 1619→1620` — one extra prediction bar in the (gitignored, refreshed-since-May-15) CSV, outside the 4-coin common-date intersection, so the portfolio is unaffected. A literal substitution cannot add a bar → diff is data drift, not code.
+
+**Conclusion.** All published backtests stand; the fixes drag *live → backtest* (the always-correct target), not the reverse. What is invalidated is the **live testnet equity-curve-to-date** (ran the old divergent strategy); after redeploy the 90-day acceptance clock effectively restarts against the real strategy.
+
+### Required manual VPS steps before redeploy (prod writes blocked from agent)
+- Edit `/opt/tradingagents/secrets/.env.trading`: `CONFIDENCE_REF_RETURN=0.05`, `SYMMETRIC=false` (new preflight blocks deploy otherwise — intended).
+- `data_root` auto-fixes via `DATA_DIR` fallback; frozen `/opt/.../data/ohlcv_cache` resumes refreshing.
+
+### Not done (deferred backlog)
+~23 MED/LOW items (real `agreement_rate`, dead-man's-switch, retrain quality gate, funding-cost journaling, alpha A1–A3) + un-audited surface (exchange margin-mode one-way check, monitor Sharpe metric backing the go/no-go, retrain/predict train-serve skew).
+
+## Section 31: V5 MIX 8-coin Live Promotion + Min-Hold + Residual P0/P1 (2026-05-30)
+
+**Branch**: `feature/v5-8coin-live` (off `fix/c1-portfolio-weight`); merged to `main`, tagged `live-v2.2.0`.
+**Goal**: promote the validated 8-coin V5 MIX (BTC/ETH/BNB/SOL core + XRP/DOGE/ADA/TRX satellite) to the live bot, with the full P0/P1 hardening set including a newly-implemented stateful min-hold, so the live system reproduces the validated backtest. Testnet (`LIVE_MODE=false`).
+
+**Validation**: `tests/execution/` **152 passed / 3 skipped / 0 failures** (live suite 135 pass; +16 new tests). 8-coin backtest reproduced at the live Kelly=0.25 (committed `baseline_v5_mix.py`, symlinked WF dirs): **portfolio SR +3.913**, return +247.0%, MaxDD −2.4%, vol 5.0% over 1619 bars. SR ≈ the published +3.966 (small data-refresh drift); the lower return/vol/DD vs the published +1053%/−4.8% are purely the Kelly=0.25-vs-0.5 effect (SR leverage-invariant). Per-coin SRs reproduce (ada +2.49, sol +2.32, xrp +2.19, eth, doge +1.97, btc, bnb, trx +1.93).
+
+### P1 — Stateful min-hold (the headline gap §30 left open)
+`§30` shipped 8 fixes but left P1 (min-hold) as "Tier-3, deferred": live re-sized statelessly every cycle, so it churned positions the backtest holds ≥7 bars — and BT11 credits ~90% of V5's alpha to exactly this V2 sizing + hold discipline, i.e. the deployed strategy was not the validated one. Closed here:
+- **`hold_state` journal table** (per-coin `current_dir, bars_held, entry_price, entry_base`) carried across daily cycles.
+- **`hold_sizer.step_hold_state`** — a pure single-bar transcription of `v2_sizing.build_positions_with_hold` (7-day min-hold + adaptive early-exit). A **golden test asserts byte-for-byte parity** (`np.allclose atol=1e-12`) over 8 random seeds × 150 bars plus the early-exit-then-same-bar-reentry edge case.
+- **Runner wiring**: the hold step runs for every coin every cycle (so `bars_held` bookkeeping + early-exit/flip fire even on no-signal bars); execution and the leverage cap branch on the hold-adjusted `held_fraction`; the entry sleeve is frozen during a hold and re-scaled by the current bar's SMA multiplier. Identity with the prior stateless path on entry/flip bars. Stateless fallback + alert on any hold-state error (never blocks a cycle).
+- **Documented minor residual**: on a no-signal/vol-capped hold bar `compute_size` returns `sma_multiplier=1.0`, so that bar does not re-apply the daily trend multiplier to the frozen base (bounded by the 0.5–1.5× band; the position is still maintained). The weekly S1 parity job quantifies it on the box.
+
+### Residual P0/P1 not in the §30 stack (found by code inspection here)
+| ID | Sev | Defect | Fix |
+|----|-----|--------|-----|
+| S3265 | **P0** | `get_total_portfolio_value` returned `account.get("totalMarginBalance", 0.0)` → a garbled response sized every coin to 0 and flattened the whole book, no alert | Raise on a missing key; add `min_capital_floor` (default 100) guard in the runner that aborts the cycle + alerts before the sizing loop |
+| J1 | P1 | Journal opened with only `foreign_keys=ON` → "database is locked" risk across the runner's 2nd connection + monitor + rebacktest (worse with the new `hold_state` writes) | `PRAGMA journal_mode=WAL` + `busy_timeout=10000` |
+| PF1 | P1 | `preflight.sh` `set -e` aborted the whole trading day on a supplementary-source (Coinglass/DefiLlama) failure; also hard-failed on `COIN_UNIVERSE != 4` (blocked 8-coin) | Demote Coinglass auth to a WARN; replace the fixed coin-count with a routing-completeness check (supports 4 or 8) |
+| AL1 | P1 | Telegram 4xx (bad token / Markdown) returned silently (no raise → no log); DD/heartbeat only on the success path | `_post_telegram` `raise_for_status()` so 4xx is logged; per-cycle dead-man heartbeat file written in the cycle `finally` (success/abort/error) |
+
+### 8-coin live config
+`config.py`: `_V5_DEFAULT_ROUTING` +4 satellites (XRP/DOGE/TRX=78f, ADA=193f; 2+1 pools, feature sets from `baseline_v5_mix.DEFAULT_ROUTING`); `_COIN_TO_BINANCE_BASE` +XRP/DOGE/ADA/TRX; `COIN_UNIVERSE` default → 8 coins; `MAX_OPEN_POSITIONS` → 8. C1 `compute_portfolio_weights` already renormalized core 0.15×4 / sat 0.10×4 → these now activate. `data_refresh` `coin_to_sym` + `_BASIS_SYM_TO_COIN` maps extended. `predict` majority-fail threshold `max(3, n-1)` scales to 7 for 8 coins. Live retrains all 8 routes daily from OHLCV — no pre-generated WF dirs needed on the box.
+
+### Deferred (now smaller)
+Dead-man **timer** (the heartbeat file exists; the systemd `OnCalendar` alerter is the operator follow-up), richer alert channel, the trend-on-hold residual above, and the still-open §30 backlog (retrain quality gate, margin-mode check, monitor-Sharpe definition). The full live equity-vs-replay parity (S1) gate runs on the box during the 90-day window (needs Binance refetch). Acceptance: SR ≥ +2.86, report vs the live-Kelly 8-coin SR ≈ +3.91. Deploy steps: `docs/superpowers/plans/2026-05-30-v5-8coin-live-DEPLOY-HANDOFF.md`.

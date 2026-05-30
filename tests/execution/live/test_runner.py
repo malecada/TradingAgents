@@ -32,6 +32,27 @@ def _seed_ohlcv_cache(data_dir: Path, seed: int) -> None:
         df.to_parquet(cache_dir / f"{coin}USDT_1d.parquet", index=False)
 
 
+def test_run_cycle_refuses_to_trade_when_halted(env_setup):
+    """R4: a persistent HALT sentinel short-circuits the cycle before any data
+    refresh or exchange access, so a tripped halt does not auto-resume."""
+    from tradingagents.execution.live import runner, halt
+
+    data_dir = env_setup / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    halt.write_halt("cycle 2026-05-11: daily PnL -16% — KILL SWITCH",
+                    data_dir=data_dir)
+
+    with patch("tradingagents.execution.live.data_refresh.refresh_all") as mock_refresh, \
+         patch("tradingagents.execution.live.runner.ExchangeClient") as mock_ex_cls, \
+         patch("tradingagents.execution.live.notify.send_alert"):
+        result = runner.run_cycle(dry_run=True)
+
+    assert result.status == "halted"
+    assert "KILL SWITCH" in result.error_msg
+    mock_refresh.assert_not_called()
+    mock_ex_cls.assert_not_called()
+
+
 def test_dry_run_completes_full_pipeline(env_setup):
     """End-to-end dry run: no real orders, all steps execute, summary sent."""
     from tradingagents.execution.live import runner
@@ -179,5 +200,9 @@ def test_runner_uses_v5_routing(monkeypatch, tmp_path):
     result = runner.run_cycle(cycle_id="20260514-test", dry_run=True)
 
     assert captured_routing[0] is not None
-    assert set(captured_routing[0].keys()) == {"bitcoin", "ethereum", "binancecoin", "solana"}
+    # Default universe is the 8-coin V5 MIX (4 core + 4 satellite).
+    assert set(captured_routing[0].keys()) == {
+        "bitcoin", "ethereum", "binancecoin", "solana",
+        "ripple", "dogecoin", "cardano", "tron",
+    }
     assert captured_predict_routing[0] == captured_routing[0]

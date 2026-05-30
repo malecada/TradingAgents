@@ -15,11 +15,16 @@ _TELEGRAM_API = "https://api.telegram.org/bot{token}/sendMessage"
 
 
 def _post_telegram(*, token: str, chat_id: str, text: str):
-    return requests.post(
+    resp = requests.post(
         _TELEGRAM_API.format(token=token),
         json={"chat_id": chat_id, "text": text, "parse_mode": "Markdown"},
         timeout=10,
     )
+    # AL1: a 4xx/5xx (bad token, chat not found, Markdown parse error) does NOT
+    # raise on its own — without this the alert silently vanishes. Promote it to
+    # an exception so the callers' except-blocks log it loudly.
+    resp.raise_for_status()
+    return resp
 
 
 def send_daily_summary(*, bot_token, chat_id, cycle_id,

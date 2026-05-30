@@ -21,10 +21,16 @@ from pathlib import Path
 
 import pandas as pd
 
-from tradingagents.execution.exchange import BinanceIPBan, ExchangeClient
+from tradingagents.execution.exchange import (
+    BinanceIPBan,
+    BinanceOrderTimeoutUnknown,
+    ExchangeClient,
+)
 from tradingagents.execution.live import (
     config,
     data_refresh,
+    halt,
+    hold_sizer,
     journal,
     notify,
     predict,
@@ -32,9 +38,11 @@ from tradingagents.execution.live import (
     risk,
     shadow,
     sizer,
+    stops,
     structured_log,
 )
 from tradingagents.execution.live.config import to_binance_symbol
+from tradingagents.execution.live.hold_sizer import HoldState, step_hold_state
 
 logger = logging.getLogger(__name__)
 
@@ -111,6 +119,29 @@ def _utc_now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _abort_if_no_capital(portfolio_before: float, floor: float) -> bool:
+    """True when equity is at/below the sanity floor — caller must abort the
+    cycle instead of sizing every coin to zero (which flattens the book).
+
+    A garbled Binance response is already rejected upstream
+    (``get_total_portfolio_value`` raises on a missing ``totalMarginBalance``);
+    this additionally catches a genuinely drained / dust account (S3265).
+    """
+    return not (portfolio_before > floor)
+
+
+def _write_heartbeat(data_dir) -> None:
+    """Stamp a heartbeat file every cycle (success OR abort) so an external
+    dead-man monitor can alert on a *missing* cycle — the one failure mode
+    in-process alerting cannot cover (AL1)."""
+    try:
+        (Path(data_dir) / "last_cycle_heartbeat.txt").write_text(
+            datetime.now(timezone.utc).isoformat()
+        )
+    except Exception:
+        pass
+
+
 def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult:
     """Execute one full cycle. Returns a CycleResult — never raises."""
     cycle_id = cycle_id or _today_id()
@@ -119,6 +150,34 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
     data_dir = Path(os.environ.get("DATA_DIR", "data"))
     log_dir = Path(os.environ.get("LOG_DIR", "logs"))
     data_dir.mkdir(parents=True, exist_ok=True)
+
+    # R4: refuse to trade while a persistent halt sentinel is set (written by a
+    # KILL_SWITCH trip or --kill-all). The operator clears it with --resume
+    # after investigating, so a tripped halt never silently auto-resumes on the
+    # next systemd timer fire. Checked before data refresh / exchange access.
+    if halt.is_halted(data_dir=data_dir):
+        reason = halt.halt_reason(data_dir=data_dir)
+        logger.error("Cycle %s skipped — trading halted: %s", cycle_id, reason)
+        jh = journal.Journal(str(data_dir / "trade_journal.db"))
+        try:
+            jh.log_cycle_start(cycle_id, git_sha=_git_sha(Path(__file__).resolve().parents[3]))
+            jh.log_cycle_end(cycle_id, status="halted", error_msg=reason)
+        finally:
+            jh.close()
+        try:
+            notify.send_alert(
+                bot_token=cfg.telegram_bot_token,
+                chat_id=cfg.telegram_chat_id,
+                severity="HALTED",
+                message=(f"Cycle {cycle_id} skipped — trading halted: {reason}. "
+                         f"Investigate, then clear with --resume."),
+            )
+        except Exception:
+            pass
+        return CycleResult(
+            cycle_id=cycle_id, status="halted", n_executed=0, error_msg=reason,
+        )
+
     log_path = log_dir / f"cycle_{cycle_id}.jsonl"
     structured = structured_log.StructuredLogger(log_path, cycle_id)
 
@@ -263,16 +322,46 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                 logger.warning("set_leverage failed for %s: %s", c, e)
         portfolio_before = ex.get_total_portfolio_value()
 
-        # Daily PnL for the kill-switch gate. compute_live_metrics returns
-        # 0.0 when fewer than 2 snapshots exist (correct for cycle 1 of the day).
-        from datetime import date
-        today_str = date.today().isoformat()
+        # S3265: never size the book against zero/dust equity. A missing
+        # totalMarginBalance already raised in get_total_portfolio_value; this
+        # catches a drained account before the sizing loop flattens everything.
+        if _abort_if_no_capital(portfolio_before, cfg.min_capital_floor):
+            try:
+                notify.send_alert(
+                    bot_token=cfg.telegram_bot_token, chat_id=cfg.telegram_chat_id,
+                    severity="CAPITAL_FLOOR",
+                    message=(f"portfolio_before={portfolio_before} <= floor "
+                             f"{cfg.min_capital_floor}; aborting cycle (no sizing)."),
+                )
+            except Exception:
+                pass
+            j.log_cycle_end(
+                cycle_id, status="aborted_capital_floor",
+                error_msg=f"equity {portfolio_before} <= floor {cfg.min_capital_floor}",
+            )
+            return CycleResult(
+                cycle_id=cycle_id, status="aborted_capital_floor",
+                n_executed=n_executed, trades_executed=trades_executed,
+                error_msg="capital below floor",
+            )
+
+        # Daily PnL + drawdown for the kill-switch gate (L1 fix). The old gate
+        # fed compute_live_metrics(today, today) — only today's single snapshot
+        # (<2 rows) -> return_pct=0.0, so the daily-loss check never fired.
+        # Compare the live current equity against the prior-day close, and
+        # track drawdown from the running peak. _today_id() is the UTC date,
+        # aligning with the UTC-stamped portfolio_snapshots (local date() would
+        # misalign the window near midnight).
+        today_str = _today_id()
         try:
-            from tradingagents.execution.live.rebacktest import compute_live_metrics
-            intraday_metrics = compute_live_metrics(today_str, today_str)
-            pnl_today_pct = intraday_metrics.get("return_pct", 0.0)
+            from tradingagents.execution.live.rebacktest import (
+                compute_daily_pnl_pct, compute_drawdown_from_peak,
+            )
+            pnl_today_pct = compute_daily_pnl_pct(portfolio_before, today_str)
+            dd_from_peak = compute_drawdown_from_peak(portfolio_before, today_str)
         except Exception:
             pnl_today_pct = 0.0  # safe fallback if journal unavailable
+            dd_from_peak = 0.0
 
         for coin in cfg.coin_universe:
             if _shutdown_requested:
@@ -283,6 +372,10 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
 
             cache = data_dir / "ohlcv_cache" / f"{symbol}_1d.parquet"
             history = pd.read_parquet(cache) if cache.exists() else pd.DataFrame()
+            # P4: drop today's in-progress daily bar so vol/SMA use only
+            # complete bars through asof (yesterday's close — same vintage as
+            # the prediction).
+            history = sizer.bars_through(history, asof_date)
             if len(history) < cfg.vol_lookback:
                 structured.event("skip_coin", "insufficient_history", {"coin": coin})
                 continue
@@ -335,20 +428,68 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                     final_size_notional=sz.final_size_notional,
                 )
 
+            # 5b. P1 stateful min-hold. Runs for EVERY coin every cycle (so
+            # bars_held bookkeeping + early-exit/flip fire reliably, even on a
+            # no-signal hold bar). Derives the held PRE-trend base from prior
+            # state (frozen during the 7-day hold, refreshed on entry/flip/early-
+            # exit), then re-applies THIS cycle's SMA multiplier — matching the
+            # backtest's build_positions_with_hold + apply_trend_filter ordering.
+            # On an entry/flip bar held_fraction == sz.final_size_notional
+            # (identical to the old stateless path). All downstream gates and
+            # the target-qty conversion use held_fraction, not final_size_notional.
+            try:
+                prev = j.get_hold_state(coin)
+                prev_state = HoldState(
+                    current_dir=prev["current_dir"] if prev else 0,
+                    bars_held=prev["bars_held"] if prev else 0,
+                    entry_price=prev["entry_price"] if prev else 0.0,
+                    entry_base=prev["entry_base"] if prev else 0.0,
+                )
+                new_state, base_target = step_hold_state(
+                    prev_state, sig=sz.signal, vol_ok=sz.vol_ok,
+                    fresh_base=sz.leverage,  # pre-trend sized position
+                    price=preds[coin]["ref_price"],
+                    min_hold=cfg.min_hold, early_exit_loss=cfg.early_exit_loss,
+                )
+                j.upsert_hold_state(
+                    coin=coin, current_dir=new_state.current_dir,
+                    bars_held=new_state.bars_held, entry_price=new_state.entry_price,
+                    entry_base=new_state.entry_base, entry_cycle=cycle_id,
+                )
+                # Re-apply this bar's trend multiplier to the (possibly frozen)
+                # base. On a no-signal/vol-capped hold bar compute_size returns
+                # sma_multiplier=1.0, so the trend mult is not re-applied that
+                # bar (documented minor parity gap, bounded by the 0.5-1.5x band);
+                # the position is still maintained at the frozen base.
+                held_fraction = base_target * sz.sma_multiplier
+            except Exception as e:
+                structured.event("hold_state", "fallback_stateless",
+                                 {"coin": coin, "err": str(e)})
+                try:
+                    notify.send_alert(
+                        bot_token=cfg.telegram_bot_token, chat_id=cfg.telegram_chat_id,
+                        severity="HOLD_STATE_FALLBACK", message=f"{coin}: {e}",
+                    )
+                except Exception:
+                    pass
+                held_fraction = sz.final_size_notional
+
             # 6. risk_check
             with structured.step("risk_check", {"coin": coin}):
+                # Check the actual intended (min-hold-adjusted) sleeve, not the
+                # raw stateless size — held_fraction is what becomes the target.
                 ok_lev, why = risk.check_leverage(
-                    sz.final_size_notional, cfg.max_leverage,
+                    held_fraction, cfg.max_leverage,
                 )
                 j.log_risk_check(
                     cycle_id, coin, "leverage_cap", ok_lev,
-                    abs(sz.final_size_notional), cfg.max_leverage, why,
+                    abs(held_fraction), cfg.max_leverage, why,
                 )
                 if not ok_lev:
                     continue
 
-                # pnl_today_pct was pre-computed from today's portfolio
-                # snapshots once per cycle (above the per-coin loop).
+                # pnl_today_pct / dd_from_peak were pre-computed once per cycle
+                # (above the per-coin loop) from the live equity vs the journal.
                 ok_loss, why = risk.check_daily_loss(
                     pnl_today_pct, cfg.max_daily_loss_pct,
                 )
@@ -356,16 +497,32 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                     cycle_id, coin, "daily_loss", ok_loss,
                     pnl_today_pct, -cfg.max_daily_loss_pct, why,
                 )
-                if not ok_loss:
+                ok_dd, why_dd = risk.check_drawdown(
+                    dd_from_peak, cfg.max_portfolio_dd,
+                )
+                j.log_risk_check(
+                    cycle_id, coin, "portfolio_drawdown", ok_dd,
+                    dd_from_peak, cfg.max_portfolio_dd, why_dd,
+                )
+                if not ok_loss or not ok_dd:
+                    kill_reason = why if not ok_loss else why_dd
+                    # R4: persist the halt so the next cycle stays down until an
+                    # operator clears it with --resume.
+                    halt.write_halt(
+                        f"cycle {cycle_id}: {kill_reason}", data_dir=data_dir,
+                    )
                     notify.send_alert(
                         bot_token=cfg.telegram_bot_token,
                         chat_id=cfg.telegram_chat_id,
-                        severity="KILL_SWITCH", message=why,
+                        severity="KILL_SWITCH", message=kill_reason,
                     )
                     break
 
-            # 7. execute (or shadow-only when no trade)
-            if sz.final_size_notional == 0:
+            # 7. execute (or shadow-only when no trade). Branch on the min-hold
+            # target: a flat/exited coin (held_fraction == 0) trades nothing,
+            # but a held position with no fresh signal still has a nonzero
+            # held_fraction and proceeds to the delta-trade below.
+            if held_fraction == 0:
                 with structured.step("shadow_replay", {"coin": coin}):
                     shadow_dec = shadow.compute_shadow_decision(
                         coin=coin, prediction=preds[coin],
@@ -384,7 +541,7 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                         cycle_id=cycle_id, coin=coin,
                         live_signal=sz.signal,
                         backtest_signal=shadow_dec.signal,
-                        live_size=sz.final_size_notional,
+                        live_size=held_fraction,
                         backtest_size=shadow_dec.size,
                     )
                 continue
@@ -405,12 +562,18 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
             if not ok_freq:
                 continue
 
-            # Target position is what V2 sizing says the book SHOULD look
-            # like after this cycle. Trade only the delta vs the current
-            # exchange position so we don't stack notional across days.
-            target_signed_qty = (
-                sz.final_size_notional * portfolio_before
-                / preds[coin]["ref_price"]
+            # Target position is what V2 sizing (with stateful min-hold, applied
+            # above) says the book SHOULD look like after this cycle. Trade only
+            # the delta vs the current exchange position so we don't stack
+            # notional across days. `held_fraction` is scaled by the coin's
+            # renormalized portfolio weight (C1 fix) — the sleeve is a
+            # full-equity fraction, so without the weight an N-coin shared-margin
+            # book runs ~N x the validated gross exposure.
+            target_signed_qty = sizer.target_position_qty(
+                size_fraction=held_fraction,
+                portfolio_value=portfolio_before,
+                weight=cfg.portfolio_weights[coin],
+                ref_price=preds[coin]["ref_price"],
             )
             try:
                 current_signed_qty = float(ex.get_current_position(symbol))
@@ -515,14 +678,13 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                         # long instead of protecting it. Compute net position
                         # explicitly and skip the stop if position is flat.
                         net_position = current_signed_qty + delta_qty
-                        # Cancel any prior stop on this symbol before placing
-                        # a new one — closePosition=true stops can collide.
-                        try:
-                            if hasattr(ex, "cancel_all_orders"):
-                                ex.cancel_all_orders(symbol)
-                        except Exception:
-                            pass
                         if abs(net_position) < 1e-8:
+                            # Flat after the trade — clear any resting stop.
+                            try:
+                                if hasattr(ex, "cancel_all_orders"):
+                                    ex.cancel_all_orders(symbol)
+                            except Exception:
+                                pass
                             stop_id = None
                             status = "EXECUTED"
                         else:
@@ -532,28 +694,19 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                                 if net_position > 0
                                 else exec_price * (1 + cfg.stop_loss_pct)
                             )
-                            try:
-                                stop = ex.place_stop_loss(
-                                    symbol, abs(net_position),
-                                    stop_price, stop_side,
-                                )
-                                # Binance Futures returns 'algoId' for
-                                # STOP_MARKET on the conditional-order API,
-                                # 'orderId' on the legacy path. Capture
-                                # whichever is present.
-                                stop_id = str(
-                                    stop.get("orderId")
-                                    or stop.get("algoId", "")
-                                )
-                                status = "EXECUTED"
-                            except Exception as e:
-                                stop_id = None
-                                status = "UNPROTECTED"
+                            # R1/R5: place-then-cancel + monotonic stop. Never
+                            # leaves the position naked on a failed swap, and
+                            # won't ratchet the stop looser cycle-over-cycle.
+                            stop_id, status = stops.arm_stop_loss(
+                                ex, symbol=symbol, net_position=net_position,
+                                stop_price=stop_price, stop_side=stop_side,
+                            )
+                            if status == "UNPROTECTED":
                                 notify.send_alert(
                                     bot_token=cfg.telegram_bot_token,
                                     chat_id=cfg.telegram_chat_id,
                                     severity="UNPROTECTED",
-                                    message=f"{coin} stop-loss failed: {e}",
+                                    message=f"{coin} stop-loss failed — position UNPROTECTED",
                                 )
                         trade_id = j.log_trade(
                             cycle_id=cycle_id, coin=coin, side=side, qty=qty,
@@ -573,6 +726,29 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                             "coin": coin, "side": side,
                             "qty": qty, "price": exec_price,
                         })
+                    except BinanceOrderTimeoutUnknown as e:
+                        # -1007 + reconciliation could not confirm fill or
+                        # cancel cleanly. Log a distinct status so the next
+                        # cycle's position-reconcile path can detect the
+                        # ambiguous state, and emit RECONCILE_NEEDED so a
+                        # human checks before more orders fire for this coin.
+                        j.log_trade(
+                            cycle_id=cycle_id, coin=coin, side=side, qty=qty,
+                            entry_price=preds[coin]["ref_price"],
+                            exit_price=None, pnl=None, fees=None, slippage=None,
+                            order_id=None, stop_loss_id=None,
+                            status=f"TIMEOUT_{e.state.upper()}",
+                        )
+                        notify.send_alert(
+                            bot_token=cfg.telegram_bot_token,
+                            chat_id=cfg.telegram_chat_id,
+                            severity="RECONCILE_NEEDED",
+                            message=(
+                                f"{coin} order -1007 timeout, state={e.state}: "
+                                f"{e.side} qty={e.qty}. "
+                                f"Verify positions before next cycle."
+                            ),
+                        )
                     except Exception as e:
                         j.log_trade(
                             cycle_id=cycle_id, coin=coin, side=side, qty=qty,
@@ -606,7 +782,7 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                     cycle_id=cycle_id, coin=coin,
                     live_signal=sz.signal,
                     backtest_signal=shadow_dec.signal,
-                    live_size=sz.final_size_notional,
+                    live_size=held_fraction,
                     backtest_size=shadow_dec.size,
                 )
 
@@ -713,6 +889,9 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
             n_executed=n_executed, error_msg=str(e),
         )
     finally:
+        # AL1: heartbeat on every cycle exit (ok / aborted / error) so an
+        # external dead-man monitor can alert on a *missing* cycle.
+        _write_heartbeat(data_dir)
         j.close()
 
 
@@ -736,6 +915,10 @@ def replay_cycle(cycle_id: str) -> CycleResult:
 def kill_all() -> None:
     """Cancel all open orders, close all open positions, halt cycle execution."""
     cfg = config.load_config()
+    # R4: persist the halt first, so even if the close-out below partially
+    # fails the next cycle still refuses to trade until an operator --resumes.
+    data_dir = Path(os.environ.get("DATA_DIR", "data"))
+    halt.write_halt("operator --kill-all", data_dir=data_dir)
     ex = ExchangeClient(
         api_key=cfg.binance_api_key, api_secret=cfg.binance_api_secret,
         testnet=not cfg.live_mode,
@@ -777,10 +960,17 @@ def main():
                         help="reconstruct decision for past cycle from journal")
     parser.add_argument("--kill-all", action="store_true",
                         help="cancel all orders + close all positions, halt")
+    parser.add_argument("--resume", action="store_true",
+                        help="clear a persistent trading halt, then exit")
     args = parser.parse_args()
 
     signal.signal(signal.SIGTERM, _handle_sigterm)
 
+    if args.resume:
+        data_dir = Path(os.environ.get("DATA_DIR", "data"))
+        cleared = halt.clear_halt(data_dir=data_dir)
+        logger.info("Halt %s", "cleared" if cleared else "was not set")
+        sys.exit(0)
     if args.kill_all:
         kill_all()
         sys.exit(0)

@@ -291,3 +291,12 @@ def _fake_cfg(tmp_path):
         data_root = str(tmp_path)
         data_refresh_critical = {"ohlcv", "coinmetrics"}
     return C()
+
+
+def test_satellite_symbol_maps_present():
+    """8-coin expansion: reverse basis map covers the 4 satellites."""
+    import tradingagents.execution.live.data_refresh as dr
+    assert dr._BASIS_SYM_TO_COIN["XRPUSDT"] == "ripple"
+    assert dr._BASIS_SYM_TO_COIN["DOGEUSDT"] == "dogecoin"
+    assert dr._BASIS_SYM_TO_COIN["ADAUSDT"] == "cardano"
+    assert dr._BASIS_SYM_TO_COIN["TRXUSDT"] == "tron"

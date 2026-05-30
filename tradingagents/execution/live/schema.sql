@@ -122,3 +122,17 @@ CREATE TABLE IF NOT EXISTS shadow_decisions (
     backtest_size REAL,
     size_delta_pct REAL
 );
+
+-- P1 stateful min-hold: per-coin position state carried across daily cycles so
+-- the live runner reproduces v2_sizing.build_positions_with_hold (7-day min
+-- hold + adaptive early exit). entry_base is the PRE-trend signed sleeve frozen
+-- at entry/flip; the runner re-applies the current bar's SMA multiplier.
+CREATE TABLE IF NOT EXISTS hold_state (
+    coin TEXT PRIMARY KEY,
+    current_dir INTEGER NOT NULL,
+    bars_held INTEGER NOT NULL,
+    entry_price REAL NOT NULL,
+    entry_base REAL NOT NULL,
+    entry_cycle TEXT,
+    updated_ts TEXT
+);

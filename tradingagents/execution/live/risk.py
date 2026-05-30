@@ -15,6 +15,13 @@ def check_daily_loss(pnl_today_pct: float, max_loss_pct: float) -> tuple[bool, s
     return True, "ok"
 
 
+def check_drawdown(dd_from_peak: float, max_dd_pct: float) -> tuple[bool, str]:
+    if dd_from_peak >= max_dd_pct:
+        return False, (f"drawdown {dd_from_peak:.2%} >= max {max_dd_pct:.2%} — "
+                       f"KILL SWITCH")
+    return True, "ok"
+
+
 def check_max_positions(current_open: int, max_open: int, opening_new: bool) -> tuple[bool, str]:
     if opening_new and current_open >= max_open:
         return False, f"already at MAX_OPEN_POSITIONS={max_open}"

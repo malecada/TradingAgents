@@ -20,6 +20,12 @@ class Journal:
     def __init__(self, db_path: str):
         self.db_path = db_path
         self._conn = sqlite3.connect(db_path)
+        # J1: WAL + busy_timeout so the runner's second raw connection (frequency
+        # guard), the always-on monitor service, and ta-rebacktest can read/write
+        # concurrently without "database is locked" aborting a cycle mid-loop.
+        # Min-hold adds a hold_state write per coin, raising contention further.
+        self._conn.execute("PRAGMA journal_mode=WAL;")
+        self._conn.execute("PRAGMA busy_timeout=10000;")
         self._conn.execute("PRAGMA foreign_keys = ON;")
         with open(_SCHEMA_PATH) as f:
             self._conn.executescript(f.read())
@@ -248,6 +254,33 @@ class Journal:
             "ref_price, bundle_route) VALUES (?, ?, ?, ?, ?, ?)",
             [(cid, coin, h, pred, ref, route)
              for (cid, coin, h, pred, ref, route) in rows],
+        )
+        self._conn.commit()
+
+    # ── P1 stateful min-hold ───────────────────────────────────────────
+    def get_hold_state(self, coin: str) -> dict | None:
+        """Return the per-coin hold state, or None if the coin has no row yet."""
+        row = self._conn.execute(
+            "SELECT coin, current_dir, bars_held, entry_price, entry_base, "
+            "entry_cycle FROM hold_state WHERE coin = ?", (coin,),
+        ).fetchone()
+        if row is None:
+            return None
+        return {
+            "coin": row[0], "current_dir": int(row[1]), "bars_held": int(row[2]),
+            "entry_price": float(row[3]), "entry_base": float(row[4]),
+            "entry_cycle": row[5],
+        }
+
+    def upsert_hold_state(self, *, coin, current_dir, bars_held,
+                          entry_price, entry_base, entry_cycle) -> None:
+        """Insert or replace the per-coin hold state after a cycle's sizing."""
+        self._conn.execute(
+            "INSERT OR REPLACE INTO hold_state (coin, current_dir, bars_held, "
+            "entry_price, entry_base, entry_cycle, updated_ts) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (coin, int(current_dir), int(bars_held), float(entry_price),
+             float(entry_base), entry_cycle, _utcnow_iso()),
         )
         self._conn.commit()
 

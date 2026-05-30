@@ -14,6 +14,11 @@ _COIN_TO_BINANCE_BASE = {
     "ethereum": "ETH",
     "binancecoin": "BNB",
     "solana": "SOL",
+    # 8-coin expansion satellites (V5 MIX 8-coin, THESIS §20).
+    "ripple": "XRP",
+    "dogecoin": "DOGE",
+    "cardano": "ADA",
+    "tron": "TRX",
 }
 
 
@@ -26,7 +31,47 @@ _V5_DEFAULT_ROUTING: dict[str, dict[str, object]] = {
     "ethereum":    {"feature_set": "193f", "pool": ["bitcoin", "ethereum"]},
     "binancecoin": {"feature_set": "78f",  "pool": ["bitcoin", "ethereum", "binancecoin"]},
     "solana":      {"feature_set": "193f", "pool": ["bitcoin", "ethereum", "solana"]},
+    # 8-coin satellites (feature sets from scripts/baseline_v5_mix.DEFAULT_ROUTING:
+    # XRP/DOGE/TRX = 78f canonical, ADA = 193f extended; 2+1 pools).
+    "ripple":      {"feature_set": "78f",  "pool": ["bitcoin", "ethereum", "ripple"]},
+    "dogecoin":    {"feature_set": "78f",  "pool": ["bitcoin", "ethereum", "dogecoin"]},
+    "cardano":     {"feature_set": "193f", "pool": ["bitcoin", "ethereum", "cardano"]},
+    "tron":        {"feature_set": "78f",  "pool": ["bitcoin", "ethereum", "tron"]},
 }
+
+
+# V5 MIX core/satellite portfolio weights — canonical source is
+# scripts/baseline_v5_mix.py:PORTFOLIO_WEIGHTS (the run that produced the
+# published SR +3.18). Core coins 15% each, satellites 10% each. These are
+# renormalized over the active universe by `compute_portfolio_weights`, so a
+# 4-core-coin book becomes 25% equal-weight — matching baseline_v5_mix's
+# `portfolio_return`, which does `w = w / w.sum()` over present columns.
+# A parity test (tests/execution/live/test_portfolio_weights.py) asserts this
+# stays equal to the backtest constant.
+_V5_PORTFOLIO_WEIGHTS: dict[str, float] = {
+    "bitcoin": 0.15, "ethereum": 0.15, "binancecoin": 0.15, "solana": 0.15,
+    "ripple": 0.10, "dogecoin": 0.10, "cardano": 0.10, "tron": 0.10,
+}
+
+
+def compute_portfolio_weights(universe: list[str]) -> dict[str, float]:
+    """Per-coin portfolio weights renormalized over the active universe.
+
+    Mirrors `scripts.baseline_v5_mix.portfolio_return`: restrict the canonical
+    core/satellite weights to the coins actually traded, then divide by their
+    sum so the live book allocates exactly the same fraction of equity to each
+    coin as the validated backtest combines its per-coin sleeves. Without this,
+    converting each coin's full-equity size fraction to a quantity over-levers
+    the shared-margin account by ~N (one full sleeve per coin).
+    """
+    present = {c: _V5_PORTFOLIO_WEIGHTS[c] for c in universe if c in _V5_PORTFOLIO_WEIGHTS}
+    total = sum(present.values())
+    if total <= 0:
+        raise ValueError(
+            f"no weighted coins in universe {universe!r} "
+            f"(known: {sorted(_V5_PORTFOLIO_WEIGHTS)})"
+        )
+    return {c: w / total for c, w in present.items()}
 
 
 def to_binance_symbol(coin_id: str) -> str:
@@ -50,6 +95,7 @@ class LiveConfig:
     telegram_chat_id: str
     max_leverage: float
     max_daily_loss_pct: float
+    max_portfolio_dd: float
     stop_loss_pct: float
     max_open_positions: int
     target_vol: float
@@ -68,10 +114,19 @@ class LiveConfig:
     coin_universe: list[str]
     # V5 routing fields (Task 3 — V5 MIX live deployment)
     routing: dict[str, dict[str, object]] = field(default_factory=dict)
+    # Per-coin portfolio weights renormalized over `coin_universe` (C1 fix).
+    # The runner scales each coin's size fraction by its weight before
+    # converting to a quantity, so the shared-margin book matches the
+    # validated backtest's combined gross exposure instead of running ~N x.
+    portfolio_weights: dict[str, float] = field(default_factory=dict)
     coinglass_api_key: str = ""
     data_refresh_critical: set[str] = field(default_factory=set)
     data_root: str = "data"
     signal_threshold: float = 0.0  # not used by V2 (kept for back-compat)
+    # S3265: minimum equity below which the runner aborts the cycle instead of
+    # sizing every coin to zero (which would flatten the whole book). Guards a
+    # garbled exchange response or a genuinely drained account.
+    min_capital_floor: float = 100.0
 
     @classmethod
     def from_env(cls) -> "LiveConfig":
@@ -122,7 +177,24 @@ def load_config() -> LiveConfig:
         )
 
     coin_universe = [c.strip() for c in os.environ.get(
-        "COIN_UNIVERSE", "bitcoin,ethereum,binancecoin,solana").split(",") if c.strip()]
+        "COIN_UNIVERSE",
+        "bitcoin,ethereum,binancecoin,solana,ripple,dogecoin,cardano,tron",
+    ).split(",") if c.strip()]
+
+    # P5: single data-root source of truth. The runner reads the OHLCV cache +
+    # journal from $DATA_DIR, while data_refresh / retrain WRITE to data_root.
+    # If those diverge the read-side cache silently goes stale (observed live:
+    # frozen /opt/.../data/ohlcv_cache vs fresh repo/data). Fall back to DATA_DIR
+    # when TRADINGAGENTS_DATA_ROOT is unset, and refuse to start if both are set
+    # and disagree.
+    _explicit_root = os.environ.get("TRADINGAGENTS_DATA_ROOT", "").strip()
+    _data_dir = os.environ.get("DATA_DIR", "").strip()
+    if _explicit_root and _data_dir and _explicit_root != _data_dir:
+        raise ValueError(
+            f"TRADINGAGENTS_DATA_ROOT ({_explicit_root!r}) != DATA_DIR ({_data_dir!r}) "
+            f"— set them equal or unset one (runner reads DATA_DIR, refresh writes data_root)"
+        )
+    data_root = _explicit_root or _data_dir or "data"
 
     # Validate that every coin in the universe has a routing entry —
     # otherwise downstream predict.py KeyErrors mid-cycle.
@@ -143,19 +215,22 @@ def load_config() -> LiveConfig:
         telegram_chat_id=os.environ.get("TELEGRAM_CHAT_ID", ""),
         max_leverage=_float("MAX_LEVERAGE", 3.0),
         max_daily_loss_pct=_float("MAX_DAILY_LOSS_PCT", 0.15),
+        max_portfolio_dd=_float("MAX_PORTFOLIO_DD", 0.15),
         stop_loss_pct=_float("STOP_LOSS_PCT", 0.03),
-        max_open_positions=_int("MAX_OPEN_POSITIONS", 4),
+        max_open_positions=_int("MAX_OPEN_POSITIONS", 8),
         target_vol=_float("TARGET_VOL", 0.10),
         kelly_fraction=_float("KELLY_FRACTION", 0.25),
         vol_lookback=_int("VOL_LOOKBACK", 20),
         vol_cap_pct=_float("VOL_CAP_PCT", 0.95),
-        confidence_ref_return=_float("CONFIDENCE_REF_RETURN", 0.02),
+        # Canonical V5 MIX signal config (matches scripts/baseline_v5_mix.py
+        # V5_CONFIDENCE_REF / V5_ASYMMETRIC — the published SR +3.18 run).
+        confidence_ref_return=_float("CONFIDENCE_REF_RETURN", 0.05),
         early_exit_loss=_float("EARLY_EXIT_LOSS", 0.015),
         min_hold=_int("MIN_HOLD", 7),
         trend_sma=_int("TREND_SMA", 30),
         trend_multiplier=_float("TREND_MULTIPLIER", 1.5),
         horizons=[int(x) for x in os.environ.get("HORIZONS", "7,14").split(",") if x.strip()],
-        symmetric=_bool("SYMMETRIC", "true"),
+        symmetric=_bool("SYMMETRIC", "false"),
         arima_filter=_bool("ARIMA_FILTER", "false"),
         initial_capital=_float("INITIAL_CAPITAL", 10000.0),
         coin_universe=coin_universe,
@@ -164,9 +239,11 @@ def load_config() -> LiveConfig:
         # without deep-copy, mutations through `cfg.routing` would
         # persist across cycles and corrupt subsequent loads.
         routing=copy.deepcopy(_V5_DEFAULT_ROUTING),
+        portfolio_weights=compute_portfolio_weights(coin_universe),
         coinglass_api_key=coinglass_api_key,
         data_refresh_critical={"ohlcv", "coinmetrics"},
-        data_root=os.environ.get("TRADINGAGENTS_DATA_ROOT", "data"),
+        data_root=data_root,
+        min_capital_floor=_float("MIN_CAPITAL_FLOOR", 100.0),
     )
     if cfg.max_leverage <= 0:
         raise ValueError(f"MAX_LEVERAGE must be > 0, got {cfg.max_leverage}")

@@ -38,13 +38,15 @@ if [ -z "${COINGLASS_API_KEY:-}" ]; then
 fi
 echo "  COINGLASS_API_KEY: set"
 
-# 2. Coin universe = 4 coins
-N_COINS=$(echo "${COIN_UNIVERSE:-bitcoin,ethereum,binancecoin,solana}" | tr ',' '\n' | wc -l)
-if [ "$N_COINS" -ne 4 ]; then
-    echo "FAIL: COIN_UNIVERSE must have 4 coins, got $N_COINS"
+# 2. Coin universe sane size (1..8). Correctness — every coin has a routing
+# entry — is enforced in the python import check below (step 5), which is the
+# genuinely critical condition and supports both the 4-coin and 8-coin universes.
+N_COINS=$(echo "${COIN_UNIVERSE:-bitcoin,ethereum,binancecoin,solana,ripple,dogecoin,cardano,tron}" | tr ',' '\n' | grep -c .)
+if [ "$N_COINS" -lt 1 ] || [ "$N_COINS" -gt 8 ]; then
+    echo "FAIL: COIN_UNIVERSE size $N_COINS out of [1, 8]"
     exit 1
 fi
-echo "  COIN_UNIVERSE: 4 coins"
+echo "  COIN_UNIVERSE: $N_COINS coins"
 
 # 3. Kelly is set + reasonable (0.10 to 0.29 band)
 KELLY="${KELLY_FRACTION:-0.25}"
@@ -54,8 +56,25 @@ case "$KELLY" in
 esac
 echo "  KELLY_FRACTION: $KELLY"
 
+# 3b. Signal config must match the canonical backtest (P2/P3 parity). The
+# published SR +3.18 run used confidence_ref=0.05 + asymmetric (SYMMETRIC=false);
+# any other value silently trades a different signal/size than was validated.
+CONF_REF="${CONFIDENCE_REF_RETURN:-0.05}"
+if [ "$CONF_REF" != "0.05" ]; then
+    echo "FAIL: CONFIDENCE_REF_RETURN=$CONF_REF != canonical 0.05 (backtest parity)"
+    exit 1
+fi
+echo "  CONFIDENCE_REF_RETURN: $CONF_REF"
+SYM_LC=$(echo "${SYMMETRIC:-false}" | tr '[:upper:]' '[:lower:]')
+case "$SYM_LC" in
+    false|0|no) ;;
+    *) echo "FAIL: SYMMETRIC=$SYM_LC must be false (canonical V5 MIX is asymmetric)"; exit 1 ;;
+esac
+echo "  SYMMETRIC: $SYM_LC"
+
 # 4. Derivatives + options dirs writable
-DATA_ROOT="${TRADINGAGENTS_DATA_ROOT:-/opt/tradingagents/data}"
+# P5: mirror config.load_config precedence — explicit root, else DATA_DIR.
+DATA_ROOT="${TRADINGAGENTS_DATA_ROOT:-${DATA_DIR:-/opt/tradingagents/data}}"
 for sub in derivatives derivatives_raw options onchain cache; do
     DIR="$DATA_ROOT/$sub"
     if [ ! -d "$DIR" ]; then
@@ -75,17 +94,33 @@ echo "  data subdirs: writable"
 PYTHON_BIN="${PYTHON:-/opt/tradingagents/venv/bin/python}"
 [ -x "$PYTHON_BIN" ] || PYTHON_BIN="python"
 "$PYTHON_BIN" -c "
-from tradingagents.execution.live.config import LiveConfig
+import os
+from tradingagents.execution.live.config import LiveConfig, _V5_DEFAULT_ROUTING
 from tradingagents.execution.live.data_refresh import refresh_all, CriticalDataRefreshError
 from tradingagents.execution.live.retrain import run_retrain_with_fallback
 from tradingagents.execution.live.predict import run_predict, PredictMajorityFail
-print('  V5 imports: OK')
-" || { echo "FAIL: V5 import error"; exit 1; }
+# Routing correctness: every COIN_UNIVERSE coin must have a routing entry,
+# else predict.py KeyErrors mid-cycle. This is the genuinely critical universe
+# check (replaces the old fixed coin-count), and supports 4 or 8 coins.
+_u = [c.strip() for c in os.environ.get(
+    'COIN_UNIVERSE',
+    'bitcoin,ethereum,binancecoin,solana,ripple,dogecoin,cardano,tron',
+).split(',') if c.strip()]
+_missing = [c for c in _u if c not in _V5_DEFAULT_ROUTING]
+assert not _missing, f'COIN_UNIVERSE coins missing routing: {_missing}'
+print('  V5 imports + routing: OK')
+" || { echo "FAIL: V5 import / routing error"; exit 1; }
 
-# 6. Sample Coinglass auth
-curl -s --max-time 8 -H "CG-API-KEY: $COINGLASS_API_KEY" \
+# 6. Sample Coinglass auth — SUPPLEMENTARY (PF1). Coinglass is not in
+# data_refresh_critical {ohlcv, coinmetrics}; the runtime tiers it for graceful
+# degradation. A Coinglass outage must NOT abort a full trading day, so warn
+# rather than exit. (The key-present check at step 1 stays hard-fail.)
+if curl -s --max-time 8 -H "CG-API-KEY: $COINGLASS_API_KEY" \
     "https://open-api-v4.coinglass.com/api/futures/supported-coins" \
-    | grep -q '"code":"0"' || { echo "FAIL: Coinglass auth"; exit 1; }
-echo "  Coinglass auth: OK"
+    | grep -q '"code":"0"'; then
+    echo "  Coinglass auth: OK"
+else
+    echo "  WARN: Coinglass auth check failed — supplementary source, runtime will tier it; continuing." >&2
+fi
 
 echo "V5 preflight: ALL OK"

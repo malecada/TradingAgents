@@ -35,6 +35,46 @@ class SizingResult:
     dirs_per_horizon: dict[int, int] | None = None
 
 
+def bars_through(price_history, asof):
+    """Return only bars dated on or before ``asof`` (drops the in-progress bar).
+
+    The cycle fires shortly after 00:00 UTC, so the OHLCV cache may carry
+    today's daily bar with only minutes of data. Computing realized vol / SMA
+    on that partial bar corrupts the vol denominator and the trend multiplier
+    (P4). Slicing to ``asof`` (yesterday's complete close — the same vintage the
+    prediction uses) keeps the sizing inputs self-consistent and complete.
+
+    ``asof`` is an ISO date string (``"YYYY-MM-DD"``) or anything pandas can
+    coerce to a Timestamp. A history without a ``date`` column is returned
+    unchanged.
+    """
+    if price_history is None or len(price_history) == 0 or "date" not in getattr(price_history, "columns", []):
+        return price_history
+    d = pd.to_datetime(price_history["date"]).dt.normalize()
+    cutoff = pd.Timestamp(asof).normalize()
+    return price_history[d <= cutoff]
+
+
+def target_position_qty(
+    *, size_fraction: float, portfolio_value: float,
+    weight: float, ref_price: float,
+) -> float:
+    """Convert a per-coin size fraction to a signed target quantity.
+
+    ``size_fraction`` is ``SizingResult.final_size_notional`` — a fraction of
+    equity on a full-portfolio basis (matching one of the backtest's per-coin
+    sleeves, bounded by ``max_leverage``). ``weight`` is the coin's
+    renormalized portfolio weight (see ``config.compute_portfolio_weights``).
+    Folding the weight in here reproduces ``baseline_v5_mix.portfolio_return``:
+    the live book allocates ``weight * equity`` to each coin's sleeve rather
+    than the full equity, so an N-coin shared-margin account no longer runs
+    ~N x the validated gross exposure.
+    """
+    if ref_price <= 0:
+        return 0.0
+    return size_fraction * portfolio_value * weight / ref_price
+
+
 def compute_size(
     *, coin, prediction, price_history,
     horizons, symmetric,

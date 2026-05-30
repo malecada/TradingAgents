@@ -233,6 +233,9 @@ _SPOT_URL = "https://api.binance.com/api/v3/klines"
 _BASIS_SYM_TO_COIN = {
     "BTCUSDT": "bitcoin", "ETHUSDT": "ethereum",
     "BNBUSDT": "binancecoin", "SOLUSDT": "solana",
+    # 8-coin expansion satellites.
+    "XRPUSDT": "ripple", "DOGEUSDT": "dogecoin",
+    "ADAUSDT": "cardano", "TRXUSDT": "tron",
 }
 
 
@@ -377,7 +380,10 @@ def refresh_all(cfg, structured_log) -> dict:
         currencies=["BTC", "ETH"], options_dir=options_dir, structured_log=structured_log,
     ))
     coin_to_sym = {"bitcoin": "BTCUSDT", "ethereum": "ETHUSDT",
-                   "binancecoin": "BNBUSDT", "solana": "SOLUSDT"}
+                   "binancecoin": "BNBUSDT", "solana": "SOLUSDT",
+                   # 8-coin expansion satellites.
+                   "ripple": "XRPUSDT", "dogecoin": "DOGEUSDT",
+                   "cardano": "ADAUSDT", "tron": "TRXUSDT"}
     symbols = [coin_to_sym[c] for c in cfg.coin_universe if c in coin_to_sym]
     _try("perp_spot_basis", lambda: refresh_perp_spot_basis(
         symbols=symbols, raw_dir=deriv_raw, daily_dir=deriv_dir,
