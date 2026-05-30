@@ -112,3 +112,11 @@ def test_update_trade_fills_unknown_id_does_not_raise(journal):
     journal.update_trade_fills(99999, fees=0.1, realized_pnl=0.0)
     n = journal._conn.execute("SELECT COUNT(*) FROM trades").fetchone()[0]
     assert n == 0
+
+
+def test_journal_uses_wal_and_busy_timeout(journal):
+    """J1: WAL mode + busy_timeout so concurrent connections don't abort cycles."""
+    mode = journal._conn.execute("PRAGMA journal_mode").fetchone()[0]
+    busy = journal._conn.execute("PRAGMA busy_timeout").fetchone()[0]
+    assert mode.lower() == "wal"
+    assert busy >= 10000

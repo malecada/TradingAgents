@@ -20,6 +20,12 @@ class Journal:
     def __init__(self, db_path: str):
         self.db_path = db_path
         self._conn = sqlite3.connect(db_path)
+        # J1: WAL + busy_timeout so the runner's second raw connection (frequency
+        # guard), the always-on monitor service, and ta-rebacktest can read/write
+        # concurrently without "database is locked" aborting a cycle mid-loop.
+        # Min-hold adds a hold_state write per coin, raising contention further.
+        self._conn.execute("PRAGMA journal_mode=WAL;")
+        self._conn.execute("PRAGMA busy_timeout=10000;")
         self._conn.execute("PRAGMA foreign_keys = ON;")
         with open(_SCHEMA_PATH) as f:
             self._conn.executescript(f.read())
