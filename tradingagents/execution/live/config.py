@@ -112,6 +112,10 @@ class LiveConfig:
     data_refresh_critical: set[str] = field(default_factory=set)
     data_root: str = "data"
     signal_threshold: float = 0.0  # not used by V2 (kept for back-compat)
+    # S3265: minimum equity below which the runner aborts the cycle instead of
+    # sizing every coin to zero (which would flatten the whole book). Guards a
+    # garbled exchange response or a genuinely drained account.
+    min_capital_floor: float = 100.0
 
     @classmethod
     def from_env(cls) -> "LiveConfig":
@@ -226,6 +230,7 @@ def load_config() -> LiveConfig:
         coinglass_api_key=coinglass_api_key,
         data_refresh_critical={"ohlcv", "coinmetrics"},
         data_root=data_root,
+        min_capital_floor=_float("MIN_CAPITAL_FLOOR", 100.0),
     )
     if cfg.max_leverage <= 0:
         raise ValueError(f"MAX_LEVERAGE must be > 0, got {cfg.max_leverage}")

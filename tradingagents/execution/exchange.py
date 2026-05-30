@@ -159,9 +159,25 @@ class ExchangeClient:
         return abs(pos_amt) * price
 
     def get_total_portfolio_value(self) -> float:
-        """Total futures wallet value (wallet balance + unrealised PnL)."""
+        """Total futures wallet value (wallet balance + unrealised PnL).
+
+        Raises ValueError when the account response lacks ``totalMarginBalance``
+        (e.g. an error envelope that still parses as a dict). The old
+        ``.get(..., 0.0)`` silently returned 0.0, which made the runner size
+        every coin to zero and flatten the entire book with no alert (S3265).
+        Treating a missing key as a fetch failure lets the runner abort the
+        cycle instead.
+        """
         account = self._retry(self._client.futures_account)
-        return float(account.get("totalMarginBalance", 0.0))
+        if not isinstance(account, dict) or "totalMarginBalance" not in account:
+            raise ValueError(
+                "Binance futures_account response missing 'totalMarginBalance' "
+                f"(type={type(account).__name__}, "
+                f"keys={sorted(account)[:8] if isinstance(account, dict) else 'n/a'}) "
+                "— treating as a fetch failure rather than sizing the book to "
+                "zero (S3265 floor)."
+            )
+        return float(account["totalMarginBalance"])
 
     def get_open_position_count(self) -> int:
         """Count symbols with non-zero futures positions."""

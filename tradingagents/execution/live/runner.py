@@ -117,6 +117,29 @@ def _utc_now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _abort_if_no_capital(portfolio_before: float, floor: float) -> bool:
+    """True when equity is at/below the sanity floor — caller must abort the
+    cycle instead of sizing every coin to zero (which flattens the book).
+
+    A garbled Binance response is already rejected upstream
+    (``get_total_portfolio_value`` raises on a missing ``totalMarginBalance``);
+    this additionally catches a genuinely drained / dust account (S3265).
+    """
+    return not (portfolio_before > floor)
+
+
+def _write_heartbeat(data_dir) -> None:
+    """Stamp a heartbeat file every cycle (success OR abort) so an external
+    dead-man monitor can alert on a *missing* cycle — the one failure mode
+    in-process alerting cannot cover (AL1)."""
+    try:
+        (Path(data_dir) / "last_cycle_heartbeat.txt").write_text(
+            datetime.now(timezone.utc).isoformat()
+        )
+    except Exception:
+        pass
+
+
 def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult:
     """Execute one full cycle. Returns a CycleResult — never raises."""
     cycle_id = cycle_id or _today_id()
@@ -296,6 +319,29 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
             except Exception as e:
                 logger.warning("set_leverage failed for %s: %s", c, e)
         portfolio_before = ex.get_total_portfolio_value()
+
+        # S3265: never size the book against zero/dust equity. A missing
+        # totalMarginBalance already raised in get_total_portfolio_value; this
+        # catches a drained account before the sizing loop flattens everything.
+        if _abort_if_no_capital(portfolio_before, cfg.min_capital_floor):
+            try:
+                notify.send_alert(
+                    bot_token=cfg.telegram_bot_token, chat_id=cfg.telegram_chat_id,
+                    severity="CAPITAL_FLOOR",
+                    message=(f"portfolio_before={portfolio_before} <= floor "
+                             f"{cfg.min_capital_floor}; aborting cycle (no sizing)."),
+                )
+            except Exception:
+                pass
+            j.log_cycle_end(
+                cycle_id, status="aborted_capital_floor",
+                error_msg=f"equity {portfolio_before} <= floor {cfg.min_capital_floor}",
+            )
+            return CycleResult(
+                cycle_id=cycle_id, status="aborted_capital_floor",
+                n_executed=n_executed, trades_executed=trades_executed,
+                error_msg="capital below floor",
+            )
 
         # Daily PnL + drawdown for the kill-switch gate (L1 fix). The old gate
         # fed compute_live_metrics(today, today) — only today's single snapshot
