@@ -257,6 +257,33 @@ class Journal:
         )
         self._conn.commit()
 
+    # ── P1 stateful min-hold ───────────────────────────────────────────
+    def get_hold_state(self, coin: str) -> dict | None:
+        """Return the per-coin hold state, or None if the coin has no row yet."""
+        row = self._conn.execute(
+            "SELECT coin, current_dir, bars_held, entry_price, entry_base, "
+            "entry_cycle FROM hold_state WHERE coin = ?", (coin,),
+        ).fetchone()
+        if row is None:
+            return None
+        return {
+            "coin": row[0], "current_dir": int(row[1]), "bars_held": int(row[2]),
+            "entry_price": float(row[3]), "entry_base": float(row[4]),
+            "entry_cycle": row[5],
+        }
+
+    def upsert_hold_state(self, *, coin, current_dir, bars_held,
+                          entry_price, entry_base, entry_cycle) -> None:
+        """Insert or replace the per-coin hold state after a cycle's sizing."""
+        self._conn.execute(
+            "INSERT OR REPLACE INTO hold_state (coin, current_dir, bars_held, "
+            "entry_price, entry_base, entry_cycle, updated_ts) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (coin, int(current_dir), int(bars_held), float(entry_price),
+             float(entry_base), entry_cycle, _utcnow_iso()),
+        )
+        self._conn.commit()
+
     def log_shadow_decision(self, *, cycle_id, coin, live_signal, backtest_signal,
                              live_size, backtest_size) -> None:
         agree = 1 if live_signal == backtest_signal else 0
