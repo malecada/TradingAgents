@@ -14,6 +14,11 @@ _COIN_TO_BINANCE_BASE = {
     "ethereum": "ETH",
     "binancecoin": "BNB",
     "solana": "SOL",
+    # 8-coin expansion satellites (V5 MIX 8-coin, THESIS §20).
+    "ripple": "XRP",
+    "dogecoin": "DOGE",
+    "cardano": "ADA",
+    "tron": "TRX",
 }
 
 
@@ -26,6 +31,12 @@ _V5_DEFAULT_ROUTING: dict[str, dict[str, object]] = {
     "ethereum":    {"feature_set": "193f", "pool": ["bitcoin", "ethereum"]},
     "binancecoin": {"feature_set": "78f",  "pool": ["bitcoin", "ethereum", "binancecoin"]},
     "solana":      {"feature_set": "193f", "pool": ["bitcoin", "ethereum", "solana"]},
+    # 8-coin satellites (feature sets from scripts/baseline_v5_mix.DEFAULT_ROUTING:
+    # XRP/DOGE/TRX = 78f canonical, ADA = 193f extended; 2+1 pools).
+    "ripple":      {"feature_set": "78f",  "pool": ["bitcoin", "ethereum", "ripple"]},
+    "dogecoin":    {"feature_set": "78f",  "pool": ["bitcoin", "ethereum", "dogecoin"]},
+    "cardano":     {"feature_set": "193f", "pool": ["bitcoin", "ethereum", "cardano"]},
+    "tron":        {"feature_set": "78f",  "pool": ["bitcoin", "ethereum", "tron"]},
 }
 
 
@@ -166,7 +177,9 @@ def load_config() -> LiveConfig:
         )
 
     coin_universe = [c.strip() for c in os.environ.get(
-        "COIN_UNIVERSE", "bitcoin,ethereum,binancecoin,solana").split(",") if c.strip()]
+        "COIN_UNIVERSE",
+        "bitcoin,ethereum,binancecoin,solana,ripple,dogecoin,cardano,tron",
+    ).split(",") if c.strip()]
 
     # P5: single data-root source of truth. The runner reads the OHLCV cache +
     # journal from $DATA_DIR, while data_refresh / retrain WRITE to data_root.
@@ -204,7 +217,7 @@ def load_config() -> LiveConfig:
         max_daily_loss_pct=_float("MAX_DAILY_LOSS_PCT", 0.15),
         max_portfolio_dd=_float("MAX_PORTFOLIO_DD", 0.15),
         stop_loss_pct=_float("STOP_LOSS_PCT", 0.03),
-        max_open_positions=_int("MAX_OPEN_POSITIONS", 4),
+        max_open_positions=_int("MAX_OPEN_POSITIONS", 8),
         target_vol=_float("TARGET_VOL", 0.10),
         kelly_fraction=_float("KELLY_FRACTION", 0.25),
         vol_lookback=_int("VOL_LOOKBACK", 20),
