@@ -835,6 +835,9 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
             n_executed=n_executed, error_msg=str(e),
         )
     finally:
+        # AL1: heartbeat on every cycle exit (ok / aborted / error) so an
+        # external dead-man monitor can alert on a *missing* cycle.
+        _write_heartbeat(data_dir)
         j.close()
 
 
