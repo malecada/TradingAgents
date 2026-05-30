@@ -13,7 +13,8 @@ Deployment drives up to the classifier-blocked VPS boundary; `.env.trading` and 
 
 ## 2. Why this is safe to do now (context)
 
-- The 9 P0/P1 fix commits already exist as a clean, tested stack on `fix/c1-portfolio-weight`, branched directly off the deployed commit `9cf436d`.
+- **8 of the P0/P1 fixes** already exist as a clean, tested stack on `fix/c1-portfolio-weight`, branched directly off the deployed commit `9cf436d`: C1 (`58d8254`), L1+R4 (`dafb5ce`), R2/R3 (`c2a645b`), R1/R5 (`aba6909`), P2/P3 (`0c26f15`), P5 (`5f2c98c`), P4 (`26e780e`), S1 (`e4fefdb`).
+- **Discovered during planning (2026-05-30): the following P0/P1 items are NOT on the branch and are added here as Phase 1.5** — `S3265` (portfolio_before=0 book-wipe floor, **P0**), `J1` (WAL/busy_timeout), `PF1` (preflight `set -e`), `AL1` (alert hardening / dead-man). These were assumed present in the original design; code inspection proved otherwise. The spec goal ("all P0/P1 fixes integrated") requires them, especially with 8 coins (8× the over-leverage C1 guards against) and the extra journal writes min-hold introduces.
 - The C1 over-leverage fix is **already 8-coin-aware**: `_V5_PORTFOLIO_WEIGHTS` holds core 0.15×4 + satellite 0.10×4; `compute_portfolio_weights(universe)` renormalizes over the active universe (4-coin → 0.25 each, 8-coin → 0.15/0.10). Both cases have passing tests.
 - **Live retrains its own models daily from OHLCV** (`retrain.py` fits every route in the `routing` config; `predict.py` routes per coin). No pre-generated walk-forward prediction directories are needed for the live runtime — only the 8-coin routing config plus OHLCV cache for the 4 new coins on the box. The heavy WF dirs (`data/multi_3coins_{xrp,doge,ada,trx}_wf`, already present locally) are only for the parity-replay / re-validation harness.
 
@@ -32,6 +33,12 @@ The 9 commits guard live capital and were never merge-reviewed:
 - Independent code review (`requesting-code-review`) of each fix against its audit finding.
 - Run the existing test suite; confirm green.
 - Fix any review findings before building on the stack.
+
+### Phase 1.5 — Remaining unfixed P0/P1 items (discovered in planning)
+- **S3265 (P0):** `tradingagents/execution/exchange.py:161` `get_total_portfolio_value` returns `float(account.get("totalMarginBalance", 0.0))` — a missing key yields 0.0, and `runner.py` then sizes every coin to 0 and flattens the book. Fix: raise on a missing `totalMarginBalance` key (treat as a fetch failure), and add a `min_capital_floor` guard in the runner immediately after `portfolio_before = ex.get_total_portfolio_value()` (abort + alert if `portfolio_before <= floor`).
+- **J1:** `journal.py:__init__` sets only `PRAGMA foreign_keys=ON`. Add `PRAGMA journal_mode=WAL` + `PRAGMA busy_timeout=10000`. One-liner; needed because min-hold adds `hold_state` writes and the monitor/rebacktest open the same DB.
+- **PF1:** `deploy/preflight.sh` runs `set -euo pipefail` + `set -e`, so a supplementary-source (DefiLlama/Coinglass/Deribit) or ping failure aborts the whole trading day. Demote supplementary checks to warnings; keep hard-fail only for genuinely critical conditions (V5 imports, kelly band, universe routing, OHLCV/CoinMetrics availability).
+- **AL1 (minimal):** alerts are best-effort and swallowed (`notify.py`), and the drawdown check only runs in the success path. Add: a dead-man heartbeat (a missing cycle is itself alerted), move the DD/heartbeat check into the cycle `finally`, and log alert-send failures loudly to the structured log rather than silently `pass`. (Richer second channels — email/SMS — are a follow-up.)
 
 ### Phase 2 — P1 min-hold (stateful sizing) — new code
 Replicate backtest `build_positions_with_hold(min_hold=7, early_exit_loss=0.015)` (`tradingagents/strategies/v2_sizing.py:135`) in the live daily loop, which currently uses the stateless `sizer.compute_size`.
@@ -56,7 +63,7 @@ Replicate backtest `build_positions_with_hold(min_hold=7, early_exit_loss=0.015)
   - `tron`:     `78f`,  pool `[bitcoin, ethereum, tron]`
 - `BINANCE_BASES` += `ripple→XRP, dogecoin→DOGE, cardano→ADA, tron→TRX`.
 - `COIN_UNIVERSE` default → 8 coins; `MAX_OPEN_POSITIONS` default → 8.
-- `data_refresh.py`: add the 4 satellites to the fetch list so OHLCV cache is populated on the box.
+- `data_refresh.py`: the fetch loop is already `cfg.coin_universe`-driven, but two hardcoded 4-coin maps must gain the 4 satellites: `coin_to_sym` (line ~379) and `_BASIS_SYM_TO_COIN` (line ~233) — `ripple↔XRPUSDT, dogecoin↔DOGEUSDT, cardano↔ADAUSDT, tron↔TRXUSDT`.
 - `predict.py`: critical-failure threshold `max(3, n-1)` already scales (8-coin → critical at ≥7 coins failing); confirm with a test.
 - Cost tiers / satellite haircut remain backtest-only (live pays real exchange fees); noted for validation parity, not wired into the live runtime.
 
