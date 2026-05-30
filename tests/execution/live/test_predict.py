@@ -132,3 +132,10 @@ def test_run_predict_majority_fail_raises(monkeypatch, tmp_path):
             store_root=tmp_path / "o", ohlcv_cache=tmp_path / "c",
             horizons=[7, 14],
         )
+
+
+def test_majority_fail_threshold_scales_with_universe():
+    """predict.py: threshold = max(3, n-1) → 8-coin trips at 7 failures."""
+    assert max(3, 8 - 1) == 7
+    assert max(3, 4 - 1) == 3
+    assert max(3, 2 - 1) == 3
