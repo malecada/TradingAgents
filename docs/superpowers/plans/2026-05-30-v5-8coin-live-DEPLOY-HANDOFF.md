@@ -42,7 +42,9 @@ git checkout live-v2.2.0
 cd /opt/tradingagents/repo && PYTHON=/opt/tradingagents/venv/bin/python bash deploy/preflight.sh
 
 # 6. One manual dry-run cycle sanity (optional but recommended)
-DRY_RUN=true /opt/tradingagents/venv/bin/python -m tradingagents.execution.live.runner --once
+#    NOTE: dry-run is the --dry-run CLI FLAG, not a DRY_RUN env var (the runner
+#    reads args.dry_run). Setting DRY_RUN=... does nothing and WILL place orders.
+/opt/tradingagents/venv/bin/python -m tradingagents.execution.live.runner --once --dry-run
 
 # 7. Restart services
 systemctl start ta-monitor.service ta-cycle.timer ta-rebacktest.timer
