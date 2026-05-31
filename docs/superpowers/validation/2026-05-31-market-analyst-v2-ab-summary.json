@@ -1,0 +1,240 @@
+{
+  "runs": {
+    "A_pure_quant": {
+      "bitcoin": {
+        "sharpe": 5.6298,
+        "n_bars": 89,
+        "total_return": 0.6448
+      },
+      "ethereum": {
+        "sharpe": 3.2007,
+        "n_bars": 89,
+        "total_return": 0.4865
+      },
+      "binancecoin": {
+        "sharpe": 2.8796,
+        "n_bars": 89,
+        "total_return": 0.3171
+      },
+      "solana": {
+        "sharpe": 2.1972,
+        "n_bars": 89,
+        "total_return": 0.2715
+      }
+    },
+    "B_legacy_market": {
+      "bitcoin": {
+        "sharpe": 7.2347,
+        "n_bars": 89,
+        "total_return": 0.555
+      },
+      "ethereum": {
+        "sharpe": 3.513,
+        "n_bars": 89,
+        "total_return": 0.4816
+      },
+      "binancecoin": {
+        "sharpe": 3.4514,
+        "n_bars": 89,
+        "total_return": 0.4045
+      },
+      "solana": {
+        "sharpe": 1.7132,
+        "n_bars": 89,
+        "total_return": 0.1907
+      }
+    },
+    "C_v2_struct_only": {
+      "bitcoin": {
+        "sharpe": 5.8222,
+        "n_bars": 89,
+        "total_return": 0.6752
+      },
+      "ethereum": {
+        "sharpe": 2.6196,
+        "n_bars": 89,
+        "total_return": 0.3961
+      },
+      "binancecoin": {
+        "sharpe": 3.6386,
+        "n_bars": 89,
+        "total_return": 0.4167
+      },
+      "solana": {
+        "sharpe": 2.3926,
+        "n_bars": 89,
+        "total_return": 0.2924
+      }
+    },
+    "D_v2_full": {
+      "bitcoin": {
+        "sharpe": 5.9327,
+        "n_bars": 89,
+        "total_return": 0.7225
+      },
+      "ethereum": {
+        "sharpe": 1.6728,
+        "n_bars": 89,
+        "total_return": 0.2215
+      },
+      "binancecoin": {
+        "sharpe": 3.1087,
+        "n_bars": 89,
+        "total_return": 0.3773
+      },
+      "solana": {
+        "sharpe": 2.4049,
+        "n_bars": 71,
+        "total_return": 0.2487
+      }
+    }
+  },
+  "comparisons": {
+    "B_legacy_market": {
+      "bitcoin_vs_A_pure_quant": {
+        "delta_sharpe_mean": 1.2197,
+        "ci_lo": 0.025,
+        "ci_hi": 2.5408,
+        "p_positive": 0.9807,
+        "n_paired": 89
+      },
+      "ethereum_vs_A_pure_quant": {
+        "delta_sharpe_mean": 0.2093,
+        "ci_lo": -1.2104,
+        "ci_hi": 1.5406,
+        "p_positive": 0.6223,
+        "n_paired": 89
+      },
+      "binancecoin_vs_A_pure_quant": {
+        "delta_sharpe_mean": 0.6112,
+        "ci_lo": -0.4138,
+        "ci_hi": 1.8721,
+        "p_positive": 0.8721,
+        "n_paired": 89
+      },
+      "solana_vs_A_pure_quant": {
+        "delta_sharpe_mean": -0.4956,
+        "ci_lo": -1.7013,
+        "ci_hi": 0.6261,
+        "p_positive": 0.1896,
+        "n_paired": 89
+      }
+    },
+    "C_v2_struct_only": {
+      "bitcoin_vs_A_pure_quant": {
+        "delta_sharpe_mean": 0.2397,
+        "ci_lo": -0.2053,
+        "ci_hi": 0.8452,
+        "p_positive": 0.8224,
+        "n_paired": 89
+      },
+      "bitcoin_vs_B_legacy_market": {
+        "delta_sharpe_mean": -0.9799,
+        "ci_lo": -2.3009,
+        "ci_hi": 0.1685,
+        "p_positive": 0.1216,
+        "n_paired": 89
+      },
+      "ethereum_vs_A_pure_quant": {
+        "delta_sharpe_mean": -0.606,
+        "ci_lo": -2.1113,
+        "ci_hi": 0.7157,
+        "p_positive": 0.1933,
+        "n_paired": 89
+      },
+      "ethereum_vs_B_legacy_market": {
+        "delta_sharpe_mean": -0.8153,
+        "ci_lo": -1.9577,
+        "ci_hi": 0.341,
+        "p_positive": 0.0818,
+        "n_paired": 89
+      },
+      "binancecoin_vs_A_pure_quant": {
+        "delta_sharpe_mean": 0.7987,
+        "ci_lo": -0.218,
+        "ci_hi": 2.1413,
+        "p_positive": 0.9312,
+        "n_paired": 89
+      },
+      "binancecoin_vs_B_legacy_market": {
+        "delta_sharpe_mean": 0.1875,
+        "ci_lo": -0.7603,
+        "ci_hi": 1.2283,
+        "p_positive": 0.6438,
+        "n_paired": 89
+      },
+      "solana_vs_A_pure_quant": {
+        "delta_sharpe_mean": 0.1952,
+        "ci_lo": -0.4557,
+        "ci_hi": 0.9629,
+        "p_positive": 0.6948,
+        "n_paired": 89
+      },
+      "solana_vs_B_legacy_market": {
+        "delta_sharpe_mean": 0.6908,
+        "ci_lo": -0.2077,
+        "ci_hi": 1.7689,
+        "p_positive": 0.9268,
+        "n_paired": 89
+      }
+    },
+    "D_v2_full": {
+      "bitcoin_vs_A_pure_quant": {
+        "delta_sharpe_mean": 0.22,
+        "ci_lo": -0.6452,
+        "ci_hi": 0.9252,
+        "p_positive": 0.7635,
+        "n_paired": 89
+      },
+      "bitcoin_vs_B_legacy_market": {
+        "delta_sharpe_mean": -0.9997,
+        "ci_lo": -2.2777,
+        "ci_hi": 0.2276,
+        "p_positive": 0.0942,
+        "n_paired": 89
+      },
+      "ethereum_vs_A_pure_quant": {
+        "delta_sharpe_mean": -1.5991,
+        "ci_lo": -4.2325,
+        "ci_hi": 0.5671,
+        "p_positive": 0.0764,
+        "n_paired": 89
+      },
+      "ethereum_vs_B_legacy_market": {
+        "delta_sharpe_mean": -1.8084,
+        "ci_lo": -4.6648,
+        "ci_hi": 0.7769,
+        "p_positive": 0.088,
+        "n_paired": 89
+      },
+      "binancecoin_vs_A_pure_quant": {
+        "delta_sharpe_mean": 0.3139,
+        "ci_lo": -0.8275,
+        "ci_hi": 1.6561,
+        "p_positive": 0.7011,
+        "n_paired": 89
+      },
+      "binancecoin_vs_B_legacy_market": {
+        "delta_sharpe_mean": -0.2973,
+        "ci_lo": -1.7407,
+        "ci_hi": 1.048,
+        "p_positive": 0.344,
+        "n_paired": 89
+      },
+      "solana_vs_A_pure_quant": {
+        "delta_sharpe_mean": 0.0916,
+        "ci_lo": -1.2741,
+        "ci_hi": 1.3876,
+        "p_positive": 0.5667,
+        "n_paired": 71
+      },
+      "solana_vs_B_legacy_market": {
+        "delta_sharpe_mean": 0.951,
+        "ci_lo": 0.1557,
+        "ci_hi": 1.8866,
+        "p_positive": 0.9921,
+        "n_paired": 71
+      }
+    }
+  }
+}
