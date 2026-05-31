@@ -377,7 +377,18 @@ class ExchangeClient:
                 newClientOrderId=client_order_id,
             )
             try:
-                return self._retry(self._client.futures_create_order, **kwargs)
+                resp = self._retry(self._client.futures_create_order, **kwargs)
+                # Binance routes STOP_MARKET through the conditional/algo system:
+                # a success carries `algoId` (CONDITIONAL), not `orderId`. Treat
+                # EITHER as success; a response with neither is a silent failure
+                # (observed on testnet) — raise so arm_stop_loss marks the
+                # position UNPROTECTED + alerts instead of recording a phantom id.
+                if not (resp.get("orderId") or resp.get("algoId")):
+                    raise RuntimeError(
+                        f"STOP_MARKET {symbol} returned no orderId/algoId "
+                        f"(silent rejection): {resp!r}"
+                    )
+                return resp
             except BinanceAPIException as e:
                 if getattr(e, "code", None) != -1007 and "-1007" not in str(e):
                     raise
@@ -424,21 +435,62 @@ class ExchangeClient:
         ))
 
     def list_open_stops(self, symbol: str) -> list[dict]:
-        """Open reduceOnly STOP_MARKET orders for *symbol* (the protective stops).
+        """Open protective STOP_MARKET orders for *symbol*.
 
-        Used by :func:`tradingagents.execution.live.stops.arm_stop_loss` to do
-        place-then-cancel replacement without a naked window.
+        Binance places STOP_MARKET as CONDITIONAL/algo orders, which do NOT
+        appear in ``futures_get_open_orders`` — they live in the algo-orders
+        endpoint and are keyed by ``algoId`` (not ``orderId``), with
+        ``triggerPrice``/``quantity`` instead of ``stopPrice``/``origQty``.
+        Query BOTH and normalize to the shape ``arm_stop_loss`` expects
+        (``orderId`` / ``stopPrice`` / ``origQty``), tagging algo rows so
+        ``cancel_order`` can route them. Without the algo half, the runner is
+        blind to existing stops → no monotonic-keep (R5) and orphan stops
+        accumulate every cycle.
         """
-        orders = self._retry(
-            self._client.futures_get_open_orders, symbol=symbol,
-        )
-        return [o for o in orders if o.get("type") == "STOP_MARKET"]
+        out: list[dict] = []
+        # Regular STOP_MARKET (mainnet/legacy path).
+        try:
+            for o in self._retry(self._client.futures_get_open_orders, symbol=symbol):
+                if o.get("type") == "STOP_MARKET":
+                    out.append({**o, "_algo": False})
+        except Exception as e:  # noqa: BLE001 — never let a query failure block arming
+            logger.warning("futures_get_open_orders failed for %s: %s", symbol, e)
+        # Conditional/algo STOP_MARKET (the actual path on current Binance).
+        try:
+            algo = self._retry(self._client.futures_get_open_algo_orders)
+            for o in algo:
+                if o.get("symbol") != symbol or o.get("orderType") != "STOP_MARKET":
+                    continue
+                out.append({
+                    "orderId": o.get("algoId"),
+                    "stopPrice": o.get("triggerPrice"),
+                    "origQty": o.get("quantity"),
+                    "type": "STOP_MARKET",
+                    "_algo": True,
+                })
+        except Exception as e:  # noqa: BLE001
+            logger.warning("futures_get_open_algo_orders failed for %s: %s", symbol, e)
+        return out
 
     def cancel_order(self, symbol: str, order_id) -> dict:
-        """Cancel a single open futures order by id."""
-        return self._retry(
-            self._client.futures_cancel_order, symbol=symbol, orderId=order_id,
-        )
+        """Cancel a single open futures order by id.
+
+        Tries the regular order endpoint first; STOP_MARKET stops are algo
+        orders, so on an unknown-order error fall back to the algo cancel
+        (``order_id`` is then the ``algoId``).
+        """
+        try:
+            return self._retry(
+                self._client.futures_cancel_order, symbol=symbol, orderId=order_id,
+            )
+        except BinanceAPIException as e:
+            code = getattr(e, "code", None)
+            if code not in (-2011, -2013) and "Unknown order" not in str(e) \
+                    and "does not exist" not in str(e):
+                raise
+            return self._retry(
+                self._client.futures_cancel_algo_order, algoId=order_id,
+            )
 
     def cancel_all_orders(self, symbol: str) -> list[dict]:
         """Cancel all open futures orders for *symbol*."""
