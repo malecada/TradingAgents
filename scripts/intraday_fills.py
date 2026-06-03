@@ -151,11 +151,15 @@ def run_coin_backtest_intrabar(
         if exit_eq is not None:
             # Genuine intrabar barrier touch (a high/low strictly beyond the
             # close crossed the barrier before the close): exit at the clamped
-            # barrier equity, pay an extra closing-trade fee, flatten for the
-            # rest of day i (re-entry, if signal persists, happens on day i+1).
+            # barrier equity, flatten for the rest of day i (re-entry, if the
+            # signal persists, happens on day i+1). Cost model is IDENTICAL to
+            # the daily engine — no extra exit fee — so the only difference from
+            # run_coin_backtest is fill TIMING (the day's return is capped at the
+            # barrier instead of booked to the close). The round-trip fee for the
+            # exit+re-entry is charged on day i+1's position change, exactly as in
+            # the daily engine.
             gross_ret = exit_eq / e0 - 1.0
-            close_fee = (2 * fee_rate + slippage + 2 * spread) * abs(target_pos)
-            net_ret = gross_ret - (fee_cost + impact_cost + holding_cost + close_fee)
+            net_ret = gross_ret - (fee_cost + impact_cost + holding_cost)
             new_equity = e0 * (1 + net_ret)
             filled_pos = 0.0
         else:
