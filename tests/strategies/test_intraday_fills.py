@@ -97,3 +97,61 @@ def test_group_intraday_by_day_maps_calendar_days():
     assert m[0].shape == (2, 2)
     assert m[1].shape == (1, 2)
     assert m[0][1, 0] == 3.0
+
+
+def test_price_stop_fires_at_entry_minus_pct():
+    # Enter long at p_prev=100 (bar0 flat at 100). Day1 close=101 (up) but low=95 (-5% price).
+    # price stop 3% -> stop level 100*0.97=97; low 95 < 97 -> fires; exit booked at 97.
+    dates = np.array([np.datetime64("2024-01-01"), np.datetime64("2024-01-02")])
+    prices = np.array([100.0, 101.0], dtype=float)
+    positions = np.array([1.0, 1.0], dtype=float)
+    day_map = {0: np.array([[100.0, 100.0]]), 1: np.array([[101.0, 95.0]])}
+    costs = dict(COSTS); costs["stop_loss"] = 0.03
+    eq, _ = run_coin_backtest_intrabar(
+        dates=dates, prices=prices, positions=positions, intraday=day_map,
+        initial_capital=10_000.0, trailing_stop=0.0, stop_mode="price", **costs)
+    # gross at stop = pos*(97-100)/100 = -3%; equity ~ 10000*0.97 minus costs
+    assert eq[-1] < 10_000.0 * 0.972
+    assert eq[-1] > 10_000.0 * 0.96
+
+
+def test_price_tp_fires_at_entry_plus_pct():
+    dates = np.array([np.datetime64("2024-01-01"), np.datetime64("2024-01-02")])
+    prices = np.array([100.0, 100.5], dtype=float)
+    positions = np.array([1.0, 1.0], dtype=float)
+    day_map = {0: np.array([[100.0, 100.0]]), 1: np.array([[106.0, 100.0]])}
+    costs = dict(COSTS); costs["stop_loss"] = 0.50; costs["take_profit"] = 0.05
+    eq, _ = run_coin_backtest_intrabar(
+        dates=dates, prices=prices, positions=positions, intraday=day_map,
+        initial_capital=10_000.0, trailing_stop=0.0, stop_mode="price", **costs)
+    # TP at 105; gross +5%
+    assert eq[-1] > 10_000.0 * 1.045
+
+
+def test_price_short_stop_mirror():
+    dates = np.array([np.datetime64("2024-01-01"), np.datetime64("2024-01-02")])
+    prices = np.array([100.0, 99.0], dtype=float)
+    positions = np.array([-1.0, -1.0], dtype=float)
+    day_map = {0: np.array([[100.0, 100.0]]), 1: np.array([[105.0, 99.0]])}  # high 105 > entry*1.03
+    costs = dict(COSTS); costs["stop_loss"] = 0.03
+    eq, _ = run_coin_backtest_intrabar(
+        dates=dates, prices=prices, positions=positions, intraday=day_map,
+        initial_capital=10_000.0, trailing_stop=0.0, stop_mode="price", **costs)
+    # short stop at 103; gross = (-1)*(103-100)/100 = -3%
+    assert eq[-1] < 10_000.0 * 0.972
+    assert eq[-1] > 10_000.0 * 0.96
+
+
+def test_equity_mode_still_default_and_unchanged():
+    # Calling without stop_mode == equity mode == the original behavior.
+    dates = np.array([np.datetime64("2024-01-0%d" % d) for d in range(1, 9)])
+    prices = np.array([100, 101, 99, 103, 97, 105, 104, 106], dtype=float)
+    positions = np.array([0, 1, 1, 1, 1, 1, 1, 0], dtype=float)
+    day_map = {i: np.array([[p, p]] * 4, dtype=float) for i, p in enumerate(prices)}
+    eq_default, _ = run_coin_backtest_intrabar(
+        dates=dates, prices=prices, positions=positions, intraday=day_map,
+        initial_capital=10_000.0, trailing_stop=0.0, **COSTS)
+    eq_explicit, _ = run_coin_backtest_intrabar(
+        dates=dates, prices=prices, positions=positions, intraday=day_map,
+        initial_capital=10_000.0, trailing_stop=0.0, stop_mode="equity", **COSTS)
+    np.testing.assert_allclose(eq_default, eq_explicit, rtol=1e-12, atol=0)

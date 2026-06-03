@@ -85,6 +85,62 @@ def _barrier_exit_equity(
     return None, peak_eq
 
 
+def _barrier_exit_price(
+    bars: np.ndarray, e0: float, p_prev: float, p_curr: float, pos: float,
+    entry_price: float, peak_price: float,
+    stop_loss: float, take_profit: float, trailing_stop: float,
+) -> tuple[float | None, float]:
+    """PRICE-based triple barrier (mirrors the live STOP_MARKET semantics).
+
+    Long: SL at entry_price*(1-stop_loss), TP at entry_price*(1+take_profit),
+    trailing at peak_price*(1-trailing_stop). Short: mirror (SL above, TP below,
+    trailing off the running min). Fires intrabar only when the relevant 1h
+    extreme is strictly beyond the day's close (flat bars defer to the
+    close-to-close path). Returns (exit_equity_or_None, updated_peak_price).
+    The exit equity books the move from p_prev to the barrier PRICE:
+    e0 * (1 + pos*(barrier_price - p_prev)/p_prev).
+    """
+    if pos == 0.0 or p_prev <= 0.0 or entry_price <= 0.0 or bars.shape[0] == 0:
+        return None, peak_price
+
+    def exit_eq(barrier_price: float) -> float:
+        return e0 * (1.0 + pos * (barrier_price - p_prev) / p_prev)
+
+    if pos > 0:
+        sl_price = entry_price * (1.0 - stop_loss)
+        tp_price = entry_price * (1.0 + take_profit)
+        for hi, lo in bars:
+            adv_exc = lo < p_curr        # genuine downside excursion below close
+            fav_exc = hi > p_curr
+            if adv_exc and lo <= sl_price:
+                return exit_eq(sl_price), peak_price
+            if fav_exc and take_profit > 0 and hi >= tp_price:
+                return exit_eq(tp_price), peak_price
+            if fav_exc:
+                peak_price = max(peak_price, hi)
+            if adv_exc and trailing_stop > 0:
+                trail_price = peak_price * (1.0 - trailing_stop)
+                if lo <= trail_price:
+                    return exit_eq(trail_price), peak_price
+    else:  # short
+        sl_price = entry_price * (1.0 + stop_loss)
+        tp_price = entry_price * (1.0 - take_profit)
+        for hi, lo in bars:
+            adv_exc = hi > p_curr        # upside excursion = adverse for a short
+            fav_exc = lo < p_curr
+            if adv_exc and hi >= sl_price:
+                return exit_eq(sl_price), peak_price
+            if fav_exc and take_profit > 0 and lo <= tp_price:
+                return exit_eq(tp_price), peak_price
+            if fav_exc:
+                peak_price = min(peak_price, lo)
+            if adv_exc and trailing_stop > 0:
+                trail_price = peak_price * (1.0 + trailing_stop)
+                if hi >= trail_price:
+                    return exit_eq(trail_price), peak_price
+    return None, peak_price
+
+
 def run_coin_backtest_intrabar(
     dates: np.ndarray,
     prices: np.ndarray,
@@ -100,6 +156,7 @@ def run_coin_backtest_intrabar(
     max_portfolio_dd: float,
     take_profit: float = 0.0,
     trailing_stop: float = 0.0,
+    stop_mode: str = "equity",
     funding_series: np.ndarray | None = None,
 ) -> tuple[list, dict]:
     """Intraday-fill twin of baseline_strategy_v2.run_coin_backtest.
@@ -112,8 +169,10 @@ def run_coin_backtest_intrabar(
     daily_returns: list[float] = []
     prev_pos = 0.0
     entry_equity = initial_capital
+    entry_price = prices[0] if len(prices) > 0 else 0.0
     peak_equity = initial_capital
     peak_eq_since_entry = initial_capital
+    peak_price_since_entry = prices[0] if len(prices) > 0 else 0.0
     halted = False
 
     for i in range(1, len(dates)):
@@ -131,15 +190,23 @@ def run_coin_backtest_intrabar(
         if target_pos != prev_pos and target_pos != 0:
             entry_equity = equity[-1]
             peak_eq_since_entry = equity[-1]
+            entry_price = p_prev
+            peak_price_since_entry = p_prev
         if target_pos == 0 and prev_pos != 0:
             entry_equity = equity[-1]
 
         e0 = equity[-1]
         bars = intraday.get(i, np.empty((0, 2), dtype=float))
-        exit_eq, peak_eq_since_entry = _barrier_exit_equity(
-            bars, e0=e0, p_prev=p_prev, p_curr=p_curr, pos=target_pos,
-            entry_equity=entry_equity, peak_eq=peak_eq_since_entry,
-            stop_loss=stop_loss, take_profit=take_profit, trailing_stop=trailing_stop)
+        if stop_mode == "price":
+            exit_eq, peak_price_since_entry = _barrier_exit_price(
+                bars, e0=e0, p_prev=p_prev, p_curr=p_curr, pos=target_pos,
+                entry_price=entry_price, peak_price=peak_price_since_entry,
+                stop_loss=stop_loss, take_profit=take_profit, trailing_stop=trailing_stop)
+        else:
+            exit_eq, peak_eq_since_entry = _barrier_exit_equity(
+                bars, e0=e0, p_prev=p_prev, p_curr=p_curr, pos=target_pos,
+                entry_equity=entry_equity, peak_eq=peak_eq_since_entry,
+                stop_loss=stop_loss, take_profit=take_profit, trailing_stop=trailing_stop)
 
         fee_cost = (2 * fee_rate + slippage + 2 * spread) * trade_notional
         impact_cost = price_impact * trade_notional * trade_notional
@@ -172,14 +239,30 @@ def run_coin_backtest_intrabar(
             net_ret = gross_ret - (fee_cost + impact_cost + holding_cost)
             new_equity = e0 * (1 + net_ret)
             filled_pos = target_pos
-            if target_pos != 0 and entry_equity > 0:
-                trade_dd = (entry_equity - new_equity) / entry_equity
-                if trade_dd >= stop_loss:
-                    filled_pos = 0.0
-                trade_up = (new_equity - entry_equity) / entry_equity
-                if take_profit > 0 and trade_up >= take_profit:
-                    filled_pos = 0.0
-            peak_eq_since_entry = max(peak_eq_since_entry, new_equity)
+            if stop_mode == "price":
+                if target_pos > 0:
+                    if p_curr <= entry_price * (1 - stop_loss):
+                        filled_pos = 0.0
+                    elif take_profit > 0 and p_curr >= entry_price * (1 + take_profit):
+                        filled_pos = 0.0
+                elif target_pos < 0:
+                    if p_curr >= entry_price * (1 + stop_loss):
+                        filled_pos = 0.0
+                    elif take_profit > 0 and p_curr <= entry_price * (1 - take_profit):
+                        filled_pos = 0.0
+                peak_price_since_entry = (max(peak_price_since_entry, p_curr) if target_pos > 0
+                                          else min(peak_price_since_entry, p_curr) if target_pos < 0
+                                          else peak_price_since_entry)
+            else:
+                # existing equity-mode daily stop/TP check (unchanged)
+                if target_pos != 0 and entry_equity > 0:
+                    trade_dd = (entry_equity - new_equity) / entry_equity
+                    if trade_dd >= stop_loss:
+                        filled_pos = 0.0
+                    trade_up = (new_equity - entry_equity) / entry_equity
+                    if take_profit > 0 and trade_up >= take_profit:
+                        filled_pos = 0.0
+                peak_eq_since_entry = max(peak_eq_since_entry, new_equity)
 
         daily_returns.append(net_ret)
         equity.append(new_equity)
