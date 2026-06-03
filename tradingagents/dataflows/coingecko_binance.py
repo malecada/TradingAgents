@@ -98,12 +98,18 @@ def _resolve_binance_symbol(coingecko_id: str) -> str | None:
 # ── Binance helpers ──────────────────────────────────────────────────
 
 
-def _binance_klines(symbol_usdt: str, from_ms: int, to_ms: int) -> list:
-    """Fetch daily klines from Binance public API."""
+_INTERVAL_MS = {
+    "1m": 60_000, "5m": 300_000, "15m": 900_000, "1h": 3_600_000,
+    "4h": 14_400_000, "1d": 86_400_000,
+}
+
+
+def _binance_klines(symbol_usdt: str, from_ms: int, to_ms: int, interval: str = "1d") -> list:
+    """Fetch klines from Binance public API at the given interval (default daily)."""
     url = f"{_BINANCE_BASE_URL}/klines"
     params = {
         "symbol": symbol_usdt,
-        "interval": "1d",
+        "interval": interval,
         "startTime": int(from_ms),
         "endTime": int(to_ms),
         "limit": _BINANCE_KLINE_LIMIT,
@@ -113,25 +119,59 @@ def _binance_klines(symbol_usdt: str, from_ms: int, to_ms: int) -> list:
         r.raise_for_status()
         return r.json()
     except Exception as e:
-        logger.warning(f"Binance klines error for {symbol_usdt}: {e}")
+        logger.warning(f"Binance klines error for {symbol_usdt} ({interval}): {e}")
         return []
 
 
-def _binance_klines_chunked(symbol_usdt: str, from_ms: int, to_ms: int) -> list:
-    """Fetch daily klines from Binance, paginating if range > 1000 days."""
+def _binance_klines_chunked(
+    symbol_usdt: str, from_ms: int, to_ms: int,
+    interval: str = "1d", step_ms: int | None = None,
+) -> list:
+    """Fetch klines from Binance, paginating across the full range.
+
+    Cursor advances past the last returned bar's open_time so no bar is
+    fetched twice. ``step_ms`` defaults to the interval's bar width.
+    """
+    if step_ms is None:
+        step_ms = _INTERVAL_MS.get(interval, 86_400_000)
     all_klines = []
     cursor = int(from_ms)
     while cursor < int(to_ms):
-        klines = _binance_klines(symbol_usdt, cursor, to_ms)
+        klines = _binance_klines(symbol_usdt, cursor, to_ms, interval=interval)
         if not klines:
             break
         all_klines.extend(klines)
         last_open_ms = klines[-1][0]
-        cursor = last_open_ms + 86_400_000  # +1 day in ms
+        cursor = last_open_ms + step_ms
         if len(klines) < _BINANCE_KLINE_LIMIT:
             break
         time.sleep(0.5)
     return all_klines
+
+
+def fetch_binance_klines_range(
+    symbol: str, from_ms: int, to_ms: int, interval: str = "1h",
+) -> pd.DataFrame:
+    """Fetch [from_ms, to_ms) klines at ``interval`` as a tidy DataFrame.
+
+    Columns: open_time (datetime64, UTC-naive), open, high, low, close, volume.
+    Deduplicated on open_time, sorted ascending. Empty DataFrame on error.
+    """
+    if not symbol:
+        return pd.DataFrame()
+    klines = _binance_klines_chunked(symbol, from_ms, to_ms, interval=interval)
+    if not klines:
+        return pd.DataFrame()
+    rows = [
+        {
+            "open_time": pd.to_datetime(k[0], unit="ms"),
+            "open": float(k[1]), "high": float(k[2]), "low": float(k[3]),
+            "close": float(k[4]), "volume": float(k[5]),
+        }
+        for k in klines
+    ]
+    df = pd.DataFrame(rows).drop_duplicates(subset="open_time")
+    return df.sort_values("open_time").reset_index(drop=True)
 
 
 def fetch_binance_daily(symbol: str, days: int = 2) -> pd.DataFrame:
