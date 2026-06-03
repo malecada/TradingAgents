@@ -71,6 +71,30 @@ within a single 1h bar the trailing peak ratchets on the favorable extreme befor
 is measured against the adverse extreme (an implicit favorable-then-adverse intrabar order) — but
 trailing never wins any cell (best trail = 0 throughout), so this has no effect on any result.
 
+## 31.4b Headline 3 — intrabar also overturns §29's *stop* conclusion (the robust finding)
+
+§29 (close-only) found SL ∈ {3,5,7,10}% clustered within <0.001 SR — a flat plateau giving no
+reason to move off 3%. Under intrabar fills the **pure stop axis** (TP=0, trail=0; `sl_axis.json`)
+instead shows a clear **monotonic gradient** — tight stops bleed from intraday wick-outs the
+close-only engine never saw:
+
+| SL | 0% | 1% | 2% | 3% | 4% | 5% | 7% | 10% |
+|----|----|----|----|----|----|----|----|-----|
+| intrabar SR | −10.1 (circuit-broke) | 3.00 | 3.04 | **3.06** | 3.11 | 3.12 | **3.34** | 3.34 |
+
+A stop is essential (SL=0 → −10 SR, 15% DD halt), but **3% is too tight**: 7% beats 3% by **ΔSR
++0.32** (full window, CI [+0.13, +0.53], P(7>3)=0.999) at the same 3.5% drawdown, and the 5–10%
+region is a flat top plateau. Crucially this **holds out-of-sample across ALL FOUR split dates**
+(P(7>3) = 0.993 / 0.982 / 0.955 / 0.997; ΔSR +0.51 to +0.65) — far more robust than the SL4%/TP8%
+take-profit cell, which shipped only 2/4. The looser-stop edge is also *conservative*: intrabar
+stops fill at the exact stop level (no slippage), and tight stops trigger far more often, so real
+market-order slippage would penalise 3% more than 7% — widening the true gap.
+
+**Per-coin, the effect is again overwhelmingly ETH:** 3%→7% takes ETH from SR +0.89 to +1.82
+(**ΔSR +1.05, P=1.000**); BNB +0.10 (P=0.998), BTC +0.04 (P=0.87), SOL +0.06 (P=0.80) — all
+non-negative, none hurt. ETH's 3% stop is uniquely wick-prone; for BTC/BNB/SOL the 3–7% range is
+effectively stop-insensitive. This is the same ETH-backbone asymmetry seen in §23.11 and §31.3.
+
 ## 31.5 In-sample statistics (full window)
 
 - **DSR** (n_trials = 192): value ≈ **1.000** (raw SR 0.213 vs E[max|null] 0.059, SE 0.0216) —
@@ -107,21 +131,31 @@ p = 0.007 → "SHIP" on this window (`stats_oos.json`).
 
 ## 31.7 Conclusion & production stance
 
-- **§29's stop conclusion is upheld:** 3% remains a defensible, non-overfit *stop* — across split
-  windows no specific looser-stop cell is stably superior, and selecting one would re-introduce the
-  SL selection bias §29 deliberately avoided.
-- **§29's take-profit conclusion is overturned (with caveats):** under realistic intrabar fills, a
-  take-profit cap adds alpha that the close-only engine masked. The effect is *directionally* robust
-  (whole top-10 ridge beats 3% OOS) but **concentrated in ETH** and **not stable as a single tuned
-  cell** across windows.
-- **Do not blanket-switch production to SL4%/TP8%.** The cell is window-unstable and the gain is an
-  ETH phenomenon. The actionable, conservative move: **keep the 3% stop**, and evaluate adding an
-  **intraday take-profit limit for ETH specifically**, which requires an operational change
-  (resting intraday limit orders; the current bot only checks SL/TP at daily rebalance) and should
-  be confirmed by a forward A/B before any live change.
+- **§29's stop conclusion is OVERTURNED — 3% is too tight.** §29's flat 3–10% plateau was an
+  artifact of the daily engine, which cannot stop a position out on an intraday wick. Intrabar, a
+  looser stop (~5–7%) beats 3% by **ΔSR +0.32**, and this is the **most robust result in §31**:
+  it holds out-of-sample across **all four** split dates (P(7>3) ≥ 0.955), versus the take-profit
+  cell's 2/4. The actionable production change is to **widen the stop from 3% toward the 5–7%
+  region** (the 5–10% plateau is flat, so the exact value is not critical — this is a region, not a
+  tuned point, which avoids the single-value SL selection bias §29 worried about).
+- **The benefit is concentrated in ETH** (3%→7%: ΔSR +1.05, P=1.000). BTC/BNB/SOL are
+  stop-insensitive in 3–7% (all non-negative, none hurt), so widening is **safe portfolio-wide** and
+  **most impactful for ETH** — whose tight 3% stop bleeds badly from intraday wick-outs.
+- **§29's take-profit conclusion is also overturned, but the TP lever is weaker/fragile:** a TP cap
+  adds alpha the close-only engine masked, directionally robust (top-10 ridge all beat 3% OOS) but
+  **ETH-only and window-unstable** (SHIP 2/4). Treat an **intraday TP limit for ETH** as future work
+  — it needs resting intraday limit orders (the bot currently checks SL/TP only at daily rebalance)
+  and a forward A/B.
+- **Recommended stance:** (1) widen ETH's stop to ~5–7% (robust, large, OOS-validated); (2) widening
+  BTC/BNB/SOL is harmless and marginally positive — optional; (3) never tighten below 3% (worse) or
+  remove the stop (SL=0 → −10 SR / DD halt); (4) TP/trailing = future work, ETH-focused, pending
+  intraday execution. None of this contradicts the user's original anti-overfit instinct: 3% was a
+  reasonable a-priori, the daily sweep gave no reason to move, and only the **bias-corrected**
+  intrabar evaluation supplies a principled, OOS-robust reason to loosen it.
 - **Bias correction for the thesis record:** the production-style 3% config's *true* (intrabar)
   Sharpe is ≈ **+3.06**, not the §29 daily +3.33 — close-to-close evaluation overstated it by ~0.27
-  SR. All future SL/TP claims should cite intrabar numbers.
+  SR (almost entirely via ETH). All future SL/TP claims should cite intrabar numbers, and add
+  `scripts/intraday_sl_axis.py` to the §31.8 reproduce list.
 
 ## 31.8 Reproduce
 
@@ -136,6 +170,8 @@ python scripts/intraday_sltp_stats.py --sweep-dir data/intraday_sltp_sweep --n-i
 python scripts/intraday_sltp_stats.py --oos --split 2025-04-15 --sweep-dir data/intraday_sltp_sweep
 # 5. robustness (split / seed / per-coin / neighborhood)
 python scripts/intraday_sltp_robustness.py
+# 5b. stop-loss axis: is any SL level robustly better than 3%? (the §31.4b finding)
+python scripts/intraday_sl_axis.py
 # 6. figures
 python scripts/intraday_sltp_report.py --sweep-dir data/intraday_sltp_sweep
 ```
