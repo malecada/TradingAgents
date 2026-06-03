@@ -45,3 +45,8 @@ def test_fetch_klines_range_parses_ohlc(monkeypatch):
     assert len(df) == 3
     assert df["high"].iloc[0] == 11.0
     assert df["open_time"].is_monotonic_increasing
+
+
+def test_chunked_raises_on_unknown_interval():
+    with pytest.raises(ValueError):
+        cgb._binance_klines_chunked("BTCUSDT", 0, 1000, interval="2h")

@@ -133,7 +133,12 @@ def _binance_klines_chunked(
     fetched twice. ``step_ms`` defaults to the interval's bar width.
     """
     if step_ms is None:
-        step_ms = _INTERVAL_MS.get(interval, 86_400_000)
+        if interval not in _INTERVAL_MS:
+            raise ValueError(
+                f"Unknown interval {interval!r}; pass an explicit step_ms or add "
+                f"it to _INTERVAL_MS (known: {sorted(_INTERVAL_MS)})"
+            )
+        step_ms = _INTERVAL_MS[interval]
     all_klines = []
     cursor = int(from_ms)
     while cursor < int(to_ms):
