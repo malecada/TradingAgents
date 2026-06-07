@@ -206,3 +206,107 @@ def test_runner_uses_v5_routing(monkeypatch, tmp_path):
         "ripple", "dogecoin", "cardano", "tron",
     }
     assert captured_predict_routing[0] == captured_routing[0]
+
+
+_BULLISH_3COIN_PREDS = [
+    {"coin": "bitcoin", "horizon": 7, "prediction": 63000.0,
+     "ref_price": 60000.0, "bundle_route": "bitcoin_78f"},
+    {"coin": "bitcoin", "horizon": 14, "prediction": 66000.0,
+     "ref_price": 60000.0, "bundle_route": "bitcoin_78f"},
+    {"coin": "ethereum", "horizon": 7, "prediction": 3050.0,
+     "ref_price": 3000.0, "bundle_route": "ethereum_193f"},
+    {"coin": "ethereum", "horizon": 14, "prediction": 3100.0,
+     "ref_price": 3000.0, "bundle_route": "ethereum_193f"},
+    {"coin": "binancecoin", "horizon": 7, "prediction": 410.0,
+     "ref_price": 400.0, "bundle_route": "binancecoin_78f"},
+    {"coin": "binancecoin", "horizon": 14, "prediction": 420.0,
+     "ref_price": 400.0, "bundle_route": "binancecoin_78f"},
+]
+
+
+def _retrain_artifact():
+    return MagicMock(
+        path=Path("/tmp/m.pkl"), sha="c" * 64, retrain_id="2026-05-12",
+        routes=["bitcoin_78f", "ethereum_193f", "binancecoin_78f"],
+        n_train_rows=100, train_window_start="2024-01-01", train_dir_acc=0.0,
+    )
+
+
+def test_below_min_notional_opening_order_skipped(env_setup):
+    """A: a fresh (non-reduce-only) order whose notional is under the symbol's
+    MIN_NOTIONAL is skipped cleanly, not sent — Binance rejects such dust and
+    the runner logged FAILED rows for them on the live testnet."""
+    from tradingagents.execution.live import runner
+    import sqlite3
+
+    data_dir = env_setup / "data"
+    _seed_ohlcv_cache(data_dir, seed=7)
+
+    with patch("tradingagents.execution.live.data_refresh.refresh_all",
+                return_value={"critical_ok": True, "supplementary_failures": []}), \
+         patch("tradingagents.execution.live.retrain.run_retrain_with_fallback") as mock_retrain, \
+         patch("tradingagents.execution.live.predict.run_predict") as mock_pred, \
+         patch("tradingagents.execution.live.runner.ExchangeClient") as mock_ex_cls, \
+         patch("tradingagents.execution.live.notify.send_daily_summary"):
+        mock_retrain.return_value = _retrain_artifact()
+        mock_pred.return_value = pd.DataFrame(_BULLISH_3COIN_PREDS)
+        ex = mock_ex_cls.return_value
+        ex.get_total_portfolio_value.return_value = 10000.0
+        ex.get_usdt_balance.return_value = 10000.0
+        ex.get_current_position.return_value = 0.0
+        ex.get_ticker_price.return_value = 60000.0
+        ex.min_notional.return_value = 1e12   # every opening order is "dust"
+
+        result = runner.run_cycle(cycle_id="2026-05-12", dry_run=True)
+
+    assert result.status == "ok"
+    conn = sqlite3.connect(data_dir / "trade_journal.db")
+    n_trades = conn.execute("SELECT COUNT(*) FROM trades").fetchone()[0]
+    conn.close()
+    assert n_trades == 0   # all below-min-notional opens skipped, none attempted
+
+
+def test_shadow_logs_stateless_size_not_held_fraction(env_setup):
+    """B: shadow_decisions.live_size is the STATELESS sizing result (comparable
+    to the stateless backtest_size), not the min-hold-adjusted held_fraction.
+    On a held bar the two differ; logging held_fraction made the size-parity
+    diagnostic cry wolf every hold cycle."""
+    from tradingagents.execution.live import runner
+    from tradingagents.execution.live.journal import Journal
+    import sqlite3
+
+    data_dir = env_setup / "data"
+    _seed_ohlcv_cache(data_dir, seed=11)
+    data_dir.mkdir(parents=True, exist_ok=True)
+    # Freeze a long hold for bitcoin with an entry_base distinct from what fresh
+    # sizing produces this bar, so held_fraction != stateless final_size_notional.
+    j = Journal(str(data_dir / "trade_journal.db"))
+    j.upsert_hold_state(coin="bitcoin", current_dir=1, bars_held=2,
+                        entry_price=60000.0, entry_base=0.123456,
+                        entry_cycle="2026-05-11")
+    j.close()
+
+    with patch("tradingagents.execution.live.data_refresh.refresh_all",
+                return_value={"critical_ok": True, "supplementary_failures": []}), \
+         patch("tradingagents.execution.live.retrain.run_retrain_with_fallback") as mock_retrain, \
+         patch("tradingagents.execution.live.predict.run_predict") as mock_pred, \
+         patch("tradingagents.execution.live.runner.ExchangeClient") as mock_ex_cls, \
+         patch("tradingagents.execution.live.notify.send_daily_summary"):
+        mock_retrain.return_value = _retrain_artifact()
+        mock_pred.return_value = pd.DataFrame(_BULLISH_3COIN_PREDS)
+        ex = mock_ex_cls.return_value
+        ex.get_total_portfolio_value.return_value = 10000.0
+        ex.get_usdt_balance.return_value = 10000.0
+        ex.get_current_position.return_value = 0.0
+        ex.get_ticker_price.return_value = 60000.0
+
+        runner.run_cycle(cycle_id="2026-05-12", dry_run=True)
+
+    conn = sqlite3.connect(data_dir / "trade_journal.db")
+    rows = conn.execute(
+        "SELECT live_size, backtest_size FROM shadow_decisions WHERE coin='bitcoin'"
+    ).fetchall()
+    conn.close()
+    assert rows, "expected a shadow_decisions row for the held bitcoin position"
+    for live_size, backtest_size in rows:
+        assert live_size == pytest.approx(backtest_size)

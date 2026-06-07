@@ -541,7 +541,11 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                         cycle_id=cycle_id, coin=coin,
                         live_signal=sz.signal,
                         backtest_signal=shadow_dec.signal,
-                        live_size=held_fraction,
+                        # Stateless sizing result (matches the stateless shadow
+                        # recompute) — a size divergence here flags input
+                        # mutation, the shadow's purpose. The executed,
+                        # min-hold-adjusted size lives in trades/sizing.
+                        live_size=sz.final_size_notional,
                         backtest_size=shadow_dec.size,
                     )
                 continue
@@ -627,6 +631,32 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                 )
                 continue
 
+            # reduceOnly when the trade reduces/closes a same-direction position
+            # (delta opposite-sign to current, magnitude <= |current|). Binance
+            # lets reduceOnly closes bypass MIN_NOTIONAL; opening/increasing
+            # orders do not.
+            is_reduce_only = (
+                abs(current_signed_qty) > 1e-9
+                and current_signed_qty * delta_qty < 0
+                and abs(delta_qty) <= abs(current_signed_qty) + 1e-9
+            )
+            # Skip dust: a fresh order below the symbol's MIN_NOTIONAL is
+            # rejected by Binance (-4164/-1013) and was logged FAILED on the
+            # live testnet (e.g. 0.0001 BTC). Not a failure — just nothing to do.
+            if not is_reduce_only:
+                try:
+                    min_notional = float(ex.min_notional(symbol))
+                except Exception:
+                    min_notional = 5.0
+                notional = rounded_qty * preds[coin]["ref_price"]
+                if notional < min_notional:
+                    structured.event(
+                        "execute", "below_min_notional",
+                        {"coin": coin, "qty": rounded_qty,
+                         "notional": notional, "min_notional": min_notional},
+                    )
+                    continue
+
             with structured.step("execute", {"coin": coin}):
                 if dry_run:
                     j.log_trade(
@@ -641,16 +671,9 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                     )
                 else:
                     try:
-                        # If the trade is reducing or closing a same-direction
-                        # position (delta opposite-sign to current, magnitude
-                        # ≤ |current|) it can run as reduceOnly. This bypasses
-                        # the Binance MIN_NOTIONAL ($20) filter and prevents
-                        # accidental over-shoot if margin is tight.
-                        is_reduce_only = (
-                            abs(current_signed_qty) > 1e-9
-                            and current_signed_qty * delta_qty < 0
-                            and abs(delta_qty) <= abs(current_signed_qty) + 1e-9
-                        )
+                        # is_reduce_only was computed with the dust guard above
+                        # (reduceOnly closes bypass MIN_NOTIONAL and avoid
+                        # accidental over-shoot when margin is tight).
                         order = ex.place_market_order(
                             symbol, side, qty, reduce_only=is_reduce_only,
                         )
@@ -782,7 +805,10 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                     cycle_id=cycle_id, coin=coin,
                     live_signal=sz.signal,
                     backtest_signal=shadow_dec.signal,
-                    live_size=held_fraction,
+                    # Stateless sizing result (matches the stateless shadow
+                    # recompute) — divergence here flags input mutation. The
+                    # executed, min-hold-adjusted size lives in trades/sizing.
+                    live_size=sz.final_size_notional,
                     backtest_size=shadow_dec.size,
                 )
 
