@@ -194,9 +194,17 @@ def load_live_journal_rows(journal_db: str, start_cycle: str, end_cycle: str) ->
         "WHERE date(ts) BETWEEN ? AND ?",
         conn, params=(start_cycle, end_cycle),
     ) if "portfolio_snapshots" in tables else pd.DataFrame()
+    # Shadow decisions are the per-cycle live-vs-backtest *signal* comparison —
+    # the parity check that stays valid on testnet, where the live price feed
+    # diverges from the mainnet replay so return parity is meaningless.
+    shadow = pd.read_sql(
+        "SELECT * FROM shadow_decisions WHERE cycle_id BETWEEN ? AND ?",
+        conn, params=(start_cycle, end_cycle),
+    ) if "shadow_decisions" in tables else pd.DataFrame()
     conn.close()
     return {"cycles": cycles, "predictions": preds, "sizing": sizing,
-            "trades": trades, "portfolio_snapshots": snaps}
+            "trades": trades, "portfolio_snapshots": snaps,
+            "shadow_decisions": shadow}
 
 
 # V5 sizing needs lookback history before it produces any position:
@@ -284,6 +292,36 @@ def _live_daily_returns(snapshots: pd.DataFrame, live_start: str,
     return s.pct_change().dropna()
 
 
+# Signal-parity verdict thresholds (used when the return-diff window is too
+# short — the normal case for a testnet week, and the only valid parity there).
+_SIGNAL_PASS = 1.0          # 100% agreement -> PASS
+_SIGNAL_INVESTIGATE = 0.9   # >= 90% agreement -> INVESTIGATE; below -> FAIL
+
+
+def _signal_parity(shadow: pd.DataFrame) -> dict:
+    """Live-vs-shadow per-cycle signal agreement.
+
+    `shadow_decisions` records, for each (cycle, coin), the live signal vs the
+    backtest (shadow) signal and whether they agree. This is the parity check
+    that stays valid on testnet — the live exchange's price feed diverges from
+    the mainnet replay, so return parity is meaningless, but the *decision*
+    the strategy makes from the same inputs must still match.
+    """
+    if shadow is None or shadow.empty or "agree" not in shadow.columns:
+        return {"n": 0, "n_agree": 0, "agree_pct": float("nan"),
+                "disagreements": []}
+    agree = shadow["agree"].fillna(0).astype(int)
+    n = int(len(agree))
+    n_agree = int(agree.sum())
+    cols = [c for c in ("cycle_id", "coin", "live_signal", "backtest_signal")
+            if c in shadow.columns]
+    disagreements = (shadow[agree == 0][cols].to_dict("records")
+                     if cols else [])
+    return {"n": n, "n_agree": n_agree,
+            "agree_pct": (n_agree / n) if n else float("nan"),
+            "disagreements": disagreements}
+
+
 def compare(live: dict, replay_dir: Path, out_report: Path,
             live_start: str, live_end: str) -> str:
     """Generate parity_report.md. Returns PASS / INVESTIGATE / FAIL /
@@ -333,6 +371,9 @@ def compare(live: dict, replay_dir: Path, out_report: Path,
     else:
         cum_live = cum_replay = cum_gap = corr = daily_mae = float("nan")
 
+    # --- signal parity (live vs shadow backtest) — valid even on testnet ---
+    sig = _signal_parity(live.get("shadow_decisions", pd.DataFrame()))
+
     live_total_trades = int(live["cycles"]["n_trades"].sum()) if not live["cycles"].empty else 0
     live_status_summary = (live["cycles"]["status"].value_counts().to_dict()
                             if not live["cycles"].empty else {})
@@ -359,6 +400,11 @@ def compare(live: dict, replay_dir: Path, out_report: Path,
         f"- Daily-return correlation: {corr:.3f}" if n_common >= 2 else "- Daily-return correlation: n/a",
         f"- Daily-return MAE:         {daily_mae:.4f}" if n_common >= 2 else "- Daily-return MAE:         n/a",
         "",
+        f"## Signal parity (live vs shadow backtest)",
+        (f"- Decisions: {sig['n']}  agree: {sig['n_agree']}  agreement: {sig['agree_pct']:.1%}"
+         if sig["n"] else "- Decisions: 0 (no shadow_decisions in window)"),
+        *[f"- DISAGREE: {d}" for d in sig["disagreements"][:20]],
+        "",
         f"## Aggregate metrics (replay, live window only)",
         f"- Replay portfolio Sharpe: {replay_port.get('sharpe', float('nan')):.3f}",
         f"- Replay portfolio return: {replay_port.get('total_return', float('nan')):+.1%}",
@@ -368,16 +414,30 @@ def compare(live: dict, replay_dir: Path, out_report: Path,
 
     data_fail = any(k in live_status_summary
                     for k in ("predict_majority_fail", "critical_data_fail", "error"))
-    if n_common < _MIN_PARITY_BARS:
-        verdict = "INSUFFICIENT_WINDOW"
-    elif cum_gap > _GAP_FAIL or (corr == corr and corr < _CORR_FAIL):
-        verdict = "FAIL"
-    elif data_fail:
-        verdict = "INVESTIGATE"
-    elif cum_gap > _GAP_INVESTIGATE or (corr == corr and corr < _CORR_INVESTIGATE):
-        verdict = "INVESTIGATE"
+    if n_common >= _MIN_PARITY_BARS:
+        # Enough aligned bars for a return-diff verdict (mainnet / long run).
+        if cum_gap > _GAP_FAIL or (corr == corr and corr < _CORR_FAIL):
+            verdict = "FAIL"
+        elif data_fail:
+            verdict = "INVESTIGATE"
+        elif cum_gap > _GAP_INVESTIGATE or (corr == corr and corr < _CORR_INVESTIGATE):
+            verdict = "INVESTIGATE"
+        else:
+            verdict = "PASS"
+    elif sig["n"] > 0:
+        # Return-diff window too short (the testnet-week case): fall back to
+        # signal parity, which is the only valid parity on testnet prices.
+        if data_fail:
+            verdict = "INVESTIGATE"
+        elif sig["agree_pct"] >= _SIGNAL_PASS:
+            verdict = "PASS"
+        elif sig["agree_pct"] >= _SIGNAL_INVESTIGATE:
+            verdict = "INVESTIGATE"
+        else:
+            verdict = "FAIL"
     else:
-        verdict = "PASS"
+        # No return-diff bars and no shadow decisions — nothing to compare.
+        verdict = "INSUFFICIENT_WINDOW"
     lines.append(f"## Verdict: {verdict}")
     out_report.write_text("\n".join(lines))
     return verdict

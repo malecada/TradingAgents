@@ -30,6 +30,7 @@ def compute_live_metrics(live_start_date, live_end_date) -> dict:
     Returns NaN/zero defaults if the DB is missing or has fewer than two
     snapshots in the window — callers must tolerate that.
     """
+    import re
     import sqlite3
     import numpy as np
 
@@ -44,20 +45,31 @@ def compute_live_metrics(live_start_date, live_end_date) -> dict:
         }
     conn = sqlite3.connect(db)
     rows = conn.execute(
-        "SELECT ts, total_value FROM portfolio_snapshots "
+        "SELECT cycle_id, ts, total_value FROM portfolio_snapshots "
         "WHERE date(ts) >= ? AND date(ts) <= ? ORDER BY ts",
         (live_start_date, live_end_date),
     ).fetchall()
     conn.close()
-    if len(rows) < 2:
+    # Keep only scheduled daily cycles (cycle_id == YYYY-MM-DD) and collapse to
+    # one equity point per trading day (the last snapshot of the day). This
+    # drops manual/deploy/dryrun cycles and the deploy-day balance reset: its
+    # pre/post-reset double-snapshot (same daily cycle_id) would otherwise
+    # inject a phantom return — e.g. a faucet top-up read as +7.8% profit on
+    # week 1. Rows are ts-ordered, so the last write per cycle_id wins.
+    _daily = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+    by_day: dict[str, float] = {}
+    for cycle_id, _ts, val in rows:
+        if cycle_id is not None and _daily.match(cycle_id) and val is not None:
+            by_day[cycle_id] = val
+    if len(by_day) < 2:
         return {
             "sharpe": float("nan"),
             "return_pct": 0.0,
             "max_dd": 0.0,
-            "n_trades": len(rows),
+            "n_trades": len(by_day),
             "win_rate": 0.0,
         }
-    values = np.array([r[1] for r in rows], dtype=float)
+    values = np.array([by_day[d] for d in sorted(by_day)], dtype=float)
     rets = np.diff(values) / values[:-1]
     if len(rets) > 1 and np.std(rets, ddof=1) > 0:
         sharpe = float(np.mean(rets) / np.std(rets, ddof=1) * np.sqrt(252))
@@ -70,7 +82,7 @@ def compute_live_metrics(live_start_date, live_end_date) -> dict:
         "sharpe": sharpe,
         "return_pct": float((values[-1] - values[0]) / values[0]),
         "max_dd": dd,
-        "n_trades": len(rows),
+        "n_trades": len(values),
         "win_rate": float(np.mean(rets > 0)) if len(rets) else 0.0,
     }
 
