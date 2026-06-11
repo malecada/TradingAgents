@@ -20,6 +20,7 @@ from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 
 from tradingagents.monitor import db, health, metrics
+from tradingagents.execution.live.rebacktest import compare_quant_hybrid
 
 _DIR = Path(__file__).parent
 _AUTH_USER = "admin"
@@ -162,6 +163,25 @@ def create_app(
             "errors": health.recent_errors(steps),
             "retrains": retrains,
         }
+
+    @app.get("/api/compare")
+    def api_compare(_: str = Depends(require_auth)):
+        """Quant vs hybrid live equity-curve comparison.
+
+        Resolves journal paths from QUANT_DATA_DIR and HYBRID_DATA_DIR env vars
+        (both default to DATA_DIR so the route degrades gracefully when only one
+        bot is running).  Returns the compare_quant_hybrid dict: quant/hybrid/
+        delta metrics (sharpe, ret, maxdd) + the overlapping date window.
+        """
+        quant_dir = Path(os.environ.get(
+            "QUANT_DATA_DIR", os.environ.get("DATA_DIR", "data")))
+        hybrid_dir = Path(os.environ.get(
+            "HYBRID_DATA_DIR", os.environ.get("DATA_DIR", "data")))
+        quant_db = quant_dir / "trade_journal.db"
+        hybrid_db = hybrid_dir / "trade_journal.db"
+        coins_env = os.environ.get("COMPARE_COINS", "")
+        coins = [c.strip() for c in coins_env.split(",") if c.strip()]
+        return compare_quant_hybrid(quant_db, hybrid_db, coins=coins)
 
     @app.exception_handler(sqlite3.OperationalError)
     def _db_error(request: Request, exc: sqlite3.OperationalError):

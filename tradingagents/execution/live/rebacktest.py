@@ -146,6 +146,137 @@ def compute_drawdown_from_peak(current_value: float, asof_date: str) -> float:
     return (peak - current_value) / peak
 
 
+def _read_daily_equity(db_path) -> dict[str, float]:
+    """Read portfolio_snapshots from *db_path* and return a {YYYY-MM-DD: value}
+    dict using the same filtering logic as compute_live_metrics (only
+    scheduled daily cycle_ids, last snapshot of each day wins).
+
+    Returns an empty dict when the file is missing or the table is empty.
+    """
+    import re
+    import sqlite3
+
+    db = Path(db_path)
+    if not db.exists():
+        return {}
+    _daily = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+    conn = sqlite3.connect(str(db))
+    rows = conn.execute(
+        "SELECT cycle_id, ts, total_value FROM portfolio_snapshots ORDER BY ts"
+    ).fetchall()
+    conn.close()
+    by_day: dict[str, float] = {}
+    for cycle_id, _ts, val in rows:
+        if cycle_id is not None and _daily.match(cycle_id) and val is not None:
+            by_day[cycle_id] = val
+    return by_day
+
+
+def _metrics_from_values(values) -> dict:
+    """Compute Sharpe / total-return / max-drawdown from an ordered equity
+    sequence.  Reuses the same arithmetic as compute_live_metrics.
+
+    Args:
+        values: sequence of float equity values, oldest first.
+
+    Returns:
+        Dict with keys ``sharpe``, ``ret``, ``maxdd``.
+    """
+    import numpy as np
+
+    arr = np.array(list(values), dtype=float)
+    if len(arr) < 2:
+        return {"sharpe": float("nan"), "ret": 0.0, "maxdd": 0.0}
+    rets = np.diff(arr) / arr[:-1]
+    if len(rets) > 1 and np.std(rets, ddof=1) > 0:
+        sharpe = float(np.mean(rets) / np.std(rets, ddof=1) * np.sqrt(252))
+    else:
+        sharpe = 0.0
+    cum = np.cumprod(1 + rets)
+    peak = np.maximum.accumulate(cum)
+    maxdd = float(np.max((peak - cum) / peak)) if len(cum) else 0.0
+    return {
+        "sharpe": sharpe,
+        "ret": float((arr[-1] - arr[0]) / arr[0]),
+        "maxdd": maxdd,
+    }
+
+
+def compare_quant_hybrid(
+    quant_db_path,
+    hybrid_db_path,
+    coins: list,
+) -> dict:
+    """Compare live equity curves of the quant and hybrid books.
+
+    Reads each journal's ``portfolio_snapshots`` (filtered to scheduled daily
+    cycle_ids, last snapshot of each day), aligns them to the overlapping date
+    window (from the *later* of the two start dates to the shared end), then
+    computes Sharpe / total-return / max-drawdown for each book and their
+    deltas.
+
+    Args:
+        quant_db_path: path to the quant bot's ``trade_journal.db``.
+        hybrid_db_path: path to the hybrid bot's ``trade_journal.db``.
+        coins: list of coin names (e.g. ``["bitcoin", "ethereum"]``).
+               Accepted for a future per-coin breakdown; currently recorded
+               in the output but not used for sub-slicing.
+
+    Returns:
+        Dict with structure::
+
+            {
+              "quant":  {"sharpe": float, "ret": float, "maxdd": float},
+              "hybrid": {"sharpe": float, "ret": float, "maxdd": float},
+              "delta":  {"sharpe": float, "ret": float, "maxdd": float},
+              "window": {"start": str, "end": str, "n": int, "coins": list},
+            }
+
+        ``delta`` = hybrid − quant for every metric.  ``window.n`` is the
+        number of daily data points in the overlap.  All metrics use ``nan``
+        / zero defaults when there are fewer than two overlapping snapshots.
+    """
+    quant_eq = _read_daily_equity(quant_db_path)
+    hybrid_eq = _read_daily_equity(hybrid_db_path)
+
+    # Overlap: dates present in both, restricted to the common window.
+    shared_dates = sorted(set(quant_eq) & set(hybrid_eq))
+
+    window_start = shared_dates[0] if shared_dates else ""
+    window_end = shared_dates[-1] if shared_dates else ""
+
+    quant_vals = [quant_eq[d] for d in shared_dates]
+    hybrid_vals = [hybrid_eq[d] for d in shared_dates]
+
+    q_metrics = _metrics_from_values(quant_vals)
+    h_metrics = _metrics_from_values(hybrid_vals)
+
+    import math
+
+    def _delta(h, q):
+        if math.isnan(h) or math.isnan(q):
+            return float("nan")
+        return h - q
+
+    delta = {
+        "sharpe": _delta(h_metrics["sharpe"], q_metrics["sharpe"]),
+        "ret": _delta(h_metrics["ret"], q_metrics["ret"]),
+        "maxdd": _delta(h_metrics["maxdd"], q_metrics["maxdd"]),
+    }
+
+    return {
+        "quant": q_metrics,
+        "hybrid": h_metrics,
+        "delta": delta,
+        "window": {
+            "start": window_start,
+            "end": window_end,
+            "n": len(shared_dates),
+            "coins": list(coins),
+        },
+    }
+
+
 def run_weekly_parity(*, week_end, live_start_date, live_end_date,
                        output_dir, journal_db=None, sandbox=None,
                        kelly: float = 0.25, lookback_days: int = 1500) -> Path:
