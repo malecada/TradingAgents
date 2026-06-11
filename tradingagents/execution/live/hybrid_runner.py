@@ -108,11 +108,73 @@ def run_hybrid_cycle(
         graph = _graph or _build_graph(str(staged))
         j = journal.Journal(str(data_dir / "trade_journal.db"))
 
+        # FIX 2: track cycle outcome so log_cycle_end fires on ALL paths
+        cycle_status = "ok"
+        cycle_err = ""
+
         try:
             j.log_cycle_start(cycle_id, git_sha="hybrid")
             portfolio_before = float(ex.get_total_portfolio_value())
             asof = datetime.now(timezone.utc).date().isoformat()
             weights = config.compute_portfolio_weights(list(preds.keys()))
+
+            # ── FIX 1: portfolio-level daily-loss + drawdown kill-switch ──
+            # Mirror the quant runner's pre-coin-loop risk gate: derive peak from
+            # the hybrid journal's own snapshot history, compute dd_from_peak and
+            # daily pnl, then halt before any trade if either gate fires.
+            #
+            # Cold-start (no prior snapshots): peak_total_value() returns 0.0 →
+            # we fall back to current value so dd=0 and the gate does not fire.
+            peak = j.peak_total_value()
+            if peak <= 0.0:
+                peak = portfolio_before   # first cycle: no false-trigger
+            dd_from_peak = (peak - portfolio_before) / peak if peak > 0 else 0.0
+
+            # Daily loss: compare current equity vs the last snapshot's total_value.
+            # We read directly from the hybrid journal (no rebacktest import).
+            import sqlite3 as _sqlite3
+            _conn_snap = _sqlite3.connect(str(data_dir / "trade_journal.db"))
+            _snap_row = _conn_snap.execute(
+                "SELECT total_value FROM portfolio_snapshots "
+                "ORDER BY ts DESC LIMIT 1"
+            ).fetchone()
+            _conn_snap.close()
+            if _snap_row and _snap_row[0] and float(_snap_row[0]) > 0:
+                pnl_today_pct = (portfolio_before - float(_snap_row[0])) / float(_snap_row[0])
+            else:
+                pnl_today_pct = 0.0   # first cycle: safe default
+
+            ok_loss, loss_why = live_risk.check_daily_loss(
+                pnl_today_pct, cfg.max_daily_loss_pct,
+            )
+            ok_dd, dd_why = live_risk.check_drawdown(
+                dd_from_peak, cfg.max_portfolio_dd,
+            )
+            if not ok_loss or not ok_dd:
+                kill_reason = loss_why if not ok_loss else dd_why
+                halt.write_halt(
+                    f"cycle {cycle_id}: {kill_reason}", data_dir=data_dir,
+                )
+                logger.error("hybrid kill-switch: %s", kill_reason)
+                cycle_status = "risk_halt"
+                cycle_err = kill_reason
+                return CycleResult(
+                    cycle_id=cycle_id, status="risk_halt", n_executed=0,
+                    error_msg=kill_reason,
+                )
+
+            # Log pre-trade portfolio snapshot (mirrors runner's step 9 pattern,
+            # placed here so peak_total_value() includes this cycle on the next run).
+            j.log_portfolio_snapshot(
+                cycle_id=cycle_id,
+                total_value=portfolio_before,
+                usdt_balance=ex.get_usdt_balance(),
+                position_qty_per_coin={
+                    c: ex.get_current_position(to_binance_symbol(c))
+                    for c in preds
+                },
+                unrealized_pnl=0.0,
+            )
 
             # Count already-open positions for max-positions gate
             open_count = 0
@@ -206,13 +268,24 @@ def run_hybrid_cycle(
                 side = "BUY" if delta > 0 else "SELL"
                 qty = ex.round_quantity(symbol, abs(delta))
                 price = preds[coin]["ref_price"]
-                if qty * price < ex.min_notional(symbol) and abs(current) < 1e-9:
-                    continue  # below MIN_NOTIONAL for an opening order
+
+                # FIX 3: reduceOnly when the trade reduces/closes an existing position
+                # (delta opposes current signed position and magnitude <= |current|).
+                # Binance lets reduceOnly closes bypass MIN_NOTIONAL (-4164 guard).
+                is_reduce_only = (
+                    abs(current) > 1e-9
+                    and current * delta < 0
+                    and abs(delta) <= abs(current) + 1e-9
+                )
+                if not is_reduce_only:
+                    if qty * price < ex.min_notional(symbol) and abs(current) < 1e-9:
+                        continue  # below MIN_NOTIONAL for an opening order
 
                 if dry_run:
                     continue
 
-                order = ex.place_market_order(symbol, side, qty)
+                order = ex.place_market_order(symbol, side, qty,
+                                              reduce_only=is_reduce_only)
                 n_executed += 1
                 if opening_new:
                     open_count += 1
@@ -240,9 +313,15 @@ def run_hybrid_cycle(
                     stop_loss_id=str(stop_id or ""), status="executed",
                 )
 
-            j.log_cycle_end(cycle_id, status="ok")
             return CycleResult(cycle_id=cycle_id, status="ok", n_executed=n_executed)
+        except Exception as exc:
+            # FIX 2: capture exception so the finally block can log it
+            cycle_status = "error"
+            cycle_err = str(exc)
+            raise
         finally:
+            # FIX 2: always record cycle outcome before closing the journal
+            j.log_cycle_end(cycle_id, status=cycle_status, error_msg=cycle_err)
             j.close()
 
     except Exception as e:
