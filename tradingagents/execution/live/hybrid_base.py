@@ -14,7 +14,7 @@ from tradingagents.execution.live.hold_sizer import HoldState, step_hold_state
 def derive_base(
     *, coin: str, prediction: dict, price_history,
     prev_state: HoldState, cfg: dict, asof: str,
-) -> tuple[float, HoldState, object]:
+) -> tuple[float, HoldState, sizer.SizingResult | None]:
     """Return (held_fraction, new_state, sizing_result_or_None).
 
     Re-derives the executed V5 base by calling sizer.compute_size then
