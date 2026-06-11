@@ -9,7 +9,9 @@ from __future__ import annotations
 import sqlite3
 
 
-def read_cycle_predictions(quant_db_path: str, cycle_id: str):
+def read_cycle_predictions(
+    quant_db_path: str, cycle_id: str
+) -> tuple[list[dict], dict[str, dict[str, float]]]:
     """Return (rows, preds) for a cycle.
 
     rows  = list[{coin, horizon, prediction, ref_price}]  (for stage_quant_preds)

@@ -7,10 +7,15 @@ The composition mirrors the validated §23 backtest
     final = base * (1 + effective_weight * (multiplier - 1))
 
 where ``base`` is the V5-sized quant position and (multiplier, effective_weight)
-come from the modulator graph's ``modulated_position`` (NOT its ``position``,
-which composed against the graph's own internal magnitude).
+come from the modulator graph's ``modulated_position`` (NOT its ``position``
+field, which is already composed against the graph's own internal magnitude
+and would double-apply the LLM adjustment).
 """
 from __future__ import annotations
+
+from pathlib import Path
+
+import pandas as pd
 
 
 def compose_final(*, base: float, multiplier: float, effective_weight: float) -> float:
@@ -35,10 +40,6 @@ def extract_modulator_outputs(modulated_position: dict | None) -> tuple[float, f
     return (mult, eff_w)
 
 
-from pathlib import Path
-import pandas as pd
-
-
 def stage_quant_preds(rows: list[dict], *, date: str, out_dir) -> Path:
     """Write cycle predictions to the quant_engine CSV layout.
 
@@ -49,6 +50,8 @@ def stage_quant_preds(rows: list[dict], *, date: str, out_dir) -> Path:
     """
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
+    if not rows:
+        return out_dir
     df = pd.DataFrame(rows)
     for h, fname in [(7, "preds_lgb_h7.csv"), (14, "preds_lgb_h14.csv")]:
         sub = df[df["horizon"] == h].copy()

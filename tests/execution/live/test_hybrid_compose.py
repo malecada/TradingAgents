@@ -35,3 +35,8 @@ def test_extract_clamps_multiplier_to_contract_bounds():
     # ModulatedPosition bounds llm_multiplier to [0, 1.5]
     assert extract_modulator_outputs({"llm_multiplier": 9.0, "effective_weight": 0.5})[0] == 1.5
     assert extract_modulator_outputs({"llm_multiplier": -9.0, "effective_weight": 0.5})[0] == 0.0
+
+def test_extract_clamps_effective_weight_to_unit_interval():
+    # effective_weight is a weight, bounded to [0, 1]
+    assert extract_modulator_outputs({"llm_multiplier": 1.0, "effective_weight": 9.0})[1] == 1.0
+    assert extract_modulator_outputs({"llm_multiplier": 1.0, "effective_weight": -1.0})[1] == 0.0
