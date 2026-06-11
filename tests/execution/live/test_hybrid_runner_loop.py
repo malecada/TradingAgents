@@ -81,12 +81,14 @@ def _seed_quant_db(db_path: str, cycle_id: str) -> None:
     j.close()
 
 
-def _seed_ohlcv_cache(hybrid_dir, symbol: str) -> None:
-    """Write 60-bar parquet to <hybrid_dir>/ohlcv_cache/<symbol>_1d.parquet
+def _seed_ohlcv_cache(data_dir, symbol: str) -> None:
+    """Write 60-bar parquet to <data_dir>/ohlcv_cache/<symbol>_1d.parquet
     with lowercase columns: date, open, high, low, close, volume.
     60 bars ensures vol_lookback=20 + trend_sma=30 have sufficient history.
+    The hybrid runner reads OHLCV from the QUANT data dir (populated by the
+    quant cycle); pass quant_dir here, not hybrid_dir.
     """
-    cache_dir = hybrid_dir / "ohlcv_cache"
+    cache_dir = data_dir / "ohlcv_cache"
     cache_dir.mkdir(parents=True, exist_ok=True)
     idx = pd.date_range("2026-03-01", periods=60, freq="D")
     px = pd.Series(100.0 + np.arange(60) * 0.5)
@@ -118,7 +120,7 @@ def test_loop_composes_and_executes_on_hybrid_only(tmp_path, monkeypatch):
     monkeypatch.setenv("BINANCE_API_SECRET", "qs")
     monkeypatch.setenv("COINGLASS_API_KEY", "cgk")
 
-    _seed_ohlcv_cache(hybrid_dir, "BTCUSDT")
+    _seed_ohlcv_cache(quant_dir, "BTCUSDT")
 
     fake_ex = FakeExchange()
     res = hybrid_runner.run_hybrid_cycle(
@@ -161,7 +163,7 @@ def test_loop_compose_uses_mult_not_position(tmp_path, monkeypatch):
     monkeypatch.setenv("BINANCE_API_SECRET", "qs")
     monkeypatch.setenv("COINGLASS_API_KEY", "cgk")
 
-    _seed_ohlcv_cache(hybrid_dir, "BTCUSDT")
+    _seed_ohlcv_cache(quant_dir, "BTCUSDT")
 
     # StubGraph returns position=-999 but the hybrid should use mult=1.4, eff_w=0.5
     fake_ex = FakeExchange()
@@ -198,7 +200,7 @@ def test_modulator_failure_degrades_to_pure_quant(tmp_path, monkeypatch):
     monkeypatch.setenv("BINANCE_API_SECRET", "qs")
     monkeypatch.setenv("COINGLASS_API_KEY", "cgk")
 
-    _seed_ohlcv_cache(hybrid_dir, "BTCUSDT")
+    _seed_ohlcv_cache(quant_dir, "BTCUSDT")
 
     fake_ex = FakeExchange()
     res = hybrid_runner.run_hybrid_cycle(
@@ -305,7 +307,7 @@ def test_drawdown_kill_halts_and_places_no_orders(tmp_path, monkeypatch):
     monkeypatch.setenv("BINANCE_API_SECRET", "qs")
     monkeypatch.setenv("COINGLASS_API_KEY", "cgk")
 
-    _seed_ohlcv_cache(hybrid_dir, "BTCUSDT")
+    _seed_ohlcv_cache(quant_dir, "BTCUSDT")
 
     fake_ex = FakeExchangeLow()
     res = hybrid_runner.run_hybrid_cycle(
@@ -357,7 +359,7 @@ def test_cycle_end_logged_on_exception(tmp_path, monkeypatch):
     monkeypatch.setenv("BINANCE_API_SECRET", "qs")
     monkeypatch.setenv("COINGLASS_API_KEY", "cgk")
 
-    _seed_ohlcv_cache(hybrid_dir, "BTCUSDT")
+    _seed_ohlcv_cache(quant_dir, "BTCUSDT")
 
     fake_ex = ExchangeThatExplodes()
     res = hybrid_runner.run_hybrid_cycle(
@@ -478,7 +480,7 @@ def test_reduce_only_set_when_flattening(tmp_path, monkeypatch):
     monkeypatch.setenv("BINANCE_API_SECRET", "qs")
     monkeypatch.setenv("COINGLASS_API_KEY", "cgk")
 
-    _seed_ohlcv_cache(hybrid_dir, "BTCUSDT")
+    _seed_ohlcv_cache(quant_dir, "BTCUSDT")
 
     # Exchange reports existing 0.5 BTC long
     fake_ex = FakeExchangeWithPosition(existing_qty=0.5)

@@ -179,6 +179,11 @@ def create_app(
             "HYBRID_DATA_DIR", os.environ.get("DATA_DIR", "data")))
         quant_db = quant_dir / "trade_journal.db"
         hybrid_db = hybrid_dir / "trade_journal.db"
+        if quant_db == hybrid_db:
+            return {"error": (
+                "hybrid not configured — "
+                "HYBRID_DATA_DIR not set or equals QUANT_DATA_DIR"
+            )}
         coins_env = os.environ.get("COMPARE_COINS", "")
         coins = [c.strip() for c in coins_env.split(",") if c.strip()]
         return compare_quant_hybrid(quant_db, hybrid_db, coins=coins)

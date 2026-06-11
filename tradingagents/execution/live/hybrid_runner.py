@@ -104,6 +104,11 @@ def run_hybrid_cycle(
             early_exit_loss=cfg.early_exit_loss,
         )
 
+        # OHLCV is written by the quant cycle into QUANT_DATA_DIR/ohlcv_cache;
+        # the hybrid runner does not refresh data, so read from there (same
+        # pattern as reading the quant journal read-only).
+        quant_data_dir = Path(acct.quant_db_path).parent
+
         ex = _exchange or _build_exchange(acct)
         graph = _graph or _build_graph(str(staged))
         j = journal.Journal(str(data_dir / "trade_journal.db"))
@@ -190,8 +195,15 @@ def run_hybrid_cycle(
             for coin in preds:
                 symbol = to_binance_symbol(coin)
 
-                # ── load OHLCV cache ───────────────────────────────────────
-                cache = data_dir / "ohlcv_cache" / f"{symbol}_1d.parquet"
+                # ── load OHLCV cache (written by quant cycle, not hybrid) ──
+                cache = quant_data_dir / "ohlcv_cache" / f"{symbol}_1d.parquet"
+                if not cache.exists():
+                    logger.warning(
+                        "OHLCV cache missing for %s at %s — "
+                        "derive_base will return None and this coin will be skipped; "
+                        "ensure the quant cycle has run and populated QUANT_DATA_DIR",
+                        symbol, cache,
+                    )
                 history = pd.read_parquet(cache) if cache.exists() else pd.DataFrame()
 
                 # ── re-derive V5 base using hybrid journal's hold state ────

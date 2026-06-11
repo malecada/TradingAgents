@@ -1,5 +1,12 @@
 [Unit]
 Description=TradingAgents hybrid (quant×LLM) live cycle
+# NOTE: After=ta-cycle.service only orders units started in the same systemd
+# transaction (e.g. boot, explicit combined start); it does NOT enforce ordering
+# between the two independent timer-driven activations (ta-cycle.timer fires at
+# 00:05 UTC, ta-hybrid-cycle.timer fires at 00:35 UTC).  The 30-minute calendar
+# gap is the real sequencing mechanism: if the quant cycle has not yet written
+# predictions for today when the hybrid fires, run_hybrid_cycle() detects the
+# missing cycle and returns status=no_quant_cycle, skipping that day gracefully.
 After=network-online.target ta-cycle.service
 Wants=network-online.target ta-cycle.service
 
