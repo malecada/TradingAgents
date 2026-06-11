@@ -124,3 +124,11 @@ else
 fi
 
 echo "V5 preflight: ALL OK"
+
+# --- hybrid preflight (only when HYBRID_DATA_DIR is set) ---
+if [ -n "${HYBRID_DATA_DIR:-}" ]; then
+  : "${HYBRID_BINANCE_API_KEY:?HYBRID_BINANCE_API_KEY missing}"
+  : "${HYBRID_BINANCE_API_SECRET:?HYBRID_BINANCE_API_SECRET missing}"
+  : "${OPENAI_API_KEY:?OPENAI_API_KEY missing for modulator}"
+  echo "  hybrid secrets: present"
+fi
