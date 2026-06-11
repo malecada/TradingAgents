@@ -84,6 +84,21 @@ def to_binance_symbol(coin_id: str) -> str:
     return f"{base}USDT"
 
 
+_BINANCE_BASE_TO_COIN = {v: k for k, v in _COIN_TO_BINANCE_BASE.items()}
+
+
+def from_binance_symbol(symbol: str) -> str:
+    """Inverse of :func:`to_binance_symbol`: Binance USDT pair → coin id.
+
+    Strips the ``USDT`` quote and reverses the known base map; unknown bases
+    fall back to the lower-cased base, so the mapping round-trips for any id.
+    """
+    base = symbol.upper()
+    if base.endswith("USDT"):
+        base = base[:-4]
+    return _BINANCE_BASE_TO_COIN.get(base, base.lower())
+
+
 @dataclass(frozen=True)
 class LiveConfig:
     live_mode: bool

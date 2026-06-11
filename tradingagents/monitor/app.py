@@ -10,7 +10,9 @@ import json
 import os
 import secrets
 import sqlite3
+import time
 from pathlib import Path
+from typing import Callable
 
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import JSONResponse
@@ -19,6 +21,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 
+from tradingagents.execution.live.config import from_binance_symbol
 from tradingagents.monitor import db, health, metrics
 from tradingagents.execution.live.rebacktest import compare_quant_hybrid
 
@@ -30,12 +33,54 @@ def create_app(
     journal_path: str,
     log_dir: str,
     start_capital: float = 10000.0,
+    position_provider: Callable[[], list[dict]] | None = None,
+    position_cache_ttl: float = 30.0,
+    clock: Callable[[], float] = time.monotonic,
 ) -> FastAPI:
     """Build the monitor app. Raises RuntimeError if TA_MONITOR_PASSWORD
-    is unset — the UI must never run without a password."""
+    is unset — the UI must never run without a password.
+
+    ``position_provider`` returns the live exchange positions as
+    ``[{symbol, qty, usd}, ...]``; the default queries Binance via
+    ``ExchangeClient.get_open_positions``. Results (and failures) are cached
+    for ``position_cache_ttl`` seconds so 30-second UI polling — and retries
+    during an IP ban — never hammer the exchange.
+    """
     password = os.environ.get("TA_MONITOR_PASSWORD", "")
     if not password:
         raise RuntimeError("TA_MONITOR_PASSWORD environment variable is not set")
+
+    # Default provider: lazy ExchangeClient, reused across calls. Raises (so
+    # the endpoint falls back to the journal snapshot) when no creds are set.
+    _exchange: dict = {"client": None}
+
+    def _default_position_provider() -> list[dict]:
+        if not os.environ.get("BINANCE_API_KEY"):
+            raise RuntimeError(
+                "BINANCE_API_KEY not set — live positions unavailable")
+        if _exchange["client"] is None:
+            from tradingagents.execution.exchange import ExchangeClient
+            _exchange["client"] = ExchangeClient()
+        return _exchange["client"].get_open_positions()
+
+    provider = position_provider or _default_position_provider
+    _pos_cache: dict = {"exp": 0.0, "data": None, "error": None}
+
+    def live_positions() -> list[dict]:
+        """Cached live positions. Re-raises a cached failure within the TTL
+        rather than re-querying — repeated calls during a ban extend it."""
+        now = clock()
+        if now < _pos_cache["exp"]:
+            if _pos_cache["error"] is not None:
+                raise _pos_cache["error"]
+            return _pos_cache["data"]
+        try:
+            data = provider()
+            _pos_cache.update(exp=now + position_cache_ttl, data=data, error=None)
+            return data
+        except Exception as exc:
+            _pos_cache.update(exp=now + position_cache_ttl, data=None, error=exc)
+            raise
 
     app = FastAPI(title="V5 MIX Live Monitor", docs_url=None, redoc_url=None)
     templates = Jinja2Templates(directory=str(_DIR / "templates"))
@@ -83,27 +128,44 @@ def create_app(
         equity = metrics.equity_series(snaps, trades, start_capital)
         values = [pt["value"] for pt in equity]
 
-        # Current holdings come from the latest portfolio snapshot's
-        # position_qty_per_coin JSON map. The V5 bot is a rebalancing
-        # strategy — it never journals round-trip trades, so per-trade
-        # PnL does not exist; the equity curve is the realized-PnL story.
-        # usd values qty at the last-cycle ref price (signed — shorts < 0).
+        # Current holdings: live exchange positions valued at live mark price.
+        # On any live failure (IP ban, missing creds, timeout) fall back to the
+        # latest journal snapshot's position_qty_per_coin map valued at the
+        # last-cycle ref price, flagged stale so the UI never presents frozen
+        # positions as live. The V5 bot is a rebalancing strategy — it never
+        # journals round-trip trades, so the equity curve is the PnL story.
         holdings: list[dict] = []
-        if snaps:
-            raw = snaps[-1].get("position_qty_per_coin")
-            try:
-                qty_map = json.loads(raw) if raw else {}
-            except (json.JSONDecodeError, TypeError):
-                qty_map = {}
-            for coin, qty in sorted(qty_map.items()):
-                if not qty:
+        holdings_stale = False
+        holdings_as_of = None
+        holdings_live_error = None
+        try:
+            for p in sorted(live_positions(), key=lambda x: x["symbol"]):
+                if not p["qty"]:
                     continue
-                price = ref_prices.get(coin)
                 holdings.append({
-                    "coin": coin,
-                    "qty": qty,
-                    "usd": qty * price if price is not None else None,
+                    "coin": from_binance_symbol(p["symbol"]),
+                    "qty": p["qty"],
+                    "usd": p["usd"],
                 })
+        except Exception as exc:  # live unavailable — fall back to snapshot
+            holdings_stale = True
+            holdings_live_error = str(exc)
+            if snaps:
+                holdings_as_of = snaps[-1].get("ts")
+                raw = snaps[-1].get("position_qty_per_coin")
+                try:
+                    qty_map = json.loads(raw) if raw else {}
+                except (json.JSONDecodeError, TypeError):
+                    qty_map = {}
+                for coin, qty in sorted(qty_map.items()):
+                    if not qty:
+                        continue
+                    price = ref_prices.get(coin)
+                    holdings.append({
+                        "coin": coin,
+                        "qty": qty,
+                        "usd": qty * price if price is not None else None,
+                    })
         holdings_usd_total = sum(
             h["usd"] for h in holdings if h["usd"] is not None
         )
@@ -119,6 +181,9 @@ def create_app(
             "backtest_anchor_sharpe": 3.18,
             "holdings": holdings,
             "holdings_usd_total": holdings_usd_total,
+            "holdings_stale": holdings_stale,
+            "holdings_as_of": holdings_as_of,
+            "holdings_live_error": holdings_live_error,
         }
 
     @app.get("/api/trades")
