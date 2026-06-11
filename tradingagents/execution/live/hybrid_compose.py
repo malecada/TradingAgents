@@ -17,6 +17,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from tradingagents.default_config import DEFAULT_CONFIG
+
 
 def compose_final(*, base: float, multiplier: float, effective_weight: float) -> float:
     return float(base * (1.0 + effective_weight * (multiplier - 1.0)))
@@ -61,3 +63,34 @@ def stage_quant_preds(rows: list[dict], *, date: str, out_dir) -> Path:
             out_dir / fname, index=False
         )
     return out_dir
+
+
+# Validated §23 production analyst set: market + onchain + prediction.
+# crypto_sentiment dropped (feedback_drop_sentiment_analyst); market kept
+# (market-analyst-v2 refactor rejected, project_market_analyst_v2).
+HYBRID_ANALYSTS = ["market", "onchain", "prediction"]
+
+
+def build_hybrid_config(*, quant_pred_dir: str) -> dict:
+    """Return DEFAULT_CONFIG with the validated hybrid pins applied.
+
+    Pins gpt-4o-mini for both LLM slots (gpt-5-mini HURT, §23.9), turns the
+    replay cache off (live), and points quant_pred_dir at the staged live
+    preds. Modulator config (regime_weighting, dampeners, rolling_edge_*) is
+    inherited from DEFAULT_CONFIG unchanged (validated defaults).
+
+    Args:
+        quant_pred_dir: path to directory holding preds_lgb_h7.csv /
+            preds_lgb_h14.csv written by stage_quant_preds.
+
+    Returns:
+        Config dict ready to pass to TradingAgentsGraph(..., config=cfg).
+    """
+    cfg = DEFAULT_CONFIG.copy()
+    cfg["asset_class"] = "crypto"
+    cfg["llm_provider"] = "openai"
+    cfg["deep_think_llm"] = "gpt-4o-mini"
+    cfg["quick_think_llm"] = "gpt-4o-mini"
+    cfg["replay_cache"] = False
+    cfg["quant_pred_dir"] = quant_pred_dir
+    return cfg
