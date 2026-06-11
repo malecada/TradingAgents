@@ -131,4 +131,16 @@ if [ -n "${HYBRID_DATA_DIR:-}" ]; then
   : "${HYBRID_BINANCE_API_SECRET:?HYBRID_BINANCE_API_SECRET missing}"
   : "${OPENAI_API_KEY:?OPENAI_API_KEY missing for modulator}"
   echo "  hybrid secrets: present"
+  # All 8 live-coin regime HMMs must be provisioned. Checkpoints are gitignored
+  # out-of-band artifacts (trained on / scp'd to the VPS), so guard their
+  # presence here before the hybrid cycle relies on them.
+  ckpt_dir="${CHECKPOINT_DIR:-data/checkpoints}"
+  for c in bitcoin ethereum binancecoin solana ripple dogecoin cardano tron; do
+    [ -f "$ckpt_dir/regime_hmm_$c.pkl" ] || {
+      echo "MISSING regime HMM: $ckpt_dir/regime_hmm_$c.pkl" >&2
+      echo "  provision via: python scripts/train_regime_hmm.py --coins $c --through <date>" >&2
+      exit 1
+    }
+  done
+  echo "  hybrid regime HMMs: 8/8 present"
 fi
