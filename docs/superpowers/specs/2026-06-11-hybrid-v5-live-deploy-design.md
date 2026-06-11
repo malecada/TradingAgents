@@ -111,8 +111,7 @@ Live universe = BTC ETH BNB SOL XRP DOGE ADA TRX. Current checkpoints: regime HM
 - **Regime HMM (cheap, deterministic — price history only):** train **XRP, DOGE, ADA, TRX** via
   `scripts/train_regime_hmm.py --coins ripple dogecoin cardano tron --through <deploy-date> --n-iter 200`.
   (Missing HMM already degrades gracefully — `regime.py:284` try/except → warning + default — so this is quality, not a blocker.)
-- **Isotonic calibration (heavier — needs LLM signal history):** missing for **BNB, SOL, XRP, DOGE, ADA, TRX** (6). `IsotonicCalibrator.fit` needs ≥10 `(raw_conf, outcome)` pairs, which only exist after a historical `generate_hybrid_signals` pass per coin → real LLM cost. **Cutoff constraint:** that historical pass must start **after 2023-10** (gpt-4o-mini cutoff; `feedback_llm_cutoff_constraint`). Missing calibration falls back to **identity** (`load_or_identity`) — the validated BTC+ETH-era state itself used identity for all-but-two coins, so this is acceptable if cost is a concern.
-  - **Scope flag for review:** regime HMM pre-train is clearly worth it; calibration pre-train for the 6 satellites carries an LLM-cost historical pass — see §8. Confirm at review whether to do all 6 or accept identity for the satellites.
+- **Isotonic calibration — DROPPED (inert on positions, 2026-06-11).** Code trace: the calibrated confidence (`agents/modulator.py:166-168`) lands only in `ModulatedPosition.llm_confidence`, a logged audit field. The position (`strategies/modulator.py:66`) is `magnitude × (1 + effective_weight × (multiplier−1))`, with `multiplier=m_mean` (raw Self-MoA mean) and `effective_weight` keyed on `uncertainty=m_std` (raw) — neither reads the calibrated confidence; the live runner discards `llm_confidence` entirely. So fitted vs identity ⇒ **identical trades**. The 6 satellites use identity calibration (`load_or_identity`) — behaviorally identical, not a degradation. The one-off ~$50–75 LLM pre-train is skipped. (BTC/ETH calibrators already exist but are likewise vestigial for sizing.) Re-open only if a future change makes `llm_confidence` affect sizing, or the thesis needs the logged confidence to be empirically meaningful.
 
 ### 5.8 Comparison reporting (extend existing)
 - **Does:** extend the weekly `rebacktest.py`/parity job + monitor UI to read **both** journals and emit quant-vs-hybrid ΔSR / Δret / ΔmaxDD over the overlapping live window; per-coin + BTC+ETH sleeve + full-8 aggregate.
@@ -136,14 +135,13 @@ Live universe = BTC ETH BNB SOL XRP DOGE ADA TRX. Current checkpoints: regime HM
 ## 8. Risks / cost / caveats
 
 - **8-coin cold-start:** even after regime-HMM pre-train, `rolling_llm_edge` cold-starts per coin (`rolling_edge_min_trades=10`) → the 6 satellites' effective_weight is under-informed for the first ~weeks. Self-warms. Expected; the validated alpha is BTC+ETH, which are fully warm.
-- **LLM cost/latency:** 8 full graphs/day × Self-MoA N=5, gpt-4o-mini — small daily run-cost, but the calibration pre-train (§5.7) is a one-off **historical** LLM pass over 6 coins → the main cost line. Bound it (window length × coins) and confirm at review.
-- **Cutoff:** any historical hybrid-signal generation must start after 2023-10.
+- **LLM cost/latency:** 8 full graphs/day × Self-MoA N=5, gpt-4o-mini — small daily run-cost, no large one-off (calibration pre-train dropped, §5.7). Each daily cycle runs 8 sequential graphs after the quant cycle; the 00:35 UTC start leaves ~23h slack before the next bar.
 - **Sentiment-drop extrapolation:** dropping `crypto_sentiment` is validated on BTC+ETH only; applying to all 8 is an assumption — recorded as a caveat, revisitable.
 - **No-regression is the hard constraint:** all hybrid work is additive; STEP 1 stays untouched and is covered by a regression test.
 
 ## 9. Rollout
 
-1. Pre-train regime HMM (XRP/DOGE/ADA/TRX) + (scoped) calibration; validate checkpoints load.
+1. Pre-train regime HMM (XRP/DOGE/ADA/TRX); validate all 8 checkpoints load. (Calibration dropped — inert on positions, §5.7.)
 2. Build `hybrid_runner` + staging + config pins + tests (off `live-v2.2.2` in an isolated worktree).
 3. Provision 2nd testnet key + `OPENAI_API_KEY`; second `DATA_DIR`/secrets/systemd unit.
 4. Dry-run on VPS (no orders) → verify per-coin `final`, isolation, journals.
@@ -151,6 +149,6 @@ Live universe = BTC ETH BNB SOL XRP DOGE ADA TRX. Current checkpoints: regime HM
 
 ## 10. Resolved decisions (2026-06-11)
 
-1. **Calibration pre-train scope** (§5.7/§8): regime HMM pre-trained for all 4 missing coins (XRP/DOGE/ADA/TRX, cheap/deterministic). Isotonic calibration for the 6 satellites generated over the §23 validated window (1-yr, post-2023-10) as a **gated, cost-estimated pre-deploy task** — the LLM spend is surfaced for go/no-go before it runs; identity fallback (`load_or_identity`) if declined.
+1. **Calibration: DROPPED as inert** (§5.7). Code trace confirmed isotonic calibration affects only the logged `llm_confidence` audit field, never the position (which keys on raw `multiplier` + `uncertainty`). Fitted vs identity ⇒ identical trades, so the 6 satellites use identity calibration and the ~$50–75 LLM pre-train is skipped. Regime HMM still pre-trained for all 4 missing coins (XRP/DOGE/ADA/TRX, cheap/deterministic).
 2. **Quant-base handoff** (§5.2): **re-derive from the shared `predictions` rows** via the same `sizer`/`hold_sizer` against the hybrid journal's own `hold_state` (zero-touch to `run_cycle`; the executed `held_fraction` is not persisted, so reading it back is impossible — re-derivation is both necessary and cleaner). Architecture is **two ordered systemd units**, not one process.
 3. **Self-MoA N=5** (confirmed in code) and **analyst set = `market` + `onchain` + `prediction`** (sentiment dropped). See §5.4.

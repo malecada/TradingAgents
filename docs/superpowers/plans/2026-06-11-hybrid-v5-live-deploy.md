@@ -94,9 +94,9 @@ git add tests/strategies/test_regime_hmm_satellites.py data/checkpoints/regime_h
 git commit -m "feat(hybrid): regime HMM checkpoints for XRP/DOGE/ADA/TRX"
 ```
 
-### Task 0.2 (GATED — LLM cost): Isotonic calibration for the 6 satellites
+### Task 0.2 — DROPPED (calibration is inert on the hybrid position)
 
-> **STOP — cost gate.** This task runs `scripts/generate_hybrid_signals.py` over a 1-year post-cutoff window for 6 coins to collect `(raw_conf, outcome)` pairs (gpt-4o-mini, Self-MoA N=5 per bar ≈ 6 coins × ~365 bars × graph cost). Estimate the spend (≈ the §23 1-yr hybrid-signal cost × 3, since 6 coins vs 2) and get explicit user go/no-go **before running Step 3**. If declined, skip this task — `load_or_identity` degrades the 6 satellites to identity calibration, which is acceptable (the validated BTC+ETH-era state used identity for all-but-two coins). BTC/ETH already have fitted calibrators.
+> **Decision 2026-06-11: DO NOT run this task.** Code trace confirms the isotonic-calibrated confidence (`agents/modulator.py:166-168`) lands only in `ModulatedPosition.llm_confidence` — a logged audit field. The position formula (`strategies/modulator.py:66`) is `magnitude × (1 + effective_weight × (multiplier − 1))`, where `multiplier=m_mean` (raw) and `effective_weight` keys on `uncertainty=m_std` (raw); neither reads the calibrated confidence, and the live runner discards `llm_confidence` (`extract_modulator_outputs` pulls only multiplier + effective_weight). So fitted vs identity calibrators ⇒ **identical trades**. The 6 satellites use identity calibration (`load_or_identity`) — behaviorally identical, not a degradation. Saves the ~$50–75 one-off LLM spend. Re-open ONLY if a future change makes `llm_confidence` affect sizing, or the thesis needs the logged confidence empirically meaningful. **The steps below are retained for reference and MUST NOT be executed.**
 
 **Files:**
 - Use existing: `scripts/generate_hybrid_signals.py`, `tradingagents/strategies/calibration.py` (`IsotonicCalibrator`)
