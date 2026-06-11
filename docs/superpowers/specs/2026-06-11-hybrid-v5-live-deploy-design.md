@@ -43,47 +43,51 @@ Run the **hybrid quant+LLM-modulator** strategy live on Binance testnet **in par
 
 ## 4. Architecture
 
-Single daily process (one systemd trigger), additive to the quant path:
+**Two ordered systemd units** (`ta-hybrid-cycle` runs `After=ta-cycle`), additive — the quant runner is **not touched at all**:
 
 ```
-ta-cycle (daily 00:05 UTC) — ONE process
-│
-├─ STEP 1  quant run_cycle()  ── UNCHANGED ──▶ QUANT testnet acct + journal(quant)
-│            data→retrain→predict(8-coin preds_df)→size(V5 base)→risk→execute
-│            (this is today's live bot, untouched; writes predictions + sizing to journal)
-│
-└─ STEP 2  hybrid_runner (NEW, additive)
-             a. read this cycle's V5 base[coin] + preds from journal(quant)   ← zero-touch reuse
-             b. stage preds → quant_engine CSV layout (8 coins, h7/h14) in a per-cycle dir;
-                point quant_pred_dir/base_dir at it
-             c. for coin in 8:
-                  propagate_with_modulator(coin, date)  →  (multiplier, effective_weight)   [gpt-4o-mini]
-             d. final[coin] = base[coin] × (1 + effective_weight[coin] × (multiplier[coin] − 1))
-             e. risk-check final (same per-coin caps + gross cap + 3% price stops as quant)
-             f. execute final on HYBRID testnet acct  ──▶ journal(hybrid)
-│
-└─ STEP 3  comparison: weekly rebacktest job + monitor read both journals →
-             ΔSR / Δret / ΔmaxDD  (BTC+ETH sleeve + full 8)
+UNIT 1  ta-cycle (daily 00:05 UTC)  — existing, UNCHANGED
+        run_cycle()  ── QUANT testnet acct ──▶ journal(quant)
+        data→retrain→predict(8-coin preds_df)→size(V5 base)→risk→execute
+        writes the full preds to journal(quant).predictions  (coin,horizon,pred_value,ref_price,bundle_route)
+
+UNIT 2  ta-hybrid-cycle (After=ta-cycle, same cycle_id = UTC date)  — NEW
+        a. read this cycle's predictions back from journal(quant)  ← shared signals, ZERO touch to UNIT 1
+        b. stage preds → quant_engine CSV layout (preds_lgb_h{7,14}.csv, cols date,coin_id,ref_price,prediction);
+           point config["quant_pred_dir"] at it  → the modulator's LLM reasons over LIVE preds
+        c. for coin in 8:
+             base[coin]  = re-derive V5 sizing from the SAME preds via sizer.compute_size
+                           + hold_sizer.step_hold_state against the HYBRID journal's own hold_state
+             mp          = propagate_with_modulator(coin, date)   [gpt-4o-mini, Self-MoA N=5]
+             mult, eff_w = mp["llm_multiplier"], mp["effective_weight"]     ← extract, DISCARD mp["position"]
+             final[coin] = base[coin] × (1 + eff_w × (mult − 1))            ← recompose vs the V5 base
+        d. risk-check final (same live/risk.py checks + 3% price STOP_MARKET algo stops as quant)
+        e. execute final on HYBRID testnet acct  ──▶ journal(hybrid)  +  hybrid heartbeat
+
+UNIT 3  comparison: weekly rebacktest job + monitor read both journals →
+        ΔSR / Δret / ΔmaxDD  (BTC+ETH sleeve + full 8)
 ```
 
-**No-regression guarantee:** STEP 1 is the existing `run_cycle()` invoked unmodified — it executes the quant account exactly as today and persists predictions/sizing to its journal. STEP 2 only *reads* that journal and trades a *separate* account. The sole code addition to the existing path is, at most, surfacing the in-memory base weights to avoid a journal round-trip — and even that is optional (the journal already records them).
+**Composition correctness (critical):** the modulator graph *internally* computes `mp["position"] = magnitude × (1 + eff_w × (mult−1))` using its **own** Layer-1 magnitude (`s×c` off the LGB CSVs). The validated §23 backtest (`scripts/backtest_hybrid.py`, `v2_sizing=True`) instead composed `(mult, eff_w)` against the **V2/V5-sized base**. So the live path **extracts only `llm_multiplier` + `effective_weight`** from `modulated_position` and **recomposes against the V5 base** — `mp["position"]` is discarded.
+
+**No-regression guarantee:** UNIT 1 (`run_cycle`) is byte-for-byte untouched — it executes the quant account exactly as today. UNIT 2 only *reads* the quant journal's `predictions` rows (not path-dependent) and re-derives V5 sizing itself (same `sizer`/`hold_sizer` code, the hybrid's own `hold_state`), so it never needs the quant's executed base and never writes to the quant book. One shared train/predict (UNIT 1); UNIT 2 adds only `compute_size` (cheap) + the modulator graph.
 
 ## 5. Components
 
 Each is a small, independently testable unit.
 
 ### 5.1 `hybrid_runner` (new — `tradingagents/execution/live/hybrid_runner.py`)
-- **Does:** orchestrates STEP 2 — read base, stage preds, call modulator per coin, compose, risk-check, execute on the hybrid account, write hybrid journal, heartbeat.
-- **Interface:** `run_hybrid_cycle(cycle_id, *, dry_run=False) -> CycleResult`. CLI `--once/--dry-run/--cycle-id/--kill-all/--resume` mirroring `live/runner.py`.
-- **Depends on:** quant journal (read), `quant_engine` staging, `TradingAgentsGraph.propagate_with_modulator`, `execution/risk.py`, a second `ExchangeClient`, hybrid journal.
+- **Does:** orchestrates UNIT 2 — read the quant cycle's preds, stage them, re-derive the V5 base, call the modulator per coin, recompose, risk-check, execute on the hybrid account, write the hybrid journal + heartbeat.
+- **Interface:** `run_hybrid_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult` (mirrors `runner.run_cycle`; reuses the `CycleResult` dataclass). CLI `--once/--dry-run/--cycle-id/--kill-all/--resume`. `cycle_id` defaults to the same UTC-date string as the quant cycle, so it reads the same cycle's preds.
+- **Depends on (all reused leaf modules):** `journal.Journal` (raw read of the quant DB's `predictions` + a separate hybrid DB), `sizer.compute_size` + `hold_sizer.step_hold_state`, `TradingAgentsGraph.propagate_with_modulator`, `live/risk.py` checks, `live/stops.arm_stop_loss`, a second `ExchangeClient`.
 
-### 5.2 Quant-base reuse (read-only)
-- **Does:** load the just-written `predictions` + `sizing` rows for `cycle_id` from the quant journal → `base[coin]`.
-- **Why journal-read:** zero modification to `run_cycle()` → strongest no-regression guarantee. (Alternative: have the paired orchestrator pass base weights in-memory; decide at plan time — default to journal-read.)
+### 5.2 Quant-base handoff — re-derive from shared preds (zero-touch)
+- **Does:** read the quant cycle's `predictions` rows (raw `SELECT coin, horizon, pred_value, ref_price FROM predictions WHERE cycle_id=?` — there is **no** journal reader method, mirror the runner's inline-`sqlite3` pattern at `runner.py:554-561`), reshape to `preds[coin] = {ref_price, pred_h7, pred_h14}`, then re-derive the V5 base via `sizer.compute_size(...)` + `hold_sizer.step_hold_state(...)` against the **hybrid journal's own `hold_state`**.
+- **Why re-derive, not read the executed base:** the journal `sizing` table stores only the *stateless* `final_size_notional`; the actually-executed base is the min-hold path-dependent `held_fraction`, which is not persisted. Re-deriving with the same `sizer`/`hold_sizer` code on the same (non-path-dependent) preds gives an identical stateless base, and the hybrid correctly runs its **own** min-hold discipline on its **own** book. Zero modification to `run_cycle()`.
 
-### 5.3 Prediction staging (the one real seam)
-- **Does:** each cycle, write the live V5 8-coin predictions to the CSV layout `quant_engine` expects (`preds_lgb_h{7,14}.csv` per coin) in a per-cycle dir; set `base_dir`/`quant_pred_dir` so the modulator graph's Layer-1 consumes live preds, not the static backtest dir.
-- **Interface:** `stage_quant_preds(preds_df, out_dir) -> Path`.
+### 5.3 Prediction staging (required for the modulator's LLM context)
+- **Does:** write the cycle's 8-coin predictions to the CSV layout `quant_engine._load_pred_row` expects — `preds_lgb_h7.csv` + `preds_lgb_h14.csv`, columns exactly `date, coin_id, ref_price, prediction` — in a per-cycle dir, then set `config["quant_pred_dir"]` to it. Without this, `_load_pred_row` returns `None` for live dates → the modulator node hits "Layer 1 unavailable" and skips. (Regime detection + effective_weight do **not** read these CSVs, but the LLM's `deterministic_signals` pack — `lgb_h7/lgb_h14/ref_price/lgb_confidence` — does.)
+- **Interface:** `stage_quant_preds(preds_rows, out_dir) -> Path`.
 
 ### 5.4 Modulator invocation + config pinning
 - **Does:** build one `TradingAgentsGraph` with the **validated hybrid config**, call `propagate_with_modulator` per coin.
@@ -94,8 +98,8 @@ Each is a small, independently testable unit.
   - Modulator config (`regime_weighting`, `rolling_edge_window_days`, dampeners) — already validated defaults on the base; keep.
 
 ### 5.5 Composition + execution
-- **Does:** apply the formula (§3), then route through the **same** `execution/risk.py` path (per-coin notional caps, gross cap, MIN_NOTIONAL, LOT_SIZE rounding, 3% **price**-based STOP_MARKET algo stops) before placing orders on the hybrid account.
-- **Note:** `multiplier>1` can lever the hybrid position *above* the quant base; the shared risk caps bound it. Stops/risk apply post-composition.
+- **Does:** recompose `final = base × (1 + eff_w × (mult − 1))`, convert to a signed qty via `sizer.target_position_qty(size_fraction, portfolio_value, weight=cfg.portfolio_weights[coin], ref_price)`, delta vs the hybrid account's current position, then route through the **same** live checks (`live/risk.py`: `check_leverage/daily_loss/drawdown/frequency_guard/max_positions`), `ex.round_quantity` (LOT_SIZE), `ex.min_notional` (MIN_NOTIONAL), and `stops.arm_stop_loss` (3% **price** STOP_MARKET algo stop) before placing orders on the hybrid account.
+- **Note:** `mult ∈ [0, 1.5]` (Pydantic-bounded), so `mult>1` can lever the hybrid position *above* the quant base; the same `max_leverage`/`max_open_positions` caps bound it. Stops/risk apply post-composition.
 
 ### 5.6 Second-account isolation
 - **Does:** hybrid trades a **separate Binance testnet account** (its own API key/secret) so positions never collide with the quant account.
@@ -148,5 +152,5 @@ Live universe = BTC ETH BNB SOL XRP DOGE ADA TRX. Current checkpoints: regime HM
 ## 10. Resolved decisions (2026-06-11)
 
 1. **Calibration pre-train scope** (§5.7/§8): regime HMM pre-trained for all 4 missing coins (XRP/DOGE/ADA/TRX, cheap/deterministic). Isotonic calibration for the 6 satellites generated over the §23 validated window (1-yr, post-2023-10) as a **gated, cost-estimated pre-deploy task** — the LLM spend is surfaced for go/no-go before it runs; identity fallback (`load_or_identity`) if declined.
-2. **Quant-base handoff** (§5.2): **journal-read** (zero-touch to the quant path).
+2. **Quant-base handoff** (§5.2): **re-derive from the shared `predictions` rows** via the same `sizer`/`hold_sizer` against the hybrid journal's own `hold_state` (zero-touch to `run_cycle`; the executed `held_fraction` is not persisted, so reading it back is impossible — re-derivation is both necessary and cleaner). Architecture is **two ordered systemd units**, not one process.
 3. **Self-MoA N=5** (confirmed in code) and **analyst set = `market` + `onchain` + `prediction`** (sentiment dropped). See §5.4.
