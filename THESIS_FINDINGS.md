@@ -1347,6 +1347,8 @@ Both prefer aw=2.0 dw=0.3. Cap diverges. The portfolio uniform (cap=2.0) sits be
 
 ## 9. Data Artifacts
 
+> (Historical numbering — this section predates the §10/§11 insertions and sits out of order.)
+
 | File | Contents |
 |------|----------|
 | `data/eval_predictions.csv` | BTC RF+ARIMA 365-day walk-forward predictions (single-coin) |
@@ -1375,15 +1377,18 @@ Note: `_v2` directories contain the corrected prediction CSVs with `ref_price` c
 
 ---
 
-## 10. V3 Quant Strategy — First-Run A/B Headline Evaluation (Task 37)
+## 12.0 V3 Quant Strategy — First-Run A/B Headline Evaluation (Task 37)
 
-### 10.1 Setup
+> Renumbered from a duplicate "§10" heading (collided with §10 PIT Sentiment);
+> this is the preamble run to §12.
+
+### 12.0.1 Setup
 
 **V3 pipeline** (feature/hybrid-modulator): NH-HMM regime detector + multi-horizon LGB ensemble (h=3,7,14,21) + vol-targeted position sizing + CDAP drawdown control.
 
 **Features used**: klines-proxy microstructure (ofi_proxy, ofi_proxy_w, vol_dispersion) + funding rate (Binance Futures; OI endpoint returned 404) + price techs (ret_1d, ret_5d, vol_5d, vol_21d). Training cutoff: 2025-12-31. OOS window: 88 bars, 2026-01-16 → 2026-04-15.
 
-### 10.2 Bugs Fixed During First Run
+### 12.0.2 Bugs Fixed During First Run
 
 1. `v3_train_regime.py` and `baseline_strategy_v3.py`: wrong `_load_crypto_ohlcv()` API (`coin=`/`days=` → `coingecko_id=`/`curr_date=`).
 2. `runner_v3.py`: tz-aware/tz-naive mismatch when slicing microstructure/derivatives indices — fixed by normalizing to match `as_of` tz.
@@ -1391,7 +1396,7 @@ Note: `_v2` directories contain the corrected prediction CSVs with `ref_price` c
 4. `runner_v3.py`: `_position_to_signal` thresholds (±0.3) designed for full-confidence positions; vol-targeted positions with 5-6% confidence and rv≈0.23 yield positions ≈0.03 → always HOLD. Fixed with `low_vol_scale=10` amplifier before threshold mapping.
 5. Signal deadband: default 0.05 produces 79/89 HOLD bars; reduced to 0.02 for realistic signal generation.
 
-### 10.3 Results
+### 12.0.3 Results
 
 **OOS window: 88 bars, 2026-01-16 → 2026-04-15**
 
@@ -1403,14 +1408,14 @@ Note: `_v2` directories contain the corrected prediction CSVs with `ref_price` c
 
 **Note on window mismatch:** V2 Sharpe is measured over the full 363-day OOS window (2025-04-18 → 2026-04-15); V3 is measured on the last 88-bar sub-window only. The 363d V2 Sharpe should be treated as a longer-window reference, not a same-window comparison.
 
-### 10.4 Interpretation
+### 12.0.4 Interpretation
 
 - **ETH**: V3 shows positive Sharpe (1.25) on the 88-bar window — directionally correct, but low confidence (~4-11%) limits position size. The klines-proxy microstructure + funding rate features appear to add marginal signal for ETH.
 - **BTC**: V3 Sharpe -2.71 — model picked mostly long direction during the Jan-Apr 2026 BTC drawdown. The NH-HMM regime detector consistently labeled regime as "sideways" with near-zero bear probability, failing to identify the correction.
 - **Root cause (low confidence)**: V3 LGB models trained on 7 historical features produce probability estimates clustered in 0.52-0.57 range. Calibration gap: isotonic calibration on the holdout didn't push probas further from 0.5. The 88-bar window is too short for meaningful calibration.
 - **FINSABER result reproduced**: On BTC, the V3 ML modulator HURTS performance (Sharpe -2.71 vs V2 2.18), consistent with backtest hardening findings (BT1-BT11) that LLM/ML modulation is noise on BTC.
 
-### 10.5 Recommendations for V3 Calibration Fix
+### 12.0.5 Recommendations for V3 Calibration Fix
 
 1. Lower isotonic calibration target or use Platt scaling — push probas toward 0.3/0.7 range.
 2. Increase training features: add momentum signals (SMA10/SMA30 cross), RSI, on-chain (when available).
@@ -2646,7 +2651,7 @@ BTC and BNB are **effectively uncorrelated** (−0.007); BTC/SOL nearly so (+0.0
 
 ### 20.7 Verdict
 
-**4-coin V5 MIX is the new canonical production strategy.** Portfolio SR +3.25 / +787% return / −4.9% max DD over 4.5-yr walk-forward — the strongest validated result in the thesis. The recipe:
+**4-coin V5 MIX is the new canonical production strategy.** Portfolio SR +3.25 / +787% return / −4.9% max DD over 4.5-yr walk-forward — the strongest validated result in the thesis. *(Drift note: a later data-cache refresh moved this headline to **+3.178** — the canonical figure for all sections from §21 on; see §21.1 and the §29 reproduction note.)* The recipe:
 
 1. V2 architecture (term-structure regression + vol-targeted Kelly + SMA30 trend filter) — unchanged, confirmed optimal (§15).
 2. Per-coin feature-set routing: BTC→78f, ETH→193f, BNB→78f, SOL→193f. Validated per asset, not assumed.
@@ -2674,8 +2679,10 @@ pass: (1) multiple-testing correction, (2) signal-vs-mechanics attribution,
 
 Production wrapper `scripts/baseline_v5_mix.py` recomputes the canonical
 portfolio in a single clean pass: **SR +3.178 / +764.6% / −4.9% max DD** over
-1619 daily bars (the §20 +3.25 used quarterly-block recompute; +3.178 is the
-canonical single-pass figure used henceforth).
+1619 daily bars (+3.178 is the canonical single-pass figure used henceforth.
+The §20 +3.25 was computed pre data-cache refresh and via quarterly-block
+recompute; the §29 reproduction note pins the residual drift as data-side, not
+code — both notes describe the same 3.25→3.178 move).
 
 ### 21.2 Deflated Sharpe Ratio — PASSES
 
@@ -2841,6 +2848,13 @@ parity-refetch check (§7) verifies model + sizing parity exact; the slippage
 allowance bounds realistic execution costs at <50bps cumulative.
 
 ## 23. V5 MIX — Per-coin Kelly Fraction Sweep (2026-05-16)
+
+> **§23 fork note.** Section numbers ≥ 23 diverge between this file and the copy
+> on branch `feature/hybrid-modulator`: there, §23 = "Hybrid V5 1-Year Backtest +
+> Model A/B" with subsections §23.9 (model A/B), §23.11 (per-analyst LOO
+> ablation) and §23.12 (sentiment-v3 A/B) that do **not** exist in this file.
+> Those hybrid results appear **here as §28** (numbers agree to rounding).
+> External notes and the thesis LaTeX cite the *branch* numbering.
 
 ### 23.1 Motivation
 
@@ -3166,7 +3180,7 @@ These results substantially strengthen the project's central claim. The new head
 
 > **The multi-agent LLM system, configured as a hybrid quant+LLM modulator over the V5 production signal, lifts ETH risk-adjusted return from Sharpe +3.59 to +4.68 over a 1-year out-of-sample window (Δ +1.10), while leaving BTC essentially unchanged. The improvement is not a leverage artefact — ETH max drawdown nearly halves alongside the Sharpe gain.**
 
-This is the first thesis result where the LLM modulator delivers measurable, multi-quarter alpha at production scale. It promotes the §10.9 per-coin mixed-strategy idea from "best LLM-augmented result on 88 bars" to "first robust LLM contribution at 1-year horizon." The narrative for assignment §4.3 (multi-agent system performance) now has a clean positive result on ETH, complementing the §16 V5 MIX result.
+This is the first thesis result where the LLM modulator delivers measurable, multi-quarter alpha at production scale. It promotes the §10.9 per-coin mixed-strategy idea from "best LLM-augmented result on 88 bars" to "first robust LLM contribution at 1-year horizon." The narrative for assignment §4.3 (multi-agent system performance) now has a clean positive result on ETH, complementing the §20 V5 MIX result.
 
 The honest caveats remain:
 - BTC is still structurally inert under LLM modulation
@@ -3450,7 +3464,9 @@ Sharpe and reduces drawdown** (4.9 % → 4.0 % at 20 %). Yearly carry Sharpe ran
    they avoid. The "2026 compression problem" that motivated gating was traced to a
    reporting bug (an execution drag mistakenly applied to idle days); with correct
    transition-cost-only accounting, always_on's 2026 Sharpe is **+1.3** (positive).
-   Mirrors the §12 (V3) and §23.12 (sentiment-v3) pattern: the sophisticated addition
+   Mirrors the §12 (V3) and sentiment-v3 pattern (§23.12 *in the
+   feature/hybrid-modulator branch copy of this file* — not present here, see
+   the §23 fork note): the sophisticated addition
    loses to the simple baseline.
 3. *Universe expansion hurts.* Extending the sleeve beyond BTC/ETH degrades it. BNB
    funding is **structurally negative** (−6.15 %/yr, 24 % positive days → short-carry
@@ -3460,8 +3476,9 @@ Sharpe and reduces drawdown** (4.9 % → 4.0 % at 20 %). Yearly carry Sharpe ran
    to V5 from +0.003 to +0.20** — their funding tails fire during the same crashes that
    hurt the directional book, destroying the orthogonality that is the sleeve's entire
    value. Carry is a deep-liquidity-majors phenomenon (persistent positive funding, tight
-   basis), consistent with the per-coin asymmetry of §20 (V5 MIX routing) and §23.11 (LOO
-   ablation).
+   basis), consistent with the per-coin asymmetry of §20 (V5 MIX routing) and the LOO
+   ablation (§23.11 *in the feature/hybrid-modulator branch copy* — see the §23 fork
+   note).
 
 **Production recommendation.** Ship **always_on, leverage ≤ 3, BTC/ETH only**, as a
 market-neutral sleeve sized at 10–20 % of book. No real binding risk was found over
@@ -3523,6 +3540,11 @@ Sweep: `scripts/funding_correction_sweep.py`.
 | BTC/ETH (2-coin) | 2.502 → **2.496** (−0.006) | +457 % → +454 % | −5.9 % → −5.9 % |
 | 4-coin (canonical) | 3.178 → **3.146** (−0.033) | +765 % → +742 % | −4.9 % → −5.2 % |
 | 8-coin | 3.966 → **3.913** (−0.053) | +1053 % → +1009 % | −4.8 % → −5.0 % |
+
+*(Coincidence warning: §31's Kelly-0.25 live-parity reproduction also lands on SR
++3.913 for the 8-coin book — that is a different run with a different cause
+(data-refresh drift at kelly=0.25, flat funding); the 3.913 here is the
+kelly=0.5 book under real signed funding. The equality is numeric accident.)*
 
 Per-coin ΔSR: BTC +0.01, ETH/BNB/ADA −0.02, SOL/XRP/DOGE/TRX −0.04…−0.05. **The
 correction is modest** — −0.03 to −0.05 portfolio SR, ~3–6 % of total return — and the

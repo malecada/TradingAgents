@@ -1,10 +1,10 @@
-# §31. Intraday Triple-Barrier SL/TP Sweep (1h fills)
+# §33. Intraday Triple-Barrier SL/TP Sweep (1h fills)
 
-> **Integration note:** This is a standalone draft of THESIS_FINDINGS.md §31. It was kept
-> out of `THESIS_FINDINGS.md` only because that file had uncommitted §30 (carry-sleeve) WIP
-> at the time of writing and non-interactive git cannot stage part of a file. Paste this
-> section into `THESIS_FINDINGS.md` after §30 when committing the carry work, and add the
-> CLAUDE.md pointer (bottom of this file).
+> **Integration note:** Standalone draft, originally numbered "§31" — but
+> THESIS_FINDINGS.md already uses §30 (Live Pipeline Audit), §31 (8-coin Live
+> Promotion) and §32 (Carry Sleeve, committed 2026-06-12). Fold this in as
+> **§33** to avoid a duplicate §31. Internal §31.x anchor names below are kept
+> for continuity with the figures/scripts; renumber to 33.x on integration.
 >
 > Branch: `feature/intraday-sltp-sweep`. All numbers below are reproducible (commands at end).
 
