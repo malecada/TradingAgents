@@ -200,7 +200,11 @@ def create_app(
                     "stale": False, "as_of": None, "error": None,
                 }
             else:  # journal fallback (same pattern as v2.3.1 holdings fix)
-                conn = _conn(s)
+                try:
+                    conn = _conn(s)
+                except sqlite3.OperationalError:
+                    out[s.name] = None
+                    continue
                 try:
                     snaps, ref_prices = _snapshot_rows(conn)
                 finally:

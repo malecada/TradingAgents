@@ -62,8 +62,23 @@ def ttl_cached(fn: Callable[[], dict], ttl: float = 30.0,
     return wrapped
 
 
-def _exchange_provider(api_key_env: str, api_secret_env: str) -> Callable[[], dict]:
-    """Lazy ExchangeClient bound to one account's env credentials."""
+def _exchange_provider(
+    api_key_env: str,
+    api_secret_env: str,
+    testnet: bool | None = None,
+) -> Callable[[], dict]:
+    """Lazy ExchangeClient bound to one account's env credentials.
+
+    Args:
+        api_key_env: Environment variable name for the Binance API key.
+        api_secret_env: Environment variable name for the Binance API secret.
+        testnet: When True, force testnet=True on the ExchangeClient regardless
+            of the quant runner's LIVE_MODE config. When None, the ExchangeClient
+            falls back to its own config (follows the quant runner's live_mode).
+            The hybrid runner always runs testnet=True, so callers constructing a
+            hybrid provider must pass testnet=True to avoid a live-venue mismatch
+            if the quant runner is ever promoted to LIVE_MODE=True.
+    """
     holder: dict = {"client": None}
 
     def provide() -> dict:
@@ -71,10 +86,13 @@ def _exchange_provider(api_key_env: str, api_secret_env: str) -> Callable[[], di
             raise RuntimeError(f"{api_key_env} not set — live account unavailable")
         if holder["client"] is None:
             from tradingagents.execution.exchange import ExchangeClient
-            holder["client"] = ExchangeClient(
-                api_key=os.environ.get(api_key_env),
-                api_secret=os.environ.get(api_secret_env),
-            )
+            kwargs: dict = {
+                "api_key": os.environ.get(api_key_env),
+                "api_secret": os.environ.get(api_secret_env),
+            }
+            if testnet is not None:
+                kwargs["testnet"] = testnet
+            holder["client"] = ExchangeClient(**kwargs)
         return account_snapshot(holder["client"])
 
     return provide
@@ -102,6 +120,7 @@ def resolve_sources(ttl: float = 30.0) -> tuple[StrategySource, StrategySource |
         journal_path=str(Path(hybrid_env) / "trade_journal.db"),
         snapshot=ttl_cached(
             _exchange_provider("HYBRID_BINANCE_API_KEY",
-                               "HYBRID_BINANCE_API_SECRET"), ttl),
+                               "HYBRID_BINANCE_API_SECRET",
+                               testnet=True), ttl),
     )
     return quant, hybrid

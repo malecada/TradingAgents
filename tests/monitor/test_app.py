@@ -166,6 +166,21 @@ def test_health_isolates_missing_hybrid_db(journal_path, log_dir, monkeypatch):
     assert body["timeline"]["hybrid"] is None
 
 
+def test_positions_isolates_missing_hybrid_db(journal_path, log_dir, monkeypatch):
+    monkeypatch.setenv("TA_MONITOR_PASSWORD", "pw")
+    def boom():
+        raise RuntimeError("no creds")
+    quant = StrategySource("quant", journal_path, boom)
+    hybrid = StrategySource("hybrid", "/nonexistent/h.db", boom)
+    app = create_app(quant=quant, hybrid=hybrid, log_dir=log_dir, start_capital=10000.0)
+    c = TestClient(app)
+    r = c.get("/api/positions", auth=("admin", "pw"))
+    assert r.status_code == 200
+    body = r.json()
+    assert body["quant"]["stale"] is True            # journal fallback worked
+    assert body["hybrid"] is None                     # isolated, not 503
+
+
 def test_index_serves_react_dist(dual_client):
     import pathlib
     dist = (pathlib.Path(__file__).resolve().parents[2]
