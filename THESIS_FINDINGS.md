@@ -3294,7 +3294,6 @@ robust of the two and the natural candidate for a follow-up live A/B.
 - Plan: `docs/superpowers/plans/2026-05-19-v5-sltp-sweep.md`
 - Branch: `feature/v5-sltp-sweep`
 
-
 ## Section 30: Live Pipeline Audit + Remediation (V5 MIX, testnet) (2026-05-29/30)
 
 **Branch**: `fix/c1-portfolio-weight` (worktree; 8 fix commits + this doc, ahead of `live-v2.1.5` @ 9cf436d)
@@ -3365,3 +3364,209 @@ Proof by re-run: rebuilt 4-coin V5 MIX (`--kelly 0.25`, 4-coin routing-json) wit
 
 ### Deferred (now smaller)
 Dead-man **timer** (the heartbeat file exists; the systemd `OnCalendar` alerter is the operator follow-up), richer alert channel, the trend-on-hold residual above, and the still-open §30 backlog (retrain quality gate, margin-mode check, monitor-Sharpe definition). The full live equity-vs-replay parity (S1) gate runs on the box during the 90-day window (needs Binance refetch). Acceptance: SR ≥ +2.86, report vs the live-Kelly 8-coin SR ≈ +3.91. Deploy steps: `docs/superpowers/plans/2026-05-30-v5-8coin-live-DEPLOY-HANDOFF.md`.
+
+## Section 32: Perpetual Funding-Carry Sleeve — Market-Neutral Diversifier (2026-05-30)
+
+**Origin.** A multi-source literature survey (5 search angles, 26 peer-reviewed
+primary sources, adversarial 3-vote verification) of crypto trading strategies that
+could raise V5 MIX risk-adjusted return identified the perpetual-futures carry trade
+as the single most *additive, orthogonal, data-ready* candidate. Other surveyed
+techniques were either redundant with the existing GBDT core (CTREND trend factor,
+momentum β = 0.79), SR-neutral risk overlays (volatility targeting, HRP), or
+adversarially refuted (3-factor pricing, size factor, naive daily reversal).
+
+**Mechanism.** A delta-neutral position — short perpetual + long spot, equal notional
+— harvests the funding rate. Funding is paid 3×/day (every 8 h); a short-perp leg
+*collects* it when positive. Because the legs are delta-neutral, spot/perp price moves
+cancel and the daily return is approximately the funding collected minus rebalance
+costs (CMU working paper; BIS WP 1087: profitability is driven by the funding rate,
+median ≈ 11 %/yr and serially correlated, **not** the basis, which is ≈ i.i.d.,
+median ≈ 0).
+
+**Implementation.** `tradingagents/strategies/carry_sleeve.py` (16 unit tests, TDD,
+`tests/strategies/test_carry_sleeve.py`). Core: `funding_daily_income` (daily income =
+**sum** of the day's 8 h prints — the existing feature scraper takes the *mean*
+[`onchain.py:247`], a 3× undercount of carry income, guarded by a regression test),
+`fetch_perp_mark` (`/fapi/v1/markPriceKlines`), `compute_price_pnl`
+(= spot_ret − perp_ret, the real basis leg), `carry_sleeve_return`
+(always_on | gated), `blend_returns`.
+
+**Feasibility correction.** The initial spec assumed no perp-price data was available
+and that the basis leg would have to be approximated by synthetic noise. This was
+**falsified**: Binance `fapi` serves public daily perp last-price *and* mark-price
+history on the same API used for funding. The basis leg is therefore measured from
+**real** mark prices, not assumed.
+
+**Liquidation analysis (real daily + 1 h data, 4.5 yr, BTC/ETH).** The worst intraday
+adverse excursion of the short-perp leg (daily mark high vs prior close) was **17.3 %
+(BTC) / 22.8 % (ETH)**; the worst single 1 h up-move was 10.4 %. Liquidation-day counts
+by perp leverage (isolated-margin threshold ≈ 1/L):
+
+| Leverage | Threshold | BTC liq-days | ETH liq-days |
+|---|---|---|---|
+| 2 | ~50 % | 0 | 0 |
+| 3 | ~33 % | 0 | 0 |
+| 5 | ~20 % | 0 | 3 |
+| 10 | ~9.5 % | 20 | 37 |
+
+At **L ≤ 3 there were zero liquidations in 4.5 years**. Because the daily mark high
+*is* the maximum intraday excursion for a daily-rebalanced position, hourly data cannot
+produce a higher figure — the liquidation trigger is fully bounded by daily OHLC, and
+the 1 h series confirmed it (max excursion identical to the daily bound). With no
+liquidation at L ≤ 3, there is no forced close, hence no spike-reversal path risk, and
+the daily-rebalanced Sharpe is faithful (margin capital cost is Sharpe-neutral —
+scale-invariant).
+
+**Headline result (canonical convention, ANN = √252, official `_metrics`,
+2021-11-07 → 2026-04-15, vs `data/v5_mix_production` baseline).**
+
+| Series | Sharpe | Total ret | Max DD |
+|---|---|---|---|
+| V5 MIX production (baseline) | **3.178** | +765 % | −4.9 % |
+| Carry sleeve (BTC/ETH, always_on, real basis) | **8.24** | +35 % | −0.8 % |
+| **Correlation(sleeve, V5 MIX)** | **+0.003** | | |
+
+Blend (separate capital allocation, V5 reduced pro-rata):
+
+| Carry allocation | Blend Sharpe | ΔSharpe | Max DD |
+|---|---|---|---|
+| 5 % | 3.201 | +0.023 | −4.7 % |
+| 10 % | 3.227 | +0.048 | −4.5 % |
+| 20 % | **3.287** | **+0.108** | −4.0 % |
+| 30 % | 3.364 | +0.185 | −3.6 % |
+
+The sleeve is a genuine orthogonal diversifier (corr +0.003): blending it both **raises
+Sharpe and reduces drawdown** (4.9 % → 4.0 % at 20 %). Yearly carry Sharpe ranged
+1.3–16.6; **never a losing year** (worst 2022 bear +2.4 %, 2026-YTD compression +0.6 %).
+
+**Three controlled negative results.**
+1. *Perfect-hedge illusion.* Modelling the hedge as exactly price-neutral (price PnL ≡ 0)
+   gave Sharpe ≈ 15 (BTC) / 11 (ETH). Using the **real** mark-price basis brought it to
+   8.2 — the high figure was an artefact of the zero-basis assumption.
+2. *Trailing-sign gate hurts.* A `gated` mode (deploy only when trailing-k-day funding
+   exceeds a cost hurdle) was implemented and tested but **empirically underperforms
+   always_on** on full-period Sharpe (always_on ≈ 9.9 vs gated 5–7 in the √365 working
+   convention) — whipsaw turnover and lagged re-entry cost more than the compression
+   they avoid. The "2026 compression problem" that motivated gating was traced to a
+   reporting bug (an execution drag mistakenly applied to idle days); with correct
+   transition-cost-only accounting, always_on's 2026 Sharpe is **+1.3** (positive).
+   Mirrors the §12 (V3) and §23.12 (sentiment-v3) pattern: the sophisticated addition
+   loses to the simple baseline.
+3. *Universe expansion hurts.* Extending the sleeve beyond BTC/ETH degrades it. BNB
+   funding is **structurally negative** (−6.15 %/yr, 24 % positive days → short-carry
+   Sharpe −3.86); SOL is usually positive but carries a catastrophic tail (a −17 % single
+   day at the FTX collapse, standalone max DD −54 %). A 3- or 4-coin sleeve collapses to
+   Sharpe ≈ 0 and a **negative** blend Δ. Critically, adding SOL/BNB **raises correlation
+   to V5 from +0.003 to +0.20** — their funding tails fire during the same crashes that
+   hurt the directional book, destroying the orthogonality that is the sleeve's entire
+   value. Carry is a deep-liquidity-majors phenomenon (persistent positive funding, tight
+   basis), consistent with the per-coin asymmetry of §20 (V5 MIX routing) and §23.11 (LOO
+   ablation).
+
+**Production recommendation.** Ship **always_on, leverage ≤ 3, BTC/ETH only**, as a
+market-neutral sleeve sized at 10–20 % of book. No real binding risk was found over
+4.5 yr; the only forward risk is the funding *regime* — the sleeve behaves as a "free
+option on elevated funding": strongly additive when funding is fat (2021, 2023–25), and
+**neutral, not negative**, when it compresses (2026), since corr ≈ 0 and the return goes
+to ≈ 0 rather than negative. Live deployment additionally requires perp + spot venue
+access and a margin/liquidation buffer (the daily model assumes instantaneous re-hedge);
+this is the one item not exercised by the backtest.
+
+**Transfer to V5 — NEGATIVE (funding is redundant with price).** Two plausible
+transfers of the funding data into the directional V5 book were tested and both fail.
+(1) *Direction:* bucketing V5 next-day returns by funding z-score (long-crowding) or
+cross-coin funding dispersion shows no monotonic edge (top vs bottom quintile Sharpe
+2.7 vs 2.9) — funding does not predict V5 direction. (2) *Volatility/sizing:* funding
+dispersion correlates with V5's bad days **contemporaneously** (worst-decile days mean
+dispersion 8.4 bp vs 3.1 bp normal), but as a *forward* vol signal it adds essentially
+nothing beyond V5's own realized vol — incremental R² of |return_{t+1}| from
+[realized_vol → realized_vol + funding_dispersion] is **+0.002**, and dispersion is a
+far weaker lead of future realized vol than realized vol itself (corr to rv_{t+5} 0.25
+vs 0.78). Mechanism: funding is a positioning proxy that co-moves with price, so its
+information is already in V5's price-derived features — the same reason §12's V3 (which
+fed funding/OI into a GBDT) produced no alpha. The carry result is therefore strictly a
+*separate diversifier*, not a source of V5 signal or risk improvement.
+
+**Re-evaluation of V5 backtest returns — funding-cost unit bug (ACTIONABLE).** Getting
+the funding units right for the carry sleeve (daily funding = **sum** of the 3×8 h
+prints) exposed that the V5 backtest cost model uses
+`funding_rate = 0.0001 / 8 = 1.25e-5/day ≈ 0.46 %/yr`
+(`scripts/baseline_v5_mix.py` `COSTS`; applied as `holding_cost = funding_rate *
+abs(target_pos)` in `baseline_strategy_v2.run_coin_backtest`). The **measured** BTC/ETH
+perp funding is **≈ 1.8e-4/day ≈ 6.6 %/yr** — i.e. the modelled funding drag is **~14×
+too small** (the `/8` divides an 8 h rate by 8 instead of summing 3 periods/day; the same
+class of unit error as the carry scraper's `groupby.mean()`). Because V5 is long-biased
+and a long perp **pays** funding when funding is positive (85–88 % of days), the headline
+backtest returns are **overstated**. Re-running the 8-coin V5 with corrected funding:
+
+| Funding assumption | Sharpe | Total return | Max DD |
+|---|---|---|---|
+| current (0.0001/8 ≈ 0.46 %/yr, **buggy**) | 3.97 | +1053 % | −4.8 % |
+| realistic (1.8e-4/day ≈ 6.6 %/yr) | 3.86 | +978 % | −4.8 % |
+| aggressive (3e-4/day ≈ 11 %/yr) | 3.64 | +712 % | −4.8 % |
+
+The above is a flat-rate first approximation. **The proper fix** — `run_coin_backtest`
+extended with a `funding_series` parameter that deducts the **real per-date Binance
+funding SIGNED** (long pays, short receives; `baseline_strategy_v2.py`,
+regression-tested in `tests/strategies/test_sltp_sweep.py`; `run_coin(...,
+use_real_funding=True)` in `baseline_v5_mix.py` wires the real
+`carry_sleeve.funding_daily_income` series per coin) — with a venue-cap clip on the
+funding series (`FUNDING_DAILY_CLIP = 0.0225`, ≈ 3 × Binance's ±0.75 %/8h cap; the raw
+series contains data artifacts that exceed any venue cap, e.g. SOL **−17 %/day** during
+the Nov-2022 FTX mark/index dislocation — applying that raw to a position is unphysical).
+Sweep: `scripts/funding_correction_sweep.py`.
+
+**Corrected V5 family (flat-buggy → real clipped signed funding, 2021-11-07 → 2026-04-15).**
+
+| Portfolio | SR (flat→real) | Total ret (flat→real) | Max DD (flat→real) |
+|---|---|---|---|
+| BTC/ETH (2-coin) | 2.502 → **2.496** (−0.006) | +457 % → +454 % | −5.9 % → −5.9 % |
+| 4-coin (canonical) | 3.178 → **3.146** (−0.033) | +765 % → +742 % | −4.9 % → −5.2 % |
+| 8-coin | 3.966 → **3.913** (−0.053) | +1053 % → +1009 % | −4.8 % → −5.0 % |
+
+Per-coin ΔSR: BTC +0.01, ETH/BNB/ADA −0.02, SOL/XRP/DOGE/TRX −0.04…−0.05. **The
+correction is modest** — −0.03 to −0.05 portfolio SR, ~3–6 % of total return — and the
+**BTC/ETH core is funding-neutral** (−0.006 SR), consistent with V5 holding balanced
+long/short there. (An *unclipped* run gives a far larger, spurious −0.40 SR / +765 %→
++415 % driven almost entirely by the single SOL FTX funding print hitting a position;
+that figure is a data artifact, not a real cost — clipping removes only SOL's 5 FTX days
+and leaves every other coin untouched.) **Implications:** (a) absolute-return headlines
+are overstated by only ~3–6 % once funding is modelled correctly — re-runnable per
+portfolio with `use_real_funding=True`; (b) relative rankings (V2/V3/V5/routing) are
+preserved (all shared the buggy constant); (c) the **live** system pays real funding, so
+the gap to backtest is now quantified and small for the BTC/ETH-weighted book.
+
+**V2 baseline — real funding HELPS (it is two-sided).** Running the V2 baseline
+(`baseline_strategy_v2.py --real-funding`, signed funding via the same clipped series):
+
+| Config | SR (flat→real) | Total ret (flat→real) |
+|---|---|---|
+| V2 2-coin (BTC/ETH) | 2.69 → **2.74** (+0.05) | +106.0 % → +108.6 % |
+| V2 3-coin (BTC/ETH/BNB) | 2.74 → **2.79** (+0.05) | +98.5 % → +100.9 % |
+
+(The 2-coin flat reproduces the published SR 2.69 exactly, validating the method.) Unlike
+the long-biased V5, V2 in `--symmetric` mode takes real **short** positions, which
+*receive* funding (positive 85–88 % of days), so correct signed funding is a small net
+**credit** — V2's risk-adjusted return is *understated* by the buggy constant, not
+overstated. The sign of the funding correction thus depends on a strategy's net
+long/short tilt: long-biased books lose a little, two-sided books gain a little; the
+BTC/ETH core is ≈ neutral either way.
+
+**V3 + LLM-system engine.** V3 and the LLM system backtests route through the agent-signal
+engine (`tradingagents/backtesting/engine.py:run_backtest`), which modelled **no funding
+at all** (only a short borrow cost). It was extended with the same signed `funding_series`
+parameter (default None = legacy; TDD `tests/test_engine_funding.py`; 145 backtesting/
+strategy/regression tests stay green). A full V3 re-run was **not** executed: V3 is
+two-sided (like V2, where funding helped), its 88-bar headline window
+(2026-01-16 → 2026-04-15) sits in the 2026 funding-compression regime (≈ zero funding to
+apply), and any correction moves V2 and V3 in the same direction — so V3's negative,
+*relative* conclusion (underperforms V2) is unaffected. The engine now supports a
+funding-correct re-run of V3 / the LLM system backtests should an absolute figure be
+needed.
+
+**Artifacts.**
+- Code: `tradingagents/strategies/carry_sleeve.py`, `tests/strategies/test_carry_sleeve.py` (16 tests)
+- Data audit (gate): `scripts/carry_data_audit.py`
+- Blend / correlation: `scripts/carry_blend_p4.py`
+- Spec: `docs/CARRY_SLEEVE_BACKTEST_SPEC.md`
+- Baseline series: `data/v5_mix_production/daily_returns.csv` (Sharpe 3.178)

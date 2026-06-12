@@ -90,8 +90,17 @@ def run_coin_backtest(
     stop_loss: float,
     max_portfolio_dd: float,
     take_profit: float = 0.0,
+    funding_series: np.ndarray | None = None,
 ) -> tuple[list, dict]:
-    """Run backtest for a single coin with full cost and risk model."""
+    """Run backtest for a single coin with full cost and risk model.
+
+    Funding:
+        ``funding_series`` (per-date, aligned to ``dates``), when supplied, is the
+        real daily funding rate and is applied SIGNED — a long position pays
+        funding when funding>0, a short receives it: ``holding_cost =
+        funding_series[i] * target_pos``. When ``None`` (default) the legacy flat
+        ``funding_rate * abs(target_pos)`` is used (backward-compatible).
+    """
     equity = [initial_capital]
     daily_returns = []
     prev_pos = 0.0
@@ -127,7 +136,11 @@ def run_coin_backtest(
 
         fee_cost = (2 * fee_rate + slippage + 2 * spread) * trade_notional
         impact_cost = price_impact * trade_notional * trade_notional
-        holding_cost = funding_rate * abs(target_pos)
+        if funding_series is None:
+            holding_cost = funding_rate * abs(target_pos)
+        else:
+            # signed: long pays funding (when >0), short receives it
+            holding_cost = funding_series[i] * target_pos
         total_cost = fee_cost + impact_cost + holding_cost
         net_ret = gross_ret - total_cost
 
@@ -222,6 +235,9 @@ def parse_args():
     p.add_argument("--spread", type=float, default=0.0005)
     p.add_argument("--price-impact", type=float, default=0.001)
     p.add_argument("--funding-rate", type=float, default=0.0001)
+    p.add_argument("--real-funding", action="store_true",
+                   help="Deduct real per-date Binance funding (signed: longs pay, "
+                        "shorts receive) instead of the flat --funding-rate.")
     p.add_argument("--symmetric", action="store_true",
                     help="Use symmetric consensus (both horizons must agree for longs too).")
     p.add_argument("--early-exit-loss", type=float, default=0.015,
@@ -328,10 +344,23 @@ def main():
                 positions, prices, args.trend_sma, args.trend_multiplier,
             )
 
+        # Optional real signed funding (longs pay, shorts receive); clipped to
+        # the venue cap. Reuses the proven helper (lazy import avoids a circular
+        # dependency with baseline_v5_mix, which imports run_coin_backtest here).
+        funding_series = None
+        if getattr(args, "real_funding", False):
+            from scripts.baseline_v5_mix import _real_funding_array
+            funding_series = _real_funding_array(
+                coin, dates,
+                str(pd.Timestamp(dates.min()).date()),
+                str(pd.Timestamp(dates.max()).date()),
+            )
+
         # Use ref_price for the backtest (price at prediction time)
         equity, metrics = run_coin_backtest(
             dates, prices, positions,
             initial_capital=args.initial_capital,
+            funding_series=funding_series,
             **cost_kwargs,
         )
 

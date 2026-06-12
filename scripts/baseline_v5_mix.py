@@ -173,6 +173,46 @@ def _metrics(r: pd.Series) -> dict:
     }
 
 
+# CoinGecko id → Binance perp symbol, for the real funding-rate series.
+_FUNDING_SYMBOLS = {
+    "bitcoin": "BTCUSDT", "ethereum": "ETHUSDT", "binancecoin": "BNBUSDT",
+    "solana": "SOLUSDT", "ripple": "XRPUSDT", "dogecoin": "DOGEUSDT",
+    "cardano": "ADAUSDT", "tron": "TRXUSDT",
+}
+
+
+# Daily funding clip ≈ 3 × Binance's typical ±0.75 %/8h cap. Removes venue-cap-
+# exceeding data artifacts (e.g. SOL −17 %/day during the FTX mark dislocation)
+# while still admitting genuine funding stress.
+FUNDING_DAILY_CLIP = 0.0225
+
+
+def _real_funding_array(
+    coin: str, dates: np.ndarray, start: str, end: str,
+    clip: float | None = FUNDING_DAILY_CLIP,
+) -> np.ndarray:
+    """Daily funding series (sum of 8h prints) aligned index-for-index to ``dates``.
+
+    Missing days → 0.0; values clipped to ±``clip``/day (``None`` disables) to
+    drop venue-cap-exceeding data artifacts. Used to deduct SIGNED funding (longs
+    pay, shorts receive) in the engine instead of the flat ``COSTS['funding_rate']``.
+    """
+    from datetime import datetime as _dt
+
+    from tradingagents.strategies.carry_sleeve import funding_daily_income
+
+    sym = _FUNDING_SYMBOLS[coin]
+    s = _dt.strptime(start, "%Y-%m-%d").date()
+    e = _dt.strptime(end, "%Y-%m-%d").date()
+    inc = funding_daily_income(sym, s, e)              # date-indexed
+    inc.index = pd.to_datetime(list(inc.index)).normalize()
+    idx = pd.to_datetime(dates).tz_localize(None).normalize()
+    arr = inc.reindex(idx).fillna(0.0).to_numpy(dtype=float)
+    if clip is not None:
+        arr = np.clip(arr, -clip, clip)
+    return arr
+
+
 def run_coin(
     coin: str,
     pred_dir: Path,
@@ -181,12 +221,15 @@ def run_coin(
     kelly_fraction: float = 0.5,
     early_exit_loss: float = EARLY_EXIT_DEFAULT,
     costs_override: dict[str, float] | None = None,
+    use_real_funding: bool = False,
 ) -> pd.Series:
     """Run V2 sizing on one coin's routed predictions → daily return series.
 
     Early exit loss is forwarded to the position builder.
     Costs override (if supplied) replaces the COSTS dict passed to the engine —
     callers can override stop_loss and take_profit per-call.
+    ``use_real_funding=True`` deducts the real per-date Binance funding (signed:
+    longs pay, shorts receive) instead of the flat ``COSTS['funding_rate']``.
     """
     preds = _load_preds(pred_dir, coin)
     preds = preds[(preds["date"] >= start) & (preds["date"] <= end)]
@@ -202,9 +245,13 @@ def run_coin(
         merged, kelly_fraction=kelly_fraction, early_exit_loss=early_exit_loss,
     )
     costs = dict(COSTS if costs_override is None else costs_override)
+    funding_series = (
+        _real_funding_array(coin, merged["date"].values, start, end)
+        if use_real_funding else None
+    )
     equity, _m = run_coin_backtest(
         dates=merged["date"].values, prices=merged["Close"].values,
-        positions=pos, initial_capital=10_000.0, **costs,
+        positions=pos, initial_capital=10_000.0, funding_series=funding_series, **costs,
     )
     eq = np.asarray(equity, dtype=float)
     rets = eq[1:] / eq[:-1] - 1.0

@@ -2,6 +2,7 @@
 """Tests for take-profit extension to run_coin_backtest + sweep harness."""
 from __future__ import annotations
 
+import math
 import sys
 from pathlib import Path
 
@@ -163,9 +164,17 @@ def test_v5_baseline_reproduces_published_sharpe():
         COSTS, DEFAULT_ROUTING, run_coin,
     )
 
+    # Anchor is the 4-coin §20 canonical portfolio. DEFAULT_ROUTING grew to
+    # 8 coins on 2026-05-23 — iterating it computes the 8-coin SR (~4.02)
+    # and silently breaks this guard, so pin the frozen subset.
+    canonical_4coin = {
+        coin: DEFAULT_ROUTING[coin]
+        for coin in ("bitcoin", "ethereum", "binancecoin", "solana")
+    }
+
     start, end = "2021-11-07", "2026-04-15"
     coin_rets = {}
-    for coin, pdir in DEFAULT_ROUTING.items():
+    for coin, pdir in canonical_4coin.items():
         coin_rets[coin] = run_coin(
             coin, PROJECT_ROOT / pdir, start, end,
             kelly_fraction=0.5,
@@ -182,3 +191,49 @@ def test_v5_baseline_reproduces_published_sharpe():
         f"V5 baseline reproduction drifted: got SR={sr:.3f}, "
         f"expected {_V5_ANCHOR_SR} ± {_V5_ANCHOR_TOL}"
     )
+
+
+# ── Real signed funding (longs pay, shorts receive) ──────────────────
+
+
+def test_funding_series_charges_longs_and_credits_shorts():
+    """A per-date funding series is applied SIGNED: long pays funding (when
+    funding>0), short receives it. Isolated by zeroing price move + other costs.
+    """
+    dates = np.array([0, 1])
+    prices = np.array([100.0, 100.0])  # zero price return -> isolate funding
+    zero_costs = dict(
+        fee_rate=0.0, slippage=0.0, spread=0.0, price_impact=0.0,
+        funding_rate=0.0, stop_loss=1.0, max_portfolio_dd=1.0, take_profit=0.0,
+    )
+    fseries = np.array([0.0, 0.0002])  # +funding on day 1
+
+    eq_long, _ = run_coin_backtest(
+        dates=dates, prices=prices, positions=np.array([0.0, 1.0]),
+        initial_capital=10_000.0, funding_series=fseries, **zero_costs)
+    eq_short, _ = run_coin_backtest(
+        dates=dates, prices=prices, positions=np.array([0.0, -1.0]),
+        initial_capital=10_000.0, funding_series=fseries, **zero_costs)
+
+    assert eq_long[-1] < 10_000.0    # long PAYS funding
+    assert eq_short[-1] > 10_000.0   # short RECEIVES funding
+    assert math.isclose(eq_long[-1], 10_000.0 * (1 - 0.0002), rel_tol=1e-12)
+    assert math.isclose(eq_short[-1], 10_000.0 * (1 + 0.0002), rel_tol=1e-12)
+
+
+def test_funding_series_none_preserves_scalar_abs_behavior():
+    """funding_series=None reproduces the legacy scalar funding_rate*abs(pos)."""
+    dates = np.array([0, 1])
+    prices = np.array([100.0, 100.0])
+    common = dict(
+        dates=dates, prices=prices, positions=np.array([0.0, -1.0]),
+        initial_capital=10_000.0, fee_rate=0.0, slippage=0.0, spread=0.0,
+        price_impact=0.0, funding_rate=0.0002, stop_loss=1.0,
+        max_portfolio_dd=1.0, take_profit=0.0,
+    )
+    eq_default, _ = run_coin_backtest(**common)
+    eq_none, _ = run_coin_backtest(funding_series=None, **common)
+
+    # legacy behavior: short is CHARGED funding_rate*abs(pos) (unsigned)
+    assert math.isclose(eq_default[-1], 10_000.0 * (1 - 0.0002), rel_tol=1e-12)
+    np.testing.assert_array_equal(np.asarray(eq_default), np.asarray(eq_none))

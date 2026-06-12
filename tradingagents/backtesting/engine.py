@@ -184,6 +184,7 @@ def run_backtest(
     short_cost: float = 0.0003,
     position_size: float = 1.0,
     risk_free_rate: float = 0.045,
+    funding_series: Optional[np.ndarray] = None,
 ) -> BacktestResult:
     """Run a backtest for a strategy over a historical period.
 
@@ -305,6 +306,9 @@ def run_backtest(
         # Additional borrowing cost for short exposure.
         if effective_position < 0:
             cost += short_cost * abs_pos
+        # Signed perp funding (long pays when funding>0, short receives).
+        if funding_series is not None:
+            cost += funding_series[i] * effective_position
 
         net_ret = gross_ret - cost
 
