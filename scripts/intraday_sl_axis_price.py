@@ -76,7 +76,8 @@ def main() -> None:
         s = _portfolio_series_price(data, sl); series[sl] = s
         landscape.append(dict(sl=sl, sharpe=_ann_sr(s.values)))
 
-    # Best price-stop EXCLUDING the degenerate no-stop (0.0) which can circuit-break.
+    # Best price-stop EXCLUDING the degenerate always-firing stop (0.0: any adverse
+    # excursion triggers — NOT "no stop") which circuit-breaks.
     cand = max((c for c in landscape if c["sl"] > 0), key=lambda c: c["sharpe"])
     best_sl = cand["sl"]
     s_best, s_live = series[best_sl], series[LIVE_SL]

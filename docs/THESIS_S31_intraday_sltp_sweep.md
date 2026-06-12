@@ -82,11 +82,15 @@ close-only engine never saw:
 |----|----|----|----|----|----|----|----|-----|
 | intrabar SR | −10.1 (circuit-broke) | 3.00 | 3.04 | **3.06** | 3.11 | 3.12 | **3.34** | 3.34 |
 
-A stop is essential (SL=0 → −10 SR, 15% DD halt), but **3% is too tight**: 7% beats 3% by **ΔSR
-+0.32** (full window, CI [+0.13, +0.53], P(7>3)=0.999) at the same 3.5% drawdown, and the 5–10%
-region is a flat top plateau. Crucially this **holds out-of-sample across ALL FOUR split dates**
-(P(7>3) = 0.993 / 0.982 / 0.955 / 0.997; ΔSR +0.51 to +0.65) — far more robust than the SL4%/TP8%
-take-profit cell, which shipped only 2/4. The looser-stop edge is also *conservative*: intrabar
+The SL=0 cell is **not** "no stop": `stop_loss=0.0` is a degenerate *always-firing* stop (any
+adverse excursion ≥ 0 triggers, exiting at entry equity), which forgoes all gains and bleeds costs
+until the 15% circuit breaker halts — the −0.150 total return is exactly the breaker. The true
+no-stop end of this axis is SL=10% (0 fires over the whole window), and it is near-best (3.34).
+On this axis **3% is too tight**: 7% beats 3% by **ΔSR +0.32** (full window, CI [+0.13, +0.53],
+P(7>3)=0.999) at the same 3.5% drawdown, and the 5–10% region is a flat top plateau. This holds
+out-of-sample with P(7>3) ≥ 0.955 on all four split dates (ΔSR +0.51 to +0.65), individually
+significant on three (the 2025-01-15 split's CI [−0.08, +1.17] includes 0) — still far more robust
+than the SL4%/TP8% take-profit cell, which shipped only 2/4. The looser-stop edge is also *conservative*: intrabar
 stops fill at the exact stop level (no slippage), and tight stops trigger far more often, so real
 market-order slippage would penalise 3% more than 7% — widening the true gap.
 
@@ -113,15 +117,27 @@ engine's `stop_mode="price"` (`scripts/intraday_sl_axis_price.py` → `sl_axis_p
 
 The price-stop curve **peaks at ~3–4% and declines for looser stops** — the *opposite* shape of the
 equity axis. The nominal best (4%) beats the live 3% by only **+0.036 SR** full-window (CI
-[−0.089, +0.170], P=0.70, not significant) and is **significantly *worse* than 3% in all four OOS
-splits** (ΔSR −0.12 to −0.21; P(4>3) = 0.001 / 0.003 / 0.017 / 0.060). **0/4 splits ship.** Per-coin,
-no coin robustly benefits; ETH is marginally *hurt* by a looser price stop.
+[−0.089, +0.170], P=0.70, not significant) and is *worse* than 3% in **all four** OOS splits,
+significantly so in three (ΔSR −0.12 to −0.21; P(4>3) = 0.001 / 0.003 / 0.017; the fourth, 0.060,
+has a CI including 0). **0/4 splits ship.** Per-coin, no coin robustly benefits; ETH is marginally
+*hurt* by a looser price stop.
 
-**Reconciliation:** the two analyses *agree* once leverage is accounted for. A 3% *price* stop, at
-the strategy's realized ~2× leverage, **is** a ~6–7% *equity* stop — exactly the §31.4b equity
-optimum. The live bot, by using a price stop directly, is **already sitting at the sweet spot**.
-§31.4b's "loosen the equity stop" really meant "the equity-stop *variable* was producing too-tight
-*price* stops" — a problem the live bot never had.
+**Why the two axes disagree — measured, not assumed.** An earlier draft reconciled them as "a 3%
+price stop at the strategy's realized ~2× leverage *is* a ~6–7% equity stop". That is **wrong**:
+the sweep's realized gross exposure averages **~0.21×** (per-coin mean |pos| 0.19–0.27, max-ever
+1.43×, zero days ≥ 2×), and an engine-exact replay counts the 7% *equity* stop firing **once** in
+4.5 yr × 4 coins (10%: never) versus **1,125 fires** for the 3% *price* stop (4%: 857). The two
+stops are not equivalent in any units. At sub-1× leverage the equity axis tested *near-inactive*
+stops — its "optimum" 7% is effectively a disarmed stop — while the price axis tests a
+frequently-binding constraint. The equity-axis gradient therefore mainly says "binding stops hurt
+on that axis"; the **price axis is the only deployable experiment**, and it independently favors
+the existing 3–4% region.
+
+*Caveat (model-vs-live parity):* this axis was swept with early-exit OFF, while live also runs
+`EARLY_EXIT_LOSS=0.015`. The EE-off price-3% SR (3.1777) matching the EE-on production anchor
+(3.178) is numeric coincidence, not a parity check. EE fires before the stop on slow bleeds, so the
+interaction should make the price stop *less* binding rather than move the optimum, but a live
+config with EE off was not what this table models.
 
 **VERDICT — keep live `STOP_LOSS_PCT = 3%`; no deploy.** Changing it (looser or tighter) does not
 robustly help and degrades OOS. Note that naively shipping §31.4b's "7%" as `STOP_LOSS_PCT=0.07`
@@ -168,11 +184,14 @@ p = 0.007 → "SHIP" on this window (`stats_oos.json`).
 
 - **§29's stop conclusion is overturned IN EQUITY-STOP UNITS — but this does NOT mean change the
   live stop.** Intrabar, a looser *equity* stop (~5–7%) beats a 3% *equity* stop by **ΔSR +0.32**,
-  OOS-robust across all four splits (P(7>3) ≥ 0.955). BUT the live bot uses a *price* stop, and
-  §31.4c shows that variable is *already* near-optimal at 3% — because a 3% price stop ≈ a 6–7%
-  equity stop at the realized ~2× leverage. **So there is no live config change to make**; the
-  equity-axis result and the live setting are reconciled. The takeaway is methodological: §29's flat
-  daily plateau was a close-to-close artifact, and stop optima must be read in the executor's units.
+  OOS P(7>3) ≥ 0.955 on all four splits (three individually significant). BUT the equity result is
+  not deployable: at the realized ~0.21× leverage the equity stops barely fire (7%: once over
+  4.5 yr × 4 coins), so the equity "optimum" is effectively a disarmed stop — not an equivalent of
+  the live price stop. The live variable is the *price* stop, and §31.4c shows it is already
+  near-optimal at 3% on its own evidence. **So there is no live config change to make.** The
+  takeaway is methodological: §29's flat daily plateau was a close-to-close artifact, and stop
+  optima must be read in the executor's units — and validated by firing behaviour, not unit
+  conversion.
 - **The benefit is concentrated in ETH** (3%→7%: ΔSR +1.05, P=1.000). BTC/BNB/SOL are
   stop-insensitive in 3–7% (all non-negative, none hurt), so widening is **safe portfolio-wide** and
   **most impactful for ETH** — whose tight 3% stop bleeds badly from intraday wick-outs.
@@ -183,9 +202,11 @@ p = 0.007 → "SHIP" on this window (`stats_oos.json`).
   and a forward A/B.
 - **Recommended LIVE stance (after the §31.4c price-units check): KEEP `STOP_LOSS_PCT = 3%` — no
   deploy.** The price-stop axis peaks at ~3–4% and the nominal 4% best fails 0/4 OOS splits (worse
-  than 3%), so the live 3% price stop is already at/near the optimum. Never set it to 0 (no stop →
-  −10 SR / DD halt). The §31.4b equity-axis "loosen to 5–7%" is *not* a live instruction — it is the
-  equity-unit equivalent of the price stop the bot already runs. TP/trailing remain future work
+  than 3%), so the live 3% price stop is already at/near the optimum. Never set it to 0 — live,
+  `STOP_LOSS_PCT=0` arms a STOP_MARKET at the execution price itself, triggering immediately (and
+  in the backtest SL=0 is a degenerate always-firing stop, not "no stop"). The §31.4b equity-axis
+  "loosen to 5–7%" is *not* a live instruction — that axis's stops were effectively inactive at the
+  realized ~0.21× leverage. TP/trailing remain future work
   (ETH-focused, fragile, and needing intraday limit-order execution). This vindicates the original
   anti-overfit instinct: 3% was a good a-priori and stays.
 - **Bias correction for the thesis record:** the production-style 3% config's *true* (intrabar)
