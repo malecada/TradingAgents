@@ -231,3 +231,5 @@ tmp_output.txt
 tradingagents/monitor/frontend/node_modules/
 # Allow frontend src/lib despite root lib/ rule
 !tradingagents/monitor/frontend/src/lib/
+# Allow committed frontend dist (FastAPI serves it; VPS has no Node)
+!tradingagents/monitor/frontend/dist/

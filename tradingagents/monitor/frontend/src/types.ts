@@ -43,7 +43,7 @@ export interface StrategyPositions {
 }
 
 export interface PositionsResp {
-  quant: StrategyPositions; hybrid: StrategyPositions | null;
+  quant: StrategyPositions | null; hybrid: StrategyPositions | null;
 }
 
 export interface IncomeSummary {
