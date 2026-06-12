@@ -229,6 +229,15 @@ def run_hybrid_cycle(
                     mp = None
 
                 mult, eff_w = extract_modulator_outputs(mp)
+                is_fallback = not mp or mp.get("llm_multiplier") is None
+                j.log_modulator(
+                    cycle_id=cycle_id, coin=coin, multiplier=mult,
+                    effective_weight=eff_w,
+                    llm_confidence=(mp or {}).get("llm_confidence"),
+                    regime=(str(mp["regime"]) if mp and mp.get("regime") is not None
+                            else None),
+                    fallback=is_fallback,
+                )
                 final_fraction = compose_final(base=base, multiplier=mult, effective_weight=eff_w)
 
                 # ── persist hybrid hold state ──────────────────────────────
