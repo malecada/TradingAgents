@@ -40,3 +40,13 @@ def test_slippage_stats():
 
 def test_slippage_stats_empty():
     assert analytics.slippage_stats([]) == {"mean": None, "max": None, "n": 0}
+
+
+def test_income_summary_malformed_income_skipped():
+    s = analytics.income_summary([
+        {"symbol": "BTCUSDT", "incomeType": "REALIZED_PNL", "income": "N/A"},
+        {"symbol": "BTCUSDT", "incomeType": "REALIZED_PNL", "income": None},
+        {"symbol": "BTCUSDT", "incomeType": "REALIZED_PNL", "income": "5.0"},
+    ])
+    assert s["realized_pnl_per_coin"] == {"BTCUSDT": 5.0}
+    assert s["n_closing_fills"] == 1

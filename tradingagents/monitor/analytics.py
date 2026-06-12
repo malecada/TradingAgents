@@ -6,6 +6,14 @@ income endpoint); slippage comes from journal trade rows. No I/O here.
 from __future__ import annotations
 
 
+def _to_float(val, default: float = 0.0) -> float:
+    """Parse Binance numeric strings defensively; malformed values count 0."""
+    try:
+        return float(val) if val is not None else default
+    except (ValueError, TypeError):
+        return default
+
+
 def income_summary(records: list[dict]) -> dict:
     """Aggregate Binance income records into the analytics strip payload.
 
@@ -35,7 +43,7 @@ def income_summary(records: list[dict]) -> dict:
     closing = 0
     for r in records:
         kind = r.get("incomeType")
-        amount = float(r.get("income", 0.0))
+        amount = _to_float(r.get("income"))
         symbol = r.get("symbol") or "?"
         if kind == "REALIZED_PNL":
             pnl_per_coin[symbol] = pnl_per_coin.get(symbol, 0.0) + amount
