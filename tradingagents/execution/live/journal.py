@@ -284,6 +284,23 @@ class Journal:
         )
         self._conn.commit()
 
+    def log_modulator(self, *, cycle_id: str, coin: str, multiplier: float,
+                      effective_weight: float, llm_confidence: float | None = None,
+                      regime: str | None = None, fallback: bool = False) -> None:
+        """Persist the hybrid modulator outputs for one coin/cycle.
+
+        Written even when the modulator degraded to pure quant (1.0, 0.0)
+        with fallback=True, so the UI can label the row honestly.
+        """
+        self._conn.execute(
+            "INSERT OR REPLACE INTO modulator_outputs "
+            "(cycle_id, coin, multiplier, effective_weight, llm_confidence, "
+            "regime, fallback) VALUES (?,?,?,?,?,?,?)",
+            (cycle_id, coin, multiplier, effective_weight, llm_confidence,
+             regime, 1 if fallback else 0),
+        )
+        self._conn.commit()
+
     def log_shadow_decision(self, *, cycle_id, coin, live_signal, backtest_signal,
                              live_size, backtest_size) -> None:
         agree = 1 if live_signal == backtest_signal else 0

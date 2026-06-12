@@ -136,3 +136,17 @@ CREATE TABLE IF NOT EXISTS hold_state (
     entry_cycle TEXT,
     updated_ts TEXT
 );
+
+-- Hybrid modulator outputs (one row per coin per hybrid cycle). Additive;
+-- quant journals simply never write it. fallback=1 means the modulator
+-- failed/was skipped and the hybrid traded pure quant (1.0, 0.0).
+CREATE TABLE IF NOT EXISTS modulator_outputs (
+    cycle_id TEXT NOT NULL,
+    coin TEXT NOT NULL,
+    multiplier REAL NOT NULL,
+    effective_weight REAL NOT NULL,
+    llm_confidence REAL,
+    regime TEXT,
+    fallback INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (cycle_id, coin)
+);
