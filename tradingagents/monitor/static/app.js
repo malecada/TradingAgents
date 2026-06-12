@@ -53,7 +53,13 @@ function renderPerformance(d) {
     ? "<canvas id='equity-canvas' height='90'></canvas>"
     : "<p class='muted'>No equity data yet.</p>";
   html += "</div>";
-  html += "<div class='panel'><h3>Current holdings · valued at last-cycle ref price</h3>";
+  const holdingsSub = d.holdings_stale
+    ? "<span class='warn'>STALE — live unavailable" +
+        (d.holdings_as_of ? " · snapshot as of " + d.holdings_as_of : "") +
+        (d.holdings_live_error ? " (" + d.holdings_live_error + ")" : "") +
+      "</span>"
+    : "live exchange positions";
+  html += "<div class='panel'><h3>Current holdings · " + holdingsSub + "</h3>";
   if (d.holdings.length) {
     html += "<table><tr><th>Coin</th><th>Position qty</th><th>Value (USD)</th></tr>";
     for (const p of d.holdings) {
