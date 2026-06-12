@@ -571,6 +571,19 @@ class ExchangeClient:
                 return round(price, precision)
         return price
 
+    def min_notional(self, symbol: str) -> float:
+        """Symbol's MIN_NOTIONAL filter — minimum order value in USDT.
+
+        Binance rejects non-reduceOnly orders below this (-4164/-1013); the
+        live runner uses it to skip dust rebalance deltas instead of logging
+        FAILED trades. Defaults to 5.0 (the Futures floor) when absent.
+        """
+        info = self.get_symbol_info(symbol)
+        for f in info["filters"]:
+            if f["filterType"] == "MIN_NOTIONAL":
+                return float(f.get("notional", f.get("minNotional", 5.0)))
+        return 5.0
+
     # -- Retry logic -----------------------------------------------------------
 
     @staticmethod
