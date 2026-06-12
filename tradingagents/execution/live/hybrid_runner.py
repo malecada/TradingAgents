@@ -229,7 +229,8 @@ def run_hybrid_cycle(
                     mp = None
 
                 mult, eff_w = extract_modulator_outputs(mp)
-                is_fallback = not mp or mp.get("llm_multiplier") is None
+                is_fallback = (not mp or mp.get("llm_multiplier") is None
+                               or mp.get("effective_weight") is None)
                 j.log_modulator(
                     cycle_id=cycle_id, coin=coin, multiplier=mult,
                     effective_weight=eff_w,

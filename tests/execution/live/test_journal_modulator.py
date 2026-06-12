@@ -55,11 +55,14 @@ def test_fallback_detection_matches_extract_semantics():
     # extract_modulator_outputs degrade conditions.
     from tradingagents.execution.live.hybrid_compose import extract_modulator_outputs
 
-    for mp in (None, {}, {"llm_multiplier": None, "effective_weight": 0.4}):
-        is_fallback = not mp or mp.get("llm_multiplier") is None
+    for mp in (None, {}, {"llm_multiplier": None, "effective_weight": 0.4},
+               {"llm_multiplier": 1.2, "effective_weight": None}):
+        is_fallback = (not mp or mp.get("llm_multiplier") is None
+                       or mp.get("effective_weight") is None)
         assert is_fallback is True
         assert extract_modulator_outputs(mp) == (1.0, 0.0)
 
     mp = {"llm_multiplier": 1.2, "effective_weight": 0.4}
-    assert (not mp or mp.get("llm_multiplier") is None) is False
+    assert (not mp or mp.get("llm_multiplier") is None
+            or mp.get("effective_weight") is None) is False
     assert extract_modulator_outputs(mp) == (1.2, 0.4)
