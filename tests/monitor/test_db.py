@@ -68,3 +68,32 @@ def test_retrains(journal_path):
     rows = db.retrains(conn)
     assert rows[0]["retrain_id"] == "r1"
     conn.close()
+
+
+def test_modulator_outputs_missing_table_is_empty(journal_path):
+    # Simulate an OLD journal (pre-modulator table) by dropping it.
+    import sqlite3 as sq
+    conn = sq.connect(journal_path)
+    conn.execute("DROP TABLE IF EXISTS modulator_outputs")
+    conn.commit()
+    conn.close()
+    ro = db.open_journal(journal_path)
+    assert db.modulator_outputs(ro, "c2") == []
+    ro.close()
+
+
+def test_modulator_outputs_rows(journal_path):
+    import sqlite3 as sq
+    conn = sq.connect(journal_path)
+    conn.execute(
+        "INSERT INTO modulator_outputs (cycle_id, coin, multiplier, "
+        "effective_weight, llm_confidence, regime, fallback) "
+        "VALUES ('c2','ethereum',1.2,0.35,0.7,'trend_up',0)")
+    conn.commit()
+    conn.close()
+    ro = db.open_journal(journal_path)
+    rows = db.modulator_outputs(ro, "c2")
+    ro.close()
+    assert rows[0]["coin"] == "ethereum"
+    assert rows[0]["multiplier"] == 1.2
+    assert rows[0]["fallback"] == 0

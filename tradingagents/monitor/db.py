@@ -67,3 +67,15 @@ def portfolio_snapshots(conn: sqlite3.Connection) -> list[dict]:
 def retrains(conn: sqlite3.Connection) -> list[dict]:
     """Retrain history, newest first."""
     return _rows(conn, "SELECT * FROM retrains ORDER BY rowid DESC")
+
+
+def modulator_outputs(conn: sqlite3.Connection, cycle_id: str) -> list[dict]:
+    """Hybrid modulator rows for one cycle. Empty list when the journal
+    predates the modulator_outputs table (quant journals never have it)."""
+    try:
+        return _rows(
+            conn,
+            "SELECT * FROM modulator_outputs WHERE cycle_id = ? ORDER BY coin",
+            (cycle_id,))
+    except sqlite3.OperationalError:
+        return []
