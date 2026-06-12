@@ -1,227 +1,287 @@
-"""FastAPI app for the live bot monitoring UI.
+"""FastAPI app for the dual-strategy (quant + hybrid) live bot monitor.
 
-Read-only. Serves an HTML shell at ``/`` and JSON at ``/api/*``. Every
-route requires HTTP basic auth. All endpoints tolerate an empty or missing
-journal: empty DBs yield empty payloads, an unreadable DB yields HTTP 503.
+Read-only. Serves the built React SPA at ``/`` and JSON at ``/api/*``.
+HTTP basic auth is enforced by middleware on EVERY path (including static
+assets). All endpoints tolerate an empty or missing journal: empty DBs
+yield empty payloads, an unreadable DB yields HTTP 503. A missing hybrid
+source yields ``hybrid: null`` blocks, never an error.
 """
 from __future__ import annotations
 
+import base64
 import json
+import math
 import os
 import secrets
 import sqlite3
-import time
 from pathlib import Path
-from typing import Callable
 
-from fastapi import Depends, FastAPI, HTTPException
-from fastapi.responses import JSONResponse
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 
 from tradingagents.execution.live.config import from_binance_symbol
-from tradingagents.monitor import db, health, metrics
 from tradingagents.execution.live.rebacktest import compare_quant_hybrid
+from tradingagents.monitor import analytics, db, health, metrics
+from tradingagents.monitor.sources import StrategySource
 
 _DIR = Path(__file__).parent
+_DIST = _DIR / "frontend" / "dist"
 _AUTH_USER = "admin"
+_ROLLING_WINDOW = 30
+
+
+def _sanitize_floats(obj):
+    """Recursively replace NaN/±Inf with None so FastAPI can JSON-serialize."""
+    if isinstance(obj, float):
+        return None if not math.isfinite(obj) else obj
+    if isinstance(obj, dict):
+        return {k: _sanitize_floats(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_sanitize_floats(v) for v in obj]
+    return obj
 
 
 def create_app(
-    journal_path: str,
-    log_dir: str,
+    *,
+    quant: StrategySource,
+    hybrid: StrategySource | None = None,
+    log_dir: str = "logs",
     start_capital: float = 10000.0,
-    position_provider: Callable[[], list[dict]] | None = None,
-    position_cache_ttl: float = 30.0,
-    clock: Callable[[], float] = time.monotonic,
 ) -> FastAPI:
     """Build the monitor app. Raises RuntimeError if TA_MONITOR_PASSWORD
-    is unset — the UI must never run without a password.
-
-    ``position_provider`` returns the live exchange positions as
-    ``[{symbol, qty, usd}, ...]``; the default queries Binance via
-    ``ExchangeClient.get_open_positions``. Results (and failures) are cached
-    for ``position_cache_ttl`` seconds so 30-second UI polling — and retries
-    during an IP ban — never hammer the exchange.
-    """
+    is unset — the UI must never run without a password."""
     password = os.environ.get("TA_MONITOR_PASSWORD", "")
     if not password:
         raise RuntimeError("TA_MONITOR_PASSWORD environment variable is not set")
 
-    # Default provider: lazy ExchangeClient, reused across calls. Raises (so
-    # the endpoint falls back to the journal snapshot) when no creds are set.
-    _exchange: dict = {"client": None}
+    app = FastAPI(title="Live Monitor", docs_url=None, redoc_url=None)
 
-    def _default_position_provider() -> list[dict]:
-        if not os.environ.get("BINANCE_API_KEY"):
-            raise RuntimeError(
-                "BINANCE_API_KEY not set — live positions unavailable")
-        if _exchange["client"] is None:
-            from tradingagents.execution.exchange import ExchangeClient
-            _exchange["client"] = ExchangeClient()
-        return _exchange["client"].get_open_positions()
+    # ── auth middleware (covers /api AND static SPA assets) ────────────────
+    expected = base64.b64encode(f"{_AUTH_USER}:{password}".encode()).decode()
 
-    provider = position_provider or _default_position_provider
-    _pos_cache: dict = {"exp": 0.0, "data": None, "error": None}
+    @app.middleware("http")
+    async def basic_auth(request: Request, call_next):
+        header = request.headers.get("authorization", "")
+        ok = header.startswith("Basic ") and secrets.compare_digest(
+            header[6:], expected)
+        if not ok:
+            return Response(status_code=401,
+                            headers={"WWW-Authenticate": "Basic"})
+        return await call_next(request)
 
-    def live_positions() -> list[dict]:
-        """Cached live positions. Re-raises a cached failure within the TTL
-        rather than re-querying — repeated calls during a ban extend it."""
-        now = clock()
-        if now < _pos_cache["exp"]:
-            if _pos_cache["error"] is not None:
-                raise _pos_cache["error"]
-            return _pos_cache["data"]
+    # ── helpers ────────────────────────────────────────────────────────────
+    def _sources() -> list[StrategySource]:
+        return [quant] + ([hybrid] if hybrid else [])
+
+    def _source(name: str) -> StrategySource:
+        for s in _sources():
+            if s.name == name:
+                return s
+        raise HTTPException(status_code=400, detail=f"unknown strategy {name!r}")
+
+    def _conn(s: StrategySource) -> sqlite3.Connection:
+        return db.open_journal(s.journal_path)
+
+    def _snapshot_rows(conn: sqlite3.Connection) -> tuple:
+        """(portfolio_snapshots, latest ref_price per coin)."""
+        snaps = db.portfolio_snapshots(conn)
+        ref_prices: dict = {}
+        latest = db.latest_cycle(conn)
+        if latest:
+            for p in db.cycle_detail(conn, latest["cycle_id"])["predictions"]:
+                if p.get("ref_price") is not None:
+                    ref_prices[p["coin"]] = p["ref_price"]
+        return snaps, ref_prices
+
+    def _live_block(s: StrategySource) -> tuple:
+        """(snapshot|None, error|None) from the TTL-cached provider."""
         try:
-            data = provider()
-            _pos_cache.update(exp=now + position_cache_ttl, data=data, error=None)
-            return data
+            return s.snapshot(), None
         except Exception as exc:
-            _pos_cache.update(exp=now + position_cache_ttl, data=None, error=exc)
-            raise
+            return None, str(exc)
 
-    app = FastAPI(title="V5 MIX Live Monitor", docs_url=None, redoc_url=None)
-    templates = Jinja2Templates(directory=str(_DIR / "templates"))
-    app.mount("/static", StaticFiles(directory=str(_DIR / "static")), name="static")
-    security = HTTPBasic()
-
-    def require_auth(creds: HTTPBasicCredentials = Depends(security)) -> str:
-        user_ok = secrets.compare_digest(creds.username, _AUTH_USER)
-        pass_ok = secrets.compare_digest(creds.password, password)
-        if not (user_ok and pass_ok):
-            raise HTTPException(
-                status_code=401, detail="Unauthorized",
-                headers={"WWW-Authenticate": "Basic"})
-        return creds.username
-
-    def _journal() -> sqlite3.Connection:
-        """Open the journal read-only, or raise HTTP 503 with {error: ...}."""
-        try:
-            return db.open_journal(journal_path)
-        except sqlite3.OperationalError as exc:
-            # Raise OperationalError directly so the exception handler below
-            # returns {"error": ...} (not {"detail": ...}).
-            raise exc
-
-    @app.get("/")
-    def index(request: Request, _: str = Depends(require_auth)):
-        return templates.TemplateResponse(request, "base.html")
-
+    # ── endpoints ──────────────────────────────────────────────────────────
     @app.get("/api/performance")
-    def api_performance(_: str = Depends(require_auth)):
-        conn = _journal()
-        try:
-            snaps = db.portfolio_snapshots(conn)
-            trades = db.all_trades(conn)
-            # Latest cycle's predictions carry a ref_price per coin — the
-            # journal-native price used to value current holdings in USD.
-            latest = db.latest_cycle(conn)
-            ref_prices: dict[str, float] = {}
-            if latest:
-                for p in db.cycle_detail(conn, latest["cycle_id"])["predictions"]:
-                    if p.get("ref_price") is not None:
-                        ref_prices[p["coin"]] = p["ref_price"]
-        finally:
-            conn.close()
-        equity = metrics.equity_series(snaps, trades, start_capital)
-        values = [pt["value"] for pt in equity]
-
-        # Current holdings: live exchange positions valued at live mark price.
-        # On any live failure (IP ban, missing creds, timeout) fall back to the
-        # latest journal snapshot's position_qty_per_coin map valued at the
-        # last-cycle ref price, flagged stale so the UI never presents frozen
-        # positions as live. The V5 bot is a rebalancing strategy — it never
-        # journals round-trip trades, so the equity curve is the PnL story.
-        holdings: list[dict] = []
-        holdings_stale = False
-        holdings_as_of = None
-        holdings_live_error = None
-        try:
-            for p in sorted(live_positions(), key=lambda x: x["symbol"]):
-                if not p["qty"]:
-                    continue
-                holdings.append({
-                    "coin": from_binance_symbol(p["symbol"]),
-                    "qty": p["qty"],
-                    "usd": p["usd"],
-                })
-        except Exception as exc:  # live unavailable — fall back to snapshot
-            holdings_stale = True
-            holdings_live_error = str(exc)
-            if snaps:
-                holdings_as_of = snaps[-1].get("ts")
-                raw = snaps[-1].get("position_qty_per_coin")
-                try:
-                    qty_map = json.loads(raw) if raw else {}
-                except (json.JSONDecodeError, TypeError):
-                    qty_map = {}
-                for coin, qty in sorted(qty_map.items()):
-                    if not qty:
-                        continue
-                    price = ref_prices.get(coin)
-                    holdings.append({
-                        "coin": coin,
-                        "qty": qty,
-                        "usd": qty * price if price is not None else None,
-                    })
-        holdings_usd_total = sum(
-            h["usd"] for h in holdings if h["usd"] is not None
-        )
-
-        return {
-            "cards": {
-                "equity": values[-1] if values else start_capital,
-                "sharpe": round(metrics.sharpe(values), 2),
-                "max_drawdown": round(metrics.max_drawdown(values), 4),
-                "open_positions": len(holdings),
-            },
-            "equity": equity,
-            "backtest_anchor_sharpe": 3.18,
-            "holdings": holdings,
-            "holdings_usd_total": holdings_usd_total,
-            "holdings_stale": holdings_stale,
-            "holdings_as_of": holdings_as_of,
-            "holdings_live_error": holdings_live_error,
+    def api_performance():
+        out: dict = {"quant": None, "hybrid": None}
+        for s in _sources():
+            conn = _conn(s)
+            try:
+                snaps, _ = _snapshot_rows(conn)
+                trades = db.all_trades(conn)
+            finally:
+                conn.close()
+            equity = metrics.equity_series(snaps, trades, start_capital)
+            values = [pt["value"] for pt in equity]
+            live, _live_err = _live_block(s)
+            if live is not None:
+                total_upnl = sum(p["upnl"] for p in live["positions"])
+                n_open = len(live["positions"])
+                upnl_stale = False
+            else:
+                total_upnl = snaps[-1].get("unrealized_pnl") if snaps else None
+                n_open = None
+                upnl_stale = True
+            out[s.name] = {
+                "cards": {
+                    "equity": values[-1] if values else start_capital,
+                    "sharpe": round(metrics.sharpe(values), 2),
+                    "max_drawdown": round(metrics.max_drawdown(values), 4),
+                    "total_upnl": total_upnl,
+                    "upnl_stale": upnl_stale,
+                    "open_positions": n_open,
+                },
+                "equity": equity,
+                "drawdown": metrics.drawdown_series(equity),
+                "rolling_sharpe": metrics.rolling_sharpe(equity, _ROLLING_WINDOW),
+            }
+        compare = None
+        if hybrid is not None:
+            try:
+                compare = _sanitize_floats(compare_quant_hybrid(
+                    Path(quant.journal_path), Path(hybrid.journal_path), coins=[]))
+            except Exception as exc:
+                compare = {"error": str(exc)}
+        out["compare"] = compare
+        out["anchors"] = {
+            "quant": float(os.environ.get("TA_MONITOR_ANCHOR_SR_QUANT", "3.18")),
+            "hybrid": (float(os.environ["TA_MONITOR_ANCHOR_SR_HYBRID"])
+                       if os.environ.get("TA_MONITOR_ANCHOR_SR_HYBRID") else None),
         }
+        return out
+
+    @app.get("/api/positions")
+    def api_positions():
+        out: dict = {"quant": None, "hybrid": None}
+        for s in _sources():
+            live, live_err = _live_block(s)
+            if live is not None:
+                positions = []
+                for p in sorted(live["positions"], key=lambda x: x["symbol"]):
+                    entry_notional = abs(p["qty"]) * p["entry_price"]
+                    positions.append({
+                        "coin": from_binance_symbol(p["symbol"]),
+                        "side": "LONG" if p["qty"] > 0 else "SHORT",
+                        "qty": p["qty"],
+                        "entry": p["entry_price"],
+                        "mark": p["mark_price"],
+                        "leverage": p["leverage"],
+                        "notional": p["notional"],
+                        "upnl_usd": p["upnl"],
+                        "upnl_pct": (p["upnl"] / entry_notional * 100.0
+                                     if entry_notional else None),
+                        "liq_price": p["liq_price"] or None,
+                    })
+                allocation = [{"label": pos["coin"], "usd": abs(pos["notional"])}
+                              for pos in positions]
+                allocation.append({"label": "USDT (free)", "usd": live["usdt_free"]})
+                out[s.name] = {
+                    "positions": positions,
+                    "totals": {
+                        "upnl": sum(p["upnl_usd"] for p in positions),
+                        "notional": sum(abs(p["notional"]) for p in positions),
+                        "equity": live["equity"],
+                    },
+                    "allocation": allocation,
+                    "stale": False, "as_of": None, "error": None,
+                }
+            else:  # journal fallback (same pattern as v2.3.1 holdings fix)
+                conn = _conn(s)
+                try:
+                    snaps, ref_prices = _snapshot_rows(conn)
+                finally:
+                    conn.close()
+                positions = []
+                as_of = None
+                if snaps:
+                    as_of = snaps[-1].get("ts")
+                    try:
+                        qty_map = json.loads(
+                            snaps[-1].get("position_qty_per_coin") or "{}")
+                    except (json.JSONDecodeError, TypeError):
+                        qty_map = {}
+                    for coin, qty in sorted(qty_map.items()):
+                        if not qty:
+                            continue
+                        price = ref_prices.get(coin)
+                        positions.append({
+                            "coin": coin,
+                            "side": "LONG" if qty > 0 else "SHORT",
+                            "qty": qty, "entry": None, "mark": price,
+                            "leverage": None,
+                            "notional": qty * price if price else None,
+                            "upnl_usd": None, "upnl_pct": None,
+                            "liq_price": None,
+                        })
+                allocation = [{"label": p["coin"], "usd": abs(p["notional"])}
+                              for p in positions if p["notional"] is not None]
+                out[s.name] = {
+                    "positions": positions,
+                    "totals": {
+                        "upnl": snaps[-1].get("unrealized_pnl") if snaps else None,
+                        "notional": sum(a["usd"] for a in allocation) or None,
+                        "equity": snaps[-1].get("total_value") if snaps else None,
+                    },
+                    "allocation": allocation,
+                    "stale": True, "as_of": as_of, "error": live_err,
+                }
+        return out
 
     @app.get("/api/trades")
-    def api_trades(_: str = Depends(require_auth)):
-        """Execution log. The journal records one row per executed order;
-        exit_price/pnl/fees are never back-filled (rebalancing strategy)."""
-        conn = _journal()
+    def api_trades(strategy: str = "quant"):
+        s = _source(strategy)
+        conn = _conn(s)
         try:
             executions = db.all_trades(conn)
         finally:
             conn.close()
-        return {"executions": executions}
+        income_block = None
+        live, _err = _live_block(s)
+        if live is not None and live.get("income") is not None:
+            income_block = analytics.income_summary(live["income"])
+        return {
+            "executions": executions,
+            "analytics": {
+                "income": income_block,
+                "slippage": analytics.slippage_stats(executions),
+            },
+        }
 
     @app.get("/api/cycles")
-    def api_cycles(_: str = Depends(require_auth)):
-        conn = _journal()
+    def api_cycles(strategy: str = "quant"):
+        conn = _conn(_source(strategy))
         try:
             return {"cycles": db.list_cycles(conn)}
         finally:
             conn.close()
 
     @app.get("/api/cycle/{cycle_id}")
-    def api_cycle(cycle_id: str, _: str = Depends(require_auth)):
-        conn = _journal()
+    def api_cycle(cycle_id: str, strategy: str = "quant"):
+        conn = _conn(_source(strategy))
         try:
-            return db.cycle_detail(conn, cycle_id)
+            detail = db.cycle_detail(conn, cycle_id)
+            detail["modulator"] = db.modulator_outputs(conn, cycle_id)
+            return detail
         finally:
             conn.close()
 
     @app.get("/api/health")
-    def api_health(_: str = Depends(require_auth)):
-        conn = _journal()
-        try:
-            timeline = db.list_cycles(conn)
-            retrains = db.retrains(conn)
-        finally:
-            conn.close()
-        steps = health.read_structured_log(log_dir)
+    def api_health():
+        timeline: dict = {}
+        retrains: dict = {}
+        for s in _sources():
+            conn = _conn(s)
+            try:
+                timeline[s.name] = db.list_cycles(conn)
+                retrains[s.name] = db.retrains(conn)
+            finally:
+                conn.close()
+        if hybrid is None:
+            timeline.setdefault("hybrid", None)
+            retrains.setdefault("hybrid", None)
+        steps = health.read_structured_log(log_dir)  # quant runner only
         return {
             "timeline": timeline,
             "steps": steps,
@@ -230,31 +290,32 @@ def create_app(
         }
 
     @app.get("/api/compare")
-    def api_compare(_: str = Depends(require_auth)):
-        """Quant vs hybrid live equity-curve comparison.
-
-        Resolves journal paths from QUANT_DATA_DIR and HYBRID_DATA_DIR env vars
-        (both default to DATA_DIR so the route degrades gracefully when only one
-        bot is running).  Returns the compare_quant_hybrid dict: quant/hybrid/
-        delta metrics (sharpe, ret, maxdd) + the overlapping date window.
-        """
-        quant_dir = Path(os.environ.get(
-            "QUANT_DATA_DIR", os.environ.get("DATA_DIR", "data")))
-        hybrid_dir = Path(os.environ.get(
-            "HYBRID_DATA_DIR", os.environ.get("DATA_DIR", "data")))
-        quant_db = quant_dir / "trade_journal.db"
-        hybrid_db = hybrid_dir / "trade_journal.db"
-        if quant_db == hybrid_db:
-            return {"error": (
-                "hybrid not configured — "
-                "HYBRID_DATA_DIR not set or equals QUANT_DATA_DIR"
-            )}
+    def api_compare():
+        if hybrid is None:
+            return {"error": "hybrid not configured — HYBRID_DATA_DIR not set "
+                             "or equals QUANT_DATA_DIR"}
         coins_env = os.environ.get("COMPARE_COINS", "")
         coins = [c.strip() for c in coins_env.split(",") if c.strip()]
-        return compare_quant_hybrid(quant_db, hybrid_db, coins=coins)
+        return _sanitize_floats(compare_quant_hybrid(
+            Path(quant.journal_path), Path(hybrid.journal_path), coins=coins))
 
     @app.exception_handler(sqlite3.OperationalError)
     def _db_error(request: Request, exc: sqlite3.OperationalError):
         return JSONResponse(status_code=503, content={"error": str(exc)})
+
+    # ── React SPA (built dist committed to repo) ───────────────────────────
+    if _DIST.is_dir():
+        app.mount("/assets", StaticFiles(directory=str(_DIST / "assets")),
+                  name="assets")
+
+        @app.get("/")
+        def index():
+            return FileResponse(str(_DIST / "index.html"))
+    else:  # pre-build / CI without dist: explicit 503, not a silent 404
+        @app.get("/")
+        def index_missing():
+            return JSONResponse(status_code=503, content={
+                "error": "frontend not built — run npm run build in "
+                         "tradingagents/monitor/frontend"})
 
     return app

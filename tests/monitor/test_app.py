@@ -1,187 +1,129 @@
-import base64
+"""Dual-strategy monitor API tests."""
+from __future__ import annotations
 
 import pytest
-from starlette.testclient import TestClient
+from fastapi.testclient import TestClient
 
 from tradingagents.monitor.app import create_app
-
-_PW = "testpw"
-
-
-def _auth_header(user="admin", pw=_PW):
-    raw = f"{user}:{pw}".encode()
-    return {"Authorization": "Basic " + base64.b64encode(raw).decode()}
+from tradingagents.monitor.sources import StrategySource
 
 
-def _offline_provider():
-    # Force the snapshot-fallback path deterministically — never touch Binance.
-    raise RuntimeError("live unavailable")
-
-
-@pytest.fixture
-def client(journal_path, log_dir, monkeypatch):
-    monkeypatch.setenv("TA_MONITOR_PASSWORD", _PW)
-    app = create_app(journal_path=journal_path, log_dir=log_dir,
-                      start_capital=10000.0,
-                      position_provider=_offline_provider)
-    return TestClient(app)
-
-
-@pytest.fixture
-def empty_client(empty_journal_path, tmp_path, monkeypatch):
-    monkeypatch.setenv("TA_MONITOR_PASSWORD", _PW)
-    app = create_app(journal_path=empty_journal_path, log_dir=str(tmp_path),
-                      start_capital=10000.0,
-                      position_provider=_offline_provider)
-    return TestClient(app)
+def _quant_only_app(journal_path, log_dir, monkeypatch, snapshot=None):
+    monkeypatch.setenv("TA_MONITOR_PASSWORD", "pw")
+    def boom():
+        raise RuntimeError("no creds")
+    quant = StrategySource("quant", journal_path, snapshot or boom)
+    return create_app(quant=quant, hybrid=None, log_dir=log_dir,
+                      start_capital=10000.0)
 
 
 def test_create_app_requires_password(journal_path, log_dir, monkeypatch):
     monkeypatch.delenv("TA_MONITOR_PASSWORD", raising=False)
+    quant = StrategySource("quant", journal_path, lambda: {})
     with pytest.raises(RuntimeError):
-        create_app(journal_path=journal_path, log_dir=log_dir)
+        create_app(quant=quant, hybrid=None, log_dir=log_dir)
 
 
-def test_root_requires_auth(client):
-    assert client.get("/").status_code == 401
+def test_all_routes_require_auth(dual_app):
+    # Use a fresh client with NO auth set so the middleware returns 401.
+    from fastapi.testclient import TestClient
+    c = TestClient(dual_app, raise_server_exceptions=False)
+    for path in ("/", "/api/performance", "/api/positions", "/api/trades",
+                 "/api/cycles", "/api/health", "/api/compare"):
+        assert c.get(path).status_code == 401, path
 
 
-def test_root_rejects_bad_password(client):
-    r = client.get("/", headers=_auth_header(pw="wrong"))
-    assert r.status_code == 401
-
-
-def test_root_ok_with_auth(client):
-    r = client.get("/", headers=_auth_header())
-    assert r.status_code == 200
-    assert "text/html" in r.headers["content-type"]
-
-
-def test_api_performance(client):
-    r = client.get("/api/performance", headers=_auth_header())
+def test_performance_dual(dual_client):
+    r = dual_client.get("/api/performance", auth=dual_client.auth)
     assert r.status_code == 200
     body = r.json()
-    # Holdings come from the latest snapshot's position_qty_per_coin map;
-    # usd values qty at the latest cycle's prediction ref_price.
-    assert body["cards"]["open_positions"] == 2
-    assert len(body["equity"]) == 2
-    assert {h["coin"] for h in body["holdings"]} == {"bitcoin", "ethereum"}
-    usd = {h["coin"]: h["usd"] for h in body["holdings"]}
-    assert usd["bitcoin"] == 0.06 * 68000.0
-    assert usd["ethereum"] == 1.4 * 3800.0
-    assert body["holdings_usd_total"] == 0.06 * 68000.0 + 1.4 * 3800.0
+    q, h = body["quant"], body["hybrid"]
+    assert q["cards"]["equity"] == 10280.0          # last snapshot total_value
+    assert q["cards"]["total_upnl"] == 50.0          # live snapshot
+    assert q["cards"]["open_positions"] == 1
+    assert len(q["equity"]) == 2 and len(q["drawdown"]) == 2
+    assert q["rolling_sharpe"] == []                 # < 31 points
+    assert h["cards"]["equity"] == 10100.0
+    assert body["anchors"]["quant"] == 3.18
+    assert "compare" in body                          # delta block present
 
 
-def test_holdings_live_when_provider_succeeds(journal_path, log_dir, monkeypatch):
-    monkeypatch.setenv("TA_MONITOR_PASSWORD", _PW)
-    provider = lambda: [
-        {"symbol": "BTCUSDT", "qty": 0.001, "usd": 63.0},
-        {"symbol": "SOLUSDT", "qty": 0.96, "usd": 64.06},
-    ]
-    app = create_app(journal_path=journal_path, log_dir=log_dir,
-                     position_provider=provider)
-    body = TestClient(app).get(
-        "/api/performance", headers=_auth_header()).json()
-    assert body["holdings_stale"] is False
-    assert body["holdings_as_of"] is None
-    assert body["holdings_live_error"] is None
-    coins = {h["coin"]: h for h in body["holdings"]}
-    assert set(coins) == {"bitcoin", "solana"}
-    assert coins["bitcoin"]["qty"] == 0.001
-    assert coins["solana"]["usd"] == 64.06
-    assert body["cards"]["open_positions"] == 2
-    assert body["holdings_usd_total"] == 63.0 + 64.06
-
-
-def test_holdings_fall_back_to_snapshot_when_live_fails(
-        journal_path, log_dir, monkeypatch):
-    monkeypatch.setenv("TA_MONITOR_PASSWORD", _PW)
-
-    def boom():
-        raise RuntimeError("ip banned")
-
-    app = create_app(journal_path=journal_path, log_dir=log_dir,
-                     position_provider=boom)
-    body = TestClient(app).get(
-        "/api/performance", headers=_auth_header()).json()
-    assert body["holdings_stale"] is True
-    assert body["holdings_as_of"] == "2026-05-20T07:05:00+00:00"
-    assert "ip banned" in body["holdings_live_error"]
-    # Falls back to the latest snapshot, valued at ref_price.
-    assert {h["coin"] for h in body["holdings"]} == {"bitcoin", "ethereum"}
-    usd = {h["coin"]: h["usd"] for h in body["holdings"]}
-    assert usd["bitcoin"] == 0.06 * 68000.0
-
-
-def test_live_positions_cached_within_ttl(journal_path, log_dir, monkeypatch):
-    monkeypatch.setenv("TA_MONITOR_PASSWORD", _PW)
-    calls = {"n": 0}
-
-    def provider():
-        calls["n"] += 1
-        return [{"symbol": "BTCUSDT", "qty": 0.001, "usd": 63.0}]
-
-    now = {"t": 1000.0}
-    app = create_app(journal_path=journal_path, log_dir=log_dir,
-                     position_provider=provider,
-                     position_cache_ttl=30.0, clock=lambda: now["t"])
+def test_performance_hybrid_none(journal_path, log_dir, monkeypatch):
+    app = _quant_only_app(journal_path, log_dir, monkeypatch)
     c = TestClient(app)
-    c.get("/api/performance", headers=_auth_header())
-    c.get("/api/performance", headers=_auth_header())
-    assert calls["n"] == 1  # second read served from cache
-    now["t"] += 31.0
-    c.get("/api/performance", headers=_auth_header())
-    assert calls["n"] == 2  # TTL expired, refetched
+    body = c.get("/api/performance", auth=("admin", "pw")).json()
+    assert body["hybrid"] is None
+    assert body["compare"] is None
+    # live snapshot failed -> uPnL falls back to journal snapshot value
+    assert body["quant"]["cards"]["total_upnl"] == 80.0
+    assert body["quant"]["cards"]["upnl_stale"] is True
 
 
-def test_api_trades(client):
-    r = client.get("/api/trades", headers=_auth_header())
-    assert r.status_code == 200
-    body = r.json()
-    assert len(body["executions"]) == 3
-    assert body["executions"][0]["status"] == "FAILED"  # newest first
+def test_positions_dual(dual_client):
+    body = dual_client.get("/api/positions", auth=dual_client.auth).json()
+    q = body["quant"]
+    assert q["positions"][0]["coin"] == "bitcoin"
+    assert q["positions"][0]["upnl_usd"] == 50.0
+    assert q["totals"]["upnl"] == 50.0 and q["totals"]["equity"] == 10350.0
+    assert {"label": "USDT (free)", "usd": 7000.0} in q["allocation"]
+    assert q["stale"] is False
+    h = body["hybrid"]
+    assert h["positions"][0]["coin"] == "ethereum"
+    assert h["positions"][0]["upnl_pct"] == pytest.approx(100.0 / 3800.0 * 100, rel=1e-3)
 
 
-def test_api_cycles(client):
-    r = client.get("/api/cycles", headers=_auth_header())
-    assert r.status_code == 200
-    assert [c["cycle_id"] for c in r.json()["cycles"]] == ["c2", "c1"]
+def test_positions_fallback_when_live_fails(journal_path, log_dir, monkeypatch):
+    app = _quant_only_app(journal_path, log_dir, monkeypatch)
+    c = TestClient(app)
+    q = c.get("/api/positions", auth=("admin", "pw")).json()["quant"]
+    assert q["stale"] is True and "no creds" in q["error"]
+    coins = {p["coin"] for p in q["positions"]}
+    assert coins == {"bitcoin", "ethereum"}          # journal snapshot qty map
+    assert q["as_of"] == "2026-05-20T07:05:00+00:00"
 
 
-def test_api_cycle_detail(client):
-    r = client.get("/api/cycle/c2", headers=_auth_header())
-    assert r.status_code == 200
-    body = r.json()
-    assert len(body["predictions"]) == 2
-    assert len(body["risk_checks"]) == 2
+def test_trades_strategy_param_and_analytics(dual_client):
+    body = dual_client.get("/api/trades?strategy=hybrid",
+                           auth=dual_client.auth).json()
+    assert len(body["executions"]) == 1
+    assert body["executions"][0]["coin"] == "ethereum"
+    assert body["analytics"]["slippage"] == {"mean": 0.4, "max": 0.4, "n": 1}
+    assert body["analytics"]["income"] is None       # fake snapshot has no income
+    quant = dual_client.get("/api/trades?strategy=quant",
+                            auth=dual_client.auth).json()
+    assert len(quant["executions"]) == 3
 
 
-def test_api_health(client):
-    r = client.get("/api/health", headers=_auth_header())
-    assert r.status_code == 200
-    body = r.json()
-    assert len(body["timeline"]) == 2
-    assert len(body["steps"]) == 3
-    assert len(body["errors"]) == 1
-    assert len(body["retrains"]) == 1
+def test_trades_bad_strategy_400(dual_client):
+    r = dual_client.get("/api/trades?strategy=nope", auth=dual_client.auth)
+    assert r.status_code == 400
 
 
-def test_api_empty_db_returns_empty_states(empty_client):
-    r = empty_client.get("/api/performance", headers=_auth_header())
-    assert r.status_code == 200
-    body = r.json()
-    assert body["equity"] == []
-    assert body["cards"]["open_positions"] == 0
+def test_cycles_and_cycle_detail_strategy(dual_client):
+    cycles = dual_client.get("/api/cycles?strategy=hybrid",
+                             auth=dual_client.auth).json()["cycles"]
+    assert [c["cycle_id"] for c in cycles] == ["c2"]
+    detail = dual_client.get("/api/cycle/c2?strategy=hybrid",
+                             auth=dual_client.auth).json()
+    assert detail["modulator"][0]["multiplier"] == 1.2
+    quant_detail = dual_client.get("/api/cycle/c2?strategy=quant",
+                                   auth=dual_client.auth).json()
+    assert quant_detail["modulator"] == []
+    assert len(quant_detail["predictions"]) == 2
 
-    r = empty_client.get("/api/trades", headers=_auth_header())
-    assert r.json()["executions"] == []
+
+def test_health_dual(dual_client):
+    body = dual_client.get("/api/health", auth=dual_client.auth).json()
+    assert body["timeline"]["quant"][0]["cycle_id"] == "c2"
+    assert body["timeline"]["hybrid"][0]["cycle_id"] == "c2"
+    assert body["steps"]                                # quant JSONL only
+    assert body["errors"][0]["step"] == "execute"
 
 
-def test_api_missing_db_returns_503(log_dir, monkeypatch):
-    monkeypatch.setenv("TA_MONITOR_PASSWORD", _PW)
-    app = create_app(journal_path="/nonexistent/trade_journal.db",
-                      log_dir=log_dir, start_capital=10000.0)
-    client = TestClient(app)
-    r = client.get("/api/performance", headers=_auth_header())
-    assert r.status_code == 503
-    assert "error" in r.json()
+def test_missing_db_returns_503(log_dir, monkeypatch):
+    monkeypatch.setenv("TA_MONITOR_PASSWORD", "pw")
+    quant = StrategySource("quant", "/nonexistent/x.db", lambda: {})
+    app = create_app(quant=quant, hybrid=None, log_dir=log_dir)
+    c = TestClient(app)
+    r = c.get("/api/cycles", auth=("admin", "pw"))
+    assert r.status_code == 503 and "error" in r.json()

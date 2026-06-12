@@ -126,3 +126,63 @@ def log_dir(tmp_path) -> str:
         for r in records:
             f.write(json.dumps(r) + "\n")
     return str(d)
+
+
+@pytest.fixture
+def hybrid_journal_path(tmp_path) -> str:
+    """A small hybrid journal: 1 overlapping cycle + modulator rows."""
+    db = tmp_path / "hybrid" / "trade_journal.db"
+    db.parent.mkdir()
+    conn = sqlite3.connect(str(db))
+    with open(_SCHEMA) as f:
+        conn.executescript(f.read())
+    conn.execute(
+        "INSERT INTO cycles (cycle_id, start_ts, end_ts, status, n_trades) "
+        "VALUES ('c2','2026-05-20T08:00:00+00:00','2026-05-20T08:20:00+00:00','ok',1)")
+    conn.execute(
+        "INSERT INTO portfolio_snapshots (cycle_id, ts, total_value, usdt_balance, "
+        "position_qty_per_coin, unrealized_pnl) VALUES "
+        "('c2','2026-05-20T08:20:00+00:00',10100.0,5000.0,'{\"ethereum\": 1.0}',20.0)")
+    conn.execute(
+        "INSERT INTO modulator_outputs (cycle_id, coin, multiplier, "
+        "effective_weight, llm_confidence, regime, fallback) VALUES "
+        "('c2','ethereum',1.2,0.35,0.7,'trend_up',0)")
+    conn.execute(
+        "INSERT INTO trades (cycle_id, coin, side, qty, entry_price, slippage, "
+        "order_id, status) VALUES ('c2','ethereum','BUY',1.0,3800.0,0.4,'h1','EXECUTED')")
+    conn.commit()
+    conn.close()
+    return str(db)
+
+
+def _fake_snapshot(positions=None, equity=10350.0, usdt=7000.0):
+    def snap():
+        return {"positions": positions or [], "usdt_free": usdt,
+                "equity": equity, "income": None}
+    return snap
+
+
+@pytest.fixture
+def dual_app(journal_path, hybrid_journal_path, log_dir, monkeypatch):
+    """create_app with quant+hybrid sources and fake snapshot providers."""
+    from tradingagents.monitor.app import create_app
+    from tradingagents.monitor.sources import StrategySource
+    monkeypatch.setenv("TA_MONITOR_PASSWORD", "pw")
+    quant = StrategySource("quant", journal_path, _fake_snapshot(positions=[
+        {"symbol": "BTCUSDT", "qty": 0.05, "entry_price": 65000.0,
+         "mark_price": 66000.0, "upnl": 50.0, "leverage": 3.0,
+         "liq_price": 30000.0, "notional": 3300.0}]))
+    hybrid = StrategySource("hybrid", hybrid_journal_path, _fake_snapshot(
+        positions=[{"symbol": "ETHUSDT", "qty": 1.0, "entry_price": 3800.0,
+                    "mark_price": 3900.0, "upnl": 100.0, "leverage": 2.0,
+                    "liq_price": 1900.0, "notional": 3900.0}], equity=10100.0))
+    return create_app(quant=quant, hybrid=hybrid, log_dir=log_dir,
+                      start_capital=10000.0)
+
+
+@pytest.fixture
+def dual_client(dual_app):
+    from fastapi.testclient import TestClient
+    c = TestClient(dual_app)
+    c.auth = ("admin", "pw")
+    return c
