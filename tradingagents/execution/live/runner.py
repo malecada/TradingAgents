@@ -363,6 +363,34 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
             pnl_today_pct = 0.0  # safe fallback if journal unavailable
             dd_from_peak = 0.0
 
+        # Whole-account position snapshot, once per cycle (weight-5 call).
+        # Replaces ~2 per-symbol queries per coin plus an O(N²) max-positions
+        # sweep. If Binance cannot report positions after retries, trading is
+        # OFF for this cycle: a fetch failure treated as "flat" computes
+        # delta = full target, which can stack a second full-size position on
+        # an existing one or skip a required close. Resting STOP_MARKETs keep
+        # protecting existing positions while we sit out.
+        try:
+            positions_by_symbol = {
+                p["symbol"]: float(p["qty"]) for p in ex.get_open_positions()
+            }
+            positions_known = True
+        except Exception as e:  # noqa: BLE001
+            positions_by_symbol = {}
+            positions_known = False
+            structured.event(
+                "execute", "position_snapshot_failed", {"err": str(e)},
+            )
+            try:
+                notify.send_alert(
+                    bot_token=cfg.telegram_bot_token,
+                    chat_id=cfg.telegram_chat_id,
+                    severity="POSITION_SNAPSHOT_FAILED",
+                    message=f"positions unknown — trading skipped this cycle: {e}",
+                )
+            except Exception:
+                pass
+
         for coin in cfg.coin_universe:
             if _shutdown_requested:
                 break
@@ -579,10 +607,13 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                 weight=cfg.portfolio_weights[coin],
                 ref_price=preds[coin]["ref_price"],
             )
-            try:
-                current_signed_qty = float(ex.get_current_position(symbol))
-            except Exception:
-                current_signed_qty = 0.0
+            if not positions_known:
+                structured.event(
+                    "execute", "skip_unknown_position",
+                    {"coin": coin, "target": target_signed_qty},
+                )
+                continue
+            current_signed_qty = positions_by_symbol.get(symbol, 0.0)
             delta_qty = target_signed_qty - current_signed_qty
             if abs(delta_qty) < 1e-8:
                 structured.event(
@@ -602,8 +633,7 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                 and abs(target_signed_qty) > 1e-9
             )
             open_count = sum(
-                1 for c in cfg.coin_universe
-                if abs(ex.get_current_position(to_binance_symbol(c))) > 1e-9
+                1 for q in positions_by_symbol.values() if abs(q) > 1e-9
             )
             ok_pos, why = risk.check_max_positions(
                 open_count, cfg.max_open_positions,
@@ -701,6 +731,9 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                         # long instead of protecting it. Compute net position
                         # explicitly and skip the stop if position is flat.
                         net_position = current_signed_qty + delta_qty
+                        # Keep the cycle snapshot current so later coins see
+                        # this fill in their max-positions count.
+                        positions_by_symbol[symbol] = net_position
                         if abs(net_position) < 1e-8:
                             # Flat after the trade — clear any resting stop.
                             try:
@@ -814,13 +847,25 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
 
         # 9. snapshot
         portfolio_after = ex.get_total_portfolio_value()
+        # Fresh single-call snapshot (positions changed during execution);
+        # falls back to the per-symbol loop only if the one call fails.
+        try:
+            _post = {
+                p["symbol"]: float(p["qty"]) for p in ex.get_open_positions()
+            }
+            qty_per_coin = {
+                c: _post.get(to_binance_symbol(c), 0.0)
+                for c in cfg.coin_universe
+            }
+        except Exception:
+            qty_per_coin = {
+                c: ex.get_current_position(to_binance_symbol(c))
+                for c in cfg.coin_universe
+            }
         j.log_portfolio_snapshot(
             cycle_id=cycle_id, total_value=portfolio_after,
             usdt_balance=ex.get_usdt_balance(),
-            position_qty_per_coin={
-                c: ex.get_current_position(to_binance_symbol(c))
-                for c in cfg.coin_universe
-            },
+            position_qty_per_coin=qty_per_coin,
             unrealized_pnl=portfolio_after - portfolio_before,
         )
 
