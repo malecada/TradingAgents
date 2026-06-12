@@ -14,6 +14,14 @@ const RANGES = [
   { label: "90d", days: 90 }, { label: "all", days: null },
 ] as const;
 
+function prep(p: StrategyPerf | null, days: number | null) {
+  return {
+    eq: p ? rebaseTo100(sliceFromDays(p.equity, days)) : [],
+    dd: p ? sliceFromDays(p.drawdown, days) : [],
+    rs: p ? sliceFromDays(p.rolling_sharpe, days) : [],
+  };
+}
+
 function CardsRow(props: { name: "quant" | "hybrid"; p: StrategyPerf }) {
   const c = props.p.cards;
   return (
@@ -35,17 +43,17 @@ function CardsRow(props: { name: "quant" | "hybrid"; p: StrategyPerf }) {
 export function PerformanceTab() {
   const q = useQuery({ queryKey: ["performance"], queryFn: api.performance });
   const [days, setDays] = useState<number | null>(null);
-  if (q.isLoading) return <div className="muted">loading…</div>;
-  if (q.isError || !q.data) return <div className="badge error">failed: {String(q.error)}</div>;
   const d = q.data;
-
-  const prep = (p: StrategyPerf | null) => ({
-    eq: p ? rebaseTo100(sliceFromDays(p.equity, days)) : [],
-    dd: p ? sliceFromDays(p.drawdown, days) : [],
-    rs: p ? sliceFromDays(p.rolling_sharpe, days) : [],
-  });
-  const quant = useMemo(() => prep(d.quant), [d, days]);
-  const hybrid = useMemo(() => prep(d.hybrid), [d, days]);
+  const quant = useMemo(
+    () => prep(d?.quant ?? null, days),
+    [d, days],
+  );
+  const hybrid = useMemo(
+    () => prep(d?.hybrid ?? null, days),
+    [d, days],
+  );
+  if (q.isLoading) return <div className="muted">loading…</div>;
+  if (q.isError || !d) return <div className="badge error">failed: {String(q.error)}</div>;
 
   return (
     <>
