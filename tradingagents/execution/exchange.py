@@ -170,6 +170,48 @@ class ExchangeClient:
             out.append({"symbol": pos["symbol"], "qty": qty, "usd": usd})
         return out
 
+    def get_position_details(self) -> list[dict]:
+        """All non-flat positions with the fields the monitor UI shows.
+
+        Read-only superset of get_open_positions (kept separate so the
+        runner's hot path is untouched). qty/notional are signed.
+        """
+        positions = self._retry(self._client.futures_position_information)
+        out: list[dict] = []
+        for pos in positions:
+            qty = float(pos["positionAmt"])
+            if qty == 0:
+                continue
+            notional = pos.get("notional")
+            out.append({
+                "symbol": pos["symbol"],
+                "qty": qty,
+                "entry_price": float(pos["entryPrice"]),
+                "mark_price": float(pos["markPrice"]),
+                "upnl": float(pos["unRealizedProfit"]),
+                "leverage": float(pos.get("leverage") or 0),
+                "liq_price": float(pos.get("liquidationPrice") or 0),
+                "notional": float(notional) if notional is not None
+                else qty * float(pos["markPrice"]),
+            })
+        return out
+
+    def income_history(self, *, start_time_ms: int | None = None,
+                       income_type: str | None = None,
+                       limit: int = 1000) -> list[dict]:
+        """Futures income records (REALIZED_PNL / COMMISSION / FUNDING_FEE...).
+
+        Caller aggregates; this is a thin retry wrapper. Binance caps one
+        page at 1000 records — enough for the testnet A/B volumes; the
+        monitor labels totals as 'last 1000 records' rather than paginating.
+        """
+        params: dict = {"limit": limit}
+        if start_time_ms is not None:
+            params["startTime"] = start_time_ms
+        if income_type is not None:
+            params["incomeType"] = income_type
+        return self._retry(self._client.futures_income_history, **params)
+
     def get_position_value(self, symbol: str) -> float:
         """Return absolute USDT value of current position for *symbol*."""
         pos_amt = self.get_current_position(symbol)
