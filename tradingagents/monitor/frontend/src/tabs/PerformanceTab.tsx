@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../api";
 import { Card } from "../components/Card";
@@ -44,8 +44,8 @@ export function PerformanceTab() {
     dd: p ? sliceFromDays(p.drawdown, days) : [],
     rs: p ? sliceFromDays(p.rolling_sharpe, days) : [],
   });
-  const quant = prep(d.quant);
-  const hybrid = prep(d.hybrid);
+  const quant = useMemo(() => prep(d.quant), [d, days]);
+  const hybrid = useMemo(() => prep(d.hybrid), [d, days]);
 
   return (
     <>

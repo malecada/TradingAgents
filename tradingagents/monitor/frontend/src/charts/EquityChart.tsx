@@ -77,7 +77,7 @@ export function EquityChart(props: EquityChartProps) {
     onResize();
     window.addEventListener("resize", onResize);
     return () => { window.removeEventListener("resize", onResize); chart.remove(); };
-  }, [props]);
+  }, [props.quantEquity, props.hybridEquity, props.quantDd, props.hybridDd, props.quantRs, props.hybridRs, props.anchors]);
 
   return <div ref={ref} />;
 }

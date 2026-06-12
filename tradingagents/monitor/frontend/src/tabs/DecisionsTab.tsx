@@ -34,6 +34,8 @@ export function DecisionsTab() {
     queryFn: () => api.cycle(selected!, strategy),
     enabled: selected !== null,
   });
+  if (cyclesQ.isLoading) return <div className="muted">loading…</div>;
+  if (cyclesQ.isError) return <div className="badge error">failed: {String(cyclesQ.error)}</div>;
   return (
     <>
       <div className="pills">
