@@ -127,3 +127,40 @@ def test_missing_db_returns_503(log_dir, monkeypatch):
     c = TestClient(app)
     r = c.get("/api/cycles", auth=("admin", "pw"))
     assert r.status_code == 503 and "error" in r.json()
+
+
+def test_auth_non_ascii_header_is_401(dual_app):
+    c = TestClient(dual_app, raise_server_exceptions=False)
+    # Pass raw bytes so the HTTP layer doesn't ASCII-encode and reject first
+    r = c.get("/api/performance", headers={"Authorization": b"Basic \xff\xfe"})
+    assert r.status_code == 401
+
+
+def test_auth_wrong_password_is_401(dual_app):
+    c = TestClient(dual_app, raise_server_exceptions=False)
+    r = c.get("/api/performance", auth=("admin", "wrong"))
+    assert r.status_code == 401
+
+
+def test_performance_isolates_missing_hybrid_db(journal_path, log_dir, monkeypatch):
+    monkeypatch.setenv("TA_MONITOR_PASSWORD", "pw")
+    quant = StrategySource("quant", journal_path, lambda: (_ for _ in ()).throw(RuntimeError("x")))
+    hybrid = StrategySource("hybrid", "/nonexistent/h.db", lambda: {})
+    app = create_app(quant=quant, hybrid=hybrid, log_dir=log_dir, start_capital=10000.0)
+    c = TestClient(app)
+    r = c.get("/api/performance", auth=("admin", "pw"))
+    assert r.status_code == 200
+    body = r.json()
+    assert body["quant"]["cards"]["equity"] == 10280.0
+    assert body["hybrid"] is None
+
+
+def test_health_isolates_missing_hybrid_db(journal_path, log_dir, monkeypatch):
+    monkeypatch.setenv("TA_MONITOR_PASSWORD", "pw")
+    quant = StrategySource("quant", journal_path, lambda: {})
+    hybrid = StrategySource("hybrid", "/nonexistent/h.db", lambda: {})
+    app = create_app(quant=quant, hybrid=hybrid, log_dir=log_dir, start_capital=10000.0)
+    c = TestClient(app)
+    body = c.get("/api/health", auth=("admin", "pw")).json()
+    assert body["timeline"]["quant"][0]["cycle_id"] == "c2"
+    assert body["timeline"]["hybrid"] is None

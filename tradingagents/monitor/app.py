@@ -3,8 +3,12 @@
 Read-only. Serves the built React SPA at ``/`` and JSON at ``/api/*``.
 HTTP basic auth is enforced by middleware on EVERY path (including static
 assets). All endpoints tolerate an empty or missing journal: empty DBs
-yield empty payloads, an unreadable DB yields HTTP 503. A missing hybrid
-source yields ``hybrid: null`` blocks, never an error.
+yield empty payloads, an unreadable DB yields HTTP 503 on per-strategy
+endpoints (/api/cycles, /api/cycle, /api/trades). Combined endpoints
+(/api/performance, /api/health) degrade per-strategy instead — a locked
+or missing journal for one source yields ``null`` for that strategy and
+continues serving the other. A missing hybrid source yields
+``hybrid: null`` blocks, never an error.
 """
 from __future__ import annotations
 
@@ -58,14 +62,19 @@ def create_app(
 
     app = FastAPI(title="Live Monitor", docs_url=None, redoc_url=None)
 
+    # ── parse anchor env vars once at startup (fail fast on bad values) ────
+    _anchor_quant = float(os.environ.get("TA_MONITOR_ANCHOR_SR_QUANT", "3.18"))
+    _anchor_hybrid_env = os.environ.get("TA_MONITOR_ANCHOR_SR_HYBRID")
+    _anchor_hybrid = float(_anchor_hybrid_env) if _anchor_hybrid_env else None
+
     # ── auth middleware (covers /api AND static SPA assets) ────────────────
-    expected = base64.b64encode(f"{_AUTH_USER}:{password}".encode()).decode()
+    expected = base64.b64encode(f"{_AUTH_USER}:{password}".encode())
 
     @app.middleware("http")
     async def basic_auth(request: Request, call_next):
         header = request.headers.get("authorization", "")
         ok = header.startswith("Basic ") and secrets.compare_digest(
-            header[6:], expected)
+            header[6:].encode("latin-1", "replace"), expected)
         if not ok:
             return Response(status_code=401,
                             headers={"WWW-Authenticate": "Basic"})
@@ -107,7 +116,11 @@ def create_app(
     def api_performance():
         out: dict = {"quant": None, "hybrid": None}
         for s in _sources():
-            conn = _conn(s)
+            try:
+                conn = _conn(s)
+            except sqlite3.OperationalError:
+                out[s.name] = None
+                continue
             try:
                 snaps, _ = _snapshot_rows(conn)
                 trades = db.all_trades(conn)
@@ -146,9 +159,8 @@ def create_app(
                 compare = {"error": str(exc)}
         out["compare"] = compare
         out["anchors"] = {
-            "quant": float(os.environ.get("TA_MONITOR_ANCHOR_SR_QUANT", "3.18")),
-            "hybrid": (float(os.environ["TA_MONITOR_ANCHOR_SR_HYBRID"])
-                       if os.environ.get("TA_MONITOR_ANCHOR_SR_HYBRID") else None),
+            "quant": _anchor_quant,
+            "hybrid": _anchor_hybrid,
         }
         return out
 
@@ -272,7 +284,12 @@ def create_app(
         timeline: dict = {}
         retrains: dict = {}
         for s in _sources():
-            conn = _conn(s)
+            try:
+                conn = _conn(s)
+            except sqlite3.OperationalError:
+                timeline[s.name] = None
+                retrains[s.name] = None
+                continue
             try:
                 timeline[s.name] = db.list_cycles(conn)
                 retrains[s.name] = db.retrains(conn)
@@ -296,8 +313,11 @@ def create_app(
                              "or equals QUANT_DATA_DIR"}
         coins_env = os.environ.get("COMPARE_COINS", "")
         coins = [c.strip() for c in coins_env.split(",") if c.strip()]
-        return _sanitize_floats(compare_quant_hybrid(
-            Path(quant.journal_path), Path(hybrid.journal_path), coins=coins))
+        try:
+            return _sanitize_floats(compare_quant_hybrid(
+                Path(quant.journal_path), Path(hybrid.journal_path), coins=coins))
+        except Exception as exc:
+            return {"error": str(exc)}
 
     @app.exception_handler(sqlite3.OperationalError)
     def _db_error(request: Request, exc: sqlite3.OperationalError):
