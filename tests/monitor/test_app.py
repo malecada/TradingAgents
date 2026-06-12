@@ -164,3 +164,15 @@ def test_health_isolates_missing_hybrid_db(journal_path, log_dir, monkeypatch):
     body = c.get("/api/health", auth=("admin", "pw")).json()
     assert body["timeline"]["quant"][0]["cycle_id"] == "c2"
     assert body["timeline"]["hybrid"] is None
+
+
+def test_index_serves_react_dist(dual_client):
+    import pathlib
+    dist = (pathlib.Path(__file__).resolve().parents[2]
+            / "tradingagents/monitor/frontend/dist")
+    if not dist.is_dir():
+        import pytest as _pytest
+        _pytest.skip("frontend dist not built")
+    r = dual_client.get("/", auth=dual_client.auth)
+    assert r.status_code == 200
+    assert '<div id="root">' in r.text
