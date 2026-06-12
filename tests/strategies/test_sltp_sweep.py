@@ -237,3 +237,29 @@ def test_funding_series_none_preserves_scalar_abs_behavior():
     # legacy behavior: short is CHARGED funding_rate*abs(pos) (unsigned)
     assert math.isclose(eq_default[-1], 10_000.0 * (1 - 0.0002), rel_tol=1e-12)
     np.testing.assert_array_equal(np.asarray(eq_default), np.asarray(eq_none))
+
+
+def test_real_funding_array_includes_final_bar(monkeypatch):
+    """The backtest `end` date is inclusive but fetch_funding_raw's `end` is
+    exclusive — passing it through unshifted silently zeroes the final bar's
+    funding. The fetch window must extend one day past the backtest end."""
+    import pandas as pd
+    from tradingagents.strategies import carry_sleeve
+    from scripts.baseline_v5_mix import _real_funding_array
+
+    captured = {}
+
+    def fake_income(symbol, start, end):
+        captured["start"], captured["end"] = start, end
+        idx = pd.date_range("2026-01-01", "2026-01-03", freq="D").date
+        return pd.Series([0.0001, 0.0002, 0.0003], index=idx)
+
+    monkeypatch.setattr(carry_sleeve, "funding_daily_income", fake_income)
+
+    dates = pd.to_datetime(["2026-01-01", "2026-01-02", "2026-01-03"]).values
+    arr = _real_funding_array("bitcoin", dates, "2026-01-01", "2026-01-03")
+
+    assert captured["end"] > pd.Timestamp("2026-01-03").date(), (
+        "fetch end must be strictly after the (inclusive) backtest end"
+    )
+    assert arr[-1] == pytest.approx(0.0003), "final bar funding must not be zeroed"

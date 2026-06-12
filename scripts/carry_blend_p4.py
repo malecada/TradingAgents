@@ -6,9 +6,9 @@ haircut carry Sharpe levels (since the real-basis SR is an upper bound that
 omits intraday liquidation + margin capital cost — see
 docs/CARRY_SLEEVE_BACKTEST_SPEC.md, P5/open-question).
 
-Usage:
+Usage (defaults reproduce the published THESIS §32 blend table):
     python scripts/carry_blend_p4.py \
-        --v5-csv data/v5_mix_kelly_025/daily_returns.csv \
+        --v5-csv data/v5_mix_production/daily_returns.csv \
         --start 2021-11-07 --end 2026-04-15
 """
 from __future__ import annotations
@@ -56,9 +56,15 @@ def fetch_spot_close(symbol: str, start: date, end: date) -> pd.Series:
     return pd.Series([float(r[4]) for r in rows], index=idx, name="spot")
 
 
+# Thesis-canonical annualization (baseline_v5_mix._metrics uses sqrt(252)).
+# Early exploratory runs used sqrt(365) — those figures are 1.203x larger and
+# do NOT match the published §32 table.
+ANN = np.sqrt(252)
+
+
 def sharpe(r) -> float:
     r = np.asarray(r, dtype=float)
-    return float(r.mean() / r.std() * np.sqrt(365))
+    return float(r.mean() / r.std() * ANN)
 
 
 def maxdd(r) -> float:
@@ -91,13 +97,16 @@ def haircut_to_sharpe(sleeve: pd.Series, target_sr: float) -> pd.Series:
     Models liquidation/capital drag eating return without assuming where it bites.
     """
     r = sleeve.to_numpy(dtype=float)
-    mu_t = (target_sr / np.sqrt(365)) * r.std()
+    mu_t = (target_sr / ANN) * r.std()
     return pd.Series(r - r.mean() + mu_t, index=sleeve.index, name="carry_sleeve")
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--v5-csv", default="data/v5_mix_kelly_025/daily_returns.csv")
+    # Production baseline (SR 3.178 under sqrt(252)) — the published §32 blend
+    # table is computed against THIS file. kelly_025 is a hotter variant and
+    # yields a different (larger) blend delta.
+    ap.add_argument("--v5-csv", default="data/v5_mix_production/daily_returns.csv")
     ap.add_argument("--v5-col", default="portfolio")
     ap.add_argument("--symbols", nargs="+", default=["BTCUSDT", "ETHUSDT"])
     ap.add_argument("--start", type=_parse_date, default=_parse_date("2021-11-07"))

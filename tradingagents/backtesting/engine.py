@@ -303,8 +303,11 @@ def run_backtest(
         # Transaction costs scale with absolute position size.
         abs_pos = abs(effective_position)
         cost = (2 * fee_rate + slippage) * abs_pos
-        # Additional borrowing cost for short exposure.
-        if effective_position < 0:
+        # Additional borrowing cost for short exposure — legacy holding-cost
+        # proxy. Real signed funding REPLACES it (perps have no borrow fee;
+        # charging both double-counts the short's carry — the V2 path makes
+        # the same replacement).
+        if effective_position < 0 and funding_series is None:
             cost += short_cost * abs_pos
         # Signed perp funding (long pays when funding>0, short receives).
         if funding_series is not None:

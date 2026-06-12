@@ -43,3 +43,32 @@ def test_engine_signed_funding_long_pays_short_receives():
 def test_engine_funding_none_is_legacy_no_funding():
     r = _two_day(["HOLD", "BUY"], None)  # no funding series
     assert math.isclose(r.daily_returns[-1], 0.0, abs_tol=1e-12)  # zero fees, no funding
+
+
+def _two_day_with_short_cost(signals, fseries, short_cost):
+    from tradingagents.backtesting.engine import run_backtest
+    from tradingagents.backtesting.strategies import FiveLevelSignal
+
+    dates = pd.Series(pd.to_datetime(["2024-01-01", "2024-01-02"]))
+    actuals = np.array([100.0, 100.0])
+    return run_backtest(
+        dates, actuals, signals, FiveLevelSignal(),
+        fee_rate=0.0, slippage=0.0, short_cost=short_cost,
+        funding_series=fseries,
+    )
+
+
+def test_real_funding_replaces_short_cost_not_stacks():
+    """With real signed funding supplied, the legacy short borrow proxy must
+    NOT also be charged — perps have no borrow fee and charging both
+    double-counts the short's carry (the V2 path already replaces it)."""
+    fseries = np.array([0.0, 0.0002])
+    r_short = _two_day_with_short_cost(["HOLD", "SELL"], fseries, short_cost=0.0003)
+    # Funding-only: short receives +0.0002. If short_cost stacked, the day
+    # would net 0.0002 - 0.0003 = -0.0001.
+    assert math.isclose(r_short.daily_returns[-1], +0.0002, rel_tol=1e-12)
+
+
+def test_legacy_short_cost_still_charged_without_funding():
+    r_short = _two_day_with_short_cost(["HOLD", "SELL"], None, short_cost=0.0003)
+    assert math.isclose(r_short.daily_returns[-1], -0.0003, rel_tol=1e-12)

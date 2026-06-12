@@ -197,14 +197,16 @@ def _real_funding_array(
     drop venue-cap-exceeding data artifacts. Used to deduct SIGNED funding (longs
     pay, shorts receive) in the engine instead of the flat ``COSTS['funding_rate']``.
     """
-    from datetime import datetime as _dt
+    from datetime import datetime as _dt, timedelta as _td
 
-    from tradingagents.strategies.carry_sleeve import funding_daily_income
+    from tradingagents.strategies import carry_sleeve
 
     sym = _FUNDING_SYMBOLS[coin]
     s = _dt.strptime(start, "%Y-%m-%d").date()
-    e = _dt.strptime(end, "%Y-%m-%d").date()
-    inc = funding_daily_income(sym, s, e)              # date-indexed
+    # fetch_funding_raw's end is EXCLUSIVE while the backtest end is inclusive
+    # — fetch one day past so the final bar's funding is not silently zeroed.
+    e = _dt.strptime(end, "%Y-%m-%d").date() + _td(days=1)
+    inc = carry_sleeve.funding_daily_income(sym, s, e)  # date-indexed
     inc.index = pd.to_datetime(list(inc.index)).normalize()
     idx = pd.to_datetime(dates).tz_localize(None).normalize()
     arr = inc.reindex(idx).fillna(0.0).to_numpy(dtype=float)
