@@ -18,7 +18,12 @@ WorkingDirectory=/opt/tradingagents/repo
 #   TA_MONITOR_ANCHOR_SR_HYBRID=                  # optional; shown on hybrid perf tab
 EnvironmentFile=/opt/tradingagents/secrets/.env.trading
 EnvironmentFile=-/opt/tradingagents/secrets/.env.monitor
+# Hybrid account creds (HYBRID_BINANCE_API_KEY/_SECRET) — same file the hybrid
+# runner uses, so the monitor's hybrid pane needs no duplicated secrets.
+EnvironmentFile=-/opt/tradingagents/secrets/.env.hybrid
 Environment=DATA_DIR=/opt/tradingagents/data
+Environment=QUANT_DATA_DIR=/opt/tradingagents/data
+Environment=HYBRID_DATA_DIR=/opt/tradingagents/data-hybrid
 Environment=LOG_DIR=/opt/tradingagents/logs
 Environment=TA_MONITOR_HOST=127.0.0.1
 Environment=TA_MONITOR_PORT=8800
