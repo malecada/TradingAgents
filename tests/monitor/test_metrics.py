@@ -62,3 +62,32 @@ def test_equity_series_fallback_to_trades():
 
 def test_equity_series_empty():
     assert metrics.equity_series([], trades=[], start_capital=10000.0) == []
+
+
+def test_drawdown_series():
+    eq = [{"ts": "t1", "value": 100.0}, {"ts": "t2", "value": 110.0},
+          {"ts": "t3", "value": 99.0}]
+    dd = metrics.drawdown_series(eq)
+    assert dd == [{"ts": "t1", "value": 0.0}, {"ts": "t2", "value": 0.0},
+                  {"ts": "t3", "value": -0.1}]
+
+
+def test_drawdown_series_empty():
+    assert metrics.drawdown_series([]) == []
+
+
+def test_rolling_sharpe_short_series_is_empty():
+    eq = [{"ts": f"t{i}", "value": 100.0 + i} for i in range(10)]
+    assert metrics.rolling_sharpe(eq, window=30) == []
+
+
+def test_rolling_sharpe_emits_from_window():
+    # 40 points, constant 1% growth -> first point at index 30, huge sharpe
+    vals, v = [], 100.0
+    for i in range(40):
+        vals.append({"ts": f"t{i}", "value": v})
+        v *= 1.01
+    rs = metrics.rolling_sharpe(vals, window=30)
+    assert len(rs) == 10
+    assert rs[0]["ts"] == "t30"
+    assert all(p["value"] > 0 for p in rs)

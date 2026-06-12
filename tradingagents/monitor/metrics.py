@@ -50,6 +50,35 @@ def cumulative_pnl(trades: list[dict]) -> float:
     return sum(t["pnl"] for t in trades if t.get("pnl") is not None)
 
 
+def drawdown_series(equity: list[dict]) -> list[dict]:
+    """Running drawdown per equity point as {ts, value} (value <= 0)."""
+    out: list[dict] = []
+    peak = float("-inf")
+    for pt in equity:
+        v = pt["value"]
+        peak = max(peak, v)
+        dd = (v - peak) / peak if peak > 0 else 0.0
+        out.append({"ts": pt["ts"], "value": round(dd, 6)})
+    return out
+
+
+def rolling_sharpe(equity: list[dict], window: int = 30) -> list[dict]:
+    """Rolling annualized Sharpe over the trailing ``window`` returns.
+
+    Emits one {ts, value} per point starting at index ``window`` (needs
+    ``window`` returns => window+1 equity points). Empty when history is
+    shorter — the UI hides the pane until enough cycles exist.
+    """
+    values = [p["value"] for p in equity]
+    out: list[dict] = []
+    for i in range(window, len(values)):
+        out.append({
+            "ts": equity[i]["ts"],
+            "value": round(sharpe(values[i - window: i + 1]), 4),
+        })
+    return out
+
+
 def equity_series(
     snapshots: list[dict], trades: list[dict], start_capital: float
 ) -> list[dict]:
