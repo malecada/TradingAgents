@@ -22,10 +22,14 @@ function Panel(props: { o: AdhocOutput }) {
   );
 }
 
+const ANALYST_OPTIONS = ["market", "onchain", "prediction", "crypto_sentiment"] as const;
+
 export function RunTab() {
   const [coin, setCoin] = useState("bitcoin");
   const [date, setDate] = useState("");
   const [strategy, setStrategy] = useState<AdhocStrategy>("quant");
+  const [model, setModel] = useState("gpt-4o-mini");
+  const [analysts, setAnalysts] = useState<string[]>(["market", "onchain", "prediction"]);
   const [runId, setRunId] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
@@ -59,10 +63,12 @@ export function RunTab() {
     if (!date) { setErr("pick a date"); return; }
     if (strategy === "hybrid" &&
         !window.confirm(
-          "Hybrid run hits live Binance + LLM APIs and takes ~90–120s " +
-          "(est. cost ~$0.002, gpt-4o-mini). Continue?")) return;
+          `Hybrid run (${analysts.length} analysts, ${model}) hits live Binance + LLM APIs and takes ~90–120s. Continue?`)) return;
     try {
-      const { run_id } = await api.adhocRun({ coin, date, strategy });
+      const body = strategy === "hybrid"
+        ? { coin, date, strategy, analysts, model }
+        : { coin, date, strategy };
+      const { run_id } = await api.adhocRun(body);
       setRunId(run_id);
     } catch (e) {
       setErr(String(e));
@@ -90,12 +96,34 @@ export function RunTab() {
             <button key={s} className={`pill ${s === strategy ? "active" : ""}`}
               onClick={() => setStrategy(s)}>{s}</button>
           ))}
+          {strategy === "hybrid" && (
+            <select value={model} onChange={(e) => setModel(e.target.value)}
+              style={{ background: "#161b22", color: "#e6edf3",
+                       border: "1px solid #30363d", borderRadius: 6, padding: "4px 8px" }}>
+              <option value="gpt-4o-mini">gpt-4o-mini</option>
+              <option value="gpt-4o">gpt-4o</option>
+            </select>
+          )}
           <button className="pill active" disabled={busy || meta?.job_running}
             onClick={start}>{busy ? "running…" : "Run"}</button>
           {meta?.job_running && !runId &&
             <Badge kind="stale">another job is running</Badge>}
         </div>
         {err && <p style={{ color: "#f85149" }}>{err}</p>}
+        {strategy === "hybrid" && (
+          <div style={{ marginTop: 10, display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
+            {ANALYST_OPTIONS.map((a) => (
+              <label key={a} style={{ display: "flex", alignItems: "center", gap: 4, cursor: "pointer" }}>
+                <input type="checkbox" checked={analysts.includes(a)}
+                  onChange={(e) => setAnalysts(e.target.checked
+                    ? [...analysts, a]
+                    : analysts.filter((x) => x !== a))} />
+                {a}
+              </label>
+            ))}
+            <span className="muted">sentiment omitted by default for BTC/ETH</span>
+          </div>
+        )}
         <p className="muted" style={{ marginTop: 8 }}>
           Historical dates use the latest model checkpoint (features are
           point-in-time; model weights are as-of-latest). Display only — no trade
