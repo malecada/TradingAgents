@@ -55,7 +55,7 @@ export default function App() {
                 className={`tab ${t.id === active.id ? "active" : ""} ${t.id === "run" ? "tab-run" : ""}`}
                 title={t.desc}
                 onClick={() => { window.location.hash = t.id; }}>
-                {t.id === "run" ? "▸ Run" : t.label}
+                {t.id === "run" ? "▸ Run Prediction" : t.label}
               </button>
             </Fragment>
           ))}
