@@ -63,6 +63,8 @@ def run_quant(*, coin: str, date: str, run_id: str) -> Iterator[Output]:
         "regime": sig.regime})
 
 
+# sentiment_report is opt-in: HYBRID_ANALYSTS omits it for BTC/ETH, so the loop
+# emits it only when the user explicitly selects the sentiment analyst.
 _REPORT_KEYS = [
     ("market_report", "Market analyst"),
     ("onchain_report", "On-chain analyst"),
@@ -71,8 +73,8 @@ _REPORT_KEYS = [
 ]
 
 
-def run_hybrid(*, coin: str, date: str, analysts, model: str | None,
-               run_id: str) -> Iterator[Output]:
+def run_hybrid(*, coin: str, date: str, analysts: list[str] | None,
+               model: str | None, run_id: str) -> Iterator[Output]:
     from tradingagents.execution.live import config as live_config
     from tradingagents.execution.live import hybrid_compose
     from tradingagents.graph import trading_graph
