@@ -1,23 +1,40 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { api } from "../api";
 import { Badge } from "../components/Badge";
 import { Card } from "../components/Card";
 import { Section } from "../components/Section";
 import { pollInterval } from "../lib/adhoc";
+import { fmtNum } from "../lib/format";
 import type { AdhocOutput, AdhocStrategy } from "../types";
+
+/** Pull the 5-level rating out of the portfolio-manager prose for the headline
+ *  card (the full reasoning stays in the collapsible "Portfolio manager" panel). */
+function shortRating(text: unknown): string | null {
+  if (typeof text !== "string") return null;
+  const m = text.toUpperCase().match(/\b(BUY|OVERWEIGHT|HOLD|UNDERWEIGHT|SELL)\b/g);
+  return m ? m[m.length - 1] : null;  // last mention = the conclusion
+}
 
 function Panel(props: { o: AdhocOutput }) {
   const { o } = props;
-  const text = o.kind === "json"
-    ? JSON.stringify(o.content, null, 2)
-    : String(o.content ?? "");
   return (
     <details style={{ marginBottom: 8 }}>
       <summary style={{ cursor: "pointer", fontWeight: 600 }}>{o.label}</summary>
-      <pre style={{ whiteSpace: "pre-wrap", background: "#161b22",
-                    border: "1px solid #30363d", borderRadius: 6, padding: 12,
-                    marginTop: 8, overflowX: "auto" }}>{text}</pre>
+      {o.kind === "json" ? (
+        <pre style={{ whiteSpace: "pre-wrap", background: "#161b22",
+                      border: "1px solid #30363d", borderRadius: 6, padding: 12,
+                      marginTop: 8, overflowX: "auto" }}>
+          {JSON.stringify(o.content, null, 2)}
+        </pre>
+      ) : (
+        <div className="md" style={{ background: "#161b22", border: "1px solid #30363d",
+                                     borderRadius: 6, padding: "2px 14px", marginTop: 8 }}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{String(o.content ?? "")}</ReactMarkdown>
+        </div>
+      )}
     </details>
   );
 }
@@ -143,14 +160,16 @@ export function RunTab() {
         <>
           <Section title="Final decision">
             <div className="cards">
-              <Card label="Direction" value={String(finalObj.direction ?? finalObj.pm ?? "—")} />
+              <Card label={finalObj.strategy === "hybrid" ? "Rating" : "Direction"}
+                value={String(finalObj.direction ?? shortRating(finalObj.pm) ?? "—")} />
               {"magnitude" in finalObj &&
-                <Card label="Magnitude" value={String(finalObj.magnitude)} />}
+                <Card label="Magnitude" value={fmtNum(Number(finalObj.magnitude), 3)} />}
               {"multiplier" in finalObj &&
-                <Card label="LLM multiplier" value={String(finalObj.multiplier)} />}
+                <Card label="LLM multiplier" value={fmtNum(Number(finalObj.multiplier), 3)} />}
               {"effective_weight" in finalObj &&
-                <Card label="Effective weight" value={String(finalObj.effective_weight)} />}
-              {"regime" in finalObj && <Card label="Regime" value={String(finalObj.regime)} />}
+                <Card label="Effective weight" value={fmtNum(Number(finalObj.effective_weight), 3)} />}
+              {finalObj.regime != null &&
+                <Card label="Regime" value={String(finalObj.regime)} />}
             </div>
             <button className="pill" disabled title="coming soon"
               style={{ marginTop: 12, opacity: 0.5 }}>Trade this prediction</button>

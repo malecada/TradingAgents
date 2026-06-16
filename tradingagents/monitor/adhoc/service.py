@@ -127,4 +127,5 @@ def run_hybrid(*, coin: str, date: str, analysts: list[str] | None,
 
     yield ("final", "Final decision", "json", {
         "strategy": "hybrid", "pm": final_state.get("final_trade_decision"),
-        "multiplier": mult, "effective_weight": eff_w, "modulated_position": mp})
+        "multiplier": mult, "effective_weight": eff_w,
+        "regime": (mp or {}).get("regime"), "modulated_position": mp})

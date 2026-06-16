@@ -38,6 +38,26 @@ h2 { font-size: 15px; color: var(--muted); font-weight: 600; margin: 18px 0 8px;
 }
 .run-btn:hover:not(:disabled) { background: rgba(63, 185, 80, 0.20); }
 .run-btn:disabled { opacity: 0.45; cursor: default; }
+/* rendered-markdown body inside agent/PM panels */
+.md { font-size: 13.5px; line-height: 1.55; color: var(--text); overflow-x: auto; }
+.md h1, .md h2, .md h3, .md h4 { color: var(--text); font-weight: 600; line-height: 1.3;
+  margin: 14px 0 6px; }
+.md h1 { font-size: 17px; } .md h2 { font-size: 15px; } .md h3 { font-size: 14px; }
+.md h4 { font-size: 13px; color: var(--muted); text-transform: none; }
+.md p { margin: 6px 0; }
+.md ul, .md ol { margin: 6px 0; padding-left: 22px; }
+.md li { margin: 2px 0; }
+.md strong { color: var(--text); }
+.md a { color: var(--blue); }
+.md code { background: #0d1117; border: 1px solid var(--border); border-radius: 4px;
+  padding: 1px 5px; font-size: 12px; }
+.md pre { background: #0d1117; border: 1px solid var(--border); border-radius: 6px;
+  padding: 10px; overflow-x: auto; }
+.md pre code { border: none; padding: 0; }
+.md blockquote { border-left: 3px solid var(--border); margin: 8px 0; padding: 2px 12px;
+  color: var(--muted); }
+.md table { margin: 8px 0; }
+.md hr { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
 .card {
   background: var(--panel); border: 1px solid var(--border);
