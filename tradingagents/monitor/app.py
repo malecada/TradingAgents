@@ -28,6 +28,7 @@ from starlette.requests import Request
 from tradingagents.execution.live.config import from_binance_symbol
 from tradingagents.execution.live.rebacktest import compare_quant_hybrid
 from tradingagents.monitor import analytics, db, health, metrics
+from tradingagents.monitor.adhoc.api import register_adhoc_routes
 from tradingagents.monitor.sources import StrategySource
 
 _DIR = Path(__file__).parent
@@ -326,6 +327,9 @@ def create_app(
     @app.exception_handler(sqlite3.OperationalError)
     def _db_error(request: Request, exc: sqlite3.OperationalError):
         return JSONResponse(status_code=503, content={"error": str(exc)})
+
+    # ── ad-hoc prediction routes (only writing routes; isolated adhoc db) ──
+    register_adhoc_routes(app)
 
     # ── React SPA (built dist committed to repo) ───────────────────────────
     if _DIST.is_dir():
