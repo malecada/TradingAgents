@@ -23,14 +23,19 @@ function Panel(props: { o: AdhocOutput }) {
 }
 
 export function RunTab() {
-  const metaQ = useQuery({ queryKey: ["adhocMeta"], queryFn: api.adhocMeta });
-  const meta = metaQ.data;
-
   const [coin, setCoin] = useState("bitcoin");
   const [date, setDate] = useState("");
   const [strategy, setStrategy] = useState<AdhocStrategy>("quant");
   const [runId, setRunId] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
+
+  // Poll meta faster while a run is in flight so `job_running` clears promptly
+  // when the worker finishes (else the Run button stays disabled up to 30s).
+  const metaQ = useQuery({
+    queryKey: ["adhocMeta"], queryFn: api.adhocMeta,
+    refetchInterval: runId ? 3_000 : 30_000,
+  });
+  const meta = metaQ.data;
 
   const statusQ = useQuery({
     queryKey: ["adhocStatus", runId],
@@ -106,7 +111,7 @@ export function RunTab() {
         </Section>
       )}
 
-      {status?.status === "done" && (
+      {status?.status === "done" && resultQ.data && (
         <>
           <Section title="Final decision">
             <div className="cards">
