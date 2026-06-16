@@ -39,7 +39,7 @@ def patched(tmp_path, monkeypatch):
         horizons=[7, 14], data_root=str(tmp_path))
     monkeypatch.setattr("tradingagents.execution.live.config.load_config", lambda: cfg)
     (tmp_path / "checkpoints").mkdir()
-    (tmp_path / "checkpoints" / "composite_x.pkl").write_text("x")
+    (tmp_path / "checkpoints" / "lgb_v5_mix_2026-05-01.pkl").write_text("x")
     df = pd.DataFrame([
         {"coin": "bitcoin", "horizon": 7, "prediction": 0.01, "ref_price": 60000.0},
         {"coin": "bitcoin", "horizon": 14, "prediction": 0.02, "ref_price": 60000.0}])

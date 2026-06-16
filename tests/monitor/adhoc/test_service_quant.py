@@ -29,7 +29,7 @@ def patched(tmp_path, monkeypatch):
     # fake checkpoint
     ckpt_dir = tmp_path / "checkpoints"
     ckpt_dir.mkdir()
-    (ckpt_dir / "composite_20260501.pkl").write_text("x")
+    (ckpt_dir / "lgb_v5_mix_2026-05-01.pkl").write_text("x")
     # fake run_predict
     df = pd.DataFrame([
         {"coin": "bitcoin", "horizon": 7, "prediction": 0.011, "ref_price": 60000.0,
@@ -65,3 +65,20 @@ def test_run_quant_errors_on_empty_preds(patched, monkeypatch):
                         lambda **kw: __import__("pandas").DataFrame())
     with pytest.raises(RuntimeError, match="no prediction"):
         list(service.run_quant(coin="bitcoin", date="2026-05-01", run_id="r1"))
+
+
+def test_latest_checkpoint_picks_newest_v5_mix(tmp_path):
+    # matches the live retrain artifact name lgb_v5_mix_<asof>.pkl
+    ck = tmp_path / "checkpoints"
+    ck.mkdir()
+    (ck / "lgb_v5_mix_2026-05-01.pkl").write_text("x")
+    (ck / "lgb_v5_mix_2026-06-15.pkl").write_text("x")
+    (ck / "lgb_3coin_pit_2026-06-20.pkl").write_text("x")  # different model, ignored
+    got = service._latest_checkpoint(str(tmp_path))
+    assert got.name == "lgb_v5_mix_2026-06-15.pkl"
+
+
+def test_latest_checkpoint_missing_raises(tmp_path):
+    (tmp_path / "checkpoints").mkdir()
+    with pytest.raises(FileNotFoundError, match="lgb_v5_mix"):
+        service._latest_checkpoint(str(tmp_path))

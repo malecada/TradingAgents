@@ -19,13 +19,15 @@ def _staging_root(data_root: str, run_id: str) -> Path:
 
 
 def _latest_checkpoint(data_root: str) -> Path:
+    # Match the live retrain's resolution (execution/live/retrain.py): the V5
+    # composite checkpoint is written as lgb_v5_mix_<asof>.pkl, and the latest
+    # is picked via lexicographic sort (ISO date in the name → chronological).
     ckpt_dir = Path(data_root) / "checkpoints"
-    cands = sorted(ckpt_dir.glob("composite_*.pkl"),
-                   key=lambda p: p.stat().st_mtime, reverse=True)
+    cands = sorted(ckpt_dir.glob("lgb_v5_mix_*.pkl"))
     if not cands:
         raise FileNotFoundError(
-            f"no composite_*.pkl checkpoint in {ckpt_dir}; run a live cycle first")
-    return cands[0]
+            f"no lgb_v5_mix_*.pkl checkpoint in {ckpt_dir}; run a live cycle first")
+    return cands[-1]
 
 
 def _compute_and_stage(cfg, coin: str, date: str, run_id: str) -> Path:
