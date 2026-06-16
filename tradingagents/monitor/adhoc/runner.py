@@ -18,7 +18,10 @@ STALE_SECONDS = 600  # 10 min (spec §12)
 def _is_stale(active: dict) -> bool:
     now = time.time()
     if active["status"] == "running":
-        hb = active.get("heartbeat_ts")
+        # Fall back to started_ts/created_ts when no heartbeat was ever written
+        # (worker crashed right after flipping to running) so it still reaps.
+        hb = (active.get("heartbeat_ts") or active.get("started_ts")
+              or active.get("created_ts"))
         return hb is not None and (now - hb) > STALE_SECONDS
     if active["status"] == "queued":
         created = active.get("created_ts")

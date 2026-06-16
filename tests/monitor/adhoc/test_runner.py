@@ -39,7 +39,7 @@ def test_stale_running_reaped(conn):
     assert store.get_run(conn, rid)["status"] == "error"
 
 
-def test_stale_queued_reaped(conn, monkeypatch):
+def test_stale_queued_reaped(conn):
     # a queued run whose worker never started (created long ago, no heartbeat)
     rid = store.create_run(conn, coin="b", date="d", strategy="quant",
                            analysts=[], model="m")
@@ -47,6 +47,17 @@ def test_stale_queued_reaped(conn, monkeypatch):
     conn.execute("UPDATE runs SET created_ts = ? WHERE run_id = ?",
                  (time.time() - runner.STALE_SECONDS - 1, rid))
     conn.commit()
+    ok, blocker = runner.can_start(conn)
+    assert ok is True and blocker is None
+    assert store.get_run(conn, rid)["status"] == "error"
+
+
+def test_stale_running_without_heartbeat_reaped(conn):
+    # running but heartbeat_ts never written; falls back to started_ts anchor
+    rid = store.create_run(conn, coin="b", date="d", strategy="quant",
+                           analysts=[], model="m")
+    store.set_status(conn, rid, "running",
+                     started_ts=time.time() - runner.STALE_SECONDS - 1)
     ok, blocker = runner.can_start(conn)
     assert ok is True and blocker is None
     assert store.get_run(conn, rid)["status"] == "error"
