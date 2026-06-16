@@ -4,6 +4,7 @@ import { PositionsTab } from "./tabs/PositionsTab";
 import { ExecutionsTab } from "./tabs/ExecutionsTab";
 import { DecisionsTab } from "./tabs/DecisionsTab";
 import { HealthTab } from "./tabs/HealthTab";
+import { RunTab } from "./tabs/RunTab";
 
 const TABS = [
   { id: "performance", label: "Performance", el: <PerformanceTab /> },
@@ -11,6 +12,7 @@ const TABS = [
   { id: "executions", label: "Executions", el: <ExecutionsTab /> },
   { id: "decisions", label: "Decisions", el: <DecisionsTab /> },
   { id: "health", label: "Health", el: <HealthTab /> },
+  { id: "run", label: "Run", el: <RunTab /> },
 ] as const;
 
 export default function App() {
