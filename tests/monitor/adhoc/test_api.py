@@ -70,3 +70,26 @@ def test_result_returns_outputs(client):
 
 def test_result_404_unknown(client):
     assert client.get("/api/adhoc/result/nope").status_code == 404
+
+
+def test_status_404_unknown(client):
+    assert client.get("/api/adhoc/status/nope").status_code == 404
+
+
+def test_run_rejects_bad_strategy(client):
+    r = client.post("/api/adhoc/run", json={
+        "coin": "bitcoin", "date": "2026-05-01", "strategy": "psychic"})
+    assert r.status_code == 400
+
+
+def test_run_rejects_bad_date(client):
+    r = client.post("/api/adhoc/run", json={
+        "coin": "bitcoin", "date": "not-a-date", "strategy": "quant"})
+    assert r.status_code == 400
+
+
+def test_runs_lists_created_run(client):
+    rid = client.post("/api/adhoc/run", json={
+        "coin": "bitcoin", "date": "2026-05-01", "strategy": "quant"}).json()["run_id"]
+    runs = client.get("/api/adhoc/runs").json()["runs"]
+    assert any(r["run_id"] == rid for r in runs)
