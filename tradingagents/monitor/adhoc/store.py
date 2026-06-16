@@ -62,7 +62,16 @@ def create_run(conn, *, coin, date, strategy, analysts, model, est_cost=0.0) -> 
     return run_id
 
 
+_UPDATABLE_COLS = frozenset({
+    "stage", "progress", "error_msg", "started_ts", "finished_ts",
+    "est_cost", "heartbeat_ts",
+})
+
+
 def set_status(conn, run_id, status, **fields) -> None:
+    bad = set(fields) - _UPDATABLE_COLS
+    if bad:
+        raise ValueError(f"set_status: not-updatable field(s): {sorted(bad)}")
     cols = ["status = ?"]
     vals = [status]
     for k, v in fields.items():

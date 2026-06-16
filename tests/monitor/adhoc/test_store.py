@@ -67,3 +67,10 @@ def test_list_runs_newest_first(conn):
                           analysts=[], model="m")
     runs = store.list_runs(conn, limit=10)
     assert [r["run_id"] for r in runs[:2]] == [r2, r1]
+
+
+def test_set_status_rejects_unknown_field(conn):
+    rid = store.create_run(conn, coin="b", date="d", strategy="quant",
+                           analysts=[], model="m")
+    with pytest.raises(ValueError, match="not-updatable"):
+        store.set_status(conn, rid, "running", coin="hacked")
