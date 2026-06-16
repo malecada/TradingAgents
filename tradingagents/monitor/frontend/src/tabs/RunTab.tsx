@@ -104,8 +104,8 @@ export function RunTab() {
               <option value="gpt-4o">gpt-4o</option>
             </select>
           )}
-          <button className="pill active" disabled={busy || meta?.job_running}
-            onClick={start}>{busy ? "running…" : "Run"}</button>
+          <button className="run-btn" disabled={busy || meta?.job_running}
+            onClick={start}>{busy ? "running…" : "▸ Run prediction"}</button>
           {meta?.job_running && !runId &&
             <Badge kind="stale">another job is running</Badge>}
         </div>

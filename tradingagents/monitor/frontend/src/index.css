@@ -30,6 +30,14 @@ h2 { font-size: 15px; color: var(--muted); font-weight: 600; margin: 18px 0 8px;
 .tab.tab-run.active { color: var(--green); background: rgba(63, 185, 80, 0.10); border-color: var(--green); }
 /* one-line description of the active tab, shown above its content */
 .tab-desc { color: var(--muted); font-size: 13px; margin: 14px 0 4px; max-width: 900px; }
+/* primary action button — echoes the "Run" tab accent, distinct from the grey quant/hybrid toggle pills */
+.run-btn {
+  padding: 6px 16px; border-radius: 6px; cursor: pointer; font-size: 14px;
+  font-weight: 600; color: var(--green); background: rgba(63, 185, 80, 0.12);
+  border: 1px solid var(--green);
+}
+.run-btn:hover:not(:disabled) { background: rgba(63, 185, 80, 0.20); }
+.run-btn:disabled { opacity: 0.45; cursor: default; }
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
 .card {
   background: var(--panel); border: 1px solid var(--border);
