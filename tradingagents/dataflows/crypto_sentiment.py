@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """Crypto-specific sentiment data sources: Reddit and Google News.
 
 Reddit scraper ported from Krypto-v0/src/scraping/reddit/scraper.py.

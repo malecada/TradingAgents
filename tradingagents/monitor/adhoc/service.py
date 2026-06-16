@@ -61,3 +61,66 @@ def run_quant(*, coin: str, date: str, run_id: str) -> Iterator[Output]:
     yield ("final", "Final decision", "json", {
         "strategy": "quant", "direction": sig.direction, "magnitude": sig.magnitude,
         "regime": sig.regime})
+
+
+_REPORT_KEYS = [
+    ("market_report", "Market analyst"),
+    ("onchain_report", "On-chain analyst"),
+    ("prediction_report", "Prediction analyst"),
+    ("sentiment_report", "Sentiment analyst"),
+]
+
+
+def run_hybrid(*, coin: str, date: str, analysts, model: str | None,
+               run_id: str) -> Iterator[Output]:
+    from tradingagents.execution.live import config as live_config
+    from tradingagents.execution.live import hybrid_compose
+    from tradingagents.graph import trading_graph
+
+    yield ("_p", "Computing quant base", "progress", "")
+    cfg = live_config.load_config()
+    staged = _compute_and_stage(cfg, coin, date, run_id)
+
+    gcfg = hybrid_compose.build_hybrid_config(quant_pred_dir=str(staged))
+    if model:
+        gcfg["deep_think_llm"] = model
+        gcfg["quick_think_llm"] = model
+
+    yield ("_p", "Running agent graph (~90s)", "progress", "")
+    graph = trading_graph.TradingAgentsGraph(
+        selected_analysts=list(analysts) if analysts else list(hybrid_compose.HYBRID_ANALYSTS),
+        config=gcfg)
+    final_state, mp, _qs, narrative = graph.propagate_with_modulator(coin, date)
+
+    for key, label in _REPORT_KEYS:
+        text = final_state.get(key)
+        if text:
+            yield (key, label, "text", text)
+
+    debate = final_state.get("investment_debate_state", {}) or {}
+    if debate.get("bull_history"):
+        yield ("bull", "Bull researcher", "text", debate["bull_history"])
+    if debate.get("bear_history"):
+        yield ("bear", "Bear researcher", "text", debate["bear_history"])
+    if debate.get("judge_decision"):
+        yield ("research_manager", "Research manager", "text", debate["judge_decision"])
+
+    if final_state.get("trader_investment_plan"):
+        yield ("trader", "Trader plan", "text", final_state["trader_investment_plan"])
+
+    risk = final_state.get("risk_debate_state", {}) or {}
+    if risk.get("judge_decision"):
+        yield ("risk_debate", "Risk debate", "text", risk["judge_decision"])
+
+    mult, eff_w = hybrid_compose.extract_modulator_outputs(mp)
+    yield ("modulator", "Modulator", "json", {
+        "multiplier": mult, "effective_weight": eff_w, "narrative": narrative,
+        "modulated_position": mp})
+
+    if final_state.get("final_trade_decision"):
+        yield ("pm_decision", "Portfolio manager", "text",
+               final_state["final_trade_decision"])
+
+    yield ("final", "Final decision", "json", {
+        "strategy": "hybrid", "pm": final_state.get("final_trade_decision"),
+        "multiplier": mult, "effective_weight": eff_w, "modulated_position": mp})
