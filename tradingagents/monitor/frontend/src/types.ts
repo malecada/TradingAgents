@@ -123,8 +123,9 @@ export interface AdhocOutput {
 
 export interface AdhocRunRow {
   run_id: string; created_ts: number; coin: string; date: string;
-  strategy: AdhocStrategy; model: string; status: string;
-  stage: string | null; error_msg: string | null; est_cost: number | null;
+  strategy: AdhocStrategy; analysts: string[]; model: string; status: string;
+  stage: string | null; progress: number | null; error_msg: string | null;
+  started_ts: number | null; finished_ts: number | null; est_cost: number | null;
 }
 
 export interface AdhocResult { run: AdhocRunRow; outputs: AdhocOutput[]; }
