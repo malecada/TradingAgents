@@ -247,7 +247,12 @@ def load_config() -> LiveConfig:
         confidence_ref_return=_float("CONFIDENCE_REF_RETURN", 0.05),
         early_exit_loss=_float("EARLY_EXIT_LOSS", 0.015),
         min_hold=_int("MIN_HOLD", 7),
-        trend_sma=_int("TREND_SMA", 30),
+        # V5.1 sma×hold sweep at tv0.07/tm2.0: trend_sma 30→20 (a sharper trend
+        # signal paired with the stronger 2.0 multiplier) lifts 8-coin SR
+        # 4.28→4.71 (the dominant, low-behavioral-risk half of the sweep; the
+        # min_hold 7→14 half was deferred — corner-seeking + slower reversal
+        # exit). Env-overridable.
+        trend_sma=_int("TREND_SMA", 20),
         trend_multiplier=_float("TREND_MULTIPLIER", 2.0),
         horizons=[int(x) for x in os.environ.get("HORIZONS", "7,14").split(",") if x.strip()],
         symmetric=_bool("SYMMETRIC", "false"),
