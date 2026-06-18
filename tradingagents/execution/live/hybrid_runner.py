@@ -25,6 +25,8 @@ from tradingagents.execution.live.hold_sizer import HoldState
 from tradingagents.execution.live.hybrid_base import derive_base
 from tradingagents.execution.live.hybrid_compose import (
     HYBRID_ANALYSTS,
+    MODULATION_BYPASS_COINS,
+    analysts_for_coin,
     build_hybrid_config,
     compose_final,
     extract_modulator_outputs,
@@ -46,12 +48,31 @@ def _build_exchange(acct):
     return ExchangeClient(api_key=acct.api_key, api_secret=acct.api_secret, testnet=True)
 
 
-def _build_graph(quant_pred_dir: str):
+def _build_graph(quant_pred_dir: str, analysts: list[str] | None = None):
     from tradingagents.graph.trading_graph import TradingAgentsGraph
     return TradingAgentsGraph(
-        selected_analysts=HYBRID_ANALYSTS,
+        selected_analysts=analysts or HYBRID_ANALYSTS,
         config=build_hybrid_config(quant_pred_dir=quant_pred_dir),
     )
+
+
+class _GraphRouter:
+    """Resolves a per-coin modulator graph, building one TradingAgentsGraph per
+    distinct analyst set and caching it. A single injected test graph (``_graph``)
+    short-circuits routing so existing tests keep one stub for every coin."""
+
+    def __init__(self, quant_pred_dir: str, injected=None):
+        self._quant_pred_dir = quant_pred_dir
+        self._injected = injected
+        self._cache: dict[tuple[str, ...], object] = {}
+
+    def for_coin(self, coin: str):
+        if self._injected is not None:
+            return self._injected
+        key = tuple(analysts_for_coin(coin))
+        if key not in self._cache:
+            self._cache[key] = _build_graph(self._quant_pred_dir, list(key))
+        return self._cache[key]
 
 
 # ---------------------------------------------------------------------------
@@ -110,7 +131,7 @@ def run_hybrid_cycle(
         quant_data_dir = Path(acct.quant_db_path).parent
 
         ex = _exchange or _build_exchange(acct)
-        graph = _graph or _build_graph(str(staged))
+        router = _GraphRouter(str(staged), injected=_graph)
         j = journal.Journal(str(data_dir / "trade_journal.db"))
 
         # FIX 2: track cycle outcome so log_cycle_end fires on ALL paths
@@ -222,11 +243,19 @@ def run_hybrid_cycle(
                     continue
 
                 # ── run modulator (degrade to pure quant on failure) ───────
-                try:
-                    _state, mp, _qs, _narr = graph.propagate_with_modulator(coin, cycle_id)
-                except Exception as e:
-                    logger.warning("modulator failed for %s: %s; pure quant", coin, e)
+                # Bypass coins (e.g. SOL — modulator significantly hurts, P=0.022)
+                # trade the unmodulated V5 base. Per-coin analyst routing for the
+                # rest (ETH drops the market analyst).
+                if coin in MODULATION_BYPASS_COINS:
                     mp = None
+                    logger.info("modulation bypassed for %s (validated negative); pure quant", coin)
+                else:
+                    try:
+                        graph = router.for_coin(coin)
+                        _state, mp, _qs, _narr = graph.propagate_with_modulator(coin, cycle_id)
+                    except Exception as e:
+                        logger.warning("modulator failed for %s: %s; pure quant", coin, e)
+                        mp = None
 
                 mult, eff_w = extract_modulator_outputs(mp)
                 is_fallback = (not mp or mp.get("llm_multiplier") is None

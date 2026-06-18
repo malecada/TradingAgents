@@ -70,6 +70,26 @@ def stage_quant_preds(rows: list[dict], *, date: str, out_dir) -> Path:
 # (market-analyst-v2 refactor rejected, project_market_analyst_v2).
 HYBRID_ANALYSTS = ["market", "onchain", "prediction"]
 
+# Per-coin analyst routing. Full-year A/B (project_improvement_leads_jun2026):
+# dropping the market analyst for ETH lifts hybrid SR (+0.15 over the 3-analyst
+# stack, same direction as the §23.11 LOO +0.69) and saves a third of the LLM
+# spend — the 150+ technical indicators add dimensionality noise on top of
+# ETH's 193f prediction backbone. All other coins keep the full stack.
+ANALYSTS_BY_COIN: dict[str, list[str]] = {
+    "ethereum": ["onchain", "prediction"],
+}
+
+# Coins where the LLM modulator is BYPASSED (pure-quant pass-through, mult=1.0).
+# Full-year A/B: SOL hybrid dSR -0.96 (95% CI [-2.27,-0.03], P=0.022) — the
+# modulator significantly HURTS SOL, so it trades the unmodulated V5 base.
+# (BNB stays modulated: dSR +1.41, P=0.994; ETH stays modulated: +0.69..0.85.)
+MODULATION_BYPASS_COINS: set[str] = {"solana"}
+
+
+def analysts_for_coin(coin: str) -> list[str]:
+    """Return the modulator analyst set for ``coin`` (per-coin routing)."""
+    return ANALYSTS_BY_COIN.get(coin, HYBRID_ANALYSTS)
+
 
 def build_hybrid_config(*, quant_pred_dir: str) -> dict:
     """Return DEFAULT_CONFIG with the validated hybrid pins applied.
