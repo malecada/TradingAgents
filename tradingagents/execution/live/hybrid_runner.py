@@ -320,6 +320,14 @@ def run_hybrid_cycle(
                 qty = ex.round_quantity(symbol, abs(delta))
                 price = preds[coin]["ref_price"]
 
+                # |delta| below the LOT_SIZE step floors to 0; sending a zero-qty
+                # order triggers Binance -4003 ("Quantity less than or equal to
+                # zero") and crashes the whole cycle. Dust-skip it. This guard
+                # covers all paths (open / adjust / reduceOnly), unlike the
+                # MIN_NOTIONAL check below which only fires for opening orders.
+                if qty <= 0.0:
+                    continue
+
                 # FIX 3: reduceOnly when the trade reduces/closes an existing position
                 # (delta opposes current signed position and magnitude <= |current|).
                 # Binance lets reduceOnly closes bypass MIN_NOTIONAL (-4164 guard).

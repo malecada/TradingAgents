@@ -499,3 +499,97 @@ def test_reduce_only_set_when_flattening(tmp_path, monkeypatch):
         assert ro is True, (
             f"SELL order {sym} qty={qty} has reduce_only={ro}, expected True"
         )
+
+
+# ---------------------------------------------------------------------------
+# FIX 4: qty that floors to 0 at LOT_SIZE must be dust-skipped, not sent
+# ---------------------------------------------------------------------------
+
+class FakeExchangeDustRound:
+    """``round_quantity`` floors any delta to 0.0 — the real Binance LOT_SIZE
+    behaviour for a sub-step rebalance delta. ``place_market_order`` rejects
+    qty<=0 the way Binance does (APIError -4003 'Quantity less than or equal to
+    zero'). Reports an existing position so the *opening-order* dust guard
+    (``abs(current) < 1e-9``) does NOT apply — this is the path that crashed
+    the live hybrid cycle every run."""
+
+    def __init__(self, existing_qty: float = 0.5):
+        self._existing_qty = existing_qty
+        self.orders = []          # list of (symbol, side, qty, reduce_only)
+
+    def set_leverage(self, *a, **k):
+        pass
+
+    def get_total_portfolio_value(self):
+        return 10_000.0
+
+    def get_usdt_balance(self):
+        return 10_000.0
+
+    def get_current_position(self, symbol):
+        return self._existing_qty
+
+    def round_quantity(self, symbol, q):
+        return 0.0                # everything floors to dust
+
+    def min_notional(self, symbol):
+        return 5.0
+
+    def get_ticker_price(self, symbol):
+        return 65_000.0
+
+    def place_market_order(self, symbol, side, qty, reduce_only=False):
+        # Binance rejects qty<=0 with -4003; mirror that so a leaked zero-qty
+        # order is observable as a cycle failure.
+        assert qty > 0, f"zero/neg qty {qty} sent to exchange (Binance -4003)"
+        self.orders.append((symbol, side, qty, reduce_only))
+        return {"orderId": 4, "status": "FILLED"}
+
+    def cancel_all_orders(self, symbol):
+        return []
+
+    def list_open_stops(self, symbol):
+        return []
+
+    def place_stop_loss(self, symbol, qty, stop_price, stop_side):
+        return {"orderId": 997}
+
+    def cancel_order(self, symbol, order_id):
+        pass
+
+
+def test_qty_rounds_to_zero_is_dust_skipped(tmp_path, monkeypatch):
+    """A rebalance delta that floors to 0 at the LOT_SIZE step must be skipped,
+    not sent. Otherwise Binance -4003 ('Quantity <= zero') crashes the whole
+    hybrid cycle (the live failure that produced 0 modulator_outputs)."""
+    quant_dir = tmp_path / "data"
+    quant_dir.mkdir()
+    hybrid_dir = tmp_path / "data-hybrid"
+
+    _seed_quant_db(str(quant_dir / "trade_journal.db"), "2026-06-11")
+
+    monkeypatch.setenv("HYBRID_BINANCE_API_KEY", "k")
+    monkeypatch.setenv("HYBRID_BINANCE_API_SECRET", "s")
+    monkeypatch.setenv("HYBRID_DATA_DIR", str(hybrid_dir))
+    monkeypatch.setenv("QUANT_DATA_DIR", str(quant_dir))
+    monkeypatch.setenv("COIN_UNIVERSE", "bitcoin")
+    monkeypatch.setenv("BINANCE_API_KEY", "qk")
+    monkeypatch.setenv("BINANCE_API_SECRET", "qs")
+    monkeypatch.setenv("COINGLASS_API_KEY", "cgk")
+
+    _seed_ohlcv_cache(quant_dir, "BTCUSDT")
+
+    fake_ex = FakeExchangeDustRound(existing_qty=0.5)
+    res = hybrid_runner.run_hybrid_cycle(
+        cycle_id="2026-06-11", dry_run=False,
+        _exchange=fake_ex, _graph=StubGraph(),
+    )
+
+    # Cycle must complete, not crash on the zero-qty order.
+    assert res.status == "ok", (
+        f"zero-qty order was not dust-skipped: {res.status}: {res.error_msg}"
+    )
+    # No zero/negative-qty order may reach the exchange.
+    assert all(qty > 0 for _, _, qty, _ in fake_ex.orders), (
+        "a zero-qty order leaked to place_market_order"
+    )
