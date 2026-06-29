@@ -337,8 +337,13 @@ def run_hybrid_cycle(
                     and abs(delta) <= abs(current) + 1e-9
                 )
                 if not is_reduce_only:
-                    if qty * price < ex.min_notional(symbol) and abs(current) < 1e-9:
-                        continue  # below MIN_NOTIONAL for an opening order
+                    # Binance rejects ANY non-reduceOnly order below MIN_NOTIONAL
+                    # with -4164 — not just opening ones. A sub-$5 *add* to an
+                    # existing position (current != 0) must skip too; the old
+                    # `abs(current) < 1e-9` clause let those through and crashed
+                    # the cycle (TRX add, 2026-06-29).
+                    if qty * price < ex.min_notional(symbol):
+                        continue  # below MIN_NOTIONAL for a non-reduceOnly order
 
                 if dry_run:
                     continue
