@@ -16,7 +16,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import pandas as pd
+from binance.exceptions import BinanceAPIException, BinanceRequestException
 
+from tradingagents.execution.exchange import BinanceOrderTimeoutUnknown
 from tradingagents.execution.live import config, halt, journal
 from tradingagents.execution.live import risk as live_risk
 from tradingagents.execution.live import sizer, stops
@@ -37,6 +39,17 @@ from tradingagents.execution.live.hybrid_io import read_cycle_predictions
 from tradingagents.execution.live.runner import CycleResult, _today_id, _write_heartbeat
 
 logger = logging.getLogger(__name__)
+
+# Exchange errors that mean THIS coin's order was rejected/unresolved (bad
+# precision -1111, insufficient margin -2019, PERCENT_PRICE -4131, qty -4003,
+# notional -4164, unresolved timeout -1007, malformed request, …). They are
+# per-coin and must not abort the whole cycle — log a FAILED trade and continue.
+# Anything outside this tuple is treated as an unexpected bug and still aborts.
+_ORDER_REJECTION_ERRORS = (
+    BinanceAPIException,
+    BinanceRequestException,
+    BinanceOrderTimeoutUnknown,
+)
 
 
 # ---------------------------------------------------------------------------
@@ -348,8 +361,25 @@ def run_hybrid_cycle(
                 if dry_run:
                     continue
 
-                order = ex.place_market_order(symbol, side, qty,
-                                              reduce_only=is_reduce_only)
+                try:
+                    order = ex.place_market_order(symbol, side, qty,
+                                                  reduce_only=is_reduce_only)
+                except _ORDER_REJECTION_ERRORS as order_exc:
+                    # One coin's rejected/unresolved order must not abort the
+                    # cycle for the rest. Record a FAILED trade and move on.
+                    logger.warning(
+                        "order rejected for %s %s qty=%s: %s; "
+                        "logging FAILED and skipping coin",
+                        symbol, side, qty, order_exc,
+                    )
+                    j.log_trade(
+                        cycle_id=cycle_id, coin=coin, side=side, qty=qty,
+                        entry_price=price, exit_price=0.0, pnl=0.0, fees=0.0,
+                        slippage=0.0, order_id="", stop_loss_id="",
+                        status="failed",
+                    )
+                    continue
+
                 n_executed += 1
                 if opening_new:
                     open_count += 1
