@@ -396,9 +396,11 @@ def _join_sentiment(df: pd.DataFrame, coin: str, engine: str = "llm") -> pd.Data
     if feats is None:
         feats = pd.DataFrame(index=df.index, columns=FEATURE_COLS, dtype="float64")
 
-    feats = feats.copy()
-    if feats.index.tz is not None:
-        feats.index = feats.index.tz_convert("UTC").tz_localize(None)
+    # build_sentiment_features indexes its output by exactly the dates it was
+    # given (same order, same tz-ness), so feats.index already matches
+    # df.index — no tz normalization needed (unlike the onchain PIT block,
+    # whose builder always returns tz-aware UTC). The reindex is a no-op
+    # safety net kept for the fallback frames above.
     feats = feats.reindex(out.index)
 
     for col in FEATURE_COLS:

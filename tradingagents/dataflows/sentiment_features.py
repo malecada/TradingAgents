@@ -120,16 +120,38 @@ def build_sentiment_features(
     data_root = Path(os.environ.get("TRADINGAGENTS_DATA_ROOT", "data"))
     fng_path = data_root / "sentiment" / "fng" / "fng.parquet"
     if fng_path.exists():
-        fng_df = pd.read_parquet(fng_path)
-        fng_series = fng_df[["as_of_ts", "value"]]
-        cutoff_idx = _end_of_day(sorted_idx)
-        fng_level_sorted = _pit_align(cutoff_idx, fng_series, "fng_level").astype("float64")
-        fng_level_sorted.index = sorted_idx
-        fng_ema_sorted = fng_level_sorted.ewm(halflife=84).mean()
-        fng_dev_sorted = fng_level_sorted - fng_ema_sorted
+        try:
+            fng_df = pd.read_parquet(fng_path)
+            fng_series = fng_df[["as_of_ts", "value"]].copy()
+            fng_series["as_of_ts"] = pd.to_datetime(fng_series["as_of_ts"], utc=True)
+            fng_series = fng_series.sort_values("as_of_ts")
+            fng_first_day = pd.to_datetime(fng_df["event_ts"], utc=True).min().normalize()
+        except Exception:  # malformed file → degrade to NaN cols, never raise
+            fng_series = pd.DataFrame(columns=["as_of_ts", "value"])
+            fng_first_day = None
+        if not fng_series.empty:
+            # Window-invariance: the EWM must not restart at each caller's
+            # window start — otherwise the same (day, fng_dev) pair differs
+            # across walk-forward calls with different lookbacks. Align the
+            # level over the FULL daily calendar from fng's own first event
+            # day up to the max requested day (mirrors the full_idx pattern
+            # in onchain_features.build_pit_onchain_features), run the EWM
+            # on that full series, then reindex down to the caller's dates.
+            last_day = sorted_idx.max().normalize()
+            if fng_first_day <= last_day:
+                full_days = pd.date_range(fng_first_day, last_day, freq="D", tz="UTC")
+            else:
+                full_days = pd.DatetimeIndex(sorted_idx.normalize().unique()).sort_values()
+            fng_level_full = _pit_align(
+                _end_of_day(full_days), fng_series, "fng_level"
+            ).astype("float64")
+            fng_level_full.index = full_days
+            fng_ema_full = fng_level_full.ewm(halflife=84).mean()
+            fng_dev_full = fng_level_full - fng_ema_full
 
-        out["fng_level"] = fng_level_sorted.reindex(idx_utc).values
-        out["fng_ema_168d"] = fng_ema_sorted.reindex(idx_utc).values
-        out["fng_dev"] = fng_dev_sorted.reindex(idx_utc).values
+            day_idx = idx_utc.normalize()
+            out["fng_level"] = fng_level_full.reindex(day_idx).values
+            out["fng_ema_168d"] = fng_ema_full.reindex(day_idx).values
+            out["fng_dev"] = fng_dev_full.reindex(day_idx).values
 
     return out

@@ -121,6 +121,54 @@ def test_fng_dev_hand_computed(tmp_path, monkeypatch):
     )
 
 
+def test_fng_ema_window_invariant(tmp_path, monkeypatch):
+    """fng_ema_168d/fng_dev on a given calendar day must not depend on the
+    caller's query-window start: the EWM runs over the full available fng
+    history, not the window-restricted slice, so walk-forward calls with
+    different lookbacks agree on the same (coin, date) values."""
+    monkeypatch.setattr(sentiment_index_store, "BASE_ROOT", tmp_path / "index_wi")
+    base = datetime(2025, 1, 1, tzinfo=timezone.utc)
+    n = 40
+    rows = []
+    for i in range(n):
+        d = base + timedelta(days=i)
+        rows.append({
+            "event_ts": d, "as_of_ts": d + timedelta(hours=1),
+            "value": 10 + (i * 7) % 60, "classification": "x",
+        })
+    _write_fng(tmp_path, monkeypatch, rows)
+
+    # Long window: full history. Short window: strict subset (last 5 days).
+    long_dates = pd.DatetimeIndex([base + timedelta(days=i) for i in range(n)])
+    short_dates = pd.DatetimeIndex([base + timedelta(days=i) for i in range(n - 5, n)])
+
+    long_out = sentiment_features.build_sentiment_features("bitcoin", long_dates)
+    short_out = sentiment_features.build_sentiment_features("bitcoin", short_dates)
+
+    for col in ["fng_level", "fng_ema_168d", "fng_dev"]:
+        pd.testing.assert_series_equal(
+            short_out[col],
+            long_out[col].loc[short_dates],
+            check_names=False,
+        )
+
+
+def test_fng_malformed_parquet_degrades_to_nan(tmp_path, monkeypatch):
+    """A malformed fng.parquet (wrong columns) must yield NaN fng cols, not raise."""
+    monkeypatch.setattr(sentiment_index_store, "BASE_ROOT", tmp_path / "index_mal")
+    data_root = tmp_path / "data_root_mal"
+    monkeypatch.setenv("TRADINGAGENTS_DATA_ROOT", str(data_root))
+    fng_dir = data_root / "sentiment" / "fng"
+    fng_dir.mkdir(parents=True, exist_ok=True)
+    pd.DataFrame({"bogus": [1, 2]}).to_parquet(fng_dir / "fng.parquet", index=False)
+
+    dates = pd.DatetimeIndex([datetime(2025, 6, 10, tzinfo=timezone.utc)])
+    out = sentiment_features.build_sentiment_features("bitcoin", dates)
+
+    for col in ["fng_level", "fng_ema_168d", "fng_dev"]:
+        assert out[col].isna().all()
+
+
 def test_column_set_exactly_ten_in_order(tmp_path, monkeypatch):
     monkeypatch.setattr(sentiment_index_store, "BASE_ROOT", tmp_path / "index_empty3")
     monkeypatch.setenv("TRADINGAGENTS_DATA_ROOT", str(tmp_path / "no_root"))
