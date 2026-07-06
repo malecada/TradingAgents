@@ -206,6 +206,22 @@ class TestSha1Of:
         assert ssc.sha1_of("hello") != ssc.sha1_of("world")
 
 
+class TestRawContentSha:
+    def test_is_sha_of_raw_headline_plus_content(self):
+        assert ssc.raw_content_sha("Head", "Body", "Sum") == ssc.sha1_of("Head\n\nBody")
+
+    def test_falls_back_to_summary_when_content_empty(self):
+        assert ssc.raw_content_sha("Head", "", "Sum") == ssc.sha1_of("Head\n\nSum")
+
+    def test_coin_independent_unlike_llm_text(self):
+        # Per-coin anonymized LLM texts differ between btc and eth for the
+        # same article, but the raw sha (used for the global row) must not
+        # depend on which coin's scoring path produced it.
+        h, c = "Bitcoin and Ethereum rally", "Bitcoin adoption grows; Ethereum too."
+        assert ssc.build_llm_text(h, c, "", "btc") != ssc.build_llm_text(h, c, "", "eth")
+        assert ssc.raw_content_sha(h, c, "") == ssc.raw_content_sha(h, c, "")
+
+
 # ---------------------------------------------------------------------------
 # year-partition writer: round-trip + dedupe
 # ---------------------------------------------------------------------------
@@ -289,6 +305,155 @@ class TestWriteScores:
         bad = _make_rows(1).drop(columns=["content_sha"])
         with pytest.raises(ValueError):
             ssc.write_scores(bad, engine="llm", source="alpaca", data_root=tmp_path)
+
+
+# ---------------------------------------------------------------------------
+# global-row stability across re-runs (review fix, Important)
+# ---------------------------------------------------------------------------
+
+def _multi_coin_article_df():
+    """One article matching both btc and eth (plus global)."""
+    return pd.DataFrame({
+        "event_ts": pd.to_datetime(["2024-03-01"], utc=True),
+        "as_of_ts": pd.to_datetime(["2024-03-01"], utc=True),
+        "headline": ["Bitcoin and Ethereum rally"],
+        "content": ["Bitcoin adoption grows; Ethereum staking too."],
+        "summary": [""],
+        "matched_coins": [["btc", "eth", "global"]],
+    })
+
+
+class _ScriptedLlmScorer:
+    """Fake LlmIndexScorer: per-coin scripted outcomes, no network."""
+
+    def __init__(self, outcomes: dict):
+        # outcomes: coin -> dict result, or "error"
+        self.outcomes = outcomes
+
+    def score_article(self, text, coin, coin_name, symbol):
+        out = self.outcomes[coin]
+        if out == "error":
+            return {"relevant": False, "idx": None, "raw": "__error__: boom"}
+        return out
+
+
+class TestGlobalRowStability:
+    def test_global_content_sha_is_raw_and_coin_independent(self):
+        df = _multi_coin_article_df()
+        scorer = _ScriptedLlmScorer({
+            "btc": {"relevant": True, "idx": 3, "raw": "Relevant. x, Index: 3"},
+            "eth": {"relevant": True, "idx": 1, "raw": "Relevant. y, Index: 1"},
+        })
+        rows, _ = ssc.run_llm_engine(df, scorer=scorer)
+        g = rows[rows["coin"] == "global"]
+        assert len(g) == 1
+        expected_sha = ssc.raw_content_sha(
+            df.loc[0, "headline"], df.loc[0, "content"], df.loc[0, "summary"])
+        assert g.iloc[0]["content_sha"] == expected_sha
+        # score still copied from the first successfully scored coin (btc)
+        assert g.iloc[0]["score_norm"] == pytest.approx(ssc.llm_score_norm(3))
+
+    def test_rerun_with_different_surviving_coin_leaves_one_global_row(self, tmp_path):
+        """Run 1: btc errors, eth succeeds -> global copies eth's score.
+        Run 2: btc succeeds -> global copies btc's score. After writing both
+        runs, exactly ONE global row must remain for the article (the raw
+        content_sha makes [content_sha, coin] dedupe collapse them)."""
+        df = _multi_coin_article_df()
+
+        run1 = _ScriptedLlmScorer({
+            "btc": "error",
+            "eth": {"relevant": True, "idx": 1, "raw": "Relevant. y, Index: 1"},
+        })
+        rows1, _ = ssc.run_llm_engine(df, scorer=run1)
+        ssc.write_scores(rows1, engine="llm", source="alpaca", data_root=tmp_path)
+
+        run2 = _ScriptedLlmScorer({
+            "btc": {"relevant": True, "idx": 3, "raw": "Relevant. x, Index: 3"},
+            "eth": {"relevant": True, "idx": 1, "raw": "Relevant. y, Index: 1"},
+        })
+        rows2, _ = ssc.run_llm_engine(df, scorer=run2)
+        ssc.write_scores(rows2, engine="llm", source="alpaca", data_root=tmp_path)
+
+        target = tmp_path / "sentiment" / "scores" / "llm" / "alpaca" / "2024.parquet"
+        out = pd.read_parquet(target)
+        g = out[out["coin"] == "global"]
+        assert len(g) == 1, f"expected 1 global row, got {len(g)}"
+        # keep='last' -> run 2's global (btc-sourced) score wins
+        assert g.iloc[0]["score_norm"] == pytest.approx(ssc.llm_score_norm(3))
+
+    def test_bert_global_row_uses_raw_sha_too(self):
+        df = _multi_coin_article_df()
+
+        class FakeBert:
+            def score(self, texts):
+                return np.tile(np.array([0.2, 0.3, 0.5]), (len(texts), 1))
+
+        rows, _ = ssc.run_bert_engine(df, scorer=FakeBert())
+        g = rows[rows["coin"] == "global"]
+        assert len(g) == 1
+        expected_sha = ssc.raw_content_sha(
+            df.loc[0, "headline"], df.loc[0, "content"], df.loc[0, "summary"])
+        assert g.iloc[0]["content_sha"] == expected_sha
+        # per-coin rows keep the engine-text sha (different from raw)
+        bert_sha = ssc.sha1_of(ssc.build_bert_text(df.loc[0, "headline"], df.loc[0, "summary"]))
+        per_coin = rows[rows["coin"] != "global"]
+        assert set(per_coin["content_sha"]) == {bert_sha}
+        assert bert_sha != expected_sha
+
+
+# ---------------------------------------------------------------------------
+# summary stats use per-call denominators (review fix, Minor)
+# ---------------------------------------------------------------------------
+
+class TestLlmStatsPerCallDenominator:
+    def test_relevant_share_cannot_exceed_one_for_multi_coin_articles(self):
+        # 1 article, 2 coins, both relevant -> 2 relevant results over
+        # 2 score_article calls = 1.0 (per-article denominator would say 2.0).
+        df = _multi_coin_article_df()
+        scorer = _ScriptedLlmScorer({
+            "btc": {"relevant": True, "idx": 3, "raw": "Relevant. x, Index: 3"},
+            "eth": {"relevant": True, "idx": 1, "raw": "Relevant. y, Index: 1"},
+        })
+        _, stats = ssc.run_llm_engine(df, scorer=scorer)
+        assert stats["n_calls"] == 2
+        assert stats["relevant_share"] == pytest.approx(1.0)
+
+    def test_error_rate_uses_per_call_denominator(self):
+        df = _multi_coin_article_df()
+        scorer = _ScriptedLlmScorer({
+            "btc": "error",
+            "eth": {"relevant": True, "idx": 1, "raw": "Relevant. y, Index: 1"},
+        })
+        _, stats = ssc.run_llm_engine(df, scorer=scorer)
+        assert stats["n_calls"] == 2
+        assert stats["n_errors"] == 1
+        assert stats["relevant_share"] == pytest.approx(0.5)
+
+
+# ---------------------------------------------------------------------------
+# --est-only messaging per engine (review fix, Minor)
+# ---------------------------------------------------------------------------
+
+class TestEstOnlyMessaging:
+    def _run(self, engine, tmp_path, capsys):
+        rc = ssc.main([
+            "--engine", engine, "--source", "alpaca", "--coins", "btc",
+            "--start", "2024-01-01", "--end", "2024-02-01",
+            "--est-only", "--data-root", str(tmp_path),
+        ])
+        assert rc == 0
+        return capsys.readouterr().out
+
+    def test_bert_est_only_prints_no_api_cost(self, tmp_path, capsys):
+        out = self._run("bert", tmp_path, capsys)
+        assert "local model" in out
+        assert "no API cost" in out
+        assert "gpt-4o-mini" not in out
+
+    def test_llm_est_only_prints_cost_estimate(self, tmp_path, capsys):
+        out = self._run("llm", tmp_path, capsys)
+        assert "gpt-4o-mini" in out
+        assert "Estimated cost" in out
 
 
 # ---------------------------------------------------------------------------

@@ -12,8 +12,11 @@ Produces per-article score rows at
 `{DATA_ROOT}/sentiment/scores/{engine}/{source}/{year}.parquet` with columns
 `[event_ts, as_of_ts, coin, engine, score_norm, relevant, content_sha]`
 (see `SCORE_COLS`), one row per matched coin plus one extra `global` row
-reusing whichever matched coin's score was computed first (see
-`resolve_coins_for_article`). Consumed downstream by
+reusing whichever matched coin's score was successfully computed first (see
+`resolve_coins_for_article`). Per-coin rows carry the sha of the exact text
+sent to the engine; the `global` row instead carries `raw_content_sha` (raw
+un-anonymized headline+body, coin- and engine-independent) so its dedupe
+key stays stable across re-runs. Consumed downstream by
 `scripts/build_sentiment_index.py` (Task 7).
 
 Coin mapping:
@@ -202,6 +205,20 @@ def sha1_of(text: str) -> str:
     return hashlib.sha1(text.encode("utf-8", errors="replace")).hexdigest()
 
 
+def raw_content_sha(headline: str, content: Optional[str], summary: Optional[str]) -> str:
+    """content_sha for an article's `global` row: sha1 of the RAW
+    (un-anonymized) `headline + "\\n\\n" + (content or summary)`.
+
+    Coin- and engine-independent by construction, so the global row's
+    dedupe key ([content_sha, coin="global"]) is stable across re-runs even
+    when a different matched coin's score survives (e.g. the higher-priority
+    coin errored on run 1 but succeeded on run 2). Per-coin rows keep their
+    engine-text sha (the sha of what was actually sent to the engine).
+    """
+    body = content or summary or ""
+    return sha1_of(f"{headline}\n\n{body}")
+
+
 def clamp_llm_start(start: date, engine: str, cutoff: date = LLM_CUTOFF_DATE) -> tuple[date, bool]:
     """Hard guard: engine=llm never scores articles before `cutoff` (the
     model's knowledge cutoff), to avoid look-ahead bias from memorized
@@ -322,6 +339,7 @@ def run_llm_engine(matched_df: pd.DataFrame, scorer: Optional[LlmIndexScorer] = 
     rows: list[dict] = []
     n_relevant = 0
     n_errors = 0
+    n_calls = 0
     n_processed = 0
     for article in matched_df.itertuples(index=False):
         matched = list(article.matched_coins)
@@ -331,6 +349,7 @@ def run_llm_engine(matched_df: pd.DataFrame, scorer: Optional[LlmIndexScorer] = 
             text = build_llm_text(article.headline, article.content, article.summary, coin)
             alias = coin_alias(coin)
             result = scorer.score_article(text, coin, coin_name=alias, symbol=alias)
+            n_calls += 1
             if isinstance(result.get("raw"), str) and result["raw"].startswith("__error__:"):
                 n_errors += 1
                 continue
@@ -351,7 +370,15 @@ def run_llm_engine(matched_df: pd.DataFrame, scorer: Optional[LlmIndexScorer] = 
         if "global" in matched:
             source_row = _first_matched_row(per_coin_rows, real_coins)
             if source_row is not None:
-                rows.append({**source_row, "coin": "global"})
+                # Coin-independent sha so the global row's dedupe key is
+                # stable across re-runs regardless of which coin's score
+                # survived this run (see raw_content_sha).
+                rows.append({
+                    **source_row,
+                    "coin": "global",
+                    "content_sha": raw_content_sha(
+                        article.headline, article.content, article.summary),
+                })
         n_processed += 1
         if n_processed % PROGRESS_EVERY == 0:
             print(f"  ... {n_processed} articles processed "
@@ -359,10 +386,15 @@ def run_llm_engine(matched_df: pd.DataFrame, scorer: Optional[LlmIndexScorer] = 
     stats = {
         "engine": "llm",
         "n_articles": n_processed,
+        "n_calls": n_calls,
         "n_rows": len(rows),
         "n_relevant": n_relevant,
         "n_errors": n_errors,
-        "relevant_share": (n_relevant / n_processed) if n_processed else 0.0,
+        # Per-call denominators: one article can trigger several
+        # score_article calls (one per matched coin), so dividing by
+        # n_processed could exceed 100%.
+        "relevant_share": (n_relevant / n_calls) if n_calls else 0.0,
+        "error_rate": (n_errors / n_calls) if n_calls else 0.0,
     }
     return pd.DataFrame(rows, columns=SCORE_COLS), stats
 
@@ -391,7 +423,11 @@ def run_bert_engine(matched_df: pd.DataFrame, scorer=None,
                     "engine": "bert",
                     "score_norm": score_norm,
                     "relevant": True,
-                    "content_sha": sha,
+                    # Global rows use the coin/engine-independent raw sha so
+                    # both engines' global rows share one stable dedupe key.
+                    "content_sha": raw_content_sha(
+                        article.headline, article.content, article.summary,
+                    ) if coin == "global" else sha,
                 })
             n_processed += 1
             if n_processed % PROGRESS_EVERY == 0:
@@ -399,10 +435,12 @@ def run_bert_engine(matched_df: pd.DataFrame, scorer=None,
     stats = {
         "engine": "bert",
         "n_articles": n_processed,
+        "n_calls": n_processed,
         "n_rows": len(rows),
         "n_relevant": n_processed,
         "n_errors": 0,
         "relevant_share": 1.0 if n_processed else 0.0,
+        "error_rate": 0.0,
     }
     return pd.DataFrame(rows, columns=SCORE_COLS), stats
 
@@ -466,8 +504,11 @@ def main(argv: Optional[list[str]] = None) -> int:
     if args.est_only:
         print(f"Articles matching --coins {coins} in window "
               f"[{start} .. {end}]: {n_articles}")
-        print(f"Estimated cost (gpt-4o-mini @ {EST_TOKENS_IN}in/{EST_TOKENS_OUT}out "
-              f"tokens/article): ${cost:.2f}")
+        if args.engine == "llm":
+            print(f"Estimated cost (gpt-4o-mini @ {EST_TOKENS_IN}in/{EST_TOKENS_OUT}out "
+                  f"tokens/article): ${cost:.2f}")
+        else:
+            print("Engine bert runs a local model — no API cost.")
         return 0
 
     if args.engine == "llm" and cost > COST_ABORT_THRESHOLD and not args.yes:
@@ -489,9 +530,10 @@ def main(argv: Optional[list[str]] = None) -> int:
     print("--- Summary ---")
     print(f"Engine: {stats['engine']}  Source: {args.source}  Coins: {coins}")
     print(f"Articles processed (cost-relevant): {stats['n_articles']}")
+    print(f"Engine calls: {stats['n_calls']}")
     print(f"Score rows written: {stats['n_rows']}")
-    print(f"Relevant share: {stats['relevant_share']:.2%}")
-    print(f"Errors (skipped): {stats['n_errors']}")
+    print(f"Relevant share (per call): {stats['relevant_share']:.2%}")
+    print(f"Errors (skipped): {stats['n_errors']} ({stats['error_rate']:.2%} of calls)")
     print(f"Years written: {sorted(written)}")
     return 0
 
