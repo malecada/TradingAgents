@@ -3,6 +3,11 @@
 Prompt structure and the "Relevant. [summary], Index: N" output contract are
 adapted verbatim from News_fulltext/sentiment_index_tariff.py so the parser
 carries over. Scale: 0 very negative ... 4 very positive for the coin's price.
+
+Error contract: if the LLM call fails after all retries, ``score_article``
+returns ``{"relevant": False, "idx": None, "raw": "__error__: <exc>"}`` and
+does NOT write to the cache. Downstream (the corpus scoring runner) uses the
+``__error__:`` prefix on ``raw`` to skip-and-count failed articles.
 """
 from __future__ import annotations
 
@@ -10,10 +15,13 @@ import hashlib
 import os
 import re
 import sqlite3
+import time
 from pathlib import Path
 
 CACHE_PATH = Path(os.environ.get("TRADINGAGENTS_DATA_ROOT", "data")) / "sentiment" / "llm_score_cache.sqlite"
 MAX_CHARS = 12_000
+_MAX_ATTEMPTS = 3
+_RETRY_DELAYS = (2, 8, 30)  # backoff schedule; slept between attempts
 
 SCORING_PROMPT = """You are a cryptocurrency market analyst evaluating news articles for their relevance to {coin_name} ({symbol}) market conditions. Additionally, you will assess the sentiment of relevant articles based on their potential impact on {coin_name} price over the next days to weeks. Follow these steps:
 STEP 1:
@@ -48,7 +56,7 @@ Format your responses as follows:
 Ensure your evaluations are clear, concise, and consistent.
 article text: {article}"""
 
-_IDX_RE = re.compile(r"Index:\s*(\d)")
+_IDX_RE = re.compile(r"Index:\s*(\d+)")
 
 
 def parse_index(answer: str) -> int | None:
@@ -56,14 +64,18 @@ def parse_index(answer: str) -> int | None:
     if "not relevant" in low or "relevant" not in low:
         return None
     m = _IDX_RE.search(answer)
-    if not m:
-        tail = answer.split("Index")[-1]
-        digits = re.findall(r"\d", tail)
-        if not digits:
-            return None
-        m_val = int(digits[0])
-    else:
+    if m:
         m_val = int(m.group(1))
+    else:
+        # Fallback only when "Index" IS present but the regex missed
+        # (e.g. "Index = 3"). Never scavenge stray digits from the answer.
+        if "Index" not in answer:
+            return None
+        tail = answer.split("Index")[-1]
+        m_tail = re.search(r"\d+", tail)
+        if not m_tail:
+            return None
+        m_val = int(m_tail.group(0))
     return m_val if 0 <= m_val <= 4 else None
 
 
@@ -89,6 +101,8 @@ class LlmIndexScorer:
         resp = self._client.chat.completions.create(
             model=self.model, temperature=0,
             messages=[{"role": "user", "content": prompt}])
+        if not resp.choices:
+            raise RuntimeError("empty choices in LLM response")
         return resp.choices[0].message.content or ""
 
     def score_article(self, text: str, coin: str, coin_name: str, symbol: str) -> dict:
@@ -98,8 +112,21 @@ class LlmIndexScorer:
             (self.model, sha, coin)).fetchone()
         if row:
             return {"relevant": bool(row[0]), "idx": row[1], "raw": row[2]}
-        answer = self._chat(SCORING_PROMPT.format(
-            coin_name=coin_name, symbol=symbol, article=text[:MAX_CHARS]))
+        prompt = SCORING_PROMPT.format(
+            coin_name=coin_name, symbol=symbol, article=text[:MAX_CHARS])
+        answer: str | None = None
+        last_exc: Exception | None = None
+        for attempt in range(_MAX_ATTEMPTS):
+            try:
+                answer = self._chat(prompt)
+                break
+            except Exception as exc:  # noqa: BLE001 — graceful degradation
+                last_exc = exc
+                if attempt < _MAX_ATTEMPTS - 1:
+                    time.sleep(_RETRY_DELAYS[attempt])
+        if answer is None:
+            # Errors are never cached — the corpus runner skips-and-counts these.
+            return {"relevant": False, "idx": None, "raw": f"__error__: {last_exc}"}
         idx = parse_index(answer)
         rec = {"relevant": idx is not None, "idx": idx, "raw": answer}
         self._conn.execute(

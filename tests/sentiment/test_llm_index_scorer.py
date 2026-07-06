@@ -1,9 +1,5 @@
 """Tests for LLM 0-4 index scorer."""
-import tempfile
-from pathlib import Path
 from unittest.mock import MagicMock
-
-import pytest
 
 from tradingagents.sentiment import llm_index_scorer
 
@@ -25,6 +21,18 @@ class TestParseIndex:
 
     def test_out_of_range_clamped_to_none(self):
         assert llm_index_scorer.parse_index("Relevant. Something, Index: 7") is None
+
+    def test_multi_digit_index_returns_none(self):
+        # "Index: 12" must parse as 12 (out of range) -> None, not truncate to 1
+        assert llm_index_scorer.parse_index("Relevant. Something, Index: 12") is None
+
+    def test_no_index_keyword_returns_none_despite_digits(self):
+        # No "Index" in answer: stray digits (dates, percentages) must not be scavenged
+        assert llm_index_scorer.parse_index("Relevant. Price rose 3 percent.") is None
+
+    def test_index_equals_fallback_parses(self):
+        # "Index" present but regex misses (e.g. "Index = 3") -> fallback parses first number
+        assert llm_index_scorer.parse_index("Relevant. Summary, Index = 3") == 3
 
 
 class TestLlmIndexScorer:
@@ -81,3 +89,49 @@ class TestLlmIndexScorer:
         assert result3["relevant"] is True
         assert result3["idx"] == 3
         assert call_count["count"] == 2  # Should have incremented
+
+    def test_error_path_returns_error_record_and_is_not_cached(self, tmp_path, monkeypatch):
+        """A failing _chat retries, returns an __error__ record, and never caches it."""
+        cache_db = tmp_path / "llm_score_cache.sqlite"
+        monkeypatch.setattr(llm_index_scorer, "CACHE_PATH", cache_db)
+        # Don't actually wait during retry backoff
+        monkeypatch.setattr(llm_index_scorer.time, "sleep", lambda *_: None)
+
+        scorer = llm_index_scorer.LlmIndexScorer(model="gpt-4o-mini")
+
+        raising_calls = {"count": 0}
+
+        def raising_chat(prompt: str) -> str:
+            raising_calls["count"] += 1
+            raise RuntimeError("rate limited")
+
+        scorer._chat = raising_chat
+
+        result = scorer.score_article(
+            text="This is a test article about Bitcoin",
+            coin="bitcoin",
+            coin_name="Bitcoin",
+            symbol="BTC",
+        )
+        assert result["relevant"] is False
+        assert result["idx"] is None
+        assert result["raw"].startswith("__error__:")
+        assert raising_calls["count"] == 3  # up to 3 attempts
+
+        # Error must NOT be cached: a subsequent good _chat must be invoked again
+        good_calls = {"count": 0}
+
+        def good_chat(prompt: str) -> str:
+            good_calls["count"] += 1
+            return "Relevant. Test, Index: 3"
+
+        scorer._chat = good_chat
+
+        result2 = scorer.score_article(
+            text="This is a test article about Bitcoin",
+            coin="bitcoin",
+            coin_name="Bitcoin",
+            symbol="BTC",
+        )
+        assert good_calls["count"] == 1  # cache miss -> _chat invoked
+        assert result2 == {"relevant": True, "idx": 3, "raw": "Relevant. Test, Index: 3"}
