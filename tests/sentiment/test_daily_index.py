@@ -245,3 +245,58 @@ class TestStoreRoundTrip:
         )
         assert len(loaded) == len(out)
         assert set(loaded["metric"]) == set(di.METRICS)
+
+
+# ---------------------------------------------------------------------------
+# Timestamp handling & relevant filtering
+# ---------------------------------------------------------------------------
+
+class TestNaiveTimestampHandling:
+    def test_aggregate_converts_naive_to_utc_midnight(self):
+        """Input event_ts values without timezone info are converted to
+        tz-aware UTC midnight for the calendar day."""
+        rows = []
+        for i in range(3):
+            day = pd.Timestamp(f"2024-01-0{i+1}")  # naive timestamp
+            rows.append({
+                "event_ts": day + pd.Timedelta(hours=5, minutes=30),  # naive
+                "as_of_ts": day + pd.Timedelta(hours=6),
+                "coin": "btc",
+                "engine": "llm",
+                "score_norm": 0.5,
+                "relevant": True,
+                "content_sha": f"sha-{i}",
+            })
+        scores = pd.DataFrame(rows)
+        out = di.aggregate(scores)
+
+        # All event_ts should be tz-aware UTC and at midnight
+        assert out["event_ts"].dt.tz is not None
+        assert str(out["event_ts"].dt.tz) == "UTC"
+        assert (out["event_ts"].dt.hour == 0).all()
+        assert (out["event_ts"].dt.minute == 0).all()
+        assert (out["event_ts"].dt.second == 0).all()
+
+
+class TestRelevantFiltering:
+    def test_irrelevant_rows_excluded_from_aggregation(self):
+        """Rows with relevant=False should not contribute to daily counts."""
+        rows = []
+        for i in range(10):
+            rows.append({
+                "event_ts": BASE_DAY + pd.Timedelta(hours=i),
+                "as_of_ts": BASE_DAY + pd.Timedelta(hours=i + 1),
+                "coin": "btc",
+                "engine": "llm",
+                "score_norm": 0.5,
+                "relevant": i < 5,  # first 5 are relevant, last 5 are not
+                "content_sha": f"sha-{i}",
+            })
+        scores = pd.DataFrame(rows)
+        out = di.aggregate(scores)
+
+        # snt_cnt (article count) should only count the 5 relevant rows
+        cnt_metric = _metric(out, "btc", "snt_idx_mean")
+        assert len(cnt_metric) > 0
+        # On the one day with articles, mean should be 0.5 (all relevant rows have 0.5)
+        assert cnt_metric["value"].iloc[0] == pytest.approx(0.5)
