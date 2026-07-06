@@ -371,6 +371,42 @@ def data_transform(
     return reframed_lags, df_final
 
 
+def _join_sentiment(df: pd.DataFrame, coin: str, engine: str = "llm") -> pd.DataFrame:
+    """Left-join the 10 PIT sentiment-index/F&G columns onto a model df.
+
+    Pure/testable join step factored out of `build_pooled_dataset` so it can
+    be unit-tested with a synthetic frame without hitting network vendors.
+    Mirrors the `add_onchain_pit` block's join shape: tz-normalize the
+    model df's date index to calendar day, left-join per coin, then
+    `fillna(0.0)` for exactly the 10 new columns. Never raises — a fetch
+    failure degrades to an all-zero (post-fillna) block, same as the
+    on-chain PIT block's best-effort behavior.
+    """
+    from tradingagents.dataflows.sentiment_features import (
+        FEATURE_COLS,
+        build_sentiment_features,
+    )
+
+    out = df.copy()
+    try:
+        feats = build_sentiment_features(coin, df.index, engine=engine)
+    except Exception as e:  # pragma: no cover
+        logger.warning(f"Sentiment feature fetch failed for {coin}: {e}")
+        feats = pd.DataFrame(index=df.index, columns=FEATURE_COLS, dtype="float64")
+    if feats is None:
+        feats = pd.DataFrame(index=df.index, columns=FEATURE_COLS, dtype="float64")
+
+    feats = feats.copy()
+    if feats.index.tz is not None:
+        feats.index = feats.index.tz_convert("UTC").tz_localize(None)
+    feats = feats.reindex(out.index)
+
+    for col in FEATURE_COLS:
+        out[col] = feats[col].values if col in feats.columns else float("nan")
+    out[FEATURE_COLS] = out[FEATURE_COLS].fillna(0.0)
+    return out
+
+
 def build_pooled_dataset(
     coin_universe: list,
     lookback_days: int,
@@ -380,6 +416,8 @@ def build_pooled_dataset(
     add_cross_asset: bool = True,
     add_onchain: bool = True,
     add_onchain_pit: bool = False,
+    add_sentiment: bool = False,
+    sentiment_engine: str = "llm",
 ) -> pd.DataFrame:
     """Build a pooled multi-coin dataset enriched with optional features.
 
@@ -514,6 +552,13 @@ def build_pooled_dataset(
                 else:
                     df[col] = 0.0  # thin-coverage mask
             coin_dfs_model[coin] = df
+
+    # PIT sentiment-index + Fear & Greed features (opt-in). Same join shape
+    # as the add_onchain_pit block above: per-coin left-join of a fixed
+    # 10-column feature set, fillna(0.0) for those columns only.
+    if add_sentiment:
+        for coin, df in list(coin_dfs_model.items()):
+            coin_dfs_model[coin] = _join_sentiment(df, coin, sentiment_engine)
 
     # Tag with coin_id and concat
     pooled_rows = []
