@@ -72,7 +72,7 @@ Expected: 41+ shards; columns include `event_ts, as_of_ts, headline, content, su
 - Test: `tests/sentiment/test_scorers_cache.py`
 
 **Interfaces:**
-- Produces: `CryptoBertScorer().score_polarity_mean(texts: list[str]) -> float` and per-text `score(texts) -> np.ndarray (n,3)` with sqlite cache at `data/sentiment/scorer_cache.sqlite` keyed `(model_id, content_sha)`. `anonymize(text: str) -> str` replaces tickers/entity names.
+- Produces: `CryptoBertScorer().score_polarity_mean(texts: list[str]) -> float` and per-text `score(texts) -> np.ndarray (n,3)` with sqlite cache at `data/sentiment/scorer_cache.sqlite` keyed `(model_id, content_sha)`. `anonymize_text(text: str, coin: str) -> str` replaces tickers/entity names (actual research-fork API; per-coin).
 
 - [ ] **Step 1: Copy files verbatim** (they are self-contained; check imports resolve against this repo).
 
@@ -375,11 +375,11 @@ class LlmIndexScorer:
 - Test: `tests/sentiment/test_score_corpus_helpers.py` (coin-mapping + normalization helpers only; network runs are manual)
 
 **Interfaces:**
-- Consumes: Alpaca shards (`data/sentiment/alpaca/*/*.parquet`, cols `event_ts, as_of_ts, headline, content, summary, symbols`), HF store (`data/sentiment/hf_btc/`), `LlmIndexScorer`, `CryptoBertScorer`, `anonymize`.
+- Consumes: Alpaca shards (`data/sentiment/alpaca/*/*.parquet`, cols `event_ts, as_of_ts, headline, content, summary, symbols`), HF store (`data/sentiment/hf_btc/`), `LlmIndexScorer`, `CryptoBertScorer`, `anonymize_text`.
 - Produces: per-article score parquets `data/sentiment/scores/{engine}/{source}/{year}.parquet` with cols `[event_ts, as_of_ts, coin, engine, score_norm, relevant, content_sha]`. Coin mapping: Alpaca `symbols` contains `BTCUSD`→`btc`, `ETHUSD`→`eth`; an article may emit one row per matched coin plus one `global` row (any crypto match). HF corpus → `btc` + `global`.
 
 Key behaviors to implement (CLI: `--engine {llm,bert} --source {alpaca,hf_btc} --coins btc,eth --start --end --limit N --est-only`):
-- Engine A path: `anonymize(headline + "\n\n" + (content or summary))` → `score_article`; `score_norm=(idx-2)/2`; drop non-relevant.
+- Engine A path: `anonymize_text(headline + "\n\n" + (content or summary), coin)` → `score_article`; `score_norm=(idx-2)/2`; drop non-relevant. NOTE: anonymization replaces coin names with placeholders — the scoring prompt's `{coin_name}/{symbol}` must use the SAME placeholder tokens `anonymize_text` emits for that coin, not the real names (else the relevance filter can't match).
 - Engine B path: `score_polarity_mean` per article (headline+summary is enough for BERT's 256-token window); `relevant=True` always (BERT has no relevance filter — the daily count features absorb this).
 - `--est-only`: print article count × est. 1.4k tokens in / 160 out × model price, exit. Abort real runs if estimate > $40 unless `--yes`.
 - Idempotent: sqlite caches make re-runs cheap; parquet write is overwrite-per-year after dedupe on `content_sha, coin`.
