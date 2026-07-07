@@ -3365,3 +3365,39 @@ Proof by re-run: rebuilt 4-coin V5 MIX (`--kelly 0.25`, 4-coin routing-json) wit
 
 ### Deferred (now smaller)
 Dead-man **timer** (the heartbeat file exists; the systemd `OnCalendar` alerter is the operator follow-up), richer alert channel, the trend-on-hold residual above, and the still-open §30 backlog (retrain quality gate, margin-mode check, monitor-Sharpe definition). The full live equity-vs-replay parity (S1) gate runs on the box during the 90-day window (needs Binance refetch). Acceptance: SR ≥ +2.86, report vs the live-Kelly 8-coin SR ≈ +3.91. Deploy steps: `docs/superpowers/plans/2026-05-30-v5-8coin-live-DEPLOY-HANDOFF.md`.
+
+## Section 33: Sentiment Index as Quant Feature — Pre-registered A/B (NEGATIVE) (2026-07-07)
+
+**Question.** Does a PIT-safe daily news-sentiment index, injected as ~10 numeric LGB features, improve V5-class per-coin performance? (Quant-first redirection, spec `docs/superpowers/specs/2026-07-03-quant-first-sentiment-and-model-improvements-design.md`.)
+
+### Data + engines
+- Corpora: Alpaca/Benzinga full-text store (13,914 articles in window, tail-refreshed to 2026-07) + HF `edaschau/bitcoin_news` re-ingest (100,010 BTC articles 2011-2025).
+- Engine A (`llm`): gpt-4o-mini, supervisor-template prompt contract ("Relevant. [summary], Index: 0-4"), ticker-anonymized input, scored 2023-10+ only (knowledge-cutoff rule). 18,510 calls, 0 errors, 77.6% relevant, ≈$6.
+- Engine B (`bert`): ElKulako/cryptobert polarity (p_bull−p_bear), full 2021+ history. 142,554 score rows.
+- Daily aggregation → bitemporal store `data/sentiment/index/{engine}/` (metrics `snt_idx_mean, snt_idx_ewm3, snt_cnt_z30, snt_neg_share_7d, snt_disp_7d` per btc/eth/global). Features add `fng_level, fng_ema_168d, fng_dev` (window-invariant full-history EMA). Sanity: FTX week = 13th pctile of btc `snt_idx_ewm3`, LUNA = 11th (level has bullish bias ~+0.25; relative signal correct).
+- Wiring: `build_pooled_dataset(add_sentiment=True, sentiment_engine=...)` — flag-off path byte-identical (purely additive diff + regression tests).
+
+### A/B design (pre-registered)
+Window 2023-10-01→2026-05-26 (`--days 1400 --min-train 365`, h7+h14, LGB only). Arms per coin: bitcoin base_78f vs sent_{engine}_78f; ethereum base_193f vs sent_{engine}_193f — identical config except the flag. Same-window regenerated baselines (never published numbers). V5 sizing pipeline identical both arms (`baseline_v5_mix.run_coin`). Paired stationary block bootstrap (block 21, n=2000, shared index path both arms). Gates: p_pos ≥ 0.90 AND ΔmaxDD ≤ +1pp; DSR n_trials=8. Harness: `scripts/validate_sentiment_feature.py`; outputs `data/sentiment_feature_ab/{engine}/summary.json`.
+
+### Results (annualization 365d; internal A/B scale)
+
+| Coin | Engine | SR base | SR sent | ΔSR | p_pos | maxDD base→sent | Verdict |
+|---|---|---|---|---|---|---|---|
+| BTC (78f) | llm  | +3.049 | +2.654 | −0.394 | 0.166 | 4.5%→6.3% | **NO** |
+| ETH (193f) | llm  | +3.270 | +3.265 | −0.005 | 0.468 | 7.6%→7.3% | **NO** |
+| Portfolio | llm  | +3.868 | +3.608 | −0.259 | 0.254 | 4.4%→5.2% | **NO** |
+| BTC (78f) | bert | +3.049 | +2.761 | −0.288 | 0.149 | 4.5%→2.8% | **NO** |
+| ETH (193f) | bert | +3.270 | +3.344 | +0.074 | 0.599 | 7.6%→7.6% | **NO** |
+| Portfolio | bert | +3.868 | +3.842 | −0.026 | 0.452 | 4.4%→3.8% | **NO** |
+
+### Feature-importance readout (full-window fit, gain pct-rank of the 10 sentiment cols)
+`fng_ema_168d` ranks 88-92nd pctile in ALL four configs; `snt_neg_share_7d`/`snt_disp_7d`/`snt_g_idx_ewm3` 61-86th. The model is NOT ignoring the features — it spends splits on them and 100% of predictions shift (11.9% direction flips on BTC 78f) — yet OOS PnL does not improve and BTC degrades. This is the informative-but-not-profitable pattern of §17 (extended features hurt BTC-class coins), now reproduced on a third feature family.
+
+### Verdict
+**Do not ship** (all six gates NO). Consistent with §10.3 (GDELT hurt BTC), §23.11 (sentiment analyst = LOO noise), §23.12 (v3 hurt ETH): for BTC+ETH daily-bar systems, news sentiment adds no exploitable signal beyond price/on-chain, whether fed to LLM agents or directly to the GBDT. Live wiring (plan Task 11) skipped per gate. Assets retained: PIT sentiment-index store + builders (reusable for other horizons/coins), scored corpora, harness (`validate_sentiment_feature.py` — paired-bootstrap A/B pattern reusable for any feature-flag experiment).
+
+### Caveats
+- Single 2.6-yr window; regime coverage limited (mostly bull/chop, one deep drawdown leg).
+- bert BTC arm halves maxDD (4.5→2.8%) at −0.29 SR — a DD-hedge reframing was NOT pre-registered and is not pursued.
+- 365d-annualized SRs here are not comparable to §20 published values (252d-scale differences + different window).
