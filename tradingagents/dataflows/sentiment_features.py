@@ -53,9 +53,11 @@ def _end_of_day(idx: pd.DatetimeIndex) -> pd.DatetimeIndex:
 
     The PIT rule is "usable on day D iff as_of_ts <= end of day D", not
     "<= midnight of D" — a row scored a few hours after midnight (e.g. the
-    +25h offset `daily_index.py` uses) must still count as visible on its
-    own event day. `_pit_align` compares literal instants, so callers must
-    pre-shift the query instants to day-end themselves.
+    +25h offset `daily_index.py` uses, which lands at 01:00 on D+1) must
+    still count as visible by end-of-day D+1, one extra day of conservatism
+    rather than being visible on its own event day D. `_pit_align` compares
+    literal instants, so callers must pre-shift the query instants to
+    day-end themselves.
     """
     return idx.normalize() + pd.Timedelta(days=1) - pd.Timedelta(microseconds=1)
 

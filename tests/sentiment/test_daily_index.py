@@ -281,15 +281,19 @@ class TestNaiveTimestampHandling:
 class TestRelevantFiltering:
     def test_irrelevant_rows_excluded_from_aggregation(self):
         """Rows with relevant=False should not contribute to daily counts."""
+        relevant_score = 0.5
+        irrelevant_score = -1.0  # deliberately different from relevant_score
+        # so a mean that leaked the irrelevant rows in would visibly diverge.
         rows = []
         for i in range(10):
+            is_relevant = i < 5
             rows.append({
                 "event_ts": BASE_DAY + pd.Timedelta(hours=i),
                 "as_of_ts": BASE_DAY + pd.Timedelta(hours=i + 1),
                 "coin": "btc",
                 "engine": "llm",
-                "score_norm": 0.5,
-                "relevant": i < 5,  # first 5 are relevant, last 5 are not
+                "score_norm": relevant_score if is_relevant else irrelevant_score,
+                "relevant": is_relevant,  # first 5 are relevant, last 5 are not
                 "content_sha": f"sha-{i}",
             })
         scores = pd.DataFrame(rows)
@@ -298,5 +302,30 @@ class TestRelevantFiltering:
         # snt_cnt (article count) should only count the 5 relevant rows
         cnt_metric = _metric(out, "btc", "snt_idx_mean")
         assert len(cnt_metric) > 0
-        # On the one day with articles, mean should be 0.5 (all relevant rows have 0.5)
-        assert cnt_metric["value"].iloc[0] == pytest.approx(0.5)
+        # On the one day with articles, mean should equal the relevant-only
+        # value (0.5) -- if the irrelevant -1.0 rows leaked in, the mean
+        # would be pulled toward -0.25, catching the discrimination failure.
+        assert cnt_metric["value"].iloc[0] == pytest.approx(relevant_score)
+
+
+# ---------------------------------------------------------------------------
+# PIT ingest-lag contract guard
+# ---------------------------------------------------------------------------
+
+class TestPitLagGuard:
+    def test_as_of_ts_beyond_25h_raises(self):
+        """A row whose as_of_ts is more than 25h after its event day's
+        midnight violates the ingest-lag contract and must raise, rather
+        than being silently aggregated as if it arrived on schedule."""
+        rows = [{
+            "event_ts": BASE_DAY,
+            "as_of_ts": BASE_DAY + pd.Timedelta(hours=30),
+            "coin": "btc",
+            "engine": "llm",
+            "score_norm": 0.5,
+            "relevant": True,
+            "content_sha": "sha-late",
+        }]
+        scores = pd.DataFrame(rows)
+        with pytest.raises(ValueError):
+            di.aggregate(scores)

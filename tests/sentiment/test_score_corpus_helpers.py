@@ -219,7 +219,8 @@ class TestRawContentSha:
         # depend on which coin's scoring path produced it.
         h, c = "Bitcoin and Ethereum rally", "Bitcoin adoption grows; Ethereum too."
         assert ssc.build_llm_text(h, c, "", "btc") != ssc.build_llm_text(h, c, "", "eth")
-        assert ssc.raw_content_sha(h, c, "") == ssc.raw_content_sha(h, c, "")
+        expected = ssc.sha1_of(f"{h}\n\n{c}")
+        assert ssc.raw_content_sha(h, c, "") == expected
 
 
 # ---------------------------------------------------------------------------

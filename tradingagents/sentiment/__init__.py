@@ -20,7 +20,6 @@ __all__ = [
     "get_cryptobert",
     "get_finbert_crypto",
     "score_polarity_mean",
-    "_BertScorer",
     "anonymize_text",
     "build_substitution_table",
 ]

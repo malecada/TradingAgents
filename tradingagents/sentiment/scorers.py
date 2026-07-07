@@ -1,4 +1,9 @@
-"""HuggingFace CryptoBERT and FinBERT-Crypto scorers with disk cache."""
+"""HuggingFace CryptoBERT and FinBERT-Crypto scorers with disk cache.
+
+Requires the `sentiment-bert` optional extra (`uv sync --extra sentiment-bert`)
+for `torch` + `transformers`; both are lazy-imported in `_load`/`_infer` so
+importing this module without the extra installed still works.
+"""
 from __future__ import annotations
 
 import hashlib

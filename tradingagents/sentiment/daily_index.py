@@ -83,9 +83,15 @@ def aggregate(scores: pd.DataFrame) -> pd.DataFrame:
     """Roll up per-article `scores` into daily long-format index-store rows.
 
     Input columns: `event_ts, as_of_ts, coin, engine, score_norm, relevant,
-    content_sha` (as_of_ts/engine/content_sha are not needed downstream and
-    are ignored). Output columns match `onchain_store.SCHEMA_COLS`:
+    content_sha` (engine/content_sha are not needed downstream and are
+    ignored). Output columns match `onchain_store.SCHEMA_COLS`:
     `event_ts, as_of_ts, coin, metric, value, source, status`.
+
+    PIT ingest-lag contract: every input row's `as_of_ts` must fall within
+    25h of its `event_ts` calendar-day midnight (matching the `AS_OF_OFFSET`
+    this module itself stamps on its output rows). Rows violating that
+    contract raise `ValueError` rather than being silently aggregated as if
+    they were ingested on schedule.
 
     Only non-NaN metric values are emitted (warm-up days for the z-score /
     rolling metrics are dropped, never upserted).
@@ -95,6 +101,17 @@ def aggregate(scores: pd.DataFrame) -> pd.DataFrame:
 
     df = scores.copy()
     df["event_ts"] = pd.to_datetime(df["event_ts"], utc=True)
+    if "as_of_ts" in df.columns:
+        as_of_ts = pd.to_datetime(df["as_of_ts"], utc=True)
+        day_midnight = df["event_ts"].dt.floor("D")
+        lag = as_of_ts - day_midnight
+        if (lag > AS_OF_OFFSET).any():
+            bad = int((lag > AS_OF_OFFSET).sum())
+            raise ValueError(
+                f"{bad} row(s) violate the PIT ingest-lag contract: "
+                f"as_of_ts more than {AS_OF_OFFSET} after their event day's "
+                "midnight."
+            )
     if "relevant" in df.columns:
         # Defensive no-op under current invariants: score parquets never
         # persist non-relevant rows (see score_sentiment_corpus.py), but
