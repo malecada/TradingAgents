@@ -72,8 +72,9 @@ MAX_NAN_FRAC = 0.01
 # *aligned* (base ∩ sent) index, not to the raw pipeline input (running the
 # pipeline over the full history first preserves hold-state/trend-filter
 # continuity; slicing the input window would shift them).
-_FULL_START = "1900-01-01"
-_FULL_END = "2999-12-31"
+# NOTE: must stay inside pandas' ns-timestamp range (1677..2262).
+_FULL_START = "1970-01-01"
+_FULL_END = "2262-01-01"
 
 # Fixed per-coin arm mapping (Task 10 contract).
 ARMS = {
