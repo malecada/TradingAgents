@@ -75,15 +75,28 @@ def parse_args():
     p.add_argument("--onchain-pit", action="store_true",
                    help="Enable PIT on-chain features from the bitemporal "
                         "store (MVRV, flows, Puell, TVL). Safe for backtests.")
+    p.add_argument("--target-mode", choices=["level", "logret"], default="level",
+                   help="LGB target space. 'level' (default, byte-identical to "
+                        "before) predicts the raw future price. 'logret' "
+                        "predicts log(P_t+h/P_t); predictions are inverse-"
+                        "transformed back to price level before being written "
+                        "to the prediction CSVs, so the output schema is "
+                        "unchanged. Only affects the 'lgb' model.")
     return p.parse_args()
 
 
 def build_pooled_transformed(
     coins: list, horizons: list, days: int, trade_date: str | None,
     add_technical: bool, add_cross_asset: bool, add_onchain: bool,
-    add_onchain_pit: bool = False,
+    add_onchain_pit: bool = False, target_mode: str = "level",
 ) -> pd.DataFrame:
     """Build pooled dataset and apply data_transform per-coin.
+
+    Args:
+        target_mode: "level" (default, byte-identical to before) or "logret" —
+            forwarded to `data_transform`; see that docstring for details.
+            Only the "lgb" path in this script's `main()` knows how to
+            inverse-transform "logret" predictions back to price level.
 
     Returns a date-indexed DataFrame with `coin_id` column, ready for
     pooled walk-forward evaluation.
@@ -118,6 +131,7 @@ def build_pooled_transformed(
         try:
             reframed, _ = data_transform(
                 sub, first_future, include_future_row=False, horizons=horizons,
+                target_mode=target_mode,
             )
         except Exception as e:
             logger.warning(f"data_transform failed for {coin}: {e}")
@@ -215,6 +229,7 @@ def main():
     print(f"  Cross-asset : {'yes' if not args.no_cross_asset else 'no'}")
     print(f"  On-chain    : {'yes' if not args.no_onchain else 'no'}")
     print(f"  On-chain PIT: {'yes' if args.onchain_pit else 'no'}")
+    print(f"  Target mode : {args.target_mode}")
 
     try:
         pooled = build_pooled_transformed(
@@ -226,6 +241,7 @@ def main():
             add_cross_asset=not args.no_cross_asset,
             add_onchain=not args.no_onchain,
             add_onchain_pit=args.onchain_pit,
+            target_mode=args.target_mode,
         )
     except Exception as e:
         print(f"ERROR: Failed to build pooled dataset: {e}")
@@ -245,6 +261,15 @@ def main():
             if model_name == "arima" and horizon > 3:
                 continue
             print(f"\n--- {model_name.upper()} h={horizon} ---")
+            # rf_model.model_run_pooled has no logret->level inverse-transform
+            # (that's implemented only in lgb_model, per Task E1's scope); a
+            # logret target column fed to RF would silently write raw
+            # log-returns into the "prediction"/"actual" CSV columns. Skip
+            # rather than emit a corrupted schema.
+            if model_name == "rf" and args.target_mode == "logret":
+                print("  SKIPPED: --target-mode logret is only supported for "
+                      "the lgb model (rf_model has no inverse-transform).")
+                continue
             try:
                 if model_name == "rf":
                     from tradingagents.models import rf_model
@@ -258,6 +283,7 @@ def main():
                         pooled, horizon, args.min_train,
                         train_window_days=args.train_window_days,
                         purge_days=purge,
+                        target_mode=args.target_mode,
                     )
                 elif model_name == "arima":
                     pred_df, metrics = run_arima_per_coin(pooled, horizon, args.min_train)
