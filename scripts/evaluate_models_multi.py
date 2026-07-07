@@ -16,6 +16,11 @@ Usage examples:
 
     # Exclude cross-asset features to isolate their contribution
     python scripts/evaluate_models_multi.py --no-cross-asset
+
+    # Training-window-staggered prediction ensemble (Experiment E2): fit one
+    # LGB per train-end offset {0, -21, -42} days and average predictions.
+    python scripts/evaluate_models_multi.py --models lgb \
+        --train-end-offsets 0,21,42
 """
 from __future__ import annotations
 
@@ -69,7 +74,20 @@ def parse_args():
     p.add_argument("--onchain-pit", action="store_true",
                    help="Enable PIT on-chain features from the bitemporal "
                         "store (MVRV, flows, Puell, TVL). Safe for backtests.")
+    p.add_argument("--train-end-offsets", default=None,
+                   help="Comma-separated day offsets for the training-window-"
+                        "staggered prediction ensemble (Experiment E2), e.g. "
+                        "'0,21,42'. LGB only. Default: None (single model, "
+                        "unchanged behavior).")
     return p.parse_args()
+
+
+def _parse_train_end_offsets(raw: str | None) -> list[int] | None:
+    """Parse the --train-end-offsets CLI flag into a list[int] or None."""
+    if raw is None:
+        return None
+    offsets = [int(x.strip()) for x in raw.split(",") if x.strip() != ""]
+    return offsets or None
 
 
 def build_pooled_transformed(
@@ -201,6 +219,8 @@ def main():
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    train_end_offsets = _parse_train_end_offsets(args.train_end_offsets)
+
     print(f"\n{'='*60}\n  Building pooled dataset\n{'='*60}")
     print(f"  Coins       : {len(args.coins)} ({', '.join(args.coins)})")
     print(f"  Horizons    : {args.horizons}")
@@ -209,6 +229,7 @@ def main():
     print(f"  Cross-asset : {'yes' if not args.no_cross_asset else 'no'}")
     print(f"  On-chain    : {'yes' if not args.no_onchain else 'no'}")
     print(f"  On-chain PIT: {'yes' if args.onchain_pit else 'no'}")
+    print(f"  Train-end offsets (LGB): {train_end_offsets if train_end_offsets else 'none (single model)'}")
 
     try:
         pooled = build_pooled_transformed(
@@ -249,6 +270,7 @@ def main():
                     from tradingagents.models import lgb_model
                     pred_df, metrics = lgb_model.model_run_pooled(
                         pooled, horizon, args.min_train,
+                        train_end_offsets=train_end_offsets,
                     )
                 elif model_name == "arima":
                     pred_df, metrics = run_arima_per_coin(pooled, horizon, args.min_train)

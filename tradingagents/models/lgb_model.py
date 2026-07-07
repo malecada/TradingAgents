@@ -112,6 +112,7 @@ def walk_forward_pooled(
     pooled_df: pd.DataFrame,
     horizon: int,
     min_train_window: int = 365,
+    train_end_offsets: list[int] | None = None,
 ) -> tuple[pd.DataFrame, dict]:
     """Walk-forward eval on the pooled multi-coin dataset.
 
@@ -128,11 +129,23 @@ def walk_forward_pooled(
         horizon: Which `prices_h{h}` column to predict.
         min_train_window: Number of initial dates to reserve as training only
             (walk-forward starts after this).
+        train_end_offsets: Training-window-staggered prediction ensemble
+            (Experiment E2). When None (default), behavior is unchanged:
+            one model per date trained on all rows with date < cur_date.
+            When set (e.g. [0, 21, 42]), one model is fit PER offset `k` per
+            date, each trained only on rows with date < (cur_date - k days);
+            the emitted `prediction` is the MEAN across the K offset models'
+            predictions, and each offset model's own prediction is also
+            emitted as a diagnostic column `pred_off{k}`. This targets
+            training-window variance (LGB signal flips ~16% per 3-week
+            train-end shift per the vintage/PIT audit) rather than seed
+            variance (already tried, failed).
 
     Returns:
         (predictions_df, metrics_dict) where predictions_df has columns
-        [date, coin_id, prediction, actual] and metrics_dict has keys
-        r2/mae/rmse/mape/directional_accuracy.
+        [date, coin_id, prediction, actual, ref_price] (plus `pred_off{k}`
+        diagnostic columns when train_end_offsets is set) and metrics_dict
+        has keys r2/mae/rmse/mape/directional_accuracy.
     """
     pooled_df = _ensure_date_indexed(pooled_df)
 
@@ -167,32 +180,79 @@ def walk_forward_pooled(
     rows = []
     for i in range(min_train_window, len(unique_dates)):
         cur_date = unique_dates[i]
-        train = pooled_df.loc[pooled_df.index < cur_date].dropna(subset=[target_col])
         test = pooled_df.loc[pooled_df.index == cur_date].dropna(subset=[target_col])
-        if train.empty or test.empty:
+        if test.empty:
             continue
 
-        X_tr = train[feature_cols].to_numpy(dtype=np.float32)
-        y_tr = train[target_col].to_numpy(dtype=np.float32)
+        if train_end_offsets is None:
+            # Original single-model path — untouched, byte-identical output.
+            train = pooled_df.loc[pooled_df.index < cur_date].dropna(subset=[target_col])
+            if train.empty:
+                continue
+
+            X_tr = train[feature_cols].to_numpy(dtype=np.float32)
+            y_tr = train[target_col].to_numpy(dtype=np.float32)
+            X_te = test[feature_cols].to_numpy(dtype=np.float32)
+
+            scaler = MinMaxScaler()
+            X_tr_s = scaler.fit_transform(X_tr)
+            X_te_s = scaler.transform(X_te)
+
+            model = _build_lgb()
+            model.fit(X_tr_s, y_tr)
+            preds = model.predict(X_te_s)
+
+            test_rows = test.reset_index().rename(columns={"index": "date"})
+            for j in range(len(test)):
+                rows.append({
+                    "date": cur_date,
+                    "coin_id": test_rows.iloc[j]["coin_id"],
+                    "prediction": float(preds[j]),
+                    "actual": float(test.iloc[j][target_col]),
+                    "ref_price": float(test.iloc[j]["prices"]),
+                })
+            continue
+
+        # Training-window-staggered ensemble path: one model per offset,
+        # each trained on rows with date < (cur_date - offset days).
         X_te = test[feature_cols].to_numpy(dtype=np.float32)
+        offset_preds: dict[int, np.ndarray] = {}
+        skip_date = False
+        for k in train_end_offsets:
+            cutoff = cur_date - pd.Timedelta(days=k)
+            train_k = pooled_df.loc[pooled_df.index < cutoff].dropna(subset=[target_col])
+            if train_k.empty:
+                skip_date = True
+                break
 
-        scaler = MinMaxScaler()
-        X_tr_s = scaler.fit_transform(X_tr)
-        X_te_s = scaler.transform(X_te)
+            X_tr = train_k[feature_cols].to_numpy(dtype=np.float32)
+            y_tr = train_k[target_col].to_numpy(dtype=np.float32)
 
-        model = _build_lgb()
-        model.fit(X_tr_s, y_tr)
-        preds = model.predict(X_te_s)
+            scaler = MinMaxScaler()
+            X_tr_s = scaler.fit_transform(X_tr)
+            X_te_s = scaler.transform(X_te)
+
+            model = _build_lgb()
+            model.fit(X_tr_s, y_tr)
+            offset_preds[k] = model.predict(X_te_s)
+
+        if skip_date:
+            continue
+
+        mean_preds = np.mean(np.vstack(list(offset_preds.values())), axis=0)
 
         test_rows = test.reset_index().rename(columns={"index": "date"})
         for j in range(len(test)):
-            rows.append({
+            row = {
                 "date": cur_date,
                 "coin_id": test_rows.iloc[j]["coin_id"],
-                "prediction": float(preds[j]),
+                "prediction": float(mean_preds[j]),
                 "actual": float(test.iloc[j][target_col]),
                 "ref_price": float(test.iloc[j]["prices"]),
-            })
+            }
+            for k in train_end_offsets:
+                row[f"pred_off{k}"] = float(offset_preds[k][j])
+            rows.append(row)
 
     pred_df = pd.DataFrame(rows)
     if pred_df.empty:
@@ -208,13 +268,14 @@ def model_run_pooled(
     pooled_df: pd.DataFrame,
     horizon: int,
     min_train_window: int = 365,
+    train_end_offsets: list[int] | None = None,
 ) -> tuple[pd.DataFrame, dict]:
     """Public entrypoint mirroring the contract used by evaluate scripts.
 
     Currently a thin wrapper around walk_forward_pooled(). Returns the same
     (pred_df, metrics_dict) tuple.
     """
-    return walk_forward_pooled(pooled_df, horizon, min_train_window)
+    return walk_forward_pooled(pooled_df, horizon, min_train_window, train_end_offsets)
 
 
 # ── Live inference path: fit-once + predict ──────────────────────────
