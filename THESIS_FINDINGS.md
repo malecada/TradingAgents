@@ -3365,3 +3365,22 @@ Proof by re-run: rebuilt 4-coin V5 MIX (`--kelly 0.25`, 4-coin routing-json) wit
 
 ### Deferred (now smaller)
 Dead-man **timer** (the heartbeat file exists; the systemd `OnCalendar` alerter is the operator follow-up), richer alert channel, the trend-on-hold residual above, and the still-open §30 backlog (retrain quality gate, margin-mode check, monitor-Sharpe definition). The full live equity-vs-replay parity (S1) gate runs on the box during the 90-day window (needs Binance refetch). Acceptance: SR ≥ +2.86, report vs the live-Kelly 8-coin SR ≈ +3.91. Deploy steps: `docs/superpowers/plans/2026-05-30-v5-8coin-live-DEPLOY-HANDOFF.md`.
+
+## Section 34: E1 Return-Space Target (logret) — Quick-Look NEGATIVE, stopped at gate (2026-07-07)
+
+**Hypothesis.** LGB predicts raw price LEVEL; trees cannot extrapolate above the trained target range → mechanical short bias at new ATHs; predicting log(P_{t+h}/P_t) removes it. (Plan `docs/superpowers/plans/2026-07-03-model-improvement-experiments.md` Task E1.)
+
+**Implementation.** `target_mode="logret"` in `data_transform` (same `prices_h{h}` column name, positivity-guarded log), inverse-transform `ref_price*exp(pred)` at emission so CSV schema + all downstream consumers unchanged; `--target-mode` on `evaluate_models_multi.py`; default byte-identical (tested). Commits 5caf7ac, d117e26; 10 new tests.
+
+**Quick-look (pre-registered gate):** BTC+ETH pooled, 18mo eval (`--days 913 --min-train 365`, trade-date 2026-05-26), h7+h14. ATH day = ref_price ≥ 98% of running max (n=85).
+
+| h | mode | DirAcc | DirAcc@ATH | long-share@ATH |
+|---|---|---|---|---|
+| 7 | level | 0.749 | 0.753 | 0.235 |
+| 7 | logret | 0.708 | 0.694 | 0.506 |
+| 14 | level | 0.789 | 0.812 | 0.235 |
+| 14 | logret | 0.790 | 0.776 | 0.482 |
+
+**Reading.** The mechanical premise is CONFIRMED — level mode is strongly short-biased at ATHs (long-share 23.5%) and logret debiases it (~50%). But the bias is not costing accuracy: level wins h7 outright (−4.1pp for logret) and ties h14; at ATH days level is better in both horizons. In this regime the extrapolation cap functions as an accidental mean-reversion prior that happens to pay. Gate "logret ≥ level overall AND markedly better @ATH" fails → full-window V5 A/B not run (pre-registered stop).
+
+**Verdict.** Do not adopt logret target for V5-class daily models. Retain `target_mode` plumbing (default level) — zero production impact, reusable if a strong-trend regime motivates a re-test. Caveats: 18mo window, 85 ATH samples, DirAcc ≠ PnL (not pursued per gate).
