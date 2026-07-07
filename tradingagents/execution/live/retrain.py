@@ -32,6 +32,7 @@ from __future__ import annotations
 import hashlib
 import logging
 from dataclasses import dataclass, field
+from datetime import datetime
 from pathlib import Path
 
 import joblib
@@ -41,6 +42,10 @@ from tradingagents.models.lgb_model import fit_pooled_full
 from tradingagents.models.model_utils import build_pooled_dataset, data_transform
 
 logger = logging.getLogger(__name__)
+
+# Fallback composites older than this (vs the cycle asof) are alarming — the
+# model has been frozen on outdated training data (audit 2026-07-07 R4).
+MAX_FALLBACK_AGE_DAYS = 3
 
 
 @dataclass
@@ -213,6 +218,25 @@ def run_retrain_with_fallback(
                 "V5 retrain failed and no previous composite to fall back to"
             ) from exc
         prior_path = previous[-1]
+        # Staleness alert (audit 2026-07-07 R4): a persistent data outage
+        # would otherwise freeze the model indefinitely with only per-day
+        # warnings. ERROR-level so log-based alerting picks it up.
+        try:
+            prior_asof = datetime.strptime(
+                prior_path.stem.replace("lgb_v5_mix_", ""), "%Y-%m-%d"
+            )
+            age_days = (datetime.strptime(asof, "%Y-%m-%d") - prior_asof).days
+            if age_days > MAX_FALLBACK_AGE_DAYS:
+                logger.error(
+                    "V5 fallback composite is STALE: %d days old (%s, asof %s, "
+                    "max %d) — model is frozen on outdated training data",
+                    age_days, prior_path.name, asof, MAX_FALLBACK_AGE_DAYS,
+                )
+        except ValueError:
+            logger.error(
+                "V5 fallback composite has unparseable vintage: %s — "
+                "cannot assess staleness", prior_path.name,
+            )
         # Recover route list from the loaded composite
         composite = joblib.load(prior_path)
         return CheckpointArtifact(

@@ -226,6 +226,20 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
         supp_failures = (refresh_result or {}).get("supplementary_failures", [])
         if supp_failures:
             stale_sources = json.dumps([s for s, _ in supp_failures])
+            # 193f-routed coins consume Coinglass/DefiLlama/DVOL features; a
+            # stale supplementary source silently distorts their model inputs
+            # (audit 2026-07-07 R4) — escalate to ERROR when any 193f route
+            # is in the universe so log alerting fires.
+            pit_coins = [
+                c for c, r in cfg.routing.items()
+                if str(r.get("feature_set")) == "193f"
+            ]
+            if pit_coins:
+                logger.error(
+                    "supplementary data stale (%s) while 193f routes %s are "
+                    "live — extended features are ffilled/degraded this cycle",
+                    stale_sources, pit_coins,
+                )
 
         # 2. retrain — V5 composite (routing-aware)
         asof_date = (
@@ -260,7 +274,9 @@ def run_cycle(cycle_id: str | None = None, dry_run: bool = False) -> CycleResult
                     ckpt_path=artifact.path,
                     asof=asof_date,
                     store_root=Path(cfg.data_root) / "onchain",
-                    ohlcv_cache=Path(cfg.data_root) / "cache",
+                    # must match data_refresh.refresh_all's cache_root — the
+                    # daily-refreshed parquets, NOT the vendor CSV cache
+                    ohlcv_cache=Path(cfg.data_root) / "ohlcv_cache",
                     horizons=cfg.horizons,
                 )
             except predict.PredictMajorityFail as exc:
