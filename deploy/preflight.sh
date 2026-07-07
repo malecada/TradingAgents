@@ -72,6 +72,29 @@ case "$SYM_LC" in
 esac
 echo "  SYMMETRIC: $SYM_LC"
 
+# 3c. Sizing config gate (audit 2026-07-07). The validated backtest config is
+# target_vol=0.10, trend_multiplier=1.5, trend_sma=30 (V5.0 canonical). The
+# V5.1 tuned values (0.07/2.0/20) were selected on the pre-audit same-bar
+# convention and are NOT revalidated; deploying them mid-acceptance-window
+# makes the acceptance result uninterpretable. Any other value than canonical
+# requires an explicit operator acknowledgement via PREFLIGHT_ALLOW_TUNED=1.
+# NOTE: config.py DEFAULTS are the V5.1 values, so a box without TARGET_VOL/
+# TREND_MULTIPLIER/TREND_SMA env pins runs V5.1 — this gate checks the
+# effective values (env override or config default).
+EFF_TV="${TARGET_VOL:-0.07}"
+EFF_TM="${TREND_MULTIPLIER:-2.0}"
+EFF_SMA="${TREND_SMA:-20}"
+if [ "$EFF_TV" != "0.10" ] || [ "$EFF_TM" != "1.5" ] || [ "$EFF_SMA" != "30" ]; then
+    if [ "${PREFLIGHT_ALLOW_TUNED:-0}" != "1" ]; then
+        echo "FAIL: sizing config (TARGET_VOL=$EFF_TV TREND_MULTIPLIER=$EFF_TM TREND_SMA=$EFF_SMA)"
+        echo "      != canonical validated (0.10 / 1.5 / 30)."
+        echo "      Set PREFLIGHT_ALLOW_TUNED=1 to deploy a non-validated config knowingly."
+        exit 1
+    fi
+    echo "  WARN: non-canonical sizing config allowed by PREFLIGHT_ALLOW_TUNED=1"
+fi
+echo "  TARGET_VOL/TREND_MULTIPLIER/TREND_SMA: $EFF_TV / $EFF_TM / $EFF_SMA"
+
 # 4. Derivatives + options dirs writable
 # P5: mirror config.load_config precedence — explicit root, else DATA_DIR.
 DATA_ROOT="${TRADINGAGENTS_DATA_ROOT:-${DATA_DIR:-/opt/tradingagents/data}}"
