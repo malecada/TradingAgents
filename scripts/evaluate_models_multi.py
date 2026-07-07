@@ -69,6 +69,11 @@ def parse_args():
     p.add_argument("--onchain-pit", action="store_true",
                    help="Enable PIT on-chain features from the bitemporal "
                         "store (MVRV, flows, Puell, TVL). Safe for backtests.")
+    p.add_argument("--add-sentiment", action="store_true",
+                   help="Enable PIT sentiment-index features (news/social "
+                        "sentiment + Fear & Greed). Safe for backtests.")
+    p.add_argument("--sentiment-engine", default="llm", choices=["llm", "bert"],
+                   help="Sentiment scoring engine used to build the index.")
     return p.parse_args()
 
 
@@ -76,6 +81,7 @@ def build_pooled_transformed(
     coins: list, horizons: list, days: int, trade_date: str | None,
     add_technical: bool, add_cross_asset: bool, add_onchain: bool,
     add_onchain_pit: bool = False,
+    add_sentiment: bool = False, sentiment_engine: str = "llm",
 ) -> pd.DataFrame:
     """Build pooled dataset and apply data_transform per-coin.
 
@@ -95,6 +101,8 @@ def build_pooled_transformed(
         add_cross_asset=add_cross_asset,
         add_onchain=add_onchain,
         add_onchain_pit=add_onchain_pit,
+        add_sentiment=add_sentiment,
+        sentiment_engine=sentiment_engine,
     )
     if pooled_raw.empty:
         raise RuntimeError("build_pooled_dataset returned empty DataFrame")
@@ -209,6 +217,7 @@ def main():
     print(f"  Cross-asset : {'yes' if not args.no_cross_asset else 'no'}")
     print(f"  On-chain    : {'yes' if not args.no_onchain else 'no'}")
     print(f"  On-chain PIT: {'yes' if args.onchain_pit else 'no'}")
+    print(f"  Sentiment   : {'yes (' + args.sentiment_engine + ')' if args.add_sentiment else 'no'}")
 
     try:
         pooled = build_pooled_transformed(
@@ -220,6 +229,8 @@ def main():
             add_cross_asset=not args.no_cross_asset,
             add_onchain=not args.no_onchain,
             add_onchain_pit=args.onchain_pit,
+            add_sentiment=args.add_sentiment,
+            sentiment_engine=args.sentiment_engine,
         )
     except Exception as e:
         print(f"ERROR: Failed to build pooled dataset: {e}")
