@@ -3365,3 +3365,20 @@ Proof by re-run: rebuilt 4-coin V5 MIX (`--kelly 0.25`, 4-coin routing-json) wit
 
 ### Deferred (now smaller)
 Dead-man **timer** (the heartbeat file exists; the systemd `OnCalendar` alerter is the operator follow-up), richer alert channel, the trend-on-hold residual above, and the still-open §30 backlog (retrain quality gate, margin-mode check, monitor-Sharpe definition). The full live equity-vs-replay parity (S1) gate runs on the box during the 90-day window (needs Binance refetch). Acceptance: SR ≥ +2.86, report vs the live-Kelly 8-coin SR ≈ +3.91. Deploy steps: `docs/superpowers/plans/2026-05-30-v5-8coin-live-DEPLOY-HANDOFF.md`.
+
+## Section 35: E2 Training-Window-Staggered Ensemble — Quick-Look NEGATIVE, stopped at gate (2026-07-07)
+
+**Hypothesis.** WF non-reproducibility is driven by training-window sensitivity (§vintage audit: 16% signal flips per 3-week shift). Averaging K=3 models with train-end offsets {0,21,42}d should cut signal variance (distinct from the failed seed ensemble — different noise source).
+
+**Implementation.** `walk_forward_pooled(train_end_offsets=[0,21,42])` (calendar-date cutoffs, mean prediction, `pred_off{k}` diagnostics, dedup+validation), `--train-end-offsets` CLI, `scripts/exp_flip_rate.py` (sign-flip share on common (date,coin) rows; tie=flip documented). Commits a26f901, 6da6511; 15 tests; default-None byte-identical (tested).
+
+**Quick-look (pre-registered gate: flip-rate reduction ≥30% relative AND quick SR not down >0.2).** BTC+ETH pooled 18mo, h7+h14; stability measured as flip-rate between runs with trade-date 2026-05-26 vs 2026-05-05 (21d grid shift), 2,070 common rows:
+
+| arm | flips | flip-rate |
+|---|---|---|
+| baseline | 196 | 9.47% |
+| K=3 ensemble | 173 | 8.36% |
+
+Relative reduction 11.7% — far short of the 30% gate; SR leg not evaluated (gate already failed). **Stopped at quick-look; full-window A/B not run.**
+
+**Reading.** Training-window staggering at 3-week granularity barely dents instability: most flip variance apparently comes from data at the immediate training edge (days, not weeks) or from split-level stochasticity that time-averaging over 0-42d offsets cannot smooth. Cost 3×, benefit ~1/9 — poor trade. Plumbing retained (default off).
