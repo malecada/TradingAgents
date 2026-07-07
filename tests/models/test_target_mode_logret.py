@@ -74,6 +74,37 @@ def test_last_h_rows_have_nan_target():
     assert out["prices_h7"].tail(7).isna().all()
 
 
+def test_logret_zero_price_yields_nan_not_inf():
+    """A literal 0.0 close (not NaN, so it survives the fetch layer's dropna)
+    must produce NaN targets at every affected offset — never ±inf, which
+    would pass the NaN-only target dropna downstream and silently poison
+    LGB training."""
+    df = _toy()
+    zero_pos = 20  # raw positional index of the bad close
+    df.iloc[zero_pos, df.columns.get_loc("prices")] = 0.0
+    first_day_future = df.index.max() + pd.Timedelta(days=1)
+
+    _, out = data_transform(
+        df, first_day_future=first_day_future,
+        include_future_row=False, horizons=[7], target_mode="logret",
+    )
+
+    target = out["prices_h7"]
+    # No inf anywhere in the target column.
+    assert not np.isinf(target.to_numpy(dtype=float)).any()
+
+    # Both affected offsets are NaN. Raw target at raw index t is
+    # log(P_{t+7}/P_t); the bad close at raw index `zero_pos` poisons
+    # t=zero_pos (denominator) and t=zero_pos-7 (numerator). The global t-1
+    # shift drops raw row 0 and moves raw row t's value to output position t.
+    assert np.isnan(target.iloc[zero_pos])       # denominator hit
+    assert np.isnan(target.iloc[zero_pos - 7])   # numerator hit
+
+    # Rows not touching the bad close keep finite values.
+    assert np.isfinite(target.iloc[zero_pos - 8])
+    assert np.isfinite(target.iloc[zero_pos + 1])
+
+
 def test_invalid_target_mode_raises():
     df = _toy()
     first_day_future = df.index.max() + pd.Timedelta(days=1)
