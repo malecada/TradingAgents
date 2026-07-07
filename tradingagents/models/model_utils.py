@@ -310,9 +310,17 @@ def data_transform(
     # so after the shift below they become "h days ahead of the day from
     # which features were drawn".
     horizons = tuple(int(h) for h in horizons)
+    if target_mode == "logret":
+        # Guard positivity before the log: a literal 0.0 (or negative) close
+        # survives the fetch layer's dropna (it isn't NaN) and would yield
+        # ±inf here, which then passes the NaN-only target dropna downstream
+        # and silently poisons LGB training. Masking to NaN routes bad rows
+        # through the existing dropna instead. (Same pattern as the
+        # replace-0-with-NaN-before-log guard in onchain_features.py.)
+        _pos_prices = df_all["prices"].where(df_all["prices"] > 0)
     for h in horizons:
         if target_mode == "logret":
-            df_all[f"prices_h{h}"] = np.log(df_all["prices"].shift(-h) / df_all["prices"])
+            df_all[f"prices_h{h}"] = np.log(_pos_prices.shift(-h) / _pos_prices)
         else:
             df_all[f"prices_h{h}"] = df_all["prices"].shift(-h)
 
