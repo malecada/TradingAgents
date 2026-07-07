@@ -8,6 +8,8 @@ Covers:
      and the metrics dict has the full required-key contract.
   3. Alignment: two arms with offset date ranges intersect cleanly with no
      NaNs in the resulting aligned return series.
+  4. Guards: insufficient overlapping dates raises; NaN days are dropped
+     pairwise (counted in the metrics); excessive NaN fraction raises.
 
 No network access and no real prediction data are required — OHLCV loading
 is monkeypatched at `scripts.baseline_v5_mix._load_crypto_ohlcv` (the same
@@ -113,8 +115,11 @@ class TestSyntheticEndToEnd:
         required_keys = {
             "n_bars", "sr_base", "sr_sent", "delta_sr", "ci_low", "ci_high",
             "p_pos", "maxdd_base", "maxdd_sent", "verdict",
+            "n_days", "n_dropped_nan",
         }
         assert required_keys <= metrics.keys()
+        assert metrics["n_days"] == metrics["n_bars"] == len(base_ret)
+        assert metrics["n_dropped_nan"] == 0
         assert metrics["verdict"] in {"SHIP", "NO"}
         assert metrics["delta_sr"] > 0
         assert metrics["delta_sr"] == pytest.approx(metrics["sr_sent"] - metrics["sr_base"])
@@ -156,10 +161,14 @@ class TestSyntheticEndToEnd:
         per_coin_keys = {
             "n_bars", "sr_base", "sr_sent", "delta_sr", "ci_low", "ci_high",
             "p_pos", "maxdd_base", "maxdd_sent", "verdict",
+            "n_days", "n_dropped_nan",
         }
         for coin_metrics in summary["per_coin"].values():
             assert per_coin_keys <= coin_metrics.keys()
-        assert per_coin_keys <= summary["portfolio"].keys()
+        # Portfolio row carries the base A/B contract (per-coin NaN-drop
+        # accounting lives on the per-coin rows).
+        portfolio_keys = per_coin_keys - {"n_days", "n_dropped_nan"}
+        assert portfolio_keys <= summary["portfolio"].keys()
         assert summary["dsr"]["n_trials"] == vsf.DSR_N_TRIALS == 8
         assert summary["config"]["engine"] == "llm"
         assert summary["config"]["git_sha"]  # non-empty string ("unknown" fallback OK)
@@ -177,10 +186,10 @@ class TestAlignment:
         full_dates = pd.date_range("2023-12-01", periods=250, freq="D")
         price = _make_uptrend_price(250, seed=55)
 
-        dates_base = full_dates[30:130]     # 100 days
-        dates_sent = full_dates[60:160]     # offset by 30 days, 100 days
-        price_base = price[30:130]
-        price_sent = price[60:160]
+        dates_base = full_dates[0:180]      # 180 days
+        dates_sent = full_dates[30:210]     # offset by 30 days, 180 days
+        price_base = price[0:180]
+        price_sent = price[30:210]
 
         rng = np.random.default_rng(7)
         noise_base = rng.uniform(-0.02, 0.02, len(dates_base))
@@ -211,3 +220,104 @@ class TestAlignment:
         assert not base_ret.isna().any()
         assert not sent_ret.isna().any()
         assert metrics["n_bars"] == len(base_ret)
+
+
+# ── 4. Guards: overlap minimum + pairwise NaN handling ──────────────
+
+
+def _series(dates: pd.DatetimeIndex, seed: int) -> pd.Series:
+    rng = np.random.default_rng(seed)
+    return pd.Series(rng.normal(0.001, 0.01, len(dates)), index=dates)
+
+
+class TestAlignmentGuards:
+    def test_insufficient_overlap_raises(self):
+        dates_a = pd.date_range("2024-01-01", periods=120, freq="D")
+        dates_b = pd.date_range("2024-03-15", periods=120, freq="D")  # ~46-day overlap
+        base = _series(dates_a, seed=1)
+        sent = _series(dates_b, seed=2)
+        with pytest.raises(ValueError, match="insufficient overlapping dates.*bitcoin"):
+            vsf.align_arm_returns(base, sent, "bitcoin")
+
+    def test_zero_overlap_raises_not_crashes(self):
+        # Fully disjoint ranges must raise the clear guard message, not
+        # crash deep inside the bootstrap with rng.integers(0, 0).
+        base = _series(pd.date_range("2023-01-01", periods=150, freq="D"), seed=1)
+        sent = _series(pd.date_range("2025-01-01", periods=150, freq="D"), seed=2)
+        with pytest.raises(ValueError, match="insufficient overlapping dates"):
+            vsf.align_arm_returns(base, sent, "ethereum")
+
+    def test_window_filter_can_trigger_overlap_guard(self):
+        dates = pd.date_range("2024-01-01", periods=200, freq="D")
+        base = _series(dates, seed=3)
+        sent = _series(dates, seed=4)
+        with pytest.raises(ValueError, match="insufficient overlapping dates"):
+            vsf.align_arm_returns(base, sent, "bitcoin",
+                                  start="2024-06-01", end="2024-06-20")
+
+    def test_nan_days_dropped_pairwise_and_counted(self):
+        dates = pd.date_range("2024-01-01", periods=200, freq="D")
+        base = _series(dates, seed=5)
+        sent = _series(dates, seed=6)
+        sent.iloc[50] = np.nan  # NaN in one arm only
+
+        b, s, n_dropped = vsf.align_arm_returns(base, sent, "bitcoin")
+
+        assert n_dropped == 1
+        # The NaN day is removed from BOTH arms (pairwise).
+        assert dates[50] not in b.index
+        assert dates[50] not in s.index
+        assert b.index.equals(s.index)
+        assert len(b) == 199
+        assert not b.isna().any()
+        assert not s.isna().any()
+
+    def test_excessive_nan_fraction_raises(self):
+        dates = pd.date_range("2024-01-01", periods=200, freq="D")
+        base = _series(dates, seed=7)
+        sent = _series(dates, seed=8)
+        sent.iloc[10:15] = np.nan  # 5/200 = 2.5% > 1% tolerance
+        with pytest.raises(ValueError, match="NaN returns.*broken"):
+            vsf.align_arm_returns(base, sent, "bitcoin")
+
+    def test_nan_count_reaches_json_metrics(self, tmp_path, monkeypatch):
+        """A single NaN injected into one arm's return series flows through
+        run_coin_ab: dropped pairwise, counted in n_dropped_nan, and never
+        reaches sharpe()/p_pos silently."""
+        n = 140
+        dates = pd.date_range("2024-01-01", periods=n, freq="D")
+        price = _make_uptrend_price(n, seed=11)
+        rng = np.random.default_rng(12)
+        noise = rng.uniform(-0.02, 0.02, n)
+        base_pred = price * (1.0 + noise)
+        sent_pred = price * (1.0 + noise + 0.01)
+
+        base_dir = tmp_path / "base_78f"
+        sent_dir = tmp_path / "sent_llm_78f"
+        _write_pred_csvs(base_dir, "bitcoin", dates, base_pred, base_pred, price)
+        _write_pred_csvs(sent_dir, "bitcoin", dates, sent_pred, sent_pred, price)
+
+        ohlcv = _make_ohlcv(dates, price)
+        monkeypatch.setattr(vsf.bm, "_load_crypto_ohlcv", lambda coin, end: ohlcv.copy())
+
+        # Wrap run_coin to inject a NaN into the sentiment arm's returns.
+        real_run_coin = vsf.bm.run_coin
+
+        def run_coin_with_nan(coin, pred_dir, *args, **kwargs):
+            r = real_run_coin(coin, pred_dir, *args, **kwargs)
+            if pred_dir == sent_dir:
+                r.iloc[40] = np.nan
+            return r
+
+        monkeypatch.setattr(vsf.bm, "run_coin", run_coin_with_nan)
+
+        metrics, base_ret, sent_ret = vsf.run_coin_ab(
+            "bitcoin", base_dir, sent_dir, n_boot=50, seed=9,
+        )
+
+        assert metrics["n_dropped_nan"] == 1
+        assert metrics["n_days"] == len(base_ret) == len(sent_ret)
+        assert not base_ret.isna().any()
+        assert not sent_ret.isna().any()
+        assert not np.isnan(metrics["sr_sent"])
+        assert not np.isnan(metrics["p_pos"])

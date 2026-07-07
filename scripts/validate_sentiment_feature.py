@@ -60,6 +60,13 @@ BLOCK_SIZE_DEFAULT = 21  # matches bootstrap_sharpe.py's Politis-Romano default
 N_BOOT_DEFAULT = 2000
 DSR_N_TRIALS = 8
 
+# Data-quality guards on the aligned (base ∩ sent) index. Fewer overlapping
+# days than MIN_OVERLAP_DAYS is not a meaningful A/B (and a zero-length path
+# would crash the block bootstrap); more than MAX_NAN_FRAC of NaN days
+# signals a broken arm rather than benign missing bars.
+MIN_OVERLAP_DAYS = 100
+MAX_NAN_FRAC = 0.01
+
 # Wide bounds so `baseline_v5_mix.run_coin` returns the full history present
 # in the predictions CSVs; --start/--end are applied afterward to the
 # *aligned* (base ∩ sent) index, not to the raw pipeline input (running the
@@ -102,12 +109,13 @@ def arm_dirs(pred_root: Path, engine: str) -> dict:
 
 
 def sharpe(returns: np.ndarray) -> float:
-    """365d-annualized Sharpe (mirrors baseline_v5_mix._metrics's convention:
-    population std, no risk-free subtraction — just annualization differs)."""
+    """365d-annualized Sharpe: mean/std with sample std (ddof=1), no
+    risk-free subtraction. ddof=1 matches pandas' `Series.std()` default used
+    by `baseline_v5_mix._metrics` and this script's `_dsr_for_returns`."""
     r = np.asarray(returns, dtype=float)
     if len(r) < 2:
         return 0.0
-    sd = r.std()
+    sd = r.std(ddof=1)
     return float(r.mean() / sd * ANN) if sd > 0 else 0.0
 
 
@@ -156,6 +164,8 @@ def bootstrap_delta_sr(
     base = np.asarray(base, dtype=float)
     sent = np.asarray(sent, dtype=float)
     n = min(len(base), len(sent))
+    if n < 2:
+        raise ValueError(f"bootstrap_delta_sr: need >= 2 paired days, got {n}")
     base, sent = base[:n], sent[:n]
     rng = np.random.default_rng(seed)
     delta_samples = np.empty(n_boot)
@@ -209,23 +219,60 @@ def ab_metrics(
     }
 
 
-def _coin_arm_returns(
-    coin: str, base_dir: Path, sent_dir: Path,
+def align_arm_returns(
+    base: pd.Series, sent: pd.Series, coin: str,
     start: str | None = None, end: str | None = None,
-    kelly_fraction: float = 0.5,
-) -> tuple[pd.Series, pd.Series]:
-    """Run the V2/V5 pipeline for both arms of one coin, then align them on
-    their common date intersection (optionally further restricted to
-    [start, end])."""
-    base_full = bm.run_coin(coin, base_dir, _FULL_START, _FULL_END, kelly_fraction=kelly_fraction)
-    sent_full = bm.run_coin(coin, sent_dir, _FULL_START, _FULL_END, kelly_fraction=kelly_fraction)
-    common = base_full.index.intersection(sent_full.index)
+) -> tuple[pd.Series, pd.Series, int]:
+    """Align two arm return series on their common date intersection
+    (optionally restricted to [start, end]) and drop NaN days PAIRWISE.
+
+    Guards (raise ValueError with a clear message):
+      - aligned index shorter than MIN_OVERLAP_DAYS — too little overlap for
+        a meaningful A/B (and would crash the block bootstrap downstream);
+      - more than MAX_NAN_FRAC of the aligned days NaN in either arm — a
+        broken arm, not benign missing bars. NaN must never reach `sharpe()`
+        silently (nan comparisons are False, which deflates p_pos).
+
+    Returns (base_aligned, sent_aligned, n_dropped_nan).
+    """
+    common = base.index.intersection(sent.index)
     if start is not None:
         common = common[common >= pd.Timestamp(start)]
     if end is not None:
         common = common[common <= pd.Timestamp(end)]
     common = common.sort_values()
-    return base_full.loc[common], sent_full.loc[common]
+    n = len(common)
+    if n < MIN_OVERLAP_DAYS:
+        raise ValueError(
+            f"insufficient overlapping dates between arms for {coin}: {n} "
+            f"(minimum {MIN_OVERLAP_DAYS})"
+        )
+    b = base.loc[common]
+    s = sent.loc[common]
+    nan_mask = b.isna() | s.isna()
+    n_dropped = int(nan_mask.sum())
+    if n_dropped > MAX_NAN_FRAC * n:
+        raise ValueError(
+            f"{coin}: {n_dropped}/{n} aligned days have NaN returns in at "
+            f"least one arm (> {MAX_NAN_FRAC:.0%} tolerance) — arm data looks broken"
+        )
+    if n_dropped:
+        b = b[~nan_mask]
+        s = s[~nan_mask]
+    return b, s, n_dropped
+
+
+def _coin_arm_returns(
+    coin: str, base_dir: Path, sent_dir: Path,
+    start: str | None = None, end: str | None = None,
+    kelly_fraction: float = 0.5,
+) -> tuple[pd.Series, pd.Series, int]:
+    """Run the V2/V5 pipeline for both arms of one coin, then align + clean
+    them via `align_arm_returns` (common intersection, pairwise NaN drop,
+    overlap/NaN guards)."""
+    base_full = bm.run_coin(coin, base_dir, _FULL_START, _FULL_END, kelly_fraction=kelly_fraction)
+    sent_full = bm.run_coin(coin, sent_dir, _FULL_START, _FULL_END, kelly_fraction=kelly_fraction)
+    return align_arm_returns(base_full, sent_full, coin, start=start, end=end)
 
 
 def run_coin_ab(
@@ -240,13 +287,15 @@ def run_coin_ab(
     aligned series are returned so the caller can build the 50/50 portfolio
     row from the same per-coin paths.
     """
-    base_aligned, sent_aligned = _coin_arm_returns(
+    base_aligned, sent_aligned, n_dropped_nan = _coin_arm_returns(
         coin, base_dir, sent_dir, start=start, end=end, kelly_fraction=kelly_fraction,
     )
     metrics = ab_metrics(
         base_aligned.values, sent_aligned.values,
         n_boot=n_boot, block_size=block_size, seed=seed,
     )
+    metrics["n_days"] = int(len(base_aligned))
+    metrics["n_dropped_nan"] = n_dropped_nan
     return metrics, base_aligned, sent_aligned
 
 
@@ -297,13 +346,16 @@ def run_validation(
     the summary dict that gets written to `--out`."""
     dirs = arm_dirs(pred_root, engine)
 
+    # Deterministic per-series seed offsets (coin i → seed+i, portfolio →
+    # seed+len(dirs)) so bootstraps of equal-length series don't share
+    # identical resampled index paths.
     per_coin = {}
     base_series, sent_series = {}, {}
-    for coin, (base_dir, sent_dir) in dirs.items():
+    for i, (coin, (base_dir, sent_dir)) in enumerate(dirs.items()):
         metrics, b, s = run_coin_ab(
             coin, base_dir, sent_dir, start=start, end=end,
             kelly_fraction=kelly_fraction, n_boot=n_boot,
-            block_size=block_size, seed=seed,
+            block_size=block_size, seed=seed + i,
         )
         per_coin[coin] = metrics
         base_series[coin] = b
@@ -319,7 +371,7 @@ def run_validation(
     port_sent = bm.portfolio_return(sent_df, PORTFOLIO_WEIGHTS)
     portfolio = ab_metrics(
         port_base.values, port_sent.values,
-        n_boot=n_boot, block_size=block_size, seed=seed,
+        n_boot=n_boot, block_size=block_size, seed=seed + len(dirs),
     )
 
     dsr = _dsr_for_returns(port_sent.values, n_trials=DSR_N_TRIALS)
