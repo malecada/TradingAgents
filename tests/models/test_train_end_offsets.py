@@ -208,3 +208,37 @@ def test_model_run_pooled_forwards_train_end_offsets(monkeypatch):
 
     assert len(calls) == 2
     assert pred_df.iloc[0]["prediction"] == pytest.approx(1.5)
+
+
+def test_offsets_dedup_and_sort_duplicates(monkeypatch):
+    """Duplicate offsets [0, 0, 5] are silently deduplicated to [0, 5];
+    the resulting predictions match a run with [0, 5] directly."""
+    from tradingagents.models import lgb_model
+
+    df = _synthetic_two_coin_frame(n_days=35)
+
+    # Run with duplicates: [0, 0, 5]
+    pred_dup, metrics_dup = lgb_model.walk_forward_pooled(
+        df.copy(), horizon=1, min_train_window=33, train_end_offsets=[0, 0, 5],
+    )
+
+    # Run with dedup: [0, 5]
+    pred_dedup, metrics_dedup = lgb_model.walk_forward_pooled(
+        df.copy(), horizon=1, min_train_window=33, train_end_offsets=[0, 5],
+    )
+
+    # Both should produce identical results (same two unique offsets)
+    pd.testing.assert_frame_equal(pred_dup, pred_dedup)
+    assert metrics_dup == pytest.approx(metrics_dedup)
+
+
+def test_offsets_raises_on_negative_value():
+    """Negative offsets are invalid and raise ValueError."""
+    from tradingagents.models import lgb_model
+
+    df = _toy_single_coin_frame(n_days=30)
+
+    with pytest.raises(ValueError, match="must be non-negative"):
+        lgb_model.walk_forward_pooled(
+            df, horizon=1, min_train_window=29, train_end_offsets=[0, -5],
+        )

@@ -9,6 +9,10 @@ walk-forward prediction directories with the same schema
 common (date, coin_id) rows where the trading DIRECTION implied by the
 prediction — sign(prediction - ref_price) — differs between run A and run B.
 
+Direction = sign(prediction - ref_price). Ties (prediction == ref_price) yield
+direction 0 and count as a flip against any nonzero direction — deliberate:
+a tie is a changed signal for the V5 term-structure consumer.
+
 This is used to compare a baseline single-model walk-forward run against a
 training-window-staggered ensemble run (`--train-end-offsets`), typically
 with the whole evaluation grid shifted by ~21 days between the two runs
@@ -57,7 +61,13 @@ def discover_common_horizons(dir_a: Path, dir_b: Path) -> list[int]:
 
 
 def _pred_direction(df: pd.DataFrame) -> pd.Series:
-    """sign(prediction - ref_price) — the trading direction implied by a row."""
+    """sign(prediction - ref_price) — the trading direction implied by a row.
+
+    Returns 1 for up (prediction > ref_price), -1 for down (prediction < ref_price),
+    and 0 for ties (prediction == ref_price). Ties carry direction 0 and will always
+    count as flips against any nonzero direction — deliberate: a tie is a changed
+    signal for the V5 term-structure consumer.
+    """
     return np.sign(df["prediction"] - df["ref_price"])
 
 
@@ -66,8 +76,12 @@ def flip_rate_for_pair(df_a: pd.DataFrame, df_b: pd.DataFrame) -> tuple[int, int
 
     Both frames must have `date`, `coin_id`, `prediction`, `ref_price` columns.
     Rows are matched on (date, coin_id); rows only present in one side are
-    dropped (not "common"). Direction = sign(prediction - ref_price); a row
-    "flips" when direction differs between A and B.
+    dropped (not "common"). Direction = sign(prediction - ref_price) ∈ {-1, 0, 1};
+    a row "flips" when direction differs between A and B.
+
+    Ties (prediction == ref_price) carry direction 0 and count as a flip against
+    any nonzero direction — deliberate: a tie is a changed signal for the V5
+    term-structure consumer.
 
     Returns:
         (n_common, n_flips, flip_rate). flip_rate is 0.0 when n_common == 0.

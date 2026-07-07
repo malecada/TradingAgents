@@ -147,6 +147,16 @@ def walk_forward_pooled(
         diagnostic columns when train_end_offsets is set) and metrics_dict
         has keys r2/mae/rmse/mape/directional_accuracy.
     """
+    # Validate and dedup train_end_offsets
+    if train_end_offsets is not None:
+        offsets = sorted(set(int(k) for k in train_end_offsets))
+        for k in offsets:
+            if k < 0:
+                raise ValueError(
+                    f"train_end_offsets must be non-negative; got {k} in {train_end_offsets}"
+                )
+        train_end_offsets = offsets
+
     pooled_df = _ensure_date_indexed(pooled_df)
 
     target_col = f"prices_h{horizon}"

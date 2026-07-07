@@ -125,6 +125,30 @@ def test_discover_common_horizons_intersects_dirs(tmp_path):
     assert discover_common_horizons(dir_a, dir_b) == [7, 14]
 
 
+def test_flip_rate_for_pair_ties_counted_as_flips():
+    """Ties (prediction == ref_price) carry direction 0 and count as flips
+    against any nonzero direction — deliberate: a tie is a changed signal."""
+    from scripts.exp_flip_rate import flip_rate_for_pair
+
+    # A: BTC up (+), ETH tie (0)
+    # B: BTC up (+), ETH down (-)
+    # Row 1: both up -> no flip
+    # Row 2: tie (0) vs down (-) -> flip (direction differs)
+    df_a = pd.DataFrame([
+        {"date": "2024-01-01", "coin_id": "BTC", "prediction": 105.0, "ref_price": 100.0},  # up (+1)
+        {"date": "2024-01-01", "coin_id": "ETH", "prediction": 100.0, "ref_price": 100.0},  # tie (0)
+    ])
+    df_b = pd.DataFrame([
+        {"date": "2024-01-01", "coin_id": "BTC", "prediction": 105.0, "ref_price": 100.0},  # up (+1)
+        {"date": "2024-01-01", "coin_id": "ETH", "prediction": 95.0, "ref_price": 100.0},   # down (-1)
+    ])
+
+    n_common, n_flips, flip_rate = flip_rate_for_pair(df_a, df_b)
+    assert n_common == 2
+    assert n_flips == 1  # only ETH tie vs down
+    assert flip_rate == pytest.approx(0.5)
+
+
 def test_main_writes_json_and_prints_table(tmp_path, monkeypatch, capsys):
     from scripts import exp_flip_rate
 
