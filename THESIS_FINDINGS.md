@@ -3365,3 +3365,44 @@ Proof by re-run: rebuilt 4-coin V5 MIX (`--kelly 0.25`, 4-coin routing-json) wit
 
 ### Deferred (now smaller)
 Dead-man **timer** (the heartbeat file exists; the systemd `OnCalendar` alerter is the operator follow-up), richer alert channel, the trend-on-hold residual above, and the still-open §30 backlog (retrain quality gate, margin-mode check, monitor-Sharpe definition). The full live equity-vs-replay parity (S1) gate runs on the box during the 90-day window (needs Binance refetch). Acceptance: SR ≥ +2.86, report vs the live-Kelly 8-coin SR ≈ +3.91. Deploy steps: `docs/superpowers/plans/2026-05-30-v5-8coin-live-DEPLOY-HANDOFF.md`.
+
+## Section 33: Backtest Correctness Audit — headline invalidated + causal re-baseline (2026-07-07)
+
+Trigger: pre-deployment validation of the 8-coin V5 MIX headline (+1052.8% / SR +3.966 / −4.8% DD, 2021-11-07→2026-04-15, `data/v5_8coin_production`). Five independent audit passes (leakage, WF-harness/selection, execution realism, metric computation, backtest↔live parity), each of which first reproduced the published numbers bit-for-bit before testing variants.
+
+### 33.1 Two CRITICAL defects jointly account for essentially the whole headline
+
+**C1 — Same-bar sizing look-ahead.** The engine credits `positions[i]` with the close(i−1)→close(i) return (`baseline_strategy_v2.py:117-126`), but `positions[i]` is built from close(i): the SMA trend multiplier (`v2_sizing.py:220-232`, ×1.5/÷ on the *crossing bar itself*), realized vol/vol-gate, hold entry/early-exit prices, and (via the `ref_price = Close` overwrite at `baseline_v5_mix.py:199`, also `walkforward_v2.py:128`, `cpcv_v2.py:145`, `validate_v5_mix.py:129`) the signal comparator. The prediction CSVs themselves are PIT-correct (`model_utils.py:319-321`; CSV `ref_price` = close(D−1)) — the strategy layer re-introduces the same-bar close. Live trades at 00:05 UTC from asof=D−1 and structurally cannot do this. Dominant channel: the trend filter (lagging it alone costs ≈ −1.6 SR); the random-signal placebo's "mechanics floor" collapses +2.89 → +0.12 under causal sizing — §21.3's "90% from mechanics" was 90% from the artifact.
+
+**C2 — No purge/embargo in the LGB walk-forward.** `walk_forward_pooled` trained on all rows `< cur_date` (`lgb_model.py:170`), but row d carries target close(d−1+h): the last h−1 training rows per coin hold labels realized *after* the test date. `walkforward_v2.py`'s docstring claim of a "14-bar embargo enforced upstream" was false. Paired 90-fold retrain: h=14 DirAcc **81.7% → 49.4%**, corr(pred, realized) **+0.79 → +0.08** once purged. The h=1→7→14 DirAcc ladder (50/75/85%) tracks the leaked-row count (0/6/13) exactly. All published DirAcc, per-coin routing choices, and "model skill" claims were contaminated. The live retrain path (`fit_pooled_full` + dropna) is a de-facto purge — live never had this signal, which is why testnet ≈ flat while parity was 100%.
+
+Also confirmed: funding understated ~24× (0.0001/8 per day vs ~3bp/day; M1); live 3%-price-axis intrabar stops absent from the backtest (≈64 engine stop events vs ≈1,723 replayed intrabar; H); permanent per-coin 15%-DD halt latch truncates XRP/DOGE sleeves at their troughs; 2026-dated top-10 universe = survivorship (2021-11 top-10 contained LUNA); per-coin 78f/193f routing + 8-coin acceptance decided on the same window they're reported on; V5.1 tuning (tv0.07/tm2.0/sma20) optimized the C1 artifact axis. Metric arithmetic itself verified clean (exact reconciliation of return/SR/DD from stored series; proper daily-rebalanced portfolio; block bootstrap; √252 on 365-bar years is conservative).
+
+### 33.2 Corrected numbers (same preds, remediated harness)
+
+| Variant | 8-coin SR | Return | MaxDD |
+|---|---|---|---|
+| Published (legacy convention, `--convention legacy` reproduces) | +3.966 | +1052.8% | −4.8% |
+| Causal sizing (live contract) | +2.040 | +134.7% | −6.0% |
+| Causal + realistic funding (3bp/day) | **+1.931** | **+123.9%** | −6.2% |
+| Causal + PURGED predictions (C2 fixed) | pending (16 WF regenerations running) | | |
+| Causal + purged + rolling-730d train window (full live contract) | pending | | |
+
+Audit-run reference points: trend-lag-only ≈ +1.46; naive pos-shift ≈ +3.02 (over-lags the signal); fully-causal + earliest-legitimate-signal ≈ **+0.45 / +13%**; purged-signal expectation ≈ SR 0.1–0.5. Per-coin under causal: BTC +2.49 / ETH +2.19 survive; BNB +1.18, SOL +0.79; satellites XRP +0.39 / DOGE +0.03 / ADA +0.38 / TRX −0.77 — **the 8-coin expansion increment is artifact; §20's 4-coin→8-coin ACCEPT verdict is rescinded**.
+
+### 33.3 Remediation shipped (this working tree)
+
+1. `walk_forward_pooled(train_window_days=, purge_days=)` + `evaluate_models_multi.py --purge --train-window-days` (tests: `tests/models/test_walkforward_rolling_window.py`). All 8 route dirs regenerating under `data/audit_fix/{purged,rolling730}/` with the §20 protocol + `--purge`.
+2. `baseline_v5_mix.py --convention {causal,legacy}` (default causal): sizing inputs lagged one bar, CSV `ref_price` preserved, funding 3bp/day (tests: `tests/strategies/test_causal_convention.py`; legacy mode reproduces +3.966 exactly).
+3. Live/backtest cache unification: `build_pooled_dataset(ohlcv_frames=, pit_root=)`; `build_features_asof` now honors `store_root`/`ohlcv_cache` (previously silently ignored) and reads the daily-refreshed `data_root/ohlcv_cache/{SYM}_1d.parquet`; runner fixed to pass `ohlcv_cache` (was `cache`). Tests: `tests/execution/live/test_ohlcv_cache_unification.py`.
+4. `test_predict_equivalence.py` rewritten as an OFFLINE numeric live-vs-backtest feature-path parity test (passes; the old one was CI-skipped and would have errored).
+5. Retrain-fallback staleness ERROR at >3 days (`retrain.MAX_FALLBACK_AGE_DAYS`, tested); supplementary-stale escalated to ERROR when 193f routes are live.
+6. `deploy/preflight.sh` gate 3c: TARGET_VOL/TREND_MULTIPLIER/TREND_SMA must equal canonical 0.10/1.5/30 unless `PREFLIGHT_ALLOW_TUNED=1` — blocks silent V5.1 config drift (the deployed box has run V5.1 since 2026-06-18, day 18 of the acceptance window, making the window's result uninterpretable).
+7. `scripts/acceptance_gate_power.py`: the §22 gate (SR≥2.86 @ 90d) has SE≈1.7 → 4.4% false-pass at true SR 0, 26% false-fail at 3.97 — underpowered by design; threshold must be re-derived from the causal baseline.
+
+### 33.4 Standing conclusions
+
+- The realistic live expectation for the deployed system is bounded above by the causal+purged backtest (pending), best current estimate **SR ≈ 0.1–0.5 portfolio** — consistent with observed testnet (−0.9%…−1.8%). The −1.75% testnet result was never anomalous; the backtest was.
+- BT11/§21.3's "90% sizing+momentum" attribution is reinterpreted: it was measuring the same-bar artifact, not genuine momentum alpha.
+- V5.1 (tv0.07/tm2.0/sma20) and the 8-coin expansion must be re-derived on the causal+purged harness before any deployment decision; §20 T7 routing choices are void (selected on leaked DirAcc/SR).
+- Known-stale on this branch: `tests/execution/live/test_parity_script.py` 4-coin pins vs the uncommitted 8-coin `_PARITY_ROUTES` WIP (pre-existing, unrelated to this audit).
