@@ -3592,3 +3592,20 @@ needed.
 - Blend / correlation: `scripts/carry_blend_p4.py`
 - Spec: `docs/CARRY_SLEEVE_BACKTEST_SPEC.md`
 - Baseline series: `data/v5_mix_production/daily_returns.csv` (Sharpe 3.178)
+
+## Section 36: E4 Carry Sleeve Go/No-Go — GO (drift-check PASS, live integration scoped) (2026-07-08)
+
+**Decision task** (plan Task E4): confirm §32 on current data stores before any live work.
+
+**Reproduction (2026-07-08, same script `carry_blend_p4.py`, refreshed stores):** identical to §32 — overlap 1,619d 2021-11-08..2026-04-14; V5 core SR 3.18 / DD −4.9%; sleeve (real-basis upper bound) SR 8.24 / DD −0.8%; corr +0.003; blend @20% SR 3.29 (Δ+0.11) DD −4.0%. Haircut stress: even at true carry SR 1.0 the blend is never worse than core (Δ ∈ [+0.01, +0.02] across allocations). Zero drift.
+
+**Persistence caveat:** post-window funding (2026-04-15..05-21, 37d) flipped — BTC perp funding net NEGATIVE, ETH ~92% below its historical run-rate. Sleeve pays funding in such stretches; §32's 4.5-yr result already averages over similar episodes, but deployment timing is exposed to the current regime. Requirement: live monitor metric = trailing 30d funding sign per leg (alert on sustained negative).
+
+**Live-integration scope (one page, per plan — build is a SEPARATE plan+deploy cycle):**
+1. Sleeve runner: daily job, short perp + long spot BTC/ETH, always_on, leverage ≤3, 20% capital allocation, rebalance on drift >20% of target notional.
+2. Margin interplay: sleeve perp shorts share the futures wallet with V5 MIX positions — isolate via sub-account (preferred) or reserve-margin accounting; the 3% V5 price stops and the −1003/−1007 ban/timeout handlers must never cancel sleeve orders (order-tag namespace).
+3. Spot leg: spot wallet buys, no leverage; hedge ratio 1.0 notional.
+4. Journal + monitor: new `data-carry/` journal, monitor tab with funding-collected vs paid, trailing 30d funding sign alert, basis tracking.
+5. Acceptance: 30-day testnet parity (funding accrual reconciliation vs exchange statements), then mainnet-small.
+
+**Verdict: GO** — blend robust, worst case non-negative; proceed to a dedicated live-integration plan when operator bandwidth allows. No code changes in this task.
