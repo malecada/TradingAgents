@@ -3385,8 +3385,14 @@ Also confirmed: funding understated ~24× (0.0001/8 per day vs ~3bp/day; M1); li
 | Published (legacy convention, `--convention legacy` reproduces) | +3.966 | +1052.8% | −4.8% |
 | Causal sizing (live contract) | +2.040 | +134.7% | −6.0% |
 | Causal + realistic funding (3bp/day) | **+1.931** | **+123.9%** | −6.2% |
-| Causal + PURGED predictions (C2 fixed) | pending (16 WF regenerations running) | | |
-| Causal + purged + rolling-730d train window (full live contract) | pending | | |
+| Causal + PURGED predictions (C2 fixed) | +0.559 | +15.3% | −5.6% |
+| Causal + purged + rolling-730d train window (**full live contract**) | **+0.145** | **+2.8%** | −5.1% |
+
+Final per-route purged DirAcc (h7/h14): BTC 54.4/53.8, ETH 53.8/50.7, BNB 55.2/54.4, SOL 54.6/51.1, XRP 52.7/51.3, DOGE 52.2/52.2, ADA 52.8/50.1, TRX 53.5/53.4 — every route 50-55% (legacy claims 68-85%). 4-coin core: causal+purged +0.74/+29.1%; live contract +0.36/+11.4% (BTC leg −0.58).
+
+**V5.1 tuning recheck (causal+purged 8-coin)**: expanding tv0.07/tm2.0/sma20 = +0.745 vs canonical +0.559; under the live contract (rolling-730d) V5.1 = **+0.104 vs canonical +0.145** — the published "3.18→3.51, 6/6 years" lift does not exist on the corrected harness; tuning was artifact-fit.
+
+**Corrected validation battery (4-coin causal+purged, K=500)**: random-entry placebo null mean **−0.04** (legacy +2.87 — the "sizing floor" is fully explained by C1); observed +0.83 beats the null (p=0.002) — a small REAL residual signal (the ~53-55% h7 edge) — but **DSR fails multiple-testing** (0.69 @ n_trials=12; 0.36 @ 100). Conclusion: weak genuine edge, not statistically defensible after search correction, and ≈0.1-0.4 SR under the live training contract.
 
 Audit-run reference points: trend-lag-only ≈ +1.46; naive pos-shift ≈ +3.02 (over-lags the signal); fully-causal + earliest-legitimate-signal ≈ **+0.45 / +13%**; purged-signal expectation ≈ SR 0.1–0.5. Per-coin under causal: BTC +2.49 / ETH +2.19 survive; BNB +1.18, SOL +0.79; satellites XRP +0.39 / DOGE +0.03 / ADA +0.38 / TRX −0.77 — **the 8-coin expansion increment is artifact; §20's 4-coin→8-coin ACCEPT verdict is rescinded**.
 

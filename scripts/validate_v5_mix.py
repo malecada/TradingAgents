@@ -114,6 +114,8 @@ def main() -> None:
     p.add_argument("--n-perms", type=int, default=1000)
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--output-dir", default="data/v5_validation")
+    p.add_argument("--routing-json", default=None,
+                   help="Optional JSON {coin: pred_dir} overriding ROUTING")
     p.add_argument("--convention", choices=("causal", "legacy"), default="causal",
                    help="'causal' lags sizing inputs one bar + keeps the CSV "
                         "PIT ref_price (live contract); 'legacy' reproduces "
@@ -131,7 +133,10 @@ def main() -> None:
     coin_obs_rets: dict[str, pd.Series] = {}
     coin_sig_mix: dict[str, tuple] = {}
 
-    for coin, pdir in ROUTING.items():
+    routing = ROUTING
+    if args.routing_json:
+        routing = json.loads(Path(args.routing_json).read_text())
+    for coin, pdir in routing.items():
         preds = _load_preds(PROJECT_ROOT / pdir, coin)
         preds = preds[(preds["date"] >= START) & (preds["date"] <= END)]
         ohlcv = _load_crypto_ohlcv(coin, END)
