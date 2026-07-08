@@ -78,16 +78,24 @@ def _load_preds(pred_dir: Path, coin: str) -> pd.DataFrame:
     return p7.merge(p14, on="date").sort_values("date").reset_index(drop=True)
 
 
-def _v2_pipeline(merged: pd.DataFrame, signals: np.ndarray, conf: np.ndarray) -> np.ndarray:
+def _v2_pipeline(
+    merged: pd.DataFrame,
+    signals: np.ndarray,
+    conf: np.ndarray,
+    convention: str = "causal",
+) -> np.ndarray:
+    from tradingagents.strategies.v2_sizing import sizing_price_series
+
     px = merged["Close"].astype(float).values
-    rv = compute_realized_vol(px, lookback=20)
+    px_sz = sizing_price_series(px, convention)
+    rv = compute_realized_vol(px_sz, lookback=20)
     mask = vol_regime_mask(rv, percentile_cap=0.95)
     pos = build_positions_with_hold(
-        signals=signals, vol_ok=mask, confidence=conf, realized_vol=rv, prices=px,
+        signals=signals, vol_ok=mask, confidence=conf, realized_vol=rv, prices=px_sz,
         target_vol=0.10, kelly_fraction=0.5, max_leverage=3.0,
         min_hold=7, early_exit_loss=0.015,
     )
-    return apply_trend_filter(pos, px, sma_period=30, multiplier=1.5)
+    return apply_trend_filter(pos, px_sz, sma_period=30, multiplier=1.5)
 
 
 def _daily_returns(merged: pd.DataFrame, positions: np.ndarray) -> pd.Series:
@@ -106,6 +114,10 @@ def main() -> None:
     p.add_argument("--n-perms", type=int, default=1000)
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--output-dir", default="data/v5_validation")
+    p.add_argument("--convention", choices=("causal", "legacy"), default="causal",
+                   help="'causal' lags sizing inputs one bar + keeps the CSV "
+                        "PIT ref_price (live contract); 'legacy' reproduces "
+                        "the pre-audit same-bar convention.")
     args = p.parse_args()
 
     out_dir = PROJECT_ROOT / args.output_dir
@@ -126,13 +138,15 @@ def main() -> None:
         ohlcv["Date"] = pd.to_datetime(ohlcv["Date"]).dt.tz_localize(None).dt.normalize()
         merged = preds.merge(ohlcv[["Date", "Close"]], left_on="date", right_on="Date")
         merged = merged.dropna(subset=["Close"]).reset_index(drop=True)
-        merged["ref_price"] = merged["Close"]
+        if args.convention == "legacy" or "ref_price" not in merged.columns:
+            merged["ref_price"] = merged["Close"]
         coin_merged[coin] = merged
 
         sig, conf = generate_term_structure_signals(merged, [7, 14], 0.05, asymmetric=True)
         coin_obs_sig[coin] = sig
         coin_obs_conf[coin] = conf
-        coin_obs_rets[coin] = _daily_returns(merged, _v2_pipeline(merged, sig, conf))
+        coin_obs_rets[coin] = _daily_returns(
+            merged, _v2_pipeline(merged, sig, conf, convention=args.convention))
 
         n = len(sig)
         coin_sig_mix[coin] = (
@@ -182,7 +196,8 @@ def main() -> None:
             pl, ps, pf = coin_sig_mix[coin]
             n = len(coin_obs_sig[coin])
             rand_sig = rng.choice(choices, size=n, p=[pl, ps, pf])
-            rand_pos = _v2_pipeline(merged, rand_sig, np.abs(coin_obs_conf[coin]))
+            rand_pos = _v2_pipeline(merged, rand_sig, np.abs(coin_obs_conf[coin]),
+                                    convention=args.convention)
             perm_rets[coin] = _daily_returns(merged, rand_pos)
         pdf = pd.DataFrame(perm_rets).dropna().sort_index()
         pp = pdf.mean(axis=1)
