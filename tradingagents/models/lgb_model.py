@@ -19,17 +19,24 @@ from tradingagents.models import model_utils as mu
 logger = logging.getLogger(__name__)
 
 
-def _build_lgb():
+def _build_lgb(objective: str | None = None, alpha: float | None = None):
     """Build a LightGBM regressor with config-driven hyperparameters.
 
     Uses single-threaded fitting (n_jobs=1): walk-forward evaluation trains
     hundreds of small models and the multi-threading overhead dominates the
     per-model fit time on small datasets.
+
+    Args:
+        objective: Optional LGBM objective override (e.g. "quantile" for
+            quantile regression). When None, the default LGBM objective
+            ("regression") is used — this is the byte-identical default path.
+        alpha: Quantile level in (0, 1), required by LightGBM when
+            objective="quantile". Ignored otherwise.
     """
     import lightgbm as lgb
 
     cfg = get_config().get("prediction_models", {})
-    return lgb.LGBMRegressor(
+    kwargs = dict(
         n_estimators=cfg.get("lgb_n_estimators", 500),
         max_depth=cfg.get("lgb_max_depth", -1),
         learning_rate=cfg.get("lgb_learning_rate", 0.05),
@@ -39,6 +46,11 @@ def _build_lgb():
         verbose=-1,
         n_jobs=1,
     )
+    if objective is not None:
+        kwargs["objective"] = objective
+    if alpha is not None:
+        kwargs["alpha"] = alpha
+    return lgb.LGBMRegressor(**kwargs)
 
 
 def _ensure_date_indexed(pooled_df: pd.DataFrame) -> pd.DataFrame:
@@ -112,6 +124,7 @@ def walk_forward_pooled(
     pooled_df: pd.DataFrame,
     horizon: int,
     min_train_window: int = 365,
+    quantiles: tuple[float, ...] | None = None,
 ) -> tuple[pd.DataFrame, dict]:
     """Walk-forward eval on the pooled multi-coin dataset.
 
@@ -128,12 +141,26 @@ def walk_forward_pooled(
         horizon: Which `prices_h{h}` column to predict.
         min_train_window: Number of initial dates to reserve as training only
             (walk-forward starts after this).
+        quantiles: Optional tuple of quantile levels, e.g. (0.1, 0.5, 0.9).
+            When None (default), a single point-estimate LGBMRegressor is
+            fit per date — byte-identical to the pre-quantile behavior.
+            When set, one LGBMRegressor per alpha is fit with
+            objective="quantile" (hyperparameters otherwise unchanged via
+            `_build_lgb`). Must include 0.5 — its prediction becomes the
+            `prediction` column (the point estimate / q50). Every other
+            alpha `a` is emitted as an extra column named `q{int(a*100)}`
+            (e.g. 0.1 -> `q10`, 0.9 -> `q90`).
 
     Returns:
         (predictions_df, metrics_dict) where predictions_df has columns
-        [date, coin_id, prediction, actual] and metrics_dict has keys
+        [date, coin_id, prediction, actual] (plus quantile columns when
+        `quantiles` is set) and metrics_dict has keys
         r2/mae/rmse/mape/directional_accuracy.
     """
+    if quantiles is not None and 0.5 not in quantiles:
+        raise ValueError(
+            f"quantiles must include 0.5 (used as the point prediction); got {quantiles}"
+        )
     pooled_df = _ensure_date_indexed(pooled_df)
 
     target_col = f"prices_h{horizon}"
@@ -180,19 +207,35 @@ def walk_forward_pooled(
         X_tr_s = scaler.fit_transform(X_tr)
         X_te_s = scaler.transform(X_te)
 
-        model = _build_lgb()
-        model.fit(X_tr_s, y_tr)
-        preds = model.predict(X_te_s)
+        if quantiles is None:
+            model = _build_lgb()
+            model.fit(X_tr_s, y_tr)
+            preds = model.predict(X_te_s)
+            extra_preds: dict[float, np.ndarray] = {}
+        else:
+            preds = None
+            extra_preds = {}
+            for q in quantiles:
+                qmodel = _build_lgb(objective="quantile", alpha=q)
+                qmodel.fit(X_tr_s, y_tr)
+                qpred = qmodel.predict(X_te_s)
+                if q == 0.5:
+                    preds = qpred
+                else:
+                    extra_preds[q] = qpred
 
         test_rows = test.reset_index().rename(columns={"index": "date"})
         for j in range(len(test)):
-            rows.append({
+            row = {
                 "date": cur_date,
                 "coin_id": test_rows.iloc[j]["coin_id"],
                 "prediction": float(preds[j]),
                 "actual": float(test.iloc[j][target_col]),
                 "ref_price": float(test.iloc[j]["prices"]),
-            })
+            }
+            for q, qpred in extra_preds.items():
+                row[f"q{int(round(q * 100)):02d}"] = float(qpred[j])
+            rows.append(row)
 
     pred_df = pd.DataFrame(rows)
     if pred_df.empty:
@@ -208,13 +251,15 @@ def model_run_pooled(
     pooled_df: pd.DataFrame,
     horizon: int,
     min_train_window: int = 365,
+    quantiles: tuple[float, ...] | None = None,
 ) -> tuple[pd.DataFrame, dict]:
     """Public entrypoint mirroring the contract used by evaluate scripts.
 
     Currently a thin wrapper around walk_forward_pooled(). Returns the same
-    (pred_df, metrics_dict) tuple.
+    (pred_df, metrics_dict) tuple. `quantiles=None` is byte-identical to the
+    pre-quantile behavior; see `walk_forward_pooled` for the quantile contract.
     """
-    return walk_forward_pooled(pooled_df, horizon, min_train_window)
+    return walk_forward_pooled(pooled_df, horizon, min_train_window, quantiles=quantiles)
 
 
 # ── Live inference path: fit-once + predict ──────────────────────────

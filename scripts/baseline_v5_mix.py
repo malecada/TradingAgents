@@ -132,22 +132,37 @@ DEFAULT_ROUTING = {
 
 
 def _load_preds(pred_dir: Path, coin: str) -> pd.DataFrame:
+    """Load + merge h7/h14 prediction CSVs for one coin.
+
+    Backward-compatible with CSVs that lack quantile columns: `q10`/`q90`
+    (emitted by `lgb_model.walk_forward_pooled(quantiles=...)`) are renamed
+    to `q10_h7`/`q90_h7` and `q10_h14`/`q90_h14` when present, and simply
+    omitted otherwise (confidence_mode="ref" doesn't need them;
+    confidence_mode="quantile" raises a clear error downstream if missing).
+    """
     p7 = pd.read_csv(pred_dir / "preds_lgb_h7.csv", parse_dates=["date"])
     p14 = pd.read_csv(pred_dir / "preds_lgb_h14.csv", parse_dates=["date"])
     for d in (p7, p14):
         d["date"] = pd.to_datetime(d["date"]).dt.tz_localize(None).dt.normalize()
-    p7 = p7[p7["coin_id"] == coin].rename(columns={"prediction": "pred_h7"})
-    p14 = p14[p14["coin_id"] == coin].rename(columns={"prediction": "pred_h14"})[["date", "pred_h14"]]
-    return p7.merge(p14, on="date").sort_values("date").reset_index(drop=True)
+    p7 = p7[p7["coin_id"] == coin].rename(
+        columns={"prediction": "pred_h7", "q10": "q10_h7", "q90": "q90_h7"}
+    )
+    p14 = p14[p14["coin_id"] == coin].rename(
+        columns={"prediction": "pred_h14", "q10": "q10_h14", "q90": "q90_h14"}
+    )
+    p14_cols = ["date", "pred_h14"] + [c for c in ("q10_h14", "q90_h14") if c in p14.columns]
+    return p7.merge(p14[p14_cols], on="date").sort_values("date").reset_index(drop=True)
 
 
 def _v2_positions(
     merged: pd.DataFrame,
     kelly_fraction: float = 0.5,
     early_exit_loss: float = EARLY_EXIT_DEFAULT,
+    confidence_mode: str = "ref",
 ) -> np.ndarray:
     sig, conf = generate_term_structure_signals(
         merged, [7, 14], V5_CONFIDENCE_REF, asymmetric=V5_ASYMMETRIC,
+        confidence_mode=confidence_mode,
     )
     px = merged["Close"].astype(float).values
     rv = compute_realized_vol(px, lookback=20)
@@ -181,12 +196,16 @@ def run_coin(
     kelly_fraction: float = 0.5,
     early_exit_loss: float = EARLY_EXIT_DEFAULT,
     costs_override: dict[str, float] | None = None,
+    confidence_mode: str = "ref",
 ) -> pd.Series:
     """Run V2 sizing on one coin's routed predictions → daily return series.
 
     Early exit loss is forwarded to the position builder.
     Costs override (if supplied) replaces the COSTS dict passed to the engine —
     callers can override stop_loss and take_profit per-call.
+    confidence_mode="quantile" requires predictions regenerated with
+    lgb_model.walk_forward_pooled(quantiles=(0.1, 0.5, 0.9)) (q10/q90 columns
+    present in the h14 prediction CSV); raises a clear error otherwise.
     """
     preds = _load_preds(pred_dir, coin)
     preds = preds[(preds["date"] >= start) & (preds["date"] <= end)]
@@ -200,6 +219,7 @@ def run_coin(
 
     pos = _v2_positions(
         merged, kelly_fraction=kelly_fraction, early_exit_loss=early_exit_loss,
+        confidence_mode=confidence_mode,
     )
     costs = dict(COSTS if costs_override is None else costs_override)
     equity, _m = run_coin_backtest(
@@ -227,6 +247,12 @@ def main() -> None:
     p.add_argument("--sat-haircut", type=float, default=SATELLITE_HAIRCUT,
                    help="Satellite-coin slippage/impact multiplier "
                         "(default 1.5; sweep 1.0/1.5/2.0 for sensitivity)")
+    p.add_argument("--confidence-mode", choices=["ref", "quantile"], default="ref",
+                   help="Sizing confidence source (default 'ref' = constant-"
+                        "scaled heuristic, byte-identical to pre-E3 behavior). "
+                        "'quantile' uses the q10/q90 predictive interval width "
+                        "(requires predictions regenerated with "
+                        "--quantiles 0.1,0.5,0.9 via evaluate_models_multi.py).")
     args = p.parse_args()
 
     if args.data_root:
@@ -248,7 +274,8 @@ def main() -> None:
     for coin, pdir in routing.items():
         r = run_coin(coin, PROJECT_ROOT / pdir, args.start, args.end,
                      kelly_fraction=args.kelly,
-                     costs_override=costs_for_coin(coin, args.sat_haircut))
+                     costs_override=costs_for_coin(coin, args.sat_haircut),
+                     confidence_mode=args.confidence_mode)
         coin_rets[coin] = r
         m = _metrics(r)
         feat = "193f extended" if "pit" in pdir else "78f canonical"

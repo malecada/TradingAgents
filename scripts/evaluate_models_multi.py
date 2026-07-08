@@ -69,6 +69,12 @@ def parse_args():
     p.add_argument("--onchain-pit", action="store_true",
                    help="Enable PIT on-chain features from the bitemporal "
                         "store (MVRV, flows, Puell, TVL). Safe for backtests.")
+    p.add_argument("--quantiles", default=None,
+                   help="Comma-separated quantile levels for LGB quantile "
+                        "regression, e.g. '0.1,0.5,0.9'. Must include 0.5. "
+                        "Only applies to --models lgb; fits one LGBMRegressor "
+                        "per alpha (3x fit cost) and emits qNN columns "
+                        "(e.g. q10, q90) in the prediction CSV.")
     return p.parse_args()
 
 
@@ -210,6 +216,11 @@ def main():
     print(f"  On-chain    : {'yes' if not args.no_onchain else 'no'}")
     print(f"  On-chain PIT: {'yes' if args.onchain_pit else 'no'}")
 
+    quantiles = None
+    if args.quantiles:
+        quantiles = tuple(float(x) for x in args.quantiles.split(","))
+        print(f"  Quantiles   : {quantiles}")
+
     try:
         pooled = build_pooled_transformed(
             coins=args.coins,
@@ -248,7 +259,7 @@ def main():
                 elif model_name == "lgb":
                     from tradingagents.models import lgb_model
                     pred_df, metrics = lgb_model.model_run_pooled(
-                        pooled, horizon, args.min_train,
+                        pooled, horizon, args.min_train, quantiles=quantiles,
                     )
                 elif model_name == "arima":
                     pred_df, metrics = run_arima_per_coin(pooled, horizon, args.min_train)

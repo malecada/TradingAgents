@@ -24,6 +24,7 @@ def generate_term_structure_signals(
     horizons: list[int],
     confidence_ref: float,
     asymmetric: bool = True,
+    confidence_mode: str = "ref",
 ) -> tuple[np.ndarray, np.ndarray]:
     """Generate consensus signals and confidence for a single coin.
 
@@ -34,13 +35,43 @@ def generate_term_structure_signals(
     When longest horizon says UP but shorter disagrees, signal is LONG at
     half confidence (fallback).
 
+    Direction/signal logic is IDENTICAL regardless of `confidence_mode` —
+    only how the confidence magnitude is computed changes:
+      - "ref" (default, byte-identical to pre-quantile behavior): confidence
+        = clip(mean_h(|pred_h - ref| / ref) / confidence_ref, 0, 1).
+      - "quantile": requires `q10_h{H}`/`q90_h{H}` columns for the longest
+        horizon H (e.g. produced by `lgb_model.walk_forward_pooled(quantiles=...)`).
+        confidence = clip(|pred_H - ref| / max(q90_H - q10_H, eps), 0, 1).
+        If the interval is degenerate (q90 <= q10), confidence is 0 for that
+        row. The same full-agreement / asymmetric-fallback (x0.5) branch
+        structure as "ref" mode applies on top of this base confidence.
+
     Returns (signals, confidence) arrays aligned with df_coin rows.
     """
+    if confidence_mode not in ("ref", "quantile"):
+        raise ValueError(
+            f"confidence_mode must be 'ref' or 'quantile', got {confidence_mode!r}"
+        )
+
     n = len(df_coin)
     signals = np.zeros(n)
     confidence = np.zeros(n)
     ref = df_coin["ref_price"].values
     longest_h = max(horizons)
+
+    q10_col = f"q10_h{longest_h}"
+    q90_col = f"q90_h{longest_h}"
+    if confidence_mode == "quantile":
+        if q10_col not in df_coin.columns or q90_col not in df_coin.columns:
+            raise ValueError(
+                f"confidence_mode='quantile' requires columns {q10_col!r} and "
+                f"{q90_col!r} (longest horizon={longest_h}) in df_coin; got "
+                f"columns={list(df_coin.columns)}. Regenerate predictions with "
+                f"lgb_model.walk_forward_pooled(quantiles=(0.1, 0.5, 0.9)) or "
+                f"use confidence_mode='ref'."
+            )
+        q10_vals = df_coin[q10_col].values
+        q90_vals = df_coin[q90_col].values
 
     for i in range(n):
         if ref[i] <= 0 or np.isnan(ref[i]):
@@ -59,18 +90,27 @@ def generate_term_structure_signals(
         if len(dirs) != len(horizons):
             continue
 
-        avg_ret = np.mean(ret_magnitudes)
+        if confidence_mode == "quantile":
+            pred_longest = df_coin[f"pred_h{longest_h}"].values[i]
+            width = q90_vals[i] - q10_vals[i]
+            if not np.isfinite(width) or width <= 0:
+                base_conf = 0.0
+            else:
+                base_conf = min(1.0, abs(pred_longest - ref[i]) / width)
+        else:
+            avg_ret = np.mean(ret_magnitudes)
+            base_conf = min(1.0, avg_ret / confidence_ref)
 
         if all(d == dirs[0] for d in dirs):
             # Full agreement
             signals[i] = dirs[0]
-            confidence[i] = min(1.0, avg_ret / confidence_ref)
+            confidence[i] = base_conf
         elif asymmetric:
             # Longest horizon gets final say for longs
             longest_dir = dirs[horizons.index(longest_h)]
             if longest_dir == 1:
                 signals[i] = 1
-                confidence[i] = min(1.0, avg_ret / confidence_ref) * 0.5
+                confidence[i] = base_conf * 0.5
             # For shorts, require full agreement (already handled above)
 
     return signals, confidence
