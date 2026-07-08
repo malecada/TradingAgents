@@ -1,10 +1,29 @@
-"""Re-publish V5 MIX absolute returns with REAL signed funding (THESIS §32).
+"""Re-publish V5 MIX absolute returns with corrected funding (THESIS §32).
 
-The V5 backtest cost model understated funding ~14× (`COSTS['funding_rate'] =
-0.0001/8 ≈ 0.46 %/yr` vs measured ~6.6 %/yr). This sweep re-runs the V5 MIX family
-with `use_real_funding=True` (signed: longs pay, shorts receive, real per-date
-Binance funding) and tabulates published vs corrected for every per-coin and
-portfolio headline.
+The V5 backtest cost model understated funding ~14x (`COSTS['funding_rate'] =
+0.0001/8 ≈ 0.46 %/yr` vs measured ~6.6 %/yr).
+
+ADAPTED 2026-07-08 (post-audit rebuild, branch rebuild/honest-2026-07): the
+original version of this script (imported from `exp/carry-go-nogo` @ 9af1cc1)
+called `run_coin(..., use_real_funding=real)` and passed `--real-funding` to
+`baseline_strategy_v2.py`. Both were signed, per-date real-funding-series
+knobs that were never merged into `scripts/baseline_v5_mix.py` /
+`scripts/baseline_strategy_v2.py` — they were superseded during audit
+remediation (2026-07-07) by a flat-rate cost convention:
+`COSTS["funding_rate"] = 0.0001/8` (legacy, understated) vs
+`FUNDING_RATE_DAILY_CAUSAL = 0.0001 * 3` (audit-corrected flat rate), selected
+via `costs_for_coin(coin, convention="legacy"|"causal")`. This script now
+approximates "real funding" with that flat audit-corrected rate instead of a
+signed per-date series. `run_coin`'s own (unrelated) `convention` parameter —
+which toggles same-day-close vs point-in-time sizing, not funding — is pinned
+to "legacy" in both arms so only the funding cost varies (apples-to-apples
+with how the original §32 numbers were produced). The V2 subprocess driver
+gets `--funding-rate 0.0003` for the "real" arm instead of the removed
+`--real-funding` flag (default is 0.0001, i.e. the legacy rate, for the
+"flat" arm).
+
+Historical §32 numbers in THESIS_FINDINGS.md were produced by the
+exp/carry-go-nogo version of this script (signed real funding), not this one.
 
 Usage:
     python scripts/funding_correction_sweep.py
@@ -35,10 +54,17 @@ START, END = "2021-11-07", "2026-04-15"
 
 
 def _run(coin: str, real: bool) -> pd.Series:
+    """Run V2 sizing for one coin under the flat-buggy or audit-corrected funding rate.
+
+    `convention="legacy"` is pinned for the sizing engine in both arms (not
+    swept) so this isolates the funding cost change only; the funding rate
+    itself is swept via `costs_for_coin(..., convention=...)`.
+    """
     return run_coin(
         coin, PROJECT_ROOT / DEFAULT_ROUTING[coin], START, END,
         kelly_fraction=0.5, early_exit_loss=0.015,
-        costs_override=costs_for_coin(coin), use_real_funding=real,
+        costs_override=costs_for_coin(coin, convention=("causal" if real else "legacy")),
+        convention="legacy",
     )
 
 
@@ -47,7 +73,7 @@ def _v2_portfolio(pred_dir: str, real: bool) -> tuple[float, float]:
     cmd = [sys.executable, "scripts/baseline_strategy_v2.py",
            "--pred-dir", pred_dir, "--symmetric"]
     if real:
-        cmd.append("--real-funding")
+        cmd.extend(["--funding-rate", "0.0003"])
     out = subprocess.run(cmd, capture_output=True, text=True,
                          cwd=str(PROJECT_ROOT), env={"PYTHONPATH": str(PROJECT_ROOT), **__import__("os").environ}).stdout
     block = out.split("Equal-Weight Portfolio", 1)[-1]
