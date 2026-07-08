@@ -3365,3 +3365,21 @@ Proof by re-run: rebuilt 4-coin V5 MIX (`--kelly 0.25`, 4-coin routing-json) wit
 
 ### Deferred (now smaller)
 Dead-man **timer** (the heartbeat file exists; the systemd `OnCalendar` alerter is the operator follow-up), richer alert channel, the trend-on-hold residual above, and the still-open §30 backlog (retrain quality gate, margin-mode check, monitor-Sharpe definition). The full live equity-vs-replay parity (S1) gate runs on the box during the 90-day window (needs Binance refetch). Acceptance: SR ≥ +2.86, report vs the live-Kelly 8-coin SR ≈ +3.91. Deploy steps: `docs/superpowers/plans/2026-05-30-v5-8coin-live-DEPLOY-HANDOFF.md`.
+
+## Section 38: E3 Quantile-LGB Confidence — Quick-Look NEGATIVE, stopped at gate (2026-07-08)
+
+**Hypothesis.** ~90% of V5 alpha is sizing; replacing the constant-scaled confidence heuristic (`|pred−ref|/ref / 0.05`) with a distribution-aware one (`|q50−ref| / (q90−q10)` from quantile-LGB models α=0.1/0.5/0.9) should allocate better.
+
+**Implementation.** `walk_forward_pooled(quantiles=...)` (per-α fits, q10/q90 CSV cols), `confidence_mode="quantile"` in `generate_term_structure_signals` (direction logic untouched; degenerate interval → confidence 0), flags on both scripts; default paths byte-identical, golden tests untouched. Commit 4a76ee1; 19 tests; review approved.
+
+**Pre-registered stop-check tripped first:** q50 (median objective) agrees with the production L2 model's direction on only **76.7%** of rows (expectation ~100% "same objective family" was wrong — median vs mean differ materially on skewed crypto targets), and independent per-α fits produce **quantile crossing (q10≤q50≤q90 violated) on 30.8%** of real rows (toy-data tests passed at ≥95% — real-data behavior much worse). Per the plan, direction change of this size means the pure "swap q50 in" A/B would confound signal and sizing.
+
+**Isolation A/B actually run** (confidence-only, per experiment intent): hybrid pred set = production L2 predictions + q10/q90 columns; BTC+ETH 18mo quick-look; identical V5 sizing except confidence source; paired stationary block bootstrap n=2000:
+
+| Series | ref conf SR | quantile conf SR | ΔSR | p_pos |
+|---|---|---|---|---|
+| BTC | +1.460 | +1.051 | −0.409 | 0.168 |
+| ETH | +1.710 | +0.681 | −1.030 | 0.059 |
+| 50/50 portfolio | +2.019 | +1.259 | **−0.760** | 0.062 |
+
+**Verdict: NEGATIVE — stopped at quick-look; full-window A/B not run.** The interval width from independent quantile fits is too unstable to size on: 31% crossing days force confidence 0 (strategy sits out), and surviving widths are noisy. If ever revisited: monotone quantile methods (rearrangement post-processing, or a single model with non-crossing constraints) are prerequisites, not refinements. Plumbing retained default-off. (Quick-look SRs are low vs house numbers because the 18-mo window + single-coin runs differ from published configs; both arms share the scale.)
