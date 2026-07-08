@@ -90,6 +90,9 @@ def run_coin_backtest(
     stop_loss: float,
     max_portfolio_dd: float,
     take_profit: float = 0.0,
+    highs: np.ndarray | None = None,
+    lows: np.ndarray | None = None,
+    price_stop_pct: float = 0.0,
 ) -> tuple[list, dict]:
     """Run backtest for a single coin with full cost and risk model."""
     equity = [initial_capital]
@@ -98,6 +101,8 @@ def run_coin_backtest(
     entry_equity = initial_capital
     peak_equity = initial_capital
     halted = False
+    use_price_stop = price_stop_pct > 0 and highs is not None and lows is not None
+    entry_price = 0.0  # price-axis entry for the live-style STOP_MARKET
 
     for i in range(1, len(dates)):
         p_prev = prices[i - 1]
@@ -121,6 +126,32 @@ def run_coin_backtest(
             entry_equity = equity[-1]
         if target_pos == 0 and prev_pos != 0:
             entry_equity = equity[-1]
+
+        if use_price_stop and target_pos != 0:
+            opened = (prev_pos == 0) or (np.sign(target_pos) != np.sign(prev_pos))
+            if opened:
+                entry_price = p_prev
+            stop_level = (entry_price * (1 - price_stop_pct) if target_pos > 0
+                          else entry_price * (1 + price_stop_pct))
+            hit = (lows[i] <= stop_level) if target_pos > 0 else (highs[i] >= stop_level)
+            if hit and entry_price > 0:
+                gross_ret = target_pos * (stop_level - p_prev) / p_prev
+                trade_notional = abs(target_pos - prev_pos)
+                exit_notional = abs(target_pos)
+                fee_cost = (2 * fee_rate + slippage + 2 * spread) * (trade_notional + exit_notional)
+                impact_cost = price_impact * trade_notional * trade_notional
+                holding_cost = funding_rate * abs(target_pos)
+                net_ret = gross_ret - fee_cost - impact_cost - holding_cost
+                new_equity = equity[-1] * (1 + net_ret)
+                daily_returns.append(net_ret)
+                equity.append(new_equity)
+                prev_pos = 0.0
+                entry_price = 0.0
+                peak_equity = max(peak_equity, new_equity)
+                dd_from_peak = (peak_equity - new_equity) / peak_equity if peak_equity > 0 else 0
+                if dd_from_peak >= max_portfolio_dd:
+                    halted = True
+                continue
 
         price_return = (p_curr - p_prev) / p_prev
         gross_ret = target_pos * price_return
