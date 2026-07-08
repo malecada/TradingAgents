@@ -66,6 +66,12 @@ def parse_args():
                    help="Disable cross-asset (BTC-anchored) features.")
     p.add_argument("--no-onchain", action="store_true",
                    help="Disable realtime on-chain (funding/TVL/stablecoin) features.")
+    p.add_argument("--train-window-days", type=int, default=None,
+                   help="Rolling training window in calendar days (live retrain "
+                        "contract = 730). Default: expanding window.")
+    p.add_argument("--purge", action="store_true",
+                   help="Purge training rows within `horizon` days of each test "
+                        "date (removes label-overlap leakage). LGB only.")
     p.add_argument("--onchain-pit", action="store_true",
                    help="Enable PIT on-chain features from the bitemporal "
                         "store (MVRV, flows, Puell, TVL). Safe for backtests.")
@@ -247,8 +253,11 @@ def main():
                     )
                 elif model_name == "lgb":
                     from tradingagents.models import lgb_model
+                    purge = horizon if args.purge else 0
                     pred_df, metrics = lgb_model.model_run_pooled(
                         pooled, horizon, args.min_train,
+                        train_window_days=args.train_window_days,
+                        purge_days=purge,
                     )
                 elif model_name == "arima":
                     pred_df, metrics = run_arima_per_coin(pooled, horizon, args.min_train)

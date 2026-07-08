@@ -69,22 +69,29 @@ def _load_preds(pred_dir: Path, coin: str) -> pd.DataFrame:
     return p7.merge(p14, on="date").sort_values("date").reset_index(drop=True)
 
 
-def _build_v2_path(merged: pd.DataFrame) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+def _build_v2_path(
+    merged: pd.DataFrame, convention: str = "causal"
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Compute V2 positions over the FULL series; returns (dates, prices, positions).
 
     Sized over full series so vol/SMA history is correct; we slice into
-    test groups afterward.
+    test groups afterward. convention="causal" lags every sizing input one
+    bar (live contract, audit 2026-07-07 C1); "legacy" reproduces the
+    pre-audit same-bar behavior.
     """
+    from tradingagents.strategies.v2_sizing import sizing_price_series
+
     sig, conf = generate_term_structure_signals(merged, [7, 14], 0.05, asymmetric=True)
     px = merged["Close"].astype(float).values
-    rv = compute_realized_vol(px, lookback=20)
+    px_sz = sizing_price_series(px, convention)
+    rv = compute_realized_vol(px_sz, lookback=20)
     mask = vol_regime_mask(rv, percentile_cap=0.95)
     pos = build_positions_with_hold(
-        signals=sig, vol_ok=mask, confidence=conf, realized_vol=rv, prices=px,
+        signals=sig, vol_ok=mask, confidence=conf, realized_vol=rv, prices=px_sz,
         target_vol=0.10, kelly_fraction=0.5, max_leverage=3.0,
         min_hold=7, early_exit_loss=0.015,
     )
-    pos = apply_trend_filter(pos, px, sma_period=30, multiplier=1.5)
+    pos = apply_trend_filter(pos, px_sz, sma_period=30, multiplier=1.5)
     return merged["date"].values, px, pos
 
 
@@ -120,6 +127,10 @@ def main():
     p.add_argument("--k-test", type=int, default=2)
     p.add_argument("--embargo", type=int, default=14)
     p.add_argument("--output-dir", required=True)
+    p.add_argument("--convention", choices=("causal", "legacy"), default="causal",
+                   help="'causal' lags sizing inputs one bar + keeps the CSV "
+                        "PIT ref_price (live contract); 'legacy' reproduces "
+                        "the pre-audit same-bar convention.")
     args = p.parse_args()
 
     out_dir = Path(args.output_dir)
@@ -142,9 +153,10 @@ def main():
         ohlcv["Date"] = pd.to_datetime(ohlcv["Date"]).dt.tz_localize(None).dt.normalize()
         merged = preds.merge(ohlcv[["Date", "Close"]], left_on="date", right_on="Date")
         merged = merged.dropna(subset=["Close"]).reset_index(drop=True)
-        merged["ref_price"] = merged["Close"]
+        if args.convention == "legacy" or "ref_price" not in merged.columns:
+            merged["ref_price"] = merged["Close"]
 
-        dates_full, px_full, pos_full = _build_v2_path(merged)
+        dates_full, px_full, pos_full = _build_v2_path(merged, convention=args.convention)
         n_bars = len(pos_full)
         # Sequential group boundaries
         group_edges = np.linspace(0, n_bars, args.n_groups + 1, dtype=int)

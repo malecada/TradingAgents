@@ -112,11 +112,14 @@ def walk_forward_pooled(
     pooled_df: pd.DataFrame,
     horizon: int,
     min_train_window: int = 365,
+    train_window_days: int | None = None,
+    purge_days: int = 0,
 ) -> tuple[pd.DataFrame, dict]:
     """Walk-forward eval on the pooled multi-coin dataset.
 
     For each unique date at position >= min_train_window:
       - Train on all coin-rows with date < current
+        (bounded below by `train_window_days` and above by `purge_days`)
       - Predict all coin-rows with date == current
     Features: all columns except target columns (`prices_h*`), `coin_id`,
     and `date`. `coin_id` is encoded as an integer `coin_int` feature so
@@ -128,6 +131,15 @@ def walk_forward_pooled(
         horizon: Which `prices_h{h}` column to predict.
         min_train_window: Number of initial dates to reserve as training only
             (walk-forward starts after this).
+        train_window_days: If set, train on a rolling window of at most this
+            many calendar days before the test date (live retrain contract:
+            execution/live/retrain.py uses a 730-day lookback) instead of the
+            full expanding history.
+        purge_days: Exclude training rows within this many calendar days
+            before the test date. Targets are `prices.shift(-h)`, so rows
+            closer than `horizon` days to the test date carry labels realized
+            AFTER the test date (label-overlap leakage). Pass `horizon` to
+            purge them.
 
     Returns:
         (predictions_df, metrics_dict) where predictions_df has columns
@@ -167,7 +179,13 @@ def walk_forward_pooled(
     rows = []
     for i in range(min_train_window, len(unique_dates)):
         cur_date = unique_dates[i]
-        train = pooled_df.loc[pooled_df.index < cur_date].dropna(subset=[target_col])
+        train_end = cur_date
+        if purge_days > 0:
+            train_end = cur_date - pd.Timedelta(days=purge_days - 1)
+        train_mask = pooled_df.index < train_end
+        if train_window_days is not None:
+            train_mask &= pooled_df.index >= cur_date - pd.Timedelta(days=train_window_days)
+        train = pooled_df.loc[train_mask].dropna(subset=[target_col])
         test = pooled_df.loc[pooled_df.index == cur_date].dropna(subset=[target_col])
         if train.empty or test.empty:
             continue
@@ -208,13 +226,18 @@ def model_run_pooled(
     pooled_df: pd.DataFrame,
     horizon: int,
     min_train_window: int = 365,
+    train_window_days: int | None = None,
+    purge_days: int = 0,
 ) -> tuple[pd.DataFrame, dict]:
     """Public entrypoint mirroring the contract used by evaluate scripts.
 
     Currently a thin wrapper around walk_forward_pooled(). Returns the same
     (pred_df, metrics_dict) tuple.
     """
-    return walk_forward_pooled(pooled_df, horizon, min_train_window)
+    return walk_forward_pooled(
+        pooled_df, horizon, min_train_window,
+        train_window_days=train_window_days, purge_days=purge_days,
+    )
 
 
 # ── Live inference path: fit-once + predict ──────────────────────────

@@ -44,6 +44,36 @@ class PredictMajorityFail(RuntimeError):
     """≥ 3 of 4 coins failed predict — strategy cannot run."""
 
 
+def _load_cached_ohlcv_frames(
+    coin_pool: list[str], ohlcv_cache: Path, asof: str,
+) -> dict[str, pd.DataFrame]:
+    """Load refreshed data_root/ohlcv_cache parquets as OHLCV frames.
+
+    Returns only the coins whose parquet exists — callers fall back to the
+    vendor CSV path for the rest. Rows after ``asof`` (the in-flight bar the
+    daily refresh may have written) are dropped here as well as downstream.
+    """
+    from tradingagents.execution.live.config import to_binance_symbol
+
+    frames: dict[str, pd.DataFrame] = {}
+    for coin in coin_pool:
+        p = Path(ohlcv_cache) / f"{to_binance_symbol(coin)}_1d.parquet"
+        if not p.exists():
+            logger.warning(
+                "ohlcv_cache parquet missing for %s (%s) — falling back to "
+                "vendor CSV cache for this coin", coin, p,
+            )
+            continue
+        df = pd.read_parquet(p)
+        df = df.rename(columns={
+            "date": "Date", "open": "Open", "high": "High",
+            "low": "Low", "close": "Close", "volume": "Volume",
+        })
+        df["Date"] = pd.to_datetime(df["Date"])
+        frames[coin] = df[df["Date"] <= pd.to_datetime(asof)].reset_index(drop=True)
+    return frames
+
+
 def build_features_asof(
     coin_pool: list[str],
     asof: str,
@@ -52,6 +82,7 @@ def build_features_asof(
     add_onchain_pit: bool = True,
     horizons: list[int] = (7, 14),
     lookback_days: int = 730,
+    ohlcv_frames: dict[str, pd.DataFrame] | None = None,
 ) -> pd.DataFrame:
     """Build a feature frame for the asof date — one row per coin.
 
@@ -67,10 +98,17 @@ def build_features_asof(
             route's full pool is materialized so cross-asset features
             line up with the bundle's training distribution.
         asof: Upper-bound trade date (YYYY-mm-dd).
-        store_root: PIT on-chain feature store root (forwarded to the
-            data-fetch layer when used by callers; kept as a parameter
-            for V5 composite compatibility).
-        ohlcv_cache: OHLCV cache directory (same rationale).
+        store_root: PIT on-chain feature store root — forwarded to
+            ``build_pit_onchain_features`` so live reads the same store
+            the daily refresh writes (audit 2026-07-07 R3; previously
+            silently ignored in favor of env resolution).
+        ohlcv_cache: Directory holding the daily-refreshed
+            ``{SYMBOL}_1d.parquet`` files (``data_root/ohlcv_cache``).
+            When set, those frames feed the feature build so features and
+            sizing read the SAME data; coins without a parquet fall back
+            to the vendor CSV cache.
+        ohlcv_frames: Pre-loaded {coin: OHLCV frame} override (takes
+            precedence over ohlcv_cache; used by tests/replay).
         add_onchain_pit: Whether to include the PIT on-chain feature
             set. ``True`` for 193f routes, ``False`` for 78f routes.
         horizons: Forecast horizons to materialize as ``prices_h{h}``
@@ -88,12 +126,18 @@ def build_features_asof(
     # feature equivalence; the equivalence test guards this.
     from tradingagents.execution.live.retrain import _transform_pooled
 
+    frames = ohlcv_frames
+    if frames is None and ohlcv_cache is not None:
+        frames = _load_cached_ohlcv_frames(list(coin_pool), ohlcv_cache, asof)
+
     pooled = build_pooled_dataset(
         coin_universe=list(coin_pool),
         lookback_days=lookback_days,
         horizons=list(horizons),
         trade_date=asof,
         add_onchain_pit=bool(add_onchain_pit),
+        ohlcv_frames=frames,
+        pit_root=store_root,
     )
     transformed = _transform_pooled(pooled, list(horizons))
     if transformed is None or len(transformed) == 0:

@@ -233,17 +233,27 @@ def load_config() -> LiveConfig:
         max_portfolio_dd=_float("MAX_PORTFOLIO_DD", 0.15),
         stop_loss_pct=_float("STOP_LOSS_PCT", 0.03),
         max_open_positions=_int("MAX_OPEN_POSITIONS", 8),
-        target_vol=_float("TARGET_VOL", 0.10),
+        # V5.1 tuned defaults (CPCV-validated 45/45 folds; DSR pass over the
+        # 20-cell trend×vol sweep): target_vol 0.10→0.07 and trend_multiplier
+        # 1.5→2.0 lift 4-coin SR 3.18→3.51 and dominate the old cell on
+        # return/DD/vol/leverage. Env-overridable for rollback to published-V5
+        # (TARGET_VOL=0.10, TREND_MULTIPLIER=1.5).
+        target_vol=_float("TARGET_VOL", 0.07),
         kelly_fraction=_float("KELLY_FRACTION", 0.25),
         vol_lookback=_int("VOL_LOOKBACK", 20),
         vol_cap_pct=_float("VOL_CAP_PCT", 0.95),
         # Canonical V5 MIX signal config (matches scripts/baseline_v5_mix.py
-        # V5_CONFIDENCE_REF / V5_ASYMMETRIC — the published SR +3.18 run).
+        # V5_CONFIDENCE_REF / V5_ASYMMETRIC).
         confidence_ref_return=_float("CONFIDENCE_REF_RETURN", 0.05),
         early_exit_loss=_float("EARLY_EXIT_LOSS", 0.015),
         min_hold=_int("MIN_HOLD", 7),
-        trend_sma=_int("TREND_SMA", 30),
-        trend_multiplier=_float("TREND_MULTIPLIER", 1.5),
+        # V5.1 sma×hold sweep at tv0.07/tm2.0: trend_sma 30→20 (a sharper trend
+        # signal paired with the stronger 2.0 multiplier) lifts 8-coin SR
+        # 4.28→4.71 (the dominant, low-behavioral-risk half of the sweep; the
+        # min_hold 7→14 half was deferred — corner-seeking + slower reversal
+        # exit). Env-overridable.
+        trend_sma=_int("TREND_SMA", 20),
+        trend_multiplier=_float("TREND_MULTIPLIER", 2.0),
         horizons=[int(x) for x in os.environ.get("HORIZONS", "7,14").split(",") if x.strip()],
         symmetric=_bool("SYMMETRIC", "false"),
         arima_filter=_bool("ARIMA_FILTER", "false"),

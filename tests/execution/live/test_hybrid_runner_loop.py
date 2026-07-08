@@ -499,3 +499,331 @@ def test_reduce_only_set_when_flattening(tmp_path, monkeypatch):
         assert ro is True, (
             f"SELL order {sym} qty={qty} has reduce_only={ro}, expected True"
         )
+
+
+# ---------------------------------------------------------------------------
+# FIX 4: qty that floors to 0 at LOT_SIZE must be dust-skipped, not sent
+# ---------------------------------------------------------------------------
+
+class FakeExchangeDustRound:
+    """``round_quantity`` floors any delta to 0.0 — the real Binance LOT_SIZE
+    behaviour for a sub-step rebalance delta. ``place_market_order`` rejects
+    qty<=0 the way Binance does (APIError -4003 'Quantity less than or equal to
+    zero'). Reports an existing position so the *opening-order* dust guard
+    (``abs(current) < 1e-9``) does NOT apply — this is the path that crashed
+    the live hybrid cycle every run."""
+
+    def __init__(self, existing_qty: float = 0.5):
+        self._existing_qty = existing_qty
+        self.orders = []          # list of (symbol, side, qty, reduce_only)
+
+    def set_leverage(self, *a, **k):
+        pass
+
+    def get_total_portfolio_value(self):
+        return 10_000.0
+
+    def get_usdt_balance(self):
+        return 10_000.0
+
+    def get_current_position(self, symbol):
+        return self._existing_qty
+
+    def round_quantity(self, symbol, q):
+        return 0.0                # everything floors to dust
+
+    def min_notional(self, symbol):
+        return 5.0
+
+    def get_ticker_price(self, symbol):
+        return 65_000.0
+
+    def place_market_order(self, symbol, side, qty, reduce_only=False):
+        # Binance rejects qty<=0 with -4003; mirror that so a leaked zero-qty
+        # order is observable as a cycle failure.
+        assert qty > 0, f"zero/neg qty {qty} sent to exchange (Binance -4003)"
+        self.orders.append((symbol, side, qty, reduce_only))
+        return {"orderId": 4, "status": "FILLED"}
+
+    def cancel_all_orders(self, symbol):
+        return []
+
+    def list_open_stops(self, symbol):
+        return []
+
+    def place_stop_loss(self, symbol, qty, stop_price, stop_side):
+        return {"orderId": 997}
+
+    def cancel_order(self, symbol, order_id):
+        pass
+
+
+def test_qty_rounds_to_zero_is_dust_skipped(tmp_path, monkeypatch):
+    """A rebalance delta that floors to 0 at the LOT_SIZE step must be skipped,
+    not sent. Otherwise Binance -4003 ('Quantity <= zero') crashes the whole
+    hybrid cycle (the live failure that produced 0 modulator_outputs)."""
+    quant_dir = tmp_path / "data"
+    quant_dir.mkdir()
+    hybrid_dir = tmp_path / "data-hybrid"
+
+    _seed_quant_db(str(quant_dir / "trade_journal.db"), "2026-06-11")
+
+    monkeypatch.setenv("HYBRID_BINANCE_API_KEY", "k")
+    monkeypatch.setenv("HYBRID_BINANCE_API_SECRET", "s")
+    monkeypatch.setenv("HYBRID_DATA_DIR", str(hybrid_dir))
+    monkeypatch.setenv("QUANT_DATA_DIR", str(quant_dir))
+    monkeypatch.setenv("COIN_UNIVERSE", "bitcoin")
+    monkeypatch.setenv("BINANCE_API_KEY", "qk")
+    monkeypatch.setenv("BINANCE_API_SECRET", "qs")
+    monkeypatch.setenv("COINGLASS_API_KEY", "cgk")
+
+    _seed_ohlcv_cache(quant_dir, "BTCUSDT")
+
+    fake_ex = FakeExchangeDustRound(existing_qty=0.5)
+    res = hybrid_runner.run_hybrid_cycle(
+        cycle_id="2026-06-11", dry_run=False,
+        _exchange=fake_ex, _graph=StubGraph(),
+    )
+
+    # Cycle must complete, not crash on the zero-qty order.
+    assert res.status == "ok", (
+        f"zero-qty order was not dust-skipped: {res.status}: {res.error_msg}"
+    )
+    # No zero/negative-qty order may reach the exchange.
+    assert all(qty > 0 for _, _, qty, _ in fake_ex.orders), (
+        "a zero-qty order leaked to place_market_order"
+    )
+
+
+# ---------------------------------------------------------------------------
+# FIX 5: sub-MIN_NOTIONAL add to an existing position must be skipped (-4164)
+# ---------------------------------------------------------------------------
+
+class FakeExchangeSubNotional:
+    """An *add* to an existing position whose notional is below MIN_NOTIONAL.
+    Mirrors a low-priced coin (e.g. TRX qty=1 @ ~$0.27 => ~$0.27 notional).
+    ``place_market_order`` rejects non-reduceOnly orders below $5 the way
+    Binance does (APIError -4164). Because a position already exists
+    (current != 0), the opening-order MIN_NOTIONAL guard (abs(current)<1e-9)
+    does NOT fire — the live failure on 2026-06-29."""
+
+    PRICE = 0.27
+
+    def __init__(self, existing_qty: float = 0.5):
+        self._existing_qty = existing_qty
+        self.orders = []          # (symbol, side, qty, reduce_only)
+
+    def set_leverage(self, *a, **k):
+        pass
+
+    def get_total_portfolio_value(self):
+        return 10_000.0
+
+    def get_usdt_balance(self):
+        return 10_000.0
+
+    def get_current_position(self, symbol):
+        return self._existing_qty
+
+    def round_quantity(self, symbol, q):
+        return 1.0                # TRX-like integer LOT_SIZE step
+
+    def min_notional(self, symbol):
+        return 5.0
+
+    def get_ticker_price(self, symbol):
+        return self.PRICE
+
+    def place_market_order(self, symbol, side, qty, reduce_only=False):
+        if not reduce_only and qty * self.PRICE < 5.0:
+            raise RuntimeError(
+                "APIError(code=-4164): Order's notional must be no smaller "
+                "than 5 (unless you choose reduce only)."
+            )
+        self.orders.append((symbol, side, qty, reduce_only))
+        return {"orderId": 5, "status": "FILLED"}
+
+    def cancel_all_orders(self, symbol):
+        return []
+
+    def list_open_stops(self, symbol):
+        return []
+
+    def place_stop_loss(self, symbol, qty, stop_price, stop_side):
+        return {"orderId": 996}
+
+    def cancel_order(self, symbol, order_id):
+        pass
+
+
+def _seed_quant_db_lowprice(db_path: str, cycle_id: str) -> None:
+    j = Journal(db_path)
+    j.log_cycle_start(cycle_id, git_sha="x")
+    preds_df = pd.DataFrame([
+        {"coin": "bitcoin", "horizon": 7,  "prediction": 0.03,
+         "ref_price": 0.27, "bundle_route": "bitcoin_78f"},
+        {"coin": "bitcoin", "horizon": 14, "prediction": 0.05,
+         "ref_price": 0.27, "bundle_route": "bitcoin_78f"},
+    ])
+    j.record_predictions(cycle_id=cycle_id, preds_df=preds_df)
+    j.close()
+
+
+def test_sub_min_notional_add_is_skipped(tmp_path, monkeypatch):
+    """An add to an existing position whose notional is below MIN_NOTIONAL must
+    be skipped, not sent — Binance -4164 ('notional must be no smaller than 5')
+    otherwise crashes the cycle (the 2026-06-29 live failure)."""
+    quant_dir = tmp_path / "data"
+    quant_dir.mkdir()
+    hybrid_dir = tmp_path / "data-hybrid"
+
+    _seed_quant_db_lowprice(str(quant_dir / "trade_journal.db"), "2026-06-11")
+
+    monkeypatch.setenv("HYBRID_BINANCE_API_KEY", "k")
+    monkeypatch.setenv("HYBRID_BINANCE_API_SECRET", "s")
+    monkeypatch.setenv("HYBRID_DATA_DIR", str(hybrid_dir))
+    monkeypatch.setenv("QUANT_DATA_DIR", str(quant_dir))
+    monkeypatch.setenv("COIN_UNIVERSE", "bitcoin")
+    monkeypatch.setenv("BINANCE_API_KEY", "qk")
+    monkeypatch.setenv("BINANCE_API_SECRET", "qs")
+    monkeypatch.setenv("COINGLASS_API_KEY", "cgk")
+
+    _seed_ohlcv_cache(quant_dir, "BTCUSDT")
+
+    # Existing 0.5 long; StubGraph wants more long -> small BUY add @ ~$0.27.
+    fake_ex = FakeExchangeSubNotional(existing_qty=0.5)
+    res = hybrid_runner.run_hybrid_cycle(
+        cycle_id="2026-06-11", dry_run=False,
+        _exchange=fake_ex, _graph=StubGraph(),
+    )
+
+    assert res.status == "ok", (
+        f"sub-min-notional add was not skipped: {res.status}: {res.error_msg}"
+    )
+    # Any order that DID go through must clear MIN_NOTIONAL.
+    for sym, side, qty, ro in fake_ex.orders:
+        assert ro or qty * FakeExchangeSubNotional.PRICE >= 5.0, (
+            f"sub-min-notional non-reduceOnly order leaked: {sym} {side} qty={qty}"
+        )
+
+
+# ---------------------------------------------------------------------------
+# FIX 6: one coin's exchange-rejected order must not kill the whole cycle
+# ---------------------------------------------------------------------------
+
+def _binance_api_error(code: int, msg: str):
+    """Build a real BinanceAPIException (3-arg constructor parses JSON text)."""
+    import json
+    from binance.exceptions import BinanceAPIException
+
+    class _Resp:
+        status_code = 400
+        text = json.dumps({"code": code, "msg": msg})
+
+    r = _Resp()
+    return BinanceAPIException(r, 400, r.text)
+
+
+class FakeExchangeOneRejects:
+    """``place_market_order`` rejects the first symbol with a Binance API error
+    (e.g. -1111 precision) and fills every other symbol. Proves one bad coin
+    does not abort the cycle for the rest."""
+
+    def __init__(self, reject_symbol="BTCUSDT"):
+        self._reject = reject_symbol
+        self.orders = []          # (symbol, side, qty, reduce_only)
+
+    def set_leverage(self, *a, **k):
+        pass
+
+    def get_total_portfolio_value(self):
+        return 10_000.0
+
+    def get_usdt_balance(self):
+        return 10_000.0
+
+    def get_current_position(self, symbol):
+        return 0.0
+
+    def round_quantity(self, symbol, q):
+        return round(q, 3)
+
+    def min_notional(self, symbol):
+        return 5.0
+
+    def get_ticker_price(self, symbol):
+        return 65_000.0
+
+    def place_market_order(self, symbol, side, qty, reduce_only=False):
+        if symbol == self._reject:
+            raise _binance_api_error(-1111, "Precision is over the maximum")
+        self.orders.append((symbol, side, qty, reduce_only))
+        return {"orderId": 6, "status": "FILLED"}
+
+    def cancel_all_orders(self, symbol):
+        return []
+
+    def list_open_stops(self, symbol):
+        return []
+
+    def place_stop_loss(self, symbol, qty, stop_price, stop_side):
+        return {"orderId": 995}
+
+    def cancel_order(self, symbol, order_id):
+        pass
+
+
+def _seed_quant_db_two_coins(db_path: str, cycle_id: str) -> None:
+    j = Journal(db_path)
+    j.log_cycle_start(cycle_id, git_sha="x")
+    rows = []
+    for coin, route in (("bitcoin", "bitcoin_78f"), ("ethereum", "ethereum_193f")):
+        for h, p in ((7, 0.03), (14, 0.05)):
+            rows.append({"coin": coin, "horizon": h, "prediction": p,
+                         "ref_price": 65_000.0, "bundle_route": route})
+    j.record_predictions(cycle_id=cycle_id, preds_df=pd.DataFrame(rows))
+    j.close()
+
+
+def test_one_coin_order_rejection_does_not_abort_cycle(tmp_path, monkeypatch):
+    """bitcoin's order is rejected by Binance; ethereum must still trade and the
+    cycle must complete (not crash). The failed coin is logged, not fatal."""
+    quant_dir = tmp_path / "data"
+    quant_dir.mkdir()
+    hybrid_dir = tmp_path / "data-hybrid"
+
+    _seed_quant_db_two_coins(str(quant_dir / "trade_journal.db"), "2026-06-11")
+
+    monkeypatch.setenv("HYBRID_BINANCE_API_KEY", "k")
+    monkeypatch.setenv("HYBRID_BINANCE_API_SECRET", "s")
+    monkeypatch.setenv("HYBRID_DATA_DIR", str(hybrid_dir))
+    monkeypatch.setenv("QUANT_DATA_DIR", str(quant_dir))
+    monkeypatch.setenv("COIN_UNIVERSE", "bitcoin,ethereum")
+    monkeypatch.setenv("BINANCE_API_KEY", "qk")
+    monkeypatch.setenv("BINANCE_API_SECRET", "qs")
+    monkeypatch.setenv("COINGLASS_API_KEY", "cgk")
+
+    _seed_ohlcv_cache(quant_dir, "BTCUSDT")
+    _seed_ohlcv_cache(quant_dir, "ETHUSDT")
+
+    fake_ex = FakeExchangeOneRejects(reject_symbol="BTCUSDT")
+    res = hybrid_runner.run_hybrid_cycle(
+        cycle_id="2026-06-11", dry_run=False,
+        _exchange=fake_ex, _graph=StubGraph(),
+    )
+
+    # Cycle completes despite bitcoin's rejection.
+    assert res.status == "ok", (
+        f"one coin's rejection aborted the cycle: {res.status}: {res.error_msg}"
+    )
+    # ethereum still traded.
+    assert any(sym == "ETHUSDT" for sym, *_ in fake_ex.orders), (
+        "ethereum did not trade after bitcoin's order was rejected"
+    )
+    # bitcoin's rejection was recorded as a FAILED trade, not silently dropped.
+    hyb = sqlite3.connect(str(hybrid_dir / "trade_journal.db"))
+    n_failed = hyb.execute(
+        "SELECT COUNT(*) FROM trades WHERE coin='bitcoin' AND status='failed'"
+    ).fetchone()[0]
+    hyb.close()
+    assert n_failed >= 1, "bitcoin order rejection was not logged as a FAILED trade"

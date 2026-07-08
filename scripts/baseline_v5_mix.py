@@ -74,17 +74,31 @@ SATELLITE_HAIRCUT = 1.5            # conservative slippage/impact multiplier
 SATELLITE_COST_KEYS = ("slippage", "price_impact")
 
 
-def costs_for_coin(coin: str, sat_haircut: float = SATELLITE_HAIRCUT) -> dict:
+# Perp funding: ~0.01% per 8h funding event, 3 events/day. The legacy COSTS
+# value (0.0001/8 per day) understates this ~24x (audit 2026-07-07, M1).
+FUNDING_RATE_DAILY_CAUSAL = 0.0001 * 3
+
+
+def costs_for_coin(
+    coin: str,
+    sat_haircut: float = SATELLITE_HAIRCUT,
+    convention: str = "legacy",
+) -> dict:
     """Return the cost dict for a coin.
 
     Core coins get the legacy ``COSTS`` verbatim. Satellite coins get
     ``slippage`` and ``price_impact`` scaled by ``sat_haircut`` (default 1.5,
     a margin-of-safety for lower-cap perps). All other cost keys are shared.
+    convention="causal" replaces the understated legacy funding_rate with
+    ``FUNDING_RATE_DAILY_CAUSAL`` (charged side-blind on |pos| — conservative
+    for shorts, roughly right for this long-biased book).
     """
     c = dict(COSTS)
     if coin in SATELLITE_COINS:
         for k in SATELLITE_COST_KEYS:
             c[k] = COSTS[k] * sat_haircut
+    if convention == "causal":
+        c["funding_rate"] = FUNDING_RATE_DAILY_CAUSAL
     return c
 
 
@@ -145,19 +159,38 @@ def _v2_positions(
     merged: pd.DataFrame,
     kelly_fraction: float = 0.5,
     early_exit_loss: float = EARLY_EXIT_DEFAULT,
+    convention: str = "causal",
 ) -> np.ndarray:
+    """Build V2 positions for one coin.
+
+    convention="causal" (live contract): every price-derived sizing input
+    (realized vol, vol-regime mask, hold entry/exit prices, SMA trend filter)
+    sees close(D-1) for the position credited with bar D's return — exactly
+    what the 00:05 UTC live cycle can know. convention="legacy" reproduces
+    the pre-audit same-bar behavior (close(D) sizes the bar-D position),
+    which overstates results (audit 2026-07-07, finding C1/F2).
+    """
+    if convention not in ("causal", "legacy"):
+        raise ValueError(f"unknown convention: {convention!r}")
     sig, conf = generate_term_structure_signals(
         merged, [7, 14], V5_CONFIDENCE_REF, asymmetric=V5_ASYMMETRIC,
     )
     px = merged["Close"].astype(float).values
-    rv = compute_realized_vol(px, lookback=20)
+    if convention == "causal":
+        px_sizing = np.empty_like(px)
+        px_sizing[1:] = px[:-1]
+        px_sizing[0] = px[0]
+    else:
+        px_sizing = px
+    rv = compute_realized_vol(px_sizing, lookback=20)
     mask = vol_regime_mask(rv, percentile_cap=0.95)
     pos = build_positions_with_hold(
-        signals=sig, vol_ok=mask, confidence=conf, realized_vol=rv, prices=px,
+        signals=sig, vol_ok=mask, confidence=conf, realized_vol=rv,
+        prices=px_sizing,
         target_vol=0.10, kelly_fraction=kelly_fraction, max_leverage=3.0,
         min_hold=7, early_exit_loss=early_exit_loss,
     )
-    return apply_trend_filter(pos, px, sma_period=30, multiplier=1.5)
+    return apply_trend_filter(pos, px_sizing, sma_period=30, multiplier=1.5)
 
 
 def _metrics(r: pd.Series) -> dict:
@@ -181,12 +214,17 @@ def run_coin(
     kelly_fraction: float = 0.5,
     early_exit_loss: float = EARLY_EXIT_DEFAULT,
     costs_override: dict[str, float] | None = None,
+    convention: str = "causal",
 ) -> pd.Series:
     """Run V2 sizing on one coin's routed predictions → daily return series.
 
     Early exit loss is forwarded to the position builder.
     Costs override (if supplied) replaces the COSTS dict passed to the engine —
     callers can override stop_loss and take_profit per-call.
+    convention="causal" keeps the prediction CSV's point-in-time ref_price
+    (= close(D-1)) and lags all sizing inputs one bar (live contract);
+    "legacy" overwrites ref_price with the same-day close and sizes off it
+    (pre-audit behavior, inflated — see audit 2026-07-07 C1/F2).
     """
     preds = _load_preds(pred_dir, coin)
     preds = preds[(preds["date"] >= start) & (preds["date"] <= end)]
@@ -196,10 +234,13 @@ def run_coin(
     ohlcv["Date"] = pd.to_datetime(ohlcv["Date"]).dt.tz_localize(None).dt.normalize()
     merged = preds.merge(ohlcv[["Date", "Close"]], left_on="date", right_on="Date")
     merged = merged.dropna(subset=["Close"]).reset_index(drop=True)
-    merged["ref_price"] = merged["Close"]
+    if convention == "legacy":
+        merged["ref_price"] = merged["Close"]
+    # causal: keep the CSV ref_price (= close(D-1), verified PIT-correct)
 
     pos = _v2_positions(
         merged, kelly_fraction=kelly_fraction, early_exit_loss=early_exit_loss,
+        convention=convention,
     )
     costs = dict(COSTS if costs_override is None else costs_override)
     equity, _m = run_coin_backtest(
@@ -227,6 +268,10 @@ def main() -> None:
     p.add_argument("--sat-haircut", type=float, default=SATELLITE_HAIRCUT,
                    help="Satellite-coin slippage/impact multiplier "
                         "(default 1.5; sweep 1.0/1.5/2.0 for sensitivity)")
+    p.add_argument("--convention", choices=("causal", "legacy"), default="causal",
+                   help="'causal' (default): sizing inputs see close(D-1) only "
+                        "— the live contract. 'legacy': pre-audit same-bar "
+                        "convention (reproduces the inflated published numbers).")
     args = p.parse_args()
 
     if args.data_root:
@@ -241,14 +286,17 @@ def main() -> None:
 
     print(f"\n{'=' * 78}")
     print(f"  V5 MIX — {len(routing)}-coin portfolio (core/satellite weighted)")
-    print(f"  window: {args.start} → {args.end}   sat-haircut: {args.sat_haircut:.2f}x")
+    print(f"  window: {args.start} → {args.end}   sat-haircut: {args.sat_haircut:.2f}x"
+          f"   convention: {args.convention}")
     print(f"{'=' * 78}\n")
 
     coin_rets: dict[str, pd.Series] = {}
     for coin, pdir in routing.items():
         r = run_coin(coin, PROJECT_ROOT / pdir, args.start, args.end,
                      kelly_fraction=args.kelly,
-                     costs_override=costs_for_coin(coin, args.sat_haircut))
+                     costs_override=costs_for_coin(coin, args.sat_haircut,
+                                                   convention=args.convention),
+                     convention=args.convention)
         coin_rets[coin] = r
         m = _metrics(r)
         feat = "193f extended" if "pit" in pdir else "78f canonical"

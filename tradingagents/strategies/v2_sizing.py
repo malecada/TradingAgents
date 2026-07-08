@@ -79,6 +79,25 @@ def generate_term_structure_signals(
 # ── Volatility, Sizing, Leverage ─────────────────────────────────────
 
 
+def sizing_price_series(prices: np.ndarray, convention: str = "causal") -> np.ndarray:
+    """Price series visible to sizing at each bar.
+
+    convention="causal": bar i sees close(i-1) — the live contract (the
+    00:05 UTC cycle sizes the position that earns bar i's return from data
+    through the previous close). convention="legacy": bar i sees close(i),
+    the pre-audit same-bar convention that pays the position the return of
+    the bar whose close sized it (audit 2026-07-07 C1 — inflated).
+    """
+    if convention == "legacy":
+        return prices
+    if convention != "causal":
+        raise ValueError(f"unknown convention: {convention!r}")
+    out = np.empty_like(prices)
+    out[1:] = prices[:-1]
+    out[0] = prices[0]
+    return out
+
+
 def compute_realized_vol(prices: np.ndarray, lookback: int) -> np.ndarray:
     """Rolling annualized realized volatility from log returns."""
     log_ret = np.full(len(prices), np.nan)

@@ -2,8 +2,9 @@
 """BT8 — Expanding-window walk-forward backtest of V2 quant baseline.
 
 Per BACKTESTING_METHODOLOGY.md §5: slices walk-forward LGB predictions
-into non-overlapping quarterly test blocks (63 bars each, 14-bar
-embargo enforced upstream by evaluate_models_multi's purging) and runs
+into non-overlapping quarterly test blocks (63 bars each; label-overlap
+purging exists upstream ONLY when evaluate_models_multi ran with --purge —
+pre-2026-07 prediction CSVs are unpurged, see audit 2026-07-07 C2) and runs
 the production V2 sizing pipeline on each. Aggregates quarterly Sharpe,
 returns, max-drawdown.
 
@@ -69,17 +70,22 @@ def _load_prices(coin: str, end: str) -> pd.DataFrame:
     return df.sort_values("Date").reset_index(drop=True)
 
 
-def _v2_positions(merged: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
+def _v2_positions(
+    merged: pd.DataFrame, convention: str = "causal"
+) -> tuple[np.ndarray, np.ndarray]:
+    from tradingagents.strategies.v2_sizing import sizing_price_series
+
     sig, conf = generate_term_structure_signals(merged, [7, 14], 0.05, asymmetric=True)
     px = merged["Close"].astype(float).values
-    rv = compute_realized_vol(px, lookback=20)
+    px_sz = sizing_price_series(px, convention)
+    rv = compute_realized_vol(px_sz, lookback=20)
     mask = vol_regime_mask(rv, percentile_cap=0.95)
     pos = build_positions_with_hold(
-        signals=sig, vol_ok=mask, confidence=conf, realized_vol=rv, prices=px,
+        signals=sig, vol_ok=mask, confidence=conf, realized_vol=rv, prices=px_sz,
         target_vol=0.10, kelly_fraction=0.5, max_leverage=3.0,
         min_hold=7, early_exit_loss=0.015,
     )
-    pos = apply_trend_filter(pos, px, sma_period=30, multiplier=1.5)
+    pos = apply_trend_filter(pos, px_sz, sma_period=30, multiplier=1.5)
     return pos, px
 
 
@@ -102,6 +108,10 @@ def main():
     p.add_argument("--end", default="2026-04-15")
     p.add_argument("--quarter-bars", type=int, default=63)
     p.add_argument("--output-dir", required=True)
+    p.add_argument("--convention", choices=("causal", "legacy"), default="causal",
+                   help="'causal' lags sizing inputs one bar + keeps the CSV "
+                        "PIT ref_price (live contract); 'legacy' reproduces "
+                        "the pre-audit same-bar convention.")
     args = p.parse_args()
 
     out_dir = Path(args.output_dir)
@@ -124,11 +134,13 @@ def main():
         merged = merged.dropna(subset=["Close"]).reset_index(drop=True)
         merged = merged.rename(columns={"date": "_date"})
 
-        # Add ref_price for generate_term_structure_signals
-        merged["ref_price"] = merged["Close"]
+        # ref_price: causal keeps the CSV PIT value (= close(D-1)); legacy
+        # (or CSVs predating the ref_price column) uses the same-day close
+        if args.convention == "legacy" or "ref_price" not in merged.columns:
+            merged["ref_price"] = merged["Close"]
 
         # Compute V2 positions over the FULL series first (vol/SMA need history)
-        pos_full, px_full = _v2_positions(merged)
+        pos_full, px_full = _v2_positions(merged, convention=args.convention)
         dates_full = merged["_date"].values
 
         # Slice into quarterly test blocks

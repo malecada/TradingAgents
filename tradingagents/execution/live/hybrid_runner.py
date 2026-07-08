@@ -16,7 +16,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import pandas as pd
+from binance.exceptions import BinanceAPIException, BinanceRequestException
 
+from tradingagents.execution.exchange import BinanceOrderTimeoutUnknown
 from tradingagents.execution.live import config, halt, journal
 from tradingagents.execution.live import risk as live_risk
 from tradingagents.execution.live import sizer, stops
@@ -25,6 +27,8 @@ from tradingagents.execution.live.hold_sizer import HoldState
 from tradingagents.execution.live.hybrid_base import derive_base
 from tradingagents.execution.live.hybrid_compose import (
     HYBRID_ANALYSTS,
+    MODULATION_BYPASS_COINS,
+    analysts_for_coin,
     build_hybrid_config,
     compose_final,
     extract_modulator_outputs,
@@ -36,6 +40,17 @@ from tradingagents.execution.live.runner import CycleResult, _today_id, _write_h
 
 logger = logging.getLogger(__name__)
 
+# Exchange errors that mean THIS coin's order was rejected/unresolved (bad
+# precision -1111, insufficient margin -2019, PERCENT_PRICE -4131, qty -4003,
+# notional -4164, unresolved timeout -1007, malformed request, …). They are
+# per-coin and must not abort the whole cycle — log a FAILED trade and continue.
+# Anything outside this tuple is treated as an unexpected bug and still aborts.
+_ORDER_REJECTION_ERRORS = (
+    BinanceAPIException,
+    BinanceRequestException,
+    BinanceOrderTimeoutUnknown,
+)
+
 
 # ---------------------------------------------------------------------------
 # Private builders (injectable for tests)
@@ -46,12 +61,31 @@ def _build_exchange(acct):
     return ExchangeClient(api_key=acct.api_key, api_secret=acct.api_secret, testnet=True)
 
 
-def _build_graph(quant_pred_dir: str):
+def _build_graph(quant_pred_dir: str, analysts: list[str] | None = None):
     from tradingagents.graph.trading_graph import TradingAgentsGraph
     return TradingAgentsGraph(
-        selected_analysts=HYBRID_ANALYSTS,
+        selected_analysts=analysts or HYBRID_ANALYSTS,
         config=build_hybrid_config(quant_pred_dir=quant_pred_dir),
     )
+
+
+class _GraphRouter:
+    """Resolves a per-coin modulator graph, building one TradingAgentsGraph per
+    distinct analyst set and caching it. A single injected test graph (``_graph``)
+    short-circuits routing so existing tests keep one stub for every coin."""
+
+    def __init__(self, quant_pred_dir: str, injected=None):
+        self._quant_pred_dir = quant_pred_dir
+        self._injected = injected
+        self._cache: dict[tuple[str, ...], object] = {}
+
+    def for_coin(self, coin: str):
+        if self._injected is not None:
+            return self._injected
+        key = tuple(analysts_for_coin(coin))
+        if key not in self._cache:
+            self._cache[key] = _build_graph(self._quant_pred_dir, list(key))
+        return self._cache[key]
 
 
 # ---------------------------------------------------------------------------
@@ -110,7 +144,7 @@ def run_hybrid_cycle(
         quant_data_dir = Path(acct.quant_db_path).parent
 
         ex = _exchange or _build_exchange(acct)
-        graph = _graph or _build_graph(str(staged))
+        router = _GraphRouter(str(staged), injected=_graph)
         j = journal.Journal(str(data_dir / "trade_journal.db"))
 
         # FIX 2: track cycle outcome so log_cycle_end fires on ALL paths
@@ -222,11 +256,19 @@ def run_hybrid_cycle(
                     continue
 
                 # ── run modulator (degrade to pure quant on failure) ───────
-                try:
-                    _state, mp, _qs, _narr = graph.propagate_with_modulator(coin, cycle_id)
-                except Exception as e:
-                    logger.warning("modulator failed for %s: %s; pure quant", coin, e)
+                # Bypass coins (e.g. SOL — modulator significantly hurts, P=0.022)
+                # trade the unmodulated V5 base. Per-coin analyst routing for the
+                # rest (ETH drops the market analyst).
+                if coin in MODULATION_BYPASS_COINS:
                     mp = None
+                    logger.info("modulation bypassed for %s (validated negative); pure quant", coin)
+                else:
+                    try:
+                        graph = router.for_coin(coin)
+                        _state, mp, _qs, _narr = graph.propagate_with_modulator(coin, cycle_id)
+                    except Exception as e:
+                        logger.warning("modulator failed for %s: %s; pure quant", coin, e)
+                        mp = None
 
                 mult, eff_w = extract_modulator_outputs(mp)
                 is_fallback = (not mp or mp.get("llm_multiplier") is None
@@ -291,6 +333,14 @@ def run_hybrid_cycle(
                 qty = ex.round_quantity(symbol, abs(delta))
                 price = preds[coin]["ref_price"]
 
+                # |delta| below the LOT_SIZE step floors to 0; sending a zero-qty
+                # order triggers Binance -4003 ("Quantity less than or equal to
+                # zero") and crashes the whole cycle. Dust-skip it. This guard
+                # covers all paths (open / adjust / reduceOnly), unlike the
+                # MIN_NOTIONAL check below which only fires for opening orders.
+                if qty <= 0.0:
+                    continue
+
                 # FIX 3: reduceOnly when the trade reduces/closes an existing position
                 # (delta opposes current signed position and magnitude <= |current|).
                 # Binance lets reduceOnly closes bypass MIN_NOTIONAL (-4164 guard).
@@ -300,14 +350,36 @@ def run_hybrid_cycle(
                     and abs(delta) <= abs(current) + 1e-9
                 )
                 if not is_reduce_only:
-                    if qty * price < ex.min_notional(symbol) and abs(current) < 1e-9:
-                        continue  # below MIN_NOTIONAL for an opening order
+                    # Binance rejects ANY non-reduceOnly order below MIN_NOTIONAL
+                    # with -4164 — not just opening ones. A sub-$5 *add* to an
+                    # existing position (current != 0) must skip too; the old
+                    # `abs(current) < 1e-9` clause let those through and crashed
+                    # the cycle (TRX add, 2026-06-29).
+                    if qty * price < ex.min_notional(symbol):
+                        continue  # below MIN_NOTIONAL for a non-reduceOnly order
 
                 if dry_run:
                     continue
 
-                order = ex.place_market_order(symbol, side, qty,
-                                              reduce_only=is_reduce_only)
+                try:
+                    order = ex.place_market_order(symbol, side, qty,
+                                                  reduce_only=is_reduce_only)
+                except _ORDER_REJECTION_ERRORS as order_exc:
+                    # One coin's rejected/unresolved order must not abort the
+                    # cycle for the rest. Record a FAILED trade and move on.
+                    logger.warning(
+                        "order rejected for %s %s qty=%s: %s; "
+                        "logging FAILED and skipping coin",
+                        symbol, side, qty, order_exc,
+                    )
+                    j.log_trade(
+                        cycle_id=cycle_id, coin=coin, side=side, qty=qty,
+                        entry_price=price, exit_price=0.0, pnl=0.0, fees=0.0,
+                        slippage=0.0, order_id="", stop_loss_id="",
+                        status="failed",
+                    )
+                    continue
+
                 n_executed += 1
                 if opening_new:
                     open_count += 1

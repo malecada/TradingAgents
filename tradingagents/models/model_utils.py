@@ -380,6 +380,8 @@ def build_pooled_dataset(
     add_cross_asset: bool = True,
     add_onchain: bool = True,
     add_onchain_pit: bool = False,
+    ohlcv_frames: dict[str, pd.DataFrame] | None = None,
+    pit_root: "Path | None" = None,
 ) -> pd.DataFrame:
     """Build a pooled multi-coin dataset enriched with optional features.
 
@@ -403,6 +405,16 @@ def build_pooled_dataset(
         add_technical: If True, compute and merge stockstats indicators.
         add_cross_asset: If True, add BTC-anchored cross-asset features.
         add_onchain: If True, add funding rate / TVL / stablecoin features.
+        ohlcv_frames: Optional {coin: OHLCV DataFrame} override. When a coin
+            is present, its frame is used instead of the vendor CSV cache —
+            the live runner passes the daily-refreshed
+            ``data_root/ohlcv_cache/{SYMBOL}_1d.parquet`` frames here so the
+            feature path and the sizing path read the SAME data (audit
+            2026-07-07 R3). Frames use Date/Open/High/Low/Close/Volume
+            columns; rows after ``trade_date`` are dropped.
+        pit_root: Optional PIT on-chain store root forwarded to
+            ``build_pit_onchain_features`` (default: TRADINGAGENTS_DATA_ROOT
+            env resolution).
 
     Returns:
         Concatenated date-indexed DataFrame with one `coin_id` column. Empty
@@ -420,11 +432,16 @@ def build_pooled_dataset(
 
     for coin in coin_universe:
         end_str = end_date.strftime("%Y-%m-%d")
-        try:
-            df_ohlcv = _load_crypto_ohlcv(coin, end_str)
-        except Exception as e:
-            logger.warning(f"Failed to fetch OHLCV for {coin}: {e}")
-            continue
+        if ohlcv_frames is not None and coin in ohlcv_frames:
+            df_ohlcv = ohlcv_frames[coin].copy()
+            df_ohlcv["Date"] = pd.to_datetime(df_ohlcv["Date"])
+            df_ohlcv = df_ohlcv[df_ohlcv["Date"] <= pd.to_datetime(end_date)]
+        else:
+            try:
+                df_ohlcv = _load_crypto_ohlcv(coin, end_str)
+            except Exception as e:
+                logger.warning(f"Failed to fetch OHLCV for {coin}: {e}")
+                continue
 
         if df_ohlcv.empty:
             logger.warning(f"No OHLCV data for {coin}, skipping")
@@ -481,7 +498,7 @@ def build_pooled_dataset(
         per_coin_feats: dict[str, pd.DataFrame] = {}
         for coin, df in list(coin_dfs_model.items()):
             try:
-                feats = build_pit_onchain_features(coin, df.index)
+                feats = build_pit_onchain_features(coin, df.index, root=pit_root)
             except Exception as e:  # pragma: no cover
                 logger.warning(f"PIT on-chain fetch failed for {coin}: {e}")
                 feats = pd.DataFrame(index=df.index)
