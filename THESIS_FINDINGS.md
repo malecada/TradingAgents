@@ -3609,3 +3609,21 @@ needed.
 5. Acceptance: 30-day testnet parity (funding accrual reconciliation vs exchange statements), then mainnet-small.
 
 **Verdict: GO** — blend robust, worst case non-negative; proceed to a dedicated live-integration plan when operator bandwidth allows. No code changes in this task.
+
+## Section 37: E5 V4-Heuristic Regime Overlay on 8-coin V5 MIX — FAIL, do not ship (2026-07-08)
+
+**Decision task** (plan Task E5). Original 4-coin-era result (§V4): SR-neutral DD-reducer. Gate: portfolio maxDD −≥1pp with ΔSR ≥ −0.10 at p ≥ 0.80.
+
+**Run:** `walkforward_v4.py --regime-method heuristic` vs `--no-regime`, per coin over the 8 frozen routed pred dirs, 2021-11-08..2026-04-14 (1,594 common bars), core/satellite weights. Paired stationary block bootstrap n=2000, block 21.
+
+| Arm | SR (365d) | maxDD |
+|---|---|---|
+| OFF (V5 8-coin) | +4.402 | 4.80% |
+| ON (heuristic overlay) | +3.620 | 3.19% |
+| Δ | **−0.782** CI[−1.046, −0.455] | **+1.61pp** CI[+0.03, +1.97] |
+
+Gate: P(DD improve ≥1pp) = 0.661 (<0.80); P(ΔSR ≥ −0.10) = 0.000. **FAIL on both.**
+
+Per-coin: DD improves on all 8 (BTC 6.7→4.4%, ETH 9.2→6.2% — matches the 4-coin-era reference), but SR drops on 7/8 coins. The overlay still de-risks, but on the higher-SR 8-coin book its de-leveraging in flagged regimes now costs robust return — the "free" DD reduction of the 4-coin era was a property of that book's regime mix, not of the overlay.
+
+**Verdict: do not ship.** If live DD ever becomes the binding constraint, revisit as an explicit SR-for-DD trade (e.g. overlay only on satellites), not as a free lunch. Artifacts: `data/exp_e5/summary.{json,md}`, 16 per-coin run dirs.
