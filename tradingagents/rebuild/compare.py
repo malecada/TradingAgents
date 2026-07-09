@@ -18,6 +18,11 @@ def paired_bootstrap(
     ab = pd.concat({"a": a, "b": b}, axis=1).dropna()
     xa, xb = ab["a"].values, ab["b"].values
     T = len(xa)
+    if T < 30:
+        raise ValueError(
+            f"paired_bootstrap: only {T} overlapping non-NaN rows between arms "
+            f"(need >= 30) — likely an index-alignment bug in the caller"
+        )
     rng = np.random.default_rng(seed)
     deltas = np.empty(n)
     for k in range(n):

@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import pytest
 
 from tradingagents.rebuild.compare import paired_bootstrap
 
@@ -31,3 +32,11 @@ def test_clearly_better_arm_wins():
 def test_deterministic_given_seed():
     a, b = _series(0.0, seed=1), _series(0.001, seed=2)
     assert paired_bootstrap(a, b) == paired_bootstrap(a, b)
+
+
+def test_disjoint_indices_raise():
+    a = _series(0.001)
+    b = _series(0.001)
+    b.index = b.index + pd.Timedelta(days=10_000)  # no overlap
+    with pytest.raises(ValueError, match="overlapping"):
+        paired_bootstrap(a, b)
