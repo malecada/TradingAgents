@@ -4,7 +4,7 @@
     "purpose": "Freeze the candidate portfolio recipe BEFORE any holdout data (2025-04-01 onward) is touched. This file is the one-shot contract for H2.",
     "frozen_at_commit": "e53737f34aa5beec8e9d73eccbba9e37534586c2",
     "dev_window": ["2021-11-07", "2025-03-31"],
-    "note_dev_window_offset": "carry_audit artifacts use window start 2021-11-08 (first return day, since day-0 has no prior close); factor_floor/directional artifacts use 2021-11-07. Both are the same dev window; the 1-day offset is inherent to each pipeline's return-construction (carry needs a t-1 price to form day-1 return) and is not a discrepancy to reconcile."
+    "note_dev_window_offset": "2021-11-07 was the --start CLI flag; both artifacts' first RETURN row is 2021-11-08. carry_audit artifacts use window start 2021-11-08 (first return day, since day-0 has no prior close); factor_floor/directional artifacts use 2021-11-07 as the --start flag but likewise produce their first return row at 2021-11-08 (the factor_floor daily_returns.csv's first row is a 0.0/0.0 warm-up bar). Both are the same dev window; the 1-day offset between the CLI --start flag and the first return row is inherent to each pipeline's return-construction (a t-1 price is needed to form day-1 return) and is not a discrepancy to reconcile."
   },
   "sleeves": {
     "carry": {
@@ -82,11 +82,11 @@
     }
   },
   "allocation": {
-    "rule": "inverse-vol weights computed on DEV data only (2021-11-07/08 .. 2025-03-31), carry capped at 50% of book; factor gets the remainder. Rebalanced monthly during holdout on trailing-90d vol (see rebalance_rule below); cap always re-applied.",
+    "rule": "inverse-vol weights computed on DEV data only (2021-11-07/08 .. 2025-03-31), carry capped at 50% of book; factor gets the remainder. Rebalanced monthly during holdout on trailing-90d vol (see rebalance_rule below); cap always re-applied. Weights are recomputed at each calendar-month start from trailing-90-calendar-day sleeve vols (carry cap 0.5 reapplied), then HELD CONSTANT and applied to daily sleeve returns until the next rebalance date (no intra-month drift accounting).",
     "formula": "w_carry_raw = (1/vol_carry) / (1/vol_carry + 1/vol_factor); w_factor_raw = 1 - w_carry_raw; if w_carry_raw > 0.5: w_carry = 0.5, w_factor = 0.5; else w_carry = w_carry_raw, w_factor = w_factor_raw",
     "vol_definition": "annualized daily-return stdev, ddof=1, x sqrt(252)",
     "dev_window_computation": {
-      "carry_input": "data/rebuild/carry_audit/sleeve_stressed_daily.csv column 'sleeve' (1239 rows, 2021-11-08..2025-03-31)",
+      "carry_input": "data/rebuild/carry_audit/sleeve_stressed_daily.csv column 'sleeve' (1239 rows, 2021-11-08..2025-03-30)",
       "factor_input": "data/rebuild/factor_floor/BEST/daily_returns.csv column 'portfolio' (1240 rows, 2021-11-08..2025-03-31, first row is a 0.0/0.0 warm-up bar)",
       "carry_ann_vol": 0.0069285710026634455,
       "factor_ann_vol": 0.1100311810068574,
@@ -127,8 +127,8 @@
         "step": 2,
         "sleeve": "carry",
         "action": "Extend the C2 stressed construction (scripts/carry_audit_costs.py) through 2026-07-01 with identical cost parameters (see sleeves.carry.stressed_cost_model above, verbatim).",
-        "command": "edit scripts/carry_audit_costs.py START/END module constants from (\"2021-11-08\", \"2025-03-31\") to (\"2021-11-08\", \"2026-07-01\") -- no other line changes -- then: uv run python scripts/carry_audit_costs.py",
-        "note": "carry_audit_costs.py has no --start/--end CLI flags; window is hardcoded at module scope (START, END = ...). H2 must edit those two constants only, re-run, and then slice the output to the holdout sub-window for evaluation, exactly as with the factor sleeve (the drift/rebalance state and margin accrual are also path-dependent and must be run from full history, not a truncated holdout-only window)."
+        "command": "edit scripts/carry_audit_costs.py (or preferably a pass-through copy) START -> \"2025-04-01\", END -> \"2026-07-01\", and the output directory -> \"data/rebuild/holdout/carry_audit/\" -- no other changes -- then: uv run python scripts/carry_audit_costs.py",
+        "note": "carry_audit_costs.py has no --start/--end CLI flags; window is hardcoded at module scope (START, END = ...). H2 is permitted to change EXACTLY three things in scripts/carry_audit_costs.py (or preferably pass-through copies): START -> \"2025-04-01\", END -> \"2026-07-01\", and the output directory -> \"data/rebuild/holdout/carry_audit/\". All cost parameters remain frozen. Dev artifacts in data/rebuild/carry_audit/ must remain untouched; H2 must verify `git diff --stat data/rebuild/carry_audit/` is empty after the run. NOTE also: carry signal has no warm-up requirement (always-on), but funding/spot fetches need the holdout date range only -- unlike the factor sleeve, no pre-window history or output slicing is needed since START/END already equal the holdout window."
       },
       {
         "step": 3,
@@ -142,10 +142,11 @@
           "portfolio_net_sharpe_min": 0.5,
           "max_drawdown_max": 0.15,
           "sleeve_contribution_min": 0.0,
-          "sleeve_contribution_note": "each sleeve's own holdout Sharpe (or cumulative return contribution) must be >= 0 -- i.e. neither sleeve is allowed to be a net drag over the holdout window.",
+          "sleeve_contribution_note": "sleeve_contribution_i = sleeve i's cumulative net return over the holdout window (standalone, before weighting) must be >= 0.",
           "placebo_p_max": 0.05,
-          "placebo_definition": "random-entry factor-sleeve placebo under the causal convention established in the rebuild's audit (random entry/exit dates replacing the MA-cross signal, same sizing stack, same halt latch, bootstrapped p-value that the real signal beats random entries).",
-          "placebo_scope_note": "the placebo test applies to the FACTOR sleeve only. The carry sleeve is model-free and always-on by construction (no entry/exit signal to randomize -- it is short-perp/long-spot on every bar unconditionally), so a placebo test is not meaningful for it and is not required for the carry leg. This interpretation is frozen here so H2 does not need to invent a carry placebo.",
+          "placebo_scope_note": "Scope: factor sleeve only (carry is model-free/always-on -- not placebo-testable; unchanged).",
+          "placebo_definition": "Procedure: N=500 placebo variants, k=1..500. Variant k: per coin, block-shuffle the REAL macross_10_50_ls holdout signal array (int8 {-1,0,+1}) using stationary block bootstrap with block length 21 and numpy default_rng(seed=k) -- resample blocks of the signal series (preserving persistence + marginal distribution), same length as original. Run each variant through the IDENTICAL frozen sizing/engine path as the real factor sleeve (same constants, costs, price stop, halt latch), BTC+ETH EW portfolio, holdout window.",
+          "placebo_pvalue_formula": "p = (1 + #{placebo portfolio SR >= real factor portfolio SR}) / (N + 1). Gate: p < 0.05.",
           "one_shot": true
         }
       },
