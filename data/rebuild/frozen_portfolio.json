@@ -1,0 +1,216 @@
+{
+  "_meta": {
+    "task": "H1",
+    "purpose": "Freeze the candidate portfolio recipe BEFORE any holdout data (2025-04-01 onward) is touched. This file is the one-shot contract for H2.",
+    "frozen_at_commit": "e53737f34aa5beec8e9d73eccbba9e37534586c2",
+    "dev_window": ["2021-11-07", "2025-03-31"],
+    "note_dev_window_offset": "carry_audit artifacts use window start 2021-11-08 (first return day, since day-0 has no prior close); factor_floor/directional artifacts use 2021-11-07. Both are the same dev window; the 1-day offset is inherent to each pipeline's return-construction (carry needs a t-1 price to form day-1 return) and is not a discrepancy to reconcile."
+  },
+  "sleeves": {
+    "carry": {
+      "status": "GO",
+      "verdict_source": "data/rebuild/carry_audit/verdict.json (§39 five-pass audit, commit d36f539)",
+      "construction": "always-on funding-carry sleeve: short 1x perp + long 1x spot, equal notional both legs, 50/50 BTC/ETH; inception = first day of window, exit = last day; margin = 1/3 of perp notional (realized leverage <= 3x by construction)",
+      "symbols": ["BTCUSDT", "ETHUSDT"],
+      "weighting_within_sleeve": "50/50 BTC/ETH, equal notional",
+      "stressed_cost_model": {
+        "source": "data/rebuild/carry_audit/costs.json (verbatim, commit d36f539)",
+        "annualization": "sqrt(252)",
+        "cost_parameters": {
+          "spot_taker": 0.001,
+          "perp_taker": 0.0004,
+          "spread_per_side": 0.0001,
+          "open_cost_both_legs_one_side": 0.0016,
+          "roundtrip_cost_both_legs": 0.0032,
+          "drift_threshold_frac_of_target": 0.2,
+          "target_notional_per_leg": 1.0,
+          "rf_annual": 0.045,
+          "rf_daily": 0.00017468543594945096,
+          "margin_fraction_of_perp_notional": 0.3333333333333333
+        },
+        "turnover_convention": "'per side' = one execution (open OR close) touching both legs: spot(taker+spread) + perp(taker+spread) = 0.0016; inception charges one open, final exit one close.",
+        "rebalance_trigger": "rebalance fires when |drift| >= drift_threshold_frac_of_target (0.2, i.e. 20% of target per-leg notional)",
+        "rebalance_drift_convention": "drift tracked by compounding each leg's equity with its own daily return since the last rebalance: long-spot leg grows at +spot_ret, SHORT-perp leg grows at -perp_ret (a short's equity FALLS as the perp price rises). This is the drift-generating reading (the alternative, +perp_ret, makes the short leg track spot so drift never reaches 20% and rebalance count degenerates to 0). AMBIGUITY WAS RESOLVED THIS WAY in the §C2 costs pass; carried forward unchanged into the holdout.",
+        "rebalance_cost": "full round-trip cost (2x open = 0.0032) charged on the drift notional at each rebalance event",
+        "margin_cost": "constant daily risk-free drag = rf_daily * (1/3) * perp_notional (margin_fraction_of_perp_notional = 1/3, i.e. leverage <= 3x)",
+        "boundary_basis": "recorded as 0.0 by construction — compute_price_pnl marks the spot-perp basis to market every day via spot_ret - perp_ret on actual price series, so entry/exit basis convergence is already inside the hedge P&L. A separate boundary-basis charge would double-count.",
+        "waterfall_order": ["as_built", "plus_turnover", "plus_rebalance", "plus_margin_cost", "plus_boundary_basis"],
+        "waterfall_sr_dev": {
+          "as_built": 8.595331872319965,
+          "plus_turnover": 8.423127504484063,
+          "plus_rebalance": 5.868202106286357,
+          "plus_margin_cost": 3.7503661753112434,
+          "plus_boundary_basis": 3.7503661753112434
+        }
+      },
+      "dev_window_stressed_sr": 3.7503661753112434,
+      "dev_window_stressed_sr_note": "= plus_margin_cost = plus_boundary_basis layer (final stressed value), read from costs.json 'stressed_blended_sr'. Reference only — NOT re-measured in this file; recomputed fresh on the holdout window in H2.",
+      "gate_caveat_carried_forward": "the rebalance-convention choice above plausibly overstates rebalance cost ~3x (§39 caveat: stressed SR is realistically a range [3.75, ~5.9], with 3.75 the conservative/gate-relevant bound). The 3.75 bound and its convention are frozen for holdout evaluation — no re-tuning."
+    },
+    "factor": {
+      "status": "SURVIVES ml_survival gate as the directional sleeve (LGB candidate did not beat it, see phase4_note)",
+      "verdict_source": "data/rebuild/directional_verdict.json (commit e53737f) + data/rebuild/factor_floor/floor_table.md (commit f359050)",
+      "config_name": "macross_10_50_ls",
+      "config_source": "scripts/factor_baselines.py build_config_specs() (verbatim, commit e53737f)",
+      "signal": {
+        "family": "ma_cross",
+        "fast": 10,
+        "slow": 50,
+        "side": "ls",
+        "definition": "ma_cross_signal(close, fast=10, slow=50) = sign(SMA_10 - SMA_50), both MAs ending at index t-1 (strictly causal: no same-bar look-ahead). Long-short: signal in {-1, 0, +1} per coin.",
+        "universe": "bitcoin + ethereum, equal weight (mean of the two coins' daily net-of-cost returns)"
+      },
+      "sizing_stack": {
+        "note": "V2 sizing primitives (tradingagents.strategies.v2_sizing), canonical constants exactly as scripts/factor_baselines.py module-level constants. NO trend filter is applied (the factor_baselines.py docstring is explicit: 'these ARE the trend strategies').",
+        "target_vol": 0.10,
+        "kelly_fraction": 0.5,
+        "kelly_note": "0.5, NOT 0.25. The F6 kelly=0.25 adoption (data/rebuild/axis_sizing/result.json) applied to the retired LGB candidate config only. The factor floor (macross_10_50_ls) was measured at kelly=0.5 in scripts/factor_baselines.py and that is the frozen, as-measured config for H2 — it is not re-tuned to kelly=0.25.",
+        "max_leverage": 3.0,
+        "min_hold": 7,
+        "early_exit_loss": 0.015,
+        "vol_lookback": 20,
+        "vol_cap_percentile": 0.95,
+        "price_stop_pct": 0.03,
+        "halt_latch": "run_coin_backtest's max_portfolio_dd = 0.15 circuit breaker: PERMANENT per-coin latch. Once a coin's drawdown-from-peak breaches 15%, halted=True never resets and every subsequent bar for that coin returns a flat 0.0. This is the live system's real circuit breaker; it is frozen ON, applied identically per coin, unchanged for holdout.",
+        "halt_dates_dev_window": {"ETHUSDT": "2022-07-19", "BTCUSDT": "2023-03-04"},
+        "halt_transparency_note": "in the dev window both coins eventually halt (trailing zero tail = 759/1240 bars = 61%); full-series SR (the gate metric, 'sr' key) already reflects this. sr_active (+1.016, halt-tail excluded) is diagnostic only, never used for selection or gating."
+      },
+      "price_stop_pct": 0.03,
+      "dev_window_sr_full_series": 0.6322181732492197,
+      "dev_window_sr_note": "read from data/rebuild/factor_floor/BEST/daily_returns.csv 'portfolio' column and confirmed against directional_verdict.json floor.portfolio_full_series.sharpe (0.632). Reference only — recomputed fresh on the holdout window in H2.",
+      "reproduce_command_dev": "uv run python scripts/factor_baselines.py --start 2021-11-07 --end 2025-03-31 --output-dir data/rebuild/factor_floor"
+    }
+  },
+  "allocation": {
+    "rule": "inverse-vol weights computed on DEV data only (2021-11-07/08 .. 2025-03-31), carry capped at 50% of book; factor gets the remainder. Rebalanced monthly during holdout on trailing-90d vol (see rebalance_rule below); cap always re-applied.",
+    "formula": "w_carry_raw = (1/vol_carry) / (1/vol_carry + 1/vol_factor); w_factor_raw = 1 - w_carry_raw; if w_carry_raw > 0.5: w_carry = 0.5, w_factor = 0.5; else w_carry = w_carry_raw, w_factor = w_factor_raw",
+    "vol_definition": "annualized daily-return stdev, ddof=1, x sqrt(252)",
+    "dev_window_computation": {
+      "carry_input": "data/rebuild/carry_audit/sleeve_stressed_daily.csv column 'sleeve' (1239 rows, 2021-11-08..2025-03-31)",
+      "factor_input": "data/rebuild/factor_floor/BEST/daily_returns.csv column 'portfolio' (1240 rows, 2021-11-08..2025-03-31, first row is a 0.0/0.0 warm-up bar)",
+      "carry_ann_vol": 0.0069285710026634455,
+      "factor_ann_vol": 0.1100311810068574,
+      "carry_ann_vol_pct": "0.693%",
+      "factor_ann_vol_pct": "11.003%",
+      "sr_sanity_check": "mean/std*sqrt(252) on these same series reproduces costs.json stressed_blended_sr (3.7503661753109525) and floor_table.md portfolio sr (0.6322181732492269) to ~1e-9 -- confirms the vol inputs are read from the correct, already-cost-adjusted / already-net series.",
+      "w_carry_raw": 0.9407610662332848,
+      "w_factor_raw": 0.05923893376671525,
+      "carry_cap_triggered": true,
+      "w_carry_final": 0.5,
+      "w_factor_final": 0.5
+    },
+    "frozen_dev_weights": {
+      "carry": 0.5,
+      "factor": 0.5,
+      "note": "Carry's raw inverse-vol weight (94.1%) blows through the 50% cap because the stressed carry sleeve has ~16x lower realized vol than the factor sleeve in dev (0.69% vs 11.0% annualized) despite its much higher dev SR. The cap is therefore binding at the very first allocation point -- this is exactly the audit-unfriendly 'all eggs in the newest/quietest basket' scenario the cap in the task brief is designed to prevent. Both sleeves start at 50/50 in holdout."
+    },
+    "rebalance_rule": {
+      "frequency": "monthly (recompute at each calendar month start during the holdout window)",
+      "vol_window": "trailing 90 calendar days of realized daily returns per sleeve, as of the rebalance date",
+      "formula": "identical to formula above, re-applied with trailing-90d vols in place of the full-dev-window vols",
+      "cap": "carry weight capped at 50% of book at every rebalance, unconditionally -- same cap value as the dev freeze, never re-tuned",
+      "look_ahead_guard": "trailing-90d window must end strictly before the rebalance date (no same-day or future data)"
+    }
+  },
+  "holdout_protocol": {
+    "window": ["2025-04-01", "2026-07-01"],
+    "one_shot_rule": "No parameter changes to either sleeve, the sizing stack, or the allocation rule after this file is committed -- regardless of the holdout outcome. Any ledger calls made against this evaluation MUST pass allow_holdout=True, and this is the ONLY evaluation ever permitted to set that flag.",
+    "steps": [
+      {
+        "step": 1,
+        "sleeve": "factor",
+        "action": "Extend OHLCV data through 2026-07-01 and run scripts/factor_baselines.py's macross_10_50_ls path (same builder, same sizing constants, same halt latch) over an extended range that begins well before 2025-04-01 and ends 2026-07-01.",
+        "command": "uv run python scripts/factor_baselines.py --start 2021-11-07 --end 2026-07-01 --output-dir data/rebuild/holdout/factor_floor",
+        "warm_up_note": "The MA-10/50 cross signal needs >=50 bars of prior Close history to be defined, and the halt latch is a running drawdown-from-peak state that must be carried in from before the holdout window (both coins already halt in dev -- see halt_dates_dev_window above -- so the latch state entering holdout is 'both halted' unless the extended run is computed from full history). RULE: compute signals AND run the halt-latch/sizing state machine over the FULL history (2021-11-07 onward, i.e. do not truncate the input to the holdout window), then slice the resulting daily-return series to 2025-04-01..2026-07-01 ONLY for performance evaluation. Evaluating returns on a truncated-input run would reset the halt latch and understate its effect -- not a legitimate alternative."
+      },
+      {
+        "step": 2,
+        "sleeve": "carry",
+        "action": "Extend the C2 stressed construction (scripts/carry_audit_costs.py) through 2026-07-01 with identical cost parameters (see sleeves.carry.stressed_cost_model above, verbatim).",
+        "command": "edit scripts/carry_audit_costs.py START/END module constants from (\"2021-11-08\", \"2025-03-31\") to (\"2021-11-08\", \"2026-07-01\") -- no other line changes -- then: uv run python scripts/carry_audit_costs.py",
+        "note": "carry_audit_costs.py has no --start/--end CLI flags; window is hardcoded at module scope (START, END = ...). H2 must edit those two constants only, re-run, and then slice the output to the holdout sub-window for evaluation, exactly as with the factor sleeve (the drift/rebalance state and margin accrual are also path-dependent and must be run from full history, not a truncated holdout-only window)."
+      },
+      {
+        "step": 3,
+        "action": "Combine the two sleeves' holdout daily returns with the frozen allocation rule (allocation.rule / allocation.rebalance_rule above): start both sleeves at 50/50 on the holdout's first bar, recompute weights monthly from trailing-90d vol, re-apply the 50% carry cap every time.",
+        "output": "a single holdout portfolio daily-return series and its Sharpe, total return, max drawdown."
+      },
+      {
+        "step": 4,
+        "action": "Evaluate against data/rebuild/gates.json 'holdout_deploy' criteria.",
+        "criteria": {
+          "portfolio_net_sharpe_min": 0.5,
+          "max_drawdown_max": 0.15,
+          "sleeve_contribution_min": 0.0,
+          "sleeve_contribution_note": "each sleeve's own holdout Sharpe (or cumulative return contribution) must be >= 0 -- i.e. neither sleeve is allowed to be a net drag over the holdout window.",
+          "placebo_p_max": 0.05,
+          "placebo_definition": "random-entry factor-sleeve placebo under the causal convention established in the rebuild's audit (random entry/exit dates replacing the MA-cross signal, same sizing stack, same halt latch, bootstrapped p-value that the real signal beats random entries).",
+          "placebo_scope_note": "the placebo test applies to the FACTOR sleeve only. The carry sleeve is model-free and always-on by construction (no entry/exit signal to randomize -- it is short-perp/long-spot on every bar unconditionally), so a placebo test is not meaningful for it and is not required for the carry leg. This interpretation is frozen here so H2 does not need to invent a carry placebo.",
+          "one_shot": true
+        }
+      },
+      {
+        "step": 5,
+        "action": "Record the holdout verdict (GO/NO-GO to deploy) in a new verdict JSON. Ledger entries for this evaluation must set allow_holdout=True -- the only evaluation in the rebuild ever permitted to do so."
+      }
+    ]
+  },
+  "provenance": {
+    "phase2_directional_verdict": {
+      "file": "data/rebuild/directional_verdict.json",
+      "commit": "e53737f34aa5beec8e9d73eccbba9e37534586c2",
+      "commit_subject": "exp(rebuild): §40 sizing ablation + directional sleeve verdict",
+      "content": "LGB candidate (F6 config) vs factor floor at ml_survival gate: delta_sharpe -0.255, p_pos 0.354, dsr 0.077 -- gate FAILS. Verdict: directional sleeve = FACTOR (macross_10_50_ls)."
+    },
+    "carry_audit_verdict_section39": {
+      "file": "data/rebuild/carry_audit/verdict.json",
+      "commit": "d36f539ee3d9bb78702c653deb290826b2a171b3",
+      "commit_subject": "audit(carry): §39 five-pass audit verdict (GO/NO-GO at pre-registered gate)",
+      "content": "Carry sleeve GO: stressed_sharpe 3.75 (>= 1.5 gate), worst-90d loss 1.82% (<= 5% gate). Both criteria pass."
+    },
+    "carry_costs_c2": {
+      "file": "data/rebuild/carry_audit/costs.json",
+      "commit": "d36f539ee3d9bb78702c653deb290826b2a171b3",
+      "content": "stressed cost waterfall, params copied verbatim into sleeves.carry.stressed_cost_model above."
+    },
+    "carry_supporting_passes": {
+      "timing_json": "data/rebuild/carry_audit/timing.json (commit d36f539)",
+      "funding_recon_json": "data/rebuild/carry_audit/funding_recon.json (commit d36f539)",
+      "regime_json": "data/rebuild/carry_audit/regime.json (commit d36f539)",
+      "haircut_curve_csv": "data/rebuild/carry_audit/haircut_curve.csv (commit d36f539)"
+    },
+    "carry_daily_series": {
+      "file": "data/rebuild/carry_audit/sleeve_stressed_daily.csv",
+      "commit": "d36f539ee3d9bb78702c653deb290826b2a171b3",
+      "used_for": "carry ann-vol input to allocation calc"
+    },
+    "factor_floor_f1": {
+      "file": "data/rebuild/factor_floor/floor_table.md, data/rebuild/factor_floor/BEST/daily_returns.csv",
+      "commit_18_config_build": "f359050c16521aa5fdd9bb10c0e25af9f37ff57f",
+      "commit_18_config_build_subject": "fix(rebuild): halt-latch transparency in factor floor (dual SR reporting, halt dates)",
+      "commit_note": "F1 = data/rebuild/factor_floor pass; halt-latch transparency (sr_active, halt dates, n_trailing_zero_bars) landed in f359050c16521aa5fdd9bb10c0e25af9f37ff57f. macross_10_50_ls is BEST at that commit (full-series SR +0.632).",
+      "used_for": "factor sleeve config (macross_10_50_ls params) and factor ann-vol input to allocation calc"
+    },
+    "factor_baselines_script": {
+      "file": "scripts/factor_baselines.py",
+      "commit": "e53737f34aa5beec8e9d73eccbba9e37534586c2",
+      "used_for": "sizing constants (TARGET_VOL, KELLY_FRACTION, MAX_LEVERAGE, MIN_HOLD, EARLY_EXIT_LOSS, VOL_LOOKBACK, VOL_CAP, PRICE_STOP_PCT) and ma_cross_signal definition"
+    },
+    "sizing_ablation_f6": {
+      "file": "data/rebuild/axis_sizing/result.json",
+      "commit": "e53737f34aa5beec8e9d73eccbba9e37534586c2",
+      "content": "F6 kelly=0.25 adoption -- applies to the retired LGB candidate config only, NOT to the frozen factor sleeve (which stays at kelly=0.5, its as-measured value in factor_baselines.py)."
+    },
+    "gates": {
+      "file": "data/rebuild/gates.json",
+      "content": "carry_go, ml_survival, holdout_deploy gate thresholds (all pre-registered 2026-07-08, before any relevant audit pass ran)."
+    },
+    "frozen_at_repo_commit": "e53737f34aa5beec8e9d73eccbba9e37534586c2 (HEAD at time of this freeze; this file is committed on top of it)"
+  },
+  "phase4_note": {
+    "lgb_status": "retired",
+    "retirement_source": "data/rebuild/directional_verdict.json",
+    "reason": "LGB candidate (F6-composed config: trend_sma=30, trend_multiplier=1.5, kelly_fraction=0.25, 78-feature 2-coin pool, horizon=3, target=level) failed the ml_survival gate against the model-free factor floor: delta_sharpe -0.255 (needs > 0.0), p_pos 0.354 (needs >= 0.85), DSR 0.077 (needs >= 0.90). All three sub-criteria fail.",
+    "deferred": "Hybrid/LLM re-test (modulating the factor or carry sleeve with an LLM signal, per the earlier hybrid-modulator branch's ETH result) is explicitly deferred to a Phase 5 decision made AFTER the holdout one-shot in this task is scored. It is NOT part of the frozen portfolio and MUST NOT be introduced before the holdout commit."
+  }
+}
