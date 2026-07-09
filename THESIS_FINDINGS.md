@@ -3572,3 +3572,147 @@ The composed LGB candidate is gated against the **factor floor** — 18 pre-regi
 ### 40.6 What goes to Phase 3 holdout
 
 The Phase 3 one-shot (locked window ≥ 2025-04-01, `holdout_deploy` gate) carries forward the **factor sleeve**: directional signal = **`macross_10_50_ls`** (10/50 MA-cross long-short) run through the causal V2/V5 sizing stack (vol-targeted Kelly, SMA30 trend filter ×1.5, min_hold=7, adaptive early exit, 3% price stop, 15% halt latch), equal-weight BTC+ETH. The composed LGB config is **retired as a controlled negative result** — it is fully specified in `data/rebuild/axis_sizing/result.json` and `data/rebuild/directional_verdict.json` for reproducibility, but does not advance. The carry sleeve (§39, GO) advances as an isolated diversifier alongside the factor directional sleeve. Phase 3 will apply the `holdout_deploy` gate (portfolio net SR ≥ 0.5, maxDD ≤ 15%, sleeve contribution ≥ 0, placebo p ≤ 0.05) **once** to this factor+carry book. Ledger: `axis_sizing` (7 rows); outputs `data/rebuild/axis_sizing/result.json`, `data/rebuild/directional_verdict.json`.
+
+## Section 41: Holdout One-Shot — NO-GO (deploy = ∅) (2026-07-09)
+
+The single, irreversible Phase-3 test. The frozen portfolio contract
+(`data/rebuild/frozen_portfolio.json`, commit **fc33cd5**, itself frozen on
+`e53737f` before any holdout data was touched) was executed **exactly once** on
+the locked holdout window **2025-04-01 → 2026-07-01** (≈15 months, never seen by
+any prior experiment; the ledger's `assert_dev_window` guard mechanically blocked
+it until this one authorized `allow_holdout=True` pass). No parameter was — or
+could be — changed in response to the outcome (`one_shot_rule`). The result is
+recorded as it fell out.
+
+### 41.1 Provenance & execution
+
+- **Contract:** `frozen_portfolio.json` @ fc33cd5, verified unmodified in the
+  working tree before the run.
+- **Factor sleeve:** frozen `macross_10_50_ls` (10/50 MA-cross long-short,
+  kelly=0.5, target_vol=0.10, max_lev=3, min_hold=7, early_exit=0.015,
+  vol_lookback=20, vol_cap=0.95, price_stop=3%, 15% halt-latch; **no trend
+  filter** — the MA-cross is itself the trend rule; equal-weight BTC+ETH). Run
+  two-stage per the contract: (a) `ma_cross_signal` computed on FULL history
+  2021-11-07→2026-07-01 (warm-up), (b) fresh-latch sizing/backtest engine
+  invoked on the 2025-04-01→2026-07-01 signal slice only. Frozen path reused
+  verbatim from `scripts/factor_baselines.py` (imported, not re-implemented).
+- **Carry sleeve:** C2 stressed construction (`scripts/carry_audit_costs.py`)
+  re-run on the holdout window via a pass-through copy
+  (`scripts/holdout/carry_stressed_holdout.py`) with only the window, output
+  directory and the authorized `allow_holdout` ledger flag changed; every cost
+  parameter frozen verbatim. Dev artifacts in `data/rebuild/carry_audit/`
+  verified untouched (`git diff --stat` empty).
+- **Placebo:** N=500 stationary-bootstrap (mean block 21) block-shuffles of the
+  real factor signal arrays, one `default_rng(seed=k)` per variant, coins drawn
+  [bitcoin, ethereum] in order, each variant through the identical fresh-latch
+  engine. Runtime ≈29 s.
+- Outputs under `data/rebuild/holdout/`; four ledger rows logged
+  (`experiment="holdout_oneshot"`, `allow_holdout=True`).
+
+### 41.2 Per-sleeve holdout metrics (standalone, before weighting)
+
+| sleeve | net SR | total return | maxDD | n_bars | notes |
+|--------|-------:|-------------:|------:|-------:|-------|
+| factor (EW BTC+ETH) | **+0.389** | +6.67% | −14.43% | 456 | BTC halted (15% latch tripped intra-holdout); ETH survived |
+| — factor: bitcoin | −0.339 | — | — | — | negative standalone; hit the halt latch |
+| — factor: ethereum | +0.620 | — | — | — | carries the sleeve |
+| carry (stressed 50/50) | **−1.477** | −1.14% | −1.97% | 456 | funding did not cover stressed costs on this window |
+
+Carry stressed waterfall on holdout: as_built +7.53 → +turnover +6.00 →
++rebalance +1.93 → +margin_cost **−1.48** (boundary_basis Δ0). The margin-drag
+layer flips it negative — on the dev window the same waterfall bottomed at +3.75.
+The sleeve's edge did not survive execution frictions out-of-sample.
+
+### 41.3 Portfolio combination & weight schedule
+
+Frozen allocation: 50/50 freeze on the first bar, monthly inverse-vol rebalance
+on trailing-90-calendar-day vol, carry capped at 50%, zero-vol guard. **The
+carry cap binds at every single rebalance:** carry's realized ann-vol
+(~0.3–0.5%) is 15–35× smaller than factor's (~6–13%), so raw inverse-vol wants
+carry at ~95–97% and is clipped to 0.5 each month. The book is therefore a
+constant **50% carry / 50% factor** across all 15 rebalances — the exact
+"all eggs in the quietest basket" concentration the cap exists to prevent, with
+the cap binding throughout.
+
+| portfolio | net SR | total return | maxDD | n_bars |
+|-----------|-------:|-------------:|------:|-------:|
+| factor+carry (frozen rule) | **+0.380** | +3.42% | −7.17% | 455 |
+
+Half the book is the negative-SR carry sleeve, which drags the combined Sharpe
+from the factor sleeve's +0.389 down to +0.380.
+
+### 41.4 Placebo (factor sleeve)
+
+Real factor portfolio SR = +0.389. Of 500 block-shuffled-signal placebos,
+**82 matched or beat it** → **p = (1+82)/501 = 0.166**. Placebo SR distribution:
+mean −0.458, p95 +0.987, max ≈ +2.7. The real signal's holdout Sharpe is **not
+distinguishable from a persistence-matched random signal** (needs p < 0.05).
+
+### 41.5 Gate evaluation — `gates.json` holdout_deploy
+
+| criterion | scope | threshold | measured | verdict |
+|-----------|-------|----------:|---------:|:-------:|
+| portfolio_net_sharpe_min | portfolio | ≥ 0.50 | **0.380** | **FAIL** |
+| max_drawdown_max | portfolio | ≤ 0.15 | 0.072 | PASS |
+| sleeve_contribution_min (carry) | sleeve | ≥ 0.0 | **−0.0114** | **FAIL** |
+| sleeve_contribution_min (factor) | sleeve | ≥ 0.0 | +0.0667 | PASS |
+| placebo_p_max (factor) | sleeve | < 0.05 | **0.166** | **FAIL** |
+
+Only 2 of 5 criteria pass. Composition rule: portfolio SR & maxDD are a global
+precondition; a sleeve is retained iff the precondition holds AND its
+contribution ≥ 0 (and, for factor, placebo p < 0.05). The portfolio SR
+precondition already fails, and carry (negative contribution) and factor (placebo
+insignificant) each fail their own sleeve criteria independently.
+
+### 41.6 Verdict — **deploy = ∅ (NO-GO on both sleeves)**
+
+The frozen factor+carry portfolio does **not** clear the pre-registered
+`holdout_deploy` gate. **Nothing proceeds to Phase 4 (live integration) as a
+deployable strategy.** This is a valid, pre-registered recorded outcome (the gate
+was designed to admit exactly this):
+
+- **Carry** — NO-GO. Stressed carry is negative on the holdout (SR −1.48,
+  cumulative −1.14%); the funding edge that survived to +3.75 in dev does not
+  survive execution costs out-of-sample here. Fails contribution ≥ 0.
+- **Factor** — NO-GO. Positive but thin (SR +0.39, +6.67%) and **statistically
+  indistinguishable from a random persistence-matched signal** (placebo
+  p = 0.166). BTC tripped the 15% halt latch; ETH alone carried the sleeve.
+  Fails the placebo gate (and drags below the portfolio SR floor when blended
+  with carry).
+
+### 41.7 Honest caveats
+
+- **Single 15-month window, one shot.** No re-runs, no averaging, no CI beyond
+  the placebo. The point estimates are what one deployment start would have seen.
+- **Carry dev-range context.** §39 flagged the stressed carry SR as realistically
+  a range [3.75, ~5.9] (the rebalance-cost convention plausibly overstates cost
+  ~3×); 3.75 was the conservative gate bound carried into H2. Even the optimistic
+  end of that dev range is irrelevant here — the holdout carry return is negative
+  in level, not merely low-SR, so a friendlier cost convention would not flip the
+  contribution sign to positive by much and would not rescue the portfolio SR
+  floor.
+- **Cap-binding concentration.** The 50/50 outcome is not a diversified blend; it
+  is the carry cap clipping an extreme inverse-vol tilt every month. The "book"
+  is effectively half-committed to the losing sleeve by construction.
+- **Consistency with the rebuild.** This reproduces the program's recurring
+  finding (BT11, §12, V3, §34–§38): honest, causal, look-ahead-free signals on
+  BTC/ETH produce thin, often insignificant edges once same-bar look-ahead and
+  unpurged labels are removed. The holdout does not contradict the dev work; it
+  confirms that the dev-window survivors were near the noise floor.
+
+### 41.8 What proceeds to Phase 4 / Phase 5
+
+Per `phase4_note`, Phase-4 live integration and Phase-5 hybrid/LLM re-test are
+gated on this holdout. **With deploy = ∅, no sleeve advances to live integration
+as-is.** Phase 4 and Phase 5 must therefore be re-scoped as new
+brainstorm+plan cycles seeded by `data/rebuild/holdout/result.json`, not as a
+deployment of this book. Candidate directions (out of scope for H2, not yet
+tested on any holdout): a factor-only book without the carry drag; a different
+carry cost/rebalance convention re-validated on dev *before* any new holdout; or
+the deferred LLM-modulator re-test (§23.9 ETH result) — each requiring its own
+pre-registered gate and its own untouched holdout, since this one is now spent.
+
+Ledger: `holdout_oneshot` (4 rows, `allow_holdout=True` — the only authorized use
+in the rebuild); outputs `data/rebuild/holdout/result.json`,
+`data/rebuild/holdout/carry_audit/`, `data/rebuild/holdout/factor_floor/`,
+`data/rebuild/holdout/placebo_distribution.json`. Contract: fc33cd5.
