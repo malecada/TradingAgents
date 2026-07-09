@@ -3491,3 +3491,84 @@ The sleeve must be margined so it can never draw down or be cancelled by the dir
 ### 39.8 Verdict
 
 **GO** at the pre-registered gate: stressed Sharpe **3.75 ≥ 1.5** and worst-90d loss **1.82% ≤ 5%** (0.36%/0.91% at the intended 20%/50% allocation), both from committed pass outputs with no re-tuning. The sleeve is approved as a small, isolated, model-free diversifier (intended 20–50% notional allocation, sub-account isolated, ⅓ margin fraction, `CARRY_` order namespace), subject to the caveats above — in particular the GO is conditional on realizing ≥ ~65% of modeled funding capture and on the isolation/margin requirements in §39.6. Ledger: `carry_audit / {"pass":"verdict"}`, git `e581a3d`.
+
+## Section 40: Directional Sleeve Re-derivation — Five Axes + Ablation + Survival Verdict (2026-07-09)
+
+This section closes Phase 2 of the honest rebuild. The pre-audit directional strategy (V5 MIX, published SR +3.18) was invalidated by the 2026-07-07 backtest audit (§33): same-bar sizing look-ahead (finding C1) and unpurged training labels inflated every V5-derived number, and the honest purged directional accuracy collapsed to ~50%. Phase 2 re-derives the directional sleeve from scratch on a **causal** sizing path (every price-derived sizing input sees `close(D−1)` only) and **purged** walk-forward predictions, over the locked dev window **2021-11-07 → 2025-03-31** (BTC+ETH, equal weight). Each design choice is a pre-registered axis experiment gated by a paired stationary-block bootstrap (block=21, n=2000); the composed config is then gated against a model-free factor floor. The holdout (≥ 2025-04-01) stays locked for the Phase 3 one-shot.
+
+### 40.1 Honest purged directional accuracy (the raw signal)
+
+The re-derived LGB predictions, evaluated on purged walk-forward folds (level target, 78-feature pool), are at or barely above a coin flip — this is the honest signal quality that every downstream sizing decision inherits:
+
+| horizon | h1 | h3 | h7 | h14 |
+|---|---|---|---|---|
+| purged DirAcc (BTC+ETH pooled) | .498 | .502 | .506 | .527 |
+
+Only h14 is materially above 0.50, and even that is the term that the audit showed was most contaminated in the old harness. This reproduces the §33 audit conclusion (honest purged DirAcc ≈ 49–53%, honest SR ≈ 0.1–0.5) and is the binding constraint on everything below.
+
+### 40.2 The five axes — contaminated choice vs honest choice
+
+Each axis re-answers a design question the old (leaked) harness answered on inflated evidence. The gate is `delta_sharpe > 0 AND p_pos ≥ 0.85 AND max_drawdown_worsening ≤ 0.01`.
+
+| axis | old (contaminated) choice | honest re-derivation | honest choice | evidence |
+|---|---|---|---|---|
+| **Horizons** (F3) | h7 + h14 term-structure consensus (the DirAcc ladder tracked leaked-row count exactly, §33) | 7 candidate horizon sets on purged preds; incumbent [7,14] SR **−0.90**, best [3] SR **+0.386** | **[3] adopted** | ΔSR +1.284, p_pos 0.980, DD −0.025 (gate PASS) |
+| **Target** (E1/F2) | log-return target | level vs logret at h3; logret SR −0.744 vs level +0.376 | **level retained** | ΔSR −1.121, p_pos 0.022 (logret REJECTED; confirms E1) |
+| **Pool** (F4) | per-coin routing / larger universes | 2 vs 3 vs 5-coin pools at h3; pool3 SR −0.271, pool5 −0.033, pool2 **+0.376** | **2-coin retained** | best arm IS incumbent (trivial retention) |
+| **Features** (F5) | §20 per-coin routing: BTC/BNB→78f, ETH/SOL→193f | 78f vs 193f for **both** coins at h3; 78f is the incumbent, §20's ETH→193f routing does not reproduce causally | **78f both coins** (§20 routing reversed) | incumbent retained; 193f not adopted |
+| **Sizing** (F6) | "SMA30 trend filter = single biggest win (SR 1.88→2.69)" — a C1 same-bar artifact | 6-arm component ablation (below) | **incumbent sizing kept, kelly→0.25** | see §40.3 |
+
+Net honest incumbent after F2–F5: **level target, single horizon [3], 2-coin BTC+ETH pool, 78-feature predictions**, portfolio SR **+0.3763** (BTC +0.372 / ETH +0.192 per-coin). This is an order of magnitude below the published V5 MIX +3.18 — the gap is exactly the C1 look-ahead + label leakage the audit removed.
+
+### 40.3 Sizing-component ablation (F6, Part 1)
+
+Six arms each toggle **one** sizing component off the incumbent; all else canonical (causal convention, price stop 3%, 15% halt-latch ON for every arm — identical-engine policy). Identity check first: `run_coin_sizing` at defaults reproduces the incumbent SR **0.3763016494366421** to **2.8e-16** (< 1e-9), proving the parameterized path is byte-identical to the incumbent before any toggle. A component is REMOVED (its arm adopted into the composed config) iff its removal arm IMPROVES: `delta_sr > 0 AND p_pos ≥ 0.85`.
+
+| arm | component removed | SR | ΔSR vs incumbent | p_pos | maxDD | removal improves? |
+|---|---|---:|---:|---:|---:|:--:|
+| — incumbent — | (none) | **+0.3763** | — | — | −11.6% | — |
+| `no_trend_filter` | SMA30 trend filter (`trend_sma=0`) | +0.1325 | −0.244 | 0.080 | −10.5% | **no** |
+| `trend_mult_1` | trend boost (`multiplier=1.0`) | +0.1325 | −0.244 | 0.080 | −10.5% | **no** |
+| `no_vol_target` | vol-targeted Kelly (fixed base 1.0) | +0.0534 | −0.323 | 0.238 | −23.1% | **no** |
+| `kelly_025` | half-Kelly → quarter-Kelly | +0.3775 | +0.0012 | 1.000 | −5.9% | **yes** |
+| `min_hold_1` | 7-day min hold (→ 1-day) | −0.6188 | −0.995 | 0.029 | −14.9% | **no** |
+| `no_early_exit` | adaptive early exit (disabled) | +0.3435 | −0.033 | 0.435 | −10.7% | **no** |
+
+**Findings.**
+
+1. **The old "trend filter is the biggest win" claim inverts under honesty — but the filter still helps.** Removing the SMA30 trend filter *drops* SR 0.376 → 0.132 (ΔSR −0.244, p_pos 0.080). The pre-audit claim that the filter was the single largest driver (SR 1.88→2.69) was a C1 same-bar artifact; causally the filter still contributes positively, just far more modestly. It is **retained** (removal does not improve).
+2. **`trend_mult_1` is numerically identical to `no_trend_filter`** (max abs return diff **0.0**), as predicted: in `apply_trend_filter`, `multiplier=1.0` scales aligned positions by 1.0 and opposed positions by 1/1.0 = 1.0 → a complete no-op. Both arms therefore probe the same component and both fail the gate together.
+3. **Vol-targeting and min-hold are load-bearing.** Replacing vol-targeted Kelly with a fixed base size collapses SR to +0.053 and *doubles* max drawdown (−11.6% → −23.1%). Dropping the 7-day min hold to 1 day flips the strategy negative (SR −0.619) — the exit-only-on-flip builder with a 1-day hold churns through whipsaws. Both retained.
+4. **Early exit is ≈ noise.** Disabling adaptive early exit costs a statistically indistinguishable −0.033 SR (p_pos 0.435). Retained (removal does not improve), but it is not doing meaningful work — consistent with the builder being exit-only-on-flip so the bars-3–6 early-exit window rarely fires on this long-biased book.
+5. **`kelly_025` is the only "improvement" — and it is a selection-optimism artifact.** Quarter-Kelly beats half-Kelly by ΔSR **+0.0012** (economically nil) yet posts **p_pos 1.000**. This is not a robust edge: halving Kelly rescales positions almost uniformly (the change only bites where the ×3 leverage cap clips), so the two return streams are near-perfectly correlated and the tiny SR gap has the same sign in every bootstrap resample → p_pos saturates at 1.0. The mechanical gate passes, so kelly=0.25 is adopted into the composed config, **but the improvement is negligible and drawdown-driven** (maxDD −11.6% → −5.9%), not alpha.
+
+**Composed config** = incumbent minus every removed component = incumbent with **kelly_fraction = 0.25** (only adopted arm): level target, horizons [3], 2-coin pool, 78f, SMA30 trend filter ×1.5, vol-targeted Kelly=0.25, min_hold=7, early_exit=0.015, price_stop=3%. Composed portfolio SR **+0.3775** (ΔSR +0.0012 vs incumbent, p_pos 1.000 — same selection-optimism caveat).
+
+### 40.4 ML survival verdict vs the factor floor (F6, Part 2)
+
+The composed LGB candidate is gated against the **factor floor** — 18 pre-registered model-free configs run through the identical causal sizing engine (§ factor-floor). Best floor config: **`macross_10_50_ls`** (10/50 MA-cross, long-short), portfolio SR **+0.632** full-series (+1.016 active-period). Gate (gates.json `ml_survival`): `paired_bootstrap(floor, candidate) ΔSR > 0 AND p_pos ≥ 0.85 AND DSR ≥ 0.90`.
+
+| quantity | value |
+|---|---|
+| candidate SR (composed LGB) | **+0.3775** |
+| floor SR (`macross_10_50_ls`, full-series) | **+0.6322** |
+| ΔSR (floor → candidate), paired bootstrap | **−0.2552** |
+| p_pos (candidate > floor) | 0.354 |
+| DSR (Bailey–López de Prado 2014) | **0.0771** |
+| DSR inputs | per-bar SR 0.02379, SE(SR) 0.02818, E[max SR\|null] 0.06393, **n_trials = 49** |
+
+**n_trials = 49** is the count of **unique `config_hash` rows** in `trial_ledger.jsonl` at evaluation time (69 total rows, 42 unique before F6 + 7 new F6 configs = 49). The raw row count (69) overstates the search because the factor floor's 18 configs were double-appended in a re-run; the unique-hash count is the honest multiple-testing denominator. DSR uses the same implementation (`tradingagents/strategies/v3/backtest/dsr.py`) that `scripts/validate_v5_mix.py` uses.
+
+**Halt-latch dual-reporting.** The engine's 15% portfolio-drawdown circuit breaker is a permanent per-coin latch (once tripped, every later bar for that coin is a flat 0.0). It is kept ON identically for both the candidate and the floor (identical-engine policy), so full-series SR is a fair gate metric. The floor's active-period SR (+1.016, trailing post-halt zeros excluded) is even higher than its full-series +0.632; on either reading the floor dominates the candidate.
+
+**VERDICT: directional sleeve = FACTOR.** The composed LGB candidate does **not** beat the model-free factor floor on any of the three gate conditions (ΔSR −0.255 < 0; p_pos 0.354 < 0.85; DSR 0.077 < 0.90). All three fail decisively — the candidate is *worse* than the floor, not marginally short of it. The honest directional sleeve is the model-free **`macross_10_50_ls`** momentum config, not LGB. This is the F6 analogue of the §12/§33 finding that V5's alpha is ~90% sizing+momentum and the ML layer adds little: once the same-bar look-ahead and label leakage are removed, the LGB signal adds *negative* value over a plain MA-cross run through the same sizing stack.
+
+### 40.5 Interpretation caveats
+
+1. **F3 horizon win is partly a full-confidence sizing effect.** The [3]-over-[7,14] adoption (ΔSR +1.28) is not purely a signal-quality result: a single-horizon config always reaches "full agreement" in `generate_term_structure_signals` (one horizon trivially agrees with itself), so it sizes at full confidence every bar, whereas the two-horizon consensus down-weights or zeroes disagreeing bars. Part of [3]'s edge is therefore *more time in market at higher confidence*, not sharper direction — the honest DirAcc ladder (§40.1) shows h3 is only .502.
+2. **Selection optimism in the p_pos values.** Every axis/arm p_pos is argmax-conditioned (reported for the winner of a small search), so it overstates significance — most starkly `kelly_025`'s p_pos 1.000 on a +0.0012 SR gap. The DSR at the survival gate is precisely the multiple-testing correction: with n_trials=49 the expected max SR under the null (0.064 per-bar) already exceeds the candidate's observed per-bar SR (0.024), which is why DSR collapses to 0.077 regardless of the axis-level p_pos values.
+3. **Single in-sample dev window.** All of §40 is one 2021-11-07 → 2025-03-31 window; the numbers are descriptive of dev, not forward estimates.
+
+### 40.6 What goes to Phase 3 holdout
+
+The Phase 3 one-shot (locked window ≥ 2025-04-01, `holdout_deploy` gate) carries forward the **factor sleeve**: directional signal = **`macross_10_50_ls`** (10/50 MA-cross long-short) run through the causal V2/V5 sizing stack (vol-targeted Kelly, SMA30 trend filter ×1.5, min_hold=7, adaptive early exit, 3% price stop, 15% halt latch), equal-weight BTC+ETH. The composed LGB config is **retired as a controlled negative result** — it is fully specified in `data/rebuild/axis_sizing/result.json` and `data/rebuild/directional_verdict.json` for reproducibility, but does not advance. The carry sleeve (§39, GO) advances as an isolated diversifier alongside the factor directional sleeve. Phase 3 will apply the `holdout_deploy` gate (portfolio net SR ≥ 0.5, maxDD ≤ 15%, sleeve contribution ≥ 0, placebo p ≤ 0.05) **once** to this factor+carry book. Ledger: `axis_sizing` (7 rows); outputs `data/rebuild/axis_sizing/result.json`, `data/rebuild/directional_verdict.json`.
