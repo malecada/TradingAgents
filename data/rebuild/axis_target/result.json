@@ -1,0 +1,164 @@
+{
+  "window": {
+    "start": "2021-11-07",
+    "end": "2025-03-31"
+  },
+  "coins": [
+    "bitcoin",
+    "ethereum"
+  ],
+  "arms": {
+    "level": "btc_eth_78f",
+    "logret": "btc_eth_78f_logret"
+  },
+  "horizon_sets": {
+    "primary": [
+      3
+    ],
+    "reference": [
+      7,
+      14
+    ]
+  },
+  "verification": {
+    "logret": {
+      "h3": {
+        "max_date": "2025-03-29",
+        "n": 2478,
+        "dir_acc": 0.49596448748991123,
+        "dir_acc_sane": true,
+        "max_date_ok": true,
+        "pred_ref_ratio_mean": 1.000963249115999,
+        "level_space_ok": true
+      },
+      "h7": {
+        "max_date": "2025-03-25",
+        "n": 2470,
+        "dir_acc": 0.4987854251012146,
+        "dir_acc_sane": true,
+        "max_date_ok": true,
+        "pred_ref_ratio_mean": 1.001840007792269,
+        "level_space_ok": true
+      },
+      "h14": {
+        "max_date": "2025-03-18",
+        "n": 2456,
+        "dir_acc": 0.5765472312703583,
+        "dir_acc_sane": true,
+        "max_date_ok": true,
+        "pred_ref_ratio_mean": 1.0086929156826046,
+        "level_space_ok": true
+      }
+    },
+    "level": {
+      "h3": {
+        "max_date": "2025-03-29",
+        "n": 2478,
+        "dir_acc": 0.5024213075060533,
+        "dir_acc_sane": true,
+        "max_date_ok": true,
+        "pred_ref_ratio_mean": 1.0046138207832969,
+        "level_space_ok": true
+      },
+      "h7": {
+        "max_date": "2025-03-25",
+        "n": 2470,
+        "dir_acc": 0.5060728744939271,
+        "dir_acc_sane": true,
+        "max_date_ok": true,
+        "pred_ref_ratio_mean": 1.009346023727165,
+        "level_space_ok": true
+      },
+      "h14": {
+        "max_date": "2025-03-18",
+        "n": 2456,
+        "dir_acc": 0.5268729641693811,
+        "dir_acc_sane": true,
+        "max_date_ok": true,
+        "pred_ref_ratio_mean": 1.020424031200204,
+        "level_space_ok": true
+      }
+    },
+    "ok": true
+  },
+  "configs": {
+    "level_primary": {
+      "target_mode": "level",
+      "horizon_set": "primary",
+      "horizons": [
+        3
+      ],
+      "sharpe": 0.3763016494366421,
+      "total_return": 0.11059230642387652,
+      "max_drawdown": -0.11583722637911531,
+      "ann_vol": 0.06180319613199191,
+      "n_bars": 1238
+    },
+    "level_reference": {
+      "target_mode": "level",
+      "horizon_set": "reference",
+      "horizons": [
+        7,
+        14
+      ],
+      "sharpe": -0.8975778324308247,
+      "total_return": -0.12324055920601429,
+      "max_drawdown": -0.1412697197443542,
+      "ann_vol": 0.029604595067765683,
+      "n_bars": 1227
+    },
+    "logret_primary": {
+      "target_mode": "logret",
+      "horizon_set": "primary",
+      "horizons": [
+        3
+      ],
+      "sharpe": -0.7442630350990967,
+      "total_return": -0.12786134216312706,
+      "max_drawdown": -0.1541455698145371,
+      "ann_vol": 0.03651743742850086,
+      "n_bars": 1238
+    },
+    "logret_reference": {
+      "target_mode": "logret",
+      "horizon_set": "reference",
+      "horizons": [
+        7,
+        14
+      ],
+      "sharpe": 0.2387937361101398,
+      "total_return": 0.07041595564040848,
+      "max_drawdown": -0.10411394632832449,
+      "ann_vol": 0.06818503562970663,
+      "n_bars": 1227
+    }
+  },
+  "primary_bootstrap_level_vs_logret_h3": {
+    "sr_a": 0.3763016494366421,
+    "sr_b": -0.7442630350990967,
+    "delta_sr": -1.1205646845357389,
+    "p_pos": 0.022,
+    "ci_low": -2.170357247991269,
+    "ci_high": -0.03494365351079147
+  },
+  "reference_bootstrap_level_vs_logret_h7_14": {
+    "sr_a": -0.8975778324308247,
+    "sr_b": 0.2387937361101398,
+    "delta_sr": 1.1363715685409645,
+    "p_pos": 0.977,
+    "ci_low": 0.02082190940612712,
+    "ci_high": 1.9919331465037489
+  },
+  "gate": {
+    "delta_sharpe": -1.1205646845357389,
+    "p_pos": 0.022,
+    "max_drawdown_worsening": 0.03830834343542178,
+    "rule": "delta_sharpe > 0 AND p_pos >= 0.85 (paired block bootstrap, block=21, n=2000) AND max_drawdown_worsening <= 0.01",
+    "pass": false
+  },
+  "decision": {
+    "adopt_logret": false,
+    "incumbent_after": "level"
+  },
+  "concerns": []
+}
