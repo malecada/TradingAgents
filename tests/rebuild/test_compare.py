@@ -10,11 +10,14 @@ def _series(mu, n=500, seed=1):
     return pd.Series(rng.normal(mu, 0.01, n), index=idx)
 
 
-def test_identical_series_p_pos_half():
+def test_identical_series_degenerate_conservative():
+    """Identical arms: all bootstrap deltas are exactly 0, so p_pos is 0.0
+    (strict > comparison) — conservatively fails any adoption gate."""
     a = _series(0.0005)
     r = paired_bootstrap(a, a.copy())
     assert r["delta_sr"] == 0.0
-    assert 0.4 <= r["p_pos"] <= 0.6
+    assert r["p_pos"] == 0.0
+    assert r["ci_low"] == 0.0 and r["ci_high"] == 0.0
 
 
 def test_clearly_better_arm_wins():
