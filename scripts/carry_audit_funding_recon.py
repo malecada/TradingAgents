@@ -68,6 +68,48 @@ def independent_recompute(raw: pd.DataFrame) -> dict[date, float]:
     return income
 
 
+def compare_daily_series(recomputed_daily: dict[date, float], module_daily: pd.Series) -> dict:
+    """Per-day (not just per-quarter-total) comparison of the two aggregations.
+
+    Totals-only comparison is invariant to how events get bucketed into days —
+    a timezone/day-boundary bug in `aggregate_daily_funding_income` (e.g. an
+    off-by-one-day shift applied consistently) would still sum to the same
+    quarterly total and sail through with rel_diff≈0. Building an explicit
+    per-day series and diffing day-by-day (plus cross-checking day *counts*)
+    catches that class of bug even when totals agree.
+    """
+    recomputed_series = pd.Series(recomputed_daily, dtype="float64")
+    recomputed_series.index = pd.to_datetime(recomputed_series.index)
+    recomputed_series = recomputed_series.sort_index()
+
+    module_series = module_daily.copy()
+    module_series.index = pd.to_datetime(module_series.index)
+    module_series = module_series.sort_index()
+
+    n_days_recomputed = int(len(recomputed_series))
+    n_days_module = int(len(module_series))
+
+    # Union index: a day present on only one side is itself evidence of a
+    # day-boundary discrepancy, so treat the missing side as 0.0 rather than
+    # dropping the day.
+    union_idx = recomputed_series.index.union(module_series.index)
+    aligned_recomputed = recomputed_series.reindex(union_idx, fill_value=0.0)
+    aligned_module = module_series.reindex(union_idx, fill_value=0.0)
+    daily_abs_diff = (aligned_recomputed - aligned_module).abs()
+    max_daily_abs_diff = float(daily_abs_diff.max()) if len(daily_abs_diff) > 0 else 0.0
+
+    daily_series_identical = bool(
+        n_days_recomputed == n_days_module and max_daily_abs_diff < 1e-12
+    )
+
+    return {
+        "n_days_recomputed": n_days_recomputed,
+        "n_days_module": n_days_module,
+        "max_daily_abs_diff": max_daily_abs_diff,
+        "daily_series_identical": daily_series_identical,
+    }
+
+
 def analyze_quarter(symbol: str, q_start: date, q_end: date) -> dict:
     raw = fetch_funding_raw(symbol, q_start, q_end)
     n_events = len(raw)
@@ -86,6 +128,8 @@ def analyze_quarter(symbol: str, q_start: date, q_end: date) -> dict:
     neg_days = sum(1 for v in recomputed_daily.values() if v < 0)
     neg_funding_day_share = (neg_days / n_days) if n_days > 0 else 0.0
 
+    daily_cmp = compare_daily_series(recomputed_daily, module_daily)
+
     return {
         "n_events": n_events,
         "n_days": n_days,
@@ -94,6 +138,7 @@ def analyze_quarter(symbol: str, q_start: date, q_end: date) -> dict:
         "rel_diff": rel_diff,
         "events_per_day": events_per_day,
         "neg_funding_day_share": neg_funding_day_share,
+        **daily_cmp,
     }
 
 
@@ -109,7 +154,10 @@ def main() -> None:
                 f"{label} {sym}: recomputed={res['recomputed_income']:.6f} "
                 f"module={res['module_income']:.6f} rel_diff={res['rel_diff']:.6%} "
                 f"events/day={res['events_per_day']:.2f} "
-                f"neg_share={res['neg_funding_day_share']:.2%}"
+                f"neg_share={res['neg_funding_day_share']:.2%} "
+                f"n_days(recomp/mod)={res['n_days_recomputed']}/{res['n_days_module']} "
+                f"max_daily_abs_diff={res['max_daily_abs_diff']:.3e} "
+                f"daily_identical={res['daily_series_identical']}"
             )
 
     max_rel_diff = max(
@@ -117,8 +165,14 @@ def main() -> None:
         for sym_map in out["quarters"].values()
         for res in sym_map.values()
     )
-    verdict = "PASS" if max_rel_diff < 0.01 else "INVESTIGATE"
+    all_daily_identical = all(
+        res["daily_series_identical"]
+        for sym_map in out["quarters"].values()
+        for res in sym_map.values()
+    )
+    verdict = "PASS" if (max_rel_diff < 0.01 and all_daily_identical) else "INVESTIGATE"
     out["max_rel_diff"] = max_rel_diff
+    out["all_daily_series_identical"] = all_daily_identical
     out["verdict"] = verdict
     out["window_sampled"] = [[q_start.isoformat(), q_end.isoformat()] for _, q_start, q_end in QUARTERS]
     out["symbols"] = list(SYMBOLS)
