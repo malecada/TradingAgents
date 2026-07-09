@@ -41,6 +41,27 @@ Window: 2021-11-07 .. 2025-03-31 (dev; strictly before the locked holdout).
 
 Usage:
     uv run python scripts/factor_baselines.py --start 2021-11-07 --end 2025-03-31
+
+HALT-LATCH TRANSPARENCY (adjudicated 2026-07-09, reviewer finding, Critical).
+`run_coin_backtest`'s max_portfolio_dd=0.15 circuit breaker is a PERMANENT
+latch: once a coin's drawdown-from-peak breaches 15%, `halted=True` is never
+reset, and every subsequent bar for that coin returns a flat 0.0. In the
+former BEST config (macross_10_50_ls), ETH halts on 2022-07-18 and BTC halts
+on 2023-03-03; the trailing zero tail is 61% of the window, and it drags rank
+13-15 (macross_20_100_lo / macross_50_200_lo / tsmom_k90_lo) to byte-identical
+full-series metrics because the dead tail washes out any residual difference
+between them. The controller's decision: the halt STAYS — it is the live
+system's real circuit breaker and it is applied identically to every
+rebuild-arm config, so full-series Sharpe remains a fair, apples-to-apples
+gate metric across configs. What changes here is TRANSPARENCY only: each
+config's recorded metrics now also carry `sr_active` (the portfolio Sharpe
+computed only over bars up to the last nonzero portfolio return, i.e. with
+the trailing post-halt zero tail excluded — diagnostic only, never used for
+selection), `halted_bitcoin` / `halted_ethereum` (bool + first date at which
+that coin's returns go permanently to zero, or null if never halted), and
+`n_trailing_zero_bars` (portfolio-level trailing zero-bar count). The
+full-series Sharpe (column/key `sr`) remains THE primary metric and BEST
+selection is unchanged (max full-series `sr`).
 """
 from __future__ import annotations
 
@@ -194,12 +215,17 @@ def long_only(sig: np.ndarray) -> np.ndarray:
 def _size_and_backtest(
     coin: str, dates: np.ndarray, closes: np.ndarray, highs: np.ndarray,
     lows: np.ndarray, signal: np.ndarray,
-) -> pd.Series:
-    """Signal (windowed) + real OHLC -> daily net return series for one coin.
+) -> tuple[pd.Series, bool]:
+    """Signal (windowed) + real OHLC -> (daily net return series, halted flag).
 
     Causal pattern: px_sizing lags one bar (px_sizing[1:] = px[:-1]); vol,
     vol-mask and position hold-prices see close(D-1). The engine gets the real
     Close for P&L and real High/Low for the intrabar 3% price stop.
+
+    ``halted`` mirrors ``run_coin_backtest``'s permanent max_portfolio_dd
+    circuit breaker for this coin (see module docstring — HALT-LATCH
+    TRANSPARENCY). It is surfaced so callers can report the halt date; it
+    never affects the sizing/backtest math itself.
     """
     px = np.asarray(closes, dtype=float)
     px_sizing = np.empty_like(px)
@@ -220,14 +246,51 @@ def _size_and_backtest(
     # Core-coin causal costs; the 3% price stop replaces the equity-axis proxy.
     costs = costs_for_coin("bitcoin", convention="causal")
     costs["stop_loss"] = 1.0
-    equity, _m = run_coin_backtest(
+    equity, m = run_coin_backtest(
         dates=dates, prices=px, positions=pos, initial_capital=INITIAL_CAPITAL,
         **costs, highs=np.asarray(highs, dtype=float),
         lows=np.asarray(lows, dtype=float), price_stop_pct=PRICE_STOP_PCT,
     )
     eq = np.asarray(equity, dtype=float)
     rets = eq[1:] / eq[:-1] - 1.0
-    return pd.Series(rets, index=pd.to_datetime(dates[1:]), name=coin)
+    series = pd.Series(rets, index=pd.to_datetime(dates[1:]), name=coin)
+    return series, bool(m["halted"])
+
+
+def _coin_halt_date(series: pd.Series, halted: bool) -> str | None:
+    """First date after which ``series`` is permanently zero, or None.
+
+    Proxy (task-specified, simplest robust form): the index one bar after the
+    LAST nonzero return — the halt latch zeros every subsequent bar, so this
+    is exactly the date equity stops changing. Only computed when the engine
+    itself reports ``halted=True`` for this coin.
+    """
+    if not halted:
+        return None
+    vals = series.to_numpy()
+    nz = np.nonzero(vals)[0]
+    idx = (nz[-1] + 1) if len(nz) else 0
+    idx = min(idx, len(series.index) - 1)
+    return series.index[idx].strftime("%Y-%m-%d")
+
+
+def _trailing_zero_info(port: pd.Series) -> tuple[float, int]:
+    """(sr_active, n_trailing_zero_bars) — SR truncated at the last nonzero
+    portfolio return, with the trailing post-halt zero tail excluded.
+
+    Diagnostic only (see module docstring); never used for BEST selection.
+    Same annualization (sqrt(252), ddof=1) as the primary full-series SR.
+    """
+    vals = port.to_numpy()
+    nz = np.nonzero(vals)[0]
+    if len(nz) == 0:
+        return 0.0, len(vals)
+    last_nz = int(nz[-1])
+    trimmed = vals[: last_nz + 1]
+    n_trailing = len(vals) - (last_nz + 1)
+    sd = trimmed.std(ddof=1) if len(trimmed) > 1 else 0.0
+    sr = float(trimmed.mean() / sd * ANN) if sd > 0 else 0.0
+    return sr, n_trailing
 
 
 def _portfolio_metrics(df: pd.DataFrame) -> dict:
@@ -325,23 +388,33 @@ def build_config_specs() -> list[dict]:
 
 # ── Runners ─────────────────────────────────────────────────────────────────
 def run_per_coin_config(spec: dict, data: dict[str, pd.DataFrame],
-                        start: str, end: str) -> pd.DataFrame:
-    """Build one config's BTC+ETH daily-return frame (same builder per coin)."""
+                        start: str, end: str) -> tuple[pd.DataFrame, dict]:
+    """Build one config's BTC+ETH daily-return frame (same builder per coin).
+
+    Returns (returns_df, halts) where halts maps coin -> {"halted": bool,
+    "date": str | None} (see module docstring, HALT-LATCH TRANSPARENCY).
+    """
     cols = {}
+    halts = {}
     for coin in COINS:
         df = data[coin]
         sig_full = np.asarray(spec["builder"](df), dtype=np.int8)
         m = _window_mask(df["Date"], start, end)
-        cols[coin] = _size_and_backtest(
+        series, halted = _size_and_backtest(
             coin, df["Date"].values[m], df["Close"].values[m],
             df["High"].values[m], df["Low"].values[m], sig_full[m],
         )
-    return pd.DataFrame(cols).dropna().sort_index()
+        cols[coin] = series
+        halts[coin] = {"halted": halted, "date": _coin_halt_date(series, halted)}
+    return pd.DataFrame(cols).dropna().sort_index(), halts
 
 
 def run_xs_config(spec: dict, data: dict[str, pd.DataFrame],
-                  start: str, end: str) -> pd.DataFrame:
-    """Cross-sectional BTC/ETH pair on the shared (inner-joined) calendar."""
+                  start: str, end: str) -> tuple[pd.DataFrame, dict]:
+    """Cross-sectional BTC/ETH pair on the shared (inner-joined) calendar.
+
+    Returns (returns_df, halts) — see run_per_coin_config.
+    """
     btc, eth = data["bitcoin"], data["ethereum"]
     merged = btc[["Date", "Close", "High", "Low"]].merge(
         eth[["Date", "Close", "High", "Low"]], on="Date",
@@ -350,17 +423,20 @@ def run_xs_config(spec: dict, data: dict[str, pd.DataFrame],
         merged["Close_btc"].values, merged["Close_eth"].values, k=spec["k"])
     m = _window_mask(merged["Date"], start, end)
     dates = merged["Date"].values[m]
-    cols = {
-        "bitcoin": _size_and_backtest(
-            "bitcoin", dates, merged["Close_btc"].values[m],
-            merged["High_btc"].values[m], merged["Low_btc"].values[m],
-            btc_sig_full[m]),
-        "ethereum": _size_and_backtest(
-            "ethereum", dates, merged["Close_eth"].values[m],
-            merged["High_eth"].values[m], merged["Low_eth"].values[m],
-            eth_sig_full[m]),
+    btc_series, btc_halted = _size_and_backtest(
+        "bitcoin", dates, merged["Close_btc"].values[m],
+        merged["High_btc"].values[m], merged["Low_btc"].values[m],
+        btc_sig_full[m])
+    eth_series, eth_halted = _size_and_backtest(
+        "ethereum", dates, merged["Close_eth"].values[m],
+        merged["High_eth"].values[m], merged["Low_eth"].values[m],
+        eth_sig_full[m])
+    cols = {"bitcoin": btc_series, "ethereum": eth_series}
+    halts = {
+        "bitcoin": {"halted": btc_halted, "date": _coin_halt_date(btc_series, btc_halted)},
+        "ethereum": {"halted": eth_halted, "date": _coin_halt_date(eth_series, eth_halted)},
     }
-    return pd.DataFrame(cols).dropna().sort_index()
+    return pd.DataFrame(cols).dropna().sort_index(), halts
 
 
 def main() -> None:
@@ -386,21 +462,35 @@ def main() -> None:
     rows = []  # (name, metrics, df)
     for spec in specs:
         if spec.get("xs"):
-            df = run_xs_config(spec, data, args.start, args.end)
+            df, halts = run_xs_config(spec, data, args.start, args.end)
         else:
-            df = run_per_coin_config(spec, data, args.start, args.end)
+            df, halts = run_per_coin_config(spec, data, args.start, args.end)
         m = _portfolio_metrics(df)
+        port = df.mean(axis=1)
+        sr_active, n_trailing = _trailing_zero_info(port)
+        m["sr_active"] = sr_active
+        m["n_trailing_zero_bars"] = n_trailing
+        m["halted_bitcoin"] = halts["bitcoin"]
+        m["halted_ethereum"] = halts["ethereum"]
         cfg = {k: v for k, v in spec.items() if k not in ("builder",)}
         log_trial(
             experiment="factor_floor", config=cfg,
             window=(args.start, args.end), metrics=m,
         )
         rows.append((spec["name"], m, df))
-        print(f"  {spec['name']:22s}  SR={m['sharpe']:+.2f}  "
+        print(f"  {spec['name']:22s}  SR={m['sharpe']:+.2f} (active {sr_active:+.2f})  "
               f"ret={m['total_return']:+8.1%}  maxDD={m['max_drawdown']:6.1%}  "
-              f"({m['n_bars']} bars)")
+              f"({m['n_bars']} bars, {n_trailing} trailing-zero)")
 
     rows.sort(key=lambda r: r[1]["sharpe"], reverse=True)
+
+    def _halt_str(m: dict) -> str:
+        parts = []
+        for label, key in (("ETH", "halted_ethereum"), ("BTC", "halted_bitcoin")):
+            h = m[key]
+            if h["halted"]:
+                parts.append(f"{label} {h['date']}")
+        return "; ".join(parts) if parts else "—"
 
     # Floor table.
     lines = [
@@ -412,21 +502,40 @@ def main() -> None:
         "min_hold=7, early_exit=0.015, vol_lookback=20, vol_cap=0.95, "
         "price_stop=3%). Sorted by portfolio Sharpe (desc).",
         "",
-        "| rank | config | portfolio SR | total_return | maxDD | n_bars |",
-        "|-----:|--------|-------------:|-------------:|------:|-------:|",
+        "**Halt-latch transparency** (adjudicated Critical finding, "
+        "2026-07-09): `run_coin_backtest`'s max_portfolio_dd=0.15 circuit "
+        "breaker is a PERMANENT per-coin latch — once tripped it never "
+        "resets, and every later bar for that coin is a flat 0.0. The halt "
+        "is kept as-is (it is the live-system circuit breaker, applied "
+        "identically to every config, so full-series SR stays a fair gate "
+        "metric), but is now surfaced for transparency: `sr_active` is the "
+        "portfolio Sharpe computed only up to the last nonzero portfolio "
+        "return (trailing post-halt zero tail excluded) — diagnostic only, "
+        "never used for BEST selection, which remains max full-series `sr`. "
+        "`halts` lists the first date each coin's returns went permanently "
+        "to zero. `n_trailing_zero_bars` is the portfolio-level trailing "
+        "zero-bar count.",
+        "",
+        "| rank | config | sr | sr_active | total_return | maxDD | halts | "
+        "n_trailing_zero_bars | n_bars |",
+        "|-----:|--------|-----:|-----:|-------------:|------:|-------|"
+        "---------------------:|-------:|",
     ]
     for rank, (name, m, _df) in enumerate(rows, start=1):
         lines.append(
-            f"| {rank} | {name} | {m['sharpe']:+.3f} | "
+            f"| {rank} | {name} | {m['sharpe']:+.3f} | {m['sr_active']:+.3f} | "
             f"{m['total_return']:+.1%} | {m['max_drawdown']:.1%} | "
-            f"{m['n_bars']} |")
+            f"{_halt_str(m)} | {m['n_trailing_zero_bars']} | {m['n_bars']} |")
     lines.append("")
     best_name = rows[0][0]
     best_m = rows[0][1]
     lines.append(
-        f"**Best config: `{best_name}`** — portfolio SR {best_m['sharpe']:+.3f}, "
+        f"**Best config: `{best_name}`** — portfolio SR {best_m['sharpe']:+.3f} "
+        f"(active-period SR {best_m['sr_active']:+.3f}), "
         f"total return {best_m['total_return']:+.1%}, "
-        f"maxDD {best_m['max_drawdown']:.1%}.")
+        f"maxDD {best_m['max_drawdown']:.1%}, halts: {_halt_str(best_m)}. "
+        "Selection remains max full-series SR (`sr`); `sr_active` is "
+        "diagnostic only — see Halt-latch transparency note above.")
     lines.append("")
     (out_dir / "floor_table.md").write_text("\n".join(lines))
 
@@ -440,6 +549,19 @@ def main() -> None:
     best_df.index.name = "date"
     best_df.reset_index()[["date", "bitcoin", "ethereum", "portfolio"]].to_csv(
         best_out / "daily_returns.csv", index=False)
+
+    # Append-only ledger note documenting the halt-transparency decision
+    # (the existing 18 per-config rows above are never rewritten).
+    log_trial(
+        experiment="factor_floor",
+        config={"kind": "halt_transparency_note"},
+        window=(args.start, args.end),
+        metrics={
+            "best_sr_full": best_m["sharpe"],
+            "best_sr_active": best_m["sr_active"],
+            "decision": "identical-engine dual-reporting",
+        },
+    )
 
     print(f"\n{'=' * 78}")
     print(f"  BEST: {best_name}  SR={best_m['sharpe']:+.3f}  "
