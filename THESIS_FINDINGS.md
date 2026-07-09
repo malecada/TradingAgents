@@ -3412,3 +3412,82 @@ Audit-run reference points: trend-lag-only ≈ +1.46; naive pos-shift ≈ +3.02 
 - BT11/§21.3's "90% sizing+momentum" attribution is reinterpreted: it was measuring the same-bar artifact, not genuine momentum alpha.
 - V5.1 (tv0.07/tm2.0/sma20) and the 8-coin expansion must be re-derived on the causal+purged harness before any deployment decision; §20 T7 routing choices are void (selected on leaked DirAcc/SR).
 - Known-stale on this branch: `tests/execution/live/test_parity_script.py` 4-coin pins vs the uncommitted 8-coin `_PARITY_ROUTES` WIP (pre-existing, unrelated to this audit).
+
+## Section 39: Carry Sleeve Five-Pass Audit — GO (2026-07-09)
+
+Trigger: after §33 invalidated every V5-derived directional headline, the funding-carry sleeve (always-on, short 1× perp + long 1× spot, equal notional, 50/50 BTC/ETH) is the one **model-free** lead candidate that survives the rebuild — its edge is exchange-mechanical (perpetual funding transfer), not an ML prediction, so it cannot carry the same-bar/purge defects that sank the directional stack. Five independent passes each reproduced the as-built dev-window sleeve before stressing it, then the pre-registered gate (`data/rebuild/gates.json → carry_go`, registered 2026-07-08 **before** any pass ran: stressed SR ≥ 1.5 **AND** worst-90d loss at intended allocation ≤ 5%) was evaluated against the committed pass outputs only. Window 2021-11-08 → 2025-03-31 (1239 days, √252, dev-window; holdout ≥ 2025-04-01 untouched).
+
+### 39.1 Pass findings (1–5)
+
+**Pass 1 — funding-timing look-ahead (`timing.json`, PASS).** Lagging the funding series one bar leaves SR essentially intact: BTC ΔSR **−0.21** (9.34→9.13), ETH ΔSR **+0.04** (6.66→6.70). No material funding look-ahead; the funding leg is PIT-clean. (`repro.txt` records the real-basis blended sleeve upper bound at SR 8.53; the audit's own as-built reconstruction in `costs.json` is 8.60 — same object, ~0.07 SR reconstruction gap, immaterial.)
+
+**Pass 2 — execution-realism costs (`costs.json`).** Five-layer waterfall from as-built 8.60 to stressed **3.75** (per-symbol BTC 4.39 / ETH 2.50); 147 rebalances (BTC 63 / ETH 84) over 1239 days at a 20%-of-target drift threshold. The two large drops are `plus_rebalance` (−2.55 SR) and `plus_margin_cost` (−2.12 SR); `plus_boundary_basis` is 0.0 by construction (spot−perp basis already marked to market daily in the hedge P&L — a separate boundary charge would double-count). **Reviewer caveat carried forward:** the rebalance layer models the short-perp leg's drift with `−perp_ret`, a conservative judgment call (the `+perp_ret` reading is degenerate — |drift| never reaches 20%, zero rebalances) that plausibly **overstates rebalance cost ~3×**; under the alternative reading stressed SR ≈ **5.9**. Treat stressed carry as the **range [3.75, ~5.9]**, with **3.75 the gate-relevant stress bound**.
+
+**Pass 3 — funding reconciliation (`funding_recon.json`, PASS).** Recomputed vs module funding income across three quarters (2022-Q2 bear / 2023-Q4 chop / 2024-Q1 bull) is identical to floating-point (max rel-diff **1.2e-16**, per-day series identical to 1e-19), 3.00 funding events/day. Bear-market negative-funding-day shares: ETH 2022-Q2 **42.9%**, BTC **26.4%** — the sleeve pays funding on a large fraction of bear days.
+
+**Pass 4 — regime / drawdown (`regime.json`).** Worst rolling-90d return **−1.82%** (2022-08-24 → 11-21). Per-year SR: 2021 +8.50 / **2022 −2.03** / 2023 +6.90 / 2024 +8.74 / 2025-partial +1.89 — a single losing year, the 2022 bear. Haircut curve (scaling realized funding capture only): SR **3.75 / 2.04 / −0.13 / −2.73** at capture h = 1.00 / 0.75 / 0.50 / 0.25 → **SR crosses zero once realized funding capture falls below ~60–70%**. Longest drawdown **≈667 days (22 months)**, peak 2022-01-05 → recovery 2023-11-02 (JSON records 666; +1 off-by-one).
+
+**Pass 5 — gate synthesis (`verdict.json`, this pass).** Both pre-registered criteria evaluated against the committed pass outputs with no re-runs; both pass with wide margin → **GO** (see §39.5).
+
+### 39.2 Cost waterfall (`costs.json`, blended SR)
+
+| Layer | SR after | ΔSR |
+|---|---|---|
+| as_built | 8.60 | — |
+| + turnover (open/close, both legs) | 8.42 | −0.17 |
+| + rebalance (drift > 20% target) | 5.87 | −2.55 |
+| + margin cost (rf drag on ⅓ perp notional) | **3.75** | −2.12 |
+| + boundary basis | 3.75 | 0.00 (marked-to-market) |
+
+Stressed blended **3.75** (BTC 4.39 / ETH 2.50). Range under the rebalance-convention caveat: **[3.75, ~5.9]**.
+
+### 39.3 Haircut curve (`regime.json` / `haircut_curve.csv`, funding-capture scaling)
+
+| funding capture h | Sharpe | total return | max DD |
+|---|---|---|---|
+| 1.00 | 3.75 | +13.6% | −2.9% |
+| 0.75 | 2.04 | +6.4% | −3.4% |
+| 0.50 | −0.13 | −0.4% | −3.8% |
+| 0.25 | −2.73 | −6.7% | −6.7% |
+
+Zero-crossing at ~60–70% realized capture — the binding fragility.
+
+### 39.4 Per-year Sharpe (`regime.json`)
+
+| Year | Sharpe | n days |
+|---|---|---|
+| 2021 | +8.50 | 54 |
+| 2022 | **−2.03** | 365 |
+| 2023 | +6.90 | 365 |
+| 2024 | +8.74 | 366 |
+| 2025 (partial) | +1.89 | 89 |
+
+### 39.5 Gate evaluation (pre-registered `carry_go`)
+
+| Criterion | Registered threshold | Measured | Source file | Pass |
+|---|---|---|---|---|
+| stressed Sharpe | ≥ 1.5 | **3.75** | `costs.json → stressed_blended_sr` | **PASS** |
+| worst-90d loss at allocation | ≤ 5% | **1.82%** raw (0.36% @20%, 0.91% @50% alloc; <5% even @100%) | `regime.json → worst_90d.return` | **PASS** |
+
+Both criteria pass → **VERDICT: GO**. The stressed SR clears the 1.5 floor by 2.25 SR even at the conservative 3.75 stress bound; the worst-90d loss clears the 5% floor at any allocation in the intended 20–50% range (implied max allocation to keep the gate = 100% notional).
+
+### 39.6 Capacity / margin note (live-integration requirements, E4 scope)
+
+The sleeve must be margined so it can never draw down or be cancelled by the directional (V5 MIX) engine, and vice versa.
+
+- **Sub-account isolation (preferred).** Run the sleeve in a dedicated Binance Futures sub-account with its own wallet balance. Margin, liquidation price, and ADL exposure are then computed only over the sleeve's own two legs; a directional stop-out or a margin call on the main account cannot cascade into the sleeve. This is the recommended topology.
+- **Reserve-margin accounting (fallback, shared wallet).** If a single futures wallet must host both, the sleeve's margin must be booked as a hard reserve that the directional sizer treats as unavailable equity. The directional sleeve's Kelly/vol-target notional must be computed on `wallet_equity − carry_reserve`, never on gross equity — otherwise a shared wallet double-counts margin and the combined book can exceed intended leverage exactly when funding turns adverse (2022-type regime) and both sleeves draw at once.
+- **Realized leverage ≤ 3× holds by construction.** The stressed series is built from a 1× perp short + 1× spot long with margin fixed at **⅓ of perp notional** (`costs.json.cost_parameters.margin_fraction_of_perp_notional = 0.3333`). Gross exposure is 2× notional against ⅓-notional posted margin, i.e. **≤ 3× realized leverage by construction** — there is no path in the stressed construction where the sleeve levers past 3×, and the margin-cost waterfall layer (the −2.12 SR drop to 3.75) already charges the rf carry on that ⅓-notional margin. Live must enforce the same ⅓ margin fraction; any tighter margin re-levers the book above the audited 3× and voids the stressed number.
+- **Order-tag namespace.** All sleeve orders must carry a reserved `clientOrderId` prefix (e.g. `CARRY_`) disjoint from the directional namespace. The existing ban/timeout reconciliation handlers and directional stop-loss/algo-order cancellers sweep by namespace; without a disjoint tag a −1003 ban recovery or a directional stop cancel-all could cancel the sleeve's perp hedge and leave a naked spot leg (or vice-versa). The reconciler and stop handlers must be scoped to their own prefix and must never touch `CARRY_*` orders. This mirrors the `STOP_MARKET`/algoId isolation already required for directional stops.
+
+### 39.7 Caveats
+
+1. **Rebalance-convention range** — stressed SR is the range **[3.75, ~5.9]**; 3.75 (the conservative `−perp_ret` reading) is the gate-relevant bound and the gate passes at it. The point estimate is convention-dependent.
+2. **Haircut fragility (~60–70% capture)** — GO is conditional on realizing ≥ ~65% of modeled funding income live; below that the edge disappears (h=0.50 SR −0.13). Missed funding events, exchange throttling, and adverse rebalance timing all erode capture.
+3. **2022 negative year** — per-year SR 2022 = −2.03; the sleeve loses in sustained negative-funding bear regimes, not funding-regime-agnostic.
+4. **Single 3.4-yr in-sample window** — all statistics on one 2021-11-08→2025-03-31 window, no OOS holdout; per-year SR and worst-90d are descriptive, not forward estimates.
+5. **In-sample worst-90d** — the −1.82% floor and the ~667-day (22-month) longest drawdown are the realized minimum/max over the acceptance window; a forward path could exceed them even while passing the 90-day gate.
+
+### 39.8 Verdict
+
+**GO** at the pre-registered gate: stressed Sharpe **3.75 ≥ 1.5** and worst-90d loss **1.82% ≤ 5%** (0.36%/0.91% at the intended 20%/50% allocation), both from committed pass outputs with no re-tuning. The sleeve is approved as a small, isolated, model-free diversifier (intended 20–50% notional allocation, sub-account isolated, ⅓ margin fraction, `CARRY_` order namespace), subject to the caveats above — in particular the GO is conditional on realizing ≥ ~65% of modeled funding capture and on the isolation/margin requirements in §39.6. Ledger: `carry_audit / {"pass":"verdict"}`, git `e581a3d`.

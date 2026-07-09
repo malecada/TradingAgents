@@ -1,0 +1,93 @@
+{
+  "experiment": "carry_audit",
+  "pass": "verdict",
+  "date": "2026-07-09",
+  "window": ["2021-11-08", "2025-03-31"],
+  "annualization": "sqrt(252)",
+  "construction": "always-on funding-carry sleeve, short 1x perp + long 1x spot, equal notional both legs, 50/50 BTC/ETH; margin = 1/3 of perp notional (realized leverage <= 3x by construction)",
+  "registered_gate": {
+    "source": "data/rebuild/gates.json -> carry_go",
+    "registered": "2026-07-08 (BEFORE any audit pass ran)",
+    "stressed_sharpe_min": 1.5,
+    "worst_90d_loss_max_at_allocation": 0.05,
+    "note": "stressed = after execution-realism cost pass C2 haircuts"
+  },
+  "gate_inputs": [
+    {
+      "criterion": "stressed_sharpe",
+      "registered_threshold": 1.5,
+      "comparator": ">=",
+      "measured": 3.7503661753112434,
+      "source_file": "data/rebuild/carry_audit/costs.json",
+      "source_key": "stressed_blended_sr",
+      "pass": true,
+      "detail": {
+        "per_symbol_stressed_sr": {"BTCUSDT": 4.393652364358618, "ETHUSDT": 2.4971898572775255},
+        "waterfall_sr": {
+          "as_built": 8.595331872319965,
+          "plus_turnover": 8.423127504484063,
+          "plus_rebalance": 5.868202106286357,
+          "plus_margin_cost": 3.7503661753112434,
+          "plus_boundary_basis": 3.7503661753112434
+        }
+      }
+    },
+    {
+      "criterion": "worst_90d_loss_at_allocation",
+      "registered_threshold": 0.05,
+      "comparator": "loss_at_allocation <= 0.05",
+      "measured_raw_worst_90d_return": -0.018221768679029804,
+      "measured_worst_90d_window": ["2022-08-24", "2022-11-21"],
+      "intended_allocation_range": [0.2, 0.5],
+      "loss_at_20pct_alloc": -0.0036443537358059608,
+      "loss_at_50pct_alloc": -0.009110884339514902,
+      "loss_at_100pct_notional": -0.018221768679029804,
+      "implied_max_allocation_to_keep_gate": 1.0,
+      "source_file": "data/rebuild/carry_audit/regime.json",
+      "source_key": "worst_90d.return / gate",
+      "pass": true,
+      "detail": "worst-90d raw sleeve loss 1.82% < 5% floor even at 100% notional; passes at both 20% and 50% intended allocation with wide margin."
+    }
+  ],
+  "gate_evaluation": {
+    "stressed_sharpe_pass": true,
+    "worst_90d_loss_pass": true,
+    "both_criteria_pass": true
+  },
+  "verdict": "GO",
+  "supporting_passes": {
+    "pass1_timing": {
+      "source_file": "data/rebuild/carry_audit/timing.json",
+      "verdict": "PASS",
+      "sr_delta_funding_lag1": {"BTCUSDT": -0.20868150691451426, "ETHUSDT": 0.036006600121852195},
+      "note": "one-bar funding lag leaves SR essentially intact; no material funding look-ahead."
+    },
+    "pass2_costs": {
+      "source_file": "data/rebuild/carry_audit/costs.json",
+      "stressed_blended_sr": 3.7503661753112434,
+      "note": "gate-relevant stress bound. See rebalance-convention caveat: stressed carry realistically a RANGE [3.75, ~5.9]."
+    },
+    "pass3_funding_recon": {
+      "source_file": "data/rebuild/carry_audit/funding_recon.json",
+      "verdict": "PASS",
+      "max_rel_diff": 1.2463537719271053e-16,
+      "events_per_day": 3.0,
+      "neg_funding_day_share": {"BTC_2022Q2": 0.26373626373626374, "ETH_2022Q2": 0.42857142857142855}
+    },
+    "pass4_regime": {
+      "source_file": "data/rebuild/carry_audit/regime.json",
+      "worst_90d": -0.018221768679029804,
+      "per_year_sharpe": {"2021": 8.500083775168871, "2022": -2.029670893215954, "2023": 6.902328071983671, "2024": 8.743655757282193, "2025_partial": 1.8904449906609861},
+      "haircut_curve_sr": {"1.00": 3.7503661753109525, "0.75": 2.0416594014804583, "0.50": -0.12718532512675948, "0.25": -2.731665647075739},
+      "longest_drawdown_days": "~667 (22 months; JSON records 666, +1 off-by-one)"
+    }
+  },
+  "caveats": [
+    "Rebalance-convention range: the stressed SR of 3.75 uses the conservative -perp_ret drift convention in the rebalance layer, which plausibly overstates rebalance cost ~3x. Under the alternative (funding-neutral) reading the stressed blended SR is ~5.9. Treat stressed carry as the RANGE [3.75, ~5.9]; 3.75 is the gate-relevant lower/stress bound and the gate passes at that bound.",
+    "Haircut fragility: the haircut curve (regime.json) crosses zero SR once realized funding capture falls below ~60-70% of the modeled series (h=1.00 SR 3.75, h=0.75 SR 2.04, h=0.50 SR -0.13, h=0.25 SR -2.73). The GO verdict is conditional on capturing at least ~65% of modeled funding income live; slippage on funding realization (missed events, exchange throttling, adverse rebalance timing) is the dominant risk to the edge.",
+    "2022 negative year: per-year SR 2022 = -2.03 (365 days), the single losing year, driven by sustained negative-funding stretches in the bear market (ETH 2022-Q2 neg-funding-day share 42.9%, BTC 26.4%). The sleeve is not funding-regime-agnostic.",
+    "Single 3.4-year in-sample window: all statistics are computed on one contiguous 2021-11-08..2025-03-31 window with no out-of-sample holdout. Per-year SR and worst-90d are descriptive of this window, not forward estimates.",
+    "In-sample worst-90d: the -1.82% worst-90d floor is the realized minimum over the same window used to accept the gate; a forward worst-90d could exceed it. Longest observed drawdown ~667 days (22 months, peak 2022-01-05 to recovery 2023-11-02) shows the sleeve can bleed for extended low-funding regimes even while passing the 90-day loss gate."
+  ],
+  "provenance_note": "All gate inputs read directly from committed pass outputs (timing.json, costs.json, funding_recon.json, regime.json). No parameters were re-run or re-tuned to change the gate result."
+}
