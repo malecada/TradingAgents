@@ -114,6 +114,7 @@ def walk_forward_pooled(
     min_train_window: int = 365,
     train_window_days: int | None = None,
     purge_days: int = 0,
+    target_mode: str = "level",
 ) -> tuple[pd.DataFrame, dict]:
     """Walk-forward eval on the pooled multi-coin dataset.
 
@@ -140,12 +141,23 @@ def walk_forward_pooled(
             closer than `horizon` days to the test date carry labels realized
             AFTER the test date (label-overlap leakage). Pass `horizon` to
             purge them.
+        target_mode: "level" (default) — `target_col` already holds the raw
+            future price, predictions are used as-is. "logret" — `target_col`
+            holds `log(P_{t+h}/P_t)` (see `model_utils.data_transform`); the
+            model is fit/predicts in log-return space, but both `prediction`
+            and `actual` are inverse-transformed to price level
+            (`ref_price * exp(x)`) before being written to `pred_df`, so the
+            output schema and every downstream consumer (CSV columns,
+            `_dir_acc`, `v2_sizing`, `baseline_v5_mix`) are unchanged.
 
     Returns:
         (predictions_df, metrics_dict) where predictions_df has columns
-        [date, coin_id, prediction, actual] and metrics_dict has keys
+        [date, coin_id, prediction, actual, ref_price] (always price-level,
+        regardless of target_mode) and metrics_dict has keys
         r2/mae/rmse/mape/directional_accuracy.
     """
+    if target_mode not in ("level", "logret"):
+        raise ValueError(f"target_mode must be 'level' or 'logret', got {target_mode!r}")
     pooled_df = _ensure_date_indexed(pooled_df)
 
     target_col = f"prices_h{horizon}"
@@ -204,12 +216,21 @@ def walk_forward_pooled(
 
         test_rows = test.reset_index().rename(columns={"index": "date"})
         for j in range(len(test)):
+            ref_price = float(test.iloc[j]["prices"])
+            raw_pred = float(preds[j])
+            raw_actual = float(test.iloc[j][target_col])
+            if target_mode == "logret":
+                pred_level = ref_price * np.exp(raw_pred)
+                actual_level = ref_price * np.exp(raw_actual)
+            else:
+                pred_level = raw_pred
+                actual_level = raw_actual
             rows.append({
                 "date": cur_date,
                 "coin_id": test_rows.iloc[j]["coin_id"],
-                "prediction": float(preds[j]),
-                "actual": float(test.iloc[j][target_col]),
-                "ref_price": float(test.iloc[j]["prices"]),
+                "prediction": pred_level,
+                "actual": actual_level,
+                "ref_price": ref_price,
             })
 
     pred_df = pd.DataFrame(rows)
@@ -228,6 +249,7 @@ def model_run_pooled(
     min_train_window: int = 365,
     train_window_days: int | None = None,
     purge_days: int = 0,
+    target_mode: str = "level",
 ) -> tuple[pd.DataFrame, dict]:
     """Public entrypoint mirroring the contract used by evaluate scripts.
 
@@ -237,6 +259,7 @@ def model_run_pooled(
     return walk_forward_pooled(
         pooled_df, horizon, min_train_window,
         train_window_days=train_window_days, purge_days=purge_days,
+        target_mode=target_mode,
     )
 
 
@@ -261,6 +284,7 @@ def fit_pooled_full(
     pooled_df: pd.DataFrame,
     horizon: int,
     feature_cols: list[str] | None = None,
+    target_mode: str = "level",
 ) -> dict:
     """Fit a single LGB regressor on the entire pooled dataset for one horizon.
 
@@ -276,7 +300,9 @@ def fit_pooled_full(
         plus an integer-encoded `coin_int` derived from `coin_id` so the model
         can learn per-coin offsets.
       - Min-max scaling fitted on the training rows; the fitted scaler is
-        bundled so live inference applies the same transform.
+        bundled so live inference applies the same transform. Note: only the
+        feature matrix is scaled — the target (`y`) is fit raw in both level
+        and logret mode, so there is no target-scaling to invert here.
 
     Args:
         pooled_df: Pooled DataFrame post-`data_transform` (must already have
@@ -284,6 +310,10 @@ def fit_pooled_full(
         horizon: Which `prices_h{h}` column to predict.
         feature_cols: Optional override of the feature list. When None we
             replicate walk_forward_pooled's selection rule.
+        target_mode: "level" (default) or "logret" — must match the mode
+            `data_transform` used to build `pooled_df`'s target column. Stored
+            on the returned bundle so `predict_pooled` knows whether to
+            inverse-transform (`ref_price * exp(pred)`) back to price level.
 
     Returns:
         Dict with:
@@ -294,10 +324,14 @@ def fit_pooled_full(
           - 'n_train_rows': rows used after dropping NaN target rows
           - 'scaler': fitted MinMaxScaler used at fit time
           - 'coin_to_int': mapping of coin_id -> integer (for live encoding)
+          - 'target_mode': echoed input ("level" or "logret")
 
     Raises:
         ValueError: target column missing or no rows remain after NaN drop.
     """
+    if target_mode not in ("level", "logret"):
+        raise ValueError(f"target_mode must be 'level' or 'logret', got {target_mode!r}")
+
     target_col = f"prices_h{horizon}"
     if target_col not in pooled_df.columns:
         raise ValueError(
@@ -344,6 +378,7 @@ def fit_pooled_full(
         "n_train_rows": int(len(train)),
         "scaler": scaler,
         "coin_to_int": coin_to_int,
+        "target_mode": target_mode,
     }
 
 
@@ -358,13 +393,21 @@ def predict_pooled(
     mapping and the feature_row has a `coin_id` column but lacks `coin_int`,
     the integer code is filled in automatically.
 
+    When `bundle["target_mode"] == "logret"`, the raw booster output is in
+    log-return space and is inverse-transformed to price level before being
+    returned (`ref_price * exp(raw_pred)`), using the row's own `prices`
+    feature column as `ref_price` — that is exactly the same reference price
+    `data_transform` used to build the logret target (see
+    `model_utils.data_transform`). Callers therefore always receive a
+    price-level prediction regardless of the mode the bundle was fit with.
+
     Args:
         bundle: Output of `fit_pooled_full`.
         feature_row: DataFrame with at least the columns in
             bundle['feature_names']. Only the first row is used.
 
     Returns:
-        The predicted target as a Python float.
+        The predicted target, in price level, as a Python float.
     """
     feat_names = bundle["feature_names"]
     row = feature_row.copy()
@@ -384,7 +427,12 @@ def predict_pooled(
     if scaler is not None:
         X = scaler.transform(X)
     pred = bundle["booster"].predict(X)
-    return float(pred[0])
+    raw_pred = float(pred[0])
+
+    if bundle.get("target_mode") == "logret":
+        ref_price = float(row["prices"].iloc[0])
+        return ref_price * float(np.exp(raw_pred))
+    return raw_pred
 
 
 # ── Agent-facing single-date multi-horizon forecast ──────────────────

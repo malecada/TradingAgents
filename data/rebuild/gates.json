@@ -1,0 +1,27 @@
+{
+  "registered": "2026-07-08",
+  "spec": "docs/superpowers/specs/2026-07-08-honest-rebuild-design.md",
+  "carry_go": {
+    "stressed_sharpe_min": 1.5,
+    "worst_90d_loss_max_at_allocation": 0.05,
+    "note": "stressed = after execution-realism cost pass C2 haircuts"
+  },
+  "axis_experiments": {
+    "adopt_rule": "delta_sharpe > 0 AND p_pos >= 0.85 (paired block bootstrap, block=21, n=2000) AND max_drawdown_worsening <= 0.01",
+    "note": "applies to axes: target, horizons, pool, features, sizing components"
+  },
+  "ml_survival": {
+    "vs": "best factor-floor config",
+    "delta_sharpe_min": 0.0,
+    "p_pos_min": 0.85,
+    "dsr_min": 0.90,
+    "dsr_trials": "trial_count() from ledger at evaluation time"
+  },
+  "holdout_deploy": {
+    "portfolio_net_sharpe_min": 0.5,
+    "max_drawdown_max": 0.15,
+    "sleeve_contribution_min": 0.0,
+    "placebo_p_max": 0.05,
+    "one_shot": true
+  }
+}
