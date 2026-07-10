@@ -3513,7 +3513,7 @@ Each axis re-answers a design question the old (leaked) harness answered on infl
 | axis | old (contaminated) choice | honest re-derivation | honest choice | evidence |
 |---|---|---|---|---|
 | **Horizons** (F3) | h7 + h14 term-structure consensus (the DirAcc ladder tracked leaked-row count exactly, §33) | 7 candidate horizon sets on purged preds; incumbent [7,14] SR **−0.90**, best [3] SR **+0.386** | **[3] adopted** | ΔSR +1.284, p_pos 0.980, DD −0.025 (gate PASS) |
-| **Target** (E1/F2) | log-return target | level vs logret at h3; logret SR −0.744 vs level +0.376 | **level retained** | ΔSR −1.121, p_pos 0.022 (logret REJECTED; confirms E1) |
+| **Target** (E1/F2) | level target (E1 had rejected logret on leaked DirAcc — a "may flip" candidate) | level vs logret at h3; logret SR −0.744 vs level +0.376 | **level retained** | ΔSR −1.121, p_pos 0.022 (logret REJECTED; confirms E1) |
 | **Pool** (F4) | per-coin routing / larger universes | 2 vs 3 vs 5-coin pools at h3; pool3 SR −0.271, pool5 −0.033, pool2 **+0.376** | **2-coin retained** | best arm IS incumbent (trivial retention) |
 | **Features** (F5) | §20 per-coin routing: BTC/BNB→78f, ETH/SOL→193f | 78f vs 193f for **both** coins at h3; 78f is the incumbent, §20's ETH→193f routing does not reproduce causally | **78f both coins** (§20 routing reversed) | incumbent retained; 193f not adopted |
 | **Sizing** (F6) | "SMA30 trend filter = single biggest win (SR 1.88→2.69)" — a C1 same-bar artifact | 6-arm component ablation (below) | **incumbent sizing kept, kelly→0.25** | see §40.3 |
@@ -3571,7 +3571,7 @@ The composed LGB candidate is gated against the **factor floor** — 18 pre-regi
 
 ### 40.6 What goes to Phase 3 holdout
 
-The Phase 3 one-shot (locked window ≥ 2025-04-01, `holdout_deploy` gate) carries forward the **factor sleeve**: directional signal = **`macross_10_50_ls`** (10/50 MA-cross long-short) run through the causal V2/V5 sizing stack (vol-targeted Kelly, SMA30 trend filter ×1.5, min_hold=7, adaptive early exit, 3% price stop, 15% halt latch), equal-weight BTC+ETH. The composed LGB config is **retired as a controlled negative result** — it is fully specified in `data/rebuild/axis_sizing/result.json` and `data/rebuild/directional_verdict.json` for reproducibility, but does not advance. The carry sleeve (§39, GO) advances as an isolated diversifier alongside the factor directional sleeve. Phase 3 will apply the `holdout_deploy` gate (portfolio net SR ≥ 0.5, maxDD ≤ 15%, sleeve contribution ≥ 0, placebo p ≤ 0.05) **once** to this factor+carry book. Ledger: `axis_sizing` (7 rows); outputs `data/rebuild/axis_sizing/result.json`, `data/rebuild/directional_verdict.json`.
+The Phase 3 one-shot (locked window ≥ 2025-04-01, `holdout_deploy` gate) carries forward the **factor sleeve**: directional signal = **`macross_10_50_ls`** (10/50 MA-cross long-short) run through the causal V2/V5 sizing stack (vol-targeted Kelly at kelly_fraction=0.5 — the §40.3 kelly=0.25 adoption applies only to the retired LGB config; **no trend filter** — the MA-cross is itself the trend rule; min_hold=7, adaptive early exit, 3% price stop, 15% halt latch), equal-weight BTC+ETH. The composed LGB config is **retired as a controlled negative result** — it is fully specified in `data/rebuild/axis_sizing/result.json` and `data/rebuild/directional_verdict.json` for reproducibility, but does not advance. The carry sleeve (§39, GO) advances as an isolated diversifier alongside the factor directional sleeve. Phase 3 will apply the `holdout_deploy` gate (portfolio net SR ≥ 0.5, maxDD ≤ 15%, sleeve contribution ≥ 0, placebo p < 0.05) **once** to this factor+carry book. Ledger: `axis_sizing` (7 rows); outputs `data/rebuild/axis_sizing/result.json`, `data/rebuild/directional_verdict.json`.
 
 ## Section 41: Holdout One-Shot — NO-GO (deploy = ∅) (2026-07-09)
 
@@ -3616,12 +3616,15 @@ recorded as it fell out.
 | factor (EW BTC+ETH) | **+0.389** | +6.67% | −14.43% | 456 | BTC halted (15% latch tripped intra-holdout); ETH survived |
 | — factor: bitcoin | −0.339 | — | — | — | negative standalone; hit the halt latch |
 | — factor: ethereum | +0.620 | — | — | — | carries the sleeve |
-| carry (stressed 50/50) | **−1.477** | −1.14% | −1.97% | 456 | funding did not cover stressed costs on this window |
+| carry (stressed 50/50) | **−1.477** | −1.14% | −1.97% | 456 | funding held; rf margin-cost layer flips the stressed sleeve negative |
 
 Carry stressed waterfall on holdout: as_built +7.53 → +turnover +6.00 →
 +rebalance +1.93 → +margin_cost **−1.48** (boundary_basis Δ0). The margin-drag
 layer flips it negative — on the dev window the same waterfall bottomed at +3.75.
-The sleeve's edge did not survive execution frictions out-of-sample.
+Funding income itself held up out-of-sample (as-built +7.53, and still +1.93
+after all trading frictions); what fails is the risk-free hurdle — the rf
+opportunity cost on margin capital (−3.41 SR) dominates a ~0.4%-ann-vol sleeve.
+The stressed sleeve underperforms T-bills; it is not eaten by execution.
 
 ### 41.3 Portfolio combination & weight schedule
 
@@ -3645,7 +3648,7 @@ from the factor sleeve's +0.389 down to +0.380.
 
 Real factor portfolio SR = +0.389. Of 500 block-shuffled-signal placebos,
 **82 matched or beat it** → **p = (1+82)/501 = 0.166**. Placebo SR distribution:
-mean −0.458, p95 +0.987, max ≈ +2.7. The real signal's holdout Sharpe is **not
+mean −0.458, p95 +0.987, max +2.21. The real signal's holdout Sharpe is **not
 distinguishable from a persistence-matched random signal** (needs p < 0.05).
 
 ### 41.5 Gate evaluation — `gates.json` holdout_deploy
@@ -3672,8 +3675,10 @@ deployable strategy.** This is a valid, pre-registered recorded outcome (the gat
 was designed to admit exactly this):
 
 - **Carry** — NO-GO. Stressed carry is negative on the holdout (SR −1.48,
-  cumulative −1.14%); the funding edge that survived to +3.75 in dev does not
-  survive execution costs out-of-sample here. Fails contribution ≥ 0.
+  cumulative −1.14%). The funding edge itself persisted (as-built +7.53;
+  +1.93 after all trading frictions) but the rf margin opportunity-cost layer
+  dominates the tiny-vol sleeve — under the frozen stressed model the sleeve
+  underperforms the risk-free hurdle out-of-sample. Fails contribution ≥ 0.
 - **Factor** — NO-GO. Positive but thin (SR +0.39, +6.67%) and **statistically
   indistinguishable from a random persistence-matched signal** (placebo
   p = 0.166). BTC tripped the 15% halt latch; ETH alone carried the sleeve.

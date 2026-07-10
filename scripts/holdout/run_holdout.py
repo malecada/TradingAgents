@@ -232,6 +232,10 @@ def main() -> None:
           f"[{pb['runtime_sec']}s]")
 
     # ── gate evaluation ─────────────────────────────────────────────────────
+    # Comparator convention (final-review note): *_min thresholds are inclusive
+    # (>=), *_max inclusive (<=), placebo strictly < placebo_p_max. Nothing in
+    # this run landed near a threshold (SR 0.380 vs 0.5; p 0.166 vs 0.05), so
+    # the inclusive/strict distinction did not affect any verdict.
     carry_contrib = carry_m["total_return"]
     factor_contrib = factor_m["total_return"]
     g_sr = port_m["sharpe"] >= gates["portfolio_net_sharpe_min"]
