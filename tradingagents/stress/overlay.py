@@ -29,9 +29,10 @@ def _sr(returns: pd.Series) -> float:
 
 
 def _maxdd(returns: pd.Series) -> float:
+    """Max drawdown as positive magnitude; delta_maxdd = overlay - base, improvement < 0 (matches frozen gate overlay_delta_maxdd_max = 0.0)."""
     cum = returns.cumsum()
     dd = cum - cum.cummax()
-    return float(np.expm1(dd.min()))
+    return float(-np.expm1(dd.min()))
 
 
 def overlay_metrics(returns: pd.Series, warn: pd.Series, cooldown: int = 5) -> dict:

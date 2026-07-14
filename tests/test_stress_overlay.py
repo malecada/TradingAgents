@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import pytest
 from tradingagents.stress.overlay import apply_overlay, overlay_metrics
 
 
@@ -24,7 +25,8 @@ def test_overlay_avoids_crash_improves_dd():
     warn = pd.Series(False, index=idx)
     warn.iloc[28:40] = True  # warned before crash
     m = overlay_metrics(ret, warn, cooldown=2)
-    assert m["delta_maxdd"] > 0  # overlay reduces drawdown (maxdd_overlay > maxdd_base when both negative)
+    assert m["delta_maxdd"] < 0  # overlay reduces drawdown (positive-magnitude convention: improvement is negative)
+    assert m["maxdd_base"] > 0  # positive-magnitude convention pinned
     assert m["sr_overlay"] > m["sr_base"]
 
 
@@ -34,3 +36,14 @@ def test_zero_variance_sr_is_zero():
     warn = pd.Series(False, index=idx)
     m = overlay_metrics(ret, warn)
     assert m["sr_base"] == 0.0
+
+
+def test_maxdd_positive_magnitude_convention():
+    idx = _idx(30)
+    ret = pd.Series(-0.01, index=idx)
+    warn = pd.Series(False, index=idx)
+    m = overlay_metrics(ret, warn)
+    # cum log-returns: cum[i] = -0.01*(i+1); cummax anchors at day-0 value (-0.01)
+    # since the series is monotonically decreasing, so dd.min() = -0.01*29 = -0.29
+    # (not -0.30 -- the running max never resets below day 0's own value).
+    assert m["maxdd_base"] == pytest.approx(0.2517, abs=1e-3)
