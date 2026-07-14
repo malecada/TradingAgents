@@ -3892,3 +3892,223 @@ Task 1 ran, and the negative is recorded as it fell. This is consistent with
 the program's recurring pattern of honest, causal, look-ahead-free signals
 producing thin or null edges once same-bar look-ahead and post-hoc tuning are
 removed (BT11, §12, §33–§38, §40–§41).
+
+## Section 43: Wide-Universe Cross-Sectional Momentum (P1) + F&G Sentiment-Beta (D1) — Dev-Gate NEGATIVE ×2, Holdouts Unspent (2026-07-14)
+
+Motivation traces to the wide-universe pivot pass
+(`PIVOT_RESEARCH_2026-07-12.md`) and the sentiment early-warning pass
+(`SENTIMENT_EARLY_WARNING_RESEARCH_2026-07-14.md`). P1 tests whether
+published post-2020 cross-sectional crypto momentum (Borri, Liu, Tsyvinski
+& Wu, arXiv 2510.14435, survivorship-controlled 16,468-coin universe,
+2-week momentum long-short t = 3.70 Newey-West; independently corroborated by
+JFQA 2025 "Trend Factor for the Cross-Section of Cryptocurrency Returns")
+survives as a retail-implementable long-only top-K design net of realistic
+costs on a tradable Binance-perp subuniverse — the literature reports gross
+Sharpes only, and net-of-cost retail survival is an open question this task
+answers in-house. D1 tests whether the nonlinear F&G-beta pricing effect
+documented in *Journal of Behavioral and Experimental Finance* (2025,
+S2214635025000243; intermediate-beta coins earn +3.57%/week risk-adjusted
+excess return vs. extreme-beta coins, 1,100+ coins, 2018-2024) survives as a
+standalone middle-quintile long portfolio under the same cost and universe
+regime. Both were pre-registered as candidate honest negatives alongside §42,
+under the same one-shot discipline that governs the rest of the rebuild
+(§39-41).
+
+### 43.1 Pre-registration provenance
+
+Gates frozen **before** any grid cell was run: `data/rebuild/gates.json →
+xs_mom_p1` + `fg_beta_d1` (registered 2026-07-14), full rule text in
+`docs/superpowers/specs/2026-07-14-xs-mom-fg-beta-prereg.md`, committed at
+`d5236d1`. P1's grid is closed at 12 configurations (L ∈ {7, 14, 28} ×
+skip ∈ {0, 1} × K ∈ {10, 20}); D1's grid is closed at 2 configurations
+((a) standalone middle-quintile long, (b) P1-overlay excluding extreme-beta
+quintiles, with (b) conditional on P1 selecting a config). Dev window for
+both: **2021-01-01 → 2025-03-31**. Holdout window for both: **2025-04-01 →
+2026-07-01**, untouched by this task — the gate check
+(`dev_results.json["selected"]`) returns `None` for both experiments, so the
+one-shot holdout scripts were never written and no holdout data was read.
+
+Portfolio-mechanics and universe-eligibility engine: `tradingagents/xsect/`,
+built and hardened across commits `cbfd748` (survivorship-safe bulk kline
+fetcher), `9b8dab9` (trim trailing zero-volume padding), `c1ccab5` (PIT
+universe eligibility from kline availability), `396744a` (calendar-anchored
+30-day volume window), `99ca9d4` (weekly EW portfolio engine + paired
+bootstrap + rank placebo), `a8e9c35` (weight-anchored returns, full exit
+costs, calendar momentum window, C1 kill-test), and `9db04ab` (require
+anchor close before momentum window — fused-return guard). Grid execution
+commits: `974fc77` (P1, 12 configs + benchmark) and `9268dc2` +`ef27ab1`
+(D1 causal rolling-OLS beta sort + standalone dev run). The vectorized grid
+engine used for the 12/2-config sweeps was cross-validated bit-identical
+against the reference `run_weekly_portfolio()` path on high-turnover
+configs: max abs diff `1.67e-16` (P1) and `5.55e-17` (D1). DSR uses the
+house n_trials recipe (unique config hashes across the full ledger):
+`n_trials_at_eval = 74` at P1 evaluation, `75` at D1 evaluation (D1 adds one
+trial to P1's count).
+
+### 43.2 Data and universe construction (survivorship story)
+
+Both experiments share a 799-symbol survivorship-safe daily-kline store
+(`data/xsect/klines/`, committed `c25ab5b`), built from Binance USDT-M
+futures kline history enumerated via S3 bucket listing (not the live
+symbols endpoint), so delisted symbols are included with their full
+trading history up to delisting — e.g. `LUNAUSDT` ends 2022-05-12 (the
+Terra/UST collapse) and `FTTUSDT` ends 2022-11-14 (the FTX collapse); both
+remain in the eligible universe up to their last trading day and then drop
+out, rather than being silently absent from the whole sample (the standard
+survivorship bias this class of study is required to control for per the
+pre-registration's validity precondition). Trailing zero-volume padding
+that the futures API appends after a symbol's real delisting date was
+trimmed (`9b8dab9`) so it cannot masquerade as tradable volume.
+
+Daily PIT eligibility (top-100 by 30-day median quote-volume, ≥$5M
+threshold, first kline ≤ D-30) ranges **67-100 symbols** on 2021 Monday
+rebalance dates, rising to a steady **100** from later in the sample
+onward as more symbols cross the 30-day-history and volume floors. Three
+non-ASCII meme perpetuals listed after 2025 never enter any dev-window
+universe. LUNA is present through its 2022 crash and then exits cleanly at
+delisting, consistent with the eligibility rule rather than a hand-curated
+exclusion.
+
+### 43.3 P1: wide-universe cross-sectional momentum — dev grid (12/12 FAIL)
+
+Benchmark (EW, full eligible universe, same weekly mechanics/costs):
+**net SR −0.417**, maxDD **0.967**, over 1,547 days.
+
+| L | skip | K | net_sr | delta_sr | p_pos | placebo_p | dsr | pass |
+|---:|---:|---:|---:|---:|---:|---:|---:|:---:|
+| 7 | 0 | 10 | −0.748 | −0.331 | 0.046 | 0.978 | 0.0000 | FAIL |
+| 7 | 0 | 20 | −0.695 | −0.278 | 0.018 | 0.978 | 0.0001 | FAIL |
+| 7 | 1 | 10 | −0.701 | −0.284 | 0.051 | 0.948 | 0.0001 | FAIL |
+| 7 | 1 | 20 | −0.638 | −0.221 | 0.049 | 0.932 | 0.0001 | FAIL |
+| 14 | 0 | 10 | −0.559 | −0.142 | 0.230 | 0.713 | 0.0002 | FAIL |
+| 14 | 0 | 20 | −0.553 | −0.136 | 0.138 | 0.717 | 0.0002 | FAIL |
+| 14 | 1 | 10 | −0.661 | −0.244 | 0.095 | 0.908 | 0.0001 | FAIL |
+| 14 | 1 | 20 | −0.597 | −0.180 | 0.044 | 0.852 | 0.0001 | FAIL |
+| 28 | 0 | 10 | −0.520 | −0.104 | 0.314 | 0.593 | 0.0002 | FAIL |
+| 28 | 0 | 20 | −0.479 | −0.062 | 0.299 | 0.481 | 0.0003 | FAIL |
+| 28 | 1 | 10 | −0.493 | −0.077 | 0.352 | 0.523 | 0.0003 | FAIL |
+| 28 | 1 | 20 | −0.542 | −0.125 | 0.138 | 0.695 | 0.0002 | FAIL |
+
+**0/12 configs pass** the pre-registered `xs_mom_p1.dev_select` gate
+(`net_sr_min` 0.8, `delta_sr_vs_benchmark_min` 0.0, `p_pos_min` 0.85,
+`placebo_p_max` 0.05, `dsr_min` 0.9 — all five required). Every config's
+net SR is between −0.75 and −0.48, all below the −0.417 benchmark
+(`delta_sr` negative in every row); every `placebo_p` is between 0.48 and
+0.98 — the real ranked signal never beats the median of its own 500
+within-rebalance random-rank placebo draws, let alone the top 5% required
+by `placebo_p_max`. DSR is effectively zero at every grid cell (max
+0.0003). MaxDD across configs sits near 0.97-0.99 (worse than the 0.967
+benchmark), consistent with the real trading history of a concentrated
+EW alt-basket over this window: a 2021-05 cycle peak, an −87.6% collapse
+through 2022, and no recovery by 2025-03-31 — the grid is not producing an
+implausible drawdown artifact, it is reproducing a real, well-known
+period.
+
+### 43.4 P1 mechanism: tail-selection into volatility, not a reversal story
+
+An un-ledgered diagnostic check sorted the same L-day cumulative-return
+score in the **ascending** (loser) direction instead of descending
+(winner) — the opposite tail of the identical distribution. That
+diagnostic also underperforms: net SR −0.778, `placebo_p` 0.988. Both
+tails of the L-day-return sort underperform random rank draws by a wide
+margin. This rules out the most likely rescue hypothesis (momentum should
+be inverted into a reversal/mean-reversion signal): if the losers were
+underpriced, the ascending sort would show a strong positive edge, not
+another failing placebo score. The mechanism instead looks like
+**tail-selection into volatility**: picking any K=10-20 names by extreme
+rank (either direction) out of a 67-100-name universe concentrates the
+portfolio into the highest-realized-volatility names of the period,
+without buying compensating expected return. This reads directly from the
+placebo distribution itself: the median placebo SR (**−0.487**, the
+expected SR of 500 *random* K-name draws from the same universe) is
+already below the full-universe benchmark (−0.417) — concentrating from
+100 names down to 10-20 names, with **no ranking skill at all**, already
+costs Sharpe. Actual ranking (by either momentum tail) subtracts further
+from that already-degraded concentrated baseline rather than adding to
+it. Engine correctness for this conclusion was cross-validated
+bit-identical (max abs diff 1.67e-16) between the reviewed reference path
+and the vectorized grid path on the highest-turnover (L=7) configs, and
+the house DSR recipe was verified against `n_trials_at_eval = 74`.
+
+### 43.5 D1: F&G sentiment-beta, standalone middle-quintile — dev result (FAIL, 0/5 gates)
+
+| metric | value | gate threshold | pass |
+|---|---:|---:|:---:|
+| net_sr | −0.418 | ≥ 0.8 | FAIL |
+| delta_sr (vs. benchmark) | −0.001 | > 0.0 | FAIL |
+| p_pos | 0.483 | ≥ 0.85 | FAIL |
+| placebo_p | 0.271 | ≤ 0.05 | FAIL |
+| dsr | 0.0005 | ≥ 0.9 | FAIL |
+
+Config: 90-day rolling causal OLS beta of coin log-return on Δ F&G, min 60
+overlapping observations, standalone EW long of the middle F&G-beta
+quintile of the eligible universe, weekly rebalance, identical cost/universe
+mechanics to P1. Portfolio size sanity over the 222-week dev window: min 13,
+median 19, max 20 names (0 zero-weeks) — the middle-quintile filter never
+starved the portfolio down to a degenerate size. Net SR (−0.418) is
+essentially indistinguishable from the EW full-universe benchmark
+(−0.417); `delta_sr` is −0.0015 unrounded, i.e., statistically flat against
+benchmark rather than negative or positive — the middle-beta filter neither
+helps nor hurts, it reproduces the benchmark almost exactly. `p_pos` at
+0.483 means the real portfolio beats its own bootstrap resample distribution
+essentially at a coin-flip rate, and `placebo_p` at 0.271 means the real
+quintile selection is indistinguishable from a random-rank draw at
+conventional significance. All 5 pre-registered gates fail; `n_trials_at_eval
+= 75` at D1 evaluation. Per the frozen grid rule, variant (b) — the P1-based
+overlay excluding extreme-beta quintiles — correctly never ran, because P1
+selected `NONE` (§43.3): the spec's conditional clause ("if P1 selects NONE,
+only (a) runs") is a frozen rule evaluated mechanically, not a judgment call
+made after seeing D1's own standalone result. Causality of the beta
+perturbation (shift(1)-causal inputs, 90-day rolling window, 60-obs minimum)
+was verified as part of engine cross-validation.
+
+### 43.6 Interpretation limits
+
+1. **Scope of the practical question answered.** Both experiments test a
+   long-only, top-K/quintile, equal-weight, weekly-rebalance,
+   10-bps-cost implementation on a Binance-perp tradable subuniverse — not
+   the literature's constructions (Borri et al.'s value-weighted
+   long-short cross-sectional spread on a 16,468-coin universe; the JBEF
+   paper's long-short beta-sorted portfolio). This result answers the
+   pre-registered *practical* question (does a retail-implementable
+   variant survive realistic costs), not the papers' underlying factor
+   claim — a value-weighted long-short construction on the full universe
+   remains untested here.
+2. **Single dev window.** 2021-01-01 → 2025-03-31 is dominated by the
+   2022 bear market (Terra/LUNA, Celsius/3AC, FTX) and the 2024-25 altcoin
+   malaise; a period in which any concentrated long-only altcoin basket
+   — ranked, random, or inverted — underperforms. A different dev window
+   is untested and would require a new pre-registered cycle.
+3. **Benchmark confound, addressed by placebo.** The benchmark (K=100,
+   full universe) trades at lower concentration than any grid cell
+   (K=10/20); part of the SR gap between grid cells and benchmark is
+   concentration, not ranking. The placebo test (500 random-rank draws at
+   the *same* K) isolates ranking skill from concentration and is
+   therefore the decisive gate for P1 — and it fails at every grid cell.
+4. **D1's implementation choice.** The standalone middle-quintile
+   long-only design is one implementable reading of a paper whose
+   original construction is a long-short beta-sorted portfolio (intermediate
+   beta vs. extreme beta, both sides). A long-short variant of D1, or an
+   overlay variant beyond the frozen (b) rule, is untested and out of
+   scope for this pre-registered cycle.
+
+### 43.7 Verdict
+
+**P1: 0/12 configs pass** the pre-registered `xs_mom_p1.dev_select` gate;
+**D1: 0/5 gates pass** for the standalone middle-quintile design (variant
+(b) correctly never ran because P1 selected none). Per the Task 7 brief's
+gate check (`dev_results.json["selected"] is None` for both experiments),
+neither one-shot holdout script was written and neither holdout window
+(2025-04-01 → 2026-07-01) was read: both stay **locked and unspent**,
+available for a future pre-registered cycle testing a different
+construction (value-weighted long-short momentum, long-short beta sort, a
+different dev window) without needing to re-spend a fresh holdout. One-shot
+discipline intact throughout: both grids (12 + 2 configs) were closed by
+pre-registration before Task 1 ran; the ascending-tail diagnostic in §43.4
+was run and reported as a mechanism check, not used to select or rescue a
+config, and did not touch the holdout. This extends the same pattern
+documented in §42 and the broader rebuild (BT11, §12, §33-§41): once
+same-bar look-ahead, unpurged labels, and post-hoc tuning are removed,
+even mechanism-verified published effects (post-2020 CS momentum,
+nonlinear F&G-beta pricing) do not clear a pre-registered net-of-cost bar
+on this data and this implementation.
