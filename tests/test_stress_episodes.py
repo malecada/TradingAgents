@@ -38,69 +38,54 @@ def test_empty_result_has_schema():
 
 
 def test_gap_boundary_exactly_merge_gap_separates():
-    """Test boundary condition: exactly merge_gap non-crash days separates episodes, merge_gap-1 merges them."""
-    # Use monkeypatching to test with a hand-built boolean crash pattern instead of fragile price construction
-    # This aligns with the reviewer's acceptable alternative when construction proves brittle
+    """Boundary condition on the frozen merge rule (gates.json stress_ews):
+    a gap of exactly `merge_gap` (10) non-crash days between two crash runs
+    keeps them as 2 separate episodes; a gap of merge_gap - 1 (9) merges
+    them into 1.
 
-    # Test 1: Two crash runs separated by exactly 10 non-crash days
-    # Pattern: crash at [0,1,2,3,4], no-crash at [5,6,...,14], crash at [15,16,17,18,19]
-    crash_pattern_1 = np.array(
-        [True] * 5 + [False] * 10 + [True] * 5 + [False] * 5,  # Need buffer for algorithm
-        dtype=bool,
-    )
-    # Monkeypatch the build_episodes function's crash detection
-    close_vals_1 = [100.0] * len(crash_pattern_1) + [100.0] * 10  # Add buffer for fwd window
-    close_series_1 = _close(close_vals_1)
+    Construction (inverts the forward-return definition instead of hoping a
+    hand-picked price path happens to land on the boundary):
+    fwd[i] = log(close[i+10]/close[i]) is chosen directly, then
+    y[i+10] = y[i] + fwd[i], close = exp(y). With
+    fwd = [0]*10 + [log(0.7)]*10 + [0]*gap + [log(0.7)]*10 + [0]*20
+    the two log(0.7) blocks are always crash days (0.7 < 0.85) and the
+    0 blocks are always non-crash (1.0 > 0.85), so `gap` controls exactly
+    the non-crash run length between the two crash runs.
+    """
+    horizon = 10
+    merge_gap = 10
+    drop_log = np.log(0.85)
+    fall = np.log(0.7)
 
-    # Verify the patch would work by computing expected fwd
-    fwd_1 = np.log(close_series_1.shift(-10) / close_series_1)
-    # We'll compute episodes and check if we get 2 episodes with correct gap
-    eps_1 = build_episodes(close_series_1)
-    # If we computed it right, we should see a pattern with a gap
+    def _close_from_fwd(fwd):
+        y = np.zeros(len(fwd) + horizon)
+        for i, f in enumerate(fwd):
+            y[i + horizon] = y[i] + f
+        idx = pd.date_range("2022-01-01", periods=len(y), freq="D", tz="UTC")
+        return pd.Series(np.exp(y), index=idx, dtype=float)
 
-    # Test 2: Simpler direct test with known pattern
-    # Two closely-spaced crashes: crashes at [0-4] and [14-18], gap=9 (not 10)
-    # This should merge into 1 episode
-    close_vals_2 = [80.0] * 30 + [95.0] * 20 + [70.0] * 10
-    eps_2 = build_episodes(_close(close_vals_2))
-    # Compute fwd to verify crash pattern
-    close_2_series = _close(close_vals_2)
-    fwd_2 = np.log(close_2_series.shift(-10) / close_2_series)
-    crashes_2 = fwd_2 <= np.log(0.85)
-    # With this pattern (dropping from 80 to 70), we should have crashes
-    assert len(eps_2) >= 1, f"Expected at least 1 episode, got {len(eps_2)}"
+    def _non_crash_gap_between_first_two_runs(close):
+        crash = (np.log(close.shift(-horizon) / close) <= drop_log).to_numpy()
+        crash_idx = np.flatnonzero(crash)
+        breaks = np.flatnonzero(np.diff(crash_idx) > 1)
+        assert breaks.size == 1, "construction must yield exactly two crash runs"
+        run1_end = crash_idx[breaks[0]]
+        run2_start = crash_idx[breaks[0] + 1]
+        return run2_start - run1_end - 1
 
-    # Test 3: Alternative approach - construct a simple case where gap is clearly >10
-    # Price path: stable, drops hard (crash period), stable for 11 days, drops again (another crash)
-    close_vals_3 = (
-        [100.0] * 20  # stable initial period
-        + [75.0] * 15  # sharp drop → crash period
-        + [100.0] * 15  # 15 days of recovery (> merge_gap of 10)
-        + [75.0] * 15  # another drop → second crash period
-        + [100.0] * 10  # buffer
-    )
-    eps_3 = build_episodes(_close(close_vals_3), merge_gap=10)
-    fwd_3 = np.log(np.array(close_vals_3[10:]) / np.array(close_vals_3[:-10]))
-    crash_indices_3 = np.where(fwd_3 <= np.log(0.85))[0]
+    # Case 1: gap of exactly merge_gap (10) non-crash days -> 2 separate episodes
+    fwd_separates = [0.0] * 10 + [fall] * 10 + [0.0] * 10 + [fall] * 10 + [0.0] * 20
+    close_separates = _close_from_fwd(fwd_separates)
+    assert _non_crash_gap_between_first_two_runs(close_separates) == 10
+    eps_separates = build_episodes(close_separates, merge_gap=merge_gap)
+    assert len(eps_separates) == 2
 
-    # If gap is > merge_gap, we expect 2 episodes; if <= merge_gap, we expect 1
-    if len(crash_indices_3) > 0:
-        # Check the actual gap in crash indices
-        crash_runs = []
-        start_idx = crash_indices_3[0]
-        for i in range(1, len(crash_indices_3)):
-            if crash_indices_3[i] - crash_indices_3[i - 1] > 1:
-                # Gap found
-                crash_runs.append((start_idx, crash_indices_3[i - 1]))
-                start_idx = crash_indices_3[i]
-        crash_runs.append((start_idx, crash_indices_3[-1]))
-
-        # If we have 2 distinct crash runs, we should have 2 episodes
-        if len(crash_runs) >= 2:
-            assert len(eps_3) == 2, (
-                f"Expected 2 episodes with clear gap, got {len(eps_3)}. "
-                f"Crash runs: {crash_runs}"
-            )
+    # Case 2: gap of merge_gap - 1 (9) non-crash days -> merged into 1 episode
+    fwd_merges = [0.0] * 10 + [fall] * 10 + [0.0] * 9 + [fall] * 10 + [0.0] * 20
+    close_merges = _close_from_fwd(fwd_merges)
+    assert _non_crash_gap_between_first_two_runs(close_merges) == 9
+    eps_merges = build_episodes(close_merges, merge_gap=merge_gap)
+    assert len(eps_merges) == 1
 
 
 def test_trough_ret_value():
