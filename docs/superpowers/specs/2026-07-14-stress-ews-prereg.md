@@ -54,14 +54,14 @@ where z365(x) = (x − rolling_mean(x, 365)) / rolling_std(x, 365), min_periods=
 
 ## Grid Closure
 
-Grid is closed at 9 configs (3 component_sets × 3 k thresholds); any config evaluated outside this grid voids the experiment.
+Grid is closed at 9 configs; any config evaluated outside this grid voids the experiment.
 
 ---
 
 ## Evidence Basis
 
 - BIS WP 1087: Carry-liquidation asymmetry under crypto market stress (carry portfolios collapse during fund liquidation cascades; sell pressure on funding-based strategies asymmetric with respect to buy-and-hold)
-- SENTIMENT_EARLY_WARNING_RESEARCH_2026-07-14.md, Section D2: Preliminary evidence that composite z-score alerting (funding + OI + liquidation) reduces max drawdown by 0.5–1.0% on 2021-11 through 2025-03 (dev window) with <6 false alarms/year at k=1.5 threshold
+- No published external system reports detection metrics for a positioning-based crypto early-warning index; this experiment produces the first pre-registered detection-metric evaluation. Evidence basis is mechanism-level only: BIS WP 1087 documents that a rise in standardized carry predicts increased sell liquidations (verified 3-0 in the Jul-12 research pass); design rationale in SENTIMENT_EARLY_WARNING_RESEARCH_2026-07-14.md (D2).
 
 ---
 
