@@ -17,6 +17,8 @@ def momentum_scores(klines: dict, symbols: list, date: pd.Timestamp,
     lo = date - pd.Timedelta(days=skip + L - 1)
     for s in symbols:
         close = klines[s]["close"].loc[:date]
+        if (lo - pd.Timedelta(days=1)) not in close.index:
+            continue  # anchor close missing -> first window return would fuse days
         lr = np.log(close).diff()
         window = lr.loc[lo:hi].dropna()
         if len(window) == L:
