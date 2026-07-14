@@ -10,6 +10,7 @@ COMPONENTS = ["z_fund", "z_oi", "z_liq", "z_fg"]
 def zscore_365(s: pd.Series) -> pd.Series:
     mean = s.rolling(365, min_periods=180).mean()
     std = s.rolling(365, min_periods=180).std()
+    std = std.replace(0.0, np.nan)
     return (s - mean) / std
 
 
