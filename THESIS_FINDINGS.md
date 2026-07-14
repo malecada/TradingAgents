@@ -3721,3 +3721,174 @@ Ledger: `holdout_oneshot` (4 rows, `allow_holdout=True` — the only authorized 
 in the rebuild); outputs `data/rebuild/holdout/result.json`,
 `data/rebuild/holdout/carry_audit/`, `data/rebuild/holdout/factor_floor/`,
 `data/rebuild/holdout/placebo_distribution.json`. Contract: fc33cd5.
+
+## Section 42: Positioning Stress Early-Warning Index — Dev-Gate NEGATIVE, Holdout Unspent (2026-07-14)
+
+Motivation traces to the D2 lead identified in the sentiment-pivot research pass
+(`SENTIMENT_EARLY_WARNING_RESEARCH_2026-07-14.md`): with directional sentiment
+signals repeatedly negative or neutral (§23.11, §23.12, sentiment-index-quant),
+the remaining sentiment-adjacent thesis angle is positioning-as-early-warning,
+not positioning-as-alpha. BIS Working Paper 1087 documents a mechanism-level
+finding that a rise in standardized carry (funding-rate buildup) predicts
+increased sell-side liquidations in crypto perpetual markets — a
+carry-crowding → forced-liquidation cascade channel, verified 3-0 in the Jul-12
+research pass. No published system reports pre-registered detection metrics
+(hit rate, false alarms, placebo) for a positioning-based crypto early-warning
+index; this experiment was designed to produce the first honest one, with an
+explicit kill condition (hit rate ≤ placebo, or false-alarm cost eating any
+drawdown benefit) accepted up front as a publishable negative.
+
+### 42.1 Pre-registration provenance
+
+Gate frozen **before** any grid cell was run: `data/rebuild/gates.json →
+stress_ews` (registered 2026-07-14), full rule text in
+`docs/superpowers/specs/2026-07-14-stress-ews-prereg.md`. Commits: `a84ab8c`
+(prereg: gates, 9-config grid, episode + warn rules frozen), `a7d4628` (fix:
+removed fabricated evidence numbers, verbatim grid-closure sentence — a
+correction applied to the spec text itself before Task 1 ran, not after seeing
+results). Dev grid executed and ledgered at `8a34e55` (9 rows,
+`experiment="stress_ews"`, dev window guard active, no `allow_holdout`). Grid
+is closed at 9 configs by the pre-registration; no config outside the grid was
+evaluated.
+
+Dev window: **2021-11-01 → 2025-03-31**. Holdout window: **2025-04-01 →
+onward**, untouched by this task per Step 1 of the Task 7 brief — the gate
+check (`dev_results.json["selected"]`) returns `None`, so Steps 2–4 (write and
+execute the one-shot holdout script) do not run. Holdout stays locked and
+unspent.
+
+### 42.2 Component and rule definitions (frozen)
+
+| component | formula (daily, per coin, EW-averaged BTC+ETH) |
+|---|---|
+| `z_fund` | z365(funding_rate_ma7) |
+| `z_oi` | z365(oi_close / oi_close.shift(30) − 1) |
+| `z_liq` | z365(liq_total_usd / oi_close) |
+| `z_fg` | z365(abs(fng_value − 50)) — portfolio-level, not per coin |
+
+`z365(x) = (x − rolling_mean(x, 365)) / rolling_std(x, 365)`, `min_periods=180`;
+every input `.shift(1)`'d first (value dated D uses data ≤ D−1). Composite =
+mean of the selected component z-scores. WARN active while composite ≥ k,
+released below k−0.25 (hysteresis). Episode rule: a crash day is a day whose
+10-day forward log-return of the EW BTC+ETH close is ≤ log(0.85); episodes
+separated by <10 non-crash days are merged; detection window = 20 days
+pre-episode-start. Grid: component sets {[z_fund,z_oi],
+[z_fund,z_oi,z_liq], [z_fund,z_oi,z_liq,z_fg]} × k ∈ {1.0, 1.5, 2.0} = 9
+configs. Dev-select gate: hit_rate ≥ 0.5, false_alarms/yr ≤ 6, placebo p ≤
+0.05, Δmax DD ≤ 0.0, ΔSR ≥ −0.10 (all five required to pass).
+
+### 42.3 Dev grid results (9/9 configs, `dev_results.json`)
+
+| components | k | hit_rate | p_hit_rate | FA/yr | ΔmaxDD | ΔSR | exposure_frac | SR base | pass |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|:---:|
+| z_fund, z_oi | 1.0 | 0.000 | 1.000 | 1.76 | +0.000 | −0.395 | 0.836 | −0.137 | FAIL |
+| z_fund, z_oi | 1.5 | 0.000 | 1.000 | 2.35 | +0.000 | −0.218 | 0.908 | −0.137 | FAIL |
+| z_fund, z_oi | 2.0 | 0.000 | 1.000 | 0.88 | +0.000 | −0.098 | 0.955 | −0.137 | FAIL |
+| z_fund, z_oi, z_liq | 1.0 | 0.000 | 1.000 | 4.69 | +0.000 | −0.386 | 0.871 | −0.137 | FAIL |
+| z_fund, z_oi, z_liq | 1.5 | 0.000 | 1.000 | 2.35 | +0.000 | −0.198 | 0.931 | −0.137 | FAIL |
+| z_fund, z_oi, z_liq | 2.0 | 0.000 | 1.000 | 1.76 | +0.000 | −0.072 | 0.957 | −0.137 | FAIL |
+| z_fund, z_oi, z_liq, z_fg | 1.0 | 0.000 | 1.000 | 3.22 | +0.000 | −0.450 | 0.869 | −0.137 | FAIL |
+| z_fund, z_oi, z_liq, z_fg | 1.5 | 0.000 | 1.000 | 2.05 | +0.000 | −0.161 | 0.937 | −0.137 | FAIL |
+| z_fund, z_oi, z_liq, z_fg | 2.0 | 0.000 | 1.000 | 0.88 | +0.000 | −0.057 | 0.972 | −0.137 | FAIL |
+
+**0/9 configs pass.** Every config fails on `hit_rate < 0.5` (all exactly 0,
+`n_hits=0/11`) and `p_hit_rate > 0.05` (all exactly 1.000 — the block-shuffle
+placebo never scores worse than the real signal, consistent with a real hit
+rate of zero). Several configs additionally fail `overlay_delta_sr_min`
+(as loose as k=2.0, four-component still −0.057 to −0.098). `overlay_sr_base`
+(EW BTC+ETH buy-and-hold over the dev window) is a fixed **−0.137** across all
+9 rows — the base series itself is negative-SR over 2021-11→2025-03,
+so any flattening overlay subtracts from an already-negative baseline unless it
+removes more downside than upside.
+
+### 42.4 Episode catalog (11 episodes, dev window, mechanical rule)
+
+| # | start | end | trough (10d fwd log-ret) | known event |
+|---|---|---|---:|---|
+| 1 | 2021-11-08 | 2021-11-08 | −0.1781 | post-ATH top formation *(inside funding warm-up)* |
+| 2 | 2021-11-30 | 2021-11-30 | −0.1806 | late-Nov 2021 selloff *(inside funding warm-up)* |
+| 3 | 2021-12-27 | 2021-12-27 | −0.1663 | year-end 2021 selloff *(inside funding warm-up)* |
+| 4 | 2022-01-11 | 2022-01-18 | −0.2797 | Jan-2022 macro/rate selloff *(inside funding warm-up)* |
+| 5 | 2022-04-29 | 2022-05-08 | −0.3298 | Terra/LUNA-UST collapse *(inside funding warm-up)* |
+| 6 | 2022-06-02 | 2022-06-12 | −0.5266 | Celsius freeze / 3AC contagion |
+| 7 | 2022-08-16 | 2022-08-18 | −0.2142 | Aug-2022 pullback |
+| 8 | 2022-09-10 | 2022-09-12 | −0.2582 | Sep-2022 post-Merge selloff |
+| 9 | 2022-10-30 | 2022-11-07 | −0.3125 | FTX collapse |
+| 10 | 2024-07-26 | 2024-08-01 | −0.2734 | Aug-2024 yen-carry unwind / global selloff |
+| 11 | 2025-02-22 | 2025-03-02 | −0.1983 | Feb-2025 tariff selloff |
+
+`funding_rate` history starts exactly **2021-11-01**; the `z_fund`/composite
+365-day z-score requires `min_periods=180`, so no config can produce a
+meaningful composite value before **~2022-04-29**. Episodes 1–5 (2021-11-08 →
+2022-04-29, including the Terra/LUNA collapse) fall inside this warm-up and are
+structurally undetectable regardless of composite construction — the honest
+denominator is **6 detectable episodes** (#6–#11), not 11. Against that
+denominator the composite still scores **0/6 hits**; the pre-registered gate's
+`hit_rate_min = 0.5` required at least 3/6 (equivalently 6/6 if measured against
+the full 11 without the warm-up correction — either reading fails by a wide
+margin).
+
+### 42.5 Mechanism finding: composite tracks euphoria, not stress
+
+Inspecting the composite's warn-cluster timing (all 9 configs, all thresholds)
+shows warn clusters fire exclusively during **bull-euphoria** periods: the
+Jan-2023 recovery, the Oct–Dec-2023 rally, the Feb–Apr-2024 ETF rally, and the
+Nov-2024 post-election rally. The maximum pre-episode composite value across
+every episode and every component set is **+0.912**, reached ahead of episode
+#7 (2022-08-16) — below the loosest grid threshold, k=1.0. No config, at no
+threshold, ever reaches WARN in the 20 days preceding any of the 11 episodes.
+The composite as constructed behaves as a **long-crowding / euphoria
+detector** (funding and OI buildup rise when longs pile in during rallies), not
+a pre-crash stress detector: the dev-window crashes that matter — Celsius/3AC,
+FTX, the Aug-2024 yen-carry unwind, the Feb-2025 tariff selloff — each arrived
+**without** a preceding euphoria signature at any pre-registered threshold.
+
+### 42.6 Overlay economics: zero drawdown protection, negative Sharpe drag
+
+`maxdd_overlay` is **byte-identical to `maxdd_base` in all 9 configs**
+(0.7680 both, every row) — the WARN state never covers any day inside the
+window that produces the dev-window's true worst drawdown (2021-11 →
+2022-11), so flattening-while-WARN buys **zero drawdown protection**. Every
+row's `ΔSR` is negative: flattening removes euphoric up-days from an
+already-negative-SR base (−0.137), so the overlay only subtracts return
+without ever touching the drawdown it exists to defend against.
+
+### 42.7 Interpretation limits
+
+1. **The index was never tested on its target regime.** The canonical
+   funding-euphoria blow-off top this composite is designed to catch — the
+   Nov-2021 all-time-high top — predates the funding-rate data series itself
+   (funding starts 2021-11-01) plus the 180-day warm-up; the composite could not
+   have been evaluated against its own motivating example inside this dev
+   window.
+2. **Scope of the negative.** This result applies to *this specific composite*
+   (z_fund/z_oi/z_liq/z_fg, mean-aggregated, lagged 1 day) at k ∈
+   {1.0, 1.5, 2.0} with 20-day detection windows, evaluated post-2022 — it is
+   not a finding that "positioning stress carries no early-warning content."
+   Different aggregation (e.g. max instead of mean), different lag structure,
+   or a longer detection window are untested variants outside the frozen grid.
+3. **Cheap falsification path exists but is out of scope here.** Open interest
+   data reaches back to 2020-02; backfilling funding-rate history to ≥2020
+   would let a future pre-registered cycle test the composite against its
+   actual target event (the Nov-2021 top, and earlier 2020-2021 leverage
+   cycles). Per house pre-registration methodology, this requires a **new**
+   pre-registered cycle — it cannot be retrofitted onto this one without
+   voiding the current gate.
+
+### 42.8 Verdict
+
+**0/9 configs pass** the pre-registered `stress_ews.dev_select` gate — every
+config fails `hit_rate_min` (0.5 required, 0/11 and 0/6-detectable measured)
+and `placebo_p_max` (0.05 required, 1.000 measured), with several also failing
+`overlay_delta_sr_min`. Per the Task 7 brief's Step 1 gate check
+(`dev_results.json["selected"] is None`), the holdout one-shot does **not**
+run: `scripts/stress_ews_holdout.py` was not written, no holdout window data
+was touched, and the locked holdout (2025-04-01 onward) remains **unspent** —
+available for a future pre-registered cycle (e.g. the funding-backfill
+falsification path noted in §42.7 above) without needing to re-spend a fresh
+holdout window. One-shot discipline intact: no code or threshold was adjusted after
+seeing the dev grid; the 9-config grid was closed by pre-registration before
+Task 1 ran, and the negative is recorded as it fell. This is consistent with
+the program's recurring pattern of honest, causal, look-ahead-free signals
+producing thin or null edges once same-bar look-ahead and post-hoc tuning are
+removed (BT11, §12, §33–§38, §40–§41).
