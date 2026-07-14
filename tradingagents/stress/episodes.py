@@ -29,5 +29,6 @@ def build_episodes(
         [
             {"start": s, "end": e, "trough_ret": float(fwd.loc[s:e].min())}
             for s, e in rows
-        ]
+        ],
+        columns=["start", "end", "trough_ret"],
     )
