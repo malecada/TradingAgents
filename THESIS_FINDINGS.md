@@ -3939,8 +3939,10 @@ anchor close before momentum window — fused-return guard). Grid execution
 commits: `974fc77` (P1, 12 configs + benchmark) and `9268dc2` +`ef27ab1`
 (D1 causal rolling-OLS beta sort + standalone dev run). The vectorized grid
 engine used for the 12/2-config sweeps was cross-validated bit-identical
-against the reference `run_weekly_portfolio()` path on high-turnover
-configs: max abs diff `1.67e-16` (P1) and `5.55e-17` (D1). DSR uses the
+against the reference `run_weekly_portfolio()` path twice: in-run on the
+K=100 benchmark leg (max abs diff `1.67e-16` at P1; `5.55e-17` at D1), and
+independently in the forensic review on two high-turnover momentum configs,
+L=7/skip=0/K=10 and L=28/skip=1/K=20 (max abs diff `5.6e-17`). DSR uses the
 house n_trials recipe (unique config hashes across the full ledger):
 `n_trials_at_eval = 74` at P1 evaluation, `75` at D1 evaluation (D1 adds one
 trial to P1's count).
@@ -3999,8 +4001,9 @@ within-rebalance random-rank placebo draws, let alone the top 5% required
 by `placebo_p_max`. DSR is effectively zero at every grid cell (max
 0.0003). MaxDD across configs sits near 0.97-0.99 (worse than the 0.967
 benchmark), consistent with the real trading history of a concentrated
-EW alt-basket over this window: a 2021-05 cycle peak, an −87.6% collapse
-through 2022, and no recovery by 2025-03-31 — the grid is not producing an
+EW alt-basket over this window: a 2021-05 cycle peak, a −87.6% calendar-2022
+return (−92.6% cumulative from the 2021-05 peak by end-2022), and no
+recovery by 2025-03-31 — the grid is not producing an
 implausible drawdown artifact, it is reproducing a real, well-known
 period.
 
@@ -4026,9 +4029,10 @@ already below the full-universe benchmark (−0.417) — concentrating from
 costs Sharpe. Actual ranking (by either momentum tail) subtracts further
 from that already-degraded concentrated baseline rather than adding to
 it. Engine correctness for this conclusion was cross-validated
-bit-identical (max abs diff 1.67e-16) between the reviewed reference path
-and the vectorized grid path on the highest-turnover (L=7) configs, and
-the house DSR recipe was verified against `n_trials_at_eval = 74`.
+bit-identical between the reviewed reference path and the vectorized grid
+path — in-run on the benchmark leg (1.67e-16) and in the forensic review on
+two high-turnover momentum configs (5.6e-17) — and the house DSR recipe was
+verified against `n_trials_at_eval = 74`.
 
 ### 43.5 D1: F&G sentiment-beta, standalone middle-quintile — dev result (FAIL, 0/5 gates)
 
