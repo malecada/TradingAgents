@@ -95,6 +95,21 @@ def fetch_vision_monthly(symbol: str) -> pd.DataFrame:
     return out[~out.index.duplicated(keep="first")].sort_index()
 
 
+def trim_trailing_zero_volume(df: pd.DataFrame) -> pd.DataFrame:
+    """Drop TRAILING zero-quote-volume rows.
+
+    fapi pads delisted SETTLING symbols (e.g. FTTUSDT) with frozen zero-volume bars
+    at the settlement price forever after the real delisting date. A perp with zero
+    quote volume is not tradable, so those rows must not count as "kline exists".
+    Interior zero-volume days are kept untouched. All-zero input -> empty frame
+    (caller skips the symbol).
+    """
+    if df.empty:
+        return df
+    nz = df["quote_volume"].to_numpy().nonzero()[0]
+    return df.iloc[:nz[-1] + 1] if len(nz) else df.iloc[:0]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--symbols", type=str, default=None,
@@ -122,6 +137,7 @@ def main():
             df = fetch_fapi(sym)
             if df.empty:
                 df = fetch_vision_monthly(sym)
+            df = trim_trailing_zero_volume(df)
             if df.empty:
                 print(f"  {sym}: NO DATA (skipped)")
                 continue
