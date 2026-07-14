@@ -37,40 +37,56 @@ def test_weekly_mondays():
 
 
 def test_volume_window_is_calendar_anchored():
-    # Create 100-day fixture with one interior missing day in the last 30 calendar days
+    # Discriminating fixture: calendar window [D-29, D] with ONE interior gap
+    # tests that eligibility uses calendar anchoring, not last-N-observations.
+    # This kills the tail(30) regression.
+    d = pd.Timestamp("2021-12-08", tz="UTC")
+    d_minus_29 = d - pd.Timedelta(days=29)  # 2021-11-09
+    d_minus_30 = d - pd.Timedelta(days=30)  # 2021-11-08
+
+    # Create ~100-day index (actually 99 from 2021-09-01 to 2021-12-08), remove one interior day
     idx = pd.date_range("2021-09-01", "2021-12-08", freq="D", tz="UTC")
-    # Remove one interior day (e.g., day 95 out of 100)
-    idx = idx.delete(95)
+    interior_gap_date = pd.Timestamp("2021-11-20", tz="UTC")
+    idx = idx.delete(idx.get_loc(interior_gap_date))
+    assert len(idx) == 98  # 99 - 1 = 98
 
-    # Create volume data where D-30 has an extreme value that would flip ranking if included
-    # Evaluation date: 2021-12-08 (100 days from 2021-09-01)
-    # D-30 = 2021-11-08
-    # Calendar window: [D-29, D] = [2021-11-09, 2021-12-08] excludes D-30
+    # Volume distribution:
+    # - D-30 (outside calendar window): 1e12 (extreme; only old tail(30) would include it)
+    # - Calendar window [D-29, D] (29 rows due to gap): 15×4e6 + 14×1e7
+    #   Median of 29 values = sorted[14] (0-idx) = 4e6 < 5e6 floor → EXCLUDED
+    # - Before D-30: all 1e7
     qv = np.ones(len(idx)) * 1e7
+    pos_d_minus_30 = idx.get_loc(d_minus_30)
+    qv[pos_d_minus_30] = 1e12
 
-    # Find the index position of 2021-11-08 (D-30)
-    d_minus_30 = pd.Timestamp("2021-11-08", tz="UTC")
-    if d_minus_30 in idx:
-        pos = idx.get_loc(d_minus_30)
-        qv[pos] = 1e12  # Extreme value at D-30
+    # Assign 15×4e6 and 14×1e7 within calendar window [D-29, D]
+    calendar_mask = (idx >= d_minus_29) & (idx <= d)
+    calendar_pos = np.where(calendar_mask)[0]
+    assert len(calendar_pos) == 29, f"Expected 29 rows in calendar window, got {len(calendar_pos)}"
+    qv[calendar_pos[:15]] = 4e6
+    qv[calendar_pos[15:]] = 1e7
 
-    # Create kline with this data
     kl = {"TEST": pd.DataFrame({"open": 1.0, "high": 1.0, "low": 1.0, "close": 1.0,
                                  "quote_volume": qv}, index=idx)}
 
-    # Evaluate at 2021-12-08
-    d = pd.Timestamp("2021-12-08", tz="UTC")
-
-    # Calendar window [2021-11-09, 2021-12-08] should NOT include the extreme value at 2021-11-08
-    # Compute expected median from the calendar slice
-    expected_window = kl["TEST"].loc[d - pd.Timedelta(days=29):d]["quote_volume"]
-    expected_median = float(expected_window.median())
-
-    # Assert eligibility returns TEST (volume >= min_mvol of 5e6)
+    # Assertion 1: Calendar window [D-29, D] excludes D-30 → median 4e6 < floor
     result = eligibility(kl, d)
-    assert "TEST" in result
-    # Verify median is around 1e7, not pulled down by the 1e12 at D-30
-    assert expected_median >= 1e7
+    assert "TEST" not in result, \
+        f"TEST should be excluded at {d} (calendar window median 4e6 < 5e6 floor)"
+
+    # Assertion 2: Verify the gap exists in [D-29, D]
+    window_dates = kl["TEST"].loc[d_minus_29:d].index
+    full_range = pd.date_range(d_minus_29, d, freq="D", tz="UTC")
+    gaps = full_range.difference(window_dates)
+    assert len(gaps) == 1, \
+        f"Expected 1 missing day in [{d_minus_29}, {d}], got {len(gaps)}: {gaps}"
+    assert gaps[0] == interior_gap_date
+
+    # Assertion 3: Positive control — earlier date where window is all 1e7 → included
+    d_control = d - pd.Timedelta(days=60)  # Far enough back to avoid D-30
+    result_control = eligibility(kl, d_control)
+    assert "TEST" in result_control, \
+        f"TEST should be included at {d_control} (control window median 1e7 >= floor)"
 
 
 def test_age_boundary_exact_30_days():
@@ -85,11 +101,9 @@ def test_age_boundary_exact_30_days():
     d_minus_29 = d - pd.Timedelta(days=29)
     kl_at_29 = {"AT_29": _kl(str(d_minus_29.date()), str(d.date()), qv=1e7)}
 
-    # Both should be in eligibility (default min_age_days=30 means must be >= 30 days old)
-    # Actually, let me re-read: if df.index[0] > date - pd.Timedelta(days=min_age_days): continue
-    # So if first kline is AFTER D-30, it's skipped. If it's AT or BEFORE D-30, it's included.
-    # AT_30: first index == D-30, so D-30 <= D-30? Yes, included.
-    # AT_29: first index == D-29, so D-29 <= D-30? No, D-29 > D-30, so excluded.
+    # If df.index[0] > date - pd.Timedelta(days=min_age_days): skip
+    # AT_30: first index == D-30, condition false, included
+    # AT_29: first index == D-29 > D-30, condition true, excluded
 
     result_at_30 = eligibility(kl_at_30, d)
     result_at_29 = eligibility(kl_at_29, d)
