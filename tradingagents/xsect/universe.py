@@ -16,7 +16,9 @@ def eligibility(klines: dict, date: pd.Timestamp, min_age_days: int = 30,
             continue
         if df.index[0] > date - pd.Timedelta(days=min_age_days):
             continue
-        window = df.loc[:date].tail(30)["quote_volume"]
+        window = df.loc[date - pd.Timedelta(days=29):date]["quote_volume"]
+        if window.empty:
+            continue
         mvol = float(window.median())
         if mvol >= min_mvol:
             scored.append((sym, mvol))
