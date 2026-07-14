@@ -8,16 +8,17 @@ from tradingagents.stress.overlay import _sr as sr  # sqrt(365), 0.0 on zero var
 
 def momentum_scores(klines: dict, symbols: list, date: pd.Timestamp,
                      L: int, skip: int) -> dict:
-    """Sum of daily log-returns over the L days ending `skip` days before `date`
-    (window (date-skip-L, date-skip]). Symbols with insufficient/NaN history are dropped."""
+    """Sum of daily log-returns dated within the CALENDAR window
+    (date-skip-L, date-skip], i.e. return-dates in [date-skip-L+1, date-skip].
+    Requires all L calendar days present (gapless) to score a symbol; any gap
+    or insufficient history drops the symbol that week (conservative, frozen)."""
     out = {}
+    hi = date - pd.Timedelta(days=skip)
+    lo = date - pd.Timedelta(days=skip + L - 1)
     for s in symbols:
         close = klines[s]["close"].loc[:date]
-        if skip:
-            close = close.iloc[:-skip] if len(close) > skip else close.iloc[:0]
-        if len(close) < L + 1:
-            continue
-        window = np.log(close.iloc[-(L + 1):]).diff().dropna()
+        lr = np.log(close).diff()
+        window = lr.loc[lo:hi].dropna()
         if len(window) == L:
             out[s] = float(window.sum())
     return out
@@ -30,11 +31,13 @@ def run_weekly_portfolio(klines: dict, rebalance_dates: pd.DatetimeIndex,
     Mechanics: at each rebalance date t (Monday, using close t), target = EW over
     select_fn(t) (list of symbols); positions apply from bar t+1 (no look-ahead —
     the decision bar itself never accrues the return that produced the signal).
-    Daily portfolio log-return = mean of members' close-to-close log-returns.
+    Daily portfolio log-return = weight-anchored sum: Sum_s weights[s] * r_s over
+    members whose return exists that day (a member missing a kline that day
+    contributes 0 — its weight is NOT redistributed to survivors intra-week;
+    weights only change at the next rebalance).
     Costs: cost = cost_bps/1e4 * Sum|w_new - w_old| (one-side rate times summed
     one-side turnover across both legs of each trade), deducted on the first
-    accrual day after each rebalance. A member delisted mid-week contributes its
-    last available return then weight redistributes at the next rebalance.
+    accrual day after each rebalance (even if the book is empty/flat that day).
     """
     logret = {s: np.log(df["close"]).diff() for s, df in klines.items()}
     all_days = sorted(set().union(*[df.index for df in klines.values()]))
@@ -45,10 +48,13 @@ def run_weekly_portfolio(klines: dict, rebalance_dates: pd.DatetimeIndex,
     reb = set(rebalance_dates)
     for day in all_days:
         if weights:
-            rets = [logret[s].get(day) for s in weights]
-            rets = [r for r in rets if r is not None and not np.isnan(r)]
-            port.loc[day] = float(np.mean(rets)) if rets else 0.0
-        if pending_cost and weights:
+            total = 0.0
+            for s, w in weights.items():
+                r = logret[s].get(day)
+                if r is not None and not np.isnan(r):
+                    total += w * r
+            port.loc[day] = total
+        if pending_cost:
             port.loc[day] -= pending_cost
             pending_cost = 0.0
         if day in reb:
@@ -56,7 +62,7 @@ def run_weekly_portfolio(klines: dict, rebalance_dates: pd.DatetimeIndex,
             new_w = {s: 1.0 / len(members) for s in members} if members else {}
             keys = set(new_w) | set(weights)
             turnover = sum(abs(new_w.get(k, 0.0) - weights.get(k, 0.0)) for k in keys)
-            pending_cost = cost_bps / 1e4 * turnover
+            pending_cost += cost_bps / 1e4 * turnover
             weights = new_w
     start = rebalance_dates[0] if len(rebalance_dates) else all_days[0]
     return port.loc[port.index > start]
