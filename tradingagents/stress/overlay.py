@@ -5,7 +5,7 @@ import pandas as pd
 
 def flat_mask(warn: pd.Series, index: pd.DatetimeIndex, cooldown: int = 5) -> pd.Series:
     """True while WARN is active and for `cooldown` days after release."""
-    warn = warn.reindex(index).fillna(False).astype(bool)
+    warn = warn.reindex(index, fill_value=False).astype(bool)
     release_count = 0
     out_flags = []
     for on in warn:
