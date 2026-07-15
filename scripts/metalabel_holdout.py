@@ -17,6 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from tradingagents.metalabel.backtest import evaluate_g2, portfolio_returns, replay_coin
 from tradingagents.metalabel.features import assemble_dataset
 from tradingagents.metalabel.model import fit_predict_fold
+from tradingagents.metalabel.wf import EMBARGO_CAL_DAYS
 from tradingagents.rebuild.ledger import log_trial
 
 from scripts.metalabel_run import FREEZE, load_coin_blob
@@ -25,6 +26,19 @@ DEV_RESULTS = Path(__file__).resolve().parents[1] / "data/metalabel/dev_results.
 SPENT_FLAG = Path(__file__).resolve().parents[1] / "data/metalabel/holdout_spent.flag"
 HOLDOUT_START, HOLDOUT_END = FREEZE["holdout_window"]
 DEV_START, DEV_END = FREEZE["dev_window"]
+
+
+def g3_train_mask(meta: pd.DataFrame) -> pd.Series:
+    """Dev-window train mask for the G3 holdout fit, purged at the holdout
+    boundary: an event qualifies only if its event_date falls in the dev
+    window AND its label has fully resolved (touch_date) before
+    HOLDOUT_START minus the embargo. Without the embargo term, dev-tail
+    events would have labels resolved using holdout-window prices —
+    training-time leakage across the dev/holdout boundary."""
+    purge_cutoff = pd.Timestamp(HOLDOUT_START) - pd.Timedelta(days=EMBARGO_CAL_DAYS)
+    return (meta["event_date"] <= pd.Timestamp(DEV_END)) & (
+        pd.to_datetime(meta["touch_date"]) < purge_cutoff
+    )
 
 
 def main() -> dict:
@@ -37,7 +51,7 @@ def main() -> dict:
 
     per_coin = {c: load_coin_blob(c, HOLDOUT_END) for c in FREEZE["coins"]}
     X, y, w, meta = assemble_dataset(per_coin)
-    is_dev = meta["event_date"] <= pd.Timestamp(DEV_END)
+    is_dev = g3_train_mask(meta)
     is_hold = meta["event_date"] >= pd.Timestamp(HOLDOUT_START)
 
     order = np.argsort(meta[is_dev]["event_date"].values)
@@ -55,8 +69,7 @@ def main() -> dict:
         if not len(labels_h):
             continue
         prim[c] = replay_coin(b["ohlcv"], b["votes"], labels_h, None, tau=tau)
-        pc = p_series.loc[c] if c in p_series.index.get_level_values(0) else None
-        metaarm[c] = replay_coin(b["ohlcv"], b["votes"], labels_h, pc, tau=tau)
+        metaarm[c] = replay_coin(b["ohlcv"], b["votes"], labels_h, p_series.loc[c], tau=tau)
 
     span = slice(pd.Timestamp(HOLDOUT_START), pd.Timestamp(HOLDOUT_END))
     prim_port = portfolio_returns(prim).loc[span]

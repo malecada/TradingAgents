@@ -59,3 +59,25 @@ def test_assemble_dataset_shapes_and_onehots():
         assert X[c].isna().all()
     assert "f_breadth" in X.columns
     assert X["f_breadth"].between(0, 1).all()
+
+
+def test_assemble_dataset_normalizes_tz_aware_onchain_index():
+    # build_pit_onchain_features returns a UTC tz-AWARE DatetimeIndex in
+    # production; event dates (labels.index) are tz-naive. Regression for
+    # C1: reindexing a tz-aware series against tz-naive dates silently
+    # returns all-NaN (no error) unless assemble_dataset normalizes tz
+    # itself as defense-in-depth against a caller that forgot to.
+    blob = _coin_blob(1)
+    ev = blob["labels"].index
+    col = OC_FEATURES[0]
+    known_values = np.arange(len(ev), dtype=float)
+    oc = pd.DataFrame(
+        {col: known_values},
+        index=pd.DatetimeIndex(ev, tz="UTC"),
+    )
+    blob["onchain"] = oc
+
+    X, y, w, meta = assemble_dataset({"bitcoin": blob})
+
+    assert not X[col].isna().any()
+    np.testing.assert_array_equal(X[col].to_numpy(), known_values)

@@ -65,6 +65,11 @@ def load_coin_blob(coin: str, end_date: str) -> dict:
     except Exception as exc:  # missing store coverage -> NaN features, logged
         print(f"[warn] onchain features unavailable for {coin}: {exc}")
         onchain = None
+    if onchain is not None and getattr(onchain.index, "tz", None) is not None:
+        # build_pit_onchain_features returns a UTC tz-aware index; event dates
+        # here are tz-naive midnight UTC, so normalize losslessly before any
+        # reindex against tz-naive event dates (else silent all-NaN reindex).
+        onchain.index = onchain.index.tz_localize(None)
     return {
         "ohlcv": ohlcv, "votes": votes, "labels": labels, "weights": weights,
         "onchain": onchain, "fng": fng_series(ev_idx) if len(ev_idx) else None,
@@ -88,11 +93,20 @@ def main(end_date: str = DEV_END) -> dict:
 
     per_coin = {c: load_coin_blob(c, end_date) for c in COINS}
     X, y, w, meta = assemble_dataset(per_coin)
-    print(f"events: {len(X)} | coverage: {json.dumps(coverage_report(X))}")
+    cov = coverage_report(X)
+    print(f"events: {len(X)} | coverage: {json.dumps(cov)}")
+
+    oc_cols = [c for c in X.columns if c.startswith("oc_")]
+    if oc_cols and all(cov[c] == 0.0 for c in oc_cols):
+        raise RuntimeError(
+            "on-chain feature coverage is zero — tz/store wiring broken; "
+            "refusing to run gates on a gutted model"
+        )
 
     folds = purged_walk_forward(
         meta, DEV_START, end_date,
         retrain_every_days=FREEZE["wf"]["retrain_every_days"],
+        embargo_bars=FREEZE["wf"]["embargo_bars"],
         min_train_events=FREEZE["wf"]["min_train_events"],
     )
     preds = {m: run_walk_forward(X, y, w, meta, folds, m)
@@ -130,8 +144,7 @@ def main(end_date: str = DEV_END) -> dict:
             meta_port = portfolio_returns({
                 c: replay_coin(
                     per_coin[c]["ohlcv"], per_coin[c]["votes"], labels,
-                    lgb_preds.loc[c] if c in lgb_preds.index.get_level_values(0) else None,
-                    tau=tau,
+                    lgb_preds.loc[c], tau=tau,
                 )
                 for c, labels in oos_labels.items()
             })

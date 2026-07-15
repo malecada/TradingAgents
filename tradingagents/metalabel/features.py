@@ -67,6 +67,14 @@ def assemble_dataset(per_coin: dict) -> tuple[pd.DataFrame, pd.Series, pd.Series
         x = price_trend_features(blob["ohlcv"], blob["votes"], ev)
 
         oc = blob.get("onchain")
+        if oc is not None and getattr(oc.index, "tz", None) is not None:
+            # Defense-in-depth: build_pit_onchain_features returns a UTC
+            # tz-aware index; event dates (ev) are tz-naive, so reindexing
+            # a tz-aware series against them silently returns all-NaN
+            # (pandas does not raise). Normalize here regardless of what
+            # the caller already did.
+            oc = oc.copy()
+            oc.index = oc.index.tz_localize(None)
         for col in OC_FEATURES:
             x[col] = oc[col].reindex(ev) if oc is not None and col in oc.columns else np.nan
 
