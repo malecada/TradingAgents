@@ -8,12 +8,18 @@ import numpy as np
 import pandas as pd
 
 # Exact PIT-store columns consumed (all causal, oc_-prefixed by the loader).
+# Names verified 2026-07 against tradingagents/dataflows/onchain_features.py
+# `_add_derived` / `_add_derivatives_derived` output (real column names, not
+# guessed): active-address z-score is `oc_active_addr_z_30d`, exchange
+# net-flow z-score is `oc_net_flow_z_30d`, and MVRV Z-Score is the
+# Glassnode-style 4-year full-cycle window `oc_mvrv_z_4y` (the 1y variant
+# `oc_mvrv_z_1y` also exists but is not used here).
 OC_FEATURES = [
     "oc_funding_rate", "oc_funding_z_30d", "oc_funding_oiw_z_30d",
     "oc_oi_chg_7d", "oc_oi_z_30d", "oc_oi_to_mcap",
     "oc_liq_asym_z_30d", "oc_liq_total_z_30d",
     "oc_smart_money_z_30d", "oc_taker_asym_z_30d", "oc_basis_z_30d",
-    "oc_AdrActCnt_z", "oc_flow_net_z", "oc_mvrv_z",
+    "oc_active_addr_z_30d", "oc_net_flow_z_30d", "oc_mvrv_z_4y",
 ]
 
 
