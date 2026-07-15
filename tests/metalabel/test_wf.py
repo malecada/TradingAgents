@@ -41,3 +41,19 @@ def test_min_train_events_skips_early_folds():
         warnings.simplefilter("always")
         folds = purged_walk_forward(meta, "2021-07-01", "2022-06-30")
     assert all(len(tr) >= 150 for tr, _ in folds) or len(folds) == 0
+
+
+def test_embargo_bars_widens_admissible_train_set():
+    meta = _meta()
+    folds_tight = purged_walk_forward(
+        meta, "2021-07-01", "2025-03-31", embargo_bars=1, min_train_events=0
+    )
+    folds_wide = purged_walk_forward(
+        meta, "2021-07-01", "2025-03-31", embargo_bars=15, min_train_events=0
+    )
+    assert len(folds_tight) == len(folds_wide)
+    sizes_tight = [len(tr) for tr, _ in folds_tight]
+    sizes_wide = [len(tr) for tr, _ in folds_wide]
+    # smaller embargo_bars -> shorter embargo -> more admissible train events
+    assert any(t > w for t, w in zip(sizes_tight, sizes_wide))
+    assert all(t >= w for t, w in zip(sizes_tight, sizes_wide))
