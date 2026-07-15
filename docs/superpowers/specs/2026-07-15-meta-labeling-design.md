@@ -61,7 +61,7 @@ For each entry event at bar t with entry price P_t and vol estimate σ_t (20d EW
 ## 3. Evaluation protocol (pre-registered)
 
 - Harness: corrected causal + purged engine lineage (main @ 382d189 fixes + rebuild intrabar stop). Same-bar execution forbidden; signals at close t execute at open t+1.
-- Data split: dev = 2021-07 … 2025-06; **locked holdout = 2025-07 … 2026-06** (last 12 months). Holdout OHLCV/feature files hashed and untouched until G3. Holdout guard from `tradingagents/rebuild/ledger.py` enforces access.
+- Data split: dev = 2021-07-01 … 2025-03-31; **locked holdout = 2025-04-01 … 2026-06-30** — aligned with the pre-existing house lock `HOLDOUT_START = 2025-04-01` in `tradingagents/rebuild/ledger.py` (stricter than the originally drafted 2025-07 boundary; guard code unmodified). Holdout OHLCV/feature files hashed and untouched until G3. Holdout guard from `tradingagents/rebuild/ledger.py` enforces access.
 - Walk-forward on dev: expanding window, retrain every 90 days, embargo = 15 trading days (= vertical barrier) after each train window; purge events whose label window overlaps the test block (Lopez de Prado purged K-fold adapted to WF).
 - Costs: 10 bps round trip + funding where applicable — identical to rebuild convention.
 - Trial ledger: every model fit / config run logged via `tradingagents/rebuild/ledger.py`; gates.json committed BEFORE the first experiment.
