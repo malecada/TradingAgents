@@ -1676,9 +1676,10 @@ def main() -> dict:
     is_hold = meta["event_date"] >= pd.Timestamp(HOLDOUT_START)
 
     order = np.argsort(meta[is_dev]["event_date"].values)
+    meta_dev_sorted = meta[is_dev].iloc[order][["event_date", "touch_date"]].reset_index(drop=True)
     p_hold = fit_predict_fold(
         X[is_dev].iloc[order], y[is_dev].iloc[order], w[is_dev].iloc[order],
-        X[is_hold], "lgb",
+        X[is_hold], "lgb", meta_tr=meta_dev_sorted,
     )
     p_series = pd.Series(p_hold, index=pd.MultiIndex.from_frame(
         meta[is_hold][["coin", "event_date"]]))
