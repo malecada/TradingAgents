@@ -52,6 +52,33 @@ def test_run_walk_forward_and_g1():
     assert g1["lgb_auc"] > 0.6  # learnable synthetic
 
 
+def test_inner_cv_purge_runs_with_overlapping_touch_dates():
+    # Many events' label windows (touch_date) extend 30 days past event_date,
+    # i.e. well past the neighboring inner-CV validation block boundaries —
+    # this is exactly the leakage scenario the embargo purge guards against.
+    # We don't assert which combo wins (seed-dependent); this is a
+    # behavioral smoke test that purging doesn't break the selection path.
+    X, y, w = _learnable()
+    X_tr, y_tr, w_tr, X_te = X[:600], y[:600], w[:600], X[600:650]
+    ev = pd.date_range("2021-07-01", periods=len(X_tr), freq="D")
+    meta = pd.DataFrame({"event_date": ev, "touch_date": ev + pd.Timedelta(days=30)})
+    p = fit_predict_fold(X_tr, y_tr, w_tr, X_te, "lgb", meta_tr=meta)
+    assert np.isfinite(p).all()
+    assert (p >= 0).all() and (p <= 1).all()
+
+
+def test_calibrated_single_class_fit_slice_does_not_raise():
+    X, y, w = _learnable()
+    X_tr, y_tr, w_tr, X_te = X[:600].copy(), y[:600].copy(), w[:600].copy(), X[600:650]
+    cut = int(len(y_tr) * 0.8)
+    y_tr.iloc[:cut] = 0  # first-80% fit slice becomes single-class
+    tail_n = len(y_tr) - cut
+    y_tr.iloc[cut:] = np.array([0, 1] * (tail_n // 2 + 1))[:tail_n]
+    p = fit_predict_fold(X_tr, y_tr, w_tr, X_te, "lgb")
+    assert np.isfinite(p).all()
+    assert (p >= 0).all() and (p <= 1).all()
+
+
 def test_g1_fails_on_noise():
     rng = np.random.default_rng(0)
     n = 600
