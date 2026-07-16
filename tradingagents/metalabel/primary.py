@@ -40,6 +40,14 @@ def extract_events(votes: pd.Series) -> pd.DatetimeIndex:
     return pd.DatetimeIndex(votes.index[cross])
 
 
+def extract_inbar_events(votes: pd.Series) -> pd.DatetimeIndex:
+    """Dense event scheme (v2): every bar in-trend (vote > 0.5) is an event.
+
+    Overlapping label windows are handled downstream by uniqueness weights
+    (labeler) and cluster bootstrap (evaluate_g1)."""
+    return pd.DatetimeIndex(votes.index[(votes > 0.5) & votes.notna()])
+
+
 def primary_positions(votes: pd.Series) -> pd.Series:
     pos = (votes > 0.5).astype(float)
     pos[votes.isna()] = np.nan

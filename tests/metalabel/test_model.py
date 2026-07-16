@@ -79,6 +79,24 @@ def test_calibrated_single_class_fit_slice_does_not_raise():
     assert (p >= 0).all() and (p <= 1).all()
 
 
+def test_cluster_bootstrap_wider_ci_and_default_unchanged():
+    X, y, w = _learnable()
+    ev = pd.date_range("2021-07-01", periods=len(X), freq="D")
+    meta = pd.DataFrame({"event_date": ev, "touch_date": ev + pd.Timedelta(days=10),
+                         "coin": "bitcoin"})
+    folds = [(np.arange(0, 500), np.arange(500, 800))]
+    preds = {m: run_walk_forward(X, y, w, meta, folds, m)
+             for m in ("constant", "logit", "lgb")}
+    iid = evaluate_g1(preds, n_boot=300)
+    lgb_df = preds["lgb"]
+    clusters = lgb_df["event_date"].dt.to_period("M").astype(str) + "_" + lgb_df["coin"]
+    clu = evaluate_g1(preds, n_boot=300, clusters=clusters)
+    # point estimates identical, only CI differs
+    assert clu["lgb_auc"] == iid["lgb_auc"]
+    assert (clu["auc_ci_high"] - clu["auc_ci_low"]) >= (iid["auc_ci_high"] - iid["auc_ci_low"]) * 0.8
+    assert "g1_pass" in clu
+
+
 def test_g1_fails_on_noise():
     rng = np.random.default_rng(0)
     n = 600

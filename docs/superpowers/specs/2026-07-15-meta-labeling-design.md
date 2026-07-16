@@ -98,3 +98,11 @@ Multiple-testing discipline: exactly one primary, one label geometry, one model 
 - G1 may fail: trade-outcome predictability given entry may be as absent as unconditional direction. Pre-registered stop honors that.
 - Event count (~1–2K) is small; wide CIs expected. Pooling + uniqueness weights mitigate but don't remove this.
 - The meta layer cannot raise SR by more than the fraction of bad trades it can identify; realistic upside is filtering the ~50% of trend entries that whipsaw. Even ΔSR ≈ +0.3–0.5 with reduced DD would validate the thesis claim ("a prediction model with sufficient accuracy can improve a trading strategy") in its honest, conditional form.
+
+## 7. Experiment v2 (2026-07-16)
+
+v1 failed G1, underpowered: 203 entry events → only 44 usable pooled dev OOS rows (walk-forward folds below `min_train_events` skipped), LGB AUC 0.347 with bootstrap CI [0.18, 0.52] (includes 0.5), `g1_pass: false`. Root cause is event sparsity, not signal absence — the sparse entry-crossing scheme starves every fold.
+
+v2 registers four deltas, everything else (barriers, sigma_span, τ grid, costs, vol target, coins, LGB grid, size-mult, holdout window, G2/G3 formulas) copied verbatim from v1: (1) `event_scheme: "inbar_dense"` — train/G1 on every in-trend bar (vote > 0.5), not just entry crossings, attacking the density constraint directly; (2) `dev_window` starts 2022-01-01 (was 2021-07-01), restricting dev to the feature-coverage-dense era (Coinglass/on-chain PIT history is thin before 2022); (3) `wf.min_train_events` lowered to 75 (was 150), consistent with the denser event stream needing fewer folds skipped; (4) `g1_bootstrap: "cluster"` (coin-month clusters) replacing iid row bootstrap, so the CI honestly reflects the overlap that dense in-bar events introduce (adjacent in-trend bars share label windows) rather than treating them as independent.
+
+G2 replay stays keyed on v1's sparse entry events (dense OOS predictions are a superset, so entry-bar p̂ is available); only G1's training/evaluation event set and bootstrap widen. v1's ledger rows stand as history; holdout remains unspent.

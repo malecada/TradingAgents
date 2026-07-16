@@ -218,7 +218,10 @@ def run_walk_forward(X, y, w, meta, folds, model_type: str) -> pd.DataFrame:
     return pd.concat(rows, ignore_index=True)
 
 
-def evaluate_g1(preds_by_model: dict, n_boot: int = 2000, seed: int = 7) -> dict:
+def evaluate_g1(
+    preds_by_model: dict, n_boot: int = 2000, seed: int = 7,
+    clusters: pd.Series | None = None,
+) -> dict:
     """Evaluate the G1 gate (LGB beats logit/constant with a positive CI).
 
     Computes AUC and Brier score per model in ``preds_by_model``, plus a
@@ -232,6 +235,18 @@ def evaluate_g1(preds_by_model: dict, n_boot: int = 2000, seed: int = 7) -> dict
             ``"lgb"`` key plus columns ``y``, ``p``, ``w``).
         n_boot: Number of bootstrap resamples for the LGB AUC CI.
         seed: Seed for the bootstrap RNG (reproducibility).
+        clusters: Optional cluster id per row of the LGB predictions frame
+            (row-aligned; values are arbitrary hashable ids, e.g. a
+            coin-month key). When given, each bootstrap draw is a two-stage
+            cluster bootstrap: resample unique cluster ids with
+            replacement, then resample each picked cluster's member rows
+            with replacement (same cluster size) — honest under both
+            cross-cluster and within-cluster overlap from the dense in-bar
+            event scheme, where naive whole-block duplication would damp
+            AUC's rank-statistic variance below the iid case. When ``None``
+            (default), the bootstrap is iid over rows — v1 behavior,
+            bit-identical (same rng consumption pattern:
+            ``rng.integers(0, n, n)`` per draw).
 
     Returns:
         Dict with per-model ``{name}_auc`` / ``{name}_brier`` keys,
@@ -249,9 +264,26 @@ def evaluate_g1(preds_by_model: dict, n_boot: int = 2000, seed: int = 7) -> dict
 
     rng = np.random.default_rng(seed)
     n = len(lgb_df)
+    uniq, members = None, None
+    if clusters is not None:
+        cluster_ids = np.asarray(clusters)
+        uniq = np.unique(cluster_ids)
+        members = {c: np.where(cluster_ids == c)[0] for c in uniq}
     aucs = []
     for _ in range(n_boot):
-        idx = rng.integers(0, n, n)
+        if clusters is not None:
+            picked = rng.choice(uniq, size=len(uniq), replace=True)
+            # Two-stage: resample cluster ids, then resample member rows
+            # within each picked cluster (with replacement) so overlap
+            # within a cluster (dense in-bar events, same coin-month) is
+            # reflected in CI width rather than damped by verbatim
+            # whole-block duplication.
+            idx = np.concatenate([
+                rng.choice(members[c], size=len(members[c]), replace=True)
+                for c in picked
+            ])
+        else:
+            idx = rng.integers(0, n, n)
         s = lgb_df.iloc[idx]
         if len(set(s["y"])) < 2 or s["p"].nunique() < 2:
             continue
