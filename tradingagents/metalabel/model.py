@@ -225,9 +225,12 @@ def evaluate_g1(
     """Evaluate the G1 gate (LGB beats logit/constant with a positive CI).
 
     Computes AUC and Brier score per model in ``preds_by_model``, plus a
-    percentile bootstrap 95% CI on the LGB model's AUC. The gate passes iff
-    the LGB AUC's bootstrap CI lower bound exceeds 0.5, LGB AUC beats logit
-    AUC, and LGB Brier is no worse than the constant baseline's Brier.
+    percentile bootstrap 95% CI on the LGB model's AUC — iid over rows by
+    default, or a cluster (block) bootstrap over ``(coin, month)`` clusters
+    (the registered v2 G1 CI method) when ``clusters`` is supplied. The
+    gate passes iff the LGB AUC's bootstrap CI lower bound exceeds 0.5, LGB
+    AUC beats logit AUC, and LGB Brier is no worse than the constant
+    baseline's Brier.
 
     Args:
         preds_by_model: Mapping of model name to the out-of-fold prediction
@@ -237,16 +240,20 @@ def evaluate_g1(
         seed: Seed for the bootstrap RNG (reproducibility).
         clusters: Optional cluster id per row of the LGB predictions frame
             (row-aligned; values are arbitrary hashable ids, e.g. a
-            coin-month key). When given, each bootstrap draw is a two-stage
-            cluster bootstrap: resample unique cluster ids with
-            replacement, then resample each picked cluster's member rows
-            with replacement (same cluster size) — honest under both
-            cross-cluster and within-cluster overlap from the dense in-bar
-            event scheme, where naive whole-block duplication would damp
-            AUC's rank-statistic variance below the iid case. When ``None``
-            (default), the bootstrap is iid over rows — v1 behavior,
-            bit-identical (same rng consumption pattern:
-            ``rng.integers(0, n, n)`` per draw).
+            coin-month key). When given, the bootstrap is a standard
+            single-stage cluster (block) bootstrap over ``(coin, month)``
+            clusters (Cameron & Miller style) — the registered v2 G1 CI
+            method: resample unique cluster ids with replacement, gather
+            ALL member rows of each picked cluster verbatim (no further
+            within-cluster resampling), and compute the weighted AUC on the
+            concatenated rows. This is the honest procedure under our
+            threat model (overlapping triple-barrier labels induce strong
+            within-cluster correlation): a two-stage variant that also
+            resamples within picked clusters would independently perturb
+            rows that are correlated in reality, understating CI width
+            exactly where it matters. When ``None`` (default), the
+            bootstrap is iid over rows — v1 behavior, bit-identical (same
+            rng consumption pattern: ``rng.integers(0, n, n)`` per draw).
 
     Returns:
         Dict with per-model ``{name}_auc`` / ``{name}_brier`` keys,
@@ -272,16 +279,15 @@ def evaluate_g1(
     aucs = []
     for _ in range(n_boot):
         if clusters is not None:
+            # Single-stage cluster (block) bootstrap: resample unique
+            # cluster ids with replacement, gather all member rows of each
+            # picked cluster verbatim (Cameron & Miller). No within-cluster
+            # resampling — the whole block moves together, which is what
+            # correctly propagates within-cluster correlation into CI
+            # width under our threat model (overlapping triple-barrier
+            # labels).
             picked = rng.choice(uniq, size=len(uniq), replace=True)
-            # Two-stage: resample cluster ids, then resample member rows
-            # within each picked cluster (with replacement) so overlap
-            # within a cluster (dense in-bar events, same coin-month) is
-            # reflected in CI width rather than damped by verbatim
-            # whole-block duplication.
-            idx = np.concatenate([
-                rng.choice(members[c], size=len(members[c]), replace=True)
-                for c in picked
-            ])
+            idx = np.concatenate([members[c] for c in picked])
         else:
             idx = rng.integers(0, n, n)
         s = lgb_df.iloc[idx]

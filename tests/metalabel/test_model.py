@@ -79,7 +79,7 @@ def test_calibrated_single_class_fit_slice_does_not_raise():
     assert (p >= 0).all() and (p <= 1).all()
 
 
-def test_cluster_bootstrap_wider_ci_and_default_unchanged():
+def test_cluster_bootstrap_point_estimates_and_determinism():
     X, y, w = _learnable()
     ev = pd.date_range("2021-07-01", periods=len(X), freq="D")
     meta = pd.DataFrame({"event_date": ev, "touch_date": ev + pd.Timedelta(days=10),
@@ -91,10 +91,74 @@ def test_cluster_bootstrap_wider_ci_and_default_unchanged():
     lgb_df = preds["lgb"]
     clusters = lgb_df["event_date"].dt.to_period("M").astype(str) + "_" + lgb_df["coin"]
     clu = evaluate_g1(preds, n_boot=300, clusters=clusters)
-    # point estimates identical, only CI differs
+
+    # point estimates (computed once on the full frame, before the
+    # bootstrap loop) are identical regardless of CI method
     assert clu["lgb_auc"] == iid["lgb_auc"]
-    assert (clu["auc_ci_high"] - clu["auc_ci_low"]) >= (iid["auc_ci_high"] - iid["auc_ci_low"]) * 0.8
+    assert clu["logit_auc"] == iid["logit_auc"]
+    assert clu["constant_auc"] == iid["constant_auc"]
+    assert clu["lgb_brier"] == iid["lgb_brier"]
+    assert clu["logit_brier"] == iid["logit_brier"]
+    assert clu["constant_brier"] == iid["constant_brier"]
+
+    # cluster CI is a well-formed interval
+    assert np.isfinite(clu["auc_ci_low"]) and np.isfinite(clu["auc_ci_high"])
+    assert 0.0 <= clu["auc_ci_low"] < clu["auc_ci_high"] <= 1.0
     assert "g1_pass" in clu
+
+    # determinism: same seed, same call twice -> identical CI
+    clu2 = evaluate_g1(preds, n_boot=300, clusters=clusters)
+    assert clu2["auc_ci_low"] == clu["auc_ci_low"]
+    assert clu2["auc_ci_high"] == clu["auc_ci_high"]
+
+
+def test_cluster_bootstrap_wider_under_cluster_correlation():
+    # Build predictions with REAL within-cluster correlation: 40 clusters
+    # (coin-months), each with 20 rows that are near-duplicates (same y,
+    # nearly-same p) because they share one latent cluster-level draw.
+    # Under this design the cluster CI must be materially wider than an
+    # iid CI computed on the same data, since the effective sample size
+    # is ~40 clusters, not ~800 rows.
+    rng = np.random.default_rng(11)
+    n_clusters, rows_per_cluster = 40, 20
+    ev0 = pd.Timestamp("2021-07-01")
+
+    rows = []
+    for c in range(n_clusters):
+        u = rng.normal()
+        y_cluster = int(rng.random() < 1 / (1 + np.exp(-u)))
+        p_cluster = 1 / (1 + np.exp(-(u + rng.normal(scale=0.05))))
+        coin = "bitcoin" if c % 2 == 0 else "ethereum"
+        month_date = ev0 + pd.DateOffset(months=c // 2)
+        for r in range(rows_per_cluster):
+            rows.append({
+                "event_date": month_date + pd.Timedelta(days=r),
+                "y": y_cluster,
+                "p": float(np.clip(p_cluster, 1e-6, 1 - 1e-6)),
+                "w": 1.0,
+                "coin": coin,
+            })
+    lgb_df = pd.DataFrame(rows)
+
+    # constant/logit baselines only need >1 unique value and both classes
+    # present; their exact values don't matter for this test.
+    base_rate = lgb_df["y"].mean()
+    const_df = lgb_df.copy()
+    const_df["p"] = np.clip(
+        base_rate + rng.normal(scale=0.01, size=len(const_df)), 1e-6, 1 - 1e-6)
+    logit_df = lgb_df.copy()
+    logit_df["p"] = np.clip(
+        lgb_df["p"] * 0.8 + rng.normal(scale=0.02, size=len(logit_df)), 1e-6, 1 - 1e-6)
+
+    preds = {"constant": const_df, "logit": logit_df, "lgb": lgb_df}
+
+    iid = evaluate_g1(preds, n_boot=1000, seed=5)
+    clusters = lgb_df["event_date"].dt.to_period("M").astype(str) + "_" + lgb_df["coin"]
+    clu = evaluate_g1(preds, n_boot=1000, seed=5, clusters=clusters)
+
+    iid_width = iid["auc_ci_high"] - iid["auc_ci_low"]
+    clu_width = clu["auc_ci_high"] - clu["auc_ci_low"]
+    assert clu_width > iid_width * 1.15
 
 
 def test_g1_fails_on_noise():
