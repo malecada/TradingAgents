@@ -3,8 +3,8 @@ import pandas as pd
 import pytest
 
 from tradingagents.xsect.carry_xs import (
-    MIN_FUND_DAYS, build_funding_matrix, carry_signal, carry_weights,
-    funding_daily,
+    MIN_FUND_DAYS, RF_DAILY, build_funding_matrix, carry_signal, carry_weights,
+    funding_daily, run_ls_portfolio,
 )
 
 
@@ -112,3 +112,42 @@ def test_carry_weights_long_leg_tie_break_ascending():
     assert row["A"] == pytest.approx(0.25)
     assert row["B"] == pytest.approx(0.25)
     assert row["C"] == 0
+
+
+def _one_symbol_frames(w, r, f, n=4):
+    days = pd.date_range("2024-01-01", periods=n, freq="D", tz="UTC")
+    W = pd.DataFrame({"XUSDT": w}, index=days)
+    R = pd.DataFrame({"XUSDT": r}, index=days)
+    F = pd.DataFrame({"XUSDT": f}, index=days)
+    return W, R, F
+
+
+def test_funding_sign_long_pays_short_receives():
+    Wl, R, F = _one_symbol_frames([0.5, 0.5, 0.5, 0.5], [0.0] * 4, [2e-3] * 4)
+    pl = run_ls_portfolio(Wl, R, F, cost_bps=0.0, rf_daily=0.0)
+    assert pl.iloc[1] == pytest.approx(-0.5 * 2e-3)   # long pays positive funding
+    Ws = Wl * -1
+    ps = run_ls_portfolio(Ws, R, F, cost_bps=0.0, rf_daily=0.0)
+    assert ps.iloc[1] == pytest.approx(+0.5 * 2e-3)   # short receives
+
+
+def test_causal_next_bar_accrual():
+    # weight appears at t=1; day-1 return must NOT accrue, day-2 must
+    W, R, F = _one_symbol_frames([0.0, 1.0, 1.0, 1.0],
+                                 [0.0, 0.10, 0.02, 0.0], [0.0] * 4)
+    p = run_ls_portfolio(W, R, F, cost_bps=0.0, rf_daily=0.0)
+    assert p.loc[W.index[1]] == pytest.approx(0.0)     # decision bar: no accrual
+    assert p.loc[W.index[2]] == pytest.approx(0.02)
+
+
+def test_costs_on_weight_change_and_rf_every_day():
+    W, R, F = _one_symbol_frames([0.0, 1.0, 1.0, 1.0], [0.0] * 4, [0.0] * 4)
+    p = run_ls_portfolio(W, R, F, cost_bps=10.0)
+    assert p.iloc[1] == pytest.approx(-10 / 1e4 * 1.0 - RF_DAILY)  # |dW|=1 charged
+    assert p.iloc[2] == pytest.approx(-RF_DAILY)                    # rf alone
+
+
+def test_nan_funding_on_held_symbol_accrues_zero():
+    W, R, F = _one_symbol_frames([0.5] * 4, [0.0] * 4, [np.nan] * 4)
+    p = run_ls_portfolio(W, R, F, cost_bps=0.0, rf_daily=0.0)
+    assert (p == 0).all()

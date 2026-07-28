@@ -58,3 +58,21 @@ def carry_weights(all_days, S: pd.DataFrame, F: pd.DataFrame,
         W.loc[t, shorts] = -0.5 / n_leg
         W.loc[t, longs] = +0.5 / n_leg
     return W
+
+
+def run_ls_portfolio(W: pd.DataFrame, R: pd.DataFrame, F: pd.DataFrame,
+                     cost_bps: float = 10.0,
+                     rf_daily: float = RF_DAILY) -> pd.Series:
+    for X in (R, F):
+        if not W.index.equals(X.index) or list(W.columns) != list(X.columns):
+            raise ValueError("W, R, F must share identical index and columns")
+    Wv = W.to_numpy()
+    Rv = np.nan_to_num(R.to_numpy(), nan=0.0)
+    Fv = np.nan_to_num(F.to_numpy(), nan=0.0)
+    Wprev = np.vstack([np.zeros((1, Wv.shape[1])), Wv[:-1]])
+    Wprev2 = np.vstack([np.zeros((2, Wv.shape[1])), Wv[:-2]])
+    price = (Wprev * Rv).sum(axis=1)
+    funding = (Wprev * Fv).sum(axis=1)          # long pays (+F drains), short receives
+    cost = cost_bps / 1e4 * np.abs(Wprev - Wprev2).sum(axis=1)
+    port = pd.Series(price - funding - cost - rf_daily, index=W.index)
+    return port.iloc[1:]
