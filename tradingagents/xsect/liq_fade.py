@@ -32,3 +32,45 @@ def cascade_triggers(close, qvol, thr, window=2160, min_periods=1440):
     z_ret = _roll_z(r, window, min_periods)
     z_vol = _roll_z(np.log1p(qvol), window, min_periods)
     return (z_ret <= -thr) & (z_vol >= thr)
+
+
+def event_weights_hourly(trig, H, w_per=0.1, cap=1.0):
+    """Generate position weights from liquidation cascade triggers.
+
+    A trigger at bar t opens weight w_per for bars t+1…t+H. Retrigger during
+    the hold resets the timer. A new event that would push W.sum(axis=1) above
+    cap at its entry bar is ignored entirely; arrival order = column order for
+    same-bar ties. Symbols already holding always reset regardless of cap.
+
+    Args:
+        trig: pd.DataFrame of bool, triggers[i,j] = True if cascade detected
+        H: int, hold duration in bars (bars t+1..t+H)
+        w_per: float, weight per active position (default 0.1)
+        cap: float, gross cap on total position weight per bar (default 1.0)
+
+    Returns:
+        pd.DataFrame of float weights; W.iloc[i] is the position held DURING bar i
+        (decided from triggers ≤ bar i-1)
+    """
+    T = trig.to_numpy()
+    n, k = T.shape
+    left = np.zeros(k, dtype=np.int64)  # bars remaining for each symbol
+    W = np.zeros((n, k))
+    max_slots = int(round(cap / w_per))
+
+    for i in range(n):
+        if i > 0:
+            # events triggered at bar i-1 activate for bar i
+            for j in range(k):
+                if T[i - 1, j]:
+                    active = int((left > 0).sum())
+                    if left[j] > 0 or active < max_slots:
+                        left[j] = H  # open or reset timer
+
+        # Set weights based on current holdings (before decrement)
+        W[i] = np.where(left > 0, w_per, 0.0)
+
+        # Decrement hold counters
+        left = np.maximum(left - 1, 0)
+
+    return pd.DataFrame(W, index=trig.index, columns=trig.columns)
