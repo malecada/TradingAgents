@@ -22,8 +22,10 @@ This design executes lead #2: **time-series trend ensemble across the top-N liqu
 perps** ("breadth does the work"). External anchors (both unverified, replicate
 in-house, treated as motivation only): practitioner trend ensemble top-20, net SR ~1.57
 @ 10 bps (SSRN 5209907); AdaptiveTrend 6h bars net SR 2.41 (arXiv 2602.11708). Prior
-internal evidence: 2-coin version of the same frozen primary, holdout +0.389 n.s. (§44)
-— breadth is the axis being tested, not new signal rules.
+internal evidence (CORRECTED 2026-07-28 post-review): the §44 vote-ensemble primary was
+never separately dev/holdout-gated (only its meta-layer, which failed G1); the adjacent
+trend datapoint is §41's macross_10_50_ls factor sleeve, holdout +0.389 n.s. — breadth
+is the axis being tested, not new signal rules.
 
 ## Decisions taken at brainstorm
 
