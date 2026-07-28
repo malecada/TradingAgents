@@ -4124,12 +4124,16 @@ numbering reserved to avoid merge collision.)
 
 Motivation traces to the post-§44 go-forward menu, which ranked two leads above all
 others: cross-crypto spillover long/short and a wide-universe trend ensemble
-("breadth does the work"). This task executes the second lead. The frozen §44
-primary (2-coin) cleared its own dev bar but produced a statistically
-insignificant holdout result (+0.389 n.s.); the open question this task answers
-is whether widening the traded universe from 2 coins to a top-N liquid-perp
-basket rescues that signal, or whether the underlying edge is too thin to survive
-breadth.
+("breadth does the work"). This task executes the second lead. §44 is the origin
+of the frozen 4-rule vote primary reused here (MA-cross 5/20, 10/40, 20/60 +
+Donchian 20/10); §44's meta-labeling classifier built on top of that primary
+failed its own dev gate (G1, both v1 and v2 variants — v2 well-powered at 2,604
+OOS observations, AUC 0.48 CI [0.45, 0.52]), and its holdout stayed unspent. The
+primary itself (the 4-rule vote, independent of the meta-labeling classifier) was
+never separately dev/holdout-gated in §44. The open question this task answers is
+whether widening the traded universe from a small BTC/ETH-scale book to a top-N
+liquid-perp basket lets that same primary clear a pre-registered net-of-cost bar,
+or whether the underlying edge is too thin to survive breadth.
 
 ### 45.1 Pre-registration provenance, including a dropped lead
 
@@ -4156,8 +4160,14 @@ motivated by two external, unverified anchors treated as motivation only (neithe
 replicated in-house before this task, both remaining unverified after it): a
 practitioner top-20 trend ensemble reporting net SR ≈ 1.57 at 10 bps costs (SSRN
 5209907), and an "AdaptiveTrend" system on 6-hour bars reporting net SR 2.41
-(arXiv 2602.11708). The internal prior is the §44 primary's own 2-coin holdout
-result (+0.389 n.s.) — breadth, not a new signal rule, is the axis under test.
+(arXiv 2602.11708). An adjacent-family internal reference point (a different
+signal construction, not this primary) is §41's honest-rebuild factor sleeve,
+`macross_10_50_ls` (a single 10/50 MA-cross long-short on EW BTC+ETH): its
+one-shot holdout Sharpe was +0.389, statistically indistinguishable from a
+persistence-matched block-shuffle placebo (p = 0.166) — a thin trend edge on
+BTC/ETH majors, cited here only as motivation-adjacent context, not as prior
+evidence for the §44 primary tested in this section. Breadth, not a new signal
+rule, is the axis under test.
 
 Gate frozen **before** any grid cell was run: `data/rebuild/gates.json →
 trend_wide_t1` (registered 2026-07-28, commit `fd25aff`), full rule text and
@@ -4284,9 +4294,14 @@ signal's edge over the benchmark is a **long-flat exposure/participation
 effect**, not evidence of directional timing skill, and this is precisely the
 failure mode the `placebo_p` gate (0.27-0.40, an order of magnitude above the
 0.05 bar) already flags at the ledger level. Breadth did not rescue the trend
-primary: it is consistent with the §44 2-coin holdout's own statistically
-insignificant result (+0.389 n.s.) rather than an improvement on it, and the
-practitioner net-SR-≈1.57 anchor (SSRN 5209907) is not reproduced in-house
+primary: the §44 primary itself was never separately dev/holdout-gated (only
+its downstream meta-labeling classifier was, and that failed G1), so this
+result is not a comparison against a passing prior — it stands alongside the
+thin, statistically insignificant trend edge measured on a different
+construction in §41 (`macross_10_50_ls`, +0.389 holdout, p = 0.166) as a second
+data point that daily-horizon trend-following on BTC/ETH-scale or wider crypto
+universes has not yet produced a signal that clears an honest net-of-cost bar.
+The practitioner net-SR-≈1.57 anchor (SSRN 5209907) is not reproduced in-house
 under a survivorship-safe PIT universe and honest t+1/cost accounting.
 
 ### 45.5 Interpretation limits
