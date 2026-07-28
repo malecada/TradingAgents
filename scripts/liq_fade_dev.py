@@ -609,8 +609,14 @@ def _grid_core(close: pd.DataFrame, qvol: pd.DataFrame, universe: dict,
             vals = event_forward_sum(R_active, trig_active, h)
             fade[f"mean_fade_ret_{h}h"] = float(vals.mean()) if len(vals) else float("nan")
 
+        # cfg holds ONLY frozen design constants -- anything runtime-derived
+        # (e.g. which columns happened to be active on disk) must NOT enter
+        # config_hash, or a rerun with one different active symbol mints a
+        # new hash and silently inflates cross-experiment n_trials forever
+        # (see tradingagents/rebuild/ledger.py docstring). n_symbols_active
+        # is reported in metrics instead.
         cfg = {"thr": thr, "H": H, "w_per": W_PER, "cap": CAP, "cost_bps": COST_BPS,
-               "rf_annual": RF_ANNUAL, "n_symbols_active": len(active_cols)}
+               "rf_annual": RF_ANNUAL}
         metrics = {"net_sr": real_sr, "maxdd": maxdd_v, "n_events": n_events,
                    "events_per_coin_month": events_per_coin_month,
                    "annual_turnover": annual_turnover,
@@ -620,6 +626,7 @@ def _grid_core(close: pd.DataFrame, qvol: pd.DataFrame, universe: dict,
                    "placebo_p_shiftfam": p_shift, "placebo_p_randfam": p_rand,
                    "placebo_p_worse": placebo_p_worse,
                    "boundary_open_events": boundary_open_events,
+                   "n_symbols_active": len(active_cols),
                    "n_days": len(net_real), **fade}
 
         if not smoke:
@@ -638,17 +645,28 @@ def _grid_core(close: pd.DataFrame, qvol: pd.DataFrame, universe: dict,
     best = max(results, key=lambda r: r["metrics"]["net_sr"])
     n_trials = n_trials_before + len(GRID)
     cand = net_by_cfg[(best["config"]["thr"], best["config"]["H"])].to_numpy()
+    # DSR is best-effort diagnostic, not a hard requirement to land the run:
+    # deflated_sharpe_ratio raises ValueError on se_sr<=0 (degenerate/negative
+    # variance estimate). If that fires, ledger rows for all 6 configs are
+    # already written -- dev_results.json must still land, just with
+    # dsr=nan and the gate failing on that config (never silently pass).
+    dsr = float("nan")
     if len(cand) >= 2 and cand.std(ddof=1) > 0:
         var_sr = variance_of_sr(cand)
         se_sr = float(np.sqrt(var_sr))
         sr_perbar = float(cand.mean() / cand.std(ddof=1))
-        dsr = deflated_sharpe_ratio(sr_perbar, expected_max_sharpe(n_trials, var_sr), se_sr)
-    else:
-        dsr = float("nan")
+        if se_sr > 0.0:
+            try:
+                dsr = deflated_sharpe_ratio(sr_perbar, expected_max_sharpe(n_trials, var_sr), se_sr)
+            except ValueError as e:
+                print(f"[WARN] DSR computation failed ({e}); dsr=nan, dsr_pass=False",
+                      file=sys.stderr)
+                dsr = float("nan")
+    dsr_pass = bool(np.isfinite(dsr) and dsr >= GRID_GATE["dsr_min"])
     best["metrics"]["dsr"] = dsr
     best["metrics"]["n_trials_at_eval"] = n_trials
-    best["gate_pass"] = bool(best["net_sr_pass"] and best["placebo_pass"]
-                             and np.isfinite(dsr) and dsr >= GRID_GATE["dsr_min"])
+    best["dsr_pass"] = dsr_pass
+    best["gate_pass"] = bool(best["net_sr_pass"] and best["placebo_pass"] and dsr_pass)
     selected = best["config"] if best["gate_pass"] else None
 
     payload = {"smoke": bool(smoke),

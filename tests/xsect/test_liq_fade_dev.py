@@ -311,3 +311,63 @@ def test_run_grid_real_calls_probes_guard_before_anything_else(tmp_path, monkeyp
     monkeypatch.setattr(liq_fade_dev, "OUT_DIR", tmp_path)
     with pytest.raises(RuntimeError, match="grid refuses to run"):
         liq_fade_dev.run_grid(smoke=False)
+
+
+# ── Task 9 fix-review #1: cfg must carry ONLY frozen design constants ───────
+#
+# Anything runtime-derived in the ledgered `config` dict contaminates
+# config_hash determinism: an otherwise-identical rerun with one different
+# active symbol (e.g. a coin that briefly drops out of the top-50 PIT
+# universe) mints a NEW hash and silently, permanently inflates
+# cross-experiment n_trials (tradingagents/rebuild/ledger.py docstring
+# documents this exact failure class). This test locks the frozen key set so
+# a future addition to `cfg` fails loudly instead of leaking through.
+
+_FROZEN_CFG_KEYS = {"thr", "H", "w_per", "cap", "cost_bps", "rf_annual"}
+
+
+def test_grid_smoke_config_keys_are_exactly_the_frozen_set():
+    payload = liq_fade_dev.run_grid(smoke=True)
+    assert len(payload["results"]) == 6
+    for r in payload["results"]:
+        assert set(r["config"].keys()) == _FROZEN_CFG_KEYS, (
+            f"cfg leaked a non-frozen key: {set(r['config'].keys()) - _FROZEN_CFG_KEYS}")
+        # the runtime-derived value must still be reported, just in metrics
+        assert "n_symbols_active" in r["metrics"]
+        assert "n_symbols_active" not in r["config"]
+
+
+def test_grid_smoke_config_hash_is_stable_across_reruns_with_different_active_cols():
+    """Two configs that differ ONLY in which columns happened to be active
+    (i.e. same thr/H/w_per/cap/cost_bps/rf_annual) must hash identically once
+    fed through the real ledger config_hash function -- this is the concrete
+    scenario the frozen-key fix guards against."""
+    import hashlib
+
+    cfg_a = {"thr": 2.5, "H": 6, "w_per": 0.1, "cap": 1.0, "cost_bps": 10.0,
+            "rf_annual": 0.045}
+    cfg_b = dict(cfg_a)  # identical frozen fields; a "different active symbol"
+                         # rerun would have produced this same cfg post-fix
+    hash_a = hashlib.sha256(json.dumps(cfg_a, sort_keys=True, default=str).encode()).hexdigest()[:12]
+    hash_b = hashlib.sha256(json.dumps(cfg_b, sort_keys=True, default=str).encode()).hexdigest()[:12]
+    assert hash_a == hash_b
+
+
+# ── Task 9 fix-review #2: DSR ValueError must not prevent dev_results.json ──
+
+def test_grid_smoke_dsr_valueerror_still_completes_the_run(monkeypatch):
+    """If deflated_sharpe_ratio raises (e.g. a degenerate se_sr slips past the
+    pre-check), the grid must still complete and return a payload with
+    dsr=nan / dsr_pass=False / gate_pass=False -- never crash before payload
+    assembly (which is what gates dev_results.json actually landing on the
+    real run)."""
+    def _boom(*_a, **_k):
+        raise ValueError("se_sr must be > 0.0")
+    monkeypatch.setattr(liq_fade_dev, "deflated_sharpe_ratio", _boom)
+    monkeypatch.setattr(liq_fade_dev, "variance_of_sr", lambda cand: 1e-6)  # keeps se_sr > 0
+    payload = liq_fade_dev.run_grid(smoke=True)   # must not raise
+    assert len(payload["results"]) == 6
+    best = next(r for r in payload["results"] if r["config"] == payload["best_config"])
+    assert np.isnan(best["metrics"]["dsr"])
+    assert best["dsr_pass"] is False
+    assert best["gate_pass"] is False
