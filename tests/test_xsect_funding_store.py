@@ -17,8 +17,10 @@ def test_merge_prints_from_empty_sorts_and_types():
 
 def test_merge_prints_tail_append_dedupes():
     base = merge_prints(None, _rows([("2024-01-02 00:00", 2e-4)]))
-    out = merge_prints(base, _rows([("2024-01-02 00:00", 2e-4), ("2024-01-02 08:00", 1e-4)]))
+    # overlap with conflicting rate: new value should win (keep="last" semantics)
+    out = merge_prints(base, _rows([("2024-01-02 00:00", 3e-4), ("2024-01-02 08:00", 1e-4)]))
     assert len(out) == 2  # overlap deduped on timestamp
+    assert out.loc[pd.Timestamp("2024-01-02 00:00", tz="UTC"), "fundingRate"] == 3e-4  # new value wins
     # idempotent: re-append same rows changes nothing
     again = merge_prints(out, _rows([("2024-01-02 08:00", 1e-4)]))
     assert again.equals(out)

@@ -21,7 +21,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from tradingagents.strategies.v3.features._http import with_backoff  # noqa: E402
+from tradingagents.strategies.v3.features._http import RateLimitError, with_backoff  # noqa: E402
 
 URL = "https://fapi.binance.com/fapi/v1/fundingRate"
 FUND_DIR = PROJECT_ROOT / "data" / "xsect" / "funding"
@@ -55,6 +55,8 @@ def _fetch_page(symbol: str, start_ms: int, limit: int = 1000) -> list[dict]:
     r = requests.get(URL, params={"symbol": symbol, "startTime": start_ms,
                                   "endTime": int(FETCH_END.timestamp() * 1000),
                                   "limit": limit}, timeout=15)
+    if r.status_code == 429:
+        raise RateLimitError("Binance Futures 429")
     r.raise_for_status()
     return r.json()
 
@@ -87,8 +89,15 @@ def write_coverage(manifest: dict) -> None:
                         "funding_first": None, "funding_last": None,
                         "n_prints": 0, "day_coverage_frac": 0.0}
             continue
+        path = FUND_DIR / f"{sym}.parquet"
+        if not path.exists():
+            missing.append(sym)
+            cov[sym] = {"kline_first": ke["first"], "kline_last": ke["last"],
+                        "funding_first": None, "funding_last": None,
+                        "n_prints": 0, "day_coverage_frac": 0.0}
+            continue
         k0, k1 = pd.Timestamp(ke["first"]), pd.Timestamp(ke["last"])
-        f = pd.read_parquet(FUND_DIR / f"{sym}.parquet")
+        f = pd.read_parquet(path)
         days_with = f.loc[k0:k1 + pd.Timedelta(days=1)].index.normalize().nunique()
         n_days = (k1 - k0).days + 1
         cov[sym] = {"kline_first": ke["first"], "kline_last": ke["last"],
