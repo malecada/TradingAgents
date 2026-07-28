@@ -4365,3 +4365,302 @@ AdaptiveTrend for this section) remain unreproduced in-house once a
 survivorship-safe PIT universe, honest t+1 costs, and a dual-placebo test for
 cross-coin co-activation are applied. Revival of either lead requires a new
 pre-registered cycle, not a retrofit onto this one.
+
+## Section 46: Cross-Sectional Funding Carry L/S (carry_xs_t1) — Dev-Gate NEGATIVE, Holdout Unspent (2026-07-28)
+
+Executes lead #3 of the post-§44 go-forward menu, after lead #1 (spillover) was
+dropped pre-registration and lead #2 (wide trend) closed dev-gate negative
+(§45). This task revisits carry specifically because §41's holdout one-shot
+found that the BTC/ETH spot-hedged funding-carry sleeve passed its dev GO gate
+(§39) but failed the pre-registered holdout on the risk-free margin
+opportunity-cost hurdle: a ~0.4%-ann-vol sleeve cannot clear T-bills, even
+though the underlying funding income itself held out-of-sample (+7.53 as-built
+SR, +1.93 after trading frictions — the failure was capital efficiency, not a
+fake signal). §41 explicitly mandated that any carry revival be a **new**
+pre-registered cycle with the margin/risk-free convention fixed upfront, not a
+retrofit onto the old sleeve. This section is that cycle, testing a distinct
+hypothesis (cross-sectional relative-rank funding carry across a wide perp
+universe) under the same harshest-honest rf convention that killed the §39-41
+sleeve, so a pass would be unambiguous and a fail cannot be attributed to
+convention-shopping.
+
+### 46.1 Pre-registration provenance
+
+Gate frozen **before** any grid cell was run: `data/rebuild/gates.json →
+carry_xs_t1` (registered 2026-07-28), full rule text and provenance in
+`docs/superpowers/specs/2026-07-28-carry-xs-design.md` (commit `18e83bb`,
+design spec `b6f54fb`). Construction choice made at brainstorm and recorded in
+the spec before any code: perp-only dollar-neutral long/short deciles (short
+high-funding perps, long low/negative-funding perps, no spot leg), rejecting a
+widened spot-hedged sleeve as a repeat of the old sleeve's capital-inefficiency
+failure mode. The risk-free convention — flat annual rf 4.5%, deducted daily
+on 100% of capital regardless of the strategy's actual vol — is the exact
+`data/rebuild/carry_audit/costs.json` house convention from the §39 audit,
+amended into the spec at plan-writing time (commit `18e83bb`) in place of an
+originally-considered FRED DTB3 series, before any run: flat 4.5% is harsher
+than realized 2021-2022 T-bill rates (near zero) and removes an external data
+dependency, consistent with the harshest-honest-convention decision.
+
+**Data build.** A new funding-rate store was built from Binance
+`GET /fapi/v1/fundingRate` for all 799 symbols in the existing survivorship-safe
+klines store (the same universe reused from `feature/xs-momentum`/§43),
+committed at `c207106` (fetch script) and `1b09fcc` (manifest + coverage
+report). Final store: **2,406,061 prints across 799 symbols, 2019-09-10 →
+2026-07-03, 0 symbols below 90% day-coverage, median day-coverage 1.001**
+(`data/xsect/funding_coverage.json`). The spec flagged a specific
+survivorship risk before the fetch ran — that Binance might return empty or
+truncated funding history for delisted perps, punching survivorship holes in
+a store whose klines side is survivorship-safe — and required a forensic
+coverage check before registration could be considered complete; that check
+confirms delisted perps serve their full funding history via the same
+endpoint, resolving the risk cleanly. Two fetch defects were caught and fixed
+during the build, before the store was used for any signal or backtest: (1)
+`584498a` — the initial fetch cursor started at `startTime=0`, but Binance's
+API treats `startTime=0` as "return the most recent page" rather than "start
+from the beginning," which would have silently served only each symbol's
+latest prints instead of its full history; fixed by seeding the cursor at
+`kline_first − 30d`. (2) `a0b7afa` — the pagination loop had no handling for
+Binance 429/`RateLimitError` responses, which would leave silent gaps in the
+middle of a symbol's history on a transient rate-limit hit; fixed with retry
+handling, plus a dedup guard and a check for missing per-symbol parquet files.
+Both were caught by the build's own tests, not discovered downstream in
+results.
+
+**Pre-result amendment (tied-signal leg overlap).** Per `gates.json`'s
+`amendment_2026-07-28` entry, the long-leg construction was amended
+(`0373b3c`, "long leg must exclude short-leg members") **after registration
+but before any result was produced**: the first dev-grid invocation crashed on
+the frozen net-exposure sanity assert because tied signal values at the
+leg-selection boundary let a naive descending/ascending double-sort put the
+same symbol in both legs. Zero metrics were read and zero ledger rows were
+written at the time of the amendment — it is a correctness fix to a crashing
+assert, made blind to any outcome, not a result-contingent adjustment. §46.4
+below reports the forensic check on how much this amendment actually mattered
+once real results existed.
+
+### 46.2 Design summary
+
+Signal: trailing mean daily funding income over lookback `L` days, where daily
+funding is the **sum** (not mean) of that UTC day's 8h funding prints — the
+same undercounting lesson from the original carry sleeve (`groupby.mean()`
+undercounts funding income roughly 3×) applied here to a cross-sectional
+signal. Realized prints only, timestamped at print time (point-in-time safe).
+Daily cross-sectional rank within the current 50-symbol universe.
+
+Universe: the existing 799-symbol PIT eligibility rule
+(`tradingagents/xsect/universe.eligibility`) — USDT-M perp with a kline on day
+D, first kline ≤ D−30, 30-day median quote-volume ≥ $5M — ranked by volume and
+capped at **top-50**, refreshed monthly at the first-Monday close. An
+additional funding-specific requirement (≥30 gapless trailing funding days)
+makes the universe identical across all 6 grid configs, since the grid caps
+`L` at 30 — required for grid-level DSR comparability. A coin leaving the
+universe is force-flattened at the next bar with turnover cost; leg membership
+inside the fixed monthly universe refreshes **daily** (funding ranks move
+fast, universe membership does not).
+
+Portfolio: at decision close *t*, within the valid universe, SHORT the top
+`leg_frac × N` symbols by signal (highest funding paid by longs — collected by
+the short leg) and LONG the bottom `leg_frac × N` symbols, excluding short-leg
+members (the post-amendment rule), each leg equal-weighted at 50% of gross
+capital → gross 1.0, net 0. No vol targeting or per-symbol vol scaling in this
+first test (`t1`), a deliberate simplicity choice that also avoids
+reintroducing the §43 vol-selection mechanism through sizing. Decision at
+close *t* accrues from bar *t+1*; funding accrual is signed by weight (long
+pays positive funding, short receives); costs are 10 bps per side on Σ|Δw|,
+charged on the first accrual day after any weight change; rf is deducted
+every day on full capital as described above. A **vol-selection diagnostic**
+(rank-correlation of the funding signal against 30-day realized vol, and
+per-leg mean vol) was pre-registered as non-gating, recorded either way,
+specifically because §43 showed cross-sectional sorts can select on
+volatility rather than the named characteristic.
+
+Grid, frozen before the first run: `L ∈ {1, 7, 30}` × `leg_frac ∈ {0.10,
+0.20}` = 6 configurations, `N=50` fixed. Dev window 2021-01-01 → 2025-03-31
+(1,547 accrued days); holdout 2025-04-01 → 2026-07-01, sealed and one-shot,
+spent only if dev passes. No relative benchmark gate — the book is
+dollar-neutral, so cash is the natural benchmark and the rf deduction already
+embeds it.
+
+### 46.3 Dev grid results (6/6 configs, `data/rebuild/carry_xs/dev_results.json`)
+
+`n_trials_at_eval = 87` at every row (house unique-config-hash recipe over the
+full ledger). Placebo `p` below is the worse (max) of the two families per the
+gate rule.
+
+| L | leg_frac | net_sr | placebo_p_indep | placebo_p_shared | placebo_p (worse) | dsr | turnover/day | vol_rank_corr | pass |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|:---:|
+| 1 | 0.10 | −0.269 | 0.164 | 0.114 | 0.164 | 0.0011 | 0.716 | 0.040 | FAIL |
+| 1 | 0.20 | −0.464 | 0.116 | 0.104 | 0.116 | 0.0002 | 0.663 | 0.040 | FAIL |
+| 7 | 0.10 | −0.202 | 0.529 | 0.395 | 0.529 | 0.0018 | 0.236 | 0.002 | FAIL |
+| 7 | 0.20 | +0.463 | 0.086 | 0.064 | 0.086 | 0.0571 | 0.210 | 0.002 | FAIL |
+| 30 | 0.10 | +0.185 | 0.365 | 0.301 | 0.365 | 0.0173 | 0.099 | −0.034 | FAIL |
+| **30** | **0.20** | **+0.695** | 0.066 | 0.094 | 0.094 | 0.1226 | 0.085 | −0.034 | FAIL |
+
+**0/6 configs pass** the pre-registered `carry_xs_t1.dev_select` gate
+(`net_sr_min` 1.0, `placebo_p_max` 0.05 under both families, `dsr_min` 0.9 —
+all three required). No config is close on more than one axis
+simultaneously: the best config (L=30, leg_frac=0.20) gets nearest on all
+three (net SR 0.695 vs 1.0, placebo p 0.094 vs 0.05, DSR 0.123 vs 0.9) but
+clears none of them. `L` shows a clean monotonic recovery as turnover falls
+(net SR −0.27 → −0.20/+0.46 → +0.19/+0.70 as `L` goes 1 → 7 → 30, turnover
+falling 0.72/0.66 → 0.24/0.21 → 0.10/0.08), and `leg_frac=0.20` beats
+`leg_frac=0.10` at every `L`. The vol-selection diagnostic is clean at every
+`L` — rank-correlation between the funding signal and 30-day realized vol is
+≈0 (0.040, 0.002, −0.034), and mean leg vols sit within a narrow 0.059-0.075
+band regardless of leg — confirming (per the §43-motivated non-gating check)
+that this cross-sectional sort is not a disguised volatility proxy.
+
+### 46.4 Forensic verification (all 6 probes, `.superpowers/sdd/2026-07-28-carry-xs/task-7-forensics.md`)
+
+The negative was forensically verified per house discipline (dev window only;
+no holdout metric computed anywhere in the forensics pass). All six probes
+came back clean — no engine, wiring, or data defect found:
+
+1. **Book fully populated, not starved.** Universe membership is a clean
+   top-50 every one of 51 monthly refreshes; 99.97% of universe-member-days
+   have a valid signal and 30-day gapless funding history at every `L`;
+   per-day `n_valid` never drops below 49; zero days across the 1,547-day dev
+   window hit the `MIN_VALID=5` flat-day floor. This rules out the
+   §45-style sparsity mechanism (wide-trend's negative was partly an
+   under-populated book; carry_xs is not).
+2. **Mutation kill-test — engine is wired to the signal.** Negating the
+   best-config signal flips SR from +0.6948 to −1.3155 (the residual
+   asymmetry is explained by cost/rf drag being a constant burden on both the
+   real and negated book, not a red flag).
+3. **P&L decomposition (best config, L=30/leg_frac=0.20)** contradicts the
+   pre-registered "funding thin cross-sectionally" concern stated in the
+   design spec: isolating each leg (no cost/rf) gives price leg SR **+0.41**
+   and funding leg SR **+15.5** (near-cash-like — funding differentials are a
+   slow-moving, low-noise signal). Both legs are genuinely positive; combined
+   gross (cost/rf-free) SR is **+1.005**, comfortably above the 1.0 floor.
+   **What kills the gate is cost+rf drag alone**, pulling net SR from 1.005
+   down to the registered 0.695 — isolated cost drag ≈ −0.187 logret (≈4.4%
+   ann.) and isolated rf drag ≈ −0.169 logret (≈4.0% ann.) over the 4.2-year
+   window, consistent with the house `RF_DAILY` convention and ~8.5% mean
+   gross turnover/day.
+4. **Turnover/cost share, all 6 configs.** L=1's negative net SR is purely
+   cost-driven: gross (no-cost) SR is positive at both L=1 configs (+0.49,
+   +0.62), but daily turnover of 0.66-0.72 of book/day (a 1-day signal is
+   noisy and churns leg membership constantly) drags net SR to −0.27/−0.46.
+   This is expected and mechanical — a 1-day trailing-mean carry signal being
+   too high-turnover to survive 10bps/side is itself a real economic finding
+   — and L=7/L=30's progressively lower turnover (0.21-0.24, 0.08-0.10)
+   recovers most of the gross edge.
+5. **Tie mass at the best config — the amendment essentially never binds
+   in-sample.** Restricted to the 1,547 scored dev days at L=30/leg_frac=0.20:
+   days where a tie sits exactly on the leg-selection cutoff = 4/1547
+   (0.26%); days where the **naive**, pre-amendment sort would have actually
+   put the same symbol in both legs — the exact bug the amendment exists to
+   prevent — = **0/1547 (0.0%)**. The amendment remains a necessary
+   *correctness* guard (the first invocation crashed on it, per §46.1, before
+   any metric existed), but for the window/configs actually scored, it never
+   materially reassigns portfolio weight; the negative result is not an
+   artifact of the tie-handling rule.
+6. **Bit-exact independent reproduction.** A fresh script reloading
+   klines/funding from disk from scratch, calling only the registered module
+   functions, reproduces the ledger's net SR, maxDD, and total log-return for
+   the best config to 0.00e+00 difference.
+7. **DSR closes the loop.** Independently recomputed DSR for the best config
+   matches the ledger exactly (0.1226, `n_trials_at_eval=87`). A sensitivity
+   check shows the daily-SR standard error (0.0276) is on the same order as
+   the observed daily SR (0.0364) — the raw signal is only **≈1.3 standard
+   errors from zero** on 4.25 years of data *before* any multiplicity
+   correction. Even at `n_trials=1` (no multiplicity penalty at all), DSR
+   would be 0.788 — still below the 0.9 floor. The ledger-wide 87-trial
+   multiplicity penalty then compounds this (0.788 → 0.123), but the
+   signal is intrinsically thin even before that penalty is applied.
+
+**Interesting positive recorded honestly.** The cross-sectional funding leg
+(SR +15.5 in isolation, gross) genuinely holds income, consistent with §41's
+finding that funding income itself is real and survives out-of-sample (the
+old sleeve's holdout funding SR was +7.53 as-built, +1.93 after frictions).
+What fails here is, again, the economics bar — cost, rf drag, and
+multiple-testing — not the existence of the underlying income stream. Two
+independent constructions of a crypto funding-carry edge (§41's spot-hedged
+time series, this section's cross-sectional relative-rank) now agree that the
+funding premium is real but too thin, once honestly costed, to clear a
+pre-registered net-of-cost-and-multiplicity bar.
+
+### 46.5 Interpretation limits
+
+1. **Scope of the negative.** This result applies to a pure cross-sectional
+   funding-rank sort (no vol targeting, no trend interaction) traded
+   dollar-neutral across a monthly-refreshed top-50 perp universe at 10 bps
+   costs and flat 4.5% rf drag, over 2021-2025. The design spec's own
+   candidate t2 extension (a carry × trend/breakout interaction, motivated by
+   a noted negative correlation between the two signal families) was
+   explicitly gated on t1 showing signal first and was never run.
+2. **Rf convention is deliberately harsh, not neutral.** Flat annual 4.5% on
+   100% of gross capital was chosen specifically because it is the same
+   convention that killed the §39-41 sleeve, to make a pass unambiguous; it
+   is harsher than realized 2021-2022 T-bill rates and structurally penalizes
+   any strategy independent of its actual capital efficiency. A different,
+   still-defensible rf treatment (e.g., margin-only rather than full-capital)
+   is untested and would move the net SR upward from the reported 0.695 at
+   the best config — though not past the DSR/placebo failures, which do not
+   depend on the rf convention at all (see §46.4 point 3's gross-vs-net
+   breakdown).
+3. **Single dev window.** 2021-01-01 → 2025-03-31 includes the same 2022 bear
+   market and 2024-25 altcoin conditions discussed in §43 and §45; funding
+   dynamics across bull/bear regimes are not separately tested here.
+4. **DSR's 87-trial multiplicity penalty reflects the full ledger's
+   cumulative trial count**, not just this experiment's 6 configs; even
+   discounting all prior unrelated experiments (`n_trials=1`), the signal
+   still misses the DSR floor (§46.4 point 7), so this negative is not
+   primarily a multiplicity artifact.
+
+### 46.6 Verdict
+
+**0/6 configs pass** the pre-registered `carry_xs_t1.dev_select` gate. The
+best config (L=30, leg_frac=0.20) has a genuinely positive gross edge on both
+legs (price SR +0.41, funding SR +15.5, combined gross SR +1.005) but fails
+net SR (0.695 vs 1.0 required) once cost and the harshest-honest rf convention
+are applied, fails the placebo gate under the worse of the two families (0.094
+vs 0.05 required), and fails DSR (0.123 vs 0.9 required, and would still fail
+at 0.788 even with zero multiplicity correction). All six forensic probes
+came back clean: the book is fully populated (not starved), the engine is
+demonstrably wired to the signal (kill-test sign flip), the results
+bit-exactly reproduce independently, and the pre-result tied-signal amendment
+— though a necessary correctness fix — is confirmed to never materially bind
+on the scored dev window (0/1547 naive-overlap days). Per the gate check
+(`dev_results.json["selected"] is null`), the holdout one-shot does **not**
+run: no holdout-window return (2025-04-01 → 2026-07-01) entered any reported
+metric, and the locked holdout stays **unspent**, available for a future
+pre-registered cycle. One-shot discipline intact throughout: the 6-config
+grid was closed by pre-registration before any run, the rf-convention
+amendment (flat 4.5% vs. FRED DTB3) was made at plan-writing before any code
+ran, the tied-signal amendment was made blind to results after a crash and
+before any metric was read, and the forensic checks in §46.4 were run and
+reported as verification, not used to select or rescue a config.
+
+This closes lead #3 of the post-§44 program as an honest negative — the third
+in a row alongside §45 (wide trend) — and the second data point, after §41,
+that a real crypto funding-carry premium exists but is too thin to clear an
+honestly costed, multiplicity-aware bar under any construction tested so far
+(time-series spot-hedged or cross-sectional relative-rank). Per the go-forward
+leads queue, the next candidates are **#6 (liquidation/open-interest
+mean-reversion)** and **P5 (LLM re-test)**; a further carry revival would
+require a new pre-registered cycle testing a different construction (e.g. the
+untested t2 carry×trend interaction, or a less punitive rf treatment) against
+this same funding store and engine.
+
+### Artifacts
+
+- Spec: `docs/superpowers/specs/2026-07-28-carry-xs-design.md` (`b6f54fb`
+  design spec, `18e83bb` implementation plan + rf-convention amendment)
+- Funding store build: `c207106` (fetch script), `584498a` (startTime=0
+  cursor fix), `a0b7afa` (429/RateLimitError handling + dedup + missing-file
+  guard), `1b09fcc` (manifest + coverage report) — `data/xsect/funding/*.parquet`,
+  `data/xsect/funding_manifest.json`, `data/xsect/funding_coverage.json`
+- Signal + engine: `28d742c` (daily funding aggregation + trailing signal),
+  `50e8871` + `a72021d` (dollar-neutral L/S weight builder, tie-break fix),
+  `5c069dc` (L/S engine, signed funding accrual, rf on full capital), `f0af965`
+  (dual-family placebo kill-test) — `tradingagents/xsect/carry_xs.py`
+- Registration + amendment: `3174eb9` (gates.json entry + dev grid script,
+  pre-run), `2fdf3fe` (per-leg vol diagnostic), `0373b3c` (tied-signal
+  long/short exclusion amendment) — `data/rebuild/gates.json` key
+  `carry_xs_t1`
+- Results: `b2f8188` — `data/rebuild/carry_xs/dev_results.json`
+- Forensics: `.superpowers/sdd/2026-07-28-carry-xs/task-7-forensics.md`
+  (probe scripts throwaway, uncommitted, per house convention for forensic
+  passes)
