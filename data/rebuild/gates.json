@@ -321,5 +321,28 @@
    "run cost USD"
   ],
   "budget_usd": "15-25 approved"
+ },
+ "liq_fade_i1": {
+  "registered": "2026-07-28",
+  "spec": "docs/superpowers/specs/2026-07-28-liq-fade-intraday-design.md",
+  "dev_window": ["2021-01-01", "2025-03-31"],
+  "holdout_window": ["2025-04-01", "2026-07-01"],
+  "universe": "top-50 PIT monthly by trailing 30d median quote_volume from 799-symbol survivorship-safe daily store; min_age 60d; Binance UM 1h klines",
+  "signal": "per symbol hourly: z_ret = rolling z of 1h log returns, z_vol = rolling z of log1p(quote_volume), window 2160 bars min_periods 1440 ddof=1 inclusive of t; trigger = z_ret <= -thr AND z_vol >= thr; LONG-FADE ONLY (short side pre-excluded per section-47 asymmetry)",
+  "portfolio_rule": "trigger at bar t -> long 1/10 for bars t+1..t+H; retrigger resets timer; gross cap 1.0 (max 10 concurrent, arrival order); costs 10 bps per side on |dW|; rf_daily = 1.045^(1/365)-1 on full capital every calendar day; funding EXCLUDED; SR on daily-aggregated UTC net returns x sqrt(365)",
+  "grid": {"thr": [2.5, 3.5], "H": [6, 24, 48]},
+  "probes": {
+   "P0": "1h bars open-stamped; daily aggregation of 1h closes reconciles with daily store (corr > 0.99 on overlapping returns, BTCUSDT)",
+   "P1": "proxy triggers (thr=2.5) aggregated daily on 8 Coinglass coins must flag >= 4 of 5 benchmark cascade dates (2021-05-19, 2022-06-13, 2022-11-09, 2024-08-05, 2025-02-03); FAIL -> STOP",
+   "P2": "mean cumulative GROSS forward return t+1..t+H over all dev triggers must exceed +25 bps in at least one grid cell; FAIL -> STOP (NEGATIVE-at-probe)"
+  },
+  "dev_select": {
+   "net_sr_min": 1.0,
+   "placebo": "dual-family (A: per-symbol circular shift of trigger series; B: count-matched uniform random trigger timestamps), 500 draws each, costs+rf re-applied, p = (1+#{placebo SR >= real SR})/(N+1), gate on WORSE p <= 0.05",
+   "dsr_min": 0.9,
+   "n_trials": "ledger-cumulative unique config_hash count at evaluation time (+6 from this grid)"
+  },
+  "one_shot": "holdout spent only if dev gate passes; stress row +10bps slippage reported not gated",
+  "thesis_section": "48"
  }
 }
