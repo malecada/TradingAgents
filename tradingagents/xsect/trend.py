@@ -83,3 +83,27 @@ def run_daily_portfolio(W: pd.DataFrame, R: pd.DataFrame, cost_bps: float = 10.0
     cost = cost_bps / 1e4 * np.abs(Wprev - Wprev2).sum(axis=1)
     port = pd.Series(gross - cost, index=W.index)
     return port.iloc[1:]
+
+
+def circular_shift_weights(W: pd.DataFrame, rng: np.random.Generator,
+                            min_shift: int = 30) -> pd.DataFrame:
+    """Per-column random circular roll — preserves each coin's weight
+    autocorrelation and vol-scaling structure, destroys alignment with the
+    market path. Costs are re-applied downstream by run_daily_portfolio."""
+    n = len(W)
+    out = {}
+    for col in W.columns:
+        k = int(rng.integers(min_shift, n - min_shift))
+        out[col] = np.roll(W[col].to_numpy(), k)
+    return pd.DataFrame(out, index=W.index, columns=W.columns)
+
+
+def placebo_srs(W: pd.DataFrame, R: pd.DataFrame, n_placebo: int,
+                 cost_bps: float = 10.0) -> list:
+    from tradingagents.xsect.portfolio import sr as _sr
+    out = []
+    for p in range(n_placebo):
+        rng = np.random.default_rng(seed=p)  # reproducible per placebo index
+        shifted = circular_shift_weights(W, rng)
+        out.append(_sr(run_daily_portfolio(shifted, R, cost_bps=cost_bps)))
+    return out

@@ -3,9 +3,10 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from tradingagents.xsect.portfolio import rank_placebo_pvalue, sr
 from tradingagents.xsect.trend import (
-    build_matrices, ew_benchmark_weights, monthly_refresh_dates,
-    run_daily_portfolio, trend_weights,
+    build_matrices, circular_shift_weights, ew_benchmark_weights, monthly_refresh_dates,
+    placebo_srs, run_daily_portfolio, trend_weights,
 )
 
 UTC = "UTC"
@@ -135,3 +136,35 @@ def test_ew_benchmark_constant_within_month():
     feb = W.loc["2021-02-01":"2021-02-28"]
     assert (feb["A"] == 0.5).all() and (feb["B"] == 0.5).all()
     assert (W.loc[W.index < refresh[0]] == 0.0).all().all()
+
+
+def test_circular_shift_preserves_mass_and_reproducible():
+    days = _idx("2021-01-01", 400)
+    rng0 = np.random.default_rng(7)
+    W = pd.DataFrame({"A": rng0.uniform(0, 1, 400), "B": rng0.uniform(0, 1, 400)}, index=days)
+    s1 = circular_shift_weights(W, np.random.default_rng(3))
+    s2 = circular_shift_weights(W, np.random.default_rng(3))
+    pd.testing.assert_frame_equal(s1, s2)
+    assert np.allclose(np.sort(s1["A"].values), np.sort(W["A"].values))
+    assert not s1.equals(W)
+
+
+def test_placebo_kill_test_on_synthetic_trend():
+    """Real trend weights must beat ~all circularly-shifted placebos on a
+    regime series engineered so trend-following earns (mutation kill-test)."""
+    rng = np.random.default_rng(42)
+    n = 900
+    regime = np.sign(np.sin(np.arange(n) / 60.0))       # ~120d alternating regimes
+    r = 0.004 * regime + rng.normal(0, 0.01, n)
+    idx = _idx("2020-06-01", n)
+    px = pd.Series(100 * np.exp(np.cumsum(r)), index=idx)
+    klines = _mk_klines({"A": px})
+    refresh = monthly_refresh_dates("2020-09-01", str(idx[-1].date()))
+    members = {d: ["A"] for d in refresh}
+    all_days, R, V, S = build_matrices(klines, ["A"])
+    W = trend_weights(all_days, R, V, S, members, n_slots=1, vol_target=0.40)
+    real = sr(run_daily_portfolio(W, R, cost_bps=10.0))
+    p_srs = placebo_srs(W, R, n_placebo=99, cost_bps=10.0)
+    p = rank_placebo_pvalue(real, p_srs)
+    assert real > 0
+    assert p <= 0.05
