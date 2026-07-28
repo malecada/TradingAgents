@@ -104,9 +104,11 @@ r_p(t+1) = Σ_i w_i · r_i(t+1)                    price leg (w signed, long > 0
 - Funding accrual uses realized prints of day t+1 (position holds through prints).
 - Turnover cost charged on the first accrual day after each weight change; weights
   change daily (rank churn) and monthly (universe rotation).
-- rf source: flat rf_annual = 0.045, rf_daily = 1.045^(1/365) − 1 ≈ 1.7469e-4 —
-  the exact house convention from the §39 carry audit
-  (data/rebuild/carry_audit/costs.json). Flat 4.5% is HARSHER than realized
+- rf source: flat rf_annual = 0.045, rf_daily = 1.045^(1/365) − 1 ≈ 1.2060e-4 —
+  the house carry-audit rf_annual=4.5% (this cycle uses a 365-day count:
+  rf_daily = 1.045^(1/365) − 1 ≈ 1.2060e-4; the §39 carry audit's
+  data/rebuild/carry_audit/costs.json figure of 1.7469e-4 uses a 252-day
+  count and is not the number applied here). Flat 4.5% is HARSHER than realized
   2021–2022 T-bill rates (near zero), consistent with the harshest-honest-convention
   decision, and removes an external data dependency. (Amended from FRED DTB3 at
   plan-writing, pre-registration, before any run.)

@@ -4534,8 +4534,11 @@ came back clean — no engine, wiring, or data defect found:
    slow-moving, low-noise signal). Both legs are genuinely positive; combined
    gross (cost/rf-free) SR is **+1.005**, comfortably above the 1.0 floor.
    **What kills the gate is cost+rf drag alone**, pulling net SR from 1.005
-   down to the registered 0.695 — isolated cost drag ≈ −0.187 logret (≈4.4%
-   ann.) and isolated rf drag ≈ −0.169 logret (≈4.0% ann.) over the 4.2-year
+   down to the registered 0.695 — isolated cost drag ≈ −0.169 logret (≈4.0%
+   ann.; scored-window turnover 0.1087/day × 10bps × 1547 days) and isolated
+   rf drag ≈ −0.187 logret (≈4.4% ann.; 1547 × rf_daily 1.2060e-4 — rf is a
+   deterministic daily charge on full capital regardless of turnover, which
+   is the proof the two are correctly attributed) over the 4.2-year
    window, consistent with the house `RF_DAILY` convention and ~8.5% mean
    gross turnover/day.
 4. **Turnover/cost share, all 6 configs.** L=1's negative net SR is purely
@@ -4624,8 +4627,14 @@ bit-exactly reproduce independently, and the pre-result tied-signal amendment
 — though a necessary correctness fix — is confirmed to never materially bind
 on the scored dev window (0/1547 naive-overlap days). Per the gate check
 (`dev_results.json["selected"] is null`), the holdout one-shot does **not**
-run: no holdout-window return (2025-04-01 → 2026-07-01) entered any reported
-metric, and the locked holdout stays **unspent**, available for a future
+run: no holdout-window return (2025-04-01 → 2026-07-01) entered any **gate**
+metric. The three non-gating diagnostics (`vol_rank_corr_diag`, per-leg mean
+vols, `mean_gross_turnover`) sample the full weight history, which includes
+458 post-2025-03-31 active days (22 of the 96 diagnostic sample dates for the
+best config) — a dev-window-only recompute gives `vol_rank_corr` −0.012
+(vs. −0.034 committed) and leg vols 0.0675/0.0653 (vs. 0.0674/0.0632
+committed), leaving the "≈0, not a vol proxy" conclusion in §46.3 unchanged.
+The locked holdout stays **unspent**, available for a future
 pre-registered cycle. One-shot discipline intact throughout: the 6-config
 grid was closed by pre-registration before any run, the rf-convention
 amendment (flat 4.5% vs. FRED DTB3) was made at plan-writing before any code
