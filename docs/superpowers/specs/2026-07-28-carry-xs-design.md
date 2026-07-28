@@ -104,7 +104,12 @@ r_p(t+1) = Σ_i w_i · r_i(t+1)                    price leg (w signed, long > 0
 - Funding accrual uses realized prints of day t+1 (position holds through prints).
 - Turnover cost charged on the first accrual day after each weight change; weights
   change daily (rank churn) and monthly (universe rotation).
-- rf source: FRED 3-month T-bill (DTB3), forward-filled to daily, /365.
+- rf source: flat rf_annual = 0.045, rf_daily = 1.045^(1/365) − 1 ≈ 1.7469e-4 —
+  the exact house convention from the §39 carry audit
+  (data/rebuild/carry_audit/costs.json). Flat 4.5% is HARSHER than realized
+  2021–2022 T-bill rates (near zero), consistent with the harshest-honest-convention
+  decision, and removes an external data dependency. (Amended from FRED DTB3 at
+  plan-writing, pre-registration, before any run.)
 - Missing kline for a held member: contributes 0 that day, weights not redistributed
   intra-period (store convention, matches trend_wide).
 
