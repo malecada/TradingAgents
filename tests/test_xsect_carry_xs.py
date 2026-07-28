@@ -114,6 +114,28 @@ def test_carry_weights_long_leg_tie_break_ascending():
     assert row["C"] == 0
 
 
+def test_carry_weights_all_tied_legs_disjoint():
+    # Regression: degenerate all-tied cross-section (ubiquitous in real funding
+    # data, e.g. Binance default 1e-4/8h print) collapses both the desc and asc
+    # sorts to symbol-asc order. Long leg must exclude short-leg members so the
+    # legs stay disjoint instead of overwriting each other (Sigma w != 0 crash).
+    days, syms, _ = _panel()  # 8 symbols, MIN_FUND_DAYS+ warmup available
+    F = pd.DataFrame(0.0, index=days, columns=syms)  # constant identical funding
+    S = carry_signal(F, L=7)
+    W = carry_weights(days, S, F, {days[0]: syms}, leg_frac=0.25)  # n_leg=2
+    t = days[MIN_FUND_DAYS + 10]
+    row = W.loc[t]
+    shorts = ["S0USDT", "S1USDT"]     # alphabetically-first 2
+    longs = ["S2USDT", "S3USDT"]      # next alphabetically after shorts excluded
+    for s in shorts:
+        assert row[s] == pytest.approx(-0.25)
+    for s in longs:
+        assert row[s] == pytest.approx(+0.25)
+    assert set(shorts).isdisjoint(longs)
+    assert row.sum() == pytest.approx(0.0)
+    assert row.abs().sum() == pytest.approx(1.0)
+
+
 def _one_symbol_frames(w, r, f, n=4):
     days = pd.date_range("2024-01-01", periods=n, freq="D", tz="UTC")
     W = pd.DataFrame({"XUSDT": w}, index=days)

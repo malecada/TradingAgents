@@ -50,11 +50,19 @@ def carry_weights(all_days, S: pd.DataFrame, F: pd.DataFrame,
             continue
         n_leg = max(1, int(round(leg_frac * n_valid)))
         # SHORT: top n_leg by (signal desc, symbol asc); LONG: bottom n_leg by
-        # (signal asc, symbol asc). Two independent sorts — a single desc sort's
-        # tail gives (signal asc, symbol DESC) at tie boundaries, which diverges
-        # from the frozen ascending tie-break for the long leg.
+        # (signal asc, symbol asc) EXCLUDING short-leg members. Two independent
+        # sorts — a single desc sort's tail gives (signal asc, symbol DESC) at
+        # tie boundaries, which diverges from the frozen ascending tie-break for
+        # the long leg. Under heavily tied signals (common in real funding data,
+        # e.g. Binance default 1e-4/8h print -> identical trailing means across
+        # many symbols) the desc and asc sorts can pick overlapping symbols —
+        # in the degenerate all-tied case both sorts collapse to symbol-asc and
+        # the legs would be identical, so the long leg must explicitly exclude
+        # short-leg members to keep the legs disjoint (Sigma w = 0 sanity holds).
         shorts = sorted(names, key=lambda s: (-S.loc[t, s], s))[:n_leg]
-        longs = sorted(names, key=lambda s: (S.loc[t, s], s))[:n_leg]
+        shorts_set = set(shorts)
+        longs = [s for s in sorted(names, key=lambda s: (S.loc[t, s], s))
+                if s not in shorts_set][:n_leg]
         W.loc[t, shorts] = -0.5 / n_leg
         W.loc[t, longs] = +0.5 / n_leg
     return W

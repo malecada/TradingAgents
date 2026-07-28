@@ -212,7 +212,7 @@
   ],
   "signal": "trailing mean over L days of daily funding income, daily funding = SUM of the UTC day's prints; realized prints only; rank cross-sectionally within monthly universe; signal NaN if any of trailing L days missing",
   "universe_rule": "PIT monthly refresh at first Monday close: USDT-M perp with kline on day D, first kline <= D-30, 30d median quote-volume >= 5000000 USD, rank by volume, keep top-50; symbol additionally needs 30 gapless trailing funding days at decision else excluded that day; leaving symbol force-flattened next bar with cost",
-  "portfolio_rule": "daily decision close t -> weights bar t+1; valid = universe members with non-NaN signal and 30 gapless funding days; if n_valid < 5 flat; n_leg = max(1, round(leg_frac*n_valid)); SHORT top n_leg by (signal desc, symbol asc) at -0.5/n_leg, LONG bottom n_leg at +0.5/n_leg; gross 1.0 net 0; costs 10 bps per side on sum|dW| first accrual day; funding accrual signed W*F (long pays positive funding); rf_daily = 1.045^(1/365)-1 deducted every day on full capital (house carry-audit convention, harshest-honest per section-41 mandate)",
+  "portfolio_rule": "daily decision close t -> weights bar t+1; valid = universe members with non-NaN signal and 30 gapless funding days; if n_valid < 5 flat; n_leg = max(1, round(leg_frac*n_valid)); SHORT top n_leg by (signal desc, symbol asc) at -0.5/n_leg, LONG bottom n_leg by (signal asc, symbol asc) EXCLUDING short-leg members at +0.5/n_leg; gross 1.0 net 0; costs 10 bps per side on sum|dW| first accrual day; funding accrual signed W*F (long pays positive funding); rf_daily = 1.045^(1/365)-1 deducted every day on full capital (house carry-audit convention, harshest-honest per section-41 mandate)",
   "benchmark": "none (dollar-neutral; cash benchmark embedded via rf deduction)",
   "grid": {
    "L": [
@@ -238,6 +238,7 @@
    "placebo_p_max": 0.05,
    "one_shot": true
   },
-  "diagnostics_non_gating": "rank-correlation of funding signal vs 30d realized vol across universe; per-leg mean vol (section-43 vol-selection check)"
+  "diagnostics_non_gating": "rank-correlation of funding signal vs 30d realized vol across universe; per-leg mean vol (section-43 vol-selection check)",
+  "amendment_2026-07-28": "long-leg disjointness rule added after registration but BEFORE any result was produced: first dev invocation crashed on the frozen net-exposure sanity assert (tied-signal cross-sections make desc/asc sorts overlap); zero metrics read, zero ledger rows written at amendment time"
  }
 }
