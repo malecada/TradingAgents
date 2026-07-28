@@ -4770,3 +4770,86 @@ P5 LLM flagship re-test on the corrected harness.
 - Results: `data/rebuild/liq_mr/dev_results.json`
 - Forensics: `data/rebuild/liq_mr/forensics.md` (committed; probe scripts
   throwaway per house convention)
+
+## Section 48: LLM Flagship Re-test (llm_p5_hybrid) — Gate FAIL, Modulator Harmful on Honest Legs (2026-07-28)
+
+The honest rebuild (§39-§41) deferred exactly one LLM question to a final
+Phase 5: does the Layer-2 LLM modulator add risk-adjusted value over the
+CORRECTED quant legs? Every prior positive hybrid number (1-yr ETH ΔSR +1.10,
+§23.11 LOO backbone effects, prompt A/Bs) was measured on the same-bar legs
+invalidated by the 2026-07-07 audit. This section is that re-measurement —
+one experiment, one gate, registered before any run (`llm_p5_hybrid` in
+data/rebuild/gates.json @ d30842f; parent gate frozen 2026-07-08 in the
+rebuild spec §8).
+
+### 48.1 Precondition — pure-LLM engine audit
+
+`tradingagents/backtesting/engine.py` (`run_backtest`, the engine behind all
+pure-LLM system backtests) audited per the Phase-5 precondition: **same-bar
+confirmed** — `agent_signals[i]`, formed from day-i close data, earns bar i's
+own return. Same defect class as audit finding C1. Every legacy pure-LLM
+backtest number (P1-P5 phases, §23 hybrid line, §23.11/23.12 ablations) is
+thereby verified stale, not merely presumed so. `scripts/backtest_hybrid.py`
+shares the defect. Both were excluded; P5 ran on a new causal A/B harness
+(`scripts/llm_p5_ab.py`, unit-tested slot alignment).
+
+### 48.2 Design (single config, one-shot)
+
+ETH, 2026-01-16 → 2026-05-21 (126 bars; start = post-cutoff P4 precedent for
+gpt-5.4-mini, end = Coinglass PIT-feature limit; holdout overlap documented
+in the registration — quant base frozen, §41 already spent the directional
+holdout, LLM-cutoff rule forces a 2026 window). Arm A: canonical V2 leg on
+freshly regenerated corrected predictions (purged + rolling-730d +
+onchain-PIT, exact audit recipe; DirAcc 49-51% — the honest 50-55% profile),
+causal sizing, causal costs, 3% intrabar price-stop replay. Arm B: identical
+engine on `pos_A × (1 + effective_weight × (multiplier − 1))` with modulator
+outputs from the production graph (live ETH analyst stack onchain+prediction,
+gpt-5.4-mini/nano, prompt v1, replay-cached), factor from decision date D−1
+applied to slot D (live 00:05-UTC information boundary). Gate: paired
+stationary block bootstrap (block 21, n 2000) on the daily diff, PASS iff
+p_pos ≥ 0.90.
+
+### 48.3 Result — FAIL (modulator harmful)
+
+| | net SR | total ret | maxDD | ann vol |
+|---|---|---|---|---|
+| Arm A quant | +0.699 | +4.22% | −5.70% | 13.2% |
+| Arm B hybrid | +0.234 | +0.99% | −5.09% | 11.1% |
+
+ΔSR = **−0.465** [95% CI −1.04, +0.07], **p_pos = 0.065** vs gate 0.90.
+Run integrity: 126/126 bars, 0 errors, 100% multiplier extraction, modulator
+active on 75% of slots (mean multiplier 0.789). Ledger row 9b0bdc346884
+(`allow_holdout=True` per registration). Results:
+`data/rebuild/llm_p5/ab_results.json`.
+
+### 48.4 Forensic verification
+
+`data/rebuild/llm_p5/forensics.md`. (P1) Layer-1 parity: CSV quant direction
+= audited leg consensus 125/125 same-day; the A/B's 66% cross-day figure is
+the consensus's own 34.9% daily sign churn — harness clean. (P2) Alignment
+robustness: under the pre-audit leaky convention (factor d → slot d, same-bar
+LLM info) the modulator is neutral (ΔSR −0.006, p_pos 0.50) — so the legacy
++1.10 "ETH alpha" does not survive causal LEGS even with the leaky LLM
+alignment: the apparent LLM alpha lived in the same-bar quant legs. (P3)
+Mechanism: dampening fired on the profitable days (+7.5 bp mean quant return
+on dampened slots vs −1.1 bp on neutral) — trust-scaling anti-correlated
+with realized edge. Not underpowered: p ≈ 0.94 that the effect is negative.
+
+### 48.5 Verdict and consequence
+
+Pre-registered stop rule applied: the LLM modulator layer is thesis-only,
+reported as no-effect-to-harmful on honest legs; the live hybrid A/B line
+loses its backtest rationale (its legacy-leg justification is void). With
+§45-§47 and this section, every open lead and the LLM flagship question now
+have pre-registered verdicts on the corrected harness.
+
+### Artifacts
+
+- Registration: `d30842f` (spec 2026-07-28-llm-p5-hybrid-prereg.md + gates)
+- Harness: `d153dff` (`scripts/llm_p5_ab.py` + tests), `7d51114` (prompt-
+  version flag adoption, behavior-preserving)
+- Signals: `data/llm_p5/signals/ethereum_2026-01-15_2026-05-20.csv` (126
+  bars, 5.7 h, ≈$15-25)
+- Predictions: `data/audit_fix/rolling730/multi_2coins_pit_wf_p5/` (audit
+  recipe, trade-date 2026-06-05)
+- Results + forensics: `data/rebuild/llm_p5/`
