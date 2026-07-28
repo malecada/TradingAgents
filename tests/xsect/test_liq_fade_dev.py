@@ -97,6 +97,26 @@ def test_event_forward_sum_multiple_symbols_and_events_flattened():
     assert np.isclose(vals[1], H * 0.02)  # BBB event
 
 
+def test_event_forward_sum_uses_t1_to_tH_not_t_to_tHminus1():
+    """Non-constant return path: with constant returns, the correct window
+    t+1..t+H and the off-by-one mutant t..t+H-1 (e.g. an errant
+    `.shift(-H+1)` instead of `.shift(-H)`) sum to the identical value and
+    the bug is invisible. Use a strictly increasing return path so the two
+    windows disagree, and hand-compute the correct answer."""
+    idx = _hourly_index("2021-01-01", 6)
+    R = pd.DataFrame({"AAA": [0.01, 0.02, 0.03, 0.04, 0.05, 0.06]}, index=idx)
+    trig = pd.DataFrame({"AAA": [False] * 6}, index=idx)
+    trig.iloc[1, 0] = True   # trigger at t=1 (row index 1, return 0.02)
+    H = 3
+    vals = liq_fade_dev.event_forward_sum(R, trig, H)
+    assert len(vals) == 1
+    # correct: sum(R[t+1..t+H]) = R[2]+R[3]+R[4] = 0.03+0.04+0.05
+    assert np.isclose(vals[0], 0.12)
+    # off-by-one mutant (t..t+H-1, i.e. includes the trigger bar itself):
+    # R[1]+R[2]+R[3] = 0.02+0.03+0.04 = 0.09 -- must NOT match
+    assert not np.isclose(vals[0], 0.09)
+
+
 # ── load_symbols smoke restriction (pure filesystem check, no parquet reads) ─
 
 def test_load_symbols_smoke_restricts_to_symbols_on_disk():

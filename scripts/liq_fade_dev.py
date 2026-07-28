@@ -147,20 +147,28 @@ def load_hourly_panel(symbols: list[str], start: str = WARMUP_START,
 def probe_p0() -> dict:
     """Daily-aggregation reconciliation on BTCUSDT: resample('1D').last() of
     1h closes, pct_change, must correlate > 0.99 with the daily-store
-    BTCUSDT close pct_change over the 2021-2025 overlap. `pass: None` means
-    the overlap couldn't be computed yet (insufficient 1h history on disk --
-    expected mid-fetch / under --smoke), never a false pass or fail."""
+    BTCUSDT close pct_change over the 2021-01-01..MAX_LOAD_END overlap.
+    Both the 1h and daily series are clamped to [2021-01-01, MAX_LOAD_END]
+    BEFORE resampling/pct_change -- the daily store extends to the present
+    and the 1h tail keeps advancing, so an unclamped window would pull ~9
+    months of sealed holdout data into a probe that is supposed to run
+    pre-backtest. `pass: None` means the overlap couldn't be computed yet
+    (insufficient 1h history on disk -- expected mid-fetch / under --smoke),
+    never a false pass or fail."""
     p1h = KLINES_1H_DIR / "BTCUSDT.parquet"
     pdaily = KLINES_DAILY_DIR / "BTCUSDT.parquet"
     if not p1h.exists() or not pdaily.exists():
         return {"pass": None, "reason": "BTCUSDT store(s) missing", "corr": None,
                 "n_overlap_days": 0}
+    lo = pd.Timestamp("2021-01-01", tz="UTC")
+    cap = pd.Timestamp(MAX_LOAD_END, tz="UTC")  # sealed-holdout guard -- see docstring
     d1h = pd.read_parquet(p1h)
+    d1h = d1h.loc[(d1h.index >= lo) & (d1h.index <= cap)]
     daily_from_1h = d1h["close"].resample("1D").last().pct_change()
     dd = pd.read_parquet(pdaily)
+    dd = dd.loc[(dd.index >= lo) & (dd.index <= cap)]
     daily_store_ret = dd["close"].pct_change()
-    lo, hi = pd.Timestamp("2021-01-01", tz="UTC"), pd.Timestamp("2025-12-31", tz="UTC")
-    a = daily_from_1h[(daily_from_1h.index >= lo) & (daily_from_1h.index <= hi)]
+    a = daily_from_1h[(daily_from_1h.index >= lo) & (daily_from_1h.index <= cap)]
     b = daily_store_ret.reindex(a.index)
     valid = a.notna() & b.notna()
     n = int(valid.sum())
@@ -169,7 +177,8 @@ def probe_p0() -> dict:
                 "corr": None, "n_overlap_days": n}
     corr = float(np.corrcoef(a[valid].to_numpy(), b[valid].to_numpy())[0, 1])
     return {"pass": bool(corr > P0_MIN_CORR), "corr": corr, "n_overlap_days": n,
-            "required_corr": P0_MIN_CORR}
+            "required_corr": P0_MIN_CORR,
+            "window": [str(lo.date()), str(cap.date())]}
 
 
 def probe_p1() -> dict:
@@ -290,7 +299,48 @@ def probe_p2(smoke: bool) -> dict:
     return result
 
 
+def _assert_data_complete() -> None:
+    """Hard guard for non-smoke probe runs, checked BEFORE any probe computes.
+
+    Without this, a premature real run (bulk 1h fetch still in progress)
+    would silently write a smoke:false probes.json off a partial universe --
+    a file that LOOKS like a registered verdict but isn't backed by the full
+    217-symbol universe, and is indistinguishable from a genuine full-data
+    run downstream. Requires: every symbol in liq_fade_symbols.txt present
+    on disk under data/xsect/klines_1h/, AND BTCUSDT 1h coverage spanning
+    <= 2020-06-02 through >= 2025-04-14 (the registered warmup start through
+    just short of the sealed holdout). Never bypassed except via --smoke,
+    which never claims a registered verdict in the first place.
+    """
+    required = [s.strip() for s in SYMBOLS_FILE.read_text().splitlines() if s.strip()]
+    on_disk = {p.stem for p in KLINES_1H_DIR.glob("*.parquet")}
+    missing = sorted(s for s in required if s not in on_disk)
+    if missing:
+        raise RuntimeError(
+            f"data-completeness guard FAILED: {len(missing)}/{len(required)} symbols "
+            f"from {SYMBOLS_FILE} missing under {KLINES_1H_DIR} (e.g. {missing[:5]}); "
+            "refusing a non-smoke probe run on a partial universe. Use --smoke for a "
+            "partial-data sanity check, or wait for the bulk 1h fetch to finish.")
+    p = KLINES_1H_DIR / "BTCUSDT.parquet"
+    if not p.exists():
+        raise RuntimeError(f"data-completeness guard FAILED: {p} missing")
+    d = pd.read_parquet(p)
+    if d.empty:
+        raise RuntimeError(f"data-completeness guard FAILED: {p} is empty")
+    first, last = d.index.min(), d.index.max()
+    need_first = pd.Timestamp("2020-06-02", tz="UTC")
+    need_last = pd.Timestamp("2025-04-14", tz="UTC")
+    if first > need_first or last < need_last:
+        raise RuntimeError(
+            f"data-completeness guard FAILED: BTCUSDT 1h coverage {first.date()} -> "
+            f"{last.date()} does not span the required <= {need_first.date()} -> "
+            f">= {need_last.date()}; refusing a non-smoke probe run before the fetch "
+            "is complete.")
+
+
 def run_probes(smoke: bool) -> dict:
+    if not smoke:
+        _assert_data_complete()
     t0 = time.time()
     p0 = probe_p0()
     print(f"[P0] pass={p0['pass']} corr={p0['corr']} n_overlap_days={p0['n_overlap_days']} "
