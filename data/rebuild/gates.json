@@ -240,5 +240,55 @@
   },
   "diagnostics_non_gating": "rank-correlation of funding signal vs 30d realized vol across universe; per-leg mean vol (section-43 vol-selection check)",
   "amendment_2026-07-28": "long-leg disjointness rule added after registration but BEFORE any result was produced: first dev invocation crashed on the frozen net-exposure sanity assert (tied-signal cross-sections make desc/asc sorts overlap); zero metrics read, zero ledger rows written at amendment time"
+ },
+ "liq_mr_t1": {
+  "registered": "2026-07-28",
+  "spec": "docs/superpowers/specs/2026-07-28-liq-mr-design.md",
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "holdout_window": [
+   "2025-04-01",
+   "2026-07-01"
+  ],
+  "universe": "fixed 8 majors with Coinglass derivatives history (BTCUSDT ETHUSDT BNBUSDT SOLUSDT ADAUSDT DOGEUSDT XRPUSDT TRXUSDT); non-PIT ex-post selection recorded as limitation; all listed pre-2021, never delisted",
+  "signal": "per coin: x_dir(t) = liq_dir_usd(t)/oi_close(t) for dir in {long, short}; z_dir(t) = trailing 90d rolling z-score (min_periods 60, ddof=1, inclusive of t); all inputs complete at close t (Coinglass 1d bars stamped at UTC day open; contemporaneity probe must pass before any run is trusted); oi_close 0/missing -> NaN -> no signal",
+  "portfolio_rule": "z_long(t) >= thr -> LONG 1/8 for bars t+1..t+H; z_short(t) >= thr -> SHORT 1/8 same; same-direction re-event resets timer; opposite directions net (sum of direction states); no vol targeting or scaling; costs 10 bps per side on sum|dW| at first accrual day; rf_daily = 1.045^(1/365)-1 deducted every day on full capital (house section-41 convention, identical to carry_xs_t1); funding accrual on holds EXCLUDED in t1 (recorded simplification; holdout adds realized-funding robustness line, not a gate); missing kline return for held coin contributes 0",
+  "grid": {
+   "thr": [
+    1.5,
+    2.5
+   ],
+   "H": [
+    1,
+    3,
+    5
+   ]
+  },
+  "benchmark": "none (flat-by-default episodic; cash benchmark embedded via rf deduction)",
+  "dev_select": {
+   "net_sr_min": 1.0,
+   "placebo": "dual-family (per-coin independent circular shifts; shared-offset shift), 500 draws each, costs+rf re-applied, p = (1+#{placebo SR >= real SR})/(N+1), gate on WORSE p <= 0.05",
+   "dsr_min": 0.9,
+   "n_trials": "ledger-cumulative unique config_hash count",
+   "tiebreak": "highest DSR, then lowest placebo p",
+   "conventions": "sqrt(252), ddof=1, zero-variance SR := 0"
+  },
+  "holdout_deploy": {
+   "net_sr_min": 0.5,
+   "placebo_p_max": 0.05,
+   "one_shot": true,
+   "latch": "fresh per evaluation window",
+   "note": "store extension via fetch_coinglass_history tail-append before run; funding-accrual robustness line reported, not gated"
+  },
+  "diagnostics_not_gates": [
+   "event counts per config/coin (power label if < 30 total)",
+   "long-fade vs short-fade decomposition",
+   "event-day vol-regime correlation",
+   "% days active + SR gross of rf",
+   "next-1/3/5-day post-event return profile"
+  ],
+  "stop_rule": "any dev failure -> negative recorded in THESIS section 47, holdout stays sealed; no second pass, no added grid axes"
  }
 }
