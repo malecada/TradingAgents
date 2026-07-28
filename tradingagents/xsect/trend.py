@@ -98,6 +98,17 @@ def circular_shift_weights(W: pd.DataFrame, rng: np.random.Generator,
     return pd.DataFrame(out, index=W.index, columns=W.columns)
 
 
+def shared_shift_weights(W: pd.DataFrame, rng: np.random.Generator,
+                          min_shift: int = 30) -> pd.DataFrame:
+    """Single shared circular roll for ALL columns — preserves cross-coin
+    co-activation (regime clustering) while destroying calendar alignment.
+    Second placebo family per amended spec (gate = worse of both p's)."""
+    n = len(W)
+    k = int(rng.integers(min_shift, n - min_shift))
+    return pd.DataFrame(np.roll(W.to_numpy(), k, axis=0), index=W.index,
+                        columns=W.columns)
+
+
 def placebo_srs(W: pd.DataFrame, R: pd.DataFrame, n_placebo: int,
                  cost_bps: float = 10.0) -> list:
     from tradingagents.xsect.portfolio import sr as _sr

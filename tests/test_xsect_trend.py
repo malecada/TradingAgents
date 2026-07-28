@@ -6,7 +6,7 @@ import pytest
 from tradingagents.xsect.portfolio import rank_placebo_pvalue, sr
 from tradingagents.xsect.trend import (
     build_matrices, circular_shift_weights, ew_benchmark_weights, monthly_refresh_dates,
-    placebo_srs, run_daily_portfolio, trend_weights,
+    placebo_srs, run_daily_portfolio, shared_shift_weights, trend_weights,
 )
 
 UTC = "UTC"
@@ -168,3 +168,55 @@ def test_placebo_kill_test_on_synthetic_trend():
     p = rank_placebo_pvalue(real, p_srs)
     assert real > 0
     assert p <= 0.05
+
+
+def test_shared_shift_same_offset_all_columns():
+    days = _idx("2021-01-01", 400)
+    rng0 = np.random.default_rng(11)
+    W = pd.DataFrame({"A": rng0.uniform(0, 1, 400), "B": rng0.uniform(0, 1, 400)}, index=days)
+    s1 = shared_shift_weights(W, np.random.default_rng(5))
+    s2 = shared_shift_weights(W, np.random.default_rng(5))
+    pd.testing.assert_frame_equal(s1, s2)
+
+    n = len(W)
+    a = W["A"].to_numpy()
+    shifted_a = s1["A"].to_numpy()
+    # recover shared offset k from column A: np.roll(a, k)[0] == a[(n - k) % n]
+    j = int(np.argmin(np.abs(a - shifted_a[0])))
+    k = (n - j) % n
+    assert np.allclose(np.roll(a, k), shifted_a)
+
+    b = W["B"].to_numpy()
+    assert np.allclose(np.roll(b, k), s1["B"].to_numpy())  # same k applied to B
+
+    assert np.allclose(np.sort(s1["A"].values), np.sort(W["A"].values))
+    assert np.allclose(np.sort(s1["B"].values), np.sort(W["B"].values))
+    assert not s1.equals(W)
+
+
+def test_shared_shift_kill_test():
+    """Second placebo family (shared offset across columns) must also be beaten
+    by real trend weights on the synthetic regime series — single coin here,
+    so shared and independent offsets coincide; that's expected/fine."""
+    rng = np.random.default_rng(42)
+    n = 900
+    regime = np.sign(np.sin(np.arange(n) / 60.0))       # ~120d alternating regimes
+    r = 0.004 * regime + rng.normal(0, 0.01, n)
+    idx = _idx("2020-06-01", n)
+    px = pd.Series(100 * np.exp(np.cumsum(r)), index=idx)
+    klines = _mk_klines({"A": px})
+    refresh = monthly_refresh_dates("2020-09-01", str(idx[-1].date()))
+    members = {d: ["A"] for d in refresh}
+    all_days, R, V, S = build_matrices(klines, ["A"])
+    W = trend_weights(all_days, R, V, S, members, n_slots=1, vol_target=0.40)
+    real = sr(run_daily_portfolio(W, R, cost_bps=10.0))
+
+    srs = []
+    for p in range(99):
+        prng = np.random.default_rng(seed=p)
+        shifted = shared_shift_weights(W, prng)
+        srs.append(sr(run_daily_portfolio(shifted, R, cost_bps=10.0)))
+
+    p_val = rank_placebo_pvalue(real, srs)
+    assert real > 0
+    assert p_val <= 0.05
