@@ -54,6 +54,10 @@ def parse_args():
                         "§23); v2 = realigned with composition formula.")
     p.add_argument("--anonymize", action="store_true",
                    help="Enable asset-name anonymization (Tier A4)")
+    p.add_argument("--quant-pred-dir", default=None,
+                   help="Override config quant_pred_dir (Layer 1 quant "
+                        "signal source). Default keeps DEFAULT_CONFIG's "
+                        "data/multi_2coins_v2.")
     p.add_argument("--force", action="store_true")
     p.add_argument("--quant-version", choices=("v2", "v3"), default="v2",
                    help="Quant signal version. v3 requires per-coin regime + "
@@ -208,6 +212,8 @@ def main():
     cfg["replay_cache"] = True
     cfg["anonymize_assets"] = bool(args.anonymize)
     cfg["modulator_prompt_version"] = args.prompt_version
+    if args.quant_pred_dir:
+        cfg["quant_pred_dir"] = args.quant_pred_dir
 
     print(f"\n{'=' * 60}")
     print(f"  Hybrid Signal Generation (Layer 1 + Modulator)")
