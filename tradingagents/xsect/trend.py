@@ -64,7 +64,7 @@ def trend_weights(all_days, R, VOTES, SIGMA, members_by_refresh, n_slots: int,
     scale = (vol_target / (SIGMA * np.sqrt(ANN))).clip(upper=1.0)
     W = (1.0 / n_slots) * scale.where(np.isfinite(scale), 0.0)
     W = W.where((VOTES > 0.5) & member, 0.0)
-    return W.fillna(0.0)
+    return W.fillna(0.0)  # defensive no-op: prior .where() already zeros all False/NaN conditions
 
 
 def ew_benchmark_weights(all_days, R, members_by_refresh, n_slots: int) -> pd.DataFrame:
@@ -73,6 +73,8 @@ def ew_benchmark_weights(all_days, R, members_by_refresh, n_slots: int) -> pd.Da
 
 
 def run_daily_portfolio(W: pd.DataFrame, R: pd.DataFrame, cost_bps: float = 10.0) -> pd.Series:
+    if not W.index.equals(R.index) or list(W.columns) != list(R.columns):
+        raise ValueError("W and R must share identical index and columns")
     Wv = W.to_numpy()
     Rv = np.nan_to_num(R.to_numpy(), nan=0.0)
     Wprev = np.vstack([np.zeros((1, Wv.shape[1])), Wv[:-1]])       # W[t-1]

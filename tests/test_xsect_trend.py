@@ -43,6 +43,16 @@ def test_run_daily_portfolio_t_plus_1_and_costs():
     assert port.loc[days[3]] == pytest.approx(-0.05)
 
 
+def test_run_daily_portfolio_rejects_misaligned_index():
+    days = _idx("2021-01-01", 4)
+    R = pd.DataFrame({"A": [np.nan, 0.10, 0.20, -0.05]}, index=days)
+    W = pd.DataFrame({"A": [0.0, 1.0, 1.0, 0.0]}, index=days)
+    # R missing the first day -> index misaligned with W
+    R_bad = R.iloc[1:]
+    with pytest.raises(ValueError):
+        run_daily_portfolio(W, R_bad, cost_bps=10.0)
+
+
 def test_exit_cost_charged_after_flatten():
     days = _idx("2021-01-01", 4)
     R = pd.DataFrame({"A": [np.nan, 0.0, 0.0, 0.0]}, index=days)
