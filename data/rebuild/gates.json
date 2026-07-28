@@ -198,5 +198,46 @@
    "placebo_p_max": 0.05,
    "one_shot": true
   }
+ },
+ "carry_xs_t1": {
+  "registered": "2026-07-28",
+  "spec": "docs/superpowers/specs/2026-07-28-carry-xs-design.md",
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "holdout_window": [
+   "2025-04-01",
+   "2026-07-01"
+  ],
+  "signal": "trailing mean over L days of daily funding income, daily funding = SUM of the UTC day's prints; realized prints only; rank cross-sectionally within monthly universe; signal NaN if any of trailing L days missing",
+  "universe_rule": "PIT monthly refresh at first Monday close: USDT-M perp with kline on day D, first kline <= D-30, 30d median quote-volume >= 5000000 USD, rank by volume, keep top-50; symbol additionally needs 30 gapless trailing funding days at decision else excluded that day; leaving symbol force-flattened next bar with cost",
+  "portfolio_rule": "daily decision close t -> weights bar t+1; valid = universe members with non-NaN signal and 30 gapless funding days; if n_valid < 5 flat; n_leg = max(1, round(leg_frac*n_valid)); SHORT top n_leg by (signal desc, symbol asc) at -0.5/n_leg, LONG bottom n_leg at +0.5/n_leg; gross 1.0 net 0; costs 10 bps per side on sum|dW| first accrual day; funding accrual signed W*F (long pays positive funding); rf_daily = 1.045^(1/365)-1 deducted every day on full capital (house carry-audit convention, harshest-honest per section-41 mandate)",
+  "benchmark": "none (dollar-neutral; cash benchmark embedded via rf deduction)",
+  "grid": {
+   "L": [
+    1,
+    7,
+    30
+   ],
+   "leg_frac": [
+    0.1,
+    0.2
+   ]
+  },
+  "funding_coverage_note": "799/799 symbols fetched (2.406M prints); 0 missing; median day-coverage 1.001; 0 symbols below 90%; delisted perps confirmed to serve full funding history via /fapi/v1/fundingRate",
+  "placebo": "TWO families, 500 draws each, funding accrual AND costs AND rf re-applied to shifted weights, p=(1+#{placebo SR >= real SR})/(N+1), gate on the WORSE (max) p: (a) per-coin independent circular time-shifts (min offset 30d) of the final daily weight series; (b) shared-offset circular time-shift",
+  "dev_select": {
+   "net_sr_min": 1.0,
+   "placebo_p_max": 0.05,
+   "dsr_min": 0.9,
+   "tiebreak": "highest DSR, then lowest placebo p"
+  },
+  "holdout_deploy": {
+   "net_sr_min": 0.5,
+   "placebo_p_max": 0.05,
+   "one_shot": true
+  },
+  "diagnostics_non_gating": "rank-correlation of funding signal vs 30d realized vol across universe; per-leg mean vol (section-43 vol-selection check)"
  }
 }
