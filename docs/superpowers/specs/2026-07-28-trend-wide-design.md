@@ -99,10 +99,15 @@ dev_select (winning config must clear ALL):
 - net SR ≥ 1.0
 - ΔSR vs matching EW benchmark > 0 with paired stationary-block bootstrap
   p_pos ≥ 0.90 (block 21, n = 2000)
-- placebo p ≤ 0.05, placebo = N=500 per-coin random circular time-shifts of the final
-  daily weight series (preserves weight autocorrelation, vol-scaling structure, and
-  market path; destroys alignment); costs re-applied to the shifted weights;
-  p = (1 + #{placebo SR ≥ real SR}) / (N + 1)
+- placebo p ≤ 0.05 under BOTH placebo families (gate on the WORSE of the two p-values),
+  500 draws each, costs re-applied to shifted weights,
+  p = (1 + #{placebo SR ≥ real SR}) / (N + 1):
+  - (a) per-coin independent circular time-shifts of the final daily weight series —
+    nulls per-coin directional timing (caveat: breaks cross-coin co-activation);
+  - (b) shared-offset circular time-shift (one offset for all columns per draw) —
+    preserves cross-coin regime co-activation, nulls calendar alignment; guards against
+    fake significance from correlated regime exposure (task-3 review finding, amended
+    2026-07-28 BEFORE gates registration).
 - DSR ≥ 0.9 computed over the 6-config grid
 - tiebreak: highest DSR, then lowest placebo p
 

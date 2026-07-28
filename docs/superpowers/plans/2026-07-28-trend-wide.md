@@ -534,7 +534,7 @@ g["trend_wide_t1"] = {
     "benchmark": "per-N EW buy-and-hold of same monthly top-N universe, same t+1 and cost mechanics",
     "grid": {"N": [10, 20], "vol_target": [0.20, 0.30, 0.40]},
     "bootstrap": {"block": 21, "n": 2000},
-    "placebo": "N=500 per-coin random circular time-shifts (min offset 30d) of the final daily weight series, costs re-applied; p=(1+#{placebo SR >= real SR})/(N+1)",
+    "placebo": "TWO families, 500 draws each, costs re-applied, p=(1+#{placebo SR >= real SR})/(N+1), gate on the WORSE (max) p: (a) per-coin independent circular time-shifts (min offset 30d) of the final daily weight series; (b) shared-offset circular time-shift (one offset for all columns per draw). Amended 2026-07-28 pre-registration after task-3 review (cross-coin co-activation caveat).",
     "dev_select": {"net_sr_min": 1.0, "delta_sr_vs_benchmark_min": 0.0,
                     "p_pos_min": 0.90, "placebo_p_max": 0.05, "dsr_min": 0.9,
                     "tiebreak": "highest DSR, then lowest placebo p"},
@@ -597,7 +597,8 @@ from tradingagents.xsect.portfolio import (  # noqa: E402
 )
 from tradingagents.xsect.trend import (  # noqa: E402
     build_matrices, circular_shift_weights, ew_benchmark_weights,
-    monthly_refresh_dates, run_daily_portfolio, trend_weights,
+    monthly_refresh_dates, run_daily_portfolio, shared_shift_weights,
+    trend_weights,
 )
 from tradingagents.xsect.universe import eligibility, load_klines  # noqa: E402
 
@@ -708,20 +709,26 @@ def main() -> None:
         real = real.loc[real.index > refresh[0]]
         real_sr = sr(real)
         pb = paired_bootstrap(real, bench[N])
-        p_srs = []
-        for p in range(N_PLACEBO):
-            rng = np.random.default_rng(seed=p)
-            shifted = circular_shift_weights(W, rng)
-            ps = run_daily_portfolio(shifted, R, COST_BPS).loc[:hi]
-            ps = ps.loc[ps.index > refresh[0]]
-            p_srs.append(sr(ps))
-        placebo_p = rank_placebo_pvalue(real_sr, p_srs)
+        def _placebo_p(shift_fn):
+            srs_ = []
+            for p in range(N_PLACEBO):
+                rng = np.random.default_rng(seed=p)
+                ps = run_daily_portfolio(shift_fn(W, rng), R, COST_BPS).loc[:hi]
+                ps = ps.loc[ps.index > refresh[0]]
+                srs_.append(sr(ps))
+            return rank_placebo_pvalue(real_sr, srs_)
+
+        placebo_p_indep = _placebo_p(circular_shift_weights)
+        placebo_p_shared = _placebo_p(shared_shift_weights)
+        placebo_p = max(placebo_p_indep, placebo_p_shared)  # gate on the WORSE family
         cfg = {"N": N, "vol_target": vt, "cost_bps": COST_BPS,
                "min_history_bars": MIN_HISTORY_BARS, "refresh": "monthly_first_monday"}
         metrics = {"net_sr": real_sr, "maxdd": maxdd(real),
                    "total_logret": float(real.sum()),
                    "bench_sr": sr(bench[N]), "delta_sr": pb["delta_sr"],
-                   "p_pos": pb["p_pos"], "placebo_p": placebo_p, "n_days": len(real)}
+                   "p_pos": pb["p_pos"], "placebo_p": placebo_p,
+                   "placebo_p_indep": placebo_p_indep,
+                   "placebo_p_shared": placebo_p_shared, "n_days": len(real)}
         log_trial("trend_wide_t1", cfg, DEV, metrics)
         series_by_cfg[(N, vt)] = real
         results.append({"config": cfg, "metrics": metrics})
