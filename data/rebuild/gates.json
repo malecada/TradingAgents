@@ -1,84 +1,202 @@
 {
-  "xs_mom_p1": {
-    "registered": "2026-07-14",
-    "dev_window": ["2021-01-01", "2025-03-31"],
-    "holdout_window": ["2025-04-01", "2026-07-01"],
-    "universe_rule": "PIT daily eligibility: USDT-M perp with kline on day D, first kline <= D-30, 30d median quote-volume >= 5000000 USD; rank by 30d median quote-volume, keep top 100; snapshot at each weekly rebalance (Monday close) using data <= that close",
-    "portfolio_rule": "EW long-only top-K by momentum at Monday close, held to next Monday close; returns accrue from the bar AFTER the decision bar; momentum = sum of daily log-returns over L days ending S days before the decision close; costs 10bps per side on turnover; benchmark = EW full eligible universe, same mechanics",
-    "grid": { "L": [7, 14, 28], "skip": [0, 1], "K": [10, 20] },
-    "bootstrap": { "block": 21, "n": 2000 },
-    "placebo": "N=500 within-rebalance random rank permutations of the momentum scores, identical mechanics; p=(1+#{placebo SR >= real SR})/(N+1)",
-    "dev_select": {
-      "net_sr_min": 0.8,
-      "delta_sr_vs_benchmark_min": 0.0,
-      "p_pos_min": 0.85,
-      "placebo_p_max": 0.05,
-      "dsr_min": 0.9,
-      "tiebreak": "highest DSR, then lowest placebo p"
-    },
-    "holdout_deploy": { "net_sr_min": 0.5, "delta_sr_vs_benchmark_min": 0.0, "p_pos_min": 0.85, "placebo_p_max": 0.05, "one_shot": true }
+ "xs_mom_p1": {
+  "registered": "2026-07-14",
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "holdout_window": [
+   "2025-04-01",
+   "2026-07-01"
+  ],
+  "universe_rule": "PIT daily eligibility: USDT-M perp with kline on day D, first kline <= D-30, 30d median quote-volume >= 5000000 USD; rank by 30d median quote-volume, keep top 100; snapshot at each weekly rebalance (Monday close) using data <= that close",
+  "portfolio_rule": "EW long-only top-K by momentum at Monday close, held to next Monday close; returns accrue from the bar AFTER the decision bar; momentum = sum of daily log-returns over L days ending S days before the decision close; costs 10bps per side on turnover; benchmark = EW full eligible universe, same mechanics",
+  "grid": {
+   "L": [
+    7,
+    14,
+    28
+   ],
+   "skip": [
+    0,
+    1
+   ],
+   "K": [
+    10,
+    20
+   ]
   },
-  "fg_beta_d1": {
-    "registered": "2026-07-14",
-    "dev_window": ["2021-01-01", "2025-03-31"],
-    "holdout_window": ["2025-04-01", "2026-07-01"],
-    "beta_rule": "rolling 90d OLS beta of coin daily log-return on delta F&G (value diff), min 60 overlapping obs, inputs shift(1)-causal at the decision close",
-    "grid_desc": "exactly 2 configs: (a) standalone = EW long the MIDDLE F&G-beta quintile of the eligible universe, weekly, same mechanics/costs as P1; (b) overlay = P1 dev-selected portfolio excluding coins in the extreme (top+bottom) beta quintiles; if P1 selects NONE, only (a) runs",
-    "dev_select_standalone": { "net_sr_min": 0.8, "delta_sr_vs_benchmark_min": 0.0, "p_pos_min": 0.85, "placebo_p_max": 0.05, "dsr_min": 0.9 },
-    "dev_select_overlay": { "delta_sr_vs_p1_min": 0.0, "p_pos_min": 0.85 },
-    "holdout_deploy": { "same_as_dev": true, "net_sr_min_holdout": 0.5, "one_shot": true }
+  "bootstrap": {
+   "block": 21,
+   "n": 2000
   },
-  "registered": "2026-07-08",
-  "spec": "docs/superpowers/specs/2026-07-08-honest-rebuild-design.md",
-  "carry_go": {
-    "stressed_sharpe_min": 1.5,
-    "worst_90d_loss_max_at_allocation": 0.05,
-    "note": "stressed = after execution-realism cost pass C2 haircuts"
-  },
-  "axis_experiments": {
-    "adopt_rule": "delta_sharpe > 0 AND p_pos >= 0.85 (paired block bootstrap, block=21, n=2000) AND max_drawdown_worsening <= 0.01",
-    "note": "applies to axes: target, horizons, pool, features, sizing components"
-  },
-  "ml_survival": {
-    "vs": "best factor-floor config",
-    "delta_sharpe_min": 0.0,
-    "p_pos_min": 0.85,
-    "dsr_min": 0.90,
-    "dsr_trials": "trial_count() from ledger at evaluation time"
+  "placebo": "N=500 within-rebalance random rank permutations of the momentum scores, identical mechanics; p=(1+#{placebo SR >= real SR})/(N+1)",
+  "dev_select": {
+   "net_sr_min": 0.8,
+   "delta_sr_vs_benchmark_min": 0.0,
+   "p_pos_min": 0.85,
+   "placebo_p_max": 0.05,
+   "dsr_min": 0.9,
+   "tiebreak": "highest DSR, then lowest placebo p"
   },
   "holdout_deploy": {
-    "portfolio_net_sharpe_min": 0.5,
-    "max_drawdown_max": 0.15,
-    "sleeve_contribution_min": 0.0,
-    "placebo_p_max": 0.05,
-    "one_shot": true
-  },
-  "stress_ews": {
-    "registered": "2026-07-14",
-    "dev_window": ["2021-11-01", "2025-03-31"],
-    "holdout_window_start": "2025-04-01",
-    "episode_rule": "crash day t: 10-day forward log-return of EW BTC+ETH close <= log(0.85); episode = maximal run of crash days, episodes separated by <10 non-crash days are merged; episode_start = first crash day",
-    "warn_rule": "composite = mean(component z-scores, all lagged 1 day, z over trailing 365d window with min 180d); WARN active while composite >= k, released below k-0.25; components and k from grid",
-    "grid": {
-      "component_sets": [["z_fund", "z_oi"], ["z_fund", "z_oi", "z_liq"], ["z_fund", "z_oi", "z_liq", "z_fg"]],
-      "k": [1.0, 1.5, 2.0]
-    },
-    "detection_window_days": 20,
-    "dev_select": {
-      "hit_rate_min": 0.5,
-      "false_alarms_per_year_max": 6,
-      "placebo_p_max": 0.05,
-      "overlay_delta_maxdd_max": 0.0,
-      "overlay_delta_sr_min": -0.10,
-      "tiebreak": "lowest placebo_p, then most negative overlay_delta_maxdd"
-    },
-    "holdout_deploy": {
-      "hit_rate_min": 0.5,
-      "false_alarms_per_year_max": 6,
-      "placebo_p_max": 0.05,
-      "overlay_delta_maxdd_max": 0.0,
-      "overlay_delta_sr_min": -0.10,
-      "one_shot": true
-    }
+   "net_sr_min": 0.5,
+   "delta_sr_vs_benchmark_min": 0.0,
+   "p_pos_min": 0.85,
+   "placebo_p_max": 0.05,
+   "one_shot": true
   }
+ },
+ "fg_beta_d1": {
+  "registered": "2026-07-14",
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "holdout_window": [
+   "2025-04-01",
+   "2026-07-01"
+  ],
+  "beta_rule": "rolling 90d OLS beta of coin daily log-return on delta F&G (value diff), min 60 overlapping obs, inputs shift(1)-causal at the decision close",
+  "grid_desc": "exactly 2 configs: (a) standalone = EW long the MIDDLE F&G-beta quintile of the eligible universe, weekly, same mechanics/costs as P1; (b) overlay = P1 dev-selected portfolio excluding coins in the extreme (top+bottom) beta quintiles; if P1 selects NONE, only (a) runs",
+  "dev_select_standalone": {
+   "net_sr_min": 0.8,
+   "delta_sr_vs_benchmark_min": 0.0,
+   "p_pos_min": 0.85,
+   "placebo_p_max": 0.05,
+   "dsr_min": 0.9
+  },
+  "dev_select_overlay": {
+   "delta_sr_vs_p1_min": 0.0,
+   "p_pos_min": 0.85
+  },
+  "holdout_deploy": {
+   "same_as_dev": true,
+   "net_sr_min_holdout": 0.5,
+   "one_shot": true
+  }
+ },
+ "registered": "2026-07-08",
+ "spec": "docs/superpowers/specs/2026-07-08-honest-rebuild-design.md",
+ "carry_go": {
+  "stressed_sharpe_min": 1.5,
+  "worst_90d_loss_max_at_allocation": 0.05,
+  "note": "stressed = after execution-realism cost pass C2 haircuts"
+ },
+ "axis_experiments": {
+  "adopt_rule": "delta_sharpe > 0 AND p_pos >= 0.85 (paired block bootstrap, block=21, n=2000) AND max_drawdown_worsening <= 0.01",
+  "note": "applies to axes: target, horizons, pool, features, sizing components"
+ },
+ "ml_survival": {
+  "vs": "best factor-floor config",
+  "delta_sharpe_min": 0.0,
+  "p_pos_min": 0.85,
+  "dsr_min": 0.9,
+  "dsr_trials": "trial_count() from ledger at evaluation time"
+ },
+ "holdout_deploy": {
+  "portfolio_net_sharpe_min": 0.5,
+  "max_drawdown_max": 0.15,
+  "sleeve_contribution_min": 0.0,
+  "placebo_p_max": 0.05,
+  "one_shot": true
+ },
+ "stress_ews": {
+  "registered": "2026-07-14",
+  "dev_window": [
+   "2021-11-01",
+   "2025-03-31"
+  ],
+  "holdout_window_start": "2025-04-01",
+  "episode_rule": "crash day t: 10-day forward log-return of EW BTC+ETH close <= log(0.85); episode = maximal run of crash days, episodes separated by <10 non-crash days are merged; episode_start = first crash day",
+  "warn_rule": "composite = mean(component z-scores, all lagged 1 day, z over trailing 365d window with min 180d); WARN active while composite >= k, released below k-0.25; components and k from grid",
+  "grid": {
+   "component_sets": [
+    [
+     "z_fund",
+     "z_oi"
+    ],
+    [
+     "z_fund",
+     "z_oi",
+     "z_liq"
+    ],
+    [
+     "z_fund",
+     "z_oi",
+     "z_liq",
+     "z_fg"
+    ]
+   ],
+   "k": [
+    1.0,
+    1.5,
+    2.0
+   ]
+  },
+  "detection_window_days": 20,
+  "dev_select": {
+   "hit_rate_min": 0.5,
+   "false_alarms_per_year_max": 6,
+   "placebo_p_max": 0.05,
+   "overlay_delta_maxdd_max": 0.0,
+   "overlay_delta_sr_min": -0.1,
+   "tiebreak": "lowest placebo_p, then most negative overlay_delta_maxdd"
+  },
+  "holdout_deploy": {
+   "hit_rate_min": 0.5,
+   "false_alarms_per_year_max": 6,
+   "placebo_p_max": 0.05,
+   "overlay_delta_maxdd_max": 0.0,
+   "overlay_delta_sr_min": -0.1,
+   "one_shot": true
+  }
+ },
+ "trend_wide_t1": {
+  "registered": "2026-07-28",
+  "spec": "docs/superpowers/specs/2026-07-28-trend-wide-design.md",
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "holdout_window": [
+   "2025-04-01",
+   "2026-07-01"
+  ],
+  "signal": "frozen metalabel primary verbatim (MA 5/20,10/40,20/60 + Donchian 20/10, vote>0.5, warmup 60); long-flat",
+  "universe_rule": "PIT monthly refresh at first Monday close of each month using data <= that close: USDT-M perp with kline on day D, first kline <= D-30, 30d median quote-volume >= 5000000 USD, rank by 30d median quote-volume, keep top-N; symbol needs >= 90 daily bars at decision; coin leaving universe force-flattened next bar with cost",
+  "portfolio_rule": "daily decision close t -> weights apply bar t+1; w = (1/N)*min(1, vol_target/(sigma30*sqrt(365)))*1{vote>0.5}; sigma30 = rolling 30-calendar-day std of daily log-returns, gapless else weight 0; costs 10 bps per side on sum|dW| charged first accrual day; missing kline contributes 0, no redistribution",
+  "benchmark": "per-N EW buy-and-hold of same monthly top-N universe, same t+1 and cost mechanics",
+  "grid": {
+   "N": [
+    10,
+    20
+   ],
+   "vol_target": [
+    0.2,
+    0.3,
+    0.4
+   ]
+  },
+  "bootstrap": {
+   "block": 21,
+   "n": 2000
+  },
+  "placebo": "TWO families, 500 draws each, costs re-applied, p=(1+#{placebo SR >= real SR})/(N+1), gate on the WORSE (max) p: (a) per-coin independent circular time-shifts (min offset 30d) of the final daily weight series; (b) shared-offset circular time-shift (one offset for all columns per draw). Amended 2026-07-28 pre-registration after task-3 review (cross-coin co-activation caveat).",
+  "dev_select": {
+   "net_sr_min": 1.0,
+   "delta_sr_vs_benchmark_min": 0.0,
+   "p_pos_min": 0.9,
+   "placebo_p_max": 0.05,
+   "dsr_min": 0.9,
+   "tiebreak": "highest DSR, then lowest placebo p"
+  },
+  "holdout_deploy": {
+   "net_sr_min": 0.5,
+   "delta_sr_vs_benchmark_min": 0.0,
+   "p_pos_min": 0.85,
+   "placebo_p_max": 0.05,
+   "one_shot": true
+  }
+ }
 }
