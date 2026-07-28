@@ -74,3 +74,43 @@ def event_weights_hourly(trig, H, w_per=0.1, cap=1.0):
         left = np.maximum(left - 1, 0)
 
     return pd.DataFrame(W, index=trig.index, columns=trig.columns)
+
+
+def run_hourly_portfolio(W, R, cost_bps=10.0, rf_annual=0.045):
+    """Compute daily net simple returns from hourly gross returns and turnover costs.
+
+    Consumes hourly position weights W and simple returns R (same shape). Computes
+    daily net returns accounting for transaction costs (proportional to turnover) and
+    risk-free rate (full-capital convention, accrued daily).
+
+    Args:
+        W: pd.DataFrame of float weights (index hourly UTC, columns = symbols)
+        R: pd.DataFrame of float simple returns, same shape (fillna(0.0) for missing)
+        cost_bps: float, transaction cost in basis points (default 10.0)
+        rf_annual: float, annual risk-free rate (default 0.045 = 4.5%)
+
+    Returns:
+        pd.Series of daily (UTC calendar-day) net simple returns, indexed by calendar date
+    """
+    gross = (W * R.fillna(0.0)).sum(axis=1)
+    turn = (W - W.shift().fillna(0.0)).abs().sum(axis=1)
+    hourly = gross - cost_bps / 1e4 * turn
+    daily = hourly.groupby(hourly.index.tz_convert("UTC").normalize()).sum()
+    daily = daily.asfreq("D", fill_value=0.0)      # rf accrues on gap days too
+    rf_d = (1 + rf_annual) ** (1 / 365) - 1
+    return daily - rf_d
+
+
+def sharpe_daily(net):
+    """Compute annualized Sharpe ratio from daily net returns.
+
+    Args:
+        net: pd.Series of daily net simple returns
+
+    Returns:
+        float, annualized Sharpe ratio (sqrt(365) annualization), or 0.0 if std is 0
+    """
+    sd = net.std(ddof=1)
+    if not np.isfinite(sd) or sd == 0:
+        return 0.0
+    return float(net.mean() / sd * np.sqrt(365))
