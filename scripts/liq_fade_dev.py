@@ -1,5 +1,5 @@
-"""liq_fade_i1 dev runner: probes P0-P2 (Task 8), dev grid (Task 9, not yet
-implemented). Ledger: liq_fade_i1. Gates: data/rebuild/gates.json["liq_fade_i1"].
+"""liq_fade_i1 dev runner: probes P0-P2 (Task 8), dev grid (Task 9). Ledger:
+liq_fade_i1. Gates: data/rebuild/gates.json["liq_fade_i1"].
 Spec: docs/superpowers/specs/2026-07-28-liq-fade-intraday-design.md.
 
 Probes (all pre-registered, BINDING per gates.json):
@@ -34,8 +34,15 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from tradingagents.xsect.liq_fade import cascade_triggers  # noqa: E402
+from tradingagents.rebuild.ledger import DEFAULT_LEDGER, log_trial  # noqa: E402
+from tradingagents.strategies.v3.backtest.dsr import (  # noqa: E402
+    deflated_sharpe_ratio, expected_max_sharpe, variance_of_sr,
+)
+from tradingagents.xsect.liq_fade import (  # noqa: E402
+    cascade_triggers, event_weights_hourly, run_hourly_portfolio, sharpe_daily,
+)
 from tradingagents.xsect.liq_mr import liq_zscore  # noqa: E402
+from tradingagents.xsect.portfolio import maxdd, rank_placebo_pvalue  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 SYMBOLS_FILE = PROJECT_ROOT / "data" / "xsect" / "liq_fade_symbols.txt"
@@ -65,6 +72,17 @@ P0_MIN_CORR = 0.99
 P1_THR = 2.5
 P1_MIN_MATCHES = 4
 P2_MIN_RET = 0.0025
+
+# ── Task 9: dev grid ─────────────────────────────────────────────────────────
+GRID_GATE = {"net_sr_min": 1.0, "placebo_p_max": 0.05, "dsr_min": 0.9}
+N_PLACEBO = 500
+N_PLACEBO_SMOKE = 20      # --grid-smoke only, never a registered verdict
+COST_BPS = 10.0
+STRESS_COST_BPS = 20.0    # sr_stress_20bps: reported, NOT gated
+RF_ANNUAL = 0.045
+W_PER = 0.1
+CAP = 1.0
+PLACEBO_SHIFT_MIN_OFFSET = 24   # bars, per side
 
 
 def _sanitize(obj):
@@ -388,8 +406,298 @@ def run_probes(smoke: bool) -> dict:
     return payload
 
 
-def run_grid() -> None:
-    raise NotImplementedError("dev grid (thr x H, placebos, DSR) is Task 9")
+def _assert_probes_passed(probes_path: Path | None = None) -> dict:
+    """Hard guard for a non-smoke grid run: refuses to touch real data unless
+    a REGISTERED (smoke=False) probes.json exists with P1 and P2 both passing.
+    Checked before _assert_data_complete() so a stale/failing/missing probes
+    file is reported first (it is the cheaper, more specific failure mode).
+    probes_path is injectable for tests (tmp_path monkeypatch); defaults to
+    the real OUT_DIR/probes.json."""
+    path = probes_path if probes_path is not None else (OUT_DIR / "probes.json")
+    if not path.exists():
+        raise RuntimeError(
+            f"grid refuses to run: {path} not found -- run "
+            "`python scripts/liq_fade_dev.py --probes-only` (no --smoke) first; "
+            "P1 and P2 must pass before the dev grid touches real data.")
+    payload = json.loads(path.read_text())
+    p1 = payload.get("p1", {}) or {}
+    p2 = payload.get("p2", {}) or {}
+    ok = (payload.get("smoke") is False and p1.get("pass") is True
+          and p2.get("pass") is True)
+    if not ok:
+        raise RuntimeError(
+            f"grid refuses to run: {path} is not a passing registered verdict "
+            f"(smoke={payload.get('smoke')!r} p1.pass={p1.get('pass')!r} "
+            f"p2.pass={p2.get('pass')!r}); re-run --probes-only without --smoke "
+            "and confirm P1/P2 pass before running the grid.")
+    return payload
+
+
+def _unique_config_hashes(ledger_path: Path | None = None) -> int:
+    path = ledger_path if ledger_path is not None else DEFAULT_LEDGER
+    if not Path(path).exists():
+        return 0
+    seen = set()
+    with open(path) as f:
+        for line in f:
+            if line.strip():
+                seen.add(json.loads(line)["config_hash"])
+    return len(seen)
+
+
+def _shift_triggers(trig: pd.DataFrame, rng: np.random.Generator) -> pd.DataFrame:
+    """Placebo family A: per symbol, circular-shift the (already
+    membership-masked, dev-window-restricted) trigger column by a uniform
+    random offset in [24, N-24] bars. Preserves each symbol's exact event
+    count (a roll is a permutation) and its temporal clustering structure;
+    destroys calendar alignment with the realized market path."""
+    n = len(trig)
+    lo = PLACEBO_SHIFT_MIN_OFFSET
+    hi = n - PLACEBO_SHIFT_MIN_OFFSET
+    if hi <= lo:
+        raise ValueError(f"trigger panel too short ({n} bars) for a "
+                         f"[{lo}, {n - lo}] shift offset")
+    out = {}
+    for col in trig.columns:
+        k = int(rng.integers(lo, hi + 1))   # inclusive of N-24
+        out[col] = np.roll(trig[col].to_numpy(), k)
+    return pd.DataFrame(out, index=trig.index, columns=trig.columns)
+
+
+def _redraw_random_triggers(trig: pd.DataFrame, mask: pd.DataFrame,
+                            rng: np.random.Generator) -> pd.DataFrame:
+    """Placebo family B: per symbol, redraw n_events(symbol) uniform bar
+    positions among eligible bars -- bars where the symbol is
+    membership-eligible in the dev window (`mask`, same columns/index as
+    `trig`). Count-matched per symbol by construction (redraw size ==
+    real n_events for that symbol; symbols with 0 real events get an
+    all-False placebo column, never gaining spurious events)."""
+    T = trig.to_numpy()
+    M = mask.to_numpy()
+    out = np.zeros_like(T)
+    for j, col in enumerate(trig.columns):
+        n_ev = int(T[:, j].sum())
+        if n_ev == 0:
+            continue
+        eligible = np.nonzero(M[:, j])[0]
+        assert len(eligible) >= n_ev, (
+            f"{col}: {n_ev} real events but only {len(eligible)} eligible bars "
+            "-- trig-implies-mask invariant violated")
+        pick = rng.choice(eligible, size=n_ev, replace=False)
+        out[pick, j] = True
+    return pd.DataFrame(out, index=trig.index, columns=trig.columns)
+
+
+def _synthetic_grid_smoke_panel(n_symbols: int = 6, n_bars: int = 24 * 120,
+                                seed: int = 7):
+    """Tiny fully-synthetic hourly (close, quote_volume, universe) panel for
+    --grid-smoke: deterministic, always available regardless of the real 1h
+    fetch's progress. Each symbol gets a handful of injected cascade-like
+    shocks (sharp negative return + volume spike) so cascade_triggers has
+    something to find and the placebo machinery is exercised non-trivially."""
+    idx = pd.date_range("2021-01-01", periods=n_bars, freq="1h", tz="UTC")
+    rng = np.random.default_rng(seed)
+    cols = [f"SMOKE{i}USDT" for i in range(n_symbols)]
+    close = pd.DataFrame(index=idx, columns=cols, dtype=float)
+    qvol = pd.DataFrame(index=idx, columns=cols, dtype=float)
+    for c in cols:
+        rets = rng.normal(0.0, 0.003, n_bars)
+        vol = rng.lognormal(10.0, 0.3, n_bars)
+        n_shocks = max(3, n_bars // 500)
+        shock_bars = rng.choice(n_bars, size=n_shocks, replace=False)
+        rets[shock_bars] -= rng.uniform(0.02, 0.05, size=n_shocks)
+        vol[shock_bars] *= rng.uniform(4.0, 8.0, size=n_shocks)
+        close[c] = 100.0 * np.exp(np.cumsum(rets))
+        qvol[c] = vol
+    universe = {"2021-01-01": cols}
+    return close, qvol, universe
+
+
+def _grid_core(close: pd.DataFrame, qvol: pd.DataFrame, universe: dict,
+               dev_lo: pd.Timestamp, dev_hi: pd.Timestamp, n_placebo: int,
+               smoke: bool, n_trials_before: int = 0) -> dict:
+    """Shared 6-config grid loop used by both the real and --grid-smoke
+    paths. Only I/O (ledger append, dev_results.json write) is gated on
+    `smoke`; the computation is identical."""
+    t_start = time.time()
+    R = close.pct_change()
+    mask_full = membership_mask_hourly(universe, close.columns.tolist(), close.index)
+    row_sel = (close.index >= dev_lo) & (close.index <= dev_hi)
+
+    rng = np.random.default_rng(48)  # single generator, threaded across the
+    # whole grid (all 6 configs x both placebo families) in GRID order, per spec
+    results = []
+    net_by_cfg = {}
+    for cfg_i, (thr, H) in enumerate(GRID):
+        t_cfg = time.time()
+        trig_raw = cascade_triggers(close, qvol, thr=thr)
+        trig_masked = trig_raw & mask_full
+        trig_dev = trig_masked.loc[row_sel]
+        R_dev = R.loc[row_sel]
+        mask_dev = mask_full.loc[row_sel]
+
+        # Perf: restrict to trig-active columns only. Inactive columns are
+        # provably zero-contribution to weights/PnL for BOTH the real config
+        # AND every placebo draw (family A: rolling an all-False column stays
+        # all-False; family B: redrawing 0 events draws nothing) -- so this
+        # never changes any reported metric, only speeds up the O(n*k)
+        # event_weights_hourly loop, which is the placebo hot path.
+        active_cols = trig_dev.columns[trig_dev.to_numpy().any(axis=0)].tolist()
+        trig_active = trig_dev[active_cols]
+        R_active = R_dev[active_cols]
+        mask_active = mask_dev[active_cols]
+
+        n_events = int(trig_active.to_numpy().sum())
+
+        W_real = event_weights_hourly(trig_active, H, w_per=W_PER, cap=CAP)
+        net_real = run_hourly_portfolio(W_real, R_active, cost_bps=COST_BPS,
+                                        rf_annual=RF_ANNUAL)
+        real_sr = sharpe_daily(net_real)
+        net_stress = run_hourly_portfolio(W_real, R_active, cost_bps=STRESS_COST_BPS,
+                                          rf_annual=RF_ANNUAL)
+        sr_stress = sharpe_daily(net_stress)
+
+        t_pb0 = time.time()
+        shift_srs, rand_srs = [], []
+        for _ in range(n_placebo):
+            trig_p = _shift_triggers(trig_active, rng)
+            Wp = event_weights_hourly(trig_p, H, w_per=W_PER, cap=CAP)
+            netp = run_hourly_portfolio(Wp, R_active, cost_bps=COST_BPS, rf_annual=RF_ANNUAL)
+            shift_srs.append(sharpe_daily(netp))
+        for _ in range(n_placebo):
+            trig_p = _redraw_random_triggers(trig_active, mask_active, rng)
+            Wp = event_weights_hourly(trig_p, H, w_per=W_PER, cap=CAP)
+            netp = run_hourly_portfolio(Wp, R_active, cost_bps=COST_BPS, rf_annual=RF_ANNUAL)
+            rand_srs.append(sharpe_daily(netp))
+        pb_elapsed = time.time() - t_pb0
+        if cfg_i == 0 and not smoke:
+            projected_sec = pb_elapsed * len(GRID)
+            if projected_sec > 6 * 3600:
+                print(f"[WARN] projected placebo wall-clock {projected_sec / 3600:.1f}h "
+                      f"> 6h budget even after active-column reduction "
+                      f"({len(active_cols)}/{len(trig_dev.columns)} cols); draws are "
+                      "NOT reduced per spec.", file=sys.stderr)
+
+        p_shift = rank_placebo_pvalue(real_sr, shift_srs)
+        p_rand = rank_placebo_pvalue(real_sr, rand_srs)
+        placebo_p_worse = max(p_shift, p_rand)
+
+        maxdd_v = maxdd(net_real)
+        # events_per_coin_month: n_events / total membership coin-months in
+        # the dev window (coin-days with any hourly membership, summed across
+        # symbols, / 30.44 avg days-per-month) -- normalizes trigger density
+        # by exposure, not by raw calendar time.
+        coin_days = float(mask_dev.groupby(
+            mask_dev.index.tz_convert("UTC").normalize()).any().to_numpy().sum())
+        coin_months = coin_days / 30.44
+        events_per_coin_month = (n_events / coin_months) if coin_months > 0 else float("nan")
+        n_days_dev = max(1, (trig_dev.index[-1] - trig_dev.index[0]).days + 1)
+        # annual_turnover: total |delta W| summed over all bars & symbols,
+        # annualized by (365 / calendar days spanned), halved because a
+        # round-trip (open + close) registers twice in |delta W| -- this
+        # reports round-trip position changes per year, not raw weight-change
+        # volume.
+        dW_abs_sum = float(W_real.diff().fillna(0.0).abs().to_numpy().sum())
+        annual_turnover = dW_abs_sum * 365.0 / n_days_dev / 2.0
+        active_daily = (W_real.abs().sum(axis=1) > 0).groupby(
+            W_real.index.tz_convert("UTC").normalize()).any()
+        pct_days_active = float(active_daily.mean()) if len(active_daily) else 0.0
+        mean_gross_turnover = float(W_real.diff().fillna(0.0).abs().sum(axis=1).mean())
+        boundary_open_events = int((W_real.iloc[-1] > 0).sum()) if len(W_real) else 0
+        fade = {}
+        for h in (1, 6, 24):
+            vals = event_forward_sum(R_active, trig_active, h)
+            fade[f"mean_fade_ret_{h}h"] = float(vals.mean()) if len(vals) else float("nan")
+
+        cfg = {"thr": thr, "H": H, "w_per": W_PER, "cap": CAP, "cost_bps": COST_BPS,
+               "rf_annual": RF_ANNUAL, "n_symbols_active": len(active_cols)}
+        metrics = {"net_sr": real_sr, "maxdd": maxdd_v, "n_events": n_events,
+                   "events_per_coin_month": events_per_coin_month,
+                   "annual_turnover": annual_turnover,
+                   "pct_days_active": pct_days_active,
+                   "mean_gross_turnover": mean_gross_turnover,
+                   "sr_stress_20bps": sr_stress,
+                   "placebo_p_shiftfam": p_shift, "placebo_p_randfam": p_rand,
+                   "placebo_p_worse": placebo_p_worse,
+                   "boundary_open_events": boundary_open_events,
+                   "n_days": len(net_real), **fade}
+
+        if not smoke:
+            log_trial("liq_fade_i1", cfg,
+                      (str(dev_lo.date()), str(pd.Timestamp(dev_hi).date())), metrics)
+
+        net_by_cfg[(thr, H)] = net_real
+        results.append({"config": cfg, "metrics": metrics,
+                        "net_sr_pass": bool(real_sr >= GRID_GATE["net_sr_min"]),
+                        "placebo_pass": bool(placebo_p_worse <= GRID_GATE["placebo_p_max"])})
+        print(f"thr={thr} H={H}: SR={real_sr:+.3f} p_shift={p_shift:.3f} "
+              f"p_rand={p_rand:.3f} ev={n_events} act_cols={len(active_cols)} "
+              f"({time.time() - t_cfg:.1f}s)")
+
+    # DSR computed only for the best config by net_sr, per spec (not all 6)
+    best = max(results, key=lambda r: r["metrics"]["net_sr"])
+    n_trials = n_trials_before + len(GRID)
+    cand = net_by_cfg[(best["config"]["thr"], best["config"]["H"])].to_numpy()
+    if len(cand) >= 2 and cand.std(ddof=1) > 0:
+        var_sr = variance_of_sr(cand)
+        se_sr = float(np.sqrt(var_sr))
+        sr_perbar = float(cand.mean() / cand.std(ddof=1))
+        dsr = deflated_sharpe_ratio(sr_perbar, expected_max_sharpe(n_trials, var_sr), se_sr)
+    else:
+        dsr = float("nan")
+    best["metrics"]["dsr"] = dsr
+    best["metrics"]["n_trials_at_eval"] = n_trials
+    best["gate_pass"] = bool(best["net_sr_pass"] and best["placebo_pass"]
+                             and np.isfinite(dsr) and dsr >= GRID_GATE["dsr_min"])
+    selected = best["config"] if best["gate_pass"] else None
+
+    payload = {"smoke": bool(smoke),
+               "generated_at": pd.Timestamp.now(tz="UTC").isoformat(),
+               "dev_window": [str(dev_lo), str(dev_hi)],
+               "gate": GRID_GATE, "results": results,
+               "best_config": best["config"], "selected": selected,
+               "n_trials_at_eval": n_trials,
+               "total_runtime_sec": time.time() - t_start}
+
+    if not smoke:
+        OUT_DIR.mkdir(parents=True, exist_ok=True)
+        with open(OUT_DIR / "dev_results.json", "w") as f:
+            json.dump(_sanitize(payload), f, indent=1, allow_nan=False, default=str)
+        print(f"\nwrote {OUT_DIR / 'dev_results.json'}")
+    print(f"selected: {json.dumps(_sanitize(selected)) if selected else 'NONE'}")
+    print(f"total runtime: {time.time() - t_start:.1f}s")
+    return payload
+
+
+def _run_grid_real() -> dict:
+    _assert_probes_passed()
+    _assert_data_complete()
+    n_trials_before = _unique_config_hashes()
+    symbols = load_symbols(smoke=False)
+    universe = json.loads(UNIVERSE_FILE.read_text())
+    close, qvol = load_hourly_panel(symbols)   # WARMUP_START .. DEV[1]
+    dev_lo = pd.Timestamp(DEV[0], tz="UTC")
+    dev_hi = pd.Timestamp(DEV[1], tz="UTC") + pd.Timedelta(hours=23)
+    print(f"[grid] {len(symbols)} symbols loaded, dev window "
+          f"{dev_lo.date()}..{dev_hi.date()}, n_trials_before={n_trials_before}")
+    return _grid_core(close, qvol, universe, dev_lo, dev_hi, N_PLACEBO,
+                      smoke=False, n_trials_before=n_trials_before)
+
+
+def _run_grid_smoke() -> dict:
+    close, qvol, universe = _synthetic_grid_smoke_panel()
+    dev_lo = close.index[24 * 30]   # skip a synthetic "warmup" month
+    dev_hi = close.index[-1]
+    print(f"[grid --grid-smoke] synthetic panel: {len(close.columns)} symbols, "
+          f"{len(close)} bars, dev {dev_lo}..{dev_hi} -- NOT a registered verdict")
+    return _grid_core(close, qvol, universe, dev_lo, dev_hi, N_PLACEBO_SMOKE,
+                      smoke=True, n_trials_before=0)
+
+
+def run_grid(smoke: bool = False) -> dict:
+    if smoke:
+        return _run_grid_smoke()
+    return _run_grid_real()
 
 
 def main() -> None:
@@ -400,16 +708,19 @@ def main() -> None:
     mode.add_argument("--grid", action="store_true", help="run the dev grid (Task 9)")
     mode.add_argument("--all", action="store_true", help="probes then grid (Task 9)")
     ap.add_argument("--smoke", action="store_true",
-                    help="restrict to symbols present on disk; never a registered verdict")
+                    help="probes: restrict to symbols present on disk; never a "
+                         "registered verdict")
+    ap.add_argument("--grid-smoke", action="store_true",
+                    help="grid: tiny synthetic panel, never writes ledger rows or "
+                         "dev_results.json; for implementation verification only")
     args = ap.parse_args()
 
     if args.probes_only:
         run_probes(args.smoke)
         return
-    # --grid / --all both require the grid runner, not yet implemented (Task 9)
     if args.all:
         run_probes(args.smoke)
-    run_grid()
+    run_grid(smoke=args.grid_smoke)
 
 
 if __name__ == "__main__":

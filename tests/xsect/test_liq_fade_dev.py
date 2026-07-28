@@ -1,13 +1,19 @@
 """Unit tests for the liq_fade_i1 dev runner's pure helpers (scripts/liq_fade_dev.py):
-membership_mask_hourly (monthly PIT universe -> hourly bool mask) and
-event_forward_sum (P2's forward-return-at-trigger extraction). Both are
-testable on synthetic data without touching the (partial, still-fetching)
-1h kline store."""
+membership_mask_hourly (monthly PIT universe -> hourly bool mask),
+event_forward_sum (P2's forward-return-at-trigger extraction), and the
+Task 9 dev-grid helpers (dual-family placebo generators, the probes-passed
+guard, and ledger row schema). All are testable on synthetic data without
+touching the (partial, still-fetching) 1h kline store."""
 import importlib.util
+import json
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pytest
+
+from tradingagents.rebuild.ledger import log_trial
+from tradingagents.xsect.portfolio import rank_placebo_pvalue
 
 spec = importlib.util.spec_from_file_location(
     "liq_fade_dev", Path(__file__).parents[2] / "scripts" / "liq_fade_dev.py")
@@ -125,3 +131,183 @@ def test_load_symbols_smoke_restricts_to_symbols_on_disk():
     smoke_syms = liq_fade_dev.load_symbols(smoke=True)
     assert set(smoke_syms) == set(all_syms) & on_disk
     assert set(smoke_syms).issubset(on_disk)
+
+
+# ── Task 9: dev-grid placebo generators ─────────────────────────────────────
+
+def _synthetic_trig_and_mask(n=200, seed=0):
+    idx = _hourly_index("2021-01-01", n)
+    rng = np.random.default_rng(seed)
+    cols = ["AAA", "BBB", "CCC"]
+    trig = pd.DataFrame(False, index=idx, columns=cols)
+    # a handful of real events per symbol, all inside the eligible region
+    trig.loc[idx[10], "AAA"] = True
+    trig.loc[idx[50], "AAA"] = True
+    trig.loc[idx[90], "AAA"] = True
+    trig.loc[idx[30], "BBB"] = True
+    # CCC gets zero real events -- exercises the "n_ev == 0" skip path
+    mask = pd.DataFrame(True, index=idx, columns=cols)  # fully eligible
+    return trig, mask, rng
+
+
+def test_shift_triggers_preserves_event_count_per_symbol():
+    trig, _mask, rng = _synthetic_trig_and_mask()
+    shifted = liq_fade_dev._shift_triggers(trig, rng)
+    assert shifted.shape == trig.shape
+    assert list(shifted.columns) == list(trig.columns)
+    for col in trig.columns:
+        assert int(shifted[col].sum()) == int(trig[col].sum())
+
+
+def test_shift_triggers_is_a_true_circular_permutation():
+    """The shifted column's True positions are a np.roll of the original --
+    not just count-matched by coincidence (a redraw could also preserve
+    count). Recovering the shift offset and rolling back must reproduce the
+    original column exactly."""
+    trig, _mask, rng = _synthetic_trig_and_mask()
+    shifted = liq_fade_dev._shift_triggers(trig, rng)
+    for col in trig.columns:
+        orig = trig[col].to_numpy()
+        shft = shifted[col].to_numpy()
+        if not orig.any():
+            assert not shft.any()
+            continue
+        # find the offset by brute force and confirm it reproduces `shft`
+        found = False
+        for k in range(len(orig)):
+            if np.array_equal(np.roll(orig, k), shft):
+                found = True
+                break
+        assert found, f"{col}: shifted column is not a circular roll of the original"
+
+
+def test_shift_triggers_rejects_too_short_panel():
+    idx = _hourly_index("2021-01-01", 10)  # far shorter than 2*24
+    trig = pd.DataFrame(False, index=idx, columns=["AAA"])
+    with pytest.raises(ValueError, match="too short"):
+        liq_fade_dev._shift_triggers(trig, np.random.default_rng(0))
+
+
+def test_redraw_random_triggers_is_count_matched_per_symbol():
+    trig, mask, rng = _synthetic_trig_and_mask()
+    redrawn = liq_fade_dev._redraw_random_triggers(trig, mask, rng)
+    assert redrawn.shape == trig.shape
+    for col in trig.columns:
+        assert int(redrawn[col].sum()) == int(trig[col].sum())
+    # CCC had 0 real events -> placebo column must stay all-False, never gain events
+    assert redrawn["CCC"].sum() == 0
+
+
+def test_redraw_random_triggers_only_draws_from_eligible_bars():
+    idx = _hourly_index("2021-01-01", 100)
+    trig = pd.DataFrame(False, index=idx, columns=["AAA"])
+    trig.loc[idx[5], "AAA"] = True
+    trig.loc[idx[60], "AAA"] = True
+    mask = pd.DataFrame(False, index=idx, columns=["AAA"])
+    mask.loc[idx[40:], "AAA"] = True   # only the back half is eligible
+    rng = np.random.default_rng(1)
+    redrawn = liq_fade_dev._redraw_random_triggers(trig, mask, rng)
+    picked = np.nonzero(redrawn["AAA"].to_numpy())[0]
+    assert len(picked) == 2
+    assert all(p >= 40 for p in picked)
+
+
+def test_redraw_random_triggers_raises_on_invariant_violation():
+    """trig-implies-mask must hold (masking is applied before triggers reach
+    this function); a caller bug that violates it must fail loudly, not
+    silently draw from the wrong bars."""
+    idx = _hourly_index("2021-01-01", 20)
+    trig = pd.DataFrame(False, index=idx, columns=["AAA"])
+    trig.loc[idx[0], "AAA"] = True
+    trig.loc[idx[1], "AAA"] = True
+    mask = pd.DataFrame(False, index=idx, columns=["AAA"])
+    mask.loc[idx[0], "AAA"] = True     # only 1 eligible bar for 2 real events
+    with pytest.raises(AssertionError):
+        liq_fade_dev._redraw_random_triggers(trig, mask, np.random.default_rng(0))
+
+
+# ── Task 9: p-value formula agreement ───────────────────────────────────────
+
+def test_placebo_pvalue_formula_agrees_with_rank_placebo_pvalue_hand_case():
+    real_sr = 1.0
+    placebo_srs = [0.5, 1.0, 1.5, 0.2, 2.0]   # 3 of 5 are >= real_sr (1.0, 1.5, 2.0)
+    expected = (1 + 3) / (5 + 1)               # = 4/6 = 0.6667 by the registered formula
+    got = rank_placebo_pvalue(real_sr, placebo_srs)
+    assert np.isclose(got, expected)
+    assert np.isclose(got, 2 / 3)
+
+
+# ── Task 9: probes-passed guard ─────────────────────────────────────────────
+
+def _write_probes(path, *, smoke, p1_pass, p2_pass):
+    path.write_text(json.dumps({"smoke": smoke, "p1": {"pass": p1_pass},
+                                "p2": {"pass": p2_pass}}))
+
+
+def test_grid_refuses_without_probes_file(tmp_path):
+    with pytest.raises(RuntimeError, match="not found"):
+        liq_fade_dev._assert_probes_passed(tmp_path / "probes.json")
+
+
+def test_grid_refuses_when_probes_are_smoke(tmp_path):
+    p = tmp_path / "probes.json"
+    _write_probes(p, smoke=True, p1_pass=True, p2_pass=True)
+    with pytest.raises(RuntimeError, match="passing registered verdict"):
+        liq_fade_dev._assert_probes_passed(p)
+
+
+def test_grid_refuses_when_p1_failed(tmp_path):
+    p = tmp_path / "probes.json"
+    _write_probes(p, smoke=False, p1_pass=False, p2_pass=True)
+    with pytest.raises(RuntimeError, match="passing registered verdict"):
+        liq_fade_dev._assert_probes_passed(p)
+
+
+def test_grid_refuses_when_p2_failed(tmp_path):
+    p = tmp_path / "probes.json"
+    _write_probes(p, smoke=False, p1_pass=True, p2_pass=False)
+    with pytest.raises(RuntimeError, match="passing registered verdict"):
+        liq_fade_dev._assert_probes_passed(p)
+
+
+def test_grid_accepts_passing_registered_probes(tmp_path):
+    p = tmp_path / "probes.json"
+    _write_probes(p, smoke=False, p1_pass=True, p2_pass=True)
+    payload = liq_fade_dev._assert_probes_passed(p)   # must not raise
+    assert payload["p1"]["pass"] is True
+    assert payload["p2"]["pass"] is True
+
+
+# ── Task 9: ledger row schema ────────────────────────────────────────────────
+
+def test_ledger_row_schema_matches_liq_mr_rows(tmp_path):
+    """liq_fade_i1 rows must be structurally identical to liq_mr_t1 rows --
+    both go through the same tradingagents.rebuild.ledger.log_trial, so this
+    mainly guards against a caller passing extra/missing top-level keys."""
+    ledger = tmp_path / "ledger.jsonl"
+    row = log_trial(
+        "liq_fade_i1",
+        {"thr": 2.5, "H": 6, "w_per": 0.1, "cap": 1.0, "cost_bps": 10.0,
+         "rf_annual": 0.045, "n_symbols_active": 12},
+        ("2021-01-01", "2025-03-31"),
+        {"net_sr": 1.23, "maxdd": 0.05},
+        ledger_path=ledger,
+    )
+    liq_mr_row_keys = {"ts", "git_commit", "experiment", "config", "config_hash",
+                       "window", "metrics"}
+    assert set(row.keys()) == liq_mr_row_keys
+    loaded = json.loads(ledger.read_text().strip())
+    assert set(loaded.keys()) == liq_mr_row_keys
+    assert loaded["experiment"] == "liq_fade_i1"
+    assert loaded["window"] == ["2021-01-01", "2025-03-31"]
+
+
+# ── Task 9: grid dispatch respects the probes guard ─────────────────────────
+
+def test_run_grid_real_calls_probes_guard_before_anything_else(tmp_path, monkeypatch):
+    """Without a real probes.json on disk, run_grid(smoke=False) must fail at
+    the probes guard -- not proceed to load (partial, still-fetching) real
+    kline data."""
+    monkeypatch.setattr(liq_fade_dev, "OUT_DIR", tmp_path)
+    with pytest.raises(RuntimeError, match="grid refuses to run"):
+        liq_fade_dev.run_grid(smoke=False)
