@@ -3,7 +3,8 @@ import pandas as pd
 import pytest
 
 from tradingagents.xsect.carry_xs import (
-    build_funding_matrix, carry_signal, funding_daily,
+    MIN_FUND_DAYS, build_funding_matrix, carry_signal, carry_weights,
+    funding_daily,
 )
 
 
@@ -42,3 +43,49 @@ def test_carry_signal_requires_full_window():
     assert S.loc[d, "XUSDT"] == pytest.approx(2e-4)          # mean of daily sums
     assert np.isnan(S.loc[pd.Timestamp("2024-01-04", tz="UTC"), "XUSDT"])  # gap in window
     assert np.isnan(S.loc[pd.Timestamp("2024-01-01", tz="UTC"), "XUSDT"])  # warmup
+
+
+def _panel(n_sym=8, n_days=80):
+    days = pd.date_range("2024-01-01", periods=n_days, freq="D", tz="UTC")
+    syms = [f"S{i}USDT" for i in range(n_sym)]
+    # persistent funding levels: S0 highest ... S7 lowest (incl. negative)
+    levels = np.linspace(3e-3, -1e-3, n_sym)
+    F = pd.DataFrame({s: np.full(n_days, lv) for s, lv in zip(syms, levels)},
+                     index=days)
+    return days, syms, F
+
+
+def test_carry_weights_dollar_neutral_and_leg_sizes():
+    days, syms, F = _panel()
+    S = carry_signal(F, L=7)
+    W = carry_weights(days, S, F, {days[0]: syms}, leg_frac=0.25)  # n_leg=2
+    t = days[MIN_FUND_DAYS + 10]
+    row = W.loc[t]
+    assert row.sum() == pytest.approx(0.0)
+    assert row.abs().sum() == pytest.approx(1.0)
+    assert row["S0USDT"] == pytest.approx(-0.25)   # highest funding shorted
+    assert row["S7USDT"] == pytest.approx(+0.25)   # lowest funding long
+    assert (row[["S3USDT", "S4USDT"]] == 0).all()  # middle untouched
+
+
+def test_carry_weights_warmup_flat():
+    days, syms, F = _panel()
+    S = carry_signal(F, L=7)
+    W = carry_weights(days, S, F, {days[0]: syms}, leg_frac=0.25)
+    assert (W.iloc[:MIN_FUND_DAYS - 1] == 0).all().all()  # funding-history gate
+
+
+def test_carry_weights_min_valid_flat():
+    days, syms, F = _panel(n_sym=3)  # n_valid=3 < MIN_VALID=5
+    S = carry_signal(F, L=7)
+    W = carry_weights(days, S, F, {days[0]: syms}, leg_frac=0.2)
+    assert (W == 0).all().all()
+
+
+def test_carry_weights_respects_monthly_membership():
+    days, syms, F = _panel()
+    refresh2 = days[40]
+    members = {days[0]: syms[:6], refresh2: syms[2:]}  # S0,S1 rotate out
+    S = carry_signal(F, L=7)
+    W = carry_weights(days, S, F, members, leg_frac=0.2)
+    assert (W.loc[days[45]:, ["S0USDT", "S1USDT"]] == 0).all().all()

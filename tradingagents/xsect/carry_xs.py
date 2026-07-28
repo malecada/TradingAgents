@@ -9,6 +9,8 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
+from tradingagents.xsect.trend import _membership_mask  # shared frozen semantics
+
 RF_DAILY = 1.045 ** (1 / 365) - 1  # house convention, data/rebuild/carry_audit/costs.json
 MIN_FUND_DAYS = 30                  # gapless trailing funding days required to trade
 MIN_VALID = 5                       # fewer valid symbols than this => flat that day
@@ -31,3 +33,24 @@ def build_funding_matrix(funding: dict, all_days: pd.DatetimeIndex,
 
 def carry_signal(F: pd.DataFrame, L: int) -> pd.DataFrame:
     return F.rolling(L, min_periods=L).mean()
+
+
+def carry_weights(all_days, S: pd.DataFrame, F: pd.DataFrame,
+                  members_by_refresh: dict, leg_frac: float) -> pd.DataFrame:
+    member = _membership_mask(all_days, S.columns, members_by_refresh)
+    fund_ok = F.notna().rolling(MIN_FUND_DAYS, min_periods=MIN_FUND_DAYS).sum() \
+        .eq(MIN_FUND_DAYS)
+    valid = member & S.notna() & fund_ok
+    W = pd.DataFrame(0.0, index=all_days, columns=S.columns)
+    for t in all_days:
+        v = valid.loc[t]
+        names = v.index[v]
+        n_valid = len(names)
+        if n_valid < MIN_VALID:
+            continue
+        n_leg = max(1, int(round(leg_frac * n_valid)))
+        ranked = sorted(names, key=lambda s: (-S.loc[t, s], s))  # desc, tie by name
+        shorts, longs = ranked[:n_leg], ranked[-n_leg:]
+        W.loc[t, shorts] = -0.5 / n_leg
+        W.loc[t, longs] = +0.5 / n_leg
+    return W
