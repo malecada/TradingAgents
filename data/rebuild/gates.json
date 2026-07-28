@@ -290,5 +290,36 @@
    "next-1/3/5-day post-event return profile"
   ],
   "stop_rule": "any dev failure -> negative recorded in THESIS section 47, holdout stays sealed; no second pass, no added grid axes"
+ },
+ "llm_p5_hybrid": {
+  "registered": "2026-07-28",
+  "spec": "docs/superpowers/specs/2026-07-28-llm-p5-hybrid-prereg.md",
+  "parent": "docs/superpowers/specs/2026-07-08-honest-rebuild-design.md section 8 (Phase 5, gate frozen 2026-07-08)",
+  "window": [
+   "2026-01-16",
+   "2026-05-21"
+  ],
+  "window_note": "inside 2025-04+ holdout region: legitimate \u2014 quant base FROZEN (no selection), directional holdout already spent by section-41 one-shot, LLM-cutoff rule forces 2026 window; ledger rows use allow_holdout=True",
+  "coin": "ethereum",
+  "arm_a": "canonical V2 h7+h14 consensus + V2 sizing, causal convention, costs_for_coin('ethereum','causal'), 3% intrabar price-stop replay, preds = purged+rolling730+onchain-pit regen (multi_2coins_pit_wf_p5, exact audit recipe)",
+  "arm_b": "pos_A x (1 + effective_weight x (multiplier - 1)) from generate_hybrid_signals ETH analysts=[onchain,prediction], gpt-5.4-mini/gpt-5.4-nano, prompt v1, anonymize False, replay cache ON, quant_pred_dir = arm-A pred dir; extraction failure -> multiplier 1.0 (production fallback), count = diagnostic",
+  "engine": "new causal A/B harness; tradingagents/backtesting/engine.py EXCLUDED (audited 2026-07-28: same-bar confirmed); scripts/backtest_hybrid.py EXCLUDED (same defect, pre-audit)",
+  "gate": {
+   "p_pos_min": 0.9,
+   "test": "paired stationary block bootstrap block=21 n=2000 shared index on daily diff (hybrid - quant), rebuild/compare.py",
+   "one_shot": true,
+   "conventions": "sqrt(252), ddof=1, zero-variance SR := 0"
+  },
+  "grid": "NONE - single config, no axes",
+  "stop_rule": "fail -> LLM layer thesis-only ('base-dependent / no-effect on honest legs'); no prompt retune, no window shop, no second model; deterministic crash re-runs via replay cache only",
+  "diagnostics_not_gates": [
+   "multiplier distribution + % bars != 1.0",
+   "extraction failure rate",
+   "effective_weight distribution",
+   "delta maxDD",
+   "quant_direction parity vs pred-CSV consensus (honest denominators)",
+   "run cost USD"
+  ],
+  "budget_usd": "15-25 approved"
  }
 }
