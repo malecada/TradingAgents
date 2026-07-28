@@ -1,0 +1,24 @@
+{
+  "experiment": "metalabel-2026-07",
+  "registered": "2026-07-15",
+  "holdout_start": "2025-04-01",
+  "G1": {
+    "description": "Model quality on pooled dev OOS predictions",
+    "auc_ci_excludes": 0.5,
+    "auc_ci_level": 0.95,
+    "bootstrap_n": 2000,
+    "must_beat": ["constant_base_rate", "logistic"],
+    "brier_vs": "constant_base_rate"
+  },
+  "G2": {
+    "description": "Economic do-no-harm on dev walk-forward",
+    "meta_sr_gte_primary": true,
+    "delta_sr_p_pos_min": 0.90,
+    "max_dd_ratio_max": 1.1
+  },
+  "G3": {
+    "description": "Holdout one-shot with frozen pipeline",
+    "one_shot": true,
+    "criteria": "delta_sr > 0 AND (meta_sr_holdout > 0 OR meta_sr_holdout > primary_sr_holdout)"
+  }
+}

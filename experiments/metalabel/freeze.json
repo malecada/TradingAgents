@@ -1,0 +1,22 @@
+{
+  "frozen": "2026-07-15",
+  "ma_pairs": [[5, 20], [10, 40], [20, 60]],
+  "donchian": {"entry": 20, "exit": 10},
+  "barriers": {"pt_mult": 2.0, "sl_mult": 1.5, "vertical_bars": 15},
+  "sigma_span": 20,
+  "tau_grid": [0.45, 0.50, 0.55, 0.60],
+  "cost_bps_round_trip": 10,
+  "vol_target_ann": 0.30,
+  "coins": ["bitcoin", "ethereum", "binancecoin", "solana", "ripple", "dogecoin", "cardano", "tron"],
+  "dev_window": ["2021-07-01", "2025-03-31"],
+  "holdout_window": ["2025-04-01", "2026-06-30"],
+  "wf": {"retrain_every_days": 90, "embargo_bars": 15, "min_train_events": 150},
+  "lgb_grid": {
+    "num_leaves": [15, 31],
+    "min_child_samples": [20, 50],
+    "feature_fraction": [0.7, 1.0],
+    "learning_rate": 0.05,
+    "n_estimators": 300
+  },
+  "size_mult": "clip((p - tau) / (0.7 - tau), 0.25, 1.0)"
+}
