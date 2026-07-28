@@ -4116,3 +4116,228 @@ same-bar look-ahead, unpurged labels, and post-hoc tuning are removed,
 even mechanism-verified published effects (post-2020 CS momentum,
 nonlinear F&G-beta pricing) do not clear a pre-registered net-of-cost bar
 on this data and this implementation.
+
+## Section 45: Wide-Universe Trend Following (trend_wide_t1) — Dev-Gate NEGATIVE, Holdout Unspent (2026-07-28)
+
+(Section 44 = meta-labeled trend system, recorded on branch feature/meta-labeling;
+numbering reserved to avoid merge collision.)
+
+Motivation traces to the post-§44 go-forward menu, which ranked two leads above all
+others: cross-crypto spillover long/short and a wide-universe trend ensemble
+("breadth does the work"). This task executes the second lead. The frozen §44
+primary (2-coin) cleared its own dev bar but produced a statistically
+insignificant holdout result (+0.389 n.s.); the open question this task answers
+is whether widening the traded universe from 2 coins to a top-N liquid-perp
+basket rescues that signal, or whether the underlying edge is too thin to survive
+breadth.
+
+### 45.1 Pre-registration provenance, including a dropped lead
+
+Lead #1 of the go-forward menu — cross-crypto return spillover long/short,
+anchored on Guo, Sang, Tu & Wang, *Cross-cryptocurrency return predictability*,
+*Journal of Economic Dynamics and Control* 163 (2024) 104863 — was investigated
+first and **dropped before registration**. Reading the paper (PDF cached at
+scratchpad `guo2024_spillover.pdf`) established that it is a minute-frequency
+study: 30 coins, 1-minute bars, sample 2019-03-25 → 2021-04-30 (futures leg only
+2020-07-29 → 2021-04-30), quintile long/short portfolios rebalanced every 5-10
+minutes, reporting net returns of 0.34-0.66 bps per 10-minute bar after a 4-bps
+taker fee. The trading universe was also selected by volume as of 2020-05-09 —
+after the sample start — a look-ahead in the paper's own construction. The paper
+provides no daily-horizon evidence, and its stated mechanism (limited-attention
+information diffusion across correlated coins) is a minute-scale phenomenon by
+construction; a daily-horizon spillover test would be an original, low-prior
+hypothesis sitting in the same cross-sectional-momentum family already closed
+0/12 at §43, not a replication of Guo et al.'s finding. This detour is recorded
+here per house pre-registration methodology (dropped leads are documented, not
+silently discarded) rather than run and reported as a test of the paper's claim.
+
+Lead #2 — the wide-universe trend ensemble executed in this section — is
+motivated by two external, unverified anchors treated as motivation only (neither
+replicated in-house before this task, both remaining unverified after it): a
+practitioner top-20 trend ensemble reporting net SR ≈ 1.57 at 10 bps costs (SSRN
+5209907), and an "AdaptiveTrend" system on 6-hour bars reporting net SR 2.41
+(arXiv 2602.11708). The internal prior is the §44 primary's own 2-coin holdout
+result (+0.389 n.s.) — breadth, not a new signal rule, is the axis under test.
+
+Gate frozen **before** any grid cell was run: `data/rebuild/gates.json →
+trend_wide_t1` (registered 2026-07-28, commit `fd25aff`), full rule text and
+lead-#1 provenance in `docs/superpowers/specs/2026-07-28-trend-wide-design.md`
+(commit `7dcae06`, implementation plan `705faa7`). Build commits: `b6daa97`
+(frozen vote module copied verbatim from the `feature/meta-labeling` §44
+primary, pinned against a parity fixture — no re-tuning), `ebbb428` (daily
+weight construction + t+1 cost engine), `d536653` (W/R index-alignment assert),
+`2917eae` (circular-shift placebo family + synthetic kill-test), `47ff0c1` +
+`fc7c446` (dual-family placebo amendment — see below), `02e193c` (6-config dev
+grid script), `7afe1a6` (dev grid results ledgered), `c2e51f2` (dev_results.json
+tracked). Dev grid executed and ledgered at `7afe1a6` (6 rows,
+`experiment="trend_wide_t1"`). Grid is closed at 6 configs by the
+pre-registration; no config outside the grid was evaluated.
+
+The dual-placebo design (per-coin independent **and** shared-offset circular
+time-shifts, gating on the worse of the two p-values) was **amended before
+registration**, not after seeing results: an internal task-3 review of the draft
+spec caught that a single per-coin-independent placebo family nulls each coin's
+own directional timing but breaks cross-coin co-activation, so a real signal
+whose only "edge" is that many coins turn on together during the same bull
+regime could look significant against that placebo alone. The shared-offset
+family (one time-shift offset applied to every column in a draw) preserves
+that cross-coin co-activation and nulls only calendar alignment, closing the
+gap. Both families are frozen in `gates.json` and both ran; §45.4 below shows
+why this amendment mattered.
+
+Dev window: **2021-01-01 → 2025-03-31**. Holdout window: **2025-04-01 →
+2026-07-01**, untouched by this task — the gate check
+(`dev_results.json["selected"]` returns `null`) means Steps 2-4 of the holdout
+procedure do not run: no holdout script was written, no holdout-window data was
+read. Holdout stays locked and unspent.
+
+### 45.2 Design summary
+
+Signal: the frozen §44 primary reused verbatim — vote = mean of 4 binary rules
+(MA-cross 5/20, 10/40, 20/60, and a stateful Donchian 20-entry/10-exit rule),
+60-bar warmup, long when vote > 0.5, flat otherwise (long-flat only; no
+short-side funding modeling needed). No parameter re-tuning; a parity unit
+test pins the module's output against a fixture from the `feature/meta-labeling`
+worktree.
+
+Universe: PIT-eligible top-N by 30-day median quote-volume (≥$5M floor, first
+kline ≤ D−30, ≥90 daily bars at decision) drawn from the 799-symbol
+survivorship-safe kline store (`tradingagents/xsect/universe.eligibility`, the
+same store used in §43), refreshed monthly at the first Monday close of each
+calendar month. A coin leaving the universe is force-flattened at the next bar
+with turnover cost charged.
+
+Sizing: per-coin weight `w_i(t) = (1/N) · min(1, vol_target / (σ_i(t)·√365)) ·
+1{vote_i(t) > 0.5}`, with `σ_i(t)` the 30-calendar-day rolling std of daily log
+returns (weight 0 on insufficient history). Decision at close *t* accrues from
+bar *t+1* (causal next-bar convention, per house rebuild discipline); 10 bps
+per side on Σ|Δw|, charged on the first accrual day after any weight change
+(daily vote/vol drift and monthly universe rotation both trigger costs).
+
+Grid, frozen before the first run: N ∈ {10, 20} × vol_target ∈ {0.20, 0.30,
+0.40} = 6 configurations. Benchmark: per-N equal-weight buy-and-hold of the
+same monthly top-N universe, identical t+1 accrual and 10-bps mechanics — SR
+comparison is scale-invariant, so vol is not matched. Dev window 2021-01-01 →
+2025-03-31 (1,547 accrued days); holdout 2025-04-01 → 2026-07-01, sealed and
+one-shot, spent only if dev passes.
+
+### 45.3 Dev grid results (6/6 configs, `data/rebuild/trend_wide/dev_results.json`)
+
+Benchmarks: N=10 net SR **−0.484** (maxDD 0.969), N=20 net SR **−0.505** (maxDD
+0.964), both over 1,547 days. `n_trials_at_eval = 81` at every row (house
+unique-config-hash recipe over the full ledger).
+
+| N | vt | net_sr | delta_sr | p_pos | placebo_p_indep | placebo_p_shared | placebo_p | dsr | pass |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|:---:|
+| 10 | 0.20 | 0.337 | 0.821 | 0.963 | 0.383 | 0.341 | 0.383 | 0.0386 | FAIL |
+| 10 | 0.30 | 0.337 | 0.821 | 0.963 | 0.385 | 0.337 | 0.385 | 0.0385 | FAIL |
+| 10 | 0.40 | 0.317 | 0.801 | 0.962 | 0.401 | 0.351 | 0.401 | 0.0353 | FAIL |
+| 20 | 0.20 | 0.374 | 0.879 | 0.991 | 0.184 | 0.271 | 0.271 | 0.0451 | FAIL |
+| 20 | 0.30 | 0.373 | 0.878 | 0.991 | 0.184 | 0.273 | 0.273 | 0.0449 | FAIL |
+| 20 | 0.40 | 0.359 | 0.864 | 0.990 | 0.192 | 0.283 | 0.283 | 0.0423 | FAIL |
+
+**0/6 configs pass** the pre-registered `trend_wide_t1.dev_select` gate
+(`net_sr_min` 1.0, `delta_sr_vs_benchmark_min` 0.0, `p_pos_min` 0.90,
+`placebo_p_max` 0.05, `dsr_min` 0.9 — all five required). The grid clears the
+*relative* axis comfortably (ΔSR +0.80 to +0.88, p_pos 0.96-0.99, all six
+configs beating their per-N benchmark with high confidence under the paired
+stationary-block bootstrap) but fails the *absolute* net-SR floor by a wide
+margin (0.317-0.374 vs the 1.0 threshold), fails the placebo gate under both
+families (worse-of-two 0.271-0.401, an order of magnitude above the 0.05
+requirement), and fails DSR by roughly 20x (0.035-0.045 vs 0.9 required). No
+config is close to passing on more than one of the three failing axes.
+
+### 45.4 Mechanism (forensically verified): benchmark outperformance is exposure, not timing
+
+Three engine-liveness checks (own reproduction against the frozen engine code,
+`tradingagents/xsect/trend.py` + `trend_signal.py`, using the exact dev-window
+accrual convention in `scripts/trend_wide_dev.py`) confirm the grid is not a
+frozen or degenerate strategy: for N=20/vt=0.3, the number of occupied slots
+per day has median 4.00 and mean 6.60 out of 20 (min 0, max 20) — the sizing
+and vote-gating logic is actively varying exposure, not sitting at a constant
+allocation; monthly universe membership shows **0 of 50** month-to-month
+refreshes with zero churn (every refresh rotates at least one name in or out);
+and BTC's composite vote crosses its 0.5 long/flat threshold **59 times** over
+the 1,547-day dev window (own reproduction from the frozen vote module,
+matching the engine's dev-window convention) — the primary is actively trading
+BTC, not stuck long or flat throughout.
+
+Despite the engine being demonstrably alive, the source of the six configs'
+positive ΔSR is not timing skill. BTC buy-and-hold over the identical dev
+window has SR **+0.363** (own reproduction, raw log-returns, no costs) —
+positive — while the EW top-N basket benchmarks are **−0.484** (N=10) and
+**−0.505** (N=20) — negative. The wide-universe long-flat trend book's ΔSR
+of +0.80 to +0.88 is being measured against a *benchmark that has already
+decayed further than BTC itself* over this window (broad-altcoin buy-and-hold
+underperforms BTC buy-and-hold badly across 2021-2025, consistent with the
+concentrated-altcoin-basket decay documented in §43.3). This is exactly what
+the dual-placebo amendment in §45.1 was designed to catch, and it does: running
+both placebo families' 500 random time-shifts of the real weight pattern
+through the same engine and asking what fraction of the *placebo* portfolios
+*also* beat the same per-N benchmark (own reproduction, not the ledgered
+`placebo_p` statistic, which compares placebos against the real SR rather than
+against the benchmark) shows **92-99%** of randomly time-shifted weight
+patterns beat the benchmark too (indep family ≈98-99%, shared-offset family
+≈92-95%, across both N=10 and N=20). Almost any long-flat weight pattern with
+this basket's exposure profile beats this particular benchmark; the real
+signal's edge over the benchmark is a **long-flat exposure/participation
+effect**, not evidence of directional timing skill, and this is precisely the
+failure mode the `placebo_p` gate (0.27-0.40, an order of magnitude above the
+0.05 bar) already flags at the ledger level. Breadth did not rescue the trend
+primary: it is consistent with the §44 2-coin holdout's own statistically
+insignificant result (+0.389 n.s.) rather than an improvement on it, and the
+practitioner net-SR-≈1.57 anchor (SSRN 5209907) is not reproduced in-house
+under a survivorship-safe PIT universe and honest t+1/cost accounting.
+
+### 45.5 Interpretation limits
+
+1. **Scope of the negative.** This result applies to the frozen §44 primary
+   (MA 5/20, 10/40, 20/60 + Donchian 20/10, vote-mean long-flat) traded across
+   a monthly-refreshed top-10/top-20 liquid-perp basket, vol-targeted at
+   20-40%, under 10-bps costs, over 2021-2025 — it is not a finding that no
+   trend-following construction survives breadth. A different signal (e.g. a
+   continuous-weight trend score rather than a binary vote), different
+   rebalance cadence, or a different vol-target/leverage regime is untested.
+2. **Single dev window, bear-heavy for altcoins.** 2021-01-01 → 2025-03-31
+   contains the same 2022 bear market and 2024-25 altcoin malaise noted in
+   §43.6 as depressing any broad-altcoin long exposure; the benchmark's
+   negative SR over this window is a real, well-documented period, not an
+   artifact, but it does make the ΔSR-vs-benchmark axis easy to clear for
+   almost any long-flat pattern (§45.4).
+3. **Both external anchors remain unverified in-house.** SSRN 5209907 and
+   arXiv 2602.11708 were treated as motivation only per the pre-registration
+   and were not independently replicated on their own terms (their exact
+   universes, rebalance rules, and cost assumptions were not reproduced) —
+   this task tests a specific in-house implementable design inspired by them,
+   not a replication of either paper.
+4. **Lead #1 (spillover) is a documented detour, not a tested hypothesis.**
+   §45.1's dropped lead was never run; nothing in this section speaks to
+   whether a daily-horizon cross-crypto spillover signal would or would not
+   clear a pre-registered gate. That remains open for a future cycle if a
+   daily-horizon evidence base for the effect is found.
+
+### 45.6 Verdict
+
+**0/6 configs pass** the pre-registered `trend_wide_t1.dev_select` gate. Every
+config clears the relative benchmark axis (ΔSR +0.80 to +0.88, p_pos
+0.96-0.99) but fails the absolute net-SR floor (0.317-0.374 vs 1.0 required),
+fails the placebo gate under both the independent and shared-offset families
+(worse-of-two 0.271-0.401 vs 0.05 required), and fails DSR by roughly 20x
+(0.035-0.045 vs 0.9 required). Per the gate check
+(`dev_results.json["selected"] is null`), the holdout one-shot does **not**
+run: no holdout script was written, no data in 2025-04-01 → 2026-07-01 was
+read, and the locked holdout stays **unspent**, available for a future
+pre-registered cycle testing a different signal or sizing construction on this
+same PIT universe engine. One-shot discipline intact throughout: the 6-config
+grid was closed by pre-registration before Task 1 ran, the dual-placebo
+amendment was made before registration in response to an internal review
+finding (not after seeing results), and the forensic mechanism checks in §45.4
+were run and reported as verification, not used to select or rescue a config.
+This is the second breadth-family negative in the post-§44 program, after the
+799-symbol wide-universe cross-sectional momentum result in §43: both external
+trend/momentum anchors motivating these two experiments (Borri et al. and the
+JFQA trend-factor paper for §43; the SSRN practitioner ensemble and
+AdaptiveTrend for this section) remain unreproduced in-house once a
+survivorship-safe PIT universe, honest t+1 costs, and a dual-placebo test for
+cross-coin co-activation are applied. Revival of either lead requires a new
+pre-registered cycle, not a retrofit onto this one.
