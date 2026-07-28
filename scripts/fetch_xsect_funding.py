@@ -61,9 +61,12 @@ def _fetch_page(symbol: str, start_ms: int, limit: int = 1000) -> list[dict]:
     return r.json()
 
 
-def fetch_symbol(symbol: str, existing: pd.DataFrame | None) -> pd.DataFrame:
-    cursor = 0 if existing is None or existing.empty else \
-        int(existing.index[-1].timestamp() * 1000) + 1
+def fetch_symbol(symbol: str, existing: pd.DataFrame | None, kline_first: str) -> pd.DataFrame:
+    if existing is None or existing.empty:
+        # Start from kline_first minus 30 days (funding cannot meaningfully predate listing)
+        cursor = int((pd.Timestamp(kline_first, tz="UTC") - pd.Timedelta(days=30)).timestamp() * 1000)
+    else:
+        cursor = int(existing.index[-1].timestamp() * 1000) + 1
     df = existing
     while True:
         page = with_backoff(lambda: _fetch_page(symbol, cursor))
@@ -122,12 +125,14 @@ def main() -> None:
     args = ap.parse_args()
     FUND_DIR.mkdir(parents=True, exist_ok=True)
     manifest = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {}
+    km = json.loads(KLINES_MANIFEST.read_text())
     if not args.report_only:
-        symbols = args.symbols or sorted(json.loads(KLINES_MANIFEST.read_text()))
+        symbols = args.symbols or sorted(km.keys())
         for i, sym in enumerate(symbols):
             path = FUND_DIR / f"{sym}.parquet"
             existing = pd.read_parquet(path) if path.exists() else None
-            df = fetch_symbol(sym, existing)
+            kline_first = km[sym]["first"]
+            df = fetch_symbol(sym, existing, kline_first)
             if len(df):
                 df.to_parquet(path)
                 manifest[sym] = manifest_entry(df)
