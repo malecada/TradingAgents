@@ -151,3 +151,63 @@ def test_nan_funding_on_held_symbol_accrues_zero():
     W, R, F = _one_symbol_frames([0.5] * 4, [0.0] * 4, [np.nan] * 4)
     p = run_ls_portfolio(W, R, F, cost_bps=0.0, rf_daily=0.0)
     assert (p == 0).all()
+
+
+from tradingagents.xsect.portfolio import rank_placebo_pvalue, sr
+from tradingagents.xsect.trend import circular_shift_weights, shared_shift_weights
+
+
+def _placebo_p(W, R, F, shift_fn, n=50):
+    real = sr(run_ls_portfolio(W, R, F, cost_bps=0.0, rf_daily=0.0))
+    srs = []
+    for p in range(n):
+        rng = np.random.default_rng(seed=p)
+        srs.append(sr(run_ls_portfolio(shift_fn(W, rng), R, F,
+                                       cost_bps=0.0, rf_daily=0.0)))
+    return rank_placebo_pvalue(real, srs)
+
+
+# Regime-rotation fixture: funding-level->symbol assignment is permuted every
+# regime_len days, so short/long leg membership churns (~10 distinct regimes
+# over 600d) instead of being column-constant. A circular-shift placebo can
+# only destroy a TIMING relationship between weight and return; the earlier
+# column-constant version made the book's long/short assignment nearly
+# time-invariant, so no time-shift null could distinguish real from placebo
+# (real SR sat mid-pack of the placebo distribution regardless of k). With
+# rotating regimes the alpha genuinely depends on alignment-in-time, which
+# circular/shared shifts destroy.
+def _synthetic(k, seed=0, n_sym=20, n_days=600, regime_len=60, spread=4e-3):
+    rng = np.random.default_rng(seed)
+    days = pd.date_range("2022-01-01", periods=n_days, freq="D", tz="UTC")
+    syms = [f"S{i:02d}USDT" for i in range(n_sym)]
+    base = np.linspace(spread / 2, -spread / 2, n_sym)
+    F = np.empty((n_days, n_sym))
+    for b in range(0, n_days, regime_len):
+        m = min(regime_len, n_days - b)
+        perm = rng.permutation(n_sym)
+        F[b:b + m] = base[perm] + rng.normal(0, 2e-4, (m, n_sym))
+    F = pd.DataFrame(F, index=days, columns=syms)
+    S = carry_signal(F, L=7)
+    noise = rng.normal(0, 0.01, (n_days, n_sym))
+    R = pd.DataFrame(noise, index=days, columns=syms) - k * S.shift(1).fillna(0.0)
+    W = carry_weights(days, S, F, {days[0]: syms}, leg_frac=0.2)
+    return W, R, F
+
+
+def test_placebo_kill_planted_signal_detected_both_families():
+    W, R, F = _synthetic(k=2.0)  # high funding -> lower future return
+    assert _placebo_p(W, R, F, circular_shift_weights) <= 0.05
+    assert _placebo_p(W, R, F, shared_shift_weights) <= 0.05
+
+
+# spread=0.0 is required here, not just k=0.0: run_ls_portfolio always accrues
+# real funding P&L from F regardless of k (funding is the strategy's actual
+# harvest mechanism), so a persistent cross-sectional funding SPREAD is a real,
+# detectable effect on its own -- k=0.0 with the default spread only nulls the
+# price-timing channel, not the funding-differential channel, and the placebo
+# machinery correctly flagged it (ablation: p=0.0196 with spread=4e-3 vs.
+# 0.37/0.16/0.45 across seeds with spread=0.0). A true null needs zero
+# persistent structure in BOTH channels.
+def test_placebo_null_not_detected():
+    W, R, F = _synthetic(k=0.0, spread=0.0)
+    assert _placebo_p(W, R, F, circular_shift_weights) > 0.05
