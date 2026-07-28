@@ -17,3 +17,18 @@ def monthly_top_n(daily, start, end, n=50, lookback=30, min_age_days=60):
         ranked = sorted(scores, key=lambda s: -scores[s])[:n]
         out[m] = ranked
     return out
+
+
+def _roll_z(x: pd.DataFrame, window: int, min_periods: int) -> pd.DataFrame:
+    """Compute rolling z-score with pandas rolling."""
+    mu = x.rolling(window, min_periods=min_periods).mean()
+    sd = x.rolling(window, min_periods=min_periods).std(ddof=1)
+    return (x - mu) / sd
+
+
+def cascade_triggers(close, qvol, thr, window=2160, min_periods=1440):
+    """Detect liquidation cascade 1h trigger: low return + high volume."""
+    r = np.log(close).diff()
+    z_ret = _roll_z(r, window, min_periods)
+    z_vol = _roll_z(np.log1p(qvol), window, min_periods)
+    return (z_ret <= -thr) & (z_vol >= thr)
