@@ -83,6 +83,8 @@ def main() -> None:
     print(f"[matrices] union={len(union)} days={len(all_days)} "
           f"funding_files={len(funding)} ({time.time() - t_start:.1f}s)")
 
+    SIG30 = R.rolling(30, min_periods=30).std()  # config-independent, hoisted
+
     results, series_by_cfg = [], {}
     for L, leg_frac in GRID:
         t_cfg = time.time()
@@ -112,11 +114,21 @@ def main() -> None:
         placebo_p = max(p_indep, p_shared)
 
         # non-gating vol-selection diagnostic (section-43 check)
-        SIG30 = R.rolling(30, min_periods=30).std()
         active_days = W.index[act > 0]
         rcs = [pd.Series(S.loc[t]).corr(pd.Series(SIG30.loc[t]), method="spearman")
                for t in active_days[::21]]
         vol_rank_corr = float(np.nanmean(rcs))
+
+        # per-leg mean 30d realized vol (section-43 vol-selection check), same
+        # sampled dates and SIG30 frame as vol_rank_corr_diag above
+        short_vols, long_vols = [], []
+        for t in active_days[::21]:
+            w_row = W.loc[t]
+            sv = SIG30.loc[t, w_row[w_row < 0].index].mean()
+            lv = SIG30.loc[t, w_row[w_row > 0].index].mean()
+            short_vols.append(sv); long_vols.append(lv)
+        mean_vol_short_leg = float(np.nanmean(short_vols))
+        mean_vol_long_leg = float(np.nanmean(long_vols))
 
         cfg = {"L": L, "leg_frac": leg_frac, "top_n": TOP_N, "cost_bps": COST_BPS,
                "rf_daily": RF_DAILY, "refresh": "monthly_first_monday"}
@@ -126,7 +138,9 @@ def main() -> None:
                    "placebo_p_shared": p_shared, "n_days": len(real),
                    "n_active_days": int((act.loc[real.index] > 0).sum()),
                    "mean_gross_turnover": float(W.diff().abs().sum(axis=1).mean()),
-                   "vol_rank_corr_diag": vol_rank_corr}
+                   "vol_rank_corr_diag": vol_rank_corr,
+                   "mean_vol_short_leg_diag": mean_vol_short_leg,
+                   "mean_vol_long_leg_diag": mean_vol_long_leg}
         log_trial("carry_xs_t1", cfg, DEV, metrics)
         series_by_cfg[(L, leg_frac)] = real
         results.append({"config": cfg, "metrics": metrics})
