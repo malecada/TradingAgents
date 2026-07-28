@@ -4673,3 +4673,100 @@ this same funding store and engine.
 - Forensics: `.superpowers/sdd/2026-07-28-carry-xs/task-7-forensics.md`
   (probe scripts throwaway, uncommitted, per house convention for forensic
   passes)
+
+## Section 47: Liquidation-Cascade Mean-Reversion (liq_mr_t1) — Dev-Gate NEGATIVE, Holdout Unspent (2026-07-28)
+
+Executes lead #6 of the post-§44 go-forward menu, after leads #1 (dropped),
+#2 (§45 negative), and #3 (§46 negative). The hypothesis: liquidation
+cascades are forced, price-insensitive flow — a spike in long liquidations
+marks an undershoot to buy, a short-liquidation spike an overshoot to short.
+Exploratory with no external study; the Coinglass 10-exchange daily
+liquidation history (2020-12+) is a retail-rare data asset and this was the
+only untried lead exploiting it. This was also the last unblocked lead on the
+menu (#4 intraday disk-blocked, #5 needs a winning base, #7 data-blocked).
+
+### 47.1 Pre-registration provenance
+
+Design spec (`docs/superpowers/specs/2026-07-28-liq-mr-design.md`) and
+gates entry (`data/rebuild/gates.json["liq_mr_t1"]`) committed at `7856d17`
+BEFORE any experiment run. Frozen: 8-major universe (BTC ETH BNB SOL ADA
+DOGE XRP TRX — non-PIT ex-post selection recorded as a limitation at
+registration), per-direction z-score of liq_usd/OI over a trailing 90d window
+(min_periods 60, inclusive of day t), event at close t → ±1/8 fade position
+over bars t+1..t+H, same-direction timer reset, opposite-direction netting,
+no vol scaling, 10 bps/side turnover costs, rf 4.5%/365 deducted daily on
+full capital (identical harshest-honest convention to §46), funding accrual
+on holds excluded (registered simplification). Grid = 6 configs:
+thr ∈ {1.5, 2.5} × H ∈ {1, 3, 5}. Dev 2021-01-01→2025-03-31; holdout
+2025-04-01→2026-07-01 sealed. Gates: net SR ≥ 1.0, dual-family placebo
+worse-p ≤ 0.05 (500 draws each, costs+rf re-applied), DSR ≥ 0.9 at
+ledger-cumulative n_trials.
+
+A spec-mandated pre-run probe validated the Coinglass stamp convention:
+liquidation spikes align with same-day |returns| (BTC 6.5% vs 2.2% baseline),
+not next-day — rows are stamped at UTC day open, so the day-t aggregate is
+complete at close t and the close-t decision is causal.
+
+### 47.2 Result: 0/6 configs pass — NEGATIVE
+
+| thr | H | net SR | placebo p (worse) | DSR | events L/S | % days active |
+|-----|---|--------|-------------------|-----|-----------|---------------|
+| 1.5 | 1 | −0.355 | 0.283 | 0.001 | 722/789 | 33.1% |
+| 1.5 | 3 | −0.481 | 0.593 | 0.000 | 722/789 | 58.7% |
+| 1.5 | 5 | −0.674 | 0.806 | 0.000 | 722/789 | 71.3% |
+| 2.5 | 1 | −0.119 | 0.136 | 0.003 | 349/393 | 18.4% |
+| 2.5 | 3 | −0.460 | 0.521 | 0.000 | 349/393 | 38.1% |
+| 2.5 | 5 | −0.764 | 0.824 | 0.000 | 349/393 | 52.2% |
+
+Selected: NONE. Ledger n_trials at evaluation = 93. Results:
+`data/rebuild/liq_mr/dev_results.json`; per-config rows in the trial ledger.
+
+### 47.3 Forensic verification (negative verified)
+
+Full report: `data/rebuild/liq_mr/forensics.md`. Summary: (P1) signal live
+1492/1551 dev days on all 8 coins, first signal 2021-03-01 exactly per the
+registered warmup — honest denominators; (P2) inversion kill test — at H=1
+the fade direction beats its inversion (−0.119 vs −0.835: a weak real
+reversal), at H=5 the inversion is the better side (+0.150 vs −0.764:
+continuation dominates multi-day holds); (P3) drag decomposition of the best
+config: gross +0.359 → costs +0.166 → rf −0.119 — the raw effect is ~1/3 of
+the gate floor before any drag, so unlike §46 this is an intrinsically weak
+signal, not a cost/capital-efficiency kill; (P4) all five benchmark cascade
+dates (2021-05-19, 2022-06-13, FTX 2022-11-09, 2024-08-05, 2025-02-03)
+flagged, hundreds of events per config — well-powered, the §44 underpowered
+label does not apply; (P5) planted-reversal placebo kill test passes both
+families; (P6) per-coin long-fade decomposition broad but shallow (7/8 coins
+positive, max DOGE +0.66) — no concentration artifact.
+
+### 47.4 Mechanism reading (diagnostics, non-gating)
+
+The signed post-event fade profile is +25 bp (1d), −29 bp (3d), −91 bp (5d)
+gross at thr=2.5: the cascade reversal essentially completes intraday (the
+6.5% same-day move), leaving only a faint next-day echo at daily bars, and
+cascades **continue** beyond one day. Direction asymmetry: the entire weak
+edge is long-fade (buying after long-liquidation flushes, +0.19..+0.55 SR
+alone); fading short squeezes loses consistently (−0.68..−1.41). Both
+directions were frozen at registration — no post-hoc long-only variant is
+claimed. Event days sit at the 0.51 vol percentile — the §43 vol-proxy
+mechanism is absent. The natural (untested) follow-on is intraday cascade
+fading — lead #4's granularity, currently disk-blocked.
+
+### 47.5 Verdict
+
+Dev-gate NEGATIVE, forensically verified; holdout stays sealed and unspent.
+With #6 closed, every unblocked lead on the 2026-07 go-forward menu has now
+been executed to a pre-registered verdict; remaining open items are the
+blocked leads (#4 intraday, #5 overlay-on-winner, #7 value factor) and the
+P5 LLM flagship re-test on the corrected harness.
+
+### Artifacts
+
+- Spec + registration: `docs/superpowers/specs/2026-07-28-liq-mr-design.md`,
+  `data/rebuild/gates.json` key `liq_mr_t1` (`7856d17`, pre-run)
+- Module + tests: `tradingagents/xsect/liq_mr.py`,
+  `tests/test_xsect_liq_mr.py` (`048204c`) — 14 unit tests incl. planted
+  placebo kill-test; reuses the frozen xsect engine conventions
+- Dev grid runner: `scripts/liq_mr_dev.py`
+- Results: `data/rebuild/liq_mr/dev_results.json`
+- Forensics: `data/rebuild/liq_mr/forensics.md` (committed; probe scripts
+  throwaway per house convention)
