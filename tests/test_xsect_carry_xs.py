@@ -89,3 +89,26 @@ def test_carry_weights_respects_monthly_membership():
     S = carry_signal(F, L=7)
     W = carry_weights(days, S, F, members, leg_frac=0.2)
     assert (W.loc[days[45]:, ["S0USDT", "S1USDT"]] == 0).all().all()
+
+
+def test_carry_weights_long_leg_tie_break_ascending():
+    # Regression: LONG leg must pick alphabetically-FIRST among tied-lowest
+    # signals (bottom n_leg by (signal asc, symbol asc)), not the alphabetical
+    # tail of a single descending sort.
+    n_days = 40
+    days = pd.date_range("2024-01-01", periods=n_days, freq="D", tz="UTC")
+    syms = ["X1", "X2", "X3", "A", "B", "C"]
+    levels = {"X1": 5e-3, "X2": 4e-3, "X3": 3e-3, "A": -1e-3, "B": -1e-3, "C": -1e-3}
+    F = pd.DataFrame({s: np.full(n_days, levels[s]) for s in syms}, index=days)
+    S = carry_signal(F, L=7)
+    W = carry_weights(days, S, F, {days[0]: syms}, leg_frac=1 / 3)  # n_leg=2
+    t = days[MIN_FUND_DAYS + 5]
+    row = W.loc[t]
+    # SHORT: top-2 by signal desc, no tie involved
+    assert row["X1"] == pytest.approx(-0.25)
+    assert row["X2"] == pytest.approx(-0.25)
+    assert row["X3"] == 0
+    # LONG: bottom-2 among {A,B,C} tied at -1e-3 -> alphabetically-first A,B win
+    assert row["A"] == pytest.approx(0.25)
+    assert row["B"] == pytest.approx(0.25)
+    assert row["C"] == 0

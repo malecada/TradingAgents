@@ -49,8 +49,12 @@ def carry_weights(all_days, S: pd.DataFrame, F: pd.DataFrame,
         if n_valid < MIN_VALID:
             continue
         n_leg = max(1, int(round(leg_frac * n_valid)))
-        ranked = sorted(names, key=lambda s: (-S.loc[t, s], s))  # desc, tie by name
-        shorts, longs = ranked[:n_leg], ranked[-n_leg:]
+        # SHORT: top n_leg by (signal desc, symbol asc); LONG: bottom n_leg by
+        # (signal asc, symbol asc). Two independent sorts — a single desc sort's
+        # tail gives (signal asc, symbol DESC) at tie boundaries, which diverges
+        # from the frozen ascending tie-break for the long leg.
+        shorts = sorted(names, key=lambda s: (-S.loc[t, s], s))[:n_leg]
+        longs = sorted(names, key=lambda s: (S.loc[t, s], s))[:n_leg]
         W.loc[t, shorts] = -0.5 / n_leg
         W.loc[t, longs] = +0.5 / n_leg
     return W
