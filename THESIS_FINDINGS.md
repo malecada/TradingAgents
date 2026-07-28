@@ -4198,8 +4198,13 @@ why this amendment mattered.
 Dev window: **2021-01-01 → 2025-03-31**. Holdout window: **2025-04-01 →
 2026-07-01**, untouched by this task — the gate check
 (`dev_results.json["selected"]` returns `null`) means Steps 2-4 of the holdout
-procedure do not run: no holdout script was written, no holdout-window data was
-read. Holdout stays locked and unspent.
+procedure do not run: no holdout script was written, no holdout-window returns
+entered any reported metric (the kline store backing this task spans through
+2026-07 and the placebo circular-shift rolls traverse the full weight history,
+including holdout-period signal states, before dev-window truncation — an
+artifact that dilutes the placebo null and biases that gate toward passing,
+leaving this negative conservative rather than invalidated). Holdout stays
+locked and unspent.
 
 ### 45.2 Design summary
 
@@ -4340,10 +4345,14 @@ fails the placebo gate under both the independent and shared-offset families
 (worse-of-two 0.271-0.401 vs 0.05 required), and fails DSR by roughly 20x
 (0.035-0.045 vs 0.9 required). Per the gate check
 (`dev_results.json["selected"] is null`), the holdout one-shot does **not**
-run: no holdout script was written, no data in 2025-04-01 → 2026-07-01 was
-read, and the locked holdout stays **unspent**, available for a future
-pre-registered cycle testing a different signal or sizing construction on this
-same PIT universe engine. One-shot discipline intact throughout: the 6-config
+run: no holdout script was written and no holdout-window returns (2025-04-01 →
+2026-07-01) entered any reported metric (the kline store spans through 2026-07
+and the placebo weight rolls traverse the full weight history, including
+holdout-period signal states, before dev-window truncation — this dilutes the
+placebo null in the direction of an easier pass, so the gate still failing
+leaves the negative conservative w.r.t. this artifact), and the locked holdout
+stays **unspent**, available for a future pre-registered cycle testing a
+different signal or sizing construction on this same PIT universe engine. One-shot discipline intact throughout: the 6-config
 grid was closed by pre-registration before Task 1 ran, the dual-placebo
 amendment was made before registration in response to an internal review
 finding (not after seeing results), and the forensic mechanism checks in §45.4
