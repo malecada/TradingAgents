@@ -1,14 +1,16 @@
 {
- "generated_at": "2026-07-29T17:26:42.307212+00:00",
+ "generated_at": "2026-07-29T17:54:47.333540+00:00",
  "experiment": "liq_fade_r1",
  "outcome": "NEGATIVE-at-probe (P2/P3), gates never evaluated",
  "power": {
   "n_events_masked": 1892,
   "n_events_full_window": 1884,
   "n_band_symbols": 304,
+  "n_symbols_with_events": 219,
   "years_spanned": 4.243668720054757,
   "events_per_year": 445.84064516129035,
   "events_per_symbol": 6.223684210526316,
+  "events_per_active_symbol": 8.639269406392694,
   "events_per_year_table": {
    "2020": 0,
    "2021": 226,
@@ -22,6 +24,21 @@
   "se_mean_fwd_ret": 0.0041812128388439744,
   "t_stat": -0.9992198089403382,
   "distinguishable_from_zero_at_5pct": false
+ },
+ "pooled_concentration": {
+  "top_contributor_symbol": "FTTUSDT",
+  "top_contributor_n_events": 27,
+  "top_contributor_sum_pp": -12.610173731989336,
+  "total_pooled_sum_pp": -7.871259107436771,
+  "top_contributor_share_of_total_sum": 1.6020529320493637,
+  "n_events_excl_top_contributor": 1857,
+  "mean_fwd_ret_excl_top_contributor": 0.0025519195608791384,
+  "se_excl_top_contributor": 0.003620877004035881,
+  "t_stat_excl_top_contributor": 0.7047794106330407,
+  "p2_floor": 0.0025,
+  "excl_clears_p2_floor": true,
+  "disclosure_only_not_registered_statistic": true,
+  "note": "Reported for disclosure only. The pre-registered P2 statistic is the full-band mean over ALL events (see 'power' above); gates.json liq_fade_r1.stop_rule forbids any post-hoc cost-model or scope relaxation, of which post-hoc symbol exclusion is a clear instance. The verdict is NOT recomputed on this basis and remains NEGATIVE."
  },
  "p3_control": {
   "primary_net_sr": -0.04757158731370988,

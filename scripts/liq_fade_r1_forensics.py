@@ -20,6 +20,19 @@ Sections implemented:
   power               -- events/year, events/symbol, SE of the mean event
                           return (F4 analog): is this a real negative or an
                           underpowered one.
+  pooled_concentration -- pooled (whole-band) single-largest-contributor
+                          check: identifies the one symbol that contributes
+                          most to the pooled event-return sum and reports the
+                          mean with it excluded, DISCLOSURE ONLY -- the
+                          pre-registered P2 statistic is the full-band mean
+                          and the verdict is not recomputed on this basis
+                          (gates.json's stop_rule forbids exactly this kind
+                          of post-hoc exclusion). New: closes the gap where
+                          _partition_stats already does this exclusion at the
+                          near-top50/never-top50 partition level but never at
+                          the pooled level, which is the only level where it
+                          changes the registered statistic's sign relative to
+                          its floor.
   p3_control          -- primary vs vol-drift-control event counts and net
                           SRs, independently re-derived from the frozen
                           panel (F9 analog) -- the check i1's own forensics
@@ -168,13 +181,13 @@ def main() -> None:
     dev_lo = pd.Timestamp(lfr.DEV[0], tz="UTC")
     dev_hi = pd.Timestamp(lfr.DEV[1], tz="UTC") + pd.Timedelta(hours=23)
 
-    # Reproduce probe_p2's exact row selection: masked triggers over the
-    # FULL loaded index (which already ends at DEV[1]), gated to dev_lo only
-    # on the lower bound -- boundary-truncated forward windows near DEV[1]
-    # are what separates n_events (1892) from n_events_with_full_forward_window.
-    row_sel_lo = np.asarray(close.index >= dev_lo)
+    # Reproduce probe_p2's exact row selection: masked triggers bounded at
+    # both dev_lo and dev_hi -- boundary-truncated forward windows near
+    # DEV[1] are what separates n_events (1892) from
+    # n_events_with_full_forward_window.
+    row_sel_dev = np.asarray((close.index >= dev_lo) & (close.index <= dev_hi))
     trig_all = cascade_triggers(close, qvol, thr=lfr.THR) & mask
-    trig_dev = pd.DataFrame(trig_all.to_numpy() & row_sel_lo[:, None],
+    trig_dev = pd.DataFrame(trig_all.to_numpy() & row_sel_dev[:, None],
                             index=trig_all.index, columns=trig_all.columns)
     n_events_masked = int(trig_dev.to_numpy().sum())
     assert n_events_masked == p2["n_events"], (
@@ -210,6 +223,8 @@ def main() -> None:
     events_per_year = n_events_masked / years_spanned
     n_band_symbols = len(close.columns)
     events_per_symbol = n_events_masked / n_band_symbols
+    n_symbols_with_events = int(events["symbol"].nunique())
+    events_per_active_symbol = n_events_masked / n_symbols_with_events
     sd_ret = float(events["fwd_ret"].std(ddof=1))
     se_ret = sd_ret / np.sqrt(n_events_full_window)
     t_stat = mean_ret / se_ret
@@ -221,9 +236,11 @@ def main() -> None:
         "n_events_masked": n_events_masked,
         "n_events_full_window": n_events_full_window,
         "n_band_symbols": n_band_symbols,
+        "n_symbols_with_events": n_symbols_with_events,
         "years_spanned": years_spanned,
         "events_per_year": events_per_year,
         "events_per_symbol": events_per_symbol,
+        "events_per_active_symbol": events_per_active_symbol,
         "events_per_year_table": events_per_year_table,
         "mean_fwd_ret": mean_ret,
         "sd_fwd_ret": sd_ret,
@@ -231,10 +248,57 @@ def main() -> None:
         "t_stat": t_stat,
         "distinguishable_from_zero_at_5pct": bool(abs(t_stat) > 1.96),
     }
-    print(f"[power] {n_events_masked} events / {n_band_symbols} symbols over "
-          f"{years_spanned:.2f}y = {events_per_year:.0f}/yr, "
-          f"{events_per_symbol:.2f}/symbol; mean={mean_ret:+.4%} se={se_ret:.4%} "
-          f"t={t_stat:.2f}")
+    print(f"[power] {n_events_masked} events / {n_band_symbols} band symbols "
+          f"({n_symbols_with_events} active) over {years_spanned:.2f}y = "
+          f"{events_per_year:.0f}/yr, {events_per_symbol:.2f}/band-symbol, "
+          f"{events_per_active_symbol:.2f}/active-symbol; mean={mean_ret:+.4%} "
+          f"se={se_ret:.4%} t={t_stat:.2f}")
+
+    # ══════════════════════════════════════════════════════════════════════
+    # POOLED SINGLE-SYMBOL CONCENTRATION (disclosure only -- NOT a registered
+    # statistic; see the note embedded in the payload and forensics.md)
+    # ══════════════════════════════════════════════════════════════════════
+    by_sym_sum_pooled = events.groupby("symbol")["fwd_ret"].sum().sort_values()
+    total_sum_pooled = float(by_sym_sum_pooled.sum())
+    top_sym_pooled = (by_sym_sum_pooled.index[0] if mean_ret < 0
+                      else by_sym_sum_pooled.index[-1])
+    top_sum_pooled = float(by_sym_sum_pooled.loc[top_sym_pooled])
+    top_share_pooled = (top_sum_pooled / total_sum_pooled) if total_sum_pooled != 0 else None
+    top_n_events_pooled = int((events["symbol"] == top_sym_pooled).sum())
+    excl_pooled = events[events["symbol"] != top_sym_pooled]
+    n_excl_pooled = int(len(excl_pooled))
+    mean_excl_pooled = float(excl_pooled["fwd_ret"].mean())
+    sd_excl_pooled = float(excl_pooled["fwd_ret"].std(ddof=1))
+    se_excl_pooled = sd_excl_pooled / np.sqrt(n_excl_pooled)
+    t_excl_pooled = mean_excl_pooled / se_excl_pooled if se_excl_pooled else None
+    excl_clears_p2_floor = bool(mean_excl_pooled > lfr.P2_MIN_RET)
+    pooled_concentration = {
+        "top_contributor_symbol": top_sym_pooled,
+        "top_contributor_n_events": top_n_events_pooled,
+        "top_contributor_sum_pp": top_sum_pooled,
+        "total_pooled_sum_pp": total_sum_pooled,
+        "top_contributor_share_of_total_sum": top_share_pooled,
+        "n_events_excl_top_contributor": n_excl_pooled,
+        "mean_fwd_ret_excl_top_contributor": mean_excl_pooled,
+        "se_excl_top_contributor": se_excl_pooled,
+        "t_stat_excl_top_contributor": t_excl_pooled,
+        "p2_floor": lfr.P2_MIN_RET,
+        "excl_clears_p2_floor": excl_clears_p2_floor,
+        "disclosure_only_not_registered_statistic": True,
+        "note": ("Reported for disclosure only. The pre-registered P2 statistic "
+                 "is the full-band mean over ALL events (see 'power' above); "
+                 "gates.json liq_fade_r1.stop_rule forbids any post-hoc "
+                 "cost-model or scope relaxation, of which post-hoc symbol "
+                 "exclusion is a clear instance. The verdict is NOT "
+                 "recomputed on this basis and remains NEGATIVE."),
+    }
+    print(f"[pooled_concentration] top contributor {top_sym_pooled} "
+          f"({top_n_events_pooled} events): {top_sum_pooled:+.2f}pp of "
+          f"{total_sum_pooled:+.2f}pp total pooled sum "
+          f"({top_share_pooled:.0%}); excluding it, mean = "
+          f"{mean_excl_pooled:+.4%} over {n_excl_pooled} events "
+          f"(t={t_excl_pooled:.2f}), {'ABOVE' if excl_clears_p2_floor else 'still below'} "
+          f"the +{lfr.P2_MIN_RET:.2%} P2 floor -- disclosure only, verdict unchanged")
 
     # ══════════════════════════════════════════════════════════════════════
     # P3 CONTROL DETAIL (F9 analog) -- independently re-derived
@@ -420,7 +484,8 @@ def main() -> None:
     payload = {
         "generated_at": pd.Timestamp.now(tz="UTC").isoformat(),
         "experiment": "liq_fade_r1", "outcome": "NEGATIVE-at-probe (P2/P3), gates never evaluated",
-        "power": power, "p3_control": p3_control, "liquidity_gradient": liquidity_gradient,
+        "power": power, "pooled_concentration": pooled_concentration,
+        "p3_control": p3_control, "liquidity_gradient": liquidity_gradient,
         "per_symbol": per_symbol, "horizon": horizon, "contrast": contrast,
         "sections_skipped": skipped,
     }
@@ -434,7 +499,7 @@ def main() -> None:
 
 
 def write_markdown(p: dict, near_top50: list[str], never_top50: list[str]) -> None:
-    pw, p3c, lg = p["power"], p["p3_control"], p["liquidity_gradient"]
+    pw, pc, p3c, lg = p["power"], p["pooled_concentration"], p["p3_control"], p["liquidity_gradient"]
     ps, hz, ct = p["per_symbol"], p["horizon"], p["contrast"]
     i1, r1 = ct["liq_fade_i1_thr3.5_H48"], ct["liq_fade_r1_thr3.5_H48"]
     near, never = lg["near_top50"], lg["never_top50"]
@@ -456,9 +521,14 @@ def write_markdown(p: dict, near_top50: list[str], never_top50: list[str]) -> No
     a(f"{pw['n_events_masked']} masked triggers across {pw['n_band_symbols']} band "
       f"symbols over {pw['years_spanned']:.2f} years of dev window "
       f"({pw['events_per_year']:.0f} events/year, {pw['events_per_symbol']:.2f} "
-      f"events/symbol) — comparable order of magnitude to `liq_fade_i1`'s 710 "
-      f"events over 88 symbols (8.07 events/symbol there). {pw['n_events_full_window']} "
-      f"events have a full H=48 forward window and enter the mean below.\n")
+      f"events per band symbol across the full 304-symbol band). "
+      f"{pw['n_symbols_with_events']} of those symbols registered at least one "
+      f"event — {pw['events_per_active_symbol']:.2f} events per *active* symbol, "
+      f"the like-for-like comparison against `liq_fade_i1`'s 710 events over its "
+      f"88 active symbols (8.07 events/symbol there): comparable order of "
+      f"magnitude on an apples-to-apples, active-symbol basis. "
+      f"{pw['n_events_full_window']} events have a full H=48 forward window and "
+      f"enter the mean below.\n")
     a(f"Mean gross forward return per event: **{pw['mean_fwd_ret']:+.4%}**, "
       f"sd {pw['sd_fwd_ret']:.4%}, standard error of the mean "
       f"{pw['se_mean_fwd_ret']:.4%} → t = {pw['t_stat']:.2f}. This does **not** "
@@ -487,6 +557,33 @@ def write_markdown(p: dict, near_top50: list[str], never_top50: list[str]) -> No
       f"support that stronger claim.\n")
     yr_tbl = ", ".join(f"{y}: {n}" for y, n in sorted(pw["events_per_year_table"].items()))
     a(f"Events by calendar year: {yr_tbl}.\n")
+
+    a("## Pooled single-symbol concentration — disclosure only, verdict unchanged\n")
+    a(f"The pooled P2 statistic above sums to **{pc['total_pooled_sum_pp']:+.2f}pp** "
+      f"across all {pw['n_events_full_window']} events. A single symbol, "
+      f"**{pc['top_contributor_symbol']}**, contributes **"
+      f"{pc['top_contributor_sum_pp']:+.2f}pp** of that total from just "
+      f"{pc['top_contributor_n_events']} events — {pc['top_contributor_share_of_total_sum']:.0%} "
+      f"of the pooled sum, and more negative than the pooled total itself. "
+      f"Excluding it, the pooled mean becomes **{pc['mean_fwd_ret_excl_top_contributor']:+.4%}** "
+      f"over {pc['n_events_excl_top_contributor']} events (t="
+      f"{pc['t_stat_excl_top_contributor']:.2f}), which is **"
+      f"{'ABOVE' if pc['excl_clears_p2_floor'] else 'still below'}** the pre-registered "
+      f"+{pc['p2_floor']:.2%} P2 floor.\n")
+    a(f"**This figure is reported, not acted on.** The registered P2 statistic is "
+      f"the full-band mean computed over *all* events (the Power section above); "
+      f"`data/rebuild/gates.json`'s `liq_fade_r1.stop_rule` explicitly forbids "
+      f"\"no cost-model relaxation\" and a second pass after a probe failure, and "
+      f"post-hoc exclusion of a single symbol chosen because it is the largest "
+      f"contributor is exactly the kind of relaxation that rule exists to "
+      f"prevent — it is indistinguishable in kind from picking the best cell in "
+      f"an unregistered grid. The verdict is **not** recomputed on this basis and "
+      f"remains **NEGATIVE**. The finding is reported here because the negative "
+      f"rests substantially on one delisted exchange token (FTTUSDT, the FTX "
+      f"token, permanently impaired by the November 2022 FTX collapse) rather "
+      f"than on a broad-based pattern, and a reader deserves to know that; the "
+      f"pre-registration is precisely what stops this number from being used to "
+      f"rescue the result.\n")
 
     a("## P3 control detail (the check `liq_fade_i1`'s own forensics left open)\n")
     a(f"`liq_fade_i1`'s forensics (THESIS 49.5, item 9) flagged an open item: "
@@ -581,7 +678,14 @@ def write_markdown(p: dict, near_top50: list[str], never_top50: list[str]) -> No
       f"50%). It comes from the *magnitude* of losses among the losing names "
       f"exceeding the magnitude of gains among the winning ones — a fat left "
       f"tail sitting on top of an otherwise roughly symmetric distribution, "
-      f"which is exactly what the worst/best tables below show.\n")
+      f"which is exactly what the worst/best tables below show. That magnitude "
+      f"concentration is not merely broad-tail: as the pooled single-symbol "
+      f"concentration subsection above quantifies, one name "
+      f"({pc['top_contributor_symbol']}) alone accounts for "
+      f"{pc['top_contributor_share_of_total_sum']:.0%} of the *entire pooled* "
+      f"event-return sum, more than the pooled total itself — the negative "
+      f"rests substantially on a single delisted exchange token, disclosed and "
+      f"reported there, not acted on here.\n")
     a("Worst 5 by mean forward return:\n")
     for r in ps["worst5"]:
         a(f"- {r['symbol']}: {r['mean_fwd_ret']:+.4%} ({r['n_events']} events)")
@@ -654,7 +758,16 @@ def write_markdown(p: dict, near_top50: list[str], never_top50: list[str]) -> No
       "band actively punishes crash-fading. The per-symbol distribution shows "
       "a roughly even sign split (50.2% positive) with the pooled negative "
       "driven by a small number of fat-tailed losers (worst: FTTUSDT −46.7%, "
-      "the FTX collapse), not a broad-based majority-negative pattern. The "
+      "the FTX collapse), not a broad-based majority-negative pattern — and, "
+      "quantified in the pooled single-symbol concentration subsection above, "
+      f"FTTUSDT alone contributes {pc['top_contributor_share_of_total_sum']:.0%} "
+      "of the pooled event-return sum (more negative than the pooled total "
+      f"itself); excluding it the pooled mean is "
+      f"{pc['mean_fwd_ret_excl_top_contributor']:+.4%}, which clears the +25bp "
+      "P2 floor. That figure is reported for disclosure, not acted on: P2 is "
+      "pre-registered on the full band and gates.json's stop_rule forbids "
+      "exactly this kind of post-hoc exclusion, so the verdict here remains "
+      "**NEGATIVE** on the full-band statistic. The "
       "liquidity-gradient partition shows a directional split consistent with "
       "a gradient — near-top50 symbols tilt positive (+0.49%, not "
       "significant), never-top50 symbols tilt negative (−7.84%, but 78% of "

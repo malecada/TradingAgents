@@ -78,3 +78,49 @@ def test_probes_guard_rejects_missing_file(tmp_path):
     import liq_fade_repl as m
     with pytest.raises(RuntimeError, match="not found"):
         m.assert_probes_passed(tmp_path / "nope.json")
+
+
+@pytest.mark.parametrize("p3_pass,p1_pass,p2_pass,expected_stop", [
+    (True, True, True, False),      # all pass -> no stop
+    (False, True, True, True),      # P3 fails -> stop
+    (True, False, True, True),      # P1 fails -> stop
+    (True, True, False, True),      # P2 fails -> stop
+    (None, True, True, True),       # P3 indeterminate -> STOP (not silently pass-through)
+    (True, None, True, True),       # P1 indeterminate -> STOP
+    (True, True, None, True),       # P2 indeterminate (e.g. no dev triggers) -> STOP
+])
+def test_probes_should_stop_treats_indeterminate_as_stop(p3_pass, p1_pass, p2_pass, expected_stop):
+    """A probe returning pass=None (indeterminate) must STOP, not silently
+    continue as if it passed. `assert_probes_passed` already refuses a
+    primary run on None, but the --probes-only CLI's own STOP/exit-code
+    reporting must agree, rather than checking `pass is False` only (which
+    treats None the same as True)."""
+    from liq_fade_repl import probes_should_stop
+    p3, p1, p2 = {"pass": p3_pass}, {"pass": p1_pass}, {"pass": p2_pass}
+    assert probes_should_stop(p3, p1, p2) is expected_stop
+
+
+def test_probe_p2_bounds_both_dev_lo_and_dev_hi(monkeypatch):
+    """probe_p2's row_sel must bound BOTH dev_lo and dev_hi, matching
+    probe_p3 -- otherwise a trigger dated after the dev window would still be
+    counted if it happened to fall within the panel's loaded index. Harmless
+    in production today (load_hourly_panel always caps at DEV[1]), but this
+    is an implicit invariant in a holdout-discipline codebase, so it is
+    tested directly rather than relying on the loader to paper over it."""
+    import liq_fade_repl as m
+    idx = pd.date_range("2021-01-01", periods=10, freq="1D", tz="UTC")
+    close = pd.DataFrame({"A": [100.0] * 10}, index=idx)
+    qvol = pd.DataFrame({"A": [1.0] * 10}, index=idx)
+    mask = pd.DataFrame({"A": [True] * 10}, index=idx)
+
+    trig_full = pd.DataFrame({"A": [False] * 10}, index=idx)
+    trig_full.iloc[2, 0] = True   # 2021-01-03 -- inside the dev window
+    trig_full.iloc[8, 0] = True   # 2021-01-09 -- after dev_hi, must be excluded
+
+    monkeypatch.setattr(m, "cascade_triggers", lambda close, qvol, thr: trig_full)
+    monkeypatch.setattr(m, "DEV", ("2021-01-01", "2021-01-03"))
+
+    p2 = m.probe_p2(close, qvol, mask)
+    assert p2["n_events"] == 1, (
+        "trigger dated after dev_hi leaked into the count -- probe_p2 must "
+        "bound row_sel at both dev_lo and dev_hi")

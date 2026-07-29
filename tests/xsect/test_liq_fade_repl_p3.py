@@ -55,7 +55,8 @@ def test_vol_only_is_a_superset_of_primary():
     (1.30, 0.10, True,  "PASS"),                 # control 0.10 < 0.5, sep 1.20 >= 0.75
     (1.30, 0.49, True,  "PASS"),                 # control 0.49 < 0.5, sep 0.81 >= 0.75
     (1.30, 0.60, False, "NEGATIVE-confounded"),  # control 0.60 >= 0.5
-    (1.30, 0.56, False, "NEGATIVE-confounded"),  # control ok but sep 0.74 < 0.75
+    (1.30, 0.56, False, "NEGATIVE-confounded"),  # both fail: control 0.56 >= 0.5 and sep 0.74 < 0.75
+    (1.20, 0.48, False, "NEGATIVE-confounded"),  # control 0.48 < 0.5 passes; sep 0.72 < 0.75 fails alone
     (0.80, 0.10, False, "NEGATIVE"),             # weak primary -> plain NEGATIVE
     (0.80, 0.70, False, "NEGATIVE"),             # weak primary, label still not confounded
 ])

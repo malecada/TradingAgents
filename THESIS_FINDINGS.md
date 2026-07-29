@@ -5160,17 +5160,22 @@ never touched.
 
 Full report: `data/rebuild/liq_fade_r1/forensics.md`, script
 `scripts/liq_fade_r1_forensics.py` (`tradingagents/xsect/liq_fade.py` imported
-unchanged). Six sections were written for this outcome (power, P3 control
-detail, a new liquidity-gradient partition, per-symbol distribution, a
-horizon check, and an i1-vs-r1 contrast table); six of the original
-eleven-section template (F1 inversion, F3 yearly stability, F5 DSR
-decomposition, F6 cost curve, F7 P2 reconciliation, F8 placebo audit) are
-explicitly named and skipped in the report, each with a one-line reason —
-none of them apply to a result that never reached a gate.
+unchanged). Seven sections were written for this outcome (power, a pooled
+single-symbol concentration disclosure, P3 control detail, a new
+liquidity-gradient partition, per-symbol distribution, a horizon check, and
+an i1-vs-r1 contrast table); six of the original eleven-section template (F1
+inversion, F3 yearly stability, F5 DSR decomposition, F6 cost curve, F7 P2
+reconciliation, F8 placebo audit) are explicitly named and skipped in the
+report, each with a one-line reason — none of them apply to a result that
+never reached a gate.
 
-1. **Power**: 1892 masked triggers across 304 symbols over 4.24 years (446
-   events/year, 6.22/symbol) — comparable order of magnitude to `liq_fade_i1`'s
-   710/88. The mean gross forward return (−0.418%) has a standard error of
+1. **Power**: 1892 masked triggers across 304 band symbols over 4.24 years
+   (446 events/year, 6.22/band-symbol across the full 304-symbol band). Of
+   those 304, 219 registered at least one event; on that like-for-like,
+   active-symbol basis the rate is 1892/219 = **8.64 events/symbol**,
+   directly comparable to `liq_fade_i1`'s 710 events over its 88 active
+   symbols (710/88 = **8.07 events/symbol**) — comparable order of magnitude.
+   The mean gross forward return (−0.418%) has a standard error of
    0.418% on 1884 events (t ≈ −1.00) — **not** distinguishable from zero at
    conventional significance under a naive per-event test, and events are not
    strictly independent (market-wide crash days trigger many band symbols
@@ -5205,19 +5210,49 @@ none of them apply to a result that never reached a gate.
    but neither partition is a statistically robust, broad-based finding once
    single-symbol concentration is accounted for, and the pooled, whole-band
    result remains the governing (null) verdict.
-4. **Per-symbol distribution**: 219 of 304 band symbols registered at least
+4. **Pooled single-symbol concentration** (new; disclosure only, does NOT
+   change the verdict): the `_partition_stats` exclusion the script already
+   applies to the near-top50/never-top50 partitions is now also applied to
+   the **pooled, whole-band** sum, which is the level the registered P2
+   statistic is actually computed on. The pooled event-return sum across all
+   1884 full-window events is **−7.87pp**. A single symbol, **FTTUSDT**,
+   contributes **−12.61pp** of that — more negative than the pooled total
+   itself (27 events, the FTX exchange token that collapsed to near-zero in
+   November 2022). Excluding it, the pooled mean becomes **+0.2552%** over
+   1857 events, which is **ABOVE** the pre-registered **+0.25%** P2 floor.
+   **This figure is reported, not acted on**: P2 is pre-registered on the
+   full band, `data/rebuild/gates.json`'s `liq_fade_r1.stop_rule` explicitly
+   forbids "no cost-model relaxation" and a second pass after a probe
+   failure, and post-hoc exclusion of the single largest contributor is
+   exactly that kind of relaxation. The verdict is **not** recomputed on
+   this basis and remains **NEGATIVE**. It is disclosed because the negative
+   rests substantially on one delisted exchange token, a reader deserves to
+   know that, and the pre-registration is precisely what stops this number
+   from being used to rescue the result. Full computation and script:
+   `scripts/liq_fade_r1_forensics.py` (`pooled_concentration`),
+   `data/rebuild/liq_fade_r1/forensics.md` ("Pooled single-symbol
+   concentration" section).
+5. **Per-symbol distribution**: 219 of 304 band symbols registered at least
    one event; **110/219 (50.2%)** have a positive mean forward return —
    essentially a coin flip, not a lopsided negative majority. The pooled
    negative mean is driven by *magnitude*, not *breadth*: a small number of
    fat-tailed losers (worst: FTTUSDT −46.7%, an order of magnitude beyond any
    other name in either tail) outweigh many smaller, roughly offsetting gains
-   and losses elsewhere in the band.
-5. **Horizon check**: mean gross forward return is negative at every
+   and losses elsewhere in the band. That magnitude concentration is not
+   merely a broad fat tail, though: per item 4 above, FTTUSDT alone
+   contributes −12.61pp against a pooled total of −7.87pp — **160% of the
+   total**, i.e. every other band symbol nets positive on balance and
+   FTTUSDT alone drags the pool negative. The pooled negative therefore
+   rests substantially on this one delisted exchange token, not on a
+   broad-based pattern, and excluding it flips the pooled mean above the
+   pre-registered P2 floor (item 4). That exclusion is reported for
+   disclosure only and does not change the registered verdict.
+6. **Horizon check**: mean gross forward return is negative at every
    horizon tested — H=1h −0.08% (t=−0.88), H=6h −0.36% (t=−1.82), H=24h
    −0.45% (t=−1.27), H=48h −0.42% (t=−1.00) — none individually significant,
    but none positive either. H=48 was not an unlucky choice of hold; no
    shorter exit would have rescued the primary config.
-6. **i1-vs-r1 contrast**:
+7. **i1-vs-r1 contrast**:
 
    | | liq_fade_i1 (§49) | liq_fade_r1 |
    |---|---|---|
@@ -5237,8 +5272,16 @@ rule — does not merely shrink §49's effect, it flips the sign of the
 point-estimate gross return per event (+2.77% → −0.42%). The forensic pass
 found no plumbing bug (P0/P1 both clean), no dominant single-regime or
 single-config artifact (horizon check), and confirms the negative is a
-well-powered null rather than a confidently-signed harm (power section);
-the liquidity-gradient partition sharpens the picture into a real, partial
+well-powered null rather than a confidently-signed harm (power section) —
+but it **is** substantially a single-*symbol* artifact at the pooled level:
+FTTUSDT (the FTX exchange token, delisted after its November 2022 collapse)
+alone contributes 160% of the pooled −7.87pp event-return sum (item 4
+above), and excluding it flips the pooled mean above the pre-registered P2
+floor (+0.2552% vs +0.25% required). That figure is reported for disclosure,
+not acted on — P2 is pre-registered on the full band and `gates.json`'s
+`stop_rule` forbids exactly this kind of post-hoc exclusion, so the verdict
+here stands as **NEGATIVE** on the full-band, all-events statistic. The
+liquidity-gradient partition sharpens the picture into a real, partial
 decay from strongly-positive-on-top-50 toward a small-and-not-significant
 tilt just outside it and a materially confounded (single-collapse-driven)
 negative further out, without producing a second robust positive result to

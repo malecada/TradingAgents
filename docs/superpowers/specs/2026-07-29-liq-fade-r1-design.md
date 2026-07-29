@@ -68,7 +68,7 @@ Frozen from §49. One statement, no grid, no search:
 > over 2021-01-01 → 2025-03-31, the long-side fade of 1h proxy liquidation
 > cascades — trigger `z_ret ≤ −3.5` AND `z_vol ≥ 3.5`, z-windows 2160/1440 bars,
 > holding horizon H = 48 hours, 1/10 of capital per event, aggregate cap 1.0,
-> risk-free 4.5%/yr on full capital, 20bps round-trip cost — earns a net Sharpe
+> risk-free 4.5%/yr on full capital, 20bps per side cost — earns a net Sharpe
 > ratio of at least 1.0.
 
 Every parameter is inherited unchanged from the §49 best config. Exactly two
@@ -107,7 +107,7 @@ this experiment under any outcome.
 
 ## 5. Cost assumption
 
-20bps round-trip, against 10bps in dev. Band names are smaller and wider-spread
+20bps per side, against 10bps in dev. Band names are smaller and wider-spread
 than the dev top-50, and carrying the top-50 cost model onto them would invite
 the obvious objection. §49 F6 established the effect is not cost-fragile
 (SR 1.305 / 1.229 / 1.153 at 10 / 20 / 30bps), so the stricter assumption is

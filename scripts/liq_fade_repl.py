@@ -255,7 +255,8 @@ def probe_p2(close: pd.DataFrame, qvol: pd.DataFrame, mask: pd.DataFrame) -> dic
     exceed +25bp."""
     R = close.pct_change(fill_method=None)
     dev_lo = pd.Timestamp(DEV[0], tz="UTC")
-    row_sel = np.asarray(close.index >= dev_lo)
+    dev_hi = pd.Timestamp(DEV[1], tz="UTC") + pd.Timedelta(hours=23)
+    row_sel = np.asarray((close.index >= dev_lo) & (close.index <= dev_hi))
     trig = cascade_triggers(close, qvol, thr=THR) & mask
     trig_dev = pd.DataFrame(trig.to_numpy() & row_sel[:, None],
                             index=trig.index, columns=trig.columns)
@@ -300,6 +301,16 @@ def probe_p3(close: pd.DataFrame, qvol: pd.DataFrame, mask: pd.DataFrame) -> dic
             "min_separation": P3_MIN_SEPARATION, "cost_bps": COST_BPS}
 
 
+def probes_should_stop(p3: dict, p1: dict, p2: dict) -> bool:
+    """True unless P3, P1 and P2 all explicitly PASS. Uses `is not True` (not
+    `is False`) so an indeterminate probe (`pass: None`, e.g. P2 with no
+    dev-window triggers) also STOPs -- `assert_probes_passed` already refuses
+    a primary run on `None`, but the CLI should say so honestly rather than
+    exit 0."""
+    return bool(p3.get("pass") is not True or p1.get("pass") is not True
+               or p2.get("pass") is not True)
+
+
 def run_probes(smoke: bool) -> dict:
     if not smoke:
         assert_band_data_complete()
@@ -330,8 +341,7 @@ def run_probes(smoke: bool) -> dict:
                                   "cost_bps": COST_BPS, "rf_annual": RF_ANNUAL},
                "p3": p3, "p0": p0, "p1": p1, "p2": p2,
                "runtime_sec": time.time() - t0}
-    payload["stop"] = bool(p3.get("pass") is False or p1.get("pass") is False
-                           or p2.get("pass") is False)
+    payload["stop"] = probes_should_stop(p3, p1, p2)
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     with open(OUT_DIR / "probes.json", "w") as f:
