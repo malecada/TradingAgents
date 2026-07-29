@@ -368,3 +368,234 @@ def assert_probes_passed(path: Path | None = None) -> dict:
             f"p1={(payload.get('p1') or {}).get('pass')!r} "
             f"p2={(payload.get('p2') or {}).get('pass')!r})")
     return payload
+
+
+from tradingagents.rebuild.ledger import log_trial  # noqa: E402
+from tradingagents.strategies.v3.backtest.dsr import (  # noqa: E402
+    deflated_sharpe_ratio, expected_max_sharpe, variance_of_sr,
+)
+from tradingagents.xsect.portfolio import maxdd, rank_placebo_pvalue  # noqa: E402
+
+N_PLACEBO = 500
+PLACEBO_SHIFT_MIN_OFFSET = 24
+DSR_DENOMINATORS = (1, 13, 121)          # gated on 1; 13 and 121 reported
+COST_SENSITIVITIES = (10.0, 30.0)        # reported, not gated
+SECONDARY_CONFIGS = ((2.5, 24), (3.5, 24))   # reported, not gated
+
+
+def primary_config() -> dict:
+    """Frozen design constants ONLY. Nothing runtime-derived may enter here --
+    config_hash is computed from this dict, and a leaked runtime value mints a
+    fresh hash on every rerun, silently inflating cross-experiment n_trials."""
+    return {"thr": THR, "H": H, "w_per": W_PER, "cap": CAP,
+            "cost_bps": COST_BPS, "rf_annual": RF_ANNUAL}
+
+
+def shift_triggers(trig: pd.DataFrame, rng: np.random.Generator) -> pd.DataFrame:
+    """Placebo family A: per symbol, circular-shift the trigger column by a
+    uniform random offset in [24, N-24] bars. A roll is a permutation, so each
+    symbol's event count and clustering structure survive exactly; only
+    calendar alignment with the realized path is destroyed."""
+    n = len(trig)
+    lo, hi = PLACEBO_SHIFT_MIN_OFFSET, n - PLACEBO_SHIFT_MIN_OFFSET
+    if hi <= lo:
+        raise ValueError(f"trigger panel too short ({n} bars) for a "
+                         f"[{lo}, {n - lo}] shift offset")
+    out = {}
+    for col in trig.columns:
+        k = int(rng.integers(lo, hi + 1))
+        out[col] = np.roll(trig[col].to_numpy(), k)
+    return pd.DataFrame(out, index=trig.index, columns=trig.columns)
+
+
+def redraw_random_triggers(trig: pd.DataFrame, mask: pd.DataFrame,
+                           rng: np.random.Generator) -> pd.DataFrame:
+    """Placebo family B: per symbol, redraw n_events(symbol) uniform positions
+    among membership-eligible bars. Count-matched by construction; a symbol
+    with zero real events gets an all-False column and never gains spurious
+    events."""
+    T, M = trig.to_numpy(), mask.to_numpy()
+    out = np.zeros_like(T)
+    for j, col in enumerate(trig.columns):
+        n_ev = int(T[:, j].sum())
+        if n_ev == 0:
+            continue
+        eligible = np.nonzero(M[:, j])[0]
+        assert len(eligible) >= n_ev, (
+            f"{col}: {n_ev} real events but only {len(eligible)} eligible bars "
+            "-- trig-implies-mask invariant violated")
+        out[rng.choice(eligible, size=n_ev, replace=False), j] = True
+    return pd.DataFrame(out, index=trig.index, columns=trig.columns)
+
+
+def compute_dsr_table(net: pd.Series, denominators=DSR_DENOMINATORS) -> dict:
+    """DSR at each denominator. Returns {str(n): dsr}. nan on a degenerate
+    series -- deflated_sharpe_ratio raises on se_sr <= 0, and the run must
+    still land its results file rather than crashing after the ledger row is
+    already written."""
+    x = np.asarray(net, dtype=float)
+    out = {str(n): float("nan") for n in denominators}
+    if len(x) < 2 or not np.isfinite(x).all() or x.std(ddof=1) <= 0:
+        return out
+    var_sr = variance_of_sr(x)
+    se_sr = float(np.sqrt(var_sr))
+    if se_sr <= 0.0:
+        return out
+    sr_perbar = float(x.mean() / x.std(ddof=1))
+    for n in denominators:
+        try:
+            out[str(n)] = deflated_sharpe_ratio(
+                sr_perbar, expected_max_sharpe(n, var_sr), se_sr)
+        except ValueError as e:
+            print(f"[WARN] DSR at n={n} failed ({e}); reporting nan", file=sys.stderr)
+    return out
+
+
+def log_primary_trial(net_sr: float, metrics: dict, ledger_path=None) -> dict:
+    """Write THE single ledger row for this experiment. Secondary configs and
+    cost sensitivities are descriptive and are deliberately NOT logged -- the
+    registered n_trials is 1, and extra rows would both contradict that and
+    inflate the cumulative denominator for every future experiment."""
+    kw = {"ledger_path": ledger_path} if ledger_path is not None else {}
+    return log_trial("liq_fade_r1", primary_config(), (DEV[0], DEV[1]), metrics, **kw)
+
+
+def _run_config(close, qvol, mask, thr, h, cost_bps, dev_lo, dev_hi,
+                n_placebo=0, rng=None, sub_cols=None):
+    """Evaluate one (thr, H, cost) cell. Returns a metrics dict. Placebo runs
+    only when n_placebo > 0 (the primary); secondaries and cost sensitivities
+    skip it."""
+    R = close.pct_change(fill_method=None)
+    row_sel = (close.index >= dev_lo) & (close.index <= dev_hi)
+    trig = (cascade_triggers(close, qvol, thr=thr) & mask).loc[row_sel]
+    R_dev, mask_dev = R.loc[row_sel], mask.loc[row_sel]
+    if sub_cols is not None:
+        keep = [c for c in trig.columns if c in set(sub_cols)]
+        trig, R_dev, mask_dev = trig[keep], R_dev[keep], mask_dev[keep]
+    active = trig.columns[trig.to_numpy().any(axis=0)].tolist()
+    if not active:
+        return {"net_sr": 0.0, "n_events": 0, "n_symbols_active": 0,
+                "maxdd": 0.0, "n_days": 0}
+    trig_a, R_a, mask_a = trig[active], R_dev[active], mask_dev[active]
+    W = event_weights_hourly(trig_a, h, w_per=W_PER, cap=CAP)
+    net = run_hourly_portfolio(W, R_a, cost_bps=cost_bps, rf_annual=RF_ANNUAL)
+    sr = sharpe_daily(net)
+    out = {"net_sr": sr, "n_events": int(trig_a.to_numpy().sum()),
+           "n_symbols_active": len(active), "maxdd": maxdd(net),
+           "n_days": len(net), "thr": thr, "H": h, "cost_bps": cost_bps}
+    if n_placebo:
+        shift_srs, rand_srs = [], []
+        for _ in range(n_placebo):
+            Wp = event_weights_hourly(shift_triggers(trig_a, rng), h,
+                                      w_per=W_PER, cap=CAP)
+            shift_srs.append(sharpe_daily(run_hourly_portfolio(
+                Wp, R_a, cost_bps=cost_bps, rf_annual=RF_ANNUAL)))
+        for _ in range(n_placebo):
+            Wp = event_weights_hourly(redraw_random_triggers(trig_a, mask_a, rng),
+                                      h, w_per=W_PER, cap=CAP)
+            rand_srs.append(sharpe_daily(run_hourly_portfolio(
+                Wp, R_a, cost_bps=cost_bps, rf_annual=RF_ANNUAL)))
+        p_shift = rank_placebo_pvalue(sr, shift_srs)
+        p_rand = rank_placebo_pvalue(sr, rand_srs)
+        out.update({"placebo_p_shiftfam": p_shift, "placebo_p_randfam": p_rand,
+                    "placebo_p_worse": max(p_shift, p_rand),
+                    "placebo_shift_sd": float(np.std(shift_srs, ddof=1)),
+                    "placebo_rand_sd": float(np.std(rand_srs, ddof=1)),
+                    "placebo_shift_max": float(np.max(shift_srs)),
+                    "placebo_rand_max": float(np.max(rand_srs))})
+        out["_net"] = net
+    return out
+
+
+def run_primary() -> dict:
+    assert_probes_passed()
+    assert_band_data_complete()
+    t0 = time.time()
+    symbols = load_symbols_r1()
+    universe = json.loads(UNIVERSE_FILE.read_text())
+    close, qvol = load_hourly_panel(symbols)
+    mask = membership_mask_hourly(universe, close.columns.tolist(), close.index)
+    dev_lo = pd.Timestamp(DEV[0], tz="UTC")
+    dev_hi = pd.Timestamp(DEV[1], tz="UTC") + pd.Timedelta(hours=23)
+    rng = np.random.default_rng(49)
+
+    print(f"[primary] thr={THR} H={H} cost={COST_BPS}bps, "
+          f"{len(close.columns)} symbols")
+    primary = _run_config(close, qvol, mask, THR, H, COST_BPS, dev_lo, dev_hi,
+                          n_placebo=N_PLACEBO, rng=rng)
+    net = primary.pop("_net", None)
+    if net is None:
+        # _run_config short-circuits with no placebo keys when the config has
+        # zero active columns. That cannot happen after P2 passed (P2 requires
+        # dev-window triggers), so reaching here means the probes file is stale
+        # relative to the data -- fail loudly rather than log a degenerate row.
+        raise RuntimeError(
+            "primary config produced no active symbols despite a passing P2 -- "
+            "probes.json is stale relative to the data; re-run --probes-only")
+    dsr_table = compute_dsr_table(net)
+    primary["dsr"] = dsr_table["1"]
+    primary["dsr_by_n_trials"] = dsr_table
+
+    g1 = bool(primary["net_sr"] >= GATE["net_sr_min"])
+    g2 = bool(primary["placebo_p_worse"] <= GATE["placebo_p_max"])
+    g3 = bool(np.isfinite(primary["dsr"]) and primary["dsr"] >= GATE["dsr_min"])
+    gate_pass = bool(g1 and g2 and g3)
+
+    log_primary_trial(primary["net_sr"], primary)
+
+    # ── reported, NOT gated, NOT logged ─────────────────────────────────────
+    cost_sens = {str(c): _run_config(close, qvol, mask, THR, H, c, dev_lo, dev_hi)
+                 for c in COST_SENSITIVITIES}
+    secondaries = {f"thr{t}_H{h}": _run_config(close, qvol, mask, t, h, COST_BPS,
+                                               dev_lo, dev_hi)
+                   for t, h in SECONDARY_CONFIGS}
+    i1 = json.loads(I1_UNIVERSE_FILE.read_text())
+    never_top50 = sorted(set(close.columns) - {s for v in i1.values() for s in v})
+    never_sub = _run_config(close, qvol, mask, THR, H, COST_BPS, dev_lo, dev_hi,
+                            sub_cols=never_top50)
+
+    payload = {
+        "experiment": "liq_fade_r1", "smoke": False,
+        "generated_at": pd.Timestamp.now(tz="UTC").isoformat(),
+        "dev_window": list(DEV), "gate": GATE,
+        "primary_config": primary_config(), "primary": primary,
+        "gate_detail": {"G1_net_sr": g1, "G2_placebo": g2, "G3_dsr_n1": g3},
+        "gate_pass": gate_pass,
+        "gates_cleared": int(g1) + int(g2) + int(g3),
+        "reported_not_gated": {
+            "cost_sensitivities": cost_sens,
+            "secondary_configs": secondaries,
+            "dsr_by_n_trials": dsr_table,
+            "never_top50_subset": {"n_symbols": len(never_top50), **never_sub},
+        },
+        "runtime_sec": time.time() - t0,
+    }
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    with open(OUT_DIR / "results.json", "w") as f:
+        json.dump(_sanitize(payload), f, indent=1, allow_nan=False, default=str)
+    print(f"\nSR={primary['net_sr']:+.3f} p_worse={primary['placebo_p_worse']:.4f} "
+          f"DSR(n=1)={primary['dsr']:.3f} -> {payload['gates_cleared']}/3 "
+          f"{'PASS' if gate_pass else 'FAIL'}")
+    print(f"wrote {OUT_DIR / 'results.json'} ({time.time() - t0:.0f}s)")
+    return payload
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    mode = ap.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--probes-only", action="store_true",
+                      help="run P3 (blocking) then P0-P2")
+    mode.add_argument("--primary", action="store_true",
+                      help="run the frozen primary config + placebo + DSR")
+    ap.add_argument("--smoke", action="store_true",
+                    help="probes: restrict to symbols on disk; never a registered verdict")
+    args = ap.parse_args()
+    if args.probes_only:
+        run_probes(args.smoke)
+        return
+    run_primary()
+
+
+if __name__ == "__main__":
+    main()
