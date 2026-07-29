@@ -182,10 +182,10 @@ def probe_p0() -> dict:
     cap = pd.Timestamp(MAX_LOAD_END, tz="UTC")  # sealed-holdout guard -- see docstring
     d1h = pd.read_parquet(p1h)
     d1h = d1h.loc[(d1h.index >= lo) & (d1h.index <= cap)]
-    daily_from_1h = d1h["close"].resample("1D").last().pct_change()
+    daily_from_1h = d1h["close"].resample("1D").last().pct_change(fill_method=None)
     dd = pd.read_parquet(pdaily)
     dd = dd.loc[(dd.index >= lo) & (dd.index <= cap)]
-    daily_store_ret = dd["close"].pct_change()
+    daily_store_ret = dd["close"].pct_change(fill_method=None)
     a = daily_from_1h[(daily_from_1h.index >= lo) & (daily_from_1h.index <= cap)]
     b = daily_store_ret.reindex(a.index)
     valid = a.notna() & b.notna()
@@ -282,7 +282,7 @@ def probe_p2(smoke: bool) -> dict:
     symbols = load_symbols(smoke)
     universe = json.loads(UNIVERSE_FILE.read_text())
     close, qvol = load_hourly_panel(symbols)
-    R = close.pct_change()
+    R = close.pct_change(fill_method=None)
     mask = membership_mask_hourly(universe, close.columns.tolist(), close.index)
     dev_lo = pd.Timestamp(DEV[0], tz="UTC")
     row_sel = np.asarray(close.index >= dev_lo)
@@ -520,7 +520,7 @@ def _grid_core(close: pd.DataFrame, qvol: pd.DataFrame, universe: dict,
     paths. Only I/O (ledger append, dev_results.json write) is gated on
     `smoke`; the computation is identical."""
     t_start = time.time()
-    R = close.pct_change()
+    R = close.pct_change(fill_method=None)
     mask_full = membership_mask_hourly(universe, close.columns.tolist(), close.index)
     row_sel = (close.index >= dev_lo) & (close.index <= dev_hi)
 

@@ -63,7 +63,7 @@ def main() -> None:
     symbols = lfd.load_symbols(smoke=False)
     universe = json.loads(lfd.UNIVERSE_FILE.read_text())
     close, qvol = lfd.load_hourly_panel(symbols)
-    R = close.pct_change()
+    R = close.pct_change(fill_method=None)
     mask_full = lfd.membership_mask_hourly(universe, close.columns.tolist(), close.index)
 
     dev_lo = pd.Timestamp(lfd.DEV[0], tz="UTC")
