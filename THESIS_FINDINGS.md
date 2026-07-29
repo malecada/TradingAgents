@@ -5083,3 +5083,201 @@ alone does not license that conclusion.
 - Forensics: `data/rebuild/liq_fade/forensics.md`,
   `scripts/liq_fade_forensics.py` (both committed, per house convention for
   a result this close to gate)
+
+## Section 50: Intraday Liquidation-Cascade Fade Replication (liq_fade_r1) — NEGATIVE-at-Probe, Effect Does Not Generalise Past the Top-50 (2026-07-29)
+
+Independent replication of `liq_fade_i1` (§49): the frozen config
+(`thr=3.5, H=48, w_per=0.1, cap=1.0`, long-fade only, dev 2021-01→2025-03,
+holdout 2025-04→2026-07 sealed) carried forward unchanged, with exactly ONE
+axis moved — the universe, from monthly-PIT top-50 to monthly-PIT **ranks
+51-150** (304 symbols, "the band"). The universe is the independence axis
+because selection is monthly and point-in-time: a symbol's rank changes
+month to month, so the band is disjoint from `liq_fade_i1`'s top-50 by
+`(symbol, month)` even though 188 of the 304 band symbols were themselves a
+top-50 member in some *other* month. This is the cleanest single-axis test
+available of whether §49's effect is a property of liquidation-cascade
+dynamics in general or specific to the largest, most liquid names — the
+question §49's own forensics (49.7, limitation 1) could not answer, since
+everything there was drawn from the same top-50 population the effect was
+discovered on. Cost was raised 10bps→20bps/side for the thinner, wider-spread
+band; §49's own forensics (F6) had already shown the top-50 result was not
+cost-fragile up to 30bps, so this is a conservative adjustment, not a
+grid search.
+
+### 50.1 Pre-registration and the n_trials=1 amendment
+
+Design spec `docs/superpowers/specs/2026-07-29-liq-fade-r1-design.md`
+(`7cb670a`) and `data/rebuild/gates.json` key `liq_fade_r1` (`1e6e3e3`)
+committed before any band data was fetched. One declared amendment to house
+convention: `liq_fade_i1` and every other post-rebuild experiment carries
+`n_trials` as the ledger-cumulative count of unique configs ever evaluated,
+because those experiments each screened a grid against the same discovery
+data. `liq_fade_r1` pre-registers **one frozen hypothesis** before touching
+any band data and evaluates it on events disjoint from discovery — no grid,
+no search — so it carries `n_trials=1`, confirmatory rather than
+exploratory inference. This is registered *before* the run, not argued for
+after seeing a result, and alternative denominators (13 = liquidation-family
+scope; 121 = full ledger-cumulative count) are pre-committed as
+reported-not-gated so the choice remains auditable. **The amendment was
+never exercised**: the dev gate was never reached (see 50.2), no DSR was
+computed at any denominator, and no trial-ledger row exists for this
+experiment — `n_trials=1` is a registered contingency that the run did not
+need.
+
+### 50.2 Probe results (`data/rebuild/liq_fade_r1/probes.json`)
+
+Probe order is P3 first and blocking, by design — the discriminating
+vol-drift control `liq_fade_i1`'s own forensics left open (49.5, item 9).
+
+- **P0** (stamp reconciliation): corr 0.99993 over 1565 overlap-days — PASS,
+  plumbing sound.
+- **P1** (proxy concordance): 5/5 benchmark cascade dates flagged by band
+  symbols (31/9/32/167/101 symbols respectively) — PASS, the detector fires
+  on genuine market-wide cascades outside the top-50, not just inside it.
+- **P2** (event-study floor): mean **gross** forward return over 1892
+  masked dev-window triggers (1884 with a full H=48 window) = **−0.418%**,
+  against a required **+0.25%** floor — **FAIL**. The band loses money
+  gross, before any cost or risk-free drag enters.
+- **P3** (vol-drift control, blocking, ran first): primary net SR **−0.048**,
+  vol-only control net SR **−0.532** (18,778 control events), separation
+  **+0.485**. Per the pre-registered scope rule, the confounded label
+  applies only when the primary itself clears the 1.0 floor; it does not
+  here, so the verdict is recorded as plain **NEGATIVE**, not
+  NEGATIVE-confounded — the crash condition is genuinely distinguishable
+  from generic high-volatility exposure (+0.485 SR better), but that
+  separates two losing strategies rather than rescuing a winning one from a
+  confound.
+
+Per the plan's pre-registered decision point, P2/P3 failing routes straight
+to write-up: **Task 7 (the gated primary run) was correctly skipped**. No
+`results.json` was produced, no gate (G1-G3) was ever evaluated, and no row
+was written to `data/rebuild/trial_ledger.jsonl` for this experiment — the
+ledger-cumulative `n_trials` count is unchanged by this run, confirmed by
+grep (0 `liq_fade_r1` rows). The sealed holdout (2025-04-01 onward) was
+never touched.
+
+### 50.3 Forensic verification (`data/rebuild/liq_fade_r1/forensics.md`)
+
+Full report: `data/rebuild/liq_fade_r1/forensics.md`, script
+`scripts/liq_fade_r1_forensics.py` (`tradingagents/xsect/liq_fade.py` imported
+unchanged). Six sections were written for this outcome (power, P3 control
+detail, a new liquidity-gradient partition, per-symbol distribution, a
+horizon check, and an i1-vs-r1 contrast table); six of the original
+eleven-section template (F1 inversion, F3 yearly stability, F5 DSR
+decomposition, F6 cost curve, F7 P2 reconciliation, F8 placebo audit) are
+explicitly named and skipped in the report, each with a one-line reason —
+none of them apply to a result that never reached a gate.
+
+1. **Power**: 1892 masked triggers across 304 symbols over 4.24 years (446
+   events/year, 6.22/symbol) — comparable order of magnitude to `liq_fade_i1`'s
+   710/88. The mean gross forward return (−0.418%) has a standard error of
+   0.418% on 1884 events (t ≈ −1.00) — **not** distinguishable from zero at
+   conventional significance under a naive per-event test, and events are not
+   strictly independent (market-wide crash days trigger many band symbols
+   simultaneously), so a clustered SE would be larger still, not smaller.
+   The honest characterization is a **well-powered null**, not a
+   confidently-signed harm: P2's floor is an absolute-value pre-registered
+   threshold, not a significance test, so a null result still fails it, but
+   the finding to report is "no detectable positive timing edge on the
+   band," not "the band actively punishes crash-fading."
+2. **P3 control detail** (independently recomputed from the frozen panel,
+   not read back from `probes.json`, reproducing it exactly): primary
+   **−0.048** vs control **−0.532**, separation **+0.485** — the check
+   `liq_fade_i1`'s own forensics could not run is now closed, on an
+   independent universe, with the same qualitative answer (crash timing ≠
+   generic vol drift) but at a Sharpe level that fails the floor either way.
+3. **Liquidity gradient** (new analysis, the most informative one this
+   replication produced): splitting the 304 band symbols into 188 "near-top50"
+   (top-50 in some *other* PIT month) vs 116 "never-top50" (never top-50 at
+   any point) shows a genuine directional split — near-top50 mean forward
+   return **+0.49%** (not significant, t=1.27), never-top50 **−7.84%**
+   (nominally significant, t=−3.77). The never-top50 number is substantially
+   a single-symbol artifact: **FTTUSDT** (the FTX exchange token, which
+   collapsed to near-zero in November 2022 and never recovered) accounts for
+   78% of that partition's total loss from just 27 of its 206 events;
+   excluding it, the never-top50 mean shrinks roughly fourfold to −1.98%
+   (still nominally significant, t=−2.18, n=179). "Fading" a token
+   headed to permanent delisting is a different bet than fading a
+   liquidity-driven overreaction, and this collapse is not representative of
+   the partition. Net reading: there is a real, order-of-magnitude decay
+   from `liq_fade_i1`'s own +2.77%/event down to the near-top50 group's small
+   positive tilt, sharper than "both partitions negative" would suggest —
+   but neither partition is a statistically robust, broad-based finding once
+   single-symbol concentration is accounted for, and the pooled, whole-band
+   result remains the governing (null) verdict.
+4. **Per-symbol distribution**: 219 of 304 band symbols registered at least
+   one event; **110/219 (50.2%)** have a positive mean forward return —
+   essentially a coin flip, not a lopsided negative majority. The pooled
+   negative mean is driven by *magnitude*, not *breadth*: a small number of
+   fat-tailed losers (worst: FTTUSDT −46.7%, an order of magnitude beyond any
+   other name in either tail) outweigh many smaller, roughly offsetting gains
+   and losses elsewhere in the band.
+5. **Horizon check**: mean gross forward return is negative at every
+   horizon tested — H=1h −0.08% (t=−0.88), H=6h −0.36% (t=−1.82), H=24h
+   −0.45% (t=−1.27), H=48h −0.42% (t=−1.00) — none individually significant,
+   but none positive either. H=48 was not an unlucky choice of hold; no
+   shorter exit would have rescued the primary config.
+6. **i1-vs-r1 contrast**:
+
+   | | liq_fade_i1 (§49) | liq_fade_r1 |
+   |---|---|---|
+   | Universe | top-50 PIT monthly (799-symbol store) | ranks 51-150 band (304 symbols) |
+   | Cost (bps/side) | 10 | 20 |
+   | Events (masked, full window) | 710 (710) | 1892 (1884) |
+   | Symbols with ≥1 event | 88 | 219 |
+   | Gross return / event | +2.772% | −0.418% |
+   | Net SR (primary config) | +1.305 | −0.048 |
+   | Gate outcome | 2/3, DSR-bound (0.479 < 0.9; 0.881 at own n=6) | NEGATIVE at P2/P3, gates never evaluated |
+
+### 50.4 Verdict
+
+**NEGATIVE, decided at probes P2/P3, before any gate was evaluated.** The
+universe move from top-50 to ranks 51-150 — same frozen signal, same holding
+rule — does not merely shrink §49's effect, it flips the sign of the
+point-estimate gross return per event (+2.77% → −0.42%). The forensic pass
+found no plumbing bug (P0/P1 both clean), no dominant single-regime or
+single-config artifact (horizon check), and confirms the negative is a
+well-powered null rather than a confidently-signed harm (power section);
+the liquidity-gradient partition sharpens the picture into a real, partial
+decay from strongly-positive-on-top-50 toward a small-and-not-significant
+tilt just outside it and a materially confounded (single-collapse-driven)
+negative further out, without producing a second robust positive result to
+set beside the first. The declared `n_trials=1` amendment was registered but
+never exercised, since the dev gate was never reached; no row was added to
+`data/rebuild/trial_ledger.jsonl`, and the ledger-cumulative trial count used
+by every other experiment's DSR calculation is unaffected by this run. The
+holdout (2025-04-01 onward) **remains sealed and unspent**.
+
+**Honest reading.** This result does not show `liq_fade_i1` was wrong on its
+own universe — §49's top-50 finding (net SR +1.305, placebo p=0.002 both
+families, DSR 0.479 at the ledger-cumulative bar) stands as reported, on the
+population it was measured on. What this replication establishes is that the
+effect **does not generalise past the top-50 cross-section**: it is not a
+general property of liquidation-cascade dynamics that a fresh, independent
+sample of less-liquid names would also exhibit, at least not at the
+frozen config tested here. Combined with §49's own DSR-bound (not
+absence-of-effect) failure, the net picture across both experiments is that
+liquidation-cascade fading on Binance USD-M perpetuals has, at best, a
+narrow domain of applicability (the most liquid ~50 names) and even there
+does not clear the house's ledger-cumulative multiplicity bar. A third,
+independently pre-registered replication would need its own new domain or
+data source to add further evidence; repeating this design on the same two
+universes again would not.
+
+### Artifacts
+
+- Spec + registration: `docs/superpowers/specs/2026-07-29-liq-fade-r1-design.md`
+  (`7cb670a`), plan `2f1eea4`, `data/rebuild/gates.json` key `liq_fade_r1`
+  (`1e6e3e3`, pre-run)
+- Data: 116 new band 1h symbol histories fetched (`b911116`); frozen band
+  universe `data/xsect/liq_fade_r1_universe.json` (304 symbols, monthly PIT
+  ranks 51-150)
+- Runner: `scripts/liq_fade_repl.py` (`e8c934e` probes P0/P1/P2, `898d4ab`
+  P3 control + verdict rule, `cae2403` frozen primary run + placebo + DSR
+  scaffold, unused once the probe stop fired)
+- Probe results: `b6a048d` — `data/rebuild/liq_fade_r1/probes.json`
+  (STOP recorded, P2 and P3 both fail)
+- Forensics: `data/rebuild/liq_fade_r1/forensics.md`,
+  `scripts/liq_fade_r1_forensics.py` (both committed; six sections
+  implemented, six named and skipped with reasons per the anti-silent-omission
+  rule)

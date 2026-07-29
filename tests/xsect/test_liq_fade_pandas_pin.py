@@ -13,6 +13,7 @@ FILES = [
     ROOT / "scripts" / "liq_fade_dev.py",
     ROOT / "scripts" / "liq_fade_forensics.py",
     ROOT / "scripts" / "liq_fade_repl.py",
+    ROOT / "scripts" / "liq_fade_r1_forensics.py",
 ]
 # Files that MUST contain at least one pct_change call. liq_fade_repl.py is
 # deliberately absent: it is created in Task 5 with no pct_change and gains its
@@ -22,6 +23,7 @@ FILES = [
 MUST_HAVE_CALLS = [
     ROOT / "scripts" / "liq_fade_dev.py",
     ROOT / "scripts" / "liq_fade_forensics.py",
+    ROOT / "scripts" / "liq_fade_r1_forensics.py",
 ]
 
 

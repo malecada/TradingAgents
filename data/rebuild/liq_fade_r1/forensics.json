@@ -1,0 +1,189 @@
+{
+ "generated_at": "2026-07-29T17:26:42.307212+00:00",
+ "experiment": "liq_fade_r1",
+ "outcome": "NEGATIVE-at-probe (P2/P3), gates never evaluated",
+ "power": {
+  "n_events_masked": 1892,
+  "n_events_full_window": 1884,
+  "n_band_symbols": 304,
+  "years_spanned": 4.243668720054757,
+  "events_per_year": 445.84064516129035,
+  "events_per_symbol": 6.223684210526316,
+  "events_per_year_table": {
+   "2020": 0,
+   "2021": 226,
+   "2022": 360,
+   "2023": 751,
+   "2024": 530,
+   "2025": 25
+  },
+  "mean_fwd_ret": -0.0041779506939685655,
+  "sd_fwd_ret": 0.181485831056302,
+  "se_mean_fwd_ret": 0.0041812128388439744,
+  "t_stat": -0.9992198089403382,
+  "distinguishable_from_zero_at_5pct": false
+ },
+ "p3_control": {
+  "primary_net_sr": -0.04757158731370988,
+  "control_net_sr": -0.5323320136111463,
+  "separation": 0.4847604262974365,
+  "n_primary_events": 1892,
+  "n_control_events": 18778,
+  "control_max_net_sr": 0.5,
+  "min_separation": 0.75,
+  "verdict": "NEGATIVE",
+  "reason": "primary SR -0.048 below the 1.0 floor; confounded label not applicable",
+  "reproduced_from_probes_json": true
+ },
+ "liquidity_gradient": {
+  "near_top50": {
+   "n_symbols_in_partition": 188,
+   "n_events": 1678,
+   "mean_fwd_ret": 0.004936231807378111,
+   "sd_fwd_ret": 0.15910912850164663,
+   "se_mean_fwd_ret": 0.0038841779519823718,
+   "t_stat": 1.2708562451055574,
+   "top_contributor_symbol": "MANAUSDT",
+   "top_contributor_sum_pp": 4.233194851473188,
+   "top_contributor_share_of_total_sum": 0.5110704332482896,
+   "top_contributor_n_events": 25,
+   "n_events_excl_top_contributor": 1653,
+   "mean_fwd_ret_excl_top_contributor": 0.002449971035273613,
+   "t_stat_excl_top_contributor": 0.6545294668994927
+  },
+  "never_top50": {
+   "n_symbols_in_partition": 116,
+   "n_events": 206,
+   "mean_fwd_ret": -0.07841871883600605,
+   "sd_fwd_ret": 0.29870714464997905,
+   "se_mean_fwd_ret": 0.020811912928242218,
+   "t_stat": -3.767972656160316,
+   "top_contributor_symbol": "FTTUSDT",
+   "top_contributor_sum_pp": -12.610173731989336,
+   "top_contributor_share_of_total_sum": 0.7806099933894174,
+   "top_contributor_n_events": 27,
+   "n_events_excl_top_contributor": 179,
+   "mean_fwd_ret_excl_top_contributor": -0.019799342727530228,
+   "t_stat_excl_top_contributor": -2.177610890563238
+  },
+  "near_top50_symbols_n": 188,
+  "never_top50_symbols_n": 116
+ },
+ "per_symbol": {
+  "n_symbols_with_events": 219,
+  "n_band_symbols_total": 304,
+  "n_positive_mean": 110,
+  "frac_positive_mean": 0.502283105022831,
+  "worst5": [
+   {
+    "symbol": "FTTUSDT",
+    "mean_fwd_ret": -0.4670434715551606,
+    "n_events": 27
+   },
+   {
+    "symbol": "BANUSDT",
+    "mean_fwd_ret": -0.28215692747144683,
+    "n_events": 2
+   },
+   {
+    "symbol": "1000SATSUSDT",
+    "mean_fwd_ret": -0.2625255909540255,
+    "n_events": 1
+   },
+   {
+    "symbol": "RAYUSDT",
+    "mean_fwd_ret": -0.2447457675296528,
+    "n_events": 4
+   },
+   {
+    "symbol": "PERPUSDT",
+    "mean_fwd_ret": -0.15749383476956275,
+    "n_events": 8
+   }
+  ],
+  "best5": [
+   {
+    "symbol": "NEARUSDT",
+    "mean_fwd_ret": 0.6594365903969668,
+    "n_events": 1
+   },
+   {
+    "symbol": "SSVUSDT",
+    "mean_fwd_ret": 0.2635951680174021,
+    "n_events": 1
+   },
+   {
+    "symbol": "KEEPUSDT",
+    "mean_fwd_ret": 0.1959638445158361,
+    "n_events": 2
+   },
+   {
+    "symbol": "TAOUSDT",
+    "mean_fwd_ret": 0.1846720794660056,
+    "n_events": 4
+   },
+   {
+    "symbol": "MANAUSDT",
+    "mean_fwd_ret": 0.16932779405892753,
+    "n_events": 25
+   }
+  ]
+ },
+ "horizon": {
+  "1": {
+   "n_events_with_full_window": 1892,
+   "mean_gross_fwd_ret": -0.0008401910441018928,
+   "se_gross_fwd_ret": 0.0009587761589783206,
+   "t_stat": -0.8763161622596113
+  },
+  "6": {
+   "n_events_with_full_window": 1891,
+   "mean_gross_fwd_ret": -0.003611957827440343,
+   "se_gross_fwd_ret": 0.0019875714482175135,
+   "t_stat": -1.8172719429430353
+  },
+  "24": {
+   "n_events_with_full_window": 1886,
+   "mean_gross_fwd_ret": -0.004477572560296111,
+   "se_gross_fwd_ret": 0.0035295049977932813,
+   "t_stat": -1.2686120470421718
+  },
+  "48": {
+   "n_events_with_full_window": 1884,
+   "mean_gross_fwd_ret": -0.0041779506939685655,
+   "se_gross_fwd_ret": 0.0041812128388439744,
+   "t_stat": -0.9992198089403382
+  },
+  "all_horizons_negative": true
+ },
+ "contrast": {
+  "liq_fade_i1_thr3.5_H48": {
+   "universe": "top-50 PIT monthly (799-symbol survivorship-safe store)",
+   "cost_bps": 10.0,
+   "n_events": 710,
+   "n_events_with_full_forward_window": 710,
+   "gross_return_per_event": 0.027718009760558316,
+   "net_sr": 1.3047414709358944,
+   "n_symbols_active": 88,
+   "gate_outcome": "2/3 -- DSR 0.479 < 0.9 (0.881 at own n_trials=6); NEGATIVE, DSR-bound"
+  },
+  "liq_fade_r1_thr3.5_H48": {
+   "universe": "monthly PIT ranks 51-150 band (304 symbols)",
+   "cost_bps": 20.0,
+   "n_events": 1892,
+   "n_events_with_full_forward_window": 1884,
+   "gross_return_per_event": -0.0041779506939685655,
+   "net_sr": -0.04757158731370988,
+   "n_symbols_active": 219,
+   "gate_outcome": "primary SR -0.048 below the 1.0 floor; confounded label not applicable"
+  }
+ },
+ "sections_skipped": {
+  "F1_inversion": "no gated result to invert -- P2 already failed gross, before any gate",
+  "F3_yearly_stability": "no realized net-return series exists (Task 7 skipped); power section's events-per-year table covers the adjacent question from raw trigger data alone",
+  "F5_dsr_decomposition": "no gate was evaluated (Task 7 skipped, no results.json, no ledger row) -- nothing to deflate",
+  "F6_cost_curve": "signal loses gross before any cost bps is applied -- cost sensitivity cannot rescue or further sink that verdict",
+  "F7_p2_reconciliation": "no realized, compounded portfolio series exists to reconcile against the P2 event-study mean",
+  "F8_placebo_audit": "no placebo was run -- P3 failure routes straight to write-up per gates.json's pass_rule, so there is no p-value to re-derive"
+ }
+}
