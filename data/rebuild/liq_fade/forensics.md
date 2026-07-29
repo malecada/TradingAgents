@@ -176,3 +176,127 @@ that the house's multiplicity discipline correctly refuses to certify on
 a fresh pre-registered replication (new data window or new instrument
 family) as its OWN experiment with its OWN trial count, not a holdout spend
 on this one.
+
+## Addendum (2026-07-29): placebo kill-test, vol percentile, per-symbol SR
+
+Reviewer follow-up per the §47 P5/P6 pattern, run to completion synchronously
+(not backgrounded) via the extended `scripts/liq_fade_forensics.py`; verdict
+and gate unchanged. Best config (thr=3.5, H=48) throughout.
+
+### F8 — Placebo machinery: distribution sanity + planted-uplift kill-test
+
+**F8a (distribution sanity).** An independent, ad-hoc re-derivation of the
+placebo SR distribution (150 draws/family, fresh RNG streams distinct from
+the registered 500-draw run) — not a re-citation of the ledger's p=0.002:
+
+| family | mean | sd | q05 | q50 | q95 | q99 | max |
+|--------|------|----|----|----|----|-----|-----|
+| shift (A) | −0.174 | 0.445 | −0.856 | −0.205 | 0.565 | 0.917 | 1.046 |
+| redraw (B) | −0.091 | 0.410 | −0.689 | −0.076 | 0.542 | 0.807 | 1.105 |
+
+Both distributions are non-degenerate (sd ≈ 0.41-0.45, clearly nonzero) and
+centered near/below zero, as expected for placebo trigger sets with no
+genuine timing information. **Real SR 1.305 exceeds the maximum of both
+150-draw distributions** (1.046 and 1.105) — 0/150 draws in either family
+reach the real SR, giving p = 1/151 = 0.0066 (the minimum resolution at this
+draw count; consistent with, and independently corroborating, the
+registered p=0.002 at 500 draws).
+
+**F8b (positive control — planted uplift at real timing).** +50bp planted at
+each of the 710 real trigger events' own entry bar (t+1, the bar the
+position first earns): real SR **1.305 → 1.583** (+0.28 SR from the
+injection alone). A fresh 150-draw placebo cloud built against this SAME
+boosted return series (using placebo-shifted, i.e. **misaligned**, trigger
+sets) stays centered near baseline (mean −0.118, essentially unchanged from
+F8a's −0.174) — misaligned candidates mostly miss the planted bump. Real SR
+vs this cloud: p = 0.0066 (0/150, same floor as F8a). **The mechanism
+correctly flags a genuinely-timed planted effect as significant, and stays
+significant (does not get diluted) even after admixing extra alpha into the
+series.**
+
+**F8c (negative control — same uplift, wrong timing).** The converse check:
+the +50bp uplift stays exactly where it was in F8b (i.e. genuinely present
+in the data, at the real trigger locations), but the candidate asked to
+detect it is deliberately **mistimed** — one fixed circular-shift draw of
+the real trigger set (same event count and per-symbol clustering structure,
+wrong calendar alignment). This mistimed candidate's own SR against the
+boosted series is **−0.234** (vs the aligned F8b reference of +1.583), and
+a placebo cloud built by further shifting that SAME mistimed candidate
+(150 draws) gives **p = 0.589** (mean −0.161, sd 0.433 — indistinguishable
+in shape from F8a's baseline cloud). **A trigger set that is mistimed
+relative to a genuine, present effect looks statistically ordinary against
+further mistimed draws — the low p-values in F8a/F8b are not an artifact of
+"some alpha exists somewhere in this return series"; they require the
+candidate's own timing to actually land on it.** This directly answers the
+reviewer's concern: the placebo machinery distinguishes **timing**, not
+**bookkeeping**.
+
+### F9 — Event-day realized-vol percentile
+
+Per-event percentile of that symbol-day's realized hourly-return volatility
+against the pooled all-symbol-day background distribution (all 710 events
+scored): **median 0.966, mean 0.915** (IQR 0.881–0.991) — event days sit at
+the extreme high end of the volatility distribution, unlike §47's liq_mr_t1
+finding (~0.51-0.52, i.e. no regime-proxy signature). **This is expected
+and not independently diagnostic here**, for a reason specific to this
+detector: unlike §47 (whose liquidation z-score is an independent Coinglass
+data source, orthogonal to price-return volatility), `cascade_triggers`
+*is itself* defined as `z_ret ≤ −thr AND z_vol ≥ thr` on the same close/
+quote-volume series used to compute realized vol — so a triggering bar is
+mechanically one of the 24 hourly observations that make up an
+elevated-volatility calendar day. A high vol percentile on event days is
+close to tautological given the trigger definition, not an independent
+finding that the edge is secretly a disguised high-vol-regime exposure. The
+relevant test for that concern is F1 (inversion): if the edge were pure
+vol-regime exposure (just "hold a high-vol coin"), long and short exposure
+to the same events should perform similarly — instead they diverge by 3.1
+SR (+1.305 vs −1.795), which is inconsistent with a pure-exposure story and
+consistent with genuine reversal timing.
+
+### F10 — Per-symbol SR table (top-15 by event count)
+
+Costs, no rf (isolates the price/cost effect per symbol from the constant
+full-capital rf drag — §47 P6 convention), alongside the F2 HHI/gross-P&L-
+share table (P&L share was used there because it directly measures
+concentration of the *dollar* result driving the aggregate SR; this table
+adds the complementary per-symbol *risk-adjusted* view):
+
+| symbol | n events | SR (costs, no rf) | gross P&L share |
+|--------|---------:|-------------------:|------------------:|
+| DOGEUSDT | 44 | +0.799 | 17.0% |
+| XRPUSDT | 38 | +0.803 | 4.8% |
+| BNBUSDT | 37 | +0.491 | 3.7% |
+| BCHUSDT | 28 | +1.121 | 7.9% |
+| ADAUSDT | 27 | +0.437 | 1.9% |
+| TRXUSDT | 27 | +0.325 | 1.6% |
+| FILUSDT | 26 | +0.025 | 0.3% |
+| LTCUSDT | 25 | +0.447 | 2.1% |
+| SOLUSDT | 23 | +0.108 | 1.4% |
+| LINKUSDT | 23 | +0.485 | 3.1% |
+| 1000SHIBUSDT | 22 | +0.679 | 6.2% |
+| EOSUSDT | 21 | +0.500 | 2.7% |
+| DOTUSDT | 21 | +0.786 | 5.6% |
+| BTCUSDT | 18 | +0.187 | 0.8% |
+| LUNAUSDT | 16 | **−0.514** | **−14.5%** |
+
+**14/15** of the top event-count symbols are individually SR-positive. The
+one exception, LUNAUSDT (16 events, SR −0.514, −14.5% gross P&L share), is
+the Terra/Luna collapse (May 2022) — a genuine tail case where "fade the
+cascade" is exactly wrong, because the underlying asset went to zero rather
+than reverting. This is a useful honest data point, not a hidden problem:
+the strategy has real tail risk on true de-pegging/collapse events, and the
+aggregate result (+1.305 SR, HHI 0.099, 14/15 symbols positive) already
+prices that loss in — LUNA's −14.5% share is fully reflected in the F2
+concentration table, not excluded or smoothed over.
+
+### Addendum conclusion
+
+None of the three additional checks changes the verdict. The placebo
+machinery is independently confirmed non-degenerate and timing-sensitive
+(F8a-c); the high event-day vol percentile (F9) is a mechanical property of
+the trigger definition, not new evidence of a disguised regime-exposure
+artifact (the inversion test in F1 remains the relevant check, and it
+already rules that story out); and the per-symbol SR table (F10) shows
+broad positive contribution (14/15) with one honestly-reported tail loss
+(LUNA) rather than a hidden concentration problem. Gate verdict (2/3, DSR
+FAIL at n_trials=100) and holdout-sealed status are unchanged.

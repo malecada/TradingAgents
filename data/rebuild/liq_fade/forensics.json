@@ -1,0 +1,291 @@
+{
+ "generated_at": "2026-07-29T06:39:04.272997+00:00",
+ "best_config": {
+  "thr": 3.5,
+  "H": 48
+ },
+ "recomputed_net_sr": 1.3047414709358944,
+ "n_events": 710,
+ "n_symbols_active": 88,
+ "f1_inversion": {
+  "long_fade_sr": 1.3047414709358944,
+  "short_inverted_sr": -1.7948033757515462,
+  "long_beats_short": true
+ },
+ "f2_concentration": {
+  "total_gross_pnl": 1.7019201908485697,
+  "n_symbols_with_nonzero_pnl": 85,
+  "top10": [
+   {
+    "symbol": "DOGEUSDT",
+    "gross_pnl": 0.28929873677270196,
+    "share_of_total": 0.16998372680945686
+   },
+   {
+    "symbol": "BCHUSDT",
+    "gross_pnl": 0.13475125470669552,
+    "share_of_total": 0.07917601273624303
+   },
+   {
+    "symbol": "1000PEPEUSDT",
+    "gross_pnl": 0.12248932479686854,
+    "share_of_total": 0.07197125074107964
+   },
+   {
+    "symbol": "SANDUSDT",
+    "gross_pnl": 0.11745877106330735,
+    "share_of_total": 0.06901544014513568
+   },
+   {
+    "symbol": "1000SHIBUSDT",
+    "gross_pnl": 0.10533964010896903,
+    "share_of_total": 0.06189458276327702
+   },
+   {
+    "symbol": "DOTUSDT",
+    "gross_pnl": 0.09496028405149508,
+    "share_of_total": 0.05579596773227557
+   },
+   {
+    "symbol": "CRVUSDT",
+    "gross_pnl": 0.08298482892115645,
+    "share_of_total": 0.04875953018677133
+   },
+   {
+    "symbol": "XRPUSDT",
+    "gross_pnl": 0.08184547672530773,
+    "share_of_total": 0.04809007917374783
+   },
+   {
+    "symbol": "FTMUSDT",
+    "gross_pnl": 0.08114859873966092,
+    "share_of_total": 0.04768061344827256
+   },
+   {
+    "symbol": "KSMUSDT",
+    "gross_pnl": 0.07410926890525642,
+    "share_of_total": 0.043544503028844064
+   }
+  ],
+  "hhi": 0.09912708692706781,
+  "top5_share": 0.45204101319519224
+ },
+ "f3_yearly_sr": {
+  "2021": {
+   "sr": 2.662590630574639,
+   "n_days": 365,
+   "mean_daily_net": 0.0022897095934053895
+  },
+  "2022": {
+   "sr": -0.347382128634323,
+   "n_days": 365,
+   "mean_daily_net": -0.00031367848988581324
+  },
+  "2023": {
+   "sr": 1.3068092157423974,
+   "n_days": 365,
+   "mean_daily_net": 0.0005879208096837629
+  },
+  "2024": {
+   "sr": 2.3527246387451757,
+   "n_days": 366,
+   "mean_daily_net": 0.001363027550675147
+  },
+  "2025": {
+   "sr": -0.20337503600532716,
+   "n_days": 90,
+   "mean_daily_net": -5.825815564866409e-05
+  }
+ },
+ "f4_events_per_year": {
+  "2021": 206,
+  "2022": 130,
+  "2023": 181,
+  "2024": 177,
+  "2025": 16,
+  "total": 710,
+  "n_years_spanned": 5,
+  "min_events_per_year": 16
+ },
+ "f5_dsr_sensitivity": {
+  "sr_perbar": 0.06829328986833912,
+  "se_sr": 0.0275619697099806,
+  "var_sr": 0.0007596621742938882,
+  "n_trials_6": {
+   "expected_max_sharpe_null": 0.03583444101331029,
+   "dsr": 0.880535499088537,
+   "dsr_pass": false
+  },
+  "n_trials_100": {
+   "expected_max_sharpe_null": 0.06974840029041411,
+   "dsr": 0.4789479662431396,
+   "dsr_pass": false
+  }
+ },
+ "f6_cost_sensitivity": {
+  "sr_cost_10bps_registered": 1.3047414709358944,
+  "sr_stress_20bps_recomputed": 1.2290418575916406,
+  "sr_stress_30bps": 1.1529060023552846
+ },
+ "f7_p2_reconciliation": {
+  "p2_mean_fwd_ret_per_event": 0.027718009760558316,
+  "n_events": 710,
+  "w_per": 0.1,
+  "naive_undiscounted_sum_event_contributions": 1.9679786929996403,
+  "realized_cum_gross_return": 3.117151930022711,
+  "realized_cum_net_return": 2.6154180600704775,
+  "years_spanned": 4.243668720054757
+ },
+ "f8_placebo_kill_test": {
+  "f8a_distribution_sanity": {
+   "n_draws_per_family": 150,
+   "real_sr": 1.3047414709358944,
+   "shift_family": {
+    "mean": -0.17441823345505475,
+    "sd": 0.44491855287014814,
+    "q05": -0.8564958223090596,
+    "q25": -0.476820328198169,
+    "q50": -0.20535338242438392,
+    "q75": 0.09183058736557567,
+    "q95": 0.5647576223306583,
+    "q99": 0.9171825204350773,
+    "max": 1.0461726043379165
+   },
+   "rand_family": {
+    "mean": -0.09104592786126708,
+    "sd": 0.4095837294283677,
+    "q05": -0.6888729385501329,
+    "q25": -0.4362730013826462,
+    "q50": -0.07567230012365521,
+    "q75": 0.19660854553043214,
+    "q95": 0.5423867551775419,
+    "q99": 0.8066779685827273,
+    "max": 1.1049304786242338
+   },
+   "p_shift": 0.006622516556291391,
+   "p_rand": 0.006622516556291391,
+   "shift_sd_nonzero": true,
+   "rand_sd_nonzero": true
+  },
+  "f8b_positive_control": {
+   "uplift_bps": 50.0,
+   "real_sr_baseline": 1.3047414709358944,
+   "real_sr_boosted": 1.5827370443394688,
+   "placebo_p_boosted": 0.006622516556291391,
+   "placebo_dist_mean": -0.11815955841162494
+  },
+  "f8c_negative_control": {
+   "uplift_bps": 50.0,
+   "scrambled_sr_vs_realboost": -0.23369729729369407,
+   "real_sr_boosted_reference": 1.5827370443394688,
+   "placebo_p_control": 0.5894039735099338,
+   "placebo_dist_mean": -0.16128115840506857,
+   "placebo_dist_sd": 0.4329630706337985,
+   "p_toward_uniform": true
+  }
+ },
+ "f9_vol_percentile": {
+  "n_events_scored": 710,
+  "n_events_total": 710,
+  "median_percentile": 0.9659734191945264,
+  "mean_percentile": 0.9153983282157312,
+  "q25_percentile": 0.8814406831564487,
+  "q75_percentile": 0.9913293027569493,
+  "is_regime_proxy": true
+ },
+ "f10_per_symbol_sr": {
+  "top15_by_event_count": [
+   {
+    "symbol": "DOGEUSDT",
+    "n_events": 44,
+    "sr_costs_no_rf": 0.7991587666600368,
+    "gross_pnl_share": 0.16998372680945686
+   },
+   {
+    "symbol": "XRPUSDT",
+    "n_events": 38,
+    "sr_costs_no_rf": 0.8034708191371575,
+    "gross_pnl_share": 0.04809007917374783
+   },
+   {
+    "symbol": "BNBUSDT",
+    "n_events": 37,
+    "sr_costs_no_rf": 0.4906401336245314,
+    "gross_pnl_share": 0.03725840011725891
+   },
+   {
+    "symbol": "BCHUSDT",
+    "n_events": 28,
+    "sr_costs_no_rf": 1.1207702798094805,
+    "gross_pnl_share": 0.07917601273624303
+   },
+   {
+    "symbol": "ADAUSDT",
+    "n_events": 27,
+    "sr_costs_no_rf": 0.43699926245665505,
+    "gross_pnl_share": 0.018907964724476374
+   },
+   {
+    "symbol": "TRXUSDT",
+    "n_events": 27,
+    "sr_costs_no_rf": 0.32524079252829674,
+    "gross_pnl_share": 0.015961787047158532
+   },
+   {
+    "symbol": "FILUSDT",
+    "n_events": 26,
+    "sr_costs_no_rf": 0.024637260852309665,
+    "gross_pnl_share": 0.0033169224361577192
+   },
+   {
+    "symbol": "LTCUSDT",
+    "n_events": 25,
+    "sr_costs_no_rf": 0.4473224116791076,
+    "gross_pnl_share": 0.021033786267374028
+   },
+   {
+    "symbol": "SOLUSDT",
+    "n_events": 23,
+    "sr_costs_no_rf": 0.10849883725873675,
+    "gross_pnl_share": 0.013745127965867637
+   },
+   {
+    "symbol": "LINKUSDT",
+    "n_events": 23,
+    "sr_costs_no_rf": 0.48513534803210384,
+    "gross_pnl_share": 0.03069002557422897
+   },
+   {
+    "symbol": "1000SHIBUSDT",
+    "n_events": 22,
+    "sr_costs_no_rf": 0.6794275961058289,
+    "gross_pnl_share": 0.06189458276327702
+   },
+   {
+    "symbol": "EOSUSDT",
+    "n_events": 21,
+    "sr_costs_no_rf": 0.5003509084258694,
+    "gross_pnl_share": 0.02650412223179837
+   },
+   {
+    "symbol": "DOTUSDT",
+    "n_events": 21,
+    "sr_costs_no_rf": 0.7862978312728723,
+    "gross_pnl_share": 0.05579596773227557
+   },
+   {
+    "symbol": "BTCUSDT",
+    "n_events": 18,
+    "sr_costs_no_rf": 0.18687263211458494,
+    "gross_pnl_share": 0.008339627272138831
+   },
+   {
+    "symbol": "LUNAUSDT",
+    "n_events": 16,
+    "sr_costs_no_rf": -0.5138314861543852,
+    "gross_pnl_share": -0.14527192825661137
+   }
+  ],
+  "n_positive_of_15": 14
+ }
+}

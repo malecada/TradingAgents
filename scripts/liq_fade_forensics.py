@@ -10,6 +10,11 @@ modifying it. Computes, for the best config (thr=3.5, H=48) only:
   F6 - cost sensitivity: +30bps row (20bps already in dev_results.json)
   F7 - P2-vs-grid order-of-magnitude reconciliation
 
+Addendum (reviewer-requested, appended without re-running F1-F7):
+  F8  - placebo distribution sanity + planted-uplift kill-test (§47 P5 pattern)
+  F9  - event-day realized-vol percentile (§47-style regime-proxy check)
+  F10 - per-symbol SR table, top-15 by event count (§47 P6 pattern)
+
 Writes data/rebuild/liq_fade/forensics.json (machine-readable); forensics.md
 (prose, house style) is hand-written from this output. Not part of the
 registered gate -- diagnostic only, run AFTER the dev grid verdict landed.
@@ -34,10 +39,13 @@ from tradingagents.strategies.v3.backtest.dsr import (  # noqa: E402
 from tradingagents.xsect.liq_fade import (  # noqa: E402
     cascade_triggers, event_weights_hourly, run_hourly_portfolio, sharpe_daily,
 )
+from tradingagents.xsect.portfolio import rank_placebo_pvalue  # noqa: E402
 
 OUT = PROJECT_ROOT / "data" / "rebuild" / "liq_fade" / "forensics.json"
 
 BEST_THR, BEST_H = 3.5, 48
+N_PLACEBO_ADDENDUM = 150   # ad-hoc sanity draws; registered grid used 500
+UPLIFT_BPS = 0.0050        # 50bp planted kill-test uplift
 
 
 def _sanitize(obj):
@@ -166,13 +174,169 @@ def main() -> None:
           f"realized_cum_gross={realized_cum_gross:.3f} "
           f"realized_cum_net={realized_cum_net:.3f} over {years_spanned:.2f}y")
 
+    # ── F8: placebo distribution sanity + planted-uplift kill-test ──────────
+    # F8a — re-derive the placebo SR distribution ad-hoc (independent draws,
+    # fresh RNG stream, N_PLACEBO_ADDENDUM << the registered 500) and report
+    # its shape, confirming it is non-degenerate and that real_sr sits far
+    # in its tail.
+    mask_active = mask_full.loc[row_sel][active_cols]
+    rng_a = np.random.default_rng(4001)
+    shift_srs = []
+    for _ in range(N_PLACEBO_ADDENDUM):
+        trig_p = lfd._shift_triggers(trig_active, rng_a)
+        Wp = event_weights_hourly(trig_p, BEST_H, w_per=lfd.W_PER, cap=lfd.CAP)
+        netp = run_hourly_portfolio(Wp, R_active, cost_bps=lfd.COST_BPS, rf_annual=lfd.RF_ANNUAL)
+        shift_srs.append(sharpe_daily(netp))
+    rng_b = np.random.default_rng(4002)
+    rand_srs = []
+    for _ in range(N_PLACEBO_ADDENDUM):
+        trig_p = lfd._redraw_random_triggers(trig_active, mask_active, rng_b)
+        Wp = event_weights_hourly(trig_p, BEST_H, w_per=lfd.W_PER, cap=lfd.CAP)
+        netp = run_hourly_portfolio(Wp, R_active, cost_bps=lfd.COST_BPS, rf_annual=lfd.RF_ANNUAL)
+        rand_srs.append(sharpe_daily(netp))
+    shift_arr, rand_arr = np.array(shift_srs), np.array(rand_srs)
+    p_shift_a = rank_placebo_pvalue(real_sr, shift_srs)
+    p_rand_a = rank_placebo_pvalue(real_sr, rand_srs)
+
+    def _dist_stats(a: np.ndarray) -> dict:
+        return {"mean": float(a.mean()), "sd": float(a.std(ddof=1)),
+                "q05": float(np.quantile(a, 0.05)), "q25": float(np.quantile(a, 0.25)),
+                "q50": float(np.quantile(a, 0.50)), "q75": float(np.quantile(a, 0.75)),
+                "q95": float(np.quantile(a, 0.95)), "q99": float(np.quantile(a, 0.99)),
+                "max": float(a.max())}
+
+    f8a = {"n_draws_per_family": N_PLACEBO_ADDENDUM, "real_sr": real_sr,
+           "shift_family": _dist_stats(shift_arr), "rand_family": _dist_stats(rand_arr),
+           "p_shift": p_shift_a, "p_rand": p_rand_a,
+           "shift_sd_nonzero": bool(shift_arr.std(ddof=1) > 1e-6),
+           "rand_sd_nonzero": bool(rand_arr.std(ddof=1) > 1e-6)}
+    print(f"[F8a placebo sanity] shift: mean={f8a['shift_family']['mean']:.3f} "
+          f"sd={f8a['shift_family']['sd']:.3f} max={f8a['shift_family']['max']:.3f} "
+          f"p={p_shift_a:.4f} | rand: mean={f8a['rand_family']['mean']:.3f} "
+          f"sd={f8a['rand_family']['sd']:.3f} max={f8a['rand_family']['max']:.3f} "
+          f"p={p_rand_a:.4f} | real={real_sr:.3f}")
+
+    # F8b — positive control: plant a +50bp uplift at the REAL trigger's own
+    # entry bar (t+1, the bar the position first earns), rerun the real
+    # config against the boosted returns, then rebuild a placebo distribution
+    # (shift family, fresh draws) against the SAME boosted returns using
+    # placebo-generated (misaligned) trigger sets. If the mechanism tracks
+    # genuine timing, real_sr should jump and p should stay low (placebo sets
+    # mostly miss the bump).
+    T = trig_active.to_numpy()
+    rows, cols = np.where(T)
+    Rb = R_active.to_numpy().copy()
+    valid = rows + 1 < Rb.shape[0]
+    np.add.at(Rb, (rows[valid] + 1, cols[valid]), UPLIFT_BPS)
+    R_boost = pd.DataFrame(Rb, index=R_active.index, columns=R_active.columns)
+    net_boost = run_hourly_portfolio(W_real, R_boost, cost_bps=lfd.COST_BPS, rf_annual=lfd.RF_ANNUAL)
+    real_boost_sr = sharpe_daily(net_boost)
+    rng_c = np.random.default_rng(4003)
+    boost_placebo_srs = []
+    for _ in range(N_PLACEBO_ADDENDUM):
+        trig_p = lfd._shift_triggers(trig_active, rng_c)
+        Wp = event_weights_hourly(trig_p, BEST_H, w_per=lfd.W_PER, cap=lfd.CAP)
+        netp = run_hourly_portfolio(Wp, R_boost, cost_bps=lfd.COST_BPS, rf_annual=lfd.RF_ANNUAL)
+        boost_placebo_srs.append(sharpe_daily(netp))
+    p_boost = rank_placebo_pvalue(real_boost_sr, boost_placebo_srs)
+    f8b_positive = {"uplift_bps": UPLIFT_BPS * 1e4, "real_sr_baseline": real_sr,
+                    "real_sr_boosted": real_boost_sr, "placebo_p_boosted": p_boost,
+                    "placebo_dist_mean": float(np.mean(boost_placebo_srs))}
+    print(f"[F8b kill-test +] real baseline={real_sr:.3f} -> boosted={real_boost_sr:.3f} "
+          f"(placebo mean={f8b_positive['placebo_dist_mean']:.3f}) p_boosted={p_boost:.4f}")
+
+    # F8c — negative control ("bookkeeping, not timing"). The uplift stays at
+    # the REAL trigger locations (same R_boost as F8b -- the bump is real and
+    # present in the data). What's swapped is which trigger set is asked to
+    # detect it: a SCRAMBLED (one fixed circular-shift draw of the real
+    # triggers -- same event count/clustering structure, wrong calendar
+    # alignment) set is evaluated against R_boost, benchmarked against a
+    # placebo cloud built by further shifting that SAME scrambled set. A
+    # trigger set that is mistimed relative to the genuine boost should look
+    # statistically ordinary against further mistimed draws -- i.e. merely
+    # having *some* alpha present in the return series, with the wrong
+    # candidate asked to find it, should NOT manufacture significance. This
+    # is the direct converse of F8b (there, the alpha and the candidate were
+    # aligned; here they are deliberately misaligned).
+    trig_scrambled = lfd._shift_triggers(trig_active, np.random.default_rng(9999))
+    W_scrambled = event_weights_hourly(trig_scrambled, BEST_H, w_per=lfd.W_PER, cap=lfd.CAP)
+    net_scrambled_vs_boost = run_hourly_portfolio(W_scrambled, R_boost,
+                                                  cost_bps=lfd.COST_BPS, rf_annual=lfd.RF_ANNUAL)
+    scrambled_vs_boost_sr = sharpe_daily(net_scrambled_vs_boost)
+    rng_d = np.random.default_rng(4004)
+    control_placebo_srs = []
+    for _ in range(N_PLACEBO_ADDENDUM):
+        trig_p = lfd._shift_triggers(trig_scrambled, rng_d)   # further-shift the mistimed set
+        Wp = event_weights_hourly(trig_p, BEST_H, w_per=lfd.W_PER, cap=lfd.CAP)
+        netp = run_hourly_portfolio(Wp, R_boost, cost_bps=lfd.COST_BPS, rf_annual=lfd.RF_ANNUAL)
+        control_placebo_srs.append(sharpe_daily(netp))
+    p_control = rank_placebo_pvalue(scrambled_vs_boost_sr, control_placebo_srs)
+    f8c_control = {"uplift_bps": UPLIFT_BPS * 1e4,
+                   "scrambled_sr_vs_realboost": scrambled_vs_boost_sr,
+                   "real_sr_boosted_reference": real_boost_sr,
+                   "placebo_p_control": p_control,
+                   "placebo_dist_mean": float(np.mean(control_placebo_srs)),
+                   "placebo_dist_sd": float(np.std(control_placebo_srs, ddof=1)),
+                   "p_toward_uniform": bool(p_control > 0.20)}
+    print(f"[F8c kill-test control] mistimed candidate vs real boost="
+          f"{scrambled_vs_boost_sr:.3f} (aligned reference from F8b={real_boost_sr:.3f}) "
+          f"p_control={p_control:.4f} (>0.20 expected -- mistimed candidate should NOT "
+          f"look significant even though the boost is genuinely present in the data)")
+
+    f8 = {"f8a_distribution_sanity": f8a, "f8b_positive_control": f8b_positive,
+          "f8c_negative_control": f8c_control}
+
+    # ── F9: event-day realized-vol percentile (regime-proxy check) ──────────
+    daily_vol = R_active.groupby(R_active.index.tz_convert("UTC").normalize()).std()
+    background = daily_vol.to_numpy().flatten()
+    background = background[~np.isnan(background)]
+    background_sorted = np.sort(background)
+    event_days = trig_active.index[rows].normalize()
+    event_syms = [active_cols[c] for c in cols]
+    pctiles = []
+    for d, s in zip(event_days, event_syms):
+        v = daily_vol.at[d, s] if d in daily_vol.index else np.nan
+        if pd.isna(v):
+            continue
+        rank = np.searchsorted(background_sorted, v, side="left")
+        pctiles.append(rank / len(background_sorted))
+    pctiles = np.array(pctiles)
+    f9 = {"n_events_scored": int(len(pctiles)), "n_events_total": n_events,
+          "median_percentile": float(np.median(pctiles)) if len(pctiles) else None,
+          "mean_percentile": float(np.mean(pctiles)) if len(pctiles) else None,
+          "q25_percentile": float(np.quantile(pctiles, 0.25)) if len(pctiles) else None,
+          "q75_percentile": float(np.quantile(pctiles, 0.75)) if len(pctiles) else None,
+          "is_regime_proxy": bool(len(pctiles) and abs(np.median(pctiles) - 0.5) > 0.15)}
+    print(f"[F9 vol percentile] median={f9['median_percentile']:.3f} "
+          f"mean={f9['mean_percentile']:.3f} n_scored={f9['n_events_scored']}/{n_events}")
+
+    # ── F10: per-symbol SR table, top-15 by event count (§47 P6 pattern) ────
+    # Costs, no rf (isolates price/cost effect per symbol from the constant
+    # full-capital rf drag, matching liq_mr_t1's P6 convention).
+    n_events_by_symbol = trig_active.sum(axis=0)
+    top15_syms = n_events_by_symbol.sort_values(ascending=False).head(15).index.tolist()
+    per_symbol_sr = []
+    for s in top15_syms:
+        Ws = W_real[[s]]
+        Rs_sym = R_active[[s]]
+        net_s = run_hourly_portfolio(Ws, Rs_sym, cost_bps=lfd.COST_BPS, rf_annual=0.0)
+        per_symbol_sr.append({"symbol": s, "n_events": int(n_events_by_symbol[s]),
+                              "sr_costs_no_rf": sharpe_daily(net_s),
+                              "gross_pnl_share": float(shares.get(s, 0.0))})
+    n_positive = sum(1 for r in per_symbol_sr if r["sr_costs_no_rf"] > 0)
+    f10 = {"top15_by_event_count": per_symbol_sr, "n_positive_of_15": n_positive}
+    print(f"[F10 per-symbol SR] {n_positive}/15 top-event-count symbols SR>0; "
+          f"top3: {[(r['symbol'], round(r['sr_costs_no_rf'], 2)) for r in per_symbol_sr[:3]]}")
+
     payload = {"generated_at": pd.Timestamp.now(tz="UTC").isoformat(),
                "best_config": {"thr": BEST_THR, "H": BEST_H},
                "recomputed_net_sr": real_sr, "n_events": n_events,
                "n_symbols_active": len(active_cols),
                "f1_inversion": f1, "f2_concentration": f2, "f3_yearly_sr": f3,
                "f4_events_per_year": f4, "f5_dsr_sensitivity": f5,
-               "f6_cost_sensitivity": f6, "f7_p2_reconciliation": f7}
+               "f6_cost_sensitivity": f6, "f7_p2_reconciliation": f7,
+               "f8_placebo_kill_test": f8, "f9_vol_percentile": f9,
+               "f10_per_symbol_sr": f10}
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT, "w") as f:
         json.dump(_sanitize(payload), f, indent=1, allow_nan=False, default=str)

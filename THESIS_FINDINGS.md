@@ -4987,6 +4987,26 @@ copy of the engine.
    concurrent overlapping positions that the per-event P2 average, which
    scores each event in isolation, does not capture.
 
+**Addendum (F8-F10, 2026-07-29).** Three further checks close the §47
+checklist. (F8) The placebo machinery was independently re-derived (150
+draws/family, non-degenerate, sd≈0.41-0.45) confirming real SR 1.305 exceeds
+both distributions' 150-draw maxima; a planted +50bp kill-test at the real
+trigger locations pushes SR to 1.583 and stays significant (p=0.0066)
+against misaligned placebos, while planting the *identical* uplift but
+evaluating it with a deliberately mistimed (shifted) candidate gives SR
+−0.234 and p=0.589 — the machinery detects timing, not the mere presence of
+extra alpha somewhere in the series. (F9) Event-day realized-vol percentile
+is high (median 0.966) but mechanically so — the trigger is itself defined
+from the same return/volume series, unlike §47's independent liquidation
+z-score — so this is not new evidence of a disguised vol-regime exposure;
+F1's inversion asymmetry remains the relevant test and already rules that
+out. (F10) A per-symbol SR table (costs, no rf) for the top-15 by event
+count shows 14/15 individually SR-positive; the one exception, LUNAUSDT
+(−0.514 SR, −14.5% gross P&L share), is the May-2022 Terra collapse — a
+genuine, honestly-reported tail loss where fading a cascade that never
+reverts costs money, already priced into the aggregate result. Full detail:
+`data/rebuild/liq_fade/forensics.md` addendum. Verdict unchanged.
+
 ### 49.6 Verdict
 
 **Dev-gate NEGATIVE, 2/3** (net SR pass, placebo pass, DSR fail). This is
