@@ -344,5 +344,57 @@
   },
   "one_shot": "holdout spent only if dev gate passes; stress row +10bps slippage reported not gated",
   "thesis_section": "48"
+ },
+ "liq_fade_r1": {
+  "registered": "2026-07-29",
+  "spec": "docs/superpowers/specs/2026-07-29-liq-fade-r1-design.md",
+  "replicates": "liq_fade_i1",
+  "dev_window": ["2021-01-01", "2025-03-31"],
+  "holdout_window": ["2025-04-01", "2026-07-01"],
+  "holdout_status": "sealed",
+  "universe": "monthly PIT ranks 51-150 by trailing 30d median quote_volume from the 799-symbol survivorship-safe daily store; min_age 60d; same monthly_top_n selector as liq_fade_i1, band = top150 minus top50 per month; union 304 symbols; disjoint from liq_fade_i1 by (symbol, month)",
+  "signal": "IDENTICAL to liq_fade_i1, frozen: per symbol hourly z_ret = rolling z of 1h log returns, z_vol = rolling z of log1p(quote_volume), window 2160 min_periods 1440 ddof=1 inclusive of t; trigger = z_ret <= -thr AND z_vol >= thr; LONG-FADE ONLY",
+  "portfolio_rule": "IDENTICAL to liq_fade_i1 except cost_bps: trigger at bar t -> long 1/10 for bars t+1..t+H; retrigger resets timer; gross cap 1.0; costs 20 bps per side on |dW|; rf_daily = 1.045^(1/365)-1 on full capital every calendar day; funding EXCLUDED; SR on daily-aggregated UTC net returns x sqrt(365)",
+  "grid": null,
+  "primary_config": {"thr": 3.5, "H": 48, "w_per": 0.1, "cap": 1.0, "cost_bps": 20.0, "rf_annual": 0.045},
+  "cost_bps_primary": 20.0,
+  "cost_bps_rationale": "band names are smaller and wider-spread than the liq_fade_i1 top-50; carrying the top-50 cost model onto them would invite the objection. liq_fade_i1 forensics F6 showed the effect is not cost-fragile (SR 1.305/1.229/1.153 at 10/20/30bps).",
+  "probes": {
+   "P3": {
+    "blocking": true,
+    "runs_first": true,
+    "desc": "vol-drift control: long-only entries on z_vol >= 3.5 with the z_ret <= -3.5 crash condition REMOVED, identical sizing/horizon/universe/cost. Isolates crash timing from generic long exposure on high-volatility days. This is the discriminating control that liq_fade_i1 never ran (section 49 forensics F9).",
+    "control_max_net_sr": 0.5,
+    "min_separation": 0.75,
+    "pass_rule": "control net SR < 0.5 AND (primary net SR - control net SR) >= 0.75",
+    "fail_verdict": "NEGATIVE-confounded",
+    "fail_action": "gates G1-G3 NOT evaluated; lead closes; written up as THESIS section 50",
+    "scope_note": "the separation term is only diagnostic when the primary is strong. If primary net SR < 1.0 the verdict is plain NEGATIVE on G1 and the confounded label is NOT applied."
+   },
+   "P0": "1h bars open-stamped; daily aggregation of BTCUSDT 1h closes reconciles with daily store, corr > 0.99 on overlapping returns, window clamped to [2021-01-01, 2025-04-15]",
+   "P1": "proxy triggers (thr=2.5) aggregated daily on band symbols must flag >= 4 of 5 benchmark cascade dates (2021-05-19, 2022-06-13, 2022-11-09, 2024-08-05, 2025-02-03); FAIL -> STOP",
+   "P2": "mean cumulative GROSS forward return t+1..t+H over all dev triggers at the primary config must exceed +25 bps; FAIL -> STOP (NEGATIVE-at-probe)"
+  },
+  "dev_select": {
+   "net_sr_min": 1.0,
+   "placebo": "dual-family (A: per-symbol circular shift of trigger series, min offset 24 bars; B: count-matched uniform random trigger timestamps among membership-eligible bars), 500 draws each, costs+rf re-applied, p = (1+#{placebo SR >= real SR})/(N+1), gate on WORSE p <= 0.05",
+   "placebo_p_max": 0.05,
+   "dsr_min": 0.9,
+   "n_trials": 1,
+   "n_trials_rationale": "confirmatory inference on independent data. Multiplicity correction attaches to a search -- a grid, a sweep, a set of candidates screened against the same data. This experiment pre-registers ONE frozen hypothesis before touching any band data and evaluates it on events disjoint from discovery, so it carries n_trials=1. This is a declared amendment to the ledger-cumulative house convention used by liq_fade_i1, made before the run, not after. Alternative denominators are computed and reported (see reported_not_gated.dsr_alt_denominators) so the choice is auditable.",
+   "conventions": "sqrt(365) annualization on daily-aggregated UTC net returns, ddof=1, zero-variance SR := 0"
+  },
+  "reported_not_gated": {
+   "cost_bps_sensitivities": [10.0, 30.0],
+   "dsr_alt_denominators": [13, 121],
+   "dsr_alt_denominator_desc": "13 = liquidation-family scope (liq_mr_t1 6 + liq_fade_i1 6 + this 1); 121 = ledger-cumulative unique config_hash count",
+   "secondary_configs": [{"thr": 2.5, "H": 24}, {"thr": 3.5, "H": 24}],
+   "secondary_configs_desc": "the two remaining liq_fade_i1 dev survivors, run for robustness context only; they CANNOT rescue a G1-G3 failure and are not logged as separate gate evaluations",
+   "never_top50_subset": true,
+   "never_top50_subset_desc": "116-symbol partition of the same run (symbols never in the liq_fade_i1 top-50 union) reported as a descriptive breakdown; a partition, not an additional config, so not an additional trial"
+  },
+  "one_shot": "holdout spent only if the dev gate passes 3/3, and then only under its own separate pre-registration",
+  "stop_rule": "any dev failure -> negative recorded in THESIS section 50, holdout stays sealed; no second pass, no added grid axes, no cost-model relaxation",
+  "thesis_section": "50"
  }
 }
