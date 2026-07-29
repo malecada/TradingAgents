@@ -4998,9 +4998,15 @@ evaluating it with a deliberately mistimed (shifted) candidate gives SR
 extra alpha somewhere in the series. (F9) Event-day realized-vol percentile
 is high (median 0.966) but mechanically so — the trigger is itself defined
 from the same return/volume series, unlike §47's independent liquidation
-z-score — so this is not new evidence of a disguised vol-regime exposure;
-F1's inversion asymmetry remains the relevant test and already rules that
-out. (F10) A per-symbol SR table (costs, no rf) for the top-15 by event
+z-score. F1's inversion asymmetry (+1.305 vs −1.795) shows direction and
+timing carry real signal, not symmetric noise, but it does **not**
+separately exclude a generic long-bias-on-high-vol-days drift confound
+(inverting a directional bet flips the sign of any nonzero per-event drift,
+so such a confound would produce the same F1 signature as genuine reversal
+timing) — the discriminating control (long-only exposure on high `z_vol`
+without the `z_ret` down-move condition) was not run and is an open item
+for any future replication. (F10) A per-symbol SR table (costs, no rf) for
+the top-15 by event
 count shows 14/15 individually SR-positive; the one exception, LUNAUSDT
 (−0.514 SR, −14.5% gross P&L share), is the May-2022 Terra collapse — a
 genuine, honestly-reported tail loss where fading a cascade that never

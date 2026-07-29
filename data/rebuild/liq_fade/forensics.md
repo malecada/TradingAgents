@@ -246,12 +246,18 @@ quote-volume series used to compute realized vol — so a triggering bar is
 mechanically one of the 24 hourly observations that make up an
 elevated-volatility calendar day. A high vol percentile on event days is
 close to tautological given the trigger definition, not an independent
-finding that the edge is secretly a disguised high-vol-regime exposure. The
-relevant test for that concern is F1 (inversion): if the edge were pure
-vol-regime exposure (just "hold a high-vol coin"), long and short exposure
-to the same events should perform similarly — instead they diverge by 3.1
-SR (+1.305 vs −1.795), which is inconsistent with a pure-exposure story and
-consistent with genuine reversal timing.
+finding that the edge is secretly a disguised high-vol-regime exposure.
+F1's inversion (+1.305 vs −1.795, a 3.1 SR gap) shows that direction and
+timing carry real signal — this is not symmetric, direction-agnostic noise.
+It does **not**, however, separately exclude a generic long-bias-on-
+high-vol-days confound: inverting a directional bet flips the sign of any
+nonzero per-event drift, so a confound where high-vol days simply drift up
+on average (independent of the specific reversal mechanism claimed here)
+would produce the same long-beats-short signature in F1. The discriminating
+control — long-only exposure on high `z_vol` bars *without* the `z_ret`
+down-move condition, to isolate a pure vol-day-drift effect from the
+conditional reversal — was not run. This is noted as an open check for any
+future replication, not resolved by the checks in this pass.
 
 ### F10 — Per-symbol SR table (top-15 by event count)
 
@@ -294,9 +300,11 @@ concentration table, not excluded or smoothed over.
 None of the three additional checks changes the verdict. The placebo
 machinery is independently confirmed non-degenerate and timing-sensitive
 (F8a-c); the high event-day vol percentile (F9) is a mechanical property of
-the trigger definition, not new evidence of a disguised regime-exposure
-artifact (the inversion test in F1 remains the relevant check, and it
-already rules that story out); and the per-symbol SR table (F10) shows
-broad positive contribution (14/15) with one honestly-reported tail loss
-(LUNA) rather than a hidden concentration problem. Gate verdict (2/3, DSR
+the trigger definition, and F1's inversion confirms direction/timing carry
+signal, but a generic long-bias-on-high-vol-days confound is **not**
+separately excluded by anything run in this pass (the discriminating
+long-only-on-high-z_vol control was not run — open item for any future
+replication); and the per-symbol SR table (F10) shows broad positive
+contribution (14/15) with one honestly-reported tail loss (LUNA) rather
+than a hidden concentration problem. Gate verdict (2/3, DSR
 FAIL at n_trials=100) and holdout-sealed status are unchanged.
