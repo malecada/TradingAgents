@@ -163,11 +163,21 @@ these can rescue a G1-G3 failure.
 
 ## 8. Code changes
 
-The backtest engine `tradingagents/xsect/liq_fade.py` is frozen. The only edit
-permitted to it is the pandas pin:
+The backtest engine `tradingagents/xsect/liq_fade.py` is frozen and is not
+edited at all. It contains no `pct_change` call — returns inside the engine come
+from `np.log(close).diff()`, which is unaffected by the pandas-3 change.
 
-- Pass `fill_method=None` explicitly to every `pct_change` call in
-  `liq_fade.py` and `scripts/liq_fade_dev.py`.
+The `pct_change` exposure is entirely in the runner and forensics layers, and
+those calls take an explicit `fill_method=None`:
+
+- `scripts/liq_fade_dev.py` lines 185, 188, 285, 523
+- `scripts/liq_fade_forensics.py` line 66
+- every `pct_change` in the new `scripts/liq_fade_repl.py`
+
+`pyproject.toml` declares `pandas>=2.3.0` with no upper bound, so a future
+`uv sync` can pull pandas 3 and silently change gap-bar attribution in exactly
+these five places. The explicit argument is the fix; no version ceiling is
+added, since the argument is valid in both major versions.
 
 New runner `scripts/liq_fade_repl.py` imports the engine unchanged and differs
 from `liq_fade_dev.py` only in universe file, cost constant, config set, and the
