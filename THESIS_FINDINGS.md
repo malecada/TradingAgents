@@ -4853,3 +4853,207 @@ have pre-registered verdicts on the corrected harness.
 - Predictions: `data/audit_fix/rolling730/multi_2coins_pit_wf_p5/` (audit
   recipe, trade-date 2026-06-05)
 - Results + forensics: `data/rebuild/llm_p5/`
+
+## Section 49: Intraday Liquidation-Cascade Fade (liq_fade_i1) — Dev-Gate NEGATIVE, DSR-Bound; First Genuine Timing Signal Post-Rebuild, Holdout Unspent (2026-07-28)
+
+Revives lead #4 (blocked in the §44 go-forward menu on paywalled sub-daily
+liquidation data) as an intraday extension of lead #6's follow-on
+(`liq_mr_t1`, §47), which found the liquidation-cascade reversal is real but
+completes within the event day and inverts to continuation by day 3-5 at
+daily resolution. Hypothesis: entering the fade within hours of the cascade,
+at 1h resolution, captures the reversal that daily bars structurally miss.
+Design spec pre-registers a **fixed frozen** direction — long-fade only
+(buy after downside cascades) — carried forward from §47's finding that
+short-fade (fading squeezes) is actively harmful; that asymmetry was not
+re-searched here. Note on section numbering: the design spec provisionally
+targeted "§48," written before §48 (LLM flagship re-test) landed the same
+day and claimed that number first; this result is §49.
+
+### 49.1 Pre-registration provenance
+
+Design spec `docs/superpowers/specs/2026-07-28-liq-fade-intraday-design.md`
+(`300c89a`) and `data/rebuild/gates.json` key `liq_fade_i1` (`14b2a6b`)
+committed before any probe or grid run. Frozen: rolling z-score of 1h log
+return (`z_ret`) and log1p(quote_volume) (`z_vol`), window 2160 bars (90d,
+`min_periods` 1440/60d, `ddof=1`, ≤t only); trigger = `z_ret ≤ −thr AND
+z_vol ≥ thr`; long 1/10 capital per active event, bars t+1..t+H, retrigger
+resets timer, gross cap 1.0 (max 10 concurrent, arrival-order tiebreak);
+10 bps/side turnover costs; funding excluded (as in §47, avoiding
+entanglement with the closed carry family); rf flat 4.5%/yr on full capital,
+daily; SR on daily-UTC-aggregated net returns × √365 (identical harshest-
+honest convention family used throughout §45-§48). Grid = 6 configs,
+`thr ∈ {2.5, 3.5} × H ∈ {6, 24, 48}` hours — closed before any run. Dev
+2021-01-01→2025-03-31; holdout 2025-04-01→2026-07-01 sealed, one-shot,
+spent only if dev passes. Gates: net SR ≥ 1.0, dual-family placebo worse-p
+≤ 0.05 (500 draws/family: A = per-symbol circular shift, B = count-matched
+uniform redraw), DSR ≥ 0.9 at ledger-cumulative `n_trials`.
+
+### 49.2 Data — proxy detector, not raw liquidation data
+
+Coinglass Hobbyist tier was probed on 2026-07-28 for sub-daily liquidation
+endpoints: every interval below 1d on all liq/OI endpoints returns
+`401 Upgrade plan` — sub-daily liquidation prints are paywalled and out of
+budget. The strategy therefore substitutes a **free proxy detector** built
+from Binance USD-M futures 1h klines (return-z × volume-z, above), with the
+existing *daily* Coinglass liquidation store used only for out-of-band
+validation (never as a live signal input — see P1 below). Universe: top-50
+by trailing 30d median quote-volume, PIT-refreshed monthly from the
+799-symbol survivorship-safe store (§43 infrastructure), min age 60d.
+
+### 49.3 Probes P0-P2 (all PASS — `data/rebuild/liq_fade/probes.json`)
+
+- **P0 (stamp reconciliation, non-gating sanity)**: daily aggregation of
+  BTCUSDT 1h closes vs. the daily-store BTCUSDT close series, 2021-2025
+  overlap: **corr = 0.9999** (n=1565 days) — 1h bars are open-stamped and the
+  decision-close-t → hold-t+1 mapping introduces no same-bar leakage.
+- **P1 (proxy concordance, gating)**: proxy triggers (thr=2.5) aggregated to
+  UTC day on the 8 Coinglass-mapped majors flagged **5/5** of the §47
+  benchmark cascade dates (2021-05-19, 2022-06-13, 2022-11-09 FTX,
+  2024-08-05, 2025-02-03), against a required ≥4/5. A non-gating
+  corroboration diagnostic (the *real* Coinglass daily liq/OI z-score on the
+  same 8 coins/dates) independently flags the same 5/5 — two independent
+  signal families agree on all five benchmark events.
+- **P2 (event-study, gating)**: mean GROSS forward return t+1..t+H over all
+  dev-window triggers exceeded the +25bp floor in **every** grid cell
+  (range +0.90% to +2.77%); best cell (thr=3.5, H=48) = **+2.77%/event**.
+
+### 49.4 Dev grid results (`data/rebuild/liq_fade/dev_results.json`)
+
+| thr | H | net SR | placebo p (worse) | n events | n symbols | % days active | pass |
+|-----|---|--------|--------------------|----------|-----------|-----------------|:---:|
+| 2.5 | 6 | +0.356 | 0.002 | 5064 | 150 | 57.6% | SR fail |
+| 2.5 | 24 | **+1.229** | 0.002 | 5064 | 150 | 70.4% | SR+placebo pass |
+| 2.5 | 48 | +0.748 | 0.058 | 5064 | 150 | 79.4% | SR+placebo fail |
+| 3.5 | 6 | +0.961 | 0.002 | 710 | 88 | 18.9% | SR fail (0.04 short) |
+| 3.5 | 24 | **+1.121** | 0.002 | 710 | 88 | 26.2% | SR+placebo pass |
+| 3.5 | 48 | **+1.305** | 0.002 | 710 | 88 | 33.7% | SR+placebo pass |
+
+**3 of 6 configs** clear both net SR and placebo independently (thr2.5/H24,
+thr3.5/H24, thr3.5/H48) — the first time in the post-§44 program that more
+than one config, let alone half the grid, clears both axes at once (§45-§47
+never had a single config clear placebo below p=0.06). DSR is computed only
+for the best-by-net-SR config per spec: **thr=3.5, H=48** — net SR +1.305,
+placebo p=0.002 both families (the minimum attainable at 500 draws), **DSR
+0.479** at ledger-cumulative `n_trials_at_eval=100` — **below the 0.9
+floor. Gate: 2/3, FAIL.**
+
+### 49.5 Forensic verification (`data/rebuild/liq_fade/forensics.md`)
+
+Full report: `data/rebuild/liq_fade/forensics.md`, script
+`scripts/liq_fade_forensics.py` (read-only re-derivation, no registered
+script modified). The independent recomputation reproduces the ledger's net
+SR (1.3047) and `sr_stress_20bps` (1.2290) to 4 decimals from a fresh reload
+of the 1h panel — the forensic numbers below are not vulnerable to a stale
+copy of the engine.
+
+1. **Inversion (F1)**: same 710 events, weights negated (short instead of
+   long-fade): **long +1.305 vs short −1.795** — a 3.1 SR gap, the cleanest
+   sign separation of any post-rebuild lead (§47's H=1 case was only
+   −0.119 vs −0.835).
+2. **Concentration (F2)**: HHI over per-symbol gross P&L = **0.099** (≈ as
+   broad as 10 equal contributors across 85 active symbols); top-5 share
+   **45.2%**, no single symbol above 17% (DOGEUSDT). 3 of the top 5 are
+   meme/high-beta retail names (DOGE, PEPE, SHIB — 30.4% combined),
+   consistent with the forced-liquidation mechanism concentrating in thin,
+   high-leverage retail books rather than an artifact of one anomalous coin.
+3. **Yearly stability (F3)**: net SR by year — 2021 +2.663, 2022 −0.347,
+   2023 +1.307, 2024 +2.353, 2025 (Q1 only) −0.203. Strongly positive across
+   3 of 5 periods spanning a bull year, a recovery year, and a strong 2024
+   run; weakest in the 2022 bear/FTX year. Not a single-regime artifact.
+4. **Event-count honesty (F4)**: 206/130/181/177/16 events across
+   2021-2025Q1 (710 total, 88 symbols, 4.25y) — every full year clears
+   ≥30/config comfortably; only the partial Q1-2025 slice is thin (16,
+   proportionate to a quieter quarter, not a data hole).
+5. **DSR sensitivity (F5, diagnostic, non-gating — verdict unchanged)**: at
+   `n_trials=6` (this experiment's own grid, isolated from ledger history),
+   the identical signal gives **DSR = 0.881** — 0.02 short of the 0.9 floor.
+   At the registered ledger-cumulative `n_trials=100`, DSR = **0.479**
+   (exact match to `dev_results.json`). The gate correctly uses the
+   ledger-cumulative count per house methodology, and this is *not* grounds
+   to override the FAIL — but it is the clearest evidence yet that this
+   negative is a **multiplicity/power problem**, not an absence-of-effect
+   problem: nothing in §45-§47 came within 30 points of the DSR floor even
+   evaluated in isolation.
+6. **Cost sensitivity (F6)**: net SR 10bps=+1.305, 20bps=+1.229 (matches the
+   registered stress row exactly), 30bps=+1.153 — roughly linear decay,
+   ~0.08 SR per +10bps; even at 3× the registered cost assumption the
+   config still clears the 1.0 floor.
+7. **P2-vs-grid reconciliation (F7)**: naive linear extrapolation of the
+   probe's +2.77%/event × 710 events × 0.10 notional = +196.8% undiscounted;
+   realized compounded portfolio return over the same 4.24y = +311.7% gross
+   / +261.5% net. Same order of magnitude (≈1.6×, not 10×) — the grid
+   result is not decoupled from the P2 event-study that justified running
+   it; the gap is explained by compounding over years and by up-to-10
+   concurrent overlapping positions that the per-event P2 average, which
+   scores each event in isolation, does not capture.
+
+### 49.6 Verdict
+
+**Dev-gate NEGATIVE, 2/3** (net SR pass, placebo pass, DSR fail). This is
+the **first post-rebuild lead (of §45-§49) to produce a genuine timing
+signal that survives the dual-family placebo** — p=0.002 in both families
+at the minimum attainable resolution, versus p≥0.06 for the best any prior
+lead achieved — and the forensic pass found no plumbing bug, no
+single-symbol or single-regime artifact, and no underpowered sample that
+could explain the SR away. The failure mode is explicitly **multiplicity
+and effect-size relative to the house's ledger-cumulative DSR bar, not
+absence of an effect**: the same signal would narrowly clear DSR (0.881 vs
+0.9) evaluated on this experiment's own 6 trials, and only fails once the
+100-trial cumulative cost of every prior post-rebuild experiment is charged
+against it. The house discipline is deliberately punitive about
+multiplicity for exactly this reason — a good-looking result late in a long
+sequence of trials is the textbook case DSR exists to catch — so the FAIL
+stands and the holdout stays **sealed and unspent**.
+
+### 49.7 Limitations
+
+1. **Proxy, not raw liquidation data.** The trigger is a return-z ×
+   volume-z proxy for cascades, not Coinglass liquidation prints — sub-daily
+   liquidation data is paywalled (§49.2). P0/P1 validate the proxy against
+   daily ground truth (5/5 benchmark dates, two independent signal families
+   agree) but sub-daily proxy-vs-ground-truth concordance is untested
+   because the ground truth itself does not exist at 1h resolution.
+2. **Binance-only.** Both the price/volume proxy and the execution venue are
+   Binance USD-M futures; cross-venue liquidation cascades (where the
+   triggering flow originates on a different exchange) are invisible to
+   this detector by construction.
+3. **10bps/side cost assumption.** F6 shows the result is not cost-fragile
+   up to 30bps, but no venue-specific slippage model, funding (excluded by
+   design), or market-impact term beyond the flat bps assumption is
+   included.
+4. **No terminal unwind cost.** The engine charges turnover costs on every
+   entry/exit but the dev-window return series is not adjusted for a
+   final forced liquidation of any position still open at the window
+   boundary (`boundary_open_events=0` at the best config in this run, so it
+   does not bind here, but is not a general property of the engine).
+
+### 49.8 What would change the verdict
+
+Not a holdout spend on this experiment — DSR failed with margin (0.479 vs
+0.9) and lowering the bar or re-litigating the multiplicity count
+post-hoc would be exactly the selection bias the house methodology exists
+to prevent. The house-consistent path is a **fresh, independently
+pre-registered replication** — a new experiment with its own trial budget,
+either on a later/rolled-forward data window or a distinct instrument
+family (e.g. a non-Binance venue, once/if sub-daily liquidation data
+becomes affordable) — that would need to clear DSR on its own terms. A
+second independent pass clearing the gate at a low own-experiment
+`n_trials` would make a strong case for treating the effect as real
+despite the first attempt's ledger-cumulative DSR fail; this experiment
+alone does not license that conclusion.
+
+### Artifacts
+
+- Spec + registration: `docs/superpowers/specs/2026-07-28-liq-fade-intraday-design.md`
+  (`300c89a`), `data/rebuild/gates.json` key `liq_fade_i1` (`14b2a6b`, pre-run)
+- Module + tests: `tradingagents/xsect/liq_fade.py` (`ba48a24` trigger,
+  `496baee` event weights, `01cb887` hourly P&L; `2d2af81` universe
+  selection), `tests/xsect/test_liq_fade_*.py` (50 tests)
+- Dev grid runner: `scripts/liq_fade_dev.py` (`6a5cdcd` probes, `28d8401`
+  probe hardening, `ac73f1d` grid + placebo + DSR + ledger, `a5f0ab6`
+  config-hash/DSR guard fix)
+- Results: `51615fb` (probes) — `data/rebuild/liq_fade/probes.json`;
+  `b17e6c7` (grid) — `data/rebuild/liq_fade/dev_results.json`
+- Forensics: `data/rebuild/liq_fade/forensics.md`,
+  `scripts/liq_fade_forensics.py` (both committed, per house convention for
+  a result this close to gate)
