@@ -1566,7 +1566,8 @@ def gate_config(net_sr: float, placebo_p_worse: float, dsr: float,
     return {"checks": checks, "pass": all(checks.values())}
 
 
-def _unique_config_hashes(ledger_path: Path = DEFAULT_LEDGER) -> int:
+def unique_config_hashes(ledger_path: Path = DEFAULT_LEDGER) -> int:
+    """Distinct config evaluations in the ledger — the DSR denominator source."""
     seen = set()
     if ledger_path.exists():
         for line in ledger_path.read_text().splitlines():
@@ -1575,7 +1576,15 @@ def _unique_config_hashes(ledger_path: Path = DEFAULT_LEDGER) -> int:
     return len(seen)
 
 
-def run_grid(days, klines, fund, universe, symbols, n_placebo: int = N_PLACEBO) -> dict:
+def run_grid(days, klines, fund, universe, symbols, n_placebo: int = N_PLACEBO,
+             log: bool = True) -> dict:
+    """Frozen 4-config grid.
+
+    ``log=False`` suppresses ledger writes for smoke runs. A reduced-placebo
+    smoke shares config_hash with the real run, so it would not inflate the
+    DSR denominator — but it would put rows carrying 5-draw placebo p-values
+    into the ledger that every DSR count in the thesis is audited against.
+    """
     dev = days[(days >= DEV[0]) & (days <= DEV[1])]
     R = simple_returns(klines, days, symbols).loc[dev]
     M = membership_mask(days, symbols, universe).loc[dev]
@@ -1586,7 +1595,7 @@ def run_grid(days, klines, fund, universe, symbols, n_placebo: int = N_PLACEBO) 
         controls[kind] = sharpe_365(run_config(C, R, M & C.notna(),
                                                LEG_FRAC["decile"]))
 
-    ledger_before = _unique_config_hashes()
+    ledger_before = unique_config_hashes()
     rng = np.random.default_rng(20260730)
     results = []
     for metric, breadth in GRID:
@@ -1626,7 +1635,8 @@ def run_grid(days, klines, fund, universe, symbols, n_placebo: int = N_PLACEBO) 
                    "delta_sr_vs_c1": d_c1, "delta_sr_vs_c2": d_c2,
                    **{f"gate_{k}": v for k, v in gate["checks"].items()},
                    "gate_pass": gate["pass"]}
-        log_trial("value_xs_t1", cfg, DEV, metrics)
+        if log:
+            log_trial("value_xs_t1", cfg, DEV, metrics)
         results.append({"config": cfg, "metrics": metrics})
         print(f"{metric}/{breadth}: SR {net_sr:+.3f} p {p_worse:.4f} "
               f"DSR {dsr_own:.3f} dC1 {d_c1:+.3f} dC2 {d_c2:+.3f} "
@@ -1655,10 +1665,19 @@ Expected: 12 passed
 Run: `uv run --no-sync python -c "
 import scripts.value_xs_dev as v
 days,k,f,u,s = v._load_all()
-out = v.run_grid(days,k,f,u,s,n_placebo=5)
+out = v.run_grid(days,k,f,u,s,n_placebo=5,log=False)
 print('configs:', len(out['results']))
 "`
-Expected: 4 config lines print, `configs: 4`. This writes 4 ledger rows — that is intended and correct; the ledger records every evaluation.
+Expected: 4 config lines print, `configs: 4`. `log=False` is required — a smoke run must not write ledger rows.
+
+Confirm the ledger is untouched:
+```bash
+uv run --no-sync python -c "
+import json
+n=sum(1 for l in open('data/rebuild/trial_ledger.jsonl') if l.strip())
+print('ledger rows:', n, '(expect 120 — unchanged by smoke)')
+"
+```
 
 - [ ] **Step 6: Run the real grid**
 
@@ -1888,12 +1907,16 @@ def test_manifest_and_vintage_written():
     assert json.loads(v.read_text())["source_url"].startswith("https://defillama-datasets")
 
 
-def test_every_stored_payload_has_an_event_log():
+def test_most_stored_payloads_have_an_event_log():
+    """Reports the empty ones AND bounds them: a store where most protocols
+    carry no event log cannot support a PIT reconstruction."""
     m = json.loads((ROOT / "data" / "xsect" / "unlocks_manifest.json").read_text())
-    no_events = [k for k, val in m.items() if val["n_events"] == 0]
-    # reported, not silently dropped
-    assert isinstance(no_events, list)
-    print(f"protocols with zero events: {len(no_events)}")
+    no_events = sorted(k for k, val in m.items() if val["n_events"] == 0)
+    print(f"protocols with zero events ({len(no_events)}/{len(m)}): {no_events}")
+    assert len(no_events) <= 0.2 * len(m), (
+        f"{len(no_events)}/{len(m)} protocols have empty event logs; "
+        f"the as-of-t reconstruction has nothing to replay for those names"
+    )
 ```
 
 - [ ] **Step 2: Run tests to verify they fail**
@@ -2636,7 +2659,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from scripts.fetch_xsect_unlocks import PROTOCOL_TO_SYMBOL  # noqa: E402
 from scripts.value_xs_dev import (  # noqa: E402
     circular_shift_columns, dsr_or_nan, gate_config, rank_shuffle_columns,
-    run_config, _unique_config_hashes,
+    run_config, unique_config_hashes, verdict_from_probes,
 )
 from tradingagents.rebuild.ledger import log_trial  # noqa: E402
 from tradingagents.xsect.ls_common import sharpe_365  # noqa: E402
@@ -2704,10 +2727,6 @@ def event_study_forward_return(events: list[tuple[str, pd.Timestamp]],
         if len(seg) == horizon:
             vals.append(float(seg.sum()))
     return float(np.mean(vals)) if vals else 0.0
-
-
-def verdict_from_probes(p0: dict, p1: dict, p2: dict) -> str:
-    return "CONTINUE" if all(p.get("pass") for p in (p0, p1, p2)) else "NEGATIVE-at-probe"
 
 
 def _load_all():
@@ -2782,7 +2801,9 @@ def probe_p2_event_study(days, events, klines, symbols) -> dict:
                     "for the probe to be informative"}
 
 
-def run_grid(days, klines, events, universe, symbols, n_placebo: int = N_PLACEBO) -> dict:
+def run_grid(days, klines, events, universe, symbols, n_placebo: int = N_PLACEBO,
+             log: bool = True) -> dict:
+    """Frozen 2-config grid. ``log=False`` suppresses ledger writes for smoke runs."""
     dev = days[(days >= DEV[0]) & (days <= DEV[1])]
     R = simple_returns(klines, days, symbols).loc[dev]
     M = membership_mask(days, symbols, universe).loc[dev]
@@ -2794,7 +2815,7 @@ def run_grid(days, klines, events, universe, symbols, n_placebo: int = N_PLACEBO
     C2 = size_control(klines, supply, days, symbols, LAG_DAYS).loc[dev]
     controls["size"] = sharpe_365(run_config(C2, R, M & C2.notna(), LEG_FRAC_DECILE))
 
-    ledger_before = _unique_config_hashes()
+    ledger_before = unique_config_hashes()
     rng = np.random.default_rng(20260730)
     results = []
     for horizon in GRID:
@@ -2834,7 +2855,8 @@ def run_grid(days, klines, events, universe, symbols, n_placebo: int = N_PLACEBO
                    "mean_amendment_share": amend,
                    **{f"gate_{k}": v for k, v in gate["checks"].items()},
                    "gate_pass": gate["pass"]}
-        log_trial("unlock_xs_t1", cfg, DEV, metrics)
+        if log:
+            log_trial("unlock_xs_t1", cfg, DEV, metrics)
         results.append({"config": cfg, "metrics": metrics})
         print(f"N={horizon}: SR {net_sr:+.3f} p {p_worse:.4f} DSR {dsr_own:.3f} "
               f"dC1 {d_c1:+.3f} dC2 {d_c2:+.3f} amend {amend:.1%} "
@@ -2976,6 +2998,6 @@ git push -u origin feature/value-unlock-xs
 
 **Spec coverage.** Every spec section maps to a task: registration → Task 2; value universe/signal/lag/controls/grid/probes → Tasks 3–7; unlock PIT reconstruction/universe/signal/controls/grid/probes → Tasks 9–12; shared portfolio, P&L, costs → Task 1 plus `run_config`; windows and sealed holdout → Global Constraints, enforced by `log_trial` and audited in Tasks 8 and 13; stop rule → Tasks 8 F-sections and 13 F9; data build with vintage stamps → Tasks 3 and 9; testing discipline (mutation kill-tests, planted signal, placebo re-derivation, honest denominators) → Tasks 5, 7, 10, 8, 13; lead #5 retirement → Task 13 Step 3; deliverables → Tasks 8 and 13.
 
-**Type consistency checked.** `ls_weights`, `sharpe_365`, `zero_funding` (Task 1) are used with identical signatures in Tasks 6, 7, 12. `run_config`, `circular_shift_columns`, `rank_shuffle_columns`, `dsr_or_nan`, `gate_config`, `_unique_config_hashes` are defined once in Task 7 and imported by Task 12 rather than redefined. `membership_mask`, `simple_returns`, `control_signal` are defined in Task 5 and reused by Task 12. `parse_events`/`schedule_as_of`/`unlocked_between`/`circulating_as_of`/`amendment_share` (Task 10) are consumed with matching signatures in Tasks 11 and 12.
+**Type consistency checked.** `ls_weights`, `sharpe_365`, `zero_funding` (Task 1) are used with identical signatures in Tasks 6, 7, 12. `run_config`, `circular_shift_columns`, `rank_shuffle_columns`, `dsr_or_nan`, `gate_config`, `unique_config_hashes`, `verdict_from_probes` are defined once (Tasks 6–7) and imported by Task 12 rather than redefined. `membership_mask`, `simple_returns`, `control_signal` are defined in Task 5 and reused by Task 12. `parse_events`/`schedule_as_of`/`unlocked_between`/`circulating_as_of`/`amendment_share` (Task 10) are consumed with matching signatures in Tasks 11 and 12.
 
 **Known risk carried deliberately.** `probe_p0_supply` compares the reconstruction against a CoinMetrics-implied supply that exists only for the small overlap between the 129 unlock names and the 63 fundamentals names. If that overlap is empty the probe returns `pass: False` with `note: "no overlap names to compare"` — an honest STOP rather than a vacuous pass. Should that happen, the correct response is a written pre-run amendment substituting a CoinGecko circulating-supply source, not lowering the probe.
