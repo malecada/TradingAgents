@@ -3,15 +3,17 @@
 Updated: 2026-07-30 (program kickoff)
 
 - **Phase:** 1 (harness + Tier 0/1 classical battery)
-- **Last completed:** Task 13 code (SeasonalAR/Ar1/Dar1, commit `9497d0d`).
-  **T3 daily battery LANDED — first candidate PASS:** HARQ beats HAR-levels
-  both symbols (BTC ΔQLIKE 11.6% dm_p 1.0e-3; ETH 15.4% dm_p 4.8e-12);
-  GARCH ≤ HAR; HAR>EWMA on BTC (lit-consistent); ETH levels-HAR outlier-weak.
-- **In flight (background):** t1_t1t2_24h battery; forensics_t3 kill-tests
-  (K1 shuffled-target, K2 rq-leak mutation).
-- **Next action:** collect forensics + T1/T2 battery → write p1_tier1 reports;
-  then T4/T6 battery runs
-  (`docs/superpowers/plans/2026-07-30-prediction-lab-phase1.md`)
+- **Last completed:** T1/T2 daily battery — **NO-SKILL both cells**
+  (lit-consistent; report p1_tier1_t1t2.md, commit `9b741c2`). Forensics v1
+  on the T3 HARQ pass: K1-ETH FAIL exposed **levels-HAR baseline fragility**
+  (HARQ "beat" it even on shuffled data → margin partly baseline-badness);
+  K2 leak-probe was mis-designed (interaction channel). v1 verdicts recorded
+  in forensics_t3.json.
+- **In flight (background):** forensics v2 (A2 rq alignment audit; K3 pairwise
+  DM HARQ vs log_har + EWMA on real data — the charter-A1 strongest-baseline
+  test; K4 shuffled vs robust reference).
+- **Next action:** collect forensics v2 → T3 verdict + report; launch t1_t4t6
+  battery (`docs/superpowers/plans/2026-07-30-prediction-lab-phase1.md`)
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
 - **Ledger:** `data/predlab/trial_ledger.jsonl` (create on first registration)
