@@ -30,13 +30,21 @@ class ArimaForecaster(Forecaster):
     name = "arima_aic"
 
     def __init__(self, orders=_DEFAULT_ORDERS, refit_every: int = 5,
-                 window_cap: "int | None" = None, select_once: bool = False):
+                 window_cap: "int | None" = None, select_once: bool = False,
+                 use_extend_cache: bool = False):
         self.orders = tuple(tuple(o) for o in orders)
         self.refit_every = refit_every  # informational; cadence enforced by runner
         self.window_cap = window_cap  # declared 1h amendment: cap conditioning window
         self.select_once = select_once  # freeze AIC-chosen order after first fit
+        # extend-cache: sequential predicts append one obs to the applied filter
+        # (statsmodels .extend) instead of re-applying the full window (~20x).
+        # With window_cap the window drifts by <= refit_every bars between
+        # refits (reset at fit) — parameters are stale anyway at that cadence.
+        self.use_extend_cache = use_extend_cache
         self._res = None
         self._order = None
+        self._applied = None
+        self._cache_n = -1
 
     def fit(self, y_train, X_train=None):
         y = np.asarray(y_train, dtype=np.float64)
@@ -58,17 +66,29 @@ class ArimaForecaster(Forecaster):
                 continue
         if best_res is not None:
             self._res, self._order = best_res, best_order
+        self._applied = None
+        self._cache_n = -1
 
     def predict(self, y_hist, x_now=None):
-        y = np.asarray(y_hist, dtype=np.float64)
-        y = y[~np.isnan(y)]
-        if self.window_cap:
-            y = y[-self.window_cap :]
+        y_full = np.asarray(y_hist, dtype=np.float64)
+        y_full = y_full[~np.isnan(y_full)]
+        y = y_full[-self.window_cap :] if self.window_cap else y_full
         if self._res is None or len(y) < 10:
             return 0.0
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
+            n = len(y_full)
+            if self.use_extend_cache and self._applied is not None:
+                if n == self._cache_n:
+                    return float(self._applied.forecast(1)[0])
+                if n == self._cache_n + 1:
+                    self._applied = self._applied.extend(y_full[-1:])
+                    self._cache_n = n
+                    return float(self._applied.forecast(1)[0])
             applied = self._res.apply(y, refit=False)
+            if self.use_extend_cache:
+                self._applied = applied
+                self._cache_n = n
             return float(applied.forecast(1)[0])
 
 
@@ -127,6 +147,32 @@ class EtsForecaster(Forecaster):
             prior = np.concatenate([[y[0]], levels[:-1]])
             sse = float(np.sum((y[1:] - prior) ** 2))
             return float(levels[-1]), sse
+        if beta is not None and len(y) > 4:
+            # Holt as an exact 2nd-order transfer function on the forecast
+            # sequence f_t = l_t + b_t:
+            #   f_t = (2-a-ab) f_{t-1} - (1-a) f_{t-2} + a(1+b) y_t - a y_{t-1}
+            # bootstrapped with two reference steps for exact initial state;
+            # pinned vs _run_reference at rtol 1e-9.
+            from scipy.signal import lfilter, lfiltic
+
+            a1 = 2.0 - alpha - alpha * beta
+            a2 = 1.0 - alpha
+            b_c = [alpha * (1.0 + beta), -alpha]
+            a_c = [1.0, -a1, a2]
+            level, trend, sse = y[0], 0.0, 0.0
+            fs = [level + trend]
+            for v in y[1:3]:
+                f = level + trend
+                sse += (v - f) ** 2
+                new_level = alpha * v + (1.0 - alpha) * (level + trend)
+                trend = beta * (new_level - level) + (1.0 - beta) * trend
+                level = new_level
+                fs.append(level + trend)
+            zi = lfiltic(b_c, a_c, y=[fs[2], fs[1]], x=[y[2], y[1]])
+            f_rest, _ = lfilter(b_c, a_c, y[3:], zi=zi)
+            fs_all = np.concatenate([fs, f_rest])
+            sse += float(np.sum((y[3:] - fs_all[2:-1]) ** 2))
+            return float(fs_all[-1]), sse
         return EtsForecaster._run_reference(y, alpha, beta)
 
     def fit(self, y_train, X_train=None):

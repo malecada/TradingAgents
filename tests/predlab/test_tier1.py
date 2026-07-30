@@ -72,6 +72,33 @@ def test_logit_lags_learns_sign_persistence():
     assert lg["pt_p"] < 1e-4  # direction skill via PT
 
 
+def test_arima_extend_cache_matches_apply_path():
+    rng = np.random.default_rng(31)
+    y = rng.normal(0, 1, 900)
+    slow = tier1.ArimaForecaster(select_once=True)
+    fast = tier1.ArimaForecaster(select_once=True, use_extend_cache=True)
+    slow.fit(y[:400])
+    fast.fit(y[:400])
+    assert slow._order == fast._order
+    # sequential predicts (runner access pattern) must match the apply path
+    for n in range(400, 470):
+        a = slow.predict(y[:n])
+        b = fast.predict(y[:n])
+        assert np.isclose(a, b, rtol=1e-7), (n, a, b)
+    # non-sequential jump falls back cleanly
+    assert np.isclose(slow.predict(y[:600]), fast.predict(y[:600]), rtol=1e-7)
+
+
+def test_aan_predict_lfilter_matches_reference():
+    rng = np.random.default_rng(32)
+    y = rng.normal(0, 1, 700).cumsum() + 5.0
+    for a in (0.05, 0.3, 0.5, 0.95):
+        for b in (0.05, 0.4, 0.95):
+            ref, _ = tier1.EtsForecaster._run_reference(y, a, b)
+            fast, _ = tier1.EtsForecaster._run(y, a, b)
+            assert np.isclose(fast, ref, rtol=1e-9), (a, b, fast, ref)
+
+
 def test_ets_ann_vectorized_sse_matches_loop():
     rng = np.random.default_rng(21)
     y = rng.normal(0, 1, 800).cumsum()

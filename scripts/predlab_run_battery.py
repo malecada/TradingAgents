@@ -253,7 +253,8 @@ def run_tier1_1h(gates_key: str) -> None:
             if tgt == "T1_ret":
                 models = [baselines.RWZero(),
                           tier1.ArimaForecaster(refit_every=refit, window_cap=CAP_1H,
-                                                select_once=True),
+                                                select_once=True,
+                                                use_extend_cache=True),
                           tier1.EtsForecaster("ANN", window_cap=CAP_1H),
                           tier1.EtsForecaster("AAN", window_cap=CAP_1H)]
             else:
