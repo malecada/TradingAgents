@@ -3,10 +3,11 @@
 Updated: 2026-07-30 (program kickoff)
 
 - **Phase:** 1 (harness + Tier 0/1 classical battery)
-- **Last completed:** Plan Task 6 — 5m fetcher shipped (38 tests green, commit
-  `33691de`); **fetch running in background** (BTC+ETH 2020-01→now, Vision bulk)
-- **Next action:** Plan Task 8 — registry + Phase-1 registration (data-independent;
-  Task 7 RV builder waits for the fetch to finish)
+- **Last completed:** Plan Task 8 — registry + **Phase-1 registration FROZEN**
+  (28 cells, floors, grids; pinned by test_p1_registration.py), 46 tests green,
+  commit `8013a41`. P1-03 registration half done (plumbing probes pending Task 9).
+- **Next action:** Plan Task 7 — RV builder (fetch: BTC parquet landed, ETH in
+  flight; if still running, do Task 9 runner/baselines synthetic parts first)
   (`docs/superpowers/plans/2026-07-30-prediction-lab-phase1.md`)
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
