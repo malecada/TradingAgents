@@ -3,9 +3,10 @@
 Updated: 2026-07-30 (program kickoff)
 
 - **Phase:** 1 (harness + Tier 0/1 classical battery)
-- **Last completed:** program setup (charter, backlog, worktree `TradingAgents-predlab`,
-  branch `research/prediction-lab` @ base `main@382d189`)
-- **Next action:** top open item in `docs/predlab/BACKLOG.md`
+- **Last completed:** Plan Task 1 — package skeleton + losses (QLIKE/MASE/SE/AE/Brier),
+  deps arch 8.0 + dieboldmariano, 7 tests green, commit `0a35ca9`
+- **Next action:** Plan Task 2 — purged rolling-origin splitter
+  (`docs/superpowers/plans/2026-07-30-prediction-lab-phase1.md`)
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
 - **Ledger:** `data/predlab/trial_ledger.jsonl` (create on first registration)
