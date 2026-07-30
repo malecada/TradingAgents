@@ -200,11 +200,45 @@ def run_tier1_t3_24h(gates_key: str) -> None:
                   f"dm_p={r['dm_p']:.4g} gw_p={r['gw_p']:.4g}")
 
 
+def run_tier1_t4t6(gates_key: str) -> None:
+    from tradingagents.predlab import tier1
+
+    entry = registry.get_experiment(gates_key)
+    proto = entry["protocol"]
+    cells = [c for c in entry["cells"]
+             if (c["target"] == "T4_vol" and c["horizon"] == "24h")
+             or c["target"] == "T6_funding"]
+    print(f"tier t1_t4t6: {len(cells)} cells")
+    for c in cells:
+        series = load_series(c["symbol"], c["horizon"], c["target"])
+        if c["target"] == "T4_vol":
+            m = SEASONAL_M[c["horizon"]]
+            models = [baselines.SeasonalNaive(m=m), baselines.Persistence(),
+                      tier1.SeasonalAR(m=m)]
+            base = f"seasonal_naive_m{m}"
+            loss, mase_m = "mase", m
+        else:
+            models = [baselines.Persistence(), tier1.Ar1(), tier1.Dar1()]
+            base = "ar1"  # registered strong baseline (Tier-1 asks: does richer beat AR1?)
+            loss, mase_m = "se", 1
+        cell = {
+            "cell": c["cell"], "target": c["target"], "horizon_bars": 1,
+            "strong_baseline": base, "loss": loss, "mase_m": mase_m,
+            "min_train": proto["min_train"].get(c["horizon"], 365), "step": 1,
+            "refit_every": 1, "embargo": 0,
+            "eval_start": entry["dev_window"][0],
+        }
+        out = runner.run_cell(cell, series, models, gates_key=gates_key, tier="t1")
+        for _, r in out.iterrows():
+            print(f"  {c['cell']} {r['model']}: loss={r['loss_mean']:.6g} "
+                  f"dm_p={r['dm_p']:.4g} cw_p={r['cw_p']:.4g}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--gates-key", default="predlab_p1_classical")
     ap.add_argument("--tier", required=True,
-                    choices=["t0", "t1_t1t2_24h", "t1_t3_24h"])
+                    choices=["t0", "t1_t1t2_24h", "t1_t3_24h", "t1_t4t6"])
     ap.add_argument("--cells", default="all")
     args = ap.parse_args()
     pattern = "*" if args.cells == "all" else args.cells
@@ -214,6 +248,8 @@ def main() -> None:
         run_tier1_t1t2_24h(args.gates_key)
     elif args.tier == "t1_t3_24h":
         run_tier1_t3_24h(args.gates_key)
+    elif args.tier == "t1_t4t6":
+        run_tier1_t4t6(args.gates_key)
 
 
 if __name__ == "__main__":
