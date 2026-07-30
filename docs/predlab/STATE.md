@@ -9,8 +9,9 @@ Updated: 2026-07-30 (program kickoff)
   SKILL-CANDIDATE (ΔMASE 16.5%/21.4%, vs best-t0 too); T6 AR(1) baseline
   wins; T1/T2 nulls. Forensic method lessons recorded (same-collapse
   shuffled-null rule; multi-seed for heavy tails). Window-cap param shipped.
-- **Next action:** register 1h compute-cap amendment in gates.json BEFORE any
-  1h result; wire + launch t1_1h and t1_7d batteries (P1-06/07)
+- **Next action:** t1_7d battery running in background (launch `bgu8ccaf9`);
+  when it lands: collect + launch t1_1h (heavy — run overnight-style in
+  background), then forensics on any PASS, reports, P1-08 roll-up
   (`docs/superpowers/plans/2026-07-30-prediction-lab-phase1.md`)
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
