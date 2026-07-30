@@ -56,12 +56,17 @@ def test_empty_fetch_asset_round_trips_datetimeindex(tmp_path, monkeypatch):
     df = fx.fetch_asset("zzz_nonexistent", "2020-01-01", "2020-01-02")
     assert isinstance(df.index, pd.DatetimeIndex)
     assert df.index.tz is not None
+    # An empty frame has no values to infer dtype from; it must be built with
+    # explicit float64 columns, or downstream consumers (np.log in
+    # value_xs.zscore_signal) crash on object dtype.
+    assert all(df[m].dtype == "float64" for m in fx.METRICS), df.dtypes.to_dict()
 
     p = tmp_path / "empty.parquet"
     df.to_parquet(p)
     df2 = pd.read_parquet(p)
     assert isinstance(df2.index, pd.DatetimeIndex)
     assert df2.index.tz is not None
+    assert all(df2[m].dtype == "float64" for m in fx.METRICS), df2.dtypes.to_dict()
 
 
 def test_end_past_holdout_margin_is_rejected():

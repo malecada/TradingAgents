@@ -46,7 +46,7 @@ def value_ratio(fund: dict, metric: str, all_days: pd.DatetimeIndex,
         num = d[METRIC_NUM]
         r = num / den.where(den > 0)
         cols[sym] = r
-    return pd.DataFrame(cols, index=all_days).sort_index(axis=1)
+    return pd.DataFrame(cols, index=all_days).astype("float64").sort_index(axis=1)
 
 
 def zscore_signal(ratio: pd.DataFrame, lag_days: int = 2) -> pd.DataFrame:

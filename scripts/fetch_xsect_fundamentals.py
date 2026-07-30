@@ -119,8 +119,10 @@ def fetch_asset(asset: str, start: str, end: str) -> pd.DataFrame:
         if url:
             time.sleep(0.2)
     if not rows:
-        return pd.DataFrame(columns=METRICS,
-                            index=pd.DatetimeIndex([], tz="UTC", name="time"))
+        return pd.DataFrame(
+            {m: pd.Series(dtype="float64") for m in METRICS},
+            index=pd.DatetimeIndex([], tz="UTC", name="time"),
+        )
     df = pd.DataFrame(rows)
     df["time"] = pd.to_datetime(df["time"], utc=True).dt.normalize()
     df = df.set_index("time").sort_index()

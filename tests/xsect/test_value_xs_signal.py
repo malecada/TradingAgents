@@ -33,6 +33,31 @@ def test_ratio_is_nan_before_window_is_full():
     assert R.loc[days[10], "AUSDT"] != R.loc[days[10], "AUSDT"]   # NaN
 
 
+def test_value_ratio_coerces_empty_object_dtype_frame_to_float64():
+    """Regression pin: assets with zero CoinMetrics rows (bnb, eos_eth,
+    trx_eth) round-trip through the fundamentals store as an empty,
+    object-dtype frame (no values to infer a numeric dtype from). value_ratio
+    is a public function whose declared output is a numeric ratio matrix, so
+    it must not depend on every caller's input frames being perfectly typed
+    -- an object-dtype input must not crash np.log downstream in
+    zscore_signal, and the output must be float64 regardless."""
+    days = pd.date_range("2022-01-01", periods=40, freq="D", tz="UTC")
+    normal = _fund(days, 100.0, 50.0, 1000.0)
+    empty_object = pd.DataFrame(
+        columns=["TxCnt", "AdrActCnt", "CapMrktCurUSD"],
+        index=pd.DatetimeIndex([], tz="UTC", name="time"),
+    )
+    assert empty_object["TxCnt"].dtype == object  # sanity: reproduces the bug's precondition
+
+    f = {"AUSDT": normal, "ZUSDT": empty_object}
+    R = value_ratio(f, "nvt_proxy", days, window=30)
+
+    assert R["AUSDT"].dtype == np.float64
+    assert R["ZUSDT"].dtype == np.float64
+    assert R["ZUSDT"].isna().all()
+    zscore_signal(R, lag_days=2)  # must not raise (np.log on object dtype)
+
+
 def test_zscore_is_cross_sectional_and_lagged():
     days = pd.date_range("2022-01-01", periods=5, freq="D", tz="UTC")
     R = pd.DataFrame({"A": [1.0, 2, 3, 4, 5], "B": [5.0, 4, 3, 2, 1],
