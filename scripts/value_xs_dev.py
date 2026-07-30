@@ -83,6 +83,31 @@ P0_LIVE_VERIFICATION = {
              "t-2 convention is conservative for the true vendor lag"),
 }
 
+# Fix round 3/5 (2026-07-30) Finding 3: document the vendor-frontier scope
+# rather than expanding VENDOR_REFERENCE_ASSETS toward the universe tail.
+# xtz/dot/bsv have coverage that genuinely ends in 2022-23 (already
+# disclosed for value_xs_t1's six partial/empty names); including them as
+# lag references would register multi-hundred-day "lags" that are dead-
+# asset artifacts, not publishing delay -- the same conflation that
+# already produced the superseded 443- and 471-day measurements.
+P0_VENDOR_SCOPE_NOTE = (
+    "measured_lag_days / vendor_max_time reflect CoinMetrics' publishing "
+    "cadence on actively-covered majors (vendor_reference_assets) -- how "
+    "many days behind fetch time the vendor's newest datapoint is for "
+    "assets it is actively publishing. This does NOT measure per-asset "
+    "coverage termination: several value_xs_t1 candidates (bnb, eos_eth, "
+    "trx_eth empty; xtz, dot, bsv truncated in 2022-23) have genuinely "
+    "stopped receiving CoinMetrics updates years ago -- a separate, "
+    "already-disclosed gap tracked per-asset in "
+    "fundamentals_manifest.json's rows/first/last fields, not a "
+    "publishing-lag issue. A thin-coverage or delisted-on-CM asset would "
+    "register as a large apparent lag for reasons unrelated to publishing "
+    "cadence if used as a lag reference, which is exactly why "
+    "vendor_reference_assets is restricted to majors with full, "
+    "continuous coverage instead of being expanded toward the universe "
+    "tail."
+)
+
 DEV = ("2021-01-01", "2025-03-31")
 WARMUP_START = "2020-06-01"        # 30d rolling windows warm up before DEV[0]
 MAX_LOAD_END = "2025-03-31"        # holdout starts 2025-04-01; never load past this
@@ -113,11 +138,25 @@ def verdict_from_probes(p0: dict, p1: dict, p2: dict) -> str:
 
 
 def _load_all():
+    # Fix round 3/5 Finding 2: klines (data/xsect/klines/) is shared,
+    # continuously-updated infra, unlike the fundamentals store, which is
+    # deliberately capped at MAX_END. Loading it unbounded read rows deep
+    # inside the sealed holdout into memory (a letter-of-the-line breach of
+    # "never load data past MAX_LOAD_END", even though no probe outcome
+    # depended on that content) and made kline_last -- previously persisted
+    # into probes.json -- change on every re-run, which is wrong for a
+    # disclosure artifact that is supposed to be stable. Truncate at load
+    # time and never surface an unbounded date from this store again.
     days = pd.date_range(WARMUP_START, MAX_LOAD_END, freq="D", tz="UTC")
-    klines = load_klines(KLINES_DIR)
     universe = json.loads(UNIV_FILE.read_text())
     symbols = sorted({s for v in universe.values() for s in v})
-    klines = {s: d for s, d in klines.items() if s in symbols}
+    klines = {s: d.loc[:MAX_LOAD_END] for s, d in load_klines(KLINES_DIR).items()
+             if s in symbols}
+    max_load_end_ts = pd.Timestamp(MAX_LOAD_END, tz="UTC")
+    assert all(d.index.max() <= max_load_end_ts for d in klines.values() if len(d)), (
+        "a klines frame exceeds MAX_LOAD_END after truncation -- the sealed "
+        "holdout boundary must never be crossed, even in memory"
+    )
     fund = load_fundamentals(FUND_DIR, ASSET_TO_SYMBOL)
     fund = {s: d for s, d in fund.items() if s in symbols}
     return days, klines, fund, universe, symbols
@@ -177,12 +216,30 @@ def probe_p0_lag(days, klines, fund) -> dict:
     persisted in the vintage stamp (see ``_lag_from_vintage``) -- it never
     diffs two stores' raw endpoints and never makes a live network call at
     run time. See the superseded_* / live_verification fields below.
+
+    ``kline_last`` is deliberately not reported (fix round 3, Finding 2):
+    klines is a shared, continuously-updated store, so its raw endpoint is
+    both irrelevant to the lag arithmetic (unused since fix round 2) and
+    non-reproducible in a disclosure artifact that is supposed to be
+    stable across re-runs. ``stamp_alignment.dev_overlap_end`` is the
+    deterministic witness in its place.
     """
     fl = max(d.index.max() for d in fund.values())
-    kl = max(d.index.max() for d in klines.values())
 
     vintage = json.loads(FUND_VINTAGE_FILE.read_text())
-    lag_result = _lag_from_vintage(vintage)
+    try:
+        lag_result = _lag_from_vintage(vintage)
+    except VintageStampStale as e:
+        # Fix round 3, Finding 1: fold the loud failure into the normal
+        # STOP contract instead of letting it propagate as an uncaught
+        # exception -- main() must still exit 2 and write probes.json
+        # recording *why*, not die with Python's default exit 1 and no
+        # artifact. This is the same bug class that cost two rounds: a
+        # failure that is loud in a unit test but not wired into the
+        # contract the rest of the pipeline depends on.
+        return {"probe": "P0_publication_lag", "fund_last": str(fl)[:10],
+                "registered_lag_days": REGISTERED_LAG, "pass": False,
+                "error": "vintage_stamp_stale", "note": str(e)}
     lag, lag_ok = lag_result["lag"], lag_result["pass"]
 
     dev = days[(days >= DEV[0]) & (days <= DEV[1])]
@@ -196,15 +253,17 @@ def probe_p0_lag(days, klines, fund) -> dict:
 
     passed = bool(lag_ok and stamp_ok)
     return {"probe": "P0_publication_lag", "fund_last": str(fl)[:10],
-            "kline_last": str(kl)[:10],
             "fetched_utc": str(lag_result["fetched_utc"])[:10],
             "vendor_max_time": str(lag_result["vendor_max_time"])[:10],
             "vendor_reference_assets": vintage.get("vendor_reference_assets"),
             "vendor_metrics": vintage.get("vendor_metrics"),
+            "vendor_max_time_scope": P0_VENDOR_SCOPE_NOTE,
             "measured_lag_days": lag, "registered_lag_days": REGISTERED_LAG,
             "lag_pass": lag_ok,
             "stamp_alignment": {"tz_ok": tz_ok, "midnight_aligned_ok": midnight_ok,
-                                "dev_overlap_ok": overlap_ok, "pass": stamp_ok},
+                                "dev_overlap_ok": overlap_ok,
+                                "dev_overlap_end": str(dev.max())[:10],
+                                "pass": stamp_ok},
             "pass": passed,
             "note": ("within registered lag and stamp-aligned" if passed else
                      "measured lag exceeds registered_lag_days and/or a "
@@ -216,9 +275,14 @@ def probe_p0_lag(days, klines, fund) -> dict:
 
 
 def probe_p1_breadth(universe, days, symbols, fund) -> dict:
-    """Breadth probe. Gated on universe breadth (registered). Also reports the
-    honest signal-valid denominator (universe intersect non-NaN nvt_proxy
-    ratio at the registered lag) for the write-up -- not gated.
+    """Breadth probe. Gated on universe breadth (registered) -- unchanged by
+    fix round 3. Also reports the honest signal-valid denominator (universe
+    intersect non-NaN ratio at the registered lag), per metric -- not gated.
+
+    Fix round 3, Finding 4: previously nvt_proxy-only. metcalfe_proxy draws
+    on a different denominator (AdrActCnt vs TxCnt) and can have a
+    different NaN pattern, so an nvt_proxy-only figure may not describe a
+    metcalfe_proxy grid run. Both are reported, keyed by metric name.
     """
     sizes = {m: len(v) for m, v in universe.items()}
     by_year: dict[str, list[int]] = {}
@@ -228,14 +292,18 @@ def probe_p1_breadth(universe, days, symbols, fund) -> dict:
 
     dev = days[(days >= DEV[0]) & (days <= DEV[1])]
     M = membership_mask(days, symbols, universe)
-    S = zscore_signal(value_ratio(fund, "nvt_proxy", days), REGISTERED_LAG)
-    signal_valid = (M.loc[dev] & S.loc[dev].notna()).sum(axis=1)
+    median_signal_valid, min_signal_valid = {}, {}
+    for metric in ("nvt_proxy", "metcalfe_proxy"):
+        S = zscore_signal(value_ratio(fund, metric, days), REGISTERED_LAG)
+        signal_valid = (M.loc[dev] & S.loc[dev].notna()).sum(axis=1)
+        median_signal_valid[metric] = float(signal_valid.median())
+        min_signal_valid[metric] = float(signal_valid.min())
 
     return {"probe": "P1_breadth", "median_breadth": med,
             "min_breadth": min(sizes.values()),
             "breadth_by_year": {y: statistics.median(v) for y, v in sorted(by_year.items())},
-            "median_signal_valid_breadth": float(signal_valid.median()),
-            "min_signal_valid_breadth": float(signal_valid.min()),
+            "median_signal_valid_breadth": median_signal_valid,
+            "min_signal_valid_breadth": min_signal_valid,
             "floor": MIN_MEDIAN_BREADTH, "pass": bool(med >= MIN_MEDIAN_BREADTH)}
 
 

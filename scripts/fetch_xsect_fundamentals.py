@@ -193,7 +193,21 @@ def write_vintage(path: Path, source_url: str, vendor_max_time: str | None = Non
             "min(max_time) across vendor_reference_assets x vendor_metrics, "
             "1d/community frequency; captured from the catalog endpoint, not "
             "subject to the --end/MAX_END truncation applied to the stored "
-            "timeseries -- this is the true vendor frontier at fetch time"
+            "timeseries -- this is the true vendor frontier at fetch time. "
+            "SCOPE: this measures CoinMetrics' publishing cadence on "
+            "actively-covered majors (vendor_reference_assets) -- how many "
+            "days behind fetch time the vendor's newest datapoint is for "
+            "assets it is actively publishing. It does NOT measure "
+            "per-asset coverage termination: several value_xs_t1 candidates "
+            "have genuinely stopped receiving CoinMetrics updates years ago "
+            "(a separate, already-disclosed gap tracked per-asset in "
+            "fundamentals_manifest.json's rows/first/last fields, not a "
+            "publishing-lag issue). A thin-coverage or delisted-on-CM asset "
+            "would register as a large apparent lag for reasons unrelated "
+            "to publishing cadence if used as a lag reference -- which is "
+            "exactly why vendor_reference_assets is restricted to majors "
+            "with full, continuous coverage instead of being expanded "
+            "toward the universe tail."
         )
     path.write_text(json.dumps(payload, indent=1))
 

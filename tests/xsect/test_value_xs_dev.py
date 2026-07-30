@@ -1,7 +1,10 @@
+import json
+
 import numpy as np
 import pandas as pd
 import pytest
 
+import scripts.value_xs_dev as vxd
 from scripts.value_xs_dev import (VintageStampStale, _lag_from_vintage,
                                    decile_spread, measure_lag,
                                    verdict_from_probes)
@@ -75,3 +78,71 @@ def test_verdict_stops_on_any_failed_probe():
     assert verdict_from_probes(ok, ok, ok) == "CONTINUE"
     assert verdict_from_probes(ok, bad, ok) == "NEGATIVE-at-probe"
     assert verdict_from_probes(bad, ok, ok) == "NEGATIVE-at-probe"
+
+
+def test_main_exits_2_and_writes_probes_json_on_stale_vintage_stamp(tmp_path, monkeypatch):
+    # Fix round 3, Finding 1: VintageStampStale must not bypass the STOP
+    # contract. Before this fix, main() had no exception boundary around
+    # probe_p0_lag(), so a stale stamp died with Python's default exit 1
+    # and wrote no probes.json -- the same bug class that cost two rounds:
+    # a failure loud in a unit test but not wired into the contract the
+    # rest of the pipeline depends on. Uses a synthetic tmp-dir store via
+    # monkeypatch; never touches the real fundamentals/klines stores.
+    days = pd.date_range(vxd.WARMUP_START, vxd.MAX_LOAD_END, freq="D", tz="UTC")
+
+    fund_dir = tmp_path / "fundamentals"
+    fund_dir.mkdir()
+    pd.DataFrame(
+        {"AdrActCnt": np.linspace(100, 200, len(days)),
+         "TxCnt": np.linspace(1000, 2000, len(days)),
+         "CapMrktCurUSD": np.linspace(1e9, 2e9, len(days))},
+        index=days,
+    ).to_parquet(fund_dir / "testcoin.parquet")
+
+    klines_dir = tmp_path / "klines"
+    klines_dir.mkdir()
+    pd.DataFrame({"close": np.linspace(1.0, 2.0, len(days))}, index=days
+                ).to_parquet(klines_dir / "TESTUSDT.parquet")
+
+    univ_file = tmp_path / "universe.json"
+    univ_file.write_text(json.dumps({"2021-01-01": ["TESTUSDT"]}))
+
+    # Stale: no vendor_max_time key (predates fix round 2).
+    vintage_file = tmp_path / "vintage.json"
+    vintage_file.write_text(json.dumps(
+        {"fetched_utc": "2026-07-30T00:00:00+00:00", "source_url": "test",
+         "note": "test"}))
+
+    out_dir = tmp_path / "out"
+
+    monkeypatch.setattr(vxd, "FUND_DIR", fund_dir)
+    monkeypatch.setattr(vxd, "KLINES_DIR", klines_dir)
+    monkeypatch.setattr(vxd, "UNIV_FILE", univ_file)
+    monkeypatch.setattr(vxd, "FUND_VINTAGE_FILE", vintage_file)
+    monkeypatch.setattr(vxd, "OUT_DIR", out_dir)
+    monkeypatch.setattr(vxd, "ASSET_TO_SYMBOL", {"testcoin": "TESTUSDT"})
+
+    with pytest.raises(SystemExit) as exc:
+        vxd.main()
+    assert exc.value.code == 2
+
+    probes = json.loads((out_dir / "probes.json").read_text())
+    assert probes["verdict"] == "NEGATIVE-at-probe"
+    p0 = probes["probes"][0]
+    assert p0["probe"] == "P0_publication_lag"
+    assert p0["pass"] is False
+    assert p0["error"] == "vintage_stamp_stale"
+    assert "vendor_max_time" in p0["note"]
+
+
+def test_load_all_klines_never_exceed_max_load_end():
+    # Fix round 3, Finding 2: data/xsect/klines/ is a shared,
+    # continuously-updated store (observed reaching 2026-07-02 -- deep
+    # inside the sealed holdout -- before this fix). _load_all must
+    # truncate every frame at MAX_LOAD_END; touches the real store.
+    _, klines, _, _, _ = vxd._load_all()
+    bound = pd.Timestamp(vxd.MAX_LOAD_END, tz="UTC")
+    assert len(klines) > 0
+    over = {s: str(d.index.max()) for s, d in klines.items()
+           if len(d) and d.index.max() > bound}
+    assert over == {}, f"klines frames exceeding MAX_LOAD_END: {over}"

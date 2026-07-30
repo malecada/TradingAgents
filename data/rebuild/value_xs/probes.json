@@ -4,7 +4,6 @@
   {
    "probe": "P0_publication_lag",
    "fund_last": "2025-04-15",
-   "kline_last": "2026-07-02",
    "fetched_utc": "2026-07-30",
    "vendor_max_time": "2026-07-29",
    "vendor_reference_assets": [
@@ -18,6 +17,7 @@
     "TxCnt",
     "CapMrktCurUSD"
    ],
+   "vendor_max_time_scope": "measured_lag_days / vendor_max_time reflect CoinMetrics' publishing cadence on actively-covered majors (vendor_reference_assets) -- how many days behind fetch time the vendor's newest datapoint is for assets it is actively publishing. This does NOT measure per-asset coverage termination: several value_xs_t1 candidates (bnb, eos_eth, trx_eth empty; xtz, dot, bsv truncated in 2022-23) have genuinely stopped receiving CoinMetrics updates years ago -- a separate, already-disclosed gap tracked per-asset in fundamentals_manifest.json's rows/first/last fields, not a publishing-lag issue. A thin-coverage or delisted-on-CM asset would register as a large apparent lag for reasons unrelated to publishing cadence if used as a lag reference, which is exactly why vendor_reference_assets is restricted to majors with full, continuous coverage instead of being expanded toward the universe tail.",
    "measured_lag_days": 1,
    "registered_lag_days": 2,
    "lag_pass": true,
@@ -25,6 +25,7 @@
     "tz_ok": true,
     "midnight_aligned_ok": true,
     "dev_overlap_ok": true,
+    "dev_overlap_end": "2025-03-31",
     "pass": true
    },
    "pass": true,
@@ -69,8 +70,14 @@
     "2024": 33.5,
     "2025": 34
    },
-   "median_signal_valid_breadth": 39.0,
-   "min_signal_valid_breadth": 25.0,
+   "median_signal_valid_breadth": {
+    "nvt_proxy": 39.0,
+    "metcalfe_proxy": 39.0
+   },
+   "min_signal_valid_breadth": {
+    "nvt_proxy": 25.0,
+    "metcalfe_proxy": 25.0
+   },
    "floor": 20,
    "pass": true
   },
