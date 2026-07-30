@@ -5,12 +5,17 @@ funding-validity mask and recomputes daily) so value and unlock signals can
 share it. ``carry_xs`` is deliberately NOT refactored onto this: its results
 are published (THESIS section 46) and must stay byte-reproducible.
 
-Tie-break follows carry_xs exactly: two independent sorts, short leg first,
-long leg excluding short-leg members. A single desc sort's tail gives
-(signal asc, symbol DESC) at tie boundaries, which diverges from the frozen
-ascending tie-break; under heavily tied signals both sorts collapse to
-symbol-asc, so the long leg must explicitly exclude shorts to keep legs
-disjoint and Sum(w) = 0.
+Tie-break and sort logic follow carry_xs exactly: two independent sorts,
+short leg first (descending signal, then ascending symbol), long leg excluding
+short-leg members (ascending signal, then ascending symbol). This avoids the
+single-sort pitfall where desc-sort tails give (asc signal, desc symbol),
+diverging from the frozen behavior.
+
+Normalization differs from carry_xs: here each leg divides by its realized
+count (to preserve dollar-neutral row sums even if legs differ in size), vs.
+carry_xs's shared n_leg divisor. This is necessary for the weight builder to
+remain signal-agnostic — different signals can produce imbalanced valid counts,
+requiring per-leg normalization to keep Sum(w) = 0 without explicit tuning.
 """
 from __future__ import annotations
 
@@ -26,11 +31,16 @@ def ls_weights(all_days: pd.DatetimeIndex, S: pd.DataFrame, valid: pd.DataFrame,
 
     Short the top ``leg_frac`` by signal, long the bottom ``leg_frac``.
     Weights are held constant until the next rebalance date. Rows sum to 0.
+
+    At exactly leg_frac=0.5, banker's rounding can cause legs to become
+    imbalanced (short leg larger than long leg) when valid-name count is
+    n ≡ 3 (mod 4). The bound is therefore strict: leg_frac ∈ (0, 0.5).
     """
-    if not 0.0 < leg_frac <= 0.5:
-        raise ValueError("leg_frac must be in (0, 0.5]")
+    if not 0.0 < leg_frac < 0.5:
+        raise ValueError("leg_frac must be in (0, 0.5)")
     W = pd.DataFrame(0.0, index=all_days, columns=S.columns)
-    rbs = [d for d in rebalance_dates if d in set(all_days)]
+    days_set = set(all_days)
+    rbs = [d for d in rebalance_dates if d in days_set]
     for i, t in enumerate(rbs):
         v = valid.loc[t] & S.loc[t].notna()
         names = list(v.index[v])

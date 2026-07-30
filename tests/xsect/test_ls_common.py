@@ -86,3 +86,15 @@ def test_zero_funding_shape():
     F = zero_funding(days, ["A", "B"])
     assert F.shape == (3, 2) and (F == 0.0).all().all()
     assert list(F.columns) == ["A", "B"]
+
+
+def test_leg_frac_half_is_rejected():
+    days = _days()
+    cols = [f"S{i}" for i in range(10)]
+    S = pd.DataFrame(1.0, index=days, columns=cols)
+    valid = pd.DataFrame(True, index=days, columns=cols)
+    rb = days[days.dayofweek == 0]
+    with pytest.raises(ValueError, match="leg_frac"):
+        ls_weights(days, S, valid, rb, leg_frac=0.5)
+    with pytest.raises(ValueError, match="leg_frac"):
+        ls_weights(days, S, valid, rb, leg_frac=0.0)
