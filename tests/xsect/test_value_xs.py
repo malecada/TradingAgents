@@ -91,3 +91,34 @@ def test_universe_cache_used_without_network_call(tmp_path, monkeypatch):
     assets, mapping = fx._resolve_universe()
     assert assets == ["btc", "eth"]
     assert mapping == {"btc": "BTCUSDT", "eth": "ETHUSDT"}
+
+
+UNIV = ROOT / "data" / "xsect" / "value_xs_universe.json"
+
+
+def test_universe_file_shape():
+    u = json.loads(UNIV.read_text())
+    assert len(u) >= 48                       # >= 4 years of months
+    k = sorted(u)[0]
+    assert k == "2021-01-01"
+    assert all(s.endswith("USDT") for s in u[k])
+
+
+def test_universe_is_subset_of_value_candidates():
+    from scripts.fetch_xsect_fundamentals import ASSET_TO_SYMBOL
+    allowed = set(ASSET_TO_SYMBOL.values())
+    u = json.loads(UNIV.read_text())
+    for month, syms in u.items():
+        assert set(syms) <= allowed, f"{month} leaks non-candidate symbols"
+
+
+def test_universe_never_reaches_into_holdout():
+    u = json.loads(UNIV.read_text())
+    assert max(u) < "2025-04-01"
+
+
+def test_median_breadth_meets_registered_floor():
+    u = json.loads(UNIV.read_text())
+    import statistics
+    med = statistics.median(len(v) for v in u.values())
+    assert med >= 20, f"breadth STOP: median {med} < 20"
