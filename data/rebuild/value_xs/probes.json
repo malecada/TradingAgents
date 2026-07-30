@@ -5,10 +5,38 @@
    "probe": "P0_publication_lag",
    "fund_last": "2025-04-15",
    "kline_last": "2026-07-02",
-   "measured_lag_days": 443,
+   "fetched_utc": "2026-07-30",
+   "measured_lag_days": 471,
    "registered_lag_days": 2,
+   "lag_pass": false,
+   "stamp_alignment": {
+    "tz_ok": true,
+    "midnight_aligned_ok": true,
+    "dev_overlap_ok": true,
+    "pass": true
+   },
    "pass": false,
-   "note": "measured lag exceeds the registered t-2 convention; widen the lag and log a pre-result amendment before the grid"
+   "note": "measured lag exceeds registered_lag_days and/or a stamp-alignment check failed; widening the lag is a pre-result amendment a human must approve",
+   "superseded_measurement": 443,
+   "superseded_method": "differenced the last dates of two stores fetched to different end bounds (fundamentals capped at the sealed-holdout MAX_END=2025-04-15; klines fetched to present, 2026-07-02) -- measured fetch-scope mismatch, not vendor publication lag",
+   "correction_rationale": "gates.json registers the P0 probe only as 'publication-lag and stamp alignment; STOP on fail', not its implementation; the corrected method measures vendor staleness against the fundamentals store's own fetch date instead of against an unrelated store's bound",
+   "live_verification": {
+    "assets": [
+     "btc",
+     "eth",
+     "ada",
+     "doge"
+    ],
+    "metrics": [
+     "AdrActCnt",
+     "TxCnt",
+     "CapMrktCurUSD"
+    ],
+    "max_time_observed": "2026-07-29",
+    "observed_lag_days": 1,
+    "observed_on": "2026-07-30",
+    "note": "independent live check against CoinMetrics wall clock, run by the coordinator outside this probe and outside the on-disk holdout-capped fundamentals store; confirms the registered t-2 convention is conservative for the true vendor lag"
+   }
   },
   {
    "probe": "P1_breadth",

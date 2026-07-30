@@ -2,7 +2,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from scripts.value_xs_dev import decile_spread, measure_lag, verdict_from_probes
+from scripts.value_xs_dev import (REGISTERED_LAG, decile_spread, measure_lag,
+                                   verdict_from_probes)
 
 
 def test_measure_lag_detects_two_day_publication_delay():
@@ -11,6 +12,24 @@ def test_measure_lag_detects_two_day_publication_delay():
     fund_last = days[7]
     kline_last = days[9]
     assert measure_lag(fund_last, kline_last) == 2
+
+
+def test_p0_lag_gate_fails_when_more_than_two_days_behind_its_own_fetch():
+    # fix round 1: P0's lag is fundamentals staleness vs its OWN fetch time
+    # (fetched_utc - fund_last), not a diff against the klines store.
+    fetched_utc = pd.Timestamp("2026-07-30", tz="UTC")
+    fund_last = pd.Timestamp("2026-07-26", tz="UTC")  # 4 days behind its own fetch
+    lag = measure_lag(fund_last, fetched_utc)
+    assert lag == 4
+    assert (lag <= REGISTERED_LAG) is False
+
+
+def test_p0_lag_gate_passes_at_exactly_the_registered_threshold():
+    fetched_utc = pd.Timestamp("2026-07-30", tz="UTC")
+    fund_last = pd.Timestamp("2026-07-28", tz="UTC")  # exactly 2 days behind
+    lag = measure_lag(fund_last, fetched_utc)
+    assert lag == 2
+    assert (lag <= REGISTERED_LAG) is True
 
 
 def test_decile_spread_orders_cheap_minus_expensive():

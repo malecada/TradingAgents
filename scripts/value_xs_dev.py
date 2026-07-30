@@ -26,9 +26,43 @@ from tradingagents.xsect.value_xs import (  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 FUND_DIR = ROOT / "data" / "xsect" / "fundamentals"
+FUND_VINTAGE_FILE = ROOT / "data" / "xsect" / "fundamentals_vintage.json"
 KLINES_DIR = ROOT / "data" / "xsect" / "klines"
 UNIV_FILE = ROOT / "data" / "xsect" / "value_xs_universe.json"
 OUT_DIR = ROOT / "data" / "rebuild" / "value_xs"
+
+# Fix round 1/5 (2026-07-30): the original P0 differenced the last dates of
+# two stores fetched to unrelated end bounds (fundamentals capped at the
+# sealed-holdout MAX_END; klines fetched to present) and measured 443 days
+# of fetch-scope mismatch, not publication lag. gates.json registers P0 as
+# "publication-lag and stamp alignment; STOP on fail" -- it does not
+# prescribe the differencing-two-stores implementation, so the correction
+# below implements the registration rather than amending it. See probes.json
+# for the full disclosure trail (superseded_measurement / superseded_method /
+# correction_rationale / live_verification) and task-6-report.md fix round 1.
+SUPERSEDED_P0_MEASUREMENT_DAYS = 443
+SUPERSEDED_P0_METHOD = ("differenced the last dates of two stores fetched to "
+                         "different end bounds (fundamentals capped at the "
+                         "sealed-holdout MAX_END=2025-04-15; klines fetched "
+                         "to present, 2026-07-02) -- measured fetch-scope "
+                         "mismatch, not vendor publication lag")
+P0_CORRECTION_RATIONALE = ("gates.json registers the P0 probe only as "
+                            "'publication-lag and stamp alignment; STOP on "
+                            "fail', not its implementation; the corrected "
+                            "method measures vendor staleness against the "
+                            "fundamentals store's own fetch date instead of "
+                            "against an unrelated store's bound")
+P0_LIVE_VERIFICATION = {
+    "assets": ["btc", "eth", "ada", "doge"],
+    "metrics": ["AdrActCnt", "TxCnt", "CapMrktCurUSD"],
+    "max_time_observed": "2026-07-29",
+    "observed_lag_days": 1,
+    "observed_on": "2026-07-30",
+    "note": ("independent live check against CoinMetrics wall clock, run by "
+             "the coordinator outside this probe and outside the on-disk "
+             "holdout-capped fundamentals store; confirms the registered "
+             "t-2 convention is conservative for the true vendor lag"),
+}
 
 DEV = ("2021-01-01", "2025-03-31")
 WARMUP_START = "2020-06-01"        # 30d rolling windows warm up before DEV[0]
@@ -70,17 +104,61 @@ def _load_all():
     return days, klines, fund, universe, symbols
 
 
+def _tz_utc_ok(idx: pd.DatetimeIndex) -> bool:
+    return len(idx) == 0 or (idx.tz is not None and str(idx.tz) == "UTC")
+
+
+def _midnight_aligned(idx: pd.DatetimeIndex) -> bool:
+    return len(idx) == 0 or bool((idx == idx.normalize()).all())
+
+
+def _overlaps_dev(idx: pd.DatetimeIndex, dev: pd.DatetimeIndex) -> bool:
+    return bool(idx.intersection(dev).size)
+
+
 def probe_p0_lag(days, klines, fund) -> dict:
+    """P0 = publication-lag AND stamp alignment (gates.json: 'publication-lag
+    and stamp alignment; STOP on fail'). Lag is the fundamentals store's own
+    staleness relative to its own fetch time (fetched_utc - fund_last), not a
+    diff against the klines store's bound: the two stores are fetched to
+    unrelated end dates by design (fundamentals capped at the sealed-holdout
+    MAX_END; klines is shared, non-pre-registered infra fetched to present),
+    so differencing their raw maxima measures fetch-scope mismatch, not
+    vendor lag. See the superseded_* / live_verification fields below.
+    """
     fl = max(d.index.max() for d in fund.values())
     kl = max(d.index.max() for d in klines.values())
-    lag = measure_lag(fl, kl)
+
+    vintage = json.loads(FUND_VINTAGE_FILE.read_text())
+    fetched_utc = pd.Timestamp(vintage["fetched_utc"]).tz_convert("UTC").normalize()
+    lag = measure_lag(fl, fetched_utc)
+    lag_ok = bool(lag <= REGISTERED_LAG)
+
+    dev = days[(days >= DEV[0]) & (days <= DEV[1])]
+    tz_ok = (all(_tz_utc_ok(d.index) for d in fund.values())
+             and all(_tz_utc_ok(d.index) for d in klines.values()))
+    midnight_ok = (all(_midnight_aligned(d.index) for d in fund.values())
+                   and all(_midnight_aligned(d.index) for d in klines.values()))
+    overlap_ok = (any(_overlaps_dev(d.index, dev) for d in fund.values())
+                  and any(_overlaps_dev(d.index, dev) for d in klines.values()))
+    stamp_ok = bool(tz_ok and midnight_ok and overlap_ok)
+
+    passed = bool(lag_ok and stamp_ok)
     return {"probe": "P0_publication_lag", "fund_last": str(fl)[:10],
-            "kline_last": str(kl)[:10], "measured_lag_days": lag,
-            "registered_lag_days": REGISTERED_LAG,
-            "pass": bool(lag <= REGISTERED_LAG),
-            "note": ("measured lag exceeds the registered t-2 convention; widen "
-                     "the lag and log a pre-result amendment before the grid"
-                     if lag > REGISTERED_LAG else "within registered lag")}
+            "kline_last": str(kl)[:10], "fetched_utc": str(fetched_utc)[:10],
+            "measured_lag_days": lag, "registered_lag_days": REGISTERED_LAG,
+            "lag_pass": lag_ok,
+            "stamp_alignment": {"tz_ok": tz_ok, "midnight_aligned_ok": midnight_ok,
+                                "dev_overlap_ok": overlap_ok, "pass": stamp_ok},
+            "pass": passed,
+            "note": ("within registered lag and stamp-aligned" if passed else
+                     "measured lag exceeds registered_lag_days and/or a "
+                     "stamp-alignment check failed; widening the lag is a "
+                     "pre-result amendment a human must approve"),
+            "superseded_measurement": SUPERSEDED_P0_MEASUREMENT_DAYS,
+            "superseded_method": SUPERSEDED_P0_METHOD,
+            "correction_rationale": P0_CORRECTION_RATIONALE,
+            "live_verification": P0_LIVE_VERIFICATION}
 
 
 def probe_p1_breadth(universe, days, symbols, fund) -> dict:
