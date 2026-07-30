@@ -72,6 +72,22 @@ def test_logit_lags_learns_sign_persistence():
     assert lg["pt_p"] < 1e-4  # direction skill via PT
 
 
+def test_window_cap_uses_only_tail():
+    rng = np.random.default_rng(9)
+    y = rng.normal(0, 1, 3000)
+    capped = tier1.ArimaForecaster(window_cap=500)
+    capped.fit(y)
+    manual = tier1.ArimaForecaster()
+    manual.fit(y[-500:])
+    # same tail-only information at fit AND predict time
+    assert np.isclose(capped.predict(y), manual.predict(y[-500:]), rtol=1e-8)
+    ets_capped = tier1.EtsForecaster("ANN", window_cap=400)
+    ets_capped.fit(y)
+    ets_manual = tier1.EtsForecaster("ANN")
+    ets_manual.fit(y[-400:])
+    assert np.isclose(ets_capped.predict(y), ets_manual.predict(y[-400:]), rtol=1e-12)
+
+
 def test_arima_pipeline_no_future_leak():
     # truncation equivalence: forecasts for common origins must be identical
     # whether or not the future part of the series exists at all

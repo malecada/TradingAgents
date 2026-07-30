@@ -29,15 +29,19 @@ class ArimaForecaster(Forecaster):
 
     name = "arima_aic"
 
-    def __init__(self, orders=_DEFAULT_ORDERS, refit_every: int = 5):
+    def __init__(self, orders=_DEFAULT_ORDERS, refit_every: int = 5,
+                 window_cap: "int | None" = None):
         self.orders = tuple(tuple(o) for o in orders)
         self.refit_every = refit_every  # informational; cadence enforced by runner
+        self.window_cap = window_cap  # declared 1h amendment: cap conditioning window
         self._res = None
         self._order = None
 
     def fit(self, y_train, X_train=None):
         y = np.asarray(y_train, dtype=np.float64)
         y = y[~np.isnan(y)]
+        if self.window_cap:
+            y = y[-self.window_cap :]
         best_aic, best_res, best_order = np.inf, None, None
         for order in self.orders:
             try:
@@ -53,6 +57,8 @@ class ArimaForecaster(Forecaster):
     def predict(self, y_hist, x_now=None):
         y = np.asarray(y_hist, dtype=np.float64)
         y = y[~np.isnan(y)]
+        if self.window_cap:
+            y = y[-self.window_cap :]
         if self._res is None or len(y) < 10:
             return 0.0
         with warnings.catch_warnings():
@@ -71,13 +77,15 @@ class EtsForecaster(Forecaster):
 
     _GRID = np.round(np.arange(0.05, 1.0, 0.05), 2)
 
-    def __init__(self, kind: str = "ANN", refit_every: int = 5):
+    def __init__(self, kind: str = "ANN", refit_every: int = 5,
+                 window_cap: "int | None" = None):
         kind = kind.upper()
         if kind not in ("ANN", "AAN"):
             raise ValueError(kind)
         self.kind = kind
         self.name = f"ets_{kind.lower()}"
         self.refit_every = refit_every
+        self.window_cap = window_cap
         self._alpha = 0.3
         self._beta = 0.1
 
@@ -101,6 +109,8 @@ class EtsForecaster(Forecaster):
     def fit(self, y_train, X_train=None):
         y = np.asarray(y_train, dtype=np.float64)
         y = y[~np.isnan(y)]
+        if self.window_cap:
+            y = y[-self.window_cap :]
         if len(y) < 10:
             return
         best = (np.inf, self._alpha, self._beta)
@@ -115,6 +125,8 @@ class EtsForecaster(Forecaster):
     def predict(self, y_hist, x_now=None):
         y = np.asarray(y_hist, dtype=np.float64)
         y = y[~np.isnan(y)]
+        if self.window_cap:
+            y = y[-self.window_cap :]
         if len(y) < 2:
             return float(y[-1]) if len(y) else 0.0
         beta = self._beta if self.kind == "AAN" else None
@@ -251,7 +263,8 @@ class GarchForecaster(Forecaster):
     }
 
     def __init__(self, kind: str = "garch11", ret_col: int = 0,
-                 horizon: int = 1, refit_every: int = 5):
+                 horizon: int = 1, refit_every: int = 5,
+                 window_cap: "int | None" = None):
         if kind not in self._SPECS:
             raise ValueError(kind)
         self.kind = kind
@@ -259,6 +272,7 @@ class GarchForecaster(Forecaster):
         self.ret_col = int(ret_col)
         self.horizon = int(horizon)
         self.refit_every = refit_every
+        self.window_cap = window_cap
         self._params = None
 
     def _model(self, rets_pct: np.ndarray):
@@ -273,6 +287,8 @@ class GarchForecaster(Forecaster):
             return
         rets = np.asarray(X_train[:, self.ret_col], dtype=np.float64)
         rets = rets[~np.isnan(rets)] * 100.0
+        if self.window_cap:
+            rets = rets[-self.window_cap :]
         if len(rets) < 100:
             self._params = None
             return
@@ -293,6 +309,8 @@ class GarchForecaster(Forecaster):
             return float(np.mean(y)) if len(y) else 0.0
         rets = np.asarray(x_hist[:, self.ret_col], dtype=np.float64)
         rets = rets[~np.isnan(rets)] * 100.0
+        if self.window_cap:
+            rets = rets[-self.window_cap :]
         import warnings
 
         with warnings.catch_warnings():
