@@ -34,24 +34,43 @@ OUT_DIR = ROOT / "data" / "rebuild" / "value_xs"
 # Fix round 1/5 (2026-07-30): the original P0 differenced the last dates of
 # two stores fetched to unrelated end bounds (fundamentals capped at the
 # sealed-holdout MAX_END; klines fetched to present) and measured 443 days
-# of fetch-scope mismatch, not publication lag. gates.json registers P0 as
-# "publication-lag and stamp alignment; STOP on fail" -- it does not
-# prescribe the differencing-two-stores implementation, so the correction
-# below implements the registration rather than amending it. See probes.json
-# for the full disclosure trail (superseded_measurement / superseded_method /
-# correction_rationale / live_verification) and task-6-report.md fix round 1.
-SUPERSEDED_P0_MEASUREMENT_DAYS = 443
-SUPERSEDED_P0_METHOD = ("differenced the last dates of two stores fetched to "
-                         "different end bounds (fundamentals capped at the "
-                         "sealed-holdout MAX_END=2025-04-15; klines fetched "
-                         "to present, 2026-07-02) -- measured fetch-scope "
-                         "mismatch, not vendor publication lag")
-P0_CORRECTION_RATIONALE = ("gates.json registers the P0 probe only as "
-                            "'publication-lag and stamp alignment; STOP on "
-                            "fail', not its implementation; the corrected "
-                            "method measures vendor staleness against the "
-                            "fundamentals store's own fetch date instead of "
-                            "against an unrelated store's bound")
+# of fetch-scope mismatch, not publication lag.
+#
+# Fix round 2/5 (2026-07-30): round 1's replacement (fetched_utc minus the
+# store's own last observation) had the *same* defect -- the store's last
+# observation is the deliberate MAX_END truncation, not the vendor's
+# frontier, so that diff measured 471 days of the same truncation artifact.
+# Publication lag is a vendor property and cannot be derived from a
+# deliberately truncated store's endpoint by any arithmetic. The fix:
+# capture the vendor's true frontier at fetch time from the catalog
+# endpoint (scripts/fetch_xsect_fundamentals.py::_vendor_max_time, not
+# subject to --end truncation), persist it in the vintage stamp
+# (vendor_max_time), and have P0 read that stamp offline -- never a live
+# network call, never a silent fallback to a store-endpoint comparison.
+#
+# gates.json registers P0 only as "publication-lag and stamp alignment;
+# STOP on fail" -- it does not prescribe an implementation, so both
+# corrections implement the registration rather than amend it. See
+# probes.json for the full disclosure trail (superseded_measurements /
+# correction_rationale / live_verification) and task-6-report.md fix
+# rounds 1-2.
+SUPERSEDED_P0_MEASUREMENTS = [
+    {"measured_lag_days": 443,
+     "method": ("differenced the last dates of two stores fetched to "
+                "different end bounds (fundamentals capped at the "
+                "sealed-holdout MAX_END=2025-04-15; klines fetched to "
+                "present, 2026-07-02)")},
+    {"measured_lag_days": 471,
+     "method": ("differenced fetch date against store last observation, "
+                "which is the deliberate holdout cap (MAX_END=2025-04-15) "
+                "rather than the vendor frontier")},
+]
+P0_CORRECTION_RATIONALE = ("the store is truncated at MAX_END by design, so "
+                            "publication lag cannot be derived from its "
+                            "endpoint; the vendor frontier is captured at "
+                            "fetch time (catalog endpoint, not subject to "
+                            "--end truncation) and compared against the "
+                            "fetch date")
 P0_LIVE_VERIFICATION = {
     "assets": ["btc", "eth", "ada", "doge"],
     "metrics": ["AdrActCnt", "TxCnt", "CapMrktCurUSD"],
@@ -116,23 +135,55 @@ def _overlaps_dev(idx: pd.DatetimeIndex, dev: pd.DatetimeIndex) -> bool:
     return bool(idx.intersection(dev).size)
 
 
+class VintageStampStale(RuntimeError):
+    """Raised when the vintage stamp predates vendor-frontier recording.
+
+    P0 must fail loudly here, not silently fall back to a store-endpoint
+    comparison -- that fallback is exactly the defect fix rounds 1 and 2
+    both hit (443 days, then 471 days), because a deliberately
+    holdout-truncated store's own endpoint can never stand in for the
+    vendor's true frontier.
+    """
+
+
+def _lag_from_vintage(vintage: dict, registered_lag: int = REGISTERED_LAG) -> dict:
+    """Pure: the P0 lag gate from an in-memory vintage-stamp dict.
+
+    Lag is the vendor's true frontier (``vendor_max_time``, captured from
+    the catalog endpoint at fetch time -- not subject to MAX_END
+    truncation) staleness relative to the stamp's own fetch time
+    (``fetched_utc``). Raises ``VintageStampStale`` if ``vendor_max_time``
+    is absent, rather than returning a (silently wrong) pass/fail dict.
+    """
+    if "vendor_max_time" not in vintage:
+        raise VintageStampStale(
+            "vintage stamp has no 'vendor_max_time' field -- this stamp "
+            "predates vendor-frontier recording (fix round 2) and must be "
+            "refreshed via `uv run --no-sync python "
+            "scripts/fetch_xsect_fundamentals.py --vintage-only` before P0 "
+            "can run."
+        )
+    fetched_utc = pd.Timestamp(vintage["fetched_utc"]).tz_convert("UTC").normalize()
+    vendor_max_time = pd.Timestamp(vintage["vendor_max_time"], tz="UTC")
+    lag = measure_lag(vendor_max_time, fetched_utc)
+    return {"lag": lag, "fetched_utc": fetched_utc,
+            "vendor_max_time": vendor_max_time,
+            "pass": bool(lag <= registered_lag)}
+
+
 def probe_p0_lag(days, klines, fund) -> dict:
     """P0 = publication-lag AND stamp alignment (gates.json: 'publication-lag
-    and stamp alignment; STOP on fail'). Lag is the fundamentals store's own
-    staleness relative to its own fetch time (fetched_utc - fund_last), not a
-    diff against the klines store's bound: the two stores are fetched to
-    unrelated end dates by design (fundamentals capped at the sealed-holdout
-    MAX_END; klines is shared, non-pre-registered infra fetched to present),
-    so differencing their raw maxima measures fetch-scope mismatch, not
-    vendor lag. See the superseded_* / live_verification fields below.
+    and stamp alignment; STOP on fail'). Lag reads the vendor frontier
+    persisted in the vintage stamp (see ``_lag_from_vintage``) -- it never
+    diffs two stores' raw endpoints and never makes a live network call at
+    run time. See the superseded_* / live_verification fields below.
     """
     fl = max(d.index.max() for d in fund.values())
     kl = max(d.index.max() for d in klines.values())
 
     vintage = json.loads(FUND_VINTAGE_FILE.read_text())
-    fetched_utc = pd.Timestamp(vintage["fetched_utc"]).tz_convert("UTC").normalize()
-    lag = measure_lag(fl, fetched_utc)
-    lag_ok = bool(lag <= REGISTERED_LAG)
+    lag_result = _lag_from_vintage(vintage)
+    lag, lag_ok = lag_result["lag"], lag_result["pass"]
 
     dev = days[(days >= DEV[0]) & (days <= DEV[1])]
     tz_ok = (all(_tz_utc_ok(d.index) for d in fund.values())
@@ -145,7 +196,11 @@ def probe_p0_lag(days, klines, fund) -> dict:
 
     passed = bool(lag_ok and stamp_ok)
     return {"probe": "P0_publication_lag", "fund_last": str(fl)[:10],
-            "kline_last": str(kl)[:10], "fetched_utc": str(fetched_utc)[:10],
+            "kline_last": str(kl)[:10],
+            "fetched_utc": str(lag_result["fetched_utc"])[:10],
+            "vendor_max_time": str(lag_result["vendor_max_time"])[:10],
+            "vendor_reference_assets": vintage.get("vendor_reference_assets"),
+            "vendor_metrics": vintage.get("vendor_metrics"),
             "measured_lag_days": lag, "registered_lag_days": REGISTERED_LAG,
             "lag_pass": lag_ok,
             "stamp_alignment": {"tz_ok": tz_ok, "midnight_aligned_ok": midnight_ok,
@@ -155,8 +210,7 @@ def probe_p0_lag(days, klines, fund) -> dict:
                      "measured lag exceeds registered_lag_days and/or a "
                      "stamp-alignment check failed; widening the lag is a "
                      "pre-result amendment a human must approve"),
-            "superseded_measurement": SUPERSEDED_P0_MEASUREMENT_DAYS,
-            "superseded_method": SUPERSEDED_P0_METHOD,
+            "superseded_measurements": SUPERSEDED_P0_MEASUREMENTS,
             "correction_rationale": P0_CORRECTION_RATIONALE,
             "live_verification": P0_LIVE_VERIFICATION}
 

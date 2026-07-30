@@ -2,7 +2,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from scripts.value_xs_dev import (REGISTERED_LAG, decile_spread, measure_lag,
+from scripts.value_xs_dev import (VintageStampStale, _lag_from_vintage,
+                                   decile_spread, measure_lag,
                                    verdict_from_probes)
 
 
@@ -14,22 +15,34 @@ def test_measure_lag_detects_two_day_publication_delay():
     assert measure_lag(fund_last, kline_last) == 2
 
 
-def test_p0_lag_gate_fails_when_more_than_two_days_behind_its_own_fetch():
-    # fix round 1: P0's lag is fundamentals staleness vs its OWN fetch time
-    # (fetched_utc - fund_last), not a diff against the klines store.
-    fetched_utc = pd.Timestamp("2026-07-30", tz="UTC")
-    fund_last = pd.Timestamp("2026-07-26", tz="UTC")  # 4 days behind its own fetch
-    lag = measure_lag(fund_last, fetched_utc)
-    assert lag == 4
-    assert (lag <= REGISTERED_LAG) is False
+def test_p0_lag_gate_fails_when_vendor_frontier_more_than_two_days_behind_fetch():
+    # fix round 2: P0's lag is the vendor's own frontier (vendor_max_time,
+    # captured at fetch time from the catalog endpoint) staleness vs the
+    # stamp's fetch time -- not a diff against the store's own (truncated)
+    # last observation, which was fix round 1's defect.
+    vintage = {"fetched_utc": "2026-07-30T10:00:00+00:00",
+               "vendor_max_time": "2026-07-25"}  # 5 days behind the fetch
+    result = _lag_from_vintage(vintage)
+    assert result["lag"] == 5
+    assert result["pass"] is False
 
 
 def test_p0_lag_gate_passes_at_exactly_the_registered_threshold():
-    fetched_utc = pd.Timestamp("2026-07-30", tz="UTC")
-    fund_last = pd.Timestamp("2026-07-28", tz="UTC")  # exactly 2 days behind
-    lag = measure_lag(fund_last, fetched_utc)
-    assert lag == 2
-    assert (lag <= REGISTERED_LAG) is True
+    vintage = {"fetched_utc": "2026-07-30T10:00:00+00:00",
+               "vendor_max_time": "2026-07-28"}  # exactly 2 days behind
+    result = _lag_from_vintage(vintage)
+    assert result["lag"] == 2
+    assert result["pass"] is True
+
+
+def test_p0_lag_gate_fails_loudly_when_vendor_max_time_missing():
+    # An older vintage stamp (pre fix-round-2) has no vendor_max_time. P0
+    # must refuse to run rather than silently falling back to a
+    # store-endpoint comparison -- that fallback is exactly the defect that
+    # produced the superseded 443-day and 471-day measurements.
+    vintage = {"fetched_utc": "2026-07-30T10:00:00+00:00"}
+    with pytest.raises(VintageStampStale):
+        _lag_from_vintage(vintage)
 
 
 def test_decile_spread_orders_cheap_minus_expensive():

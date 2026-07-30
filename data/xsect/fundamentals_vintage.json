@@ -1,5 +1,33 @@
 {
- "fetched_utc": "2026-07-30T09:19:39.249889+00:00",
+ "fetched_utc": "2026-07-30T10:44:52.561162+00:00",
  "source_url": "https://community-api.coinmetrics.io/v4/timeseries/asset-metrics (community tier)",
- "note": "vendor may restate; this stamp is what makes restatement detectable"
+ "note": "vendor may restate; this stamp is what makes restatement detectable",
+ "vendor_max_time": "2026-07-29",
+ "vendor_max_time_source": "https://community-api.coinmetrics.io/v4/catalog-v2/asset-metrics",
+ "vendor_reference_assets": [
+  "btc",
+  "eth",
+  "ada",
+  "doge"
+ ],
+ "vendor_metrics": [
+  "AdrActCnt",
+  "TxCnt",
+  "CapMrktCurUSD"
+ ],
+ "vendor_per_asset_metric_max_time": {
+  "ada:AdrActCnt": "2026-07-29",
+  "ada:CapMrktCurUSD": "2026-07-29",
+  "ada:TxCnt": "2026-07-29",
+  "btc:AdrActCnt": "2026-07-29",
+  "btc:CapMrktCurUSD": "2026-07-29",
+  "btc:TxCnt": "2026-07-29",
+  "doge:AdrActCnt": "2026-07-29",
+  "doge:CapMrktCurUSD": "2026-07-29",
+  "doge:TxCnt": "2026-07-29",
+  "eth:AdrActCnt": "2026-07-29",
+  "eth:CapMrktCurUSD": "2026-07-29",
+  "eth:TxCnt": "2026-07-29"
+ },
+ "vendor_max_time_note": "min(max_time) across vendor_reference_assets x vendor_metrics, 1d/community frequency; captured from the catalog endpoint, not subject to the --end/MAX_END truncation applied to the stored timeseries -- this is the true vendor frontier at fetch time"
 }

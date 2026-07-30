@@ -35,6 +35,16 @@ METRICS = ["AdrActCnt", "TxCnt", "CapMrktCurUSD"]
 # value_xs_t1.holdout_window); +15d is warm-up margin only, never data.
 MAX_END = "2025-04-15"
 
+# value_xs_dev P0 fix round 2 (2026-07-30): publication lag cannot be derived
+# from the store's own last observation, because the store is deliberately
+# truncated at MAX_END to protect the holdout -- that endpoint reflects our
+# fetch request, not the vendor's frontier. The vendor's true frontier is
+# captured here, at fetch time, from the catalog endpoint (which is not
+# subject to the --end truncation) and persisted in the vintage stamp so P0
+# can read it offline without a live network call. Majors only: full
+# coverage back to genesis, no thin-coverage/partial-history noise.
+VENDOR_REFERENCE_ASSETS = ["btc", "eth", "ada", "doge"]
+
 # Stablecoins and pegged assets: excluded because a value ratio on a pegged
 # asset is meaningless and the names are not directional trades.
 STABLE_EXCLUDE = {"usdc", "frax", "paxg", "xaut", "usdt", "dai", "busd",
@@ -131,13 +141,61 @@ def fetch_asset(asset: str, start: str, end: str) -> pd.DataFrame:
     return df[METRICS]
 
 
-def write_vintage(path: Path, source_url: str) -> None:
+def _vendor_max_time(reference_assets: list[str], metrics: list[str]) -> tuple[str, dict[str, str]]:
+    """Vendor frontier at fetch time: min max_time across ``metrics`` x
+    ``reference_assets`` on the catalog endpoint's 1d/community frequency
+    entry. Uses the catalog, not a timeseries fetch, so it is not subject to
+    MAX_END truncation. The binding lag is the slowest metric, so the
+    minimum (not e.g. the max or an average) is what is recorded; reference
+    assets are majors with full coverage so a short max_time here reflects
+    genuine vendor lag, not a thin-coverage artifact for that asset.
+
+    Returns (vendor_max_time_date_str, per_asset_metric) where per_asset_metric
+    maps "asset:metric" -> its own max_time date, for reproducibility.
+    """
+    url = (f"{BASE}/catalog-v2/asset-metrics?assets={','.join(reference_assets)}"
+           f"&metrics={','.join(metrics)}&page_size=10000")
+    data = requests.get(url, timeout=60).json()["data"]
+    per_asset_metric: dict[str, str] = {}
+    for row in data:
+        asset = row["asset"].lower()
+        for m in row["metrics"]:
+            for f in m["frequencies"]:
+                if f.get("frequency") == "1d" and f.get("community"):
+                    per_asset_metric[f"{asset}:{m['metric']}"] = f["max_time"][:10]
+    missing = [f"{a}:{m}" for a in reference_assets for m in metrics
+               if f"{a}:{m}" not in per_asset_metric]
+    if missing:
+        raise SystemExit(
+            f"_vendor_max_time: catalog missing 1d/community entries for {missing}"
+        )
+    vendor_max_time = min(per_asset_metric.values())
+    return vendor_max_time, per_asset_metric
+
+
+def write_vintage(path: Path, source_url: str, vendor_max_time: str | None = None,
+                  vendor_reference_assets: list[str] | None = None,
+                  vendor_metrics: list[str] | None = None,
+                  vendor_per_asset_metric: dict[str, str] | None = None) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps({
+    payload = {
         "fetched_utc": datetime.now(timezone.utc).isoformat(),
         "source_url": source_url,
         "note": "vendor may restate; this stamp is what makes restatement detectable",
-    }, indent=1))
+    }
+    if vendor_max_time is not None:
+        payload["vendor_max_time"] = vendor_max_time
+        payload["vendor_max_time_source"] = f"{BASE}/catalog-v2/asset-metrics"
+        payload["vendor_reference_assets"] = vendor_reference_assets
+        payload["vendor_metrics"] = vendor_metrics
+        payload["vendor_per_asset_metric_max_time"] = vendor_per_asset_metric
+        payload["vendor_max_time_note"] = (
+            "min(max_time) across vendor_reference_assets x vendor_metrics, "
+            "1d/community frequency; captured from the catalog endpoint, not "
+            "subject to the --end/MAX_END truncation applied to the stored "
+            "timeseries -- this is the true vendor frontier at fetch time"
+        )
+    path.write_text(json.dumps(payload, indent=1))
 
 
 def _enforce_holdout_margin(end: str) -> None:
@@ -157,7 +215,20 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--start", default="2020-06-01")
     ap.add_argument("--end", default="2025-04-15")  # never past holdout+15d
+    ap.add_argument("--vintage-only", action="store_true",
+                    help=("Refresh only the vintage stamp (vendor_max_time "
+                          "provenance). Does not touch the fundamentals "
+                          "parquets or the manifest -- no store refetch."))
     args = ap.parse_args()
+
+    vendor_max_time, per_asset_metric = _vendor_max_time(VENDOR_REFERENCE_ASSETS, METRICS)
+
+    if args.vintage_only:
+        write_vintage(VINTAGE, f"{BASE}/timeseries/asset-metrics (community tier)",
+                     vendor_max_time, VENDOR_REFERENCE_ASSETS, METRICS, per_asset_metric)
+        print(f"vintage-only refresh: vendor_max_time={vendor_max_time}")
+        return
+
     _enforce_holdout_margin(args.end)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     manifest = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {}
@@ -175,7 +246,8 @@ def main() -> None:
         MANIFEST.write_text(json.dumps(manifest, indent=1, sort_keys=True))
         print(f"[{i}/{len(CM_ASSETS)}] {a} -> {len(df)} rows")
         time.sleep(0.25)
-    write_vintage(VINTAGE, f"{BASE}/timeseries/asset-metrics (community tier)")
+    write_vintage(VINTAGE, f"{BASE}/timeseries/asset-metrics (community tier)",
+                 vendor_max_time, VENDOR_REFERENCE_ASSETS, METRICS, per_asset_metric)
 
 
 if __name__ == "__main__":

@@ -6,20 +6,40 @@
    "fund_last": "2025-04-15",
    "kline_last": "2026-07-02",
    "fetched_utc": "2026-07-30",
-   "measured_lag_days": 471,
+   "vendor_max_time": "2026-07-29",
+   "vendor_reference_assets": [
+    "btc",
+    "eth",
+    "ada",
+    "doge"
+   ],
+   "vendor_metrics": [
+    "AdrActCnt",
+    "TxCnt",
+    "CapMrktCurUSD"
+   ],
+   "measured_lag_days": 1,
    "registered_lag_days": 2,
-   "lag_pass": false,
+   "lag_pass": true,
    "stamp_alignment": {
     "tz_ok": true,
     "midnight_aligned_ok": true,
     "dev_overlap_ok": true,
     "pass": true
    },
-   "pass": false,
-   "note": "measured lag exceeds registered_lag_days and/or a stamp-alignment check failed; widening the lag is a pre-result amendment a human must approve",
-   "superseded_measurement": 443,
-   "superseded_method": "differenced the last dates of two stores fetched to different end bounds (fundamentals capped at the sealed-holdout MAX_END=2025-04-15; klines fetched to present, 2026-07-02) -- measured fetch-scope mismatch, not vendor publication lag",
-   "correction_rationale": "gates.json registers the P0 probe only as 'publication-lag and stamp alignment; STOP on fail', not its implementation; the corrected method measures vendor staleness against the fundamentals store's own fetch date instead of against an unrelated store's bound",
+   "pass": true,
+   "note": "within registered lag and stamp-aligned",
+   "superseded_measurements": [
+    {
+     "measured_lag_days": 443,
+     "method": "differenced the last dates of two stores fetched to different end bounds (fundamentals capped at the sealed-holdout MAX_END=2025-04-15; klines fetched to present, 2026-07-02)"
+    },
+    {
+     "measured_lag_days": 471,
+     "method": "differenced fetch date against store last observation, which is the deliberate holdout cap (MAX_END=2025-04-15) rather than the vendor frontier"
+    }
+   ],
+   "correction_rationale": "the store is truncated at MAX_END by design, so publication lag cannot be derived from its endpoint; the vendor frontier is captured at fetch time (catalog endpoint, not subject to --end truncation) and compared against the fetch date",
    "live_verification": {
     "assets": [
      "btc",
@@ -64,5 +84,5 @@
    "note": "cheap-minus-expensive gross daily spread must be positive for at least one metric"
   }
  ],
- "verdict": "NEGATIVE-at-probe"
+ "verdict": "CONTINUE"
 }
