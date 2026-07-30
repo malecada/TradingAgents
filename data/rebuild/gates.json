@@ -396,5 +396,130 @@
   "one_shot": "holdout spent only if the dev gate passes 3/3, and then only under its own separate pre-registration",
   "stop_rule": "any dev failure -> negative recorded in THESIS section 50, holdout stays sealed; no second pass, no added grid axes, no cost-model relaxation",
   "thesis_section": "50"
+ },
+ "value_xs_t1": {
+  "dev_window": ["2021-01-01", "2025-03-31"],
+  "holdout_window": ["2025-04-01", "2026-07-01"],
+  "holdout_status": "sealed",
+  "hypothesis": "Cross-sectional crypto value: coins cheap on market-cap-per-network-activity outperform expensive ones. Long-short, dollar-neutral, weekly.",
+  "universe": {
+   "source": "CoinMetrics community (AdrActCnt, TxCnt, CapMrktCurUSD) INTERSECT 799-symbol perp store, minus stablecoin/pegged names",
+   "n_candidates": 63,
+   "liquidity_floor_rank": 150,
+   "liquidity_floor_basis": "prior-month median quote_volume rank within the 799-symbol store",
+   "min_median_breadth": 20,
+   "breadth_stop": "median daily breadth < 20 => NEGATIVE-at-probe, stop before grid"
+  },
+  "signal": {
+   "nvt_proxy": "CapMrktCurUSD / mean(TxCnt, 30d)",
+   "metcalfe_proxy": "CapMrktCurUSD / mean(AdrActCnt, 30d)",
+   "transform": "log, then cross-sectional z-score per rebalance date",
+   "direction": "low ratio = cheap = long leg",
+   "lag": "features as of t-2, position effective t+1; widened before the grid if P0 measures a longer publication lag (pre-result amendment, logged)"
+  },
+  "rebalance": "weekly_monday",
+  "returns": "simple close-to-close on the USDT perp from data/xsect/klines/",
+  "costs": {"bps_per_side": 10.0, "rf_annual": 0.045, "rf_basis": "full capital"},
+  "grid": [
+   {"metric": "nvt_proxy", "breadth": "decile"},
+   {"metric": "nvt_proxy", "breadth": "tercile"},
+   {"metric": "metcalfe_proxy", "breadth": "decile"},
+   {"metric": "metcalfe_proxy", "breadth": "tercile"}
+  ],
+  "controls": {
+   "C1": "vol-matched: sort on trailing 30d realized volatility alone, identical pipeline",
+   "C2": "reversal: sort on -(past 30d return) alone, identical pipeline",
+   "gating": "a config clearing net SR but failing either delta-SR control is NEGATIVE"
+  },
+  "probes": {
+   "P0": "publication-lag and stamp alignment; STOP on fail",
+   "P1": "breadth floor >= 20 names median; STOP on fail",
+   "P2": "cheap-to-expensive decile spread ordered in expected direction on dev for at least one metric; STOP on fail"
+  },
+  "dev_select": {
+   "net_sr_min": 1.0,
+   "delta_sr_vs_c1_min": 0.0,
+   "delta_sr_vs_c2_min": 0.0,
+   "placebo": "dual-family (A: per-symbol circular shift of the signal series; B: count-matched random re-assignment of cross-sectional ranks among eligible names), 500 draws each, costs+rf re-applied inside every draw, p = (1+#{placebo SR >= real SR})/(N+1), gate on WORSE family",
+   "placebo_p_max": 0.05,
+   "dsr_min": 0.9,
+   "n_trials": 4,
+   "n_trials_rationale": "Declared amendment to the ledger-cumulative house convention, made 2026-07-30 BEFORE any data was touched, for a new hypothesis family. Multiplicity correction attaches to the search that produced the candidate; the section 43 momentum grid has no bearing on whether a value factor is real. Precedent: liq_fade_r1's pre-run amendment. Ledger-cumulative denominator is computed and reported (reported_not_gated) so the choice is auditable. This does NOT revisit or relax section 49's DSR failure.",
+   "conventions": "sqrt(365) annualization on daily net returns, ddof=1, zero-variance SR := 0",
+   "tiebreak": "highest DSR, then lowest placebo p"
+  },
+  "reported_not_gated": {
+   "dsr_alt_denominators": "ledger-cumulative unique config_hash count at evaluation time",
+   "breadth_by_year": true,
+   "leg_concentration": "HHI and top-5 share per leg"
+  },
+  "holdout_deploy": {
+   "net_sr_min": 0.5,
+   "placebo_p_max": 0.05,
+   "one_shot": true,
+   "latch": "fresh per evaluation window"
+  },
+  "stop_rule": "No post-hoc exclusions. If a single symbol or period dominates, disclose in forensics and let the verdict stand (precedent: liq_fade_r1 FTT). Any amendment must be declared before the affected result is read."
+ },
+ "unlock_xs_t1": {
+  "dev_window": ["2021-01-01", "2025-03-31"],
+  "holdout_window": ["2025-04-01", "2026-07-01"],
+  "holdout_status": "sealed",
+  "hypothesis": "Cross-sectional token-unlock burden: coins facing large near-term scheduled supply unlocks underperform those facing none. Long-short, dollar-neutral, weekly.",
+  "universe": {
+   "source": "DefiLlama emissions (defillama-datasets.llama.fi) INTERSECT 799-symbol perp store",
+   "n_candidates": 129,
+   "liquidity_floor_rank": 150,
+   "liquidity_floor_basis": "prior-month median quote_volume rank within the 799-symbol store",
+   "min_median_breadth": 20,
+   "breadth_stop": "median daily breadth < 20 => NEGATIVE-at-probe, stop before grid; breadth reported per year, and if the first two dev years fall below the floor the dev window is truncated forward and the truncation logged before the grid runs"
+  },
+  "signal": {
+   "definition": "unlock_burden(t, N) = tokens_unlocking(t, t+N] / circulating_supply(t)",
+   "direction": "high burden = short leg, low burden = long leg",
+   "pit_reconstruction": "replay metadata.events in timestamp order, applying only events with timestamp <= t, yielding the forward unlock curve as known at t (not today's amended schedule). Linear unlocks stay in scope.",
+   "residual_hazard": "DefiLlama may silently correct data without emitting a timestamped event; a single snapshot cannot detect this. P0 quantifies it."
+  },
+  "rebalance": "weekly_monday",
+  "returns": "simple close-to-close on the USDT perp from data/xsect/klines/",
+  "costs": {"bps_per_side": 10.0, "rf_annual": 0.045, "rf_basis": "full capital"},
+  "grid": [
+   {"lookahead_days": 14, "breadth": "decile"},
+   {"lookahead_days": 30, "breadth": "decile"}
+  ],
+  "controls": {
+   "C1": "vol-matched: sort on trailing 30d realized volatility alone, identical pipeline",
+   "C2": "size: sort on log market cap alone, where market cap = perp close x as-of-t circulating supply from the same reconstruction (NOT CoinMetrics; the 129 unlock names and 132 CoinMetrics names are largely disjoint)",
+   "gating": "a config clearing net SR but failing either delta-SR control is NEGATIVE"
+  },
+  "probes": {
+   "P0": "supply reconstruction vs independent series (CoinMetrics SplyCur where covered, CoinGecko circulating otherwise); systematic divergence growing toward the present = silent restatement = STOP",
+   "P1": "breadth floor >= 20 names median, reported per year; STOP on fail",
+   "P2": "event study: mean forward return t+1..t+14 around cliff unlocks releasing >= 1% of circulating supply must carry the expected negative sign; STOP on fail"
+  },
+  "dev_select": {
+   "net_sr_min": 1.0,
+   "delta_sr_vs_c1_min": 0.0,
+   "delta_sr_vs_c2_min": 0.0,
+   "placebo": "dual-family (A: per-symbol circular shift of the signal series; B: count-matched random re-assignment of cross-sectional ranks among eligible names), 500 draws each, costs+rf re-applied inside every draw, p = (1+#{placebo SR >= real SR})/(N+1), gate on WORSE family",
+   "placebo_p_max": 0.05,
+   "dsr_min": 0.9,
+   "n_trials": 2,
+   "n_trials_rationale": "Declared amendment to the ledger-cumulative house convention, made 2026-07-30 BEFORE any data was touched, for a new hypothesis family. Same rationale and precedent as value_xs_t1; ledger-cumulative denominator reported under reported_not_gated.",
+   "conventions": "sqrt(365) annualization on daily net returns, ddof=1, zero-variance SR := 0",
+   "tiebreak": "highest DSR, then lowest placebo p"
+  },
+  "reported_not_gated": {
+   "dsr_alt_denominators": "ledger-cumulative unique config_hash count at evaluation time",
+   "breadth_by_year": true,
+   "amendment_exposure": "share of dev-window signal mass attributable to schedule amendments vs original TGE schedule"
+  },
+  "holdout_deploy": {
+   "net_sr_min": 0.5,
+   "placebo_p_max": 0.05,
+   "one_shot": true,
+   "latch": "fresh per evaluation window"
+  },
+  "stop_rule": "No post-hoc exclusions. If a single symbol or period dominates, disclose in forensics and let the verdict stand (precedent: liq_fade_r1 FTT). Any amendment must be declared before the affected result is read."
  }
 }
