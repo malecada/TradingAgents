@@ -163,10 +163,48 @@ def run_tier1_t1t2_24h(gates_key: str) -> None:
                   f"dm_p={r['dm_p']:.4g} cw_p={r['cw_p']:.4g} pt_p={r['pt_p']:.4g}")
 
 
+def run_tier1_t3_24h(gates_key: str) -> None:
+    from tradingagents.predlab import har, tier1
+
+    entry = registry.get_experiment(gates_key)
+    proto = entry["protocol"]
+    refit = proto["refit_every"]["arima_ets_garch"]["24h"]
+    cells = [c for c in entry["cells"] if c["horizon"] == "24h" and c["target"] == "T3_rv"]
+    print(f"tier t1_t3_24h: {len(cells)} cells, refit_every(garch)={refit}")
+    for c in cells:
+        store = _rv_store(c["symbol"], "24h")
+        series = pd.DataFrame({
+            "y": store["rv"],           # target: variance of period (t, t+1d]
+            "ret": store["ret"],        # period-labeled: GARCH conditioning series
+            "rq_lag": store["rq"].shift(1),  # pre-lagged quarticity for HARQ
+        }).dropna(subset=["y", "ret"])
+        models = [
+            baselines.EWMA(lam=0.94),                        # weak ref (reported)
+            har.HarForecaster("har_levels"),                 # registered strong baseline
+            har.HarForecaster("log_har"),
+            har.HarForecaster("harq", rq_col=1),
+            tier1.GarchForecaster("garch11", ret_col=0, refit_every=refit),
+            tier1.GarchForecaster("egarch11", ret_col=0, refit_every=refit),
+            tier1.GarchForecaster("gjr11", ret_col=0, refit_every=refit),
+        ]
+        cell = {
+            "cell": c["cell"], "target": "T3_rv", "horizon_bars": 1,
+            "strong_baseline": "har_levels", "loss": "qlike",
+            "min_train": proto["min_train"]["24h"], "step": 1,
+            "refit_every": refit, "embargo": 0,
+            "eval_start": entry["dev_window"][0],
+        }
+        out = runner.run_cell(cell, series, models, gates_key=gates_key, tier="t1")
+        for _, r in out.iterrows():
+            print(f"  {c['cell']} {r['model']}: qlike={r['loss_mean']:.6g} "
+                  f"dm_p={r['dm_p']:.4g} gw_p={r['gw_p']:.4g}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--gates-key", default="predlab_p1_classical")
-    ap.add_argument("--tier", required=True, choices=["t0", "t1_t1t2_24h"])
+    ap.add_argument("--tier", required=True,
+                    choices=["t0", "t1_t1t2_24h", "t1_t3_24h"])
     ap.add_argument("--cells", default="all")
     args = ap.parse_args()
     pattern = "*" if args.cells == "all" else args.cells
@@ -174,6 +212,8 @@ def main() -> None:
         run_tier0(args.gates_key, pattern)
     elif args.tier == "t1_t1t2_24h":
         run_tier1_t1t2_24h(args.gates_key)
+    elif args.tier == "t1_t3_24h":
+        run_tier1_t3_24h(args.gates_key)
 
 
 if __name__ == "__main__":

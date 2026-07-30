@@ -122,6 +122,83 @@ class EtsForecaster(Forecaster):
         return float(f)
 
 
+class GarchForecaster(Forecaster):
+    """GARCH-family variance forecast conditioned on a return exog column.
+
+    Fits by MLE on the purged train slice (percent returns, zero mean,
+    normal dist); predict() rebuilds the model on the realized return
+    history with the FIXED fitted params (arch .fix — filter, no
+    re-estimation) and forecasts the next `horizon` steps' variance sum,
+    rescaled back from percent^2. wants_x_hist: the return column is
+    period-labeled (realized at t+h), so only the realized prefix is used.
+    """
+
+    wants_x_hist = True
+
+    _SPECS = {
+        "garch11": {"vol": "GARCH", "p": 1, "o": 0, "q": 1},
+        "egarch11": {"vol": "EGARCH", "p": 1, "o": 0, "q": 1},
+        "gjr11": {"vol": "GARCH", "p": 1, "o": 1, "q": 1},
+    }
+
+    def __init__(self, kind: str = "garch11", ret_col: int = 0,
+                 horizon: int = 1, refit_every: int = 5):
+        if kind not in self._SPECS:
+            raise ValueError(kind)
+        self.kind = kind
+        self.name = kind
+        self.ret_col = int(ret_col)
+        self.horizon = int(horizon)
+        self.refit_every = refit_every
+        self._params = None
+
+    def _model(self, rets_pct: np.ndarray):
+        from arch import arch_model
+
+        spec = self._SPECS[self.kind]
+        return arch_model(rets_pct, mean="Zero", dist="normal", **spec)
+
+    def fit(self, y_train, X_train=None):
+        if X_train is None:
+            self._params = None
+            return
+        rets = np.asarray(X_train[:, self.ret_col], dtype=np.float64)
+        rets = rets[~np.isnan(rets)] * 100.0
+        if len(rets) < 100:
+            self._params = None
+            return
+        import warnings
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            try:
+                res = self._model(rets).fit(disp="off", show_warning=False)
+                self._params = res.params
+            except Exception:
+                self._params = None
+
+    def predict(self, y_hist, x_now=None, x_hist=None):
+        if self._params is None or x_hist is None:
+            y = np.asarray(y_hist, dtype=np.float64)
+            y = y[~np.isnan(y)]
+            return float(np.mean(y)) if len(y) else 0.0
+        rets = np.asarray(x_hist[:, self.ret_col], dtype=np.float64)
+        rets = rets[~np.isnan(rets)] * 100.0
+        import warnings
+
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            try:
+                fixed = self._model(rets).fix(self._params)
+                fc = fixed.forecast(horizon=self.horizon, reindex=False)
+                var_pct = float(fc.variance.values[-1, : self.horizon].sum())
+                return var_pct / 100.0**2
+            except Exception:
+                y = np.asarray(y_hist, dtype=np.float64)
+                y = y[~np.isnan(y)]
+                return float(np.mean(y)) if len(y) else 0.0
+
+
 class LogitLags(Forecaster):
     """Logistic regression on the signs of the last n_lags targets → P(up)."""
 

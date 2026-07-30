@@ -95,7 +95,13 @@ def run_cell(
             n_hist = sp.origin - h + 1  # labels realized at the origin
             y_hist = y[:n_hist] if n_hist > 0 else y[:1]
             x_now = X[sp.origin] if X is not None else None
-            out[i] = model.predict(y_hist, x_now)
+            if getattr(model, "wants_x_hist", False):
+                # period-labeled exog (realized at t+h, e.g. returns for GARCH):
+                # only the same realized prefix as y_hist is in the info set
+                x_hist = X[:n_hist] if X is not None else None
+                out[i] = model.predict(y_hist, x_now, x_hist)
+            else:
+                out[i] = model.predict(y_hist, x_now)
         preds[model.name] = out
 
     base_name = cell["strong_baseline"]
