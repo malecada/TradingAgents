@@ -3,9 +3,10 @@
 Updated: 2026-07-30 (program kickoff)
 
 - **Phase:** 1 (harness + Tier 0/1 classical battery)
-- **Last completed:** Plan Task 4 — DM-HLN (reference-validated h=1/h=7),
-  Clark-West, Giacomini-White, 27 tests green, commit `f9a1ac3`
-- **Next action:** Plan Task 5 — Pesaran-Timmermann + direction/calibration
+- **Last completed:** Plan Task 5 — Pesaran-Timmermann (size-calibrated under
+  null) + base-rate metrics + Brier skill; **eval core complete = P1-01 ✓**;
+  33 tests green
+- **Next action:** Plan Task 6 — 5m kline fetcher + fetch run (P1-02 start)
   (`docs/superpowers/plans/2026-07-30-prediction-lab-phase1.md`)
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends

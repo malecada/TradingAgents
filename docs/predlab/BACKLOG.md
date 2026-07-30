@@ -12,7 +12,7 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 > are done (P1-01 ↔ Tasks 1–5; P1-02 ↔ Tasks 6–7; P1-03 ↔ Task 8; P1-04 ↔ Tasks 9–10;
 > P1-05 ↔ Tasks 11–13; P1-06/07 ↔ Task 14; P1-08 ↔ Task 15).
 
-- [ ] P1-01 `tradingagents/predlab/` package skeleton + eval core, TDD: loss functions
+- [x] P1-01 `tradingagents/predlab/` package skeleton + eval core, TDD: loss functions
       (MSE, MAE, QLIKE, MASE), rolling-origin splitter with purge/embargo, DM test with
       HLN correction (HAC lag ≥ h−1), Clark–West, Giacomini–White, Pesaran–Timmermann,
       Newey–West mean test, stationary block bootstrap on loss differentials. Add
