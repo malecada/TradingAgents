@@ -19,7 +19,7 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
       `arch` dependency (also provides SPA/StepM/MCS for later). Unit tests include
       worked examples validated against reference implementations
       (statsmodels/arch/dieboldmariano) and known-answer fixtures.
-- [ ] P1-02 Data: 5m klines for BTCUSDT+ETHUSDT (Binance Vision monthly zips, 2020-01
+- [x] P1-02 Data: 5m klines for BTCUSDT+ETHUSDT (Binance Vision monthly zips, 2020-01
       → 2026-07; adapt `scripts/fetch_xsect_klines_1h.py` template, `INTERVAL="5m"`,
       keep taker columns) → parquet under `data/predlab/klines_5m/` (idempotent,
       tail-append, no date-embedded cache names) → RV/BV/RQ builder from 5-min returns

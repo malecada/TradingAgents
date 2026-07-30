@@ -3,12 +3,12 @@
 Updated: 2026-07-30 (program kickoff)
 
 - **Phase:** 1 (harness + Tier 0/1 classical battery)
-- **Last completed:** Plan Task 8 — registry + **Phase-1 registration FROZEN**
-  (28 cells, floors, grids; pinned by test_p1_registration.py), 46 tests green,
-  commit `8013a41`. P1-03 registration half done (plumbing probes pending Task 9).
-- **Next action:** Plan Task 7 — RV builder (fetch: BTC parquet landed, ETH in
-  flight; if still running, do Task 9 runner/baselines synthetic parts first)
-  (`docs/superpowers/plans/2026-07-30-prediction-lab-phase1.md`)
+- **Last completed:** Plan Task 7 — RV stores built (**P1-02 ✓**): 5m fetch done
+  (692k rows/sym 2020-01→2026-07-30, 0 dup, monotonic), rv_1h 57,660 + rv_1d
+  2,402 periods/sym, sanity PASS (BTC 2021 ann. vol 0.718 / ETH 0.904; RV/CC
+  in-band 86.5%/88.7% vs 80% floor), 53 tests green
+- **Next action:** Plan Task 9 — baselines + cell runner + plumbing/canary probes
+  (completes P1-03) (`docs/superpowers/plans/2026-07-30-prediction-lab-phase1.md`)
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
 - **Ledger:** `data/predlab/trial_ledger.jsonl` (create on first registration)
