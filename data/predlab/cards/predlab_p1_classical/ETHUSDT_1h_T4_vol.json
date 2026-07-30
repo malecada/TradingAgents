@@ -1,0 +1,75 @@
+{
+ "t0": {
+  "cell": "ETHUSDT|1h|T4_vol",
+  "tier": "t0",
+  "loss": "mase",
+  "strong_baseline": "seasonal_naive_m24",
+  "n_origins": 37200,
+  "window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "per_model": {
+   "seasonal_naive_m24": {
+    "loss_mean": 1.0774843250288246,
+    "dm_stat": NaN,
+    "dm_p": NaN,
+    "cw_p": NaN,
+    "gw_p": NaN,
+    "pt_p": NaN,
+    "degenerate": true,
+    "n_origins": 37200,
+    "sub_periods": {
+     "2021-2022": 0.0,
+     "2023-2024": 0.0,
+     "2025Q1": 0.0
+    }
+   },
+   "persistence": {
+    "loss_mean": 0.7693654544483328,
+    "dm_stat": 61.25490779166983,
+    "dm_p": 0.0,
+    "cw_p": 0.0,
+    "gw_p": 0.0,
+    "pt_p": NaN,
+    "degenerate": false,
+    "n_origins": 37200,
+    "sub_periods": {
+     "2021-2022": 0.2586698962913009,
+     "2023-2024": 0.3492046529564204,
+     "2025Q1": 0.3784686319429887
+    }
+   },
+   "hist_mean": {
+    "loss_mean": 1.9718335654558232,
+    "dm_stat": -111.83334851813348,
+    "dm_p": 1.0,
+    "cw_p": 0.0,
+    "gw_p": 0.0,
+    "pt_p": NaN,
+    "degenerate": false,
+    "n_origins": 37200,
+    "sub_periods": {
+     "2021-2022": -1.6297599818326767,
+     "2023-2024": -0.2133702503251776,
+     "2025Q1": -0.47764292261597807
+    }
+   },
+   "climatology": {
+    "loss_mean": 1.9511634568945018,
+    "dm_stat": -111.48240527055232,
+    "dm_p": 1.0,
+    "cw_p": 0.0,
+    "gw_p": 0.0,
+    "pt_p": NaN,
+    "degenerate": false,
+    "n_origins": 37200,
+    "sub_periods": {
+     "2021-2022": -1.6260498404020753,
+     "2023-2024": -0.17524939745371293,
+     "2025Q1": -0.4623852069158154
+    }
+   }
+  }
+ }
+}
