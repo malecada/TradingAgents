@@ -258,4 +258,4 @@ function-scope `ASSET_TO_SYMBOL` import in
 `test_universe_is_subset_of_value_candidates`) was left untouched, out of
 scope for this round per instruction.
 
-Commit: `<filled in after commit>`
+Commit: `eb4f5c9` — `test(value-xs): read breadth floor from gates.json, fix median print`
