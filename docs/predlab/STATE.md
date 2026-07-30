@@ -3,9 +3,9 @@
 Updated: 2026-07-30 (program kickoff)
 
 - **Phase:** 1 (harness + Tier 0/1 classical battery)
-- **Last completed:** Plan Task 2 — purged rolling-origin splitter (label-overlap
-  purge property-tested), 12 tests green, commit `9e338e9`
-- **Next action:** Plan Task 3 — Newey-West t + stationary bootstrap
+- **Last completed:** Plan Task 3 — Newey-West t (statsmodels-validated) +
+  stationary bootstrap + p_pos, 18 tests green, commit `b0a5eec`
+- **Next action:** Plan Task 4 — DM-HLN, Clark-West, Giacomini-White
   (`docs/superpowers/plans/2026-07-30-prediction-lab-phase1.md`)
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
