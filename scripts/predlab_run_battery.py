@@ -133,15 +133,47 @@ def run_tier0(gates_key: str, pattern: str) -> None:
               f"best={best['model']} loss={best['loss_mean']:.6g}")
 
 
+def run_tier1_t1t2_24h(gates_key: str) -> None:
+    from tradingagents.predlab import tier1
+
+    entry = registry.get_experiment(gates_key)
+    proto = entry["protocol"]
+    refit = proto["refit_every"]["arima_ets_garch"]["24h"]
+    cells = [c for c in entry["cells"]
+             if c["horizon"] == "24h" and c["target"] in ("T1_ret", "T2_dir")]
+    print(f"tier t1_t1t2_24h: {len(cells)} cells, refit_every={refit}")
+    for c in cells:
+        series = load_series(c["symbol"], c["horizon"], c["target"])
+        if c["target"] == "T1_ret":
+            models = [baselines.RWZero(), tier1.ArimaForecaster(),
+                      tier1.EtsForecaster("ANN"), tier1.EtsForecaster("AAN")]
+        else:
+            models = [baselines.BaseRate(), tier1.LogitLags()]
+        cell = {
+            "cell": c["cell"], "target": c["target"], "horizon_bars": 1,
+            "strong_baseline": c["strong_baseline"],
+            "loss": proto["loss"][c["target"].split("_")[0]],
+            "min_train": proto["min_train"]["24h"], "step": 1,
+            "refit_every": refit, "embargo": 0,
+            "eval_start": entry["dev_window"][0],
+        }
+        out = runner.run_cell(cell, series, models, gates_key=gates_key, tier="t1")
+        for _, r in out.iterrows():
+            print(f"  {c['cell']} {r['model']}: loss={r['loss_mean']:.6g} "
+                  f"dm_p={r['dm_p']:.4g} cw_p={r['cw_p']:.4g} pt_p={r['pt_p']:.4g}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--gates-key", default="predlab_p1_classical")
-    ap.add_argument("--tier", required=True, choices=["t0"])
+    ap.add_argument("--tier", required=True, choices=["t0", "t1_t1t2_24h"])
     ap.add_argument("--cells", default="all")
     args = ap.parse_args()
     pattern = "*" if args.cells == "all" else args.cells
     if args.tier == "t0":
         run_tier0(args.gates_key, pattern)
+    elif args.tier == "t1_t1t2_24h":
+        run_tier1_t1t2_24h(args.gates_key)
 
 
 if __name__ == "__main__":

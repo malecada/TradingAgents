@@ -52,7 +52,8 @@ def run_cell(
     gates_key: str,
     tier: str,
     dry: bool = False,
-) -> pd.DataFrame:
+    return_forecasts: bool = False,
+):
     """Run every model over the cell's origins; return one tidy row per model."""
     end_date = str(series.index.max().date())
     registry.assert_dev_window(end_date, allow_holdout=bool(cell.get("allow_holdout", False)))
@@ -172,4 +173,6 @@ def run_cell(
                     "cw_p": r["cw_p"], "pt_p": r["pt_p"],
                 },
             )
+    if return_forecasts:
+        return result, preds
     return result
