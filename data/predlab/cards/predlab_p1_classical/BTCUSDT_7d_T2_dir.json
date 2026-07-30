@@ -26,5 +26,48 @@
     }
    }
   }
+ },
+ "t1": {
+  "cell": "BTCUSDT|7d|T2_dir",
+  "tier": "t1",
+  "loss": "brier",
+  "strong_baseline": "base_rate",
+  "n_origins": 1545,
+  "window": [
+   "2021-01-01",
+   "2025-03-25"
+  ],
+  "per_model": {
+   "base_rate": {
+    "loss_mean": 0.25341839574382946,
+    "dm_stat": NaN,
+    "dm_p": NaN,
+    "cw_p": NaN,
+    "gw_p": NaN,
+    "pt_p": NaN,
+    "degenerate": true,
+    "n_origins": 1545,
+    "sub_periods": {
+     "2021-2022": 0.0,
+     "2023-2024": 0.0,
+     "2025Q1": 0.0
+    }
+   },
+   "logit_lags5": {
+    "loss_mean": 0.3743444509685623,
+    "dm_stat": -8.679124557132184,
+    "dm_p": 1.0,
+    "cw_p": 0.0485360517591066,
+    "gw_p": 7.980632388367621e-22,
+    "pt_p": 0.9901476761013657,
+    "degenerate": false,
+    "n_origins": 1545,
+    "sub_periods": {
+     "2021-2022": -0.12293364514494587,
+     "2023-2024": -0.11763214996452256,
+     "2025Q1": -0.13214396121828179
+    }
+   }
+  }
  }
 }
