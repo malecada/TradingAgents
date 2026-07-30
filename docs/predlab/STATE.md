@@ -3,12 +3,11 @@
 Updated: 2026-07-30 (program kickoff)
 
 - **Phase:** 1 (harness + Tier 0/1 classical battery)
-- **Last completed:** Plan Task 7 — RV stores built (**P1-02 ✓**): 5m fetch done
-  (692k rows/sym 2020-01→2026-07-30, 0 dup, monotonic), rv_1h 57,660 + rv_1d
-  2,402 periods/sym, sanity PASS (BTC 2021 ann. vol 0.718 / ETH 0.904; RV/CC
-  in-band 86.5%/88.7% vs 80% floor), 53 tests green
-- **Next action:** Plan Task 9 — baselines + cell runner + plumbing/canary probes
-  (completes P1-03) (`docs/superpowers/plans/2026-07-30-prediction-lab-phase1.md`)
+- **Last completed:** Plan Task 9 — baselines + cell runner + probes (**P1-03 ✓**):
+  P0 recompute exact (err 0.0), leak-canary DM p 5.6e-15 with QLIKE 4.9e-13 vs
+  EWMA 0.439 (harness provably exposes leakage), 59 tests green
+- **Next action:** Plan Task 10 — Tier-0 battery over all 28 cells (P1-04)
+  (`docs/superpowers/plans/2026-07-30-prediction-lab-phase1.md`)
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
 - **Ledger:** `data/predlab/trial_ledger.jsonl` (create on first registration)

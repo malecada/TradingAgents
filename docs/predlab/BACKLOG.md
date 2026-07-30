@@ -25,7 +25,7 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
       tail-append, no date-embedded cache names) → RV/BV/RQ builder from 5-min returns
       (hourly + daily aggregates) + volume series + Parkinson range. Sanity: RV vs
       close-to-close vol ratio plausible; coverage report with honest denominators.
-- [ ] P1-03 Registration: write `data/predlab/gates.json` Phase-1 battery (cells,
+- [x] P1-03 Registration: write `data/predlab/gates.json` Phase-1 battery (cells,
       baselines, losses, effect floors from charter §5, dev/holdout windows, refit
       cadence, seeds, stop rules) + init empty ledger. Plumbing probes: timestamp
       reconciliation on the new stores; leaky-canary harness check (train-on-future
