@@ -65,6 +65,16 @@ def test_runner_baseline_row_is_degenerate_vs_itself():
     assert bool(out.iloc[0]["degenerate"]) is True  # baseline vs itself
 
 
+def test_runner_eval_start_filters_origins():
+    s = _series(n=600, start="2020-06-01")  # history begins before dev window
+    out = runner.run_cell(_cell(eval_start="2021-01-01"), s,
+                          [baselines.RWZero(), _AR1()],
+                          gates_key="predlab_p1_classical", tier="t0", dry=True)
+    # 600 daily rows from 2020-06-01 end 2022-01-21; origins must start 2021-01-01,
+    # not at min_train (2020-09-09): 386 origins (2021-01-01..2022-01-21)
+    assert int(out.iloc[0]["n_origins"]) == 386
+
+
 def test_runner_refuses_holdout_dates():
     s = _series(n=1700)  # daily from 2021-01-01 runs past 2025-04-01
     with pytest.raises(RuntimeError):
@@ -83,6 +93,17 @@ def test_baselines_basic_semantics():
     assert np.isclose(ew.predict(y), 3.125)
     br = baselines.BaseRate()
     assert np.isclose(br.predict(np.array([1.0, -1.0, 1.0, 1.0])), 0.75)
+
+
+def test_ewma_incremental_matches_full_recompute():
+    rng = np.random.default_rng(7)
+    y = rng.gamma(2.0, 0.5, 500)
+    inc = baselines.EWMA(lam=0.94)
+    seq = [inc.predict(y[:n]) for n in range(10, 501, 7)]
+    fresh = [baselines.EWMA(lam=0.94).predict(y[:n]) for n in range(10, 501, 7)]
+    assert np.allclose(seq, fresh)
+    # shrinking history triggers clean recompute
+    assert np.isclose(inc.predict(y[:50]), baselines.EWMA(lam=0.94).predict(y[:50]))
 
 
 def test_climatology_uses_season_bin():

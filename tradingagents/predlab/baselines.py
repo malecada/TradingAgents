@@ -77,14 +77,28 @@ class EWMA(Forecaster):
     def __init__(self, lam: float = 0.94):
         self.lam = float(lam)
         self.name = f"ewma_{self.lam:g}"
+        self._n = -1  # observations consumed (incl. nans), -1 = no state
+        self._s = float("nan")
+
+    def _consume(self, v: float) -> None:
+        if np.isnan(v):
+            return
+        if np.isnan(self._s):
+            self._s = float(v)
+        else:
+            self._s = self.lam * self._s + (1.0 - self.lam) * float(v)
 
     def predict(self, y_hist, x_now=None):
         y = np.asarray(y_hist, dtype=np.float64)
-        y = y[~np.isnan(y)]
-        s = y[0]
-        for v in y[1:]:
-            s = self.lam * s + (1.0 - self.lam) * v
-        return float(s)
+        n = len(y)
+        # incremental fast path: history grew by appending (the runner's access
+        # pattern); anything else falls back to a full recompute
+        if self._n < 0 or n < self._n:
+            self._n, self._s = 0, float("nan")
+        for v in y[self._n : n]:
+            self._consume(float(v))
+        self._n = n
+        return float(self._s)
 
 
 class Climatology(Forecaster):

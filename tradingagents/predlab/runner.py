@@ -68,6 +68,10 @@ def run_cell(
         len(y), min_train=int(cell["min_train"]), horizon=h,
         step=int(cell.get("step", 1)), embargo=embargo,
     )
+    eval_start = cell.get("eval_start")
+    if eval_start is not None:
+        start_ts = pd.Timestamp(eval_start, tz="UTC")
+        splits = [sp for sp in splits if series.index[sp.origin] >= start_ts]
     if not splits:
         raise ValueError(f"cell {cell['cell']}: no origins (series too short)")
 
