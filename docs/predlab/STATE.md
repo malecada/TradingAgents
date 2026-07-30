@@ -3,10 +3,10 @@
 Updated: 2026-07-30 (program kickoff)
 
 - **Phase:** 1 (harness + Tier 0/1 classical battery)
-- **Last completed:** Plan Task 5 — Pesaran-Timmermann (size-calibrated under
-  null) + base-rate metrics + Brier skill; **eval core complete = P1-01 ✓**;
-  33 tests green
-- **Next action:** Plan Task 6 — 5m kline fetcher + fetch run (P1-02 start)
+- **Last completed:** Plan Task 6 — 5m fetcher shipped (38 tests green, commit
+  `33691de`); **fetch running in background** (BTC+ETH 2020-01→now, Vision bulk)
+- **Next action:** Plan Task 8 — registry + Phase-1 registration (data-independent;
+  Task 7 RV builder waits for the fetch to finish)
   (`docs/superpowers/plans/2026-07-30-prediction-lab-phase1.md`)
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
