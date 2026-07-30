@@ -48,23 +48,32 @@ class HarForecaster(Forecaster):
     def fit(self, y_train, X_train=None):
         y = np.asarray(y_train, dtype=np.float64)
         z = self._transform(y)
-        l3 = self.lags[2]
-        rows, targets = [], []
-        for t in range(l3, len(z)):
-            if np.isnan(z[t]) or np.any(np.isnan(z[t - l3 : t])):
-                continue
-            rq_last = None
-            if self.kind == "harq":
-                rq_last = float(X_train[t, self.rq_col]) if X_train is not None else 0.0
-                if np.isnan(rq_last):
-                    continue
-            rows.append(self._row(z, t, rq_last))
-            targets.append(z[t])
-        if len(rows) < 30:
+        l1, l2, l3 = self.lags
+        n = len(z)
+        if n <= l3:
             self._coef = None
             return
-        A = np.array(rows)
-        b = np.array(targets)
+        # vectorized design (equivalent to the per-row loop; pinned by
+        # test_har_vectorized_design_matches_loop_reference)
+        c = np.concatenate([[0.0], np.nancumsum(z)])
+        t_idx = np.arange(l3, n)
+        lag1 = z[t_idx - l1]
+        m2 = (c[t_idx] - c[t_idx - l2]) / l2
+        m3 = (c[t_idx] - c[t_idx - l3]) / l3
+        cols = [np.ones(len(t_idx)), lag1, m2, m3]
+        nan_c = np.concatenate([[0], np.cumsum(np.isnan(z))])
+        window_nan = (nan_c[t_idx] - nan_c[t_idx - l3]) > 0
+        valid = ~np.isnan(z[t_idx]) & ~window_nan
+        if self.kind == "harq":
+            rq = (np.asarray(X_train[:, self.rq_col], dtype=np.float64)[t_idx]
+                  if X_train is not None else np.zeros(len(t_idx)))
+            valid &= ~np.isnan(rq)
+            cols.append(np.sqrt(np.maximum(np.nan_to_num(rq), 0.0)) * lag1)
+        A = np.column_stack(cols)[valid]
+        b = z[t_idx][valid]
+        if len(b) < 30:
+            self._coef = None
+            return
         self._coef, *_ = np.linalg.lstsq(A, b, rcond=None)
 
     def predict(self, y_hist, x_now=None):

@@ -49,6 +49,16 @@ def test_effect_floors_frozen():
     assert f["T7_ic"] == 0.02 and f["T7_nw_t"] == 3.0
 
 
+def test_amendments_declared():
+    e = _entry()
+    amds = e.get("amendments", [])
+    assert len(amds) == 1
+    a = amds[0]
+    assert a["scope"] == "1h cells, arima/ets/garch models only"
+    assert "4320" in a["change"]
+    assert a["declared_before_first_result"] is True
+
+
 def test_protocol_and_grids_frozen():
     e = _entry()
     p = e["protocol"]

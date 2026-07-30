@@ -30,10 +30,11 @@ class ArimaForecaster(Forecaster):
     name = "arima_aic"
 
     def __init__(self, orders=_DEFAULT_ORDERS, refit_every: int = 5,
-                 window_cap: "int | None" = None):
+                 window_cap: "int | None" = None, select_once: bool = False):
         self.orders = tuple(tuple(o) for o in orders)
         self.refit_every = refit_every  # informational; cadence enforced by runner
         self.window_cap = window_cap  # declared 1h amendment: cap conditioning window
+        self.select_once = select_once  # freeze AIC-chosen order after first fit
         self._res = None
         self._order = None
 
@@ -42,8 +43,11 @@ class ArimaForecaster(Forecaster):
         y = y[~np.isnan(y)]
         if self.window_cap:
             y = y[-self.window_cap :]
+        orders = self.orders
+        if self.select_once and self._order is not None:
+            orders = (self._order,)
         best_aic, best_res, best_order = np.inf, None, None
-        for order in self.orders:
+        for order in orders:
             try:
                 with warnings.catch_warnings():
                     warnings.simplefilter("ignore")
@@ -52,7 +56,8 @@ class ArimaForecaster(Forecaster):
                     best_aic, best_res, best_order = res.aic, res, order
             except Exception:
                 continue
-        self._res, self._order = best_res, best_order
+        if best_res is not None:
+            self._res, self._order = best_res, best_order
 
     def predict(self, y_hist, x_now=None):
         y = np.asarray(y_hist, dtype=np.float64)
@@ -150,17 +155,24 @@ class SeasonalAR(Forecaster):
     def fit(self, y_train, X_train=None):
         y = np.asarray(y_train, dtype=np.float64)
         start = max(self.n_lags, self.m)
-        rows, tgt = [], []
-        for t in range(start, len(y)):
-            window = y[t - start : t + 1]
-            if np.any(np.isnan(window)):
-                continue
-            rows.append(self._row(y, t))
-            tgt.append(y[t])
-        if len(rows) < 30:
+        n = len(y)
+        if n <= start:
             self._coef = None
             return
-        self._coef, *_ = np.linalg.lstsq(np.array(rows), np.array(tgt), rcond=None)
+        t_idx = np.arange(start, n)
+        cols = [np.ones(len(t_idx))]
+        cols += [y[t_idx - k] for k in range(1, self.n_lags + 1)]
+        cols.append(y[t_idx - self.m])
+        # validity mirrors the loop version: no nan anywhere in [t-start, t]
+        nan_c = np.concatenate([[0], np.cumsum(np.isnan(y))])
+        window_nan = (nan_c[t_idx + 1] - nan_c[t_idx - start]) > 0
+        valid = ~window_nan
+        A = np.column_stack(cols)[valid]
+        b = y[t_idx][valid]
+        if len(b) < 30:
+            self._coef = None
+            return
+        self._coef, *_ = np.linalg.lstsq(A, b, rcond=None)
 
     def predict(self, y_hist, x_now=None):
         y = np.asarray(y_hist, dtype=np.float64)

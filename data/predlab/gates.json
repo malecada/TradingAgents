@@ -313,6 +313,15 @@
     "logit_lags5"
    ]
   },
-  "stop_rule": "no post-hoc grid additions; amendments only before the affected cell's first result and declared in this file; NEGATIVE cells close without retry; holdout untouched until Phase-5 champions"
+  "stop_rule": "no post-hoc grid additions; amendments only before the affected cell's first result and declared in this file; NEGATIVE cells close without retry; holdout untouched until Phase-5 champions",
+  "amendments": [
+   {
+    "date": "2026-07-30",
+    "scope": "1h cells, arima/ets/garch models only",
+    "change": "conditioning window capped at the last 4320 bars (180 days) at both fit and filter time; HAR/OLS/baseline models remain fully expanding",
+    "reason": "SARIMAX/MLE estimation on expanding ~37k-observation hourly windows is computationally infeasible; cap declared before any 1h Tier-1 result exists",
+    "declared_before_first_result": true
+   }
+  ]
  }
 }

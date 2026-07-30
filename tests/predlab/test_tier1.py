@@ -72,6 +72,17 @@ def test_logit_lags_learns_sign_persistence():
     assert lg["pt_p"] < 1e-4  # direction skill via PT
 
 
+def test_select_once_freezes_order_after_first_fit():
+    rng = np.random.default_rng(11)
+    y = rng.normal(0, 1, 600)
+    f = tier1.ArimaForecaster(select_once=True)
+    f.fit(y[:300])
+    first_order = f._order
+    assert first_order is not None
+    f.fit(y[:500])  # later refits must keep the frozen order
+    assert f._order == first_order
+
+
 def test_window_cap_uses_only_tail():
     rng = np.random.default_rng(9)
     y = rng.normal(0, 1, 3000)

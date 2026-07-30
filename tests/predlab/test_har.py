@@ -85,6 +85,21 @@ def test_har_truncation_equivalence_no_leak():
     assert np.allclose(pf["har_levels"][:n], pt["har_levels"])
 
 
+def test_har_vectorized_design_matches_loop_reference():
+    rng = np.random.default_rng(12)
+    y = np.exp(rng.normal(-8, 0.5, 400))
+    f = har.HarForecaster("har_levels")
+    f.fit(y)
+    # loop reference (the original definition)
+    l1, l2, l3 = f.lags
+    rows, tgt = [], []
+    for t in range(l3, len(y)):
+        rows.append([1.0, y[t - 1], float(np.mean(y[t - l2:t])), float(np.mean(y[t - l3:t]))])
+        tgt.append(y[t])
+    ref, *_ = np.linalg.lstsq(np.array(rows), np.array(tgt), rcond=None)
+    assert np.allclose(f._coef, ref, rtol=1e-8)
+
+
 def test_garch_beats_histmean_on_simulated_garch():
     # simulate GARCH(1,1): sigma2_t = w + a*r2_{t-1} + b*sigma2_{t-1}
     rng = np.random.default_rng(6)
