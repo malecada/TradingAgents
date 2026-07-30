@@ -234,11 +234,121 @@ def run_tier1_t4t6(gates_key: str) -> None:
                   f"dm_p={r['dm_p']:.4g} cw_p={r['cw_p']:.4g}")
 
 
+CAP_1H = 4320  # declared amendment: arima/ets/garch conditioning cap at 1h
+
+
+def run_tier1_1h(gates_key: str) -> None:
+    from tradingagents.predlab import har, tier1
+
+    entry = registry.get_experiment(gates_key)
+    proto = entry["protocol"]
+    refit = proto["refit_every"]["arima_ets_garch"]["1h"]
+    cells = [c for c in entry["cells"] if c["horizon"] == "1h"]
+    print(f"tier t1_1h: {len(cells)} cells, refit(arima/ets/garch)={refit}, cap={CAP_1H}")
+    for c in cells:
+        sym, tgt = c["symbol"], c["target"]
+        store = _rv_store(sym, "1h")
+        if tgt in ("T1_ret", "T2_dir"):
+            series = store["ret"].to_frame("y").dropna()
+            if tgt == "T1_ret":
+                models = [baselines.RWZero(),
+                          tier1.ArimaForecaster(refit_every=refit, window_cap=CAP_1H,
+                                                select_once=True),
+                          tier1.EtsForecaster("ANN", window_cap=CAP_1H),
+                          tier1.EtsForecaster("AAN", window_cap=CAP_1H)]
+            else:
+                models = [baselines.BaseRate(), tier1.LogitLags()]
+            refit_cell = refit if tgt == "T1_ret" else 24
+        elif tgt == "T3_rv":
+            series = pd.DataFrame({
+                "y": store["rv"], "ret": store["ret"], "rq_lag": store["rq"].shift(1),
+            }).dropna(subset=["y", "ret"])
+            hl = (1, 24, 168)
+            models = [baselines.EWMA(lam=0.94),
+                      har.HarForecaster("har_levels", lags=hl),
+                      har.HarForecaster("log_har", lags=hl),
+                      har.HarForecaster("harq", rq_col=1, lags=hl),
+                      tier1.GarchForecaster("garch11", ret_col=0, refit_every=refit,
+                                            window_cap=CAP_1H),
+                      tier1.GarchForecaster("egarch11", ret_col=0, refit_every=refit,
+                                            window_cap=CAP_1H),
+                      tier1.GarchForecaster("gjr11", ret_col=0, refit_every=refit,
+                                            window_cap=CAP_1H)]
+            refit_cell = refit
+        else:  # T4_vol
+            series = np.log(store["quote_volume"].replace(0.0, np.nan)).to_frame("y").dropna()
+            models = [baselines.SeasonalNaive(m=24), baselines.Persistence(),
+                      tier1.SeasonalAR(m=24)]
+            refit_cell = 24
+        cell = {
+            "cell": c["cell"], "target": tgt, "horizon_bars": 1,
+            "strong_baseline": c["strong_baseline"] if tgt not in ("T3_rv", "T4_vol")
+            else ("har_levels" if tgt == "T3_rv" else "seasonal_naive_m24"),
+            "loss": proto["loss"][tgt.split("_")[0]],
+            "min_train": proto["min_train"]["1h"], "step": 1,
+            "refit_every": refit_cell, "embargo": 0, "mase_m": 24,
+            "eval_start": entry["dev_window"][0],
+        }
+        out = runner.run_cell(cell, series, models, gates_key=gates_key, tier="t1")
+        for _, r in out.iterrows():
+            print(f"  {c['cell']} {r['model']}: loss={r['loss_mean']:.6g} "
+                  f"dm_p={r['dm_p']:.4g}", flush=True)
+
+
+def run_tier1_7d(gates_key: str) -> None:
+    from tradingagents.predlab import har, tier1
+
+    entry = registry.get_experiment(gates_key)
+    proto = entry["protocol"]
+    cells = [c for c in entry["cells"] if c["horizon"] == "7d"]
+    print(f"tier t1_7d: {len(cells)} cells (direct aggregation)")
+    for c in cells:
+        sym, tgt = c["symbol"], c["target"]
+        store = _rv_store(sym, "24h")
+        if tgt in ("T1_ret", "T2_dir"):
+            series = _agg7(store["ret"]).to_frame("y").dropna()
+            models = ([baselines.RWZero(),
+                       tier1.ArimaForecaster(refit_every=5, select_once=True),
+                       tier1.EtsForecaster("ANN"), tier1.EtsForecaster("AAN")]
+                      if tgt == "T1_ret" else
+                      [baselines.BaseRate(), tier1.LogitLags()])
+        elif tgt == "T3_rv":
+            series = pd.DataFrame({
+                "y": _agg7(store["rv"]), "ret": store["ret"],
+                "rq_lag": store["rq"].shift(1),
+            }).dropna(subset=["y", "ret"])
+            models = [baselines.EWMA(lam=0.94),
+                      har.HarForecaster("har_levels"), har.HarForecaster("log_har"),
+                      har.HarForecaster("harq", rq_col=1),
+                      tier1.GarchForecaster("garch11", ret_col=0, horizon=7, refit_every=5)]
+        else:  # T4_vol: log of 7-day dollar-volume sum
+            qv7 = store["quote_volume"].rolling(7).sum().shift(-6)
+            series = np.log(qv7.replace(0.0, np.nan)).to_frame("y").dropna()
+            models = [baselines.SeasonalNaive(m=1), baselines.Persistence(),
+                      baselines.HistMean(), tier1.SeasonalAR(m=1)]
+        cell = {
+            "cell": c["cell"], "target": tgt, "horizon_bars": 7,
+            "strong_baseline": c["strong_baseline"] if tgt not in ("T3_rv",)
+            else "har_levels",
+            "loss": proto["loss"][tgt.split("_")[0]],
+            "min_train": proto["min_train"]["7d"], "step": 1,
+            "refit_every": 5, "embargo": 0, "mase_m": 1,
+            "eval_start": entry["dev_window"][0],
+        }
+        if tgt == "T4_vol":
+            cell["strong_baseline"] = "seasonal_naive_m1"
+        out = runner.run_cell(cell, series, models, gates_key=gates_key, tier="t1")
+        for _, r in out.iterrows():
+            print(f"  {c['cell']} {r['model']}: loss={r['loss_mean']:.6g} "
+                  f"dm_p={r['dm_p']:.4g}", flush=True)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--gates-key", default="predlab_p1_classical")
     ap.add_argument("--tier", required=True,
-                    choices=["t0", "t1_t1t2_24h", "t1_t3_24h", "t1_t4t6"])
+                    choices=["t0", "t1_t1t2_24h", "t1_t3_24h", "t1_t4t6",
+                             "t1_1h", "t1_7d"])
     ap.add_argument("--cells", default="all")
     args = ap.parse_args()
     pattern = "*" if args.cells == "all" else args.cells
@@ -250,6 +360,10 @@ def main() -> None:
         run_tier1_t3_24h(args.gates_key)
     elif args.tier == "t1_t4t6":
         run_tier1_t4t6(args.gates_key)
+    elif args.tier == "t1_1h":
+        run_tier1_1h(args.gates_key)
+    elif args.tier == "t1_7d":
+        run_tier1_7d(args.gates_key)
 
 
 if __name__ == "__main__":
