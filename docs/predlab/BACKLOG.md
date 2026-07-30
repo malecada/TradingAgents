@@ -30,7 +30,7 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
       cadence, seeds, stop rules) + init empty ledger. Plumbing probes: timestamp
       reconciliation on the new stores; leaky-canary harness check (train-on-future
       model must win big — proves harness can detect leakage).
-- [ ] P1-04 Tier 0 baselines run, all Phase-1 cells (RW/zero, mean, persistence,
+- [x] P1-04 Tier 0 baselines run, all Phase-1 cells (RW/zero, mean, persistence,
       seasonal-naive, EWMA, climatology) → baseline loss table per cell → ledger rows +
       report card. (Baselines are the null — no gates evaluated yet.)
 - [ ] P1-05 Tier 1 battery, daily horizon (24h): AR/ARIMA/ETS on T1; logit-on-lags for
