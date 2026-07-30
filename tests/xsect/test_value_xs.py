@@ -118,7 +118,9 @@ def test_universe_never_reaches_into_holdout():
 
 
 def test_median_breadth_meets_registered_floor():
-    u = json.loads(UNIV.read_text())
     import statistics
+    gates = json.loads((ROOT / "data" / "rebuild" / "gates.json").read_text())
+    floor = gates["value_xs_t1"]["universe"]["min_median_breadth"]
+    u = json.loads(UNIV.read_text())
     med = statistics.median(len(v) for v in u.values())
-    assert med >= 20, f"breadth STOP: median {med} < 20"
+    assert med >= floor, f"breadth STOP: median {med} < registered floor {floor}"

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import statistics
 import sys
 from pathlib import Path
 
@@ -25,7 +26,7 @@ def main() -> None:
     OUT.write_text(json.dumps(out, indent=1, sort_keys=True))
     sizes = [len(v) for v in out.values()]
     print(f"months={len(out)} breadth min/median/max="
-          f"{min(sizes)}/{sorted(sizes)[len(sizes)//2]}/{max(sizes)}")
+          f"{min(sizes)}/{statistics.median(sizes)}/{max(sizes)}")
 
 
 if __name__ == "__main__":
