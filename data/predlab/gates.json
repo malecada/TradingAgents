@@ -1,0 +1,318 @@
+{
+ "predlab_p1_classical": {
+  "registered_utc": "2026-07-30",
+  "spec": "docs/superpowers/specs/2026-07-30-prediction-lab-charter-design.md",
+  "plan": "docs/superpowers/plans/2026-07-30-prediction-lab-phase1.md",
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "holdout_window": [
+   "2025-04-01",
+   "2026-07-01"
+  ],
+  "holdout_status": "sealed",
+  "cells": [
+   {
+    "cell": "BTCUSDT|1h|T1_ret",
+    "symbol": "BTCUSDT",
+    "horizon": "1h",
+    "target": "T1_ret",
+    "strong_baseline": "rw_zero"
+   },
+   {
+    "cell": "BTCUSDT|1h|T2_dir",
+    "symbol": "BTCUSDT",
+    "horizon": "1h",
+    "target": "T2_dir",
+    "strong_baseline": "base_rate"
+   },
+   {
+    "cell": "BTCUSDT|1h|T3_rv",
+    "symbol": "BTCUSDT",
+    "horizon": "1h",
+    "target": "T3_rv",
+    "strong_baseline": "har_levels"
+   },
+   {
+    "cell": "BTCUSDT|1h|T4_vol",
+    "symbol": "BTCUSDT",
+    "horizon": "1h",
+    "target": "T4_vol",
+    "strong_baseline": "seasonal_naive"
+   },
+   {
+    "cell": "BTCUSDT|24h|T1_ret",
+    "symbol": "BTCUSDT",
+    "horizon": "24h",
+    "target": "T1_ret",
+    "strong_baseline": "rw_zero"
+   },
+   {
+    "cell": "BTCUSDT|24h|T2_dir",
+    "symbol": "BTCUSDT",
+    "horizon": "24h",
+    "target": "T2_dir",
+    "strong_baseline": "base_rate"
+   },
+   {
+    "cell": "BTCUSDT|24h|T3_rv",
+    "symbol": "BTCUSDT",
+    "horizon": "24h",
+    "target": "T3_rv",
+    "strong_baseline": "har_levels"
+   },
+   {
+    "cell": "BTCUSDT|24h|T4_vol",
+    "symbol": "BTCUSDT",
+    "horizon": "24h",
+    "target": "T4_vol",
+    "strong_baseline": "seasonal_naive"
+   },
+   {
+    "cell": "BTCUSDT|7d|T1_ret",
+    "symbol": "BTCUSDT",
+    "horizon": "7d",
+    "target": "T1_ret",
+    "strong_baseline": "rw_zero"
+   },
+   {
+    "cell": "BTCUSDT|7d|T2_dir",
+    "symbol": "BTCUSDT",
+    "horizon": "7d",
+    "target": "T2_dir",
+    "strong_baseline": "base_rate"
+   },
+   {
+    "cell": "BTCUSDT|7d|T3_rv",
+    "symbol": "BTCUSDT",
+    "horizon": "7d",
+    "target": "T3_rv",
+    "strong_baseline": "har_levels"
+   },
+   {
+    "cell": "BTCUSDT|7d|T4_vol",
+    "symbol": "BTCUSDT",
+    "horizon": "7d",
+    "target": "T4_vol",
+    "strong_baseline": "seasonal_naive"
+   },
+   {
+    "cell": "BTCUSDT|8h|T6_funding",
+    "symbol": "BTCUSDT",
+    "horizon": "8h",
+    "target": "T6_funding",
+    "strong_baseline": "ar1"
+   },
+   {
+    "cell": "BTCUSDT|24h|T6_funding",
+    "symbol": "BTCUSDT",
+    "horizon": "24h",
+    "target": "T6_funding",
+    "strong_baseline": "ar1"
+   },
+   {
+    "cell": "ETHUSDT|1h|T1_ret",
+    "symbol": "ETHUSDT",
+    "horizon": "1h",
+    "target": "T1_ret",
+    "strong_baseline": "rw_zero"
+   },
+   {
+    "cell": "ETHUSDT|1h|T2_dir",
+    "symbol": "ETHUSDT",
+    "horizon": "1h",
+    "target": "T2_dir",
+    "strong_baseline": "base_rate"
+   },
+   {
+    "cell": "ETHUSDT|1h|T3_rv",
+    "symbol": "ETHUSDT",
+    "horizon": "1h",
+    "target": "T3_rv",
+    "strong_baseline": "har_levels"
+   },
+   {
+    "cell": "ETHUSDT|1h|T4_vol",
+    "symbol": "ETHUSDT",
+    "horizon": "1h",
+    "target": "T4_vol",
+    "strong_baseline": "seasonal_naive"
+   },
+   {
+    "cell": "ETHUSDT|24h|T1_ret",
+    "symbol": "ETHUSDT",
+    "horizon": "24h",
+    "target": "T1_ret",
+    "strong_baseline": "rw_zero"
+   },
+   {
+    "cell": "ETHUSDT|24h|T2_dir",
+    "symbol": "ETHUSDT",
+    "horizon": "24h",
+    "target": "T2_dir",
+    "strong_baseline": "base_rate"
+   },
+   {
+    "cell": "ETHUSDT|24h|T3_rv",
+    "symbol": "ETHUSDT",
+    "horizon": "24h",
+    "target": "T3_rv",
+    "strong_baseline": "har_levels"
+   },
+   {
+    "cell": "ETHUSDT|24h|T4_vol",
+    "symbol": "ETHUSDT",
+    "horizon": "24h",
+    "target": "T4_vol",
+    "strong_baseline": "seasonal_naive"
+   },
+   {
+    "cell": "ETHUSDT|7d|T1_ret",
+    "symbol": "ETHUSDT",
+    "horizon": "7d",
+    "target": "T1_ret",
+    "strong_baseline": "rw_zero"
+   },
+   {
+    "cell": "ETHUSDT|7d|T2_dir",
+    "symbol": "ETHUSDT",
+    "horizon": "7d",
+    "target": "T2_dir",
+    "strong_baseline": "base_rate"
+   },
+   {
+    "cell": "ETHUSDT|7d|T3_rv",
+    "symbol": "ETHUSDT",
+    "horizon": "7d",
+    "target": "T3_rv",
+    "strong_baseline": "har_levels"
+   },
+   {
+    "cell": "ETHUSDT|7d|T4_vol",
+    "symbol": "ETHUSDT",
+    "horizon": "7d",
+    "target": "T4_vol",
+    "strong_baseline": "seasonal_naive"
+   },
+   {
+    "cell": "ETHUSDT|8h|T6_funding",
+    "symbol": "ETHUSDT",
+    "horizon": "8h",
+    "target": "T6_funding",
+    "strong_baseline": "ar1"
+   },
+   {
+    "cell": "ETHUSDT|24h|T6_funding",
+    "symbol": "ETHUSDT",
+    "horizon": "24h",
+    "target": "T6_funding",
+    "strong_baseline": "ar1"
+   }
+  ],
+  "effect_floors": {
+   "T1_oos_r2": {
+    "1h": 0.002,
+    "24h": 0.005,
+    "7d": 0.01
+   },
+   "T2_edge_pp": 2.0,
+   "T2_auc_ci_excludes": 0.5,
+   "T3_dqlike": 0.02,
+   "T4_dmase": 0.05,
+   "T6_dmse": 0.05,
+   "T7_ic": 0.02,
+   "T7_nw_t": 3.0
+  },
+  "tests": {
+   "primary": "dm_hln_p<0.05",
+   "nested": "clark_west",
+   "direction": "pesaran_timmermann",
+   "multiplicity_within_cell": "spa_mcs_phase5",
+   "across_cells": "bh_fdr_q0.10"
+  },
+  "protocol": {
+   "scheme": "rolling_origin_expanding",
+   "step": {
+    "1h": 1,
+    "24h": 1,
+    "7d": 1
+   },
+   "embargo": 0,
+   "purge": "= horizon (built into splitter)",
+   "refit_every": {
+    "cheap": 1,
+    "arima_ets_garch": {
+     "24h": 5,
+     "1h": 24,
+     "7d": 5
+    }
+   },
+   "min_train": {
+    "24h": 365,
+    "1h": 2160,
+    "7d": 365
+   },
+   "loss": {
+    "T1": "se",
+    "T2": "brier",
+    "T3": "qlike",
+    "T4": "mase",
+    "T6": "se"
+   }
+  },
+  "model_grids": {
+   "arima_orders": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     1,
+     0,
+     1
+    ],
+    [
+     2,
+     0,
+     2
+    ]
+   ],
+   "arima_selection": "in-train AIC",
+   "ets": [
+    "ANN",
+    "AAN"
+   ],
+   "garch": [
+    "garch11",
+    "egarch11",
+    "gjr11"
+   ],
+   "garch_dist": "normal, zero-mean on returns",
+   "har": [
+    "har_levels",
+    "log_har",
+    "harq"
+   ],
+   "ewma_lambda": 0.94,
+   "seasonal_ar": {
+    "volume_m_1h": 24,
+    "volume_m_24h": 7
+   },
+   "funding": [
+    "ar1",
+    "dar1"
+   ],
+   "t2": [
+    "logit_lags5"
+   ]
+  },
+  "stop_rule": "no post-hoc grid additions; amendments only before the affected cell's first result and declared in this file; NEGATIVE cells close without retry; holdout untouched until Phase-5 champions"
+ }
+}
