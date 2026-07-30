@@ -95,8 +95,8 @@ class EtsForecaster(Forecaster):
         self._beta = 0.1
 
     @staticmethod
-    def _run(y: np.ndarray, alpha: float, beta: "float | None"):
-        """Return one-step-ahead forecast after consuming y (and SSE over y)."""
+    def _run_reference(y: np.ndarray, alpha: float, beta: "float | None"):
+        """Loop recursion — the definitional reference (kept for tests)."""
         level = y[0]
         trend = 0.0
         sse = 0.0
@@ -111,6 +111,24 @@ class EtsForecaster(Forecaster):
                 level = alpha * v + (1 - alpha) * level
         return level + (trend if beta is not None else 0.0), sse
 
+    @staticmethod
+    def _run(y: np.ndarray, alpha: float, beta: "float | None"):
+        """Vectorized ANN via scipy lfilter (exact); AAN falls back to the loop.
+
+        ANN recursion l_t = a*y_t + (1-a)*l_{t-1} is an IIR filter with
+        initial state l_0 = y[0]; pinned to the loop reference at rtol 1e-10.
+        """
+        if beta is None and len(y) > 2:
+            from scipy.signal import lfilter, lfiltic
+
+            b_c, a_c = [alpha], [1.0, -(1.0 - alpha)]
+            zi = lfiltic(b_c, a_c, [y[0]])
+            levels, _ = lfilter(b_c, a_c, y[1:], zi=zi)
+            prior = np.concatenate([[y[0]], levels[:-1]])
+            sse = float(np.sum((y[1:] - prior) ** 2))
+            return float(levels[-1]), sse
+        return EtsForecaster._run_reference(y, alpha, beta)
+
     def fit(self, y_train, X_train=None):
         y = np.asarray(y_train, dtype=np.float64)
         y = y[~np.isnan(y)]
@@ -118,14 +136,32 @@ class EtsForecaster(Forecaster):
             y = y[-self.window_cap :]
         if len(y) < 10:
             return
-        best = (np.inf, self._alpha, self._beta)
-        betas = self._GRID if self.kind == "AAN" else [None]
-        for a in self._GRID:
-            for b in betas:
+        if self.kind == "ANN":
+            best = (np.inf, self._alpha)
+            for a in self._GRID:
+                _, sse = self._run(y, a, None)
+                if sse < best[0]:
+                    best = (sse, a)
+            self._alpha, self._beta = best[1], None
+            return
+        # AAN: deterministic coarse-to-fine (7x7 then 5x5 refine around best);
+        # quality pinned within 1% of the exhaustive 19x19 grid by test
+        coarse = np.round(np.arange(0.05, 1.0, 0.15), 2)
+        best = (np.inf, 0.3, 0.1)
+        for a in coarse:
+            for b in coarse:
                 _, sse = self._run(y, a, b)
                 if sse < best[0]:
                     best = (sse, a, b)
-        self._alpha, self._beta = best[1], (best[2] if self.kind == "AAN" else None)
+        _, a0, b0 = best
+        fine_a = np.clip(a0 + np.arange(-0.10, 0.11, 0.05), 0.02, 0.98)
+        fine_b = np.clip(b0 + np.arange(-0.10, 0.11, 0.05), 0.02, 0.98)
+        for a in fine_a:
+            for b in fine_b:
+                _, sse = self._run(y, a, b)
+                if sse < best[0]:
+                    best = (sse, float(a), float(b))
+        self._alpha, self._beta = best[1], best[2]
 
     def predict(self, y_hist, x_now=None):
         y = np.asarray(y_hist, dtype=np.float64)

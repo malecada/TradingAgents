@@ -72,6 +72,31 @@ def test_logit_lags_learns_sign_persistence():
     assert lg["pt_p"] < 1e-4  # direction skill via PT
 
 
+def test_ets_ann_vectorized_sse_matches_loop():
+    rng = np.random.default_rng(21)
+    y = rng.normal(0, 1, 800).cumsum()
+    for alpha in (0.1, 0.5, 0.9):
+        f_loop, sse_loop = tier1.EtsForecaster._run_reference(y, alpha, None)
+        f_vec, sse_vec = tier1.EtsForecaster._run(y, alpha, None)
+        assert np.isclose(sse_vec, sse_loop, rtol=1e-10)
+        assert np.isclose(f_vec, f_loop, rtol=1e-10)
+
+
+def test_ets_aan_coarse_fine_matches_full_grid_quality():
+    rng = np.random.default_rng(22)
+    y = 0.03 * np.arange(600) + rng.normal(0, 0.5, 600)
+    fast = tier1.EtsForecaster("AAN")
+    fast.fit(y)
+    _, sse_fast = tier1.EtsForecaster._run_reference(y, fast._alpha, fast._beta)
+    # exhaustive 19x19 reference grid
+    best = np.inf
+    for a in tier1.EtsForecaster._GRID:
+        for b in tier1.EtsForecaster._GRID:
+            _, sse = tier1.EtsForecaster._run_reference(y, a, b)
+            best = min(best, sse)
+    assert sse_fast <= best * 1.01  # within 1% of exhaustive-grid SSE
+
+
 def test_select_once_freezes_order_after_first_fit():
     rng = np.random.default_rng(11)
     y = rng.normal(0, 1, 600)
