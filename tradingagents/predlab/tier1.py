@@ -122,6 +122,115 @@ class EtsForecaster(Forecaster):
         return float(f)
 
 
+class SeasonalAR(Forecaster):
+    """OLS on short lags + one seasonal lag: y[t] ~ [1, y[t-1..t-3], y[t-m]]."""
+
+    def __init__(self, m: int, n_lags: int = 3, refit_every: int = 1):
+        self.m = int(m)
+        self.n_lags = int(n_lags)
+        self.name = f"seasonal_ar_m{self.m}"
+        self.refit_every = refit_every
+        self._coef = None
+
+    def _row(self, y: np.ndarray, t: int) -> "list[float]":
+        return [1.0, *[y[t - k] for k in range(1, self.n_lags + 1)], y[t - self.m]]
+
+    def fit(self, y_train, X_train=None):
+        y = np.asarray(y_train, dtype=np.float64)
+        start = max(self.n_lags, self.m)
+        rows, tgt = [], []
+        for t in range(start, len(y)):
+            window = y[t - start : t + 1]
+            if np.any(np.isnan(window)):
+                continue
+            rows.append(self._row(y, t))
+            tgt.append(y[t])
+        if len(rows) < 30:
+            self._coef = None
+            return
+        self._coef, *_ = np.linalg.lstsq(np.array(rows), np.array(tgt), rcond=None)
+
+    def predict(self, y_hist, x_now=None):
+        y = np.asarray(y_hist, dtype=np.float64)
+        y = y[~np.isnan(y)]
+        if self._coef is None or len(y) < max(self.n_lags, self.m):
+            return float(y[-1]) if len(y) else 0.0
+        row = np.array(self._row(y, len(y)))
+        return float(row @ self._coef)
+
+
+class Ar1(Forecaster):
+    """OLS AR(1): y[t] ~ c + phi * y[t-1] (the T6 strong baseline)."""
+
+    name = "ar1"
+
+    def __init__(self, refit_every: int = 1):
+        self.refit_every = refit_every
+        self._c = 0.0
+        self._phi = 0.0
+
+    def fit(self, y_train, X_train=None):
+        y = np.asarray(y_train, dtype=np.float64)
+        y = y[~np.isnan(y)]
+        if len(y) < 30:
+            return
+        A = np.column_stack([np.ones(len(y) - 1), y[:-1]])
+        coef, *_ = np.linalg.lstsq(A, y[1:], rcond=None)
+        self._c, self._phi = float(coef[0]), float(coef[1])
+
+    def predict(self, y_hist, x_now=None):
+        y = np.asarray(y_hist, dtype=np.float64)
+        y = y[~np.isnan(y)]
+        if not len(y):
+            return 0.0
+        return self._c + self._phi * float(y[-1])
+
+
+class Dar1(Forecaster):
+    """Double-AR(1) (Ling 2004): y_t = phi*y_{t-1} + eta*sqrt(w + a*y_{t-1}^2).
+
+    MLE via L-BFGS on the train slice; the point forecast is the conditional
+    mean phi * y_last (the variance law improves phi estimation under the
+    heteroskedasticity funding series exhibit — RESEARCH.md T6 prior).
+    """
+
+    name = "dar1"
+
+    def __init__(self, refit_every: int = 5):
+        self.refit_every = refit_every
+        self._phi = 0.0
+
+    def fit(self, y_train, X_train=None):
+        from scipy.optimize import minimize
+
+        y = np.asarray(y_train, dtype=np.float64)
+        y = y[~np.isnan(y)]
+        if len(y) < 100:
+            return
+        ylag, ycur = y[:-1], y[1:]
+        scale2 = float(np.var(y)) or 1e-12
+
+        def nll(params):
+            phi, log_w, log_a = params
+            w, a = np.exp(log_w), np.exp(log_a)
+            v = w + a * ylag**2
+            resid2 = (ycur - phi * ylag) ** 2
+            return float(np.sum(0.5 * (np.log(v) + resid2 / v)))
+
+        res = minimize(nll, x0=np.array([0.5, np.log(scale2), np.log(0.1)]),
+                       method="L-BFGS-B",
+                       bounds=[(-0.999, 0.999), (-60.0, 10.0), (-20.0, 5.0)])
+        if res.success or np.isfinite(res.fun):
+            self._phi = float(res.x[0])
+
+    def predict(self, y_hist, x_now=None):
+        y = np.asarray(y_hist, dtype=np.float64)
+        y = y[~np.isnan(y)]
+        if not len(y):
+            return 0.0
+        return self._phi * float(y[-1])
+
+
 class GarchForecaster(Forecaster):
     """GARCH-family variance forecast conditioned on a return exog column.
 
