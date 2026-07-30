@@ -25,10 +25,15 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 OUT_DIR = PROJECT_ROOT / "data" / "xsect" / "fundamentals"
 MANIFEST = PROJECT_ROOT / "data" / "xsect" / "fundamentals_manifest.json"
 VINTAGE = PROJECT_ROOT / "data" / "xsect" / "fundamentals_vintage.json"
+UNIVERSE_FILE = PROJECT_ROOT / "data" / "xsect" / "fundamentals_universe.json"
 KLINES_DIR = PROJECT_ROOT / "data" / "xsect" / "klines"
 
 BASE = "https://community-api.coinmetrics.io/v4"
 METRICS = ["AdrActCnt", "TxCnt", "CapMrktCurUSD"]
+
+# Sealed-holdout boundary: holdout opens 2025-04-01 (data/rebuild/gates.json,
+# value_xs_t1.holdout_window); +15d is warm-up margin only, never data.
+MAX_END = "2025-04-15"
 
 # Stablecoins and pegged assets: excluded because a value ratio on a pegged
 # asset is meaningless and the names are not directional trades.
@@ -61,16 +66,37 @@ def _perp_bases() -> set[str]:
 
 
 def _resolve_universe() -> tuple[list[str], dict[str, str]]:
-    """Assets with all three metrics, a tradeable perp, and not pegged."""
+    """Assets with all three metrics, a tradeable perp, and not pegged.
+
+    Cached to UNIVERSE_FILE on first resolution. Once the file exists it is
+    read instead of hitting the catalog, so importing this module (test
+    collection, every Task 4/5 call site) never makes a live network call
+    and the resolved universe can't silently vary run to run. Delete the
+    file to force a fresh catalog resolution.
+    """
+    if UNIVERSE_FILE.exists():
+        cached = json.loads(UNIVERSE_FILE.read_text())
+        return list(cached["assets"]), dict(cached["mapping"])
+
     bases = _perp_bases()
     assets, mapping = [], {}
+    seen_bases: set[str] = set()
     for a in _catalog_assets():
         b = _cm_base(a)
         if b in STABLE_EXCLUDE or a in STABLE_EXCLUDE:
             continue
-        if b in bases and b not in {_cm_base(x) for x in assets}:
+        if b in bases and b not in seen_bases:
             assets.append(a)
             mapping[a] = f"{b.upper()}USDT"
+            seen_bases.add(b)
+
+    UNIVERSE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    UNIVERSE_FILE.write_text(json.dumps({
+        "resolved_utc": datetime.now(timezone.utc).isoformat(),
+        "source_url": f"{BASE}/catalog-v2/asset-metrics",
+        "assets": assets,
+        "mapping": mapping,
+    }, indent=1))
     return assets, mapping
 
 
@@ -93,7 +119,8 @@ def fetch_asset(asset: str, start: str, end: str) -> pd.DataFrame:
         if url:
             time.sleep(0.2)
     if not rows:
-        return pd.DataFrame(columns=METRICS)
+        return pd.DataFrame(columns=METRICS,
+                            index=pd.DatetimeIndex([], tz="UTC", name="time"))
     df = pd.DataFrame(rows)
     df["time"] = pd.to_datetime(df["time"], utc=True).dt.normalize()
     df = df.set_index("time").sort_index()
@@ -111,16 +138,31 @@ def write_vintage(path: Path, source_url: str) -> None:
     }, indent=1))
 
 
+def _enforce_holdout_margin(end: str) -> None:
+    """Reject any --end that reaches past the sealed holdout margin.
+
+    The holdout window (data/rebuild/gates.json, value_xs_t1) opens
+    2025-04-01; MAX_END gives rolling windows 15 days to warm up into that
+    boundary and must never be raised past it.
+    """
+    if end > MAX_END:
+        raise SystemExit(
+            f"--end {end} reaches past the sealed holdout margin {MAX_END}"
+        )
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--start", default="2020-06-01")
     ap.add_argument("--end", default="2025-04-15")  # never past holdout+15d
     args = ap.parse_args()
+    _enforce_holdout_margin(args.end)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     manifest = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {}
     for i, a in enumerate(CM_ASSETS, 1):
         out = OUT_DIR / f"{a}.parquet"
-        if out.exists() and manifest.get(a, {}).get("end") == args.end:
+        prev = manifest.get(a, {})
+        if out.exists() and prev.get("end") == args.end and prev.get("start") == args.start:
             continue
         df = fetch_asset(a, args.start, args.end)
         df.to_parquet(out)
