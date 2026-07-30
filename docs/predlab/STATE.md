@@ -3,9 +3,9 @@
 Updated: 2026-07-30 (program kickoff)
 
 - **Phase:** 1 (harness + Tier 0/1 classical battery)
-- **Last completed:** Plan Task 3 — Newey-West t (statsmodels-validated) +
-  stationary bootstrap + p_pos, 18 tests green, commit `b0a5eec`
-- **Next action:** Plan Task 4 — DM-HLN, Clark-West, Giacomini-White
+- **Last completed:** Plan Task 4 — DM-HLN (reference-validated h=1/h=7),
+  Clark-West, Giacomini-White, 27 tests green, commit `f9a1ac3`
+- **Next action:** Plan Task 5 — Pesaran-Timmermann + direction/calibration
   (`docs/superpowers/plans/2026-07-30-prediction-lab-phase1.md`)
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
