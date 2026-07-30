@@ -1,0 +1,40 @@
+{
+ "experiment": "value_xs_t1",
+ "probes": [
+  {
+   "probe": "P0_publication_lag",
+   "fund_last": "2025-04-15",
+   "kline_last": "2026-07-02",
+   "measured_lag_days": 443,
+   "registered_lag_days": 2,
+   "pass": false,
+   "note": "measured lag exceeds the registered t-2 convention; widen the lag and log a pre-result amendment before the grid"
+  },
+  {
+   "probe": "P1_breadth",
+   "median_breadth": 45,
+   "min_breadth": 29,
+   "breadth_by_year": {
+    "2021": 44.5,
+    "2022": 48.5,
+    "2023": 47.5,
+    "2024": 33.5,
+    "2025": 34
+   },
+   "median_signal_valid_breadth": 39.0,
+   "min_signal_valid_breadth": 25.0,
+   "floor": 20,
+   "pass": true
+  },
+  {
+   "probe": "P2_monotonicity",
+   "spread_by_metric": {
+    "nvt_proxy": 0.00023498307175623403,
+    "metcalfe_proxy": 0.0004897620362825133
+   },
+   "pass": true,
+   "note": "cheap-minus-expensive gross daily spread must be positive for at least one metric"
+  }
+ ],
+ "verdict": "NEGATIVE-at-probe"
+}
