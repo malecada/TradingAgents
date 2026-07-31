@@ -19,13 +19,19 @@ class ElasticNetForecaster(Forecaster):
     name = "enet"
 
     def __init__(self, alphas=(1e-5, 1e-4, 1e-3, 1e-2), l1_ratio: float = 0.5,
-                 refit_every: int = 24):
+                 refit_every: int = 24, n_features: "int | None" = None):
         self.alphas = tuple(alphas)
         self.l1_ratio = float(l1_ratio)
         self.refit_every = refit_every
+        # use only the first n_features exog columns (guards against
+        # period-labeled helper columns appended for other models)
+        self.n_features = n_features
         self._model = None
         self._mu = None
         self._sd = None
+
+    def _slice(self, X):
+        return X if self.n_features is None else X[..., : self.n_features]
 
     def fit(self, y_train, X_train=None):
         from sklearn.linear_model import ElasticNet
@@ -34,7 +40,7 @@ class ElasticNetForecaster(Forecaster):
         if X_train is None:
             return
         y = np.asarray(y_train, dtype=np.float64)
-        X = np.asarray(X_train, dtype=np.float64)
+        X = self._slice(np.asarray(X_train, dtype=np.float64))
         ok = ~(np.isnan(y) | np.isnan(X).any(axis=1))
         y, X = y[ok], X[ok]
         if len(y) < 60:
@@ -58,7 +64,7 @@ class ElasticNetForecaster(Forecaster):
     def predict(self, y_hist, x_now=None):
         if self._model is None or x_now is None:
             return 0.0
-        x = np.asarray(x_now, dtype=np.float64)
+        x = self._slice(np.asarray(x_now, dtype=np.float64))
         if np.isnan(x).any():
             return 0.0
         xs = (x - self._mu) / self._sd
@@ -77,10 +83,15 @@ class LGBForecaster(Forecaster):
         force_row_wise=True, verbosity=-1, n_jobs=4,
     )
 
-    def __init__(self, refit_every: int = 24, params: "dict | None" = None):
+    def __init__(self, refit_every: int = 24, params: "dict | None" = None,
+                 n_features: "int | None" = None):
         self.refit_every = refit_every
         self.params = {**self._PARAMS, **(params or {})}
+        self.n_features = n_features
         self._model = None
+
+    def _slice(self, X):
+        return X if self.n_features is None else X[..., : self.n_features]
 
     def fit(self, y_train, X_train=None):
         import lightgbm as lgb
@@ -89,7 +100,7 @@ class LGBForecaster(Forecaster):
         if X_train is None:
             return
         y = np.asarray(y_train, dtype=np.float64)
-        X = np.asarray(X_train, dtype=np.float64)
+        X = self._slice(np.asarray(X_train, dtype=np.float64))
         ok = ~np.isnan(y)
         y, X = y[ok], X[ok]
         if len(y) < 200:
@@ -99,5 +110,5 @@ class LGBForecaster(Forecaster):
     def predict(self, y_hist, x_now=None):
         if self._model is None or x_now is None:
             return 0.0
-        x = np.asarray(x_now, dtype=np.float64).reshape(1, -1)
+        x = self._slice(np.asarray(x_now, dtype=np.float64)).reshape(1, -1)
         return float(self._model.predict(x)[0])

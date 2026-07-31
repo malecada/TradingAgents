@@ -88,6 +88,9 @@ def run_cell(
 
     preds: "dict[str, np.ndarray]" = {}
     for model in models:
+        # a model may declare its own refit cadence (e.g. Phase-1 champions
+        # keep their registered cadence inside Tier-2 comparison runs)
+        model_refit = int(getattr(model, "refit_every", None) or refit_every)
         out = np.empty(len(splits), dtype=np.float64)
         _t_model = _time.time()
         for i, sp in enumerate(splits):
@@ -95,7 +98,7 @@ def run_cell(
                 rate = i / max(_time.time() - _t_model, 1e-9)
                 print(f"    [{cell['cell']}] {model.name}: {i}/{len(splits)} "
                       f"({rate:.0f} orig/s)", flush=True)
-            if i % refit_every == 0:
+            if i % model_refit == 0:
                 Xt = X[: sp.train_end] if X is not None else None
                 model.fit(y[: sp.train_end], Xt)
             n_hist = sp.origin - h + 1  # labels realized at the origin

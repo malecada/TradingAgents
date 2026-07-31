@@ -344,12 +344,103 @@ def run_tier1_7d(gates_key: str) -> None:
                   f"dm_p={r['dm_p']:.4g}", flush=True)
 
 
+# 1h-grid feature names -> 24h-grid names (declared in the p2 registration:
+# "grid-aware names resolve at build time; listed for the 1h grid")
+_NAME_24H = {
+    "rv_mean24": "rv_mean7", "rv_mean168": "rv_mean22",
+    "rv_ratio_1_24": "rv_ratio_1_7", "ret_mean24": "ret_mean7",
+    "logqv_mean24": "logqv_mean7", "ti_mean24": "ti_mean7",
+    "oi_dlog24": "oi_dlog7", "oi_z168": "oi_z22",
+}
+
+
+def _t2_features(sym: str, grid: str) -> pd.DataFrame:
+    """Assemble the full pre-lagged feature frame for a symbol/grid."""
+    from tradingagents.predlab import features as F
+
+    store = _rv_store(sym, grid)
+    base = F.build_features(store, grid=grid)
+    oi5 = pd.read_parquet(DATA_ROOT / "predlab" / "oi_5m" / f"{sym}.parquet")
+    oi = F.oi_features(oi5, grid=grid)
+    rate = pd.read_parquet(DATA_ROOT / "predlab" / "funding" / f"{sym}.parquet")["fundingRate"]
+    fund = F.funding_features(rate, base.index)
+    return base.join(oi, how="left").join(fund, how="left")
+
+
+def _resolve_names(names: "list[str]", grid: str) -> "list[str]":
+    if grid == "1h":
+        return list(names)
+    return [_NAME_24H.get(n, n) for n in names]
+
+
+def run_tier2_t3t4(gates_key: str, pattern: str) -> None:
+    import fnmatch
+
+    from tradingagents.predlab import har, tier1, tier2
+
+    entry = registry.get_experiment(gates_key)
+    proto = entry["protocol"]
+    cells = [c for c in entry["cells"] if c["target"] in ("T3_rv", "T4_vol")
+             and fnmatch.fnmatch(c["cell"], pattern)]
+    print(f"tier t2_t3t4: {len(cells)} cells", flush=True)
+    for c in cells:
+        sym, hz, tgt = c["symbol"], c["horizon"], c["target"]
+        store = _rv_store(sym, hz)
+        feats_all = _t2_features(sym, hz)
+        cols = _resolve_names(entry["feature_sets"][tgt], hz)
+        missing = [x for x in cols if x not in feats_all.columns]
+        assert not missing, (c["cell"], missing)
+        refit = proto["refit_every"][hz]
+        if tgt == "T3_rv":
+            y = store["rv"]
+            hl = (1, 24, 168) if hz == "1h" else (1, 5, 22)
+            champs = [har.HarForecaster("har_levels", lags=hl, refit_every=1)]
+            if sym == "BTCUSDT":
+                # rq_lag position within the registered feature list
+                champs.append(har.HarForecaster("harq", rq_col=cols.index("rq_lag1"),
+                                                lags=hl, refit_every=1))
+            else:
+                ret_series = store["ret"]
+                feats_all = feats_all.assign(_garch_ret=ret_series)
+                cols_g = cols + ["_garch_ret"]
+                champs.append(tier1.GarchForecaster(
+                    "gjr11", ret_col=cols_g.index("_garch_ret"),
+                    refit_every=24 if hz == "1h" else 5,
+                    window_cap=4320 if hz == "1h" else None))
+                cols = cols_g
+            base_name, loss, mase_m = "har_levels", "qlike", 1
+        else:
+            y = np.log(store["quote_volume"].replace(0.0, np.nan))
+            m = 24 if hz == "1h" else 7
+            champs = [baselines.SeasonalNaive(m=m), tier1.SeasonalAR(m=m)]
+            base_name, loss, mase_m = f"seasonal_naive_m{m}", "mase", m
+        series = feats_all[cols].copy()
+        series.insert(0, "y", y)
+        series = series.dropna(subset=["y"])
+        n_registered = len(_resolve_names(entry["feature_sets"][tgt], hz))
+        models = champs + [
+            tier2.ElasticNetForecaster(refit_every=refit, n_features=n_registered),
+            tier2.LGBForecaster(refit_every=refit, n_features=n_registered),
+        ]
+        cell = {
+            "cell": c["cell"], "target": tgt, "horizon_bars": 1,
+            "strong_baseline": base_name, "loss": loss, "mase_m": mase_m,
+            "min_train": proto["min_train"][hz], "step": 1,
+            "refit_every": refit, "embargo": 0,
+            "eval_start": c["eval_start"],
+        }
+        out = runner.run_cell(cell, series, models, gates_key=gates_key, tier="t2")
+        for _, r in out.iterrows():
+            print(f"  {c['cell']} {r['model']}: loss={r['loss_mean']:.6g} "
+                  f"dm_p={r['dm_p']:.4g}", flush=True)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--gates-key", default="predlab_p1_classical")
     ap.add_argument("--tier", required=True,
                     choices=["t0", "t1_t1t2_24h", "t1_t3_24h", "t1_t4t6",
-                             "t1_1h", "t1_7d"])
+                             "t1_1h", "t1_7d", "t2_t3t4"])
     ap.add_argument("--cells", default="all")
     args = ap.parse_args()
     pattern = "*" if args.cells == "all" else args.cells
@@ -365,6 +456,8 @@ def main() -> None:
         run_tier1_1h(args.gates_key)
     elif args.tier == "t1_7d":
         run_tier1_7d(args.gates_key)
+    elif args.tier == "t2_t3t4":
+        run_tier2_t3t4("predlab_p2_ml", pattern)
 
 
 if __name__ == "__main__":

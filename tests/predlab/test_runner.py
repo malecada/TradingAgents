@@ -95,6 +95,29 @@ def test_baselines_basic_semantics():
     assert np.isclose(br.predict(np.array([1.0, -1.0, 1.0, 1.0])), 0.75)
 
 
+def test_per_model_refit_override():
+    calls = {"a": 0, "b": 0}
+
+    class _Counting(baselines.Forecaster):
+        def __init__(self, name, refit_every=None):
+            self.name = name
+            if refit_every is not None:
+                self.refit_every = refit_every
+
+        def fit(self, y, X=None):
+            calls[self.name] += 1
+
+        def predict(self, y_hist, x_now=None):
+            return 0.0
+
+    s = _series(n=400)
+    cell = _cell(refit_every=10, strong_baseline="a")
+    runner.run_cell(cell, s, [_Counting("a"), _Counting("b", refit_every=50)],
+                    gates_key="predlab_p1_classical", tier="probe", dry=True)
+    # model a uses the cell cadence (10), model b its own (50): 5x fewer fits
+    assert calls["a"] > calls["b"] * 3
+
+
 def test_ewma_incremental_matches_full_recompute():
     rng = np.random.default_rng(7)
     y = rng.gamma(2.0, 0.5, 500)

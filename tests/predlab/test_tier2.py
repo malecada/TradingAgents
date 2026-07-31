@@ -68,6 +68,26 @@ def test_tier2_truncation_equivalence_no_leak():
     assert np.allclose(p_full["lgb"][:n], p_trunc["lgb"])
 
 
+def test_n_features_guard_blocks_leaky_helper_column():
+    rng = np.random.default_rng(9)
+    n = 900
+    idx = pd.date_range("2021-06-01", periods=n, freq="h", tz="UTC")
+    y = rng.normal(0, 1, n)
+    s = pd.DataFrame({"y": y, "x1": rng.normal(0, 1, n), "x2": rng.normal(0, 1, n),
+                      "_leak": y}, index=idx)  # helper column IS the target
+    out = runner.run_cell(_cell(), s,
+                          [baselines.RWZero(),
+                           tier2.LGBForecaster(refit_every=24, n_features=2)],
+                          gates_key="predlab_p1_classical", tier="probe", dry=True)
+    lgb = out[out.model == "lgb"].iloc[0]
+    assert lgb["dm_p"] > 0.05  # sliced model cannot see the leak
+    # and WITHOUT the guard the leak is exploited (sanity that the test bites)
+    out2 = runner.run_cell(_cell(), s,
+                           [baselines.RWZero(), tier2.LGBForecaster(refit_every=24)],
+                           gates_key="predlab_p1_classical", tier="probe", dry=True)
+    assert out2[out2.model == "lgb"].iloc[0]["dm_p"] < 1e-10
+
+
 def test_enet_deterministic():
     s = _linear_cell_series(seed=4)
     outs = []
