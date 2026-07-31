@@ -105,3 +105,17 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 ## Phase P — profitability mapping (OUT OF SCOPE until a U1–U5 survivor exists)
 
 - [ ] PP-00 New spec + registration (separate design doc; not started by the loop).
+
+## Phase P — profitability mapping (registered predlab_pp, 2026-07-31)
+
+- [ ] PP-01 Engine: S1 T7 long-short (quintiles, 5bp taker + funding carry),
+      S2 HARQ vol-target overlay, S3 exploratory sign filter. Tests.
+- [ ] PP-02 Dev-gate evaluation on 2021-01→2025-03 (≤13 configs, ledger rows);
+      freeze ONE config per surviving candidate.
+- [ ] PP-03 Strategy-holdout one-shots (2025-04→2026-07) for dev survivors;
+      placebo forensics; report + THESIS §58; verdicts file blocks re-runs.
+
+## Phase 6 — deferred model upgrades (registered predlab_p6; BLOCKED on data)
+
+- [ ] P6-xx NEW sealed holdout 2026-07-02→open; spend earliest 2027-07.
+      Candidates frozen: ETH ttm_ens, T2 recalibration, T4 alt generalization.
