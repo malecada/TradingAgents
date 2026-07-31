@@ -1,8 +1,18 @@
 # Prediction Lab — STATE
 
-Updated: 2026-07-30 (program kickoff)
+Updated: 2026-07-31 (Phase O kickoff)
 
-- **Phase:** 1 (harness + Tier 0/1 classical battery)
+- **Phase:** O (system optimization cycle, `predlab_opt`) — user-directed
+  open-ended optimization of models + strategy + universe, best honest
+  backtest. Incumbent: S1 eq_h1 (dev net SR 1.483 / holdout +2.20) + vt10.
+- **Last completed:** O-00 registration (spec
+  `2026-07-31-system-optimization-design.md`, gates key `predlab_opt`,
+  BACKLOG Phase O). **Next action: O-01 parameterized opt engine (TDD,
+  eq_h1 exact-reproduction pin).**
+- **Phase-O window discipline:** design D 2021-01→2025-03; validation V
+  2025-04→2026-07 NON-VIRGIN (consistency check only, never a fresh-holdout
+  claim); forward holdout F 2026-07-02→open SEALED (one-shot, final champion,
+  ≥6mo accrual). Old holdout re-runs stay blocked.
 - **Last completed:** **Tier-1 daily verdicts finalized** (P1-05 ✓, commit
   `50ac86f`, report p1_tier1_t3t4t6.md): T3 BTC HARQ = SKILL-CANDIDATE;
   T3 ETH = predictable-vs-weak-only (baseline-fragility exposed); T4 both =

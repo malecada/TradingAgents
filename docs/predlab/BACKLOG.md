@@ -132,3 +132,31 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 - [ ] PP2-03 Forward confirmation one-shot: when >=6 months journal accrued
       (earliest ~2027-02), evaluate vt10 vs concurrent raw book per frozen
       criteria (MaxDD <= 0.75x raw AND SR >= 0.9x raw).
+
+## Phase O — system optimization cycle (registered predlab_opt, 2026-07-31)
+
+> Spec: `docs/superpowers/specs/2026-07-31-system-optimization-design.md`.
+> Windows: design D 2021-01→2025-03, validation V 2025-04→2026-07 (NON-VIRGIN,
+> consistency check only), forward holdout F 2026-07-02→open (spend ≥6mo, one-shot,
+> final champion only). Champion chain: `data/predlab/opt_champion_chain.jsonl`.
+> Each stage: freeze grid in gates.json BEFORE first run, ≤12 configs, ledger row
+> per config, kill-tests before any adoption.
+
+- [x] O-00 Spec + registration (gates key `predlab_opt`; user-directed scope
+      expansion 2026-07-31).
+- [ ] O-01 Engine: refactor `pp.py` S1 path into parameterized
+      `tradingagents/predlab/opt.py` (signal fn, universe size/floor, quantile
+      width, weighting, buffer bands, cadence, tilts, overlay). TDD; pin test must
+      reproduce eq_h1 dev numbers EXACTLY (sr_net 1.4829604657, maxdd 0.4246460613,
+      turnover 0.6669561499) + D/V split metrics helper + placebo/DSR/forensic
+      harness reuse.
+- [ ] O-02 Stage O1 signal construction: freeze grid → run → card opt_o1.md.
+- [ ] O-03 Stage O2 portfolio construction: freeze grid → run → card.
+- [ ] O-04 Stage O3 universe: freeze grid → run → card (single-name PnL share
+      diagnostic mandatory).
+- [ ] O-05 Stage O4 overlay re-tune: freeze grid → run → card.
+- [ ] O-06 Stage O5 funding tilt: freeze grid → run → card.
+- [ ] O-07 Stage O6 volume-forecast weighting: freeze grid → run → card.
+- [ ] O-08 Stage O7 momentum tilt inside book: freeze grid → run → card.
+- [ ] O-09 Stage O8 final composition + champion freeze + report + THESIS §59 +
+      memory milestone; register final champion for F one-shot.

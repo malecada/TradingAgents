@@ -42,8 +42,11 @@ Each iteration, do exactly one unit of work:
 Hard rules:
 
 - One backlog item per iteration. No grid runs that are not registered in gates.
-- NEVER evaluate anything on the holdout window (2025-04-01 → 2026-07-01) except a
-  registered one-shot champion evaluation (Phase 5), and never re-tune after it.
+- Phase O (current): the forward holdout F (2026-07-02 → open) is SEALED — never
+  evaluate anything past 2026-07-01 except the registered final-champion one-shot.
+  The old holdout (2025-04→2026-07) is SPENT: usable inside Phase O only as the
+  NON-VIRGIN validation segment V per the predlab_opt adoption rule, never as a
+  fresh-holdout claim; P5/PP one-shot re-runs stay blocked by verdict files.
 - No edits to registered gates entries except pre-run amendments declared inside
   `gates.json` itself.
 - Writes restricted to: `tradingagents/predlab/`, `tests/predlab/`,
