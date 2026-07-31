@@ -3412,3 +3412,89 @@ Audit-run reference points: trend-lag-only ≈ +1.46; naive pos-shift ≈ +3.02 
 - BT11/§21.3's "90% sizing+momentum" attribution is reinterpreted: it was measuring the same-bar artifact, not genuine momentum alpha.
 - V5.1 (tv0.07/tm2.0/sma20) and the 8-coin expansion must be re-derived on the causal+purged harness before any deployment decision; §20 T7 routing choices are void (selected on leaked DirAcc/SR).
 - Known-stale on this branch: `tests/execution/live/test_parity_script.py` 4-coin pins vs the uncommitted 8-coin `_PARITY_ROUTES` WIP (pre-existing, unrelated to this audit).
+
+---
+
+## Section 54: Prediction Lab Phase 1 — Classical Predictability Map (2026-07-31)
+
+Program reframe (charter `docs/superpowers/specs/2026-07-30-prediction-lab-charter-design.md`):
+measure forecast skill directly (per-observation loss differentials, DM-HLN/CW/GW/PT)
+instead of trading metrics, across a pre-registered battery of 28 cells
+(target × horizon × symbol; `data/predlab/gates.json` key `predlab_p1_classical`,
+frozen before any result). Dev origins 2021-01-01 → 2025-03-31; holdout
+2025-04-01 → 2026-07-01 sealed, zero spends. Tiers 0 (7 naive nulls) and 1
+(ARIMA/ETS/logit/GARCH-family/HAR-family/seasonal-AR/AR-DAR).
+
+### 54.1 Map result: 9 of 28 cells are dev SKILL-CANDIDATES
+
+All nine survive BH-FDR (q=0.10) across the registered battery, their
+pre-registered effect floors, and ≥2/3 sub-period right-sign stability
+(full table: `docs/predlab/reports/phase1_map.md`):
+
+| Family | Cells | Effect vs registered strong baseline |
+|---|---|---|
+| Volume (T4) | BTC+ETH × 1h+24h | ΔMASE 16.5–38.5% (p ≤ 7.5e-18); 1h also beats persistence by ~10% (p ≤ 2.4e-293) |
+| Realized vol (T3) | BTC 1h+24h (HARQ), ETH 1h (GARCH family) | ΔQLIKE 11.5–17.3% (p ≤ 1e-3); BTC 1h HARQ beats ALL 6 alternatives (vs egarch p 4.3e-7) |
+| Direction (T2) | BTC+ETH 1h | accuracy edge +2.86pp / +2.59pp over base rate (≥2pp floor), Brier DM p 9.0e-16 / 4.9e-12 |
+
+Negative side of the map, equally load-bearing: every return-level cell (T1),
+every funding cell (T6: AR(1) unbeaten), every 7d cell, and daily direction are
+BASELINE-WINS or NO-SKILL. Skill is horizon-local (6/8 candidates at 1h, 1/8
+daily, 0/8 weekly) and target-local (vol/volume/short-horizon-direction, never
+return level).
+
+### 54.2 First direction skill in the program's history
+
+Five sign lags in a logistic regression, hourly grid, both symbols
+independently: the first statistically significant, floor-clearing,
+cross-symbol-replicated direction result after two years of daily-horizon
+nulls (§34, §44, §48 and predecessors). Consistent with intraday
+momentum/reversal literature; magnitude (~0.7% Brier gain) is small —
+economic relevance is a Phase-P question, not claimed here.
+
+### 54.3 Honest downgrades and model-robustness findings
+
+- ETH 24h T3 downgraded to PREDICTABLE-VS-WEAK-ONLY: the battery's p=4.8e-12
+  vs har_levels reflects levels-OLS baseline fragility under ETH RV outliers
+  (established by shuffled-data forensics); HARQ's edge vs log_har (p 0.43)
+  and EWMA (p 0.21) is not significant. Charter A1 (strongest-baseline
+  principle) applied; registered gate unchanged.
+- HARQ is bimodal: dominant on BTC (both horizons), catastrophically unstable
+  on ETH 1h (QLIKE 8.19 — near-zero variance forecasts). Recorded, not
+  patched post-hoc; a variance-floor guard is a Phase-5 registered change if
+  HARQ is carried forward.
+- ETH 1h T3 verdict is FAMILY-level (gjr ≡ egarch, pairwise p 0.50);
+  single-champion selection deferred to the registered Phase-5 MCS.
+
+### 54.4 Forensic-method lessons (transferable)
+
+1. Shuffled-target kill-tests are only fair between models that collapse to
+   the same unconditional forecast; cross-class comparisons (regression vs
+   naive; levels vs log under QLIKE) are structurally biased.
+2. Row-shuffling does NOT null exog-feature models: within-row
+   feature↔target association (rq_{t-1}↔rv_t, |ret|↔rv) survives the
+   permutation. Honest exog null = permute y against features. Four probe
+   designs were falsified and corrected before any verdict shipped.
+3. A train-on-future canary (p 5.6e-15 when leaky) + deterministic alignment
+   audits + truncation-equivalence tests are the load-bearing leak checks.
+4. Measured-window bias: profiling MLE cost on calm windows underestimated
+   high-vol-window cost 3–6x (the 1h ARIMA battery); per-origin progress
+   telemetry ended estimate-slippage.
+
+### 54.5 Status and next
+
+Phase 1 complete: 180 unique ledgered configs, zero holdout spends. Phase 2
+(registered small-feature ML: LGB/elastic-net on taker-imbalance, OI, funding
+features; T7 cross-sectional IC battery) proceeds on the skill-candidate
+cells' targets first. Phase 5 (MCS + one-shot holdout confirmations of frozen
+champions) is the graduation gate to any U1–U5 "usable model" claim.
+
+### Artifacts
+
+- Registration: `data/predlab/gates.json` (`predlab_p1_classical`, incl. 1h
+  compute-cap amendment, declared pre-result)
+- Ledger: `data/predlab/trial_ledger.jsonl` (180 unique config hashes)
+- Map + per-tier reports: `docs/predlab/reports/{phase1_map,p1_tier0,p1_tier1_t1t2,p1_tier1_t3t4t6,p1_tier1_7d,p1_tier1_1h}.md`
+- Forensics: `data/predlab/{probes_p1,forensics_t3,forensics_t3_v2,forensics_t4,forensics_shuffled_null}.json`
+- Cards + stored forecasts: `data/predlab/cards/`, `data/predlab/forecasts/`
+- Branch `research/prediction-lab`, worktree TradingAgents-predlab
