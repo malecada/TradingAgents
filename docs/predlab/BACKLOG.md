@@ -69,7 +69,7 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
       the literature-favored cells first. vs HAR/seasonal baselines.
 - [x] P2-03 Same Tier 2 set on T1/T2 (returns/direction) daily+1h; reconcile any T1
       LGB result against §40 retirement verdict explicitly.
-- [ ] P2-04 T7 XS battery: wide-universe (PIT 150–300 syms) next-24h/7d return-rank +
+- [x] P2-04 T7 XS battery: wide-universe (PIT 150–300 syms) next-24h/7d return-rank +
       RV-rank ICs, ridge/LGB rank models vs zero-IC null; NW-t on IC series.
 - [ ] P2-05 Phase-2 report: map v2, FDR update, memory milestone.
 
