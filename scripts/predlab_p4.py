@@ -92,15 +92,23 @@ class ChronosModel:
 class TTMModel:
     name = "ttm_r2"
 
-    def __init__(self, context_length: int):
+    def __init__(self, context_length: int, freq: "str | None" = None):
         import torch
         from tsfm_public.toolkit.get_model import get_model
 
         self._torch = torch
         self.L = context_length
+        self.freq = freq
         self.model = get_model("ibm-granite/granite-timeseries-ttm-r2",
-                               context_length=context_length, prediction_length=1)
+                               context_length=context_length, prediction_length=1,
+                               freq=freq)
         self.model.eval()
+        self._freq_token = None
+        if getattr(self.model.config, "resolution_prefix_tuning", False):
+            from tsfm_public.toolkit.time_series_preprocessor import (
+                DEFAULT_FREQUENCY_MAPPING,
+            )
+            self._freq_token = int(DEFAULT_FREQUENCY_MAPPING.get(freq or "h", 0))
 
     def forecast(self, contexts: "list[np.ndarray]") -> np.ndarray:
         t = self._torch
@@ -114,7 +122,11 @@ class TTMModel:
                 sd = arr.std(axis=1, keepdims=True)
                 sd[sd == 0] = 1.0
                 x = t.tensor((arr - mu) / sd).unsqueeze(-1)
-                pred = self.model(past_values=x).prediction_outputs[:, 0, 0].numpy()
+                kw = {}
+                if self._freq_token is not None:
+                    kw["freq_token"] = t.full((len(arr),), self._freq_token,
+                                              dtype=t.long)
+                pred = self.model(past_values=x, **kw).prediction_outputs[:, 0, 0].numpy()
                 out[i:i + len(arr)] = pred * sd[:, 0] + mu[:, 0]
         return out
 
@@ -145,8 +157,10 @@ def run(models_sel: "list[str]", pattern: str) -> None:
                 if mname == "chronos_bolt_small":
                     loaded[mname] = ChronosModel()
                 elif mname == "ttm_r2":
-                    loaded[mname] = {"1h": TTMModel(proto["context_length"]["1h"]),
-                                     "24h": TTMModel(proto["context_length"]["24h"])}
+                    loaded[mname] = {
+                        "1h": TTMModel(proto["context_length"]["1h"], freq="h"),
+                        "24h": TTMModel(proto["context_length"]["24h"], freq="d"),
+                    }
                 else:
                     print(f"{mname}: not implemented in this runner", flush=True)
                     continue
