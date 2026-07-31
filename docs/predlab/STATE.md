@@ -30,12 +30,14 @@ Updated: 2026-07-30 (program kickoff)
   hold; LGB carries the program's strongest sign association (PT p 2.3e-44)
   but loses Brier to miscalibration → LGB+calibration declared as Phase-5
   combination candidate.
-- **P2-04 part 1 done** (@`d1934bf`): xsec IC engine (exact-pin + planted +
-  null + breadth tests), read-only symlink to the shared 799-sym daily store.
-- **Next action:** P2-04 part 2 — register `predlab_p2_t7` (universe rule:
-  monthly top-200 by prior-month median quote_volume, PIT; signals mom_21/
-  mom_5/rev_1/volchg_5/park_5 + ridge/LGB combos; floors IC≥0.02 & NW-t≥3)
-  → build panel + run → report. Then P2-05.
+- **P2-04 parts 1-2 done** (@`d5c7586`): registration frozen, panels built,
+  **raw ICs: all 5 signals pass floors on ret_24h ranks** — park_5 IC −0.089
+  (NW-t −17.5, 3/3 stable), momentum NEGATIVE (XS reversal t −11/−13,
+  explains §43 mechanism), rev_1 +0.036, volchg −0.023. TS-vs-XS asymmetry
+  is the headline. Caveats: IC ≠ tradable; microstructure slice pending.
+- **Next action:** P2-04 part 3 — ridge/LGB combos (registered) + top-50 vs
+  51-200 microstructure forensic slice → T7 report; then P2-05 Phase-2
+  report + memory milestone.
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
 - **Ledger:** `data/predlab/trial_ledger.jsonl` (create on first registration)
