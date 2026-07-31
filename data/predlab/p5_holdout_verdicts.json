@@ -1,0 +1,118 @@
+{
+ "BTCUSDT|1h|T3_rv": {
+  "champion": "harq",
+  "dev_effect_pct": 11.485316307217287,
+  "champ_loss": 0.4993967234940276,
+  "base_loss": 0.5883697895749892,
+  "dm_p": 2.947693946896495e-81,
+  "cw_p": 0.7639956244349713,
+  "n": 10945,
+  "effect_pct": 15.121963713540017,
+  "verdict": "PASS"
+ },
+ "BTCUSDT|24h|T3_rv": {
+  "champion": "harq",
+  "dev_effect_pct": 11.539154307177805,
+  "champ_loss": 0.28900563447653277,
+  "base_loss": 0.3731580303242477,
+  "dm_p": 5.5404250673235904e-11,
+  "cw_p": 0.2743946268270796,
+  "n": 457,
+  "effect_pct": 22.551409593032883,
+  "verdict": "PASS"
+ },
+ "ETHUSDT|1h|T3_rv": {
+  "champion": "egarch11",
+  "dev_effect_pct": 21.367318425535476,
+  "champ_loss": 0.5530682140168471,
+  "base_loss": 0.5970011040929845,
+  "dm_p": 2.2098029594797997e-11,
+  "cw_p": 0.06542469645855589,
+  "n": 10945,
+  "effect_pct": 7.358929451710806,
+  "verdict": "FAIL"
+ },
+ "BTCUSDT|1h|T4_vol": {
+  "champion": "lgb",
+  "dev_effect_pct": 41.877616427259774,
+  "champ_loss": 0.648878267677056,
+  "base_loss": 1.1749764846971187,
+  "dm_p": 0.0,
+  "cw_p": 0.0,
+  "n": 10945,
+  "effect_pct": 44.7752124295218,
+  "verdict": "PASS"
+ },
+ "ETHUSDT|1h|T4_vol": {
+  "champion": "lgb",
+  "dev_effect_pct": 40.44557429843631,
+  "champ_loss": 0.7082250045491714,
+  "base_loss": 1.2269208132213674,
+  "dm_p": 0.0,
+  "cw_p": 0.0,
+  "n": 10945,
+  "effect_pct": 42.27622541591119,
+  "verdict": "PASS"
+ },
+ "BTCUSDT|24h|T4_vol": {
+  "champion": "lgb",
+  "dev_effect_pct": 22.13189562705665,
+  "champ_loss": 0.6868282676775904,
+  "base_loss": 0.9361797739232222,
+  "dm_p": 8.332934883630367e-12,
+  "cw_p": 1.351475870531819e-27,
+  "n": 457,
+  "effect_pct": 26.63500250605516,
+  "verdict": "PASS"
+ },
+ "ETHUSDT|24h|T4_vol": {
+  "champion": "lgb",
+  "dev_effect_pct": 30.027565537644005,
+  "champ_loss": 0.5505704261670662,
+  "base_loss": 0.7875512626204375,
+  "dm_p": 4.3373797509260536e-14,
+  "cw_p": 3.4376417168916136e-26,
+  "n": 457,
+  "effect_pct": 30.090845853622213,
+  "verdict": "PASS"
+ },
+ "BTCUSDT|1h|T2_dir": {
+  "champion": "logit_lags5",
+  "dev_effect_pct": 0.8265213611089559,
+  "champ_loss": 0.2495801689513491,
+  "base_loss": 0.2501066409354803,
+  "dm_p": 0.10349098029231295,
+  "cw_p": 0.9999919553622972,
+  "n": 10945,
+  "effect_pct": 0.21049900241033867,
+  "acc": 0.5277295568752856,
+  "holdout_base_rate": 0.502603928734582,
+  "edge_pp": 2.5125628140703515,
+  "verdict": "FAIL"
+ },
+ "ETHUSDT|1h|T2_dir": {
+  "champion": "logit_lags5",
+  "dev_effect_pct": 0.7443628672992825,
+  "champ_loss": 0.2498808763443495,
+  "base_loss": 0.2500134148350818,
+  "dm_p": 0.36903984280077445,
+  "cw_p": 0.9706695185455129,
+  "n": 10945,
+  "effect_pct": 0.05301255167438059,
+  "acc": 0.5195979899497487,
+  "holdout_base_rate": 0.5026952946550937,
+  "edge_pp": 1.6902695294655046,
+  "verdict": "FAIL"
+ },
+ "T7|ret_24h": {
+  "champion": "park_5",
+  "n_days": 457,
+  "mean_ic": -0.08255220180495261,
+  "ic_std": 0.1922754299987753,
+  "nw_t": -11.496596907967934,
+  "share_positive": 0.31291028446389496,
+  "dev_ic": -0.08879845602558571,
+  "criteria": "|IC|>=0.02 & |NW-t|>=2 & dev sign",
+  "verdict": "PASS"
+ }
+}
