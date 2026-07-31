@@ -30,14 +30,14 @@ Updated: 2026-07-30 (program kickoff)
   hold; LGB carries the program's strongest sign association (PT p 2.3e-44)
   but loses Brier to miscalibration → LGB+calibration declared as Phase-5
   combination candidate.
-- **P2-04 parts 1-2 done** (@`d5c7586`): registration frozen, panels built,
-  **raw ICs: all 5 signals pass floors on ret_24h ranks** — park_5 IC −0.089
-  (NW-t −17.5, 3/3 stable), momentum NEGATIVE (XS reversal t −11/−13,
-  explains §43 mechanism), rev_1 +0.036, volchg −0.023. TS-vs-XS asymmetry
-  is the headline. Caveats: IC ≠ tradable; microstructure slice pending.
-- **Next action:** P2-04 part 3 — ridge/LGB combos (registered) + top-50 vs
-  51-200 microstructure forensic slice → T7 report; then P2-05 Phase-2
-  report + memory milestone.
+- **PHASE 2 COMPLETE** (@`6221966`): map v2 + THESIS §55 + memory milestone.
+  11 skilled cells + LGB volume-champion family; T7 XS skill-candidate;
+  TS-vs-XS asymmetry headline. Holdout sealed, 0 spends, ledger 250+.
+- **Next action: P3-00 — MANDATORY STOP-AND-ASK.** Per charter A4 and
+  RALPH_PROMPT hard rules: surface the GPU/cloud Tier-3 decision to the user
+  with the Tier≤2 evidence summary; DO NOT proceed autonomously. The loop
+  stops here until the user answers (Phase-4 foundation models could be
+  brought forward instead — user's call).
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
 - **Ledger:** `data/predlab/trial_ledger.jsonl` (create on first registration)
