@@ -83,11 +83,11 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 
 ## Phase 4 — Tier 4 foundation models (zero-shot first)
 
-- [ ] P4-01 Leakage-safe evaluation windows per model (from RESEARCH.md release/cutoff
+- [x] P4-01 Leakage-safe evaluation windows per model (from RESEARCH.md release/cutoff
       table) registered in gates; CPU-feasible models first (per RESEARCH.md).
-- [ ] P4-02 Zero-shot battery on Phase-1 cells within safe windows; compare vs Tier 0/1
+- [x] P4-02 Zero-shot battery on Phase-1 cells within safe windows; compare vs Tier 0/1
       on identical spans (matched-window re-runs of baselines).
-- [ ] P4-03 Report + map v3.
+- [x] P4-03 Report + map v3 (p4_fm.md; map delta folded into Phase-5 planning).
 
 ## Phase 5 — combination + final MCS
 
