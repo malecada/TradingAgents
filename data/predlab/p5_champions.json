@@ -1,0 +1,147 @@
+{
+ "BTCUSDT|1h|T3_rv": {
+  "included": [
+   "harq"
+  ],
+  "excluded": [
+   "egarch11",
+   "ewma_0.94",
+   "garch11",
+   "gjr11",
+   "har_levels"
+  ],
+  "champion": "harq",
+  "dev_loss": 0.5370108934228915,
+  "baseline": "har_levels",
+  "baseline_loss": 0.6066913093049647,
+  "n": 37200
+ },
+ "BTCUSDT|24h|T3_rv": {
+  "included": [
+   "harq",
+   "log_har"
+  ],
+  "excluded": [
+   "egarch11",
+   "ewma_0.94",
+   "garch11",
+   "gjr11",
+   "har_levels"
+  ],
+  "champion": "harq",
+  "dev_loss": 0.35203102269534586,
+  "baseline": "har_levels",
+  "baseline_loss": 0.39795122908700614,
+  "n": 1551
+ },
+ "ETHUSDT|1h|T3_rv": {
+  "included": [
+   "egarch11"
+  ],
+  "excluded": [
+   "ewma_0.94",
+   "garch11",
+   "gjr11",
+   "har_levels",
+   "lgb"
+  ],
+  "champion": "egarch11",
+  "dev_loss": 0.5830978931119289,
+  "baseline": "har_levels",
+  "baseline_loss": 0.7415464936926256,
+  "n": 29184
+ },
+ "BTCUSDT|1h|T4_vol": {
+  "included": [
+   "lgb"
+  ],
+  "excluded": [
+   "seasonal_ar_m24",
+   "seasonal_naive_m24"
+  ],
+  "champion": "lgb",
+  "dev_loss": 0.38472625625923274,
+  "baseline": "seasonal_naive_m24",
+  "baseline_loss": 0.6619244301599355,
+  "n": 37200
+ },
+ "ETHUSDT|1h|T4_vol": {
+  "included": [
+   "lgb"
+  ],
+  "excluded": [
+   "seasonal_ar_m24",
+   "seasonal_naive_m24"
+  ],
+  "champion": "lgb",
+  "dev_loss": 0.3880998231407498,
+  "baseline": "seasonal_naive_m24",
+  "baseline_loss": 0.6516725139548439,
+  "n": 29184
+ },
+ "BTCUSDT|24h|T4_vol": {
+  "included": [
+   "lgb"
+  ],
+  "excluded": [
+   "seasonal_ar_m7",
+   "seasonal_naive_m7"
+  ],
+  "champion": "lgb",
+  "dev_loss": 0.284278898064865,
+  "baseline": "seasonal_naive_m7",
+  "baseline_loss": 0.365077460603552,
+  "n": 1551
+ },
+ "ETHUSDT|24h|T4_vol": {
+  "included": [
+   "lgb"
+  ],
+  "excluded": [
+   "seasonal_ar_m7",
+   "seasonal_naive_m7"
+  ],
+  "champion": "lgb",
+  "dev_loss": 0.26684343843958996,
+  "baseline": "seasonal_naive_m7",
+  "baseline_loss": 0.381355087171002,
+  "n": 1217
+ },
+ "BTCUSDT|1h|T2_dir": {
+  "included": [
+   "logit_lags5"
+  ],
+  "excluded": [
+   "base_rate",
+   "lgb_cal"
+  ],
+  "champion": "logit_lags5",
+  "dev_loss": 0.24791638609297206,
+  "baseline": "base_rate",
+  "baseline_loss": 0.24998254522832805,
+  "n": 32881
+ },
+ "ETHUSDT|1h|T2_dir": {
+  "included": [
+   "logit_lags5"
+  ],
+  "excluded": [
+   "base_rate",
+   "lgb_cal"
+  ],
+  "champion": "logit_lags5",
+  "dev_loss": 0.24816553844421887,
+  "baseline": "base_rate",
+  "baseline_loss": 0.2500266439400633,
+  "n": 24865
+ },
+ "T7|ret_24h": {
+  "ics": {
+   "park_5": -0.08879845602558571,
+   "ridge_combo": 0.08223036568397922,
+   "lgb_combo": 0.0771742217863679
+  },
+  "champion": "park_5",
+  "note": "highest |IC|; pairwise-DM equivalence documented in p2_t7_xs.md (combos not significantly better)"
+ }
+}
