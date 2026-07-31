@@ -18,9 +18,14 @@ Updated: 2026-07-30 (program kickoff)
   leak-pinned), **predlab_p2_ml registration FROZEN** (16 cells, per-symbol
   eval_start remedy decided pre-freeze after the coverage gate REFUSED first
   pass at ETH 77.6%; windowed coverage 98.9-100%).
-- **Next action:** P2-02 — Tier-2 battery tier in predlab_run_battery.py
-  (series+features loader honoring per-symbol eval_start) → run T3/T4 cells
-  first (literature-favored), secondary DM vs Phase-1 champions.
+- **P2-02 COMPLETE** (@`871c30d`, report p2_tier2_t3t4.md): **LGB beats the
+  volume champions in ALL FOUR T4 cells** (Δ5.4-12.1% ≥ 5% floor, pairwise DM
+  p ≤ 6.7e-5, cross-symbol × cross-grid, permute-y null p≈1.0, leak guard
+  bite-tested) — first genuine ML increment over best classical. T3 vol: ML
+  never beats HAR/GARCH champions (4/4) — OI/positioning features add nothing
+  on vol. enet catastrophic on trending volume.
+- **Next action:** P2-03 — same Tier-2 set on T1/T2 daily+1h (explicit §40
+  LGB-retirement reconciliation in the report), then P2-04 T7 XS battery.
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
 - **Ledger:** `data/predlab/trial_ledger.jsonl` (create on first registration)
