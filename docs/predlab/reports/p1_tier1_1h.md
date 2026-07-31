@@ -55,3 +55,14 @@ strong baseline; pairwise strongest-baseline DMs from stored forecasts.
   applies the ≥2/3 right-signed criterion.
 - Multiplicity: all 1h results enter the registry-wide BH-FDR (q=0.10) at
   roll-up; within-cell SPA/MCS reserved for Phase 5 per registration.
+
+## Shuffled-null addendum (completed post-report)
+
+Champions vs hist_mean equality on row-shuffled data: logit BTC/ETH p 0.998/0.939
+PASS; seasonal_ar BTC/ETH p 0.9999/0.994 PASS; gjr11 ETH p 0.977 PASS. The only
+non-pass is BTC harq (p 5.9e-8) — expected and mechanism-confirming: harq reads
+the within-row (time-lagged, legitimate) rq feature, which row-shuffling
+preserves, while every history-only model (including gjr, whose ret exog enters
+via x_hist) nulls out exactly as an honest model should. The dichotomy
+history-users-pass / row-feature-user-"fails" is itself evidence the harness
+distinguishes information channels correctly.

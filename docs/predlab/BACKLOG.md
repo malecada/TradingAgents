@@ -33,14 +33,14 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 - [x] P1-04 Tier 0 baselines run, all Phase-1 cells (RW/zero, mean, persistence,
       seasonal-naive, EWMA, climatology) → baseline loss table per cell → ledger rows +
       report card. (Baselines are the null — no gates evaluated yet.)
-- [ ] P1-05 Tier 1 battery, daily horizon (24h): AR/ARIMA/ETS on T1; logit-on-lags for
+- [x] P1-05 Tier 1 battery, daily horizon (24h): AR/ARIMA/ETS on T1; logit-on-lags for
       T2; GARCH(1,1)/EGARCH/GJR + HAR-RV(+HARQ if RQ ok) on T3; seasonal-AR on T4;
       AR(1)+ on T6. DM/CW/PT vs baselines, per charter §5 → ledger + cards.
-- [ ] P1-06 Tier 1 battery, 1h horizon (same model set, hourly bars; overlapping-h
+- [x] P1-06 Tier 1 battery, 1h horizon (same model set, hourly bars; overlapping-h
       HAC handling verified) → ledger + cards.
-- [ ] P1-07 Tier 1 battery, 7d horizon (direct + iterated forecasts compared) →
+- [x] P1-07 Tier 1 battery, 7d horizon (direct + iterated forecasts compared) →
       ledger + cards.
-- [ ] P1-08 Phase-1 report: predictability map v1 (classical), BH-FDR across Phase-1
+- [x] P1-08 Phase-1 report: predictability map v1 (classical), BH-FDR across Phase-1
       cells, sub-period stability tables → `docs/predlab/reports/phase1_map.md` +
       THESIS §54 draft section. Memory milestone update.
 
