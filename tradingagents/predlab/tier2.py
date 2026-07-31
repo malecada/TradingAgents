@@ -71,6 +71,32 @@ class ElasticNetForecaster(Forecaster):
         return float(self._model.predict(xs.reshape(1, -1))[0])
 
 
+class ProbClip(Forecaster):
+    """Adapter: regression forecaster on a 0/1 target -> probability forecast.
+
+    Registered T2 convention (predlab_p2_ml protocol.note_t2): fit the inner
+    regressor on the 0/1 up-indicator, clip the output to [0.02, 0.98].
+    """
+
+    def __init__(self, inner, lo: float = 0.02, hi: float = 0.98):
+        self.inner = inner
+        self.name = inner.name
+        self.lo, self.hi = float(lo), float(hi)
+        if hasattr(inner, "refit_every"):
+            self.refit_every = inner.refit_every
+
+    def fit(self, y_train, X_train=None):
+        import numpy as _np
+
+        self.inner.fit((_np.asarray(y_train, dtype=float) > 0).astype(float), X_train)
+
+    def predict(self, y_hist, x_now=None):
+        import numpy as _np
+
+        p = self.inner.predict((_np.asarray(y_hist, dtype=float) > 0).astype(float), x_now)
+        return float(min(max(p, self.lo), self.hi))
+
+
 class LGBForecaster(Forecaster):
     """LightGBM regressor, registered fixed params, seed 0."""
 

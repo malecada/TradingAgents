@@ -435,12 +435,61 @@ def run_tier2_t3t4(gates_key: str, pattern: str) -> None:
                   f"dm_p={r['dm_p']:.4g}", flush=True)
 
 
+def run_tier2_t1t2(gates_key: str, pattern: str) -> None:
+    import fnmatch
+
+    from tradingagents.predlab import tier1, tier2
+
+    entry = registry.get_experiment(gates_key)
+    proto = entry["protocol"]
+    cells = [c for c in entry["cells"] if c["target"] in ("T1_ret", "T2_dir")
+             and fnmatch.fnmatch(c["cell"], pattern)]
+    print(f"tier t2_t1t2: {len(cells)} cells", flush=True)
+    for c in cells:
+        sym, hz, tgt = c["symbol"], c["horizon"], c["target"]
+        store = _rv_store(sym, hz)
+        feats_all = _t2_features(sym, hz)
+        cols = _resolve_names(entry["feature_sets"]["T1T2"], hz)
+        missing = [x for x in cols if x not in feats_all.columns]
+        assert not missing, (c["cell"], missing)
+        refit = proto["refit_every"][hz]
+        y = store["ret"]
+        series = feats_all[cols].copy()
+        series.insert(0, "y", y)
+        series = series.dropna(subset=["y"])
+        n_reg = len(cols)
+        if tgt == "T1_ret":
+            models = [baselines.RWZero(),
+                      tier2.ElasticNetForecaster(refit_every=refit, n_features=n_reg),
+                      tier2.LGBForecaster(refit_every=refit, n_features=n_reg)]
+            base_name, loss = "rw_zero", "se"
+        else:
+            models = [baselines.BaseRate(),
+                      tier1.LogitLags(refit_every=24 if hz == "1h" else 5),
+                      tier2.ProbClip(tier2.ElasticNetForecaster(refit_every=refit,
+                                                                n_features=n_reg)),
+                      tier2.ProbClip(tier2.LGBForecaster(refit_every=refit,
+                                                         n_features=n_reg))]
+            base_name, loss = "base_rate", "brier"
+        cell = {
+            "cell": c["cell"], "target": tgt, "horizon_bars": 1,
+            "strong_baseline": base_name, "loss": loss, "mase_m": 1,
+            "min_train": proto["min_train"][hz], "step": 1,
+            "refit_every": refit, "embargo": 0,
+            "eval_start": c["eval_start"],
+        }
+        out = runner.run_cell(cell, series, models, gates_key=gates_key, tier="t2")
+        for _, r in out.iterrows():
+            print(f"  {c['cell']} {r['model']}: loss={r['loss_mean']:.6g} "
+                  f"dm_p={r['dm_p']:.4g} pt_p={r['pt_p']:.4g}", flush=True)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--gates-key", default="predlab_p1_classical")
     ap.add_argument("--tier", required=True,
                     choices=["t0", "t1_t1t2_24h", "t1_t3_24h", "t1_t4t6",
-                             "t1_1h", "t1_7d", "t2_t3t4"])
+                             "t1_1h", "t1_7d", "t2_t3t4", "t2_t1t2"])
     ap.add_argument("--cells", default="all")
     args = ap.parse_args()
     pattern = "*" if args.cells == "all" else args.cells
@@ -458,6 +507,8 @@ def main() -> None:
         run_tier1_7d(args.gates_key)
     elif args.tier == "t2_t3t4":
         run_tier2_t3t4("predlab_p2_ml", pattern)
+    elif args.tier == "t2_t1t2":
+        run_tier2_t1t2("predlab_p2_ml", pattern)
 
 
 if __name__ == "__main__":

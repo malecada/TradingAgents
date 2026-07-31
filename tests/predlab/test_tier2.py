@@ -88,6 +88,25 @@ def test_n_features_guard_blocks_leaky_helper_column():
     assert out2[out2.model == "lgb"].iloc[0]["dm_p"] < 1e-10
 
 
+def test_probclip_learns_sign_signal_and_clips():
+    rng = np.random.default_rng(11)
+    n = 900
+    x1 = rng.normal(0, 1, n)
+    y = np.where(x1 + rng.normal(0, 0.8, n) > 0, 1.0, -1.0)  # sign target driven by x1
+    idx = pd.date_range("2021-06-01", periods=n, freq="h", tz="UTC")
+    s = pd.DataFrame({"y": y, "x1": x1}, index=idx)
+    cell = _cell(target="T2_dir", loss="brier", strong_baseline="base_rate")
+    out, preds = runner.run_cell(
+        cell, s, [baselines.BaseRate(),
+                  tier2.ProbClip(tier2.LGBForecaster(refit_every=24))],
+        gates_key="predlab_p1_classical", tier="probe", dry=True,
+        return_forecasts=True)
+    lgb = out[out.model == "lgb"].iloc[0]
+    assert lgb["dm_p"] < 1e-10 and lgb["pt_p"] < 1e-6
+    p = preds["lgb"]
+    assert p.min() >= 0.02 - 1e-12 and p.max() <= 0.98 + 1e-12
+
+
 def test_enet_deterministic():
     s = _linear_cell_series(seed=4)
     outs = []
