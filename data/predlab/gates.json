@@ -1007,6 +1007,31 @@
   "costs": "taker 5bp per side per rebalance + realized funding carry per leg where data exists (else 0, disclosed); 2x cost stress reported on champion rows",
   "champion_chain": "data/predlab/opt_champion_chain.jsonl (append-only)",
   "stop_rule": "axis list fixed; no post-hoc configs within a stage; no post-hoc single-name exclusions; no adoption ever = incumbent stands, negative-result report; F spent once on final champion only",
-  "stages": {}
+  "stages": {
+   "O1": {
+    "frozen_utc": "2026-07-31",
+    "axis": "signal construction",
+    "grid": [
+     "park_3",
+     "park_10",
+     "park_20",
+     "cc_5",
+     "cc_10",
+     "cc_20",
+     "vov_10",
+     "vov_20",
+     "ewma_5",
+     "ewma_10",
+     "ewma_20"
+    ],
+    "n_configs": 11,
+    "reference": "park_5 (incumbent, not a new trial)",
+    "portfolio_params": "incumbent eq_h1 defaults (eq, quintile, smooth 1, cadence 1, no buffer, top-200, 5bp+funding)",
+    "window": [
+     "2021-01-01",
+     "2026-07-01"
+    ]
+   }
+  }
  }
 }
