@@ -4,12 +4,13 @@ Updated: 2026-07-31 (Phase O kickoff)
 
 - **Phase:** O (system optimization cycle, `predlab_opt`) — user-directed
   open-ended optimization of models + strategy + universe, best honest
-  backtest. Incumbent: S1 eq_h1 (dev net SR 1.483 / holdout +2.20) + vt10.
-- **Last completed:** O-02 stage O1 sweep (11 cfg, 5 candidates, top ewma_20
-  full +1.928 vs incumbent +1.657; card opt_o1.md). Prior: O-01 engine @791ccf1 (18 tests, eq_h1 exact parity pin; suite 147 green). Prior: O-00 registration (spec
+  backtest. Incumbent: **ewma_20 eq quintiles (chain seq 1, full SR +1.928)** + vt10.
+  Original S1 eq_h1 (holdout +2.20) superseded at seq 1.
+- **Last completed:** O-02b ewma_20 ADOPTED (DSR corr 0.842, placebos .005/.005;
+  chain seq 1). Prior: O-02 sweep (11 cfg; card opt_o1.md). Prior: O-01 engine @791ccf1 (18 tests, eq_h1 exact parity pin; suite 147 green). Prior: O-00 registration (spec
   `2026-07-31-system-optimization-design.md`, gates key `predlab_opt`,
-  BACKLOG Phase O). **Next action: O-02b collect ewma_20 verification (bg job
-  opt_o1_verify.log) → adopt/chain if PASS, then O-03 stage O2.**
+  BACKLOG Phase O). **Next action: O-03 stage O2 portfolio construction (grid freeze →
+  run on ewma_20 champion).**
 - **Phase-O window discipline:** design D 2021-01→2025-03; validation V
   2025-04→2026-07 NON-VIRGIN (consistency check only, never a fresh-holdout
   claim); forward holdout F 2026-07-02→open SEALED (one-shot, final champion,

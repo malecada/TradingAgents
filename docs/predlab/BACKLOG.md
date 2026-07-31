@@ -152,8 +152,9 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
       harness reuse.
 - [x] O-02 Stage O1 signal construction: grid 11 cfg frozen + run (@O-02a/b).
       5 adoption candidates; top ewma_20 full +1.928 (Δ+0.271), all subs 4/4.
-- [ ] O-02b ewma_20 adoption verification (placebos, DSR@27, canary, coverage)
-      — running in background (opt_o1_verify.log); adopt + chain row if PASS.
+- [x] O-02b ewma_20 ADOPTED (chain seq 1): placebos .005/.005, DSR corrected
+      0.842 (units-bug 0.169 disclosed+retained; daily-only 0.991), alignment
+      sensitivity PASS, coverage clean. New incumbent full SR +1.928.
 - [ ] O-03 Stage O2 portfolio construction: freeze grid → run → card.
 - [ ] O-04 Stage O3 universe: freeze grid → run → card (single-name PnL share
       diagnostic mandatory).

@@ -45,3 +45,22 @@ Pending: dual placebos, DSR at n_trials = 27 (16 prior + 11 O1),
 lag-direction canary, cost-off sanity, coverage audit
 (`scripts/predlab_opt_o1_verify.py` → `opt_o1_verify.json`). Adoption
 only on full pass; chain row to `opt_champion_chain.jsonl`.
+
+## O-02b verification verdict (2026-07-31)
+
+| check | result |
+|---|---|
+| placebo p_shift / p_xshuffle (200+200) | .005 / .005 PASS |
+| DSR (registered gate, corrected per-frequency, n=27) | **0.842 PASS** |
+| DSR original units-bug value / daily-only sensitivity | 0.169 (retained) / 0.991 |
+| alignment sensitivity (lag mutation) | +1.93 → −1.91 unshifted — PASS (no smearing leak) |
+| cost-off sanity / coverage | PASS / 2008/2008 days, median 200 names |
+
+Disclosures: first DSR run repeated the PP-02 hourly-conversion units bug
+(fixed per house precedent, both retained); `peek>real` canary expectation
+was mis-specified for risk sorts (informative form = alignment
+sensitivity; mechanical no-lookahead pinned in test_opt.py).
+
+**ADOPTED: ewma_20 replaces park_5 as champion signal (chain seq 1).**
+New incumbent: full net SR +1.928 (D +1.671 / V +2.757), MaxDD 46.3%,
+turnover 0.25, 2×costs +1.849.
