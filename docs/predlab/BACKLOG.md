@@ -71,7 +71,7 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
       LGB result against §40 retirement verdict explicitly.
 - [x] P2-04 T7 XS battery: wide-universe (PIT 150–300 syms) next-24h/7d return-rank +
       RV-rank ICs, ridge/LGB rank models vs zero-IC null; NW-t on IC series.
-- [ ] P2-05 Phase-2 report: map v2, FDR update, memory milestone.
+- [x] P2-05 Phase-2 report: map v2, FDR update, memory milestone.
 
 ## Phase 3 — Tier 3 DL (GATE: compute decision + Tier≤2 evidence)
 
