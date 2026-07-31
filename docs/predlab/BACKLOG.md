@@ -144,7 +144,7 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 
 - [x] O-00 Spec + registration (gates key `predlab_opt`; user-directed scope
       expansion 2026-07-31).
-- [ ] O-01 Engine: refactor `pp.py` S1 path into parameterized
+- [x] O-01 Engine: refactor `pp.py` S1 path into parameterized
       `tradingagents/predlab/opt.py` (signal fn, universe size/floor, quantile
       width, weighting, buffer bands, cadence, tilts, overlay). TDD; pin test must
       reproduce eq_h1 dev numbers EXACTLY (sr_net 1.4829604657, maxdd 0.4246460613,

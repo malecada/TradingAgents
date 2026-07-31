@@ -5,10 +5,10 @@ Updated: 2026-07-31 (Phase O kickoff)
 - **Phase:** O (system optimization cycle, `predlab_opt`) — user-directed
   open-ended optimization of models + strategy + universe, best honest
   backtest. Incumbent: S1 eq_h1 (dev net SR 1.483 / holdout +2.20) + vt10.
-- **Last completed:** O-00 registration (spec
+- **Last completed:** O-01 parameterized engine @791ccf1 (18 tests, eq_h1 exact parity pin; suite 147 green). Prior: O-00 registration (spec
   `2026-07-31-system-optimization-design.md`, gates key `predlab_opt`,
-  BACKLOG Phase O). **Next action: O-01 parameterized opt engine (TDD,
-  eq_h1 exact-reproduction pin).**
+  BACKLOG Phase O). **Next action: O-02 stage O1 signal-construction grid
+  freeze + run.**
 - **Phase-O window discipline:** design D 2021-01→2025-03; validation V
   2025-04→2026-07 NON-VIRGIN (consistency check only, never a fresh-holdout
   claim); forward holdout F 2026-07-02→open SEALED (one-shot, final champion,
