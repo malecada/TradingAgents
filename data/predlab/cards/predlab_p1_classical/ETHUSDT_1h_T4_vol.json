@@ -71,5 +71,63 @@
     }
    }
   }
+ },
+ "t1": {
+  "cell": "ETHUSDT|1h|T4_vol",
+  "tier": "t1",
+  "loss": "mase",
+  "strong_baseline": "seasonal_naive_m24",
+  "n_origins": 37200,
+  "window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "per_model": {
+   "seasonal_naive_m24": {
+    "loss_mean": 1.0774843250288246,
+    "dm_stat": NaN,
+    "dm_p": NaN,
+    "cw_p": NaN,
+    "gw_p": NaN,
+    "pt_p": NaN,
+    "degenerate": true,
+    "n_origins": 37200,
+    "sub_periods": {
+     "2021-2022": 0.0,
+     "2023-2024": 0.0,
+     "2025Q1": 0.0
+    }
+   },
+   "persistence": {
+    "loss_mean": 0.7693654544483328,
+    "dm_stat": 61.25490779166983,
+    "dm_p": 0.0,
+    "cw_p": 0.0,
+    "gw_p": 0.0,
+    "pt_p": NaN,
+    "degenerate": false,
+    "n_origins": 37200,
+    "sub_periods": {
+     "2021-2022": 0.2586698962913009,
+     "2023-2024": 0.3492046529564204,
+     "2025Q1": 0.3784686319429887
+    }
+   },
+   "seasonal_ar_m24": {
+    "loss_mean": 0.6903252192024657,
+    "dm_stat": 93.0202556272363,
+    "dm_p": 0.0,
+    "cw_p": 0.0,
+    "gw_p": 0.0,
+    "pt_p": NaN,
+    "degenerate": false,
+    "n_origins": 37200,
+    "sub_periods": {
+     "2021-2022": 0.3386245481146677,
+     "2023-2024": 0.4284916794787701,
+     "2025Q1": 0.4474660067049041
+    }
+   }
+  }
  }
 }

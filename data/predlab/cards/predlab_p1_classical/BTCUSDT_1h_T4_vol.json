@@ -71,5 +71,63 @@
     }
    }
   }
+ },
+ "t1": {
+  "cell": "BTCUSDT|1h|T4_vol",
+  "tier": "t1",
+  "loss": "mase",
+  "strong_baseline": "seasonal_naive_m24",
+  "n_origins": 37200,
+  "window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "per_model": {
+   "seasonal_naive_m24": {
+    "loss_mean": 1.093871094763916,
+    "dm_stat": NaN,
+    "dm_p": NaN,
+    "cw_p": NaN,
+    "gw_p": NaN,
+    "pt_p": NaN,
+    "degenerate": true,
+    "n_origins": 37200,
+    "sub_periods": {
+     "2021-2022": 0.0,
+     "2023-2024": 0.0,
+     "2025Q1": 0.0
+    }
+   },
+   "persistence": {
+    "loss_mean": 0.7438358650930763,
+    "dm_stat": 68.56907714441529,
+    "dm_p": 0.0,
+    "cw_p": 0.0,
+    "gw_p": 0.0,
+    "pt_p": NaN,
+    "degenerate": false,
+    "n_origins": 37200,
+    "sub_periods": {
+     "2021-2022": 0.2728834253865897,
+     "2023-2024": 0.412542982529372,
+     "2025Q1": 0.46912824801882724
+    }
+   },
+   "seasonal_ar_m24": {
+    "loss_mean": 0.6723006212219906,
+    "dm_stat": 97.4820323647742,
+    "dm_p": 0.0,
+    "cw_p": 0.0,
+    "gw_p": 0.0,
+    "pt_p": NaN,
+    "degenerate": false,
+    "n_origins": 37200,
+    "sub_periods": {
+     "2021-2022": 0.34717909979291806,
+     "2023-2024": 0.4832529859268391,
+     "2025Q1": 0.5238216517757069
+    }
+   }
+  }
  }
 }
