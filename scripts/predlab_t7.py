@@ -64,9 +64,84 @@ def monthly_universe(qv: pd.DataFrame, top_n: int = 200) -> pd.DataFrame:
     return mask
 
 
+def _zscore_rows(df: pd.DataFrame) -> pd.DataFrame:
+    mu = df.mean(axis=1)
+    sd = df.std(axis=1, ddof=1).replace(0.0, np.nan)
+    return df.sub(mu, axis=0).div(sd, axis=0)
+
+
+def run_combos(signals: dict, ret: pd.DataFrame, uni: pd.DataFrame,
+               dev_start: str, dev_end: str) -> None:
+    """Registered ridge/lgb combos: trailing-252d pooled train, monthly refit."""
+    from sklearn.linear_model import Ridge
+    import lightgbm as lgb_mod
+
+    y_rank_z = _zscore_rows(ret.where(uni).rank(axis=1))
+    feats_z = {k: _zscore_rows(v.where(uni)) for k, v in signals.items()}
+    keys = list(feats_z)
+    months = pd.date_range(dev_start, dev_end, freq="MS", tz="UTC")
+    preds = {"ridge_combo": pd.DataFrame(np.nan, index=ret.index, columns=ret.columns),
+             "lgb_combo": pd.DataFrame(np.nan, index=ret.index, columns=ret.columns)}
+    for m in months:
+        tr_lo, tr_hi = m - pd.Timedelta(days=252), m - pd.Timedelta(days=1)
+        Xtr, ytr = [], []
+        for k in keys:
+            Xtr.append(feats_z[k].loc[tr_lo:tr_hi].to_numpy().ravel())
+        ytr = y_rank_z.loc[tr_lo:tr_hi].to_numpy().ravel()
+        Xtr = np.column_stack(Xtr)
+        ok = ~(np.isnan(Xtr).any(axis=1) | np.isnan(ytr))
+        if ok.sum() < 2000:
+            continue
+        m_end = m + pd.offsets.MonthBegin(1) - pd.Timedelta(days=1)
+        Xte_frames = [feats_z[k].loc[m:m_end] for k in keys]
+        idx, cols = Xte_frames[0].index, Xte_frames[0].columns
+        Xte = np.column_stack([f.to_numpy().ravel() for f in Xte_frames])
+        te_ok = ~np.isnan(Xte).any(axis=1)
+        for name, model in (("ridge_combo", Ridge(alpha=1.0)),
+                            ("lgb_combo", lgb_mod.LGBMRegressor(
+                                n_estimators=300, learning_rate=0.05, num_leaves=31,
+                                min_child_samples=50, subsample=0.9, subsample_freq=1,
+                                colsample_bytree=0.9, random_state=0,
+                                deterministic=True, force_row_wise=True,
+                                verbosity=-1, n_jobs=4))):
+            model.fit(Xtr[ok], ytr[ok])
+            p = np.full(len(Xte), np.nan)
+            p[te_ok] = model.predict(Xte[te_ok])
+            preds[name].loc[idx, cols] = p.reshape(len(idx), len(cols))
+    for name, pred in preds.items():
+        p_dev = pred[(pred.index >= dev_start)].where(uni)
+        y_dev = ret[(ret.index >= dev_start)].where(uni)
+        ics = xsec.daily_ic(p_dev, y_dev, min_breadth=50)
+        s = xsec.ic_summary(ics, nw_lag=5)
+        subs = {lab: float(ics[(ics.index >= lo) & (ics.index <= hi)].dropna().mean())
+                for lab, lo, hi in SUBPERIODS}
+        registry.log_trial("predlab_p2_t7", f"ret_24h|{name}", name,
+                           {"target": "ret_24h", "model": name}, (dev_start, dev_end),
+                           {k: v for k, v in s.items()})
+        print(f"ret_24h|{name}: mean_ic={s['mean_ic']:+.4f} nw_t={s['nw_t']:+.2f} "
+              f"subs={ {k: round(v,4) for k,v in subs.items()} }", flush=True)
+
+
+def run_slice(signals: dict, ret: pd.DataFrame, qv: pd.DataFrame,
+              dev_start: str) -> None:
+    """Forensic: park_5 + rev_1 ICs on top-50 vs ranks 51-200 (microstructure)."""
+    uni50 = monthly_universe(qv, top_n=50)
+    uni200 = monthly_universe(qv, top_n=200)
+    band = uni200 & ~uni50
+    for label, mask in (("top50", uni50), ("rank51_200", band)):
+        for sname in ("park_5", "rev_1"):
+            s_dev = signals[sname][signals[sname].index >= dev_start].where(mask)
+            y_dev = ret[ret.index >= dev_start].where(mask)
+            ics = xsec.daily_ic(s_dev, y_dev, min_breadth=20)
+            s = xsec.ic_summary(ics, nw_lag=5)
+            print(f"slice {label} ret_24h|{sname}: mean_ic={s['mean_ic']:+.4f} "
+                  f"nw_t={s['nw_t']:+.2f} n={s['n_days']}", flush=True)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--rebuild", action="store_true")
+    ap.add_argument("--mode", default="raw", choices=["raw", "combos", "slice"])
     args = ap.parse_args()
 
     entry = registry.get_experiment("predlab_p2_t7")
@@ -96,6 +171,12 @@ def main() -> None:
     }
 
     dev_start = entry["dev_window"][0]
+    if args.mode == "combos":
+        run_combos(signals, ret, uni, dev_start, dev_end)
+        return
+    if args.mode == "slice":
+        run_slice(signals, ret, qv, dev_start)
+        return
     results = {}
     for tname, (y, lag) in targets.items():
         y_dev = y[y.index >= dev_start].where(uni)
