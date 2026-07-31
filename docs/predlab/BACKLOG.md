@@ -102,11 +102,10 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 
 **PROGRAM COMPLETE.** U1–U4 usable models exist (volume ×4, BTC rv ×2, XS rank).
 
-## Phase P — profitability mapping (OUT OF SCOPE until a U1–U5 survivor exists)
-
-- [ ] PP-00 New spec + registration (separate design doc; not started by the loop).
-
 ## Phase P — profitability mapping (registered predlab_pp, 2026-07-31)
+
+- [x] PP-00 Spec + registration (specs/2026-07-31-phase-p-profitability-design.md;
+      gates keys predlab_pp + predlab_p6 frozen @127d5d6, user-approved 2026-07-31).
 
 - [ ] PP-01 Engine: S1 T7 long-short (quintiles, 5bp taker + funding carry),
       S2 HARQ vol-target overlay, S3 exploratory sign filter. Tests.
