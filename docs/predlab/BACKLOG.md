@@ -55,14 +55,14 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 
 ## Phase 2 — Tier 2 ML battery (registered small feature sets)
 
-- [ ] P2-01a Feature builders from EXISTING stores (PIT-safe, tested):
+- [x] P2-01a Feature builders from EXISTING stores (PIT-safe, tested):
       price/RV lags + ratios, taker-imbalance (`taker_buy_quote_volume` in
       rv stores), funding features, calendar (hour/dow sin-cos). All features
       lagged into the origin's information set; mutation-pinned.
-- [ ] P2-01b Sub-daily OI store: fetcher for Binance Vision futures METRICS
+- [x] P2-01b Sub-daily OI store: fetcher for Binance Vision futures METRICS
       monthly zips (5m OI from 2021-01 per reference_data_source_audit_jul30)
       → data/predlab/oi_5m/ + hourly/daily aggregates + OI-delta features.
-- [ ] P2-01c Registration: per-cell-family feature lists (≤ 25 each) appended
+- [x] P2-01c Registration: per-cell-family feature lists (≤ 25 each) appended
       to gates as `predlab_p2_ml` entry (windows, grids, floors inherit charter)
       BEFORE any Tier-2 result.
 - [ ] P2-02 LGB + elastic-net + kernel-ridge on T3 (vol) and T4 (volume) daily+1h —
