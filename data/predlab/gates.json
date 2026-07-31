@@ -728,6 +728,13 @@
    "comparison": "vs cell champion AND registered strong baseline on IDENTICAL matched windows (baselines re-run on the same origin subset)"
   },
   "effect_floors": "inherit charter anchors; matched-window basis",
-  "stop_rule": "roster and windows fixed; a model may be DROPPED for declared runtime infeasibility but never added; NEGATIVE closes; holdout untouched"
+  "stop_rule": "roster and windows fixed; a model may be DROPPED for declared runtime infeasibility but never added; NEGATIVE closes; holdout untouched",
+  "amendments": [
+   {
+    "date": "2026-07-31",
+    "change": "tabpfn_ts DROPPED \u2014 declared infeasibility: local weights require interactive license acceptance + account token (TabPFNLicenseError in non-interactive environment). Revivable if the operator sets TABPFN_TOKEN; no results were produced.",
+    "declared_before_first_result": true
+   }
+  ]
  }
 }

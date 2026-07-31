@@ -3553,3 +3553,25 @@ family, all dev-only, holdout sealed (zero spends).
 - Reports: `docs/predlab/reports/{p2_tier2_t3t4,p2_tier2_t1t2,p2_t7_xs,phase2_map}.md`
 - OI stores: `data/predlab/oi_5m/` + manifests; T7 panels `data/predlab/t7_panels/`.
 - Commits `03a7567..f272eb6` on `research/prediction-lab`.
+
+---
+
+## Section 56: Prediction Lab Phase 4 — Zero-Shot Foundation Models (2026-07-31)
+
+Registered `predlab_p4_fm`: leakage-classed roster (per-model post-release
+windows; models released after dev-end DEFERRED as structurally unevaluable;
+TimeGPT excluded as unauditable; TabPFN-TS dropped by declared amendment —
+interactive license). 24 matched-window runs vs incumbent champions
+(n = 121-151; leakage honesty costs power).
+
+Findings: (1) returns remain unpredictable under a FOURTH model class —
+naive, classical, ML, and foundation tiers all null (6/6 here); (2) **TTM-r2
+zero-shot beats the ETH GARCH vol champion on both grids (24h +14.0%
+p 0.0125; 1h +18.0% p 0.087)** — suggestive, NOT FDR-confirmed at 24 runs;
+routed into the Phase-5 ETH-vol MCS set rather than claimed; matches the
+RV-TSFM literature prior (TTM ≈ Log-HAR with ensemble value); (3) volume FMs
+ns vs the LGB champion; (4) compute is trivial (5.9 ms/forecast CPU) — the
+binding constraint on FM evaluation is leakage-safe data windows, not FLOPs.
+
+Artifacts: gates key `predlab_p4_fm` (+drop amendment), ledger rows,
+`docs/predlab/reports/p4_fm.md`, `scripts/predlab_p4.py`.
