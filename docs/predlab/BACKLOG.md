@@ -119,3 +119,16 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 
 - [ ] P6-xx NEW sealed holdout 2026-07-02→open; spend earliest 2027-07.
       Candidates frozen: ETH ttm_ens, T2 recalibration, T4 alt generalization.
+
+## PP2 — S1 risk overlay + forward track (registered predlab_pp2, 2026-07-31)
+
+- [x] PP2-01 Registration + dev: vt10/15/20 all PASS gates (MaxDD -77/-66/-55%,
+      SR 1.40 vs raw 1.48); **vt10 frozen** for forward confirmation.
+- [x] PP2-02 S1 daily paper-trader (scripts/predlab_s1_paper.py): live Binance
+      book journal, idempotent, fill-check vs prior close, vt10 scale after 21d.
+      First forward row 2026-07-30. OPERATOR: schedule daily run (cron, any UTC
+      hour after 00:05): `cd TradingAgents-predlab && uv run python
+      scripts/predlab_s1_paper.py`
+- [ ] PP2-03 Forward confirmation one-shot: when >=6 months journal accrued
+      (earliest ~2027-02), evaluate vt10 vs concurrent raw book per frozen
+      criteria (MaxDD <= 0.75x raw AND SR >= 0.9x raw).
