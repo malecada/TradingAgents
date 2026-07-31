@@ -83,6 +83,50 @@ def test_funding_features_aligned_to_prints():
     assert set(f.columns) == {"fund_last", "fund_mean3", "fund_cum24h"}
 
 
+def _oi_5m(n_days=10, seed=3):
+    rng = np.random.default_rng(seed)
+    idx = pd.date_range("2022-01-01", periods=n_days * 288, freq="5min", tz="UTC")
+    oi = 50000 * np.exp(np.cumsum(rng.normal(0, 0.001, len(idx))))
+    return pd.DataFrame(
+        {
+            "oi": oi,
+            "oi_value": oi * 40000,
+            "top_ls_accounts": rng.uniform(0.8, 1.4, len(idx)),
+            "top_ls_positions": rng.uniform(0.8, 1.4, len(idx)),
+            "ls_accounts": rng.uniform(0.8, 1.4, len(idx)),
+            "taker_ls_vol": rng.uniform(0.5, 1.6, len(idx)),
+        },
+        index=idx,
+    )
+
+
+def test_oi_features_strictly_lagged_and_aggregated():
+    df = _oi_5m()
+    f = features.oi_features(df, grid="1h")
+    assert len(f) == 240  # 10 days of hourly rows
+    # oi_dlog1[t] = log(oi_close[t-1]) - log(oi_close[t-2]) where oi_close is
+    # the last 5m observation of each hour
+    hourly_close = df["oi"].resample("1h").last()
+    t = 100
+    expected = np.log(hourly_close.iloc[t - 1]) - np.log(hourly_close.iloc[t - 2])
+    assert np.isclose(f["oi_dlog1"].iloc[t], expected)
+    # mutation: change 5m rows inside hour t -> features at t unchanged
+    df2 = df.copy()
+    hr_start = f.index[t]
+    mask = (df2.index >= hr_start) & (df2.index < hr_start + pd.Timedelta(hours=1))
+    df2.loc[mask, "oi"] = df2.loc[mask, "oi"] * 2.0
+    f2 = features.oi_features(df2, grid="1h")
+    pd.testing.assert_frame_equal(f.iloc[: t + 1], f2.iloc[: t + 1])
+
+
+def test_oi_z_and_ratio_columns_present():
+    f = features.oi_features(_oi_5m(20), grid="1h")
+    for col in ("oi_dlog1", "oi_dlog24", "oi_z168", "top_ls_lag1", "taker_ls_lag1"):
+        assert col in f.columns
+    z = f["oi_z168"].dropna()
+    assert len(z) > 0 and z.abs().median() < 3.0
+
+
 def test_daily_grid_uses_weekly_windows():
     st = _store(freq="D")
     f = features.build_features(st, grid="24h")

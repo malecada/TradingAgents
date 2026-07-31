@@ -57,6 +57,37 @@ def build_features(store: pd.DataFrame, grid: str) -> pd.DataFrame:
     return out
 
 
+_OI_WINDOWS = {"1h": (24, 168), "24h": (7, 22)}
+
+
+def oi_features(df_5m: pd.DataFrame, grid: str) -> pd.DataFrame:
+    """Open-interest / positioning features on the target grid, strictly lagged.
+
+    Aggregation: last 5m observation per period ("close"). All features shift(1)
+    so the row at t uses periods <= t-1 only (mutation-pinned).
+    """
+    if grid not in _OI_WINDOWS:
+        raise ValueError(f"grid must be one of {sorted(_OI_WINDOWS)}, got {grid!r}")
+    w_short, w_long = _OI_WINDOWS[grid]
+    freq = "1h" if grid == "1h" else "1D"
+
+    close = df_5m.resample(freq).last()
+    log_oi = np.log(close["oi"].replace(0.0, np.nan))
+    dlog = log_oi.diff()
+
+    out = pd.DataFrame(index=close.index)
+    out["oi_dlog1"] = dlog.shift(1)
+    out[f"oi_dlog{w_short}"] = (log_oi - log_oi.shift(w_short)).shift(1)
+    mu = dlog.rolling(w_long).mean()
+    sd = dlog.rolling(w_long).std(ddof=1)
+    out[f"oi_z{w_long}"] = ((dlog - mu) / sd).shift(1)
+    for src, name in (("top_ls_positions", "top_ls_lag1"),
+                      ("ls_accounts", "ls_acct_lag1"),
+                      ("taker_ls_vol", "taker_ls_lag1")):
+        out[name] = close[src].shift(1)
+    return out
+
+
 def funding_features(rate: pd.Series, target_index: pd.DatetimeIndex) -> pd.DataFrame:
     """Funding features aligned to an arbitrary grid.
 
