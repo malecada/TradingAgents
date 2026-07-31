@@ -65,7 +65,7 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 - [x] P2-01c Registration: per-cell-family feature lists (≤ 25 each) appended
       to gates as `predlab_p2_ml` entry (windows, grids, floors inherit charter)
       BEFORE any Tier-2 result.
-- [ ] P2-02 LGB + elastic-net + kernel-ridge on T3 (vol) and T4 (volume) daily+1h —
+- [x] P2-02 LGB + elastic-net + kernel-ridge on T3 (vol) and T4 (volume) daily+1h —
       the literature-favored cells first. vs HAR/seasonal baselines.
 - [ ] P2-03 Same Tier 2 set on T1/T2 (returns/direction) daily+1h; reconcile any T1
       LGB result against §40 retirement verdict explicitly.
