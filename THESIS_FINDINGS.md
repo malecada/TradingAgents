@@ -3646,3 +3646,37 @@ Artifacts: `data/predlab/p5_champions.json`, `p5_holdout_verdicts.json`,
 `forecasts/predlab_p5_holdout/`, reports `p5_holdout.md` + final map
 `phase5_map.md`, scripts `predlab_p5.py`, `predlab_holdout.py`,
 `predlab_holdout_forensics*.py`.
+
+## Section 58: Phase P — Profitability Mapping: the Low-Vol Rank Book Trades (2026-07-31)
+
+Registered (`predlab_pp`) before any strategy result; inputs restricted to
+the frozen P5 forecasts (no model refitting). Strategy dev 2021-01→2025-03;
+strategy holdout 2025-04→2026-07 one-shot, spend rule enforced in code.
+
+Three candidates, 13 configs, one ledger row each. **S2** (HARQ
+vol-targeting): tracking-error reduction +21.5%/+26.2% vs HAR/naive
+(bootstrap p≈0) — the forecast improves vol *tracking* — but the frozen
+do-no-harm guard (SR/MaxDD not worse than baselines) failed (SR +0.20 vs
++0.34/+0.45); dead this cycle. **S3** (1h sign filter, exploratory): the
++2.5pp accuracy edge is destroyed by 5bp/flip costs (all configs
+negative). **S1** (T7 park_5 low-vol long-short, top-200 universe, 5bp
+taker + realized funding carry): all six dev configs net SR 1.11-1.48;
+frozen config eq_h1 passed all four dev gates (floor, dual-family placebo
+.010/.005, DSR 0.70 after a disclosed units correction, sub-periods 3/3).
+
+**Holdout one-shot: PASS — net SR +2.20 (gross +3.31), need ≥0.74;
+placebos .025/.005; MaxDD 32%; 4/5 quarters positive and strengthening.**
+
+Interpretation: the first economically validated strategy of the
+post-rebuild era, and it comes from the Prediction Lab's forecast-first
+route — the signal was validated as a forecast (IC −0.083, NW-t −11.5)
+before a single backtest was run on it. Earlier XS failures (§43, §46,
+§47) were weak signals, not an untradeable market. Caveats: unlevered
+gross-2 book with 32-42% MaxDD (no risk overlay — that is a new
+registered cycle), 5bp taker cost model with untested capacity, short-leg
+liquidity in high-vol names beyond the fee model.
+
+Artifacts: gates `predlab_pp` (+`predlab_p6` deferred-upgrade cycle, new
+holdout accruing from 2026-07-02), `data/predlab/pp_dev_results.json`,
+`pp_holdout_verdicts.json`, engine `tradingagents/predlab/pp.py` (13
+pinned tests), report `docs/predlab/reports/pp_profitability.md`.

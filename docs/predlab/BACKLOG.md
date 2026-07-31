@@ -107,12 +107,13 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 - [x] PP-00 Spec + registration (specs/2026-07-31-phase-p-profitability-design.md;
       gates keys predlab_pp + predlab_p6 frozen @127d5d6, user-approved 2026-07-31).
 
-- [ ] PP-01 Engine: S1 T7 long-short (quintiles, 5bp taker + funding carry),
-      S2 HARQ vol-target overlay, S3 exploratory sign filter. Tests.
-- [ ] PP-02 Dev-gate evaluation on 2021-01→2025-03 (≤13 configs, ledger rows);
-      freeze ONE config per surviving candidate.
-- [ ] PP-03 Strategy-holdout one-shots (2025-04→2026-07) for dev survivors;
-      placebo forensics; report + THESIS §58; verdicts file blocks re-runs.
+- [x] PP-01 Engine + 13 pinned tests (@b70a993).
+- [x] PP-02 Dev gates (@c3fc773): S1 PASS all 4 (net SR 1.48, placebos, DSR 0.70
+      corrected, subs 3/3; config eq_h1 frozen); S2 FAIL do-no-harm guard
+      (TE claim strong, SR worse); S3 dead (costs kill 1h edge).
+- [x] PP-03 Strategy holdout SPENT 2026-07-31: **S1 PASS — net SR +2.20 (gross
+      +3.31), placebos .025/.005, MaxDD 32%, 4/5 quarters positive.** Report
+      pp_profitability.md + THESIS §58. First validated strategy post-rebuild.
 
 ## Phase 6 — deferred model upgrades (registered predlab_p6; BLOCKED on data)
 
