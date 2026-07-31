@@ -67,7 +67,7 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
       BEFORE any Tier-2 result.
 - [x] P2-02 LGB + elastic-net + kernel-ridge on T3 (vol) and T4 (volume) daily+1h —
       the literature-favored cells first. vs HAR/seasonal baselines.
-- [ ] P2-03 Same Tier 2 set on T1/T2 (returns/direction) daily+1h; reconcile any T1
+- [x] P2-03 Same Tier 2 set on T1/T2 (returns/direction) daily+1h; reconcile any T1
       LGB result against §40 retirement verdict explicitly.
 - [ ] P2-04 T7 XS battery: wide-universe (PIT 150–300 syms) next-24h/7d return-rank +
       RV-rank ICs, ridge/LGB rank models vs zero-IC null; NW-t on IC series.
