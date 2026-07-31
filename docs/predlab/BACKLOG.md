@@ -150,7 +150,10 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
       reproduce eq_h1 dev numbers EXACTLY (sr_net 1.4829604657, maxdd 0.4246460613,
       turnover 0.6669561499) + D/V split metrics helper + placebo/DSR/forensic
       harness reuse.
-- [ ] O-02 Stage O1 signal construction: freeze grid → run → card opt_o1.md.
+- [x] O-02 Stage O1 signal construction: grid 11 cfg frozen + run (@O-02a/b).
+      5 adoption candidates; top ewma_20 full +1.928 (Δ+0.271), all subs 4/4.
+- [ ] O-02b ewma_20 adoption verification (placebos, DSR@27, canary, coverage)
+      — running in background (opt_o1_verify.log); adopt + chain row if PASS.
 - [ ] O-03 Stage O2 portfolio construction: freeze grid → run → card.
 - [ ] O-04 Stage O3 universe: freeze grid → run → card (single-name PnL share
       diagnostic mandatory).
