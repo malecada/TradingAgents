@@ -9,14 +9,15 @@ Updated: 2026-07-30 (program kickoff)
   SKILL-CANDIDATE (ΔMASE 16.5%/21.4%, vs best-t0 too); T6 AR(1) baseline
   wins; T1/T2 nulls. Forensic method lessons recorded (same-collapse
   shuffled-null rule; multi-seed for heavy tails). Window-cap param shipped.
-- **Last completed:** t1_7d battery — **all 8 cells null** (P1-07 ✓, commit
-  `36a66cd`): skill is horizon-local (daily HARQ edge gone at 7d; plain HAR
-  wins T3), overlapping-sum trap makes fitted T1/T2 models actively worse.
-- **In flight:** t1_1h battery (final battery; 8 cells, capped ARIMA/GARCH per
-  amendment).
-- **Next action:** collect 1h + forensics on any PASS → P1-08 map roll-up
-  (rollup.py ready) + THESIS §54 + memory milestone
-  (`docs/superpowers/plans/2026-07-30-prediction-lab-phase1.md`)
+- **PHASE 1 COMPLETE** (@`11b440f`): 9/28 dev SKILL-CANDIDATES (map:
+  reports/phase1_map.md; THESIS §54; memory milestone saved). Holdout sealed,
+  0 spends, 180 ledgered configs.
+- **Last completed:** P2-01a — PIT-safe Tier-2 feature builders (mutation-
+  pinned strict lag; taker-imbalance, RV/ret/flow/calendar, funding), 98
+  tests green, commit `2887415`.
+- **Next action:** P2-01b — sub-daily OI store (Vision futures metrics
+  monthly zips, 5m from 2021-01) → data/predlab/oi_5m/ + aggregates; then
+  P2-01c registration (`predlab_p2_ml` gates entry) BEFORE any Tier-2 result.
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
 - **Ledger:** `data/predlab/trial_ledger.jsonl` (create on first registration)
