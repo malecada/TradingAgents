@@ -30,8 +30,12 @@ Updated: 2026-07-30 (program kickoff)
   hold; LGB carries the program's strongest sign association (PT p 2.3e-44)
   but loses Brier to miscalibration → LGB+calibration declared as Phase-5
   combination candidate.
-- **Next action:** P2-04 — T7 cross-sectional battery (wide-universe IC:
-  registration incl. universe rule, then run), then P2-05 Phase-2 report.
+- **P2-04 part 1 done** (@`d1934bf`): xsec IC engine (exact-pin + planted +
+  null + breadth tests), read-only symlink to the shared 799-sym daily store.
+- **Next action:** P2-04 part 2 — register `predlab_p2_t7` (universe rule:
+  monthly top-200 by prior-month median quote_volume, PIT; signals mom_21/
+  mom_5/rev_1/volchg_5/park_5 + ridge/LGB combos; floors IC≥0.02 & NW-t≥3)
+  → build panel + run → report. Then P2-05.
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
 - **Ledger:** `data/predlab/trial_ledger.jsonl` (create on first registration)
