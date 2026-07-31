@@ -3498,3 +3498,58 @@ champions) is the graduation gate to any U1–U5 "usable model" claim.
 - Forensics: `data/predlab/{probes_p1,forensics_t3,forensics_t3_v2,forensics_t4,forensics_shuffled_null}.json`
 - Cards + stored forecasts: `data/predlab/cards/`, `data/predlab/forecasts/`
 - Branch `research/prediction-lab`, worktree TradingAgents-predlab
+
+---
+
+## Section 55: Prediction Lab Phase 2 — ML Increments and the Cross-Sectional Map (2026-07-31)
+
+Frozen registrations `predlab_p2_ml` (16 cells; per-symbol eval windows after
+the OI coverage gate REFUSED the first pass — ETH Vision metrics begin
+2021-12-01) and `predlab_p2_t7` (universe/signals/floors fixed pre-result).
+New data assets: 5-min open-interest + positioning stores (BTC 525k rows,
+0 missing days; ETH 430k) from Vision metrics zips.
+
+### 55.1 Where ML adds — and where it cannot
+
+- **Volume (T4): LGB beats the Phase-1 seasonal-AR champions in all four
+  cells** (ΔMASE 5.4–12.1%, pairwise DM p ≤ 6.7e-5 down to 2.4e-96,
+  cross-symbol × cross-grid; permute-y null p ≈ 1.0; leak guard bite-tested).
+  Champion lineage: seasonal-naive → seasonal-AR → LGB (35–42% cumulative).
+- **Realized vol (T3): ML never beats HAR/GARCH champions (4/4)** — the
+  OI/positioning/funding feature set adds nothing over parametric vol
+  structure; margins 1.6–56%.
+- **Returns (T1): LGB actively harmful (4–19% worse than the zero forecast,
+  4/4).** This reconciles §40's LGB retirement on independent forecast-space
+  ground with a richer PIT-clean feature set: return levels are not learnable
+  by GBDT here, independent of any trading harness.
+- **Direction (T2): the 5-lag logit champions hold.** LGB carries the
+  strongest sign association in the program (PT p 2.3e-44) but loses Brier to
+  miscalibration — LGB + calibration layer declared (not run) as a Phase-5
+  combination candidate.
+
+### 55.2 Cross-sectional battery (T7): SKILL-CANDIDATE
+
+Monthly PIT top-200 of the 799-symbol survivorship-safe store, dev n = 1,551
+days: all five frozen signals pass |IC| ≥ 0.02 ∧ NW-t ≥ 3 on next-day return
+ranks — trailing vol dominant (IC −0.089, t −17.5, 3/3 sub-periods; effect
+STRONGER in the top-50 slice → not microstructure), cross-sectional momentum
+is REVERSAL (t −10.6/−12.6; the mechanism behind §43's xs_mom trading
+failure), classic rev_1 and a volume-spike fade. Registered combos pass with
+the smoothest stability (ridge +0.082/t 19.2) but do not beat the single vol
+signal — champion selection deferred to Phase-5 MCS. IC ≠ tradable (turnover/
+costs, cf. §43/§46) — Phase-P question, out of scope.
+
+### 55.3 Map v2 headline
+
+Time-series return levels: unpredictable at every horizon and tier.
+Cross-sectional return ranks: richly predictable. Full inventory:
+`docs/predlab/reports/phase2_map.md` — 11 skilled cells + 1 champion-upgrade
+family, all dev-only, holdout sealed (zero spends).
+
+### Artifacts
+
+- Registrations: `data/predlab/gates.json` keys `predlab_p2_ml`,
+  `predlab_p2_t7`; ledger 250+ unique hashes.
+- Reports: `docs/predlab/reports/{p2_tier2_t3t4,p2_tier2_t1t2,p2_t7_xs,phase2_map}.md`
+- OI stores: `data/predlab/oi_5m/` + manifests; T7 panels `data/predlab/t7_panels/`.
+- Commits `03a7567..f272eb6` on `research/prediction-lab`.
