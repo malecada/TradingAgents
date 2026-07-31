@@ -18,7 +18,12 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from tradingagents.predlab import registry  # noqa: E402
 
-COVERAGE_FLOOR = 0.80  # share of dev-window periods with OI data, per symbol
+COVERAGE_FLOOR = 0.80  # share of eval-window periods with OI data, per symbol
+
+# Per-symbol eval start: ETH Vision metrics begin 2021-12-01 (334 confirmed-404
+# days before that; data/predlab/oi_5m_missing_days.json). Decided at
+# registration time, informed by the coverage probe, before any result exists.
+SYMBOL_EVAL_START = {"BTCUSDT": "2021-01-01", "ETHUSDT": "2021-12-01"}
 
 FEATURE_SETS = {
     # grid-aware names resolve at build time; listed for the 1h grid
@@ -47,10 +52,11 @@ def oi_coverage(sym: str, grid_freq: str) -> float:
     path = registry.gates_path().parent / "oi_5m" / f"{sym}.parquet"
     if not path.exists():
         return 0.0
+    start = SYMBOL_EVAL_START[sym]
     oi = pd.read_parquet(path)
-    dev = oi[(oi.index >= "2021-01-01") & (oi.index <= "2025-03-31")]
+    dev = oi[(oi.index >= start) & (oi.index <= "2025-03-31")]
     periods = dev["oi"].resample(grid_freq).last()
-    expected = pd.date_range("2021-01-01", "2025-03-31 23:00:00",
+    expected = pd.date_range(start, "2025-03-31 23:00:00",
                              freq=grid_freq, tz="UTC")
     return float(periods.notna().sum() / len(expected))
 
@@ -77,7 +83,8 @@ def main() -> None:
                                f"seasonal_naive_m{24 if hz == '1h' else 7}")):
                 cells.append({"cell": f"{sym}|{hz}|{tgt}", "symbol": sym,
                               "horizon": hz, "target": tgt,
-                              "strong_baseline": base})
+                              "strong_baseline": base,
+                              "eval_start": SYMBOL_EVAL_START[sym]})
 
     entry = {
         "registered_utc": "2026-07-31",
