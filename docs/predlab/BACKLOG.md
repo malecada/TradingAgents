@@ -75,10 +75,11 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 
 ## Phase 3 — Tier 3 DL (GATE: compute decision + Tier≤2 evidence)
 
-- [ ] P3-00 DECISION POINT: surface GPU/cloud question to user with Tier≤2 evidence
-      summary (which cells qualify per charter §4 Tier-3 entry rule). Do not proceed
-      without answer.
-- [ ] P3-01+ (defined after P3-00)
+- [x] P3-00 DECISION (user, 2026-07-31): **SKIP Tier-3 DL, proceed to Phase 4**
+      (foundation models, CPU). Tier-3 revisited only if Phase 4 shows DL-class
+      gains. Rationale: LGB added skill only on volume; vol/direction champions
+      resisted all challengers; lit says DL gains marginal.
+- [-] P3-01+ (not defined — Tier 3 skipped by user decision)
 
 ## Phase 4 — Tier 4 foundation models (zero-shot first)
 
