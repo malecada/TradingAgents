@@ -10,6 +10,7 @@ dry=True.
 from __future__ import annotations
 
 import json
+import time as _time
 from pathlib import Path
 
 import numpy as np
@@ -88,7 +89,12 @@ def run_cell(
     preds: "dict[str, np.ndarray]" = {}
     for model in models:
         out = np.empty(len(splits), dtype=np.float64)
+        _t_model = _time.time()
         for i, sp in enumerate(splits):
+            if i and i % 5000 == 0:
+                rate = i / max(_time.time() - _t_model, 1e-9)
+                print(f"    [{cell['cell']}] {model.name}: {i}/{len(splits)} "
+                      f"({rate:.0f} orig/s)", flush=True)
             if i % refit_every == 0:
                 Xt = X[: sp.train_end] if X is not None else None
                 model.fit(y[: sp.train_end], Xt)
