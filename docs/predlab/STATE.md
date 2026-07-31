@@ -30,14 +30,17 @@ Updated: 2026-07-30 (program kickoff)
   hold; LGB carries the program's strongest sign association (PT p 2.3e-44)
   but loses Brier to miscalibration → LGB+calibration declared as Phase-5
   combination candidate.
-- **PHASE 2 COMPLETE** (@`6221966`): map v2 + THESIS §55 + memory milestone.
-  11 skilled cells + LGB volume-champion family; T7 XS skill-candidate;
-  TS-vs-XS asymmetry headline. Holdout sealed, 0 spends, ledger 250+.
-- **Next action: P3-00 — MANDATORY STOP-AND-ASK.** Per charter A4 and
-  RALPH_PROMPT hard rules: surface the GPU/cloud Tier-3 decision to the user
-  with the Tier≤2 evidence summary; DO NOT proceed autonomously. The loop
-  stops here until the user answers (Phase-4 foundation models could be
-  brought forward instead — user's call).
+- **PHASES 1+2+4 COMPLETE** (Phase 3 skipped by user decision @`36a0adc`;
+  Phase 4 @`197a8bd`): THESIS §54-§56, maps v1/v2, p4_fm report. Returns
+  null across FOUR model classes; TTM routed into ETH-vol Phase-5 MCS;
+  TabPFN declared-drop (revivable via TABPFN_TOKEN). Holdout sealed, 0
+  spends.
+- **Next action: PHASE 5.** P5-01: per-cell MCS over final model sets
+  (skilled cells + routed entrants + declared combination candidates:
+  LGB+calibration for T2 1h, TTM-ensemble for ETH T3), champion freeze.
+  P5-02: registered sealed-holdout one-shots for frozen champions — the
+  U1-U5 usable-model gate. Register the Phase-5 protocol BEFORE any MCS
+  computation (new gates key predlab_p5).
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
 - **Ledger:** `data/predlab/trial_ledger.jsonl` (create on first registration)
