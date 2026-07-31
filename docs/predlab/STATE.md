@@ -24,8 +24,14 @@ Updated: 2026-07-30 (program kickoff)
   bite-tested) — first genuine ML increment over best classical. T3 vol: ML
   never beats HAR/GARCH champions (4/4) — OI/positioning features add nothing
   on vol. enet catastrophic on trending volume.
-- **Next action:** P2-03 — same Tier-2 set on T1/T2 daily+1h (explicit §40
-  LGB-retirement reconciliation in the report), then P2-04 T7 XS battery.
+- **P2-03 COMPLETE** (@`bddbc51`, report p2_tier2_t1t2.md): T1 nulls hold —
+  LGB actively harmful on return levels 4-19% (4/4), **§40 retirement
+  reconciled on independent forecast-space ground**. T2 1h logit champions
+  hold; LGB carries the program's strongest sign association (PT p 2.3e-44)
+  but loses Brier to miscalibration → LGB+calibration declared as Phase-5
+  combination candidate.
+- **Next action:** P2-04 — T7 cross-sectional battery (wide-universe IC:
+  registration incl. universe rule, then run), then P2-05 Phase-2 report.
 - **Blockers:** none
 - **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
 - **Ledger:** `data/predlab/trial_ledger.jsonl` (create on first registration)
