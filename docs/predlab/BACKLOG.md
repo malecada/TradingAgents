@@ -44,11 +44,14 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
       cells, sub-period stability tables → `docs/predlab/reports/phase1_map.md` +
       THESIS §54 draft section. Memory milestone update.
 
-> Perf note (2026-07-30, measured): statsmodels SARIMAX `.apply()` costs ~98ms
-> per origin (61 CPU-min per 37k-origin 1h cell). Before any future ARIMA
-> battery (Phase-5 confirmations), switch predict to an extend-cache
-> (`res.extend(new_obs)` per origin, full re-apply only at refits/jumps;
-> ~20x cheaper). TDD equivalence-pin against the apply path.
+> Perf notes (2026-07-30, measured): (1) SARIMAX `.apply()` ~98ms/origin →
+> extend-cache shipped (`ef3b02c`), ~20x. (2) The remaining 1h-battery cost is
+> the MLE refits themselves: high-vol windows (2021-2022) run 3-10x slower
+> than calm ones (24 → ~7 orig/s cumulative). Before any future ARIMA battery
+> (Phase-5 confirmations): warm-start each refit with
+> `start_params=prev_res.params` (params drift slowly at refit_every=24;
+> expect 2-5x on fits) + consider `maxiter` cap. TDD: same-quality pin
+> (loglike within tolerance of cold-start fit).
 
 ## Phase 2 — Tier 2 ML battery (registered small feature sets)
 
