@@ -3575,3 +3575,74 @@ binding constraint on FM evaluation is leakage-safe data windows, not FLOPs.
 
 Artifacts: gates key `predlab_p4_fm` (+drop amendment), ledger rows,
 `docs/predlab/reports/p4_fm.md`, `scripts/predlab_p4.py`.
+
+## Section 57: Prediction Lab Phase 5 — MCS Champion Freeze + Sealed-Holdout One-Shots: 7/10 PASS (2026-07-31)
+
+The program endpoint. Registration `predlab_p5` (frozen before any MCS
+computation) defined per-cell Model Confidence Sets (HLN, α=0.10, block
+bootstrap 24/5) over STORED dev forecasts, two declared combination
+candidates (isotonic-recalibrated LGB probabilities; 0.5·TTM+0.5·GJR ETH
+vol ensemble), a champion rule (lowest dev loss within the MCS survivor
+set), and a one-shot holdout contract: one evaluation per frozen champion
+on 2025-04-01 → 2026-07-01 (15 months, zero prior spends), champion +
+strong baseline recomputed causally, criteria DM p<0.05 AND effect ≥
+0.5×dev AND same sign (T2: + accuracy edge ≥1.0pp; T7: |IC|≥0.02,
+|NW-t|≥2, dev sign). The spend rule is enforced in code — a verdicts file
+blocks any second run.
+
+**Verdicts (7/10 PASS):**
+
+| Cell | Champion | Dev eff | Holdout eff | DM p | Verdict |
+|---|---|---|---|---|---|
+| BTC 1h rv | HARQ | +11.5% | **+15.1%** | 3e-81 | PASS |
+| BTC 24h rv | HARQ | +11.5% | **+22.6%** | 5.5e-11 | PASS |
+| ETH 1h rv | EGARCH | +21.4% | +7.4% | 2.2e-11 | FAIL (floor) |
+| BTC 1h volume | LGB | +41.9% | **+44.8%** | ~0 | PASS |
+| ETH 1h volume | LGB | +40.4% | **+42.3%** | ~0 | PASS |
+| BTC 24h volume | LGB | +22.1% | **+26.6%** | 8.3e-12 | PASS |
+| ETH 24h volume | LGB | +30.0% | **+30.1%** | 4.3e-14 | PASS |
+| BTC 1h direction | logit | +0.83% Brier | +0.21% (edge +2.51pp) | 0.103 | FAIL |
+| ETH 1h direction | logit | +0.74% Brier | +0.05% (edge +1.69pp) | 0.369 | FAIL |
+| XS rank 24h | park_5 | IC −0.089 | **IC −0.083, NW-t −11.5** | — | PASS |
+
+**The usable-model claims (U1–U4 met).** (1) Volume: LGB on 13 registered
+features beats seasonal-naive in all four cells with holdout effects AT OR
+ABOVE dev — the program flagship. (2) BTC realized variance: HARQ beats
+HAR on both grids, holdout effects larger than dev; the quarticity channel
+is real out-of-sample. (3) Cross-sectional next-day rank: the 5-day
+Parkinson-vol sort replicates almost exactly (IC −0.083 vs dev −0.089,
+n=457 days).
+
+**The honest failures.** ETH vol skill is real (+7.4%, p 2e-11) but under
+the registered 0.5×dev floor — dev overstated the edge, exactly the
+baseline-fragility profile Phase 1 flagged for this cell. Direction skill
+survives in SIGN space (accuracy edges +2.51pp/+1.69pp, above the +1pp
+bar) but the Brier improvement collapses and loses significance — the dev
+probability edge was calibration-fragile. Both verdicts stand as FAIL per
+the registered criteria; no sign-only claim was registered so none is made.
+
+**Forensics.** T3 permute-y nulls collapse to ≤|0.31%| (vs +15.1/+22.6%
+real). T4 exposed a methodological trap worth recording: the naive
+permuted-y pairing (LGB vs seasonal-naive) yields a deterministic +30%
+pseudo-effect because a regression collapses to the unconditional center
+while a seasonal lag predicts a random permuted draw — the Phase-1
+collapse-class lesson reproduced at holdout scale. The corrected
+same-collapse null (permuted-y LGB vs HistMean) is NEGATIVE in all 20
+seed-runs (−0.33% to −12.5%): LGB's real advantage cannot be collapse-class
+artifact. T7 within-day shuffle nulls: |IC| ≤ 0.008 vs real −0.083.
+Sub-period stability: every passing cell positive in 5/6 or 6/6 holdout
+quarters (U5).
+
+**Program verdict.** Started 2026-07-30 from "predict anything, honestly."
+Returns are unpredictable across four model tiers; skill concentrates in
+volume, BTC volatility, and cross-sectional vol-rank structure, is
+horizon-local (1h ≫ 24h ≫ 7d), and survives a 15-month sealed holdout
+where every claim was pre-registered, one-shot, and forensically nulled.
+Profitability mapping (Phase P) remains a separate, not-yet-registered
+question.
+
+Artifacts: `data/predlab/p5_champions.json`, `p5_holdout_verdicts.json`,
+`p5_holdout_forensics.json`, `p5_t7_permute_null.json`,
+`forecasts/predlab_p5_holdout/`, reports `p5_holdout.md` + final map
+`phase5_map.md`, scripts `predlab_p5.py`, `predlab_holdout.py`,
+`predlab_holdout_forensics*.py`.

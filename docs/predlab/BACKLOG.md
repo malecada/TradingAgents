@@ -91,10 +91,16 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 
 ## Phase 5 — combination + final MCS
 
-- [ ] P5-01 Forecast combinations on cells with ≥1 skilled/near-skilled model; MCS
+- [x] P5-01 Forecast combinations on cells with ≥1 skilled/near-skilled model; MCS
       across final per-cell model sets; champion freeze per surviving cell.
-- [ ] P5-02 HOLDOUT one-shots for champions (U4), per charter. Final map + report +
-      THESIS §; memory milestone.
+      (@9050a8c: 10 champions frozen; lgb_cal MCS-excluded; ttm_ens dev-upgrade)
+- [x] P5-02 HOLDOUT one-shots for champions (U4), per charter. Final map + report +
+      THESIS §57; memory milestone. (**SPENT 2026-07-31: 7/10 PASS** — BTC HARQ
+      rv ×2, LGB volume ×4, T7 park_5; FAIL: ETH egarch floor, 2× logit Brier
+      gate with sign edges intact. Forensics: all nulls collapse incl. corrected
+      same-collapse T4 pairing; subs 5-6/6. reports/p5_holdout.md + phase5_map.md)
+
+**PROGRAM COMPLETE.** U1–U4 usable models exist (volume ×4, BTC rv ×2, XS rank).
 
 ## Phase P — profitability mapping (OUT OF SCOPE until a U1–U5 survivor exists)
 

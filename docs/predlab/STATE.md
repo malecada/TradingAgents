@@ -35,14 +35,22 @@ Updated: 2026-07-30 (program kickoff)
   null across FOUR model classes; TTM routed into ETH-vol Phase-5 MCS;
   TabPFN declared-drop (revivable via TABPFN_TOKEN). Holdout sealed, 0
   spends.
-- **Next action: PHASE 5.** P5-01: per-cell MCS over final model sets
-  (skilled cells + routed entrants + declared combination candidates:
-  LGB+calibration for T2 1h, TTM-ensemble for ETH T3), champion freeze.
-  P5-02: registered sealed-holdout one-shots for frozen champions — the
-  U1-U5 usable-model gate. Register the Phase-5 protocol BEFORE any MCS
-  computation (new gates key predlab_p5).
+- **P5-01 COMPLETE** (@`9050a8c`): predlab_p5 registered pre-MCS; per-cell
+  MCS run on stored dev forecasts; 10 champions frozen (p5_champions.json).
+- **P5-02 COMPLETE — HOLDOUT SPENT 2026-07-31 (@`b124b89` + finalize): 7/10
+  PASS.** USABLE (U1–U4): LGB volume ×4 (+26.6…+44.8% MASE, ≥ dev), BTC
+  HARQ rv ×2 (+15.1%/+22.6% QLIKE, > dev), T7 park_5 (IC −0.083, NW-t
+  −11.5). FAIL: ETH egarch (+7.4% real but < 0.5×dev floor), 2× logit
+  (sign edges +2.51/+1.69pp held; Brier gate missed). Forensics: T3 nulls
+  ≤|0.31%|; T4 corrected same-collapse nulls all negative (naive pairing
+  +30% artifact disclosed — collapse-class lesson); T7 shuffle |IC|≤0.008;
+  subs 5-6/6 quarters. reports/p5_holdout.md, phase5_map.md, THESIS §57.
+- **PROGRAM COMPLETE.** Phase P (profitability) is out of scope until
+  separately spec'd + registered (PP-00). ETH-vol TTM ensemble remains a
+  dev-level upgrade candidate (never holdout-spent, champion-only contract).
 - **Blockers:** none
-- **Holdout status:** sealed (2025-04-01 → 2026-07-01); zero spends
+- **Holdout status:** SPENT (one-shot per champion, 2026-07-31); re-runs
+  blocked by verdicts file + spend rule
 - **Ledger:** `data/predlab/trial_ledger.jsonl` (create on first registration)
 - **Standing rules:** charter §5 protocol; one backlog item per loop iteration; gates
   registered before any battery result; forensic kill-tests on every PASS; never write
