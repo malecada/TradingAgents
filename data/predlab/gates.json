@@ -1204,6 +1204,59 @@
      "2021-01-01",
      "2026-07-01"
     ]
+   },
+   "O5": {
+    "frozen_utc": "2026-08-03",
+    "axis": "funding-carry tilt inside book (prior: standalone carry NEGATIVE \u00a746)",
+    "base_book": "ewma_20 eq-quintile-daily top-200 (chain seq 1)",
+    "grid": {
+     "carry_l25_w7": {
+      "lam": 0.25,
+      "win": 7,
+      "rev": false
+     },
+     "carry_l25_w30": {
+      "lam": 0.25,
+      "win": 30,
+      "rev": false
+     },
+     "carry_l50_w7": {
+      "lam": 0.5,
+      "win": 7,
+      "rev": false
+     },
+     "carry_l50_w30": {
+      "lam": 0.5,
+      "win": 30,
+      "rev": false
+     },
+     "carry_l100_w7": {
+      "lam": 1.0,
+      "win": 7,
+      "rev": false
+     },
+     "carry_l100_w30": {
+      "lam": 1.0,
+      "win": 30,
+      "rev": false
+     },
+     "rev_l50_w7": {
+      "lam": 0.5,
+      "win": 7,
+      "rev": true
+     },
+     "rev_l50_w30": {
+      "lam": 0.5,
+      "win": 30,
+      "rev": true
+     }
+    },
+    "n_configs": 8,
+    "mechanism_check": "rev_* must not outperform its carry twin, else effect is not carry",
+    "window": [
+     "2021-01-01",
+     "2026-07-01"
+    ]
    }
   }
  }

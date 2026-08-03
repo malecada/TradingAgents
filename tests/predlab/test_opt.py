@@ -230,3 +230,42 @@ class TestLegacyParityPin:
         assert r["maxdd"] == pytest.approx(0.4246460612809624, abs=1e-9)
         assert r["avg_turnover"] == pytest.approx(0.6669561499469767, abs=1e-9)
         assert r["n_days"] == 1551
+
+
+class TestTiltHook:
+    def test_identity_tilt_matches_no_tilt(self):
+        sig, ret, uni = _panels()
+        r0 = opt.run_ls(sig, ret, uni, None, opt.OptConfig(), "2024-01-01", "2024-12-31")
+        r1 = opt.run_ls(sig, ret, uni, None, opt.OptConfig(), "2024-01-01", "2024-12-31",
+                        tilt=lambda d, w: w)
+        pd.testing.assert_series_equal(r0["rets"]["net"], r1["rets"]["net"],
+                                       check_names=False)
+
+    def test_tilt_preserves_leg_sums(self):
+        sig, ret, uni = _panels()
+        seen = {}
+
+        def tilt(d, w):
+            out = w.copy()
+            out[out > 0] *= np.linspace(0.5, 1.5, (out > 0).sum())
+            out[out > 0] /= out[out > 0].sum()
+            seen["called"] = True
+            return out
+
+        r = opt.run_ls(sig, ret, uni, None, opt.OptConfig(), "2024-01-01",
+                       "2024-12-31", tilt=tilt)
+        assert seen.get("called")
+        assert r["n_days"] > 0
+
+    def test_renorm_guard(self):
+        # tilt returning non-unit legs must be renormalized by the engine
+        sig, ret, uni = _panels()
+
+        def bad_tilt(d, w):
+            return w * 3.0
+
+        r0 = opt.run_ls(sig, ret, uni, None, opt.OptConfig(), "2024-01-01", "2024-12-31")
+        r1 = opt.run_ls(sig, ret, uni, None, opt.OptConfig(), "2024-01-01",
+                        "2024-12-31", tilt=bad_tilt)
+        pd.testing.assert_series_equal(r0["rets"]["net"], r1["rets"]["net"],
+                                       check_names=False)

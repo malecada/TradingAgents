@@ -148,11 +148,26 @@ def leg_weights(sig_row: pd.Series, q_frac: float, weighting: str,
 
 # ------------------------------------------------------------------ backtest
 
+def _renorm_legs(w: pd.Series) -> pd.Series:
+    """Force each leg to sum to +/-1 (gross 2)."""
+    out = w.copy()
+    pos, neg = out[out > 0].sum(), -out[out < 0].sum()
+    if pos > 0:
+        out[out > 0] /= pos
+    if neg > 0:
+        out[out < 0] /= neg
+    return out
+
+
 def run_ls(sig: pd.DataFrame, ret: pd.DataFrame, uni: pd.DataFrame,
            fund_daily: "pd.DataFrame | None", cfg: OptConfig,
-           start: str, end: str) -> dict:
+           start: str, end: str, tilt=None) -> dict:
     """Daily cross-sectional long-short generalizing pp.run_s1. Costs:
-    cfg.taker_bp x turnover + funding carry (longs pay positive funding)."""
+    cfg.taker_bp x turnover + funding carry (longs pay positive funding).
+
+    tilt: optional callable (date, target_weights) -> adjusted weights,
+    applied to each rebalance target BEFORE smoothing; the engine renorms
+    each leg back to +/-1 so a tilt can only redistribute within legs."""
     lo_ts, hi_ts = pd.Timestamp(start, tz="UTC"), pd.Timestamp(end, tz="UTC")
     sig = sig.where(uni)
     days = [d for d in ret.index if lo_ts <= d <= hi_ts]
@@ -172,6 +187,8 @@ def run_ls(sig: pd.DataFrame, ret: pd.DataFrame, uni: pd.DataFrame,
                                 cfg.buffer, held_long, held_short)
             if len(w_tgt) == 0:
                 continue
+            if tilt is not None:
+                w_tgt = _renorm_legs(tilt(d, w_tgt))
             held_long = set(w_tgt.index[w_tgt > 0])
             held_short = set(w_tgt.index[w_tgt < 0])
             targets.append(w_tgt)
