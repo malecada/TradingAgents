@@ -1031,6 +1031,57 @@
      "2021-01-01",
      "2026-07-01"
     ]
+   },
+   "O2": {
+    "frozen_utc": "2026-08-03",
+    "axis": "portfolio construction",
+    "signal": "ewma_20 (chain seq 1 champion)",
+    "grid": {
+     "decile": {
+      "q_frac": 0.1
+     },
+     "tercile": {
+      "q_frac": 0.3333333333333333
+     },
+     "rank": {
+      "weighting": "rank"
+     },
+     "ivol": {
+      "weighting": "ivol"
+     },
+     "buf25": {
+      "buffer": 0.25
+     },
+     "buf50": {
+      "buffer": 0.5
+     },
+     "buf100": {
+      "buffer": 1.0
+     },
+     "cad2": {
+      "cadence": 2
+     },
+     "cad3": {
+      "cadence": 3
+     },
+     "cad5": {
+      "cadence": 5
+     },
+     "decile_ivol": {
+      "q_frac": 0.1,
+      "weighting": "ivol"
+     },
+     "buf50_cad2": {
+      "buffer": 0.5,
+      "cadence": 2
+     }
+    },
+    "n_configs": 12,
+    "reference": "ewma_20 eq_h1 defaults (incumbent, not a new trial)",
+    "window": [
+     "2021-01-01",
+     "2026-07-01"
+    ]
    }
   }
  }
