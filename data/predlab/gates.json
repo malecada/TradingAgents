@@ -1082,6 +1082,53 @@
      "2021-01-01",
      "2026-07-01"
     ]
+   },
+   "O3": {
+    "frozen_utc": "2026-08-03",
+    "axis": "universe",
+    "signal": "ewma_20 (chain seq 1 champion)",
+    "portfolio": "eq-quintile-daily incumbent",
+    "grid": {
+     "topn100": {
+      "top_n": 100
+     },
+     "topn150": {
+      "top_n": 150
+     },
+     "topn300": {
+      "top_n": 300
+     },
+     "adv1m": {
+      "top_n": 200,
+      "adv_floor": 1000000.0
+     },
+     "adv5m": {
+      "top_n": 200,
+      "adv_floor": 5000000.0
+     },
+     "adv20m": {
+      "top_n": 200,
+      "adv_floor": 20000000.0
+     },
+     "topn150_adv5m": {
+      "top_n": 150,
+      "adv_floor": 5000000.0
+     },
+     "topn300_adv5m": {
+      "top_n": 300,
+      "adv_floor": 5000000.0
+     },
+     "topn300_adv20m": {
+      "top_n": 300,
+      "adv_floor": 20000000.0
+     }
+    },
+    "n_configs": 9,
+    "reference": "top-200 no floor (incumbent, not a new trial)",
+    "window": [
+     "2021-01-01",
+     "2026-07-01"
+    ]
    }
   }
  }
