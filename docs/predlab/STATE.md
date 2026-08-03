@@ -4,13 +4,14 @@ Updated: 2026-07-31 (Phase O kickoff)
 
 - **Phase:** O (system optimization cycle, `predlab_opt`) — user-directed
   open-ended optimization of models + strategy + universe, best honest
-  backtest. Incumbent: **ewma_20 eq quintiles (chain seq 1, full SR +1.928)** + vt10.
+  backtest. Incumbent: **ewma_20 eq quintiles + vt15_naive20_b100 overlay (chain seq 2:
+  SR +1.892, MaxDD 17.6%)**.
   Original S1 eq_h1 (holdout +2.20) superseded at seq 1.
-- **Last completed:** O-04 stage O3 NO ADOPTION (9 cfg; adv5m +0.046 under
-  floor; DD anomaly = thin-2021-breadth, resolved). Prior: O-03 O2 no-adopt;
-  O-02b ewma_20 champion (seq 1). Prior: O-01 engine @791ccf1 (18 tests, eq_h1 exact parity pin; suite 147 green). Prior: O-00 registration (spec
+- **Last completed:** O-05 stage O4 overlay vt15_naive20_b100 ADOPTED (seq 2).
+  Prior: O-04 universe no-adopt (DD anomaly resolved); O-03 no-adopt; O-02b
+  ewma_20 champion (seq 1). Prior: O-01 engine @791ccf1 (18 tests, eq_h1 exact parity pin; suite 147 green). Prior: O-00 registration (spec
   `2026-07-31-system-optimization-design.md`, gates key `predlab_opt`,
-  BACKLOG Phase O). **Next action: O-05 stage O4 overlay re-tune (grid freeze → run).**
+  BACKLOG Phase O). **Next action: O-06 stage O5 funding-carry tilt (grid freeze → run).**
 - **Phase-O window discipline:** design D 2021-01→2025-03; validation V
   2025-04→2026-07 NON-VIRGIN (consistency check only, never a fresh-holdout
   claim); forward holdout F 2026-07-02→open SEALED (one-shot, final champion,

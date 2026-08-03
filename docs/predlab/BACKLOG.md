@@ -161,7 +161,9 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 - [x] O-04 Stage O3 universe: 9 cfg, NO ADOPTION (best adv5m +1.974 <
       +2.028); identical-MaxDD anomaly probed+resolved (thin 2021 breadth =
       common DD episode); breadth floor noted as DD lever. Card opt_o3.md.
-- [ ] O-05 Stage O4 overlay re-tune: freeze grid → run → card.
+- [x] O-05 Stage O4 overlay: 12/12 PASS gates; vt15_naive20_b100 ADOPTED
+      (chain seq 2): SR +1.892, MaxDD 46.3→17.6%; breadth guard ADDS SR
+      (thin-2021 net-negative). HAR = deep-DD knob (6.9% at vt10). Card opt_o4.md.
 - [ ] O-06 Stage O5 funding tilt: freeze grid → run → card.
 - [ ] O-07 Stage O6 volume-forecast weighting: freeze grid → run → card.
 - [ ] O-08 Stage O7 momentum tilt inside book: freeze grid → run → card.
