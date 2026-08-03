@@ -155,7 +155,9 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 - [x] O-02b ewma_20 ADOPTED (chain seq 1): placebos .005/.005, DSR corrected
       0.842 (units-bug 0.169 disclosed+retained; daily-only 0.991), alignment
       sensitivity PASS, coverage clean. New incumbent full SR +1.928.
-- [ ] O-03 Stage O2 portfolio construction: freeze grid → run → card.
+- [x] O-03 Stage O2 portfolio construction: 12 cfg, NO ADOPTION (best rank
+      +1.924 < needed +2.028); incumbent construction stands; tercile noted as
+      DD-dial for O8. Card opt_o2.md.
 - [ ] O-04 Stage O3 universe: freeze grid → run → card (single-name PnL share
       diagnostic mandatory).
 - [ ] O-05 Stage O4 overlay re-tune: freeze grid → run → card.
