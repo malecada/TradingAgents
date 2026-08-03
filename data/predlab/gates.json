@@ -1129,6 +1129,81 @@
      "2021-01-01",
      "2026-07-01"
     ]
+   },
+   "O4": {
+    "frozen_utc": "2026-08-03",
+    "axis": "vol-target overlay re-tune (new claim set; pp2 vt10 claim untouched)",
+    "base_book": "ewma_20 eq-quintile-daily top-200 (chain seq 1)",
+    "grid": {
+     "vt10_naive20": {
+      "target": 0.1,
+      "est": "naive20",
+      "cap": 2.0
+     },
+     "vt10_ewma20": {
+      "target": 0.1,
+      "est": "ewma20",
+      "cap": 2.0
+     },
+     "vt10_har": {
+      "target": 0.1,
+      "est": "har",
+      "cap": 2.0
+     },
+     "vt15_naive20": {
+      "target": 0.15,
+      "est": "naive20",
+      "cap": 2.0
+     },
+     "vt15_ewma20": {
+      "target": 0.15,
+      "est": "ewma20",
+      "cap": 2.0
+     },
+     "vt15_har": {
+      "target": 0.15,
+      "est": "har",
+      "cap": 2.0
+     },
+     "vt20_naive20": {
+      "target": 0.2,
+      "est": "naive20",
+      "cap": 2.0
+     },
+     "vt20_ewma20": {
+      "target": 0.2,
+      "est": "ewma20",
+      "cap": 2.0
+     },
+     "vt20_har": {
+      "target": 0.2,
+      "est": "har",
+      "cap": 2.0
+     },
+     "vt10_naive20_cap15": {
+      "target": 0.1,
+      "est": "naive20",
+      "cap": 1.5
+     },
+     "vt15_naive20_cap15": {
+      "target": 0.15,
+      "est": "naive20",
+      "cap": 1.5
+     },
+     "vt15_naive20_b100": {
+      "target": 0.15,
+      "est": "naive20",
+      "cap": 2.0,
+      "breadth_floor": 100
+     }
+    },
+    "n_configs": 12,
+    "gates": "MaxDD reduction >=25% vs raw AND net SR >= 0.9 x raw (full window) AND overlay SR_V >= 0.5 x overlay SR_D; one adoption max; n_trials=12 disclosed",
+    "cost_model": "5bp x (scale x underlying turnover + |d scale| x gross 2)",
+    "window": [
+     "2021-01-01",
+     "2026-07-01"
+    ]
    }
   }
  }
