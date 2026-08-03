@@ -158,8 +158,9 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 - [x] O-03 Stage O2 portfolio construction: 12 cfg, NO ADOPTION (best rank
       +1.924 < needed +2.028); incumbent construction stands; tercile noted as
       DD-dial for O8. Card opt_o2.md.
-- [ ] O-04 Stage O3 universe: freeze grid → run → card (single-name PnL share
-      diagnostic mandatory).
+- [x] O-04 Stage O3 universe: 9 cfg, NO ADOPTION (best adv5m +1.974 <
+      +2.028); identical-MaxDD anomaly probed+resolved (thin 2021 breadth =
+      common DD episode); breadth floor noted as DD lever. Card opt_o3.md.
 - [ ] O-05 Stage O4 overlay re-tune: freeze grid → run → card.
 - [ ] O-06 Stage O5 funding tilt: freeze grid → run → card.
 - [ ] O-07 Stage O6 volume-forecast weighting: freeze grid → run → card.
