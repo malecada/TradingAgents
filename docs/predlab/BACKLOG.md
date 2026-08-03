@@ -167,7 +167,9 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 - [x] O-06 Stage O5 funding tilt: 8 cfg, NO ADOPTION (best +1.960, Δ+0.032 <
       floor). Mechanism VALIDATED (carry −0.99→+0.71 monotone; reverse hurts);
       premium real but thin vs turnover cost — §46 reconciled. Card opt_o5.md.
-- [ ] O-07 Stage O6 volume-forecast weighting: freeze grid → run → card.
+- [x] O-07 Stage O6 volume weighting: 8 cfg, NO ADOPTION — axis CLOSED BY
+      DOMINANCE (all deployable weightings lose SR; oracle future-volume −3.6,
+      100% DD = anti-selects event names). Equal weight robust. Card opt_o6.md.
 - [ ] O-08 Stage O7 momentum tilt inside book: freeze grid → run → card.
 - [ ] O-09 Stage O8 final composition + champion freeze + report + THESIS §59 +
       memory milestone; register final champion for F one-shot.
