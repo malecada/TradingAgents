@@ -164,7 +164,9 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 - [x] O-05 Stage O4 overlay: 12/12 PASS gates; vt15_naive20_b100 ADOPTED
       (chain seq 2): SR +1.892, MaxDD 46.3→17.6%; breadth guard ADDS SR
       (thin-2021 net-negative). HAR = deep-DD knob (6.9% at vt10). Card opt_o4.md.
-- [ ] O-06 Stage O5 funding tilt: freeze grid → run → card.
+- [x] O-06 Stage O5 funding tilt: 8 cfg, NO ADOPTION (best +1.960, Δ+0.032 <
+      floor). Mechanism VALIDATED (carry −0.99→+0.71 monotone; reverse hurts);
+      premium real but thin vs turnover cost — §46 reconciled. Card opt_o5.md.
 - [ ] O-07 Stage O6 volume-forecast weighting: freeze grid → run → card.
 - [ ] O-08 Stage O7 momentum tilt inside book: freeze grid → run → card.
 - [ ] O-09 Stage O8 final composition + champion freeze + report + THESIS §59 +
