@@ -1257,6 +1257,53 @@
      "2021-01-01",
      "2026-07-01"
     ]
+   },
+   "O6": {
+    "frozen_utc": "2026-08-03",
+    "axis": "volume/liquidity weighting (dominance design; LGB champions are BTC/ETH-only)",
+    "base_book": "ewma_20 eq-quintile-daily top-200 (chain seq 1)",
+    "grid": {
+     "qv_w7": {
+      "kind": "qv",
+      "win": 7
+     },
+     "qv_w30": {
+      "kind": "qv",
+      "win": 30
+     },
+     "qv_sqrt_w7": {
+      "kind": "qv_sqrt",
+      "win": 7
+     },
+     "qv_sqrt_w30": {
+      "kind": "qv_sqrt",
+      "win": 30
+     },
+     "qv_inv_w7": {
+      "kind": "qv_inv",
+      "win": 7
+     },
+     "qv_inv_w30": {
+      "kind": "qv_inv",
+      "win": 30
+     },
+     "oracle_next1": {
+      "kind": "oracle",
+      "win": 1,
+      "diagnostic": true
+     },
+     "oracle_next7": {
+      "kind": "oracle",
+      "win": 7,
+      "diagnostic": true
+     }
+    },
+    "n_configs": 8,
+    "diagnostic_rule": "oracle_* use FUTURE volume: upper bound on any volume forecast; NEVER adoptable; if oracle < adoption floor, forecast-weighting axis closes without per-alt models",
+    "window": [
+     "2021-01-01",
+     "2026-07-01"
+    ]
    }
   }
  }
