@@ -173,5 +173,7 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 - [x] O-08 Stage O7 momentum tilt: 8 cfg, NO ADOPTION (both directions flat-neg;
       SMA gates destructive −0.5/−0.75 at 71-79% DD). 4th within-leg tilt negative —
       book saturated. Card opt_o7.md.
-- [ ] O-09 Stage O8 final composition + champion freeze + report + THESIS §59 +
-      memory milestone; register final champion for F one-shot.
+- [x] O-09 Stage O8 FINAL: tercile knob rejected; seq-2 system frozen as FINAL
+      CHAMPION (ovl SR +1.892, DD 17.6%; DSR 0.913 selection-pool, disclosed
+      variants; overlay-parity bug caught+fixed, disclosed). Forward one-shot
+      registered (≥2027-01-02). Card opt_o8_final.md. PHASE O COMPLETE.

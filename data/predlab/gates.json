@@ -1389,6 +1389,42 @@
      "2026-07-01"
     ]
    }
+  },
+  "final_champion": {
+   "frozen_utc": "2026-08-04",
+   "config": {
+    "signal": "ewma_20 (EWMA span-20 Parkinson, shift 1)",
+    "portfolio": "equal-weight quintiles, monthly top-200 PIT by qv, daily rebalance, no buffer",
+    "overlay": {
+     "target": 0.15,
+     "est": "naive20",
+     "cap": 2.0,
+     "breadth_floor": 100
+    },
+    "costs": "taker 5bp/side + realized funding carry; overlay cost 5bp x (scale x turnover + |dscale| x 2)"
+   },
+   "dev_metrics": {
+    "ovl_sr_full": 1.892,
+    "ovl_sr_D": 1.713,
+    "ovl_sr_V": 2.515,
+    "ovl_maxdd": 0.176,
+    "raw_sr_full": 1.928,
+    "raw_maxdd": 0.463,
+    "dsr_selection_pool": 0.913,
+    "placebos": {
+     "p_shift": 0.005,
+     "p_xshuffle": 0.005
+    }
+   },
+   "forward_one_shot": {
+    "window": [
+     "2026-07-02",
+     "OPEN"
+    ],
+    "spend_rule": ">=6 months accrued, earliest 2027-01-02, ONE evaluation",
+    "criteria": "net overlaid SR_F >= 0.5 x 1.892 (=0.946) AND same sign AND time-shift placebo p<0.10 on F; MaxDD reported not gated",
+    "note": "separate claim from predlab_pp2 vt10 confirmation (old S1 book) sharing the calendar window"
+   }
   }
  }
 }

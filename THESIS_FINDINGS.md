@@ -3680,3 +3680,47 @@ Artifacts: gates `predlab_pp` (+`predlab_p6` deferred-upgrade cycle, new
 holdout accruing from 2026-07-02), `data/predlab/pp_dev_results.json`,
 `pp_holdout_verdicts.json`, engine `tradingagents/predlab/pp.py` (13
 pinned tests), report `docs/predlab/reports/pp_profitability.md`.
+
+## Section 59: Phase O — System Optimization Cycle: +28% Sharpe, −59% Drawdown (2026-08-04)
+
+Registered program `predlab_opt` (spec 2026-07-31-system-optimization-design.md)
+optimized the Phase-P-validated system end-to-end under the house pre-registration
+standard: eight axes fixed at registration, per-stage grids (≤12 configs) frozen in
+gates.json before any run, every config ledgered, champion-chain adoption gates
+(ΔSR ≥ +0.10 on D+V, V-consistency, dual placebos, corrected DSR at cumulative
+multiplicity, subperiods, concentration, forensic kill-tests). Windows: design D
+2021-01→2025-03; validation V 2025-04→2026-07 disclosed NON-VIRGIN (spent P5/PP
+holdout — consistency check only); forward holdout F 2026-07-02→open sealed.
+
+**Final champion** (gates `predlab_opt.final_champion`, chain seq 2): EWMA-20
+Parkinson low-vol rank long-short — equal-weight quintiles, monthly top-200 PIT
+universe, daily rebalance — with vt15 vol-target overlay (naive-20 estimator, cap
+2.0, breadth-100 guard). Costs 5bp taker/side + realized funding.
+
+| | Phase-P start (S1+vt10) | Phase-O final | Δ |
+|---|---|---|---|
+| Net SR (full 2021-01→2026-07) | ≈1.48 raw / 1.40 overlaid | 1.928 raw / **1.892 overlaid** | +28% |
+| MaxDD (overlaid) | 9.9% @ 10% target | 17.6% @ 15% target | higher target, −59% vs raw |
+| Evidence | — | placebos .005/.005; DSR 0.913 (n=86 selection pool; 0.096 incl. never-selectable oracle probes — disclosed); subs 4/4; conc 1.2% | |
+
+Stage verdicts: O1 signal ADOPTED (ewma_20: slow vol estimators strictly dominate
+fast — monotone in window/span); O2 construction NO (eq-quintile-daily = flat
+optimum; width is a risk dial); O3 universe NO (top-200 optimum; thin-2021 breadth
+identified as the DD driver); O4 overlay ADOPTED (vt15 + breadth guard: the O3
+insight converted to a guard that ADDS SR while cutting DD 62%); O5 funding tilt NO
+(carry-recapture mechanism verified directionally but premium < turnover cost); O6
+volume weighting CLOSED BY DOMINANCE (perfect-foresight volume weighting scores
+−3.6 SR at 100% DD — volume spikes mark event names; no volume forecast can help,
+per-alt LGB build avoided); O7 momentum tilt NO (both directions flat-negative;
+SMA gates destructive). Structural finding: the equal-weight low-vol book is
+SATURATED — four independent within-leg tilt families (inverse-vol, carry, volume,
+momentum) all reduce SR at 5bp costs.
+
+Method notes: (a) the O8 overlay re-implementation bug (double-annualized σ̂ +
+dropped turnover cost term) was caught by exact-parity check against the chain row
+and disclosed — parity pins on every adopted config are now house practice; (b) DSR
+trial-pool composition matters: never-selectable adversarial diagnostics doubled
+cross-trial std and must be excluded from the selection pool (all variants
+disclosed); (c) the honest headline remains dev-window-bounded — the untainted
+claim is the registered forward one-shot on F (spend ≥ 2027-01-02: SR_F ≥ 0.946,
+same sign, placebo p < 0.10).

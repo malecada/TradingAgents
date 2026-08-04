@@ -59,12 +59,14 @@ def register() -> None:
     print("frozen stage O8: 2 configs")
 
 
-def overlay_book(net: pd.Series, breadth: pd.Series) -> "tuple[pd.Series, pd.Series]":
-    sig_b = sigma_hat(net, OVL["est"])
-    scale = (OVL["target"] / (sig_b * np.sqrt(365.0))).clip(upper=OVL["cap"])
+def overlay_book(net: pd.Series, turnover: pd.Series,
+                 breadth: pd.Series) -> "tuple[pd.Series, pd.Series]":
+    """Exact O4 overlay math (sigma_hat is ALREADY annualized)."""
+    sh = sigma_hat(net, OVL["est"])
+    scale = (OVL["target"] / sh).clip(0.0, OVL["cap"]).fillna(0.0)
     scale = scale.where(breadth.reindex(net.index) >= OVL["breadth_floor"], 0.0)
-    scale = scale.fillna(0.0)
-    onet = net * scale - 5e-4 * scale.diff().abs().fillna(0.0) * 2.0
+    cost = 5.0 / 1e4 * (scale * turnover + scale.diff().abs().fillna(0.0) * 2.0)
+    onet = net * scale - cost
     return onet, scale
 
 
@@ -119,7 +121,7 @@ def run() -> None:
         cfg = opt.OptConfig(signal="ewma_20", **ov)
         r = opt.run_ls(sig, ret, uni, fund, cfg, *FULL)
         net = r["rets"]["net"]
-        onet, scale = overlay_book(net, breadth)
+        onet, scale = overlay_book(net, r["rets"]["turnover"], breadth)
         sr_f, dd_f = stats(onet, *FULL)
         sr_d, _ = stats(onet, "2021-01-01", "2025-03-31")
         sr_v, _ = stats(onet, "2025-04-01", "2026-07-01")
