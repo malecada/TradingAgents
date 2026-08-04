@@ -1304,6 +1304,56 @@
      "2021-01-01",
      "2026-07-01"
     ]
+   },
+   "O7": {
+    "frozen_utc": "2026-08-04",
+    "axis": "momentum/trend tilt inside book (priors: \u00a743/\u00a745 standalone NEGATIVE, disclosed)",
+    "base_book": "ewma_20 eq-quintile-daily top-200 (chain seq 1)",
+    "grid": {
+     "mom30_win": {
+      "family": "tilt",
+      "win": 30,
+      "lam": 0.5
+     },
+     "mom90_win": {
+      "family": "tilt",
+      "win": 90,
+      "lam": 0.5
+     },
+     "mom180_win": {
+      "family": "tilt",
+      "win": 180,
+      "lam": 0.5
+     },
+     "mom30_lose": {
+      "family": "tilt",
+      "win": 30,
+      "lam": -0.5
+     },
+     "mom90_lose": {
+      "family": "tilt",
+      "win": 90,
+      "lam": -0.5
+     },
+     "mom180_lose": {
+      "family": "tilt",
+      "win": 180,
+      "lam": -0.5
+     },
+     "gate_sma100": {
+      "family": "gate",
+      "sma": 100
+     },
+     "gate_sma200": {
+      "family": "gate",
+      "sma": 200
+     }
+    },
+    "n_configs": 8,
+    "window": [
+     "2021-01-01",
+     "2026-07-01"
+    ]
    }
   }
  }
