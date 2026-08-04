@@ -170,6 +170,8 @@ committed. Governed by `docs/superpowers/specs/2026-07-30-prediction-lab-charter
 - [x] O-07 Stage O6 volume weighting: 8 cfg, NO ADOPTION — axis CLOSED BY
       DOMINANCE (all deployable weightings lose SR; oracle future-volume −3.6,
       100% DD = anti-selects event names). Equal weight robust. Card opt_o6.md.
-- [ ] O-08 Stage O7 momentum tilt inside book: freeze grid → run → card.
+- [x] O-08 Stage O7 momentum tilt: 8 cfg, NO ADOPTION (both directions flat-neg;
+      SMA gates destructive −0.5/−0.75 at 71-79% DD). 4th within-leg tilt negative —
+      book saturated. Card opt_o7.md.
 - [ ] O-09 Stage O8 final composition + champion freeze + report + THESIS §59 +
       memory milestone; register final champion for F one-shot.
