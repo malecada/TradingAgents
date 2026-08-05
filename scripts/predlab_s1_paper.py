@@ -13,6 +13,12 @@ idempotent (existing date -> skip). Row: date, universe size, top-200
 membership hash, long/short legs (40 names each, weights), vt10 scale
 (NaN until 21 book-return days accrue), yesterday's realized book return
 computed from the previous row's weights (fill check vs close-to-close).
+
+A SECOND journal (journal_champion.jsonl) tracks the Phase-O final
+champion (ewma_20 signal + vt15_naive20 breadth-100 overlay, gates
+predlab_opt.final_champion) in parallel. The original journal's config is
+intentionally NOT changed: the predlab_pp2 vt10 forward confirmation is
+registered on the old book and needs that journal as-is.
 """
 from __future__ import annotations
 
@@ -36,9 +42,11 @@ from tradingagents.predlab import pp  # noqa: E402
 DATA_ROOT = Path(os.environ.get("TRADINGAGENTS_DATA_ROOT", PROJECT_ROOT / "data"))
 JDIR = DATA_ROOT / "predlab" / "s1_paper"
 JOURNAL = JDIR / "journal.jsonl"
+CH_JOURNAL = JDIR / "journal_champion.jsonl"
 FAPI = "https://fapi.binance.com"
-LOOKBACK_D = 70  # prior-month median qv + 5d park window + slack
+LOOKBACK_D = 70  # prior-month median qv + ewma-20 burn-in (tail wt < 0.2%) + slack
 VT_TARGET, VT_CAP = 0.10, 2.0
+CH_VT_TARGET, CH_BREADTH_FLOOR = 0.15, 100  # Phase-O champion overlay
 
 
 def _fetch_klines(symbol: str, days: int) -> "pd.DataFrame | None":
@@ -98,16 +106,25 @@ def load_panels_offline() -> "dict[str, pd.DataFrame]":
             "park": pd.DataFrame(parks)}
 
 
-def todays_book(panels: dict) -> "tuple[pd.Timestamp, pd.Series]":
+def todays_book(panels: dict, signal: str = "park_5"
+                ) -> "tuple[pd.Timestamp, pd.Series, int]":
+    """Book for the last complete UTC day. signal: park_5 (old S1) or
+    ewma_20 (Phase-O champion). Returns (asof, weights, breadth) where
+    breadth = universe names with a signal value (champion guard input)."""
     qv, park = panels["qv"], panels["park"]
     asof = park.index.max()  # last complete UTC day
     month_start = asof.replace(day=1)
     prior_mask = (qv.index < month_start) & (qv.index >= month_start - timedelta(days=35))
     prior = qv[prior_mask]
     members = prior.median().dropna().nlargest(200).index
-    sig = park[members].rolling(5).mean().loc[asof]
+    if signal == "park_5":
+        sig = park[members].rolling(5).mean().loc[asof]
+    elif signal == "ewma_20":
+        sig = park[members].ewm(span=20).mean().loc[asof]
+    else:
+        raise ValueError(signal)
     w = pp.quintile_weights(sig, "eq")
-    return asof, w[w != 0]
+    return asof, w[w != 0], int(sig.notna().sum())
 
 
 def realized_prev_return(panels: dict, prev_row: dict, asof: pd.Timestamp) -> "float | None":
@@ -124,27 +141,22 @@ def realized_prev_return(panels: dict, prev_row: dict, asof: pd.Timestamp) -> "f
     return float((w * r).dropna().sum())
 
 
-def vt_scale(journal_rows: "list[dict]") -> "float | None":
+def vt_scale(journal_rows: "list[dict]", target: float = VT_TARGET) -> "float | None":
     rets = [r.get("realized_book_ret") for r in journal_rows]
     rets = [x for x in rets if x is not None]
     if len(rets) < 21:
         return None
     vol = float(np.std(rets[-20:], ddof=1)) * np.sqrt(pp.ANN_DAYS)
-    return float(min(VT_TARGET / max(vol, 1e-9), VT_CAP))
+    return float(min(target / max(vol, 1e-9), VT_CAP))
 
 
-def main() -> None:
-    ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--offline", action="store_true")
-    args = ap.parse_args()
-    JDIR.mkdir(parents=True, exist_ok=True)
-    rows = ([json.loads(l) for l in JOURNAL.read_text().splitlines()]
-            if JOURNAL.exists() else [])
-    panels = load_panels_offline() if args.offline else load_panels_online()
-    asof, w = todays_book(panels)
+def journal_one(journal: Path, panels: dict, signal: str, scale_key: str,
+                vt_target: float, breadth_floor: "int | None" = None) -> str:
+    rows = ([json.loads(l) for l in journal.read_text().splitlines()]
+            if journal.exists() else [])
+    asof, w, breadth = todays_book(panels, signal)
     if any(r["asof"] == str(asof.date()) for r in rows):
-        print(f"journal already has {asof.date()} — idempotent skip")
-        return
+        return f"{journal.name}: already has {asof.date()} — idempotent skip"
     prev = rows[-1] if rows else None
     realized = realized_prev_return(panels, prev, asof) if prev else None
     est_turn = None
@@ -152,6 +164,9 @@ def main() -> None:
         pw = pd.Series(prev["weights"])
         both = w.index.union(pw.index)
         est_turn = float((w.reindex(both, fill_value=0) - pw.reindex(both, fill_value=0)).abs().sum())
+    scale = vt_scale(rows + [{"realized_book_ret": realized}], vt_target)
+    if breadth_floor is not None and scale is not None and breadth < breadth_floor:
+        scale = 0.0
     row = {
         "asof": str(asof.date()),
         "written_utc": datetime.now(timezone.utc).isoformat(),
@@ -162,14 +177,29 @@ def main() -> None:
         "realized_book_ret": realized,
         "est_turnover": est_turn,
         "est_cost": (pp.TAKER_BP / 1e4 * est_turn) if est_turn is not None else None,
-        "vt10_scale": vt_scale(rows + [{"realized_book_ret": realized}]),
+        scale_key: scale,
     }
-    with JOURNAL.open("a") as fh:
+    if breadth_floor is not None:
+        row["breadth"] = breadth
+    with journal.open("a") as fh:
         fh.write(json.dumps(row, sort_keys=True) + "\n")
     longs = sum(1 for v in w if v > 0)
-    print(f"{asof.date()}: book {longs}L/{len(w)-longs}S, "
-          f"realized_prev {realized if realized is None else f'{realized:+.4f}'}, "
-          f"turn {est_turn}, vt10 {row['vt10_scale']}")
+    return (f"{journal.name} {asof.date()}: book {longs}L/{len(w)-longs}S, "
+            f"realized_prev {realized if realized is None else f'{realized:+.4f}'}, "
+            f"turn {est_turn}, {scale_key} {scale}")
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--offline", action="store_true")
+    args = ap.parse_args()
+    JDIR.mkdir(parents=True, exist_ok=True)
+    panels = load_panels_offline() if args.offline else load_panels_online()
+    # original Phase-P book — config frozen for the pp2 vt10 confirmation
+    print(journal_one(JOURNAL, panels, "park_5", "vt10_scale", VT_TARGET))
+    # Phase-O final champion book — parallel forward journal
+    print(journal_one(CH_JOURNAL, panels, "ewma_20", "vt15_b100_scale",
+                      CH_VT_TARGET, CH_BREADTH_FLOOR))
 
 
 if __name__ == "__main__":
