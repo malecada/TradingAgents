@@ -189,11 +189,27 @@ def journal_one(journal: Path, panels: dict, signal: str, scale_key: str,
             f"turn {est_turn}, {scale_key} {scale}")
 
 
+def _already_done(date_str: str) -> bool:
+    """Cheap pre-fetch guard: True if BOTH journals already hold `date_str`.
+    Lets an hourly cron (laptop may be off at any fixed hour) exit before
+    the ~500-request kline fetch on all but the first wake-up of the day."""
+    for j in (JOURNAL, CH_JOURNAL):
+        if not j.exists() or not any(
+                json.loads(l)["asof"] == date_str
+                for l in j.read_text().splitlines()):
+            return False
+    return True
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--offline", action="store_true")
     args = ap.parse_args()
     JDIR.mkdir(parents=True, exist_ok=True)
+    expected = str((datetime.now(timezone.utc) - timedelta(days=1)).date())
+    if not args.offline and _already_done(expected):
+        print(f"both journals have {expected} — pre-fetch skip")
+        return
     panels = load_panels_offline() if args.offline else load_panels_online()
     # original Phase-P book — config frozen for the pp2 vt10 confirmation
     print(journal_one(JOURNAL, panels, "park_5", "vt10_scale", VT_TARGET))
