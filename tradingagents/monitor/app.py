@@ -8,7 +8,9 @@ endpoints (/api/cycles, /api/cycle, /api/trades). Combined endpoints
 (/api/performance, /api/health) degrade per-strategy instead — a locked
 or missing journal for one source yields ``null`` for that strategy and
 continues serving the other. A missing hybrid source yields
-``hybrid: null`` blocks, never an error.
+``hybrid: null`` blocks, never an error. /api/predlab/* serves the S1
+paper-trader read-only journals (performance/book/gate/health); with no
+predlab source configured, endpoints degrade to null-shaped 200s.
 """
 from __future__ import annotations
 
@@ -18,6 +20,7 @@ import math
 import os
 import secrets
 import sqlite3
+from datetime import datetime, timezone
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
@@ -29,6 +32,8 @@ from tradingagents.execution.live.config import from_binance_symbol
 from tradingagents.execution.live.rebacktest import compare_quant_hybrid
 from tradingagents.monitor import analytics, db, health, metrics
 from tradingagents.monitor.adhoc.api import register_adhoc_routes
+from tradingagents.monitor.predlab import (BOOKS, HEARTBEAT_NOTE,
+                                            PredlabSource, gate_status)
 from tradingagents.monitor.sources import StrategySource
 
 _DIR = Path(__file__).parent
@@ -54,6 +59,7 @@ def create_app(
     hybrid: StrategySource | None = None,
     log_dir: str = "logs",
     start_capital: float = 10000.0,
+    predlab: PredlabSource | None = None,
 ) -> FastAPI:
     """Build the monitor app. Raises RuntimeError if TA_MONITOR_PASSWORD
     is unset — the UI must never run without a password."""
@@ -323,6 +329,42 @@ def create_app(
                 Path(quant.journal_path), Path(hybrid.journal_path), coins=coins))
         except Exception as exc:
             return {"error": str(exc)}
+
+    # ── predlab paper-book endpoints (JSONL journals, read-only) ───────────
+    def _predlab_payload() -> dict | None:
+        return predlab.payload() if predlab is not None else None
+
+    @app.get("/api/predlab/performance")
+    def api_predlab_performance():
+        p = _predlab_payload()
+        if p is None:
+            return {"books": {b: None for b in BOOKS},
+                    "reference": None, "backtest_yearly": None}
+        return _sanitize_floats(p["performance"])
+
+    @app.get("/api/predlab/book")
+    def api_predlab_book(book: str = "champion"):
+        if book not in BOOKS:
+            raise HTTPException(status_code=400,
+                                detail=f"unknown book {book!r}")
+        p = _predlab_payload()
+        detail = p["books"][book] if p is not None else None
+        return _sanitize_floats({"book": book, "detail": detail})
+
+    @app.get("/api/predlab/gate")
+    def api_predlab_gate():
+        p = _predlab_payload()
+        if p is None:
+            return gate_status([], None, datetime.now(timezone.utc).date())
+        return _sanitize_floats(p["gate"])
+
+    @app.get("/api/predlab/health")
+    def api_predlab_health():
+        p = _predlab_payload()
+        if p is None:
+            return {"books": {b: None for b in BOOKS},
+                    "heartbeat_note": HEARTBEAT_NOTE}
+        return _sanitize_floats(p["health"])
 
     @app.exception_handler(sqlite3.OperationalError)
     def _db_error(request: Request, exc: sqlite3.OperationalError):
