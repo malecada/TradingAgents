@@ -3,17 +3,19 @@
 The S1 paper trader writes JSONL weights-and-returns journals (no equity
 or position fields). This module is pure: functions take parsed rows and
 return plain dicts for the API layer. Filesystem access is limited to
-``parse_journal`` / ``load_reference``; both degrade to empty results on
+``parse_journal`` / ``_load_json``; both degrade to empty results on
 missing files. See docs/superpowers/specs/2026-08-06-monitor-predlab-
 overhaul-design.md.
 """
 from __future__ import annotations
 
 import json
-from datetime import date, datetime, timedelta
+import os
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 from tradingagents.monitor import metrics
+from tradingagents.monitor.sources import ttl_cached
 
 # book key -> (journal filename, scale key). Champion is the frozen
 # Phase-O system; vt10 is the old S1 book kept for the pp2 confirmation.
@@ -189,3 +191,73 @@ def gate_status(champion_rows: list[dict], reference: dict | None,
         },
         "informational": True,
     }
+
+
+HEARTBEAT_NOTE = ("journal backup branch predlab-journal-backup pushes "
+                  "daily ~00:45 UTC")
+
+
+def _load_json(path: Path) -> dict | None:
+    if not path.is_file():
+        return None
+    try:
+        return json.loads(path.read_text())
+    except (json.JSONDecodeError, OSError):
+        return None
+
+
+class PredlabSource:
+    """Read-only predlab data bundle rooted at PREDLAB_DATA_DIR.
+
+    ``payload()`` assembles everything the /api/predlab endpoints serve,
+    TTL-cached (30 s) so hammering the UI doesn't re-read files. Files are
+    small JSONL/JSON; missing files degrade to None blocks.
+    """
+
+    def __init__(self, data_dir: str, ttl: float = 30.0) -> None:
+        self.data_dir = data_dir
+        self._cached = ttl_cached(self._build, ttl)
+
+    def payload(self) -> dict:
+        return self._cached()
+
+    def _build(self) -> dict:
+        root = Path(self.data_dir) / "predlab"
+        parsed = {}
+        for book, (fname, scale_key) in BOOKS.items():
+            rows, malformed = parse_journal(root / "s1_paper" / fname)
+            parsed[book] = (rows, malformed, scale_key)
+        gates = _load_json(root / "gates.json") or {}
+        reference = (gates.get("predlab_opt") or {}).get("final_champion")
+        backtest = _load_json(root / "champion_backtest.json")
+        backtest_yearly = None
+        if backtest:
+            systems = backtest.get("systems") or {}
+            backtest_yearly = {
+                "champion": (systems.get("new") or {}).get("yearly_ovl"),
+                "vt10": (systems.get("old") or {}).get("yearly_ovl"),
+            }
+        now = datetime.now(timezone.utc)
+        return {
+            "performance": {
+                "books": {b: derive_book(rows, sk)
+                          for b, (rows, _m, sk) in parsed.items()},
+                "reference": (reference or {}).get("dev_metrics")
+                             if reference else None,
+                "backtest_yearly": backtest_yearly,
+            },
+            "books": {b: book_detail(rows, sk)
+                      for b, (rows, _m, sk) in parsed.items()},
+            "gate": gate_status(parsed["champion"][0], reference, now.date()),
+            "health": {
+                "books": {b: book_health(rows, m, now)
+                          for b, (rows, m, _sk) in parsed.items()},
+                "heartbeat_note": HEARTBEAT_NOTE,
+            },
+        }
+
+
+def resolve_predlab_source() -> PredlabSource | None:
+    """PredlabSource from PREDLAB_DATA_DIR, or None when unset."""
+    data_dir = os.environ.get("PREDLAB_DATA_DIR")
+    return PredlabSource(data_dir) if data_dir else None
