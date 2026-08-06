@@ -1,8 +1,8 @@
 # Live Bot Monitoring UI
 
 Read-only FastAPI dashboard for forecast-quality research and live strategy
-monitoring. Reads structured research books (weights-and-returns journals),
-live bot journals, and cycle logs. Never writes to any data source.
+monitoring. Reads structured research journals (weights-and-returns), live bot
+trade journals, and cycle logs. Never writes to any data source.
 
 ## Quick Start
 
@@ -36,23 +36,27 @@ TA_MONITOR_PASSWORD=somepw \
   alongside live performance. Multi-strategy comparison panels available when
   additional books are loaded.
 
-- **Book** — weighted portfolio composition, entry/exit signals, realized
-  returns per position. Displays book-level metadata (holdout DSR, phase, gate
-  status), position history, and factor contribution to total realized return.
+- **Book** — weighted portfolio composition (long/short allocations), position
+  entry/exit signals, realized returns per position. Displays book-level
+  metadata (universe size, membership hash, scale), position history, and
+  factor contribution to total realized return.
 
-- **Gate** — pass/fail thresholds (Sharpe, DSR, equity curve shape) for the
-  champion model and experimental candidates. Shows gate status (`OPEN` / `CLOSED`),
-  historical progression, and degradation contract (null when gate data
-  unavailable).
+- **Gate** — sealed one-shot evaluation tracker (informational only). Displays
+  window start date (2026-07-02), earliest evaluation date (2027-01-02), days
+  elapsed/remaining, Sharpe threshold (0.946 or 0.5x dev ovl SR), pass/fail
+  criteria, and running proxy (paper journal SR and realized-return count).
+  The official evaluation stays sealed and uses the backtest harness on the
+  forward window.
 
 - **Ops** — cycle timeline, pipeline-step timings, recent errors, data freshness.
-  Displays book-level metadata changes, update frequency, and system health.
+  Displays book-level metadata changes, last update timestamp, and system health
+  (data staleness tracked via written_utc; threshold 36 hours).
 
 - **Legacy** — read-only archive of decommissioned V5 live-bot journals (quant +
-  hybrid). Includes Performance (equity, Sharpe, drawdown), Positions (open holdings
-  with entry/mark/leverage/uPnL), Executions (order logs), Decisions (per-cycle
-  predictions and sizing), and Health tabs. Legacy data is never recomputed;
-  updates stopped when the dual-strategy bot was decommissioned.
+  hybrid). Includes Performance (equity, Sharpe, drawdown), Positions (open
+  holdings with entry/mark/leverage/uPnL), Executions (order logs), Decisions
+  (per-cycle predictions and sizing), and Health tabs. Legacy data is never
+  recomputed; updates stopped when the dual-strategy bot was decommissioned.
 
 ## Predlab Research Books
 
@@ -62,51 +66,83 @@ Research books are organized under `PREDLAB_DATA_DIR/predlab/` as:
 predlab-data/
 ├── predlab/
 │   ├── champion_backtest.json       # backtest metadata for anchor Sharpe
-│   ├── gates.json                   # gate thresholds and status
-│   └── books/
-│       ├── book_1.jsonl             # weights-and-returns journal
-│       ├── book_2.jsonl
-│       └── ...
+│   ├── gates.json                   # gate thresholds and sealed one-shot status
+│   └── s1_paper/
+│       ├── journal_champion.jsonl   # champion (Phase-O frozen) weights-and-returns
+│       └── journal.jsonl            # vt10 (legacy S1 book) weights-and-returns
 └── ...
 ```
 
 ### Journal semantics
 
-Each `.jsonl` file in `books/` contains one JSON object per line:
+Each `.jsonl` file in `s1_paper/` contains one JSON object per line (one per day):
 
-- **Weights record**: `{"symbol": "BTC", "weight": 0.5, "timestamp": "2026-01-01T00:00:00Z"}`
-  — allocation at rebalance or end-of-bar
-- **Return record**: `{"realized_book_ret": 0.0123, "timestamp": "2026-01-01T01:00:00Z"}`
-  — realized P&L since last close, used to compound equity curve
-- **Equity reconstruction**: equity = starting_capital × product(1 + realized_book_ret)
+- `asof` (string, ISO date YYYY-MM-DD) — the bar date
+- `written_utc` (string, ISO timestamp) — when the row was written; used to
+  detect staleness (threshold 36 hours)
+- `weights` (dict, symbol → float ±0.025) — allocation at close
+- `realized_book_ret` (float | null) — realized P&L since last close; used to
+  compound equity curve; rows with null return are excluded from warmup count
+- `n_universe` (int) — size of eligible universe on this date
+- `membership_hash` (string) — hash of current membership set
+- `est_turnover` (float | null) — estimated portfolio turnover
+- `est_cost` (float | null) — estimated transaction cost
+- `vt15_b100_scale` or `vt10_scale` (float | null) — volatility target scaling
+  factor; used to compute position sizes
+- `breadth` (int | null, optional) — champion rows only; number of unique
+  securities held
+
+**Equity reconstruction**: equity = starting_capital × product(1 + realized_book_ret)
   — computed after warm-up of 21 realized returns for volatility target scaling
+  to stabilize the equity curve.
 
-### Book metadata
+### Reference files
 
-- `champion_backtest.json`: backtest Sharpe, return stream, and performance
-  metrics displayed as anchor reference on the Performance tab.
-- `gates.json`: threshold configuration and current pass/fail status for each gate
-  (Sharpe threshold, DSR threshold, etc.). Shown on the Gate tab.
+- `champion_backtest.json`: backtest Sharpe and yearly return streams displayed
+  as anchor reference on the Performance tab.
+- `gates.json`: sealed one-shot configuration; contains `predlab_opt.forward_one_shot`
+  (gate thresholds) and `predlab_opt.final_champion` (reference metrics for threshold
+  derivation). Shown on the Gate tab.
 
 ## API Endpoints
 
 ### Predlab endpoints
 
-- `GET /api/predlab/health` — book refresh status, available books, known data gaps
-- `GET /api/predlab/performance` — equity curve, Sharpe, drawdown, rolling Sharpe
-- `GET /api/predlab/book` — weighted composition, position history, realized returns
-- `GET /api/predlab/gate` — gate status, threshold values, pass/fail progression
+- `GET /api/predlab/performance` — equity curve, Sharpe, drawdown, rolling
+  Sharpe for champion and vt10 books; reference metrics and backtest yearly
+  returns
+- `GET /api/predlab/book?book=champion|vt10` — latest-row weighted composition,
+  position history, and realized returns
+- `GET /api/predlab/gate` — sealed one-shot tracker (window dates, days elapsed,
+  threshold, pass/fail criteria, running proxy)
+- `GET /api/predlab/health` — data freshness, malformed-row counts, known data
+  gaps, heartbeat note (journal backup timing)
 
 ### Degradation contract
 
-- **Missing books**: if `PREDLAB_DATA_DIR` is unset or unreachable, all predlab
-  endpoints return `{"status": "degraded", "books": []}` and the Performance/Book/Gate/Ops
-  tabs render null (grayed out). Legacy tab continues serving from `QUANT_DATA_DIR`
-  and `HYBRID_DATA_DIR` if available.
-- **Per-book isolation**: a missing or unreadable journal for one book yields `null`
-  for that book only. Other books continue serving normally.
-- **Legacy pane**: if `QUANT_DATA_DIR` and `HYBRID_DATA_DIR` are unset, the Legacy
-  tab is hidden (no dual-strategy archives to display).
+All predlab endpoints return HTTP 200 with null/empty blocks when data is missing
+or PREDLAB_DATA_DIR is unset:
+
+- `GET /api/predlab/performance` returns `{"books": {"champion": null, "vt10": null}, "reference": null, "backtest_yearly": null}`
+- `GET /api/predlab/book?book=<name>` returns `{"book": "<name>", "detail": null}` (or HTTP 400 if book name is unknown)
+- `GET /api/predlab/gate` returns a normal gate_status object with empty champion
+  rows (informational: true, running SR null)
+- `GET /api/predlab/health` returns `{"books": {"champion": null, "vt10": null}, "heartbeat_note": "..."}`
+
+Per-book isolation applies: a missing or unreadable journal for one book yields
+`null` for that book only; the other book continues serving normally.
+
+### Known data gaps
+
+The VPS scheduler was offline 2026-07-31 through 2026-08-02 (documented, not an
+incident). These dates appear in the health payload with `known: true`.
+
+### Legacy pane
+
+If `QUANT_DATA_DIR` and `HYBRID_DATA_DIR` are unset, the Legacy tab is hidden.
+The legacy `/api/performance`, `/api/positions`, `/api/health`, and `/api/compare`
+endpoints degrade per-strategy; a missing or unreadable journal for one strategy
+yields `null` for that strategy only.
 
 ## Environment
 
@@ -132,6 +168,12 @@ Basic HTTP authentication (user `admin`, password from `TA_MONITOR_PASSWORD`) is
 required on all endpoints. The password is checked once per session; requests
 without valid credentials receive a 401 Unauthorized response.
 
+## UI Removal Notes
+
+- **Run Prediction tab** was removed (V5 checkpoint evaluation retired). The backend
+  `/api/adhoc/*` routes remain mounted for backward compatibility but have no UI
+  integration.
+
 ## React build workflow
 
 The built React SPA is committed to the repo as `tradingagents/monitor/frontend/dist/`.
@@ -156,15 +198,18 @@ Secrets are loaded from `EnvironmentFile=/opt/tradingagents/secrets/.env.trading
 vars including `TA_MONITOR_PASSWORD`, `PREDLAB_DATA_DIR`, `QUANT_DATA_DIR`,
 `HYBRID_DATA_DIR`, and hybrid credentials).
 
-On the VPS, `PREDLAB_DATA_DIR` should be set to `/opt/tradingagents/predlab-data`,
-and reference files (`gates.json`, `champion_backtest.json`) should be copied
-alongside the research books:
+On the VPS, `PREDLAB_DATA_DIR` should be set to `/opt/tradingagents/predlab-data`.
+Reference files and journals must be in place before the service starts:
 
 ```
 /opt/tradingagents/predlab-data/predlab/
 ├── champion_backtest.json
 ├── gates.json
-└── books/
-    ├── book_1.jsonl
-    └── ...
+└── s1_paper/
+    ├── journal_champion.jsonl
+    └── journal.jsonl
 ```
+
+The journals are populated by the S1 paper-trader process running independently.
+The `predlab-journal-backup` branch on origin pushes daily journal snapshots
+(approximately 00:45 UTC).
