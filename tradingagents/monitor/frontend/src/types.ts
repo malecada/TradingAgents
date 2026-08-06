@@ -89,47 +89,6 @@ export interface HealthResp {
 
 export type Strategy = "quant" | "hybrid";
 
-export type AdhocStrategy = "quant" | "hybrid";
-
-export interface AdhocMeta {
-  coins: string[];
-  default_analysts: string[];
-  default_model: string;
-  job_running: boolean;
-}
-
-export interface AdhocRunBody {
-  coin: string;
-  date: string;
-  strategy: AdhocStrategy;
-  analysts?: string[];
-  model?: string;
-}
-
-export interface AdhocOutputMeta {
-  key: string; label: string; kind: "text" | "json" | "table"; ordinal: number;
-}
-
-export interface AdhocStatus {
-  status: "queued" | "running" | "done" | "error";
-  stage: string | null; progress: number | null; est_cost: number | null;
-  error_msg: string | null; outputs: AdhocOutputMeta[];
-}
-
-export interface AdhocOutput {
-  key: string; label: string; kind: "text" | "json" | "table";
-  content: unknown; ordinal: number; ts: number;
-}
-
-export interface AdhocRunRow {
-  run_id: string; created_ts: number; coin: string; date: string;
-  strategy: AdhocStrategy; analysts: string[]; model: string; status: string;
-  stage: string | null; progress: number | null; error_msg: string | null;
-  started_ts: number | null; finished_ts: number | null; est_cost: number | null;
-}
-
-export interface AdhocResult { run: AdhocRunRow; outputs: AdhocOutput[]; }
-
 // ── predlab paper-book (JSONL journals) ─────────────────────────────────
 
 export type PredlabBookName = "champion" | "vt10";

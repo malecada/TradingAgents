@@ -1,35 +1,30 @@
 import { Fragment, useEffect, useState } from "react";
-import { PerformanceTab } from "./tabs/PerformanceTab";
-import { PositionsTab } from "./tabs/PositionsTab";
-import { ExecutionsTab } from "./tabs/ExecutionsTab";
-import { DecisionsTab } from "./tabs/DecisionsTab";
-import { HealthTab } from "./tabs/HealthTab";
-import { RunTab } from "./tabs/RunTab";
+import { PredlabPerformanceTab } from "./tabs/PredlabPerformanceTab";
+import { PredlabBookTab } from "./tabs/PredlabBookTab";
+import { PredlabGateTab } from "./tabs/PredlabGateTab";
+import { PredlabOpsTab } from "./tabs/PredlabOpsTab";
+import { LegacyTab } from "./tabs/LegacyTab";
 
 const TABS = [
   {
-    id: "performance", label: "Performance", el: <PerformanceTab />,
-    desc: "Live equity, Sharpe, drawdown and rolling Sharpe for the quant and hybrid books — indexed to 100 and compared against their backtest anchors.",
+    id: "performance", label: "Performance", el: <PredlabPerformanceTab />,
+    desc: "Predlab champion (ewma_20 low-vol LS + vt15_b100) and old vt10 paper books — equity compounded from realized returns, Sharpe, drawdown, cost drag, plus the frozen dev backtest reference.",
   },
   {
-    id: "positions", label: "Positions", el: <PositionsTab />,
-    desc: "Open positions per strategy, queried live from Binance: size, entry, mark, leverage, unrealized PnL and allocation.",
+    id: "book", label: "Book", el: <PredlabBookTab />,
+    desc: "Today's cross-sectional book: 40 longs / 40 shorts at ±2.5%, universe membership, breadth and vol-target scale.",
   },
   {
-    id: "executions", label: "Executions", el: <ExecutionsTab />,
-    desc: "Filled trades and per-strategy analytics — realized PnL, fees, funding and slippage.",
+    id: "gate", label: "Gate", el: <PredlabGateTab />,
+    desc: "Sealed one-shot forward tracker — informational only; the evaluation happens once, earliest 2027-01-02.",
   },
   {
-    id: "decisions", label: "Decisions", el: <DecisionsTab />,
-    desc: "Per-cycle decision detail: predictions, sizing, risk checks, shadow decisions, and the LLM modulator (hybrid only).",
+    id: "ops", label: "Ops", el: <PredlabOpsTab />,
+    desc: "Journal freshness, gaps and malformed-line counts for both paper books, plus the backup-branch heartbeat.",
   },
   {
-    id: "health", label: "Health", el: <HealthTab />,
-    desc: "Operational health per strategy — cycle timeline, pipeline steps, recent errors and model retrains.",
-  },
-  {
-    id: "run", label: "Run", el: <RunTab />,
-    desc: "On-demand prediction: pick a coin, date and quant or hybrid, then study the final call plus every analyst, debate and intermediate output. Display-only — nothing is traded.",
+    id: "legacy", label: "Legacy", el: <LegacyTab />,
+    desc: "Read-only archive of the decommissioned V5 8-coin quant/hybrid books (journals frozen 2026-08-06).",
   },
 ] as const;
 
@@ -49,13 +44,13 @@ export default function App() {
         <nav className="tabs">
           {TABS.map((t) => (
             <Fragment key={t.id}>
-              {/* set the on-demand action tab apart from the read-only views */}
-              {t.id === "run" && <span className="tab-sep" aria-hidden="true" />}
+              {/* set the read-only archive tab apart from the live predlab views */}
+              {t.id === "legacy" && <span className="tab-sep" aria-hidden="true" />}
               <button
-                className={`tab ${t.id === active.id ? "active" : ""} ${t.id === "run" ? "tab-run" : ""}`}
+                className={`tab ${t.id === active.id ? "active" : ""} ${t.id === "legacy" ? "tab-run" : ""}`}
                 title={t.desc}
                 onClick={() => { window.location.hash = t.id; }}>
-                {t.id === "run" ? "▸ Run Prediction" : t.label}
+                {t.id === "legacy" ? "▸ Legacy" : t.label}
               </button>
             </Fragment>
           ))}
