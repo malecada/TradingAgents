@@ -1,0 +1,181 @@
+{
+ "assumptions": {
+  "impact": "k * sigma20 * sqrt(trade/ADV20), same-day, close fills",
+  "taker_bp": 5.0,
+  "aum_grid": [
+   1000000.0,
+   3000000.0,
+   10000000.0,
+   30000000.0,
+   100000000.0,
+   300000000.0,
+   1000000000.0
+  ],
+  "k_grid": [
+   0.5,
+   1.0,
+   2.0
+  ],
+  "scale_path": "baseline 5bp trajectory (AUM-invariant approx)"
+ },
+ "curves": {
+  "k=0.5": {
+   "1e+06": {
+    "sr": 1.8803466339610826,
+    "maxdd": 0.1774663932350833,
+    "ann_impact_drag_pct": 1.6787876640277564,
+    "participation_p95_pct": 0.00419725203863284,
+    "participation_max_pct": 1.5095298368629306
+   },
+   "3e+06": {
+    "sr": 1.8051581304949191,
+    "maxdd": 0.18085024588086418,
+    "ann_impact_drag_pct": 2.9077455292159446,
+    "participation_p95_pct": 0.01259175611589852,
+    "participation_max_pct": 4.528589510588792
+   },
+   "1e+07": {
+    "sr": 1.6581375131609966,
+    "maxdd": 0.18742305515086555,
+    "ann_impact_drag_pct": 5.308792726121233,
+    "participation_p95_pct": 0.041972520386328406,
+    "participation_max_pct": 15.095298368629306
+   },
+   "3e+07": {
+    "sr": 1.4199122889737958,
+    "maxdd": 0.1979551386742895,
+    "ann_impact_drag_pct": 9.195098728494063,
+    "participation_p95_pct": 0.12591756115898523,
+    "participation_max_pct": 45.28589510588792
+   },
+   "1e+08": {
+    "sr": 0.954121313103448,
+    "maxdd": 0.22226953384809367,
+    "ann_impact_drag_pct": 16.787876640277567,
+    "participation_p95_pct": 0.41972520386328405,
+    "participation_max_pct": 150.95298368629307
+   },
+   "3e+08": {
+    "sr": 0.20185949231497344,
+    "maxdd": 0.4060337594325448,
+    "ann_impact_drag_pct": 29.07745529215945,
+    "participation_p95_pct": 1.2591756115898523,
+    "participation_max_pct": 452.8589510588792
+   },
+   "1e+09": {
+    "sr": -1.2448608064478837,
+    "maxdd": 0.7654509072941542,
+    "ann_impact_drag_pct": 53.08792726121233,
+    "participation_p95_pct": 4.197252038632842,
+    "participation_max_pct": 1509.5298368629308
+   }
+  },
+  "k=1.0": {
+   "1e+06": {
+    "sr": 1.7776259015044047,
+    "maxdd": 0.18208549577559707,
+    "ann_impact_drag_pct": 3.3575753280555127,
+    "participation_p95_pct": 0.00419725203863284,
+    "participation_max_pct": 1.5095298368629306
+   },
+   "3e+06": {
+    "sr": 1.6270934744460923,
+    "maxdd": 0.18880368060221708,
+    "ann_impact_drag_pct": 5.815491058431889,
+    "participation_p95_pct": 0.01259175611589852,
+    "participation_max_pct": 4.528589510588792
+   },
+   "1e+07": {
+    "sr": 1.332662632560364,
+    "maxdd": 0.2017774662883809,
+    "ann_impact_drag_pct": 10.617585452242466,
+    "participation_p95_pct": 0.041972520386328406,
+    "participation_max_pct": 15.095298368629306
+   },
+   "3e+07": {
+    "sr": 0.8558522080448829,
+    "maxdd": 0.236251662387172,
+    "ann_impact_drag_pct": 18.390197456988126,
+    "participation_p95_pct": 0.12591756115898523,
+    "participation_max_pct": 45.28589510588792
+   },
+   "1e+08": {
+    "sr": -0.07213571271492318,
+    "maxdd": 0.5008730251621766,
+    "ann_impact_drag_pct": 33.57575328055513,
+    "participation_p95_pct": 0.41972520386328405,
+    "participation_max_pct": 150.95298368629307
+   },
+   "3e+08": {
+    "sr": -1.543731547818296,
+    "maxdd": 0.8076275026120601,
+    "ann_impact_drag_pct": 58.1549105843189,
+    "participation_p95_pct": 1.2591756115898523,
+    "participation_max_pct": 452.8589510588792
+   },
+   "1e+09": {
+    "sr": -4.198748634098379,
+    "maxdd": 0.9853649253768337,
+    "ann_impact_drag_pct": 106.17585452242466,
+    "participation_p95_pct": 4.197252038632842,
+    "participation_max_pct": 1509.5298368629308
+   }
+  },
+  "k=2.0": {
+   "1e+06": {
+    "sr": 1.5719605763140831,
+    "maxdd": 0.19124950994630707,
+    "ann_impact_drag_pct": 6.7151506561110255,
+    "participation_p95_pct": 0.00419725203863284,
+    "participation_max_pct": 1.5095298368629306
+   },
+   "3e+06": {
+    "sr": 1.2704947909086701,
+    "maxdd": 0.20448992405434585,
+    "ann_impact_drag_pct": 11.630982116863779,
+    "participation_p95_pct": 0.01259175611589852,
+    "participation_max_pct": 4.528589510588792
+   },
+   "1e+07": {
+    "sr": 0.6814663808003698,
+    "maxdd": 0.2604658303917434,
+    "ann_impact_drag_pct": 21.23517090448493,
+    "participation_p95_pct": 0.041972520386328406,
+    "participation_max_pct": 15.095298368629306
+   },
+   "3e+07": {
+    "sr": -0.26667202717869043,
+    "maxdd": 0.5590655921876069,
+    "ann_impact_drag_pct": 36.78039491397625,
+    "participation_p95_pct": 0.12591756115898523,
+    "participation_max_pct": 45.28589510588792
+   },
+   "1e+08": {
+    "sr": -2.0670439898401507,
+    "maxdd": 0.8788834506031515,
+    "ann_impact_drag_pct": 67.15150656111027,
+    "participation_p95_pct": 0.41972520386328405,
+    "participation_max_pct": 150.95298368629307
+   },
+   "3e+08": {
+    "sr": -4.709081783339776,
+    "maxdd": 0.9915540262351961,
+    "ann_impact_drag_pct": 116.3098211686378,
+    "participation_p95_pct": 1.2591756115898523,
+    "participation_max_pct": 452.8589510588792
+   },
+   "1e+09": {
+    "sr": -8.562609852760929,
+    "maxdd": 0.9999574363224533,
+    "ann_impact_drag_pct": 212.35170904484931,
+    "participation_p95_pct": 4.197252038632842,
+    "participation_max_pct": 1509.5298368629308
+   }
+  }
+ },
+ "capacity_thresholds_k1": {
+  "sr_1.5": "5.04e+06",
+  "sr_1.0": "2.15e+07",
+  "sr_0.0": "9.11e+07"
+ }
+}

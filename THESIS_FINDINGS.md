@@ -3724,3 +3724,42 @@ cross-trial std and must be excluded from the selection pool (all variants
 disclosed); (c) the honest headline remains dev-window-bounded — the untainted
 claim is the registered forward one-shot on F (spend ≥ 2027-01-02: SR_F ≥ 0.946,
 same sign, placebo p < 0.10).
+
+## Section 60: Champion Venue Replication on Bybit (predlab_bybit_r1) — PASS (2026-08-06)
+
+Pre-registered before any result (gates.json `predlab_bybit_r1`): Phase-O final
+champion verbatim (ewma_20 eq-quintile top-200 monthly-PIT daily + vt15_naive20_b100,
+5bp+funding), single authorized trial, floor = 0.946 ovl SR (0.5× Binance, the
+forward-one-shot halving convention), shift-placebo p<0.10 (200 draws), feasibility
+gate ≥1000 days breadth ≥100.
+
+Store: 735 Bybit linear-USDT-perp symbols (klines+funding, sealed 2026-07-01),
+144 delisted recovered via Binance-name probes (FTT/SRM-class servable, LUNA-class
+not). Survivorship caveat: Bybit-only delistings unrecoverable — disclosed.
+Probes: 684-symbol panel, 1,553 days breadth ≥100, median breadth 164 → FEASIBLE.
+
+**Result (1,704 traded days): raw net SR +1.941 (Binance +1.928), ovl +1.712
+(floor 0.946), ovl MaxDD 13.5%, placebo p=0.055, turnover 0.24/day, max name
+0.97% — VERDICT PASS.** Yearly ovl: 2021 flat (breadth guard), 2022 +2.23,
+2023 +0.88, 2024 +0.76, 2025 +2.65, 2026H1 +2.73. Interpretation boundary:
+venues trade the same market — this is execution/universe/venue robustness,
+not an independent statistical sample. Scripts: predlab_bybit_fetch.py,
+predlab_bybit_r1.py; result file locked (single-shot spent).
+
+## Section 61: Champion Capacity Study — Square-Root Impact (2026-08-06)
+
+Report-only (no gates; descriptive). Exact champion weight path (parity vs engine
+2.8e-17) re-priced per name-day: 5bp taker + k·σ20·√(trade/ADV20) square-root
+impact (Almgren/Grinold), ADV = 20d median quote volume lagged 1d, baseline
+overlay-scale path. Assumptions: close fills, same-day impact, no spreading,
+no crowding/alpha-decay term → bounds EXECUTION capacity only.
+
+**k=1 curve (ovl net SR): $1M +1.78 / $3M +1.63 / $10M +1.33 / $30M +0.86 /
+$100M −0.07 / $300M −1.54 / $1B −4.20. Thresholds: SR 1.5 ≈ $5.0M, SR 1.0 ≈
+$21.5M, SR 0 ≈ $91M.** Sensitivity: k=0.5 → SR 0 ≈ $350M; k=2 → SR 0 ≈ $20M.
+Participation diagnostics confirm the mechanism: max single name-day
+participation 15% of ADV at $10M, 45% at $30M, 151% (infeasible) at $100M —
+the short leg's volatile small-caps are the binding constraint. Verdict: a
+research-scale strategy; comfortable at ≤$10M, marginal at $30M, dead near
+$100M under headline assumptions. Artifacts: data/predlab/capacity_study.json
++ .png; script predlab_capacity_study.py.
