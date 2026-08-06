@@ -49,7 +49,15 @@ def parse_journal(path: Path) -> tuple[list[dict], int]:
         except json.JSONDecodeError:
             malformed += 1
             continue
-        if isinstance(row, dict) and "asof" in row:
+        asof = row.get("asof") if isinstance(row, dict) else None
+        if isinstance(asof, str):
+            try:
+                date.fromisoformat(asof)
+            except ValueError:
+                asof = None
+        else:
+            asof = None
+        if asof is not None:
             rows.append(row)
         else:
             malformed += 1
@@ -139,7 +147,7 @@ def book_health(rows: list[dict], malformed: int,
             ts = datetime.fromisoformat(written.replace("Z", "+00:00"))
             age_h = (now_utc - ts).total_seconds() / 3600.0
             stale = age_h > STALE_AFTER_HOURS
-        except ValueError:
+        except (ValueError, TypeError):
             pass
     have = {r["asof"] for r in rows}
     first = date.fromisoformat(rows[0]["asof"])

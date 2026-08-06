@@ -71,6 +71,33 @@ def test_gate_and_health(tmp_path, monkeypatch):
     assert h["books"]["champion"]["rows"] == 1
 
 
+def test_malformed_asof_rows_skipped_not_fatal(tmp_path, monkeypatch):
+    # One good row plus two valid-JSON rows with unparseable ``asof``
+    # (non-string, and non-ISO string) must be skipped and counted, never
+    # crash the four /api/predlab endpoints (parse_journal / book_health
+    # robustness contract).
+    s1 = tmp_path / "pl" / "predlab" / "s1_paper"
+    s1.mkdir(parents=True)
+    good = {"asof": "2026-08-04", "written_utc": "2026-08-04T00:20:00+00:00",
+            "n_universe": 500, "membership_hash": "abc",
+            "weights": {"BTCUSDT": 0.025, "AKEUSDT": -0.025},
+            "realized_book_ret": None, "est_turnover": 0.1,
+            "est_cost": 0.00005, "vt15_b100_scale": None, "breadth": 200}
+    bad_int_asof = {**good, "asof": 123}
+    bad_str_asof = {**good, "asof": "not-a-date"}
+    lines = "\n".join(json.dumps(r) for r in
+                       (good, bad_int_asof, bad_str_asof))
+    (s1 / "journal_champion.jsonl").write_text(lines + "\n")
+    predlab = PredlabSource(str(tmp_path / "pl"))
+    c = _client(tmp_path, monkeypatch, predlab)
+    for path in ("/api/predlab/performance", "/api/predlab/book",
+                 "/api/predlab/gate", "/api/predlab/health"):
+        assert c.get(path, auth=AUTH).status_code == 200
+    h = c.get("/api/predlab/health", auth=AUTH).json()
+    assert h["books"]["champion"]["malformed"] == 2
+    assert h["books"]["champion"]["rows"] == 1
+
+
 def test_no_predlab_source_degrades(tmp_path, monkeypatch):
     c = _client(tmp_path, monkeypatch, None)
     r = c.get("/api/predlab/performance", auth=AUTH)

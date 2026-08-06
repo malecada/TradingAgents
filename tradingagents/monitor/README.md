@@ -31,15 +31,15 @@ TA_MONITOR_PASSWORD=somepw \
 
 ### Predlab-first tab set
 
-- **Performance** — equity curve reconstruction from realized book returns,
-  Sharpe, drawdown, rolling Sharpe, uPnL cards. Champion backtest anchor shown
-  alongside live performance. Multi-strategy comparison panels available when
-  additional books are loaded.
+- **Performance** — per-book cards (cumulative return, Sharpe, max drawdown,
+  VT scale with a warming-up state, avg turnover, cum est. cost) for the
+  champion and vt10 books, a dual-book equity/drawdown/rolling-Sharpe chart
+  with range pills (7d/30d/90d/all), frozen dev reference cards (overlaid SR,
+  overlaid max DD, raw SR, DSR), and backtest yearly tables.
 
-- **Book** — weighted portfolio composition (long/short allocations), position
-  entry/exit signals, realized returns per position. Displays book-level
-  metadata (universe size, membership hash, scale), position history, and
-  factor contribution to total realized return.
+- **Book** — asof/universe/breadth/scale/turnover/cost cards for the selected
+  book, membership hash plus an entered/exited delta vs the previous row, and
+  Long/Short weight tables (symbol, weight).
 
 - **Gate** — sealed one-shot evaluation tracker (informational only). Displays
   window start date (2026-07-02), earliest evaluation date (2027-01-02), days
@@ -48,9 +48,11 @@ TA_MONITOR_PASSWORD=somepw \
   The official evaluation stays sealed and uses the backtest harness on the
   forward window.
 
-- **Ops** — cycle timeline, pipeline-step timings, recent errors, data freshness.
-  Displays book-level metadata changes, last update timestamp, and system health
-  (data staleness tracked via written_utc; threshold 36 hours).
+- **Ops** — per-journal freshness: an OK/STALE badge (36-hour threshold on
+  `written_utc`), the last row's `written_utc`, row and malformed-line counts,
+  a gaps table (known scheduler-off dates vs unexplained), and a
+  backup-branch heartbeat note. (Cycle timeline, pipeline-step timings, and
+  recent errors are the legacy Health sub-tab, not this Ops tab.)
 
 - **Legacy** — read-only archive of decommissioned V5 live-bot journals (quant +
   hybrid). Includes Performance (equity, Sharpe, drawdown), Positions (open
@@ -65,7 +67,7 @@ Research books are organized under `PREDLAB_DATA_DIR/predlab/` as:
 ```
 predlab-data/
 ├── predlab/
-│   ├── champion_backtest.json       # backtest metadata for anchor Sharpe
+│   ├── champion_backtest.json       # backtest yearly return streams (tables)
 │   ├── gates.json                   # gate thresholds and sealed one-shot status
 │   └── s1_paper/
 │       ├── journal_champion.jsonl   # champion (Phase-O frozen) weights-and-returns
@@ -92,17 +94,19 @@ Each `.jsonl` file in `s1_paper/` contains one JSON object per line (one per day
 - `breadth` (int | null, optional) — champion rows only; number of unique
   securities held
 
-**Equity reconstruction**: equity = starting_capital × product(1 + realized_book_ret)
-  — computed after warm-up of 21 realized returns for volatility target scaling
-  to stabilize the equity curve.
+**Equity reconstruction**: equity = starting_capital × product(1 + realized_book_ret),
+  compounded from all realized returns immediately — the 21-return warm-up
+  gates only the vol-target scale display card, not the equity computation.
 
 ### Reference files
 
-- `champion_backtest.json`: backtest Sharpe and yearly return streams displayed
-  as anchor reference on the Performance tab.
-- `gates.json`: sealed one-shot configuration; contains `predlab_opt.forward_one_shot`
-  (gate thresholds) and `predlab_opt.final_champion` (reference metrics for threshold
-  derivation). Shown on the Gate tab.
+- `champion_backtest.json`: supplies only the yearly return tables (SR, return,
+  max DD, days per year) shown on the Performance tab.
+- `gates.json`: sealed one-shot configuration; `predlab_opt.forward_one_shot`
+  holds gate thresholds (Gate tab) and `predlab_opt.final_champion` holds the
+  dev reference metrics (overlaid SR, overlaid max DD, raw SR, DSR) that feed
+  both the Performance tab's frozen dev reference cards and the Gate tab's
+  Sharpe threshold derivation.
 
 ## API Endpoints
 
@@ -111,8 +115,8 @@ Each `.jsonl` file in `s1_paper/` contains one JSON object per line (one per day
 - `GET /api/predlab/performance` — equity curve, Sharpe, drawdown, rolling
   Sharpe for champion and vt10 books; reference metrics and backtest yearly
   returns
-- `GET /api/predlab/book?book=champion|vt10` — latest-row weighted composition,
-  position history, and realized returns
+- `GET /api/predlab/book?book=champion|vt10` — latest row's book composition
+  (longs/shorts/weights, scale, entered/exited delta)
 - `GET /api/predlab/gate` — sealed one-shot tracker (window dates, days elapsed,
   threshold, pass/fail criteria, running proxy)
 - `GET /api/predlab/health` — data freshness, malformed-row counts, known data
@@ -139,10 +143,15 @@ incident). These dates appear in the health payload with `known: true`.
 
 ### Legacy pane
 
-If `QUANT_DATA_DIR` and `HYBRID_DATA_DIR` are unset, the Legacy tab is hidden.
-The legacy `/api/performance`, `/api/positions`, `/api/health`, and `/api/compare`
-endpoints degrade per-strategy; a missing or unreadable journal for one strategy
-yields `null` for that strategy only.
+The Legacy tab is always shown; it is not gated on `QUANT_DATA_DIR` or
+`HYBRID_DATA_DIR` being set. `QUANT_DATA_DIR` defaults to `$DATA_DIR` →
+`data` when unset, so a quant source is always constructed. The legacy
+`/api/performance`, `/api/positions`, and `/api/health` endpoints degrade
+per-strategy; a missing or unreadable journal for one strategy yields `null`
+for that strategy only. `/api/compare` (and the `compare` block nested in
+`/api/performance`) is different: it returns `{"error": "..."}` — not a
+per-strategy `null` — when the hybrid strategy isn't configured or the
+comparison itself fails.
 
 ## Environment
 
@@ -165,8 +174,9 @@ yields `null` for that strategy only.
 ## Authentication
 
 Basic HTTP authentication (user `admin`, password from `TA_MONITOR_PASSWORD`) is
-required on all endpoints. The password is checked once per session; requests
-without valid credentials receive a 401 Unauthorized response.
+required on all endpoints. Credentials are checked by middleware on every
+request (including static SPA assets); requests without valid credentials
+receive a 401 Unauthorized response.
 
 ## UI Removal Notes
 
