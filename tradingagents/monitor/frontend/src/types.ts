@@ -129,3 +129,67 @@ export interface AdhocRunRow {
 }
 
 export interface AdhocResult { run: AdhocRunRow; outputs: AdhocOutput[]; }
+
+// ── predlab paper-book (JSONL journals) ─────────────────────────────────
+
+export type PredlabBookName = "champion" | "vt10";
+
+export interface PredlabCards {
+  cum_return: number; sharpe: number; max_drawdown: number;
+  scale: number | null;
+  warmup: { n: number; required: number };
+  avg_turnover: number | null; cum_cost: number | null;
+  last_asof: string; n_days: number;
+}
+
+export interface PredlabBookPerf {
+  equity: Point[]; drawdown: Point[]; rolling_sharpe: Point[];
+  cards: PredlabCards;
+}
+
+export interface PredlabYearlyRow {
+  sr: number; ret: number; maxdd: number; n_days: number;
+}
+
+export interface PredlabPerformanceResp {
+  books: Record<PredlabBookName, PredlabBookPerf | null>;
+  reference: {
+    ovl_sr_full: number; ovl_maxdd: number;
+    raw_sr_full?: number; dsr_selection_pool?: number;
+  } | null;
+  backtest_yearly:
+    Record<PredlabBookName, Record<string, PredlabYearlyRow> | null> | null;
+}
+
+export interface PredlabWeight { symbol: string; weight: number }
+
+export interface PredlabBookDetail {
+  asof: string; n_universe: number | null; breadth: number | null;
+  membership_hash: string | null; scale: number | null;
+  est_turnover: number | null; est_cost: number | null;
+  longs: PredlabWeight[]; shorts: PredlabWeight[];
+  delta: { entered: number; exited: number } | null;
+}
+
+export interface PredlabBookResp {
+  book: PredlabBookName; detail: PredlabBookDetail | null;
+}
+
+export interface PredlabGateResp {
+  window_start: string; earliest_eval: string;
+  days_elapsed: number; days_remaining: number;
+  threshold_sr: number; criteria: string[];
+  running: { sr: number | null; n_returns: number; note: string };
+  informational: true;
+}
+
+export interface PredlabBookHealth {
+  last_asof: string; written_utc: string | null; stale: boolean;
+  rows: number; malformed: number;
+  gaps: { date: string; known: boolean }[];
+}
+
+export interface PredlabHealthResp {
+  books: Record<PredlabBookName, PredlabBookHealth | null>;
+  heartbeat_note: string;
+}

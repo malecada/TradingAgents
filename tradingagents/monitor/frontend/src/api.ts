@@ -2,6 +2,7 @@ import type {
   CycleDetail, CycleRow, HealthResp, PerformanceResp, PositionsResp,
   Strategy, TradesResp,
   AdhocMeta, AdhocRunBody, AdhocStatus, AdhocResult, AdhocRunRow,
+  PredlabBookName, PredlabPerformanceResp, PredlabBookResp, PredlabGateResp, PredlabHealthResp,
 } from "./types";
 
 /** Thin fetch wrapper. Browser basic-auth (401 challenge) covers credentials. */
@@ -36,4 +37,10 @@ export const api = {
   adhocResult: (id: string) =>
     get<AdhocResult>(`/api/adhoc/result/${encodeURIComponent(id)}`),
   adhocRuns: () => get<{ runs: AdhocRunRow[] }>("/api/adhoc/runs"),
+  predlabPerformance: () =>
+    get<PredlabPerformanceResp>("/api/predlab/performance"),
+  predlabBook: (b: PredlabBookName) =>
+    get<PredlabBookResp>(`/api/predlab/book?book=${b}`),
+  predlabGate: () => get<PredlabGateResp>("/api/predlab/gate"),
+  predlabHealth: () => get<PredlabHealthResp>("/api/predlab/health"),
 };
