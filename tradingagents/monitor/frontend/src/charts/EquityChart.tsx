@@ -10,6 +10,7 @@ export interface EquityChartProps {
   quantDd: Point[]; hybridDd: Point[];             // already sliced (fractions)
   quantRs: Point[]; hybridRs: Point[];             // rolling sharpe (may be [])
   anchors: { quant: number; hybrid: number | null };
+  labels?: { a: string; b: string };
 }
 
 const toLw = (pts: Point[]) =>
@@ -21,6 +22,7 @@ export function EquityChart(props: EquityChartProps) {
 
   useEffect(() => {
     if (!ref.current) return;
+    const labels = props.labels ?? { a: "quant", b: "hybrid" };
     const showRs = props.quantRs.length > 0 || props.hybridRs.length > 0;
     const chart = createChart(ref.current, {
       height: showRs ? 520 : 420,
@@ -35,26 +37,26 @@ export function EquityChart(props: EquityChartProps) {
     });
     chartRef.current = chart;
 
-    chart.addSeries(LineSeries, { color: "#3fb950", lineWidth: 2, title: "quant" }, 0)
+    chart.addSeries(LineSeries, { color: "#3fb950", lineWidth: 2, title: labels.a }, 0)
       .setData(toLw(props.quantEquity));
     if (props.hybridEquity.length)
-      chart.addSeries(LineSeries, { color: "#bc8cff", lineWidth: 2, title: "hybrid" }, 0)
+      chart.addSeries(LineSeries, { color: "#bc8cff", lineWidth: 2, title: labels.b }, 0)
         .setData(toLw(props.hybridEquity));
 
     const ddOpts = { lineWidth: 1 as const, priceFormat: { type: "percent" as const } };
     chart.addSeries(AreaSeries, {
       ...ddOpts, lineColor: "#3fb950", topColor: "rgba(63,185,80,0)",
-      bottomColor: "rgba(63,185,80,0.25)", title: "quant DD",
+      bottomColor: "rgba(63,185,80,0.25)", title: `${labels.a} DD`,
     }, 1).setData(toLw(props.quantDd.map((p) => ({ ...p, value: p.value * 100 }))));
     if (props.hybridDd.length)
       chart.addSeries(AreaSeries, {
         ...ddOpts, lineColor: "#bc8cff", topColor: "rgba(188,140,255,0)",
-        bottomColor: "rgba(188,140,255,0.25)", title: "hybrid DD",
+        bottomColor: "rgba(188,140,255,0.25)", title: `${labels.b} DD`,
       }, 1).setData(toLw(props.hybridDd.map((p) => ({ ...p, value: p.value * 100 }))));
 
     if (showRs) {
       const rsQuant = chart.addSeries(LineSeries,
-        { color: "#3fb950", lineWidth: 1, title: "quant rSR" }, 2);
+        { color: "#3fb950", lineWidth: 1, title: `${labels.a} rSR` }, 2);
       rsQuant.setData(toLw(props.quantRs));
       rsQuant.createPriceLine({
         price: props.anchors.quant, color: "#8b949e",
@@ -62,7 +64,7 @@ export function EquityChart(props: EquityChartProps) {
       });
       if (props.hybridRs.length) {
         const rsH = chart.addSeries(LineSeries,
-          { color: "#bc8cff", lineWidth: 1, title: "hybrid rSR" }, 2);
+          { color: "#bc8cff", lineWidth: 1, title: `${labels.b} rSR` }, 2);
         rsH.setData(toLw(props.hybridRs));
         if (props.anchors.hybrid !== null)
           rsH.createPriceLine({
@@ -77,7 +79,7 @@ export function EquityChart(props: EquityChartProps) {
     onResize();
     window.addEventListener("resize", onResize);
     return () => { window.removeEventListener("resize", onResize); chart.remove(); };
-  }, [props.quantEquity, props.hybridEquity, props.quantDd, props.hybridDd, props.quantRs, props.hybridRs, props.anchors]);
+  }, [props.quantEquity, props.hybridEquity, props.quantDd, props.hybridDd, props.quantRs, props.hybridRs, props.anchors, props.labels]);
 
   return <div ref={ref} />;
 }
