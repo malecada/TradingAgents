@@ -1426,5 +1426,24 @@
     "note": "separate claim from predlab_pp2 vt10 confirmation (old S1 book) sharing the calendar window"
    }
   }
+ },
+ "predlab_bybit_r1": {
+  "frozen_utc": "2026-08-06",
+  "hypothesis": "Phase-O final champion transfers to Bybit verbatim",
+  "config": "ewma_20 eq-quintile top-200 monthly-PIT daily + vt15_naive20_b100; 5bp + realized funding; NO re-tuning",
+  "window": [
+   "2021-01-01",
+   "2026-07-01"
+  ],
+  "n_trials": 1,
+  "feasibility": ">= 1000 trading days with breadth >= 100, else INFEASIBLE (trial unspent)",
+  "criteria": {
+   "ovl_sr_floor": 0.946,
+   "same_sign": true,
+   "placebo_shift_p_lt": 0.1,
+   "placebo_draws": 200
+  },
+  "stop_rule": "one run; no post-hoc universe/window edits; single-name checks disclosed, never acted on",
+  "survivorship_caveat": "Bybit enumerates live contracts only; delisted recovered via Binance-name probes (partial); Bybit-only delistings missing"
  }
 }
