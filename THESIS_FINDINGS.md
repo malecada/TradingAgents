@@ -5324,3 +5324,113 @@ universes again would not.
   `scripts/liq_fade_r1_forensics.py` (both committed; six sections
   implemented, six named and skipped with reasons per the anti-silent-omission
   rule)
+
+## Section 51: Lead #7 — Cross-Sectional Value and Token-Unlock Burden (value_xs_t1 / unlock_xs_t1) — Both Halves NEGATIVE, Lead Closed (2026-08-08)
+
+Lead #7 asked whether the perp cross-section misprices slow-moving
+fundamental supply/valuation information. It was registered as twin
+experiments in `data/rebuild/gates.json` on 2026-07-30, before any data was
+touched: `value_xs_t1` (market cap per unit of network activity, CoinMetrics
+community fundamentals) and `unlock_xs_t1` (scheduled token-unlock burden,
+DefiLlama emissions). Shared frozen frame: dev 2021-01-01→2025-03-31,
+holdout 2025-04-01→2026-07-01 sealed, weekly Monday dollar-neutral L/S,
+10 bps/side, rf 4.5% on full capital, top-150 liquidity floor on the
+799-symbol perp store, dev bar net SR ≥ 1.0 AND ΔSR > 0 vs both controls AND
+dual-family placebo worse-p ≤ 0.05 AND DSR ≥ 0.9 at the registered n_trials.
+Both halves reuse the frozen §46 engine (`run_ls_portfolio`) and the §46/§49
+placebo/DSR machinery verbatim.
+
+### 51.1 value_xs_t1 (ran 2026-07-30): dev-gate NEGATIVE 0/4
+
+Four configs (nvt_proxy / metcalfe_proxy × decile / tercile), four ledger
+rows at `1359bde`. Best cell nvt_proxy/tercile: net SR **+0.417**, placebo
+worse-p .014, DSR 0.431, ΔC1 +0.04, ΔC2 +0.32. Three of four cells cleared
+the placebo and the size control; none came within half of the SR ≥ 1.0
+floor and none cleared DSR ≥ 0.9. A real but tiny value tilt that does not
+survive costs at investable scale. Recorded here for completeness; the probe
+hardening that experiment forced (offline vintage-stamp P0, STOP contract
+wired through main()) is inherited by the unlock half below.
+
+### 51.2 unlock_xs_t1 (ran 2026-08-08): NEGATIVE-at-probe, grid never reached
+
+Hypothesis: coins facing large near-term scheduled unlocks underperform —
+`unlock_burden(t,N) = tokens_unlocking(t, t+N] / circulating_supply(t)`,
+long low-burden / short high-burden, frozen 2-cell grid (lookahead 14/30d ×
+decile). Producing code committed **before** any trial could log (`2cec784`,
+tz fix `0a21033`); the working tree was clean of unrelated edits.
+
+**Data.** DefiLlama emissions snapshotted in full (370 protocol files,
+per-file sha256 + fetch-time vintage stamp, `data/xsect/emissions/`).
+195 protocols map to perp symbols (registered n_candidates was 129; the
+protocol list and CoinGecko mapping grew between registration and
+execution — the frozen recipe is the intersection itself, the delta is
+disclosed in probes.json). Two calibration decisions were made against
+supply data only, before any return was computed, and are documented in
+`tradingagents/xsect/unlock_xs.py`: (a) linear events carry tokens-per-WEEK
+rates (validated ±2% against DefiLlama's own `documentedData` curve on
+aptos; the per-`rateDurationDays` reading is off by ~20%); (b) reconstructed
+circulating supply sums ALL allocation categories (all-category tracks
+CoinGecko circulating — aptos 1.005, apecoin 1.000 — while excluding
+`noncirculating` undershoots badly, apecoin 0.380). PIT replay: only events
+with timestamp ≤ t enter supply(t); the forward window uses the scheduled,
+ex-ante-public events in (t, t+N]. The module carries 24 unit tests pinning
+the forward-window boundaries, per-category rate isolation, pre-TGE NaN
+masking, and the slug-map injectivity guard; an independent review pass
+verified the PIT discipline, holdout seal, and grid integrity (verdict SHIP,
+three minor findings patched before the run).
+
+**P0 — silent restatement: PASS.** The registered hazard was DefiLlama
+rewriting schedules without timestamped events, which would make the replay
+a fiction. Independent references: CoinMetrics community `SplyCur` where
+covered (22 names, full history), CoinGecko circulating (mcap/price)
+otherwise (171 names, trailing 365 days — the public tier's hard cap,
+disclosed). 108 names had ≥180 overlap days. Median divergence growth
+(median |log recon/ref| last-90d minus first-90d) was **−0.0003** — zero
+drift toward the present — with 8/108 names flagged (7.4%, threshold 25%).
+The reconstruction is honest: whatever the market knew, the snapshot
+schedule replays it consistently with independent supply series.
+
+**P1 — breadth: PASS.** Universe breadth by year 31 / 39.5 / 48.5 / 65.5 /
+72 (2021→2025), median 45 vs floor 20; signal-valid breadth (universe ∩
+non-NaN burden) median 42, minimum 23. Well-powered throughout; the
+registered dev-truncation contingency was not triggered.
+
+**P2 — cliff event study: FAIL.** 556 cliff unlocks releasing ≥1% of
+circulating supply inside the dev window (29/73/136/256/62 by year
+2021→2025). Registered requirement: mean forward return t+1..t+14 carries
+the negative sign. Measured mean: **+0.71%** (t = 0.61). STOP —
+`probes.json` written, exit 2, the grid never ran, zero ledger rows for
+this experiment, the registered n_trials=2 never exercised.
+
+### 51.3 Forensics on the P2 failure (disclosure, not re-litigation)
+
+The distribution is coherent and economically informative: the **median**
+event return is **−3.05%**, 55.9% of events are negative, the 5%-winsorized
+mean is −0.66% and the 5%-trimmed mean is −1.08%. The positive mean is
+manufactured by a fat right tail of 2023-24 airdrop-era squeezes — TIA
+(+84% through an unlock), BIGTIME (7 events, mean +38%), SOL/DYM/XAI
+(+22-26%); excluding the top three symbols alone flips the mean to −0.12%.
+Large cliffs (≥5% of supply, n=174) mean −0.10% with median −5.41%.
+Per-year means alternate sign (+12.4% / −4.8% / +9.5% / −0.6% / −12.0%).
+Reading: the modal unlock is followed by mild underperformance, exactly as
+the lockup-expiry literature suggests, but the harvestable mean edge is
+erased by rare violent rallies in precisely the names a short-burden decile
+would be short — the tail risk is not incidental to the strategy, it *is*
+the strategy's failure mode. Under the registered stop rule ("no post-hoc
+exclusions") the mean-sign verdict stands; the trimmed-mean texture is
+disclosed here, unread by any gate.
+
+### 51.4 Verdict and disposition
+
+**Lead #7 is closed, both halves NEGATIVE** — the twelfth and thirteenth
+consecutive pre-registered failures. The holdout stays sealed and unspent
+for both experiments; revival of either requires a new registered cycle on
+fresh data. `gates.json` was not modified at any point during execution.
+Reusable infrastructure left behind: the vintage-stamped DefiLlama
+emissions snapshot pipeline (`scripts/fetch_emissions.py`), the PIT
+unlock-schedule replay module (`tradingagents/xsect/unlock_xs.py`, 24
+tests), the independent supply-reference store
+(`data/xsect/unlock_p0_refs/`, 193 names), and the 195-name
+emissions→perp mapping. Artifacts: `data/rebuild/unlock_xs/probes.json`,
+`data/xsect/emissions_vintage.json`, `data/xsect/unlock_p0_refs_vintage.json`,
+`data/xsect/unlock_xs_universe.json`, `data/xsect/unlock_xs_slug_map.json`.
