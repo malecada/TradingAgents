@@ -23,6 +23,12 @@ from tradingagents.xsect.value_xs import (  # noqa: E402
     control_signal, load_fundamentals, membership_mask, simple_returns,
     value_ratio, zscore_signal,
 )
+from tradingagents.rebuild.ledger import DEFAULT_LEDGER, log_trial  # noqa: E402
+from tradingagents.strategies.v3.backtest.dsr import (  # noqa: E402
+    deflated_sharpe_ratio, expected_max_sharpe, variance_of_sr,
+)
+from tradingagents.xsect.carry_xs import RF_DAILY, run_ls_portfolio  # noqa: E402
+from tradingagents.xsect.portfolio import maxdd, rank_placebo_pvalue  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 FUND_DIR = ROOT / "data" / "xsect" / "fundamentals"
@@ -337,6 +343,175 @@ def main() -> None:
     print(f"VERDICT: {verdict}")
     if verdict != "CONTINUE":
         sys.exit(2)
+    run_grid(days, klines, fund, universe, symbols)
+
+
+# ---------------------------------------------------------------------------
+# Grid half (Task 7): 4 configs, controls, dual-family placebo, DSR, ledger.
+# ---------------------------------------------------------------------------
+
+N_PLACEBO = 500
+GRID_GATE = {"net_sr_min": 1.0, "placebo_p_max": 0.05, "dsr_min": 0.9,
+             "delta_sr_vs_c1_min": 0.0, "delta_sr_vs_c2_min": 0.0}
+
+
+def run_config(S: pd.DataFrame, R: pd.DataFrame, valid: pd.DataFrame,
+               leg_frac: float, cost_bps: float = 10.0) -> pd.Series:
+    """Daily net portfolio returns for one signal matrix.
+
+    P&L runs through the frozen section-46 engine with a zero funding leg, so
+    cost, lag and rf semantics are byte-identical to carry_xs_t1.
+    """
+    rb = weekly_rebalance_dates(str(S.index[0])[:10], str(S.index[-1])[:10])
+    W = ls_weights(S.index, S, valid, rb, leg_frac)
+    F = zero_funding(S.index, S.columns)
+    return run_ls_portfolio(W, R.reindex_like(W), F, cost_bps=cost_bps,
+                            rf_daily=RF_DAILY)
+
+
+def circular_shift_columns(S: pd.DataFrame, rng) -> pd.DataFrame:
+    """Placebo family A: independent circular shift per symbol."""
+    out = S.copy()
+    n = len(S)
+    for c in S.columns:
+        k = int(rng.integers(1, n)) if n > 1 else 0
+        out[c] = np.roll(S[c].to_numpy(), k)
+    return out
+
+
+def rank_shuffle_columns(S: pd.DataFrame, rng) -> pd.DataFrame:
+    """Placebo family B: permute each row's values across symbols."""
+    v = S.to_numpy(copy=True)
+    for i in range(v.shape[0]):
+        row = v[i]
+        idx = np.arange(row.shape[0])
+        rng.shuffle(idx)
+        v[i] = row[idx]
+    return pd.DataFrame(v, index=S.index, columns=S.columns)
+
+
+def dsr_or_nan(returns: pd.Series, n_trials: int) -> float:
+    """DSR in per-bar units, matching liq_fade_dev.py (THESIS section 49).
+
+    variance_of_sr works in per-bar units, so the observed SR must be per-bar
+    too. Passing the sqrt(365)-annualized SR mixes units and saturates Phi()
+    to 1.0 for any positive SR, making the gate inoperative (2026-07-30 fix:
+    the reported net_sr stays sqrt(365)-annualized per the registration --
+    only the DSR internals are per-bar).
+    """
+    arr = pd.Series(returns).dropna().to_numpy()
+    if len(arr) < 2:
+        return float("nan")
+    sd = float(arr.std(ddof=1))
+    if not np.isfinite(sd) or sd == 0.0:
+        return float("nan")
+    try:
+        var_sr = variance_of_sr(arr)
+        se = float(np.sqrt(var_sr))
+        if se <= 0.0:
+            return float("nan")
+        sr_perbar = float(arr.mean() / sd)
+        return float(deflated_sharpe_ratio(sr_perbar, expected_max_sharpe(n_trials, var_sr), se))
+    except ValueError:
+        return float("nan")
+
+
+def gate_config(net_sr: float, placebo_p_worse: float, dsr: float,
+                delta_c1: float, delta_c2: float) -> dict:
+    checks = {
+        "net_sr": net_sr >= GRID_GATE["net_sr_min"],
+        "placebo": placebo_p_worse <= GRID_GATE["placebo_p_max"],
+        "dsr": bool(dsr >= GRID_GATE["dsr_min"]),   # NaN >= x is False
+        "delta_c1": delta_c1 > GRID_GATE["delta_sr_vs_c1_min"],
+        "delta_c2": delta_c2 > GRID_GATE["delta_sr_vs_c2_min"],
+    }
+    return {"checks": checks, "pass": all(checks.values())}
+
+
+def unique_config_hashes(ledger_path: Path = DEFAULT_LEDGER) -> int:
+    """Distinct config evaluations in the ledger — the DSR denominator source."""
+    seen = set()
+    if ledger_path.exists():
+        for line in ledger_path.read_text().splitlines():
+            if line.strip():
+                seen.add(json.loads(line)["config_hash"])
+    return len(seen)
+
+
+def run_grid(days, klines, fund, universe, symbols, n_placebo: int = N_PLACEBO,
+             log: bool = True) -> dict:
+    """Frozen 4-config grid.
+
+    ``log=False`` suppresses ledger writes for smoke runs. A reduced-placebo
+    smoke shares config_hash with the real run, so it would not inflate the
+    DSR denominator — but it would put rows carrying 5-draw placebo p-values
+    into the ledger that every DSR count in the thesis is audited against.
+    """
+    dev = days[(days >= DEV[0]) & (days <= DEV[1])]
+    R = simple_returns(klines, days, symbols).loc[dev]
+    M = membership_mask(days, symbols, universe).loc[dev]
+
+    controls = {}
+    for kind in ("vol", "reversal"):
+        C = control_signal(klines, days, symbols, kind).loc[dev]
+        controls[kind] = sharpe_365(run_config(C, R, M & C.notna(),
+                                               LEG_FRAC["decile"]))
+
+    ledger_before = unique_config_hashes()
+    rng = np.random.default_rng(20260730)
+    results = []
+    for metric, breadth in GRID:
+        S = zscore_signal(value_ratio(fund, metric, days), REGISTERED_LAG).loc[dev]
+        valid = M & S.notna()
+        leg = LEG_FRAC[breadth]
+        port = run_config(S, R, valid, leg)
+        net_sr = sharpe_365(port)
+
+        srs_a = [sharpe_365(run_config(circular_shift_columns(S, rng), R, valid, leg))
+                 for _ in range(n_placebo)]
+        srs_b = [sharpe_365(run_config(rank_shuffle_columns(S, rng), R, valid, leg))
+                 for _ in range(n_placebo)]
+        p_a = rank_placebo_pvalue(net_sr, srs_a)
+        p_b = rank_placebo_pvalue(net_sr, srs_b)
+        p_worse = max(p_a, p_b)
+
+        dsr_own = dsr_or_nan(port, n_trials=len(GRID))
+        dsr_ledger = dsr_or_nan(port, n_trials=ledger_before + len(GRID))
+        d_c1 = net_sr - controls["vol"]
+        d_c2 = net_sr - controls["reversal"]
+        gate = gate_config(net_sr, p_worse, dsr_own, d_c1, d_c2)
+
+        cfg = {"metric": metric, "breadth": breadth, "leg_frac": leg,
+               "lag_days": REGISTERED_LAG, "cost_bps": 10.0,
+               "rebalance": "weekly_monday", "universe": "value_xs_universe.json",
+               "n_symbols": int(len(symbols))}
+        metrics = {"net_sr": net_sr, "maxdd": float(maxdd(port)),
+                   "n_bars": int(len(port)),
+                   "placebo_p_shiftfam": p_a, "placebo_p_randfam": p_b,
+                   "placebo_p_worse": p_worse,
+                   "dsr_own_n": dsr_own, "dsr_own_n_trials": len(GRID),
+                   "dsr_ledger_n": dsr_ledger,
+                   "dsr_ledger_n_trials": ledger_before + len(GRID),
+                   "sr_control_vol": controls["vol"],
+                   "sr_control_reversal": controls["reversal"],
+                   "delta_sr_vs_c1": d_c1, "delta_sr_vs_c2": d_c2,
+                   **{f"gate_{k}": v for k, v in gate["checks"].items()},
+                   "gate_pass": gate["pass"]}
+        if log:
+            log_trial("value_xs_t1", cfg, DEV, metrics)
+        results.append({"config": cfg, "metrics": metrics})
+        print(f"{metric}/{breadth}: SR {net_sr:+.3f} p {p_worse:.4f} "
+              f"DSR {dsr_own:.3f} dC1 {d_c1:+.3f} dC2 {d_c2:+.3f} "
+              f"{'PASS' if gate['pass'] else 'FAIL'}")
+
+    passing = [r for r in results if r["metrics"]["gate_pass"]]
+    out = {"experiment": "value_xs_t1", "controls": controls,
+           "ledger_unique_hashes_before": ledger_before,
+           "results": results, "n_pass": len(passing),
+           "verdict": "GO-at-dev" if passing else "NEGATIVE"}
+    (OUT_DIR / "grid.json").write_text(json.dumps(out, indent=1, default=str))
+    print(f"VERDICT: {out['verdict']} ({len(passing)}/{len(GRID)})")
+    return out
 
 
 if __name__ == "__main__":
