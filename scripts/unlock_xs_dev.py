@@ -127,7 +127,8 @@ def probe_p0_restatement(active_map: dict) -> dict:
                         "must exist before P0 can run (offline contract)"}
     ev = json.loads(EMISSIONS_VINTAGE.read_text())
     refs_stamp = json.loads(REFS_STAMP.read_text())
-    frontier = pd.Timestamp(refs_stamp["fetched_utc"]).normalize()
+    frontier = (pd.Timestamp(refs_stamp["fetched_utc"]).tz_convert("UTC")
+                .normalize().tz_localize(None))
     p0_days = pd.date_range(WARMUP_START, frontier, freq="D", tz="UTC")
     supply_full = supply_frame(EMISSIONS_DIR, active_map, p0_days)
 
