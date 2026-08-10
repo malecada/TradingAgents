@@ -33,6 +33,8 @@ sys.path.insert(0, str(HERE))
 from llm_veto_engine import DEV_D  # noqa: E402
 
 ALPACA_ROOT = HERE.parent.parent / "TradingAgents" / "data" / "sentiment" / "alpaca"
+GDELT_ROOT = HERE.parent.parent / "TradingAgents" / "data" / "sentiment" / "gdelt"
+CORPUS_ROOTS = [ALPACA_ROOT, GDELT_ROOT]
 OUTDIR = Path("data/predlab/llm_veto")
 CACHE_DB = OUTDIR / "p2_call_cache.json"
 OUT = OUTDIR / "p2_classifier.json"
@@ -93,8 +95,9 @@ def anonymize(text: str) -> str:
 
 def load_headlines() -> pd.DataFrame:
     frames = []
-    for f in sorted(ALPACA_ROOT.rglob("*.parquet")):
-        frames.append(pd.read_parquet(f, columns=["event_ts", "headline"]))
+    for root in CORPUS_ROOTS:
+        for f in sorted(root.rglob("*.parquet")):
+            frames.append(pd.read_parquet(f, columns=["event_ts", "headline"]))
     df = pd.concat(frames, ignore_index=True)
     df["event_ts"] = pd.to_datetime(df["event_ts"], utc=True)
     df = df.dropna(subset=["headline"]).sort_values("event_ts")

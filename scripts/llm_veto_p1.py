@@ -27,6 +27,8 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 ALPACA_ROOT = HERE.parent.parent / "TradingAgents" / "data" / "sentiment" / "alpaca"
+GDELT_ROOT = HERE.parent.parent / "TradingAgents" / "data" / "sentiment" / "gdelt"
+CORPUS_ROOTS = [ALPACA_ROOT, GDELT_ROOT]
 OUTDIR = Path("data/predlab/llm_veto")
 OUT = OUTDIR / "p1_news_recall.json"
 CACHE = OUTDIR / "p1_screen_cache.json"
@@ -56,10 +58,11 @@ def headlines_for(day: pd.Timestamp) -> list[str]:
     months = {(day.year, day.month), ((day - pd.Timedelta(days=1)).year,
                                       (day - pd.Timedelta(days=1)).month)}
     frames = []
-    for y, m in months:
-        p = ALPACA_ROOT / str(y) / f"{m:02d}.parquet"
-        if p.exists():
-            frames.append(pd.read_parquet(p, columns=["event_ts", "headline"]))
+    for root in CORPUS_ROOTS:
+        for y, m in months:
+            p = root / str(y) / f"{m:02d}.parquet"
+            if p.exists():
+                frames.append(pd.read_parquet(p, columns=["event_ts", "headline"]))
     if not frames:
         return []
     df = pd.concat(frames)
