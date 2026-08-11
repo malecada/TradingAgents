@@ -1,0 +1,42 @@
+{
+ "experiment": "llm_c2_veto_ovl",
+ "probe": "P1_forensics",
+ "method": "per-store 48h-window headline counts on each screened-NO day; threshold <10 heads = corpus hole; screen spot-check on 3 rich NO-days",
+ "miss_classification": {
+  "corpus_holes": {
+   "2021-10-25": "GDELT unfetched period (>=2021-10) and/or Alpaca weekend thinness",
+   "2021-10-30": "GDELT unfetched period (>=2021-10) and/or Alpaca weekend thinness",
+   "2021-11-10": "GDELT unfetched period (>=2021-10) and/or Alpaca weekend thinness",
+   "2021-11-24": "GDELT unfetched period (>=2021-10) and/or Alpaca weekend thinness",
+   "2023-01-08": "GDELT unfetched period (>=2021-10) and/or Alpaca weekend thinness",
+   "2023-03-12": "GDELT unfetched period (>=2021-10) and/or Alpaca weekend thinness",
+   "2025-02-02": "GDELT unfetched period (>=2021-10) and/or Alpaca weekend thinness"
+  },
+  "news_silent_rich_window": [
+   "2021-06-15",
+   "2022-10-29",
+   "2023-01-09",
+   "2023-01-14",
+   "2024-04-20",
+   "2024-07-06",
+   "2024-08-08",
+   "2024-09-17",
+   "2024-10-11",
+   "2024-11-06",
+   "2025-01-14",
+   "2025-01-15",
+   "2025-01-29",
+   "2025-02-03",
+   "2025-02-08",
+   "2025-03-24"
+  ]
+ },
+ "screen_spot_check": {
+  "2024-08-08": "correct NO (post-carry-unwind bounce headlines)",
+  "2023-01-14": "correct NO (alt-rally squeeze window)",
+  "2025-02-03": "borderline false NO (tariff-crash headlines present; screen conservative)"
+ },
+ "honest_denominator": "27/50 on as-built corpus; full-corpus counterfactual <= ~30/50 (holes: USDC-depeg + tariff-Sunday plausibly YES, 2021-10/11 squeeze days plausibly NO) \u2014 at/below floor either way",
+ "structural_finding": "16/50 oracle days (32%) are news-silent with rich (>=10-head) windows: the champion low-vol LS book's worst days are substantially short-leg squeeze / rally days, not crisis days. Book left tail != crisis tail; a news-veto channel cannot reach them regardless of classifier skill.",
+ "revival_condition": "new registered cycle with uniform full-window GDELT (or equivalent) corpus AND a design targeting crisis-conditional drawdown only (accepting squeeze-day tail as out of scope)"
+}

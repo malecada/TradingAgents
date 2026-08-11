@@ -3763,3 +3763,52 @@ the short leg's volatile small-caps are the binding constraint. Verdict: a
 research-scale strategy; comfortable at ≤$10M, marginal at $30M, dead near
 $100M under headline assumptions. Artifacts: data/predlab/capacity_study.json
 + .png; script predlab_capacity_study.py.
+
+## Section 62: LLM Charter C2 — Asymmetric News Veto on Champion Book: NEGATIVE at P1 (2026-08-11)
+
+First executed charter from the LLM integration proposal (2026-08-10, §6):
+a reduce-only exposure veto (m ∈ {0, 0.5}, ≤10 veto-days/year) on the
+Phase-O champion book, gated on drawdown reduction at SR non-inferiority.
+Registered pre-result as `llm_c2_veto_ovl` (charter:
+`docs/superpowers/specs/2026-08-10-llm-c2-veto-charter.md`); probe ladder
+with STOP-on-fail; dev window = design D (2021-01-01 → 2025-03-31) only.
+
+**P0 oracle ceiling — PASS.** Perfect-foresight veto of the 10 worst
+overlaid-book days per calendar year: MaxDD 17.63% → 8.81% (relative
+reduction 50.0%), CVaR5 +26.9%, ΔSR +1.69 (all with O4 transition costs
+charged; un-vetoed book reproduced the frozen champion metrics to 1e-9
+before the probe ran). The ceiling comfortably cleared its 20% floor —
+the design was not structurally pointless.
+
+**P1 news recall audit — STOP (54% < 60% floor).** Admissible corpus:
+Alpaca News PIT store with a declared backfill of the missing 2021-01 →
+2023-09 months (10.8K dev-window rows; Alpaca's crypto tagging is empty
+before ~2021-06) plus a GDELT DOC 2.0 backfill for 2021-01 → 2021-09
+(53.6K articles). Of the 50 oracle veto days, 27 had a same-day-or-earlier
+crisis-class headline (gpt-5.4-mini screen, hand spot-checked). Verdict
+STOP under the frozen floor; charter dead this cycle.
+
+**Forensics (honest denominators).** The 23 misses split 7 corpus holes
+(GDELT unfetched ≥2021-10; Alpaca weekend thinness — including the
+USDC-depeg Sunday 2023-03-12 with 5 headlines) vs 16 genuinely
+news-silent days with rich windows. Screen spot-check: two rich NO-days
+correct, one borderline false NO (2025-02-03 tariff crash). A
+full-corpus counterfactual lands at ≈30/50 — at the floor at best, so
+the corpus holes do not overturn the verdict.
+
+**Structural finding.** 32% of the champion book's worst days are
+news-silent squeeze/rally days (short-leg alt squeezes: Jan-2023,
+Mar-2024, Sep–Nov-2024, Jan-2025), not crisis days. The book's left tail
+is substantially not news-identifiable: even a perfect crisis classifier
+reaches only the crisis-day subset of the P0 ceiling. This closes the
+"LLM reads news for daily risk veto" cell for this book (proposal §9
+cross-kill) absent (a) a uniform full-window news corpus and (b) a
+redesign that pre-registers crisis-conditional drawdown — accepting
+squeeze-day tail risk as out of scope — in a fresh cycle.
+
+Artifacts: `data/predlab/llm_veto/{p0_oracle,p1_news_recall,p1_forensics}.json`,
+ledger rows `llm_c2_veto_ovl` (P0, P1), engine + probes
+`scripts/llm_veto_{engine,register,p0,p1,p2,p3}.py` (P2/P3 written,
+never run — ladder stopped at P1; zero P2/P3 LLM spend). Total charter
+LLM spend ≈ $0.05 (P1 screen only). Corpus assets retained: Alpaca
+2021-2023 backfill + GDELT 2021 store are reusable.
