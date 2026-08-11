@@ -1,0 +1,56 @@
+"""Register llm_c1_event_xs (typed-event extraction as XS features).
+
+Idempotent: refuses to overwrite an existing registration.
+Charter: docs/superpowers/specs/2026-08-11-llm-c1-event-xs-charter.md
+Parent proposal: master_thesis/LLM_INTEGRATION_PROPOSAL_2026-08.md §5.
+"""
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+GATES = Path("data/llm_event_xs/gates.json")
+
+ENTRY = {
+    "registered_utc": "2026-08-11",
+    "spec": "docs/superpowers/specs/2026-08-11-llm-c1-event-xs-charter.md",
+    "proposal": "master_thesis/LLM_INTEGRATION_PROPOSAL_2026-08.md §5 (charter C1)",
+    "hypothesis": "typed asset-linked event features from PIT news carry XS predictive content for 1-10d forward returns beyond price/volume/funding",
+    "event_classes": ["hack", "regulatory", "listing_delisting", "unlock_emission",
+                      "upgrade_partnership", "insolvency_halt"],
+    "extractor": {"model": "gpt-5.4-mini", "temp": 0, "batch_api": True,
+                  "spend_cap_usd": 60,
+                  "prefilter": "frozen keyword list (charter §3)",
+                  "two_stage": "headline+summary first; full content only on ambiguous=true (1 retry)",
+                  "cutoff_mitigations": ["evidence-span requirement",
+                                          "fact-based severity rubric",
+                                          "P0 anonymization spot-check >=0.8 agreement"]},
+    "corpus": "alpaca store (orig + C2 backfill + 797-sym wide backfill 2021-01..2025-03) + gdelt store (2021-01..2025-03); frozen before P0 sampling; fetch failures disclosed in manifest",
+    "windows": {"dev": ["2021-01-01", "2025-03-31"],
+                "holdout": ["2025-04-01", "2026-07-01 — SEALED, one-shot only if P3 passes; virgin for event-feature family (predlab book claims are a separate family, disclosed)"]},
+    "probes": {
+        "P0_extraction_quality": "300 stratified (200 prefilter-pos, 100 prefilter-neg); hybrid ground truth: claude-haiku-4-5 pre-label + blind human adjudication of all disagreements + 60-article agreement subsample; gates precision>=0.8, recall>=0.6, asset-link>=0.9, prefilter recall>=0.85, anon agreement>=0.8; ONE amendment round (fresh 100-article audit) then STOP",
+        "P1_breadth": ">=60 mapped symbols with >=1 dev-window event; >=8 events/month avg (all classes) in 2023+; STOP if unmet",
+        "P2_event_study": "per-class CAR(1-10d, t+1 open) vs vol-rank-matched controls, block bootstrap; signs: hack-, delist-, regulatory-, insolvency-, listing+, unlock-, upgrade+; PASS needs >=2 classes p<0.05 with registered sign",
+        "P3_portfolio": "incremental to vol-rank+momentum+size baseline in §43 XS harness, 799-sym store, 5bp+funding: net SR improvement >= +0.15, dual-family placebo p<0.05, DSR>0.5 at declared n, 3/4 sub-periods non-negative; standalone reported, cannot pass",
+    },
+    "multiplicity": "<=12 ledgered configs (P0 2, P2 7, P3 <=3); ledger data/llm_event_xs/trial_ledger.jsonl append-only",
+    "stop_rule": "any probe STOP = charter dead this cycle; no post-hoc class exclusions; no prompt changes after P0 pass; no re-sampling after audit results exist; holdout untouched until registered one-shot; extraction store retained regardless of verdict",
+}
+
+
+def main() -> int:
+    GATES.parent.mkdir(parents=True, exist_ok=True)
+    gates = json.loads(GATES.read_text()) if GATES.exists() else {}
+    if "llm_c1_event_xs" in gates:
+        print("llm_c1_event_xs already registered — refusing to overwrite")
+        return 1
+    gates["llm_c1_event_xs"] = ENTRY
+    GATES.write_text(json.dumps(gates, indent=1))
+    print("registered llm_c1_event_xs")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
