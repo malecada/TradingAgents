@@ -1,0 +1,123 @@
+{
+  "window": {
+    "start": "2021-11-07",
+    "end": "2025-03-31"
+  },
+  "pred_dir": "btc_eth_78f",
+  "coins": [
+    "bitcoin",
+    "ethereum"
+  ],
+  "configs": {
+    "3": {
+      "horizons": [
+        3
+      ],
+      "sharpe": 0.3763016494366421,
+      "total_return": 0.11059230642387652,
+      "max_drawdown": -0.11583722637911531,
+      "ann_vol": 0.06180319613199191,
+      "n_bars": 1238
+    },
+    "7": {
+      "horizons": [
+        7
+      ],
+      "sharpe": -0.46889627863540784,
+      "total_return": -0.08429895877561544,
+      "max_drawdown": -0.11437087173792204,
+      "ann_vol": 0.03690630272129867,
+      "n_bars": 1234
+    },
+    "14": {
+      "horizons": [
+        14
+      ],
+      "sharpe": -0.9593155013375663,
+      "total_return": -0.1329178653671621,
+      "max_drawdown": -0.15074802752779415,
+      "ann_vol": 0.030060720443788533,
+      "n_bars": 1227
+    },
+    "3_7": {
+      "horizons": [
+        3,
+        7
+      ],
+      "sharpe": -0.4117417266105475,
+      "total_return": -0.07864679447649947,
+      "max_drawdown": -0.14007023780929573,
+      "ann_vol": 0.0388002839258149,
+      "n_bars": 1234
+    },
+    "7_14": {
+      "horizons": [
+        7,
+        14
+      ],
+      "sharpe": -0.8975778324308247,
+      "total_return": -0.12324055920601429,
+      "max_drawdown": -0.1412697197443542,
+      "ann_vol": 0.029604595067765683,
+      "n_bars": 1227
+    },
+    "3_14": {
+      "horizons": [
+        3,
+        14
+      ],
+      "sharpe": -0.717693785744571,
+      "total_return": -0.12795278550381095,
+      "max_drawdown": -0.14588504661858825,
+      "ann_vol": 0.03816259391291822,
+      "n_bars": 1227
+    },
+    "3_7_14": {
+      "horizons": [
+        3,
+        7,
+        14
+      ],
+      "sharpe": -0.9380190529236112,
+      "total_return": -0.13414845374235573,
+      "max_drawdown": -0.15195331081433894,
+      "ann_vol": 0.0310226594878616,
+      "n_bars": 1227
+    }
+  },
+  "identity_check": {
+    "per_coin_max_abs_diff": {
+      "bitcoin": 0.0,
+      "ethereum": 0.0,
+      "portfolio_sr_prod": -0.8975778324308247,
+      "portfolio_sr_driver": -0.8975778324308247,
+      "portfolio_max_abs_diff": 0.0
+    },
+    "ok": true
+  },
+  "bootstrap_vs_incumbent": {
+    "sr_a": -0.8975778324308247,
+    "sr_b": 0.3862979321912184,
+    "delta_sr": 1.2838757646220431,
+    "p_pos": 0.9795,
+    "ci_low": 0.06382901119195661,
+    "ci_high": 2.5719996301399304
+  },
+  "gate": {
+    "delta_sharpe": 1.2838757646220431,
+    "p_pos": 0.9795,
+    "max_drawdown_worsening": -0.025432493365238895,
+    "rule": "delta_sharpe > 0 AND p_pos >= 0.85 (paired block bootstrap, block=21, n=2000) AND max_drawdown_worsening <= 0.01",
+    "pass": true
+  },
+  "decision": {
+    "winner": [
+      3
+    ],
+    "adopted": true,
+    "incumbent": [
+      7,
+      14
+    ]
+  }
+}

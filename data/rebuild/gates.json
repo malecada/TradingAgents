@@ -1,0 +1,400 @@
+{
+ "xs_mom_p1": {
+  "registered": "2026-07-14",
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "holdout_window": [
+   "2025-04-01",
+   "2026-07-01"
+  ],
+  "universe_rule": "PIT daily eligibility: USDT-M perp with kline on day D, first kline <= D-30, 30d median quote-volume >= 5000000 USD; rank by 30d median quote-volume, keep top 100; snapshot at each weekly rebalance (Monday close) using data <= that close",
+  "portfolio_rule": "EW long-only top-K by momentum at Monday close, held to next Monday close; returns accrue from the bar AFTER the decision bar; momentum = sum of daily log-returns over L days ending S days before the decision close; costs 10bps per side on turnover; benchmark = EW full eligible universe, same mechanics",
+  "grid": {
+   "L": [
+    7,
+    14,
+    28
+   ],
+   "skip": [
+    0,
+    1
+   ],
+   "K": [
+    10,
+    20
+   ]
+  },
+  "bootstrap": {
+   "block": 21,
+   "n": 2000
+  },
+  "placebo": "N=500 within-rebalance random rank permutations of the momentum scores, identical mechanics; p=(1+#{placebo SR >= real SR})/(N+1)",
+  "dev_select": {
+   "net_sr_min": 0.8,
+   "delta_sr_vs_benchmark_min": 0.0,
+   "p_pos_min": 0.85,
+   "placebo_p_max": 0.05,
+   "dsr_min": 0.9,
+   "tiebreak": "highest DSR, then lowest placebo p"
+  },
+  "holdout_deploy": {
+   "net_sr_min": 0.5,
+   "delta_sr_vs_benchmark_min": 0.0,
+   "p_pos_min": 0.85,
+   "placebo_p_max": 0.05,
+   "one_shot": true
+  }
+ },
+ "fg_beta_d1": {
+  "registered": "2026-07-14",
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "holdout_window": [
+   "2025-04-01",
+   "2026-07-01"
+  ],
+  "beta_rule": "rolling 90d OLS beta of coin daily log-return on delta F&G (value diff), min 60 overlapping obs, inputs shift(1)-causal at the decision close",
+  "grid_desc": "exactly 2 configs: (a) standalone = EW long the MIDDLE F&G-beta quintile of the eligible universe, weekly, same mechanics/costs as P1; (b) overlay = P1 dev-selected portfolio excluding coins in the extreme (top+bottom) beta quintiles; if P1 selects NONE, only (a) runs",
+  "dev_select_standalone": {
+   "net_sr_min": 0.8,
+   "delta_sr_vs_benchmark_min": 0.0,
+   "p_pos_min": 0.85,
+   "placebo_p_max": 0.05,
+   "dsr_min": 0.9
+  },
+  "dev_select_overlay": {
+   "delta_sr_vs_p1_min": 0.0,
+   "p_pos_min": 0.85
+  },
+  "holdout_deploy": {
+   "same_as_dev": true,
+   "net_sr_min_holdout": 0.5,
+   "one_shot": true
+  }
+ },
+ "registered": "2026-07-08",
+ "spec": "docs/superpowers/specs/2026-07-08-honest-rebuild-design.md",
+ "carry_go": {
+  "stressed_sharpe_min": 1.5,
+  "worst_90d_loss_max_at_allocation": 0.05,
+  "note": "stressed = after execution-realism cost pass C2 haircuts"
+ },
+ "axis_experiments": {
+  "adopt_rule": "delta_sharpe > 0 AND p_pos >= 0.85 (paired block bootstrap, block=21, n=2000) AND max_drawdown_worsening <= 0.01",
+  "note": "applies to axes: target, horizons, pool, features, sizing components"
+ },
+ "ml_survival": {
+  "vs": "best factor-floor config",
+  "delta_sharpe_min": 0.0,
+  "p_pos_min": 0.85,
+  "dsr_min": 0.9,
+  "dsr_trials": "trial_count() from ledger at evaluation time"
+ },
+ "holdout_deploy": {
+  "portfolio_net_sharpe_min": 0.5,
+  "max_drawdown_max": 0.15,
+  "sleeve_contribution_min": 0.0,
+  "placebo_p_max": 0.05,
+  "one_shot": true
+ },
+ "stress_ews": {
+  "registered": "2026-07-14",
+  "dev_window": [
+   "2021-11-01",
+   "2025-03-31"
+  ],
+  "holdout_window_start": "2025-04-01",
+  "episode_rule": "crash day t: 10-day forward log-return of EW BTC+ETH close <= log(0.85); episode = maximal run of crash days, episodes separated by <10 non-crash days are merged; episode_start = first crash day",
+  "warn_rule": "composite = mean(component z-scores, all lagged 1 day, z over trailing 365d window with min 180d); WARN active while composite >= k, released below k-0.25; components and k from grid",
+  "grid": {
+   "component_sets": [
+    [
+     "z_fund",
+     "z_oi"
+    ],
+    [
+     "z_fund",
+     "z_oi",
+     "z_liq"
+    ],
+    [
+     "z_fund",
+     "z_oi",
+     "z_liq",
+     "z_fg"
+    ]
+   ],
+   "k": [
+    1.0,
+    1.5,
+    2.0
+   ]
+  },
+  "detection_window_days": 20,
+  "dev_select": {
+   "hit_rate_min": 0.5,
+   "false_alarms_per_year_max": 6,
+   "placebo_p_max": 0.05,
+   "overlay_delta_maxdd_max": 0.0,
+   "overlay_delta_sr_min": -0.1,
+   "tiebreak": "lowest placebo_p, then most negative overlay_delta_maxdd"
+  },
+  "holdout_deploy": {
+   "hit_rate_min": 0.5,
+   "false_alarms_per_year_max": 6,
+   "placebo_p_max": 0.05,
+   "overlay_delta_maxdd_max": 0.0,
+   "overlay_delta_sr_min": -0.1,
+   "one_shot": true
+  }
+ },
+ "trend_wide_t1": {
+  "registered": "2026-07-28",
+  "spec": "docs/superpowers/specs/2026-07-28-trend-wide-design.md",
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "holdout_window": [
+   "2025-04-01",
+   "2026-07-01"
+  ],
+  "signal": "frozen metalabel primary verbatim (MA 5/20,10/40,20/60 + Donchian 20/10, vote>0.5, warmup 60); long-flat",
+  "universe_rule": "PIT monthly refresh at first Monday close of each month using data <= that close: USDT-M perp with kline on day D, first kline <= D-30, 30d median quote-volume >= 5000000 USD, rank by 30d median quote-volume, keep top-N; symbol needs >= 90 daily bars at decision; coin leaving universe force-flattened next bar with cost",
+  "portfolio_rule": "daily decision close t -> weights apply bar t+1; w = (1/N)*min(1, vol_target/(sigma30*sqrt(365)))*1{vote>0.5}; sigma30 = rolling 30-calendar-day std of daily log-returns, gapless else weight 0; costs 10 bps per side on sum|dW| charged first accrual day; missing kline contributes 0, no redistribution",
+  "benchmark": "per-N EW buy-and-hold of same monthly top-N universe, same t+1 and cost mechanics",
+  "grid": {
+   "N": [
+    10,
+    20
+   ],
+   "vol_target": [
+    0.2,
+    0.3,
+    0.4
+   ]
+  },
+  "bootstrap": {
+   "block": 21,
+   "n": 2000
+  },
+  "placebo": "TWO families, 500 draws each, costs re-applied, p=(1+#{placebo SR >= real SR})/(N+1), gate on the WORSE (max) p: (a) per-coin independent circular time-shifts (min offset 30d) of the final daily weight series; (b) shared-offset circular time-shift (one offset for all columns per draw). Amended 2026-07-28 pre-registration after task-3 review (cross-coin co-activation caveat).",
+  "dev_select": {
+   "net_sr_min": 1.0,
+   "delta_sr_vs_benchmark_min": 0.0,
+   "p_pos_min": 0.9,
+   "placebo_p_max": 0.05,
+   "dsr_min": 0.9,
+   "tiebreak": "highest DSR, then lowest placebo p"
+  },
+  "holdout_deploy": {
+   "net_sr_min": 0.5,
+   "delta_sr_vs_benchmark_min": 0.0,
+   "p_pos_min": 0.85,
+   "placebo_p_max": 0.05,
+   "one_shot": true
+  }
+ },
+ "carry_xs_t1": {
+  "registered": "2026-07-28",
+  "spec": "docs/superpowers/specs/2026-07-28-carry-xs-design.md",
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "holdout_window": [
+   "2025-04-01",
+   "2026-07-01"
+  ],
+  "signal": "trailing mean over L days of daily funding income, daily funding = SUM of the UTC day's prints; realized prints only; rank cross-sectionally within monthly universe; signal NaN if any of trailing L days missing",
+  "universe_rule": "PIT monthly refresh at first Monday close: USDT-M perp with kline on day D, first kline <= D-30, 30d median quote-volume >= 5000000 USD, rank by volume, keep top-50; symbol additionally needs 30 gapless trailing funding days at decision else excluded that day; leaving symbol force-flattened next bar with cost",
+  "portfolio_rule": "daily decision close t -> weights bar t+1; valid = universe members with non-NaN signal and 30 gapless funding days; if n_valid < 5 flat; n_leg = max(1, round(leg_frac*n_valid)); SHORT top n_leg by (signal desc, symbol asc) at -0.5/n_leg, LONG bottom n_leg by (signal asc, symbol asc) EXCLUDING short-leg members at +0.5/n_leg; gross 1.0 net 0; costs 10 bps per side on sum|dW| first accrual day; funding accrual signed W*F (long pays positive funding); rf_daily = 1.045^(1/365)-1 deducted every day on full capital (house carry-audit convention, harshest-honest per section-41 mandate)",
+  "benchmark": "none (dollar-neutral; cash benchmark embedded via rf deduction)",
+  "grid": {
+   "L": [
+    1,
+    7,
+    30
+   ],
+   "leg_frac": [
+    0.1,
+    0.2
+   ]
+  },
+  "funding_coverage_note": "799/799 symbols fetched (2.406M prints); 0 missing; median day-coverage 1.001; 0 symbols below 90%; delisted perps confirmed to serve full funding history via /fapi/v1/fundingRate",
+  "placebo": "TWO families, 500 draws each, funding accrual AND costs AND rf re-applied to shifted weights, p=(1+#{placebo SR >= real SR})/(N+1), gate on the WORSE (max) p: (a) per-coin independent circular time-shifts (min offset 30d) of the final daily weight series; (b) shared-offset circular time-shift",
+  "dev_select": {
+   "net_sr_min": 1.0,
+   "placebo_p_max": 0.05,
+   "dsr_min": 0.9,
+   "tiebreak": "highest DSR, then lowest placebo p"
+  },
+  "holdout_deploy": {
+   "net_sr_min": 0.5,
+   "placebo_p_max": 0.05,
+   "one_shot": true
+  },
+  "diagnostics_non_gating": "rank-correlation of funding signal vs 30d realized vol across universe; per-leg mean vol (section-43 vol-selection check)",
+  "amendment_2026-07-28": "long-leg disjointness rule added after registration but BEFORE any result was produced: first dev invocation crashed on the frozen net-exposure sanity assert (tied-signal cross-sections make desc/asc sorts overlap); zero metrics read, zero ledger rows written at amendment time"
+ },
+ "liq_mr_t1": {
+  "registered": "2026-07-28",
+  "spec": "docs/superpowers/specs/2026-07-28-liq-mr-design.md",
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "holdout_window": [
+   "2025-04-01",
+   "2026-07-01"
+  ],
+  "universe": "fixed 8 majors with Coinglass derivatives history (BTCUSDT ETHUSDT BNBUSDT SOLUSDT ADAUSDT DOGEUSDT XRPUSDT TRXUSDT); non-PIT ex-post selection recorded as limitation; all listed pre-2021, never delisted",
+  "signal": "per coin: x_dir(t) = liq_dir_usd(t)/oi_close(t) for dir in {long, short}; z_dir(t) = trailing 90d rolling z-score (min_periods 60, ddof=1, inclusive of t); all inputs complete at close t (Coinglass 1d bars stamped at UTC day open; contemporaneity probe must pass before any run is trusted); oi_close 0/missing -> NaN -> no signal",
+  "portfolio_rule": "z_long(t) >= thr -> LONG 1/8 for bars t+1..t+H; z_short(t) >= thr -> SHORT 1/8 same; same-direction re-event resets timer; opposite directions net (sum of direction states); no vol targeting or scaling; costs 10 bps per side on sum|dW| at first accrual day; rf_daily = 1.045^(1/365)-1 deducted every day on full capital (house section-41 convention, identical to carry_xs_t1); funding accrual on holds EXCLUDED in t1 (recorded simplification; holdout adds realized-funding robustness line, not a gate); missing kline return for held coin contributes 0",
+  "grid": {
+   "thr": [
+    1.5,
+    2.5
+   ],
+   "H": [
+    1,
+    3,
+    5
+   ]
+  },
+  "benchmark": "none (flat-by-default episodic; cash benchmark embedded via rf deduction)",
+  "dev_select": {
+   "net_sr_min": 1.0,
+   "placebo": "dual-family (per-coin independent circular shifts; shared-offset shift), 500 draws each, costs+rf re-applied, p = (1+#{placebo SR >= real SR})/(N+1), gate on WORSE p <= 0.05",
+   "dsr_min": 0.9,
+   "n_trials": "ledger-cumulative unique config_hash count",
+   "tiebreak": "highest DSR, then lowest placebo p",
+   "conventions": "sqrt(252), ddof=1, zero-variance SR := 0"
+  },
+  "holdout_deploy": {
+   "net_sr_min": 0.5,
+   "placebo_p_max": 0.05,
+   "one_shot": true,
+   "latch": "fresh per evaluation window",
+   "note": "store extension via fetch_coinglass_history tail-append before run; funding-accrual robustness line reported, not gated"
+  },
+  "diagnostics_not_gates": [
+   "event counts per config/coin (power label if < 30 total)",
+   "long-fade vs short-fade decomposition",
+   "event-day vol-regime correlation",
+   "% days active + SR gross of rf",
+   "next-1/3/5-day post-event return profile"
+  ],
+  "stop_rule": "any dev failure -> negative recorded in THESIS section 47, holdout stays sealed; no second pass, no added grid axes"
+ },
+ "llm_p5_hybrid": {
+  "registered": "2026-07-28",
+  "spec": "docs/superpowers/specs/2026-07-28-llm-p5-hybrid-prereg.md",
+  "parent": "docs/superpowers/specs/2026-07-08-honest-rebuild-design.md section 8 (Phase 5, gate frozen 2026-07-08)",
+  "window": [
+   "2026-01-16",
+   "2026-05-21"
+  ],
+  "window_note": "inside 2025-04+ holdout region: legitimate \u2014 quant base FROZEN (no selection), directional holdout already spent by section-41 one-shot, LLM-cutoff rule forces 2026 window; ledger rows use allow_holdout=True",
+  "coin": "ethereum",
+  "arm_a": "canonical V2 h7+h14 consensus + V2 sizing, causal convention, costs_for_coin('ethereum','causal'), 3% intrabar price-stop replay, preds = purged+rolling730+onchain-pit regen (multi_2coins_pit_wf_p5, exact audit recipe)",
+  "arm_b": "pos_A x (1 + effective_weight x (multiplier - 1)) from generate_hybrid_signals ETH analysts=[onchain,prediction], gpt-5.4-mini/gpt-5.4-nano, prompt v1, anonymize False, replay cache ON, quant_pred_dir = arm-A pred dir; extraction failure -> multiplier 1.0 (production fallback), count = diagnostic",
+  "engine": "new causal A/B harness; tradingagents/backtesting/engine.py EXCLUDED (audited 2026-07-28: same-bar confirmed); scripts/backtest_hybrid.py EXCLUDED (same defect, pre-audit)",
+  "gate": {
+   "p_pos_min": 0.9,
+   "test": "paired stationary block bootstrap block=21 n=2000 shared index on daily diff (hybrid - quant), rebuild/compare.py",
+   "one_shot": true,
+   "conventions": "sqrt(252), ddof=1, zero-variance SR := 0"
+  },
+  "grid": "NONE - single config, no axes",
+  "stop_rule": "fail -> LLM layer thesis-only ('base-dependent / no-effect on honest legs'); no prompt retune, no window shop, no second model; deterministic crash re-runs via replay cache only",
+  "diagnostics_not_gates": [
+   "multiplier distribution + % bars != 1.0",
+   "extraction failure rate",
+   "effective_weight distribution",
+   "delta maxDD",
+   "quant_direction parity vs pred-CSV consensus (honest denominators)",
+   "run cost USD"
+  ],
+  "budget_usd": "15-25 approved"
+ },
+ "liq_fade_i1": {
+  "registered": "2026-07-28",
+  "spec": "docs/superpowers/specs/2026-07-28-liq-fade-intraday-design.md",
+  "dev_window": ["2021-01-01", "2025-03-31"],
+  "holdout_window": ["2025-04-01", "2026-07-01"],
+  "universe": "top-50 PIT monthly by trailing 30d median quote_volume from 799-symbol survivorship-safe daily store; min_age 60d; Binance UM 1h klines",
+  "signal": "per symbol hourly: z_ret = rolling z of 1h log returns, z_vol = rolling z of log1p(quote_volume), window 2160 bars min_periods 1440 ddof=1 inclusive of t; trigger = z_ret <= -thr AND z_vol >= thr; LONG-FADE ONLY (short side pre-excluded per section-47 asymmetry)",
+  "portfolio_rule": "trigger at bar t -> long 1/10 for bars t+1..t+H; retrigger resets timer; gross cap 1.0 (max 10 concurrent, arrival order); costs 10 bps per side on |dW|; rf_daily = 1.045^(1/365)-1 on full capital every calendar day; funding EXCLUDED; SR on daily-aggregated UTC net returns x sqrt(365)",
+  "grid": {"thr": [2.5, 3.5], "H": [6, 24, 48]},
+  "probes": {
+   "P0": "1h bars open-stamped; daily aggregation of 1h closes reconciles with daily store (corr > 0.99 on overlapping returns, BTCUSDT)",
+   "P1": "proxy triggers (thr=2.5) aggregated daily on 8 Coinglass coins must flag >= 4 of 5 benchmark cascade dates (2021-05-19, 2022-06-13, 2022-11-09, 2024-08-05, 2025-02-03); FAIL -> STOP",
+   "P2": "mean cumulative GROSS forward return t+1..t+H over all dev triggers must exceed +25 bps in at least one grid cell; FAIL -> STOP (NEGATIVE-at-probe)"
+  },
+  "dev_select": {
+   "net_sr_min": 1.0,
+   "placebo": "dual-family (A: per-symbol circular shift of trigger series; B: count-matched uniform random trigger timestamps), 500 draws each, costs+rf re-applied, p = (1+#{placebo SR >= real SR})/(N+1), gate on WORSE p <= 0.05",
+   "dsr_min": 0.9,
+   "n_trials": "ledger-cumulative unique config_hash count at evaluation time (+6 from this grid)"
+  },
+  "one_shot": "holdout spent only if dev gate passes; stress row +10bps slippage reported not gated",
+  "thesis_section": "48"
+ },
+ "liq_fade_r1": {
+  "registered": "2026-07-29",
+  "spec": "docs/superpowers/specs/2026-07-29-liq-fade-r1-design.md",
+  "replicates": "liq_fade_i1",
+  "dev_window": ["2021-01-01", "2025-03-31"],
+  "holdout_window": ["2025-04-01", "2026-07-01"],
+  "holdout_status": "sealed",
+  "universe": "monthly PIT ranks 51-150 by trailing 30d median quote_volume from the 799-symbol survivorship-safe daily store; min_age 60d; same monthly_top_n selector as liq_fade_i1, band = top150 minus top50 per month; union 304 symbols; disjoint from liq_fade_i1 by (symbol, month)",
+  "signal": "IDENTICAL to liq_fade_i1, frozen: per symbol hourly z_ret = rolling z of 1h log returns, z_vol = rolling z of log1p(quote_volume), window 2160 min_periods 1440 ddof=1 inclusive of t; trigger = z_ret <= -thr AND z_vol >= thr; LONG-FADE ONLY",
+  "portfolio_rule": "IDENTICAL to liq_fade_i1 except cost_bps: trigger at bar t -> long 1/10 for bars t+1..t+H; retrigger resets timer; gross cap 1.0; costs 20 bps per side on |dW|; rf_daily = 1.045^(1/365)-1 on full capital every calendar day; funding EXCLUDED; SR on daily-aggregated UTC net returns x sqrt(365)",
+  "grid": null,
+  "primary_config": {"thr": 3.5, "H": 48, "w_per": 0.1, "cap": 1.0, "cost_bps": 20.0, "rf_annual": 0.045},
+  "cost_bps_primary": 20.0,
+  "cost_bps_rationale": "band names are smaller and wider-spread than the liq_fade_i1 top-50; carrying the top-50 cost model onto them would invite the objection. liq_fade_i1 forensics F6 showed the effect is not cost-fragile (SR 1.305/1.229/1.153 at 10/20/30bps).",
+  "probes": {
+   "P3": {
+    "blocking": true,
+    "runs_first": true,
+    "desc": "vol-drift control: long-only entries on z_vol >= 3.5 with the z_ret <= -3.5 crash condition REMOVED, identical sizing/horizon/universe/cost. Isolates crash timing from generic long exposure on high-volatility days. This is the discriminating control that liq_fade_i1 never ran (section 49 forensics F9).",
+    "control_max_net_sr": 0.5,
+    "min_separation": 0.75,
+    "pass_rule": "control net SR < 0.5 AND (primary net SR - control net SR) >= 0.75",
+    "fail_verdict": "NEGATIVE-confounded",
+    "fail_action": "gates G1-G3 NOT evaluated; lead closes; written up as THESIS section 50",
+    "scope_note": "the separation term is only diagnostic when the primary is strong. If primary net SR < 1.0 the verdict is plain NEGATIVE on G1 and the confounded label is NOT applied."
+   },
+   "P0": "1h bars open-stamped; daily aggregation of BTCUSDT 1h closes reconciles with daily store, corr > 0.99 on overlapping returns, window clamped to [2021-01-01, 2025-04-15]",
+   "P1": "proxy triggers (thr=2.5) aggregated daily on band symbols must flag >= 4 of 5 benchmark cascade dates (2021-05-19, 2022-06-13, 2022-11-09, 2024-08-05, 2025-02-03); FAIL -> STOP",
+   "P2": "mean cumulative GROSS forward return t+1..t+H over all dev triggers at the primary config must exceed +25 bps; FAIL -> STOP (NEGATIVE-at-probe)"
+  },
+  "dev_select": {
+   "net_sr_min": 1.0,
+   "placebo": "dual-family (A: per-symbol circular shift of trigger series, min offset 24 bars; B: count-matched uniform random trigger timestamps among membership-eligible bars), 500 draws each, costs+rf re-applied, p = (1+#{placebo SR >= real SR})/(N+1), gate on WORSE p <= 0.05",
+   "placebo_p_max": 0.05,
+   "dsr_min": 0.9,
+   "n_trials": 1,
+   "n_trials_rationale": "confirmatory inference on independent data. Multiplicity correction attaches to a search -- a grid, a sweep, a set of candidates screened against the same data. This experiment pre-registers ONE frozen hypothesis before touching any band data and evaluates it on events disjoint from discovery, so it carries n_trials=1. This is a declared amendment to the ledger-cumulative house convention used by liq_fade_i1, made before the run, not after. Alternative denominators are computed and reported (see reported_not_gated.dsr_alt_denominators) so the choice is auditable.",
+   "conventions": "sqrt(365) annualization on daily-aggregated UTC net returns, ddof=1, zero-variance SR := 0"
+  },
+  "reported_not_gated": {
+   "cost_bps_sensitivities": [10.0, 30.0],
+   "dsr_alt_denominators": [13, 121],
+   "dsr_alt_denominator_desc": "13 = liquidation-family scope (liq_mr_t1 6 + liq_fade_i1 6 + this 1); 121 = ledger-cumulative unique config_hash count",
+   "secondary_configs": [{"thr": 2.5, "H": 24}, {"thr": 3.5, "H": 24}],
+   "secondary_configs_desc": "the two remaining liq_fade_i1 dev survivors, run for robustness context only; they CANNOT rescue a G1-G3 failure and are not logged as separate gate evaluations",
+   "never_top50_subset": true,
+   "never_top50_subset_desc": "116-symbol partition of the same run (symbols never in the liq_fade_i1 top-50 union) reported as a descriptive breakdown; a partition, not an additional config, so not an additional trial"
+  },
+  "one_shot": "holdout spent only if the dev gate passes 3/3, and then only under its own separate pre-registration",
+  "stop_rule": "any dev failure -> negative recorded in THESIS section 50, holdout stays sealed; no second pass, no added grid axes, no cost-model relaxation",
+  "thesis_section": "50"
+ }
+}

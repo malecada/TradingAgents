@@ -1,0 +1,51 @@
+{
+ "benchmark": {
+  "sr": -0.41672540003555936,
+  "maxdd": 0.9667614895828189,
+  "n_days": 1547
+ },
+ "benchmark_recheck": {
+  "recomputed_sr": -0.41672540003555936,
+  "diff_vs_committed": 0.0
+ },
+ "config": {
+  "variant": "a_standalone",
+  "beta_window": 90,
+  "beta_min_obs": 60,
+  "cost_bps": 10.0,
+  "top_n": 100,
+  "min_mvol": 5000000.0
+ },
+ "metrics": {
+  "net_sr": -0.41818988657435047,
+  "maxdd": 0.969648440213062,
+  "total_logret": -1.6625768319344343,
+  "bench_sr": -0.41672540003555936,
+  "delta_sr": -0.00146448653879111,
+  "p_pos": 0.483,
+  "placebo_p": 0.2714570858283433,
+  "n_days": 1547,
+  "dsr": 0.00048429647861890346,
+  "n_trials_at_eval": 75
+ },
+ "gate": {
+  "net_sr_ge_0.8": false,
+  "delta_sr_gt_0": false,
+  "p_pos_ge_0.85": false,
+  "placebo_p_le_0.05": false,
+  "dsr_ge_0.9": false
+ },
+ "gate_pass": false,
+ "selected": null,
+ "variant_b_skipped": "P1 selected NONE",
+ "portfolio_size_sanity": {
+  "min": 13,
+  "median": 19,
+  "max": 20,
+  "zero_weeks": 0,
+  "n_weeks": 222
+ },
+ "n_trials_at_eval": 75,
+ "validate_fast_engine_max_abs_diff": 5.551115123125783e-17,
+ "total_runtime_sec": 36.6583149433136
+}

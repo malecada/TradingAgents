@@ -3412,3 +3412,1915 @@ Audit-run reference points: trend-lag-only ≈ +1.46; naive pos-shift ≈ +3.02 
 - BT11/§21.3's "90% sizing+momentum" attribution is reinterpreted: it was measuring the same-bar artifact, not genuine momentum alpha.
 - V5.1 (tv0.07/tm2.0/sma20) and the 8-coin expansion must be re-derived on the causal+purged harness before any deployment decision; §20 T7 routing choices are void (selected on leaked DirAcc/SR).
 - Known-stale on this branch: `tests/execution/live/test_parity_script.py` 4-coin pins vs the uncommitted 8-coin `_PARITY_ROUTES` WIP (pre-existing, unrelated to this audit).
+
+## Section 39: Carry Sleeve Five-Pass Audit — GO (2026-07-09)
+
+Trigger: after §33 invalidated every V5-derived directional headline, the funding-carry sleeve (always-on, short 1× perp + long 1× spot, equal notional, 50/50 BTC/ETH) is the one **model-free** lead candidate that survives the rebuild — its edge is exchange-mechanical (perpetual funding transfer), not an ML prediction, so it cannot carry the same-bar/purge defects that sank the directional stack. Five independent passes each reproduced the as-built dev-window sleeve before stressing it, then the pre-registered gate (`data/rebuild/gates.json → carry_go`, registered 2026-07-08 **before** any pass ran: stressed SR ≥ 1.5 **AND** worst-90d loss at intended allocation ≤ 5%) was evaluated against the committed pass outputs only. Window 2021-11-08 → 2025-03-31 (1239 days, √252, dev-window; holdout ≥ 2025-04-01 untouched).
+
+### 39.1 Pass findings (1–5)
+
+**Pass 1 — funding-timing look-ahead (`timing.json`, PASS).** Lagging the funding series one bar leaves SR essentially intact: BTC ΔSR **−0.21** (9.34→9.13), ETH ΔSR **+0.04** (6.66→6.70). No material funding look-ahead; the funding leg is PIT-clean. (`repro.txt` records the real-basis blended sleeve upper bound at SR 8.53; the audit's own as-built reconstruction in `costs.json` is 8.60 — same object, ~0.07 SR reconstruction gap, immaterial.)
+
+**Pass 2 — execution-realism costs (`costs.json`).** Five-layer waterfall from as-built 8.60 to stressed **3.75** (per-symbol BTC 4.39 / ETH 2.50); 147 rebalances (BTC 63 / ETH 84) over 1239 days at a 20%-of-target drift threshold. The two large drops are `plus_rebalance` (−2.55 SR) and `plus_margin_cost` (−2.12 SR); `plus_boundary_basis` is 0.0 by construction (spot−perp basis already marked to market daily in the hedge P&L — a separate boundary charge would double-count). **Reviewer caveat carried forward:** the rebalance layer models the short-perp leg's drift with `−perp_ret`, a conservative judgment call (the `+perp_ret` reading is degenerate — |drift| never reaches 20%, zero rebalances) that plausibly **overstates rebalance cost ~3×**; under the alternative reading stressed SR ≈ **5.9**. Treat stressed carry as the **range [3.75, ~5.9]**, with **3.75 the gate-relevant stress bound**.
+
+**Pass 3 — funding reconciliation (`funding_recon.json`, PASS).** Recomputed vs module funding income across three quarters (2022-Q2 bear / 2023-Q4 chop / 2024-Q1 bull) is identical to floating-point (max rel-diff **1.2e-16**, per-day series identical to 1e-19), 3.00 funding events/day. Bear-market negative-funding-day shares: ETH 2022-Q2 **42.9%**, BTC **26.4%** — the sleeve pays funding on a large fraction of bear days.
+
+**Pass 4 — regime / drawdown (`regime.json`).** Worst rolling-90d return **−1.82%** (2022-08-24 → 11-21). Per-year SR: 2021 +8.50 / **2022 −2.03** / 2023 +6.90 / 2024 +8.74 / 2025-partial +1.89 — a single losing year, the 2022 bear. Haircut curve (scaling realized funding capture only): SR **3.75 / 2.04 / −0.13 / −2.73** at capture h = 1.00 / 0.75 / 0.50 / 0.25 → **SR crosses zero once realized funding capture falls below ~60–70%**. Longest drawdown **≈667 days (22 months)**, peak 2022-01-05 → recovery 2023-11-02 (JSON records 666; +1 off-by-one).
+
+**Pass 5 — gate synthesis (`verdict.json`, this pass).** Both pre-registered criteria evaluated against the committed pass outputs with no re-runs; both pass with wide margin → **GO** (see §39.5).
+
+### 39.2 Cost waterfall (`costs.json`, blended SR)
+
+| Layer | SR after | ΔSR |
+|---|---|---|
+| as_built | 8.60 | — |
+| + turnover (open/close, both legs) | 8.42 | −0.17 |
+| + rebalance (drift > 20% target) | 5.87 | −2.55 |
+| + margin cost (rf drag on ⅓ perp notional) | **3.75** | −2.12 |
+| + boundary basis | 3.75 | 0.00 (marked-to-market) |
+
+Stressed blended **3.75** (BTC 4.39 / ETH 2.50). Range under the rebalance-convention caveat: **[3.75, ~5.9]**.
+
+### 39.3 Haircut curve (`regime.json` / `haircut_curve.csv`, funding-capture scaling)
+
+| funding capture h | Sharpe | total return | max DD |
+|---|---|---|---|
+| 1.00 | 3.75 | +13.6% | −2.9% |
+| 0.75 | 2.04 | +6.4% | −3.4% |
+| 0.50 | −0.13 | −0.4% | −3.8% |
+| 0.25 | −2.73 | −6.7% | −6.7% |
+
+Zero-crossing at ~60–70% realized capture — the binding fragility.
+
+### 39.4 Per-year Sharpe (`regime.json`)
+
+| Year | Sharpe | n days |
+|---|---|---|
+| 2021 | +8.50 | 54 |
+| 2022 | **−2.03** | 365 |
+| 2023 | +6.90 | 365 |
+| 2024 | +8.74 | 366 |
+| 2025 (partial) | +1.89 | 89 |
+
+### 39.5 Gate evaluation (pre-registered `carry_go`)
+
+| Criterion | Registered threshold | Measured | Source file | Pass |
+|---|---|---|---|---|
+| stressed Sharpe | ≥ 1.5 | **3.75** | `costs.json → stressed_blended_sr` | **PASS** |
+| worst-90d loss at allocation | ≤ 5% | **1.82%** raw (0.36% @20%, 0.91% @50% alloc; <5% even @100%) | `regime.json → worst_90d.return` | **PASS** |
+
+Both criteria pass → **VERDICT: GO**. The stressed SR clears the 1.5 floor by 2.25 SR even at the conservative 3.75 stress bound; the worst-90d loss clears the 5% floor at any allocation in the intended 20–50% range (implied max allocation to keep the gate = 100% notional).
+
+### 39.6 Capacity / margin note (live-integration requirements, E4 scope)
+
+The sleeve must be margined so it can never draw down or be cancelled by the directional (V5 MIX) engine, and vice versa.
+
+- **Sub-account isolation (preferred).** Run the sleeve in a dedicated Binance Futures sub-account with its own wallet balance. Margin, liquidation price, and ADL exposure are then computed only over the sleeve's own two legs; a directional stop-out or a margin call on the main account cannot cascade into the sleeve. This is the recommended topology.
+- **Reserve-margin accounting (fallback, shared wallet).** If a single futures wallet must host both, the sleeve's margin must be booked as a hard reserve that the directional sizer treats as unavailable equity. The directional sleeve's Kelly/vol-target notional must be computed on `wallet_equity − carry_reserve`, never on gross equity — otherwise a shared wallet double-counts margin and the combined book can exceed intended leverage exactly when funding turns adverse (2022-type regime) and both sleeves draw at once.
+- **Realized leverage ≤ 3× holds by construction.** The stressed series is built from a 1× perp short + 1× spot long with margin fixed at **⅓ of perp notional** (`costs.json.cost_parameters.margin_fraction_of_perp_notional = 0.3333`). Gross exposure is 2× notional against ⅓-notional posted margin, i.e. **≤ 3× realized leverage by construction** — there is no path in the stressed construction where the sleeve levers past 3×, and the margin-cost waterfall layer (the −2.12 SR drop to 3.75) already charges the rf carry on that ⅓-notional margin. Live must enforce the same ⅓ margin fraction; any tighter margin re-levers the book above the audited 3× and voids the stressed number.
+- **Order-tag namespace.** All sleeve orders must carry a reserved `clientOrderId` prefix (e.g. `CARRY_`) disjoint from the directional namespace. The existing ban/timeout reconciliation handlers and directional stop-loss/algo-order cancellers sweep by namespace; without a disjoint tag a −1003 ban recovery or a directional stop cancel-all could cancel the sleeve's perp hedge and leave a naked spot leg (or vice-versa). The reconciler and stop handlers must be scoped to their own prefix and must never touch `CARRY_*` orders. This mirrors the `STOP_MARKET`/algoId isolation already required for directional stops.
+
+### 39.7 Caveats
+
+1. **Rebalance-convention range** — stressed SR is the range **[3.75, ~5.9]**; 3.75 (the conservative `−perp_ret` reading) is the gate-relevant bound and the gate passes at it. The point estimate is convention-dependent.
+2. **Haircut fragility (~60–70% capture)** — GO is conditional on realizing ≥ ~65% of modeled funding income live; below that the edge disappears (h=0.50 SR −0.13). Missed funding events, exchange throttling, and adverse rebalance timing all erode capture.
+3. **2022 negative year** — per-year SR 2022 = −2.03; the sleeve loses in sustained negative-funding bear regimes, not funding-regime-agnostic.
+4. **Single 3.4-yr in-sample window** — all statistics on one 2021-11-08→2025-03-31 window, no OOS holdout; per-year SR and worst-90d are descriptive, not forward estimates.
+5. **In-sample worst-90d** — the −1.82% floor and the ~667-day (22-month) longest drawdown are the realized minimum/max over the acceptance window; a forward path could exceed them even while passing the 90-day gate.
+
+### 39.8 Verdict
+
+**GO** at the pre-registered gate: stressed Sharpe **3.75 ≥ 1.5** and worst-90d loss **1.82% ≤ 5%** (0.36%/0.91% at the intended 20%/50% allocation), both from committed pass outputs with no re-tuning. The sleeve is approved as a small, isolated, model-free diversifier (intended 20–50% notional allocation, sub-account isolated, ⅓ margin fraction, `CARRY_` order namespace), subject to the caveats above — in particular the GO is conditional on realizing ≥ ~65% of modeled funding capture and on the isolation/margin requirements in §39.6. Ledger: `carry_audit / {"pass":"verdict"}`, git `e581a3d`.
+
+## Section 40: Directional Sleeve Re-derivation — Five Axes + Ablation + Survival Verdict (2026-07-09)
+
+This section closes Phase 2 of the honest rebuild. The pre-audit directional strategy (V5 MIX, published SR +3.18) was invalidated by the 2026-07-07 backtest audit (§33): same-bar sizing look-ahead (finding C1) and unpurged training labels inflated every V5-derived number, and the honest purged directional accuracy collapsed to ~50%. Phase 2 re-derives the directional sleeve from scratch on a **causal** sizing path (every price-derived sizing input sees `close(D−1)` only) and **purged** walk-forward predictions, over the locked dev window **2021-11-07 → 2025-03-31** (BTC+ETH, equal weight). Each design choice is a pre-registered axis experiment gated by a paired stationary-block bootstrap (block=21, n=2000); the composed config is then gated against a model-free factor floor. The holdout (≥ 2025-04-01) stays locked for the Phase 3 one-shot.
+
+### 40.1 Honest purged directional accuracy (the raw signal)
+
+The re-derived LGB predictions, evaluated on purged walk-forward folds (level target, 78-feature pool), are at or barely above a coin flip — this is the honest signal quality that every downstream sizing decision inherits:
+
+| horizon | h1 | h3 | h7 | h14 |
+|---|---|---|---|---|
+| purged DirAcc (BTC+ETH pooled) | .498 | .502 | .506 | .527 |
+
+Only h14 is materially above 0.50, and even that is the term that the audit showed was most contaminated in the old harness. This reproduces the §33 audit conclusion (honest purged DirAcc ≈ 49–53%, honest SR ≈ 0.1–0.5) and is the binding constraint on everything below.
+
+### 40.2 The five axes — contaminated choice vs honest choice
+
+Each axis re-answers a design question the old (leaked) harness answered on inflated evidence. The gate is `delta_sharpe > 0 AND p_pos ≥ 0.85 AND max_drawdown_worsening ≤ 0.01`.
+
+| axis | old (contaminated) choice | honest re-derivation | honest choice | evidence |
+|---|---|---|---|---|
+| **Horizons** (F3) | h7 + h14 term-structure consensus (the DirAcc ladder tracked leaked-row count exactly, §33) | 7 candidate horizon sets on purged preds; incumbent [7,14] SR **−0.90**, best [3] SR **+0.386** | **[3] adopted** | ΔSR +1.284, p_pos 0.980, DD −0.025 (gate PASS) |
+| **Target** (E1/F2) | level target (E1 had rejected logret on leaked DirAcc — a "may flip" candidate) | level vs logret at h3; logret SR −0.744 vs level +0.376 | **level retained** | ΔSR −1.121, p_pos 0.022 (logret REJECTED; confirms E1) |
+| **Pool** (F4) | per-coin routing / larger universes | 2 vs 3 vs 5-coin pools at h3; pool3 SR −0.271, pool5 −0.033, pool2 **+0.376** | **2-coin retained** | best arm IS incumbent (trivial retention) |
+| **Features** (F5) | §20 per-coin routing: BTC/BNB→78f, ETH/SOL→193f | 78f vs 193f for **both** coins at h3; 78f is the incumbent, §20's ETH→193f routing does not reproduce causally | **78f both coins** (§20 routing reversed) | incumbent retained; 193f not adopted |
+| **Sizing** (F6) | "SMA30 trend filter = single biggest win (SR 1.88→2.69)" — a C1 same-bar artifact | 6-arm component ablation (below) | **incumbent sizing kept, kelly→0.25** | see §40.3 |
+
+Net honest incumbent after F2–F5: **level target, single horizon [3], 2-coin BTC+ETH pool, 78-feature predictions**, portfolio SR **+0.3763** (BTC +0.372 / ETH +0.192 per-coin). This is an order of magnitude below the published V5 MIX +3.18 — the gap is exactly the C1 look-ahead + label leakage the audit removed.
+
+### 40.3 Sizing-component ablation (F6, Part 1)
+
+Six arms each toggle **one** sizing component off the incumbent; all else canonical (causal convention, price stop 3%, 15% halt-latch ON for every arm — identical-engine policy). Identity check first: `run_coin_sizing` at defaults reproduces the incumbent SR **0.3763016494366421** to **2.8e-16** (< 1e-9), proving the parameterized path is byte-identical to the incumbent before any toggle. A component is REMOVED (its arm adopted into the composed config) iff its removal arm IMPROVES: `delta_sr > 0 AND p_pos ≥ 0.85`.
+
+| arm | component removed | SR | ΔSR vs incumbent | p_pos | maxDD | removal improves? |
+|---|---|---:|---:|---:|---:|:--:|
+| — incumbent — | (none) | **+0.3763** | — | — | −11.6% | — |
+| `no_trend_filter` | SMA30 trend filter (`trend_sma=0`) | +0.1325 | −0.244 | 0.080 | −10.5% | **no** |
+| `trend_mult_1` | trend boost (`multiplier=1.0`) | +0.1325 | −0.244 | 0.080 | −10.5% | **no** |
+| `no_vol_target` | vol-targeted Kelly (fixed base 1.0) | +0.0534 | −0.323 | 0.238 | −23.1% | **no** |
+| `kelly_025` | half-Kelly → quarter-Kelly | +0.3775 | +0.0012 | 1.000 | −5.9% | **yes** |
+| `min_hold_1` | 7-day min hold (→ 1-day) | −0.6188 | −0.995 | 0.029 | −14.9% | **no** |
+| `no_early_exit` | adaptive early exit (disabled) | +0.3435 | −0.033 | 0.435 | −10.7% | **no** |
+
+**Findings.**
+
+1. **The old "trend filter is the biggest win" claim inverts under honesty — but the filter still helps.** Removing the SMA30 trend filter *drops* SR 0.376 → 0.132 (ΔSR −0.244, p_pos 0.080). The pre-audit claim that the filter was the single largest driver (SR 1.88→2.69) was a C1 same-bar artifact; causally the filter still contributes positively, just far more modestly. It is **retained** (removal does not improve).
+2. **`trend_mult_1` is numerically identical to `no_trend_filter`** (max abs return diff **0.0**), as predicted: in `apply_trend_filter`, `multiplier=1.0` scales aligned positions by 1.0 and opposed positions by 1/1.0 = 1.0 → a complete no-op. Both arms therefore probe the same component and both fail the gate together.
+3. **Vol-targeting and min-hold are load-bearing.** Replacing vol-targeted Kelly with a fixed base size collapses SR to +0.053 and *doubles* max drawdown (−11.6% → −23.1%). Dropping the 7-day min hold to 1 day flips the strategy negative (SR −0.619) — the exit-only-on-flip builder with a 1-day hold churns through whipsaws. Both retained.
+4. **Early exit is ≈ noise.** Disabling adaptive early exit costs a statistically indistinguishable −0.033 SR (p_pos 0.435). Retained (removal does not improve), but it is not doing meaningful work — consistent with the builder being exit-only-on-flip so the bars-3–6 early-exit window rarely fires on this long-biased book.
+5. **`kelly_025` is the only "improvement" — and it is a selection-optimism artifact.** Quarter-Kelly beats half-Kelly by ΔSR **+0.0012** (economically nil) yet posts **p_pos 1.000**. This is not a robust edge: halving Kelly rescales positions almost uniformly (the change only bites where the ×3 leverage cap clips), so the two return streams are near-perfectly correlated and the tiny SR gap has the same sign in every bootstrap resample → p_pos saturates at 1.0. The mechanical gate passes, so kelly=0.25 is adopted into the composed config, **but the improvement is negligible and drawdown-driven** (maxDD −11.6% → −5.9%), not alpha.
+
+**Composed config** = incumbent minus every removed component = incumbent with **kelly_fraction = 0.25** (only adopted arm): level target, horizons [3], 2-coin pool, 78f, SMA30 trend filter ×1.5, vol-targeted Kelly=0.25, min_hold=7, early_exit=0.015, price_stop=3%. Composed portfolio SR **+0.3775** (ΔSR +0.0012 vs incumbent, p_pos 1.000 — same selection-optimism caveat).
+
+### 40.4 ML survival verdict vs the factor floor (F6, Part 2)
+
+The composed LGB candidate is gated against the **factor floor** — 18 pre-registered model-free configs run through the identical causal sizing engine (§ factor-floor). Best floor config: **`macross_10_50_ls`** (10/50 MA-cross, long-short), portfolio SR **+0.632** full-series (+1.016 active-period). Gate (gates.json `ml_survival`): `paired_bootstrap(floor, candidate) ΔSR > 0 AND p_pos ≥ 0.85 AND DSR ≥ 0.90`.
+
+| quantity | value |
+|---|---|
+| candidate SR (composed LGB) | **+0.3775** |
+| floor SR (`macross_10_50_ls`, full-series) | **+0.6322** |
+| ΔSR (floor → candidate), paired bootstrap | **−0.2552** |
+| p_pos (candidate > floor) | 0.354 |
+| DSR (Bailey–López de Prado 2014) | **0.0771** |
+| DSR inputs | per-bar SR 0.02379, SE(SR) 0.02818, E[max SR\|null] 0.06393, **n_trials = 49** |
+
+**n_trials = 49** is the count of **unique `config_hash` rows** in `trial_ledger.jsonl` at evaluation time (69 total rows, 42 unique before F6 + 7 new F6 configs = 49). The raw row count (69) overstates the search because the factor floor's 18 configs were double-appended in a re-run; the unique-hash count is the honest multiple-testing denominator. DSR uses the same implementation (`tradingagents/strategies/v3/backtest/dsr.py`) that `scripts/validate_v5_mix.py` uses.
+
+**Halt-latch dual-reporting.** The engine's 15% portfolio-drawdown circuit breaker is a permanent per-coin latch (once tripped, every later bar for that coin is a flat 0.0). It is kept ON identically for both the candidate and the floor (identical-engine policy), so full-series SR is a fair gate metric. The floor's active-period SR (+1.016, trailing post-halt zeros excluded) is even higher than its full-series +0.632; on either reading the floor dominates the candidate.
+
+**VERDICT: directional sleeve = FACTOR.** The composed LGB candidate does **not** beat the model-free factor floor on any of the three gate conditions (ΔSR −0.255 < 0; p_pos 0.354 < 0.85; DSR 0.077 < 0.90). All three fail decisively — the candidate is *worse* than the floor, not marginally short of it. The honest directional sleeve is the model-free **`macross_10_50_ls`** momentum config, not LGB. This is the F6 analogue of the §12/§33 finding that V5's alpha is ~90% sizing+momentum and the ML layer adds little: once the same-bar look-ahead and label leakage are removed, the LGB signal adds *negative* value over a plain MA-cross run through the same sizing stack.
+
+### 40.5 Interpretation caveats
+
+1. **F3 horizon win is partly a full-confidence sizing effect.** The [3]-over-[7,14] adoption (ΔSR +1.28) is not purely a signal-quality result: a single-horizon config always reaches "full agreement" in `generate_term_structure_signals` (one horizon trivially agrees with itself), so it sizes at full confidence every bar, whereas the two-horizon consensus down-weights or zeroes disagreeing bars. Part of [3]'s edge is therefore *more time in market at higher confidence*, not sharper direction — the honest DirAcc ladder (§40.1) shows h3 is only .502.
+2. **Selection optimism in the p_pos values.** Every axis/arm p_pos is argmax-conditioned (reported for the winner of a small search), so it overstates significance — most starkly `kelly_025`'s p_pos 1.000 on a +0.0012 SR gap. The DSR at the survival gate is precisely the multiple-testing correction: with n_trials=49 the expected max SR under the null (0.064 per-bar) already exceeds the candidate's observed per-bar SR (0.024), which is why DSR collapses to 0.077 regardless of the axis-level p_pos values.
+3. **Single in-sample dev window.** All of §40 is one 2021-11-07 → 2025-03-31 window; the numbers are descriptive of dev, not forward estimates.
+
+### 40.6 What goes to Phase 3 holdout
+
+The Phase 3 one-shot (locked window ≥ 2025-04-01, `holdout_deploy` gate) carries forward the **factor sleeve**: directional signal = **`macross_10_50_ls`** (10/50 MA-cross long-short) run through the causal V2/V5 sizing stack (vol-targeted Kelly at kelly_fraction=0.5 — the §40.3 kelly=0.25 adoption applies only to the retired LGB config; **no trend filter** — the MA-cross is itself the trend rule; min_hold=7, adaptive early exit, 3% price stop, 15% halt latch), equal-weight BTC+ETH. The composed LGB config is **retired as a controlled negative result** — it is fully specified in `data/rebuild/axis_sizing/result.json` and `data/rebuild/directional_verdict.json` for reproducibility, but does not advance. The carry sleeve (§39, GO) advances as an isolated diversifier alongside the factor directional sleeve. Phase 3 will apply the `holdout_deploy` gate (portfolio net SR ≥ 0.5, maxDD ≤ 15%, sleeve contribution ≥ 0, placebo p < 0.05) **once** to this factor+carry book. Ledger: `axis_sizing` (7 rows); outputs `data/rebuild/axis_sizing/result.json`, `data/rebuild/directional_verdict.json`.
+
+## Section 41: Holdout One-Shot — NO-GO (deploy = ∅) (2026-07-09)
+
+The single, irreversible Phase-3 test. The frozen portfolio contract
+(`data/rebuild/frozen_portfolio.json`, commit **fc33cd5**, itself frozen on
+`e53737f` before any holdout data was touched) was executed **exactly once** on
+the locked holdout window **2025-04-01 → 2026-07-01** (≈15 months, never seen by
+any prior experiment; the ledger's `assert_dev_window` guard mechanically blocked
+it until this one authorized `allow_holdout=True` pass). No parameter was — or
+could be — changed in response to the outcome (`one_shot_rule`). The result is
+recorded as it fell out.
+
+### 41.1 Provenance & execution
+
+- **Contract:** `frozen_portfolio.json` @ fc33cd5, verified unmodified in the
+  working tree before the run.
+- **Factor sleeve:** frozen `macross_10_50_ls` (10/50 MA-cross long-short,
+  kelly=0.5, target_vol=0.10, max_lev=3, min_hold=7, early_exit=0.015,
+  vol_lookback=20, vol_cap=0.95, price_stop=3%, 15% halt-latch; **no trend
+  filter** — the MA-cross is itself the trend rule; equal-weight BTC+ETH). Run
+  two-stage per the contract: (a) `ma_cross_signal` computed on FULL history
+  2021-11-07→2026-07-01 (warm-up), (b) fresh-latch sizing/backtest engine
+  invoked on the 2025-04-01→2026-07-01 signal slice only. Frozen path reused
+  verbatim from `scripts/factor_baselines.py` (imported, not re-implemented).
+- **Carry sleeve:** C2 stressed construction (`scripts/carry_audit_costs.py`)
+  re-run on the holdout window via a pass-through copy
+  (`scripts/holdout/carry_stressed_holdout.py`) with only the window, output
+  directory and the authorized `allow_holdout` ledger flag changed; every cost
+  parameter frozen verbatim. Dev artifacts in `data/rebuild/carry_audit/`
+  verified untouched (`git diff --stat` empty).
+- **Placebo:** N=500 stationary-bootstrap (mean block 21) block-shuffles of the
+  real factor signal arrays, one `default_rng(seed=k)` per variant, coins drawn
+  [bitcoin, ethereum] in order, each variant through the identical fresh-latch
+  engine. Runtime ≈29 s.
+- Outputs under `data/rebuild/holdout/`; four ledger rows logged
+  (`experiment="holdout_oneshot"`, `allow_holdout=True`).
+
+### 41.2 Per-sleeve holdout metrics (standalone, before weighting)
+
+| sleeve | net SR | total return | maxDD | n_bars | notes |
+|--------|-------:|-------------:|------:|-------:|-------|
+| factor (EW BTC+ETH) | **+0.389** | +6.67% | −14.43% | 456 | BTC halted (15% latch tripped intra-holdout); ETH survived |
+| — factor: bitcoin | −0.339 | — | — | — | negative standalone; hit the halt latch |
+| — factor: ethereum | +0.620 | — | — | — | carries the sleeve |
+| carry (stressed 50/50) | **−1.477** | −1.14% | −1.97% | 456 | funding held; rf margin-cost layer flips the stressed sleeve negative |
+
+Carry stressed waterfall on holdout: as_built +7.53 → +turnover +6.00 →
++rebalance +1.93 → +margin_cost **−1.48** (boundary_basis Δ0). The margin-drag
+layer flips it negative — on the dev window the same waterfall bottomed at +3.75.
+Funding income itself held up out-of-sample (as-built +7.53, and still +1.93
+after all trading frictions); what fails is the risk-free hurdle — the rf
+opportunity cost on margin capital (−3.41 SR) dominates a ~0.4%-ann-vol sleeve.
+The stressed sleeve underperforms T-bills; it is not eaten by execution.
+
+### 41.3 Portfolio combination & weight schedule
+
+Frozen allocation: 50/50 freeze on the first bar, monthly inverse-vol rebalance
+on trailing-90-calendar-day vol, carry capped at 50%, zero-vol guard. **The
+carry cap binds at every single rebalance:** carry's realized ann-vol
+(~0.3–0.5%) is 15–35× smaller than factor's (~6–13%), so raw inverse-vol wants
+carry at ~95–97% and is clipped to 0.5 each month. The book is therefore a
+constant **50% carry / 50% factor** across all 15 rebalances — the exact
+"all eggs in the quietest basket" concentration the cap exists to prevent, with
+the cap binding throughout.
+
+| portfolio | net SR | total return | maxDD | n_bars |
+|-----------|-------:|-------------:|------:|-------:|
+| factor+carry (frozen rule) | **+0.380** | +3.42% | −7.17% | 455 |
+
+Half the book is the negative-SR carry sleeve, which drags the combined Sharpe
+from the factor sleeve's +0.389 down to +0.380.
+
+### 41.4 Placebo (factor sleeve)
+
+Real factor portfolio SR = +0.389. Of 500 block-shuffled-signal placebos,
+**82 matched or beat it** → **p = (1+82)/501 = 0.166**. Placebo SR distribution:
+mean −0.458, p95 +0.987, max +2.21. The real signal's holdout Sharpe is **not
+distinguishable from a persistence-matched random signal** (needs p < 0.05).
+
+### 41.5 Gate evaluation — `gates.json` holdout_deploy
+
+| criterion | scope | threshold | measured | verdict |
+|-----------|-------|----------:|---------:|:-------:|
+| portfolio_net_sharpe_min | portfolio | ≥ 0.50 | **0.380** | **FAIL** |
+| max_drawdown_max | portfolio | ≤ 0.15 | 0.072 | PASS |
+| sleeve_contribution_min (carry) | sleeve | ≥ 0.0 | **−0.0114** | **FAIL** |
+| sleeve_contribution_min (factor) | sleeve | ≥ 0.0 | +0.0667 | PASS |
+| placebo_p_max (factor) | sleeve | < 0.05 | **0.166** | **FAIL** |
+
+Only 2 of 5 criteria pass. Composition rule: portfolio SR & maxDD are a global
+precondition; a sleeve is retained iff the precondition holds AND its
+contribution ≥ 0 (and, for factor, placebo p < 0.05). The portfolio SR
+precondition already fails, and carry (negative contribution) and factor (placebo
+insignificant) each fail their own sleeve criteria independently.
+
+### 41.6 Verdict — **deploy = ∅ (NO-GO on both sleeves)**
+
+The frozen factor+carry portfolio does **not** clear the pre-registered
+`holdout_deploy` gate. **Nothing proceeds to Phase 4 (live integration) as a
+deployable strategy.** This is a valid, pre-registered recorded outcome (the gate
+was designed to admit exactly this):
+
+- **Carry** — NO-GO. Stressed carry is negative on the holdout (SR −1.48,
+  cumulative −1.14%). The funding edge itself persisted (as-built +7.53;
+  +1.93 after all trading frictions) but the rf margin opportunity-cost layer
+  dominates the tiny-vol sleeve — under the frozen stressed model the sleeve
+  underperforms the risk-free hurdle out-of-sample. Fails contribution ≥ 0.
+- **Factor** — NO-GO. Positive but thin (SR +0.39, +6.67%) and **statistically
+  indistinguishable from a random persistence-matched signal** (placebo
+  p = 0.166). BTC tripped the 15% halt latch; ETH alone carried the sleeve.
+  Fails the placebo gate (and drags below the portfolio SR floor when blended
+  with carry).
+
+### 41.7 Honest caveats
+
+- **Single 15-month window, one shot.** No re-runs, no averaging, no CI beyond
+  the placebo. The point estimates are what one deployment start would have seen.
+- **Carry dev-range context.** §39 flagged the stressed carry SR as realistically
+  a range [3.75, ~5.9] (the rebalance-cost convention plausibly overstates cost
+  ~3×); 3.75 was the conservative gate bound carried into H2. Even the optimistic
+  end of that dev range is irrelevant here — the holdout carry return is negative
+  in level, not merely low-SR, so a friendlier cost convention would not flip the
+  contribution sign to positive by much and would not rescue the portfolio SR
+  floor.
+- **Cap-binding concentration.** The 50/50 outcome is not a diversified blend; it
+  is the carry cap clipping an extreme inverse-vol tilt every month. The "book"
+  is effectively half-committed to the losing sleeve by construction.
+- **Consistency with the rebuild.** This reproduces the program's recurring
+  finding (BT11, §12, V3, §34–§38): honest, causal, look-ahead-free signals on
+  BTC/ETH produce thin, often insignificant edges once same-bar look-ahead and
+  unpurged labels are removed. The holdout does not contradict the dev work; it
+  confirms that the dev-window survivors were near the noise floor.
+
+### 41.8 What proceeds to Phase 4 / Phase 5
+
+Per `phase4_note`, Phase-4 live integration and Phase-5 hybrid/LLM re-test are
+gated on this holdout. **With deploy = ∅, no sleeve advances to live integration
+as-is.** Phase 4 and Phase 5 must therefore be re-scoped as new
+brainstorm+plan cycles seeded by `data/rebuild/holdout/result.json`, not as a
+deployment of this book. Candidate directions (out of scope for H2, not yet
+tested on any holdout): a factor-only book without the carry drag; a different
+carry cost/rebalance convention re-validated on dev *before* any new holdout; or
+the deferred LLM-modulator re-test (§23.9 ETH result) — each requiring its own
+pre-registered gate and its own untouched holdout, since this one is now spent.
+
+Ledger: `holdout_oneshot` (4 rows, `allow_holdout=True` — the only authorized use
+in the rebuild); outputs `data/rebuild/holdout/result.json`,
+`data/rebuild/holdout/carry_audit/`, `data/rebuild/holdout/factor_floor/`,
+`data/rebuild/holdout/placebo_distribution.json`. Contract: fc33cd5.
+
+## Section 42: Positioning Stress Early-Warning Index — Dev-Gate NEGATIVE, Holdout Unspent (2026-07-14)
+
+Motivation traces to the D2 lead identified in the sentiment-pivot research pass
+(`SENTIMENT_EARLY_WARNING_RESEARCH_2026-07-14.md`): with directional sentiment
+signals repeatedly negative or neutral (§23.11, §23.12, sentiment-index-quant),
+the remaining sentiment-adjacent thesis angle is positioning-as-early-warning,
+not positioning-as-alpha. BIS Working Paper 1087 documents a mechanism-level
+finding that a rise in standardized carry (funding-rate buildup) predicts
+increased sell-side liquidations in crypto perpetual markets — a
+carry-crowding → forced-liquidation cascade channel, verified 3-0 in the Jul-12
+research pass. No published system reports pre-registered detection metrics
+(hit rate, false alarms, placebo) for a positioning-based crypto early-warning
+index; this experiment was designed to produce the first honest one, with an
+explicit kill condition (hit rate ≤ placebo, or false-alarm cost eating any
+drawdown benefit) accepted up front as a publishable negative.
+
+### 42.1 Pre-registration provenance
+
+Gate frozen **before** any grid cell was run: `data/rebuild/gates.json →
+stress_ews` (registered 2026-07-14), full rule text in
+`docs/superpowers/specs/2026-07-14-stress-ews-prereg.md`. Commits: `a84ab8c`
+(prereg: gates, 9-config grid, episode + warn rules frozen), `a7d4628` (fix:
+removed fabricated evidence numbers, verbatim grid-closure sentence — a
+correction applied to the spec text itself before Task 1 ran, not after seeing
+results). Dev grid executed and ledgered at `8a34e55` (9 rows,
+`experiment="stress_ews"`, dev window guard active, no `allow_holdout`). Grid
+is closed at 9 configs by the pre-registration; no config outside the grid was
+evaluated.
+
+Dev window: **2021-11-01 → 2025-03-31**. Holdout window: **2025-04-01 →
+onward**, untouched by this task per Step 1 of the Task 7 brief — the gate
+check (`dev_results.json["selected"]`) returns `None`, so Steps 2–4 (write and
+execute the one-shot holdout script) do not run. Holdout stays locked and
+unspent.
+
+### 42.2 Component and rule definitions (frozen)
+
+| component | formula (daily, per coin, EW-averaged BTC+ETH) |
+|---|---|
+| `z_fund` | z365(funding_rate_ma7) |
+| `z_oi` | z365(oi_close / oi_close.shift(30) − 1) |
+| `z_liq` | z365(liq_total_usd / oi_close) |
+| `z_fg` | z365(abs(fng_value − 50)) — portfolio-level, not per coin |
+
+`z365(x) = (x − rolling_mean(x, 365)) / rolling_std(x, 365)`, `min_periods=180`;
+every input `.shift(1)`'d first (value dated D uses data ≤ D−1). Composite =
+mean of the selected component z-scores. WARN active while composite ≥ k,
+released below k−0.25 (hysteresis). Episode rule: a crash day is a day whose
+10-day forward log-return of the EW BTC+ETH close is ≤ log(0.85); episodes
+separated by <10 non-crash days are merged; detection window = 20 days
+pre-episode-start. Grid: component sets {[z_fund,z_oi],
+[z_fund,z_oi,z_liq], [z_fund,z_oi,z_liq,z_fg]} × k ∈ {1.0, 1.5, 2.0} = 9
+configs. Dev-select gate: hit_rate ≥ 0.5, false_alarms/yr ≤ 6, placebo p ≤
+0.05, Δmax DD ≤ 0.0, ΔSR ≥ −0.10 (all five required to pass).
+
+### 42.3 Dev grid results (9/9 configs, `dev_results.json`)
+
+| components | k | hit_rate | p_hit_rate | FA/yr | ΔmaxDD | ΔSR | exposure_frac | SR base | pass |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|:---:|
+| z_fund, z_oi | 1.0 | 0.000 | 1.000 | 1.76 | +0.000 | −0.395 | 0.836 | −0.137 | FAIL |
+| z_fund, z_oi | 1.5 | 0.000 | 1.000 | 2.35 | +0.000 | −0.218 | 0.908 | −0.137 | FAIL |
+| z_fund, z_oi | 2.0 | 0.000 | 1.000 | 0.88 | +0.000 | −0.098 | 0.955 | −0.137 | FAIL |
+| z_fund, z_oi, z_liq | 1.0 | 0.000 | 1.000 | 4.69 | +0.000 | −0.386 | 0.871 | −0.137 | FAIL |
+| z_fund, z_oi, z_liq | 1.5 | 0.000 | 1.000 | 2.35 | +0.000 | −0.198 | 0.931 | −0.137 | FAIL |
+| z_fund, z_oi, z_liq | 2.0 | 0.000 | 1.000 | 1.76 | +0.000 | −0.072 | 0.957 | −0.137 | FAIL |
+| z_fund, z_oi, z_liq, z_fg | 1.0 | 0.000 | 1.000 | 3.22 | +0.000 | −0.450 | 0.869 | −0.137 | FAIL |
+| z_fund, z_oi, z_liq, z_fg | 1.5 | 0.000 | 1.000 | 2.05 | +0.000 | −0.161 | 0.937 | −0.137 | FAIL |
+| z_fund, z_oi, z_liq, z_fg | 2.0 | 0.000 | 1.000 | 0.88 | +0.000 | −0.057 | 0.972 | −0.137 | FAIL |
+
+**0/9 configs pass.** Every config fails on `hit_rate < 0.5` (all exactly 0,
+`n_hits=0/11`) and `p_hit_rate > 0.05` (all exactly 1.000 — the block-shuffle
+placebo never scores worse than the real signal, consistent with a real hit
+rate of zero). Several configs additionally fail `overlay_delta_sr_min`
+(as loose as k=2.0, four-component still −0.057 to −0.098). `overlay_sr_base`
+(EW BTC+ETH buy-and-hold over the dev window) is a fixed **−0.137** across all
+9 rows — the base series itself is negative-SR over 2021-11→2025-03,
+so any flattening overlay subtracts from an already-negative baseline unless it
+removes more downside than upside.
+
+### 42.4 Episode catalog (11 episodes, dev window, mechanical rule)
+
+| # | start | end | trough (10d fwd log-ret) | known event |
+|---|---|---|---:|---|
+| 1 | 2021-11-08 | 2021-11-08 | −0.1781 | post-ATH top formation *(inside funding warm-up)* |
+| 2 | 2021-11-30 | 2021-11-30 | −0.1806 | late-Nov 2021 selloff *(inside funding warm-up)* |
+| 3 | 2021-12-27 | 2021-12-27 | −0.1663 | year-end 2021 selloff *(inside funding warm-up)* |
+| 4 | 2022-01-11 | 2022-01-18 | −0.2797 | Jan-2022 macro/rate selloff *(inside funding warm-up)* |
+| 5 | 2022-04-29 | 2022-05-08 | −0.3298 | Terra/LUNA-UST collapse *(inside funding warm-up)* |
+| 6 | 2022-06-02 | 2022-06-12 | −0.5266 | Celsius freeze / 3AC contagion |
+| 7 | 2022-08-16 | 2022-08-18 | −0.2142 | Aug-2022 pullback |
+| 8 | 2022-09-10 | 2022-09-12 | −0.2582 | Sep-2022 post-Merge selloff |
+| 9 | 2022-10-30 | 2022-11-07 | −0.3125 | FTX collapse |
+| 10 | 2024-07-26 | 2024-08-01 | −0.2734 | Aug-2024 yen-carry unwind / global selloff |
+| 11 | 2025-02-22 | 2025-03-02 | −0.1983 | Feb-2025 tariff selloff |
+
+`funding_rate` history starts exactly **2021-11-01**; the `z_fund`/composite
+365-day z-score requires `min_periods=180`, so no config can produce a
+meaningful composite value before **~2022-04-29**. Episodes 1–5 (2021-11-08 →
+2022-04-29, including the Terra/LUNA collapse) fall inside this warm-up and are
+structurally undetectable regardless of composite construction — the honest
+denominator is **6 detectable episodes** (#6–#11), not 11. Against that
+denominator the composite still scores **0/6 hits**; the pre-registered gate's
+`hit_rate_min = 0.5` required at least 3/6 (equivalently 6/6 if measured against
+the full 11 without the warm-up correction — either reading fails by a wide
+margin).
+
+### 42.5 Mechanism finding: composite tracks euphoria, not stress
+
+Inspecting the composite's warn-cluster timing (all 9 configs, all thresholds)
+shows warn clusters fire exclusively during **bull-euphoria** periods: the
+Jan-2023 recovery, the Oct–Dec-2023 rally, the Feb–Apr-2024 ETF rally, and the
+Nov-2024 post-election rally. The maximum pre-episode composite value across
+every episode and every component set is **+0.912**, reached ahead of episode
+#7 (2022-08-16) — below the loosest grid threshold, k=1.0. No config, at no
+threshold, ever reaches WARN in the 20 days preceding any of the 11 episodes.
+The composite as constructed behaves as a **long-crowding / euphoria
+detector** (funding and OI buildup rise when longs pile in during rallies), not
+a pre-crash stress detector: the dev-window crashes that matter — Celsius/3AC,
+FTX, the Aug-2024 yen-carry unwind, the Feb-2025 tariff selloff — each arrived
+**without** a preceding euphoria signature at any pre-registered threshold.
+
+### 42.6 Overlay economics: zero drawdown protection, negative Sharpe drag
+
+`maxdd_overlay` is **byte-identical to `maxdd_base` in all 9 configs**
+(0.7680 both, every row) — the WARN state never covers any day inside the
+window that produces the dev-window's true worst drawdown (2021-11 →
+2022-11), so flattening-while-WARN buys **zero drawdown protection**. Every
+row's `ΔSR` is negative: flattening removes euphoric up-days from an
+already-negative-SR base (−0.137), so the overlay only subtracts return
+without ever touching the drawdown it exists to defend against.
+
+### 42.7 Interpretation limits
+
+1. **The index was never tested on its target regime.** The canonical
+   funding-euphoria blow-off top this composite is designed to catch — the
+   Nov-2021 all-time-high top — predates the funding-rate data series itself
+   (funding starts 2021-11-01) plus the 180-day warm-up; the composite could not
+   have been evaluated against its own motivating example inside this dev
+   window.
+2. **Scope of the negative.** This result applies to *this specific composite*
+   (z_fund/z_oi/z_liq/z_fg, mean-aggregated, lagged 1 day) at k ∈
+   {1.0, 1.5, 2.0} with 20-day detection windows, evaluated post-2022 — it is
+   not a finding that "positioning stress carries no early-warning content."
+   Different aggregation (e.g. max instead of mean), different lag structure,
+   or a longer detection window are untested variants outside the frozen grid.
+3. **Cheap falsification path exists but is out of scope here.** Open interest
+   data reaches back to 2020-02; backfilling funding-rate history to ≥2020
+   would let a future pre-registered cycle test the composite against its
+   actual target event (the Nov-2021 top, and earlier 2020-2021 leverage
+   cycles). Per house pre-registration methodology, this requires a **new**
+   pre-registered cycle — it cannot be retrofitted onto this one without
+   voiding the current gate.
+
+### 42.8 Verdict
+
+**0/9 configs pass** the pre-registered `stress_ews.dev_select` gate — every
+config fails `hit_rate_min` (0.5 required, 0/11 and 0/6-detectable measured)
+and `placebo_p_max` (0.05 required, 1.000 measured), with several also failing
+`overlay_delta_sr_min`. Per the Task 7 brief's Step 1 gate check
+(`dev_results.json["selected"] is None`), the holdout one-shot does **not**
+run: `scripts/stress_ews_holdout.py` was not written, no holdout window data
+was touched, and the locked holdout (2025-04-01 onward) remains **unspent** —
+available for a future pre-registered cycle (e.g. the funding-backfill
+falsification path noted in §42.7 above) without needing to re-spend a fresh
+holdout window. One-shot discipline intact: no code or threshold was adjusted after
+seeing the dev grid; the 9-config grid was closed by pre-registration before
+Task 1 ran, and the negative is recorded as it fell. This is consistent with
+the program's recurring pattern of honest, causal, look-ahead-free signals
+producing thin or null edges once same-bar look-ahead and post-hoc tuning are
+removed (BT11, §12, §33–§38, §40–§41).
+
+## Section 43: Wide-Universe Cross-Sectional Momentum (P1) + F&G Sentiment-Beta (D1) — Dev-Gate NEGATIVE ×2, Holdouts Unspent (2026-07-14)
+
+Motivation traces to the wide-universe pivot pass
+(`PIVOT_RESEARCH_2026-07-12.md`) and the sentiment early-warning pass
+(`SENTIMENT_EARLY_WARNING_RESEARCH_2026-07-14.md`). P1 tests whether
+published post-2020 cross-sectional crypto momentum (Borri, Liu, Tsyvinski
+& Wu, arXiv 2510.14435, survivorship-controlled 16,468-coin universe,
+2-week momentum long-short t = 3.70 Newey-West; independently corroborated by
+JFQA 2025 "Trend Factor for the Cross-Section of Cryptocurrency Returns")
+survives as a retail-implementable long-only top-K design net of realistic
+costs on a tradable Binance-perp subuniverse — the literature reports gross
+Sharpes only, and net-of-cost retail survival is an open question this task
+answers in-house. D1 tests whether the nonlinear F&G-beta pricing effect
+documented in *Journal of Behavioral and Experimental Finance* (2025,
+S2214635025000243; intermediate-beta coins earn +3.57%/week risk-adjusted
+excess return vs. extreme-beta coins, 1,100+ coins, 2018-2024) survives as a
+standalone middle-quintile long portfolio under the same cost and universe
+regime. Both were pre-registered as candidate honest negatives alongside §42,
+under the same one-shot discipline that governs the rest of the rebuild
+(§39-41).
+
+### 43.1 Pre-registration provenance
+
+Gates frozen **before** any grid cell was run: `data/rebuild/gates.json →
+xs_mom_p1` + `fg_beta_d1` (registered 2026-07-14), full rule text in
+`docs/superpowers/specs/2026-07-14-xs-mom-fg-beta-prereg.md`, committed at
+`d5236d1`. P1's grid is closed at 12 configurations (L ∈ {7, 14, 28} ×
+skip ∈ {0, 1} × K ∈ {10, 20}); D1's grid is closed at 2 configurations
+((a) standalone middle-quintile long, (b) P1-overlay excluding extreme-beta
+quintiles, with (b) conditional on P1 selecting a config). Dev window for
+both: **2021-01-01 → 2025-03-31**. Holdout window for both: **2025-04-01 →
+2026-07-01**, untouched by this task — the gate check
+(`dev_results.json["selected"]`) returns `None` for both experiments, so the
+one-shot holdout scripts were never written and no holdout data was read.
+
+Portfolio-mechanics and universe-eligibility engine: `tradingagents/xsect/`,
+built and hardened across commits `cbfd748` (survivorship-safe bulk kline
+fetcher), `9b8dab9` (trim trailing zero-volume padding), `c1ccab5` (PIT
+universe eligibility from kline availability), `396744a` (calendar-anchored
+30-day volume window), `99ca9d4` (weekly EW portfolio engine + paired
+bootstrap + rank placebo), `a8e9c35` (weight-anchored returns, full exit
+costs, calendar momentum window, C1 kill-test), and `9db04ab` (require
+anchor close before momentum window — fused-return guard). Grid execution
+commits: `974fc77` (P1, 12 configs + benchmark) and `9268dc2` +`ef27ab1`
+(D1 causal rolling-OLS beta sort + standalone dev run). The vectorized grid
+engine used for the 12/2-config sweeps was cross-validated bit-identical
+against the reference `run_weekly_portfolio()` path twice: in-run on the
+K=100 benchmark leg (max abs diff `1.67e-16` at P1; `5.55e-17` at D1), and
+independently in the forensic review on two high-turnover momentum configs,
+L=7/skip=0/K=10 and L=28/skip=1/K=20 (max abs diff `5.6e-17`). DSR uses the
+house n_trials recipe (unique config hashes across the full ledger):
+`n_trials_at_eval = 74` at P1 evaluation, `75` at D1 evaluation (D1 adds one
+trial to P1's count).
+
+### 43.2 Data and universe construction (survivorship story)
+
+Both experiments share a 799-symbol survivorship-safe daily-kline store
+(`data/xsect/klines/`, committed `c25ab5b`), built from Binance USDT-M
+futures kline history enumerated via S3 bucket listing (not the live
+symbols endpoint), so delisted symbols are included with their full
+trading history up to delisting — e.g. `LUNAUSDT` ends 2022-05-12 (the
+Terra/UST collapse) and `FTTUSDT` ends 2022-11-14 (the FTX collapse); both
+remain in the eligible universe up to their last trading day and then drop
+out, rather than being silently absent from the whole sample (the standard
+survivorship bias this class of study is required to control for per the
+pre-registration's validity precondition). Trailing zero-volume padding
+that the futures API appends after a symbol's real delisting date was
+trimmed (`9b8dab9`) so it cannot masquerade as tradable volume.
+
+Daily PIT eligibility (top-100 by 30-day median quote-volume, ≥$5M
+threshold, first kline ≤ D-30) ranges **67-100 symbols** on 2021 Monday
+rebalance dates, rising to a steady **100** from later in the sample
+onward as more symbols cross the 30-day-history and volume floors. Three
+non-ASCII meme perpetuals listed after 2025 never enter any dev-window
+universe. LUNA is present through its 2022 crash and then exits cleanly at
+delisting, consistent with the eligibility rule rather than a hand-curated
+exclusion.
+
+### 43.3 P1: wide-universe cross-sectional momentum — dev grid (12/12 FAIL)
+
+Benchmark (EW, full eligible universe, same weekly mechanics/costs):
+**net SR −0.417**, maxDD **0.967**, over 1,547 days.
+
+| L | skip | K | net_sr | delta_sr | p_pos | placebo_p | dsr | pass |
+|---:|---:|---:|---:|---:|---:|---:|---:|:---:|
+| 7 | 0 | 10 | −0.748 | −0.331 | 0.046 | 0.978 | 0.0000 | FAIL |
+| 7 | 0 | 20 | −0.695 | −0.278 | 0.018 | 0.978 | 0.0001 | FAIL |
+| 7 | 1 | 10 | −0.701 | −0.284 | 0.051 | 0.948 | 0.0001 | FAIL |
+| 7 | 1 | 20 | −0.638 | −0.221 | 0.049 | 0.932 | 0.0001 | FAIL |
+| 14 | 0 | 10 | −0.559 | −0.142 | 0.230 | 0.713 | 0.0002 | FAIL |
+| 14 | 0 | 20 | −0.553 | −0.136 | 0.138 | 0.717 | 0.0002 | FAIL |
+| 14 | 1 | 10 | −0.661 | −0.244 | 0.095 | 0.908 | 0.0001 | FAIL |
+| 14 | 1 | 20 | −0.597 | −0.180 | 0.044 | 0.852 | 0.0001 | FAIL |
+| 28 | 0 | 10 | −0.520 | −0.104 | 0.314 | 0.593 | 0.0002 | FAIL |
+| 28 | 0 | 20 | −0.479 | −0.062 | 0.299 | 0.481 | 0.0003 | FAIL |
+| 28 | 1 | 10 | −0.493 | −0.077 | 0.352 | 0.523 | 0.0003 | FAIL |
+| 28 | 1 | 20 | −0.542 | −0.125 | 0.138 | 0.695 | 0.0002 | FAIL |
+
+**0/12 configs pass** the pre-registered `xs_mom_p1.dev_select` gate
+(`net_sr_min` 0.8, `delta_sr_vs_benchmark_min` 0.0, `p_pos_min` 0.85,
+`placebo_p_max` 0.05, `dsr_min` 0.9 — all five required). Every config's
+net SR is between −0.75 and −0.48, all below the −0.417 benchmark
+(`delta_sr` negative in every row); every `placebo_p` is between 0.48 and
+0.98 — the real ranked signal never beats the median of its own 500
+within-rebalance random-rank placebo draws, let alone the top 5% required
+by `placebo_p_max`. DSR is effectively zero at every grid cell (max
+0.0003). MaxDD across configs sits near 0.97-0.99 (worse than the 0.967
+benchmark), consistent with the real trading history of a concentrated
+EW alt-basket over this window: a 2021-05 cycle peak, a −87.6% calendar-2022
+return (−92.6% cumulative from the 2021-05 peak by end-2022), and no
+recovery by 2025-03-31 — the grid is not producing an
+implausible drawdown artifact, it is reproducing a real, well-known
+period.
+
+### 43.4 P1 mechanism: tail-selection into volatility, not a reversal story
+
+An un-ledgered diagnostic check sorted the same L-day cumulative-return
+score in the **ascending** (loser) direction instead of descending
+(winner) — the opposite tail of the identical distribution. That
+diagnostic also underperforms: net SR −0.778, `placebo_p` 0.988. Both
+tails of the L-day-return sort underperform random rank draws by a wide
+margin. This rules out the most likely rescue hypothesis (momentum should
+be inverted into a reversal/mean-reversion signal): if the losers were
+underpriced, the ascending sort would show a strong positive edge, not
+another failing placebo score. The mechanism instead looks like
+**tail-selection into volatility**: picking any K=10-20 names by extreme
+rank (either direction) out of a 67-100-name universe concentrates the
+portfolio into the highest-realized-volatility names of the period,
+without buying compensating expected return. This reads directly from the
+placebo distribution itself: the median placebo SR (**−0.487**, the
+expected SR of 500 *random* K-name draws from the same universe) is
+already below the full-universe benchmark (−0.417) — concentrating from
+100 names down to 10-20 names, with **no ranking skill at all**, already
+costs Sharpe. Actual ranking (by either momentum tail) subtracts further
+from that already-degraded concentrated baseline rather than adding to
+it. Engine correctness for this conclusion was cross-validated
+bit-identical between the reviewed reference path and the vectorized grid
+path — in-run on the benchmark leg (1.67e-16) and in the forensic review on
+two high-turnover momentum configs (5.6e-17) — and the house DSR recipe was
+verified against `n_trials_at_eval = 74`.
+
+### 43.5 D1: F&G sentiment-beta, standalone middle-quintile — dev result (FAIL, 0/5 gates)
+
+| metric | value | gate threshold | pass |
+|---|---:|---:|:---:|
+| net_sr | −0.418 | ≥ 0.8 | FAIL |
+| delta_sr (vs. benchmark) | −0.001 | > 0.0 | FAIL |
+| p_pos | 0.483 | ≥ 0.85 | FAIL |
+| placebo_p | 0.271 | ≤ 0.05 | FAIL |
+| dsr | 0.0005 | ≥ 0.9 | FAIL |
+
+Config: 90-day rolling causal OLS beta of coin log-return on Δ F&G, min 60
+overlapping observations, standalone EW long of the middle F&G-beta
+quintile of the eligible universe, weekly rebalance, identical cost/universe
+mechanics to P1. Portfolio size sanity over the 222-week dev window: min 13,
+median 19, max 20 names (0 zero-weeks) — the middle-quintile filter never
+starved the portfolio down to a degenerate size. Net SR (−0.418) is
+essentially indistinguishable from the EW full-universe benchmark
+(−0.417); `delta_sr` is −0.0015 unrounded, i.e., statistically flat against
+benchmark rather than negative or positive — the middle-beta filter neither
+helps nor hurts, it reproduces the benchmark almost exactly. `p_pos` at
+0.483 means the real portfolio beats its own bootstrap resample distribution
+essentially at a coin-flip rate, and `placebo_p` at 0.271 means the real
+quintile selection is indistinguishable from a random-rank draw at
+conventional significance. All 5 pre-registered gates fail; `n_trials_at_eval
+= 75` at D1 evaluation. Per the frozen grid rule, variant (b) — the P1-based
+overlay excluding extreme-beta quintiles — correctly never ran, because P1
+selected `NONE` (§43.3): the spec's conditional clause ("if P1 selects NONE,
+only (a) runs") is a frozen rule evaluated mechanically, not a judgment call
+made after seeing D1's own standalone result. Causality of the beta
+perturbation (shift(1)-causal inputs, 90-day rolling window, 60-obs minimum)
+was verified as part of engine cross-validation.
+
+### 43.6 Interpretation limits
+
+1. **Scope of the practical question answered.** Both experiments test a
+   long-only, top-K/quintile, equal-weight, weekly-rebalance,
+   10-bps-cost implementation on a Binance-perp tradable subuniverse — not
+   the literature's constructions (Borri et al.'s value-weighted
+   long-short cross-sectional spread on a 16,468-coin universe; the JBEF
+   paper's long-short beta-sorted portfolio). This result answers the
+   pre-registered *practical* question (does a retail-implementable
+   variant survive realistic costs), not the papers' underlying factor
+   claim — a value-weighted long-short construction on the full universe
+   remains untested here.
+2. **Single dev window.** 2021-01-01 → 2025-03-31 is dominated by the
+   2022 bear market (Terra/LUNA, Celsius/3AC, FTX) and the 2024-25 altcoin
+   malaise; a period in which any concentrated long-only altcoin basket
+   — ranked, random, or inverted — underperforms. A different dev window
+   is untested and would require a new pre-registered cycle.
+3. **Benchmark confound, addressed by placebo.** The benchmark (K=100,
+   full universe) trades at lower concentration than any grid cell
+   (K=10/20); part of the SR gap between grid cells and benchmark is
+   concentration, not ranking. The placebo test (500 random-rank draws at
+   the *same* K) isolates ranking skill from concentration and is
+   therefore the decisive gate for P1 — and it fails at every grid cell.
+4. **D1's implementation choice.** The standalone middle-quintile
+   long-only design is one implementable reading of a paper whose
+   original construction is a long-short beta-sorted portfolio (intermediate
+   beta vs. extreme beta, both sides). A long-short variant of D1, or an
+   overlay variant beyond the frozen (b) rule, is untested and out of
+   scope for this pre-registered cycle.
+
+### 43.7 Verdict
+
+**P1: 0/12 configs pass** the pre-registered `xs_mom_p1.dev_select` gate;
+**D1: 0/5 gates pass** for the standalone middle-quintile design (variant
+(b) correctly never ran because P1 selected none). Per the Task 7 brief's
+gate check (`dev_results.json["selected"] is None` for both experiments),
+neither one-shot holdout script was written and neither holdout window
+(2025-04-01 → 2026-07-01) was read: both stay **locked and unspent**,
+available for a future pre-registered cycle testing a different
+construction (value-weighted long-short momentum, long-short beta sort, a
+different dev window) without needing to re-spend a fresh holdout. One-shot
+discipline intact throughout: both grids (12 + 2 configs) were closed by
+pre-registration before Task 1 ran; the ascending-tail diagnostic in §43.4
+was run and reported as a mechanism check, not used to select or rescue a
+config, and did not touch the holdout. This extends the same pattern
+documented in §42 and the broader rebuild (BT11, §12, §33-§41): once
+same-bar look-ahead, unpurged labels, and post-hoc tuning are removed,
+even mechanism-verified published effects (post-2020 CS momentum,
+nonlinear F&G-beta pricing) do not clear a pre-registered net-of-cost bar
+on this data and this implementation.
+
+## Section 45: Wide-Universe Trend Following (trend_wide_t1) — Dev-Gate NEGATIVE, Holdout Unspent (2026-07-28)
+
+(Section 44 = meta-labeled trend system, recorded on branch feature/meta-labeling;
+numbering reserved to avoid merge collision.)
+
+Motivation traces to the post-§44 go-forward menu, which ranked two leads above all
+others: cross-crypto spillover long/short and a wide-universe trend ensemble
+("breadth does the work"). This task executes the second lead. §44 is the origin
+of the frozen 4-rule vote primary reused here (MA-cross 5/20, 10/40, 20/60 +
+Donchian 20/10); §44's meta-labeling classifier built on top of that primary
+failed its own dev gate (G1, both v1 and v2 variants — v2 well-powered at 2,604
+OOS observations, AUC 0.48 CI [0.45, 0.52]), and its holdout stayed unspent. The
+primary itself (the 4-rule vote, independent of the meta-labeling classifier) was
+never separately dev/holdout-gated in §44. The open question this task answers is
+whether widening the traded universe from a small BTC/ETH-scale book to a top-N
+liquid-perp basket lets that same primary clear a pre-registered net-of-cost bar,
+or whether the underlying edge is too thin to survive breadth.
+
+### 45.1 Pre-registration provenance, including a dropped lead
+
+Lead #1 of the go-forward menu — cross-crypto return spillover long/short,
+anchored on Guo, Sang, Tu & Wang, *Cross-cryptocurrency return predictability*,
+*Journal of Economic Dynamics and Control* 163 (2024) 104863 — was investigated
+first and **dropped before registration**. Reading the paper (PDF cached at
+scratchpad `guo2024_spillover.pdf`) established that it is a minute-frequency
+study: 30 coins, 1-minute bars, sample 2019-03-25 → 2021-04-30 (futures leg only
+2020-07-29 → 2021-04-30), quintile long/short portfolios rebalanced every 5-10
+minutes, reporting net returns of 0.34-0.66 bps per 10-minute bar after a 4-bps
+taker fee. The trading universe was also selected by volume as of 2020-05-09 —
+after the sample start — a look-ahead in the paper's own construction. The paper
+provides no daily-horizon evidence, and its stated mechanism (limited-attention
+information diffusion across correlated coins) is a minute-scale phenomenon by
+construction; a daily-horizon spillover test would be an original, low-prior
+hypothesis sitting in the same cross-sectional-momentum family already closed
+0/12 at §43, not a replication of Guo et al.'s finding. This detour is recorded
+here per house pre-registration methodology (dropped leads are documented, not
+silently discarded) rather than run and reported as a test of the paper's claim.
+
+Lead #2 — the wide-universe trend ensemble executed in this section — is
+motivated by two external, unverified anchors treated as motivation only (neither
+replicated in-house before this task, both remaining unverified after it): a
+practitioner top-20 trend ensemble reporting net SR ≈ 1.57 at 10 bps costs (SSRN
+5209907), and an "AdaptiveTrend" system on 6-hour bars reporting net SR 2.41
+(arXiv 2602.11708). An adjacent-family internal reference point (a different
+signal construction, not this primary) is §41's honest-rebuild factor sleeve,
+`macross_10_50_ls` (a single 10/50 MA-cross long-short on EW BTC+ETH): its
+one-shot holdout Sharpe was +0.389, statistically indistinguishable from a
+persistence-matched block-shuffle placebo (p = 0.166) — a thin trend edge on
+BTC/ETH majors, cited here only as motivation-adjacent context, not as prior
+evidence for the §44 primary tested in this section. Breadth, not a new signal
+rule, is the axis under test.
+
+Gate frozen **before** any grid cell was run: `data/rebuild/gates.json →
+trend_wide_t1` (registered 2026-07-28, commit `fd25aff`), full rule text and
+lead-#1 provenance in `docs/superpowers/specs/2026-07-28-trend-wide-design.md`
+(commit `7dcae06`, implementation plan `705faa7`). Build commits: `b6daa97`
+(frozen vote module copied verbatim from the `feature/meta-labeling` §44
+primary, pinned against a parity fixture — no re-tuning), `ebbb428` (daily
+weight construction + t+1 cost engine), `d536653` (W/R index-alignment assert),
+`2917eae` (circular-shift placebo family + synthetic kill-test), `47ff0c1` +
+`fc7c446` (dual-family placebo amendment — see below), `02e193c` (6-config dev
+grid script), `7afe1a6` (dev grid results ledgered), `c2e51f2` (dev_results.json
+tracked). Dev grid executed and ledgered at `7afe1a6` (6 rows,
+`experiment="trend_wide_t1"`). Grid is closed at 6 configs by the
+pre-registration; no config outside the grid was evaluated.
+
+The dual-placebo design (per-coin independent **and** shared-offset circular
+time-shifts, gating on the worse of the two p-values) was **amended before
+registration**, not after seeing results: an internal task-3 review of the draft
+spec caught that a single per-coin-independent placebo family nulls each coin's
+own directional timing but breaks cross-coin co-activation, so a real signal
+whose only "edge" is that many coins turn on together during the same bull
+regime could look significant against that placebo alone. The shared-offset
+family (one time-shift offset applied to every column in a draw) preserves
+that cross-coin co-activation and nulls only calendar alignment, closing the
+gap. Both families are frozen in `gates.json` and both ran; §45.4 below shows
+why this amendment mattered.
+
+Dev window: **2021-01-01 → 2025-03-31**. Holdout window: **2025-04-01 →
+2026-07-01**, untouched by this task — the gate check
+(`dev_results.json["selected"]` returns `null`) means Steps 2-4 of the holdout
+procedure do not run: no holdout script was written, no holdout-window returns
+entered any reported metric (the kline store backing this task spans through
+2026-07 and the placebo circular-shift rolls traverse the full weight history,
+including holdout-period signal states, before dev-window truncation — an
+artifact that dilutes the placebo null and biases that gate toward passing,
+leaving this negative conservative rather than invalidated). Holdout stays
+locked and unspent.
+
+### 45.2 Design summary
+
+Signal: the frozen §44 primary reused verbatim — vote = mean of 4 binary rules
+(MA-cross 5/20, 10/40, 20/60, and a stateful Donchian 20-entry/10-exit rule),
+60-bar warmup, long when vote > 0.5, flat otherwise (long-flat only; no
+short-side funding modeling needed). No parameter re-tuning; a parity unit
+test pins the module's output against a fixture from the `feature/meta-labeling`
+worktree.
+
+Universe: PIT-eligible top-N by 30-day median quote-volume (≥$5M floor, first
+kline ≤ D−30, ≥90 daily bars at decision) drawn from the 799-symbol
+survivorship-safe kline store (`tradingagents/xsect/universe.eligibility`, the
+same store used in §43), refreshed monthly at the first Monday close of each
+calendar month. A coin leaving the universe is force-flattened at the next bar
+with turnover cost charged.
+
+Sizing: per-coin weight `w_i(t) = (1/N) · min(1, vol_target / (σ_i(t)·√365)) ·
+1{vote_i(t) > 0.5}`, with `σ_i(t)` the 30-calendar-day rolling std of daily log
+returns (weight 0 on insufficient history). Decision at close *t* accrues from
+bar *t+1* (causal next-bar convention, per house rebuild discipline); 10 bps
+per side on Σ|Δw|, charged on the first accrual day after any weight change
+(daily vote/vol drift and monthly universe rotation both trigger costs).
+
+Grid, frozen before the first run: N ∈ {10, 20} × vol_target ∈ {0.20, 0.30,
+0.40} = 6 configurations. Benchmark: per-N equal-weight buy-and-hold of the
+same monthly top-N universe, identical t+1 accrual and 10-bps mechanics — SR
+comparison is scale-invariant, so vol is not matched. Dev window 2021-01-01 →
+2025-03-31 (1,547 accrued days); holdout 2025-04-01 → 2026-07-01, sealed and
+one-shot, spent only if dev passes.
+
+### 45.3 Dev grid results (6/6 configs, `data/rebuild/trend_wide/dev_results.json`)
+
+Benchmarks: N=10 net SR **−0.484** (maxDD 0.969), N=20 net SR **−0.505** (maxDD
+0.964), both over 1,547 days. `n_trials_at_eval = 81` at every row (house
+unique-config-hash recipe over the full ledger).
+
+| N | vt | net_sr | delta_sr | p_pos | placebo_p_indep | placebo_p_shared | placebo_p | dsr | pass |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|:---:|
+| 10 | 0.20 | 0.337 | 0.821 | 0.963 | 0.383 | 0.341 | 0.383 | 0.0386 | FAIL |
+| 10 | 0.30 | 0.337 | 0.821 | 0.963 | 0.385 | 0.337 | 0.385 | 0.0385 | FAIL |
+| 10 | 0.40 | 0.317 | 0.801 | 0.962 | 0.401 | 0.351 | 0.401 | 0.0353 | FAIL |
+| 20 | 0.20 | 0.374 | 0.879 | 0.991 | 0.184 | 0.271 | 0.271 | 0.0451 | FAIL |
+| 20 | 0.30 | 0.373 | 0.878 | 0.991 | 0.184 | 0.273 | 0.273 | 0.0449 | FAIL |
+| 20 | 0.40 | 0.359 | 0.864 | 0.990 | 0.192 | 0.283 | 0.283 | 0.0423 | FAIL |
+
+**0/6 configs pass** the pre-registered `trend_wide_t1.dev_select` gate
+(`net_sr_min` 1.0, `delta_sr_vs_benchmark_min` 0.0, `p_pos_min` 0.90,
+`placebo_p_max` 0.05, `dsr_min` 0.9 — all five required). The grid clears the
+*relative* axis comfortably (ΔSR +0.80 to +0.88, p_pos 0.96-0.99, all six
+configs beating their per-N benchmark with high confidence under the paired
+stationary-block bootstrap) but fails the *absolute* net-SR floor by a wide
+margin (0.317-0.374 vs the 1.0 threshold), fails the placebo gate under both
+families (worse-of-two 0.271-0.401, an order of magnitude above the 0.05
+requirement), and fails DSR by roughly 20x (0.035-0.045 vs 0.9 required). No
+config is close to passing on more than one of the three failing axes.
+
+### 45.4 Mechanism (forensically verified): benchmark outperformance is exposure, not timing
+
+Three engine-liveness checks (own reproduction against the frozen engine code,
+`tradingagents/xsect/trend.py` + `trend_signal.py`, using the exact dev-window
+accrual convention in `scripts/trend_wide_dev.py`) confirm the grid is not a
+frozen or degenerate strategy: for N=20/vt=0.3, the number of occupied slots
+per day has median 4.00 and mean 6.60 out of 20 (min 0, max 20) — the sizing
+and vote-gating logic is actively varying exposure, not sitting at a constant
+allocation; monthly universe membership shows **0 of 50** month-to-month
+refreshes with zero churn (every refresh rotates at least one name in or out);
+and BTC's composite vote crosses its 0.5 long/flat threshold **59 times** over
+the 1,547-day dev window (own reproduction from the frozen vote module,
+matching the engine's dev-window convention) — the primary is actively trading
+BTC, not stuck long or flat throughout.
+
+Despite the engine being demonstrably alive, the source of the six configs'
+positive ΔSR is not timing skill. BTC buy-and-hold over the identical dev
+window has SR **+0.363** (own reproduction, raw log-returns, no costs) —
+positive — while the EW top-N basket benchmarks are **−0.484** (N=10) and
+**−0.505** (N=20) — negative. The wide-universe long-flat trend book's ΔSR
+of +0.80 to +0.88 is being measured against a *benchmark that has already
+decayed further than BTC itself* over this window (broad-altcoin buy-and-hold
+underperforms BTC buy-and-hold badly across 2021-2025, consistent with the
+concentrated-altcoin-basket decay documented in §43.3). This is exactly what
+the dual-placebo amendment in §45.1 was designed to catch, and it does: running
+both placebo families' 500 random time-shifts of the real weight pattern
+through the same engine and asking what fraction of the *placebo* portfolios
+*also* beat the same per-N benchmark (own reproduction, not the ledgered
+`placebo_p` statistic, which compares placebos against the real SR rather than
+against the benchmark) shows **92-99%** of randomly time-shifted weight
+patterns beat the benchmark too (indep family ≈98-99%, shared-offset family
+≈92-95%, across both N=10 and N=20). Almost any long-flat weight pattern with
+this basket's exposure profile beats this particular benchmark; the real
+signal's edge over the benchmark is a **long-flat exposure/participation
+effect**, not evidence of directional timing skill, and this is precisely the
+failure mode the `placebo_p` gate (0.27-0.40, an order of magnitude above the
+0.05 bar) already flags at the ledger level. Breadth did not rescue the trend
+primary: the §44 primary itself was never separately dev/holdout-gated (only
+its downstream meta-labeling classifier was, and that failed G1), so this
+result is not a comparison against a passing prior — it stands alongside the
+thin, statistically insignificant trend edge measured on a different
+construction in §41 (`macross_10_50_ls`, +0.389 holdout, p = 0.166) as a second
+data point that daily-horizon trend-following on BTC/ETH-scale or wider crypto
+universes has not yet produced a signal that clears an honest net-of-cost bar.
+The practitioner net-SR-≈1.57 anchor (SSRN 5209907) is not reproduced in-house
+under a survivorship-safe PIT universe and honest t+1/cost accounting.
+
+### 45.5 Interpretation limits
+
+1. **Scope of the negative.** This result applies to the frozen §44 primary
+   (MA 5/20, 10/40, 20/60 + Donchian 20/10, vote-mean long-flat) traded across
+   a monthly-refreshed top-10/top-20 liquid-perp basket, vol-targeted at
+   20-40%, under 10-bps costs, over 2021-2025 — it is not a finding that no
+   trend-following construction survives breadth. A different signal (e.g. a
+   continuous-weight trend score rather than a binary vote), different
+   rebalance cadence, or a different vol-target/leverage regime is untested.
+2. **Single dev window, bear-heavy for altcoins.** 2021-01-01 → 2025-03-31
+   contains the same 2022 bear market and 2024-25 altcoin malaise noted in
+   §43.6 as depressing any broad-altcoin long exposure; the benchmark's
+   negative SR over this window is a real, well-documented period, not an
+   artifact, but it does make the ΔSR-vs-benchmark axis easy to clear for
+   almost any long-flat pattern (§45.4).
+3. **Both external anchors remain unverified in-house.** SSRN 5209907 and
+   arXiv 2602.11708 were treated as motivation only per the pre-registration
+   and were not independently replicated on their own terms (their exact
+   universes, rebalance rules, and cost assumptions were not reproduced) —
+   this task tests a specific in-house implementable design inspired by them,
+   not a replication of either paper.
+4. **Lead #1 (spillover) is a documented detour, not a tested hypothesis.**
+   §45.1's dropped lead was never run; nothing in this section speaks to
+   whether a daily-horizon cross-crypto spillover signal would or would not
+   clear a pre-registered gate. That remains open for a future cycle if a
+   daily-horizon evidence base for the effect is found.
+
+### 45.6 Verdict
+
+**0/6 configs pass** the pre-registered `trend_wide_t1.dev_select` gate. Every
+config clears the relative benchmark axis (ΔSR +0.80 to +0.88, p_pos
+0.96-0.99) but fails the absolute net-SR floor (0.317-0.374 vs 1.0 required),
+fails the placebo gate under both the independent and shared-offset families
+(worse-of-two 0.271-0.401 vs 0.05 required), and fails DSR by roughly 20x
+(0.035-0.045 vs 0.9 required). Per the gate check
+(`dev_results.json["selected"] is null`), the holdout one-shot does **not**
+run: no holdout script was written and no holdout-window returns (2025-04-01 →
+2026-07-01) entered any reported metric (the kline store spans through 2026-07
+and the placebo weight rolls traverse the full weight history, including
+holdout-period signal states, before dev-window truncation — this dilutes the
+placebo null in the direction of an easier pass, so the gate still failing
+leaves the negative conservative w.r.t. this artifact), and the locked holdout
+stays **unspent**, available for a future pre-registered cycle testing a
+different signal or sizing construction on this same PIT universe engine. One-shot discipline intact throughout: the 6-config
+grid was closed by pre-registration before Task 1 ran, the dual-placebo
+amendment was made before registration in response to an internal review
+finding (not after seeing results), and the forensic mechanism checks in §45.4
+were run and reported as verification, not used to select or rescue a config.
+This is the second breadth-family negative in the post-§44 program, after the
+799-symbol wide-universe cross-sectional momentum result in §43: both external
+trend/momentum anchors motivating these two experiments (Borri et al. and the
+JFQA trend-factor paper for §43; the SSRN practitioner ensemble and
+AdaptiveTrend for this section) remain unreproduced in-house once a
+survivorship-safe PIT universe, honest t+1 costs, and a dual-placebo test for
+cross-coin co-activation are applied. Revival of either lead requires a new
+pre-registered cycle, not a retrofit onto this one.
+
+## Section 46: Cross-Sectional Funding Carry L/S (carry_xs_t1) — Dev-Gate NEGATIVE, Holdout Unspent (2026-07-28)
+
+Executes lead #3 of the post-§44 go-forward menu, after lead #1 (spillover) was
+dropped pre-registration and lead #2 (wide trend) closed dev-gate negative
+(§45). This task revisits carry specifically because §41's holdout one-shot
+found that the BTC/ETH spot-hedged funding-carry sleeve passed its dev GO gate
+(§39) but failed the pre-registered holdout on the risk-free margin
+opportunity-cost hurdle: a ~0.4%-ann-vol sleeve cannot clear T-bills, even
+though the underlying funding income itself held out-of-sample (+7.53 as-built
+SR, +1.93 after trading frictions — the failure was capital efficiency, not a
+fake signal). §41 explicitly mandated that any carry revival be a **new**
+pre-registered cycle with the margin/risk-free convention fixed upfront, not a
+retrofit onto the old sleeve. This section is that cycle, testing a distinct
+hypothesis (cross-sectional relative-rank funding carry across a wide perp
+universe) under the same harshest-honest rf convention that killed the §39-41
+sleeve, so a pass would be unambiguous and a fail cannot be attributed to
+convention-shopping.
+
+### 46.1 Pre-registration provenance
+
+Gate frozen **before** any grid cell was run: `data/rebuild/gates.json →
+carry_xs_t1` (registered 2026-07-28), full rule text and provenance in
+`docs/superpowers/specs/2026-07-28-carry-xs-design.md` (commit `18e83bb`,
+design spec `b6f54fb`). Construction choice made at brainstorm and recorded in
+the spec before any code: perp-only dollar-neutral long/short deciles (short
+high-funding perps, long low/negative-funding perps, no spot leg), rejecting a
+widened spot-hedged sleeve as a repeat of the old sleeve's capital-inefficiency
+failure mode. The risk-free convention — flat annual rf 4.5%, deducted daily
+on 100% of capital regardless of the strategy's actual vol — is the exact
+`data/rebuild/carry_audit/costs.json` house convention from the §39 audit,
+amended into the spec at plan-writing time (commit `18e83bb`) in place of an
+originally-considered FRED DTB3 series, before any run: flat 4.5% is harsher
+than realized 2021-2022 T-bill rates (near zero) and removes an external data
+dependency, consistent with the harshest-honest-convention decision.
+
+**Data build.** A new funding-rate store was built from Binance
+`GET /fapi/v1/fundingRate` for all 799 symbols in the existing survivorship-safe
+klines store (the same universe reused from `feature/xs-momentum`/§43),
+committed at `c207106` (fetch script) and `1b09fcc` (manifest + coverage
+report). Final store: **2,406,061 prints across 799 symbols, 2019-09-10 →
+2026-07-03, 0 symbols below 90% day-coverage, median day-coverage 1.001**
+(`data/xsect/funding_coverage.json`). The spec flagged a specific
+survivorship risk before the fetch ran — that Binance might return empty or
+truncated funding history for delisted perps, punching survivorship holes in
+a store whose klines side is survivorship-safe — and required a forensic
+coverage check before registration could be considered complete; that check
+confirms delisted perps serve their full funding history via the same
+endpoint, resolving the risk cleanly. Two fetch defects were caught and fixed
+during the build, before the store was used for any signal or backtest: (1)
+`584498a` — the initial fetch cursor started at `startTime=0`, but Binance's
+API treats `startTime=0` as "return the most recent page" rather than "start
+from the beginning," which would have silently served only each symbol's
+latest prints instead of its full history; fixed by seeding the cursor at
+`kline_first − 30d`. (2) `a0b7afa` — the pagination loop had no handling for
+Binance 429/`RateLimitError` responses, which would leave silent gaps in the
+middle of a symbol's history on a transient rate-limit hit; fixed with retry
+handling, plus a dedup guard and a check for missing per-symbol parquet files.
+Both were caught by the build's own tests, not discovered downstream in
+results.
+
+**Pre-result amendment (tied-signal leg overlap).** Per `gates.json`'s
+`amendment_2026-07-28` entry, the long-leg construction was amended
+(`0373b3c`, "long leg must exclude short-leg members") **after registration
+but before any result was produced**: the first dev-grid invocation crashed on
+the frozen net-exposure sanity assert because tied signal values at the
+leg-selection boundary let a naive descending/ascending double-sort put the
+same symbol in both legs. Zero metrics were read and zero ledger rows were
+written at the time of the amendment — it is a correctness fix to a crashing
+assert, made blind to any outcome, not a result-contingent adjustment. §46.4
+below reports the forensic check on how much this amendment actually mattered
+once real results existed.
+
+### 46.2 Design summary
+
+Signal: trailing mean daily funding income over lookback `L` days, where daily
+funding is the **sum** (not mean) of that UTC day's 8h funding prints — the
+same undercounting lesson from the original carry sleeve (`groupby.mean()`
+undercounts funding income roughly 3×) applied here to a cross-sectional
+signal. Realized prints only, timestamped at print time (point-in-time safe).
+Daily cross-sectional rank within the current 50-symbol universe.
+
+Universe: the existing 799-symbol PIT eligibility rule
+(`tradingagents/xsect/universe.eligibility`) — USDT-M perp with a kline on day
+D, first kline ≤ D−30, 30-day median quote-volume ≥ $5M — ranked by volume and
+capped at **top-50**, refreshed monthly at the first-Monday close. An
+additional funding-specific requirement (≥30 gapless trailing funding days)
+makes the universe identical across all 6 grid configs, since the grid caps
+`L` at 30 — required for grid-level DSR comparability. A coin leaving the
+universe is force-flattened at the next bar with turnover cost; leg membership
+inside the fixed monthly universe refreshes **daily** (funding ranks move
+fast, universe membership does not).
+
+Portfolio: at decision close *t*, within the valid universe, SHORT the top
+`leg_frac × N` symbols by signal (highest funding paid by longs — collected by
+the short leg) and LONG the bottom `leg_frac × N` symbols, excluding short-leg
+members (the post-amendment rule), each leg equal-weighted at 50% of gross
+capital → gross 1.0, net 0. No vol targeting or per-symbol vol scaling in this
+first test (`t1`), a deliberate simplicity choice that also avoids
+reintroducing the §43 vol-selection mechanism through sizing. Decision at
+close *t* accrues from bar *t+1*; funding accrual is signed by weight (long
+pays positive funding, short receives); costs are 10 bps per side on Σ|Δw|,
+charged on the first accrual day after any weight change; rf is deducted
+every day on full capital as described above. A **vol-selection diagnostic**
+(rank-correlation of the funding signal against 30-day realized vol, and
+per-leg mean vol) was pre-registered as non-gating, recorded either way,
+specifically because §43 showed cross-sectional sorts can select on
+volatility rather than the named characteristic.
+
+Grid, frozen before the first run: `L ∈ {1, 7, 30}` × `leg_frac ∈ {0.10,
+0.20}` = 6 configurations, `N=50` fixed. Dev window 2021-01-01 → 2025-03-31
+(1,547 accrued days); holdout 2025-04-01 → 2026-07-01, sealed and one-shot,
+spent only if dev passes. No relative benchmark gate — the book is
+dollar-neutral, so cash is the natural benchmark and the rf deduction already
+embeds it.
+
+### 46.3 Dev grid results (6/6 configs, `data/rebuild/carry_xs/dev_results.json`)
+
+`n_trials_at_eval = 87` at every row (house unique-config-hash recipe over the
+full ledger). Placebo `p` below is the worse (max) of the two families per the
+gate rule.
+
+| L | leg_frac | net_sr | placebo_p_indep | placebo_p_shared | placebo_p (worse) | dsr | turnover/day | vol_rank_corr | pass |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|:---:|
+| 1 | 0.10 | −0.269 | 0.164 | 0.114 | 0.164 | 0.0011 | 0.716 | 0.040 | FAIL |
+| 1 | 0.20 | −0.464 | 0.116 | 0.104 | 0.116 | 0.0002 | 0.663 | 0.040 | FAIL |
+| 7 | 0.10 | −0.202 | 0.529 | 0.395 | 0.529 | 0.0018 | 0.236 | 0.002 | FAIL |
+| 7 | 0.20 | +0.463 | 0.086 | 0.064 | 0.086 | 0.0571 | 0.210 | 0.002 | FAIL |
+| 30 | 0.10 | +0.185 | 0.365 | 0.301 | 0.365 | 0.0173 | 0.099 | −0.034 | FAIL |
+| **30** | **0.20** | **+0.695** | 0.066 | 0.094 | 0.094 | 0.1226 | 0.085 | −0.034 | FAIL |
+
+**0/6 configs pass** the pre-registered `carry_xs_t1.dev_select` gate
+(`net_sr_min` 1.0, `placebo_p_max` 0.05 under both families, `dsr_min` 0.9 —
+all three required). No config is close on more than one axis
+simultaneously: the best config (L=30, leg_frac=0.20) gets nearest on all
+three (net SR 0.695 vs 1.0, placebo p 0.094 vs 0.05, DSR 0.123 vs 0.9) but
+clears none of them. `L` shows a clean monotonic recovery as turnover falls
+(net SR −0.27 → −0.20/+0.46 → +0.19/+0.70 as `L` goes 1 → 7 → 30, turnover
+falling 0.72/0.66 → 0.24/0.21 → 0.10/0.08), and `leg_frac=0.20` beats
+`leg_frac=0.10` at every `L`. The vol-selection diagnostic is clean at every
+`L` — rank-correlation between the funding signal and 30-day realized vol is
+≈0 (0.040, 0.002, −0.034), and mean leg vols sit within a narrow 0.059-0.075
+band regardless of leg — confirming (per the §43-motivated non-gating check)
+that this cross-sectional sort is not a disguised volatility proxy.
+
+### 46.4 Forensic verification (all 6 probes, `.superpowers/sdd/2026-07-28-carry-xs/task-7-forensics.md`)
+
+The negative was forensically verified per house discipline (dev window only;
+no holdout metric computed anywhere in the forensics pass). All six probes
+came back clean — no engine, wiring, or data defect found:
+
+1. **Book fully populated, not starved.** Universe membership is a clean
+   top-50 every one of 51 monthly refreshes; 99.97% of universe-member-days
+   have a valid signal and 30-day gapless funding history at every `L`;
+   per-day `n_valid` never drops below 49; zero days across the 1,547-day dev
+   window hit the `MIN_VALID=5` flat-day floor. This rules out the
+   §45-style sparsity mechanism (wide-trend's negative was partly an
+   under-populated book; carry_xs is not).
+2. **Mutation kill-test — engine is wired to the signal.** Negating the
+   best-config signal flips SR from +0.6948 to −1.3155 (the residual
+   asymmetry is explained by cost/rf drag being a constant burden on both the
+   real and negated book, not a red flag).
+3. **P&L decomposition (best config, L=30/leg_frac=0.20)** contradicts the
+   pre-registered "funding thin cross-sectionally" concern stated in the
+   design spec: isolating each leg (no cost/rf) gives price leg SR **+0.41**
+   and funding leg SR **+15.5** (near-cash-like — funding differentials are a
+   slow-moving, low-noise signal). Both legs are genuinely positive; combined
+   gross (cost/rf-free) SR is **+1.005**, comfortably above the 1.0 floor.
+   **What kills the gate is cost+rf drag alone**, pulling net SR from 1.005
+   down to the registered 0.695 — isolated cost drag ≈ −0.169 logret (≈4.0%
+   ann.; scored-window turnover 0.1087/day × 10bps × 1547 days) and isolated
+   rf drag ≈ −0.187 logret (≈4.4% ann.; 1547 × rf_daily 1.2060e-4 — rf is a
+   deterministic daily charge on full capital regardless of turnover, which
+   is the proof the two are correctly attributed) over the 4.2-year
+   window, consistent with the house `RF_DAILY` convention and ~8.5% mean
+   gross turnover/day.
+4. **Turnover/cost share, all 6 configs.** L=1's negative net SR is purely
+   cost-driven: gross (no-cost) SR is positive at both L=1 configs (+0.49,
+   +0.62), but daily turnover of 0.66-0.72 of book/day (a 1-day signal is
+   noisy and churns leg membership constantly) drags net SR to −0.27/−0.46.
+   This is expected and mechanical — a 1-day trailing-mean carry signal being
+   too high-turnover to survive 10bps/side is itself a real economic finding
+   — and L=7/L=30's progressively lower turnover (0.21-0.24, 0.08-0.10)
+   recovers most of the gross edge.
+5. **Tie mass at the best config — the amendment essentially never binds
+   in-sample.** Restricted to the 1,547 scored dev days at L=30/leg_frac=0.20:
+   days where a tie sits exactly on the leg-selection cutoff = 4/1547
+   (0.26%); days where the **naive**, pre-amendment sort would have actually
+   put the same symbol in both legs — the exact bug the amendment exists to
+   prevent — = **0/1547 (0.0%)**. The amendment remains a necessary
+   *correctness* guard (the first invocation crashed on it, per §46.1, before
+   any metric existed), but for the window/configs actually scored, it never
+   materially reassigns portfolio weight; the negative result is not an
+   artifact of the tie-handling rule.
+6. **Bit-exact independent reproduction.** A fresh script reloading
+   klines/funding from disk from scratch, calling only the registered module
+   functions, reproduces the ledger's net SR, maxDD, and total log-return for
+   the best config to 0.00e+00 difference.
+7. **DSR closes the loop.** Independently recomputed DSR for the best config
+   matches the ledger exactly (0.1226, `n_trials_at_eval=87`). A sensitivity
+   check shows the daily-SR standard error (0.0276) is on the same order as
+   the observed daily SR (0.0364) — the raw signal is only **≈1.3 standard
+   errors from zero** on 4.25 years of data *before* any multiplicity
+   correction. Even at `n_trials=1` (no multiplicity penalty at all), DSR
+   would be 0.788 — still below the 0.9 floor. The ledger-wide 87-trial
+   multiplicity penalty then compounds this (0.788 → 0.123), but the
+   signal is intrinsically thin even before that penalty is applied.
+
+**Interesting positive recorded honestly.** The cross-sectional funding leg
+(SR +15.5 in isolation, gross) genuinely holds income, consistent with §41's
+finding that funding income itself is real and survives out-of-sample (the
+old sleeve's holdout funding SR was +7.53 as-built, +1.93 after frictions).
+What fails here is, again, the economics bar — cost, rf drag, and
+multiple-testing — not the existence of the underlying income stream. Two
+independent constructions of a crypto funding-carry edge (§41's spot-hedged
+time series, this section's cross-sectional relative-rank) now agree that the
+funding premium is real but too thin, once honestly costed, to clear a
+pre-registered net-of-cost-and-multiplicity bar.
+
+### 46.5 Interpretation limits
+
+1. **Scope of the negative.** This result applies to a pure cross-sectional
+   funding-rank sort (no vol targeting, no trend interaction) traded
+   dollar-neutral across a monthly-refreshed top-50 perp universe at 10 bps
+   costs and flat 4.5% rf drag, over 2021-2025. The design spec's own
+   candidate t2 extension (a carry × trend/breakout interaction, motivated by
+   a noted negative correlation between the two signal families) was
+   explicitly gated on t1 showing signal first and was never run.
+2. **Rf convention is deliberately harsh, not neutral.** Flat annual 4.5% on
+   100% of gross capital was chosen specifically because it is the same
+   convention that killed the §39-41 sleeve, to make a pass unambiguous; it
+   is harsher than realized 2021-2022 T-bill rates and structurally penalizes
+   any strategy independent of its actual capital efficiency. A different,
+   still-defensible rf treatment (e.g., margin-only rather than full-capital)
+   is untested and would move the net SR upward from the reported 0.695 at
+   the best config — though not past the DSR/placebo failures, which do not
+   depend on the rf convention at all (see §46.4 point 3's gross-vs-net
+   breakdown).
+3. **Single dev window.** 2021-01-01 → 2025-03-31 includes the same 2022 bear
+   market and 2024-25 altcoin conditions discussed in §43 and §45; funding
+   dynamics across bull/bear regimes are not separately tested here.
+4. **DSR's 87-trial multiplicity penalty reflects the full ledger's
+   cumulative trial count**, not just this experiment's 6 configs; even
+   discounting all prior unrelated experiments (`n_trials=1`), the signal
+   still misses the DSR floor (§46.4 point 7), so this negative is not
+   primarily a multiplicity artifact.
+
+### 46.6 Verdict
+
+**0/6 configs pass** the pre-registered `carry_xs_t1.dev_select` gate. The
+best config (L=30, leg_frac=0.20) has a genuinely positive gross edge on both
+legs (price SR +0.41, funding SR +15.5, combined gross SR +1.005) but fails
+net SR (0.695 vs 1.0 required) once cost and the harshest-honest rf convention
+are applied, fails the placebo gate under the worse of the two families (0.094
+vs 0.05 required), and fails DSR (0.123 vs 0.9 required, and would still fail
+at 0.788 even with zero multiplicity correction). All six forensic probes
+came back clean: the book is fully populated (not starved), the engine is
+demonstrably wired to the signal (kill-test sign flip), the results
+bit-exactly reproduce independently, and the pre-result tied-signal amendment
+— though a necessary correctness fix — is confirmed to never materially bind
+on the scored dev window (0/1547 naive-overlap days). Per the gate check
+(`dev_results.json["selected"] is null`), the holdout one-shot does **not**
+run: no holdout-window return (2025-04-01 → 2026-07-01) entered any **gate**
+metric. The three non-gating diagnostics (`vol_rank_corr_diag`, per-leg mean
+vols, `mean_gross_turnover`) sample the full weight history, which includes
+458 post-2025-03-31 active days (22 of the 96 diagnostic sample dates for the
+best config) — a dev-window-only recompute gives `vol_rank_corr` −0.012
+(vs. −0.034 committed) and leg vols 0.0675/0.0653 (vs. 0.0674/0.0632
+committed), leaving the "≈0, not a vol proxy" conclusion in §46.3 unchanged.
+The locked holdout stays **unspent**, available for a future
+pre-registered cycle. One-shot discipline intact throughout: the 6-config
+grid was closed by pre-registration before any run, the rf-convention
+amendment (flat 4.5% vs. FRED DTB3) was made at plan-writing before any code
+ran, the tied-signal amendment was made blind to results after a crash and
+before any metric was read, and the forensic checks in §46.4 were run and
+reported as verification, not used to select or rescue a config.
+
+This closes lead #3 of the post-§44 program as an honest negative — the third
+in a row alongside §45 (wide trend) — and the second data point, after §41,
+that a real crypto funding-carry premium exists but is too thin to clear an
+honestly costed, multiplicity-aware bar under any construction tested so far
+(time-series spot-hedged or cross-sectional relative-rank). Per the go-forward
+leads queue, the next candidates are **#6 (liquidation/open-interest
+mean-reversion)** and **P5 (LLM re-test)**; a further carry revival would
+require a new pre-registered cycle testing a different construction (e.g. the
+untested t2 carry×trend interaction, or a less punitive rf treatment) against
+this same funding store and engine.
+
+### Artifacts
+
+- Spec: `docs/superpowers/specs/2026-07-28-carry-xs-design.md` (`b6f54fb`
+  design spec, `18e83bb` implementation plan + rf-convention amendment)
+- Funding store build: `c207106` (fetch script), `584498a` (startTime=0
+  cursor fix), `a0b7afa` (429/RateLimitError handling + dedup + missing-file
+  guard), `1b09fcc` (manifest + coverage report) — `data/xsect/funding/*.parquet`,
+  `data/xsect/funding_manifest.json`, `data/xsect/funding_coverage.json`
+- Signal + engine: `28d742c` (daily funding aggregation + trailing signal),
+  `50e8871` + `a72021d` (dollar-neutral L/S weight builder, tie-break fix),
+  `5c069dc` (L/S engine, signed funding accrual, rf on full capital), `f0af965`
+  (dual-family placebo kill-test) — `tradingagents/xsect/carry_xs.py`
+- Registration + amendment: `3174eb9` (gates.json entry + dev grid script,
+  pre-run), `2fdf3fe` (per-leg vol diagnostic), `0373b3c` (tied-signal
+  long/short exclusion amendment) — `data/rebuild/gates.json` key
+  `carry_xs_t1`
+- Results: `b2f8188` — `data/rebuild/carry_xs/dev_results.json`
+- Forensics: `.superpowers/sdd/2026-07-28-carry-xs/task-7-forensics.md`
+  (probe scripts throwaway, uncommitted, per house convention for forensic
+  passes)
+
+## Section 47: Liquidation-Cascade Mean-Reversion (liq_mr_t1) — Dev-Gate NEGATIVE, Holdout Unspent (2026-07-28)
+
+Executes lead #6 of the post-§44 go-forward menu, after leads #1 (dropped),
+#2 (§45 negative), and #3 (§46 negative). The hypothesis: liquidation
+cascades are forced, price-insensitive flow — a spike in long liquidations
+marks an undershoot to buy, a short-liquidation spike an overshoot to short.
+Exploratory with no external study; the Coinglass 10-exchange daily
+liquidation history (2020-12+) is a retail-rare data asset and this was the
+only untried lead exploiting it. This was also the last unblocked lead on the
+menu (#4 intraday disk-blocked, #5 needs a winning base, #7 data-blocked).
+
+### 47.1 Pre-registration provenance
+
+Design spec (`docs/superpowers/specs/2026-07-28-liq-mr-design.md`) and
+gates entry (`data/rebuild/gates.json["liq_mr_t1"]`) committed at `7856d17`
+BEFORE any experiment run. Frozen: 8-major universe (BTC ETH BNB SOL ADA
+DOGE XRP TRX — non-PIT ex-post selection recorded as a limitation at
+registration), per-direction z-score of liq_usd/OI over a trailing 90d window
+(min_periods 60, inclusive of day t), event at close t → ±1/8 fade position
+over bars t+1..t+H, same-direction timer reset, opposite-direction netting,
+no vol scaling, 10 bps/side turnover costs, rf 4.5%/365 deducted daily on
+full capital (identical harshest-honest convention to §46), funding accrual
+on holds excluded (registered simplification). Grid = 6 configs:
+thr ∈ {1.5, 2.5} × H ∈ {1, 3, 5}. Dev 2021-01-01→2025-03-31; holdout
+2025-04-01→2026-07-01 sealed. Gates: net SR ≥ 1.0, dual-family placebo
+worse-p ≤ 0.05 (500 draws each, costs+rf re-applied), DSR ≥ 0.9 at
+ledger-cumulative n_trials.
+
+A spec-mandated pre-run probe validated the Coinglass stamp convention:
+liquidation spikes align with same-day |returns| (BTC 6.5% vs 2.2% baseline),
+not next-day — rows are stamped at UTC day open, so the day-t aggregate is
+complete at close t and the close-t decision is causal.
+
+### 47.2 Result: 0/6 configs pass — NEGATIVE
+
+| thr | H | net SR | placebo p (worse) | DSR | events L/S | % days active |
+|-----|---|--------|-------------------|-----|-----------|---------------|
+| 1.5 | 1 | −0.355 | 0.283 | 0.001 | 722/789 | 33.1% |
+| 1.5 | 3 | −0.481 | 0.593 | 0.000 | 722/789 | 58.7% |
+| 1.5 | 5 | −0.674 | 0.806 | 0.000 | 722/789 | 71.3% |
+| 2.5 | 1 | −0.119 | 0.136 | 0.003 | 349/393 | 18.4% |
+| 2.5 | 3 | −0.460 | 0.521 | 0.000 | 349/393 | 38.1% |
+| 2.5 | 5 | −0.764 | 0.824 | 0.000 | 349/393 | 52.2% |
+
+Selected: NONE. Ledger n_trials at evaluation = 93. Results:
+`data/rebuild/liq_mr/dev_results.json`; per-config rows in the trial ledger.
+
+### 47.3 Forensic verification (negative verified)
+
+Full report: `data/rebuild/liq_mr/forensics.md`. Summary: (P1) signal live
+1492/1551 dev days on all 8 coins, first signal 2021-03-01 exactly per the
+registered warmup — honest denominators; (P2) inversion kill test — at H=1
+the fade direction beats its inversion (−0.119 vs −0.835: a weak real
+reversal), at H=5 the inversion is the better side (+0.150 vs −0.764:
+continuation dominates multi-day holds); (P3) drag decomposition of the best
+config: gross +0.359 → costs +0.166 → rf −0.119 — the raw effect is ~1/3 of
+the gate floor before any drag, so unlike §46 this is an intrinsically weak
+signal, not a cost/capital-efficiency kill; (P4) all five benchmark cascade
+dates (2021-05-19, 2022-06-13, FTX 2022-11-09, 2024-08-05, 2025-02-03)
+flagged, hundreds of events per config — well-powered, the §44 underpowered
+label does not apply; (P5) planted-reversal placebo kill test passes both
+families; (P6) per-coin long-fade decomposition broad but shallow (7/8 coins
+positive, max DOGE +0.66) — no concentration artifact.
+
+### 47.4 Mechanism reading (diagnostics, non-gating)
+
+The signed post-event fade profile is +25 bp (1d), −29 bp (3d), −91 bp (5d)
+gross at thr=2.5: the cascade reversal essentially completes intraday (the
+6.5% same-day move), leaving only a faint next-day echo at daily bars, and
+cascades **continue** beyond one day. Direction asymmetry: the entire weak
+edge is long-fade (buying after long-liquidation flushes, +0.19..+0.55 SR
+alone); fading short squeezes loses consistently (−0.68..−1.41). Both
+directions were frozen at registration — no post-hoc long-only variant is
+claimed. Event days sit at the 0.51 vol percentile — the §43 vol-proxy
+mechanism is absent. The natural (untested) follow-on is intraday cascade
+fading — lead #4's granularity, currently disk-blocked.
+
+### 47.5 Verdict
+
+Dev-gate NEGATIVE, forensically verified; holdout stays sealed and unspent.
+With #6 closed, every unblocked lead on the 2026-07 go-forward menu has now
+been executed to a pre-registered verdict; remaining open items are the
+blocked leads (#4 intraday, #5 overlay-on-winner, #7 value factor) and the
+P5 LLM flagship re-test on the corrected harness.
+
+### Artifacts
+
+- Spec + registration: `docs/superpowers/specs/2026-07-28-liq-mr-design.md`,
+  `data/rebuild/gates.json` key `liq_mr_t1` (`7856d17`, pre-run)
+- Module + tests: `tradingagents/xsect/liq_mr.py`,
+  `tests/test_xsect_liq_mr.py` (`048204c`) — 14 unit tests incl. planted
+  placebo kill-test; reuses the frozen xsect engine conventions
+- Dev grid runner: `scripts/liq_mr_dev.py`
+- Results: `data/rebuild/liq_mr/dev_results.json`
+- Forensics: `data/rebuild/liq_mr/forensics.md` (committed; probe scripts
+  throwaway per house convention)
+
+## Section 48: LLM Flagship Re-test (llm_p5_hybrid) — Gate FAIL, Modulator Harmful on Honest Legs (2026-07-28)
+
+The honest rebuild (§39-§41) deferred exactly one LLM question to a final
+Phase 5: does the Layer-2 LLM modulator add risk-adjusted value over the
+CORRECTED quant legs? Every prior positive hybrid number (1-yr ETH ΔSR +1.10,
+§23.11 LOO backbone effects, prompt A/Bs) was measured on the same-bar legs
+invalidated by the 2026-07-07 audit. This section is that re-measurement —
+one experiment, one gate, registered before any run (`llm_p5_hybrid` in
+data/rebuild/gates.json @ d30842f; parent gate frozen 2026-07-08 in the
+rebuild spec §8).
+
+### 48.1 Precondition — pure-LLM engine audit
+
+`tradingagents/backtesting/engine.py` (`run_backtest`, the engine behind all
+pure-LLM system backtests) audited per the Phase-5 precondition: **same-bar
+confirmed** — `agent_signals[i]`, formed from day-i close data, earns bar i's
+own return. Same defect class as audit finding C1. Every legacy pure-LLM
+backtest number (P1-P5 phases, §23 hybrid line, §23.11/23.12 ablations) is
+thereby verified stale, not merely presumed so. `scripts/backtest_hybrid.py`
+shares the defect. Both were excluded; P5 ran on a new causal A/B harness
+(`scripts/llm_p5_ab.py`, unit-tested slot alignment).
+
+### 48.2 Design (single config, one-shot)
+
+ETH, 2026-01-16 → 2026-05-21 (126 bars; start = post-cutoff P4 precedent for
+gpt-5.4-mini, end = Coinglass PIT-feature limit; holdout overlap documented
+in the registration — quant base frozen, §41 already spent the directional
+holdout, LLM-cutoff rule forces a 2026 window). Arm A: canonical V2 leg on
+freshly regenerated corrected predictions (purged + rolling-730d +
+onchain-PIT, exact audit recipe; DirAcc 49-51% — the honest 50-55% profile),
+causal sizing, causal costs, 3% intrabar price-stop replay. Arm B: identical
+engine on `pos_A × (1 + effective_weight × (multiplier − 1))` with modulator
+outputs from the production graph (live ETH analyst stack onchain+prediction,
+gpt-5.4-mini/nano, prompt v1, replay-cached), factor from decision date D−1
+applied to slot D (live 00:05-UTC information boundary). Gate: paired
+stationary block bootstrap (block 21, n 2000) on the daily diff, PASS iff
+p_pos ≥ 0.90.
+
+### 48.3 Result — FAIL (modulator harmful)
+
+| | net SR | total ret | maxDD | ann vol |
+|---|---|---|---|---|
+| Arm A quant | +0.699 | +4.22% | −5.70% | 13.2% |
+| Arm B hybrid | +0.234 | +0.99% | −5.09% | 11.1% |
+
+ΔSR = **−0.465** [95% CI −1.04, +0.07], **p_pos = 0.065** vs gate 0.90.
+Run integrity: 126/126 bars, 0 errors, 100% multiplier extraction, modulator
+active on 75% of slots (mean multiplier 0.789). Ledger row 9b0bdc346884
+(`allow_holdout=True` per registration). Results:
+`data/rebuild/llm_p5/ab_results.json`.
+
+### 48.4 Forensic verification
+
+`data/rebuild/llm_p5/forensics.md`. (P1) Layer-1 parity: CSV quant direction
+= audited leg consensus 125/125 same-day; the A/B's 66% cross-day figure is
+the consensus's own 34.9% daily sign churn — harness clean. (P2) Alignment
+robustness: under the pre-audit leaky convention (factor d → slot d, same-bar
+LLM info) the modulator is neutral (ΔSR −0.006, p_pos 0.50) — so the legacy
++1.10 "ETH alpha" does not survive causal LEGS even with the leaky LLM
+alignment: the apparent LLM alpha lived in the same-bar quant legs. (P3)
+Mechanism: dampening fired on the profitable days (+7.5 bp mean quant return
+on dampened slots vs −1.1 bp on neutral) — trust-scaling anti-correlated
+with realized edge. Not underpowered: p ≈ 0.94 that the effect is negative.
+
+### 48.5 Verdict and consequence
+
+Pre-registered stop rule applied: the LLM modulator layer is thesis-only,
+reported as no-effect-to-harmful on honest legs; the live hybrid A/B line
+loses its backtest rationale (its legacy-leg justification is void). With
+§45-§47 and this section, every open lead and the LLM flagship question now
+have pre-registered verdicts on the corrected harness.
+
+### Artifacts
+
+- Registration: `d30842f` (spec 2026-07-28-llm-p5-hybrid-prereg.md + gates)
+- Harness: `d153dff` (`scripts/llm_p5_ab.py` + tests), `7d51114` (prompt-
+  version flag adoption, behavior-preserving)
+- Signals: `data/llm_p5/signals/ethereum_2026-01-15_2026-05-20.csv` (126
+  bars, 5.7 h, ≈$15-25)
+- Predictions: `data/audit_fix/rolling730/multi_2coins_pit_wf_p5/` (audit
+  recipe, trade-date 2026-06-05)
+- Results + forensics: `data/rebuild/llm_p5/`
+
+## Section 49: Intraday Liquidation-Cascade Fade (liq_fade_i1) — Dev-Gate NEGATIVE, DSR-Bound; First Genuine Timing Signal Post-Rebuild, Holdout Unspent (2026-07-28)
+
+Revives lead #4 (blocked in the §44 go-forward menu on paywalled sub-daily
+liquidation data) as an intraday extension of lead #6's follow-on
+(`liq_mr_t1`, §47), which found the liquidation-cascade reversal is real but
+completes within the event day and inverts to continuation by day 3-5 at
+daily resolution. Hypothesis: entering the fade within hours of the cascade,
+at 1h resolution, captures the reversal that daily bars structurally miss.
+Design spec pre-registers a **fixed frozen** direction — long-fade only
+(buy after downside cascades) — carried forward from §47's finding that
+short-fade (fading squeezes) is actively harmful; that asymmetry was not
+re-searched here. Note on section numbering: the design spec provisionally
+targeted "§48," written before §48 (LLM flagship re-test) landed the same
+day and claimed that number first; this result is §49.
+
+### 49.1 Pre-registration provenance
+
+Design spec `docs/superpowers/specs/2026-07-28-liq-fade-intraday-design.md`
+(`300c89a`) and `data/rebuild/gates.json` key `liq_fade_i1` (`14b2a6b`)
+committed before any probe or grid run. Frozen: rolling z-score of 1h log
+return (`z_ret`) and log1p(quote_volume) (`z_vol`), window 2160 bars (90d,
+`min_periods` 1440/60d, `ddof=1`, ≤t only); trigger = `z_ret ≤ −thr AND
+z_vol ≥ thr`; long 1/10 capital per active event, bars t+1..t+H, retrigger
+resets timer, gross cap 1.0 (max 10 concurrent, arrival-order tiebreak);
+10 bps/side turnover costs; funding excluded (as in §47, avoiding
+entanglement with the closed carry family); rf flat 4.5%/yr on full capital,
+daily; SR on daily-UTC-aggregated net returns × √365 (identical harshest-
+honest convention family used throughout §45-§48). Grid = 6 configs,
+`thr ∈ {2.5, 3.5} × H ∈ {6, 24, 48}` hours — closed before any run. Dev
+2021-01-01→2025-03-31; holdout 2025-04-01→2026-07-01 sealed, one-shot,
+spent only if dev passes. Gates: net SR ≥ 1.0, dual-family placebo worse-p
+≤ 0.05 (500 draws/family: A = per-symbol circular shift, B = count-matched
+uniform redraw), DSR ≥ 0.9 at ledger-cumulative `n_trials`.
+
+### 49.2 Data — proxy detector, not raw liquidation data
+
+Coinglass Hobbyist tier was probed on 2026-07-28 for sub-daily liquidation
+endpoints: every interval below 1d on all liq/OI endpoints returns
+`401 Upgrade plan` — sub-daily liquidation prints are paywalled and out of
+budget. The strategy therefore substitutes a **free proxy detector** built
+from Binance USD-M futures 1h klines (return-z × volume-z, above), with the
+existing *daily* Coinglass liquidation store used only for out-of-band
+validation (never as a live signal input — see P1 below). Universe: top-50
+by trailing 30d median quote-volume, PIT-refreshed monthly from the
+799-symbol survivorship-safe store (§43 infrastructure), min age 60d.
+
+### 49.3 Probes P0-P2 (all PASS — `data/rebuild/liq_fade/probes.json`)
+
+- **P0 (stamp reconciliation, non-gating sanity)**: daily aggregation of
+  BTCUSDT 1h closes vs. the daily-store BTCUSDT close series, 2021-2025
+  overlap: **corr = 0.9999** (n=1565 days) — 1h bars are open-stamped and the
+  decision-close-t → hold-t+1 mapping introduces no same-bar leakage.
+- **P1 (proxy concordance, gating)**: proxy triggers (thr=2.5) aggregated to
+  UTC day on the 8 Coinglass-mapped majors flagged **5/5** of the §47
+  benchmark cascade dates (2021-05-19, 2022-06-13, 2022-11-09 FTX,
+  2024-08-05, 2025-02-03), against a required ≥4/5. A non-gating
+  corroboration diagnostic (the *real* Coinglass daily liq/OI z-score on the
+  same 8 coins/dates) independently flags the same 5/5 — two independent
+  signal families agree on all five benchmark events.
+- **P2 (event-study, gating)**: mean GROSS forward return t+1..t+H over all
+  dev-window triggers exceeded the +25bp floor in **every** grid cell
+  (range +0.90% to +2.77%); best cell (thr=3.5, H=48) = **+2.77%/event**.
+
+### 49.4 Dev grid results (`data/rebuild/liq_fade/dev_results.json`)
+
+| thr | H | net SR | placebo p (worse) | n events | n symbols | % days active | pass |
+|-----|---|--------|--------------------|----------|-----------|-----------------|:---:|
+| 2.5 | 6 | +0.356 | 0.002 | 5064 | 150 | 57.6% | SR fail |
+| 2.5 | 24 | **+1.229** | 0.002 | 5064 | 150 | 70.4% | SR+placebo pass |
+| 2.5 | 48 | +0.748 | 0.058 | 5064 | 150 | 79.4% | SR+placebo fail |
+| 3.5 | 6 | +0.961 | 0.002 | 710 | 88 | 18.9% | SR fail (0.04 short) |
+| 3.5 | 24 | **+1.121** | 0.002 | 710 | 88 | 26.2% | SR+placebo pass |
+| 3.5 | 48 | **+1.305** | 0.002 | 710 | 88 | 33.7% | SR+placebo pass |
+
+**3 of 6 configs** clear both net SR and placebo independently (thr2.5/H24,
+thr3.5/H24, thr3.5/H48) — the first time in the post-§44 program that more
+than one config, let alone half the grid, clears both axes at once (§45-§47
+never had a single config clear placebo below p=0.06). DSR is computed only
+for the best-by-net-SR config per spec: **thr=3.5, H=48** — net SR +1.305,
+placebo p=0.002 both families (the minimum attainable at 500 draws), **DSR
+0.479** at ledger-cumulative `n_trials_at_eval=100` — **below the 0.9
+floor. Gate: 2/3, FAIL.**
+
+### 49.5 Forensic verification (`data/rebuild/liq_fade/forensics.md`)
+
+Full report: `data/rebuild/liq_fade/forensics.md`, script
+`scripts/liq_fade_forensics.py` (read-only re-derivation, no registered
+script modified). The independent recomputation reproduces the ledger's net
+SR (1.3047) and `sr_stress_20bps` (1.2290) to 4 decimals from a fresh reload
+of the 1h panel — the forensic numbers below are not vulnerable to a stale
+copy of the engine.
+
+1. **Inversion (F1)**: same 710 events, weights negated (short instead of
+   long-fade): **long +1.305 vs short −1.795** — a 3.1 SR gap, the cleanest
+   sign separation of any post-rebuild lead (§47's H=1 case was only
+   −0.119 vs −0.835).
+2. **Concentration (F2)**: HHI over per-symbol gross P&L = **0.099** (≈ as
+   broad as 10 equal contributors across 85 active symbols); top-5 share
+   **45.2%**, no single symbol above 17% (DOGEUSDT). 3 of the top 5 are
+   meme/high-beta retail names (DOGE, PEPE, SHIB — 30.4% combined),
+   consistent with the forced-liquidation mechanism concentrating in thin,
+   high-leverage retail books rather than an artifact of one anomalous coin.
+3. **Yearly stability (F3)**: net SR by year — 2021 +2.663, 2022 −0.347,
+   2023 +1.307, 2024 +2.353, 2025 (Q1 only) −0.203. Strongly positive across
+   3 of 5 periods spanning a bull year, a recovery year, and a strong 2024
+   run; weakest in the 2022 bear/FTX year. Not a single-regime artifact.
+4. **Event-count honesty (F4)**: 206/130/181/177/16 events across
+   2021-2025Q1 (710 total, 88 symbols, 4.25y) — every full year clears
+   ≥30/config comfortably; only the partial Q1-2025 slice is thin (16,
+   proportionate to a quieter quarter, not a data hole).
+5. **DSR sensitivity (F5, diagnostic, non-gating — verdict unchanged)**: at
+   `n_trials=6` (this experiment's own grid, isolated from ledger history),
+   the identical signal gives **DSR = 0.881** — 0.02 short of the 0.9 floor.
+   At the registered ledger-cumulative `n_trials=100`, DSR = **0.479**
+   (exact match to `dev_results.json`). The gate correctly uses the
+   ledger-cumulative count per house methodology, and this is *not* grounds
+   to override the FAIL — but it is the clearest evidence yet that this
+   negative is a **multiplicity/power problem**, not an absence-of-effect
+   problem: nothing in §45-§47 came within 30 points of the DSR floor even
+   evaluated in isolation.
+6. **Cost sensitivity (F6)**: net SR 10bps=+1.305, 20bps=+1.229 (matches the
+   registered stress row exactly), 30bps=+1.153 — roughly linear decay,
+   ~0.08 SR per +10bps; even at 3× the registered cost assumption the
+   config still clears the 1.0 floor.
+7. **P2-vs-grid reconciliation (F7)**: naive linear extrapolation of the
+   probe's +2.77%/event × 710 events × 0.10 notional = +196.8% undiscounted;
+   realized compounded portfolio return over the same 4.24y = +311.7% gross
+   / +261.5% net. Same order of magnitude (≈1.6×, not 10×) — the grid
+   result is not decoupled from the P2 event-study that justified running
+   it; the gap is explained by compounding over years and by up-to-10
+   concurrent overlapping positions that the per-event P2 average, which
+   scores each event in isolation, does not capture.
+
+**Addendum (F8-F10, 2026-07-29).** Three further checks close the §47
+checklist. (F8) The placebo machinery was independently re-derived (150
+draws/family, non-degenerate, sd≈0.41-0.45) confirming real SR 1.305 exceeds
+both distributions' 150-draw maxima; a planted +50bp kill-test at the real
+trigger locations pushes SR to 1.583 and stays significant (p=0.0066)
+against misaligned placebos, while planting the *identical* uplift but
+evaluating it with a deliberately mistimed (shifted) candidate gives SR
+−0.234 and p=0.589 — the machinery detects timing, not the mere presence of
+extra alpha somewhere in the series. (F9) Event-day realized-vol percentile
+is high (median 0.966) but mechanically so — the trigger is itself defined
+from the same return/volume series, unlike §47's independent liquidation
+z-score. F1's inversion asymmetry (+1.305 vs −1.795) shows direction and
+timing carry real signal, not symmetric noise, but it does **not**
+separately exclude a generic long-bias-on-high-vol-days drift confound
+(inverting a directional bet flips the sign of any nonzero per-event drift,
+so such a confound would produce the same F1 signature as genuine reversal
+timing) — the discriminating control (long-only exposure on high `z_vol`
+without the `z_ret` down-move condition) was not run and is an open item
+for any future replication. (F10) A per-symbol SR table (costs, no rf) for
+the top-15 by event
+count shows 14/15 individually SR-positive; the one exception, LUNAUSDT
+(−0.514 SR, −14.5% gross P&L share), is the May-2022 Terra collapse — a
+genuine, honestly-reported tail loss where fading a cascade that never
+reverts costs money, already priced into the aggregate result. Full detail:
+`data/rebuild/liq_fade/forensics.md` addendum. Verdict unchanged.
+
+### 49.6 Verdict
+
+**Dev-gate NEGATIVE, 2/3** (net SR pass, placebo pass, DSR fail). This is
+the **first post-rebuild lead (of §45-§49) to produce a genuine timing
+signal that survives the dual-family placebo** — p=0.002 in both families
+at the minimum attainable resolution, versus p≥0.06 for the best any prior
+lead achieved — and the forensic pass found no plumbing bug, no
+single-symbol or single-regime artifact, and no underpowered sample that
+could explain the SR away. The failure mode is explicitly **multiplicity
+and effect-size relative to the house's ledger-cumulative DSR bar, not
+absence of an effect**: the same signal would narrowly clear DSR (0.881 vs
+0.9) evaluated on this experiment's own 6 trials, and only fails once the
+100-trial cumulative cost of every prior post-rebuild experiment is charged
+against it. The house discipline is deliberately punitive about
+multiplicity for exactly this reason — a good-looking result late in a long
+sequence of trials is the textbook case DSR exists to catch — so the FAIL
+stands and the holdout stays **sealed and unspent**.
+
+### 49.7 Limitations
+
+1. **Proxy, not raw liquidation data.** The trigger is a return-z ×
+   volume-z proxy for cascades, not Coinglass liquidation prints — sub-daily
+   liquidation data is paywalled (§49.2). P0/P1 validate the proxy against
+   daily ground truth (5/5 benchmark dates, two independent signal families
+   agree) but sub-daily proxy-vs-ground-truth concordance is untested
+   because the ground truth itself does not exist at 1h resolution.
+2. **Binance-only.** Both the price/volume proxy and the execution venue are
+   Binance USD-M futures; cross-venue liquidation cascades (where the
+   triggering flow originates on a different exchange) are invisible to
+   this detector by construction.
+3. **10bps/side cost assumption.** F6 shows the result is not cost-fragile
+   up to 30bps, but no venue-specific slippage model, funding (excluded by
+   design), or market-impact term beyond the flat bps assumption is
+   included.
+4. **No terminal unwind cost.** The engine charges turnover costs on every
+   entry/exit but the dev-window return series is not adjusted for a
+   final forced liquidation of any position still open at the window
+   boundary (`boundary_open_events=0` at the best config in this run, so it
+   does not bind here, but is not a general property of the engine).
+
+### 49.8 What would change the verdict
+
+Not a holdout spend on this experiment — DSR failed with margin (0.479 vs
+0.9) and lowering the bar or re-litigating the multiplicity count
+post-hoc would be exactly the selection bias the house methodology exists
+to prevent. The house-consistent path is a **fresh, independently
+pre-registered replication** — a new experiment with its own trial budget,
+either on a later/rolled-forward data window or a distinct instrument
+family (e.g. a non-Binance venue, once/if sub-daily liquidation data
+becomes affordable) — that would need to clear DSR on its own terms. A
+second independent pass clearing the gate at a low own-experiment
+`n_trials` would make a strong case for treating the effect as real
+despite the first attempt's ledger-cumulative DSR fail; this experiment
+alone does not license that conclusion.
+
+### Artifacts
+
+- Spec + registration: `docs/superpowers/specs/2026-07-28-liq-fade-intraday-design.md`
+  (`300c89a`), `data/rebuild/gates.json` key `liq_fade_i1` (`14b2a6b`, pre-run)
+- Module + tests: `tradingagents/xsect/liq_fade.py` (`ba48a24` trigger,
+  `496baee` event weights, `01cb887` hourly P&L; `2d2af81` universe
+  selection), `tests/xsect/test_liq_fade_*.py` (50 tests)
+- Dev grid runner: `scripts/liq_fade_dev.py` (`6a5cdcd` probes, `28d8401`
+  probe hardening, `ac73f1d` grid + placebo + DSR + ledger, `a5f0ab6`
+  config-hash/DSR guard fix)
+- Results: `51615fb` (probes) — `data/rebuild/liq_fade/probes.json`;
+  `b17e6c7` (grid) — `data/rebuild/liq_fade/dev_results.json`
+- Forensics: `data/rebuild/liq_fade/forensics.md`,
+  `scripts/liq_fade_forensics.py` (both committed, per house convention for
+  a result this close to gate)
+
+## Section 50: Intraday Liquidation-Cascade Fade Replication (liq_fade_r1) — NEGATIVE-at-Probe, Effect Does Not Generalise Past the Top-50 (2026-07-29)
+
+Independent replication of `liq_fade_i1` (§49): the frozen config
+(`thr=3.5, H=48, w_per=0.1, cap=1.0`, long-fade only, dev 2021-01→2025-03,
+holdout 2025-04→2026-07 sealed) carried forward unchanged, with exactly ONE
+axis moved — the universe, from monthly-PIT top-50 to monthly-PIT **ranks
+51-150** (304 symbols, "the band"). The universe is the independence axis
+because selection is monthly and point-in-time: a symbol's rank changes
+month to month, so the band is disjoint from `liq_fade_i1`'s top-50 by
+`(symbol, month)` even though 188 of the 304 band symbols were themselves a
+top-50 member in some *other* month. This is the cleanest single-axis test
+available of whether §49's effect is a property of liquidation-cascade
+dynamics in general or specific to the largest, most liquid names — the
+question §49's own forensics (49.7, limitation 1) could not answer, since
+everything there was drawn from the same top-50 population the effect was
+discovered on. Cost was raised 10bps→20bps/side for the thinner, wider-spread
+band; §49's own forensics (F6) had already shown the top-50 result was not
+cost-fragile up to 30bps, so this is a conservative adjustment, not a
+grid search.
+
+### 50.1 Pre-registration and the n_trials=1 amendment
+
+Design spec `docs/superpowers/specs/2026-07-29-liq-fade-r1-design.md`
+(`7cb670a`) and `data/rebuild/gates.json` key `liq_fade_r1` (`1e6e3e3`)
+committed before any band data was fetched. One declared amendment to house
+convention: `liq_fade_i1` and every other post-rebuild experiment carries
+`n_trials` as the ledger-cumulative count of unique configs ever evaluated,
+because those experiments each screened a grid against the same discovery
+data. `liq_fade_r1` pre-registers **one frozen hypothesis** before touching
+any band data and evaluates it on events disjoint from discovery — no grid,
+no search — so it carries `n_trials=1`, confirmatory rather than
+exploratory inference. This is registered *before* the run, not argued for
+after seeing a result, and alternative denominators (13 = liquidation-family
+scope; 121 = full ledger-cumulative count) are pre-committed as
+reported-not-gated so the choice remains auditable. **The amendment was
+never exercised**: the dev gate was never reached (see 50.2), no DSR was
+computed at any denominator, and no trial-ledger row exists for this
+experiment — `n_trials=1` is a registered contingency that the run did not
+need.
+
+### 50.2 Probe results (`data/rebuild/liq_fade_r1/probes.json`)
+
+Probe order is P3 first and blocking, by design — the discriminating
+vol-drift control `liq_fade_i1`'s own forensics left open (49.5, item 9).
+
+- **P0** (stamp reconciliation): corr 0.99993 over 1565 overlap-days — PASS,
+  plumbing sound.
+- **P1** (proxy concordance): 5/5 benchmark cascade dates flagged by band
+  symbols (31/9/32/167/101 symbols respectively) — PASS, the detector fires
+  on genuine market-wide cascades outside the top-50, not just inside it.
+- **P2** (event-study floor): mean **gross** forward return over 1892
+  masked dev-window triggers (1884 with a full H=48 window) = **−0.418%**,
+  against a required **+0.25%** floor — **FAIL**. The band loses money
+  gross, before any cost or risk-free drag enters.
+- **P3** (vol-drift control, blocking, ran first): primary net SR **−0.048**,
+  vol-only control net SR **−0.532** (18,778 control events), separation
+  **+0.485**. Per the pre-registered scope rule, the confounded label
+  applies only when the primary itself clears the 1.0 floor; it does not
+  here, so the verdict is recorded as plain **NEGATIVE**, not
+  NEGATIVE-confounded — the crash condition is genuinely distinguishable
+  from generic high-volatility exposure (+0.485 SR better), but that
+  separates two losing strategies rather than rescuing a winning one from a
+  confound.
+
+Per the plan's pre-registered decision point, P2/P3 failing routes straight
+to write-up: **Task 7 (the gated primary run) was correctly skipped**. No
+`results.json` was produced, no gate (G1-G3) was ever evaluated, and no row
+was written to `data/rebuild/trial_ledger.jsonl` for this experiment — the
+ledger-cumulative `n_trials` count is unchanged by this run, confirmed by
+grep (0 `liq_fade_r1` rows). The sealed holdout (2025-04-01 onward) was
+never touched.
+
+### 50.3 Forensic verification (`data/rebuild/liq_fade_r1/forensics.md`)
+
+Full report: `data/rebuild/liq_fade_r1/forensics.md`, script
+`scripts/liq_fade_r1_forensics.py` (`tradingagents/xsect/liq_fade.py` imported
+unchanged). Seven sections were written for this outcome (power, a pooled
+single-symbol concentration disclosure, P3 control detail, a new
+liquidity-gradient partition, per-symbol distribution, a horizon check, and
+an i1-vs-r1 contrast table); six of the original eleven-section template (F1
+inversion, F3 yearly stability, F5 DSR decomposition, F6 cost curve, F7 P2
+reconciliation, F8 placebo audit) are explicitly named and skipped in the
+report, each with a one-line reason — none of them apply to a result that
+never reached a gate.
+
+1. **Power**: 1892 masked triggers across 304 band symbols over 4.24 years
+   (446 events/year, 6.22/band-symbol across the full 304-symbol band). Of
+   those 304, 219 registered at least one event; on that like-for-like,
+   active-symbol basis the rate is 1892/219 = **8.64 events/symbol**,
+   directly comparable to `liq_fade_i1`'s 710 events over its 88 active
+   symbols (710/88 = **8.07 events/symbol**) — comparable order of magnitude.
+   The mean gross forward return (−0.418%) has a standard error of
+   0.418% on 1884 events (t ≈ −1.00) — **not** distinguishable from zero at
+   conventional significance under a naive per-event test, and events are not
+   strictly independent (market-wide crash days trigger many band symbols
+   simultaneously), so a clustered SE would be larger still, not smaller.
+   The honest characterization is a **well-powered null**, not a
+   confidently-signed harm: P2's floor is an absolute-value pre-registered
+   threshold, not a significance test, so a null result still fails it, but
+   the finding to report is "no detectable positive timing edge on the
+   band," not "the band actively punishes crash-fading."
+2. **P3 control detail** (independently recomputed from the frozen panel,
+   not read back from `probes.json`, reproducing it exactly): primary
+   **−0.048** vs control **−0.532**, separation **+0.485** — the check
+   `liq_fade_i1`'s own forensics could not run is now closed, on an
+   independent universe, with the same qualitative answer (crash timing ≠
+   generic vol drift) but at a Sharpe level that fails the floor either way.
+3. **Liquidity gradient** (new analysis, the most informative one this
+   replication produced): splitting the 304 band symbols into 188 "near-top50"
+   (top-50 in some *other* PIT month) vs 116 "never-top50" (never top-50 at
+   any point) shows a genuine directional split — near-top50 mean forward
+   return **+0.49%** (not significant, t=1.27), never-top50 **−7.84%**
+   (nominally significant, t=−3.77). The never-top50 number is substantially
+   a single-symbol artifact: **FTTUSDT** (the FTX exchange token, which
+   collapsed to near-zero in November 2022 and never recovered) accounts for
+   78% of that partition's total loss from just 27 of its 206 events;
+   excluding it, the never-top50 mean shrinks roughly fourfold to −1.98%
+   (still nominally significant, t=−2.18, n=179). "Fading" a token
+   headed to permanent delisting is a different bet than fading a
+   liquidity-driven overreaction, and this collapse is not representative of
+   the partition. Net reading: there is a real, order-of-magnitude decay
+   from `liq_fade_i1`'s own +2.77%/event down to the near-top50 group's small
+   positive tilt, sharper than "both partitions negative" would suggest —
+   but neither partition is a statistically robust, broad-based finding once
+   single-symbol concentration is accounted for, and the pooled, whole-band
+   result remains the governing (null) verdict.
+4. **Pooled single-symbol concentration** (new; disclosure only, does NOT
+   change the verdict): the `_partition_stats` exclusion the script already
+   applies to the near-top50/never-top50 partitions is now also applied to
+   the **pooled, whole-band** sum, which is the level the registered P2
+   statistic is actually computed on. The pooled event-return sum across all
+   1884 full-window events is **−7.87pp**. A single symbol, **FTTUSDT**,
+   contributes **−12.61pp** of that — more negative than the pooled total
+   itself (27 events, the FTX exchange token that collapsed to near-zero in
+   November 2022). Excluding it, the pooled mean becomes **+0.2552%** over
+   1857 events, which is **ABOVE** the pre-registered **+0.25%** P2 floor.
+   **This figure is reported, not acted on**: P2 is pre-registered on the
+   full band, `data/rebuild/gates.json`'s `liq_fade_r1.stop_rule` explicitly
+   forbids "no cost-model relaxation" and a second pass after a probe
+   failure, and post-hoc exclusion of the single largest contributor is
+   exactly that kind of relaxation. The verdict is **not** recomputed on
+   this basis and remains **NEGATIVE**. It is disclosed because the negative
+   rests substantially on one delisted exchange token, a reader deserves to
+   know that, and the pre-registration is precisely what stops this number
+   from being used to rescue the result. Full computation and script:
+   `scripts/liq_fade_r1_forensics.py` (`pooled_concentration`),
+   `data/rebuild/liq_fade_r1/forensics.md` ("Pooled single-symbol
+   concentration" section).
+5. **Per-symbol distribution**: 219 of 304 band symbols registered at least
+   one event; **110/219 (50.2%)** have a positive mean forward return —
+   essentially a coin flip, not a lopsided negative majority. The pooled
+   negative mean is driven by *magnitude*, not *breadth*: a small number of
+   fat-tailed losers (worst: FTTUSDT −46.7%, an order of magnitude beyond any
+   other name in either tail) outweigh many smaller, roughly offsetting gains
+   and losses elsewhere in the band. That magnitude concentration is not
+   merely a broad fat tail, though: per item 4 above, FTTUSDT alone
+   contributes −12.61pp against a pooled total of −7.87pp — **160% of the
+   total**, i.e. every other band symbol nets positive on balance and
+   FTTUSDT alone drags the pool negative. The pooled negative therefore
+   rests substantially on this one delisted exchange token, not on a
+   broad-based pattern, and excluding it flips the pooled mean above the
+   pre-registered P2 floor (item 4). That exclusion is reported for
+   disclosure only and does not change the registered verdict.
+6. **Horizon check**: mean gross forward return is negative at every
+   horizon tested — H=1h −0.08% (t=−0.88), H=6h −0.36% (t=−1.82), H=24h
+   −0.45% (t=−1.27), H=48h −0.42% (t=−1.00) — none individually significant,
+   but none positive either. H=48 was not an unlucky choice of hold; no
+   shorter exit would have rescued the primary config.
+7. **i1-vs-r1 contrast**:
+
+   | | liq_fade_i1 (§49) | liq_fade_r1 |
+   |---|---|---|
+   | Universe | top-50 PIT monthly (799-symbol store) | ranks 51-150 band (304 symbols) |
+   | Cost (bps/side) | 10 | 20 |
+   | Events (masked, full window) | 710 (710) | 1892 (1884) |
+   | Symbols with ≥1 event | 88 | 219 |
+   | Gross return / event | +2.772% | −0.418% |
+   | Net SR (primary config) | +1.305 | −0.048 |
+   | Gate outcome | 2/3, DSR-bound (0.479 < 0.9; 0.881 at own n=6) | NEGATIVE at P2/P3, gates never evaluated |
+
+### 50.4 Verdict
+
+**NEGATIVE, decided at probes P2/P3, before any gate was evaluated.** The
+universe move from top-50 to ranks 51-150 — same frozen signal, same holding
+rule — does not merely shrink §49's effect, it flips the sign of the
+point-estimate gross return per event (+2.77% → −0.42%). The forensic pass
+found no plumbing bug (P0/P1 both clean), no dominant single-regime or
+single-config artifact (horizon check), and confirms the negative is a
+well-powered null rather than a confidently-signed harm (power section) —
+but it **is** substantially a single-*symbol* artifact at the pooled level:
+FTTUSDT (the FTX exchange token, delisted after its November 2022 collapse)
+alone contributes 160% of the pooled −7.87pp event-return sum (item 4
+above), and excluding it flips the pooled mean above the pre-registered P2
+floor (+0.2552% vs +0.25% required). That figure is reported for disclosure,
+not acted on — P2 is pre-registered on the full band and `gates.json`'s
+`stop_rule` forbids exactly this kind of post-hoc exclusion, so the verdict
+here stands as **NEGATIVE** on the full-band, all-events statistic. The
+liquidity-gradient partition sharpens the picture into a real, partial
+decay from strongly-positive-on-top-50 toward a small-and-not-significant
+tilt just outside it and a materially confounded (single-collapse-driven)
+negative further out, without producing a second robust positive result to
+set beside the first. The declared `n_trials=1` amendment was registered but
+never exercised, since the dev gate was never reached; no row was added to
+`data/rebuild/trial_ledger.jsonl`, and the ledger-cumulative trial count used
+by every other experiment's DSR calculation is unaffected by this run. The
+holdout (2025-04-01 onward) **remains sealed and unspent**.
+
+**Honest reading.** This result does not show `liq_fade_i1` was wrong on its
+own universe — §49's top-50 finding (net SR +1.305, placebo p=0.002 both
+families, DSR 0.479 at the ledger-cumulative bar) stands as reported, on the
+population it was measured on. What this replication establishes is that the
+effect **does not generalise past the top-50 cross-section**: it is not a
+general property of liquidation-cascade dynamics that a fresh, independent
+sample of less-liquid names would also exhibit, at least not at the
+frozen config tested here. Combined with §49's own DSR-bound (not
+absence-of-effect) failure, the net picture across both experiments is that
+liquidation-cascade fading on Binance USD-M perpetuals has, at best, a
+narrow domain of applicability (the most liquid ~50 names) and even there
+does not clear the house's ledger-cumulative multiplicity bar. A third,
+independently pre-registered replication would need its own new domain or
+data source to add further evidence; repeating this design on the same two
+universes again would not.
+
+### Artifacts
+
+- Spec + registration: `docs/superpowers/specs/2026-07-29-liq-fade-r1-design.md`
+  (`7cb670a`), plan `2f1eea4`, `data/rebuild/gates.json` key `liq_fade_r1`
+  (`1e6e3e3`, pre-run)
+- Data: 116 new band 1h symbol histories fetched (`b911116`); frozen band
+  universe `data/xsect/liq_fade_r1_universe.json` (304 symbols, monthly PIT
+  ranks 51-150)
+- Runner: `scripts/liq_fade_repl.py` (`e8c934e` probes P0/P1/P2, `898d4ab`
+  P3 control + verdict rule, `cae2403` frozen primary run + placebo + DSR
+  scaffold, unused once the probe stop fired)
+- Probe results: `b6a048d` — `data/rebuild/liq_fade_r1/probes.json`
+  (STOP recorded, P2 and P3 both fail)
+- Forensics: `data/rebuild/liq_fade_r1/forensics.md`,
+  `scripts/liq_fade_r1_forensics.py` (both committed; six sections
+  implemented, six named and skipped with reasons per the anti-silent-omission
+  rule)

@@ -1,0 +1,262 @@
+{
+  "task": "H2_holdout_oneshot",
+  "contract": "data/rebuild/frozen_portfolio.json",
+  "contract_commit": "fc33cd5",
+  "window": [
+    "2025-04-01",
+    "2026-07-01"
+  ],
+  "one_shot": true,
+  "zero_variance_sr_convention": "SR:=0.0 (0/0), never NaN",
+  "sleeves": {
+    "factor": {
+      "config": "macross_10_50_ls",
+      "kelly_fraction": 0.5,
+      "portfolio": {
+        "sharpe": 0.38877184529912867,
+        "total_return": 0.06668520391417054,
+        "max_drawdown": -0.14433293023747173,
+        "n_bars": 456
+      },
+      "bitcoin": {
+        "sharpe": -0.3389545330184137,
+        "total_return": -0.053162734468960804,
+        "max_drawdown": -0.1533979750522585,
+        "n_bars": 456
+      },
+      "ethereum": {
+        "sharpe": 0.6197421715418123,
+        "total_return": 0.1856036924787441,
+        "max_drawdown": -0.14390270460661192,
+        "n_bars": 456
+      },
+      "halts": {
+        "bitcoin": true,
+        "ethereum": false
+      },
+      "contribution_standalone_cumret": 0.06668520391417054,
+      "dev_window_sr_reference": 0.6322181732492197
+    },
+    "carry": {
+      "construction": "always-on 50/50 BTC/ETH short-perp+long-spot, stressed",
+      "portfolio": {
+        "sharpe": -1.4767872510841928,
+        "total_return": -0.011447538804752244,
+        "max_drawdown": -0.019671272967367148,
+        "n_bars": 456
+      },
+      "contribution_standalone_cumret": -0.011447538804752244,
+      "dev_window_stressed_sr_reference": 3.7503661753112434,
+      "dev_range_context": [
+        3.75,
+        5.9
+      ]
+    }
+  },
+  "allocation": {
+    "rule": "50/50 freeze on first bar; monthly inverse-vol on trailing-90d vol; carry cap 0.5; zero-vol guard",
+    "frozen_dev_weights": {
+      "carry": 0.5,
+      "factor": 0.5
+    },
+    "weight_schedule": [
+      {
+        "date": "2025-04-02",
+        "w_carry": 0.5,
+        "w_factor": 0.5,
+        "w_cash": 0.0,
+        "kind": "initial_freeze_50_50"
+      },
+      {
+        "date": "2025-05-01",
+        "w_carry": 0.5,
+        "w_factor": 0.5,
+        "w_cash": 0.0,
+        "vol_carry_ann": 0.003419,
+        "vol_factor_ann": 0.02717,
+        "kind": "monthly_rebalance"
+      },
+      {
+        "date": "2025-06-01",
+        "w_carry": 0.5,
+        "w_factor": 0.5,
+        "w_cash": 0.0,
+        "vol_carry_ann": 0.004438,
+        "vol_factor_ann": 0.119608,
+        "kind": "monthly_rebalance"
+      },
+      {
+        "date": "2025-07-01",
+        "w_carry": 0.5,
+        "w_factor": 0.5,
+        "w_cash": 0.0,
+        "vol_carry_ann": 0.003864,
+        "vol_factor_ann": 0.118132,
+        "kind": "monthly_rebalance"
+      },
+      {
+        "date": "2025-08-01",
+        "w_carry": 0.5,
+        "w_factor": 0.5,
+        "w_cash": 0.0,
+        "vol_carry_ann": 0.004414,
+        "vol_factor_ann": 0.129996,
+        "kind": "monthly_rebalance"
+      },
+      {
+        "date": "2025-09-01",
+        "w_carry": 0.5,
+        "w_factor": 0.5,
+        "w_cash": 0.0,
+        "vol_carry_ann": 0.003856,
+        "vol_factor_ann": 0.129795,
+        "kind": "monthly_rebalance"
+      },
+      {
+        "date": "2025-10-01",
+        "w_carry": 0.5,
+        "w_factor": 0.5,
+        "w_cash": 0.0,
+        "vol_carry_ann": 0.003715,
+        "vol_factor_ann": 0.126842,
+        "kind": "monthly_rebalance"
+      },
+      {
+        "date": "2025-11-01",
+        "w_carry": 0.5,
+        "w_factor": 0.5,
+        "w_cash": 0.0,
+        "vol_carry_ann": 0.003671,
+        "vol_factor_ann": 0.121654,
+        "kind": "monthly_rebalance"
+      },
+      {
+        "date": "2025-12-01",
+        "w_carry": 0.5,
+        "w_factor": 0.5,
+        "w_cash": 0.0,
+        "vol_carry_ann": 0.003497,
+        "vol_factor_ann": 0.084626,
+        "kind": "monthly_rebalance"
+      },
+      {
+        "date": "2026-01-01",
+        "w_carry": 0.5,
+        "w_factor": 0.5,
+        "w_cash": 0.0,
+        "vol_carry_ann": 0.003676,
+        "vol_factor_ann": 0.056521,
+        "kind": "monthly_rebalance"
+      },
+      {
+        "date": "2026-02-01",
+        "w_carry": 0.5,
+        "w_factor": 0.5,
+        "w_cash": 0.0,
+        "vol_carry_ann": 0.002716,
+        "vol_factor_ann": 0.075522,
+        "kind": "monthly_rebalance"
+      },
+      {
+        "date": "2026-03-01",
+        "w_carry": 0.5,
+        "w_factor": 0.5,
+        "w_cash": 0.0,
+        "vol_carry_ann": 0.004812,
+        "vol_factor_ann": 0.099247,
+        "kind": "monthly_rebalance"
+      },
+      {
+        "date": "2026-04-01",
+        "w_carry": 0.5,
+        "w_factor": 0.5,
+        "w_cash": 0.0,
+        "vol_carry_ann": 0.004798,
+        "vol_factor_ann": 0.104933,
+        "kind": "monthly_rebalance"
+      },
+      {
+        "date": "2026-05-01",
+        "w_carry": 0.5,
+        "w_factor": 0.5,
+        "w_cash": 0.0,
+        "vol_carry_ann": 0.004555,
+        "vol_factor_ann": 0.095862,
+        "kind": "monthly_rebalance"
+      },
+      {
+        "date": "2026-06-01",
+        "w_carry": 0.5,
+        "w_factor": 0.5,
+        "w_cash": 0.0,
+        "vol_carry_ann": 0.002898,
+        "vol_factor_ann": 0.063434,
+        "kind": "monthly_rebalance"
+      }
+    ]
+  },
+  "portfolio": {
+    "sharpe": 0.38009794277667225,
+    "total_return": 0.034211275295679355,
+    "max_drawdown": -0.0717479714834931,
+    "n_bars": 455
+  },
+  "placebo": {
+    "n": 500,
+    "block_mean": 21,
+    "real_factor_sr": 0.38877184529912867,
+    "n_ge_real": 82,
+    "p_value": 0.1656686626746507,
+    "placebo_sr_mean": -0.4583021539199498,
+    "placebo_sr_std": 0.8629517665491596,
+    "placebo_sr_min": -2.9570875108427255,
+    "placebo_sr_max": 2.2144174643296415,
+    "placebo_sr_p95": 0.9874719755639028,
+    "runtime_sec": 29.1
+  },
+  "gate_table": [
+    {
+      "criterion": "portfolio_net_sharpe_min",
+      "scope": "portfolio",
+      "threshold": 0.5,
+      "measured": 0.3801,
+      "pass": false
+    },
+    {
+      "criterion": "max_drawdown_max",
+      "scope": "portfolio",
+      "threshold": 0.15,
+      "measured": 0.0717,
+      "pass": true
+    },
+    {
+      "criterion": "sleeve_contribution_min[carry]",
+      "scope": "sleeve:carry",
+      "threshold": 0.0,
+      "measured": -0.011448,
+      "pass": false
+    },
+    {
+      "criterion": "sleeve_contribution_min[factor]",
+      "scope": "sleeve:factor",
+      "threshold": 0.0,
+      "measured": 0.066685,
+      "pass": true
+    },
+    {
+      "criterion": "placebo_p_max",
+      "scope": "sleeve:factor",
+      "threshold": 0.05,
+      "measured": 0.1657,
+      "pass": false
+    }
+  ],
+  "deploy_composition_rule": "portfolio SR & maxDD are a global precondition; a sleeve deploys iff precondition holds AND its contribution>=0 AND (factor also: placebo p<0.05)",
+  "portfolio_precondition_pass": false,
+  "verdict": {
+    "deploy": [],
+    "carry_deploy": false,
+    "factor_deploy": false,
+    "all_gates_pass": false
+  }
+}
