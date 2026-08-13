@@ -43,6 +43,13 @@
    "P3_portfolio": "incremental to vol-rank+momentum+size baseline in \u00a743 XS harness, 799-sym store, 5bp+funding: net SR improvement >= +0.15, dual-family placebo p<0.05, DSR>0.5 at declared n, 3/4 sub-periods non-negative; standalone reported, cannot pass"
   },
   "multiplicity": "<=12 ledgered configs (P0 2, P2 7, P3 <=3); ledger data/llm_event_xs/trial_ledger.jsonl append-only",
-  "stop_rule": "any probe STOP = charter dead this cycle; no post-hoc class exclusions; no prompt changes after P0 pass; no re-sampling after audit results exist; holdout untouched until registered one-shot; extraction store retained regardless of verdict"
+  "stop_rule": "any probe STOP = charter dead this cycle; no post-hoc class exclusions; no prompt changes after P0 pass; no re-sampling after audit results exist; holdout untouched until registered one-shot; extraction store retained regardless of verdict",
+  "amendments": [
+   {
+    "utc": "2026-08-13",
+    "pre_result": "P0 not yet sampled or run; amendment legal",
+    "text": "P0 pre-labeler executed as claude-haiku-4-5 via Claude Code harness subagents (no Anthropic API key on host); temperature not harness-controllable \u2014 single pass, no retries. Cross-family independence vs gpt-5.4-mini extractor preserved. Human adjudication remains final and blind to label origin."
+   }
+  ]
  }
 }
