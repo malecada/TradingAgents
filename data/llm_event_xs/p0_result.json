@@ -1,0 +1,101 @@
+{
+ "experiment": "llm_c1_event_xs",
+ "probe": "P0_extraction_quality",
+ "n_adjudicated": 115,
+ "n_sample": 300,
+ "agreement_check_error_rate": 0.03333333333333333,
+ "per_class": {
+  "hack": {
+   "tp": 11,
+   "fp": 1,
+   "fn": 1,
+   "n_true": 12,
+   "precision": 0.9166666666666666,
+   "recall": 0.9166666666666666
+  },
+  "insolvency_halt": {
+   "tp": 8,
+   "fp": 0,
+   "fn": 3,
+   "n_true": 11,
+   "precision": 1.0,
+   "recall": 0.7272727272727273
+  },
+  "listing_delisting": {
+   "tp": 3,
+   "fp": 0,
+   "fn": 6,
+   "n_true": 9,
+   "precision": 1.0,
+   "recall": 0.3333333333333333
+  },
+  "regulatory": {
+   "tp": 22,
+   "fp": 8,
+   "fn": 7,
+   "n_true": 29,
+   "precision": 0.7333333333333333,
+   "recall": 0.7586206896551724
+  },
+  "unlock_emission": {
+   "tp": 1,
+   "fp": 1,
+   "fn": 1,
+   "n_true": 2,
+   "precision": 0.5,
+   "recall": 0.5
+  },
+  "upgrade_partnership": {
+   "tp": 19,
+   "fp": 5,
+   "fn": 0,
+   "n_true": 19,
+   "precision": 0.7916666666666666,
+   "recall": 1.0
+  }
+ },
+ "gates": {
+  "precision": {
+   "min": 0.8,
+   "per_gate_class": {
+    "hack": 0.9166666666666666,
+    "insolvency_halt": 1.0,
+    "regulatory": 0.7333333333333333,
+    "upgrade_partnership": 0.7916666666666666,
+    "pooled_small": 0.8
+   },
+   "pass": false
+  },
+  "recall": {
+   "min": 0.6,
+   "per_gate_class": {
+    "hack": 0.9166666666666666,
+    "insolvency_halt": 0.7272727272727273,
+    "regulatory": 0.7586206896551724,
+    "upgrade_partnership": 1.0,
+    "pooled_small": 0.36363636363636365
+   },
+   "pass": false
+  },
+  "asset_link": {
+   "min": 0.9,
+   "value": 0.96875,
+   "pass": true
+  },
+  "prefilter_recall": {
+   "min": 0.85,
+   "value": 0.52985233237455,
+   "pass": false
+  },
+  "anon_agreement": {
+   "min": 0.8,
+   "value": 0.94,
+   "pass": true
+  }
+ },
+ "asset_pairs": 64,
+ "event_rate_prefilter_pos": 0.38,
+ "event_rate_prefilter_neg": 0.06,
+ "verdict": "FAIL",
+ "note": "unaudited agreement rows scored correct-by-agreement; audited-agreement error rate reported above"
+}
