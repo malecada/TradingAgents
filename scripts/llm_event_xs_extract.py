@@ -60,6 +60,22 @@ Empty list if no qualifying event.
 Article:
 {text}"""
 
+PROMPT_V2 = PROMPT.replace(
+    "Rules:",
+    """Additional rules (v2):
+- regulatory: the target must be a crypto asset, crypto company, or crypto
+  venue. Enforcement against non-crypto firms or people (even by SEC/CFTC)
+  is NOT an event. Personnel changes and prospective/planned regulation are
+  NOT events. Convictions, sentencing, and extradition of crypto-company
+  principals ARE regulatory events for the affected venue/asset.
+- upgrade_partnership: requires a concrete named action that is signed,
+  live, or deployed. Exploration, MOUs, and conference statements are NOT
+  events.
+- listing_delisting: includes IDO/IEO, exchange debut, "X lists Y",
+  "trading opens", and "exchange adds support for Y".
+
+Rules:""")
+
 ENTITY_MASK = [
     r"FTX|Alameda", r"Terra|LUNA|UST\b", r"Celsius", r"Three Arrows|3AC",
     r"Voyager", r"BlockFi", r"Genesis", r"Silvergate", r"Signature Bank",
@@ -93,10 +109,11 @@ def call_llm(client, text: str, cache: dict, tag: str) -> dict:
     key = tag + "|" + hashlib.sha256(text.encode()).hexdigest()[:16]
     if key in cache:
         return cache[key]
+    prompt = PROMPT_V2 if tag.startswith("v2") or tag == "anon2" else PROMPT
     r = client.chat.completions.create(
         model=MODEL, temperature=0,
         response_format={"type": "json_object"},
-        messages=[{"role": "user", "content": PROMPT.format(text=text)}])
+        messages=[{"role": "user", "content": prompt.format(text=text)}])
     try:
         out = json.loads(r.choices[0].message.content)
     except (json.JSONDecodeError, TypeError):
@@ -120,8 +137,8 @@ def validate_spans(events: list, text: str) -> tuple:
     return kept, dropped
 
 
-def extract_row(client, row, cache, anon: bool = False) -> dict:
-    tag = "anon" if anon else "v1"
+def extract_row(client, row, cache, anon: bool = False, v2: bool = False) -> dict:
+    tag = ("anon2" if anon else "v2") if v2 else ("anon" if anon else "v1")
     t1 = article_text(row, 1)
     if anon:
         t1 = anonymize(t1)
@@ -142,6 +159,8 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--sample", action="store_true")
     ap.add_argument("--sample-anon", action="store_true")
+    ap.add_argument("--sample2", action="store_true")
+    ap.add_argument("--sample2-anon", action="store_true")
     args = ap.parse_args()
 
     from dotenv import load_dotenv
@@ -149,7 +168,9 @@ def main() -> int:
     from openai import OpenAI
     client = OpenAI()
 
-    sample = pd.read_parquet(OUTDIR / "p0_sample.parquet")
+    v2 = args.sample2 or args.sample2_anon
+    sample = pd.read_parquet(
+        OUTDIR / ("p0_sample_v2.parquet" if v2 else "p0_sample.parquet"))
     cache = json.loads(CACHE.read_text()) if CACHE.exists() else {}
 
     if args.sample:
@@ -161,8 +182,16 @@ def main() -> int:
         rng_rows = sample.sample(n=50, random_state=20260813)
         rows = rng_rows.to_dict("records")
         anon = True
+    elif args.sample2:
+        out_path = OUTDIR / "p0v2_extractor_labels.json"
+        rows = sample.to_dict("records")
+        anon = False
+    elif args.sample2_anon:
+        out_path = OUTDIR / "p0v2_extractor_labels_anon.json"
+        rows = sample.sample(n=50, random_state=20260814).to_dict("records")
+        anon = True
     else:
-        print("choose --sample or --sample-anon")
+        print("choose a mode")
         return 1
     if out_path.exists():
         print(f"{out_path} exists — refusing to overwrite")
@@ -170,7 +199,7 @@ def main() -> int:
 
     results = {}
     for i, row in enumerate(rows):
-        res = extract_row(client, row, cache, anon=anon)
+        res = extract_row(client, row, cache, anon=anon, v2=v2)
         results[str(row["sample_idx"])] = {
             "store": row["store"], "id": str(row["id"]),
             "headline": row["headline"], **res}
