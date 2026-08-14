@@ -5434,3 +5434,49 @@ tests), the independent supply-reference store
 emissions→perp mapping. Artifacts: `data/rebuild/unlock_xs/probes.json`,
 `data/xsect/emissions_vintage.json`, `data/xsect/unlock_p0_refs_vintage.json`,
 `data/xsect/unlock_xs_universe.json`, `data/xsect/unlock_xs_slug_map.json`.
+
+## Section 63: LLM Charter C1 — Typed-Event Extraction as XS Features: NEGATIVE at P0 (2026-08-14)
+
+Second executed charter from the LLM integration proposal (§5): LLM
+extraction of typed, asset-linked events (hack / regulatory /
+listing-delisting / unlock-emission / upgrade-partnership /
+insolvency-halt) from PIT news into cross-sectional features. Registered
+pre-result (`data/llm_event_xs/gates.json`); corpus first extended and
+frozen: Alpaca wide backfill across 797 perp bases (33.0K rows) + GDELT
+2021-10→2025-03 (350.9K rows; 65 permanently failed fetch days
+disclosed), 377.8K dev-window articles total.
+
+**P0 extraction-quality audit — FAIL, then STOP after the single
+permitted amendment round.** Hybrid ground truth: gpt-5.4-mini extractor
+vs claude-haiku-4-5 pre-labeler (cross-family), blind human adjudication
+of all disagreements plus an agreement subsample (300-article round 1,
+100-article round 2). Round 1: precision FAIL (regulatory 0.73,
+upgrade_partnership 0.79 — false events on non-crypto enforcement and
+vague partnerships), recall FAIL (listing_delisting 0.33), prefilter
+recall FAIL (0.53 — half of true events never reach the LLM through the
+keyword gate), asset-link PASS (0.97), anonymization PASS (0.94, no
+memorization signal). Amendment (declared in-file): prompt v2 tightening
+regulatory/partnership/listing rules + 29 added prefilter keywords
+(corpus pass-rate 15.1%→21.2%). Round 2 on a fresh 100-article sample:
+recall fixed (0.86), asset-link 1.00, anonymization 0.96 — but pooled
+precision 0.75 < 0.80 and prefilter recall 0.70 < 0.85. STOP.
+
+**Reading.** The extraction core is directionally sound (asset linking
+near-perfect, no anonymization collapse, big amendment gains), but crypto
+event language is too diffuse for a keyword-gated cheap-tier pipeline to
+clear pre-registered precision/completeness floors: ~30% of true events
+hide behind unenumerable phrasings, and borderline cases (exploratory
+partnerships, non-crypto SEC actions) leak into extractions. Disclosure:
+the round-2 audit contained only 14 true events, so v2 estimates carry
+wide intervals; the frozen floors decide regardless. Charter dead this
+cycle; revival requires a new cycle with either no prefilter (full-corpus
+extraction at ~5x cost), a stronger extraction tier, or an
+embedding-based candidate filter replacing keywords.
+
+**Cross-charter implications (proposal §9).** C4 (event-time intraday)
+required the C1 extraction store — void this cycle. C3 (LLM ranking)
+loses its event-digest card section but remains executable on numeric
+PIT cards alone. LLM spend this charter ≈ $2 (sample extractions only;
+no sweep). Reusable assets: the frozen 378K-article dual-store corpus,
+wide-symbol Alpaca backfill, GDELT 2021-2025 store, hybrid-adjudication
+protocol + 400 human-adjudicated article labels.

@@ -1,0 +1,82 @@
+{
+ "experiment": "llm_c1_event_xs",
+ "probe": "P0_v2_extraction_quality",
+ "n_sample": 100,
+ "agreement_check_error_rate": 0.13333333333333333,
+ "per_class": {
+  "hack": {
+   "tp": 2,
+   "fp": 1,
+   "fn": 0,
+   "n_true": 2,
+   "precision": 0.6666666666666666,
+   "recall": 1.0
+  },
+  "insolvency_halt": {
+   "tp": 3,
+   "fp": 1,
+   "fn": 0,
+   "n_true": 3,
+   "precision": 0.75,
+   "recall": 1.0
+  },
+  "listing_delisting": {
+   "tp": 0,
+   "fp": 0,
+   "fn": 1,
+   "n_true": 1,
+   "precision": 0.0,
+   "recall": 0.0
+  },
+  "regulatory": {
+   "tp": 5,
+   "fp": 1,
+   "fn": 1,
+   "n_true": 6,
+   "precision": 0.8333333333333334,
+   "recall": 0.8333333333333334
+  },
+  "upgrade_partnership": {
+   "tp": 2,
+   "fp": 1,
+   "fn": 0,
+   "n_true": 2,
+   "precision": 0.6666666666666666,
+   "recall": 1.0
+  }
+ },
+ "gates": {
+  "precision": {
+   "min": 0.8,
+   "vals": {
+    "pooled_small": 0.75
+   },
+   "pass": false
+  },
+  "recall": {
+   "min": 0.6,
+   "vals": {
+    "pooled_small": 0.857
+   },
+   "pass": true
+  },
+  "asset_link": {
+   "min": 0.9,
+   "value": 1.0,
+   "pass": true
+  },
+  "prefilter_recall": {
+   "min": 0.85,
+   "value": 0.6998246734850321,
+   "pass": false
+  },
+  "anon_agreement": {
+   "min": 0.8,
+   "value": 0.96,
+   "pass": true
+  }
+ },
+ "event_rate_pos": 0.21666666666666667,
+ "event_rate_neg": 0.025,
+ "verdict": "STOP"
+}
