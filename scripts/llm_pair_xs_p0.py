@@ -47,11 +47,13 @@ PRICE_IN, PRICE_OUT = 0.30, 1.20  # USD per 1M tokens
 SPEND_CAP = 150.0
 
 usage = {"prompt_tokens": 0, "completion_tokens": 0, "fresh_calls": 0,
-         "fresh_instances": 0}
+         "fresh_instances": 0, "prompt_chars": 0, "instances_total": 0}
 
 
 def call_chunk(client, chunk, wk_cards, tags, cache, prefix):
     prompt = build_prompt(chunk, wk_cards, tags)
+    usage["prompt_chars"] += len(prompt)
+    usage["instances_total"] += len(chunk)
     key = prefix + "|" + hashlib.sha256(prompt.encode()).hexdigest()[:16]
     if key in cache:
         winners = cache[key]
@@ -180,40 +182,48 @@ def main() -> int:
     verdict = "PASS" if (p0b_pass and p0a_pass and p0c_pass) else "STOP"
 
     # ── P0d cost checkpoint (infra) ──
-    tok_per_inst = ((usage["prompt_tokens"] + usage["completion_tokens"])
-                    / max(1, usage["fresh_instances"]))
+    if usage["fresh_instances"] > 0:
+        in_per_inst = usage["prompt_tokens"] / usage["fresh_instances"]
+        out_per_inst = usage["completion_tokens"] / usage["fresh_instances"]
+        token_basis = "measured"
+    else:
+        # cached rerun (e.g. after a crash): estimate 4 chars/token in,
+        # ~7 completion tokens per duel verdict
+        in_per_inst = usage["prompt_chars"] / 4 / max(1, usage["instances_total"])
+        out_per_inst = 7.0
+        token_basis = "estimated_from_chars"
     inst_per_week = cards.groupby("date")["symbol"].nunique().map(
         lambda n: 2 * (n // 2) * K_ROUNDS)
-    p0_cost = (usage["prompt_tokens"] * PRICE_IN
-               + usage["completion_tokens"] * PRICE_OUT) / 1e6
-    proj_inst = (inst_per_week.sum()            # P2 full dev
-                 + 2 * inst_per_week.sample(26, random_state=SEED).sum())  # P1 approx
-    proj_cost = p0_cost + proj_inst * tok_per_inst * (
-        (usage["prompt_tokens"] * PRICE_IN + usage["completion_tokens"] * PRICE_OUT)
-        / max(1, usage["prompt_tokens"] + usage["completion_tokens"])) / 1e6
+    p0_inst = usage["instances_total"]
+    p0_cost = float(p0_inst * (in_per_inst * PRICE_IN + out_per_inst * PRICE_OUT) / 1e6)
+    proj_inst = float(inst_per_week.sum()       # P2 full dev
+                      + 2 * inst_per_week.sample(26, random_state=SEED).sum())  # P1 approx
+    proj_cost = float(p0_cost + proj_inst * (in_per_inst * PRICE_IN
+                                             + out_per_inst * PRICE_OUT) / 1e6)
 
     res = {"experiment": "llm_c3p_pair_xs", "probe": "P0_swap_stability",
            "weeks": per_week,
            "P0b": {"pooled_swap_consistency": pooled_cons,
-                   "weeks_ge_055": weeks_ge, "slot1_rate": slot1_all,
+                   "weeks_ge_055": int(weeks_ge), "slot1_rate": slot1_all,
                    "criteria": {"pooled_min": 0.60, "weekly_min": 0.55,
                                 "weeks_needed": 6, "slot1_band": [0.35, 0.65]},
-                   "pass": p0b_pass},
-           "P0a": {"min_agreement": min(rr_agr), "min_rho": min(rr_rho),
+                   "pass": bool(p0b_pass)},
+           "P0a": {"min_agreement": float(min(rr_agr)), "min_rho": float(min(rr_rho)),
                    "criteria": {"agreement_min": 0.90, "rho_min": 0.90},
-                   "pass": p0a_pass},
-           "P0c": {"min_agreement": min(sh_agr), "min_rho": min(sh_rho),
+                   "pass": bool(p0a_pass)},
+           "P0c": {"min_agreement": float(min(sh_agr)), "min_rho": float(min(sh_rho)),
                    "criteria": {"agreement_min": 0.80, "rho_min": 0.80},
-                   "pass": p0c_pass},
-           "P0d_cost": {"fresh_calls": usage["fresh_calls"],
-                        "fresh_instances": usage["fresh_instances"],
-                        "prompt_tokens": usage["prompt_tokens"],
-                        "completion_tokens": usage["completion_tokens"],
+                   "pass": bool(p0c_pass)},
+           "P0d_cost": {"fresh_calls": int(usage["fresh_calls"]),
+                        "instances_total": int(usage["instances_total"]),
+                        "token_basis": token_basis,
+                        "tokens_in_per_instance": float(in_per_inst),
+                        "tokens_out_per_instance": float(out_per_inst),
                         "p0_cost_usd_assumed": round(p0_cost, 2),
                         "projected_total_usd_assumed": round(proj_cost, 2),
                         "price_assumption_per_1M": [PRICE_IN, PRICE_OUT],
                         "cap_usd": SPEND_CAP,
-                        "over_cap": proj_cost > SPEND_CAP},
+                        "over_cap": bool(proj_cost > SPEND_CAP)},
            "verdict": verdict, "n_weeks": all_res_n}
     RESULT.write_text(json.dumps(res, indent=1))
 
