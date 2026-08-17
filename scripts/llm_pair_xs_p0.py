@@ -74,18 +74,21 @@ def call_chunk(client, chunk, wk_cards, tags, cache, prefix):
     return chunk, parse_verdicts(chunk, winners, tags)
 
 
-def run_week(client, wk_cards, date, cache, prefix, inst_seed_variant="base"):
+def run_week(client, wk_cards, date, cache, prefix, inst_seed_variant="base",
+             named=False):
     """One full week (both orders). Returns (bt, resolved, resolution_rate).
 
     resolved rows: (pair_id, winner_sym, first_slot_sym).
     inst_seed_variant only re-shuffles/re-chunks the SAME instances (P0c).
+    named=True uses symbol names as tags (P1 memorization probe ONLY);
+    pairs/instances stay identical to the anonymous run.
     """
     seed = week_seed(date, "base")  # pairs + tags identical across variants
     syms = sorted(wk_cards["symbol"].tolist())
     pairs = sample_pairs(syms, seed, K_ROUNDS)
     inst_seed = seed if inst_seed_variant == "base" else week_seed(date, inst_seed_variant)
     instances = make_instances(pairs, inst_seed)
-    tags = week_tags(syms, seed)
+    tags = week_tags(syms, seed, named=named)
     chunks = chunk_instances(instances, DUELS_PER_PROMPT)
     resolved, n_inst = [], 0
     with ThreadPoolExecutor(WORKERS) as ex:
