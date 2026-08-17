@@ -5480,3 +5480,40 @@ PIT cards alone. LLM spend this charter ≈ $2 (sample extractions only;
 no sweep). Reusable assets: the frozen 378K-article dual-store corpus,
 wide-symbol Alpaca backfill, GDELT 2021-2025 store, hybrid-adjudication
 protocol + 400 human-adjudicated article labels.
+
+## Section 64: LLM Charter C3 — Cross-Sectional Ranking from Anonymized Numeric Cards: NEGATIVE at P0 (2026-08-14)
+
+Third and final executable charter from the LLM integration proposal (§7):
+`gpt-5.4-mini` ranks anonymized numeric PIT cards (returns, vol, funding,
+liquidity, CM activity, unlock schedules, age, category) for the top-200
+weekly universe, partition-rank-average over batches of 25, two rounds,
+temperature 0. Registered pre-result (`data/llm_rank_xs/gates.json`);
+card panel: 47.5K cards over 287 Fridays, 659 symbols.
+
+**P0 determinism/stability — STOP.** Eight seeded dev weeks, three runs
+each. Identical-input cache-bypassed rerun: Spearman 0.936–0.985 (gate
+≥0.9, PASS — the model is reproducible at temperature 0). In-batch
+presentation shuffle (same partition, same cards, shuffled order):
+Spearman 0.633–0.876 with 3/8 weeks below the 0.8 gate. The ordering a
+card receives depends materially on where it appears in the prompt — a
+presentation artifact, not a stable function of the card's numbers. The
+control pair isolates the cause: reproducibility high, order-invariance
+low. Charter dead at zero incremental spend beyond the probe (~$4);
+P1–P3 never ran.
+
+**Reading.** Position bias in list-ranking is a known LLM failure mode;
+the probe was registered precisely because of it, and it fired. Any IC
+measured downstream would have been confounded with batch-position noise
+of comparable magnitude to plausible signal sizes. Revival (new cycle)
+would need order-debiasing by construction — e.g. all-pairs or
+round-robin position averaging (cost multiplies by the batch size), or
+per-card scalar scoring with calibrated anchors — the latter re-enters
+the falsified scalar-opinion cell (§48) and is not obviously admissible.
+
+**LLM-integration program conclusion (charters C1–C4).** C2 dead at P1
+(§62), C1 dead at P0 (§63), C4 void (needed C1), C3 dead at P0 (§64).
+Total LLM spend across the program ≈ $8 of a budgeted $600; every charter
+died at its first or second probe, exactly as the kill-test-first
+sequencing intended. The taxonomy's untried cells are now all closed or
+void for this cycle; the falsification map (proposal §3) is complete at
+daily and weekly horizons for this program's corpus and model tier.
