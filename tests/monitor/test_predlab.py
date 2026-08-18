@@ -81,6 +81,37 @@ class TestDeriveBook:
         assert isinstance(d["rolling_sharpe"], list)  # may be empty < window
 
 
+class TestSlippage:
+    """(mark - close) per day: what the close-to-close fill assumption costs."""
+
+    def test_none_when_no_row_carries_a_mark_return(self):
+        rows = [_row("2026-08-03", None), _row("2026-08-04", 0.01)]
+        assert predlab.derive_book(rows, "vt15_b100_scale")["slippage"] is None
+
+    def test_mean_and_cumulative_reported_in_basis_points(self):
+        rows = [_row("2026-08-03", None, realized_mark_ret=None),
+                _row("2026-08-04", 0.0100, realized_mark_ret=0.0105),
+                _row("2026-08-05", 0.0200, realized_mark_ret=0.0190)]
+        s = predlab.derive_book(rows, "vt15_b100_scale")["slippage"]
+        assert s["n"] == 2
+        assert s["cum_bps"] == pytest.approx(-5.0)   # +5 then -10
+        assert s["mean_bps"] == pytest.approx(-2.5)
+
+    def test_last_pair_carries_both_legs(self):
+        rows = [_row("2026-08-04", 0.0100, realized_mark_ret=0.0105)]
+        s = predlab.derive_book(rows, "vt15_b100_scale")["slippage"]
+        assert s["last"] == {"asof": "2026-08-04", "close_ret": 0.0100,
+                             "mark_ret": 0.0105, "bps": pytest.approx(5.0)}
+
+    def test_days_missing_either_leg_are_not_paired(self):
+        rows = [_row("2026-08-04", None, realized_mark_ret=0.01),
+                _row("2026-08-05", 0.01, realized_mark_ret=None),
+                _row("2026-08-06", 0.0100, realized_mark_ret=0.0102)]
+        s = predlab.derive_book(rows, "vt15_b100_scale")["slippage"]
+        assert s["n"] == 1
+        assert s["last"]["asof"] == "2026-08-06"
+
+
 class TestBookDetail:
     def test_latest_row_split_and_delta(self):
         prev = _row("2026-08-03", None,

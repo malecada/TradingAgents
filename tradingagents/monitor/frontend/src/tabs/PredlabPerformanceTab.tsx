@@ -5,7 +5,7 @@ import { Card } from "../components/Card";
 import { Badge } from "../components/Badge";
 import { Section } from "../components/Section";
 import { EquityChart } from "../charts/EquityChart";
-import { fmtNum, fmtPct } from "../lib/format";
+import { fmtBps, fmtNum, fmtPct } from "../lib/format";
 import { rebaseTo100, sliceFromDays } from "../lib/rebase";
 import type { PredlabBookPerf, PredlabYearlyRow } from "../types";
 
@@ -26,6 +26,7 @@ function CardsRow(props: {
   name: string; kind: "quant" | "hybrid"; p: PredlabBookPerf;
 }) {
   const c = props.p.cards;
+  const slip = props.p.slippage;
   const warm = c.warmup.n < c.warmup.required;
   return (
     <div style={{ marginTop: 10 }}>
@@ -42,10 +43,22 @@ function CardsRow(props: {
             : `warming up (${c.warmup.n}/${c.warmup.required})`} />
         <Card label="Avg turnover" value={fmtPct(c.avg_turnover)} />
         <Card label="Cum est. cost" value={fmtPct(c.cum_cost)} tone="neg" />
+        <Card label="Fill slippage (mark vs close)"
+          value={slip ? `${fmtBps(slip.mean_bps)}/day` : "accruing"}
+          tone={slip ? (slip.mean_bps >= 0 ? "pos" : "neg") : ""} />
       </div>
       {warm && <p className="muted">
         vol-target scale needs {c.warmup.required} realized returns —
         {" "}{c.warmup.required - c.warmup.n} to go</p>}
+      {slip
+        ? <p className="muted">
+            fill check over {slip.n} paired day{slip.n === 1 ? "" : "s"}:
+            {" "}{fmtBps(slip.cum_bps)} cumulative · last {slip.last.asof}
+            {" "}close {fmtPct(slip.last.close_ret)} vs mark
+            {" "}{fmtPct(slip.last.mark_ret)} ({fmtBps(slip.last.bps)})</p>
+        : <p className="muted">
+            fill check accruing — rows carry write-time marks from
+            {" "}2026-08-18; the first paired day needs two marked rows</p>}
     </div>
   );
 }

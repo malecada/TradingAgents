@@ -69,6 +69,35 @@ def _realized(rows: list[dict]) -> list[dict]:
     return [r for r in rows if r.get("realized_book_ret") is not None]
 
 
+def derive_slippage(rows: list[dict]) -> dict | None:
+    """What the close-to-close fill assumption costs, in basis points.
+
+    ``realized_book_ret`` prices the book at the UTC close; the paper
+    trader writes the row minutes later and stores ``realized_mark_ret``
+    for the same book measured between those write-time marks. The
+    difference is the slippage the close-only journal used to hide.
+    Negative = the assumed close fill flattered the book. None until a day
+    carries both legs (rows written before 2026-08-18 carry no marks).
+    """
+    pairs = [r for r in rows
+             if r.get("realized_book_ret") is not None
+             and r.get("realized_mark_ret") is not None]
+    if not pairs:
+        return None
+    bps = [(r["realized_mark_ret"] - r["realized_book_ret"]) * 1e4
+           for r in pairs]
+    last = pairs[-1]
+    return {
+        "n": len(pairs),
+        "mean_bps": round(sum(bps) / len(bps), 4),
+        "cum_bps": round(sum(bps), 4),
+        "last": {"asof": last["asof"],
+                 "close_ret": last["realized_book_ret"],
+                 "mark_ret": last["realized_mark_ret"],
+                 "bps": round(bps[-1], 4)},
+    }
+
+
 def derive_book(rows: list[dict], scale_key: str) -> dict | None:
     """Performance block for one book, or None when the journal is empty."""
     if not rows:
@@ -89,6 +118,7 @@ def derive_book(rows: list[dict], scale_key: str) -> dict | None:
         "equity": equity,
         "drawdown": metrics.drawdown_series(equity),
         "rolling_sharpe": metrics.rolling_sharpe(equity, _ROLLING_WINDOW),
+        "slippage": derive_slippage(rows),
         "cards": {
             "cum_return": values[-1] / 100.0 - 1.0,
             "sharpe": round(metrics.sharpe(values), 2),

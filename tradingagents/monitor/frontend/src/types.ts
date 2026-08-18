@@ -101,9 +101,16 @@ export interface PredlabCards {
   last_asof: string; n_days: number;
 }
 
+/** (mark leg - close leg) per day: what the close fill assumption costs. */
+export interface PredlabSlippage {
+  n: number; mean_bps: number; cum_bps: number;
+  last: { asof: string; close_ret: number; mark_ret: number; bps: number };
+}
+
 export interface PredlabBookPerf {
   equity: Point[]; drawdown: Point[]; rolling_sharpe: Point[];
   cards: PredlabCards;
+  slippage: PredlabSlippage | null;
 }
 
 export interface PredlabYearlyRow {

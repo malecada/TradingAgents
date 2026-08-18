@@ -32,8 +32,9 @@ TA_MONITOR_PASSWORD=somepw \
 ### Predlab-first tab set
 
 - **Performance** — per-book cards (cumulative return, Sharpe, max drawdown,
-  VT scale with a warming-up state, avg turnover, cum est. cost) for the
-  champion and vt10 books, a dual-book equity/drawdown/rolling-Sharpe chart
+  VT scale with a warming-up state, avg turnover, cum est. cost, fill
+  slippage) for the champion and vt10 books, a dual-book
+  equity/drawdown/rolling-Sharpe chart
   with range pills (7d/30d/90d/all), frozen dev reference cards (overlaid SR,
   overlaid max DD, raw SR, DSR), and backtest yearly tables.
 
@@ -93,6 +94,17 @@ Each `.jsonl` file in `s1_paper/` contains one JSON object per line (one per day
   factor; used to compute position sizes
 - `breadth` (int | null, optional) — champion rows only; number of unique
   securities held
+- `mark_px` (dict | null) / `mark_ts` (string | null) — per-name price observed
+  when the row was written, and that timestamp; null before 2026-08-18
+- `realized_mark_ret` (float | null) — the same book return as
+  `realized_book_ret` but measured between those write-time marks
+
+**Fill slippage**: `realized_book_ret` prices the book at the UTC close, which
+  is what the paper fill assumes; the cron writes the row minutes later.
+  `derive_slippage` pairs the two legs on days carrying both and reports
+  `(mark - close)` in basis points — mean, cumulative, and the latest pair.
+  Negative means the assumed close fill flattered the book. Null until a day
+  carries both legs.
 
 **Equity reconstruction**: equity = starting_capital × product(1 + realized_book_ret),
   compounded from all realized returns immediately — the 21-return warm-up
