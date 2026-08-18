@@ -5517,3 +5517,68 @@ died at its first or second probe, exactly as the kill-test-first
 sequencing intended. The taxonomy's untried cells are now all closed or
 void for this cycle; the falsification map (proposal §3) is complete at
 daily and weekly horizons for this program's corpus and model tier.
+
+## Section 65: LLM Charter C3-P — Pairwise Duels with Bradley-Terry Aggregation: NEGATIVE at P2 (2026-08-18)
+
+Registered revival (`llm_c3p_pair_xs`, gates frozen pre-result 2026-08-17,
+`data/llm_pair_xs/gates.json`) of the dead C3 ranking charter (§64),
+attacking its kill directly: instead of list ranking, the LLM judges
+sampled pairwise duels ("which of these two cards has the higher expected
+5-day forward return?"), with EVERY pair issued in both presentation
+orders in disjoint prompts, so position bias cancels by construction
+rather than being assumed away. Per week: k=10 seeded permutation-pairing
+rounds over the reused 47.5K-card panel (~n·5 unique pairs, both orders,
+20 duels per prompt, `gpt-5.4-mini`, temperature 0); per-asset score =
+log Bradley-Terry strength (MM, α=0.5 virtual-opponent prior). Spend cap
+$150; confirmatory n_trials=1 declared for the P2 primary gate.
+
+**P0 order-swap kill-probe — PASS (the first P0 survivor of the LLM
+program).** Eight seeded dev weeks: pooled swap-consistency 0.782 (gate
+≥0.60; 8/8 weeks ≥0.55), slot-1 pick rate 0.507 (band 0.35–0.65 — no
+position preference), cache-bypassed rerun agreement 0.937 / BT-score
+Spearman 0.965 (gates ≥0.90), prompt re-shuffle/re-chunk agreement 0.819
+/ Spearman 0.901 (gates ≥0.80). The §64 presentation artifact does not
+survive the pairwise construction: duel verdicts are a stable function of
+the cards, and ~78% of duels return the same winner regardless of order.
+
+**P1 anonymization kill-probe — PASS.** 26 seeded weeks with identical
+pairs/orders, named vs anonymous tags: named mean weekly IC −0.0342 vs
+anonymous −0.0229 (named excess −0.0113 vs a +0.0115 STOP threshold);
+anonymous-vs-named score correlation ≈0.95. Asset identity adds nothing —
+no memorization channel.
+
+**P2 incremental residual IC — STOP.** Full anonymous dev run, 222
+Fridays 2021-01→2025-03 (~490K duel instances). Weekly scores residualized
+cross-sectionally on {vol rank, 4-week momentum, size rank}; residual
+Spearman IC vs 5-day forward returns: mean **+0.0079, Newey-West t = 1.01**
+(gate: mean > 0 AND t ≥ 2.0 — failed). Reported horizons: 10d +0.0075
+(t 0.78), 21d +0.0180 (t 1.54). The comparative gate (b) PASSED: on the
+170 common weeks the LLM residual IC 0.0174 vs LightGBM twin 0.0073 —
+the LLM extracts more cross-sectional signal from the identical cards
+than a purpose-trained GBDT, but neither clears significance.
+
+**Forensics (disclosure, not re-litigation).** Direction is positive and
+the study is well-powered (n=222; the mean needed for t≈2 at observed
+weekly-IC volatility is ~0.0157, twice the observed 0.0079) — this is an
+honest underpowered-effect negative, not a plumbing zero. Hit rate 54.1%.
+Year profile: 2021 −0.026, 2022 +0.007, 2023 −0.004, 2024 +0.037,
+2025 (13 wks) +0.085 — the effect concentrates late; equivalently, the
+2021 altcoin regime is where duel judgments were anti-predictive. This
+pattern and the 21d horizon (t 1.54) are REPORTED, NOT ACTED ON: the
+registered primary was full-window 5d, and slicing after the result is
+exactly what the pre-registration forbids. Any revival must
+pre-register a fresh cycle on data this search never touched (e.g. the
+sealed 2025-04→2026-07 window plus accrued forward weeks) — the dev
+window is now burned for this family.
+
+**Disposition.** Dead this cycle at the registered stop rule; P3 never
+ran, the sealed holdout was never read. Charter spend ≈ $41 (P0 $1.2,
+P1 $4, P2 ~$36 — numeric-dense cards tokenize at ~2–3 chars/token, ~60%
+above the char/4 projection); ledger 7/10 configs. Methodological note
+for the thesis: the pairwise construction fixed the mechanical failure
+mode (position bias) cleanly and cheaply, and the LLM-vs-twin comparison
+came out in the LLM's favor — the binding constraint is now signal size,
+not measurement artifact. The LLM program's falsification map (§62–64)
+gains one refinement: cross-sectional numeric-card judgment survives its
+validity probes but does not reach significance at daily/weekly horizons
+on this corpus and model tier.
