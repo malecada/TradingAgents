@@ -1517,5 +1517,55 @@
     "text": "P3 overlay uses the ANONYMIZED P2 variant's severities as the primary series (constraint 4.2: dev window inside model pretraining window); named variant reported disclosure-only. G5 episode windows frozen: 2021-05-10..2021-05-25; 2022-05-07..2022-05-16; 2022-06-12..2022-07-05; 2022-11-06..2022-11-15; 2023-03-09..2023-03-15; 2024-08-02..2024-08-09; 2025-02-21..2025-03-15. Random-veto placebo draws match per-year veto-day counts and multiplier multiset of the post-budget real veto set."
    }
   ]
+ },
+ "xasset_equity_r1": {
+  "registered_utc": "2026-08-18",
+  "charter": "docs/predlab/reports/xasset_equity_r1_charter.md",
+  "hypothesis": "Phase-O final champion (ewma_20 Parkinson low-vol eq-quintile LS, top-200 monthly-PIT dollar-volume universe, vt15_naive20_b100) transfers verbatim to US equities \u2014 asset-class generalization",
+  "config": "identical to predlab_opt.final_champion; ONLY forced asset-class adaptations: (1) ANN 365->252; (2) funding carry -> 0, replaced by short-leg borrow fee 1.0%/yr charged daily on scaled short gross; (3) taker 5bp/side kept; (4) NO re-tuning of signal/universe/overlay",
+  "data": {
+   "source": "Alpaca SIP daily bars, adjustment=all, feed=sip (free tier)",
+   "store": "data/xsect_equity/bars/*.parquet + manifest",
+   "universe_pool": "Alpaca /v2/assets us_equity, status active+inactive (survivorship-safe); exchanges NYSE/NASDAQ/AMEX/ARCA/BATS only (no OTC); exclude 5-char symbols ending W/R/U (warrants/rights/units) and ETF/fund name-heuristic matches (frozen list in fetch script)",
+   "dollar_volume": "vw * volume (VWAP notional, analogue of quote_volume)",
+   "parkinson_note": "ln(high/low) invariant to multiplicative split/div adjustment; adjusted closes give total returns"
+  },
+  "window": [
+   "2017-01-03",
+   "2026-08-14"
+  ],
+  "window_note": "2016 bars = signal burn-in + first membership month only; entire window VIRGIN (no equity data touched by any prior selection)",
+  "n_trials": 1,
+  "sensitivity_disclosure_only": "borrow {0, 1, 3}%/yr x taker {2.5, 5, 10}bp grid reported, never used for selection; rf-on-collateral ignored (conservative)",
+  "probes_P0_pre_equity": {
+   "parity_pin": "ported runner on crypto store must reproduce final_champion ovl SR +1.892 within +/-0.001 (proves engine reuse exact)",
+   "planted_alpha": "inject +20bp/day on future book longs -> pipeline must recover it",
+   "leaky_canary": "shift(0) signal variant must beat shift(1) materially, else harness cannot see leakage"
+  },
+  "feasibility_P1": {
+   "breadth": ">= 2000 trading days with breadth >= 100, else INFEASIBLE (trial unspent)",
+   "deaths": ">= 100 distinct inactive (delisted) symbols must appear in top-200 membership months with terminal bars, else INFEASIBLE (store would be survivorship-biased)",
+   "splits": "AAPL & TSLA 2020-08-31 adjusted |daily return| < 20% (adjustment sanity)"
+  },
+  "criteria": {
+   "U1_transfer": {
+    "ovl_sr_floor": 0.946,
+    "note": "= 0.5 x crypto dev ovl SR, mirrors predlab_bybit_r1 floor",
+    "placebo_shift_p_lt": 0.05,
+    "placebo_xshuffle_p_lt": 0.05,
+    "placebo_draws": 400,
+    "subperiods_positive_min": "3/4"
+   },
+   "U2_yields_returns": {
+    "ovl_sr_gt": 0.0,
+    "placebo_shift_p_lt": 0.05,
+    "placebo_xshuffle_p_lt": 0.05,
+    "placebo_draws": 400,
+    "borrow_stress_3pct_sr_gt": 0.0
+   },
+   "hierarchy": "U1 implies U2; report the strongest level attained; U2 fail = clean negative"
+  },
+  "stop_rule": "one run; no post-hoc universe/window/cost/signal edits after the first equity strategy number exists; single-name checks disclosed, never acted on; failure = negative recorded; revival or any equity re-tuning requires a NEW registered cycle",
+  "amendment_2026-08-18": "PRE-RESULT (no equity strategy number exists; store not yet built). Enumeration probe found Alpaca /v2/assets purges major delistings (BBBY/SIVB/FRC/TWTR/ATVI absent; FB recycled to an ETF) and marks 16K dead symbols with last-exchange OTC. Amended universe_pool: (a) drop exchange filter (top-200 dollar-volume membership self-selects listed liquid phase); (b) enumeration = Alpaca assets (incl. _DELISTED-suffix base mapping) UNION S&P500 ever-members 2016+ (fja05680) UNION SEC company_tickers.json, all bars-probed; (c) ticker-recycling guard: bar series split into independent segments at >90 calendar-day gaps; membership and signal computed per segment. Residual caveat: non-S&P pre-2023 delistings outside SEC-current list may be missing \u2014 gated by feasibility_P1.deaths."
  }
 }
