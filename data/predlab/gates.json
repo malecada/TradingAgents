@@ -960,7 +960,15 @@
   "costs": "5bp x (scale_t x underlying turnover + |d scale_t| x gross 2)",
   "dev_gates": "MaxDD reduction >=25% vs raw AND net SR >= 0.9 x raw net SR on dev; n_trials=3 disclosed",
   "confirmation_criteria": "on forward window: MaxDD(overlay) <= 0.75 x MaxDD(raw) AND net SR >= 0.9 x raw, one-shot",
-  "stop_rule": "3 configs fixed; failing dev gate = dead; ONE config frozen for confirmation; no equity/price stops in this cycle (SS31 lesson: stop axes are fragile)"
+  "stop_rule": "3 configs fixed; failing dev gate = dead; ONE config frozen for confirmation; no equity/price stops in this cycle (SS31 lesson: stop axes are fragile)",
+  "amendments": [
+   {
+    "utc": "2026-08-18",
+    "pre_result": "no vol-target scale has ever been emitted by the paper journal (both books stand at 14 gap-free returns of the 21 required); amendment legal",
+    "text": "Paper-trader forward record, both books: (1) realized returns measured across a journal gap are excluded from the 20-day vol-target window. The old book's 2026-07-31..08-02 outage left its 2026-08-03 row holding a 4-calendar-day return; the registered overlay formula is defined on contiguous daily returns, so counting it as one day would have mis-scaled the first vt10 value. No recorded value changes -- the fix lands before any scale exists. (2) Each row now stores the per-name price observed at write time (mark_px/mark_ts) and the book return measured mark-to-mark (realized_mark_ret) alongside the close-to-close leg. The journal previously recorded closes only, so the fill assumption it exists to check (fills at the UTC close, cron fires ~00:15-00:17 UTC) was not testable from it; the two legs now differ by exactly that slippage. Marks begin with the 2026-08-18 row; earlier rows carry null. Neither change touches a configuration, a criterion, or a threshold.",
+    "declared_before_first_result": true
+   }
+  ]
  },
  "predlab_opt": {
   "registered_utc": "2026-07-31",
@@ -1425,7 +1433,15 @@
     "criteria": "net overlaid SR_F >= 0.5 x 1.892 (=0.946) AND same sign AND time-shift placebo p<0.10 on F; MaxDD reported not gated",
     "note": "separate claim from predlab_pp2 vt10 confirmation (old S1 book) sharing the calendar window"
    }
-  }
+  },
+  "amendments": [
+   {
+    "utc": "2026-08-18",
+    "pre_result": "no vol-target scale has ever been emitted by the paper journal (both books stand at 14 gap-free returns of the 21 required); amendment legal",
+    "text": "Paper-trader forward record, both books: (1) realized returns measured across a journal gap are excluded from the 20-day vol-target window. The old book's 2026-07-31..08-02 outage left its 2026-08-03 row holding a 4-calendar-day return; the registered overlay formula is defined on contiguous daily returns, so counting it as one day would have mis-scaled the first vt10 value. No recorded value changes -- the fix lands before any scale exists. (2) Each row now stores the per-name price observed at write time (mark_px/mark_ts) and the book return measured mark-to-mark (realized_mark_ret) alongside the close-to-close leg. The journal previously recorded closes only, so the fill assumption it exists to check (fills at the UTC close, cron fires ~00:15-00:17 UTC) was not testable from it; the two legs now differ by exactly that slippage. Marks begin with the 2026-08-18 row; earlier rows carry null. Neither change touches a configuration, a criterion, or a threshold.",
+    "declared_before_first_result": true
+   }
+  ]
  },
  "predlab_bybit_r1": {
   "frozen_utc": "2026-08-06",

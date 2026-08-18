@@ -11,8 +11,18 @@ Modes:
 Journal: data/predlab/s1_paper/journal.jsonl — one row per UTC date,
 idempotent (existing date -> skip). Row: date, universe size, top-200
 membership hash, long/short legs (40 names each, weights), vt10 scale
-(NaN until 21 book-return days accrue), yesterday's realized book return
-computed from the previous row's weights (fill check vs close-to-close).
+(NaN until 21 gap-free book-return days accrue), yesterday's realized book
+return computed from the previous row's weights (close-to-close), plus the
+per-name price observed at write time (`mark_px`/`mark_ts`) and the same
+book return measured mark-to-mark (`realized_mark_ret`). The two return
+legs differ by exactly the slippage between the UTC close the paper fill
+assumes and the moment the row is actually written, which is what makes
+the fill assumption testable; rows written before 2026-08-18 carry no
+marks, so their `realized_mark_ret` is null.
+
+A return measured across a journal gap spans more than one day and is
+excluded from the vol-target window (see `_gap_free_rets`); the overlay
+formula being confirmed is defined on contiguous daily returns.
 
 A SECOND journal (journal_champion.jsonl) tracks the Phase-O final
 champion (ewma_20 signal + vt15_naive20 breadth-100 overlay, gates
@@ -25,10 +35,11 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 import sys
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import numpy as np
@@ -75,6 +86,22 @@ def _perp_symbols() -> "list[str]":
     return sorted(s["symbol"] for s in info["symbols"]
                   if s["contractType"] == "PERPETUAL"
                   and s["quoteAsset"] == "USDT" and s["status"] == "TRADING")
+
+
+def fetch_marks() -> "dict[str, float] | None":
+    """Last traded price for every perp, as of NOW (one request).
+
+    Written into each row so the next row can measure the book mark-to-mark
+    and expose the slippage the close-to-close assumption hides.
+    """
+    import urllib.request
+
+    try:
+        with urllib.request.urlopen(f"{FAPI}/fapi/v1/ticker/price", timeout=20) as r:
+            rows = json.load(r)
+    except Exception:
+        return None
+    return {x["symbol"]: float(x["price"]) for x in rows}
 
 
 def load_panels_online() -> "dict[str, pd.DataFrame]":
@@ -141,9 +168,46 @@ def realized_prev_return(panels: dict, prev_row: dict, asof: pd.Timestamp) -> "f
     return float((w * r).dropna().sum())
 
 
+def realized_prev_mark_return(prev_row: dict, marks: "dict[str, float]") -> "float | None":
+    """Return of the previous row's book measured mark-to-mark, i.e. between
+    the prices actually observable when each row was written.
+
+    `realized_book_ret` assumes fills at the UTC close; the cron fires some
+    minutes later, so that assumption is untestable from closes alone. Rows
+    written before marks existed return None.
+    """
+    prev_marks = prev_row.get("mark_px")
+    if not prev_marks:
+        return None
+    tot = 0.0
+    for sym, w in prev_row["weights"].items():
+        p0, p1 = prev_marks.get(sym), marks.get(sym)
+        if not p0 or not p1:
+            continue
+        tot += w * math.log(p1 / p0)
+    return float(tot)
+
+
+def _gap_free_rets(journal_rows: "list[dict]") -> "list[float]":
+    """Realized returns whose measurement span is exactly one day.
+
+    A journal gap (host down) leaves the following row holding a multi-day
+    return. The overlay formula is defined on contiguous daily returns, so
+    such an observation is dropped rather than counted as one day.
+    """
+    out: "list[float]" = []
+    prev_day: "date | None" = None
+    for r in journal_rows:
+        day = date.fromisoformat(r["asof"])
+        ret = r.get("realized_book_ret")
+        if ret is not None and prev_day is not None and (day - prev_day).days == 1:
+            out.append(ret)
+        prev_day = day
+    return out
+
+
 def vt_scale(journal_rows: "list[dict]", target: float = VT_TARGET) -> "float | None":
-    rets = [r.get("realized_book_ret") for r in journal_rows]
-    rets = [x for x in rets if x is not None]
+    rets = _gap_free_rets(journal_rows)
     if len(rets) < 21:
         return None
     vol = float(np.std(rets[-20:], ddof=1)) * np.sqrt(pp.ANN_DAYS)
@@ -151,7 +215,8 @@ def vt_scale(journal_rows: "list[dict]", target: float = VT_TARGET) -> "float | 
 
 
 def journal_one(journal: Path, panels: dict, signal: str, scale_key: str,
-                vt_target: float, breadth_floor: "int | None" = None) -> str:
+                vt_target: float, breadth_floor: "int | None" = None,
+                marks: "dict[str, float] | None" = None) -> str:
     rows = ([json.loads(l) for l in journal.read_text().splitlines()]
             if journal.exists() else [])
     asof, w, breadth = todays_book(panels, signal)
@@ -164,9 +229,11 @@ def journal_one(journal: Path, panels: dict, signal: str, scale_key: str,
         pw = pd.Series(prev["weights"])
         both = w.index.union(pw.index)
         est_turn = float((w.reindex(both, fill_value=0) - pw.reindex(both, fill_value=0)).abs().sum())
-    scale = vt_scale(rows + [{"realized_book_ret": realized}], vt_target)
+    scale = vt_scale(rows + [{"asof": str(asof.date()),
+                              "realized_book_ret": realized}], vt_target)
     if breadth_floor is not None and scale is not None and breadth < breadth_floor:
         scale = 0.0
+    mark_ret = realized_prev_mark_return(prev, marks) if prev and marks else None
     row = {
         "asof": str(asof.date()),
         "written_utc": datetime.now(timezone.utc).isoformat(),
@@ -178,6 +245,10 @@ def journal_one(journal: Path, panels: dict, signal: str, scale_key: str,
         "est_turnover": est_turn,
         "est_cost": (pp.TAKER_BP / 1e4 * est_turn) if est_turn is not None else None,
         scale_key: scale,
+        "mark_px": ({s: marks[s] for s in w.index if s in marks}
+                    if marks else None),
+        "mark_ts": (datetime.now(timezone.utc).isoformat() if marks else None),
+        "realized_mark_ret": mark_ret,
     }
     if breadth_floor is not None:
         row["breadth"] = breadth
@@ -211,11 +282,14 @@ def main() -> None:
         print(f"both journals have {expected} — pre-fetch skip")
         return
     panels = load_panels_offline() if args.offline else load_panels_online()
+    # prices as of write time — both journals share one snapshot
+    marks = None if args.offline else fetch_marks()
     # original Phase-P book — config frozen for the pp2 vt10 confirmation
-    print(journal_one(JOURNAL, panels, "park_5", "vt10_scale", VT_TARGET))
+    print(journal_one(JOURNAL, panels, "park_5", "vt10_scale", VT_TARGET,
+                      marks=marks))
     # Phase-O final champion book — parallel forward journal
     print(journal_one(CH_JOURNAL, panels, "ewma_20", "vt15_b100_scale",
-                      CH_VT_TARGET, CH_BREADTH_FLOOR))
+                      CH_VT_TARGET, CH_BREADTH_FLOOR, marks=marks))
 
 
 if __name__ == "__main__":
