@@ -5582,3 +5582,66 @@ not measurement artifact. The LLM program's falsification map (§62–64)
 gains one refinement: cross-sectional numeric-card judgment survives its
 validity probes but does not reach significance at daily/weekly horizons
 on this corpus and model tier.
+
+## Section 66: Cross-Asset Replication — Phase-O Champion Verbatim on US Equities (xasset_equity_r1): NEGATIVE (2026-08-18)
+
+Question: does the Phase-O final champion (ewma_20 Parkinson low-vol
+eq-quintile long-short, monthly-PIT top-200 dollar-volume universe,
+vt15_naive20_b100 overlay) yield returns outside crypto, applied verbatim
+to US equities? Registered pre-result in `data/predlab/gates.json`
+(`xasset_equity_r1`, frozen 2026-08-18) under the Bybit-r1 precedent: no
+strategy parameter was ever fitted to equity data, so the full window
+2017-01-03 → 2026-08-14 is virgin — one-shot run, n_trials = 1, no
+dev/holdout split. Forced adaptations only: 252-day annualization,
+funding carry replaced by 1%/yr short-leg borrow (stress {0,3}%), taker
+5 bp kept.
+
+Data: a survivorship-safe US equity daily store was built entirely from
+free sources — Alpaca SIP daily bars (`adjustment=all`) serve delisted
+tickers with exact death dates (BBBY's last bar is its 2023-05-02 delist
+date). Because Alpaca's asset directory purges major deaths
+(BBBY/SIVB/FRC/TWTR/ATVI absent; the FB ticker is recycled to an
+unrelated ETF), enumeration is a composite (Alpaca active+inactive ∪
+S&P 500 ever-members 2016+ ∪ SEC company_tickers = 25,330 candidates;
+7,972 with bars), with bar series split into independent segments at
+>90-day gaps as a ticker-recycling guard (declared pre-result amendment).
+Feasibility gates passed: 2,417 trading days at breadth ≥ 100 (median
+200), 128 delisted names inside the traded top-200 universe, split
+adjustment sane. Harness validity: the ported engine reproduces the
+frozen crypto champion overlay SR +1.8921360 to the digit; a return-
+oracle canary posts SR ≈ 38; a planted 20 bp/day alpha is recovered
+(+1.81 SR uplift).
+
+Result — both registered gates FAIL:
+
+| metric | crypto (frozen) | US equities (one-shot) |
+|---|---|---|
+| raw net SR | +1.928 | +0.340 |
+| ovl net SR (main cost) | +1.892 | +0.165 |
+| raw MaxDD | 46.3% | 68.3% |
+| ovl MaxDD | 17.6% | 37.1% |
+| subperiods positive | 4/4 | 3/4 |
+| placebo p (time-shift) | 0.005 | 0.2375 |
+
+U1 transfer (SR ≥ 0.946) is missed by a factor of ~6. U2 yields-returns
+(SR > 0 with both placebo families p < 0.05) fails on the circular
+time-shift family: 24% of time-misaligned vol rankings earn at least the
+real strategy's SR, so the modest positive drift is attributable to a
+static low-vol exposure pattern rather than to timed cross-sectional
+information — the same placebo signature that killed wide-universe trend
+(§45). The cross-sectional shuffle family (p = 0.000) is disclosed but
+not load-bearing: shuffled books churn ~6× the turnover and their SR
+distribution (q95 = −9.1) is cost-dominated, an unfair null under the
+same-collapse rule. Sensitivity grid: best case (0% borrow, 2.5 bp)
+reaches only SR +0.348; 10 bp taker turns the book negative. Verdict:
+the champion's edge is crypto-specific in this implementation; the
+low-vol anomaly it monetizes on Binance perps does not survive verbatim
+transport to US equities at any tested cost assumption. Any equity
+re-tuning (e.g. beta-neutral construction, different quantiles, borrow-
+aware universe) requires a new registered cycle on fresh design freedom
+— explicitly not undertaken here to keep the one-shot claim clean.
+
+Artifacts: `scripts/predlab_xasset_{register,fetch,r1}.py`,
+`data/predlab/xasset_r1_{probes,integrity,result}.json`, ledger row in
+`data/predlab/trial_ledger.jsonl`, charter
+`docs/predlab/reports/xasset_equity_r1_charter.md` (predlab worktree).
