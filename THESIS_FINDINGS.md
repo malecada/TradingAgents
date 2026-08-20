@@ -5687,3 +5687,52 @@ Artifacts: `scripts/predlab_xasset_bab{_register,,2}.py`,
 `data/predlab/xasset_bab_dev.json`, `data/predlab/xasset_bab2_dev.json`,
 gates entries `xasset_equity_bab`, `xasset_equity_bab2` (+ pre-result
 amendment), ledger rows in `data/predlab/trial_ledger.jsonl`.
+
+## Section 68: Final Equity Cycle (xasset_equity_bab3) — Structural Gates Pass, Timing Placebo Fails; Equity Program CLOSED (2026-08-20)
+
+The registered final single-cell cycle (C2f: book-level SPY hedge, clip
+widened to ±1.5 after bab2's mechanical bound error) delivered the clean
+measurement the two prior cycles could not: dev ovl net SR **+0.810**
+(frozen floor 0.75 PASS), realized beta **−0.069** (gate PASS), 4/4 dev
+quarters positive, 3%-borrow stress +0.709 — and then the shift placebo,
+run under this cycle's placebo-always policy, returned **p = 0.2375**:
+24% of circularly time-shifted vol rankings earn at least as much, with
+placebo median +0.40 and q95 +1.05. Low-vol membership is sticky, so a
+misaligned ranking still holds largely the same names; the beta-neutral
+book's return is persistent-structure exposure, not timed cross-
+sectional information. No champion; the sealed holdout (2024-01 →
+2026-08) dies unspent. Equity program CLOSED per the bab3 registration.
+Final equity map: verbatim +0.165 (placebo-flat), beta-neutralized
++0.81 (placebo-flat). The §66 conclusion survives its strongest
+challenge: the champion's equity-market performance contains no timing
+alpha at any tested construction.
+
+## Section 69: Cross-Asset Replication Arm 2 — Futures + FX (xasset_futfx_r1): NEGATIVE (2026-08-20)
+
+One-shot verbatim-adapted champion on a 68-instrument liquid multi-asset
+universe (37 FX spot pairs, 31 front-month futures; yahoo daily bars;
+registered forced adaptations: breadth floor 100→40, monthly data-
+availability membership in place of the undefined top-200 dollar-volume
+rule, no funding/borrow, Parkinson NaN on settlement-only h==l bars with
+>20%-h==l instruments excluded — PA/PL/CC). Registered caveats: FX spot
+ignores forward carry; futures splices embed roll jumps. P0 canary
+SR ≈ +30, planted alpha recovered; P1 FEASIBLE (2,788 days breadth ≥ 40,
+median breadth 68).
+
+Result: ovl net SR **−0.376** (raw −0.182; FX-only raw −0.796,
+futures-only −0.113; 10 bp stress −0.507). Placebos p_shift = 0.0125,
+p_xshuffle = 0.000 — the real ranking significantly BEATS misaligned
+versions, i.e. the Parkinson ordering carries genuine cross-sectional
+information in this universe, but the low-vol-long direction loses money
+outright: in futures/FX the low-vol leg is dominated by managed/pegged
+FX and low-carry contracts whose spot/splice drift cannot cover costs.
+Both registered gates FAIL (U2 requires SR > 0). Clean negative;
+revival (e.g. direction-flipped or carry-aware variants) would be a new
+program, not undertaken.
+
+Cross-asset map, final: Binance perps +1.89 (validated) → Bybit +1.71
+(transfer PASS) → US equities +0.17/+0.81 placebo-flat (no timing
+alpha) → futures/FX −0.38 (informative ranking, unprofitable
+direction). The champion's edge is a crypto-perp phenomenon; its signal
+family degrades gracefully in information terms but does not monetize
+elsewhere. Ledger: 8 xasset cells + 2 one-shots, all registered.
