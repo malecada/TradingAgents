@@ -1,0 +1,36 @@
+{
+ "experiment": "xasset_equity_bab3",
+ "dev_window": [
+  "2017-01-03",
+  "2023-12-31"
+ ],
+ "cells": {
+  "C2f_book_hedge": {
+   "mode": "book_hedge_v2_clip1.5",
+   "ovl_sr_dev": 0.8104392139398976,
+   "n_days": 1760,
+   "maxdd": 0.21564774186723035,
+   "sr_borrow3": 0.7087063337382211,
+   "subperiods": {
+    "D1": 1.1621146121864478,
+    "D2": 0.0713399714550401,
+    "D3": 1.3089471889714637,
+    "D4": 0.6622390507812286
+   },
+   "subperiods_positive": 4,
+   "realized_beta": -0.06894053657312958,
+   "avg_turnover": 0.2549598909833517,
+   "avg_scale": 0.8221740130010081,
+   "sr_floor_pass": true,
+   "beta_pass": true,
+   "placebo": {
+    "p_shift": 0.2375,
+    "draws": 400,
+    "q95": 1.0540225691867138,
+    "q50": 0.4039425093102663
+   },
+   "placebo_pass": false
+  }
+ },
+ "champion": null
+}

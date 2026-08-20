@@ -1626,5 +1626,63 @@
   "holdout_criteria": "identical (>= max(0.5*dev SR, 0) same sign; one-shot)",
   "multiplicity_note": "running xasset ledger count: r1 1 + bab 3 + bab2 2 = 6 cells",
   "stop_rule": "grid closed at 2 cells; no estimator/window edits post-result; 0 passing = equity program parked pending user decision; revival = new cycle"
+ },
+ "xasset_equity_bab3": {
+  "registered_utc": "2026-08-20",
+  "predecessor": "xasset_equity_bab2 (dead; C2 killed by clip [-1.5,+0.5] while the book needs a +0.83 SPY hedge \u2014 mechanical bound error, forensically documented)",
+  "user_decision": "final single-cell cycle approved 2026-08-20; equity program closes after this cycle regardless of outcome",
+  "cells": {
+   "C2f_book_hedge": "identical to bab2 C2_book_hedge except clip widened to [-1.5, +1.5]; everything else verbatim (126d min-60 rolling OLS of pre-hedge book net on SPY, shift(1), taker on |dw_spy|)"
+  },
+  "windows": "identical to bab/bab2 (dev 2017-01-03..2023-12-31; holdout 2024-01-01..2026-08-14 SEALED, never spent)",
+  "n_trials": 1,
+  "dev_gates_per_cell": "identical to bab dev gates (SR floor 0.75, |beta|<0.15, 3/4 quarters, stress3>0, shift placebo p<0.05 @400)",
+  "placebo_policy": "shift placebo RUNS REGARDLESS of floor outcome this cycle (disclosure for the final map); it remains a gate for championship",
+  "holdout_criteria": "identical (>= max(0.5*dev SR, 0), one-shot, verdict lock)",
+  "multiplicity_note": "running xasset ledger count: 7 dev cells after this",
+  "stop_rule": "single cell; no edits post-result; equity program CLOSED after this cycle either way; any future equity work = new program"
+ },
+ "xasset_futfx_r1": {
+  "registered_utc": "2026-08-20",
+  "hypothesis": "Phase-O final champion yields returns on a liquid multi-asset futures+FX universe, config verbatim up to registered forced adaptations (asset-class generalization, arm 2 of the cross-asset program)",
+  "data": {
+   "source": "yahoo chart API daily bars; FX spot ('=X', 37 pairs G10+liquid-deliverable-EM+crosses) + front-month continuous futures ('=F', 34; DX unavailable 404); store data/xsect_futfx/, frozen list in fetch script",
+   "caveats_registered": [
+    "FX spot returns ignore interest-rate carry (tradable = forward); majors/liquid crosses chosen to bound the gap",
+    "futures front-month splice embeds roll jumps in close-to-close returns; no free back-adjusted source; sub-book disclosure registered as probe",
+    "settlement-only bars (high==low) frequent on some futures: Parkinson set to NaN on h==l bars (not zero); instruments with >20% h==l EXCLUDED (PA,PL,CC per manifest) -> 68 instruments"
+   ]
+  },
+  "forced_adaptations": "ANN 252; no funding/borrow (symmetric instruments; carry caveat above); taker 5bp kept (conservative: FX majors ~1bp, CME ~1bp); universe = ALL included instruments with >=15 bars in month m-1 (PIT monthly mask \u2014 the top-200 dollar-volume rule is undefined: FX spot has no volume and the universe is smaller than 200); overlay breadth floor b100 -> b40 (~55 pct of ~72-instrument universe, same ratio as 100/200); MIN_NAMES 25 and quintile q_frac 0.2 unchanged (~13-14 names per leg)",
+  "window": [
+   "2017-01-03",
+   "2026-08-14"
+  ],
+  "window_note": "VIRGIN for this asset class; no parameter ever fitted to futures/FX data; one-shot, no dev/holdout split (Bybit-r1/equity-r1 precedent)",
+  "n_trials": 1,
+  "probes_P0": "engine parity pin already established (slim==run_ls atol 1e-12; crypto ovl pin exact); planted-alpha and return-oracle canary on the futfx panel before the one-shot",
+  "feasibility_P1": {
+   "breadth": ">= 2000 trading days with breadth >= 40, else INFEASIBLE (unspent)",
+   "coverage": ">= 55 instruments with >= 2000 bars",
+   "h_eq_l_after_exclusion": "median frac_h_eq_l over included instruments < 5%"
+  },
+  "criteria": {
+   "U1_transfer": {
+    "ovl_sr_floor": 0.946,
+    "placebo_shift_p_lt": 0.05,
+    "placebo_xshuffle_p_lt": 0.05,
+    "placebo_draws": 400,
+    "subperiods_positive_min": "3/4"
+   },
+   "U2_yields_returns": {
+    "ovl_sr_gt": 0.0,
+    "placebo_shift_p_lt": 0.05,
+    "placebo_xshuffle_p_lt": 0.05,
+    "taker10bp_stress_sr_gt": 0.0
+   },
+   "hierarchy": "U1 implies U2; strongest level reported; U2 fail = clean negative"
+  },
+  "disclosures": "FX-only and futures-only sub-book SRs (roll-splice bound); sensitivity taker {2.5,5,10}bp",
+  "stop_rule": "one run; no post-hoc universe/window/cost/signal edits after the first futfx strategy number exists; failure = negative recorded; revival = new registered cycle"
  }
 }
