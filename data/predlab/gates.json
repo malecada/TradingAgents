@@ -1567,5 +1567,64 @@
   },
   "stop_rule": "one run; no post-hoc universe/window/cost/signal edits after the first equity strategy number exists; single-name checks disclosed, never acted on; failure = negative recorded; revival or any equity re-tuning requires a NEW registered cycle",
   "amendment_2026-08-18": "PRE-RESULT (no equity strategy number exists; store not yet built). Enumeration probe found Alpaca /v2/assets purges major delistings (BBBY/SIVB/FRC/TWTR/ATVI absent; FB recycled to an ETF) and marks 16K dead symbols with last-exchange OTC. Amended universe_pool: (a) drop exchange filter (top-200 dollar-volume membership self-selects listed liquid phase); (b) enumeration = Alpaca assets (incl. _DELISTED-suffix base mapping) UNION S&P500 ever-members 2016+ (fja05680) UNION SEC company_tickers.json, all bars-probed; (c) ticker-recycling guard: bar series split into independent segments at >90 calendar-day gaps; membership and signal computed per segment. Residual caveat: non-S&P pre-2023 delistings outside SEC-current list may be missing \u2014 gated by feasibility_P1.deaths."
+ },
+ "xasset_equity_bab": {
+  "registered_utc": "2026-08-20",
+  "predecessor": "xasset_equity_r1 (NEGATIVE; THESIS \u00a766)",
+  "hypothesis": "ewma_20 Parkinson low-vol XS signal has timed cross-sectional content in US equities once the book is beta-neutralized (Frazzini-Pedersen: low-risk anomaly requires beta-neutral construction); the verbatim-r1 failure was construction, not signal",
+  "contamination_disclosure": "equity window is NOT virgin: the r1 one-shot full-window numbers (2017-2026, one config) were seen before this registration. Mitigation: DEV/HOLDOUT split introduced for this cycle; the holdout claim rests on the new design axis (beta handling), whose per-cell results have never been computed on any window",
+  "windows": {
+   "dev": [
+    "2017-01-03",
+    "2023-12-31"
+   ],
+   "holdout_sealed": [
+    "2024-01-01",
+    "2026-08-14"
+   ],
+   "note": "holdout enforced by verdict-file lock + subcommand guard; one spend for the single dev-champion only"
+  },
+  "beta_estimator": "beta_i,t = rolling 252-day OLS slope of log r_i on log r_SPY (min 120 obs), Vasicek shrink 0.6*beta + 0.4*1.0, shift(1); market proxy = SPY total-return bars (adjustment=all)",
+  "cells": {
+   "A1_leg_scale": "champion quintile legs scaled by inverse ex-ante leg beta (long *1/betaL, short *1/betaH), FP-style zero-ex-ante-beta book",
+   "A2_market_hedge": "champion book verbatim + daily SPY hedge position w_spy = -sum(w_i * beta_i); hedge turnover charged at taker",
+   "B1_beta_signal": "control: signal = shrunk beta panel instead of ewma_20 park (classic BAB ranking), construction otherwise champion-verbatim"
+  },
+  "shared_config": "everything else identical to xasset_equity_r1: top-200 monthly-PIT dollar-volume universe (same store/panels), eq quintiles, daily cadence, vt15_naive20_b100 overlay on the book net, ANN 252, taker 5bp/side on all turnover incl. hedge, borrow 1%/yr on scaled short gross (stress {0,3}%)",
+  "n_trials": 3,
+  "engine_parity_guard": "new slim day-loop must reproduce opt.run_ls net series exactly (atol 1e-12) on the unhedged champion config before any cell runs",
+  "dev_gates_per_cell": {
+   "ovl_sr_floor": 0.75,
+   "placebo_shift_p_lt": 0.05,
+   "placebo_draws": 400,
+   "subperiods_positive_min": "3/4 dev quarters",
+   "borrow_stress_3pct_sr_gt": 0.0,
+   "residual_beta_abs_lt": 0.15,
+   "residual_beta_note": "realized |beta| of the pre-overlay book vs SPY over dev \u2014 construction must actually neutralize"
+  },
+  "selection_rule": "among cells passing ALL dev gates, single champion = highest dev ovl net SR; 0 passing cells = cycle dead, no holdout spend",
+  "holdout_criteria": {
+   "ovl_sr_floor": "max(0.5 * dev ovl SR of the champion, 0.0)",
+   "same_sign": true
+  },
+  "stop_rule": "grid is closed at 3 cells; no post-hoc estimator/window/cost edits after first cell result exists; placebos only for cells that pass the SR floor (cost control), but a cell without passing placebos cannot be champion; failure = negative recorded; revival = new registered cycle",
+  "amendment_2026-08-20": "PRE-RESULT (no cell result exists). B1_beta_signal construction changed from champion-verbatim to leg_scale (true Frazzini-Pedersen BAB): the verbatim construction carries the same static ~-0.6 beta tilt this cycle exists to remove and would mechanically fail the registered residual_beta gate, making the cell uninformative."
+ },
+ "xasset_equity_bab2": {
+  "registered_utc": "2026-08-20",
+  "predecessor": "xasset_equity_bab (dead at dev: 0/3 cells; registered 0.6-shrink estimator under-hedges ~40% of beta gap by construction \u2014 forensic note in report)",
+  "hypothesis": "same as xasset_equity_bab, with hedge sizing free of the shrinkage bias",
+  "windows": "identical to xasset_equity_bab (dev 2017-01-03..2023-12-31; holdout 2024-01-01..2026-08-14 SEALED \u2014 never spent by any xasset cycle)",
+  "cells": {
+   "C1_unshrunk_hedge": "A2 market hedge sized on UNSHRUNK rolling 252d OLS betas (shrinkage removed from sizing only; forensic prediction: residual ~-0.12)",
+   "C2_book_hedge": "book-level self-correcting hedge: w_spy_t = -beta_hat(book) where beta_hat = rolling 126d (min 60) OLS slope of pre-hedge book net on SPY, shift(1), clipped [-1.5, +0.5]; applied as post-process with taker on |dw_spy|"
+  },
+  "shared_config": "identical to xasset_equity_bab shared_config",
+  "n_trials": 2,
+  "dev_gates_per_cell": "identical to xasset_equity_bab dev_gates_per_cell",
+  "selection_rule": "identical (best passing dev ovl SR; 0 passing = dead)",
+  "holdout_criteria": "identical (>= max(0.5*dev SR, 0) same sign; one-shot)",
+  "multiplicity_note": "running xasset ledger count: r1 1 + bab 3 + bab2 2 = 6 cells",
+  "stop_rule": "grid closed at 2 cells; no estimator/window edits post-result; 0 passing = equity program parked pending user decision; revival = new cycle"
  }
 }
