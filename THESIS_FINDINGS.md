@@ -5645,3 +5645,45 @@ Artifacts: `scripts/predlab_xasset_{register,fetch,r1}.py`,
 `data/predlab/xasset_r1_{probes,integrity,result}.json`, ledger row in
 `data/predlab/trial_ledger.jsonl`, charter
 `docs/predlab/reports/xasset_equity_r1_charter.md` (predlab worktree).
+
+## Section 67: Beta-Neutral Reconstruction on US Equities (xasset_equity_bab / bab2): Two Dead Cycles, Signal Content Suggestive but Sub-Floor (2026-08-20)
+
+Follow-up to §66: does the champion's low-vol signal carry timed
+cross-sectional content in US equities once the book's static beta tilt
+is removed (Frazzini-Pedersen argument)? Two registered cycles on the
+same dev window (2017-01-03 → 2023-12-31), with a sealed holdout
+(2024-01-01 → 2026-08-14) that was NEVER spent — no cycle produced a
+dev champion. Contamination from the §66 full-window one-shot is
+declared in both registrations. Forensic anchor: the verbatim champion
+book's realized beta on dev is **−0.833** — the static exposure the §66
+shift placebo detected.
+
+Cycle 1 (`xasset_equity_bab`, 3 cells — FP leg-scaling, name-level SPY
+hedge, classic BAB ranking): 0/3 pass. Diagnosis, verified by
+prediction: hedges sized on Vasicek-shrunk betas (0.6β + 0.4) leave
+(1−0.6)·(β_L−β_H) ≈ −0.28 of tilt unhedged by construction, plus
+rolling-OLS lag; observed residuals −0.33..−0.40 vs the registered
+|β| < 0.15 gate. The registered estimator made the gate unreachable;
+the stop rule forbids post-result estimator edits, so the cycle is dead
+as registered.
+
+Cycle 2 (`xasset_equity_bab2`, 2 cells): C1 sizes the hedge on unshrunk
+betas — realized β **−0.118** (gate PASS; forensic prediction −0.12),
+dev ovl net SR **+0.713**, 4/4 dev quarters positive, 3%-borrow stress
++0.610 — but misses the frozen SR floor 0.75 by 0.037 → dead by rule.
+C2's book-level hedge was registered with clip [−1.5, +0.5]; the book
+needs a +0.83 SPY hedge, so the cap left β = −0.398 → dead. Honest
+reading: beta-neutralization roughly quadruples the equity book's SR
+(+0.165 verbatim → +0.713 neutralized) and the improvement is exactly
+the mechanism the §66 placebo indicted, but the pre-registered
+economic floor is not met and the shift-placebo test (gated behind the
+floor) never ran — so "timed signal content in equities" remains
+SUGGESTIVE, NOT CONFIRMED. Ledger: 6 dev cells across the xasset
+program; holdout sealed and virgin. Program PARKED per the bab2 stop
+rule pending a user decision; any revival (e.g. a single-cell cycle
+fixing C2's clip to ±1.5, forensically motivated) is a new registration.
+
+Artifacts: `scripts/predlab_xasset_bab{_register,,2}.py`,
+`data/predlab/xasset_bab_dev.json`, `data/predlab/xasset_bab2_dev.json`,
+gates entries `xasset_equity_bab`, `xasset_equity_bab2` (+ pre-result
+amendment), ledger rows in `data/predlab/trial_ledger.jsonl`.
