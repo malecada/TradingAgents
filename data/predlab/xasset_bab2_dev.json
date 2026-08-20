@@ -1,0 +1,51 @@
+{
+ "experiment": "xasset_equity_bab2",
+ "dev_window": [
+  "2017-01-03",
+  "2023-12-31"
+ ],
+ "cells": {
+  "C1_unshrunk_hedge": {
+   "mode": "hedge_unshrunk",
+   "ovl_sr_dev": 0.7129029129762797,
+   "n_days": 1760,
+   "maxdd": 0.23866561823090926,
+   "sr_borrow3": 0.6102042116218794,
+   "subperiods": {
+    "D1": 1.0629768368376105,
+    "D2": 0.0752918971994521,
+    "D3": 1.1619153243596927,
+    "D4": 0.502506362605629
+   },
+   "subperiods_positive": 4,
+   "realized_beta": -0.11765062604890698,
+   "avg_turnover": 0.26830085116113433,
+   "avg_scale": 0.8300117706339535,
+   "sr_floor_pass": false,
+   "beta_pass": true,
+   "placebo": "not run (failed SR floor or beta gate)"
+  },
+  "C2_book_hedge": {
+   "mode": "book_hedge",
+   "ovl_sr_dev": 0.621000805545653,
+   "n_days": 1760,
+   "maxdd": 0.2129125424778121,
+   "sr_borrow3": 0.5211401028972975,
+   "subperiods": {
+    "D1": 0.7924487798156041,
+    "D2": 0.12190696012273985,
+    "D3": 1.2347416753428344,
+    "D4": 0.27012196450145204
+   },
+   "subperiods_positive": 4,
+   "realized_beta": -0.397651960663623,
+   "avg_turnover": 0.2450565521253605,
+   "avg_scale": 0.8042965486730281,
+   "sr_floor_pass": false,
+   "beta_pass": false,
+   "placebo": "not run (failed SR floor or beta gate)"
+  }
+ },
+ "passing_cells": [],
+ "champion": null
+}
