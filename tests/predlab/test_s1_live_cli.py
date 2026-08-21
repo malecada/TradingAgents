@@ -215,3 +215,40 @@ class TestCloseAllStatus:
         mod, root, _ = env
         s = mod.status(FakeClient())
         assert "no live journal" in s
+
+
+class TestCompare:
+    def test_compare_computes_signed_bps(self, env):
+        mod, root, _ = env
+        mod.LDIR.mkdir(parents=True, exist_ok=True)
+        # champion row has AAA mark 2.0, BBB mark 10.0 (from fixture)
+        fills = [
+            {"asof": "2026-08-22", "symbol": "AAAUSDT", "side": "BUY",
+             "qty": 37.0, "avg_price": 2.002, "fee_usdt": 0.03},
+            {"asof": "2026-08-22", "symbol": "BBBUSDT", "side": "SELL",
+             "qty": 7.0, "avg_price": 9.99, "fee_usdt": 0.03},
+        ]
+        mod.FILLS.write_text("\n".join(json.dumps(f) for f in fills) + "\n")
+        out = mod.compare()
+        rep = json.loads((mod.LDIR / "compare_report.json").read_text())
+        assert rep["n_fills"] == 2 and rep["n_matched"] == 2
+        # BUY at 2.002 vs 2.0 -> +10 bps cost; SELL at 9.99 vs 10 -> +10 bps
+        assert abs(rep["per_leg"][0]["bps"] - 10.0) < 0.01
+        assert abs(rep["per_leg"][1]["bps"] - 10.0) < 0.01
+        assert abs(rep["slippage_bps"]["mean"] - 10.0) < 0.01
+        assert abs(rep["total_fees_usdt"] - 0.06) < 1e-9
+        assert "10.0" in out or "10.00" in out
+
+    def test_compare_skips_error_and_unmatched(self, env):
+        mod, root, _ = env
+        mod.LDIR.mkdir(parents=True, exist_ok=True)
+        fills = [
+            {"asof": "2026-08-22", "symbol": "AAAUSDT", "side": "BUY",
+             "qty": 1.0, "error": "binance error -4164: ..."},
+            {"asof": "2026-08-22", "symbol": "NOPEUSDT", "side": "BUY",
+             "qty": 1.0, "avg_price": 5.0},
+        ]
+        mod.FILLS.write_text("\n".join(json.dumps(f) for f in fills) + "\n")
+        mod.compare()
+        rep = json.loads((mod.LDIR / "compare_report.json").read_text())
+        assert rep["n_fills"] == 2 and rep["n_matched"] == 0

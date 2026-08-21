@@ -225,6 +225,52 @@ def status(client) -> str:
     return "\n".join(lines)
 
 
+def compare() -> str:
+    import statistics
+    if not FILLS.exists():
+        return "compare: no fills yet"
+    fills = [json.loads(l) for l in FILLS.read_text().splitlines()]
+    ch = {r["asof"]: r.get("mark_px") or {}
+          for r in (json.loads(l)
+                    for l in CH_JOURNAL.read_text().splitlines())}
+    per_leg: "list[dict]" = []
+    for f in fills:
+        if "error" in f or not f.get("avg_price"):
+            continue
+        mark = ch.get(f["asof"], {}).get(f["symbol"])
+        if not mark:
+            continue
+        sign = 1.0 if f["side"] == "BUY" else -1.0
+        bps = (f["avg_price"] / mark - 1.0) * 1e4 * sign
+        per_leg.append({"asof": f["asof"], "symbol": f["symbol"],
+                        "side": f["side"], "fill": f["avg_price"],
+                        "mark": mark, "bps": round(bps, 2)})
+    vals = [x["bps"] for x in per_leg]
+    by_side = {}
+    for side in ("BUY", "SELL"):
+        sv = [x["bps"] for x in per_leg if x["side"] == side]
+        by_side[side] = round(statistics.mean(sv), 2) if sv else None
+    report = {
+        "n_fills": len(fills),
+        "n_matched": len(per_leg),
+        "slippage_bps": {
+            "mean": round(statistics.mean(vals), 2) if vals else None,
+            "median": round(statistics.median(vals), 2) if vals else None,
+            "p90": (round(sorted(vals)[int(0.9 * (len(vals) - 1))], 2)
+                    if vals else None),
+            "by_side": by_side,
+        },
+        "total_fees_usdt": round(sum(f.get("fee_usdt") or 0.0
+                                     for f in fills), 6),
+        "per_leg": per_leg,
+    }
+    LDIR.mkdir(parents=True, exist_ok=True)
+    (LDIR / "compare_report.json").write_text(json.dumps(report, indent=2))
+    m = report["slippage_bps"]["mean"]
+    return (f"compare: {len(per_leg)}/{len(fills)} matched, "
+            f"mean slippage {m} bps, fees {report['total_fees_usdt']} USDT")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     sub = ap.add_subparsers(dest="cmd")
