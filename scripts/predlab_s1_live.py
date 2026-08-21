@@ -40,7 +40,13 @@ LIVE_JOURNAL = LDIR / "journal_live.jsonl"
 FILLS = LDIR / "fills.jsonl"
 HALT_FLAG = LDIR / "halt.flag"
 DAY_EQUITY = LDIR / "day_equity.json"
-LEVERAGE = 2
+LEVERAGE = 4
+# Champion book gross is 2.0x; vt15_b100_scale can reach ~2.0 -> gross target
+# up to 4x equity. Gross cap is 2.2x and leverage 4 means margin = gross/4,
+# so an unclamped scale can refuse the whole batch (cap violation) or exceed
+# available margin. Clamp the *executed* scale; the raw overlay scale is
+# still recorded in the journal (scale_raw) for the record.
+SCALE_CLAMP = 1.1
 ORDER_PACE_S = 0.25  # ~4 orders/s, far under fapi order-rate limits
 TESTNET_BASE = "https://testnet.binancefuture.com"
 
@@ -134,29 +140,47 @@ def _place(client, orders: "list[live_exec.Order]", asof: str) -> None:
         time.sleep(ORDER_PACE_S)
 
 
+def _asof_already_executed(asof: str) -> bool:
+    """True if `asof` has a row in journal_live.jsonl. Skips any line that
+    fails to parse (a torn trailing line from a killed process must not
+    crash the hourly idempotency scan — M1)."""
+    if not LIVE_JOURNAL.exists():
+        return False
+    for l in LIVE_JOURNAL.read_text().splitlines():
+        try:
+            parsed = json.loads(l)
+        except (json.JSONDecodeError, ValueError):
+            continue
+        if parsed.get("asof") == asof:
+            return True
+    return False
+
+
 def run(client, dry_run: bool, today: "str | None" = None) -> str:
     row = read_champion_row()
     if row is None:
         return "ERROR: no champion journal row"
     asof = row["asof"]
-    if LIVE_JOURNAL.exists() and any(
-            json.loads(l)["asof"] == asof
-            for l in LIVE_JOURNAL.read_text().splitlines()):
-        return f"skip: {asof} already executed"
+
+    # Halt flag is checked first, before any API call, so a halted account
+    # costs zero network traffic per wake.
     if HALT_FLAG.exists():
         return f"halt: {HALT_FLAG} present — no orders (remove flag to resume)"
-    scale = row.get("vt15_b100_scale")
-    if scale is None:
-        return "WAIT: vt15_b100_scale is null (vol window not accrued)"
 
+    # Daily-loss check runs on EVERY wake — including an hourly wake whose
+    # asof was already executed earlier in the day — because it is the only
+    # place equity is read. Checking it after the idempotency skip (the old
+    # order) meant the breach could never fire on any wake but the first of
+    # the day, since every later wake short-circuited on "already executed"
+    # before equity was ever read (I1).
     today = today or str(datetime.now(timezone.utc).date())
     equity = client.equity()
     day_eq = day_start_equity(today, equity)
-    filters = load_filters(client)
-    positions = client.positions()
-    marks = row.get("mark_px") or {}
 
     if live_exec.daily_loss_breached(equity, day_eq):
+        filters = load_filters(client)
+        positions = client.positions()
+        marks = row.get("mark_px") or {}
         orders = _flatten(client, positions, filters, marks, asof, dry_run)
         HALT_FLAG.write_text(
             f"daily loss: equity {equity:.2f} < 95% of {day_eq:.2f} "
@@ -164,8 +188,32 @@ def run(client, dry_run: bool, today: "str | None" = None) -> str:
         return (f"halt: daily loss breached, flattened "
                 f"{len(orders)} positions, halt.flag written")
 
+    if _asof_already_executed(asof):
+        return f"skip: {asof} already executed"
+
+    scale = row.get("vt15_b100_scale")
+    if scale is None:
+        return "WAIT: vt15_b100_scale is null (vol window not accrued)"
+
+    weights = row.get("weights") or {}
+    marks = row.get("mark_px") or {}
+    if weights and not marks:
+        # Champion row has a live book but no marks this wake (paper-trader
+        # data gap) -- retry on a later wake/next day rather than journaling
+        # a false "flat" day (I2).
+        return "WAIT: champion row has no marks"
+
+    # Champion gross is 2.0x; scale can reach ~2.0 -> up to 4x equity gross.
+    # Clamp the *executed* scale so the batch never refuses on cap/margin;
+    # the raw (unclamped) overlay scale is still recorded (scale_raw) so a
+    # capped live run is legible as a capped replica, not full-scale (C2).
+    scale_executed = min(scale, SCALE_CLAMP)
+
+    filters = load_filters(client)
+    positions = client.positions()
+
     targets_qty, dropped = live_exec.build_targets(
-        row["weights"], scale, equity, marks, filters)
+        weights, scale_executed, equity, marks, filters)
     tn = {s: q * marks[s] for s, q in targets_qty.items()}
     caps = (live_exec.check_caps(tn, equity) if len(tn) >= 20
             else live_exec.check_caps(tn, equity, per_symbol_cap=1.0))
@@ -176,9 +224,9 @@ def run(client, dry_run: bool, today: "str | None" = None) -> str:
                                             marks, filters)
     jrow = live_exec.build_journal_row(
         asof=asof, executed_utc=datetime.now(timezone.utc).isoformat(),
-        equity_before=equity, equity_day_start=day_eq, scale=scale,
+        equity_before=equity, equity_day_start=day_eq, scale=scale_executed,
         targets_notional=tn, orders=orders, dropped=dropped,
-        skipped=skipped, halt=False, dry_run=dry_run)
+        skipped=skipped, halt=False, dry_run=dry_run, scale_raw=scale)
     if dry_run:
         jrow["intended_orders"] = [
             {"symbol": o.symbol, "side": o.side, "qty": o.qty,
@@ -187,6 +235,11 @@ def run(client, dry_run: bool, today: "str | None" = None) -> str:
         return (f"dry-run {asof}: {len(orders)} intended orders, "
                 f"gross {jrow['gross_target']:.0f}, "
                 f"{len(dropped)} legs dropped")
+    if client.position_mode():
+        # One-way mode is assumed throughout diff_orders' reduceOnly
+        # semantics; hedge mode must be caught before any order is placed
+        # (M2).
+        return "ERROR: account in hedge mode — set one-way position mode"
     # live: set leverage lazily on symbols we are about to touch
     seen_path = LDIR / "leverage_set.json"
     seen = set(json.loads(seen_path.read_text())) if seen_path.exists() else set()
@@ -208,15 +261,20 @@ def run(client, dry_run: bool, today: "str | None" = None) -> str:
 
 
 def close_all(client) -> str:
-    positions = client.positions()
-    filters = load_filters(client)
-    marks = {s: 1e9 for s in positions}  # dust filter must never skip a close
-    asof = f"close-all-{datetime.now(timezone.utc).date()}"
+    # halt.flag is the FIRST statement (I3): even if positions()/load_filters()
+    # itself raises (network down mid-emergency-stop), the account must
+    # already be flagged halted before any further API call is attempted.
+    LDIR.mkdir(parents=True, exist_ok=True)
+    HALT_FLAG.write_text(
+        f"manual close-all at {datetime.now(timezone.utc).isoformat()}\n")
     try:
+        positions = client.positions()
+        filters = load_filters(client)
+        marks = {s: 1e9 for s in positions}  # dust filter must never skip a close
+        asof = f"close-all-{datetime.now(timezone.utc).date()}"
         orders = _flatten(client, positions, filters, marks, asof, dry_run=False)
     finally:
-        # ensure halt.flag is written even if flatten raises
-        LDIR.mkdir(parents=True, exist_ok=True)
+        # re-write is idempotent/harmless; the flag is already in place above
         HALT_FLAG.write_text(
             f"manual close-all at {datetime.now(timezone.utc).isoformat()}\n")
     return f"close-all: flattened {len(orders)} positions, halt.flag written"
@@ -261,6 +319,8 @@ def compare() -> str:
     import statistics
     if not FILLS.exists():
         return "compare: no fills yet"
+    if not CH_JOURNAL.exists():
+        return "compare: no champion journal"
     fills = [json.loads(l) for l in FILLS.read_text().splitlines()]
     ch = {r["asof"]: r.get("mark_px") or {}
           for r in (json.loads(l)

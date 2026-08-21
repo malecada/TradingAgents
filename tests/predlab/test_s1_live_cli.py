@@ -26,11 +26,15 @@ def env(tmp_path, monkeypatch):
 
 
 class FakeClient:
-    def __init__(self, equity=3000.0, positions=None):
+    def __init__(self, equity=3000.0, positions=None, hedge_mode=False):
         self._equity = equity
         self._positions = positions or {}
         self.orders = []
         self.leverage_set = []
+        self._hedge_mode = hedge_mode
+
+    def position_mode(self):
+        return self._hedge_mode
 
     def exchange_info(self):
         return {"symbols": [
@@ -170,6 +174,112 @@ class TestRun:
         d = json.loads(mod.DAY_EQUITY.read_text())
         assert d["equity"] == 3000.0
 
+    # -- C2: scale/gross-cap/leverage consistency --------------------------
+
+    def test_scale_clamped_to_1_1_for_sizing_and_journal(self, env):
+        mod, root, row = env
+        row["vt15_b100_scale"] = 2.0
+        jp = root / "predlab" / "s1_paper" / "journal_champion.jsonl"
+        jp.write_text(json.dumps(row) + "\n")
+        c = FakeClient()
+        out = mod.run(c, dry_run=False)
+        assert out.startswith("done")
+        rows = [json.loads(l) for l in mod.LIVE_JOURNAL.read_text().splitlines()]
+        last = rows[-1]
+        assert last["scale_raw"] == 2.0
+        assert last["scale"] == pytest.approx(1.1)
+        # AAA/BBB leg weight 0.025 each * 1.1 * 3000 = 82.5 target notional
+        # each, rounded down to whole units (step=1): AAA 41*2.0=82,
+        # BBB 8*10.0=80 -> gross 162 (well under a 2.2x-equity=6600 cap,
+        # confirming the clamp -- not the gross cap -- is what bounds sizing
+        # once scale exceeds 1.1).
+        assert last["gross_target"] == pytest.approx(162.0)
+
+    def test_leverage_is_4(self, env):
+        mod, root, _ = env
+        assert mod.LEVERAGE == 4
+
+    def test_scale_clamp_constant_is_1_1(self, env):
+        mod, root, _ = env
+        assert mod.SCALE_CLAMP == 1.1
+
+    # -- I1: daily-loss halt fires even on an already-executed asof --------
+
+    def test_daily_loss_halts_even_when_asof_already_executed(self, env):
+        mod, root, _ = env
+        mod.LDIR.mkdir(parents=True, exist_ok=True)
+        # asof already journaled (idempotent-skip would normally short-circuit)
+        mod._append(mod.LIVE_JOURNAL, {"asof": "2026-08-22", "dry_run": False,
+                                       "orders_placed": 0, "gross_target": 0.0,
+                                       "equity_before": 3200.0, "scale": 1.0})
+        mod.DAY_EQUITY.write_text(
+            json.dumps({"date": "2026-08-23", "equity": 3200.0}))
+        c = FakeClient(equity=3000.0, positions={"AAAUSDT": 37.0})
+        out = mod.run(c, dry_run=False, today="2026-08-23")
+        assert out.startswith("halt")
+        assert mod.HALT_FLAG.exists()
+        assert c.orders == [("AAAUSDT", "SELL", 37.0, True)]
+
+    # -- I2: null/empty marks must WAIT, not journal a no-op day -----------
+
+    def test_null_marks_waits_without_journal_row(self, env):
+        mod, root, row = env
+        row["mark_px"] = None
+        jp = root / "predlab" / "s1_paper" / "journal_champion.jsonl"
+        jp.write_text(json.dumps(row) + "\n")
+        c = FakeClient()
+        out = mod.run(c, dry_run=False)
+        assert out == "WAIT: champion row has no marks"
+        assert c.orders == []
+        assert not mod.LIVE_JOURNAL.exists()
+
+    def test_empty_marks_dict_waits_without_journal_row(self, env):
+        mod, root, row = env
+        row["mark_px"] = {}
+        jp = root / "predlab" / "s1_paper" / "journal_champion.jsonl"
+        jp.write_text(json.dumps(row) + "\n")
+        c = FakeClient()
+        out = mod.run(c, dry_run=False)
+        assert out == "WAIT: champion row has no marks"
+        assert not mod.LIVE_JOURNAL.exists()
+
+    # -- M1: torn trailing journal_live.jsonl line must not crash run() ----
+
+    def test_torn_trailing_line_does_not_crash_idempotency_scan(self, env):
+        mod, root, _ = env
+        mod.LDIR.mkdir(parents=True, exist_ok=True)
+        intact = json.dumps({"asof": "2026-08-22", "dry_run": True,
+                             "orders_placed": 0, "gross_target": 0.0,
+                             "equity_before": 3000.0, "scale": 1.0})
+        with mod.LIVE_JOURNAL.open("w") as fh:
+            fh.write(intact + "\n")
+            fh.write('{"asof": "2026-08-2')  # torn, no trailing newline
+        c = FakeClient()
+        out = mod.run(c, dry_run=False)
+        assert out.startswith("skip")
+        assert c.orders == []
+
+    # -- M2: hedge (dual-side) position mode must be rejected ---------------
+
+    def test_hedge_mode_rejected_before_orders(self, env):
+        mod, root, _ = env
+        c = FakeClient(hedge_mode=True)
+        out = mod.run(c, dry_run=False)
+        assert out.startswith("ERROR")
+        assert "hedge" in out.lower()
+        assert c.orders == []
+
+    def test_dry_run_does_not_check_hedge_mode(self, env):
+        mod, root, _ = env
+
+        class NoPositionModeClient(FakeClient):
+            def position_mode(self):
+                raise AssertionError("dry-run must not call position_mode()")
+
+        c = NoPositionModeClient()
+        out = mod.run(c, dry_run=True)
+        assert out.startswith("dry-run")
+
     def test_main_bare_invocation_defaults_dry_run_false(self, env, monkeypatch):
         mod, root, _ = env
         calls = []
@@ -251,6 +361,21 @@ class TestCloseAllStatus:
         # but halt.flag must have been written in the finally block
         assert mod.HALT_FLAG.exists()
 
+    def test_close_all_writes_flag_before_positions_call(self, env):
+        # I3: halt.flag must be the FIRST statement of close_all(), before
+        # positions()/load_filters() -- a halted account must never be left
+        # un-flagged just because the position/filter fetch itself failed.
+        mod, root, _ = env
+
+        class RaisingClient(FakeClient):
+            def positions(self):
+                raise RuntimeError("network down")
+
+        c = RaisingClient()
+        with pytest.raises(RuntimeError):
+            mod.close_all(c)
+        assert mod.HALT_FLAG.exists()
+
 
 class TestCompare:
     def test_compare_computes_signed_bps(self, env):
@@ -287,6 +412,17 @@ class TestCompare:
         mod.compare()
         rep = json.loads((mod.LDIR / "compare_report.json").read_text())
         assert rep["n_fills"] == 2 and rep["n_matched"] == 0
+
+    def test_compare_missing_champion_journal(self, env):
+        # M3: compare() must not crash when the champion journal is absent.
+        mod, root, _ = env
+        mod.LDIR.mkdir(parents=True, exist_ok=True)
+        mod.FILLS.write_text(json.dumps(
+            {"asof": "2026-08-22", "symbol": "AAAUSDT", "side": "BUY",
+             "qty": 1.0, "avg_price": 2.0}) + "\n")
+        (root / "predlab" / "s1_paper" / "journal_champion.jsonl").unlink()
+        out = mod.compare()
+        assert out == "compare: no champion journal"
 
 
 class TestTestnetMode:

@@ -37,9 +37,14 @@ ENTRY = {
         "go/no-go -> live $3,000"),
     "risk_rails": {
         "gross_cap_x_equity": 2.2, "per_symbol_cap_of_gross": 0.05,
-        "daily_loss_halt": 0.05, "leverage": 2, "order_type": "MARKET"},
+        "daily_loss_halt": 0.05, "leverage": 4, "scale_clamp": 1.1,
+        "order_type": "MARKET"},
     "artifacts": "data/predlab/s1_live/",
     "spec": "docs/superpowers/specs/2026-08-21-s1-live-executor-design.md",
+    "amended_2026-08-21": (
+        "pre-deploy design fix: leverage 4 + executed-scale clamp 1.1 "
+        "(final review C2); live run measures a capped replica when "
+        "overlay scale > 1.1"),
 }
 
 
