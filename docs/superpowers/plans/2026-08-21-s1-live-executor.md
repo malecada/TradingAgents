@@ -1393,6 +1393,108 @@ git commit -m "feat(predlab): live executor compare subcommand (slippage report)
 
 ---
 
+### Task 7b: `--testnet` rehearsal mode (user-requested amendment 2026-08-21)
+
+**Files:**
+- Modify: `scripts/predlab_s1_live.py`
+- Test: `tests/predlab/test_s1_live_cli.py`
+
+**Interfaces:**
+- Consumes: module paths + `run`/`close_all`/`status` from Tasks 5–6; `FuturesClient(api_key, api_secret, base)` from Task 4.
+- Produces: top-level `--testnet` flag (all subcommands). When set:
+  - `_use_testnet()` rebinds module globals `LDIR`, `LIVE_JOURNAL`, `FILLS`, `HALT_FLAG`, `DAY_EQUITY` to `DATA_ROOT/predlab/s1_testnet/` equivalents (same filenames).
+  - `main()` constructs `FuturesClient(api_key=os.environ.get("BINANCE_TESTNET_API_KEY"), api_secret=os.environ.get("BINANCE_TESTNET_API_SECRET"), base=TESTNET_BASE)` with `TESTNET_BASE = "https://testnet.binancefuture.com"`.
+  - Purpose: plumbing rehearsal only; testnet fills never feed slippage conclusions (spec Phase 1b).
+
+- [ ] **Step 1: Write failing tests**
+
+Append to `tests/predlab/test_s1_live_cli.py`:
+
+```python
+class TestTestnetMode:
+    def test_use_testnet_rebinds_paths(self, env):
+        mod, root, _ = env
+        mod._use_testnet()
+        assert mod.LDIR == root / "predlab" / "s1_testnet"
+        assert mod.LIVE_JOURNAL.parent == mod.LDIR
+        assert mod.FILLS.parent == mod.LDIR
+        assert mod.HALT_FLAG.parent == mod.LDIR
+        assert mod.DAY_EQUITY.parent == mod.LDIR
+
+    def test_testnet_run_writes_to_testnet_dir(self, env):
+        mod, root, _ = env
+        mod._use_testnet()
+        mod.run(FakeClient(), dry_run=False)
+        assert (root / "predlab" / "s1_testnet" / "journal_live.jsonl").exists()
+        assert not (root / "predlab" / "s1_live" / "journal_live.jsonl").exists()
+
+    def test_make_client_testnet_base_and_keys(self, env, monkeypatch):
+        mod, root, _ = env
+        monkeypatch.setenv("BINANCE_TESTNET_API_KEY", "tk")
+        monkeypatch.setenv("BINANCE_TESTNET_API_SECRET", "ts")
+        c = mod.make_client(testnet=True)
+        assert c.base == "https://testnet.binancefuture.com"
+        assert c.api_key == "tk" and c.api_secret == "ts"
+
+    def test_make_client_mainnet_default(self, env, monkeypatch):
+        mod, root, _ = env
+        monkeypatch.setenv("BINANCE_API_KEY", "mk")
+        monkeypatch.setenv("BINANCE_API_SECRET", "ms")
+        c = mod.make_client(testnet=False)
+        assert c.base == "https://fapi.binance.com"
+        assert c.api_key == "mk"
+```
+
+- [ ] **Step 2: Run to verify fail** — `AttributeError: ... '_use_testnet'`.
+
+- [ ] **Step 3: Implement**
+
+In `scripts/predlab_s1_live.py` add near the path constants:
+
+```python
+TESTNET_BASE = "https://testnet.binancefuture.com"
+
+
+def _use_testnet() -> None:
+    """Rebind journal/flag paths to the testnet data dir (Phase 1b rehearsal)."""
+    global LDIR, LIVE_JOURNAL, FILLS, HALT_FLAG, DAY_EQUITY
+    LDIR = DATA_ROOT / "predlab" / "s1_testnet"
+    LIVE_JOURNAL = LDIR / "journal_live.jsonl"
+    FILLS = LDIR / "fills.jsonl"
+    HALT_FLAG = LDIR / "halt.flag"
+    DAY_EQUITY = LDIR / "day_equity.json"
+
+
+def make_client(testnet: bool) -> FuturesClient:
+    if testnet:
+        return FuturesClient(
+            api_key=os.environ.get("BINANCE_TESTNET_API_KEY"),
+            api_secret=os.environ.get("BINANCE_TESTNET_API_SECRET"),
+            base=TESTNET_BASE)
+    return FuturesClient()
+```
+
+In `main()`: add `ap.add_argument("--testnet", action="store_true")` on the top-level parser (before subparsers parse — use `parents` or add to each subparser if argparse ordering fights; simplest: add to the top-level parser and pass `--testnet` before the subcommand). Then:
+
+```python
+    if args.testnet:
+        _use_testnet()
+    client = make_client(args.testnet)
+```
+
+(replacing the existing `client = FuturesClient()` line). `compare` needs no client but the flag still routes its paths via `_use_testnet()`.
+
+- [ ] **Step 4: Run tests + full suite** — all green.
+
+- [ ] **Step 5: Commit**
+
+```bash
+git add scripts/predlab_s1_live.py tests/predlab/test_s1_live_cli.py
+git commit -m "feat(predlab): --testnet rehearsal mode for live executor"
+```
+
+---
+
 ### Task 8: gates.json observational annotation + ledger row
 
 **Files:**

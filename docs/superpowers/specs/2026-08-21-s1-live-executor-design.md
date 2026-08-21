@@ -153,11 +153,20 @@ wiring is out of scope (separate later task).
 
 ## Rollout
 
-1. **Phase 1 — dry-run:** deploy to VPS, cron chained, `--dry-run` for ~2 days.
+1. **Phase 1 — dry-run:** deploy to VPS, cron chained, `--dry-run` for ~1 day.
    Verifies: journal read, sizing, exchangeInfo filters, diff logic, intended-order
    logs sane, idempotency under hourly cron.
-2. **Phase 2 — live:** fund account ($2,000–5,000), remove `--dry-run`. First live
-   day manually observed.
+1b. **Phase 1b — testnet rehearsal (user-requested amendment 2026-08-21):**
+   `--testnet` flag switches the executor to Binance futures testnet
+   (`https://testnet.binancefuture.com`, keys `BINANCE_TESTNET_API_KEY/SECRET`,
+   separate data dir `data/predlab/s1_testnet/`). Run a few days to validate
+   plumbing end-to-end: orders accepted, precision/rounding, reduceOnly behavior,
+   positions match journal targets, cron idempotency. Explicitly NOT a fill-quality
+   measurement — testnet books are thin, and many of the 80 symbols are unlisted
+   there (dropped with `no_filter` logs). Testnet fills never feed the slippage
+   report's conclusions.
+2. **Phase 2 — live:** fund account ($3,000), user go/no-go, remove `--dry-run`
+   and `--testnet`. First live day manually observed.
 3. gates.json: add observational annotation `predlab_s1_live` (start date, capital,
    no claim). Ledger row via `registry.log_trial()` marking the run as
    observational.
