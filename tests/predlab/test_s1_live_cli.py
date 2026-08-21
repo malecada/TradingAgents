@@ -21,6 +21,7 @@ def env(tmp_path, monkeypatch):
     (jdir / "journal_champion.jsonl").write_text(json.dumps(row) + "\n")
     import predlab_s1_live
     mod = importlib.reload(predlab_s1_live)
+    monkeypatch.setattr(mod.time, "sleep", lambda *a, **k: None)
     return mod, tmp_path, row
 
 
@@ -168,3 +169,17 @@ class TestRun:
         mod.run(FakeClient(), dry_run=True)
         d = json.loads(mod.DAY_EQUITY.read_text())
         assert d["equity"] == 3000.0
+
+    def test_main_bare_invocation_defaults_dry_run_false(self, env, monkeypatch):
+        mod, root, _ = env
+        calls = []
+
+        def fake_run(client, dry_run=False, today=None):
+            calls.append(dry_run)
+            return "done stub"
+
+        monkeypatch.setattr(mod, "run", fake_run)
+        monkeypatch.setattr(mod, "FuturesClient", lambda *a, **k: object())
+        monkeypatch.setattr(sys, "argv", ["predlab_s1_live.py"])
+        mod.main()
+        assert calls == [False]

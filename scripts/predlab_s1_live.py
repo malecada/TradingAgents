@@ -98,7 +98,7 @@ def _place(client, orders: "list[live_exec.Order]", asof: str) -> None:
             trades = client.user_trades(o.symbol, r["orderId"])
             fee = round(sum(float(t["commission"]) for t in trades
                             if t.get("commissionAsset") == "USDT"), 6)
-        except (BinanceAPIError, KeyError, ValueError):
+        except Exception:
             pass  # fee is best-effort; avgPrice already captured
         _append(FILLS, {
             "asof": asof, "symbol": o.symbol, "side": o.side,
@@ -196,7 +196,7 @@ def main() -> None:
     cmd = args.cmd or "run"
     client = FuturesClient()
     if cmd == "run":
-        print(run(client, dry_run=args.dry_run))
+        print(run(client, dry_run=getattr(args, "dry_run", False)))
     elif cmd == "close-all":
         print(close_all(client))       # Task 6
     elif cmd == "status":
