@@ -106,3 +106,47 @@ def diff_orders(targets: "dict[str, float]", positions: "dict[str, float]",
         orders.append(Order(sym, side, delta, reduce_only))
     orders.sort(key=lambda o: (not o.reduce_only, o.symbol))
     return orders, skipped
+
+
+def check_caps(target_notionals: "dict[str, float]", equity: float,
+               gross_cap: float = 2.2, per_symbol_cap: float = 0.05,
+               ) -> "list[str]":
+    """Hard pre-trade caps on the post-trade book. Empty list = OK."""
+    violations: "list[str]" = []
+    gross = sum(abs(v) for v in target_notionals.values())
+    if gross > gross_cap * equity:
+        violations.append(
+            f"gross {gross:.0f} > {gross_cap} x equity {equity:.0f}")
+    if gross > 0:
+        for sym, v in sorted(target_notionals.items()):
+            if abs(v) > per_symbol_cap * gross:
+                violations.append(
+                    f"{sym} notional {abs(v):.0f} > "
+                    f"{per_symbol_cap:.0%} of gross {gross:.0f}")
+    return violations
+
+
+def daily_loss_breached(equity: float, day_start_equity: float,
+                        limit: float = 0.05) -> bool:
+    return equity < (1.0 - limit) * day_start_equity
+
+
+def build_journal_row(asof: str, executed_utc: str, equity_before: float,
+                      equity_day_start: float, scale: float,
+                      targets_notional: "dict[str, float]",
+                      orders: "list[Order]", dropped: "list[dict]",
+                      skipped: "list[dict]", halt: bool, dry_run: bool) -> dict:
+    return {
+        "asof": asof,
+        "executed_utc": executed_utc,
+        "equity_before": round(equity_before, 2),
+        "equity_day_start": round(equity_day_start, 2),
+        "scale": scale,
+        "targets": {k: round(v, 2) for k, v in sorted(targets_notional.items())},
+        "orders_placed": len(orders),
+        "legs_dropped_min_notional": dropped,
+        "deltas_skipped_dust": len(skipped),
+        "gross_target": round(sum(abs(v) for v in targets_notional.values()), 2),
+        "halt": halt,
+        "dry_run": dry_run,
+    }

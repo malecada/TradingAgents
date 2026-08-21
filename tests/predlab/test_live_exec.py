@@ -124,3 +124,52 @@ class TestDiffOrders:
         orders, _ = diff_orders({"BTCUSDT": 0.0035}, {"BTCUSDT": 0.002},
                                 MARKS, F, dust_usd=7.0)
         assert orders == [Order("BTCUSDT", "BUY", 0.001, False)]
+
+
+from tradingagents.predlab.live_exec import (
+    build_journal_row, check_caps, daily_loss_breached)
+
+
+class TestRiskAndJournal:
+    def test_caps_ok(self):
+        tn = {"AAAUSDT": 3000.0, "BBBUSDT": -3000.0}
+        assert check_caps(tn, equity=3000.0, per_symbol_cap=1.0) == []
+
+    def test_gross_cap_violation(self):
+        tn = {"AAAUSDT": 4000.0, "BBBUSDT": -3000.0}
+        v = check_caps(tn, equity=3000.0, per_symbol_cap=1.0)
+        assert any("gross" in s for s in v)
+
+    def test_per_symbol_cap_violation(self):
+        tn = {"AAAUSDT": 400.0, "BBBUSDT": -100.0,
+              "CCCUSDT": 100.0, "DDDUSDT": -100.0}
+        v = check_caps(tn, equity=3000.0)
+        assert any("AAAUSDT" in s for s in v)
+
+    def test_empty_book_no_violations(self):
+        assert check_caps({}, equity=3000.0) == []
+
+    def test_daily_loss(self):
+        assert daily_loss_breached(2849.0, 3000.0) is True
+        assert daily_loss_breached(2851.0, 3000.0) is False
+
+    def test_journal_row_schema(self):
+        row = build_journal_row(
+            asof="2026-08-22", executed_utc="2026-08-23T00:07:00+00:00",
+            equity_before=3000.0, equity_day_start=3010.0, scale=1.2,
+            targets_notional={"AAAUSDT": 90.0, "BBBUSDT": -90.0},
+            orders=[Order("AAAUSDT", "BUY", 45.0, False)],
+            dropped=[{"symbol": "BTCUSDT", "reason": "rounds_to_zero",
+                      "target_notional": 50.0}],
+            skipped=[{"symbol": "CCCUSDT", "reason": "dust",
+                      "delta_notional": 6.0}],
+            halt=False, dry_run=True)
+        assert row["asof"] == "2026-08-22"
+        assert row["orders_placed"] == 1
+        assert row["gross_target"] == 180.0
+        assert row["legs_dropped_min_notional"] == [
+            {"symbol": "BTCUSDT", "reason": "rounds_to_zero",
+             "target_notional": 50.0}]
+        assert row["deltas_skipped_dust"] == 1
+        assert row["dry_run"] is True and row["halt"] is False
+        assert row["scale"] == 1.2 and row["equity_day_start"] == 3010.0
