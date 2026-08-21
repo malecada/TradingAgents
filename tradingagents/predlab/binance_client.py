@@ -44,21 +44,24 @@ class FuturesClient:
         return params
 
     def _http(self, method: str, path: str, params: dict, signed: bool) -> dict:
-        if signed:
-            params = dict(params, timestamp=int(time.time() * 1000),
-                          recvWindow=10000)
-            params = self._sign(params)
-        query = urllib.parse.urlencode(params)
-        url = f"{self.base}{path}"
-        data = None
-        if method == "GET":
-            url = f"{url}?{query}" if query else url
-        else:
-            data = query.encode()
-        req = urllib.request.Request(
-            url, data=data, method=method,
-            headers={"X-MBX-APIKEY": self.api_key} if self.api_key else {})
         for attempt in (1, 2):
+            # Rebuild request on each attempt to get fresh timestamps/signatures
+            request_params = dict(params)
+            if signed:
+                request_params = dict(request_params,
+                                      timestamp=int(time.time() * 1000),
+                                      recvWindow=10000)
+                request_params = self._sign(request_params)
+            query = urllib.parse.urlencode(request_params)
+            url = f"{self.base}{path}"
+            data = None
+            if method == "GET":
+                url = f"{url}?{query}" if query else url
+            else:
+                data = query.encode()
+            req = urllib.request.Request(
+                url, data=data, method=method,
+                headers={"X-MBX-APIKEY": self.api_key} if self.api_key else {})
             try:
                 with urllib.request.urlopen(req, timeout=20) as r:
                     return json.load(r)
@@ -71,7 +74,7 @@ class FuturesClient:
                     err = json.loads(body)
                     raise BinanceAPIError(err.get("code", e.code),
                                           err.get("msg", body)) from None
-                except (ValueError, KeyError):
+                except (ValueError, AttributeError, TypeError):
                     raise BinanceAPIError(e.code, body) from None
             except urllib.error.URLError:
                 if attempt == 1:
