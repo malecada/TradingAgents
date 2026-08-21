@@ -184,6 +184,47 @@ def run(client, dry_run: bool, today: "str | None" = None) -> str:
             f"{len(skipped)} skipped")
 
 
+def close_all(client) -> str:
+    positions = client.positions()
+    filters = load_filters(client)
+    marks = {s: 1e9 for s in positions}  # dust filter must never skip a close
+    asof = f"close-all-{datetime.now(timezone.utc).date()}"
+    orders = _flatten(client, positions, filters, marks, asof, dry_run=False)
+    LDIR.mkdir(parents=True, exist_ok=True)
+    HALT_FLAG.write_text(
+        f"manual close-all at {datetime.now(timezone.utc).isoformat()}\n")
+    return f"close-all: flattened {len(orders)} positions, halt.flag written"
+
+
+def status(client) -> str:
+    lines: "list[str]" = []
+    if not LIVE_JOURNAL.exists():
+        lines.append("no live journal yet")
+    else:
+        rows = [json.loads(l) for l in LIVE_JOURNAL.read_text().splitlines()]
+        last = rows[-1]
+        lines.append(
+            f"last run {last['asof']} ({'dry' if last['dry_run'] else 'live'}): "
+            f"{last['orders_placed']} orders, gross {last['gross_target']:.0f}, "
+            f"equity {last['equity_before']:.2f}, scale {last['scale']}")
+        age = (datetime.now(timezone.utc).date()
+               - datetime.strptime(last["asof"], "%Y-%m-%d").date()).days
+        if age > 2:
+            lines.append(f"WARN: last journal row is {age} days old")
+    if HALT_FLAG.exists():
+        lines.append(f"WARN: halt.flag present — {HALT_FLAG.read_text().strip()}")
+    if FILLS.exists():
+        tail = [json.loads(l) for l in FILLS.read_text().splitlines()][-5:]
+        errs = [f for f in tail if "error" in f]
+        if errs:
+            lines.append(f"WARN: {len(errs)} order errors in last 5 fills")
+    try:
+        lines.append(f"open positions: {len(client.positions())}")
+    except Exception as e:  # status must never crash
+        lines.append(f"WARN: cannot read positions: {e}")
+    return "\n".join(lines)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     sub = ap.add_subparsers(dest="cmd")

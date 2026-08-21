@@ -183,3 +183,35 @@ class TestRun:
         monkeypatch.setattr(sys, "argv", ["predlab_s1_live.py"])
         mod.main()
         assert calls == [False]
+
+
+class TestCloseAllStatus:
+    def test_close_all_flattens_and_halts(self, env):
+        mod, root, _ = env
+        c = FakeClient(positions={"AAAUSDT": 37.0, "BBBUSDT": -7.0})
+        out = mod.close_all(c)
+        assert "2" in out
+        assert mod.HALT_FLAG.exists()
+        assert ("AAAUSDT", "SELL", 37.0, True) in c.orders
+        assert ("BBBUSDT", "BUY", 7.0, True) in c.orders
+
+    def test_status_warns_on_halt(self, env):
+        mod, root, _ = env
+        mod.LDIR.mkdir(parents=True, exist_ok=True)
+        mod.HALT_FLAG.write_text("manual\n")
+        s = mod.status(FakeClient())
+        assert "WARN" in s and "halt" in s.lower()
+
+    def test_status_warns_on_stale_journal(self, env):
+        mod, root, _ = env
+        mod.LDIR.mkdir(parents=True, exist_ok=True)
+        row = {"asof": "2026-08-01", "dry_run": True, "orders_placed": 0,
+               "gross_target": 0.0, "equity_before": 3000.0, "scale": 1.0}
+        mod.LIVE_JOURNAL.write_text(json.dumps(row) + "\n")
+        s = mod.status(FakeClient())
+        assert "WARN" in s
+
+    def test_status_clean_no_positions(self, env):
+        mod, root, _ = env
+        s = mod.status(FakeClient())
+        assert "no live journal" in s
