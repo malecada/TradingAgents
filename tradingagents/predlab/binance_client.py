@@ -99,6 +99,17 @@ class FuturesClient:
         self._http("POST", "/fapi/v1/leverage",
                    {"symbol": symbol, "leverage": leverage}, signed=True)
 
+    def position_mode(self) -> bool:
+        """True if the account is in hedge (dual-side position) mode.
+
+        The live executor assumes one-way mode (net position per symbol,
+        reduceOnly semantics as used throughout diff_orders); hedge mode
+        must be rejected before any order is placed.
+        """
+        r = self._http("GET", "/fapi/v1/positionSide/dual", {}, signed=True)
+        v = r.get("dualSidePosition")
+        return v.lower() == "true" if isinstance(v, str) else bool(v)
+
     def market_order(self, symbol: str, side: str, qty: float,
                      reduce_only: bool) -> dict:
         params = {"symbol": symbol, "side": side, "type": "MARKET",

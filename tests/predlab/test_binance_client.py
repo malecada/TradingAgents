@@ -73,6 +73,40 @@ class TestEndpoints:
         with pytest.raises(BinanceAPIError):
             client.market_order("AAAUSDT", "BUY", 1.0, reduce_only=False)
 
+    # -- M2: one-way position mode assertion --------------------------------
+
+    def test_position_mode_parses_true_bool(self, client, monkeypatch):
+        captured = {}
+
+        def fake(method, path, params, signed):
+            captured.update(method=method, path=path, signed=signed)
+            return {"dualSidePosition": True}
+
+        monkeypatch.setattr(client, "_http", fake)
+        assert client.position_mode() is True
+        assert captured["method"] == "GET"
+        assert captured["path"] == "/fapi/v1/positionSide/dual"
+        assert captured["signed"] is True
+
+    def test_position_mode_parses_false_bool(self, client, monkeypatch):
+        monkeypatch.setattr(
+            client, "_http",
+            lambda m, p, params, signed: {"dualSidePosition": False})
+        assert client.position_mode() is False
+
+    def test_position_mode_parses_string_true(self, client, monkeypatch):
+        # Binance has historically returned this field as a string.
+        monkeypatch.setattr(
+            client, "_http",
+            lambda m, p, params, signed: {"dualSidePosition": "true"})
+        assert client.position_mode() is True
+
+    def test_position_mode_parses_string_false(self, client, monkeypatch):
+        monkeypatch.setattr(
+            client, "_http",
+            lambda m, p, params, signed: {"dualSidePosition": "false"})
+        assert client.position_mode() is False
+
 
 class TestHTTPTransport:
     """Direct tests of _http() retry logic, error handling, and signing."""
