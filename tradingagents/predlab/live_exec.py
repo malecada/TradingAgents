@@ -57,3 +57,52 @@ def build_targets(weights: "dict[str, float]", scale: float, equity: float,
             continue
         targets[sym] = qty if w > 0 else -qty
     return targets, dropped
+
+
+@dataclass(frozen=True)
+class Order:
+    symbol: str
+    side: str          # "BUY" | "SELL"
+    qty: float         # always positive
+    reduce_only: bool
+
+
+def diff_orders(targets: "dict[str, float]", positions: "dict[str, float]",
+                marks: "dict[str, float]", filters: "dict[str, SymbolFilter]",
+                dust_usd: float = 7.0) -> "tuple[list[Order], list[dict]]":
+    """Delta market orders taking `positions` to `targets`.
+
+    Reduce-only when the order only shrinks an existing position (exempt
+    from Binance MIN_NOTIONAL rejection -4164); a sign flip is one plain
+    crossing order. Dust deltas and sub-min-notional increases are skipped.
+    """
+    orders: "list[Order]" = []
+    skipped: "list[dict]" = []
+    for sym in sorted(set(targets) | set(positions)):
+        tgt = targets.get(sym, 0.0)
+        cur = positions.get(sym, 0.0)
+        f = filters.get(sym)
+        if f is None or sym not in marks:
+            continue  # cannot price/round the delta; leg already logged upstream
+        delta = _round_step(abs(tgt - cur), f.step_size)
+        if delta <= 0:
+            continue
+        notional = delta * marks[sym]
+        if notional < dust_usd:
+            skipped.append({"symbol": sym, "reason": "dust",
+                            "delta_notional": round(notional, 2)})
+            continue
+        reduce_only = (
+            cur != 0.0
+            and (tgt == 0.0 or (math.copysign(1, tgt) == math.copysign(1, cur)
+                                and abs(tgt) < abs(cur)))
+        )
+        if not reduce_only and notional < f.min_notional:
+            skipped.append({"symbol": sym,
+                            "reason": "increase_below_min_notional",
+                            "delta_notional": round(notional, 2)})
+            continue
+        side = "BUY" if tgt - cur > 0 else "SELL"
+        orders.append(Order(sym, side, delta, reduce_only))
+    orders.sort(key=lambda o: (not o.reduce_only, o.symbol))
+    return orders, skipped
