@@ -13,6 +13,16 @@ chmod 600, owner tabot. Never in the repo.
 
 Fund with $3,000 USDT (decided 2026-08-21); the account must be dedicated to this executor — any position outside the champion book will be force-flattened.
 
+Leverage is set to **4x** per symbol (raised from 2x in the final pre-deploy
+review, 2026-08-21) with a hard clamp on the *executed* overlay scale at
+**1.1** (`vt15_b100_scale` can reach ~2.0, and champion gross weight is
+2.0x, so unclamped gross target notional could reach 4x equity — at 2x
+leverage that would exceed the 2.2x gross cap and refuse every batch). The
+live run always sizes off `min(vt15_b100_scale, 1.1)`; the unclamped value
+is recorded as `scale_raw` in `journal_live.jsonl` alongside the executed
+`scale`, so a capped-replica day is legible in the journal, not silently
+mislabeled as full-scale.
+
 Cron (chained after the paper trader, same hourly guard pattern):
   <existing paper cron command> && \
   cd /opt/tradingagents && set -a && . ./.env.trading && set +a && \
@@ -59,9 +69,21 @@ Testnet specifics:
   (flattens reduce-only + writes halt.flag; cron becomes a no-op).
 - Resume after halt: inspect cause, then `rm .../s1_live/halt.flag`.
 - Daily-loss halt fired: do NOT remove the flag same-day; review first.
+- Positions in halted/delisted symbols can't be market-ordered — close
+  manually in the Binance UI (executor logs them as `no_filter`).
 
 ## Invariants
 
 - Executor never writes into s1_paper/ (registered forward test).
 - Null scale -> WAIT is normal until the vol window accrues.
+- Null/empty marks with a non-empty book -> WAIT, no journal row written
+  (retried on the next wake; not a flat day).
 - scale 0.0 (breadth floor) -> executor flattens the book; not an error.
+- Executed sizing scale is `min(vt15_b100_scale, 1.1)`; the raw overlay
+  scale is preserved as `scale_raw` in the journal.
+- A symbol that leaves the champion book while still held is always closed
+  reduce-only, even with no mark for it that day (never a silent zombie
+  position).
+- Daily-loss check reads equity and can halt on every wake, including an
+  hourly wake whose asof was already executed earlier that day.
+- Hedge (dual-side) position mode is rejected before any live order.
