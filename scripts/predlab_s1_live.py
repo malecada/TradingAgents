@@ -7,10 +7,13 @@ run for fill/slippage quality — not a registered gate. Spec:
 docs/superpowers/specs/2026-08-21-s1-live-executor-design.md
 
 Subcommands:
-  run [--dry-run]   daily rebalance (idempotent per asof date)
-  close-all         flatten every position (reduce-only) + write halt.flag
-  status            one-line health summary + WARN lines
-  compare           fills vs paper marks -> slippage report JSON
+  run [--dry-run]      daily rebalance (idempotent per asof date)
+  close-all            flatten every position (reduce-only) + write halt.flag
+  status               one-line health summary + WARN lines
+  compare              fills vs paper marks -> slippage report JSON
+
+Flags:
+  --testnet            use testnet Binance + testnet data paths (Phase 1b rehearsal)
 """
 from __future__ import annotations
 
@@ -209,10 +212,13 @@ def close_all(client) -> str:
     filters = load_filters(client)
     marks = {s: 1e9 for s in positions}  # dust filter must never skip a close
     asof = f"close-all-{datetime.now(timezone.utc).date()}"
-    orders = _flatten(client, positions, filters, marks, asof, dry_run=False)
-    LDIR.mkdir(parents=True, exist_ok=True)
-    HALT_FLAG.write_text(
-        f"manual close-all at {datetime.now(timezone.utc).isoformat()}\n")
+    try:
+        orders = _flatten(client, positions, filters, marks, asof, dry_run=False)
+    finally:
+        # ensure halt.flag is written even if flatten raises
+        LDIR.mkdir(parents=True, exist_ok=True)
+        HALT_FLAG.write_text(
+            f"manual close-all at {datetime.now(timezone.utc).isoformat()}\n")
     return f"close-all: flattened {len(orders)} positions, halt.flag written"
 
 
@@ -221,23 +227,29 @@ def status(client) -> str:
     if not LIVE_JOURNAL.exists():
         lines.append("no live journal yet")
     else:
-        rows = [json.loads(l) for l in LIVE_JOURNAL.read_text().splitlines()]
-        last = rows[-1]
-        lines.append(
-            f"last run {last['asof']} ({'dry' if last['dry_run'] else 'live'}): "
-            f"{last['orders_placed']} orders, gross {last['gross_target']:.0f}, "
-            f"equity {last['equity_before']:.2f}, scale {last['scale']}")
-        age = (datetime.now(timezone.utc).date()
-               - datetime.strptime(last["asof"], "%Y-%m-%d").date()).days
-        if age > 2:
-            lines.append(f"WARN: last journal row is {age} days old")
+        try:
+            rows = [json.loads(l) for l in LIVE_JOURNAL.read_text().splitlines()]
+            last = rows[-1]
+            lines.append(
+                f"last run {last['asof']} ({'dry' if last['dry_run'] else 'live'}): "
+                f"{last['orders_placed']} orders, gross {last['gross_target']:.0f}, "
+                f"equity {last['equity_before']:.2f}, scale {last['scale']}")
+            age = (datetime.now(timezone.utc).date()
+                   - datetime.strptime(last["asof"], "%Y-%m-%d").date()).days
+            if age > 2:
+                lines.append(f"WARN: last journal row is {age} days old")
+        except Exception as e:
+            lines.append(f"WARN: cannot parse live journal: {e}")
     if HALT_FLAG.exists():
         lines.append(f"WARN: halt.flag present — {HALT_FLAG.read_text().strip()}")
     if FILLS.exists():
-        tail = [json.loads(l) for l in FILLS.read_text().splitlines()][-5:]
-        errs = [f for f in tail if "error" in f]
-        if errs:
-            lines.append(f"WARN: {len(errs)} order errors in last 5 fills")
+        try:
+            tail = [json.loads(l) for l in FILLS.read_text().splitlines()][-5:]
+            errs = [f for f in tail if "error" in f]
+            if errs:
+                lines.append(f"WARN: {len(errs)} order errors in last 5 fills")
+        except Exception as e:
+            lines.append(f"WARN: cannot parse fills: {e}")
     try:
         lines.append(f"open positions: {len(client.positions())}")
     except Exception as e:  # status must never crash

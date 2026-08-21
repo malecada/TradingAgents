@@ -216,6 +216,41 @@ class TestCloseAllStatus:
         s = mod.status(FakeClient())
         assert "no live journal" in s
 
+    def test_status_handles_malformed_journal(self, env):
+        mod, root, _ = env
+        mod.LDIR.mkdir(parents=True, exist_ok=True)
+        # Write a torn/truncated JSON line
+        mod.LIVE_JOURNAL.write_text('{"asof": "2026-08-2')
+        s = mod.status(FakeClient())
+        assert "WARN" in s and "cannot parse live journal" in s
+        # must not crash
+        assert isinstance(s, str)
+
+    def test_status_handles_malformed_fills(self, env):
+        mod, root, _ = env
+        mod.LDIR.mkdir(parents=True, exist_ok=True)
+        # Write a torn/truncated JSON line in fills
+        mod.FILLS.write_text('{"asof": "2026-08-22", "symbol":')
+        s = mod.status(FakeClient())
+        assert "WARN" in s and "cannot parse fills" in s
+        # must not crash
+        assert isinstance(s, str)
+
+    def test_close_all_writes_flag_on_flatten_exception(self, env):
+        mod, root, _ = env
+        class FallibleClient(FakeClient):
+            def market_order(self, symbol, side, qty, reduce_only):
+                raise RuntimeError("network timeout")
+
+        c = FallibleClient(positions={"AAAUSDT": 37.0})
+        try:
+            mod.close_all(c)
+        except RuntimeError:
+            # flatten exception is expected to propagate
+            pass
+        # but halt.flag must have been written in the finally block
+        assert mod.HALT_FLAG.exists()
+
 
 class TestCompare:
     def test_compare_computes_signed_bps(self, env):
