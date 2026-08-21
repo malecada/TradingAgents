@@ -39,6 +39,26 @@ HALT_FLAG = LDIR / "halt.flag"
 DAY_EQUITY = LDIR / "day_equity.json"
 LEVERAGE = 2
 ORDER_PACE_S = 0.25  # ~4 orders/s, far under fapi order-rate limits
+TESTNET_BASE = "https://testnet.binancefuture.com"
+
+
+def _use_testnet() -> None:
+    """Rebind journal/flag paths to the testnet data dir (Phase 1b rehearsal)."""
+    global LDIR, LIVE_JOURNAL, FILLS, HALT_FLAG, DAY_EQUITY
+    LDIR = DATA_ROOT / "predlab" / "s1_testnet"
+    LIVE_JOURNAL = LDIR / "journal_live.jsonl"
+    FILLS = LDIR / "fills.jsonl"
+    HALT_FLAG = LDIR / "halt.flag"
+    DAY_EQUITY = LDIR / "day_equity.json"
+
+
+def make_client(testnet: bool) -> FuturesClient:
+    if testnet:
+        return FuturesClient(
+            api_key=os.environ.get("BINANCE_TESTNET_API_KEY"),
+            api_secret=os.environ.get("BINANCE_TESTNET_API_SECRET"),
+            base=TESTNET_BASE)
+    return FuturesClient()
 
 
 def read_champion_row() -> "dict | None":
@@ -273,6 +293,7 @@ def compare() -> str:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--testnet", action="store_true")
     sub = ap.add_subparsers(dest="cmd")
     p_run = sub.add_parser("run")
     p_run.add_argument("--dry-run", action="store_true")
@@ -281,7 +302,9 @@ def main() -> None:
     sub.add_parser("compare")
     args = ap.parse_args()
     cmd = args.cmd or "run"
-    client = FuturesClient()
+    if args.testnet:
+        _use_testnet()
+    client = make_client(args.testnet)
     if cmd == "run":
         print(run(client, dry_run=getattr(args, "dry_run", False)))
     elif cmd == "close-all":

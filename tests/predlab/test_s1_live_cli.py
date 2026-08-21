@@ -252,3 +252,37 @@ class TestCompare:
         mod.compare()
         rep = json.loads((mod.LDIR / "compare_report.json").read_text())
         assert rep["n_fills"] == 2 and rep["n_matched"] == 0
+
+
+class TestTestnetMode:
+    def test_use_testnet_rebinds_paths(self, env):
+        mod, root, _ = env
+        mod._use_testnet()
+        assert mod.LDIR == root / "predlab" / "s1_testnet"
+        assert mod.LIVE_JOURNAL.parent == mod.LDIR
+        assert mod.FILLS.parent == mod.LDIR
+        assert mod.HALT_FLAG.parent == mod.LDIR
+        assert mod.DAY_EQUITY.parent == mod.LDIR
+
+    def test_testnet_run_writes_to_testnet_dir(self, env):
+        mod, root, _ = env
+        mod._use_testnet()
+        mod.run(FakeClient(), dry_run=False)
+        assert (root / "predlab" / "s1_testnet" / "journal_live.jsonl").exists()
+        assert not (root / "predlab" / "s1_live" / "journal_live.jsonl").exists()
+
+    def test_make_client_testnet_base_and_keys(self, env, monkeypatch):
+        mod, root, _ = env
+        monkeypatch.setenv("BINANCE_TESTNET_API_KEY", "tk")
+        monkeypatch.setenv("BINANCE_TESTNET_API_SECRET", "ts")
+        c = mod.make_client(testnet=True)
+        assert c.base == "https://testnet.binancefuture.com"
+        assert c.api_key == "tk" and c.api_secret == "ts"
+
+    def test_make_client_mainnet_default(self, env, monkeypatch):
+        mod, root, _ = env
+        monkeypatch.setenv("BINANCE_API_KEY", "mk")
+        monkeypatch.setenv("BINANCE_API_SECRET", "ms")
+        c = mod.make_client(testnet=False)
+        assert c.base == "https://fapi.binance.com"
+        assert c.api_key == "mk"
