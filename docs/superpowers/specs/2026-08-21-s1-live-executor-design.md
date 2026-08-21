@@ -65,8 +65,10 @@ Flow per run:
 4. Fetch account equity (USDT wallet balance + unrealized PnL), current positions,
    and `exchangeInfo` filters.
 5. Compute target notional per symbol: `w_i × vt15_b100_scale × equity`.
-6. Round to `stepSize`; drop legs whose |notional| < symbol `minNotional`
-   (log every dropped leg — measurement caveat).
+6. Round to `stepSize`; drop legs whose |notional| < symbol `minNotional` or whose
+   qty rounds to zero at `stepSize` (log every dropped leg — measurement caveat).
+   Empirically (2026-08-20 book, scale=1): equity ≥ ~$800 keeps 79/80 legs, only
+   BTCUSDT drops (one step ≈ $73 > its per-leg target); ~$3,000 keeps all 80.
 7. Diff targets against live positions → delta orders. Exposure-increasing deltas
    below the symbol's `minNotional` are dropped (Binance rejects them, error -4164);
    exposure-reducing deltas are sent `reduceOnly` (exempt from the filter) but
