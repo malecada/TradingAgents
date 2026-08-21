@@ -125,6 +125,52 @@ class TestDiffOrders:
                                 MARKS, F, dust_usd=7.0)
         assert orders == [Order("BTCUSDT", "BUY", 0.001, False)]
 
+    # -- C1: zombie positions (symbol departed the champion book) ----------
+
+    def test_departed_symbol_closed_reduce_only_even_without_mark(self):
+        # AAAUSDT held (37 units) but no longer in targets AND no longer in
+        # marks (paper trader only writes mark_px for today's book) -> must
+        # still be closed, bypassing the mark/dust/min-notional checks.
+        marks_no_aaa = {"BBBUSDT": 10.0}
+        orders, skipped = diff_orders({}, {"AAAUSDT": 37.0}, marks_no_aaa, F)
+        assert orders == [Order("AAAUSDT", "SELL", 37.0, True)]
+        assert skipped == []
+
+    def test_departed_symbol_short_closed_reduce_only_without_mark(self):
+        marks_no_aaa = {"BBBUSDT": 10.0}
+        orders, _ = diff_orders({}, {"AAAUSDT": -12.0}, marks_no_aaa, F)
+        assert orders == [Order("AAAUSDT", "BUY", 12.0, True)]
+
+    def test_departed_symbol_closed_bypasses_dust_threshold(self):
+        # 1 unit * 2.0 = 2 USDT, well below the 7 USDT dust floor -- a close
+        # must never be dropped for size.
+        marks_no_aaa = {"BBBUSDT": 10.0}
+        orders, skipped = diff_orders({}, {"AAAUSDT": 1.0}, marks_no_aaa, F)
+        assert orders == [Order("AAAUSDT", "SELL", 1.0, True)]
+        assert skipped == []
+
+    def test_nonzero_target_no_mark_skipped_with_reason(self):
+        # ZZZUSDT has a live target but the mark is missing this run:
+        # cannot size the delta -> skip, logged (not silently dropped).
+        f = dict(F, ZZZUSDT=SymbolFilter(5.0, 1.0))
+        orders, skipped = diff_orders({"ZZZUSDT": 50.0}, {}, MARKS, f)
+        assert orders == []
+        assert skipped == [{"symbol": "ZZZUSDT", "reason": "no_mark"}]
+
+    def test_departing_position_no_filter_skipped_with_reason(self):
+        # Symbol held but delisted/non-TRADING (missing from filters) ->
+        # cannot be market-ordered; must be closed manually.
+        marks = dict(MARKS, ZZZUSDT=1.0)
+        orders, skipped = diff_orders({}, {"ZZZUSDT": 10.0}, marks, F)
+        assert orders == []
+        assert skipped == [{"symbol": "ZZZUSDT", "reason": "no_filter"}]
+
+    def test_target_no_filter_skipped_with_reason(self):
+        marks = dict(MARKS, ZZZUSDT=1.0)
+        orders, skipped = diff_orders({"ZZZUSDT": 10.0}, {}, marks, F)
+        assert orders == []
+        assert skipped == [{"symbol": "ZZZUSDT", "reason": "no_filter"}]
+
 
 from tradingagents.predlab.live_exec import (
     build_journal_row, check_caps, daily_loss_breached)
@@ -173,3 +219,21 @@ class TestRiskAndJournal:
         assert row["deltas_skipped_dust"] == 1
         assert row["dry_run"] is True and row["halt"] is False
         assert row["scale"] == 1.2 and row["equity_day_start"] == 3010.0
+
+    def test_journal_row_scale_raw_defaults_to_scale(self):
+        row = build_journal_row(
+            asof="2026-08-22", executed_utc="2026-08-23T00:07:00+00:00",
+            equity_before=3000.0, equity_day_start=3010.0, scale=1.1,
+            targets_notional={}, orders=[], dropped=[], skipped=[],
+            halt=False, dry_run=True)
+        assert row["scale_raw"] == 1.1
+
+    def test_journal_row_scale_raw_explicit(self):
+        # C2: executed (clamped) scale vs the raw overlay scale from the
+        # champion journal -- both must be recoverable from the live row.
+        row = build_journal_row(
+            asof="2026-08-22", executed_utc="2026-08-23T00:07:00+00:00",
+            equity_before=3000.0, equity_day_start=3010.0, scale=1.1,
+            targets_notional={}, orders=[], dropped=[], skipped=[],
+            halt=False, dry_run=True, scale_raw=2.0)
+        assert row["scale"] == 1.1 and row["scale_raw"] == 2.0
