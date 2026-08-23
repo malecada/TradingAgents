@@ -8,7 +8,8 @@ from tradingagents.monitor.predlab import PredlabSource, resolve_predlab_source
 
 
 def _mk_data(tmp_path: Path, champion_rows=None, vt10_rows=None,
-             gates=None, backtest=None) -> Path:
+             gates=None, backtest=None, testnet_rows=None,
+             testnet_halted=False, live_rows=None) -> Path:
     s1 = tmp_path / "predlab" / "s1_paper"
     s1.mkdir(parents=True)
     if champion_rows is not None:
@@ -22,6 +23,18 @@ def _mk_data(tmp_path: Path, champion_rows=None, vt10_rows=None,
     if backtest is not None:
         (tmp_path / "predlab" / "champion_backtest.json").write_text(
             json.dumps(backtest))
+    if testnet_rows is not None:
+        tn = tmp_path / "predlab" / "s1_testnet"
+        tn.mkdir(parents=True)
+        (tn / "journal_live.jsonl").write_text(
+            "\n".join(json.dumps(r) for r in testnet_rows) + "\n")
+        if testnet_halted:
+            (tn / "halt.flag").write_text("")
+    if live_rows is not None:
+        lv = tmp_path / "predlab" / "s1_live"
+        lv.mkdir(parents=True)
+        (lv / "journal_live.jsonl").write_text(
+            "\n".join(json.dumps(r) for r in live_rows) + "\n")
     return tmp_path
 
 
@@ -50,7 +63,10 @@ def test_full_payload(tmp_path):
                     champion_rows=[_row("2026-08-03", None),
                                    _row("2026-08-04", 0.01)],
                     vt10_rows=[_row("2026-08-04", 0.02)],
-                    gates=GATES, backtest=BACKTEST)
+                    gates=GATES, backtest=BACKTEST,
+                    testnet_rows=[{"asof": "2026-08-04",
+                                   "equity_before": 1000.0}],
+                    testnet_halted=True)
     p = PredlabSource(str(root)).payload()
     assert p["performance"]["books"]["champion"]["cards"]["n_days"] == 2
     assert p["performance"]["books"]["vt10"]["cards"]["n_days"] == 1
@@ -60,6 +76,13 @@ def test_full_payload(tmp_path):
     assert p["gate"]["threshold_sr"] == 0.946
     assert p["health"]["books"]["champion"]["rows"] == 2
     assert "predlab-journal-backup" in p["health"]["heartbeat_note"]
+    # nav mirrors books, keyed the same way
+    assert p["performance"]["nav"]["champion"]["cards"]["active_days"] == 0
+    assert p["performance"]["nav"]["vt10"] is not None
+    # account: testnet present + halted, live journal absent -> None
+    assert p["performance"]["account"]["testnet"]["cards"]["equity"] == 1000.0
+    assert p["performance"]["account"]["testnet"]["cards"]["halted"] is True
+    assert p["performance"]["account"]["live"] is None
 
 
 def test_missing_everything_degrades_to_nulls(tmp_path):
@@ -67,6 +90,8 @@ def test_missing_everything_degrades_to_nulls(tmp_path):
     assert p["performance"]["books"] == {"champion": None, "vt10": None}
     assert p["performance"]["reference"] is None
     assert p["performance"]["backtest_yearly"] is None
+    assert p["performance"]["nav"] == {"champion": None, "vt10": None}
+    assert p["performance"]["account"] == {"testnet": None, "live": None}
     assert p["books"] == {"champion": None, "vt10": None}
     assert p["health"]["books"] == {"champion": None, "vt10": None}
     assert p["gate"]["threshold_sr"] == 0.946  # fallback

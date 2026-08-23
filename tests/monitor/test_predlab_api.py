@@ -54,6 +54,9 @@ def test_performance_shape(tmp_path, monkeypatch):
     assert body["books"]["champion"]["cards"]["n_days"] == 1
     assert body["books"]["vt10"] is None
     assert body["reference"] is None
+    assert body["nav"]["champion"] is not None
+    assert body["nav"]["vt10"] is None
+    assert body["account"] == {"testnet": None, "live": None}
 
 
 def test_book_endpoint_and_unknown_book(tmp_path, monkeypatch):
@@ -102,6 +105,9 @@ def test_no_predlab_source_degrades(tmp_path, monkeypatch):
     c = _client(tmp_path, monkeypatch, None)
     r = c.get("/api/predlab/performance", auth=AUTH)
     assert r.status_code == 200
-    assert r.json()["books"] == {"champion": None, "vt10": None}
+    body = r.json()
+    assert body["books"] == {"champion": None, "vt10": None}
+    assert body["nav"] == {"champion": None, "vt10": None}
+    assert body["account"] == {"testnet": None, "live": None}
     g = c.get("/api/predlab/gate", auth=AUTH)
     assert g.status_code == 200 and g.json()["informational"] is True

@@ -339,6 +339,8 @@ def create_app(
         p = _predlab_payload()
         if p is None:
             return {"books": {b: None for b in BOOKS},
+                    "nav": {b: None for b in BOOKS},
+                    "account": {"testnet": None, "live": None},
                     "reference": None, "backtest_yearly": None}
         return _sanitize_floats(p["performance"])
 

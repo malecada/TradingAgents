@@ -158,6 +158,95 @@ class TestBookHealth:
         assert predlab.book_health([], 0, self.NOW) is None
 
 
+class TestDeriveNav:
+    """NAV = 100 x prod(1 + scale_prev_t x ret_t); scale_prev is the
+    PREVIOUS row's scale — the value known when the position was put on."""
+
+    def test_empty_rows_none(self):
+        assert predlab.derive_nav([], "vt15_b100_scale") is None
+
+    def test_all_null_scales_stays_flat(self):
+        rows = [_row("2026-08-03", None), _row("2026-08-04", 0.01),
+                _row("2026-08-05", -0.02)]
+        d = predlab.derive_nav(rows, "vt15_b100_scale")
+        assert [p["value"] for p in d["series"]] == [100.0, 100.0, 100.0]
+        assert d["cards"]["nav_cum_return"] is None
+        assert d["cards"]["active_days"] == 0
+        assert d["cards"]["warmup"] == {"n": 0, "required": 21}
+        assert d["cards"]["last_scale"] is None
+
+    def test_scale_set_on_row_n_first_affects_row_n_plus_1(self):
+        # R0 anchor; R1 ret uses R0's scale (None) -> flat; R2 sets scale=0.5
+        # but R2's OWN ret still uses R1's scale (None) -> flat; R3's ret
+        # uses R2's scale (0.5) -> active, first affected row.
+        rows = [_row("2026-08-03", None),
+                _row("2026-08-04", 0.01, scale=None),
+                _row("2026-08-05", 0.02, scale=0.5),
+                _row("2026-08-06", 0.10, scale=0.5)]
+        d = predlab.derive_nav(rows, "vt15_b100_scale")
+        vals = [p["value"] for p in d["series"]]
+        assert vals == [100.0, 100.0, 100.0, pytest.approx(105.0)]
+        assert d["cards"]["active_days"] == 1
+        assert d["cards"]["nav_cum_return"] == pytest.approx(0.05)
+        assert d["cards"]["last_scale"] == 0.5
+        assert d["cards"]["warmup"] == {"n": 2, "required": 21}
+
+    def test_mixed_null_gap_mid_stream_is_flat_day(self):
+        # R2 is a null-return gap whose own scale reverts to None; R3's
+        # return must see prev_scale=None (from R2), not R1's 0.5.
+        rows = [_row("2026-08-03", None),
+                _row("2026-08-04", 0.05, scale=0.5),
+                _row("2026-08-05", None, scale=None),
+                _row("2026-08-06", 0.10, scale=0.4)]
+        d = predlab.derive_nav(rows, "vt15_b100_scale")
+        # gap row (2026-08-05) contributes no point (null return)
+        assert [p["ts"] for p in d["series"]] == [
+            "2026-08-03", "2026-08-04", "2026-08-06"]
+        vals = [p["value"] for p in d["series"]]
+        assert vals == [100.0, 100.0, 100.0]  # flat throughout
+        assert d["cards"]["active_days"] == 0
+        assert d["cards"]["nav_cum_return"] is None
+        assert d["cards"]["last_scale"] == 0.4
+
+
+class TestDeriveAccount:
+    def test_empty_rows_none(self):
+        assert predlab.derive_account([], False) is None
+
+    def test_two_rows_correct_pct(self):
+        rows = [{"asof": "2026-08-20", "equity_before": 1000.0,
+                 "orders_placed": 2, "dry_run": False},
+                {"asof": "2026-08-21", "equity_before": 1050.0,
+                 "orders_placed": 3, "dry_run": True}]
+        d = predlab.derive_account(rows, False)
+        assert [p["value"] for p in d["series"]] == [100.0, pytest.approx(105.0)]
+        assert d["cards"]["cum_return"] == pytest.approx(0.05)
+        assert d["cards"]["equity"] == 1050.0
+        assert d["cards"]["n_cycles"] == 2
+        assert d["cards"]["orders_total"] == 5
+        assert d["cards"]["last_asof"] == "2026-08-21"
+        assert d["cards"]["dry_run_last"] is True
+        assert d["cards"]["halted"] is False
+
+    def test_halted_flag_propagates(self):
+        rows = [{"asof": "2026-08-20", "equity_before": 1000.0}]
+        d = predlab.derive_account(rows, True)
+        assert d["cards"]["halted"] is True
+
+    def test_rows_missing_equity_before_skipped(self):
+        rows = [{"asof": "2026-08-20", "equity_before": 1000.0},
+                {"asof": "2026-08-21"},
+                {"asof": "2026-08-22", "equity_before": 1100.0}]
+        d = predlab.derive_account(rows, False)
+        assert len(d["series"]) == 2
+        assert d["cards"]["cum_return"] == pytest.approx(0.10)
+        assert d["cards"]["n_cycles"] == 3
+
+    def test_all_rows_missing_equity_before_none(self):
+        rows = [{"asof": "2026-08-20"}, {"asof": "2026-08-21"}]
+        assert predlab.derive_account(rows, False) is None
+
+
 class TestGateStatus:
     def test_with_reference(self):
         rows = [_row("2026-08-03", None), _row("2026-08-04", 0.01)]

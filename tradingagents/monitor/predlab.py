@@ -134,6 +134,68 @@ def derive_book(rows: list[dict], scale_key: str) -> dict | None:
     }
 
 
+def derive_nav(rows: list[dict], scale_key: str) -> dict | None:
+    """Account-percent NAV: 100 x prod(1 + scale_prev_t x ret_t).
+
+    ``scale_prev`` is the PREVIOUS row's ``scale_key`` value — the scale
+    that was actually known when the position for day t was put on. A row
+    only compounds when both its own ``realized_book_ret`` is not None
+    AND the previous row's scale is not None; otherwise the day is flat
+    (no position / no return data) and NAV carries forward unchanged.
+    Series starts at the first row, base 100.0; None if rows is empty.
+    """
+    if not rows:
+        return None
+    series = [{"ts": rows[0]["asof"], "value": 100.0}]
+    nav = 100.0
+    active_days = 0
+    prev_scale = rows[0].get(scale_key)
+    for row in rows[1:]:
+        ret = row.get("realized_book_ret")
+        if ret is not None:
+            if prev_scale is not None:
+                nav *= 1.0 + prev_scale * ret
+                active_days += 1
+            series.append({"ts": row["asof"], "value": nav})
+        prev_scale = row.get(scale_key)
+    scales = [r.get(scale_key) for r in rows if r.get(scale_key) is not None]
+    return {
+        "series": series,
+        "cards": {
+            "nav_cum_return": (nav / 100.0 - 1.0) if active_days else None,
+            "active_days": active_days,
+            "warmup": {"n": len(scales), "required": WARMUP_RETURNS},
+            "last_scale": scales[-1] if scales else None,
+        },
+    }
+
+
+def derive_account(rows: list[dict], halted: bool) -> dict | None:
+    """Live-account equity block from ``journal_live`` rows, or None when
+    no row carries a numeric ``equity_before``."""
+    valid = [r for r in rows if isinstance(r.get("equity_before"), (int, float))
+             and not isinstance(r.get("equity_before"), bool)]
+    if not valid:
+        return None
+    first = valid[0]["equity_before"]
+    series = [{"ts": r["asof"], "value": 100.0 * r["equity_before"] / first}
+              for r in valid]
+    last_eq = valid[-1]["equity_before"]
+    last_row = rows[-1]
+    return {
+        "series": series,
+        "cards": {
+            "cum_return": last_eq / first - 1.0,
+            "equity": last_eq,
+            "n_cycles": len(rows),
+            "orders_total": sum((r.get("orders_placed") or 0) for r in rows),
+            "last_asof": last_row["asof"],
+            "dry_run_last": bool(last_row.get("dry_run")),
+            "halted": halted,
+        },
+    }
+
+
 def book_detail(rows: list[dict], scale_key: str) -> dict | None:
     """Latest-row book composition, or None when the journal is empty."""
     if not rows:
@@ -276,10 +338,19 @@ class PredlabSource:
                 "vt10": (systems.get("old") or {}).get("yearly_ovl"),
             }
         now = datetime.now(timezone.utc)
+        account = {}
+        for venue in ("testnet", "live"):
+            venue_root = root / f"s1_{venue}"
+            venue_rows, _m = parse_journal(venue_root / "journal_live.jsonl")
+            halted = (venue_root / "halt.flag").is_file()
+            account[venue] = derive_account(venue_rows, halted)
         return {
             "performance": {
                 "books": {b: derive_book(rows, sk)
                           for b, (rows, _m, sk) in parsed.items()},
+                "nav": {b: derive_nav(rows, sk)
+                        for b, (rows, _m, sk) in parsed.items()},
+                "account": account,
                 "reference": (reference or {}).get("dev_metrics")
                              if reference else None,
                 "backtest_yearly": backtest_yearly,
