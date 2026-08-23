@@ -246,6 +246,30 @@ class TestDeriveAccount:
         rows = [{"asof": "2026-08-20"}, {"asof": "2026-08-21"}]
         assert predlab.derive_account(rows, False) is None
 
+    def test_zero_equity_first_row_skipped_as_anchor(self):
+        # fresh unfunded account: first row equity_before=0 must not become
+        # the division anchor (would ZeroDivisionError and, since _build is
+        # ttl_cached, poison every /api/predlab endpoint permanently).
+        rows = [{"asof": "2026-08-20", "equity_before": 0.0},
+                {"asof": "2026-08-21", "equity_before": 1000.0},
+                {"asof": "2026-08-22", "equity_before": 1100.0}]
+        d = predlab.derive_account(rows, False)
+        assert [p["value"] for p in d["series"]] == [100.0, pytest.approx(110.0)]
+        assert d["cards"]["cum_return"] == pytest.approx(0.10)
+        assert d["cards"]["n_cycles"] == 3
+
+    def test_all_zero_equity_none(self):
+        rows = [{"asof": "2026-08-20", "equity_before": 0.0},
+                {"asof": "2026-08-21", "equity_before": 0.0}]
+        assert predlab.derive_account(rows, False) is None
+
+    def test_negative_equity_row_skipped(self):
+        rows = [{"asof": "2026-08-20", "equity_before": -50.0},
+                {"asof": "2026-08-21", "equity_before": 1000.0}]
+        d = predlab.derive_account(rows, False)
+        assert len(d["series"]) == 1
+        assert d["cards"]["equity"] == 1000.0
+
 
 class TestGateStatus:
     def test_with_reference(self):

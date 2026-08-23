@@ -141,8 +141,11 @@ export interface PredlabAccount {
 
 export interface PredlabPerformanceResp {
   books: Record<PredlabBookName, PredlabBookPerf | null>;
-  nav: Record<PredlabBookName, PredlabNav | null>;
-  account: Record<PredlabVenue, PredlabAccount | null>;
+  // Optional: a backend deployed without this feature (or serving an
+  // older/degraded payload shape) may omit these keys entirely — every
+  // consumer must tolerate that, not just a null value.
+  nav?: Record<PredlabBookName, PredlabNav | null>;
+  account?: Record<PredlabVenue, PredlabAccount | null>;
   reference: {
     ovl_sr_full: number; ovl_maxdd: number;
     raw_sr_full?: number; dsr_selection_pool?: number;

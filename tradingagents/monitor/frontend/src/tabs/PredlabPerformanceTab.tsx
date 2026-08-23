@@ -7,6 +7,7 @@ import { Section } from "../components/Section";
 import { EquityChart } from "../charts/EquityChart";
 import { fmtBps, fmtNum, fmtPct, fmtUsd, fmtWarmup } from "../lib/format";
 import { rebaseTo100, sliceFromDays } from "../lib/rebase";
+import { safeAccount, safeNav } from "../lib/predlabGuard";
 import type {
   PredlabBookPerf, PredlabYearlyRow, PredlabNav, PredlabAccount, Point,
 } from "../types";
@@ -131,36 +132,41 @@ export function PredlabPerformanceTab() {
   const champ = useMemo(() => prep(d?.books.champion ?? null, days), [d, days]);
   const vt10 = useMemo(() => prep(d?.books.vt10 ?? null, days), [d, days]);
   const champNav = useMemo(
-    () => prepSeries(d?.nav.champion?.series, days), [d, days]);
+    () => prepSeries(safeNav(d, "champion")?.series, days), [d, days]);
   const vt10Nav = useMemo(
-    () => prepSeries(d?.nav.vt10?.series, days), [d, days]);
+    () => prepSeries(safeNav(d, "vt10")?.series, days), [d, days]);
   const testnetAcct = useMemo(
-    () => prepSeries(d?.account.testnet?.series, days), [d, days]);
+    () => prepSeries(safeAccount(d, "testnet")?.series, days), [d, days]);
   const liveAcct = useMemo(
-    () => prepSeries(d?.account.live?.series, days), [d, days]);
+    () => prepSeries(safeAccount(d, "live")?.series, days), [d, days]);
   if (q.isLoading) return <div className="muted">loading…</div>;
   if (q.isError || !d) return <div className="badge error">failed: {String(q.error)}</div>;
 
+  const navChampion = safeNav(d, "champion");
+  const navVt10 = safeNav(d, "vt10");
+  const acctTestnet = safeAccount(d, "testnet");
+  const acctLive = safeAccount(d, "live");
+
   const extraEquity = [
-    d.nav.champion && { label: "champion NAV", color: "#d29922", data: champNav },
-    d.nav.vt10 && { label: "vt10 NAV", color: "#56d4dd", data: vt10Nav },
-    d.account.testnet && { label: "testnet account", color: "#58a6ff", data: testnetAcct },
-    d.account.live && { label: "live account", color: "#f85149", data: liveAcct },
+    navChampion && { label: "champion NAV", color: "#d29922", data: champNav },
+    navVt10 && { label: "vt10 NAV", color: "#56d4dd", data: vt10Nav },
+    acctTestnet && { label: "testnet account", color: "#58a6ff", data: testnetAcct },
+    acctLive && { label: "live account", color: "#f85149", data: liveAcct },
   ].filter((x): x is { label: string; color: string; data: typeof champNav } => !!x);
 
   return (
     <>
       {d.books.champion
         ? <CardsRow name="champion" kind="quant" p={d.books.champion}
-            nav={d.nav.champion} />
+            nav={navChampion} />
         : <p className="muted">champion journal unavailable</p>}
       {d.books.vt10
         ? <CardsRow name="vt10 (old book)" kind="hybrid" p={d.books.vt10}
-            nav={d.nav.vt10} />
+            nav={navVt10} />
         : <p className="muted">vt10 journal unavailable</p>}
 
-      {d.account.testnet && <AccountCardsRow venue="testnet" a={d.account.testnet} />}
-      {d.account.live && <AccountCardsRow venue="live" a={d.account.live} />}
+      {acctTestnet && <AccountCardsRow venue="testnet" a={acctTestnet} />}
+      {acctLive && <AccountCardsRow venue="live" a={acctLive} />}
 
       <Section title="Paper equity + NAV/account (indexed to 100) · drawdown · rolling Sharpe"
         right={

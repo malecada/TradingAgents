@@ -172,9 +172,13 @@ def derive_nav(rows: list[dict], scale_key: str) -> dict | None:
 
 def derive_account(rows: list[dict], halted: bool) -> dict | None:
     """Live-account equity block from ``journal_live`` rows, or None when
-    no row carries a numeric ``equity_before``."""
+    no row carries a positive numeric ``equity_before`` (unfunded/zero
+    first reading can't anchor an index-to-100 series — avoid a
+    division-by-zero that would otherwise poison the ttl-cached payload
+    for every /api/predlab endpoint)."""
     valid = [r for r in rows if isinstance(r.get("equity_before"), (int, float))
-             and not isinstance(r.get("equity_before"), bool)]
+             and not isinstance(r.get("equity_before"), bool)
+             and r["equity_before"] > 0]
     if not valid:
         return None
     first = valid[0]["equity_before"]
