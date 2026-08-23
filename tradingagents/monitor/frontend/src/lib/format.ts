@@ -21,3 +21,9 @@ export function fmtNum(v: number | null | undefined, digits = 2): string {
   if (v === null || v === undefined) return "—";
   return v.toFixed(digits);
 }
+
+/** Label for an overlay/NAV series that hasn't accrued enough realized
+ *  returns to go live yet (vol-target scale warmup, 21 returns). */
+export function fmtWarmup(n: number, required: number): string {
+  return `overlay warming up ${n}/${required}`;
+}

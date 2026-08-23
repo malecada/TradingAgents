@@ -11,6 +11,9 @@ export interface EquityChartProps {
   quantRs: Point[]; hybridRs: Point[];             // rolling sharpe (may be [])
   anchors: { quant: number; hybrid: number | null };
   labels?: { a: string; b: string };
+  /** Extra base-100 equity lines on the same pane (already sliced+rebased),
+   *  e.g. NAV overlays or live-account curves. Optional, defaults to none. */
+  extraEquity?: { label: string; color: string; data: Point[] }[];
 }
 
 const toLw = (pts: Point[]) =>
@@ -42,6 +45,12 @@ export function EquityChart(props: EquityChartProps) {
     if (props.hybridEquity.length)
       chart.addSeries(LineSeries, { color: "#bc8cff", lineWidth: 2, title: labels.b }, 0)
         .setData(toLw(props.hybridEquity));
+    for (const extra of props.extraEquity ?? []) {
+      if (!extra.data.length) continue;
+      chart.addSeries(LineSeries,
+        { color: extra.color, lineWidth: 1, lineStyle: LineStyle.Dashed, title: extra.label }, 0)
+        .setData(toLw(extra.data));
+    }
 
     const ddOpts = { lineWidth: 1 as const, priceFormat: { type: "percent" as const } };
     chart.addSeries(AreaSeries, {
@@ -79,7 +88,7 @@ export function EquityChart(props: EquityChartProps) {
     onResize();
     window.addEventListener("resize", onResize);
     return () => { window.removeEventListener("resize", onResize); chart.remove(); };
-  }, [props.quantEquity, props.hybridEquity, props.quantDd, props.hybridDd, props.quantRs, props.hybridRs, props.anchors, props.labels]);
+  }, [props.quantEquity, props.hybridEquity, props.quantDd, props.hybridDd, props.quantRs, props.hybridRs, props.anchors, props.labels, props.extraEquity]);
 
   return <div ref={ref} />;
 }

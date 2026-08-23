@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { fmtUsd, fmtPct, fmtNum, fmtBps } from "./format";
+import { fmtUsd, fmtPct, fmtNum, fmtBps, fmtWarmup } from "./format";
 
 describe("format", () => {
   it("fmtUsd", () => {
@@ -19,5 +19,9 @@ describe("format", () => {
     expect(fmtBps(-2.5)).toBe("-2.5 bp");
     expect(fmtBps(0)).toBe("+0.0 bp");
     expect(fmtBps(null)).toBe("—");
+  });
+  it("fmtWarmup", () => {
+    expect(fmtWarmup(0, 21)).toBe("overlay warming up 0/21");
+    expect(fmtWarmup(14, 21)).toBe("overlay warming up 14/21");
   });
 });

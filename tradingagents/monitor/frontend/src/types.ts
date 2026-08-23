@@ -117,8 +117,32 @@ export interface PredlabYearlyRow {
   sr: number; ret: number; maxdd: number; n_days: number;
 }
 
+/** Account-percent NAV = 100 x prod(1 + scale_prev_t x ret_t). */
+export interface PredlabNav {
+  series: Point[];
+  cards: {
+    nav_cum_return: number | null; active_days: number;
+    warmup: { n: number; required: number };
+    last_scale: number | null;
+  };
+}
+
+export type PredlabVenue = "testnet" | "live";
+
+/** Live-executor (Binance) account equity block from journal_live rows. */
+export interface PredlabAccount {
+  series: Point[];
+  cards: {
+    cum_return: number; equity: number; n_cycles: number;
+    orders_total: number; last_asof: string;
+    dry_run_last: boolean; halted: boolean;
+  };
+}
+
 export interface PredlabPerformanceResp {
   books: Record<PredlabBookName, PredlabBookPerf | null>;
+  nav: Record<PredlabBookName, PredlabNav | null>;
+  account: Record<PredlabVenue, PredlabAccount | null>;
   reference: {
     ovl_sr_full: number; ovl_maxdd: number;
     raw_sr_full?: number; dsr_selection_pool?: number;

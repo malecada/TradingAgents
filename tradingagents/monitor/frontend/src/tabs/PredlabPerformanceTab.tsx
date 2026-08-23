@@ -5,9 +5,11 @@ import { Card } from "../components/Card";
 import { Badge } from "../components/Badge";
 import { Section } from "../components/Section";
 import { EquityChart } from "../charts/EquityChart";
-import { fmtBps, fmtNum, fmtPct } from "../lib/format";
+import { fmtBps, fmtNum, fmtPct, fmtUsd, fmtWarmup } from "../lib/format";
 import { rebaseTo100, sliceFromDays } from "../lib/rebase";
-import type { PredlabBookPerf, PredlabYearlyRow } from "../types";
+import type {
+  PredlabBookPerf, PredlabYearlyRow, PredlabNav, PredlabAccount, Point,
+} from "../types";
 
 const RANGES = [
   { label: "7d", days: 7 }, { label: "30d", days: 30 },
@@ -22,19 +24,33 @@ function prep(p: PredlabBookPerf | null, days: number | null) {
   };
 }
 
+/** NAV / account series are already base-100 — slice+rebase to the
+ *  selected range the same way the raw book equity is. */
+function prepSeries(series: Point[] | undefined, days: number | null): Point[] {
+  return series ? rebaseTo100(sliceFromDays(series, days)) : [];
+}
+
 function CardsRow(props: {
   name: string; kind: "quant" | "hybrid"; p: PredlabBookPerf;
+  nav: PredlabNav | null;
 }) {
   const c = props.p.cards;
   const slip = props.p.slippage;
   const warm = c.warmup.n < c.warmup.required;
+  const nav = props.nav;
+  const navActive = !!nav && nav.cards.active_days > 0;
   return (
     <div style={{ marginTop: 10 }}>
       <Badge kind={props.kind}>{props.name.toUpperCase()}</Badge>{" "}
       <span className="muted">as of {c.last_asof} · {c.n_days} rows</span>
       <div className="cards" style={{ marginTop: 6 }}>
-        <Card label="Cumulative return" value={fmtPct(c.cum_return)}
+        <Card label="Book return (gross 2x, unscaled)" value={fmtPct(c.cum_return)}
           tone={c.cum_return >= 0 ? "pos" : "neg"} />
+        <Card label="Account NAV (scaled)"
+          value={navActive ? fmtPct(nav!.cards.nav_cum_return)
+            : fmtWarmup(nav?.cards.warmup.n ?? 0, nav?.cards.warmup.required ?? 21)}
+          tone={navActive && nav!.cards.nav_cum_return !== null
+            ? (nav!.cards.nav_cum_return >= 0 ? "pos" : "neg") : ""} />
         <Card label="Sharpe (paper)" value={fmtNum(c.sharpe)}
           tone={c.sharpe >= 0 ? "pos" : "neg"} />
         <Card label="Max drawdown" value={fmtPct(c.max_drawdown)} tone="neg" />
@@ -47,6 +63,8 @@ function CardsRow(props: {
           value={slip ? `${fmtBps(slip.mean_bps)}/day` : "accruing"}
           tone={slip ? (slip.mean_bps >= 0 ? "pos" : "neg") : ""} />
       </div>
+      {nav && nav.cards.last_scale !== null && <p className="muted">
+        last overlay scale applied to the account: {fmtNum(nav.cards.last_scale)}</p>}
       {warm && <p className="muted">
         vol-target scale needs {c.warmup.required} realized returns —
         {" "}{c.warmup.required - c.warmup.n} to go</p>}
@@ -59,6 +77,26 @@ function CardsRow(props: {
         : <p className="muted">
             fill check accruing — rows carry write-time marks from
             {" "}2026-08-18; the first paired day needs two marked rows</p>}
+    </div>
+  );
+}
+
+function AccountCardsRow(props: { venue: string; a: PredlabAccount }) {
+  const c = props.a.cards;
+  return (
+    <div style={{ marginTop: 10 }}>
+      <Badge kind={c.halted ? "error" : "ok"}>{props.venue.toUpperCase()}</Badge>{" "}
+      {c.halted && <Badge kind="error">HALTED</Badge>}{" "}
+      <span className="muted">
+        as of {c.last_asof}{c.dry_run_last ? " (dry-run)" : ""}
+        {" "}· {c.n_cycles} cycles</span>
+      <div className="cards" style={{ marginTop: 6 }}>
+        <Card label="Account cumulative return" value={fmtPct(c.cum_return)}
+          tone={c.cum_return >= 0 ? "pos" : "neg"} />
+        <Card label="Equity" value={fmtUsd(c.equity)} />
+        <Card label="Cycles" value={fmtNum(c.n_cycles, 0)} />
+        <Card label="Orders placed (total)" value={fmtNum(c.orders_total, 0)} />
+      </div>
     </div>
   );
 }
@@ -92,19 +130,39 @@ export function PredlabPerformanceTab() {
   const d = q.data;
   const champ = useMemo(() => prep(d?.books.champion ?? null, days), [d, days]);
   const vt10 = useMemo(() => prep(d?.books.vt10 ?? null, days), [d, days]);
+  const champNav = useMemo(
+    () => prepSeries(d?.nav.champion?.series, days), [d, days]);
+  const vt10Nav = useMemo(
+    () => prepSeries(d?.nav.vt10?.series, days), [d, days]);
+  const testnetAcct = useMemo(
+    () => prepSeries(d?.account.testnet?.series, days), [d, days]);
+  const liveAcct = useMemo(
+    () => prepSeries(d?.account.live?.series, days), [d, days]);
   if (q.isLoading) return <div className="muted">loading…</div>;
   if (q.isError || !d) return <div className="badge error">failed: {String(q.error)}</div>;
+
+  const extraEquity = [
+    d.nav.champion && { label: "champion NAV", color: "#d29922", data: champNav },
+    d.nav.vt10 && { label: "vt10 NAV", color: "#56d4dd", data: vt10Nav },
+    d.account.testnet && { label: "testnet account", color: "#58a6ff", data: testnetAcct },
+    d.account.live && { label: "live account", color: "#f85149", data: liveAcct },
+  ].filter((x): x is { label: string; color: string; data: typeof champNav } => !!x);
 
   return (
     <>
       {d.books.champion
-        ? <CardsRow name="champion" kind="quant" p={d.books.champion} />
+        ? <CardsRow name="champion" kind="quant" p={d.books.champion}
+            nav={d.nav.champion} />
         : <p className="muted">champion journal unavailable</p>}
       {d.books.vt10
-        ? <CardsRow name="vt10 (old book)" kind="hybrid" p={d.books.vt10} />
+        ? <CardsRow name="vt10 (old book)" kind="hybrid" p={d.books.vt10}
+            nav={d.nav.vt10} />
         : <p className="muted">vt10 journal unavailable</p>}
 
-      <Section title="Paper equity (indexed to 100) · drawdown · rolling Sharpe"
+      {d.account.testnet && <AccountCardsRow venue="testnet" a={d.account.testnet} />}
+      {d.account.live && <AccountCardsRow venue="live" a={d.account.live} />}
+
+      <Section title="Paper equity + NAV/account (indexed to 100) · drawdown · rolling Sharpe"
         right={
           <div className="pills">
             {RANGES.map((r) => (
@@ -119,6 +177,7 @@ export function PredlabPerformanceTab() {
           quantRs={champ.rs} hybridRs={vt10.rs}
           anchors={{ quant: d.reference?.ovl_sr_full ?? 0, hybrid: null }}
           labels={{ a: "champion", b: "vt10" }}
+          extraEquity={extraEquity}
         />
         {(d.books.champion?.rolling_sharpe.length ?? 0) === 0 &&
           <p className="muted">rolling Sharpe appears after 30 realized days</p>}
