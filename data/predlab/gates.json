@@ -907,7 +907,14 @@
    "s2_gate": "tracking-error reduction >=15% vs both baselines, bootstrap p<0.05, SR/MaxDD not worse"
   },
   "holdout_criteria_UP": "net SR >= 0.5 x dev net SR AND same sign AND placebo p<0.10 on holdout; S2: TE improvement >= 0.5 x dev improvement; one-shot, no re-tuning",
-  "stop_rule": "candidates/configs fixed; failing dev gate = dead this cycle; ledger row per config evaluated"
+  "stop_rule": "candidates/configs fixed; failing dev gate = dead this cycle; ledger row per config evaluated",
+  "amendments": [
+   {
+    "utc": "2026-08-24",
+    "text": "SUPERSEDED by engine_correction_2026-08-24 (log-return PnL defect); see that entry and AUDIT_BACKTEST_2026-08-24.md.",
+    "pre_result": "correction registered before corrected results recorded"
+   }
+  ]
  },
  "predlab_p6": {
   "registered_utc": "2026-07-31",
@@ -967,6 +974,11 @@
     "pre_result": "no vol-target scale has ever been emitted by the paper journal (both books stand at 14 gap-free returns of the 21 required); amendment legal",
     "text": "Paper-trader forward record, both books: (1) realized returns measured across a journal gap are excluded from the 20-day vol-target window. The old book's 2026-07-31..08-02 outage left its 2026-08-03 row holding a 4-calendar-day return; the registered overlay formula is defined on contiguous daily returns, so counting it as one day would have mis-scaled the first vt10 value. No recorded value changes -- the fix lands before any scale exists. (2) Each row now stores the per-name price observed at write time (mark_px/mark_ts) and the book return measured mark-to-mark (realized_mark_ret) alongside the close-to-close leg. The journal previously recorded closes only, so the fill assumption it exists to check (fills at the UTC close, cron fires ~00:15-00:17 UTC) was not testable from it; the two legs now differ by exactly that slippage. Marks begin with the 2026-08-18 row; earlier rows carry null. Neither change touches a configuration, a criterion, or a threshold.",
     "declared_before_first_result": true
+   },
+   {
+    "utc": "2026-08-24",
+    "text": "SUPERSEDED by engine_correction_2026-08-24 (log-return PnL defect); see that entry and AUDIT_BACKTEST_2026-08-24.md.",
+    "pre_result": "correction registered before corrected results recorded"
    }
   ]
  },
@@ -1440,6 +1452,11 @@
     "pre_result": "no vol-target scale has ever been emitted by the paper journal (both books stand at 14 gap-free returns of the 21 required); amendment legal",
     "text": "Paper-trader forward record, both books: (1) realized returns measured across a journal gap are excluded from the 20-day vol-target window. The old book's 2026-07-31..08-02 outage left its 2026-08-03 row holding a 4-calendar-day return; the registered overlay formula is defined on contiguous daily returns, so counting it as one day would have mis-scaled the first vt10 value. No recorded value changes -- the fix lands before any scale exists. (2) Each row now stores the per-name price observed at write time (mark_px/mark_ts) and the book return measured mark-to-mark (realized_mark_ret) alongside the close-to-close leg. The journal previously recorded closes only, so the fill assumption it exists to check (fills at the UTC close, cron fires ~00:15-00:17 UTC) was not testable from it; the two legs now differ by exactly that slippage. Marks begin with the 2026-08-18 row; earlier rows carry null. Neither change touches a configuration, a criterion, or a threshold.",
     "declared_before_first_result": true
+   },
+   {
+    "utc": "2026-08-24",
+    "text": "SUPERSEDED by engine_correction_2026-08-24 (log-return PnL defect); see that entry and AUDIT_BACKTEST_2026-08-24.md.",
+    "pre_result": "correction registered before corrected results recorded"
    }
   ]
  },
@@ -1460,7 +1477,14 @@
    "placebo_draws": 200
   },
   "stop_rule": "one run; no post-hoc universe/window edits; single-name checks disclosed, never acted on",
-  "survivorship_caveat": "Bybit enumerates live contracts only; delisted recovered via Binance-name probes (partial); Bybit-only delistings missing"
+  "survivorship_caveat": "Bybit enumerates live contracts only; delisted recovered via Binance-name probes (partial); Bybit-only delistings missing",
+  "amendments": [
+   {
+    "utc": "2026-08-24",
+    "text": "SUPERSEDED by engine_correction_2026-08-24 (log-return PnL defect); see that entry and AUDIT_BACKTEST_2026-08-24.md.",
+    "pre_result": "correction registered before corrected results recorded"
+   }
+  ]
  },
  "llm_c2_veto_ovl": {
   "registered_utc": "2026-08-10",
@@ -1702,5 +1726,15 @@
   "artifacts": "data/predlab/s1_live/",
   "spec": "docs/superpowers/specs/2026-08-21-s1-live-executor-design.md",
   "amended_2026-08-21": "pre-deploy design fix: leverage 4 + executed-scale clamp 1.1 (final review C2); live run measures a capped replica when overlay scale > 1.1"
+ },
+ "engine_correction_2026-08-24": {
+  "registered_utc": "2026-08-24",
+  "type": "engine_correction",
+  "audit": "AUDIT_BACKTEST_2026-08-24.md (master_thesis root)",
+  "defect": "All strategy-layer runners passed ret = np.log(close).diff() to opt.run_ls / pp.run_s1, where it is consumed as arithmetic position PnL (w*r summed, then (1+net).cumprod()). A short position's daily PnL is -(simple return); crediting -log(1+x) injects +0.5*sigma^2/day. The champion family is long low-vol / short high-vol, so the spurious drift lands on the short leg. Kill-test (same engine/panels/config, expm1 conversion = identical NaN support): ovl SR +1.892 -> -0.371; short leg log +39.1 vs simple -10.2 bp/d, matching the 0.5*sigma^2 prediction leg-by-leg.",
+  "fix": "ret = close.pct_change(fill_method=None) in predlab_opt_o1.inputs, predlab_pp_dev.s1_inputs, predlab_pp_holdout.inputs, predlab_bybit_r1, predlab_xasset_r1.equity_inputs, predlab_futfx_r1.inputs; predlab_s1_paper realized_prev_return / realized_prev_mark_return switched to simple returns. Regression test added (short of a volatile synthetic path must book exactly -simple).",
+  "unchanged_by_declaration": "predlab_t7 / predlab_holdout IC layers keep log returns: rank-IC targets are monotone-invariant, programs closed. opt.build_signal cc/vov families keep log returns internally: signal construction, not PnL.",
+  "supersedes": "ALL predlab_opt stage results and the final champion (chain seq 1-3), predlab_pp dev+holdout strategy verdicts (holdout PASS +2.20 VOID), predlab_bybit_r1 verdict, capacity study, futfx leg. Original files kept, corrected recomputes written as *_corrected; ledger rows appended with correction=engine_correction_2026-08-24, originals superseded not deleted. Holdout recompute is a corrected recording of the already-spent one-shot on the frozen config (no selection, no new peek). pp2 vt10 forward confirmation and the Phase-O forward one-shot F are CANCELLED as moot (champion void); F window (2026-07-02+) remains untouched data for any successor program. Paper journal continues under simple-return convention from the amendment date; mixed log/simple rows inside one 20-day vol window differ by ~0.5*sigma_book^2/day (<1bp), disclosed.",
+  "pre_result": "amendment registered before any corrected number was recorded as official; the only corrected figures existing at registration are the read-only audit kill-test probes (scratchpad, no ledger rows)."
  }
 }
