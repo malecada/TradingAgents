@@ -1777,6 +1777,48 @@
   "stage_rule": "<=12 configs per stage; exact grid frozen in predlab_opt2.stages.<id> BEFORE first run; one ledger row per config",
   "costs": "taker 5bp per side per rebalance + realized funding carry; 2x cost stress reported on any dev-PASS row",
   "stop_rule": "stage with zero dev-PASS configs closes negative; R1 and R2 both negative => program closes NEGATIVE (negative-result report, no F spend); no post-hoc configs; no post-hoc single-name exclusions; F spent once on a final champion only",
-  "stages": {}
+  "stages": {
+   "R1": {
+    "frozen_utc": "2026-08-24",
+    "book": "LS eq-quintile daily top-200",
+    "grid": [
+     "park_3",
+     "park_5",
+     "park_10",
+     "park_20",
+     "cc_5",
+     "cc_10",
+     "cc_20",
+     "vov_10",
+     "vov_20",
+     "ewma_5",
+     "ewma_10",
+     "ewma_20"
+    ],
+    "n_configs": 12,
+    "engine": "opt.run_ls, corrected simple-return PnL, 5bp+funding"
+   },
+   "R2": {
+    "frozen_utc": "2026-08-24",
+    "book": "LONG-ONLY bottom-quintile (long leg of leg_weights, shorts clipped pre-smoothing, leg renormed to 1, gross 1)",
+    "grid": [
+     "park_3",
+     "park_5",
+     "park_10",
+     "park_20",
+     "cc_5",
+     "cc_10",
+     "cc_20",
+     "vov_10",
+     "vov_20",
+     "ewma_5",
+     "ewma_10",
+     "ewma_20"
+    ],
+    "n_configs": 12,
+    "engine": "opt.run_ls with clip-shorts tilt (unit-tested); satisfies the registered run_lo requirement \u2014 no new engine code, the documented tilt+renorm path",
+    "benchmark": "BTCUSDT buy-and-hold net of one 5bp entry, same window"
+   }
+  }
  }
 }
