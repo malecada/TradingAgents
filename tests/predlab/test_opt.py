@@ -320,3 +320,36 @@ class TestEngineCorrection20260824:
             assert "np.log(close).diff()" not in src, name
             if name != "predlab_s1_paper.py":
                 assert "pct_change(fill_method=None)" in src, name
+
+
+class TestLongOnlyClipTilt:
+    """predlab_opt2 R2: long-only book via clip-shorts tilt.
+
+    The engine renorms each leg after a tilt, so clipping shorts yields a
+    gross-1 long-only book with the standard cost/carry plumbing.
+    """
+
+    def test_clip_tilt_book_is_long_only_gross_one(self):
+        sig, ret, uni = _panels()
+        seen = {}
+
+        def lo_tilt(d, w):
+            out = w.clip(lower=0.0)
+            seen["clipped"] = True
+            return out
+
+        r = opt.run_ls(sig, ret, uni, None,
+                       opt.OptConfig(taker_bp=0.0, smooth=1),
+                       "2024-01-01", "2024-12-31", tilt=lo_tilt)
+        assert seen.get("clipped")
+        assert r["n_days"] > 0
+        # every name's cumulative PnL must come from long exposure only:
+        # rerun manually for one day and check weights
+        d = r["rets"].index[0]
+        w_tgt = opt.leg_weights(sig.loc[d], 0.2, "eq")
+        w_lo = w_tgt.clip(lower=0.0)
+        w_lo = w_lo / w_lo.sum()
+        assert (w_lo >= 0).all()
+        assert w_lo.sum() == pytest.approx(1.0)
+        got = float((w_lo * ret.loc[d].reindex(w_lo.index)).fillna(0).sum())
+        assert r["rets"]["gross"].iloc[0] == pytest.approx(got)

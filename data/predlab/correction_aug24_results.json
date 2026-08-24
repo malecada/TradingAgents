@@ -1,0 +1,76 @@
+{
+ "correction": "engine_correction_2026-08-24",
+ "ret_convention": "close.pct_change(fill_method=None)",
+ "note": "corrected recompute of frozen configs; supersedes pp_dev_results.json / pp_holdout_verdicts.json / champion chain dev_metrics / bybit_r1_result.json headline SRs",
+ "pp_s1_eq_h1": {
+  "original": {
+   "dev_sr_net": 1.483,
+   "holdout_sr_net": 2.198,
+   "verdict": "PASS (VOID)"
+  },
+  "corrected": {
+   "dev": {
+    "sr_net": -0.2722,
+    "sr_gross": 0.1045,
+    "maxdd": 0.8896
+   },
+   "holdout": {
+    "sr_net": -2.2023,
+    "sr_gross": -1.1766,
+    "maxdd": 0.8957,
+    "n_days": 457
+   }
+  }
+ },
+ "opt_final_champion": {
+  "original": {
+   "ovl_sr_full": 1.892,
+   "ovl_maxdd": 0.176,
+   "raw_sr_full": 1.928
+  },
+  "corrected": {
+   "raw_full": {
+    "sr_net": -0.4723,
+    "sr_gross": -0.0921,
+    "maxdd": 0.9385
+   },
+   "ovl_full": {
+    "sr": -0.3707,
+    "maxdd": 0.4432,
+    "mean_bp_day": -1.67,
+    "n_days": 2008
+   },
+   "ovl_D": {
+    "sr": 0.0515,
+    "maxdd": 0.3371,
+    "mean_bp_day": 0.23,
+    "n_days": 1551
+   },
+   "ovl_V": {
+    "sr": -1.7709,
+    "maxdd": 0.3502,
+    "mean_bp_day": -8.11,
+    "n_days": 457
+   }
+  }
+ },
+ "bybit_r1": {
+  "original": {
+   "raw_sr": 1.941,
+   "ovl_sr": 1.712,
+   "verdict": "PASS (VOID)"
+  },
+  "corrected": {
+   "raw": {
+    "sr_net": -0.4763,
+    "maxdd": 0.923
+   },
+   "ovl": {
+    "sr": -0.6157,
+    "maxdd": 0.4965,
+    "mean_bp_day": -2.66,
+    "n_days": 1704
+   }
+  }
+ }
+}
