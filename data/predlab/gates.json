@@ -1819,6 +1819,13 @@
     "engine": "opt.run_ls with clip-shorts tilt (unit-tested); satisfies the registered run_lo requirement \u2014 no new engine code, the documented tilt+renorm path",
     "benchmark": "BTCUSDT buy-and-hold net of one 5bp entry, same window"
    }
+  },
+  "verdict": {
+   "utc": "2026-08-24",
+   "R1": "0/12 dev-PASS (best D SR +0.111 vov_10, all V negative)",
+   "R2": "0/12 dev-PASS (best D SR +0.577 vs required >= BTC B&H +0.707 +0.10; all V negative)",
+   "result": "PROGRAM CLOSED NEGATIVE per stop_rule \u2014 no F spend, no champion. Vol-sorted cross-sectional books on Binance USDT-M perps carry no net edge under simple-return PnL; the prior Phase-O edge was entirely the log-return short-leg convexity artifact (engine_correction_2026-08-24).",
+   "results_file": "data/predlab/opt2_r1r2_results.json"
   }
  }
 }
