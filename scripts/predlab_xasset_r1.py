@@ -140,7 +140,8 @@ def equity_inputs():
     close, qv, park = panels["close"], panels["qv"], panels["park"]
     # infinite/zero-range guards: park needs high>low>0
     park = park.replace([np.inf, -np.inf], np.nan)
-    ret = np.log(close).diff()
+    # engine_correction_2026-08-24: simple returns — position PnL, never log
+    ret = close.pct_change(fill_method=None)
     ret = ret.replace([np.inf, -np.inf], np.nan)
     uni = opt.monthly_universe(qv, top_n=200)
     return close, park, ret, uni

@@ -164,7 +164,8 @@ def realized_prev_return(panels: dict, prev_row: dict, asof: pd.Timestamp) -> "f
     prev_day = pd.Timestamp(prev_row["asof"], tz="UTC")
     if prev_day not in close.index or asof not in close.index or prev_day >= asof:
         return None
-    r = np.log(close.loc[asof] / close.loc[prev_day]).reindex(w.index)
+    # engine_correction_2026-08-24: simple returns — position PnL, never log
+    r = (close.loc[asof] / close.loc[prev_day] - 1.0).reindex(w.index)
     return float((w * r).dropna().sum())
 
 
@@ -184,7 +185,7 @@ def realized_prev_mark_return(prev_row: dict, marks: "dict[str, float]") -> "flo
         p0, p1 = prev_marks.get(sym), marks.get(sym)
         if not p0 or not p1:
             continue
-        tot += w * math.log(p1 / p0)
+        tot += w * (p1 / p0 - 1.0)  # engine_correction_2026-08-24
     return float(tot)
 
 

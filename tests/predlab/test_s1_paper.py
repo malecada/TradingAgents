@@ -58,7 +58,8 @@ def test_realized_prev_mark_return_uses_the_marks_recorded_at_write_time():
     prev = {"weights": {"AAA": 0.5, "BBB": -0.5},
             "mark_px": {"AAA": 100.0, "BBB": 50.0}}
     got = realized_prev_mark_return(prev, {"AAA": 110.0, "BBB": 45.0})
-    assert got == pytest.approx(0.5 * math.log(1.1) - 0.5 * math.log(0.9))
+    # engine_correction_2026-08-24: simple returns, never log
+    assert got == pytest.approx(0.5 * 0.1 - 0.5 * (-0.1))
 
 
 def test_realized_prev_mark_return_is_none_for_a_row_written_without_marks():
@@ -70,7 +71,7 @@ def test_realized_prev_mark_return_skips_symbols_absent_from_current_marks():
     prev = {"weights": {"AAA": 0.5, "BBB": -0.5},
             "mark_px": {"AAA": 100.0, "BBB": 50.0}}
     got = realized_prev_mark_return(prev, {"AAA": 110.0})
-    assert got == pytest.approx(0.5 * math.log(1.1))
+    assert got == pytest.approx(0.5 * 0.1)
 
 
 @pytest.fixture()

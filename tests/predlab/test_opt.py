@@ -269,3 +269,54 @@ class TestTiltHook:
                         "2024-12-31", tilt=bad_tilt)
         pd.testing.assert_series_equal(r0["rets"]["net"], r1["rets"]["net"],
                                        check_names=False)
+
+
+class TestEngineCorrection20260824:
+    """engine_correction_2026-08-24: position PnL must be simple returns.
+
+    A short held over a +10% / -9.0909% round trip (price returns to start)
+    loses money in reality; under log-return accounting it books exactly 0.
+    These pins keep the defect from returning.
+    """
+
+    def test_short_round_trip_loses_under_simple_returns(self):
+        n_sym = 30  # >= opt.MIN_NAMES
+        idx = _mkidx(4)
+        syms = [f"S{i}" for i in range(n_sym)]
+        close = pd.DataFrame(100.0, index=idx, columns=syms)
+        # S29: volatile flat round trip; everything else stays at 100
+        close.loc[idx[2], "S29"] = 110.0
+        close.loc[idx[3], "S29"] = 100.0
+        ret = close.pct_change(fill_method=None)
+        # constant signal: S29 highest -> short leg (long bottom quintile)
+        sig = pd.DataFrame(np.tile(np.arange(float(n_sym)), (4, 1)), index=idx,
+                           columns=syms)
+        uni = pd.DataFrame(True, index=idx, columns=syms)
+        r = opt.run_ls(sig, ret, uni, None,
+                       opt.OptConfig(taker_bp=0.0, smooth=1),
+                       "2024-01-01", "2024-01-04")
+        # short leg = top sextile (6 names), w = -1/6 each
+        # S29 short PnL: -(1/6)*0.10 + -(1/6)*(-1/11) < 0
+        assert r["rets"]["gross"].sum() < -0.001
+        assert r["name_pnl"]["S29"] < 0
+
+        # the log-return artifact books ~0 on the same path (documents why)
+        ret_log = np.log(close).diff()
+        r_log = opt.run_ls(sig, ret_log, uni, None,
+                           opt.OptConfig(taker_bp=0.0, smooth=1),
+                           "2024-01-01", "2024-01-04")
+        assert abs(r_log["rets"]["gross"].sum()) < 1e-12
+
+    def test_runner_scripts_construct_simple_pnl_returns(self):
+        # convention pin: no strategy-PnL runner may feed log returns to the
+        # engine. t7/holdout IC layers (rank-based) are exempt by declaration.
+        pnl_scripts = [
+            "predlab_opt_o1.py", "predlab_pp_dev.py", "predlab_pp_holdout.py",
+            "predlab_bybit_r1.py", "predlab_xasset_r1.py",
+            "predlab_futfx_r1.py", "predlab_s1_paper.py",
+        ]
+        for name in pnl_scripts:
+            src = (PROJECT_ROOT / "scripts" / name).read_text()
+            assert "np.log(close).diff()" not in src, name
+            if name != "predlab_s1_paper.py":
+                assert "pct_change(fill_method=None)" in src, name

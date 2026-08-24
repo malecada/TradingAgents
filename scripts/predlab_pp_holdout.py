@@ -35,7 +35,8 @@ def inputs():
     hi = pd.Timestamp(HOLDOUT[1], tz="UTC")
     close = close[close.index <= hi]
     qv, park = qv.loc[close.index], park.loc[close.index]
-    ret = np.log(close).diff()
+    # engine_correction_2026-08-24: simple returns — position PnL, never log
+    ret = close.pct_change(fill_method=None)
     uni = monthly_universe(qv, top_n=200)
     sig = park.rolling(5).mean().shift(1)
     used = sorted(uni.columns[uni.any(axis=0)])

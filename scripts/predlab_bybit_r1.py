@@ -138,7 +138,8 @@ def probes() -> None:
     feas_days = int((breadth >= FEAS_BREADTH).sum())
     recovered = sum(1 for k, v in manifest["symbols"].items()
                     if v.get("status") == "probe-delisted" and v.get("kline_days"))
-    ret = np.log(close).diff()
+    # engine_correction_2026-08-24: simple returns — position PnL, never log
+    ret = close.pct_change(fill_method=None)
     daily_abs = float(ret.abs().stack().median())
     fund_med = float(build_funding(ret.index, list(close.columns)[:50])
                      .stack().abs().median())
@@ -174,7 +175,8 @@ def run() -> None:
 
     panels = build_panels()
     close, qv, park = panels["close"], panels["qv"], panels["park"]
-    ret = np.log(close).diff()
+    # engine_correction_2026-08-24: simple returns — position PnL, never log
+    ret = close.pct_change(fill_method=None)
     uni = opt.monthly_universe(qv, top_n=200)
     fund = build_funding(ret.index, sorted(uni.columns[uni.any(axis=0)]))
     sig = opt.build_signal(park, close, "ewma_20")

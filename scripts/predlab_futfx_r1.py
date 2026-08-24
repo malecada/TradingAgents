@@ -74,7 +74,8 @@ def monthly_mask(avail: pd.DataFrame, min_bars: int = 15) -> pd.DataFrame:
 
 def inputs():
     close, park, avail, kinds = build_panels()
-    ret = np.log(close).diff().replace([np.inf, -np.inf], np.nan)
+    # engine_correction_2026-08-24: simple returns — position PnL, never log
+    ret = close.pct_change(fill_method=None).replace([np.inf, -np.inf], np.nan)
     uni = monthly_mask(avail)
     sig = opt.build_signal(park, close, "ewma_20")
     return close, park, ret, uni, sig, kinds
