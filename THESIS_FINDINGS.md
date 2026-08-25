@@ -5736,3 +5736,53 @@ alpha) → futures/FX −0.38 (informative ranking, unprofitable
 direction). The champion's edge is a crypto-perp phenomenon; its signal
 family degrades gracefully in information terms but does not monetize
 elsewhere. Ledger: 8 xasset cells + 2 one-shots, all registered.
+
+## Section 70: Backtest Engine Correction — Log-Return PnL Artifact Voids Phase O/P Champion (2026-08-24)
+
+A full-scope backtest audit (AUDIT_BACKTEST_2026-08-24.md) found the predlab
+strategy engine booked **log returns as position PnL**. For short legs this
+adds a spurious +σ²/2-per-day convexity credit; the low-vol long-short
+champion's edge was concentrated exactly there. Under corrected simple-return
+accounting the sealed-holdout champion flips from **+1.892 to −0.371** net SR
+(S1 corrected holdout −2.20). Phase O and Phase P strategy verdicts, the Bybit
+venue replication (Section 60), and the capacity study (Section 61) are all
+VOID; forecast-quality (IC) results are unaffected. The engine was fixed the
+same day (9 sites across 8 scripts, 252 tests green, commit e4de4eb) and a
+re-optimization under the corrected engine (predlab_opt2, 24 registered
+configs: 12 LS + 12 long-only) produced **0/24 dev passes** — long-short
+uniformly negative, long-only collapsing to under-beta exposure. Program
+closed with zero validated strategies. Timing, purging, PIT universe, and
+cost plumbing were separately audited CORRECT — the artifact was purely the
+return-accounting convention. Placebo batteries were structurally blind to it
+(both real and placebo books enjoyed the same fake short-leg credit), which
+motivates a new mandatory forensic: the convention-swap kill-test (recompute
+any PnL claim under the alternate return convention; a verdict flip is a
+stop-the-world event).
+
+## Section 71: RV-vs-IV Variance-Premium Probe (rviv_p0) — NEGATIVE, Market Efficiency Direction (2026-08-25)
+
+The last unfalsified vol-monetization channel — forecast realized vol better
+than the option market and harvest the variance premium — was tested as a
+registered dev-only P0 probe (gates `predlab_rviv_p0`, charter frozen
+pre-result). Target: 30-calendar-day annualized RV of daily simple returns;
+bar: DVOL passed through an expanding PIT debiasing regression (raw DVOL is
+bias-inflated by the premium itself); primary candidate: PIT HAR-30;
+eval 2022-06-01→2025-03-31 (n=1,006/asset); QLIKE loss, DM test NW lag 30.
+
+Result: **decisive FAIL in the opposite direction.** Debiased DVOL beats
+every realized-side forecaster — HAR-30 is 36.9% worse on BTC (DM p=6.5e-4)
+and 47.0% worse on ETH (p=5.4e-3); EWMA and trailing-RV are worse still. The
+encompassing model (HAR + DVOL) matches but does not beat debiased DVOL (BTC
++1.5%, p=0.55): realized-side information adds nothing incremental to implied
+vol at the 30d horizon. Deribit DVOL is, for this purpose, an efficient
+forecast. The pre-registered descriptive VRP series shows the premium itself
+decayed: BTC mean vol premium +0.247 (2021) → +0.065 (2025) → −0.020 (2026
+partial); ETH negative from 2025. Both the timing route and the static
+harvest route are dead. Forensics: convention-swap (log target) no flip;
+shifted-IV probe degrades the debiased baseline (BTC QLIKE 0.173→0.212, ETH
+0.179→0.274) confirming genuine temporal IV information — with the disclosed
+note that the charter's predicted "collapse to trailing-RV level" was
+mis-stated (a regression on shuffled IV lands near the unconditional mean,
+which beats noisy trailing RV under QLIKE); PIT rule enforced by unit tests.
+Artifacts: `scripts/predlab_rviv_p0.py`, `data/predlab/rviv/p0_results.json`,
+12 ledger rows, commits 86dd423→f8f8ac4 (branch research/prediction-lab).
