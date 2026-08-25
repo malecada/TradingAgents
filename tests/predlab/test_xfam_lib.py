@@ -198,3 +198,21 @@ class TestPairZMR:
         df = pair_zmr_backtest(la, lb, ra, rb, beta=1.0, trade_index=idx[120:],
                                z_entry=50.0)
         assert (df["gross"] == 0).all()
+
+
+class TestCalDateLogic:
+    def test_last_friday(self):
+        from predlab_xfam_cal import last_friday
+        assert str(last_friday(2026, 8).date()) == "2026-08-28"
+        assert str(last_friday(2024, 2).date()) == "2024-02-23"
+        assert last_friday(2025, 1).weekday() == 4
+
+    def test_expiry_indicator_windows(self):
+        from predlab_xfam_cal import expiry_indicator
+        idx = pd.date_range("2024-01-01", "2024-03-15", freq="D", tz="UTC")
+        ind = expiry_indicator(idx)
+        exp_jan = pd.Timestamp("2024-01-26", tz="UTC")  # last Friday Jan 2024
+        assert ind.loc[exp_jan] == 1.0
+        assert ind.loc[exp_jan - pd.Timedelta(days=3)] == 1.0
+        assert ind.loc[exp_jan + pd.Timedelta(days=1)] == 0.0
+        assert np.isnan(ind.loc[pd.Timestamp("2024-01-10", tz="UTC")])
