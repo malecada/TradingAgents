@@ -574,10 +574,10 @@
    },
    "note_t2": "enet/lgb T2 cells fit on sign target via probability clip of regression output to [0.02, 0.98]"
   },
-  "effect_floors": "inherit predlab_p1_classical anchors (charter \u00a75)",
+  "effect_floors": "inherit predlab_p1_classical anchors (charter §5)",
   "comparisons": {
    "primary": "vs registered strong baseline (DM-HLN)",
-   "secondary": "vs Phase-1 champion of the same cell (DM-HLN) \u2014 the question Tier 2 actually answers"
+   "secondary": "vs Phase-1 champion of the same cell (DM-HLN) — the question Tier 2 actually answers"
   },
   "stop_rule": "no post-hoc feature additions or grid growth; amendments only before the affected cell's first result and declared here; NEGATIVE cells close; holdout untouched until Phase-5",
   "t7_note": "T7 cross-sectional battery registered separately (P2-04)."
@@ -692,7 +692,7 @@
    "timesfm_2_5": "release 2025-09 > dev end",
    "moirai_2": "release 2025-08 > dev end",
    "toto_2": "release 2026-05 > dev end",
-   "timegpt": "Class C \u2014 corpus unauditable, excluded on principle"
+   "timegpt": "Class C — corpus unauditable, excluded on principle"
   },
   "cells": [
    "BTCUSDT|1h|T1_ret",
@@ -732,7 +732,7 @@
   "amendments": [
    {
     "date": "2026-07-31",
-    "change": "tabpfn_ts DROPPED \u2014 declared infeasibility: local weights require interactive license acceptance + account token (TabPFNLicenseError in non-interactive environment). Revivable if the operator sets TABPFN_TOKEN; no results were produced.",
+    "change": "tabpfn_ts DROPPED — declared infeasibility: local weights require interactive license acceptance + account token (TabPFNLicenseError in non-interactive environment). Revivable if the operator sets TABPFN_TOKEN; no results were produced.",
     "declared_before_first_result": true
    }
   ]
@@ -791,7 +791,7 @@
     ],
     "loss": "qlike",
     "baseline": "har_levels",
-    "note": "ttm_ens = C2 combination (below); TTM alone lacks dev-wide forecasts (Class-B window) so enters only via the ensemble on its valid window \u2014 if MCS window must be common, C2 is evaluated as a SEPARATE matched-window comparison, not in the MCS"
+    "note": "ttm_ens = C2 combination (below); TTM alone lacks dev-wide forecasts (Class-B window) so enters only via the ensemble on its valid window — if MCS window must be common, C2 is evaluated as a SEPARATE matched-window comparison, not in the MCS"
    },
    "BTCUSDT|1h|T4_vol": {
     "set": [
@@ -921,7 +921,7 @@
   "purpose": "deferred model upgrades from P5, evaluated on a NEW sealed holdout accruing after the P5 spend",
   "new_holdout": [
    "2026-07-02",
-   "OPEN \u2014 spend earliest 2027-07-01 or when >=12 months accrued, whichever later"
+   "OPEN — spend earliest 2027-07-01 or when >=12 months accrued, whichever later"
   ],
   "dev_window_for_tuning": [
    "2021-01-01",
@@ -954,7 +954,7 @@
   "confirmation": {
    "window": [
     "2026-07-02",
-    "OPEN \u2014 spend when >=6 months accrued"
+    "OPEN — spend when >=6 months accrued"
    ],
    "benchmark": "concurrent raw eq_h1 book on the same window",
    "note": "the 2025-04..2026-07 strategy holdout is SPENT for raw S1 and is NOT reused for overlay claims"
@@ -997,11 +997,11 @@
    ],
    "validation_V": [
     "2025-04-01",
-    "2026-07-01 \u2014 NON-VIRGIN (spent P5/PP holdout), internal consistency check only"
+    "2026-07-01 — NON-VIRGIN (spent P5/PP holdout), internal consistency check only"
    ],
    "forward_holdout_F": [
     "2026-07-02",
-    "OPEN \u2014 spend when >=6 months accrued (earliest 2027-01-02), one-shot on final champion only"
+    "OPEN — spend when >=6 months accrued (earliest 2027-01-02), one-shot on final champion only"
    ]
   },
   "adoption_rule": {
@@ -1017,10 +1017,10 @@
    "O1": "signal construction (park windows {3,5,10,20}, cc-vol, vol-of-vol, EWMA park)",
    "O2": "portfolio construction (quantile width, weighting, buffer bands, cadence)",
    "O3": "universe (top-N {100,150,200,300}, ADV floor; single-name PnL share > 50% = config FAIL)",
-   "O4": "overlay re-tune (vol-target level/estimator, exposure caps) \u2014 distinct from pp2 vt10 claim",
-   "O5": "funding-carry tilt inside book (prior: standalone carry NEGATIVE \u00a746)",
+   "O4": "overlay re-tune (vol-target level/estimator, exposure caps) — distinct from pp2 vt10 claim",
+   "O5": "funding-carry tilt inside book (prior: standalone carry NEGATIVE §46)",
    "O6": "LGB volume-forecast liquidity weighting",
-   "O7": "momentum/trend tilt inside book (prior: standalone NEGATIVE \u00a743/\u00a745)",
+   "O7": "momentum/trend tilt inside book (prior: standalone NEGATIVE §43/§45)",
    "O8": "final composition + champion freeze for F"
   },
   "stage_rule": "<=12 configs per stage; exact grid appended to predlab_opt.stages.<id> BEFORE first run; one ledger row per config",
@@ -1227,7 +1227,7 @@
    },
    "O5": {
     "frozen_utc": "2026-08-03",
-    "axis": "funding-carry tilt inside book (prior: standalone carry NEGATIVE \u00a746)",
+    "axis": "funding-carry tilt inside book (prior: standalone carry NEGATIVE §46)",
     "base_book": "ewma_20 eq-quintile-daily top-200 (chain seq 1)",
     "grid": {
      "carry_l25_w7": {
@@ -1327,7 +1327,7 @@
    },
    "O7": {
     "frozen_utc": "2026-08-04",
-    "axis": "momentum/trend tilt inside book (priors: \u00a743/\u00a745 standalone NEGATIVE, disclosed)",
+    "axis": "momentum/trend tilt inside book (priors: §43/§45 standalone NEGATIVE, disclosed)",
     "base_book": "ewma_20 eq-quintile-daily top-200 (chain seq 1)",
     "grid": {
      "mom30_win": {
@@ -1377,7 +1377,7 @@
    },
    "O8": {
     "frozen_utc": "2026-08-04",
-    "axis": "final composition \u2014 pre-declared knobs only (tercile DD dial, O2 card)",
+    "axis": "final composition — pre-declared knobs only (tercile DD dial, O2 card)",
     "grid": {
      "champion_eq5": {
       "base": {
@@ -1489,7 +1489,7 @@
  "llm_c2_veto_ovl": {
   "registered_utc": "2026-08-10",
   "spec": "docs/superpowers/specs/2026-08-10-llm-c2-veto-charter.md",
-  "proposal": "master_thesis/LLM_INTEGRATION_PROPOSAL_2026-08.md \u00a76 (charter C2)",
+  "proposal": "master_thesis/LLM_INTEGRATION_PROPOSAL_2026-08.md §6 (charter C2)",
   "purpose": "reduce-only LLM news veto on Phase-O champion book: DD/CVaR reduction at SR non-inferiority",
   "book": "ewma_20 eq_h1 top-200 + vt15_naive20_b100 (O4 formula), frozen; report-only reproduction",
   "windows": {
@@ -1499,11 +1499,11 @@
    ],
    "V": [
     "2025-04-01",
-    "2026-07-01 \u2014 NON-VIRGIN, disclosure-only, no gate reads it"
+    "2026-07-01 — NON-VIRGIN, disclosure-only, no gate reads it"
    ],
    "forward_F": [
     "2026-07-02",
-    "OPEN \u2014 sealed; veto forward one-shot only alongside champion F spend (earliest 2027-01-02)"
+    "OPEN — sealed; veto forward one-shot only alongside champion F spend (earliest 2027-01-02)"
    ]
   },
   "mechanism": {
@@ -1545,7 +1545,7 @@
  "xasset_equity_r1": {
   "registered_utc": "2026-08-18",
   "charter": "docs/predlab/reports/xasset_equity_r1_charter.md",
-  "hypothesis": "Phase-O final champion (ewma_20 Parkinson low-vol eq-quintile LS, top-200 monthly-PIT dollar-volume universe, vt15_naive20_b100) transfers verbatim to US equities \u2014 asset-class generalization",
+  "hypothesis": "Phase-O final champion (ewma_20 Parkinson low-vol eq-quintile LS, top-200 monthly-PIT dollar-volume universe, vt15_naive20_b100) transfers verbatim to US equities — asset-class generalization",
   "config": "identical to predlab_opt.final_champion; ONLY forced asset-class adaptations: (1) ANN 365->252; (2) funding carry -> 0, replaced by short-leg borrow fee 1.0%/yr charged daily on scaled short gross; (3) taker 5bp/side kept; (4) NO re-tuning of signal/universe/overlay",
   "data": {
    "source": "Alpaca SIP daily bars, adjustment=all, feed=sip (free tier)",
@@ -1590,11 +1590,11 @@
    "hierarchy": "U1 implies U2; report the strongest level attained; U2 fail = clean negative"
   },
   "stop_rule": "one run; no post-hoc universe/window/cost/signal edits after the first equity strategy number exists; single-name checks disclosed, never acted on; failure = negative recorded; revival or any equity re-tuning requires a NEW registered cycle",
-  "amendment_2026-08-18": "PRE-RESULT (no equity strategy number exists; store not yet built). Enumeration probe found Alpaca /v2/assets purges major delistings (BBBY/SIVB/FRC/TWTR/ATVI absent; FB recycled to an ETF) and marks 16K dead symbols with last-exchange OTC. Amended universe_pool: (a) drop exchange filter (top-200 dollar-volume membership self-selects listed liquid phase); (b) enumeration = Alpaca assets (incl. _DELISTED-suffix base mapping) UNION S&P500 ever-members 2016+ (fja05680) UNION SEC company_tickers.json, all bars-probed; (c) ticker-recycling guard: bar series split into independent segments at >90 calendar-day gaps; membership and signal computed per segment. Residual caveat: non-S&P pre-2023 delistings outside SEC-current list may be missing \u2014 gated by feasibility_P1.deaths."
+  "amendment_2026-08-18": "PRE-RESULT (no equity strategy number exists; store not yet built). Enumeration probe found Alpaca /v2/assets purges major delistings (BBBY/SIVB/FRC/TWTR/ATVI absent; FB recycled to an ETF) and marks 16K dead symbols with last-exchange OTC. Amended universe_pool: (a) drop exchange filter (top-200 dollar-volume membership self-selects listed liquid phase); (b) enumeration = Alpaca assets (incl. _DELISTED-suffix base mapping) UNION S&P500 ever-members 2016+ (fja05680) UNION SEC company_tickers.json, all bars-probed; (c) ticker-recycling guard: bar series split into independent segments at >90 calendar-day gaps; membership and signal computed per segment. Residual caveat: non-S&P pre-2023 delistings outside SEC-current list may be missing — gated by feasibility_P1.deaths."
  },
  "xasset_equity_bab": {
   "registered_utc": "2026-08-20",
-  "predecessor": "xasset_equity_r1 (NEGATIVE; THESIS \u00a766)",
+  "predecessor": "xasset_equity_r1 (NEGATIVE; THESIS §66)",
   "hypothesis": "ewma_20 Parkinson low-vol XS signal has timed cross-sectional content in US equities once the book is beta-neutralized (Frazzini-Pedersen: low-risk anomaly requires beta-neutral construction); the verbatim-r1 failure was construction, not signal",
   "contamination_disclosure": "equity window is NOT virgin: the r1 one-shot full-window numbers (2017-2026, one config) were seen before this registration. Mitigation: DEV/HOLDOUT split introduced for this cycle; the holdout claim rests on the new design axis (beta handling), whose per-cell results have never been computed on any window",
   "windows": {
@@ -1624,7 +1624,7 @@
    "subperiods_positive_min": "3/4 dev quarters",
    "borrow_stress_3pct_sr_gt": 0.0,
    "residual_beta_abs_lt": 0.15,
-   "residual_beta_note": "realized |beta| of the pre-overlay book vs SPY over dev \u2014 construction must actually neutralize"
+   "residual_beta_note": "realized |beta| of the pre-overlay book vs SPY over dev — construction must actually neutralize"
   },
   "selection_rule": "among cells passing ALL dev gates, single champion = highest dev ovl net SR; 0 passing cells = cycle dead, no holdout spend",
   "holdout_criteria": {
@@ -1636,9 +1636,9 @@
  },
  "xasset_equity_bab2": {
   "registered_utc": "2026-08-20",
-  "predecessor": "xasset_equity_bab (dead at dev: 0/3 cells; registered 0.6-shrink estimator under-hedges ~40% of beta gap by construction \u2014 forensic note in report)",
+  "predecessor": "xasset_equity_bab (dead at dev: 0/3 cells; registered 0.6-shrink estimator under-hedges ~40% of beta gap by construction — forensic note in report)",
   "hypothesis": "same as xasset_equity_bab, with hedge sizing free of the shrinkage bias",
-  "windows": "identical to xasset_equity_bab (dev 2017-01-03..2023-12-31; holdout 2024-01-01..2026-08-14 SEALED \u2014 never spent by any xasset cycle)",
+  "windows": "identical to xasset_equity_bab (dev 2017-01-03..2023-12-31; holdout 2024-01-01..2026-08-14 SEALED — never spent by any xasset cycle)",
   "cells": {
    "C1_unshrunk_hedge": "A2 market hedge sized on UNSHRUNK rolling 252d OLS betas (shrinkage removed from sizing only; forensic prediction: residual ~-0.12)",
    "C2_book_hedge": "book-level self-correcting hedge: w_spy_t = -beta_hat(book) where beta_hat = rolling 126d (min 60) OLS slope of pre-hedge book net on SPY, shift(1), clipped [-1.5, +0.5]; applied as post-process with taker on |dw_spy|"
@@ -1653,7 +1653,7 @@
  },
  "xasset_equity_bab3": {
   "registered_utc": "2026-08-20",
-  "predecessor": "xasset_equity_bab2 (dead; C2 killed by clip [-1.5,+0.5] while the book needs a +0.83 SPY hedge \u2014 mechanical bound error, forensically documented)",
+  "predecessor": "xasset_equity_bab2 (dead; C2 killed by clip [-1.5,+0.5] while the book needs a +0.83 SPY hedge — mechanical bound error, forensically documented)",
   "user_decision": "final single-cell cycle approved 2026-08-20; equity program closes after this cycle regardless of outcome",
   "cells": {
    "C2f_book_hedge": "identical to bab2 C2_book_hedge except clip widened to [-1.5, +1.5]; everything else verbatim (126d min-60 rolling OLS of pre-hedge book net on SPY, shift(1), taker on |dw_spy|)"
@@ -1677,7 +1677,7 @@
     "settlement-only bars (high==low) frequent on some futures: Parkinson set to NaN on h==l bars (not zero); instruments with >20% h==l EXCLUDED (PA,PL,CC per manifest) -> 68 instruments"
    ]
   },
-  "forced_adaptations": "ANN 252; no funding/borrow (symmetric instruments; carry caveat above); taker 5bp kept (conservative: FX majors ~1bp, CME ~1bp); universe = ALL included instruments with >=15 bars in month m-1 (PIT monthly mask \u2014 the top-200 dollar-volume rule is undefined: FX spot has no volume and the universe is smaller than 200); overlay breadth floor b100 -> b40 (~55 pct of ~72-instrument universe, same ratio as 100/200); MIN_NAMES 25 and quintile q_frac 0.2 unchanged (~13-14 names per leg)",
+  "forced_adaptations": "ANN 252; no funding/borrow (symmetric instruments; carry caveat above); taker 5bp kept (conservative: FX majors ~1bp, CME ~1bp); universe = ALL included instruments with >=15 bars in month m-1 (PIT monthly mask — the top-200 dollar-volume rule is undefined: FX spot has no volume and the universe is smaller than 200); overlay breadth floor b100 -> b40 (~55 pct of ~72-instrument universe, same ratio as 100/200); MIN_NAMES 25 and quintile q_frac 0.2 unchanged (~13-14 names per leg)",
   "window": [
    "2017-01-03",
    "2026-08-14"
@@ -1742,8 +1742,8 @@
   "predecessor": "predlab_opt (VOID via engine_correction_2026-08-24)",
   "purpose": "re-optimization under corrected simple-return position PnL: does any vol-sorted cross-sectional book (LS or long-only) carry real net edge on Binance USDT-M perps?",
   "incumbent": {
-   "strategy": "NONE \u2014 prior champion void; LS baseline = flat (SR 0)",
-   "long_only_benchmark": "BTC buy-and-hold net of one 5bp entry, same window \u2014 a long-only book must beat beta, not zero"
+   "strategy": "NONE — prior champion void; LS baseline = flat (SR 0)",
+   "long_only_benchmark": "BTC buy-and-hold net of one 5bp entry, same window — a long-only book must beat beta, not zero"
   },
   "windows": {
    "design_D": [
@@ -1752,11 +1752,11 @@
    ],
    "validation_V": [
     "2025-04-01",
-    "2026-07-01 \u2014 NON-VIRGIN (spent P5/PP holdout + opt selection), internal consistency check only"
+    "2026-07-01 — NON-VIRGIN (spent P5/PP holdout + opt selection), internal consistency check only"
    ],
    "forward_holdout_F": [
     "2026-07-02",
-    "OPEN \u2014 untouched; any adopted champion gets a fresh one-shot, earliest 2027-01-02"
+    "OPEN — untouched; any adopted champion gets a fresh one-shot, earliest 2027-01-02"
    ]
   },
   "adoption_rule": {
@@ -1764,7 +1764,7 @@
    "lo_books": "net SR on D >= BTC buy-and-hold SR on D + 0.10, and same on V (beta is free; only excess earns adoption)",
    "consistency": "net SR on V >= 0.5 x net SR on D (and V same sign)",
    "placebo": "dual-family (time-shift + xsect-shuffle) p < 0.05 on D+V",
-   "dsr": "DSR > 0.5. Trial pool FIXED AT REGISTRATION: all predlab_pp + predlab_pp2 + predlab_opt ledgered strategy configs (92) + engine_correction_2026-08-24 rows + every predlab_opt2 ledgered config. Diagnostics count only if declared 'diagnostic: true' BEFORE running, and are then excluded; no other post-hoc pool edits \u2014 the denominator may never be re-based after a DSR value has been computed",
+   "dsr": "DSR > 0.5. Trial pool FIXED AT REGISTRATION: all predlab_pp + predlab_pp2 + predlab_opt ledgered strategy configs (92) + engine_correction_2026-08-24 rows + every predlab_opt2 ledgered config. Diagnostics count only if declared 'diagnostic: true' BEFORE running, and are then excluded; no other post-hoc pool edits — the denominator may never be re-based after a DSR value has been computed",
    "subperiods": "net mean > 0 in >= 3 of {2021-22, 2023-24, 2025H1, 2025H2+2026H1}",
    "concentration": "single-name PnL share > 50% = config FAIL",
    "forensics": "kill-tests (shuffled-signal, lag mutation, cost-off sanity, coverage audit) before any adoption"
@@ -1772,7 +1772,7 @@
   "stages_plan": {
    "R1": "LS signal sweep, corrected engine: 12 signals {park_3, park_5, park_10, park_20, cc_5, cc_10, cc_20, vov_10, vov_20, ewma_5, ewma_10, ewma_20}, eq-quintile daily top-200, 5bp+funding",
    "R2": "LONG-ONLY low-vol sweep: same 12 signals, bottom-quintile long leg only (weights sum to 1, gross 1), vs BTC B&H benchmark; requires run_lo engine extension + unit tests BEFORE the sweep",
-   "R3": "CONDITIONAL \u2014 vol-target overlay re-tune {vt10, vt15} x naive20 on any R1/R2 dev-PASS book only"
+   "R3": "CONDITIONAL — vol-target overlay re-tune {vt10, vt15} x naive20 on any R1/R2 dev-PASS book only"
   },
   "stage_rule": "<=12 configs per stage; exact grid frozen in predlab_opt2.stages.<id> BEFORE first run; one ledger row per config",
   "costs": "taker 5bp per side per rebalance + realized funding carry; 2x cost stress reported on any dev-PASS row",
@@ -1816,7 +1816,7 @@
      "ewma_20"
     ],
     "n_configs": 12,
-    "engine": "opt.run_ls with clip-shorts tilt (unit-tested); satisfies the registered run_lo requirement \u2014 no new engine code, the documented tilt+renorm path",
+    "engine": "opt.run_ls with clip-shorts tilt (unit-tested); satisfies the registered run_lo requirement — no new engine code, the documented tilt+renorm path",
     "benchmark": "BTCUSDT buy-and-hold net of one 5bp entry, same window"
    }
   },
@@ -1824,8 +1824,46 @@
    "utc": "2026-08-24",
    "R1": "0/12 dev-PASS (best D SR +0.111 vov_10, all V negative)",
    "R2": "0/12 dev-PASS (best D SR +0.577 vs required >= BTC B&H +0.707 +0.10; all V negative)",
-   "result": "PROGRAM CLOSED NEGATIVE per stop_rule \u2014 no F spend, no champion. Vol-sorted cross-sectional books on Binance USDT-M perps carry no net edge under simple-return PnL; the prior Phase-O edge was entirely the log-return short-leg convexity artifact (engine_correction_2026-08-24).",
+   "result": "PROGRAM CLOSED NEGATIVE per stop_rule — no F spend, no champion. Vol-sorted cross-sectional books on Binance USDT-M perps carry no net edge under simple-return PnL; the prior Phase-O edge was entirely the log-return short-leg convexity artifact (engine_correction_2026-08-24).",
    "results_file": "data/predlab/opt2_r1r2_results.json"
   }
+ },
+ "predlab_rviv_p0": {
+  "registered_utc": "2026-08-25",
+  "charter": "docs/superpowers/specs/2026-08-25-rviv-p0-charter.md",
+  "scope": "P0 forecast probe only; dev-window OOS; no holdout touch; no strategy layer",
+  "claim": "PIT RV forecast beats debiased-DVOL at next-30d realized vol, BTC+ETH",
+  "target": "RV30(t)=sqrt(365*mean(simple r^2, t+1..t+30 cal days)), uncentered, >=25 obs",
+  "eval_window": [
+   "2022-06-01",
+   "2025-03-31"
+  ],
+  "baselines": {
+   "B0": "raw dvol_close/100 (disclosure)",
+   "B1": "debiased DVOL expanding PIT OLS RV30~a+b*iv, THE BAR",
+   "B2": "trailing RV20 (sanity)"
+  },
+  "candidates": {
+   "C1": "EWMA span20 of simple r^2, const projection (disclosure)",
+   "C2": "HAR-30 expanding PIT OLS on RV_1/RV_5/RV_30 — PRIMARY",
+   "C3": "HAR-30 + iv regressor (encompassing diagnostic, never a claim)"
+  },
+  "pit_rule": "regressions at t train only on pairs with s+30cal_days<=t; refit daily; expanding; min 365 pairs",
+  "loss": "QLIKE on variance (primary); MSE on vol (disclosure)",
+  "test": "DM on loss diff vs B1, Newey-West lag 30, two-sided",
+  "pass_criteria": "C2 vs B1: rel QLIKE improvement >=3% AND DM p<0.05, improvement sign, on BOTH BTC and ETH; single pre-named test, no FDR needed",
+  "descriptive": "annual mean(iv^2-RV30^2) and mean(iv-RV30) per asset 2021-2026, no gate",
+  "forensics": [
+   "F1 convention-swap log-target kill-test",
+   "F2 circular-shift-IV >=180d probe (B1->B2, C3->C2 collapse)",
+   "F3 PIT unit-test audit",
+   "F4 annualization sanity [0.2,1.5]"
+  ],
+  "stop_rule": "single run per frozen spec; FAIL=lead closed; PASS=stop-and-decide with user; no re-tuning, no additions, no window changes",
+  "data_vintage": {
+   "rv_1d": "2020-01-02..2026-07-30",
+   "dvol": "2021-06-01..2026-05-26 fetched 2026-05"
+  },
+  "verdict": "PENDING"
  }
 }
