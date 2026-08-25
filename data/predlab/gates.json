@@ -1891,5 +1891,44 @@
    "n_eval_days": 1006
   },
   "interpretation": "Deribit DVOL is an efficient 30d vol forecast for BTC/ETH: it subsumes realized-side information rather than the reverse. The last unfalsified vol-monetization channel is now falsified at P0; forecast-edge route dead AND the premium itself has decayed to ~zero since 2025. Program-wide closure stands."
+ },
+ "predlab_xfam": {
+  "registered_utc": "2026-08-25",
+  "charter": "docs/superpowers/specs/2026-08-25-xfam-hunt-charter.md",
+  "purpose": "five untested signal families, autonomous deep hunt (user directive); all specs frozen in charter pre-result",
+  "families": [
+   "xfam_cal (11 pre-named calendar tests)",
+   "xfam_amx (Amihud XS premium)",
+   "xfam_llg (BTC/ETH->alt lead-lag)",
+   "xfam_pos (Coinglass L/S extremes, 8-sym)",
+   "xfam_prx (pairs cointegration MR)"
+  ],
+  "windows": {
+   "dev": [
+    "2021-01-01",
+    "2025-03-31"
+   ],
+   "holdout": [
+    "2025-04-01",
+    "2026-07-01"
+   ],
+   "holdout_status": "sealed, CONTAMINATION-DISCLOSED (observed by prior programs, virgin for xfam signals)",
+   "F": "2026-07-02+ untouched"
+  },
+  "shared_gates": {
+   "P1_promotion": "dev net SR>=1.0 AND shift-placebo p<0.10 AND cost-stress 2x sign AND name-share<=50% AND convention-swap no flip",
+   "holdout_oneshot": "net SR>=0.5x dev AND same sign AND holdout placebo p<0.10; script refuses second spend",
+   "champion_extra": "DSR>0.5, n_trials = xfam ledger + 16 priors + opt/opt2 ledger"
+  },
+  "costs": "taker 5bp/side x turnover + realized funding carry; simple returns only",
+  "stop_rule": "P0 one-shot per family, FAIL=family closed; no re-tuning; deployment decisions stay with user",
+  "order": "cal -> amx -> llg -> pos -> prx",
+  "verdicts": {
+   "xfam_cal": "PENDING",
+   "xfam_amx": "PENDING",
+   "xfam_llg": "PENDING",
+   "xfam_pos": "PENDING",
+   "xfam_prx": "PENDING"
+  }
  }
 }
