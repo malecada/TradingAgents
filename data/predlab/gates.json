@@ -1864,6 +1864,32 @@
    "rv_1d": "2020-01-02..2026-07-30",
    "dvol": "2021-06-01..2026-05-26 fetched 2026-05"
   },
-  "verdict": "PENDING"
+  "verdict": "FAIL — lead CLOSED",
+  "verdict_utc": "2026-08-25",
+  "results": {
+   "primary": {
+    "BTCUSDT": {
+     "C2_rel_impr": -0.369,
+     "dm_p": 0.00065
+    },
+    "ETHUSDT": {
+     "C2_rel_impr": -0.47,
+     "dm_p": 0.0054
+    },
+    "pass": false
+   },
+   "direction": "debiased DVOL (B1) BEATS all RV-only forecasters at DM p<0.01 both assets; C3 encompassing ~= B1 (BTC +1.5% p=.55, ETH -3.8% p=.20) => realized-side info adds nothing incremental to IV at 30d",
+   "disclosure": "ETH raw DVOL beat debiased DVOL (+12.9%, p=.14, insignificant)",
+   "vrp_descriptive": "mean vol premium decayed: BTC 2021 +0.247 -> 2025 +0.065 -> 2026 -0.020; ETH 2025 -0.033, 2026 +0.005 — premium ~gone in recent years",
+   "forensics": {
+    "F1_convention_swap": "PASS — log-target variant preserves verdict (C2 worse, p<0.005 both assets), no flip",
+    "F2_shifted_iv": "PASS in substance, charter expectation mis-stated: 180d circular shift degrades B1 QLIKE 0.173->0.212 (BTC) / 0.179->0.274 (ETH), confirming genuine temporal IV signal; predicted collapse target '~=B2' was wrong — regression-on-noise lands near unconditional-mean forecast, which beats noisy trailing RV20 under QLIKE. Disclosed, not reinterpreted post-hoc",
+    "F3_pit_audit": "PASS — unit tests assert training-pair rule (tests/predlab/test_rviv_p0.py, 14 tests)",
+    "F4_annualization": "PASS — mean RV30 0.487/0.615, mean IV 0.572/0.667, units consistent, premium sign positive full-sample"
+   },
+   "results_file": "data/predlab/rviv/p0_results.json",
+   "n_eval_days": 1006
+  },
+  "interpretation": "Deribit DVOL is an efficient 30d vol forecast for BTC/ETH: it subsumes realized-side information rather than the reverse. The last unfalsified vol-monetization channel is now falsified at P0; forecast-edge route dead AND the premium itself has decayed to ~zero since 2025. Program-wide closure stands."
  }
 }
