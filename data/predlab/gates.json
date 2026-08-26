@@ -1928,7 +1928,8 @@
    "xfam_amx": "FAIL at P0 — mean monthly IC +0.0097, NW t=0.36, p=0.72; family CLOSED",
    "xfam_llg": "FAIL at P1 — hourly BTC->alt REVERSAL real at P0 (slope -0.034, p=0.0093, 4/4 yrs) but gross SR +1.95 -> net -2.69 at 5bp taker; uneconomic, no tuning allowed; family CLOSED. Daily cells n.s. (p 0.10-0.15, all negative slopes)",
    "xfam_pos": "FAIL at P0 — S1 retail-contrarian t=0.07 p=0.47, S2 smart-follow t=-0.01 p=0.50; both flat; family CLOSED",
-   "xfam_prx": "PENDING"
-  }
+   "xfam_prx": "FAIL at P0 — OOS stationarity rate: selected 10.7% vs random 11.3% (ratio 0.94, Wilcoxon p=0.69): cointegration does not persist; ETHBTC half-life in-band 2/4 yrs; family CLOSED"
+  },
+  "program_verdict": "HUNT CLOSED NEGATIVE 2026-08-26 — 0/5 families pass; only real P0 signal (hourly BTC->alt reversal) is cost-dead; no holdout spend, no champion"
  }
 }
