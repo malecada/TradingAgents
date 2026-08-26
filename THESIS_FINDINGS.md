@@ -5786,3 +5786,49 @@ mis-stated (a regression on shuffled IV lands near the unconditional mean,
 which beats noisy trailing RV under QLIKE); PIT rule enforced by unit tests.
 Artifacts: `scripts/predlab_rviv_p0.py`, `data/predlab/rviv/p0_results.json`,
 12 ledger rows, commits 86dd423→f8f8ac4 (branch research/prediction-lab).
+
+## Section 72: Five-Family Signal Hunt (xfam) — All Untested Families NEGATIVE (2026-08-25/26)
+
+With every registered lead falsified, the five remaining on-disk-testable and
+previously-unattacked signal families were pre-registered under one umbrella
+(gates `predlab_xfam`, charter frozen before results; dev 2021-01-01→
+2025-03-31; simple returns; 5bp taker + funding; per-family one-shot P0 kill
+gates; holdout never touched). Results, in execution order:
+
+1. **Calendar (xfam_cal)** — 11 pre-named tests (weekend, turn-of-month,
+   Deribit monthly expiry week, pre-funding hours × BTC/ETH/XS-mean cells):
+   0/11 survive BH-FDR q<0.10; min raw p=0.128. No calendar structure.
+2. **Amihud illiquidity premium (xfam_amx)** — monthly Spearman IC of 21d
+   Amihud vs next-21d return, top-200 PIT universe, $1M ADV floor: mean IC
+   +0.0097, NW t=0.36, p=0.72. No liquidity premium in either direction.
+3. **Lead-lag (xfam_llg)** — the hunt's one genuine P0 signal: hourly
+   BTC→alt-index REVERSAL (slope −0.034, HAC p=0.0093, sign-consistent 4/4
+   years; daily cells n.s. but same negative sign). Economically dead: the
+   pre-registered one-config follow strategy earns gross SR +1.95 but
+   −2.69 net — hourly sign-flipping turnover meets a ~1%/day cost floor at
+   5bp/side. Charter forbade threshold tuning; FAIL at P1.
+4. **Positioning extremes (xfam_pos)** — Coinglass 8-sym panel, retail
+   contrarian z(global L/S) and smart-money follow z(top-position L/S),
+   hypothesis-signed: t=+0.07 and t=−0.01. Pure noise.
+5. **Pairs/cointegration (xfam_prx)** — the structural kill: pairs selected
+   by 90d Engle-Granger (ADF p<0.05, half-life 2-20d, top-20 by ADF) are
+   OOS-stationary next month at 10.7% vs 11.3% for RANDOM same-universe
+   pairs (ratio 0.94, Wilcoxon p=0.69). Formation-window cointegration in
+   crypto perps has zero out-of-sample persistence — the family dies before
+   any backtest. ETHBTC single-pair half-life is in the tradable band only
+   2/4 years.
+
+Program verdict: **0/5 families**; no holdout spend; no champion. Combined
+with Sections 39-51, 54-71, the falsification map now covers: trend/momentum
+(TS + XS), value, carry, liquidation MR, vol-targeted low-vol LS, variance
+premium (RV-vs-IV), sentiment (5 programs), LLM overlays (5 charters),
+calendar, liquidity premium, lead-lag, positioning, and pairs — every family
+either statistically empty, cost-dead, or an accounting artifact. The
+recurring pattern sharpened by this sweep: crypto-perp daily/hourly signal
+families that clear statistical gates die at the cost layer (llg gross +1.95
+→ net −2.69 echoes the intraday liq-fade arc of Section 49-50).
+
+Artifacts: `scripts/predlab_xfam_{lib,cal,amx,llg,pos,prx}.py` (+21 unit
+tests), `data/predlab/xfam/*_result.json`, ledger rows per config, gates
+`predlab_xfam` with per-family verdicts; commits b6a1af6→(hunt close) on
+research/prediction-lab.
