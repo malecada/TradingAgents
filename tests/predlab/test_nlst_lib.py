@@ -146,3 +146,13 @@ def test_v2_buy_price_impact_direction():
 def test_v2_sell_into_thin_pool_bounded_by_reserve():
     out = v2_sell(1e12, 50.0, 1000.0)
     assert out < 50.0  # can never extract more than the WETH reserve
+
+
+def test_p0_stats_duplicate_listing_dates_ok():
+    df = pd.DataFrame({
+        "list_date": [pd.Timestamp("2021-05-01", tz="UTC")] * 3
+        + [pd.Timestamp("2022-05-01", tz="UTC")] * 20,
+        "ret5": np.linspace(-0.1, 0.4, 23),
+    }, index=[f"S{i}" for i in range(23)])
+    st = p0_stats(df, "ret5")
+    assert st["concentration"]["top_event"] == "S22"

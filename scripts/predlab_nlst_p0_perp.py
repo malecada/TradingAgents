@@ -28,8 +28,25 @@ BYB_K = ROOT / "data" / "predlab" / "bybit" / "klines"
 BYB_F = ROOT / "data" / "predlab" / "bybit" / "funding"
 
 
-def event_table(kdir: Path, fdir: Path, horizons) -> pd.DataFrame:
+def excluded_syms(venue: str) -> set[str]:
+    """Store-artifact events (first bar >7d after exchange launch metadata) —
+    pre-result amendment in gates.json['predlab_nlst']['data_quality_result']."""
+    import json
+
+    nd = ROOT / "data" / "predlab" / "nlst"
+    files = {"bin": ["binance_onboard_diff.json"],
+             "byb": ["bybit_launchtime_diff.json",
+                     "bybit_launchtime_diff_closed.json"]}[venue]
+    out = set()
+    for f in files:
+        d = json.loads((nd / f).read_text())
+        out |= {s for s, v in d.items() if abs(v) > 7}
+    return out
+
+
+def event_table(kdir: Path, fdir: Path, horizons, venue: str) -> pd.DataFrame:
     ev = listing_events(kdir, max_h=max(horizons))
+    ev = ev.drop(index=excluded_syms(venue) & set(ev.index))
     rows = {}
     for sym, r in ev.iterrows():
         close = pd.read_parquet(kdir / f"{sym}.parquet", columns=["close"])["close"]
@@ -43,6 +60,7 @@ def x_event_table() -> pd.DataFrame:
     """Cross-venue: Binance listing (dev) of symbol on Bybit >=30d earlier.
     Entry close of Binance-listing day 0 on Bybit bars; horizons on Bybit."""
     evB = listing_events(BIN_K, max_h=max(HORIZONS_X))
+    evB = evB.drop(index=excluded_syms("bin") & set(evB.index))
     rows = {}
     for sym, r in evB.iterrows():
         pk = BYB_K / f"{sym}.parquet"
@@ -86,8 +104,8 @@ def run_cell(cell: str, tab: pd.DataFrame, horizons) -> dict:
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     tabs = {
-        "bin": event_table(BIN_K, BIN_F, HORIZONS_PERP),
-        "byb": event_table(BYB_K, BYB_F, HORIZONS_PERP),
+        "bin": event_table(BIN_K, BIN_F, HORIZONS_PERP, "bin"),
+        "byb": event_table(BYB_K, BYB_F, HORIZONS_PERP, "byb"),
         "x": x_event_table(),
     }
     for cell, tab in tabs.items():

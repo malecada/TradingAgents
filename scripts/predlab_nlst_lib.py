@@ -147,14 +147,14 @@ def p0_stats(events: pd.DataFrame, col: str, date_col: str = "list_date",
     df = events.dropna(subset=[col]).sort_values(date_col)
     x = df[col].to_numpy()
     mean, t, p = nw_tstat(x, lag=lag)
-    ser = pd.Series(df[col].to_numpy(), index=pd.DatetimeIndex(df[date_col]))
+    dated = pd.Series(df[col].to_numpy(), index=pd.DatetimeIndex(df[date_col]))
     return {
         "n": int(len(df)),
         "mean": mean, "nw_t": t, "nw_p": p,
         "median": float(np.median(x)) if len(x) else np.nan,
         "sign_p": sign_test_p(x),
-        "years": year_sign_consistency(ser),
-        "concentration": concentration(ser),
+        "years": year_sign_consistency(dated),
+        "concentration": concentration(df[col]),  # unique (symbol) index
     }
 
 
