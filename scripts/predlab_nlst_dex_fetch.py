@@ -69,18 +69,30 @@ def rpc(method: str, params: list, tries: int = 6):
                 raise RuntimeError(r["error"].get("message", str(r["error"])))
             time.sleep(THROTTLE)
             return r["result"]
-        except Exception as e:  # noqa: BLE001 — backoff on any transport error
-            msg = str(e)
-            if "ranges over" in msg or "response size" in msg.lower():
-                raise  # caller bisects
+        except urllib.error.HTTPError as e:
+            # 4xx carries the JSON-RPC error body (e.g. range/size limits):
+            # surface it immediately so the caller can bisect — no retry.
+            txt = e.read()[:500].decode(errors="replace")
+            if 400 <= e.code < 500 and e.code != 429:
+                raise RuntimeError(f"HTTP {e.code}: {txt}")
+            time.sleep(min(60, 2.0 * 2 ** a))
+        except RuntimeError:
+            raise  # JSON-RPC error object: caller decides (bisect)
+        except Exception:  # noqa: BLE001 — transport error: backoff + retry
             time.sleep(min(60, 2.0 * 2 ** a))
     raise RuntimeError(f"rpc gave up: {method}")
 
 
 def get_logs(addr, topics, lo: int, hi: int) -> list:
-    """getLogs with recursive bisection on range/size errors."""
+    """getLogs, pre-chunked at the free-plan 10k-block limit, with recursive
+    bisection on any residual range/size error."""
     if hi < lo:
         return []
+    if hi - lo + 1 > CHUNK:
+        out = []
+        for a in range(lo, hi + 1, CHUNK):
+            out += get_logs(addr, topics, a, min(a + CHUNK - 1, hi))
+        return out
     try:
         return rpc("eth_getLogs", [{
             "fromBlock": hex(lo), "toBlock": hex(hi),
