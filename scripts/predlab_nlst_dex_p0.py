@@ -62,8 +62,12 @@ def pool_event(pool: dict, ts_of, ethusd: pd.Series) -> "dict | None":
     t_create = ts_of(meta["block"])
     entry = next((s for s in syncs if ts_of(s["block"]) >= t_create + DAY), None)
     if entry is None:
+        # forensic split: liquidity pulled within 24h (rug) vs merely idle
+        w24 = [(s["r0"] if weth_is_0 else s["r1"]) / 1e18 for s in syncs]
+        rugged = w24[-1] < 0.1 * max(w24)
         return {"pair": meta["pair"], "quarter": meta["quarter"],
-                "dead_before_entry": True}
+                "dead_before_entry": True,
+                "dead_reason": "rugged_24h" if rugged else "idle_24h"}
     t_entry = ts_of(entry["block"])
     hdr_e = header(entry["block"])
     eth_e = eth_usd_at(hdr_e["ts"], ethusd)
@@ -102,13 +106,13 @@ def main() -> None:
     ts_of = load_anchors()
     ethusd = eth_usd_series()
     pools = sorted((RAW / "pools").glob("*.json"))
-    rows, dead = [], 0
+    rows, dead = [], {"rugged_24h": 0, "idle_24h": 0}
     for p in pools:
         r = pool_event(json.loads(p.read_text()), ts_of, ethusd)
         if r is None:
             continue
         if r.get("dead_before_entry"):
-            dead += 1
+            dead[r["dead_reason"]] += 1
             continue
         rows.append(r)
     tab = pd.DataFrame(rows).set_index("pair").sort_values("list_date")
@@ -132,6 +136,8 @@ def main() -> None:
                "per_quarter_descriptive": per_q.round(4).to_dict("index")}
     p = write_result("dex_p0", payload)
     print(f"dex: n={len(tab)} dead_before_entry={dead} -> {p}")
+    print(f"  loss>=99% share: " + ", ".join(
+        f"{h}d={float((tab[f'ret{h}'] <= -0.99).mean()):.2f}" for h in HORIZONS_DEX))
     for name, st in stats.items():
         print(f"  {name}: n={st['n']} mean={st['mean']:+.4f} t={st['nw_t']:+.2f} "
               f"p={st['nw_p']:.4f} med={st['median']:+.4f} "
