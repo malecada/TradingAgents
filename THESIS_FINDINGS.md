@@ -5832,3 +5832,63 @@ Artifacts: `scripts/predlab_xfam_{lib,cal,amx,llg,pos,prx}.py` (+21 unit
 tests), `data/predlab/xfam/*_result.json`, ledger rows per config, gates
 `predlab_xfam` with per-family verdicts; commits b6a1af6→(hunt close) on
 research/prediction-lab.
+
+## Section 73: New-Listing / Low-Cap Discovery Events, Multi-Venue (nlst) — NEGATIVE 0/11 (2026-08-26/30)
+
+Last unattacked event family: do newly listed / newly discovered low-cap
+coins carry an exploitable post-listing drift or fade, net of honest
+venue-specific costs? Registered 2026-08-26 pre-result (gates `predlab_nlst`,
+charter `docs/superpowers/specs/2026-08-26-newlist-charter.md`, predlab
+worktree): four venue cells, 11 pre-named P0 event-study tests (two-sided NW
+t on cross-event mean, events ordered by listing date), BH-FDR q<0.10 across
+all 11, one-shot. Dev 2021-01-01→2025-03-31; holdout untouched
+(stop-and-decide checkpoint never reached).
+
+**Data-quality gate (pre-P0)**: 15-event announcement verification 14/15;
+the one miss (GLMRUSDT) exposed that Bybit truncates kline history for
+delisted instruments. Full-universe sweep against exchange metadata (Binance
+fapi `onboardDate`, Bybit v5 `launchTime` incl. per-symbol Closed queries):
+84 "listings" were store artifacts (79/432 Bybit, up to +994 days late
+(MATIC); 5/340 Binance, incl. the ICP relaunch +424d) — excluded by
+amendment recorded before any P0 run. Genuinely-new delisted listings
+retained, preserving survivorship safety.
+
+**Cells and verdicts** (all FAIL at P0):
+
+| Cell | n events | Tests (horizons) | min raw p | Verdict |
+|---|---|---|---|---|
+| nlst_bin (Binance perps) | 335 | 5/10/20d funding-adj | 0.189 | CLOSED |
+| nlst_byb (Bybit perps) | 353 | 5/10/20d funding-adj | 0.326 | CLOSED |
+| nlst_x (Bybit ret after Binance listing) | 73 | 5/10d | 0.293 | CLOSED |
+| nlst_dex (Uniswap v2, $1k net) | 418 | 3/7/14d | 0.522 | CLOSED |
+
+BH-FDR q<0.10 needs min p ≤ 0.009 at rank 1; nothing within a factor of 20.
+
+**Perp descriptives** (thesis-grade, not registered survivors): median
+event returns are strongly negative and monotone in horizon — Binance
+−7.1%/−11.2%/−16.3% at 5/10/20d, Bybit −4.6%/−9.9%/−14.7%, sign-test
+p≈10⁻⁶ — while means sit at −2±3% (insignificant): the typical new listing
+fades hard, but a right tail of moonshots rescues the mean, and a short
+position earns the mean, not the median. Top-1 concentration ≤5% (no FTT
+repeat); funding booked throughout.
+
+**DEX cell realism** (survivorship-complete by construction): 383,874
+Uniswap v2 PairCreated events enumerated 2021→2025Q1 via free archive RPC;
+21,919 pools screened under pre-registered PIT filters (WETH quote, ≥10 WETH
+first-day depth, ≥20 swaps/24h, ≥1 successful sell, major-token exclusion) to
+a seeded 60/quarter sample of 1,020. Of those KEEP pools, **598 (59%) had
+liquidity pulled within the first 24h** (rug before the hour-24 entry), 4
+idle; of 418 entered positions, 47-53% end ≤−99% by horizon; medians
+−90…−100%. Costs modeled exactly: 0.30% LP fee/side, constant-product
+execution against actual entry/exit reserves, per-block basefee gas; $5k
+cost-stress means all negative. Buying day-old Uniswap pools is a lottery
+ticket with a deeply negative median and no significant mean edge — even
+before un-modeled MEV/sandwich losses (disclosed limitation).
+
+Conclusion: the new-listing family joins the falsification record — 0/4
+venues, 0/11 tests. Program-wide count of validated strategies remains zero
+(Sections 70-72). Reusable assets: the PairCreated enumeration + 1,020-pool
+Sync/Swap event windows + screening funnel (`data/predlab/nlst/dex_raw/`),
+the metadata-verified listing-event tables for both perp venues, and the
+event-study lib (`scripts/predlab_nlst_lib.py`, 14 unit tests). Commits
+27f04c2→4258d82 on research/prediction-lab.
