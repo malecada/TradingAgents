@@ -57,7 +57,13 @@ CHUNK = 10_000
 THROTTLE = 0.22            # s between calls
 
 
-def rpc(method: str, params: list, tries: int = 6):
+def _transient(msg: str) -> bool:
+    m = msg.lower()
+    return any(k in m for k in ("overloaded", "retry later", "rate limit",
+                                "too many", "timeout", "temporarily"))
+
+
+def rpc(method: str, params: list, tries: int = 8):
     body = json.dumps({"jsonrpc": "2.0", "id": 1, "method": method,
                        "params": params}).encode()
     for a in range(tries):
@@ -66,14 +72,18 @@ def rpc(method: str, params: list, tries: int = 6):
                 "Content-Type": "application/json", "User-Agent": "curl/8.5.0"})
             r = json.loads(urllib.request.urlopen(req, timeout=60).read())
             if "error" in r:
-                raise RuntimeError(r["error"].get("message", str(r["error"])))
+                msg = str(r["error"].get("message", r["error"]))
+                if _transient(msg):
+                    time.sleep(min(60, 2.0 * 2 ** a))
+                    continue
+                raise RuntimeError(msg)
             time.sleep(THROTTLE)
             return r["result"]
         except urllib.error.HTTPError as e:
             # 4xx carries the JSON-RPC error body (e.g. range/size limits):
             # surface it immediately so the caller can bisect — no retry.
             txt = e.read()[:500].decode(errors="replace")
-            if 400 <= e.code < 500 and e.code != 429:
+            if 400 <= e.code < 500 and e.code != 429 and not _transient(txt):
                 raise RuntimeError(f"HTTP {e.code}: {txt}")
             time.sleep(min(60, 2.0 * 2 ** a))
         except RuntimeError:
