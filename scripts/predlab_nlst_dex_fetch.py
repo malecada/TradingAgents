@@ -60,7 +60,7 @@ THROTTLE = 0.22            # s between calls
 def _transient(msg: str) -> bool:
     m = msg.lower()
     return any(k in m for k in ("overloaded", "retry later", "rate limit",
-                                "too many", "timeout", "temporarily"))
+                                "too many", "timeout", "temporarily", "route", "unavailable"))
 
 
 def rpc(method: str, params: list, tries: int = 8):
