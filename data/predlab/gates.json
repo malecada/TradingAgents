@@ -1966,15 +1966,20 @@
   "concentration": "top-1 event |contribution| <= 50%; all stats with and without top event (FTT lesson)",
   "champion_extra": "DSR>0.5, n_trials = nlst ledger + prior program trials (house denominator)",
   "stop_rule": "per-cell P0 FAIL = cell closed; 0/4 = family closes negative, THESIS section 73 + memory either way",
-  "verdicts": {},
+  "verdicts": {
+   "nlst_bin": "FAIL at P0 \u2014 0/3 survive BH-FDR q<0.10 (min raw p=0.1889 at bin_5d); cell CLOSED",
+   "nlst_byb": "FAIL at P0 \u2014 0/3 survive BH-FDR q<0.10 (min raw p=0.3264 at byb_5d); cell CLOSED",
+   "nlst_x": "FAIL at P0 \u2014 0/2 survive BH-FDR q<0.10 (min raw p=0.2929 at x_10d); cell CLOSED",
+   "nlst_dex": "FAIL at P0 \u2014 0/3 survive BH-FDR q<0.10 (min raw p=0.5219 at dex_7d); cell CLOSED"
+  },
   "data_quality_result": {
    "checked_utc": "2026-08-26",
    "sample_15": "14/15 match <=1d; 1 mismatch GLMRUSDT (Bybit store first bar 2023-10-06 vs real launch 2022-03-30 = store truncation). Gate PASS (threshold >2/15).",
    "full_sweep": {
     "binance": "321/340 events checked vs fapi onboardDate; 5 contradicted >7d (ICPUSDT +424 relaunch, GTCUSDT +88, MASKUSDT +42, REEFUSDT +28, UNFIUSDT +10); 19 delisted unverifiable",
-    "bybit": "308/432 checked vs v5 launchTime; 7 contradicted >7d (ADAUSDT +62, XMRUSDT +23, THETAUSDT/TRXUSDT/XLMUSDT/AXSUSDT/COMPUSDT +19); 124 delisted unverifiable"
+    "bybit": "432/432 events checked vs v5 launchTime (current + per-symbol Closed queries); 79 contradicted >7d (7 current incl ADA +62; 72 delisted incl MATIC +994, GLMR +555 \u2014 Bybit truncates kline history for delisted instruments); 0 unverifiable"
    },
-   "amendment_pre_result": "events whose store first bar postdates exchange-metadata launch by >7d are EXCLUDED as store artifacts (not genuine new listings): 5 Binance + 7 Bybit + GLMRUSDT (agent-verified truncation) = 13 excluded. Unverifiable delisted-symbol events RETAINED (excluding them would reintroduce survivorship bias) \u2014 disclosed limitation. Amendment recorded BEFORE any P0 run."
+   "amendment_pre_result": "events whose store first bar postdates exchange-metadata launch by >7d are EXCLUDED as store artifacts (not genuine new listings): 5 Binance + 79 Bybit = 84 excluded. Binance: 19 delisted events unverifiable (fapi lists current only) \u2014 RETAINED, disclosed. Bybit: fully verified, genuinely-new delisted listings retained. Amendment recorded BEFORE any P0 run."
   }
  }
 }
