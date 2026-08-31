@@ -1981,5 +1981,25 @@
    },
    "amendment_pre_result": "events whose store first bar postdates exchange-metadata launch by >7d are EXCLUDED as store artifacts (not genuine new listings): 5 Binance + 79 Bybit = 84 excluded. Binance: 19 delisted events unverifiable (fapi lists current only) \u2014 RETAINED, disclosed. Bybit: fully verified, genuinely-new delisted listings retained. Amendment recorded BEFORE any P0 run."
   }
+ },
+ "predlab_nlst2": {
+  "registered_utc": "2026-08-31",
+  "charter": "docs/superpowers/specs/2026-08-31-nlst2-dexlegit-charter.md",
+  "purpose": "DEX legitimacy-classifier entry (user hypothesis): 8 pre-named PIT on-chain features at h24, equal-weight pre-signed z composite, buy-if-legit; CEX + social out of scope (charter)",
+  "motivation_bound": "nlst DEX panel perfect-foresight no-rug means +73%..+224%, break-even bought-set rug rate 42% vs 54% base (exploratory forensics 2026-08-31, pre-registration)",
+  "sample": "existing 1020 KEEP pools + BLIND extension to 120/quarter (same screening, seed=7 continuation) before any feature-outcome stat; dev 2021-01-01..2025-03-31; entry/exit/costs identical to nlst_dex",
+  "features_frozen": [
+   "F1 lp_secured",
+   "F2 deployer_age (=first-LP-mint recipient nonce)",
+   "F3 deployer_supply_share",
+   "F4 pool_supply_share (amended from holder_conc pre-computation)",
+   "F5 buyer_breadth",
+   "F6 sell_ratio",
+   "F7 sell_tax_proxy",
+   "F8 depth_growth"
+  ],
+  "P0_gate": "one-shot, both must pass: T1 rug-AUC(composite) >= 0.65 AND quarter-block bootstrap 5th-pct >= 0.55; T2 top-half-score mean net ret7 > 0, NW one-sided p < 0.05, AND ex-top-event mean > 0. FAIL => cycle CLOSED, no re-weighting/threshold moves/new features",
+  "P1": "ONE frozen config: buy top-half at h24, $1k, hold 7d, nlst cost model, 1/50 position cap; house gates; STOP-AND-DECIDE with user before holdout",
+  "verdicts": {}
  }
 }
