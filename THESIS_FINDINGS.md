@@ -5936,3 +5936,51 @@ Program-wide validated strategies remain zero. Artifacts:
 `data/predlab/nlst/nlst2_*.{parquet,json}`, 2,040-pool screened sample +
 per-pool feature caches reusable; commits 41115a9→(close) on
 research/prediction-lab.
+
+## Section 75: DEX Moonshot Ranking via Smart-Money Wallet Tracking (nlst3) — Signal PASS, Economics FAIL (2026-09-01)
+
+Third and final pre-registered cycle on the new-pool panel (§73 unconditional,
+§74 legitimacy classifier), targeting future performance directly: rank pools
+by wallet-intelligence features, buy the top quintile. Registered pre-result
+(gates `predlab_nlst3`); contamination controlled by construction — a blind
+sample extension (120→180 pools/quarter; 3,060 pools, 1,205 entered) with all
+P0 statistics evaluated exclusively on the 389 virgin extension events never
+touched by prior cycles.
+
+Features (frozen pre-computation): smart-money volume share and breadth
+(expanding PIT track records of first-day buyers — ≥3 completed prior pools,
+top quintile of records; 97.5% coverage), serial-deployer performance/count,
+early net inflow, buy acceleration, ownership-renounced, plus three carried
+controls with disclosed in-sample signs. Equal-weight pre-signed per-quarter
+z composite; no fitting or threshold search. Economic bar pre-stated: a
+positive top-quintile mean needs ~2.5-3× moonshot enrichment (base rate
+P(ret7 > +100%) = 3.2-5.2%).
+
+**Verdict: FAIL — the program's closest miss.**
+
+- T1 (existence) PASS: composite Spearman IC vs net ret7 = **+0.136**
+  (p = 0.007; quarter-block bootstrap 5th-pct +0.061) on virgin events — the
+  first genuinely positive out-of-sample predictive result of the program.
+  Smart-money features carry it: volshare IC +0.29, breadth +0.38,
+  buy-acceleration +0.50; IC_moon +0.146.
+- T2 (economics) FAIL: top-quintile (n = 78) mean net ret7 = **+72.6%**
+  against an eval-set mean of −31.4%, with moonshot enrichment 14.1% vs 5.2%
+  (2.7×, at the pre-stated bar) — but the NW one-sided p is 0.22 and the
+  ex-top-event mean is −2.2%: a single event carries the entire profit
+  (top-1 share 38%, within the ≤50% cap but decisive). Median top-quintile
+  return −79%.
+
+Interpretation: smart-wallet tracking contains real information about which
+day-old pools will perform — the direction the §74 inversion pointed to —
+but at deployable scale the payoff remains a single-ticket lottery: 78
+selections, one big winner, everything else bleeding. The registered gate
+(significance + ex-top robustness) exists precisely to reject one-event
+results, and it did. Family CLOSED at P0; any revival requires a new
+registered cycle with a substantially larger blind sample (the screening
+funnel holds thousands of unsampled candidates per quarter) to power the
+tail claim honestly.
+
+Program-wide validated strategies remain zero. Artifacts:
+`scripts/predlab_nlst3_{features,p0}.py` (+5 unit tests),
+`data/predlab/nlst/nlst3_*.{parquet,json}`; wallet-ledger machinery and the
+3,060-pool sample reusable; commits 74ab412→(close) on research/prediction-lab.
