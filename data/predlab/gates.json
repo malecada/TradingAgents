@@ -2024,6 +2024,8 @@
   "composite": "equal-weight signed per-quarter z, >=6 features; no fitting/tuning/threshold search; track record = mean net ret7 of pools a wallet bought in h24, >=3 priors completed (entry+7d) before current pool creation; smart = top quintile of qualified wallets at that time",
   "P0_gate": "one-shot, eval set = per-quarter KEEPs #121-180 only, both must pass: T1 Spearman IC(composite, ret7)>0 with quarter-block bootstrap 5th-pct>0; T2 top-quintile mean net ret7>0, NW one-sided p<0.05, ex-top>0, top-1 contrib<=50%. FAIL => family CLOSED",
   "P1": "ONE frozen config: top-quintile, $1k, hold 7d, nlst cost model, 1/50 cap; house gates; STOP-AND-DECIDE before holdout",
-  "verdicts": {}
+  "verdicts": {
+   "nlst3_moonshot": "FAIL at P0 \u2014 T1 IC=+0.136 (boot p5 +0.061) PASS; T2 top-quintile mean ret7=+0.726 p1=0.2246 ex-top=-0.022 top1=0.38 FAIL; family CLOSED"
+  }
  }
 }
