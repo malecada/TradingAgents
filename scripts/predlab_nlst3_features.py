@@ -33,7 +33,29 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from predlab_nlst_dex_fetch import RAW, get_logs, jdump, jload  # noqa: E402
 from predlab_nlst2_features import anchor_maps  # noqa: E402
-from predlab_nlst2_p0 import build_events  # noqa: E402  (fresh EVENTS build)
+from predlab_nlst_dex_p0 import (  # noqa: E402
+    eth_usd_series, load_anchors, pool_event,
+)
+
+
+def build_events3() -> "pd.DataFrame":
+    """Own event table over the FULL 3,060-pool sample (cached at EVENTS3);
+    never touches the closed nlst2 cycle's nlst2_events.parquet artifact."""
+    if EVENTS3.exists():
+        return pd.read_parquet(EVENTS3)
+    ts_of = load_anchors()
+    ethusd = eth_usd_series()
+    rows = []
+    pools = sorted((RAW / "pools").glob("*.json"))
+    for i, pp in enumerate(pools):
+        r = pool_event(json.loads(pp.read_text()), ts_of, ethusd)
+        if r is not None and not r.get("dead_before_entry"):
+            rows.append(r)
+        if i % 100 == 0:
+            print(f"events3: {i}/{len(pools)}", flush=True)
+    tab = pd.DataFrame(rows).set_index("pair").sort_values("list_date")
+    tab.to_parquet(EVENTS3)
+    return tab
 
 RAW2 = ROOT / "data" / "predlab" / "nlst" / "nlst2_raw"
 RAW3 = ROOT / "data" / "predlab" / "nlst" / "nlst3_raw"
@@ -192,8 +214,7 @@ def fetch_ownership(meta: dict, b24: int) -> bool:
 def main() -> None:
     RAW3.mkdir(parents=True, exist_ok=True)
     ts_of, blk_at = anchor_maps()
-    ev = build_events()  # extended event table (fetches new headers on demand)
-    ev.to_parquet(EVENTS3)
+    ev = build_events3()  # full-sample events (fetches new headers on demand)
     f2 = pd.read_parquet(NLST2_FEATS)
     sm_entries, dep_entries, rows = [], [], []
     pools = {p.stem: p for p in (RAW / "pools").glob("*.json")}
