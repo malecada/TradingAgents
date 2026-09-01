@@ -2003,5 +2003,27 @@
   "verdicts": {
    "nlst2_dexlegit": "FAIL at P0 \u2014 T1 AUC=0.650 (boot p5 0.602) PASS; T2 top-half mean ret7=-0.478 p1=1.0000 ex-top=-0.504 FAIL; cycle CLOSED"
   }
+ },
+ "predlab_nlst3": {
+  "registered_utc": "2026-09-01",
+  "charter": "docs/superpowers/specs/2026-09-01-nlst3-moonshot-charter.md",
+  "purpose": "DEX future-performance ranking: smart-money wallet tracking + serial-deployer history + flow features; buy top quintile. Third pre-registered bite; P0 evaluated ONLY on fresh blind extension (~400 virgin events)",
+  "context": "moonshot base rate 3.2% (ret7>+100%), no prior feature IC_moon>=0.1, top-decile foresight +353%; economic bar: top-quintile positive mean needs ~2.5-3x tail enrichment \u2014 dies at P0 if smart-money weak (by design)",
+  "features_frozen": [
+   "G1 smart_money_volshare(+)",
+   "G2 smart_money_breadth(+)",
+   "G3 serial_deployer_perf(+)",
+   "G4 serial_deployer_count(-)",
+   "G5 early_net_inflow(+)",
+   "G6 buy_acceleration(+)",
+   "G7 ownership_renounced(-)",
+   "C1 deployer_supply_share(+, disclosed in-sample sign)",
+   "C2 deployer_age(-, disclosed)",
+   "C3 depth_growth(+, disclosed)"
+  ],
+  "composite": "equal-weight signed per-quarter z, >=6 features; no fitting/tuning/threshold search; track record = mean net ret7 of pools a wallet bought in h24, >=3 priors completed (entry+7d) before current pool creation; smart = top quintile of qualified wallets at that time",
+  "P0_gate": "one-shot, eval set = per-quarter KEEPs #121-180 only, both must pass: T1 Spearman IC(composite, ret7)>0 with quarter-block bootstrap 5th-pct>0; T2 top-quintile mean net ret7>0, NW one-sided p<0.05, ex-top>0, top-1 contrib<=50%. FAIL => family CLOSED",
+  "P1": "ONE frozen config: top-quintile, $1k, hold 7d, nlst cost model, 1/50 cap; house gates; STOP-AND-DECIDE before holdout",
+  "verdicts": {}
  }
 }

@@ -47,7 +47,7 @@ EXCLUDE_TOKENS = {
 }
 
 SEED = 7
-KEEP_PER_Q = 120  # nlst2 blind extension (charter 2026-08-31)
+KEEP_PER_Q = 180  # nlst3 blind extension (charter 2026-09-01)
 QUARTERS = [f"{y}Q{q}" for y in range(2021, 2025) for q in range(1, 5)] + ["2025Q1"]
 BLOCKS_24H = 7200          # ~12s blocks
 BLOCKS_16D = 16 * 7200     # event window incl. 14d horizon + buffer
