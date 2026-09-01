@@ -5892,3 +5892,47 @@ Sync/Swap event windows + screening funnel (`data/predlab/nlst/dex_raw/`),
 the metadata-verified listing-event tables for both perp venues, and the
 event-study lib (`scripts/predlab_nlst_lib.py`, 14 unit tests). Commits
 27f04c2→4258d82 on research/prediction-lab.
+
+## Section 74: DEX Legitimacy Classifier (nlst2) — Discrimination PASS, Economics FAIL (2026-08-31/09-01)
+
+Follow-up to §73 testing the conditional variant (user hypothesis): classify
+new Uniswap v2 pools as legit vs scam from PIT on-chain features at the
+hour-24 entry, buy only legit. Registered pre-result 2026-08-31 (gates
+`predlab_nlst2`); motivated by a perfect-foresight bound on the closed §73
+panel: never-rugged subsets had positive means (+73%…+224%) and break-even
+bought-set rug rate 42% vs 54% base — a moderately good rug classifier could
+in principle flip EV positive. News/social excluded (no free PIT history for
+day-old microcaps); CEX excluded (listing already a legitimacy screen, §73).
+
+Design: blind sample extension 60→120 pools/quarter (2,040 screened-KEEP
+pools, 816 entered, 813 scored; features ≥99% available), 8 pre-named
+features frozen before any feature-outcome statistic — LP burned/locked
+share, deployer nonce, deployer supply share, pool supply share, buyer
+breadth, sell ratio, sell-tax proxy (realized sell output vs constant-product
+expectation), depth growth — equal-weight pre-signed per-quarter z composite,
+no fitting or threshold search. One-shot P0: T1 rug-AUC ≥ 0.65 with
+quarter-block bootstrap 5th-pct ≥ 0.55 AND T2 top-half economic transfer
+(mean net ret7 > 0, NW one-sided p<0.05, ex-top-event positive).
+
+**Verdict: FAIL — and the failure mode is the finding.**
+
+- T1 PASS: AUC 0.650 (bootstrap p5 0.602). The on-chain legitimacy signal is
+  real: top-half legit-score pools survive 14d un-rugged 45% of the time vs
+  27% for the bottom half.
+- T2 FAIL, inverted: top-half mean net ret7 = **−47.8%** (NW t = −8.8,
+  median −72%), WORSE than the bottom half (−23.1%), despite surviving more.
+
+Legitimacy and profitability are anti-correlated conditional on entry:
+"safe" pools (locked LP, seasoned deployers, broad buyers, no sell tax)
+don't rug — they bleed monotonically; the moonshot right tail that carried
+the perfect-foresight bound sits disproportionately in the scammy-looking
+bucket, where it is inseparable ex ante from the rugs that destroy it. Rug
+avoidance ≠ return. The foresight bound was real but unreachable: the
+conditioning information that removes rugs also removes the tail.
+
+Cycle CLOSED at P0 (no re-weighting, no threshold moves, per charter).
+Program-wide validated strategies remain zero. Artifacts:
+`scripts/predlab_nlst2_{features,p0}.py` (+7 unit tests),
+`data/predlab/nlst/nlst2_*.{parquet,json}`, 2,040-pool screened sample +
+per-pool feature caches reusable; commits 41115a9→(close) on
+research/prediction-lab.
