@@ -8,6 +8,7 @@ and lets the model learn cross-asset patterns.
 from __future__ import annotations
 
 import logging
+import os
 
 import numpy as np
 import pandas as pd
@@ -29,15 +30,29 @@ def _build_lgb():
     import lightgbm as lgb
 
     cfg = get_config().get("prediction_models", {})
+    # LGB_SEED / LGB_BAGGING / LGB_FEATURE: research-only overrides for the
+    # seed-ensemble variance study. Production default = seed 42, NO subsampling
+    # (deterministic GBDT). To get genuine seed diversity, set bagging<1 + freq>0
+    # and/or feature<1 — otherwise random_state has zero effect.
+    seed = int(os.environ.get("LGB_SEED", "42"))
+    bagging = float(os.environ.get("LGB_BAGGING", "1.0"))
+    feature = float(os.environ.get("LGB_FEATURE", "1.0"))
+    extra = {}
+    if bagging < 1.0:
+        extra["subsample"] = bagging
+        extra["subsample_freq"] = 1
+    if feature < 1.0:
+        extra["colsample_bytree"] = feature
     return lgb.LGBMRegressor(
         n_estimators=cfg.get("lgb_n_estimators", 500),
         max_depth=cfg.get("lgb_max_depth", -1),
         learning_rate=cfg.get("lgb_learning_rate", 0.05),
         num_leaves=cfg.get("lgb_num_leaves", 31),
         min_child_samples=cfg.get("lgb_min_child", 20),
-        random_state=42,
+        random_state=seed,
         verbose=-1,
         n_jobs=1,
+        **extra,
     )
 
 

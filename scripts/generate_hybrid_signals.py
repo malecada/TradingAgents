@@ -49,6 +49,9 @@ def parse_args():
     p.add_argument("--deep-think", default="gpt-4o-mini")
     p.add_argument("--quick-think", default="gpt-4o-mini")
     p.add_argument("--output-dir", default="data/hybrid_signals_p1")
+    p.add_argument("--prompt-version", choices=("v1", "v2"), default="v1",
+                   help="Modulator prompt semantics. v1 = frozen (thesis "
+                        "§23); v2 = realigned with composition formula.")
     p.add_argument("--anonymize", action="store_true",
                    help="Enable asset-name anonymization (Tier A4)")
     p.add_argument("--sentiment-mode", choices=["legacy", "v3"], default="legacy",
@@ -304,6 +307,7 @@ def main():
     cfg["asset_class"] = "crypto"
     cfg["replay_cache"] = True
     cfg["anonymize_assets"] = bool(args.anonymize)
+    cfg["modulator_prompt_version"] = args.prompt_version
     cfg["sentiment_mode"] = args.sentiment_mode
     cfg["sentiment_anonymize"] = args.sentiment_anonymize or (args.sentiment_mode == "v3")
     cfg["sentiment_v3_skip_llm"] = args.sentiment_skip_llm
@@ -319,6 +323,7 @@ def main():
     print(f"  Period     : {args.start} -> {args.end}")
     print(f"  Analysts   : {', '.join(args.analysts)}")
     print(f"  LLM        : {args.deep_think} / {args.quick_think}")
+    print(f"  PromptVer  : {args.prompt_version}")
     print(f"  Anonymize  : {args.anonymize}")
     print(f"  Output     : {args.output_dir}")
     print()

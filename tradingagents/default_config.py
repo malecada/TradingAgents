@@ -100,6 +100,11 @@ DEFAULT_CONFIG = {
     "uncertainty_dampener_k": 1.0,
     "edge_dampener_k": 1.0,
     "rolling_edge_min_trades": 10,  # cold-start threshold per coin
+    # Modulator prompt semantics. "v1" (frozen, reproduces THESIS §23/§23.9) labels
+    # multiplier 0.0 as "trust quant only" — contradicts the composition formula
+    # (neutral = 1.0). "v2" realigns the prompt with the math. Keep v1 default until
+    # the v2 A/B passes its gate; see specs/2026-06-16-modulator-multiplier-semantics-scope.md.
+    "modulator_prompt_version": "v1",
     "quant_pred_dir": "data/multi_2coins_v2",
     "regime_hmm_path_template": "data/checkpoints/regime_hmm_{coin}.pkl",
     # Asset-name anonymization (Tier A4 / Glasserman & Lin 2309.17322).
