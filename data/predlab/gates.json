@@ -2000,6 +2000,8 @@
   ],
   "P0_gate": "one-shot, both must pass: T1 rug-AUC(composite) >= 0.65 AND quarter-block bootstrap 5th-pct >= 0.55; T2 top-half-score mean net ret7 > 0, NW one-sided p < 0.05, AND ex-top-event mean > 0. FAIL => cycle CLOSED, no re-weighting/threshold moves/new features",
   "P1": "ONE frozen config: buy top-half at h24, $1k, hold 7d, nlst cost model, 1/50 position cap; house gates; STOP-AND-DECIDE with user before holdout",
-  "verdicts": {}
+  "verdicts": {
+   "nlst2_dexlegit": "FAIL at P0 \u2014 T1 AUC=0.650 (boot p5 0.602) PASS; T2 top-half mean ret7=-0.478 p1=1.0000 ex-top=-0.504 FAIL; cycle CLOSED"
+  }
  }
 }
