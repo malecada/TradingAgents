@@ -4007,32 +4007,33 @@ recovery by 2025-03-31 — the grid is not producing an
 implausible drawdown artifact, it is reproducing a real, well-known
 period.
 
-### 43.4 P1 mechanism: tail-selection into volatility, not a reversal story
+### 43.4 P1 mechanism (rewritten 2026-09-02): a thin long-only edge under simple returns, not tail-selection into volatility
 
-An un-ledgered diagnostic check sorted the same L-day cumulative-return
-score in the **ascending** (loser) direction instead of descending
-(winner) — the opposite tail of the identical distribution. That
-diagnostic also underperforms: net SR −0.778, `placebo_p` 0.988. Both
-tails of the L-day-return sort underperform random rank draws by a wide
-margin. This rules out the most likely rescue hypothesis (momentum should
-be inverted into a reversal/mean-reversion signal): if the losers were
-underpriced, the ascending sort would show a strong positive edge, not
-another failing placebo score. The mechanism instead looks like
-**tail-selection into volatility**: picking any K=10-20 names by extreme
-rank (either direction) out of a 67-100-name universe concentrates the
-portfolio into the highest-realized-volatility names of the period,
-without buying compensating expected return. This reads directly from the
-placebo distribution itself: the median placebo SR (**−0.487**, the
-expected SR of 500 *random* K-name draws from the same universe) is
-already below the full-universe benchmark (−0.417) — concentrating from
-100 names down to 10-20 names, with **no ranking skill at all**, already
-costs Sharpe. Actual ranking (by either momentum tail) subtracts further
-from that already-degraded concentrated baseline rather than adding to
-it. Engine correctness for this conclusion was cross-validated
-bit-identical between the reviewed reference path and the vectorized grid
-path — in-run on the benchmark leg (1.67e-16) and in the forensic review on
-two high-turnover momentum configs (5.6e-17) — and the house DSR recipe was
-verified against `n_trials_at_eval = 74`.
+*Original text (2026-07-14) withdrawn; see §43.8 for the convention-swap
+addendum and the numbers.* The paragraph that stood here attributed the
+0/12 result to "tail-selection into volatility": both the descending
+(winner) and an un-ledgered ascending (loser) sort of the L-day score
+underperformed random K-name draws, the median placebo SR (−0.487) sat
+below the full-universe benchmark (−0.417), and concentration itself was
+read as costing Sharpe. Every number in that argument was produced by an
+engine that booked Σw·Δlog as portfolio PnL (`xsect/portfolio.py` and the
+vectorised twin in `xs_mom_dev.py`; `AUDIT_RESEARCH_PROGRAM_2026-09-02.md`
+§2). For a long-only book that convention subtracts ½σ² per day from every
+holding, and at the realised volatilities of a 10–20-name alt basket that
+term is ≈ +0.9 Sharpe: the equal-weight top-100 benchmark is +0.482 under
+simple returns, not −0.417, and the "concentration costs Sharpe" reading was
+the ½σ² penalty growing with the volatility of the selected names, not a
+selection effect. Under simple returns the winner sort at L=28/skip 0/K=10
+earns net SR +0.692 against the +0.482 benchmark (ΔSR +0.21, p_pos 0.81,
+placebo p 0.02), and the L=14 and L=28 rows clear the rank-permutation
+placebo at every K — a thin, placebo-clearing, positive momentum edge that
+fails the registered absolute floor (0.8), the p_pos floor (0.85) and DSR.
+The 0/12 verdict stands; the mechanism claim does not. The ascending-tail
+diagnostic was not re-run under simple returns and no reversal claim is made
+either way. Engine correctness of the *log* path remains as stated (reference
+and vectorised twins bit-identical, 1.67e-16 / 5.6e-17); the 2026-09-02
+lead-0 fix makes both paths book simple returns and pins the corrected
+numbers to 1e-6 (`tests/xsect/test_convention_fix.py`).
 
 ### 43.5 D1: F&G sentiment-beta, standalone middle-quintile — dev result (FAIL, 0/5 gates)
 
@@ -4116,6 +4117,44 @@ same-bar look-ahead, unpurged labels, and post-hoc tuning are removed,
 even mechanism-verified published effects (post-2020 CS momentum,
 nonlinear F&G-beta pricing) do not clear a pre-registered net-of-cost bar
 on this data and this implementation.
+
+### 43.8 Convention-swap addendum (2026-09-02): P1 and D1 re-priced under simple returns
+
+Retroactive application of the Aug-24 convention-swap kill-test
+(`AUDIT_RESEARCH_PROGRAM_2026-09-02.md` §2; forensic script and results in
+`master_thesis/data/audit_2026-09-02/`, re-run at the registered 500 placebo
+draws in `n500/`). Signals, universes, weights, costs and windows are the
+registered ones; only the return matrix fed to the PnL step is swapped from
+Δlog to expm1(Δlog). The registered log numbers reproduce exactly (parity
+column), so the shift is the convention alone.
+
+| L | skip | K | registered net SR (log) | net SR (simple) | ΔSR vs EW-100 | p_pos | placebo p (500) | DSR (n=74) |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 7 | 0 | 10 | −0.748 | +0.512 | +0.030 | 0.541 | 0.156 | 0.086 |
+| 7 | 0 | 20 | −0.695 | +0.425 | −0.057 | 0.344 | 0.355 | 0.060 |
+| 7 | 1 | 10 | −0.701 | +0.429 | −0.053 | 0.389 | 0.345 | 0.062 |
+| 7 | 1 | 20 | −0.638 | +0.418 | −0.064 | 0.303 | 0.389 | 0.059 |
+| 14 | 0 | 10 | −0.559 | +0.691 | +0.209 | 0.818 | **0.020** | 0.161 |
+| 14 | 0 | 20 | −0.553 | +0.566 | +0.084 | 0.694 | **0.028** | 0.104 |
+| 14 | 1 | 10 | −0.661 | +0.508 | +0.026 | 0.541 | 0.160 | 0.084 |
+| 14 | 1 | 20 | −0.597 | +0.462 | −0.020 | 0.422 | 0.220 | 0.070 |
+| 28 | 0 | 10 | −0.520 | **+0.692** | +0.210 | 0.809 | **0.020** | 0.163 |
+| 28 | 0 | 20 | −0.479 | +0.626 | +0.144 | **0.840** | **0.004** | 0.128 |
+| 28 | 1 | 10 | −0.493 | +0.664 | +0.182 | 0.784 | **0.032** | 0.145 |
+| 28 | 1 | 20 | −0.542 | +0.504 | +0.023 | 0.544 | 0.110 | 0.083 |
+
+EW top-100 benchmark: −0.417 registered → **+0.482** simple (+0.90). D1
+(F&G middle quintile): −0.418 → +0.427, ΔSR −0.054, placebo 0.303 —
+unchanged in every respect. Gate outcome under simple returns: still 0/12
+(best row misses the 0.8 floor by 0.11, p_pos 0.81 < 0.85, DSR 0.16 < 0.9),
+so the §43.7 verdict stands. What changes is the classification: five of
+the twelve rows clear the rank-permutation placebo at p ≤ 0.05 and beat the
+benchmark, which makes P1 a *bar-bound* kill (class B in the audit) rather
+than an evidence kill, and the §43.4 mechanism paragraph is withdrawn as
+written above. The L=28/skip 0/K=10 configuration is frozen as sleeve S3 of
+the registered combination one-shot `combo_c1` (§76). Multiplicity note:
+this addendum re-prices registered configurations only; no new
+configuration was evaluated and the ledger denominator is unchanged.
 
 ## Section 45: Wide-Universe Trend Following (trend_wide_t1) — Dev-Gate NEGATIVE, Holdout Unspent (2026-07-28)
 
@@ -4365,6 +4404,34 @@ AdaptiveTrend for this section) remain unreproduced in-house once a
 survivorship-safe PIT universe, honest t+1 costs, and a dual-placebo test for
 cross-coin co-activation are applied. Revival of either lead requires a new
 pre-registered cycle, not a retrofit onto this one.
+
+### 45.7 Convention-swap addendum (2026-09-02): trend_wide_t1 re-priced under simple returns
+
+Same protocol as §43.8 (`AUDIT_RESEARCH_PROGRAM_2026-09-02.md` §2; 500-draw
+re-run in `master_thesis/data/audit_2026-09-02/n500/`). `build_matrices`
+kept Δlog for SIGMA and the votes; only `run_daily_portfolio`'s return
+matrix was swapped. Registered log numbers reproduce exactly.
+
+| N | vol_target | registered net SR (log) | net SR (simple) | ΔSR vs EW-N | p_pos | placebo p worse (500) [registered] | DSR (n=87) |
+|---:|---:|---:|---:|---:|---:|---|---:|
+| 10 | 0.2 | +0.337 | +0.804 | +0.460 | 0.873 | 0.427 [0.383] | 0.206 |
+| 10 | 0.3 | +0.337 | +0.803 | +0.459 | 0.872 | 0.429 [0.385] | 0.206 |
+| 10 | 0.4 | +0.317 | +0.786 | +0.442 | 0.866 | 0.459 [0.401] | 0.196 |
+| 20 | 0.2 | +0.374 | **+0.916** | +0.610 | **0.956** | 0.255 [0.271] | 0.274 |
+| 20 | 0.3 | +0.373 | +0.915 | +0.609 | 0.956 | 0.253 [0.273] | 0.273 |
+| 20 | 0.4 | +0.359 | +0.902 | +0.596 | 0.954 | 0.271 [0.283] | 0.265 |
+
+Benchmarks: EW top-10 −0.484 → +0.344; EW top-20 −0.505 → +0.306. The
+long-flat book gains less than its always-long benchmark would if fully
+invested (it is flat part of the time, so its ½σ² penalty was smaller), yet
+every config still beats the benchmark by +0.44 to +0.61 with p_pos 0.87–0.96
+— the §45.4 finding that the outperformance is exposure rather than timing
+is unchanged, and the placebo gate still fails under both families (worse
+p 0.25–0.46 vs 0.05). The absolute floor is missed by less than the
+registered narrative implied (0.916 vs 1.0, not 0.374 vs 1.0). Verdict
+0/6 stands; the narrative that the strategy "earns +0.34–0.37 net" is
+withdrawn. trend_wide is excluded from `combo_c1` (§76) because its placebo
+failure identifies exposure, not a timing edge.
 
 ## Section 46: Cross-Sectional Funding Carry L/S (carry_xs_t1) — Dev-Gate NEGATIVE, Holdout Unspent (2026-07-28)
 
@@ -4673,6 +4740,33 @@ this same funding store and engine.
 - Forensics: `.superpowers/sdd/2026-07-28-carry-xs/task-7-forensics.md`
   (probe scripts throwaway, uncommitted, per house convention for forensic
   passes)
+
+### 46.7 Convention-swap addendum (2026-09-02): carry_xs_t1 re-priced under simple returns
+
+Same protocol as §43.8 (500-draw re-run in
+`master_thesis/data/audit_2026-09-02/n500/`). `carry_xs_dev.py` built the
+price matrix as Δlog and passed it to `run_ls_portfolio`; funding accrual,
+rf and costs are unchanged. Registered log numbers reproduce exactly.
+
+| L | leg_frac | registered net SR (log) | net SR (simple) | placebo p worse (500) [registered] | DSR (n=87) |
+|---:|---:|---:|---:|---|---:|
+| 1 | 0.1 | −0.269 | −0.041 | 0.070 [0.164] | 0.005 |
+| 1 | 0.2 | −0.464 | −0.245 | 0.052 [0.116] | 0.001 |
+| 7 | 0.1 | −0.202 | −0.038 | 0.409 [0.529] | 0.005 |
+| 7 | 0.2 | +0.463 | +0.708 | **0.028** [0.086] | 0.166 |
+| 30 | 0.1 | +0.185 | +0.543 | 0.164 [0.365] | 0.086 |
+| **30** | **0.2** | +0.695 | **+0.923** | **0.026** [0.094] | 0.279 |
+
+A dollar-neutral book moves less than a long basket (the ½σ² terms of the
+two legs partly cancel; the residual is the vol asymmetry between the
+legs), but the shift is still +0.23 on the best row and, decisively, the
+two leg-0.2 rows now clear the dual-family placebo (0.026 / 0.028 vs 0.05)
+that they failed under log booking. The §46.6 verdict stands — the best
+row misses the 1.0 floor by 0.08 and DSR by a wide margin — but its
+class changes from evidence kill to bar-bound kill, and the §46.6 gross
+decomposition (price +0.41 / funding +15.5 / combined +1.005) was itself
+computed under log price booking and should be read as indicative. The
+L=30/leg 0.2 configuration is frozen as sleeve S2 of `combo_c1` (§76).
 
 ## Section 47: Liquidation-Cascade Mean-Reversion (liq_mr_t1) — Dev-Gate NEGATIVE, Holdout Unspent (2026-07-28)
 
@@ -5984,3 +6078,91 @@ Program-wide validated strategies remain zero. Artifacts:
 `scripts/predlab_nlst3_{features,p0}.py` (+5 unit tests),
 `data/predlab/nlst/nlst3_*.{parquet,json}`; wallet-ledger machinery and the
 3,060-pool sample reusable; commits 74ab412→(close) on research/prediction-lab.
+
+## Section 76: Thin-Edge Combination One-Shot (combo_c1) — Registered, Probes Run, Sealed Window NOT Spent (2026-09-02)
+
+First cycle after the 2026-09-02 closure audit (`AUDIT_RESEARCH_PROGRAM_2026-09-02.md`
+§4.1, §6 item 1). The audit's thin-edge stratum — four dev-selected sleeves that
+clear their placebos after costs but fail an absolute floor or a cumulative-n
+DSR — had never been combined; Grinold's rule puts k uncorrelated SR-s sleeves
+at s·√k. Charter `docs/superpowers/specs/2026-09-02-combo-c1-charter.md`;
+gates key `combo_c1`; branch `feature/combo-c1` (off `feature/llm-event-xs`,
+since `main` carries no cross-sectional code); ledger experiment `combo_c1`.
+
+**Prerequisite (lead 0, code part) landed in the same branch.** The July
+cross-sectional engines booked Σw·Δlog (§43.8/§45.7/§46.7 addenda);
+`xsect/portfolio.py` and `xsect/trend.py` now book simple returns at the PnL
+step (log retained only for the kill-test), the vectorised weekly engine
+moved into the package, and the three dev scripts feed the simple matrix.
+Pins: a full short over +100 %/−50 % books −0.5 under simple and 0.0 under
+log; fast twin = reference bar-for-bar under both conventions; the fixed
+engines reproduce the Sep-2 forensic simple numbers on the real dev window
+to 1e-6 (`tests/xsect/test_convention_fix.py`, 257 xsect tests green).
+
+**Design (frozen pre-result).** Sleeves, parent configs verbatim: S1
+liq_fade_i1 thr 3.5/H 48 (§49), S2 carry_xs_t1 L 30/leg 0.2 (§46), S3
+xs_mom_p1 L 28/skip 0/K 10 (§43), S4 value_xs_t1 NVT tercile (§51); 10 bp
+per side, rf 4.5 % on allocated capital inside S1/S2/S4 (S3 fully invested).
+Constant-mix book of fixed capital weights on daily sleeve net returns;
+W1 inverse-vol from the aligned dev daily SD (primary, gated), W2 equal
+(reported). Holdout H1 2025-04-01 → 2026-07-01, virgin for all four, one
+evaluation with a verdict-file lock. Gates (all required): SR_H ≥ 0.5·SR_D
+and ≥ 0.5; same sign; dual-family weight-path placebo (A per-column
+independent circular shift within every sleeve, B one shared day-offset
+across sleeves and columns, ×24 hourly; 500 draws each) worse p < 0.10;
+every sleeve contribution ≥ 0; max drawdown ≤ 25 % (compounded); pooled
+top-name |PnL| share ≤ 50 %; convention swap must not flip gates 1–2.
+Confirmatory n_trials = 1 declared; family (28) and cumulative denominators
+reported. Engine `tradingagents/xsect/combo.py` (pure; 15 unit tests) +
+`combo_sleeves.py`; scripts `combo_c1_{data,register,probes,holdout}.py`.
+
+**Data deviations, disclosed.** (i) The fundamentals store is sealed at
+2025-04-15 by the value_xs_t1 design, so a separate CoinMetrics-community
+vintage `data/xsect/fundamentals_h1/` (63 assets, 2020-06-01 → 2026-07-01,
+pulled 2026-09-02, own manifest/stamp) serves S4 on the holdout; the sealed
+store keeps dev parity; on the dev overlap 1 of 60 assets (zec) was restated
+by the vendor. Holdout rows are as-of the pull (restatement-only PIT caveat).
+(ii) Sixty of the 144 names in the holdout monthly top-50 (2025-04 → 2026-06)
+had no 1h bars in the 333-symbol store (2025–26 listings); they are being
+fetched from Binance Vision and P1 will be re-run before any spend — the
+P1 figures below are from the first run (84 present).
+
+**Registration (dev, `combo_c1_register.py dev`).** P0 parity 4/4 exact:
+liq_fade +1.304741, carry +0.922519, momentum +0.691794, value +0.417316
+(pins from `dev_results.json`, `grid.json`, and the Sep-2 forensic). Dev
+daily SD 135 / 127 / 547 / 110 bp → W1 = liq_fade .283, carry .300,
+momentum .070, value .347. Dev pairwise |ρ| ≤ 0.20 (P3 PASS). Dev combined
+**SR W1 +1.599** (halves +1.83 / +1.34, max DD 23 %), W2 +1.203 (halves
++1.73 / +0.46, max DD 40 %). Registered holdout floor SR_H ≥ 0.7995 (W1).
+W1 contributions (bp/day): liq_fade 2.6, carry 1.8, momentum 1.4, value 0.8.
+
+**Probes.** P0 PASS. P1 PASS on the registered counts (momentum weekly
+eligibility 100/100, carry monthly 50/50, S1 universe 50/50 monthly; S4
+weekly signal-valid breadth median 24, min 19; funding 146/151 carry names
+through 2026-07-01; daily store to 2026-07-02) with the 1h coverage caveat
+above. P3 PASS (max |ρ| 0.204).
+
+**P2 leakage canary — STOP, on a threshold clause, and the reason the
+window was not spent.** The registered wording ("advancing each sleeve's
+signal one bar raises its dev SR by ≥ +1.0") detects leakage only for
+price-signal sleeves: advancing the long-fade trigger puts the book long
+*during* the crash bar (−2.61), the carry signal is funding not price
+(+0.20), value is lagged two days (−0.02); momentum +0.86. A pre-result
+amendment (gates.json `amendment_P2`, written after registration and before
+any holdout number) added an engine-timing oracle — |W| signed by the next
+booked return on the sleeve's own traded names — which lifts every sleeve
+by +4.9 (liq_fade) / +26.7 (carry) / +28.5 (momentum) / +23.4 (value), i.e.
+the harness sees t+1 information in all four engines. The amendment kept
+the literal ≥ +1.0 clause for the momentum sleeve; it came in at +0.86 and
+the probe script returned STOP. Relaxing that clause after seeing the
+number would be a post-hoc criterion edit, so the one-shot was **not run**:
+`data/rebuild/combo_c1/holdout_verdict.json` does not exist, the sealed
+window remains unspent for S1–S4, and the decision (accept amendment P2b —
+oracle-only blocking, literal reported — and spend; or close) is recorded
+as the user's. Everything needed for the spend is committed:
+`combo_c1_holdout.py` runs the frozen book, the placebos, the swap, the 2×
+cost stress and the DSR denominators in one pass and writes the lock.
+
+Status: **REGISTERED — spend pending decision.** Validated strategies
+program-wide remain zero. Commits 22157c8 (registration + lead-0 fix),
+4ff6942 (dev registration + probes) on `feature/combo-c1`.
