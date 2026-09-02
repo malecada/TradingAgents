@@ -160,7 +160,7 @@ def build_value(klines: dict, fund_dir: Path, asset_to_symbol: dict, universe: d
                 warmup_start: str, lo: pd.Timestamp, hi: pd.Timestamp,
                 cfg: dict | None = None) -> Sleeve:
     cfg = cfg or CFG["value"]
-    days = pd.date_range(warmup_start, hi, freq="D", tz="UTC")
+    days = pd.date_range(pd.Timestamp(warmup_start, tz="UTC"), hi, freq="D")
     symbols = sorted({s for v in universe.values() for s in v})
     kl = {s: d.loc[:hi] for s, d in klines.items() if s in symbols}
     fund = load_fundamentals(fund_dir, asset_to_symbol)

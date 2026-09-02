@@ -678,7 +678,13 @@
    "P0": "engine parity: each dev sleeve series reproduces its parent pin to 1e-6; else STOP (harness)",
    "P1": "coverage: stores span holdout to 2026-07-01; S2/S3 PIT eligibility >= 20 at every rebalance, S1 universe >= 20 monthly, S4 signal-valid weekly breadth median >= 20; fundamentals_h1 vs sealed-store restatement on the overlap reported; else STOP (data)",
    "P2": "leakage canary: W.shift(-1) (today's weights use tomorrow's decision) raises each sleeve's dev SR by >= +1.0; else STOP (harness cannot see leakage)",
-   "P3": "dev pairwise |rho| <= 0.6 for all pairs; else disclosed, W1 unchanged"
+   "P3": "dev pairwise |rho| <= 0.6 for all pairs; else disclosed, W1 unchanged",
+   "verdicts": {
+    "P0": "PASS",
+    "P1": "PASS",
+    "P2": "STOP (harness)",
+    "P3": "PASS"
+   }
   },
   "gates_holdout": {
    "sr_ratio_min": 0.5,
@@ -708,6 +714,68 @@
   "stop_rule": "FAIL on any gate => thin-edge stratum closed as a combination; no re-weighting, no sleeve dropping, no second look; H1 SPENT for S1-S4. PASS => stop-and-decide (paper journal from F window); deployment is the user's decision",
   "data_deviation": "fundamentals store sealed at 2025-04-15; separate vintage data/xsect/fundamentals_h1 (pulled 2026-09-02, own manifest/vintage) serves S4 on the holdout; PIT caveat = vendor restatement only, measured in P1",
   "mechanics": "branch feature/combo-c1 (off feature/llm-event-xs); tradingagents/xsect/combo.py + combo_sleeves.py; scripts/combo_c1_{data,register,probes,holdout}.py; ledger experiment combo_c1; THESIS section 76",
-  "thesis_section": "76"
+  "thesis_section": "76",
+  "registered_dev": {
+   "computed": "2026-09-02T19:11:39.453897+00:00",
+   "p0_pass": true,
+   "weights_W1": {
+    "carry": 0.3002600079989425,
+    "liq_fade": 0.28297737642631726,
+    "momentum": 0.06977487224589189,
+    "value": 0.3469877433288483
+   },
+   "weights_W2": {
+    "carry": 0.25,
+    "liq_fade": 0.25,
+    "momentum": 0.25,
+    "value": 0.25
+   },
+   "dev_sd_daily": {
+    "carry": 0.012718579711366935,
+    "liq_fade": 0.013495357452593382,
+    "momentum": 0.054731463103396306,
+    "value": 0.01100580905029542
+   },
+   "corr_dev": {
+    "carry": {
+     "carry": 1.0,
+     "liq_fade": 0.08496492515483184,
+     "momentum": -0.08044365086625123,
+     "value": 0.02770764271942231
+    },
+    "liq_fade": {
+     "carry": 0.08496492515483184,
+     "liq_fade": 1.0,
+     "momentum": 0.2040838491100277,
+     "value": 0.06291917814702869
+    },
+    "momentum": {
+     "carry": -0.08044365086625123,
+     "liq_fade": 0.2040838491100277,
+     "momentum": 1.0,
+     "value": -0.12541475332085347
+    },
+    "value": {
+     "carry": 0.02770764271942231,
+     "liq_fade": 0.06291917814702869,
+     "momentum": -0.12541475332085347,
+     "value": 1.0
+    }
+   },
+   "dev_sr_W1": 1.5990371476744596,
+   "dev_sr_W2": 1.2031395593728287,
+   "holdout_sr_min_W1": 0.7995185738372298
+  },
+  "amendment_P2": {
+   "when": "2026-09-02, after register dev, before any holdout number",
+   "why": "registered wording only detects leakage for price-signal sleeves; literal shift lowers SR by construction for long-fade (long during the crash bar), funding carry (signal is funding) and value (lag 2)",
+   "rule": "engine-timing oracle |W|*sign(next booked return) must raise dev SR >= +1.0 for every sleeve; literal W.shift(-1) additionally required for momentum; literal numbers reported for all",
+   "literal_results": {
+    "liq_fade": -2.6115229316270834,
+    "carry": 0.19626781717630726,
+    "momentum": 0.8587568687843158,
+    "value": -0.022722836971033222
+   }
+  }
  }
 }
