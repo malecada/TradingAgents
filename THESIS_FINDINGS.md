@@ -6123,9 +6123,9 @@ pulled 2026-09-02, own manifest/stamp) serves S4 on the holdout; the sealed
 store keeps dev parity; on the dev overlap 1 of 60 assets (zec) was restated
 by the vendor. Holdout rows are as-of the pull (restatement-only PIT caveat).
 (ii) Sixty of the 144 names in the holdout monthly top-50 (2025-04 → 2026-06)
-had no 1h bars in the 333-symbol store (2025–26 listings); they are being
-fetched from Binance Vision and P1 will be re-run before any spend — the
-P1 figures below are from the first run (84 present).
+had no 1h bars in the 333-symbol store (2025–26 listings); they were fetched
+from Binance Vision the same day (store now 393 symbols) and P1 was re-run:
+144/144 present, 143 spanning the holdout end.
 
 **Registration (dev, `combo_c1_register.py dev`).** P0 parity 4/4 exact:
 liq_fade +1.304741, carry +0.922519, momentum +0.691794, value +0.417316
@@ -6139,8 +6139,8 @@ W1 contributions (bp/day): liq_fade 2.6, carry 1.8, momentum 1.4, value 0.8.
 **Probes.** P0 PASS. P1 PASS on the registered counts (momentum weekly
 eligibility 100/100, carry monthly 50/50, S1 universe 50/50 monthly; S4
 weekly signal-valid breadth median 24, min 19; funding 146/151 carry names
-through 2026-07-01; daily store to 2026-07-02) with the 1h coverage caveat
-above. P3 PASS (max |ρ| 0.204).
+through 2026-07-01; daily store to 2026-07-02; 1h bars 144/144 after the
+refetch). P3 PASS (max |ρ| 0.204).
 
 **P2 leakage canary — STOP, on a threshold clause, and the reason the
 window was not spent.** The registered wording ("advancing each sleeve's
