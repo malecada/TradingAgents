@@ -71,7 +71,11 @@ def test_delisted_member_contributes_zero_not_reweighted():
     reb = pd.DatetimeIndex([idx[0]])
     series = run_weekly_portfolio(kl, reb, lambda t: ["A", "B"], cost_bps=0.0)
     delisted_day = idx[6]  # A has no kline from idx[5] onward
-    assert series.loc[delisted_day] == pytest.approx(0.5 * np.log(1.01), rel=1e-9)
+    # lead-0 fix (2026-09-02): PnL books SIMPLE returns -> 0.5 * 1% exactly
+    assert series.loc[delisted_day] == pytest.approx(0.5 * 0.01, rel=1e-9)
+    series_log = run_weekly_portfolio(kl, reb, lambda t: ["A", "B"], cost_bps=0.0,
+                                      convention="log")
+    assert series_log.loc[delisted_day] == pytest.approx(0.5 * np.log(1.01), rel=1e-9)
 
 
 def test_exit_to_empty_charges_sell_side():

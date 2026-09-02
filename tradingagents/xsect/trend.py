@@ -28,8 +28,14 @@ def monthly_refresh_dates(start: str, end: str) -> pd.DatetimeIndex:
     return pd.DatetimeIndex(sorted(first))
 
 
-def build_matrices(klines: dict, symbols: list) -> tuple:
-    """(all_days, R, VOTES, SIGMA). All frames days x symbols, NaN where undefined.
+def build_matrices(klines: dict, symbols: list, with_simple: bool = False) -> tuple:
+    """(all_days, R, VOTES, SIGMA[, R_simple]). All frames days x symbols, NaN where undefined.
+
+    R is the LOG return matrix — it feeds SIGMA and VOTES (signal side) and is
+    the only thing the pre-fix engine consumed. Lead-0 fix (2026-09-02): the
+    PnL step must consume ``R_simple = expm1(R)``; pass ``with_simple=True`` to
+    get it as a fifth element (the 4-tuple signature is kept for the signal
+    path and existing callers).
 
     VOTES: computed on each symbol's own bars (native index), then reindexed to
     all_days WITHOUT filling — a day with no kline has NaN vote (=> weight 0).
@@ -44,6 +50,8 @@ def build_matrices(klines: dict, symbols: list) -> tuple:
         R[s] = np.log(close).diff().reindex(all_days)
         VOTES[s] = compute_votes(close).reindex(all_days)
     SIGMA = R.rolling(VOL_WINDOW, min_periods=VOL_WINDOW).std()
+    if with_simple:
+        return all_days, R, VOTES, SIGMA, np.expm1(R)
     return all_days, R, VOTES, SIGMA
 
 

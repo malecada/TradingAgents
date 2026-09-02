@@ -325,12 +325,28 @@
  "liq_fade_i1": {
   "registered": "2026-07-28",
   "spec": "docs/superpowers/specs/2026-07-28-liq-fade-intraday-design.md",
-  "dev_window": ["2021-01-01", "2025-03-31"],
-  "holdout_window": ["2025-04-01", "2026-07-01"],
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "holdout_window": [
+   "2025-04-01",
+   "2026-07-01"
+  ],
   "universe": "top-50 PIT monthly by trailing 30d median quote_volume from 799-symbol survivorship-safe daily store; min_age 60d; Binance UM 1h klines",
   "signal": "per symbol hourly: z_ret = rolling z of 1h log returns, z_vol = rolling z of log1p(quote_volume), window 2160 bars min_periods 1440 ddof=1 inclusive of t; trigger = z_ret <= -thr AND z_vol >= thr; LONG-FADE ONLY (short side pre-excluded per section-47 asymmetry)",
   "portfolio_rule": "trigger at bar t -> long 1/10 for bars t+1..t+H; retrigger resets timer; gross cap 1.0 (max 10 concurrent, arrival order); costs 10 bps per side on |dW|; rf_daily = 1.045^(1/365)-1 on full capital every calendar day; funding EXCLUDED; SR on daily-aggregated UTC net returns x sqrt(365)",
-  "grid": {"thr": [2.5, 3.5], "H": [6, 24, 48]},
+  "grid": {
+   "thr": [
+    2.5,
+    3.5
+   ],
+   "H": [
+    6,
+    24,
+    48
+   ]
+  },
   "probes": {
    "P0": "1h bars open-stamped; daily aggregation of 1h closes reconciles with daily store (corr > 0.99 on overlapping returns, BTCUSDT)",
    "P1": "proxy triggers (thr=2.5) aggregated daily on 8 Coinglass coins must flag >= 4 of 5 benchmark cascade dates (2021-05-19, 2022-06-13, 2022-11-09, 2024-08-05, 2025-02-03); FAIL -> STOP",
@@ -349,14 +365,27 @@
   "registered": "2026-07-29",
   "spec": "docs/superpowers/specs/2026-07-29-liq-fade-r1-design.md",
   "replicates": "liq_fade_i1",
-  "dev_window": ["2021-01-01", "2025-03-31"],
-  "holdout_window": ["2025-04-01", "2026-07-01"],
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "holdout_window": [
+   "2025-04-01",
+   "2026-07-01"
+  ],
   "holdout_status": "sealed",
   "universe": "monthly PIT ranks 51-150 by trailing 30d median quote_volume from the 799-symbol survivorship-safe daily store; min_age 60d; same monthly_top_n selector as liq_fade_i1, band = top150 minus top50 per month; union 304 symbols; disjoint from liq_fade_i1 by (symbol, month)",
   "signal": "IDENTICAL to liq_fade_i1, frozen: per symbol hourly z_ret = rolling z of 1h log returns, z_vol = rolling z of log1p(quote_volume), window 2160 min_periods 1440 ddof=1 inclusive of t; trigger = z_ret <= -thr AND z_vol >= thr; LONG-FADE ONLY",
   "portfolio_rule": "IDENTICAL to liq_fade_i1 except cost_bps: trigger at bar t -> long 1/10 for bars t+1..t+H; retrigger resets timer; gross cap 1.0; costs 20 bps per side on |dW|; rf_daily = 1.045^(1/365)-1 on full capital every calendar day; funding EXCLUDED; SR on daily-aggregated UTC net returns x sqrt(365)",
   "grid": null,
-  "primary_config": {"thr": 3.5, "H": 48, "w_per": 0.1, "cap": 1.0, "cost_bps": 20.0, "rf_annual": 0.045},
+  "primary_config": {
+   "thr": 3.5,
+   "H": 48,
+   "w_per": 0.1,
+   "cap": 1.0,
+   "cost_bps": 20.0,
+   "rf_annual": 0.045
+  },
   "cost_bps_primary": 20.0,
   "cost_bps_rationale": "band names are smaller and wider-spread than the liq_fade_i1 top-50; carrying the top-50 cost model onto them would invite the objection. liq_fade_i1 forensics F6 showed the effect is not cost-fragile (SR 1.305/1.229/1.153 at 10/20/30bps).",
   "probes": {
@@ -385,10 +414,25 @@
    "conventions": "sqrt(365) annualization on daily-aggregated UTC net returns, ddof=1, zero-variance SR := 0"
   },
   "reported_not_gated": {
-   "cost_bps_sensitivities": [10.0, 30.0],
-   "dsr_alt_denominators": [13, 121],
+   "cost_bps_sensitivities": [
+    10.0,
+    30.0
+   ],
+   "dsr_alt_denominators": [
+    13,
+    121
+   ],
    "dsr_alt_denominator_desc": "13 = liquidation-family scope (liq_mr_t1 6 + liq_fade_i1 6 + this 1); 121 = ledger-cumulative unique config_hash count",
-   "secondary_configs": [{"thr": 2.5, "H": 24}, {"thr": 3.5, "H": 24}],
+   "secondary_configs": [
+    {
+     "thr": 2.5,
+     "H": 24
+    },
+    {
+     "thr": 3.5,
+     "H": 24
+    }
+   ],
    "secondary_configs_desc": "the two remaining liq_fade_i1 dev survivors, run for robustness context only; they CANNOT rescue a G1-G3 failure and are not logged as separate gate evaluations",
    "never_top50_subset": true,
    "never_top50_subset_desc": "116-symbol partition of the same run (symbols never in the liq_fade_i1 top-50 union) reported as a descriptive breakdown; a partition, not an additional config, so not an additional trial"
@@ -398,8 +442,14 @@
   "thesis_section": "50"
  },
  "value_xs_t1": {
-  "dev_window": ["2021-01-01", "2025-03-31"],
-  "holdout_window": ["2025-04-01", "2026-07-01"],
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "holdout_window": [
+   "2025-04-01",
+   "2026-07-01"
+  ],
   "holdout_status": "sealed",
   "hypothesis": "Cross-sectional crypto value: coins cheap on market-cap-per-network-activity outperform expensive ones. Long-short, dollar-neutral, weekly.",
   "universe": {
@@ -419,12 +469,28 @@
   },
   "rebalance": "weekly_monday",
   "returns": "simple close-to-close on the USDT perp from data/xsect/klines/",
-  "costs": {"bps_per_side": 10.0, "rf_annual": 0.045, "rf_basis": "full capital"},
+  "costs": {
+   "bps_per_side": 10.0,
+   "rf_annual": 0.045,
+   "rf_basis": "full capital"
+  },
   "grid": [
-   {"metric": "nvt_proxy", "breadth": "decile"},
-   {"metric": "nvt_proxy", "breadth": "tercile"},
-   {"metric": "metcalfe_proxy", "breadth": "decile"},
-   {"metric": "metcalfe_proxy", "breadth": "tercile"}
+   {
+    "metric": "nvt_proxy",
+    "breadth": "decile"
+   },
+   {
+    "metric": "nvt_proxy",
+    "breadth": "tercile"
+   },
+   {
+    "metric": "metcalfe_proxy",
+    "breadth": "decile"
+   },
+   {
+    "metric": "metcalfe_proxy",
+    "breadth": "tercile"
+   }
   ],
   "controls": {
    "C1": "vol-matched: sort on trailing 30d realized volatility alone, identical pipeline",
@@ -462,8 +528,14 @@
   "stop_rule": "No post-hoc exclusions. If a single symbol or period dominates, disclose in forensics and let the verdict stand (precedent: liq_fade_r1 FTT). Any amendment must be declared before the affected result is read."
  },
  "unlock_xs_t1": {
-  "dev_window": ["2021-01-01", "2025-03-31"],
-  "holdout_window": ["2025-04-01", "2026-07-01"],
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "holdout_window": [
+   "2025-04-01",
+   "2026-07-01"
+  ],
   "holdout_status": "sealed",
   "hypothesis": "Cross-sectional token-unlock burden: coins facing large near-term scheduled supply unlocks underperform those facing none. Long-short, dollar-neutral, weekly.",
   "universe": {
@@ -482,10 +554,20 @@
   },
   "rebalance": "weekly_monday",
   "returns": "simple close-to-close on the USDT perp from data/xsect/klines/",
-  "costs": {"bps_per_side": 10.0, "rf_annual": 0.045, "rf_basis": "full capital"},
+  "costs": {
+   "bps_per_side": 10.0,
+   "rf_annual": 0.045,
+   "rf_basis": "full capital"
+  },
   "grid": [
-   {"lookahead_days": 14, "breadth": "decile"},
-   {"lookahead_days": 30, "breadth": "decile"}
+   {
+    "lookahead_days": 14,
+    "breadth": "decile"
+   },
+   {
+    "lookahead_days": 30,
+    "breadth": "decile"
+   }
   ],
   "controls": {
    "C1": "vol-matched: sort on trailing 30d realized volatility alone, identical pipeline",
@@ -521,5 +603,111 @@
    "latch": "fresh per evaluation window"
   },
   "stop_rule": "No post-hoc exclusions. If a single symbol or period dominates, disclose in forensics and let the verdict stand (precedent: liq_fade_r1 FTT). Any amendment must be declared before the affected result is read."
+ },
+ "combo_c1": {
+  "registered": "2026-09-02",
+  "spec": "docs/superpowers/specs/2026-09-02-combo-c1-charter.md",
+  "source": "LEADS_SCOPE_2026-09-02.md Lead 1; AUDIT_RESEARCH_PROGRAM_2026-09-02.md section 4.1 / 6 item 1",
+  "hypothesis": "four dev-selected placebo-clearing thin-edge sleeves, frozen as their parents selected them and priced under simple returns, combined by a pre-declared inverse-vol capital rule, earn a positive net Sharpe on the sealed window none of them touched",
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "holdout_window": [
+   "2025-04-01",
+   "2026-07-01"
+  ],
+  "holdout_class": "H1 virgin (none of S1-S4 ever evaluated on it); ONE evaluation; verdict-file lock",
+  "sleeves": {
+   "liq_fade": {
+    "parent": "liq_fade_i1",
+    "thesis": 49,
+    "config": {
+     "thr": 3.5,
+     "H": 48,
+     "w_per": 0.1,
+     "cap": 1.0,
+     "top_n": 50,
+     "z_window": 2160,
+     "z_min_periods": 1440
+    },
+    "pin_source": "data/rebuild/liq_fade/dev_results.json (thr 3.5, H 48)"
+   },
+   "carry": {
+    "parent": "carry_xs_t1",
+    "thesis": 46,
+    "config": {
+     "L": 30,
+     "leg_frac": 0.2,
+     "top_n": 50
+    },
+    "pin_source": "Sep-2 forensic convswap_results.json carry L30 leg0.2 simple"
+   },
+   "momentum": {
+    "parent": "xs_mom_p1",
+    "thesis": 43,
+    "config": {
+     "L": 28,
+     "skip": 0,
+     "K": 10,
+     "top_n": 100
+    },
+    "pin_source": "Sep-2 forensic convswap_results.json xs_mom L28 s0 K10 simple"
+   },
+   "value": {
+    "parent": "value_xs_t1",
+    "thesis": 51,
+    "config": {
+     "metric": "nvt_proxy",
+     "leg_frac": "1/3",
+     "lag_days": 2,
+     "liquidity_floor_rank": 150
+    },
+    "pin_source": "data/rebuild/value_xs/grid.json nvt_proxy tercile"
+   }
+  },
+  "returns": "simple at every PnL step (lead-0 fixed engines); log only for the convention-swap kill-test",
+  "costs": "10 bp/side on |dW| inside each sleeve engine; rf 4.5%/yr on full allocated capital inside S1, S2, S4 (S3 fully invested, none); cost-stress 2x reported",
+  "weight_rule": {
+   "W1_primary": "w_i ~ 1/sd_i, sd_i = dev daily SD (ddof 1) of the ALIGNED (zero-filled) sleeve net return; sum w = 1; no leverage",
+   "W2_sensitivity": "0.25 each; reported not gated",
+   "book": "constant-mix of fixed capital weights on daily sleeve net returns; no cross-sleeve rebalancing cost (deployment contract)"
+  },
+  "alignment": "calendar days of the window; a day a sleeve does not cover contributes 0.0; each sleeve series starts the bar after its first decision (parents' convention)",
+  "probes": {
+   "P0": "engine parity: each dev sleeve series reproduces its parent pin to 1e-6; else STOP (harness)",
+   "P1": "coverage: stores span holdout to 2026-07-01; S2/S3 PIT eligibility >= 20 at every rebalance, S1 universe >= 20 monthly, S4 signal-valid weekly breadth median >= 20; fundamentals_h1 vs sealed-store restatement on the overlap reported; else STOP (data)",
+   "P2": "leakage canary: W.shift(-1) (today's weights use tomorrow's decision) raises each sleeve's dev SR by >= +1.0; else STOP (harness cannot see leakage)",
+   "P3": "dev pairwise |rho| <= 0.6 for all pairs; else disclosed, W1 unchanged"
+  },
+  "gates_holdout": {
+   "sr_ratio_min": 0.5,
+   "sr_abs_min": 0.5,
+   "same_sign": true,
+   "placebo": "dual family on WEIGHT PATHS, 500 draws each, costs+rf re-applied by the sleeve engines, p=(1+#{placebo SR >= real})/(N+1), gate on WORSE family; A = per-column independent circular shift within every sleeve (min 30 d / 720 bars, seeds 0..499); B = one shared day offset for every sleeve and column (x24 hourly; seeds 0..499)",
+   "placebo_p_max": 0.1,
+   "sleeve_contribution_min": 0.0,
+   "maxdd_max": 0.25,
+   "maxdd_basis": "compounded simple returns",
+   "top_name_share_max": 0.5,
+   "top_name_share_basis": "pooled gross per-symbol PnL across sleeves; max|pnl| / sum|pnl|",
+   "convention_swap": "log returns at every PnL step must not flip gates 1-2",
+   "all_required": true
+  },
+  "reported_not_gated": [
+   "W2 book on all gates",
+   "2x cost stress",
+   "per-sleeve holdout SR",
+   "two-halves SR",
+   "DSR at n_trials 1 / family 28 / cumulative ledger"
+  ],
+  "multiplicity": {
+   "n_trials": 1,
+   "rationale": "frozen book, virgin data, one evaluation; family (28) and cumulative denominators reported"
+  },
+  "stop_rule": "FAIL on any gate => thin-edge stratum closed as a combination; no re-weighting, no sleeve dropping, no second look; H1 SPENT for S1-S4. PASS => stop-and-decide (paper journal from F window); deployment is the user's decision",
+  "data_deviation": "fundamentals store sealed at 2025-04-15; separate vintage data/xsect/fundamentals_h1 (pulled 2026-09-02, own manifest/vintage) serves S4 on the holdout; PIT caveat = vendor restatement only, measured in P1",
+  "mechanics": "branch feature/combo-c1 (off feature/llm-event-xs); tradingagents/xsect/combo.py + combo_sleeves.py; scripts/combo_c1_{data,register,probes,holdout}.py; ledger experiment combo_c1; THESIS section 76",
+  "thesis_section": "76"
  }
 }

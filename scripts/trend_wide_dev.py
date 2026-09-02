@@ -100,7 +100,9 @@ def main() -> None:
     # ── Matrices over the union of all symbols ever selected ──
     t0 = time.time()
     union = sorted(set().union(*[set(v) for N in (10, 20) for v in members[N].values()]))
-    all_days, R, VOTES, SIGMA = build_matrices(klines, union)
+    # Lead-0 fix (2026-09-02): R (log) feeds SIGMA/VOTES; PnL consumes R_pnl
+    # (simple). Registered July numbers fed R (log) — audit 2026-09-02 section 2.
+    all_days, R, VOTES, SIGMA, R_pnl = build_matrices(klines, union, with_simple=True)
     print(f"[matrices] union_symbols={len(union)} days={len(all_days)} "
           f"({time.time() - t0:.1f}s)")
 
@@ -108,7 +110,7 @@ def main() -> None:
     bench = {}
     for N in (10, 20):
         Wb = ew_benchmark_weights(all_days, R, members[N], n_slots=N)
-        s = run_daily_portfolio(Wb, R, COST_BPS).loc[:hi]
+        s = run_daily_portfolio(Wb, R_pnl, COST_BPS).loc[:hi]
         s = s.loc[s.index > refresh[0]]
         bench[N] = s
         print(f"[benchmark N={N}] SR={sr(s):+.4f} maxdd={maxdd(s):.4f} n_days={len(s)}")
@@ -131,7 +133,7 @@ def main() -> None:
     for N, vt in GRID:
         t_cfg = time.time()
         W = trend_weights(all_days, R, VOTES, SIGMA, members[N], n_slots=N, vol_target=vt)
-        real = run_daily_portfolio(W, R, COST_BPS).loc[:hi]
+        real = run_daily_portfolio(W, R_pnl, COST_BPS).loc[:hi]
         real = real.loc[real.index > refresh[0]]
         real_sr = sr(real)
         pb = paired_bootstrap(real, bench[N])
@@ -139,7 +141,7 @@ def main() -> None:
             srs_ = []
             for p in range(N_PLACEBO):
                 rng = np.random.default_rng(seed=p)
-                ps = run_daily_portfolio(shift_fn(W, rng), R, COST_BPS).loc[:hi]
+                ps = run_daily_portfolio(shift_fn(W, rng), R_pnl, COST_BPS).loc[:hi]
                 ps = ps.loc[ps.index > refresh[0]]
                 srs_.append(sr(ps))
             return rank_placebo_pvalue(real_sr, srs_)

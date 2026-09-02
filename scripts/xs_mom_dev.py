@@ -90,17 +90,13 @@ def _blocked(reason: str, diagnostics: dict) -> None:
 
 # ── Fast vectorized portfolio engine (mechanics-identical to portfolio.py) ──
 
-def _build_fast_arrays(klines: dict):
-    all_days = pd.DatetimeIndex(sorted(set().union(*[df.index for df in klines.values()])))
-    day_pos = {d: i for i, d in enumerate(all_days)}
-    sym_list = sorted(klines)
-    sym_idx = {s: j for j, s in enumerate(sym_list)}
-    n_days, n_syms = len(all_days), len(sym_list)
-    R = np.full((n_days, n_syms), np.nan)
-    for s, j in sym_idx.items():
-        raw = np.log(klines[s]["close"]).diff()  # identical to portfolio.py's logret[s]
-        R[:, j] = raw.reindex(all_days).to_numpy()
-    return all_days, day_pos, R, sym_idx
+def _build_fast_arrays(klines: dict, convention: str = "simple"):
+    """Lead-0 fix (2026-09-02): the PnL matrix is SIMPLE returns (expm1 of the
+    log return that still feeds momentum_scores). The registered July numbers
+    were produced with convention="log" — see AUDIT_RESEARCH_PROGRAM_2026-09-02
+    section 2 and the convention-swap addendum in THESIS section 43.5."""
+    from tradingagents.xsect.portfolio import build_fast_arrays
+    return build_fast_arrays(klines, convention=convention)
 
 
 def _fast_portfolio(members_by_t: dict, reb_dates, all_days, day_pos, R, sym_idx,

@@ -84,13 +84,17 @@ def main() -> None:
           f"funding_files={len(funding)} ({time.time() - t_start:.1f}s)")
 
     SIG30 = R.rolling(30, min_periods=30).std()  # config-independent, hoisted
+    # Lead-0 fix (2026-09-02): R (log) stays on the signal/vol side; the PnL
+    # step consumes simple returns. The registered July numbers fed R (log)
+    # to run_ls_portfolio — AUDIT_RESEARCH_PROGRAM_2026-09-02 section 2.
+    R_pnl = np.expm1(R)
 
     results, series_by_cfg = [], {}
     for L, leg_frac in GRID:
         t_cfg = time.time()
         S = carry_signal(F, L)
         W = carry_weights(all_days, S, F, members, leg_frac)
-        real = run_ls_portfolio(W, R, F, COST_BPS, RF_DAILY).loc[:hi]
+        real = run_ls_portfolio(W, R_pnl, F, COST_BPS, RF_DAILY).loc[:hi]
         real = real.loc[real.index > refresh[0]]
         real_sr = sr(real)
 
@@ -104,7 +108,7 @@ def main() -> None:
             srs_ = []
             for p in range(N_PLACEBO):
                 rng = np.random.default_rng(seed=p)
-                ps = run_ls_portfolio(shift_fn(W, rng), R, F,
+                ps = run_ls_portfolio(shift_fn(W, rng), R_pnl, F,
                                       COST_BPS, RF_DAILY).loc[:hi]
                 srs_.append(sr(ps.loc[ps.index > refresh[0]]))
             return rank_placebo_pvalue(real_sr, srs_)

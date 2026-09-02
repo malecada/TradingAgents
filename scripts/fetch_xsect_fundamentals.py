@@ -233,7 +233,22 @@ def main() -> None:
                     help=("Refresh only the vintage stamp (vendor_max_time "
                           "provenance). Does not touch the fundamentals "
                           "parquets or the manifest -- no store refetch."))
+    # combo_c1 (2026-09-02): a SEPARATE vintage store may be pulled past the
+    # sealed margin for a registered holdout spend. The default store, manifest
+    # and vintage stamp are never touched by such a pull; the guard stays on
+    # unless --allow-past-holdout names the registered gates key explicitly.
+    ap.add_argument("--out-dir", default=None,
+                    help="alternate store directory (registered holdout vintages only)")
+    ap.add_argument("--allow-past-holdout", default=None, metavar="GATES_KEY",
+                    help="lift the MAX_END guard for a registered cycle; requires --out-dir")
     args = ap.parse_args()
+    out_dir, manifest_path, vintage_path = OUT_DIR, MANIFEST, VINTAGE
+    if args.out_dir:
+        out_dir = Path(args.out_dir)
+        manifest_path = out_dir.parent / f"{out_dir.name}_manifest.json"
+        vintage_path = out_dir.parent / f"{out_dir.name}_vintage.json"
+    if args.allow_past_holdout and not args.out_dir:
+        raise SystemExit("--allow-past-holdout requires --out-dir (default store stays sealed)")
 
     vendor_max_time, per_asset_metric = _vendor_max_time(VENDOR_REFERENCE_ASSETS, METRICS)
 
@@ -243,11 +258,15 @@ def main() -> None:
         print(f"vintage-only refresh: vendor_max_time={vendor_max_time}")
         return
 
-    _enforce_holdout_margin(args.end)
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-    manifest = json.loads(MANIFEST.read_text()) if MANIFEST.exists() else {}
+    if args.allow_past_holdout:
+        print(f"MAX_END guard lifted for registered cycle {args.allow_past_holdout!r} "
+              f"-> separate store {out_dir}", flush=True)
+    else:
+        _enforce_holdout_margin(args.end)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
     for i, a in enumerate(CM_ASSETS, 1):
-        out = OUT_DIR / f"{a}.parquet"
+        out = out_dir / f"{a}.parquet"
         prev = manifest.get(a, {})
         if out.exists() and prev.get("end") == args.end and prev.get("start") == args.start:
             continue
@@ -257,10 +276,10 @@ def main() -> None:
                        "symbol": ASSET_TO_SYMBOL[a],
                        "first": str(df.index.min())[:10] if len(df) else None,
                        "last": str(df.index.max())[:10] if len(df) else None}
-        MANIFEST.write_text(json.dumps(manifest, indent=1, sort_keys=True))
-        print(f"[{i}/{len(CM_ASSETS)}] {a} -> {len(df)} rows")
+        manifest_path.write_text(json.dumps(manifest, indent=1, sort_keys=True))
+        print(f"[{i}/{len(CM_ASSETS)}] {a} -> {len(df)} rows", flush=True)
         time.sleep(0.25)
-    write_vintage(VINTAGE, f"{BASE}/timeseries/asset-metrics (community tier)",
+    write_vintage(vintage_path, f"{BASE}/timeseries/asset-metrics (community tier)",
                  vendor_max_time, VENDOR_REFERENCE_ASSETS, METRICS, per_asset_metric)
 
 
