@@ -182,6 +182,13 @@ def probe_p2(sleeves: dict) -> dict:
 
 
 def main() -> None:
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--accept-amendment-p2b", action="store_true",
+                    help=("USER DECISION ONLY: adopt amendment P2b — the engine-timing oracle is the "
+                          "sole blocking P2 criterion for every sleeve; the literal W.shift(-1) "
+                          "numbers stay reported. Recorded in gates.json combo_c1.amendment_P2b."))
+    args = ap.parse_args()
     t0 = time.time()
     reg = json.loads((OUT / "register.json").read_text())
     gates = json.loads(GATES.read_text())
@@ -204,7 +211,23 @@ def main() -> None:
           "pass": bool(all(abs(v) <= CORR_MAX for v in pairs.values()))}
     p3["verdict"] = "PASS" if p3["pass"] else "DISCLOSED (premise weakened; W1 unchanged)"
     print(f"P3 {p3['verdict']}: max |rho| {p3['max_abs']:.3f}")
-    blocking = p0["pass"] and p1["pass"] and p2["pass"]
+    if args.accept_amendment_p2b:
+        p2["pass_p2b"] = bool(all(v["oracle_pass"] for v in p2["sleeves"].values()))
+        p2["verdict"] = ("PASS (amendment P2b: oracle-only)" if p2["pass_p2b"]
+                         else "STOP (harness; oracle failed under P2b)")
+        p2["blocking_rule"] = "P2b"
+        gates["combo_c1"]["amendment_P2b"] = {
+            "when": pd.Timestamp.utcnow().isoformat(),
+            "decided_by": "user (explicit --accept-amendment-p2b)",
+            "rule": "engine-timing oracle >= +1.0 for every sleeve is the sole blocking P2 criterion; literal W.shift(-1) reported not gated",
+            "literal_results": {k: v["delta_literal"] for k, v in p2["sleeves"].items()},
+            "oracle_results": {k: v["delta_oracle"] for k, v in p2["sleeves"].items()},
+            "note": "P2a STOP (momentum literal +0.86 < +1.0) stands on record; no holdout number existed at decision time",
+        }
+        p2_block = p2["pass_p2b"]
+    else:
+        p2_block = p2["pass"]
+    blocking = p0["pass"] and p1["pass"] and p2_block
     out = {"P0": p0, "P1": p1, "P2": p2, "P3": p3, "blocking_pass": bool(blocking),
            "runtime_sec": time.time() - t0, "computed": pd.Timestamp.utcnow().isoformat()}
     (OUT / "probes.json").write_text(json.dumps(out, indent=1, default=str))
