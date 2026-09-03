@@ -4,47 +4,23 @@ Multi-agent LLM framework for cryptocurrency trading decisions. Uses a trading f
 
 **IMPORTANT**: When new empirical findings are produced (model evaluations, backtest results, strategy comparisons), update `THESIS_FINDINGS.md` in the project root. That file is the persistent record of all experimental results for the master's thesis.
 
-## Baseline Strategy (Finalized)
+## Empirical Status (post-audit — read before citing any number)
 
-The quant baseline that the multi-agent LLM system must beat is `scripts/baseline_strategy_v2.py` with default settings:
-- **Signal**: LightGBM term structure consensus — h=7 and h=14 must agree on direction
-- **Training pool**: 2-coin (BTC+ETH) or 3-coin (BTC+ETH+target) — larger pools hurt due to altcoin noise
-- **Sizing**: Vol-targeted Kelly + confidence-weighted + conditional leverage (1-3x) + SMA30 trend filter (1.5x aligned, 0.5x against)
-- **Risk**: 7-day min hold with adaptive early exit, 3% stop-loss, 15% portfolio circuit breaker, 95th percentile vol cap
-- **Performance**: 2-coin portfolio Sharpe **2.69** (+106% return); 3-coin portfolio Sharpe 2.58 (+155% return)
+Two backtest audits invalidated most headline results produced before mid-2026:
 
-### Quant V3 (Built, Underperforms V2)
+- **Jul-7 audit** (`../AUDIT_BACKTEST_2026-07-07.md`): same-bar execution + unpurged training labels in the legacy backtest legs. All pre-Jul-7 strategy Sharpes are void (V5 MIX 3.25 → +0.36 corrected; 8-coin 3.97 → +0.145). Fixes landed @382d189 = the corrected harness.
+- **Aug-24 audit** (`../AUDIT_BACKTEST_2026-08-24.md`): prediction-lab engine booked log returns as PnL (fake +½σ²/day short edge). Predlab Phase O/P + Bybit results void.
 
-V3 (`tradingagents/strategies/v3/`) extends V2 with a Non-Homogeneous Hidden Markov Model (NH-HMM) regime detector, microstructure features (klines-proxy OFI, volume dispersion), open-interest and funding-rate derivatives, a multi-horizon LightGBM ensemble (h=3,7,14,21) in place of V2's h=7+h=14 consensus, CDAP drawdown-adaptive position control, vol-targeted Kelly sizing, and a Pydantic-typed signal contract layer. The architecture is complete (117+ unit tests, Pydantic contracts, CPCV harness) and V2 regression stays green throughout.
+Post-audit reality:
+- **Corrected V2 reference** (4.5-yr walk-forward): BTC +1.57, ETH +0.88. The Sharpe 2.69/2.58 figures that appear in command comments below are pre-audit artifacts kept only for provenance — do not cite or build on them.
+- **Honest rebuild (Jul-10)**: one-shot pre-registered pipeline deploys ∅ strategies; LGB retired from production (THESIS_FINDINGS §39-41).
+- **V3 quant stack** (`tradingagents/strategies/v3/`): built and well-engineered, but systematically inferior to V2 on every window (CPCV BTC −2.40 / ETH −2.92); retired. Details: THESIS_FINDINGS §12, `data/v3_cpcv/`.
+- **Multi-agent LLM program closed Aug-2026**: charters C1/C2/C3/C3-P all negative or void (THESIS §62-65).
+- **Branch topology (Sep-3)**: `feature/llm-event-xs` (this worktree) is the **research trunk** — all xsect cycles (§43–§51), LLM charters, THESIS_FINDINGS, gates.json, and the lead-0 engine fix (xsect PnL books simple returns; `feature/combo-c1` fast-forwarded into it). `main` carries only the monitor dashboard + deps and has NO xsect code; `research/prediction-lab` is the predlab worktree. Do not look for research code on `main`.
+- **combo_c1 (Sep-3, THESIS §76)**: thin-edge combination one-shot FAILED on the sealed window; that window (2025-04-01 → 2026-07-01) is SPENT for liq_fade_i1 / carry_xs_t1 / xs_mom_p1 / value_xs_t1.
+- **No validated live strategy program-wide** (STATE Aug-24). ~60 pre-registered research cycles closed negative — check the closed-programs ledger (auto-memory) before proposing strategy ideas.
 
-**Empirical result**: V3 is systematically inferior to V2 on every metric and every evaluation window tested. An 88-bar OOS A/B (2026-01-16 → 2026-04-15) produced portfolio Sharpe -0.73 vs V2 2.38. A 28-split CPCV over 2024-05 → 2026-04 yielded BTC mean Sharpe -2.40 (0/28 positive splits) and ETH mean Sharpe -2.92 (1/28 positive splits); Deflated Sharpe Ratio ≈ 0 for both coins. A 5-variant component ablation confirms V3 architecture is internally well-engineered (each component—multi-horizon horizons, regime detector, vol-target/CDAP—contributes positively within V3), but the LGB signal quality is the binding constraint: LGB probability estimates cluster in the 0.52–0.57 range and do not generate alpha on this OOS window. This reproduces the BT11 finding that V2's alpha is ~90% sizing+momentum and sophisticated ML modulation hurts BTC.
-
-**Status**: V3 build complete; empirically inferior to V2 on current data. Architecture is sound (ablations confirm each component contributes positively), but LGB signal quality is the binding constraint. V2 remains the production quant baseline.
-
-**Reference documents**:
-- Spec: `docs/superpowers/specs/2026-05-08-quant-v3-design.md`
-- Plan: `docs/superpowers/plans/2026-05-08-quant-v3.md`
-- 88-bar A/B results: `data/multi_2coins_v3/metrics.json`
-- CPCV results: `data/v3_cpcv/bitcoin/summary.json`, `data/v3_cpcv/ethereum/summary.json`
-- Ablation results: `data/v3_ablations/ablations_metrics.json`
-- Full empirical findings: `THESIS_FINDINGS.md` Section 12
-
-**Reproduce V3 results**:
-```bash
-# 88-bar A/B evaluation
-python scripts/baseline_strategy_v3.py --coins bitcoin ethereum \
-    --start 2026-01-16 --end 2026-04-15 --output-dir data/multi_2coins_v3
-
-# CPCV (28 splits × 2 coins)
-python scripts/v3_cpcv.py --coins bitcoin ethereum \
-    --start 2024-05-01 --end 2026-04-30 --n-splits 28 \
-    --output-dir data/v3_cpcv
-
-# Component ablation (5 variants)
-python scripts/v3_ablation.py --coins bitcoin ethereum \
-    --start 2026-01-16 --end 2026-04-15 \
-    --output-dir data/v3_ablations
-```
+House discipline for any new empirical work: `../RESEARCH_LOOP_GUIDE.md` — charter → pre-registered gates → tier ladder → sealed holdout → forensics (incl. mandatory log-vs-simple returns kill-test).
 
 ## Architecture
 
@@ -156,7 +132,7 @@ scripts/
   backtest_models.py              # Simple strategy backtest on predictions (naive daily flip)
   backtest_system.py              # Full multi-agent system backtest (propagate() over date range)
   baseline_strategy.py            # V1 baseline: RF+ARIMA h=1 ensemble (superseded by V2)
-  baseline_strategy_v2.py         # V2 baseline (PRODUCTION): LGB h=7/h=14 term structure consensus + SMA30 trend filter + adaptive hold
+  baseline_strategy_v2.py         # V2 baseline (reference): LGB h=7/h=14 term structure consensus + SMA30 trend filter + adaptive hold
 main.py                           # Example: crypto analysis of bitcoin
 THESIS_FINDINGS.md                # Persistent record of all experimental results (keep updated!)
 ```
@@ -187,7 +163,7 @@ docker compose run --rm tradingagents
 python scripts/evaluate_models_multi.py --coins bitcoin ethereum --horizons 1 3 7 14 \
     --models lgb --days 730 --min-train 365 --output-dir data/multi_2coins_v2
 
-# Step 2: Run V2+trend baseline strategy (current best — Sharpe 2.69 on 2-coin portfolio)
+# Step 2: Run V2+trend baseline strategy (⚠️ pre-audit Sharpe claims void; corrected V2: BTC +1.57/ETH +0.88 4.5-yr WF)
 python scripts/baseline_strategy_v2.py --pred-dir data/multi_2coins_v2 --symmetric
 
 # For trading a target altcoin, use "2+1" pool (BTC+ETH+target)
@@ -279,12 +255,12 @@ python scripts/evaluate_models_multi.py --coins bitcoin ethereum binancecoin \
     --horizons 1 3 7 14 --models lgb --output-dir data/multi_3coins_bnb
 ```
 
-### V2 Baseline Strategy (Production)
+### V2 Baseline Strategy (reference quant baseline; pre-audit numbers below are void)
 ```bash
-# 2-coin portfolio: Sharpe 2.69, return +106%, MaxDD 5.9%
+# 2-coin portfolio (pre-audit, void): Sharpe 2.69, return +106%, MaxDD 5.9%
 python scripts/baseline_strategy_v2.py --pred-dir data/multi_2coins_v2 --symmetric
 
-# 3-coin portfolio: Sharpe 2.58, return +156%, MaxDD 13%
+# 3-coin portfolio (pre-audit, void): Sharpe 2.58, return +156%, MaxDD 13%
 python scripts/baseline_strategy_v2.py --pred-dir data/multi_3coins_bnb --symmetric
 
 # Key defaults: h=7/h=14 consensus, SMA30 trend filter (1.5x multiplier), 7-day min hold
@@ -349,7 +325,7 @@ final_state, signal = ta.propagate("NVDA", "2025-01-15")
 - **Look-ahead bias prevention**: `set_prediction_trade_date()` binds prediction models to backtest date; OHLCV cache uses `min(curr_date, today)` as fetch boundary; `data["Date"] <= curr_date` filter applied before returning
 - **LLM replay cache**: `CachedChatModel` wraps LangChain chat models with SQLite-backed prompt-hash caching. Enable via `config["replay_cache"] = True`. Mandatory for system backtests (determinism + cost control).
 - **Multi-horizon pooled prediction**: `model_utils.build_pooled_dataset()` creates cross-coin features; `lgb_model.model_run_pooled()` runs walk-forward on pooled data with horizon as parameter. Best result: 2-coin BTC+ETH pool, h=14, BTC 84.6% / ETH 75.8% directional accuracy.
-- **V2 strategy trend filter**: V2 sizing primitives (including `apply_trend_filter`) live in `tradingagents/strategies/v2_sizing.py`; `scripts/baseline_strategy_v2.py` imports them. SMA30-based position scaling — 1.5x when aligned with trend, 0.5x when against. Single highest-impact improvement (Sharpe 1.88 → 2.69).
+- **V2 strategy trend filter**: V2 sizing primitives (including `apply_trend_filter`) live in `tradingagents/strategies/v2_sizing.py`; `scripts/baseline_strategy_v2.py` imports them. SMA30-based position scaling — 1.5x when aligned with trend, 0.5x when against. Single highest-impact improvement in pre-audit runs (1.88 → 2.69, both void as absolutes; trend-multiplier tuning was later shown artifact-fit — see DECISION_REVIEW_2026-07-08).
 - **"2+1" pooling pattern**: For trading a target altcoin, use a 3-coin pool {BTC, ETH, target} instead of larger universes. Preserves BTC/ETH quality while giving near-optimal DirAcc for the target coin.
 
 ## Gotchas
