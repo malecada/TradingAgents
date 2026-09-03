@@ -18,14 +18,23 @@ TICK_EPS = 1e-6   # in tick units, absorbs float dust in rounding / comparisons
 # ── ticks and quotes ──────────────────────────────────────────────────────────
 
 def infer_tick(prices: np.ndarray) -> float:
-    """Minimum positive gap between sorted distinct prices (NaN if < 2 prices)."""
+    """Modal positive gap between sorted distinct prices (NaN if < 2 prices).
+
+    Amendment A2 (2026-09-03, pre-result): the minimum gap under-estimates the
+    tick in ~113 symbol-months because Vision klines carry stale finer-grid
+    prints; the modal gap is the tick on which the bulk of prices sit and is the
+    conservative direction (deeper through-print requirement, coarser rounding).
+    """
     p = np.unique(np.asarray(prices, dtype=float))
     p = p[np.isfinite(p)]
     if len(p) < 2:
         return float("nan")
     d = np.diff(p)
-    d = d[d > 1e-12]
-    return float(round(float(d.min()), 10)) if len(d) else float("nan")
+    d = np.round(d[d > 1e-12], 10)
+    if len(d) == 0:
+        return float("nan")
+    vals, counts = np.unique(d, return_counts=True)
+    return float(vals[np.argmax(counts)])
 
 
 def round_to_tick(x: float, tick: float, direction: str) -> float:

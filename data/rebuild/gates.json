@@ -923,6 +923,18 @@
   "stop_rule": "per signal any gate FAIL -> closed at the execution layer ('real, uneconomic even passive' / 'no edge to price'); no re-tuning of threshold, spread, latency, fee; PASS -> stop-and-decide with the user (F-window confirmatory >= 2027-01, registered then)",
   "decisions": "LTM primary; maker 2.0 bp; R0 pre-check included; worktree TradingAgents feature/exec-pf; bookDepth dropped (probed unusable)",
   "mechanics": "tradingagents/xsect/fills.py + tests/test_xsect_fills.py; scripts/fetch_vision_{1m,aggtrades}.py; scripts/exec_pf_{register,probes,run}.py; data/rebuild/exec_pf/; ledger experiment exec_pf; THESIS section 77",
-  "thesis_section": "77"
+  "thesis_section": "77",
+  "amendments": [
+   {
+    "utc": "2026-09-03",
+    "stage": "after P2/P3/R0 probes, BEFORE P0/P1 and before any re-pricing number",
+    "trigger": "P3 as registered failed on technicalities: 2/3846 ordered bars with no 1m data are bars absent from the 1h store as well (FILUSDT 2022-04-01 02:00 exchange gap; LUNAUSDT 2022-05-13 16:00 delisting); 8 cross-month tick flags = genuine Binance tick-size changes (2021, 2025) plus minimum-gap inference picking stale finer-grid prints (113 symbol-months, 28/854 R2 orders)",
+    "A1": "the >=55/60-minute coverage requirement applies to ordered bars where the 1h store carries a close; bars absent from both stores fall under fill-model item 8 (no fill, zero return, cost charged = parent booking) and are listed",
+    "A2": "tick inference = MODAL gap between sorted distinct prices per symbol-month (was minimum gap); modal is the conservative direction (deeper through-print, coarser rounding); cross-month tick consistency and the exchangeInfo cross-check are reported, not STOP",
+    "kept": "close agreement >= 99.5% (observed min 99.997%) and A1 coverage remain STOP criteria",
+    "decided_by": "user (AskUserQuestion, accepted A1+A2)",
+    "code": "tradingagents/xsect/fills.py::infer_tick, scripts/exec_pf_probes.py::main_p3"
+   }
+  ]
  }
 }

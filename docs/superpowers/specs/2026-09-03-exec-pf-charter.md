@@ -206,3 +206,17 @@ taker-parity identity, LOC re-placement, missing-minute handling);
 `scripts/exec_pf_probes.py`, `scripts/exec_pf_run.py`; data under
 `data/xsect/klines_1m/`, `data/xsect/aggtrades/`, `data/rebuild/exec_pf/`;
 ledger experiment `exec_pf`; THESIS §77. Effort 1–2 weeks; cost $0.
+
+## Amendment (2026-09-03, pre-result, accepted by the user)
+
+Recorded in `gates.json["exec_pf"]["amendments"]`. P3 as registered failed on
+technicalities before any P0/P1/re-pricing number existed: two ordered bars
+with no 1-minute data are bars absent from the 1h store as well (FILUSDT
+2022-04-01 02:00 exchange gap; LUNAUSDT 2022-05-13 16:00 delisting), and the
+cross-month tick flags were genuine Binance tick-size changes plus the
+minimum-gap inference picking stale finer-grid prints (113 symbol-months).
+**A1:** the ≥ 55/60-minute requirement applies to ordered bars where the 1h
+store carries a close; bars absent from both stores fall under fill-model
+item 8 and are listed. **A2:** tick = modal gap per symbol-month (conservative
+direction); cross-month consistency and the exchangeInfo cross-check are
+reported, not STOP. Kept as STOP: close agreement ≥ 99.5 % and A1 coverage.

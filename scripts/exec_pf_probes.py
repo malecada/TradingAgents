@@ -68,8 +68,9 @@ def main_sample() -> None:
 def main_agg() -> None:
     t0 = time.time()
     man = {}
+    force = "--force" in sys.argv
     for i, s in enumerate(X.symbols()):
-        a = X.build_agg(s)
+        a = X.build_agg(s, force=force)
         if a is None:
             man[s] = None
             print(f"[{i+1}] {s}: no 1m data")
@@ -128,10 +129,17 @@ def main_p3() -> None:
         d = W.diff().fillna(W.iloc[0])
         ob = pd.concat([ob, pd.DataFrame({"ts_bar": W.index[d[s].to_numpy() != 0], "symbol": s})])
     nmin = agg["n_min"]
-    cov = [float(nmin.at[t, s]) if (t in nmin.index and s in nmin.columns) else np.nan
-           for t, s in zip(ob["ts_bar"], ob["symbol"])]
-    cov = np.array(cov)
-    n_bad = int(np.sum(~(cov >= P3_MIN_MINUTES)))
+    c1h_all = {s: pd.read_parquet(X.KL1H / f"{s}.parquet")["close"] for s in ob["symbol"].unique()}
+    cov, has_close = [], []
+    for t, s in zip(ob["ts_bar"], ob["symbol"]):
+        cov.append(float(nmin.at[t, s]) if (t in nmin.index and s in nmin.columns) else np.nan)
+        has_close.append(bool(np.isfinite(c1h_all[s].get(t, np.nan))))
+    cov, has_close = np.array(cov), np.array(has_close)
+    # amendment A1 (2026-09-03): the >=55-minute requirement applies to ordered bars where
+    # the 1h store carries a close; bars absent from BOTH stores (exchange halt/delisting)
+    # are fill-model item 8 (no fill, zero return, cost charged) and are listed, not gated.
+    n_bad = int(np.sum(has_close & ~(cov >= P3_MIN_MINUTES)))
+    both_absent = [(str(t), s) for t, s, h in zip(ob["ts_bar"], ob["symbol"], has_close) if not h]
     # exchangeInfo cross-check (online, best effort)
     xinfo = {}
     try:
@@ -147,10 +155,13 @@ def main_p3() -> None:
                          "match": (abs(per[s]["tick_last"] - xinfo[s]) < 1e-12) if (s in xinfo and per[s].get("tick_last")) else None}
                      for s in syms if isinstance(xinfo, dict) and s in xinfo and per[s].get("agree") is not None}
     n_flag = sum(len(v.get("tick_flags", [])) for v in per.values())
-    passed = bool(worst >= P3_MIN_AGREE and n_bad == 0 and n_flag == 0)
+    # amendment A2: tick consistency across months is REPORTED (genuine Binance tick changes fire it)
+    passed = bool(worst >= P3_MIN_AGREE and n_bad == 0)
     out = {"pass": passed, "min_agree": worst, "required_agree": P3_MIN_AGREE,
-           "ordered_bars": {"n": int(len(ob)), "n_below_55_min": n_bad, "min_minutes": float(np.nanmin(cov)) if len(cov) else None,
-                            "n_missing_agg": int(np.isnan(cov).sum())},
+           "amendments": ["A1 coverage gated only where the 1h store has a close", "A2 modal tick; consistency reported"],
+           "ordered_bars": {"n": int(len(ob)), "n_with_1h_close": int(has_close.sum()), "n_below_55_min_gated": n_bad,
+                            "min_minutes_gated": float(np.nanmin(cov[has_close])) if has_close.any() else None,
+                            "absent_from_both_stores": both_absent},
            "tick_flags_total": n_flag, "tick_vs_exchangeInfo_mismatch": [s for s, v in tick_vs_xinfo.items() if v["match"] is False],
            "per_symbol": per, "tick_vs_exchangeInfo": tick_vs_xinfo}
     _dump("p3_integrity.json", out)

@@ -23,9 +23,15 @@ def _minutes(n, start="2021-01-01"):
 
 # ── tick inference / rounding ────────────────────────────────────────────────
 
-def test_infer_tick_min_positive_gap():
+def test_infer_tick_modal_gap():
     assert infer_tick(np.array([100.0, 100.1, 100.3, 100.2, 100.1])) == pytest.approx(0.1)
     assert infer_tick(np.array([0.32757, 0.32758, 0.32760])) == pytest.approx(1e-5)
+
+
+def test_infer_tick_ignores_stale_finer_grid_print():
+    # amendment A2 (2026-09-03): a single stale 0.01-grid print must not shrink the tick
+    px = np.array([100.0, 100.1, 100.2, 100.3, 100.4, 100.5, 100.21])
+    assert infer_tick(px) == pytest.approx(0.1)
 
 
 def test_infer_tick_single_price_is_nan():
