@@ -73,21 +73,22 @@ def main() -> None:
     # ── F2 event-conditional 5-min drift on entry fills ──────────────────────
     ent = f[f["side"] == "buy"]
     drifts, mins = [], []
-    cache = {}
-    for _, r in ent.iterrows():
-        s, t = r["symbol"], pd.Timestamp(r["ts_bar"])
-        if s not in cache:
-            cache[s] = X.load_1m(s, X.DEV_LO - pd.Timedelta(days=1), X.DEV_HI)
-        df = cache[s]
-        tick = P["tick"].at[t, s]
-        thr = r["fill_price"] - fill["through_ticks"] * tick + 1e-6 * tick
-        m = first_cross_minute(df, t, "buy", thr)
-        if m is None:
+    for s_, grp in ent.groupby("symbol"):          # one symbol in memory at a time
+        df = X.load_1m(s_, X.DEV_LO - pd.Timedelta(days=1), X.DEV_HI)
+        if df is None:
             continue
-        c5 = df["close"].get(t + pd.Timedelta(minutes=m + 5), np.nan)
-        if np.isfinite(c5):
-            drifts.append(c5 / r["fill_price"] - 1)
-            mins.append(m)
+        for _, r in grp.iterrows():
+            t = pd.Timestamp(r["ts_bar"])
+            tick = P["tick"].at[t, s_]
+            thr = r["fill_price"] - fill["through_ticks"] * tick + 1e-6 * tick
+            m = first_cross_minute(df, t, "buy", thr)
+            if m is None:
+                continue
+            c5 = df["close"].get(t + pd.Timedelta(minutes=m + 5), np.nan)
+            if np.isfinite(c5):
+                drifts.append(c5 / r["fill_price"] - 1)
+                mins.append(m)
+        del df
     d = np.array(drifts)
     F2 = {"n_entry_fills": int(len(d)), "drift_5m_mean_bp": float(d.mean() * 1e4), "drift_5m_median_bp": float(np.median(d) * 1e4),
           "drift_5m_t": float(d.mean() / d.std(ddof=1) * np.sqrt(len(d))) if len(d) > 1 else None,
