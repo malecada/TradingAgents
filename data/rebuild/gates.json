@@ -682,7 +682,7 @@
    "verdicts": {
     "P0": "PASS",
     "P1": "PASS",
-    "P2": "STOP (harness)",
+    "P2": "PASS (amendment P2b: oracle-only)",
     "P3": "PASS"
    }
   },
@@ -776,6 +776,24 @@
     "momentum": 0.8587568687843158,
     "value": -0.022722836971033222
    }
+  },
+  "amendment_P2b": {
+   "when": "2026-09-03T06:49:11.097033+00:00",
+   "decided_by": "user (explicit --accept-amendment-p2b)",
+   "rule": "engine-timing oracle >= +1.0 for every sleeve is the sole blocking P2 criterion; literal W.shift(-1) reported not gated",
+   "literal_results": {
+    "liq_fade": -2.6115229316270834,
+    "carry": 0.19626781717630726,
+    "momentum": 0.8587568687843158,
+    "value": -0.022722836971033222
+   },
+   "oracle_results": {
+    "liq_fade": 4.904861437727515,
+    "carry": 26.653136577032036,
+    "momentum": 28.452337787005046,
+    "value": 23.393833579289968
+   },
+   "note": "P2a STOP (momentum literal +0.86 < +1.0) stands on record; no holdout number existed at decision time"
   }
  }
 }
