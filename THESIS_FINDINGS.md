@@ -6155,14 +6155,59 @@ by +4.9 (liq_fade) / +26.7 (carry) / +28.5 (momentum) / +23.4 (value), i.e.
 the harness sees t+1 information in all four engines. The amendment kept
 the literal ≥ +1.0 clause for the momentum sleeve; it came in at +0.86 and
 the probe script returned STOP. Relaxing that clause after seeing the
-number would be a post-hoc criterion edit, so the one-shot was **not run**:
-`data/rebuild/combo_c1/holdout_verdict.json` does not exist, the sealed
-window remains unspent for S1–S4, and the decision (accept amendment P2b —
-oracle-only blocking, literal reported — and spend; or close) is recorded
-as the user's. Everything needed for the spend is committed:
-`combo_c1_holdout.py` runs the frozen book, the placebos, the swap, the 2×
-cost stress and the DSR denominators in one pass and writes the lock.
+number would be a post-hoc criterion edit, so the one-shot was **not run**
+until the decision was put to the user. Amendment P2b (oracle-only blocking,
+literal reported, gates.json `amendment_P2b`) was accepted explicitly on
+2026-09-03 with no holdout number in existence (commit 7ef3d3f), and the
+one-shot ran once.
 
-Status: **REGISTERED — spend pending decision.** Validated strategies
-program-wide remain zero. Commits 22157c8 (registration + lead-0 fix),
-4ff6942 (dev registration + probes) on `feature/combo-c1`.
+**Holdout one-shot (2026-09-03, `combo_c1_holdout.py`, 457 days, verdict
+file written) — FAIL, 5 of 8 checks.**
+
+| metric | W1 (gated) | W2 (reported) |
+|---|---:|---:|
+| net SR | **−0.525** | −0.070 |
+| registered floor | ≥ +0.7995 | — |
+| mean net (bp/day) / total return | −2.45 / −12.2 % | — |
+| placebo p, family A (indep) / B (shared) | 0.621 / 0.264 | 0.629 (worse) |
+| sub-period halves | −0.40 / −0.65 | −0.05 / −0.09 |
+| max drawdown | 15.7 % | 32.5 % |
+| top-name share (MYXUSDT) | 7.1 % | — |
+| log-convention SR (swap test) | −2.91 | −3.09 |
+| 2× cost SR | −0.66 | −0.16 |
+| DSR n=1 / 28 / 107 | 0.28 / 0.005 / 0.001 | — |
+
+Per sleeve on the holdout (aligned SR; contribution to W1 in bp/day):
+liq_fade **−0.79** (−1.21; 198 events over 15 months vs 710 over 51 in dev,
+50 active names), carry **−0.15** (−0.44; 15 refreshes, 151 funding files),
+momentum **+0.22** (+0.48; max DD 83 % — a 10-name equal-weight alt book in
+2025–26), value **−0.96** (−1.28; breadth median 24). Holdout pairwise |ρ|
+≤ 0.28. Gates failed: SR ratio, absolute floor, sign, placebo, sleeve
+contribution (three sleeves negative); passed: drawdown, concentration; the
+convention swap does not rescue anything (log booking is far worse for the
+long books: momentum +0.22 → −2.86, the ½σ² term at 2025–26 alt
+volatility).
+
+**Reading.** The thin-edge stratum does not add up. Three of the four
+placebo-clearing dev sleeves are negative on the virgin window and the
+fourth is a coin flip with an 83 % drawdown; the combination is negative in
+both halves and indistinguishable from its own shifted-weight nulls. Under
+the audit's power table a true SR-1.6 book passes this floor roughly 55–66 %
+of the time, so a single FAIL is not proof of zero edge — but a −0.52 with
+p 0.62 is not a near miss either: the point estimate sits on the wrong side
+of zero with every sleeve but one. Kill class A (evidence): the harness
+reproduces the parents to 1e-6, the oracle canary passes in all four engines,
+the negative is stable across halves, conventions and cost stress, and no
+sleeve was starved (events, breadth and funding coverage all at dev rates).
+The stop rule applies verbatim: the stratum is closed as a combination, no
+re-weighting or sleeve dropping, and **H1 is spent for S1–S4** — any future
+liq_fade / carry / momentum / value claim on 2025-04 → 2026-07 is
+contaminated. What survives: the corrected engines (lead 0), the
+combination machinery (`xsect/combo.py`, `combo_sleeves.py`), the two new
+holdout-grade data vintages (fundamentals_h1; 1h store at 393 symbols), and
+the F window (2026-07-02 →) untouched.
+
+Status: **CLOSED — holdout FAIL.** Validated strategies program-wide remain
+zero. Commits 22157c8, 4ff6942, e25276e, 2bc75d8, abbf158, 7ef3d3f and the
+verdict commit on `feature/combo-c1`; ledger rows 4 (two dev-reference, two
+holdout).
