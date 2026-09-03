@@ -220,3 +220,10 @@ store carries a close; bars absent from both stores fall under fill-model
 item 8 and are listed. **A2:** tick = modal gap per symbol-month (conservative
 direction); cross-month consistency and the exchangeInfo cross-check are
 reported, not STOP. Kept as STOP: close agreement ≥ 99.5 % and A1 coverage.
+
+## Status (2026-09-03, executed)
+
+Probes P0–P3 PASS (P3 under amendment A1/A2), R0 closed by arithmetic.
+R1-BTC FAIL, R1-ETH FAIL, R2 PASS all gates but LTM +1.265 < taker +1.305
+(passive fills condition on continuation). THESIS §77; results in
+`data/rebuild/exec_pf/run_{R1_BTC,R1_ETH,R2}.json`, `forensics_R2.json`.

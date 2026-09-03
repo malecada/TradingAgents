@@ -6211,3 +6211,127 @@ Status: **CLOSED — holdout FAIL.** Validated strategies program-wide remain
 zero. Commits 22157c8, 4ff6942, e25276e, 2bc75d8, abbf158, 7ef3d3f and the
 verdict commit on `feature/combo-c1`; ledger rows 4 (two dev-reference, two
 holdout).
+
+## Section 77: Passive-Execution Model and Re-Pricing of the Hourly Stratum (exec_pf) — R1 FAIL, R2 PASS-but-not-better; Passive Fills Are Conditional on Continuation (2026-09-03)
+
+Lead 2 of the post-audit map (`AUDIT_RESEARCH_PROGRAM_2026-09-02.md` §6 item
+2; `LEADS_SCOPE_2026-09-02.md`). The closure audit's synthesis for the hourly
+stratum was "cost-bound, not signal-bound": two closed hourly signals were
+killed by taker cost alone, so a maker-fill model was the single infrastructure
+item that could reopen them. Charter
+`docs/superpowers/specs/2026-09-03-exec-pf-charter.md`; gates key `exec_pf`
+(registered in commit 3df55b9 before any fetch-derived number); branch
+`feature/exec-pf` off `feature/llm-event-xs`; ledger experiment `exec_pf`
+(9 rows: 3 gated LTM, 3 LOC, 3 taker-reference, the latter six declared
+non-selectable). Holdout class H3 dev-only — no sealed-window claim (the
+liq_fade window is in any case SPENT, §76). Cost $0.
+
+### 77.1 Data facts established at kickoff
+
+- Binance Vision `bookDepth` starts 2023-01-01 and carries only the ±1…±5 %
+  notional bands; `bookTicker` is not published for UM futures. Neither can
+  serve as a touch-level quote or queue proxy — the scoping charter's spread
+  and queue-haircut design was replaced pre-registration by an aggTrades-based
+  spread proxy and a trade-through fill rule that needs no queue model.
+- Vision monthly `klines/1m` fetched for the 88 symbols carrying a dev
+  thr-3.5 trigger plus BTC/ETH (2020-12 → 2025-03, 88/88 complete, 4.7 GB);
+  aggTrades for a 60-day seeded sample only (seed 20260903).
+- The S3 parent numbers (§58, `pp_dev_results.json`) were produced on the
+  pre-Aug-24 engine: rv_1h `ret` is Δlog and `y_true == ret` exactly, so the
+  forecast at t applies to bar [t, t+1h). The taker reference for R1 was
+  re-derived under simple returns.
+
+### 77.2 Fill model (frozen pre-result)
+
+Order at the parent's decision close; buy limit = close − ½·spread rounded
+down to the tick, sell = close + ½·spread rounded up; spread = max(1 tick,
+s_rel × close) with s_rel per symbol from the aggTrades sample (BTC/ETH
+0.29 bp, sampled-alt median 1.3 bp, pooled 1.45 bp for unsampled symbols);
+order live from minute 1 (minute 0 = latency); fill iff a 1-minute low/high
+trades *through* the limit by ≥ 1 tick (touch does not fill); exact segment
+booking w_old·(L/close_b − 1) + w_new·(close_{b+1}/L − 1) under simple
+returns, so adverse selection sits inside the PnL; LTM (limit, then market at
+bar end; primary, gated) and LOC (limit-or-cancel entries; reported); maker
+2.0 bp / taker 5.0 bp; rf and daily aggregation as the parents.
+Library `tradingagents/xsect/fills.py`, 24 tests (trade-through kill-tests,
+latency exclusion, rounding direction, segment identity, taker-parity identity,
+LOC re-placement, missing-minute handling).
+
+### 77.3 Probes (all pre-registered; P3 amended once, pre-result, by the user)
+
+| probe | result |
+|---|---|
+| P2 parity | taker mode reproduces the R2 parent daily series to 3e-17 (SR 1.304741 = pin) and the R1 log-engine pin −0.080423 to 3e-16 |
+| P3 integrity | 1m-rebuilt hourly close = 1h store on 99.997 % of bars; 0/3844 gated ordered bars below 55 minutes; 2 ordered bars absent from both stores (FIL 2022-04-01 gap, LUNA delisting) |
+| P0 calibration | 58 orders on the sample: 1-minute rule 89.7 % filled vs tick-level truth 87.9 % (+1.7 pp ≤ 5 pp; agreement 98.3 %; 0-latency tick rate 94.8 %); quote-proxy error 1.5 bp |
+| P1 adverse selection | 2,002 unconditional placements, 91.9 % filled; 5-minute post-fill drift −5.9 bp (t −5.2), bar-end −13.2 bp — passive fills are adverse, the model is not favourable |
+| R0 arithmetic | 0.0340 × 1.64 % (top-decile BTC hourly move) = 5.57 bp expected gross < 8.0 bp (2 × maker round trip); q95 7.27, q99 11.94 — closed without a run |
+
+**Amendment (pre-result, user-accepted):** P3 as registered stopped on two
+technicalities — the two ordered bars with no 1-minute data are bars with no
+1h data either (exchange halt / delisting, booked identically by parent and
+overlay), and the cross-month tick "inconsistency" flags were genuine Binance
+tick-size changes (2021, 2025) plus a minimum-gap inference that picked stale
+finer-grid prints in 113 symbol-months. A1 gates coverage only where the 1h
+store has a close; A2 infers the tick as the *modal* gap (the conservative
+direction: deeper through-print, coarser rounding) and reports consistency.
+Recorded in `gates.json["exec_pf"]["amendments"]` (commit df6693a) before P0,
+P1 or any re-pricing number existed.
+
+### 77.4 Results (dev 2021-01 → 2025-03; daily SR √365)
+
+| signal | taker ref (simple) | LTM | fill | LOC | maker 3 bp | log booking | placebo worse p | verdict |
+|---|---:|---:|---:|---:|---:|---:|---:|---|
+| R1-BTC sign filter | +0.210 (parent log −0.080 hourly) | **+0.216** | 94.3 % | +0.223 | +0.153 | −0.077 | 0.567 | FAIL (SR, placebo, swap) |
+| R1-ETH sign filter | −0.069 | **−0.112** | 93.9 % | −0.114 | −0.177 | −0.416 | 0.122 | FAIL (SR, placebo) |
+| R2 liq_fade thr3.5/H48 | +1.305 (10 bp) | **+1.265** | 93.2 % | +1.260 | +1.258 | +0.071 | 0.002 / 0.002 | PASS all five gates |
+
+R2 detail: 854 orders, 796 filled; fill rate by year 95/94/91/95/79 %
+(2025Q1 low n); maxDD 34.7 %; top-name share 10.7 %; yearly SR 2.62 / −0.39 /
+1.24 / 2.35 / −0.59 vs taker 2.66 / −0.35 / 1.31 / 2.35 / −0.20; DSR 0.94 at
+the family n = 3, 0.43 at the cumulative ledger n = 117 (reported). LOC fills
+96 % by re-placing but lands at the same SR. A 2-tick through rule (reported
+sensitivity, not a second rule) gives 92.3 % fills and SR +1.259.
+
+### 77.5 Forensics — why passive execution does not help a fade
+
+Order-level decomposition of LTM minus the parent's taker booking over the
+dev window (weight units): fees saved +0.066 (0.085 → 0.020); gross on the
+796 filled orders +0.018 (mean price improvement vs the close only 2.2 bp,
+against 10 bp of assumed taker cost); gross on the 58 *unfilled* orders
+−0.128 — net −0.045, i.e. SR 1.305 → 1.265. Per order the passive policy
+loses 17 bp on buys and 9 bp on sells relative to taker.
+
+Mechanism: 87 % of entry fills occur within minute 5 of the holding bar
+(median fill minute 1). After a cascade bar the price is still falling, so a
+resting bid is hit almost at once and the "improvement" is a few basis points;
+the median 5-minute post-fill drift on entries is −21 bp (mean +1 bp, t 0.04,
+skewed by rebounds). The 6.8 % of entries that never trade through are the
+bars where the price rebounds immediately — the best fade bars — and LTM then
+buys them at the bar-end close after the first-hour rebound (35 bp of the
+207 bp 24-hour fade sits in that hour, §49). Passive fills are conditional on
+continuation and misses are conditional on reversal: for a mean-reversion
+entry the maker rebate is paid back in selection. The unconditional P1 drift
+(−6 bp at 5 minutes) is the same effect without the event conditioning.
+
+### 77.6 Verdicts and status
+
+- **R1 (both):** FAIL — closed at the execution layer as "no edge to price".
+  Halving the cost halves the gross by the same amount; the sign filter's
+  taker-simple SR is +0.21/−0.07, and its parent's −0.08 was a log-booking
+  artifact on a long-only book (rail 15, in the deflating direction).
+- **R0:** closed by arithmetic without a run.
+- **R2:** PASS on every registered gate, but the passive model does *not*
+  improve on the taker booking (−0.04 SR) — the "cost-bound" premise of the
+  hourly stratum was wrong for this signal: at 10 bp its parent already
+  cleared the net-SR floor and failed only the cumulative DSR (§49), and it
+  subsequently lost −0.79 on the sealed window as a combo_c1 sleeve (§76).
+  Per the registered stop rule a PASS is a stop-and-decide, not a revival: the
+  only path left is a passive-execution confirmatory on the F window
+  (2026-07-02 →) after ≥ 6 months' accrual (≥ 2027-01), registered then; the
+  §76 out-of-sample failure makes that a low-prior spend.
+- **What the cycle bought:** a validated, conservative, tick-calibrated
+  maker-fill model on free data (`fills.py`), reusable for any hourly weight
+  path; and a structural result for the map — passive execution cannot rescue
+  a mean-reversion entry because its fills select on continuation. Cost-bound
+  hourly signals must be re-priced at taker with better timing, not at maker.
