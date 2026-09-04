@@ -2218,5 +2218,25 @@
   "verdicts": {
    "P0": "FAIL at P0 \u2014 0/12 survive BH-FDR q<0.10 + year rule (min raw p 0.0743); family CLOSED"
   }
+ },
+ "predlab_exec_fcst": {
+  "registered_utc": "2026-09-04",
+  "charter": "docs/superpowers/specs/2026-09-04-exec-fcst-charter.md",
+  "purpose": "measurement, dev-only H3: (a) causal hour-of-day volume profile vs uniform participation schedule under sqrt impact; (b) RV champions vs naive-20 in the impact model's cost prediction (trade-invariant, = QLIKE of sigma forecast)",
+  "book": "EW monthly top-200 PIT, weights 1/n set on the first trading day of each month, held; AUM grid 1e7/3e7/1e8, headline 3e7",
+  "impact": "k*sigma_h*x_h*sqrt(x_h/V_h), k=1, sigma_h = trailing-20d std of hourly returns lagged, V_h realized hourly quote volume; fees dropped (identical)",
+  "schedules": {
+   "S_uni": "T/24",
+   "S_prof": "T * trailing-28-day mean hour-of-day share of daily volume (days strictly before)",
+   "S_oracle": "realized V_h shares (lower bound, reported)"
+  },
+  "gate_a": "mean daily cost reduction >= 5% at AUM 3e7 AND stationary-bootstrap p_pos >= 0.90 (mean block 21, 2000 draws) on paired daily cost_uni - cost_prof",
+  "gate_b": "QLIKE(sigma_hat, sigma_real) improvement vs naive-20 >= 5% AND DM (HAC lag 5) p < 0.05, BTC (harq) and ETH (egarch11), 24h forecasts from predlab_p1_classical",
+  "dev_window": [
+   "2021-01-01",
+   "2025-03-31"
+  ],
+  "stop_rule": "report-grade; all numbers recorded; no schedule/window/k changes; one-shot",
+  "thesis_section": "85"
  }
 }
