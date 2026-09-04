@@ -51,17 +51,22 @@ def v3_pool(token: str, quote: str, fee: int) -> str:
 
 
 def enumerate_token(sym: str, token: str) -> list[dict]:
-    out = []
+    """All 15 factory lookups for one token in ONE batched JSON-RPC request."""
+    specs, params = [], []
     for qname, q in QUOTES.items():
-        p = v2_pair(token, q)
+        specs.append((qname, q, 2, 3000))
+        params.append([{"to": V2_FACTORY, "data": "0xe6a43905" + _pad(token) + _pad(q)}, "latest"])
+        for fee in V3_FEES:
+            specs.append((qname, q, 3, fee))
+            params.append([{"to": V3_FACTORY, "data": "0x1698ee82" + _pad(token) + _pad(q)
+                            + hex(fee)[2:].rjust(64, "0")}, "latest"])
+    res = rpc_pool.rpc_batch("eth_call", params)
+    out = []
+    for (qname, q, ver, fee), r in zip(specs, res):
+        p = _addr(r) if r and len(r) >= 66 else ZERO
         if p != ZERO:
             out.append({"sym": sym, "token": token, "quote": qname, "quote_addr": q,
-                        "version": 2, "fee": 3000, "pool": p, "token_is_0": token.lower() < q.lower()})
-        for fee in V3_FEES:
-            p = v3_pool(token, q, fee)
-            if p != ZERO:
-                out.append({"sym": sym, "token": token, "quote": qname, "quote_addr": q,
-                            "version": 3, "fee": fee, "pool": p, "token_is_0": token.lower() < q.lower()})
+                        "version": ver, "fee": fee, "pool": p, "token_is_0": token.lower() < q.lower()})
     return out
 
 
@@ -71,7 +76,7 @@ def main() -> None:
     cache = json.loads((SMW / "pools_by_token.json").read_text()) if (SMW / "pools_by_token.json").exists() else {}
     todo = {a for a in want.values() if a not in cache}
     print(f"tokens to enumerate: {len(todo)} (cached {len(cache)})", flush=True)
-    with cf.ThreadPoolExecutor(4) as ex:
+    with cf.ThreadPoolExecutor(2) as ex:
         futs = {ex.submit(enumerate_token, "", a): a for a in sorted(todo)}
         for i, f in enumerate(cf.as_completed(futs)):
             a = futs[f]

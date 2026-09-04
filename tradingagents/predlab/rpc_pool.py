@@ -70,6 +70,7 @@ class Endpoint:
         self.disabled: str | None = None
         self.logs_ok = True          # False: quota'd / pruned for getLogs, still fine for calls
         self.inflight = 0
+        self.lat = 0.0               # EMA of response seconds; 0 = untested, tried first
 
     def _post(self, method: str, params: list, timeout: float):
         if method == "__batch__":
@@ -105,7 +106,8 @@ class Pool:
         ready = [e for e in cands if e.next_ok <= now]
         if not ready:
             return None
-        return min(ready, key=lambda e: (e.inflight, e.penalty, e.next_ok))
+        # expected wait = queue depth x latency; penalised endpoints last
+        return min(ready, key=lambda e: (e.penalty > 0, round((e.inflight + 1) * e.lat, 1), e.calls, e.next_ok))
 
     def _wait_time(self, need_archive: bool, exclude: set, need_batch: bool = False) -> float:
         cands = [e for e in self.eps if e.disabled is None and e.name not in exclude
@@ -139,7 +141,10 @@ class Pool:
                 time.sleep(min(wait, 5.0) + 0.05)
                 continue
             try:
+                t_call = time.time()
                 r = ep._post(method, params, timeout)
+                with self.lock:
+                    ep.lat = 0.8 * ep.lat + 0.2 * (time.time() - t_call)
                 if need_batch:
                     if not isinstance(r, list) or len(r) != len(params):
                         raise RuntimeError(f"malformed batch response {str(r)[:80]}")
