@@ -113,7 +113,7 @@ def main() -> None:
                     s = pd.Series({pd.Timestamp(int(ts), unit="s", tz="UTC"): float(v) for ts, v in chart})
                     cols["fees_usd" if dt == "dailyFees" else "revenue_usd"] = s
             if cols:
-                df = pd.DataFrame(cols)
+                df = pd.DataFrame(cols).reindex(columns=["fees_usd", "revenue_usd"])
                 df["slug"] = slug
                 frames.append(df)
         if not frames:
