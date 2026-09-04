@@ -24,12 +24,12 @@ import urllib.request
 
 # name, url, min seconds between calls, serves historical eth_call/getBlock
 ENDPOINTS: list[dict] = [
-    {"name": "tenderly", "url": "https://mainnet.gateway.tenderly.co", "throttle": 0.6, "archive": True},
-    {"name": "mevblocker", "url": "https://rpc.mevblocker.io", "throttle": 1.0, "archive": True},
-    {"name": "drpc", "url": "https://eth.drpc.org", "throttle": 0.25, "archive": True},
-    {"name": "nodereal", "url": "https://eth-mainnet.nodereal.io/v1/1659dfb40aa24bbb8153a677b98064d7", "throttle": 1.5, "archive": True},
-    {"name": "onfinality", "url": "https://eth.api.onfinality.io/public", "throttle": 3.0, "archive": False},
-    {"name": "0xrpc", "url": "https://0xrpc.io/eth", "throttle": 3.0, "archive": False},
+    {"name": "tenderly", "url": "https://mainnet.gateway.tenderly.co", "throttle": 0.6, "archive": True, "batch": False},
+    {"name": "mevblocker", "url": "https://rpc.mevblocker.io", "throttle": 1.0, "archive": True, "batch": True},
+    {"name": "drpc", "url": "https://eth.drpc.org", "throttle": 0.25, "archive": True, "batch": False},
+    {"name": "nodereal", "url": "https://eth-mainnet.nodereal.io/v1/1659dfb40aa24bbb8153a677b98064d7", "throttle": 1.5, "archive": True, "batch": True},
+    {"name": "onfinality", "url": "https://eth.api.onfinality.io/public", "throttle": 3.0, "archive": False, "batch": False},
+    {"name": "0xrpc", "url": "https://0xrpc.io/eth", "throttle": 3.0, "archive": False, "batch": True},
 ]
 
 # Self-check: USDC/WETH v2 pair Swap logs in blocks 16,800,000-16,809,999
@@ -49,10 +49,20 @@ def _transient(msg: str) -> bool:
                                 "cu limit", "route", "upgrade to paid", "busy", "throttl"))
 
 
+def _historical(method: str, params: list) -> bool:
+    """eth_call / getBlockByNumber at 'latest' need no archive node."""
+    try:
+        tag = params[1] if method == "eth_call" else params[0]
+    except (IndexError, TypeError):
+        return True
+    return not (isinstance(tag, str) and tag in ("latest", "pending", "safe", "finalized"))
+
+
 class Endpoint:
     def __init__(self, spec: dict):
         self.name, self.url = spec["name"], spec["url"]
         self.throttle, self.archive = float(spec["throttle"]), bool(spec["archive"])
+        self.batch = bool(spec.get("batch", False))
         self.next_ok = 0.0          # earliest wall time for the next call
         self.penalty = 0.0          # current backoff after transient errors
         self.calls = self.errors = 0
@@ -61,7 +71,10 @@ class Endpoint:
         self.inflight = 0
 
     def _post(self, method: str, params: list, timeout: float):
-        body = json.dumps({"jsonrpc": "2.0", "id": 1, "method": method, "params": params}).encode()
+        if method == "__batch__":
+            body = json.dumps(params).encode()
+        else:
+            body = json.dumps({"jsonrpc": "2.0", "id": 1, "method": method, "params": params}).encode()
         req = urllib.request.Request(self.url, body, {"Content-Type": "application/json",
                                                        "User-Agent": "curl/8.5.0"})
         raw = urllib.request.urlopen(req, timeout=timeout).read()
@@ -70,8 +83,10 @@ class Endpoint:
 
 
 class Pool:
-    def __init__(self, specs: list[dict] | None = None, selfcheck: bool = True, log=print):
+    def __init__(self, specs: list[dict] | None = None, selfcheck: bool = True, log=None):
         self.eps = [Endpoint(s) for s in (specs or ENDPOINTS)]
+        if log is None:
+            log = lambda *a: print(*a, flush=True)  # noqa: E731
         self.lock = threading.Lock()
         self.log = log
         self.t0 = time.time()
@@ -79,32 +94,33 @@ class Pool:
             self.self_check()
 
     # ------------------------------------------------------------ scheduling
-    def _pick(self, need_archive: bool, exclude: set) -> "Endpoint | None":
+    def _pick(self, need_archive: bool, exclude: set, need_batch: bool = False) -> "Endpoint | None":
         """Least-loaded ready endpoint; None if every eligible one is throttled."""
         now = time.time()
         cands = [e for e in self.eps if e.disabled is None and e.name not in exclude
-                 and (e.archive or not need_archive)]
+                 and (e.archive or not need_archive) and (e.batch or not need_batch)]
         ready = [e for e in cands if e.next_ok <= now]
         if not ready:
             return None
         return min(ready, key=lambda e: (e.inflight, e.penalty, e.next_ok))
 
-    def _wait_time(self, need_archive: bool, exclude: set) -> float:
+    def _wait_time(self, need_archive: bool, exclude: set, need_batch: bool = False) -> float:
         cands = [e for e in self.eps if e.disabled is None and e.name not in exclude
-                 and (e.archive or not need_archive)]
+                 and (e.archive or not need_archive) and (e.batch or not need_batch)]
         if not cands:
             return -1.0
         return max(0.0, min(e.next_ok for e in cands) - time.time())
 
     def rpc(self, method: str, params: list, tries: int = 12, timeout: float = 90.0):
-        need_archive = method in _ARCHIVE_METHODS
+        need_archive = method in _ARCHIVE_METHODS and _historical(method, params)
+        need_batch = method == "__batch__"
         refused: set = set()      # endpoints that returned a non-transient error
         last_err = "no endpoint"
         for _attempt in range(tries):
             with self.lock:
-                ep = self._pick(need_archive, refused)
+                ep = self._pick(need_archive, refused, need_batch)
                 if ep is None:
-                    wait = self._wait_time(need_archive, refused)
+                    wait = self._wait_time(need_archive, refused, need_batch)
                     if wait < 0:
                         break     # every eligible endpoint refused this request
                 else:
@@ -115,6 +131,22 @@ class Pool:
                 continue
             try:
                 r = ep._post(method, params, timeout)
+                if need_batch:
+                    if not isinstance(r, list) or len(r) != len(params):
+                        raise RuntimeError(f"malformed batch response {str(r)[:80]}")
+                    bad = [x for x in r if not isinstance(x, dict) or "error" in x]
+                    if bad:
+                        msg = str(bad[0].get("error", bad[0]) if isinstance(bad[0], dict) else bad[0])[:120]
+                        if _transient(msg):
+                            self._penalize(ep, msg)
+                            continue
+                        refused.add(ep.name)
+                        last_err = f"{ep.name}: {msg}"
+                        continue
+                    with self.lock:
+                        ep.calls += 1
+                    by_id = {x["id"]: x["result"] for x in r}
+                    return [by_id[p["id"]] for p in params]
                 if not isinstance(r, dict):
                     raise RuntimeError(f"malformed response {str(r)[:80]}")
                 if "error" in r:
@@ -190,3 +222,11 @@ def get_pool() -> Pool:
 def rpc(method: str, params: list, tries: int = 12):
     """Drop-in for predlab_nlst_dex_fetch.rpc."""
     return get_pool().rpc(method, params, tries=tries)
+
+
+def rpc_batch(method: str, params_list: list, tries: int = 12) -> list:
+    """One HTTP call carrying many requests (endpoints flagged batch=True);
+    results returned in input order."""
+    payload = [{"jsonrpc": "2.0", "id": i, "method": method, "params": p}
+               for i, p in enumerate(params_list)]
+    return get_pool().rpc("__batch__", payload, tries=tries)

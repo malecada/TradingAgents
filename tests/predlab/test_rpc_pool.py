@@ -87,3 +87,19 @@ def test_malformed_response_is_retried_elsewhere(monkeypatch):
     _patch_post(monkeypatch, handler)
     pool = rpc_pool.Pool(_specs(), selfcheck=False, log=lambda *_: None)
     assert pool.rpc("eth_getLogs", [{}]) == 7
+
+
+def test_batch_routes_to_batch_endpoints_and_orders_results(monkeypatch):
+    seen = []
+
+    def handler(name, m, p):
+        seen.append(name)
+        assert m == "__batch__"
+        return [{"id": q["id"], "result": q["params"][0]} for q in reversed(p)]
+    _patch_post(monkeypatch, handler)
+    specs = [{"name": "nb", "url": "u", "throttle": 0.0, "archive": True, "batch": False},
+             {"name": "b", "url": "u", "throttle": 0.0, "archive": True, "batch": True}]
+    pool = rpc_pool.Pool(specs, selfcheck=False, log=lambda *_: None)
+    payload = [{"jsonrpc": "2.0", "id": i, "method": "eth_getCode", "params": [f"0x{i}", "latest"]} for i in range(5)]
+    assert pool.rpc("__batch__", payload) == [f"0x{i}" for i in range(5)]
+    assert seen == ["b"]
