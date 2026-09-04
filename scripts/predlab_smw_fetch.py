@@ -251,6 +251,7 @@ def probe() -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--probe", action="store_true")
+    ap.add_argument("--anchors-only", action="store_true")
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--months", nargs="*", default=None)
     a = ap.parse_args()
@@ -258,6 +259,8 @@ def main() -> None:
         probe()
         return
     fetch_anchors(a.workers)
+    if a.anchors_only:
+        return
     res = run(a.months or MONTHS_DEV, a.workers)
     print("FETCH DONE", json.dumps(res), flush=True)
 

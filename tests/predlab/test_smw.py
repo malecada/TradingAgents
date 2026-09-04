@@ -75,7 +75,9 @@ def test_map_prefers_ranked_then_single_unranked():
     assert m["ABCUSDT"]["cg_id"] == "b-token" and m["ABCUSDT"]["how"] == "fallback_ranked"
     assert m["XYZUSDT"]["cg_id"] == "lone" and m["XYZUSDT"]["how"] == "fallback_single_unranked"
     assert m["QQQUSDT"]["how"] == "fallback_no_candidate" and "address" not in m["QQQUSDT"]
-    assert m["DUPUSDT"]["how"] == "fallback_ambiguous_unranked"
+    assert m["DUPUSDT"]["how"] == "fallback_ambiguous"
+    m2 = map_symbols(["ABCUSDT"], coins, {"b-token": 812, "a-token": 900})
+    assert m2["ABCUSDT"]["how"] == "fallback_ambiguous" and "address" not in m2["ABCUSDT"]
 
 
 def test_binance_spot_rule_overrides_symbol_collision():

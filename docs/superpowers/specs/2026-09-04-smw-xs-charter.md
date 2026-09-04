@@ -38,9 +38,9 @@ horizon; the nlst3 signal was specific to the first-hours-of-life regime.
   coin has a `platforms.ethereum` address, and is otherwise unmapped even if
   a same-symbol ERC-20 exists (TON, CFX, DASH collisions found in the dry
   run). (2) Fallback for bases not on Binance spot today (delisted / dead
-  tokens): CoinGecko coins with that symbol and an ethereum address, best
-  market-cap rank in the top-2500 snapshot of the same day, or the single
-  unranked candidate; else unmapped. Caveat: the snapshots are 2026-09, so
+  tokens): CoinGecko coins with that symbol and an ethereum address — a single
+  candidate is taken; among several, the best market-cap rank in the
+  top-2500 snapshot of the same day only if that rank ≤ 500; else unmapped. Caveat: the snapshots are 2026-09, so
   dead multi-candidate tokens drop out and bridged wrappers (e.g. Wormhole
   AVAX) can enter — a universe-selection effect, not a signal look-ahead;
   the mapped list with the rule that fired is stored with the registration.

@@ -10,9 +10,10 @@ leading 1000 / 1000000 multiplier.
      same-symbol ERC-20 exists (TON, CFX, DASH collisions).
   2. Fallback (base not on Binance spot today, i.e. delisted / dead tokens):
      candidates = CoinGecko coins with that symbol and an ethereum address
-     (cg/coins_list_platforms.json); pick the best market_cap_rank in the
-     top-2500 snapshot (cg/markets_p*.json); if none is ranked and exactly
-     one candidate exists take it ('fallback_single_unranked'); else unmapped.
+     (cg/coins_list_platforms.json); a single candidate is taken; with
+     several, the best market_cap_rank in the top-2500 snapshot
+     (cg/markets_p*.json) is taken only if rank <= 500 (guards against
+     same-symbol ERC-20 collisions such as TON -> Tokamak); else unmapped.
 Decimals via eth_call decimals(). The mapping is a universe definition, not
 a signal; the stored file lists every symbol with the rule that fired.
 
@@ -32,6 +33,7 @@ from tradingagents.predlab import rpc_pool  # noqa: E402
 SMW = ROOT / "data" / "predlab" / "smw"
 KLINES = ROOT / "data" / "xsect" / "klines"
 OUT = SMW / "token_map.json"
+FALLBACK_MAX_RANK = 500
 
 
 def base_symbol(sym: str) -> str:
@@ -89,12 +91,12 @@ def map_symbols(syms: list[str], coins: list[dict], rank: dict,
                             "rank": pick["rank"]} if pick else {})}
             continue
         ranked = sorted([c for c in cands if c["rank"] is not None], key=lambda c: c["rank"])
-        if ranked:
+        if len(cands) == 1:
+            pick, how = cands[0], ("fallback_single_ranked" if ranked else "fallback_single_unranked")
+        elif ranked and ranked[0]["rank"] <= FALLBACK_MAX_RANK:
             pick, how = ranked[0], "fallback_ranked"
-        elif len(cands) == 1:
-            pick, how = cands[0], "fallback_single_unranked"
         else:
-            pick, how = None, ("fallback_no_candidate" if not cands else "fallback_ambiguous_unranked")
+            pick, how = None, ("fallback_no_candidate" if not cands else "fallback_ambiguous")
         out[sym] = {"base": base_symbol(sym), "how": how, "n_candidates": len(cands),
                     **({"cg_id": pick["id"], "name": pick["name"], "address": pick["address"],
                         "rank": pick["rank"]} if pick else {})}
