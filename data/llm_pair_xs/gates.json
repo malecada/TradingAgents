@@ -2,13 +2,19 @@
  "llm_c3p_pair_xs": {
   "registered_utc": "2026-08-17",
   "spec": "docs/superpowers/specs/2026-08-17-llm-c3p-pair-xs-charter.md",
-  "parent": "llm_c3_rank_xs (dead P0, THESIS §64) — pairwise revival per Aug-14 leads note",
+  "parent": "llm_c3_rank_xs (dead P0, THESIS \u00a764) \u2014 pairwise revival per Aug-14 leads note",
   "hypothesis": "Weekly Bradley-Terry scores from LLM pairwise duels on anonymized numeric PIT cards have residual IC (after vol/momentum/size neutralization) vs 5d forward returns AND beat a GBDT twin on identical inputs",
   "universe": "cards.parquet verbatim from C3 (top-200 by 30d median dollar volume, monthly PIT, 799-sym store)",
   "construction": "k=10 seeded permutation-pairing rounds/week; EVERY pair issued in both orders (A,B)+(B,A) in disjoint prompts; 20 duels/prompt; gpt-5.4-mini temp 0 JSON; BT via MM, 200 iters, alpha=0.5 virtual-opponent prior, log-strength score",
   "windows": {
-   "dev": ["2021-01-01", "2025-03-31"],
-   "holdout": ["2025-04-01", "2026-07-01 — SEALED, virgin for LLM-XS family, one-shot only if P3 passes"]
+   "dev": [
+    "2021-01-01",
+    "2025-03-31"
+   ],
+   "holdout": [
+    "2025-04-01",
+    "2026-07-01 \u2014 SEALED, virgin for LLM-XS family, one-shot only if P3 passes"
+   ]
   },
   "probes": {
    "P0b_order_swap": "base run, 8 seeded weeks (seed 20260817): pooled swap-consistency >=0.60 AND per-week >=0.55 in >=6/8 AND slot-1 pick rate in [0.35,0.65]; STOP else",
@@ -22,5 +28,25 @@
   "multiplicity": "confirmatory n_trials=1 for the P2 primary gate (single frozen pre-registered hypothesis, rail 9); family <=10 ledgered configs and cumulative ledger reported as declared sensitivities; ledger data/llm_pair_xs/trial_ledger.jsonl append-only",
   "llm_spend_cap_usd": 150,
   "stop_rule": "any STOP = dead this cycle; no prompt/k/batch/alpha/field/frequency changes after P0 runs; unresolved-instance rate <0.95/week = infra flag not a tuning license; holdout untouched until registered one-shot"
+ },
+ "llm_c3p_conf": {
+  "registered_utc": "2026-09-04",
+  "spec": "docs/superpowers/specs/2026-09-04-llm-c3p-conf-charter.md",
+  "parent": "llm_c3p_pair_xs (thesis 65)",
+  "status": "REGISTERED, NOT RUN \u2014 deferred to >= 90 sealed weeks (~2027-01) per the recommended option (afk autonomy grant 2026-09-04)",
+  "pipeline": "frozen verbatim from llm_c3p_pair_xs: gpt-5.4-mini temp 0, k=10 rounds/week, both orders, BT MM 200 iters alpha 0.5, log-strength, weekly OLS residualization on {vol_ewma20, ret_4w, size_rank}, anonymized cards",
+  "windows": {
+   "sealed_weeks": "2025-04-04 -> >= 2026-12-25 (>= 90 Fridays); H1 for this family",
+   "dev": "untouched"
+  },
+  "gates": {
+   "primary": "residual IC > 0 AND NW-t >= 2.0 (lag 4) on all sealed weeks, anonymized",
+   "twin": "LLM residual IC >= GBDT twin (refit on dev only) on common weeks",
+   "sensitivity": "post-cutoff subset (>= 2025-09) reported"
+  },
+  "cost_cap_usd": 40,
+  "multiplicity": "confirmatory n_trials=1 (frozen hypothesis, virgin weeks); cumulative reported",
+  "trigger": "cards.parquet covers >= 90 Fridays after 2025-04-04; extend card store first",
+  "thesis_section": "84"
  }
 }
