@@ -2242,5 +2242,48 @@
    "a": "FAIL: reduction 0.41% p_pos 0.990 (oracle 12.8%)",
    "b": "FAIL: BTC +14.7% p 0.0024; ETH +3.1% p 0.4207"
   }
+ },
+ "predlab_liq_fade_v1": {
+  "registered_utc": "2026-09-04",
+  "charter": "docs/superpowers/specs/2026-09-04-liq-fade-v1-charter.md",
+  "purpose": "frozen liq_fade_i1 (thr 3.5, H 48, w 0.1, cap 1.0, long-fade, 10 bp, rf 4.5%) on Bybit linear USDT perps, monthly top-50 PIT by trailing-30d median turnover, 1h; venue/universe robustness evidence (not an independent sample)",
+  "parents": "liq_fade_i1 (49), liq_fade_r1 (50), combo_c1 sleeve (76), exec_pf (77)",
+  "decisions_afk_grant": "Bybit; cost 10 bp for comparability (5.5 bp venue-actual reported)",
+  "data": "Bybit v5 kline interval 60, 735 symbols of the daily store, dev cap 2025-03-31 (predlab_bybit_fetch_1h.py); quote volume = turnover; universe from the Bybit daily store as-is (delisting-truncation caveat applies)",
+  "windows": {
+   "dev": [
+    "2021-01-01",
+    "2025-03-31"
+   ],
+   "warmup": "2020-10-01",
+   "holdout": "none (H3); Binance sealed window spent (76); Bybit claims only on the F window >= 2027-01"
+  },
+  "probes": {
+   "P0": "Bybit vs Binance 1h BTC/ETH simple returns corr > 0.99 on overlap; else STOP",
+   "P3_FIRST": "vol-drift control: long 1/10 for 48 bars after hours with z_vol >= 3.5 and z_ret > -3.5 (no crash), same engine/costs; control net SR < 0.5 AND primary - control >= 0.75; else NEGATIVE-confounded (primary >= 1.0) or NEGATIVE",
+   "P1": "thr 2.5 detector on the 8 majors flags >= 4/5 benchmark cascade dates",
+   "P2": "mean gross forward return t+1..t+48 over dev triggers >= +0.25% with >= 300 events; else STOP"
+  },
+  "gates": {
+   "net_sr_min": 1.0,
+   "placebo_p_max": 0.05,
+   "top_share_max": 0.25,
+   "ctrl_sr_max": 0.5,
+   "separation_min": 0.75,
+   "p2_min_ret": 0.0025,
+   "p2_min_events": 300,
+   "placebo": "dual family A per-symbol circular trigger shift >= 24 bars, B count-matched uniform redraw within membership; 500 draws each; worse p",
+   "cost_stress": "20 bp keeps sign",
+   "convention_swap": "log booking keeps sign",
+   "dsr": "n=1 confirmatory (frozen config, new venue) + cumulative reported"
+  },
+  "reported": [
+   "5.5 bp venue-actual cost",
+   "per-year SR",
+   "events per year",
+   "DSR cumulative"
+  ],
+  "stop_rule": "any probe/gate FAIL => does not replicate on Bybit (or NEGATIVE-confounded per P3); no re-tuning; one-shot",
+  "thesis_section": "87"
  }
 }
