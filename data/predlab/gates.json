@@ -2094,7 +2094,9 @@
   "verdicts": {
    "P0": "P0 1/8 survive BH-FDR q<0.10 + floors (|NW-t| per charter, corrected): ['XS_24h_IC']",
    "P0_original_signbug": "FAIL at P0 \u2014 0/8 cells survive (min raw p 0.0000); family CLOSED",
-   "P0_correction_note": "XS floor used signed NW-t >= 3; charter fixes no sign; corrected to |NW-t| >= 3"
+   "P0_correction_note": "XS floor used signed NW-t >= 3; charter fixes no sign; corrected to |NW-t| >= 3",
+   "P1": "XS_24h_IC quintile L/S: net SR -2.421, placebo p 0.894, stress -3.989, log -1.708, name share 0.03 -> FAIL",
+   "forensic": "decile next-day returns non-monotone: lowest-z decile 8.4 bp, deciles 1-4 15-17 bp, top decile 19.5 bp; the negative rank IC lives in the middle, extremes show continuation; bottom-minus-top quintile -5.8 bp/day (t -1.3); P1 FAIL is not an alignment error (P1-panel IC -0.020 reproduces P0); family CLOSED"
   }
  },
  "predlab_cal2": {
