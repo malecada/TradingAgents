@@ -1009,6 +1009,15 @@
   },
   "stop_rule": "0/9 PASS => family closed at the mechanism level (euphoria detector even on its target regime); no re-tuning. PASS => holdout one-shot on the selected config, then stop-and-decide",
   "mechanics": "tradingagents/stress/index.py::store_funding_components; scripts/stress_ews2_{register,dev}.py; data/rebuild/stress_ews2/; ledger stress_ews2; THESIS section 78",
-  "thesis_section": "78"
+  "thesis_section": "78",
+  "amendments": [
+   {
+    "utc": "2026-09-04",
+    "stage": "after probes P0-P2 first run, BEFORE the extended-window grid",
+    "trigger": "P0 corr 0.969 < 0.999 solely because the parent derivatives store holds funding_rate_ma7 = 0.0 (not NaN) on its first six days 2021-11-01..06 (fewer than 7 observations); on the other 1,646 overlap days store-derived ma7 equals the parent's to 5e-20 and the daily funding_rate matches exactly",
+    "A1": "P0 parity computed on overlap rows where the parent's own 7-day window is complete (>= parent first funding date + 6 d); raw corr reported alongside",
+    "decided_by": "afk autonomy grant (conservative reading; the change only removes six artifact rows of the parent, no extended-window number existed)"
+   }
+  ]
  }
 }

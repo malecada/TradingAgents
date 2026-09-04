@@ -109,12 +109,22 @@ def main_probes() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     comps = build_components_store(COINS, SYMS, DERIV, FUND, FNG)
     # P0 funding parity (EW of the two coins' ma7 vs parent ma7 -- both columns EW-averaged by build)
-    both = comps[["funding_rate_ma7_store", "funding_rate_ma7_parent"]].dropna()
+    both_raw = comps[["funding_rate_ma7_store", "funding_rate_ma7_parent"]].dropna()
+    corr_raw = float(both_raw.corr().iloc[0, 1])
+    # amendment A1 (2026-09-04, pre-grid): the parent store fills funding_rate_ma7 with 0.0 (not NaN)
+    # on its first six days (2021-11-01..06, fewer than 7 observations); parity is computed where the
+    # parent's own 7-day window is complete. Raw figure reported alongside.
+    parent_first = pd.read_parquet(DERIV / "bitcoin.parquet")["funding_rate"].first_valid_index()
+    both = both_raw.loc[both_raw.index >= parent_first + pd.Timedelta(days=6)]
     corr = float(both.corr().iloc[0, 1])
     ratio = float((both["funding_rate_ma7_store"] / both["funding_rate_ma7_parent"]).replace([np.inf, -np.inf], np.nan).median())
-    p0 = {"n_overlap": int(len(both)), "corr": corr, "median_ratio": ratio,
+    maxdiff = float((both["funding_rate_ma7_store"] - both["funding_rate_ma7_parent"]).abs().max())
+    p0 = {"n_overlap_raw": int(len(both_raw)), "corr_raw_incl_parent_zero_fill": corr_raw,
+          "n_overlap": int(len(both)), "corr": corr, "median_ratio": ratio, "max_abs_diff": maxdiff,
+          "excluded_parent_rows": [str(i.date()) for i in both_raw.index if i < parent_first + pd.Timedelta(days=6)],
+          "amendment": "A1: parent ma7 zero-filled on its first six days; parity on complete-window rows",
           "pass": bool(corr >= 0.999 and 0.98 <= ratio <= 1.02)}
-    print(f"P0 corr {corr:.6f} ratio {ratio:.4f} pass={p0['pass']}")
+    print(f"P0 corr {corr:.6f} (raw {corr_raw:.4f}) ratio {ratio:.4f} maxdiff {maxdiff:.2e} pass={p0['pass']}")
     # P1 parent parity: parent pipeline on parent window, no ledger, 50 placebo draws only for speed of the parity
     plo, phi = pd.Timestamp(PARENT_DEV[0], tz="UTC"), pd.Timestamp(PARENT_DEV[1], tz="UTC")
     parent_comps = build_components(COINS, DERIV, FNG)

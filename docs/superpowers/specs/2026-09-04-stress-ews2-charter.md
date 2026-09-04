@@ -94,3 +94,13 @@ PASS ⇒ holdout one-shot on the selected config, then stop-and-decide.
 `tradingagents/stress/index.py::store_funding_components` (+ test),
 `scripts/stress_ews2_register.py`, `scripts/stress_ews2_dev.py`,
 `data/rebuild/stress_ews2/`, THESIS §78. Effort 1 day; cost $0.
+
+## Amendment A1 (2026-09-04, pre-grid, afk grant)
+
+P0 as registered returned corr 0.969 because the parent store fills
+`funding_rate_ma7` with 0.0 on its first six days (2021-11-01..06, fewer than
+seven observations); on every other overlap day the store-derived series
+equals the parent's to 5e-20 and daily `funding_rate` matches exactly. P0 is
+computed on rows where the parent's own 7-day window is complete; the raw
+figure is reported. Recorded in `gates.json["stress_ews2"]["amendments"]`
+before any extended-window grid number existed.
