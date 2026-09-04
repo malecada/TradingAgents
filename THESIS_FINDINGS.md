@@ -6422,3 +6422,51 @@ macro-day windows carry economically large but statistically empty means
 separate a 10–30 bp mean from zero at hourly volatility. Family CLOSED; no
 P1. Together with §72's 0/11, every pre-named crypto calendar cell at daily
 and hourly resolution is now a registered negative.
+
+## Section 85: Forecasts as Execution Inputs (exec_fcst) — Volume Profile Worth 0.4 % of Impact, HARQ Worth 15 % of Cost-Prediction Loss for BTC Only (2026-09-04)
+
+Lead 10 of the post-audit map: a measurement, not an alpha claim (report-grade
+registration `predlab_exec_fcst`, charter
+`docs/superpowers/specs/2026-09-04-exec-fcst-charter.md`, commit d95dd18,
+dev-only H3, afk autonomy grant). Book: equal-weight monthly top-200 PIT,
+weights set on the first trading day of each month and held (50 rebalance
+days, 4,950 name-days with a trade); square-root impact per hour
+k·σ_h·x_h·√(x_h/V_h), k = 1, σ_h the lagged 20-day hourly-return std, V_h the
+realized hourly quote volume.
+
+**(a) Participation schedule.** Uniform 24-slice schedule vs a causal
+hour-of-day profile (trailing 28-day mean share of daily volume, days strictly
+before) vs the realized-volume oracle:
+
+| AUM | uniform impact (ann. % of AUM) | profile reduction | oracle reduction | p_pos (paired, stationary bootstrap) |
+|---:|---:|---:|---:|---:|
+| $10M | 3.28 % | 0.41 % | 12.8 % | 0.990 |
+| $30M (headline) | 5.68 % | 0.41 % | 12.8 % | 0.990 |
+| $100M | 10.4 % | 0.41 % | 12.8 % | 0.990 |
+
+The reductions are AUM-invariant by construction (√ impact scales every
+schedule alike). The profile is *reliably* cheaper (p_pos 0.99, cheaper on 60 %
+of days) but by 0.4 % against an oracle of 12.8 %: the intraday volume
+seasonality of top-200 perps is too flat, relative to the day-to-day
+variation in *when* volume arrives, for a day-start profile to matter. Gate (a)
+FAIL (≥ 5 %). A day-start schedule cannot use the one-step-ahead volume
+forecasts (§54), which is why they were declared out of scope.
+
+**(b) Volatility forecast in the impact model.** Because impact is
+multiplicative in σ, the QLIKE of predicted vs realized impact reduces exactly
+to the QLIKE of the σ forecast (trade-invariant, stated at registration).
+Champion vs naive-20 (√ of the trailing 20-day mean realized variance):
+
+| coin | model | QLIKE champ | QLIKE naive-20 | improvement | DM t | p |
+|---|---|---:|---:|---:|---:|---:|
+| BTC | HARQ | 0.0879 | 0.1031 | +14.7 % | +3.03 | 0.002 |
+| ETH | EGARCH(1,1) | 0.0931 | 0.0960 | +3.1 % | +0.81 | 0.42 |
+
+Gate (b) required both coins: FAIL. BTC's HARQ is a real, usable improvement
+in cost prediction; ETH's champion is not distinguishable from the naive
+volatility.
+
+**Reading.** The forecast map's monetisation as execution input is small and
+one-sided: the only forecast that pays is BTC realized variance, and it pays in
+cost *prediction* (risk budgeting, capacity estimates), not in cost
+*reduction*. Nothing here changes any strategy verdict.
