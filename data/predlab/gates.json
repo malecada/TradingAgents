@@ -2286,6 +2286,9 @@
    "DSR cumulative"
   ],
   "stop_rule": "any probe/gate FAIL => does not replicate on Bybit (or NEGATIVE-confounded per P3); no re-tuning; one-shot",
-  "thesis_section": "87"
+  "thesis_section": "87",
+  "verdicts": {
+   "probes": "STOP at P3 (vol-drift control, run first): primary net SR +0.808 (< 1.0 floor), control +0.391, separation +0.417 < 0.75 -> NEGATIVE (not confounded: primary below floor); P0 corr .9988/.9988 PASS; P1 5/5 PASS; P2 614 events mean fwd +3.18% PASS; dev grid NOT run; family CLOSED: liq_fade does not replicate on Bybit at the house floor"
+  }
  }
 }
