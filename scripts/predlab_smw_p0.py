@@ -183,6 +183,13 @@ def main() -> None:
                    "n_days": rc["n_days"]}
     per_feature_cov = {k: float(panels[k][panels[k].index >= eval_start].where(uni).notna().mean().mean()) for k in SIGNS}
     fx["feature_coverage"] = per_feature_cov
+    deep = universe_mask(json.loads((SMW / "universe_1m_slice.json").read_text()), close.index, syms) & uni
+    band = uni & ~deep
+    fx["depth_slice"] = {}
+    for label, mask in (("ge_1m", deep), ("250k_1m", band)):
+        fx["depth_slice"][label] = {t: score(comp[comp.index >= eval_start].where(mask),
+                                             y[y.index >= eval_start].where(mask), lag)
+                                    for t, (y, lag) in targets.items()}
 
     out = {"experiment": EXP, "eval_window": window, "eval_start_rule": f"first day with >= {MIN_QUALIFIED} qualified + 1",
            "n_symbols": len(syms), "T1": t1, "verdict_by_horizon": verdict, "results": results,

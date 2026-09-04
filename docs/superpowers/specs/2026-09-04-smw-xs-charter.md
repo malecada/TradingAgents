@@ -48,10 +48,16 @@ horizon; the nlst3 signal was specific to the first-hours-of-life regime.
   USDC, USDT (`predlab_smw_pools.py`); at each month-start block the quote
   balance held by each pool (archive `balanceOf`) × quote price (ETH close of
   the previous UTC day; stables 1) × 2; token in universe for month m iff the
-  sum over its pools ≥ $1M (`predlab_smw_depth.py`). Swap logs are fetched
-  for the pools with ≥ $10k of that depth (dust pools carry no flow).
+  sum over its pools ≥ $250k (`predlab_smw_depth.py`); stablecoin perps
+  (USDC etc.) excluded. Swap logs are fetched for the pools with ≥ $10k of
+  that depth (dust pools carry no flow).
 - Breadth floor 40 (dev median); the dry enumeration figure is recorded in
-  the gates entry. Dev window 2021-01-01 → 2025-03-31; evaluation starts on
+  the gates entry. **Pre-registration re-scope (2026-09-04, outcome-free):**
+  the scoping charter's $1M depth cut gave a dev median of 30 names (min 15,
+  47/51 months below 40) — the abort condition. The cut was lowered to $250k
+  (median 48, min 25, 10/51 months below 40) before any swap log was read;
+  the $1M subset is kept as declared forensic slice 6 so the original design
+  is still reported. Dev window 2021-01-01 → 2025-03-31; evaluation starts on
   the first day with ≥ 100 qualified wallets (burn-in for the track record;
   the date is disclosed, not chosen).
 
@@ -143,6 +149,8 @@ BH-FDR at q = 0.10 across the 10 tests (4 features × 2 horizons + composite ×
    share of smart-set days per token.
 5. Power: IC standard error from the realised breadth and day count; the
    0.02 floor sits at ≈ 6 SE on the dev sample.
+6. Depth slice: composite IC restricted to the ≥ $1M-depth names (the
+   scoping charter's universe) versus the $250k–$1M band.
 
 ## Feasibility probe (pre-registration, outcome-free)
 

@@ -36,7 +36,10 @@ from predlab_t7 import monthly_universe  # noqa: E402
 SMW = ROOT / "data" / "predlab" / "smw"
 PANELS = ROOT / "data" / "predlab" / "t7_panels"
 MONTHS = pd.date_range("2021-01-01", "2025-04-01", freq="MS", tz="UTC")
-DEPTH_FLOOR_USD = 1_000_000.0
+DEPTH_FLOOR_USD = 250_000.0     # re-scoped pre-registration: $1M gave dev median 30 (< floor 40)
+DEPTH_FLOOR_ORIG_USD = 1_000_000.0
+STABLE_PERPS = {"USDCUSDT", "USDTUSDT", "BUSDUSDT", "TUSDUSDT", "USDPUSDT", "DAIUSDT", "FDUSDUSDT",
+                "USD1USDT", "USDEUSDT", "EURUSDT", "FRAXUSDT", "PYUSDUSDT", "USDDUSDT", "USTUSDT"}
 DEC = {"WETH": 18, "USDC": 6, "USDT": 6}
 
 
@@ -123,10 +126,15 @@ def main() -> None:
                 print(f"batch {i}/{len(batches)}  {rpc_pool.get_pool().stats()}", flush=True)
     df = pd.DataFrame(rows)
     df.to_parquet(out_p)
-    tok = df.groupby(["month", "sym"])["depth_usd"].sum().reset_index()
+    tok = df[~df["sym"].isin(STABLE_PERPS)].groupby(["month", "sym"])["depth_usd"].sum().reset_index()
     universe = {m: sorted(g.loc[g["depth_usd"] >= DEPTH_FLOOR_USD, "sym"].tolist())
                 for m, g in tok.groupby("month")}
     (SMW / "universe.json").write_text(json.dumps(universe, indent=1))
+    deep = {m: sorted(g.loc[g["depth_usd"] >= DEPTH_FLOOR_ORIG_USD, "sym"].tolist())
+            for m, g in tok.groupby("month")}
+    (SMW / "universe_1m_slice.json").write_text(json.dumps(deep, indent=1))
+    bd = pd.Series({m: len(v) for m, v in deep.items()}).sort_index()
+    print(f"$1M slice breadth: median {bd[bd.index < '2025-04-01'].median():.0f}", flush=True)
     breadth = pd.Series({m: len(v) for m, v in universe.items()}).sort_index()
     dev = breadth[breadth.index < "2025-04-01"]
     print("breadth per month:\n" + breadth.to_string(), flush=True)
