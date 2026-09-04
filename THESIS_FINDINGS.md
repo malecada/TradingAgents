@@ -6393,3 +6393,32 @@ last word the composite could say, and it said it: four hits at k = 1.0 with
 placebo indistinguishable. No threshold, lag, aggregation or window changes
 (stop rule). Holdout untouched (H1 virgin, now moot). §42's interpretation
 limit 1 is discharged; limit 2 (other aggregations) stays out of scope.
+
+## Section 86: Session and Macro-Day Effects at 1 h (cal2) — 0/12, Family Closed (2026-09-04)
+
+Lead 11 of the post-audit map: the twelve intraday-session and macro-event
+calendar tests §72's sweep did not include, registered pre-result in
+`TradingAgents-predlab` (gates `predlab_cal2`, charter
+`docs/superpowers/specs/2026-09-04-cal2-charter.md`, commit 74e34c8) under the
+user's afk autonomy grant. Hourly simple returns of the 1 h store, dev
+2021-01-01 → 2025-03-31; OLS of the return on a window indicator with HAC lag
+24; BH-FDR q < 0.10 across the 12 and a 3-of-4-year sign rule for survivors.
+Clock windows approximated by bar open hours (declared): US session bars
+13–19, Asia 0–7, US-open bar 13, FOMC statement days bars 18–19 (34 dates,
+Federal Reserve calendars), CPI release days bars 12–13 (51 dates, BLS
+archive). XSM = equal-weight mean of the monthly top-100 PIT universe.
+
+| test | effect (bp/bar) | t | p | event bars |
+|---|---:|---:|---:|---:|
+| H1 US session BTC / ETH / XSM | −0.84 / −0.62 / −2.31 | −0.98 / −0.59 / −1.78 | 0.33 / 0.55 / 0.074 | 10,850 |
+| H2 Asia session BTC / ETH / XSM | −0.67 / −0.79 / +1.36 | −0.98 / −0.89 / +1.25 | 0.33 / 0.37 / 0.21 | 12,401 |
+| H3 US-open hour BTC / ETH | +0.23 / −0.60 | +0.11 / −0.24 | 0.91 / 0.81 | 1,550 |
+| H4 FOMC 18–20 UTC BTC / ETH | +11.2 / +26.9 | +0.55 / +1.23 | 0.58 / 0.22 | 68 |
+| H5 CPI 12–14 UTC BTC / ETH | +12.4 / +6.1 | +0.83 / +0.33 | 0.41 / 0.74 | 102 |
+
+**0/12 survive** (min raw p 0.074, nothing rejected by BH-FDR). The
+macro-day windows carry economically large but statistically empty means
+(FOMC ETH +27 bp per bar on 68 bars, t 1.2) — an event count that cannot
+separate a 10–30 bp mean from zero at hourly volatility. Family CLOSED; no
+P1. Together with §72's 0/11, every pre-named crypto calendar cell at daily
+and hourly resolution is now a registered negative.
