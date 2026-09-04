@@ -6335,3 +6335,6 @@ entry the maker rebate is paid back in selection. The unconditional P1 drift
   path; and a structural result for the map — passive execution cannot rescue
   a mean-reversion entry because its fills select on continuation. Cost-bound
   hourly signals must be re-priced at taker with better timing, not at maker.
+
+**Decision (2026-09-04, user):** R2 recorded as CLOSED at the execution layer;
+no F-window passive confirmatory registered. Cycle closed 0/3 revived.

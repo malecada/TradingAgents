@@ -935,6 +935,13 @@
     "decided_by": "user (AskUserQuestion, accepted A1+A2)",
     "code": "tradingagents/xsect/fills.py::infer_tick, scripts/exec_pf_probes.py::main_p3"
    }
-  ]
+  ],
+  "decision": {
+   "utc": "2026-09-04",
+   "by": "user (go with recommended approach)",
+   "R2": "PASS-but-no-gain recorded as CLOSED at the execution layer; NO F-window passive confirmatory registered (liq_fade -0.79 on sealed window in combo_c1; passive < taker on dev)",
+   "R1": "closed, no edge to price",
+   "R0": "closed by arithmetic"
+  }
  }
 }
