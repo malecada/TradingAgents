@@ -6470,3 +6470,51 @@ volatility.
 one-sided: the only forecast that pays is BTC realized variance, and it pays in
 cost *prediction* (risk budgeting, capacity estimates), not in cost
 *reduction*. Nothing here changes any strategy verdict.
+
+## Section 80: Order-Flow Linear P0 (oflow) — Time Series Flat, Cross-Sectional Flow "Reversal" Real in Rank but Non-Monotone and Untradeable (2026-09-04)
+
+Lead 7 of the post-audit map: the literature's best-replicated T1 family
+tested directly as predictive regressions rather than inside a GBDT
+(`TradingAgents-predlab`, gates `predlab_oflow`, charter
+`docs/superpowers/specs/2026-09-04-oflow-charter.md`, commit c55140e; afk
+autonomy grant). Signal: imb = (2·taker_buy_qv − qv)/qv per bar, 30-day rolling
+z, causal; 1 h store (393 symbols, taker column 100 % populated), 5-minute
+store for BTC/ETH, daily 799-symbol store and top-200 PIT universe for the
+cross-section. Eight pre-named cells, xfam P0 protocol (HAC, BH-FDR q < 0.10),
+dev 2021-01-01 → 2025-03-31, simple returns.
+
+| cell | statistic | result |
+|---|---|---|
+| TS-1h BTC / ETH | slope of r_{t+1} on z_t, HAC 24 | +2e-5 (t 0.60) / +4e-5 (t 1.04); 1/4 years agree; implied 0.15 / 0.33 bp per bar |
+| TS-24h BTC / ETH | HAC 5 | +6e-4 (t 0.75) / −8e-4 (t −0.75) |
+| TS-5m→1h BTC / ETH | last 5-minute bar's z, HAC 24 | −5e-5 (t −1.78, p 0.075, 4/4 years, 0.44 bp) / −1e-5 (t −0.36) |
+| XS-24h IC | daily Spearman, NW-t lag 5 | **IC −0.0216, NW-t −7.57**, 3/3 sub-periods, median breadth 142 |
+| XS-7d IC | NW-t lag 10 | −0.0013 (t −0.36) |
+
+**Harness defect, disclosed.** The XS floor was coded as signed NW-t ≥ 3
+although the charter fixes no sign (the TS test is two-sided); the first
+verdict therefore read 0/8. `predlab_oflow_p0_correct.py` re-derived the
+floors with |NW-t| from the unchanged statistics; both verdicts sit in
+gates.json. Corrected P0: **1/8** — the XS-24h cell survives as a *reversal*
+(heavy taker buying today, lower rank return tomorrow).
+
+**P1 (registered one config): quintile long-short daily book, long low-z /
+short high-z, equal weight, 5 bp taker + realized funding.** Net SR −2.42
+(gross −0.63), turnover 2.9× per day (cost 14.5 bp/day), maxDD 98 %,
+placebo p 0.89 (null net mean −1.77, so the real book is *worse* than random
+signals), 2× stress −3.99, log booking −1.71, name share 3 %. FAIL.
+
+**Forensic (why a t = −7.6 IC does not trade).** The P1 panels reproduce the
+P0 IC (−0.020), so alignment is not the cause. Pooled z-decile mean next-day
+returns (bp): 8.4, 14.6, 15.9, 17.2, 16.6, 10.9, 14.7, 16.3, 15.5, 19.5 for
+deciles 0…9. The rank correlation is negative because deciles 1–4 beat
+deciles 5–8, but the *extremes* show continuation: the heaviest-selling
+decile earns the least and the heaviest-buying decile the most. A quintile
+book therefore sits on the wrong side at both ends (bottom − top −5.8 bp/day,
+t −1.3), and the 2.9×/day turnover of a 30-day flow z turns any residual into
+a certain loss. The IC is real, non-monotone, and not a tradeable ordering.
+
+**Verdict.** TS cells: order flow carries no linear next-bar information for
+BTC/ETH at 1 h, 24 h or 5-minute resolution. XS: rank information without a
+monotone premium. Family CLOSED (stop rule); no lag, window or construction
+changes. Hourly survivors for the exec_pf overlay: none.
