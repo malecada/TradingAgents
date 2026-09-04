@@ -104,3 +104,5 @@ equals the parent's to 5e-20 and daily `funding_rate` matches exactly. P0 is
 computed on rows where the parent's own 7-day window is complete; the raw
 figure is reported. Recorded in `gates.json["stress_ews2"]["amendments"]`
 before any extended-window grid number existed.
+
+## Status (2026-09-04, executed): 0/9 FAIL — family closed at the mechanism level. THESIS §78.

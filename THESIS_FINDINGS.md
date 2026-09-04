@@ -6338,3 +6338,58 @@ entry the maker rebate is paid back in selection. The unconditional P1 drift
 
 **Decision (2026-09-04, user):** R2 recorded as CLOSED at the execution layer;
 no F-window passive confirmatory registered. Cycle closed 0/3 revived.
+
+## Section 78: Positioning Stress Index on the Full Funding History (stress_ews2) — 0/9, the Composite Fires Before the 2021 Leverage Tops and Before Nothing Else (2026-09-04)
+
+Lead 8 of the post-audit map: §42's "cheap falsification path" (§42.7). The
+parent composite (z_fund, z_oi, z_liq, z_fg; §42.2) was evaluated 2021-11 →
+2025-03 because its Coinglass funding series began 2021-11-01, so it never met
+the leverage tops it was built for. The 799-symbol settlement store
+(`data/xsect/funding`, BTC from 2019-09-10) supplies `funding_rate` as the
+daily mean of the three 8-hour settlements — identical to the parent's daily
+Coinglass value (P0: corr 1.000000, max |Δ| 5e-20 on 1,646 overlap days; the
+raw corr 0.969 is the parent's own zero-fill on its first six days, amendment
+A1 recorded pre-grid). Charter `docs/superpowers/specs/2026-09-04-stress-ews2-charter.md`,
+gates key `stress_ews2` (commit 9ba3a1d), ledger 9 rows, decisions under the
+user's afk autonomy grant (grid verbatim; dev start 2020-08-01). Cost $0.
+
+**Probes.** P1: the pipeline restricted to the parent window with the parent
+funding source reproduces §42's 11 episodes and all 9 hit/false-alarm rates
+exactly. P2: the extended catalog has 17 episodes (16 detectable; 2020-08-30
+dropped for < 180 d component history), including 2021-04-15, 2021-05-07,
+2021-06-11 and 2021-11-08/-30, 2021-12-27, 2022-01-11 — the target regime is
+inside the window.
+
+**Dev grid 2020-08-01 → 2025-03-31 (16 detectable episodes, 500-draw placebo, simple-return overlay):**
+
+| components | k | hit | FA/yr | placebo p | ΔSR | ΔmaxDD | pass |
+|---|---:|---:|---:|---:|---:|---:|:---:|
+| z_fund, z_oi | 1.0 | 4/16 | 1.93 | 0.834 | −0.38 | 0.000 | FAIL |
+| z_fund, z_oi | 1.5 | 1/16 | 2.36 | 0.960 | −0.17 | 0.000 | FAIL |
+| z_fund, z_oi | 2.0 | 1/16 | 0.86 | 0.838 | −0.08 | 0.000 | FAIL |
+| + z_liq | 1.0 | 2/16 | 4.08 | 0.972 | −0.51 | 0.000 | FAIL |
+| + z_liq | 1.5 | 2/16 | 2.79 | 0.894 | −0.42 | 0.000 | FAIL |
+| + z_liq | 2.0 | 2/16 | 2.57 | 0.735 | −0.19 | 0.000 | FAIL |
+| + z_liq, z_fg | 1.0 | 2/16 | 2.79 | 0.962 | −0.59 | 0.000 | FAIL |
+| + z_liq, z_fg | 1.5 | 2/16 | 2.14 | 0.860 | −0.26 | 0.000 | FAIL |
+| + z_liq, z_fg | 2.0 | 1/16 | 1.93 | 0.844 | −0.18 | 0.000 | FAIL |
+
+Base EW BTC+ETH SR over the window +0.90 (parent window −0.14); ΔmaxDD is
+0.000 in every cell — the WARN state never covers a day of the 2021-11 →
+2022-11 drawdown; the log-booked overlay (swap) moves ΔSR by < 0.04.
+
+**Mechanism (pre-window composite maxima, 2-component set):** 2021-02-17
++2.42, 2021-04-15 +1.10, 2021-05-07 +1.13, 2021-11-08 +1.03 — the four
+leverage-driven 2021 crashes are preceded by a composite above k = 1.0, as the
+design intended; every later episode (2021-11-30 +0.40, 2021-12-27 −0.69,
+2022-01-11 −0.46, Terra −0.31, Celsius +0.71, FTX −0.42, Aug-2024 −0.12,
+Feb-2025 +0.17) is not. The index is a *leverage-top* detector: it works for
+the regime it was built from and carries no information about crashes that
+arrive without a funding/OI build-up, which is 12 of the 16. With WARN active
+18 % of the window, a block-shuffled WARN series hits 4/16 as often (p 0.83).
+
+**Verdict: 0/9, family CLOSED at the mechanism level.** The 2021 tops were the
+last word the composite could say, and it said it: four hits at k = 1.0 with
+placebo indistinguishable. No threshold, lag, aggregation or window changes
+(stop rule). Holdout untouched (H1 virgin, now moot). §42's interpretation
+limit 1 is discharged; limit 2 (other aggregations) stays out of scope.
