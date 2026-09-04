@@ -72,6 +72,13 @@ def balance_of(token_addr: str, holder: str, block: int) -> int:
     return int(r, 16) if r and r != "0x" else 0
 
 
+def balances_batch(items: list[tuple[str, str, int]]) -> list[int]:
+    """[(token_addr, holder, block)] -> balances via one batched JSON-RPC call."""
+    params = [[{"to": t, "data": "0x70a08231" + h[2:].lower().rjust(64, "0")}, hex(b)] for t, h, b in items]
+    res = rpc_pool.rpc_batch("eth_call", params)
+    return [int(r, 16) if r and r != "0x" else 0 for r in res]
+
+
 def main() -> None:
     pools = json.loads((SMW / "pools.json").read_text())["by_symbol"]
     qv = pd.read_parquet(PANELS / "qv.parquet")
@@ -94,20 +101,26 @@ def main() -> None:
                     tasks.append((k, mb[k], sym, pl))
     print(f"balance calls to do: {len(tasks)} (cached {len(rows)})", flush=True)
 
-    def work(t):
-        k, blk, sym, pl = t
-        bal = balance_of(pl["quote_addr"], pl["pool"], blk) / 10 ** DEC[pl["quote"]]
-        d = pd.Timestamp(k, tz="UTC") - pd.Timedelta(days=1)
-        px = float(eth.asof(d)) if pl["quote"] == "WETH" else 1.0
-        return {"month": k, "sym": sym, "pool": pl["pool"], "version": pl["version"], "fee": pl["fee"],
-                "quote": pl["quote"], "balance": bal, "depth_usd": 2.0 * bal * px}
+    BATCH = 50
 
-    with cf.ThreadPoolExecutor(4) as ex:
-        for i, r in enumerate(ex.map(work, tasks)):
-            rows.append(r)
-            if i % 200 == 0:
+    def work(batch):
+        bals = balances_batch([(pl["quote_addr"], pl["pool"], blk) for _, blk, _, pl in batch])
+        out = []
+        for (k, blk, sym, pl), raw in zip(batch, bals):
+            bal = raw / 10 ** DEC[pl["quote"]]
+            d = pd.Timestamp(k, tz="UTC") - pd.Timedelta(days=1)
+            px = float(eth.asof(d)) if pl["quote"] == "WETH" else 1.0
+            out.append({"month": k, "sym": sym, "pool": pl["pool"], "version": pl["version"], "fee": pl["fee"],
+                        "quote": pl["quote"], "balance": bal, "depth_usd": 2.0 * bal * px})
+        return out
+
+    batches = [tasks[i:i + BATCH] for i in range(0, len(tasks), BATCH)]
+    with cf.ThreadPoolExecutor(2) as ex:
+        for i, rs in enumerate(ex.map(work, batches)):
+            rows.extend(rs)
+            if i % 20 == 0:
                 pd.DataFrame(rows).to_parquet(out_p)
-                print(f"{i}/{len(tasks)}  {rpc_pool.get_pool().stats()}", flush=True)
+                print(f"batch {i}/{len(batches)}  {rpc_pool.get_pool().stats()}", flush=True)
     df = pd.DataFrame(rows)
     df.to_parquet(out_p)
     tok = df.groupby(["month", "sym"])["depth_usd"].sum().reset_index()

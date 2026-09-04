@@ -71,7 +71,7 @@ def main() -> None:
     cache = json.loads((SMW / "pools_by_token.json").read_text()) if (SMW / "pools_by_token.json").exists() else {}
     todo = {a for a in want.values() if a not in cache}
     print(f"tokens to enumerate: {len(todo)} (cached {len(cache)})", flush=True)
-    with cf.ThreadPoolExecutor(6) as ex:
+    with cf.ThreadPoolExecutor(4) as ex:
         futs = {ex.submit(enumerate_token, "", a): a for a in sorted(todo)}
         for i, f in enumerate(cf.as_completed(futs)):
             a = futs[f]

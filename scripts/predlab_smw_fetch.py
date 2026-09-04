@@ -176,14 +176,16 @@ def fetch_anchors(workers: int = 4) -> None:
     print(f"anchors: {len(done)} cached, {len(todo)} to fetch", flush=True)
     rows = have.to_dict("records")
 
-    def one(b):
-        return {"block": b, "ts": int(rpc_pool.rpc("eth_getBlockByNumber", [hex(b), False])["timestamp"], 16)}
-    with cf.ThreadPoolExecutor(workers) as ex:
-        for i, r in enumerate(ex.map(one, todo)):
-            rows.append(r)
-            if i % 200 == 0:
+    def many(bs):
+        res = rpc_pool.rpc_batch("eth_getBlockByNumber", [[hex(b), False] for b in bs])
+        return [{"block": b, "ts": int(r["timestamp"], 16)} for b, r in zip(bs, res)]
+    batches = [todo[i:i + 20] for i in range(0, len(todo), 20)]
+    with cf.ThreadPoolExecutor(min(workers, 2)) as ex:
+        for i, rs in enumerate(ex.map(many, batches)):
+            rows.extend(rs)
+            if i % 20 == 0:
                 pd.DataFrame(rows).sort_values("block").to_parquet(p, index=False)
-                print(f"anchors {i}/{len(todo)} {rpc_pool.get_pool().stats()}", flush=True)
+                print(f"anchors batch {i}/{len(batches)} {rpc_pool.get_pool().stats()}", flush=True)
     pd.DataFrame(rows).sort_values("block").drop_duplicates("block").to_parquet(p, index=False)
 
 

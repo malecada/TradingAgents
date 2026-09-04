@@ -68,6 +68,7 @@ class Endpoint:
         self.calls = self.errors = 0
         self.bytes = 0
         self.disabled: str | None = None
+        self.logs_ok = True          # False: quota'd / pruned for getLogs, still fine for calls
         self.inflight = 0
 
     def _post(self, method: str, params: list, timeout: float):
@@ -88,6 +89,7 @@ class Pool:
         if log is None:
             log = lambda *a: print(*a, flush=True)  # noqa: E731
         self.lock = threading.Lock()
+        self._need_logs = False
         self.log = log
         self.t0 = time.time()
         if selfcheck:
@@ -98,7 +100,8 @@ class Pool:
         """Least-loaded ready endpoint; None if every eligible one is throttled."""
         now = time.time()
         cands = [e for e in self.eps if e.disabled is None and e.name not in exclude
-                 and (e.archive or not need_archive) and (e.batch or not need_batch)]
+                 and (e.archive or not need_archive) and (e.batch or not need_batch)
+                 and (e.logs_ok or not self._need_logs)]
         ready = [e for e in cands if e.next_ok <= now]
         if not ready:
             return None
@@ -106,14 +109,20 @@ class Pool:
 
     def _wait_time(self, need_archive: bool, exclude: set, need_batch: bool = False) -> float:
         cands = [e for e in self.eps if e.disabled is None and e.name not in exclude
-                 and (e.archive or not need_archive) and (e.batch or not need_batch)]
+                 and (e.archive or not need_archive) and (e.batch or not need_batch)
+                 and (e.logs_ok or not self._need_logs)]
         if not cands:
             return -1.0
         return max(0.0, min(e.next_ok for e in cands) - time.time())
 
     def rpc(self, method: str, params: list, tries: int = 12, timeout: float = 90.0):
-        need_archive = method in _ARCHIVE_METHODS and _historical(method, params)
         need_batch = method == "__batch__"
+        if need_batch:
+            need_archive = any(q.get("method") in _ARCHIVE_METHODS and _historical(q["method"], q.get("params", []))
+                               for q in params)
+        else:
+            need_archive = method in _ARCHIVE_METHODS and _historical(method, params)
+        self._need_logs = method == "eth_getLogs" or (need_batch and any(q.get("method") == "eth_getLogs" for q in params))
         refused: set = set()      # endpoints that returned a non-transient error
         last_err = "no endpoint"
         for _attempt in range(tries):
@@ -193,16 +202,29 @@ class Pool:
                                               "fromBlock": hex(_CHECK_LO), "toBlock": hex(_CHECK_HI)}], 90.0)
                 n = len(r["result"]) if isinstance(r, dict) and "result" in r else -1
                 if n != _CHECK_N:
-                    ep.disabled = f"self-check n={n} (msg={str(r)[:80]})"
+                    ep.logs_ok = False
+                    why = f"logs self-check n={n} (msg={str(r)[:80]})"
             except Exception as e:  # noqa: BLE001
-                ep.disabled = f"self-check {type(e).__name__}: {str(e)[:80]}"
-            self.log(f"rpc_pool: {ep.name:<11} {'OK' if ep.disabled is None else 'DISABLED ' + ep.disabled}")
+                ep.logs_ok = False
+                why = f"logs self-check {type(e).__name__}: {str(e)[:80]}"
+            if not ep.logs_ok:
+                # still usable for calls / blocks / code if it answers eth_blockNumber
+                try:
+                    r = ep._post("eth_blockNumber", [], 20.0)
+                    if not (isinstance(r, dict) and "result" in r):
+                        ep.disabled = why
+                except Exception as e:  # noqa: BLE001
+                    ep.disabled = f"{why}; blockNumber {type(e).__name__}"
+            state = "OK" if (ep.disabled is None and ep.logs_ok) else (
+                "NO-LOGS " + why if ep.disabled is None else "DISABLED " + ep.disabled)
+            self.log(f"rpc_pool: {ep.name:<11} {state}")
         if all(e.disabled for e in self.eps):
             raise RuntimeError("rpc_pool: no endpoint passed the self-check")
 
     def stats(self) -> str:
         el = time.time() - self.t0
-        parts = [f"{e.name}:{e.calls}/{e.errors}" + ("(off)" if e.disabled else "") for e in self.eps]
+        parts = [f"{e.name}:{e.calls}/{e.errors}" + ("(off)" if e.disabled else ("(nologs)" if not e.logs_ok else ""))
+                 for e in self.eps]
         tot = sum(e.calls for e in self.eps)
         return f"rpc_pool {tot} calls {tot / max(el, 1):.2f}/s {sum(e.bytes for e in self.eps) / 1e6:.0f}MB  " + " ".join(parts)
 

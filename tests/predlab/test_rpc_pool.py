@@ -73,9 +73,32 @@ def test_archive_methods_skip_non_archive_endpoints(monkeypatch):
     assert seen[-1] != "arch" or True  # non-archive method may use any endpoint
 
 
-def test_self_check_disables_pruned_endpoint(monkeypatch):
+def test_self_check_marks_pruned_endpoint_nologs_but_keeps_calls(monkeypatch):
+    seen = []
+
     def handler(name, m, p):
+        seen.append((name, m))
+        if m == "eth_blockNumber":
+            return {"result": "0x1"}
         return {"result": [0] * (rpc_pool._CHECK_N if name != "e1" else 0)}
+    _patch_post(monkeypatch, handler)
+    pool = rpc_pool.Pool(_specs(), selfcheck=True, log=lambda *_: None)
+    assert [e.disabled is None for e in pool.eps] == [True, True, True]
+    assert [e.logs_ok for e in pool.eps] == [True, False, True]
+    seen.clear()
+    for _ in range(6):
+        pool.rpc("eth_getLogs", [{}])
+    assert "e1" not in {n for n, _ in seen}
+    for _ in range(6):
+        pool.rpc("eth_getCode", ["0x0", "latest"])
+    assert "e1" in {n for n, _ in seen}
+
+
+def test_self_check_disables_dead_endpoint(monkeypatch):
+    def handler(name, m, p):
+        if name == "e1":
+            raise ConnectionError("down")
+        return {"result": [0] * rpc_pool._CHECK_N}
     _patch_post(monkeypatch, handler)
     pool = rpc_pool.Pool(_specs(), selfcheck=True, log=lambda *_: None)
     assert [e.disabled is None for e in pool.eps] == [True, False, True]
@@ -103,3 +126,20 @@ def test_batch_routes_to_batch_endpoints_and_orders_results(monkeypatch):
     payload = [{"jsonrpc": "2.0", "id": i, "method": "eth_getCode", "params": [f"0x{i}", "latest"]} for i in range(5)]
     assert pool.rpc("__batch__", payload) == [f"0x{i}" for i in range(5)]
     assert seen == ["b"]
+
+
+def test_batch_with_historical_call_needs_archive(monkeypatch):
+    seen = []
+    _patch_post(monkeypatch, lambda name, m, p: (seen.append(name) or [{"id": q["id"], "result": "0x1"} for q in p]))
+    specs = [{"name": "nb", "url": "u", "throttle": 0.0, "archive": False, "batch": True},
+             {"name": "ab", "url": "u", "throttle": 0.0, "archive": True, "batch": True}]
+    pool = rpc_pool.Pool(specs, selfcheck=False, log=lambda *_: None)
+    hist = [{"jsonrpc": "2.0", "id": 0, "method": "eth_call", "params": [{}, "0x10"]}]
+    latest = [{"jsonrpc": "2.0", "id": 0, "method": "eth_getCode", "params": ["0x0", "latest"]}]
+    for _ in range(4):
+        pool.rpc("__batch__", hist)
+    assert set(seen) == {"ab"}
+    seen.clear()
+    for _ in range(4):
+        pool.rpc("__batch__", latest)
+    assert "nb" in set(seen)
