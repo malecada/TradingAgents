@@ -117,7 +117,8 @@ class Pool:
             return -1.0
         return max(0.0, min(e.next_ok for e in cands) - time.time())
 
-    def rpc(self, method: str, params: list, tries: int = 12, timeout: float = 90.0):
+    def rpc(self, method: str, params: list, tries: int = 12, timeout: float = 90.0,
+            max_wait: float = 1800.0):
         need_batch = method == "__batch__"
         if need_batch:
             need_archive = any(q.get("method") in _ARCHIVE_METHODS and _historical(q["method"], q.get("params", []))
@@ -127,7 +128,9 @@ class Pool:
         self._need_logs = method == "eth_getLogs" or (need_batch and any(q.get("method") == "eth_getLogs" for q in params))
         refused: set = set()      # endpoints that returned a non-transient error
         last_err = "no endpoint"
-        for _attempt in range(tries):
+        posts = 0
+        t_start = time.time()
+        while posts < tries and time.time() - t_start < max_wait:
             with self.lock:
                 ep = self._pick(need_archive, refused, need_batch)
                 if ep is None:
@@ -138,8 +141,9 @@ class Pool:
                     ep.inflight += 1
                     ep.next_ok = time.time() + ep.throttle + ep.penalty
             if ep is None:
-                time.sleep(min(wait, 5.0) + 0.05)
+                time.sleep(min(wait, 5.0) + 0.05)   # throttled/penalised: does not consume a try
                 continue
+            posts += 1
             try:
                 t_call = time.time()
                 r = ep._post(method, params, timeout)

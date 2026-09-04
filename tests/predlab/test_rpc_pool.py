@@ -143,3 +143,28 @@ def test_batch_with_historical_call_needs_archive(monkeypatch):
     for _ in range(4):
         pool.rpc("__batch__", latest)
     assert "nb" in set(seen)
+
+
+def test_penalised_wait_does_not_consume_tries(monkeypatch):
+    calls = {"n": 0}
+
+    def handler(name, m, p):
+        calls["n"] += 1
+        if calls["n"] <= 3:
+            return {"error": {"message": "rate limit"}}
+        return {"result": "ok"}
+    _patch_post(monkeypatch, handler)
+    pool = rpc_pool.Pool(_specs(1), selfcheck=False, log=lambda *_: None)
+    monkeypatch.setattr(rpc_pool.time, "sleep", lambda *_: None)
+    # penalties push next_ok into the future; fake the clock forward on each pick
+    real_time = rpc_pool.time.time
+    offset = {"v": 0.0}
+    monkeypatch.setattr(rpc_pool.time, "time", lambda: real_time() + offset.get("v", 0.0))
+    orig_pick = pool._pick
+
+    def pick(*a, **k):
+        offset["v"] += 10.0
+        return orig_pick(*a, **k)
+    pool._pick = pick
+    assert pool.rpc("eth_getLogs", [{}], tries=4) == "ok"
+    assert calls["n"] == 4
