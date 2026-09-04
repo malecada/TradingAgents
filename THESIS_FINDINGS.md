@@ -6518,3 +6518,36 @@ a certain loss. The IC is real, non-monotone, and not a tradeable ordering.
 BTC/ETH at 1 h, 24 h or 5-minute resolution. XS: rank information without a
 monotone premium. Family CLOSED (stop rule); no lag, window or construction
 changes. Hourly survivors for the exec_pf overlay: none.
+
+## Section 87: Liquidation-Cascade Fade on a Second Venue (liq_fade_v1) — NEGATIVE at the Vol-Drift Control (2026-09-04)
+
+Lead 5 of the post-audit map: the frozen liq_fade_i1 configuration (§49; thr
+3.5, H 48, w 0.1, cap 1.0, long-fade, 10 bp, rf 4.5 %) on Bybit linear USDT
+perps — monthly top-50 PIT by trailing-30-day median turnover from the
+735-symbol Bybit daily store, 1 h bars fetched to the dev cap
+(`predlab_bybit_fetch_1h.py`, 428 symbols with history, 206 in the universe,
+median monthly breadth 50). Registered pre-result in `TradingAgents-predlab`
+(gates `predlab_liq_fade_v1`, charter
+`docs/superpowers/specs/2026-09-04-liq-fade-v1-charter.md`, commit adde747,
+afk autonomy grant: Bybit, 10 bp for comparability). Interpretation boundary
+stated at registration: venues trade the same market — robustness evidence,
+not an independent sample. The §49 replication prerequisite that the
+vol-drift control be run FIRST is honoured here for the first time.
+
+| probe | result |
+|---|---|
+| P0 stamp reconciliation | Bybit vs Binance 1 h simple returns corr 0.9988 (BTC, 37,224 bars) / 0.9988 (ETH) — PASS |
+| **P3 vol-drift control (first)** | long 1/10 for 48 bars after every high-volume hour *without* the crash condition: control net SR **+0.391**; primary (frozen config) **+0.808**; separation **+0.417 < 0.75** — FAIL |
+| P1 detector concordance | thr 2.5 on the 8 majors flags 5/5 benchmark cascade dates — PASS |
+| P2 gross event floor | 614 dev events, mean gross forward 48 h return +3.18 % — PASS |
+
+**Verdict: NEGATIVE at P3 (not "confounded": the primary is below the 1.0
+floor).** The dev grid was not run (registered STOP). On Bybit the same
+detector finds the same events (5/5 concordance, a +3.2 % gross fade per
+event) but the net book earns +0.81 against Binance's +1.30, and half of that
+is generic long-on-high-volume-hours drift (+0.39). Read with §49 (DSR-bound),
+§50 (rank 51–150 fails), §76 (−0.79 on the sealed Binance window) and §77
+(passive execution no gain): the cascade fade is a real but thin and
+venue-fragile timing effect whose economic content does not clear the house
+floor anywhere but the original Binance dev window. Family CLOSED; the
+Bybit 1 h store (428 symbols, 2020 → 2025-03) is a reusable asset.
