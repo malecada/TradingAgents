@@ -2049,7 +2049,12 @@
   "P1": "on PASS only: ONE config top-quintile $1k hold 7d, 1/50 cap, house gates (net SR >= 1, shift placebo p < 0.10, 2x cost-stress, concentration <= 25%, convention swap); then STOP-AND-DECIDE",
   "holdout": "H2: pools created 2025-04-01..2026-06-30 (virgin for every DEX signal); enumeration fetched later, never evaluated without a user decision",
   "mechanics": "scripts/predlab_nlst4_{screen,features,p0}.py reuse predlab_nlst_dex_fetch phase_a/b/c (quota override, closed script unedited), predlab_nlst2_features, predlab_nlst3_features; logs data/predlab/nlst/nlst4_*.log; ledger predlab_nlst4; THESIS section 79",
-  "stop_rule": "no re-tuning of quota, features, signs or thresholds after any pool outcome is seen; P0 script refuses to run twice"
+  "stop_rule": "no re-tuning of quota, features, signs or thresholds after any pool outcome is seen; P0 script refuses to run twice",
+  "transport_amendment": {
+   "utc": "2026-09-04T17:10Z",
+   "reason": "dRPC public endpoint quota exhausted mid phase B (screened 105,482; 2022Q4 in progress); job died on 'rpc gave up'",
+   "change": "predlab_nlst4_screen.py routes the closed fetch module's rpc() through tradingagents/predlab/rpc_pool.py (tenderly, mevblocker, drpc, nodereal, onfinality, 0xrpc; startup self-check disables endpoints that return empty logs for pruned history). Chain data, phases, quota, seeds and caches unchanged; no pool outcome seen."
+  }
  },
  "predlab_oflow": {
   "registered_utc": "2026-09-04",

@@ -22,7 +22,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 import predlab_nlst_dex_fetch as fetch  # noqa: E402
-from tradingagents.predlab import registry  # noqa: E402
+from tradingagents.predlab import registry, rpc_pool  # noqa: E402
+
+# Transport amendment 2026-09-04 (pre-result, declared in gates.json): the single
+# public dRPC endpoint exhausted its quota mid-run; route every call of the
+# closed fetch module through the self-checking multi-endpoint pool instead.
+# Same chain data, same phases, same caches; the closed script stays unedited.
+fetch.rpc = rpc_pool.rpc
 
 KEEP_PER_Q = 600
 SNAPSHOT = fetch.RAW / "screened_nlst3_snapshot.jsonl"
