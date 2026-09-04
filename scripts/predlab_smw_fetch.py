@@ -223,7 +223,11 @@ def run(months: list[str], workers: int, probe_pools: "list[str] | None" = None)
 
 
 def probe() -> None:
-    """Charter feasibility probe: 2024-03, ten deepest tokens, main segment."""
+    """Charter feasibility probe: 2024-03, ten deepest tokens, main segment.
+    Writes under raw_probe/ so the partial-pool chunks never masquerade as
+    complete cache entries of the full fetch."""
+    global RAW
+    RAW = SMW / "raw_probe"
     pools, universe, mb, dep, metas = load_plan()
     month = "2024-03-01"
     depth = pd.read_parquet(SMW / "depth.parquet")

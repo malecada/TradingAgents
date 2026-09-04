@@ -2295,5 +2295,89 @@
   "verdicts": {
    "probes": "STOP at P3 (vol-drift control, run first): primary net SR +0.808 (< 1.0 floor), control +0.391, separation +0.417 < 0.75 -> NEGATIVE (not confounded: primary below floor); P0 corr .9988/.9988 PASS; P1 5/5 PASS; P2 614 events mean fwd +3.18% PASS; dev grid NOT run; family CLOSED: liq_fade does not replicate on Bybit at the house floor"
   }
+ },
+ "predlab_smw_xs": {
+  "registered_utc": "2026-09-04",
+  "charter": "docs/superpowers/specs/2026-09-04-smw-xs-charter.md",
+  "purpose": "smart-money wallet features (PIT, DEX swap logs) on perp-listed mainnet ERC-20s carry cross-sectional next-24h / 7d rank information (T7 battery); transfer test of the nlst3 T1 channel to a liquid shortable universe",
+  "parents": "predlab_nlst3 (75, T1 PASS IC +0.136 on day-old pools, T2 FAIL), predlab_p2_t7 (55, universe + IC battery)",
+  "decisions_afk_grant": {
+   "data": "DEX Swap logs only (Uniswap v2 + v3, quotes WETH/USDC/USDT, v3 fees 100/500/3000/10000); ERC-20 Transfer logs excluded",
+   "breadth_floor": 40,
+   "sequencing": "run now, concurrently with nlst4; nlst4 wallet ledger NOT an input",
+   "wallet_identity": "swap recipient; contracts excluded via eth_getCode on wallets with >=5 net-buy days plus top-2000 by gross",
+   "mapping": "Binance-spot rule first, CoinGecko symbol fallback for dead tokens; see charter"
+  },
+  "universe": {
+   "base": "monthly PIT top-200 perps (predlab_t7.monthly_universe)",
+   "mapped_erc20": true,
+   "depth_rule": "sum over enumerated pools of 2 x quote balance x price at month-start block >= $250k, stablecoin perps excluded; pools fetched if >= $10k",
+   "rescope_pre_registration": "scoping cut $1M gave dev median breadth 30 (min 15, 47/51 months < 40) = abort condition; lowered to $250k (median 48, min 25) on 2026-09-04 before any swap log was read; $1M subset kept as forensic slice 6",
+   "dev_window": [
+    "2021-01-01",
+    "2025-03-31"
+   ],
+   "eval_start_rule": "first day with >= 100 qualified wallets (disclosed, not chosen)",
+   "min_breadth_per_day": 20,
+   "mapping_how_counts": {
+    "binance_spot": 210,
+    "fallback_ambiguous": 27,
+    "fallback_single_ranked": 77,
+    "fallback_single_unranked": 105,
+    "binance_spot_no_eth": 165,
+    "fallback_no_candidate": 212,
+    "fallback_ranked": 3
+   },
+   "n_mapped": 395,
+   "n_pools": 1482,
+   "breadth_dev_median": 48.0,
+   "breadth_dev_min": 25,
+   "breadth_dev_max": 73,
+   "breadth_first_months": {
+    "2021-01-01": 25,
+    "2021-02-01": 29,
+    "2021-03-01": 32,
+    "2021-04-01": 40,
+    "2021-05-01": 42,
+    "2021-06-01": 40
+   },
+   "breadth_floor_40": "PASS",
+   "feasibility_probe": {
+    "month": "2024-03-01",
+    "n_pools": 35,
+    "logs": 245011,
+    "wall": 103.17689561843872,
+    "projected_logs": 41882880.37142857,
+    "projected_store_gb": 1.8847296167142855,
+    "projected_hours": 4.89926481337396,
+    "verdict": "GO"
+   }
+  },
+  "track_record": "episode = (wallet, token, day) with net_buy_usd > 0 in universe; ret7 = close[d+7]/close[d]-1; record = expanding mean over episodes completed strictly before t; qualified >= 5; smart = record >= 80th pct of qualified (daily)",
+  "features_frozen": {
+   "f1": "+ smart net-buy share (sum net_buy over smart buyers / total gross over all recipients)",
+   "f2": "+ smart buyer breadth (count)",
+   "f3": "- smart net-sell share",
+   "f4": "+ log(distinct non-contract buyers d / mean over d-7..d-1)",
+   "composite": "equal-weight mean of pre-signed daily cross-sectional z, >= 3 of 4"
+  },
+  "alignment": "features from UTC day d swaps -> shifted one row -> scored against T7 target row d+1 (ret_24h = log close diff; ret_7d = 7-day rolling sum shifted -6); NW lag 5 / 10",
+  "protocol": "T7 battery verbatim: daily Spearman IC (xsec.daily_ic, min breadth 20), NW-t, sub-periods 2021-2022 / 2023-2024 / 2025Q1; BH-FDR q=0.10 over 10 tests (4 features x 2 horizons + composite x 2); every row to the ledger",
+  "T1_gate": {
+   "rule": "composite mean IC >= +0.02 AND NW-t >= 3 AND BH-adjusted p < 0.05 AND positive mean IC in >= 2 of 3 sub-periods, at 24h or 7d",
+   "fail": "family CLOSED for the perp universe; no re-signing / new features / re-weighting / universe re-cut"
+  },
+  "P1": "on T1 PASS only; two pre-declared constructions both run (long-only top quintile vs EW smw basket; quintile L/S); 5 bp + funding; net SR >= 1.0, dual placebo 500 draws p <= 0.05, dSR vs basket > 0 for (a), 2x cost stress, convention swap; DSR at n=2 + cumulative; then STOP-AND-DECIDE",
+  "holdout": "H2 2025-04-01..2026-07-01, price panel observed by prior programs, on-chain features virgin; H2 universe enumeration only after a user decision; one-shot",
+  "forensics_declared": [
+   "momentum-control partial IC (trailing 7d/30d)",
+   "timing canary (contemporaneous and +1 extra lag)",
+   "contract share of gross volume",
+   "coverage per month",
+   "power (IC SE)",
+   "depth slice: >= $1M names vs $250k-$1M band"
+  ],
+  "mechanics": "scripts/predlab_smw_{map,pools,depth,fetch,features,p0}.py; tests/predlab/test_smw.py; data/predlab/smw/; transport tradingagents/predlab/rpc_pool.py; ledger predlab_smw_xs; THESIS section 82",
+  "stop_rule": "no change to features, signs, thresholds, universe rule or alignment after any feature is joined to a return; p0 script refuses to run twice"
  }
 }
