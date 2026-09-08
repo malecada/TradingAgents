@@ -808,3 +808,56 @@ both journals have 2026-09-05 — pre-fetch skip
 both journals have 2026-09-05 — pre-fetch skip
 journal.jsonl 2026-09-06: book 40L/40S, realized_prev +0.0428, turn 0.6500000000000001, vt10_scale 0.22205748921450674
 journal_champion.jsonl 2026-09-06: book 40L/40S, realized_prev +0.0625, turn 0.1, vt15_b100_scale 0.27368350194342406
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+both journals have 2026-09-06 — pre-fetch skip
+Traceback (most recent call last):
+  File "/opt/tradingagents/predlab/scripts/predlab_s1_paper.py", line 296, in <module>
+    main()
+  File "/opt/tradingagents/predlab/scripts/predlab_s1_paper.py", line 284, in main
+    panels = load_panels_offline() if args.offline else load_panels_online()
+                                                        ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/tradingagents/predlab/scripts/predlab_s1_paper.py", line 108, in load_panels_online
+    syms = _perp_symbols()
+           ^^^^^^^^^^^^^^^
+  File "/opt/tradingagents/predlab/scripts/predlab_s1_paper.py", line 84, in _perp_symbols
+    with urllib.request.urlopen(f"{FAPI}/fapi/v1/exchangeInfo", timeout=20) as r:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 215, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 521, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 630, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 559, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib/python3.12/urllib/request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 503: Service Temporarily Unavailable
