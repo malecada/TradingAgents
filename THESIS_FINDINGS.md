@@ -6551,3 +6551,96 @@ is generic long-on-high-volume-hours drift (+0.39). Read with §49 (DSR-bound),
 venue-fragile timing effect whose economic content does not clear the house
 floor anywhere but the original Binance dev window. Family CLOSED; the
 Bybit 1 h store (428 symbols, 2020 → 2025-03) is a reusable asset.
+
+## Section 82: Smart-Money Wallet Features on Perp-Listed ERC-20 Tokens (smw_xs) — T1 FAIL; the Only On-Chain Signal Is DEX-Activity Reversal (2026-09-04 → 09-08)
+
+Lead 4 of the post-audit map: does the program's only out-of-sample-positive
+predictive channel — nlst3's smart-wallet ranking of day-old Uniswap pools
+(§75, IC +0.136) — transfer to a liquid, shortable universe? Registered
+pre-result in `TradingAgents-predlab` (gates `predlab_smw_xs`, charter
+`docs/superpowers/specs/2026-09-04-smw-xs-charter.md`, commit 4c9ebd8; afk
+autonomy grant: DEX-swap logs only, breadth floor 40, run concurrently with
+nlst4, swap recipient as wallet identity with contract exclusion).
+
+**Universe and data.** Monthly PIT top-200 Binance USDT perps (§55 rule) ∩
+tokens mapped to a mainnet ERC-20 (Binance-spot ticker rule first, CoinGecko
+symbol fallback with a rank ≤ 500 guard after TON→Tokamak, CFX→xStock and
+DASH→ERC-20 "DASH" collisions surfaced in the dry run; 395 of 799 symbols
+mapped) ∩ DEX depth at the month-start block (archive `balanceOf` on every
+Uniswap v2 pair and v3 pool against WETH/USDC/USDT, 1,482 pools). **One
+pre-registration re-scope, outcome-free and disclosed:** the scoping
+charter's $1M depth cut gave a dev-window median breadth of 30 names
+(15–46; 47/51 months below the floor), the declared abort condition; the cut
+was lowered to $250k before any swap log was read (median 48, min 25, max
+73), stablecoin perps excluded, and the $1M subset kept as a forensic slice.
+Swap logs (Uniswap v2 + v3, 2021-01 → 2025-03, in-universe months plus a
+7-day lookback) — 15.3M swaps in 1,400 address-batched chunks, 475 MB;
+block time by interpolation on 2,000-block anchors. The public dRPC endpoint
+exhausted its quota mid-programme, so all on-chain fetching now runs through
+a self-checking multi-endpoint pool (`tradingagents/predlab/rpc_pool.py`;
+an endpoint that silently returned empty logs for pruned history is excluded
+by the check). Feasibility probe (2024-03, ten deepest tokens): 245k logs in
+103 s, projected 42M logs / 1.9 GB; the actual fetch took ~50 h under
+per-IP rate limits.
+
+**Features (frozen).** Per token-day from swaps in the UTC day: F1 smart
+net-buy share (+), F2 smart buyer breadth (+), F3 smart net-sell share (−),
+F4 log buyer-breadth acceleration over the prior 7 days (+); composite =
+equal-weight mean of the pre-signed daily cross-sectional z-scores (≥ 3 of
+4). Smart set: expanding PIT wallet record = mean 7-day forward perp return
+after the wallet's net-buy days in the universe, ≥ 5 completed episodes,
+top quintile re-ranked daily (1.75M episodes; qualified wallets 12k in 2021
+→ 56k in 2025; smart set 2.5k → 11k). Contracts (routers, aggregators, bots,
+vaults) excluded by `eth_getCode` on the 67,175 addresses with ≥ 5 net-buy
+days or in the top-2,000 by volume: 9,916 contracts, carrying **75 % of
+gross swap volume** — wallet-attributable flow is a quarter of the total.
+T7 alignment: features from day d (through close d) scored against the
+return over day d+1.
+
+**P0 (T7 battery, one-shot).** 148 tokens, 2021-01-15 (first day with
+≥ 100 qualified wallets) → 2025-03-31, 1,494 composite days, min joint
+breadth 20, NW-t lag 5 / 10, BH-FDR over 10 tests.
+
+| signal | 24h IC (NW-t) | 7d IC (NW-t) | sub-periods 24h (21–22 / 23–24 / 25Q1) |
+|---|---|---|---|
+| F1 smart net-buy share (+) | −0.0098 (−2.19) | −0.0106 (−1.45) | −.008 / −.012 / −.011 |
+| F2 smart buyer breadth (+) | −0.0101 (−2.25) | −0.0114 (−1.50) | −.008 / −.012 / −.011 |
+| F3 smart net-sell share (−) | +0.0034 (+1.33) | +0.0063 (+1.80) | +.001 / +.005 / +.010 |
+| F4 buyer acceleration (+) | +0.0010 (+0.23) | +0.0081 (+1.29) | −.007 / +.007 / +.023 |
+| **composite** | **−0.0037 (−0.86)** | **+0.0033 (+0.54)** | −.011 / +.000 / +.022 |
+
+Minimum BH q 0.14; T1 (composite IC ≥ 0.02, NW-t ≥ 3, q < 0.05, 2/3
+sub-periods) **FAIL at both horizons**. Power: IC SE 0.0044, so the 0.02
+floor sat at 4.5 SE — a real effect of the registered size could not have
+been missed.
+
+**Declared forensics.** (1) Timing canary: the composite built from the
+*same* day's swaps has IC +0.152 (NW-t 25) against that day's return — flow
+and price co-move contemporaneously — while the registered one-day lag gives
+≈ 0 and a second lag −0.0025 (t −0.5): the alignment is correct and there is
+no leakage. (2) Momentum control: composite residualised on trailing 7-day
+and 30-day returns, IC +0.009 (t 2.1) / +0.013 (t 2.0) — a whisper, below
+floor. (3) Depth slices: ≥ $1M names −0.001 / −0.003; $250k–$1M band −0.003
+/ +0.018 (t 1.3, 389 days). (4) Coverage 85–95 % of the universe per month.
+
+**Post-hoc mechanism forensic (disclosed, not a claim;
+`predlab_smw_forensic_posthoc.py`).** Why do the two smart-*buying*
+features carry a consistent *negative* IC? Raw DEX activity does the same,
+harder: all-wallet buyer breadth IC −0.018 (t −4.0), gross DEX USD volume
+**−0.033 (t −7.0)** at 24h and −0.032 (t −3.0) at 7d; the known CEX
+volume-change factor −0.018 (t −3.8). Partial ICs: F2 given all-wallet
+breadth +0.009 (t 2.0); all-wallet breadth given F2 −0.014 (t −3.2). The
+smart features are a noisy sub-sample of DEX activity, and DEX activity
+predicts next-day *reversal* — the same shape as the CEX taker-flow reversal
+of §80 (IC −0.022) and the volume-change factor of §55. One post-hoc
+candidate surfaced: the DEX-to-CEX volume ratio, IC +0.015 (t 3.2) / +0.028
+(t 2.9) — dev-contaminated, testable only as a fresh registration on the F
+window; recorded on the open-leads map, not pursued.
+
+**Verdict.** The nlst3 channel does not transfer: in a liquid universe,
+smart-wallet buying is indistinguishable from activity, and activity mean-
+reverts. Family CLOSED for the perp universe (stop rule; no re-signing,
+no new features, no re-weighting, no universe re-cut). Reusable assets: the
+RPC pool, the 395-token ERC-20 map with pool list and monthly depth
+(`data/predlab/smw/`), the 15.3M-swap compact store, and the PIT
+wallet-record machinery. Ledger: 10 trials this experiment, 508 program-wide.
