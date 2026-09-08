@@ -2378,6 +2378,45 @@
    "depth slice: >= $1M names vs $250k-$1M band"
   ],
   "mechanics": "scripts/predlab_smw_{map,pools,depth,fetch,features,p0}.py; tests/predlab/test_smw.py; data/predlab/smw/; transport tradingagents/predlab/rpc_pool.py; ledger predlab_smw_xs; THESIS section 82",
-  "stop_rule": "no change to features, signs, thresholds, universe rule or alignment after any feature is joined to a return; p0 script refuses to run twice"
+  "stop_rule": "no change to features, signs, thresholds, universe rule or alignment after any feature is joined to a return; p0 script refuses to run twice",
+  "verdict": {
+   "utc": "2026-09-08",
+   "T1": "FAIL",
+   "eval_window": [
+    "2021-01-15",
+    "2025-03-31"
+   ],
+   "n_symbols": 148,
+   "composite": {
+    "ret_24h": {
+     "pass": false,
+     "mean_ic": -0.0037,
+     "nw_t": -0.8592,
+     "bh_q": 0.4878,
+     "subs_positive": 2
+    },
+    "ret_7d": {
+     "pass": false,
+     "mean_ic": 0.0033,
+     "nw_t": 0.5413,
+     "bh_q": 0.6536,
+     "subs_positive": 2
+    }
+   },
+   "per_feature_24h": {
+    "f1": -0.0098,
+    "f2": -0.0101,
+    "f3": 0.0034,
+    "f4": 0.001,
+    "composite": -0.0037
+   },
+   "forensics": "timing canary contemporaneous +0.152 (t 25) vs lagged 0 (alignment correct); gross DEX USD volume IC -0.033 (t -7.0) = activity reversal explains the negative f1/f2 IC; f2 | n_buyers +0.009 (t 2.0) < floor; depth slices null; power floor = 4.5 SE; 75% of gross volume via contract recipients",
+   "status": "family CLOSED for the perp universe (no re-signing / new features / re-weighting); post-hoc DEX/CEX volume-ratio candidate is F-window-only",
+   "result_files": [
+    "data/predlab/smw/p0_result.json",
+    "data/predlab/smw/forensic_posthoc.json",
+    "data/predlab/smw/feature_build.json"
+   ]
+  }
  }
 }
