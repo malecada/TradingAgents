@@ -25,7 +25,14 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 import predlab_nlst2_features as f2  # noqa: E402
 import predlab_nlst3_features as f3  # noqa: E402
+import predlab_nlst_dex_fetch as fetch  # noqa: E402
 from predlab_nlst_dex_fetch import RAW, jdump, jload  # noqa: E402
+from tradingagents.predlab import rpc_pool  # noqa: E402
+
+# Transport amendment 2026-09-04 (declared in gates.json): every RPC of the
+# closed modules goes through the multi-endpoint pool (dRPC public quota).
+fetch.rpc = rpc_pool.rpc      # get_logs / block_ts / header inside the fetch module
+f2.rpc = rpc_pool.rpc         # nlst2's bound name (eth_call / getTransactionCount)
 from predlab_nlst_dex_p0 import eth_usd_series, load_anchors, pool_event  # noqa: E402
 
 NL = ROOT / "data" / "predlab" / "nlst"

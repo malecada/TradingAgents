@@ -38,7 +38,8 @@ _CHECK_ADDR = "0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc"
 _CHECK_TOPIC = "0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822"
 _CHECK_LO, _CHECK_HI, _CHECK_N = 16_800_000, 16_809_999, 4399
 
-_ARCHIVE_METHODS = {"eth_call", "eth_getBlockByNumber", "eth_getBalance", "eth_getStorageAt"}
+_ARCHIVE_METHODS = {"eth_call", "eth_getBlockByNumber", "eth_getBalance", "eth_getStorageAt",
+                    "eth_getTransactionCount", "eth_getCode"}
 _PENALTY_MAX = 300.0
 
 
@@ -52,7 +53,7 @@ def _transient(msg: str) -> bool:
 def _historical(method: str, params: list) -> bool:
     """eth_call / getBlockByNumber at 'latest' need no archive node."""
     try:
-        tag = params[1] if method == "eth_call" else params[0]
+        tag = params[0] if method == "eth_getBlockByNumber" else params[1]
     except (IndexError, TypeError):
         return True
     return not (isinstance(tag, str) and tag in ("latest", "pending", "safe", "finalized"))

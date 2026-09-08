@@ -168,3 +168,10 @@ def test_penalised_wait_does_not_consume_tries(monkeypatch):
     pool._pick = pick
     assert pool.rpc("eth_getLogs", [{}], tries=4) == "ok"
     assert calls["n"] == 4
+
+
+def test_historical_tag_detection():
+    h = rpc_pool._historical
+    assert h("eth_call", [{}, "0x10"]) and not h("eth_call", [{}, "latest"])
+    assert h("eth_getBlockByNumber", ["0x10", False]) and not h("eth_getBlockByNumber", ["latest", False])
+    assert h("eth_getTransactionCount", ["0xabc", "0x10"]) and not h("eth_getCode", ["0xabc", "latest"])
