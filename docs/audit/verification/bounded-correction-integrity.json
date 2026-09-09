@@ -1,0 +1,568 @@
+{
+  "result_sha256": "21be37f6c53d9827a150309fdf722953846bf88a87d72c1a2f07b38872115a3c",
+  "source_commit": "cc6801e81e25f05cdfbae77d560b59fa43e16dd9",
+  "output_files": 23,
+  "original_input_files": 46,
+  "strategy_cells": 7,
+  "forecast_cells": 16,
+  "checks_passed": 108,
+  "checks_total": 108,
+  "failures": [],
+  "output_row_counts": {
+    "s2_harq.parquet": 1551,
+    "s2_har_levels.parquet": 1551,
+    "s2_naive20.parquet": 1551,
+    "s3_t0.5_h1.parquet": 37201,
+    "s3_t0.5_h24.parquet": 37201,
+    "s3_t0.52_h1.parquet": 37201,
+    "s3_t0.52_h24.parquet": 37201,
+    "BTCUSDT_1h_T1_ret_enet.parquet": 37201,
+    "BTCUSDT_1h_T2_dir_enet.parquet": 37201,
+    "BTCUSDT_1h_T3_rv_enet.parquet": 37201,
+    "BTCUSDT_1h_T4_vol_enet.parquet": 37200,
+    "BTCUSDT_24h_T1_ret_enet.parquet": 1551,
+    "BTCUSDT_24h_T2_dir_enet.parquet": 1551,
+    "BTCUSDT_24h_T3_rv_enet.parquet": 1551,
+    "BTCUSDT_24h_T4_vol_enet.parquet": 1551,
+    "ETHUSDT_1h_T1_ret_enet.parquet": 29185,
+    "ETHUSDT_1h_T2_dir_enet.parquet": 29185,
+    "ETHUSDT_1h_T3_rv_enet.parquet": 29185,
+    "ETHUSDT_1h_T4_vol_enet.parquet": 29184,
+    "ETHUSDT_24h_T1_ret_enet.parquet": 1217,
+    "ETHUSDT_24h_T2_dir_enet.parquet": 1217,
+    "ETHUSDT_24h_T3_rv_enet.parquet": 1217,
+    "ETHUSDT_24h_T4_vol_enet.parquet": 1217
+  },
+  "forecast_counts": [
+    {
+      "cell": "BTCUSDT|1h|T1_ret",
+      "n_saved": 37201,
+      "n_scoreable": 37201,
+      "n_fallback": 10395
+    },
+    {
+      "cell": "BTCUSDT|1h|T2_dir",
+      "n_saved": 37201,
+      "n_scoreable": 37201,
+      "n_fallback": 10395
+    },
+    {
+      "cell": "BTCUSDT|1h|T3_rv",
+      "n_saved": 37201,
+      "n_scoreable": 37200,
+      "n_fallback": 11328
+    },
+    {
+      "cell": "BTCUSDT|1h|T4_vol",
+      "n_saved": 37200,
+      "n_scoreable": 37200,
+      "n_fallback": 949
+    },
+    {
+      "cell": "BTCUSDT|24h|T1_ret",
+      "n_saved": 1551,
+      "n_scoreable": 1551,
+      "n_fallback": 425
+    },
+    {
+      "cell": "BTCUSDT|24h|T2_dir",
+      "n_saved": 1551,
+      "n_scoreable": 1551,
+      "n_fallback": 425
+    },
+    {
+      "cell": "BTCUSDT|24h|T3_rv",
+      "n_saved": 1551,
+      "n_scoreable": 1551,
+      "n_fallback": 448
+    },
+    {
+      "cell": "BTCUSDT|24h|T4_vol",
+      "n_saved": 1551,
+      "n_scoreable": 1551,
+      "n_fallback": 93
+    },
+    {
+      "cell": "ETHUSDT|1h|T1_ret",
+      "n_saved": 29185,
+      "n_scoreable": 29185,
+      "n_fallback": 9470
+    },
+    {
+      "cell": "ETHUSDT|1h|T2_dir",
+      "n_saved": 29185,
+      "n_scoreable": 29185,
+      "n_fallback": 9470
+    },
+    {
+      "cell": "ETHUSDT|1h|T3_rv",
+      "n_saved": 29185,
+      "n_scoreable": 29184,
+      "n_fallback": 9558
+    },
+    {
+      "cell": "ETHUSDT|1h|T4_vol",
+      "n_saved": 29184,
+      "n_scoreable": 29184,
+      "n_fallback": 860
+    },
+    {
+      "cell": "ETHUSDT|24h|T1_ret",
+      "n_saved": 1217,
+      "n_scoreable": 1217,
+      "n_fallback": 399
+    },
+    {
+      "cell": "ETHUSDT|24h|T2_dir",
+      "n_saved": 1217,
+      "n_scoreable": 1217,
+      "n_fallback": 399
+    },
+    {
+      "cell": "ETHUSDT|24h|T3_rv",
+      "n_saved": 1217,
+      "n_scoreable": 1217,
+      "n_fallback": 403
+    },
+    {
+      "cell": "ETHUSDT|24h|T4_vol",
+      "n_saved": 1217,
+      "n_scoreable": 1217,
+      "n_fallback": 87
+    }
+  ],
+  "checks": [
+    {
+      "check": "23 exact output parquet names",
+      "pass": true
+    },
+    {
+      "check": "23 output checksums match manifest",
+      "pass": true
+    },
+    {
+      "check": "46 current original input hashes match recorded inputs",
+      "pass": true
+    },
+    {
+      "check": "all input paths remain in original predlab store",
+      "pass": true
+    },
+    {
+      "check": "frozen original artifact pp_dev_results.json",
+      "pass": true
+    },
+    {
+      "check": "frozen original artifact pp_holdout_verdicts.json",
+      "pass": true
+    },
+    {
+      "check": "frozen original artifact gates.json",
+      "pass": true
+    },
+    {
+      "check": "frozen original artifact trial_ledger.jsonl",
+      "pass": true
+    },
+    {
+      "check": "embedded gate equals gate at source commit",
+      "pass": true
+    },
+    {
+      "check": "current gate remains frozen",
+      "pass": true
+    },
+    {
+      "check": "canonical gate checksum",
+      "pass": true
+    },
+    {
+      "check": "correction policy checksum at source commit",
+      "pass": true
+    },
+    {
+      "check": "result status and declared source identity",
+      "pass": true
+    },
+    {
+      "check": "integrated ledger preserves committed prefix",
+      "pass": true
+    },
+    {
+      "check": "one correction ledger record",
+      "pass": true
+    },
+    {
+      "check": "ledger source commit and config hash",
+      "pass": true
+    },
+    {
+      "check": "ledger denominators and status",
+      "pass": true
+    },
+    {
+      "check": "registered run precedes result ledger record",
+      "pass": true
+    },
+    {
+      "check": "exact strategy and forecast cell set",
+      "pass": true
+    },
+    {
+      "check": "frozen original development window",
+      "pass": true
+    },
+    {
+      "check": "original net SR floor remains one",
+      "pass": true
+    },
+    {
+      "check": "paired original metrics harq",
+      "pass": true
+    },
+    {
+      "check": "saved strategy clock/count harq",
+      "pass": true
+    },
+    {
+      "check": "paired original metrics har_levels",
+      "pass": true
+    },
+    {
+      "check": "saved strategy clock/count har_levels",
+      "pass": true
+    },
+    {
+      "check": "paired original metrics naive20",
+      "pass": true
+    },
+    {
+      "check": "saved strategy clock/count naive20",
+      "pass": true
+    },
+    {
+      "check": "paired original metrics s3_t0.5_h1",
+      "pass": true
+    },
+    {
+      "check": "saved strategy clock/count s3_t0.5_h1",
+      "pass": true
+    },
+    {
+      "check": "S3 frozen floor and exclusion s3_t0.5_h1",
+      "pass": true
+    },
+    {
+      "check": "paired original metrics s3_t0.5_h24",
+      "pass": true
+    },
+    {
+      "check": "saved strategy clock/count s3_t0.5_h24",
+      "pass": true
+    },
+    {
+      "check": "S3 frozen floor and exclusion s3_t0.5_h24",
+      "pass": true
+    },
+    {
+      "check": "paired original metrics s3_t0.52_h1",
+      "pass": true
+    },
+    {
+      "check": "saved strategy clock/count s3_t0.52_h1",
+      "pass": true
+    },
+    {
+      "check": "S3 frozen floor and exclusion s3_t0.52_h1",
+      "pass": true
+    },
+    {
+      "check": "paired original metrics s3_t0.52_h24",
+      "pass": true
+    },
+    {
+      "check": "saved strategy clock/count s3_t0.52_h24",
+      "pass": true
+    },
+    {
+      "check": "S3 frozen floor and exclusion s3_t0.52_h24",
+      "pass": true
+    },
+    {
+      "check": "both S2 baseline gates present",
+      "pass": true
+    },
+    {
+      "check": "S2 recorded paired gate arithmetic har_levels",
+      "pass": true
+    },
+    {
+      "check": "S2 recorded paired gate arithmetic naive20",
+      "pass": true
+    },
+    {
+      "check": "S2 failed gate conclusion",
+      "pass": true
+    },
+    {
+      "check": "forecast preserved input clock/values BTCUSDT|1h|T1_ret",
+      "pass": true
+    },
+    {
+      "check": "forecast denominator/coverage BTCUSDT|1h|T1_ret",
+      "pass": true
+    },
+    {
+      "check": "forecast baseline fallback integrity BTCUSDT|1h|T1_ret",
+      "pass": true
+    },
+    {
+      "check": "forecast diagnostic-only status BTCUSDT|1h|T1_ret",
+      "pass": true
+    },
+    {
+      "check": "forecast preserved input clock/values BTCUSDT|1h|T2_dir",
+      "pass": true
+    },
+    {
+      "check": "forecast denominator/coverage BTCUSDT|1h|T2_dir",
+      "pass": true
+    },
+    {
+      "check": "forecast baseline fallback integrity BTCUSDT|1h|T2_dir",
+      "pass": true
+    },
+    {
+      "check": "forecast diagnostic-only status BTCUSDT|1h|T2_dir",
+      "pass": true
+    },
+    {
+      "check": "forecast preserved input clock/values BTCUSDT|1h|T3_rv",
+      "pass": true
+    },
+    {
+      "check": "forecast denominator/coverage BTCUSDT|1h|T3_rv",
+      "pass": true
+    },
+    {
+      "check": "forecast baseline fallback integrity BTCUSDT|1h|T3_rv",
+      "pass": true
+    },
+    {
+      "check": "forecast diagnostic-only status BTCUSDT|1h|T3_rv",
+      "pass": true
+    },
+    {
+      "check": "forecast preserved input clock/values BTCUSDT|1h|T4_vol",
+      "pass": true
+    },
+    {
+      "check": "forecast denominator/coverage BTCUSDT|1h|T4_vol",
+      "pass": true
+    },
+    {
+      "check": "forecast baseline fallback integrity BTCUSDT|1h|T4_vol",
+      "pass": true
+    },
+    {
+      "check": "forecast diagnostic-only status BTCUSDT|1h|T4_vol",
+      "pass": true
+    },
+    {
+      "check": "forecast preserved input clock/values BTCUSDT|24h|T1_ret",
+      "pass": true
+    },
+    {
+      "check": "forecast denominator/coverage BTCUSDT|24h|T1_ret",
+      "pass": true
+    },
+    {
+      "check": "forecast baseline fallback integrity BTCUSDT|24h|T1_ret",
+      "pass": true
+    },
+    {
+      "check": "forecast diagnostic-only status BTCUSDT|24h|T1_ret",
+      "pass": true
+    },
+    {
+      "check": "forecast preserved input clock/values BTCUSDT|24h|T2_dir",
+      "pass": true
+    },
+    {
+      "check": "forecast denominator/coverage BTCUSDT|24h|T2_dir",
+      "pass": true
+    },
+    {
+      "check": "forecast baseline fallback integrity BTCUSDT|24h|T2_dir",
+      "pass": true
+    },
+    {
+      "check": "forecast diagnostic-only status BTCUSDT|24h|T2_dir",
+      "pass": true
+    },
+    {
+      "check": "forecast preserved input clock/values BTCUSDT|24h|T3_rv",
+      "pass": true
+    },
+    {
+      "check": "forecast denominator/coverage BTCUSDT|24h|T3_rv",
+      "pass": true
+    },
+    {
+      "check": "forecast baseline fallback integrity BTCUSDT|24h|T3_rv",
+      "pass": true
+    },
+    {
+      "check": "forecast diagnostic-only status BTCUSDT|24h|T3_rv",
+      "pass": true
+    },
+    {
+      "check": "forecast preserved input clock/values BTCUSDT|24h|T4_vol",
+      "pass": true
+    },
+    {
+      "check": "forecast denominator/coverage BTCUSDT|24h|T4_vol",
+      "pass": true
+    },
+    {
+      "check": "forecast baseline fallback integrity BTCUSDT|24h|T4_vol",
+      "pass": true
+    },
+    {
+      "check": "forecast diagnostic-only status BTCUSDT|24h|T4_vol",
+      "pass": true
+    },
+    {
+      "check": "forecast preserved input clock/values ETHUSDT|1h|T1_ret",
+      "pass": true
+    },
+    {
+      "check": "forecast denominator/coverage ETHUSDT|1h|T1_ret",
+      "pass": true
+    },
+    {
+      "check": "forecast baseline fallback integrity ETHUSDT|1h|T1_ret",
+      "pass": true
+    },
+    {
+      "check": "forecast diagnostic-only status ETHUSDT|1h|T1_ret",
+      "pass": true
+    },
+    {
+      "check": "forecast preserved input clock/values ETHUSDT|1h|T2_dir",
+      "pass": true
+    },
+    {
+      "check": "forecast denominator/coverage ETHUSDT|1h|T2_dir",
+      "pass": true
+    },
+    {
+      "check": "forecast baseline fallback integrity ETHUSDT|1h|T2_dir",
+      "pass": true
+    },
+    {
+      "check": "forecast diagnostic-only status ETHUSDT|1h|T2_dir",
+      "pass": true
+    },
+    {
+      "check": "forecast preserved input clock/values ETHUSDT|1h|T3_rv",
+      "pass": true
+    },
+    {
+      "check": "forecast denominator/coverage ETHUSDT|1h|T3_rv",
+      "pass": true
+    },
+    {
+      "check": "forecast baseline fallback integrity ETHUSDT|1h|T3_rv",
+      "pass": true
+    },
+    {
+      "check": "forecast diagnostic-only status ETHUSDT|1h|T3_rv",
+      "pass": true
+    },
+    {
+      "check": "forecast preserved input clock/values ETHUSDT|1h|T4_vol",
+      "pass": true
+    },
+    {
+      "check": "forecast denominator/coverage ETHUSDT|1h|T4_vol",
+      "pass": true
+    },
+    {
+      "check": "forecast baseline fallback integrity ETHUSDT|1h|T4_vol",
+      "pass": true
+    },
+    {
+      "check": "forecast diagnostic-only status ETHUSDT|1h|T4_vol",
+      "pass": true
+    },
+    {
+      "check": "forecast preserved input clock/values ETHUSDT|24h|T1_ret",
+      "pass": true
+    },
+    {
+      "check": "forecast denominator/coverage ETHUSDT|24h|T1_ret",
+      "pass": true
+    },
+    {
+      "check": "forecast baseline fallback integrity ETHUSDT|24h|T1_ret",
+      "pass": true
+    },
+    {
+      "check": "forecast diagnostic-only status ETHUSDT|24h|T1_ret",
+      "pass": true
+    },
+    {
+      "check": "forecast preserved input clock/values ETHUSDT|24h|T2_dir",
+      "pass": true
+    },
+    {
+      "check": "forecast denominator/coverage ETHUSDT|24h|T2_dir",
+      "pass": true
+    },
+    {
+      "check": "forecast baseline fallback integrity ETHUSDT|24h|T2_dir",
+      "pass": true
+    },
+    {
+      "check": "forecast diagnostic-only status ETHUSDT|24h|T2_dir",
+      "pass": true
+    },
+    {
+      "check": "forecast preserved input clock/values ETHUSDT|24h|T3_rv",
+      "pass": true
+    },
+    {
+      "check": "forecast denominator/coverage ETHUSDT|24h|T3_rv",
+      "pass": true
+    },
+    {
+      "check": "forecast baseline fallback integrity ETHUSDT|24h|T3_rv",
+      "pass": true
+    },
+    {
+      "check": "forecast diagnostic-only status ETHUSDT|24h|T3_rv",
+      "pass": true
+    },
+    {
+      "check": "forecast preserved input clock/values ETHUSDT|24h|T4_vol",
+      "pass": true
+    },
+    {
+      "check": "forecast denominator/coverage ETHUSDT|24h|T4_vol",
+      "pass": true
+    },
+    {
+      "check": "forecast baseline fallback integrity ETHUSDT|24h|T4_vol",
+      "pass": true
+    },
+    {
+      "check": "forecast diagnostic-only status ETHUSDT|24h|T4_vol",
+      "pass": true
+    },
+    {
+      "check": "input hashes still match after read-only review",
+      "pass": true
+    }
+  ]
+}

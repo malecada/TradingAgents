@@ -1,0 +1,607 @@
+{
+  "experiment": "audit_correction_2026_09_09",
+  "git_commit": "cc6801e81e25f05cdfbae77d560b59fa43e16dd9",
+  "correction_policy_sha256": "23cdf85b45138a5a0429e19bf20fd195402bbc9aec4e03cdb28e8eb2ed8d8350",
+  "gate_sha256": "611d12466b06865e38cb6fce51f9ce30713d7ac472a0effe02686c26b9b82bd5",
+  "evidence_policy": "audit-v2",
+  "registered_experiment": "audit_correction_2026_09_09",
+  "window": [
+    "2021-01-01",
+    "2025-03-31"
+  ],
+  "holdout_read": false,
+  "models_refit": false,
+  "registered_gate": {
+    "kind": "bounded_accounting_correction_and_saved_forecast_reassessment",
+    "registered_utc": "2026-09-09T14:34:32.774257+00:00",
+    "charter": "docs/superpowers/specs/2026-09-09-audit-corrections.md",
+    "authorization": "User approved the September 9 audit correction plan; no new strategy search.",
+    "development_window": [
+      "2021-01-01",
+      "2025-03-31"
+    ],
+    "strategies": {
+      "S2": {
+        "models": [
+          "harq",
+          "har_levels",
+          "naive20"
+        ],
+        "target_ann": 0.2,
+        "lev_cap": 3.0,
+        "fee_bp": 5.0
+      },
+      "S3": {
+        "thresholds": [
+          0.5,
+          0.52
+        ],
+        "smooth_hours": [
+          1,
+          24
+        ],
+        "fee_bp": 5.0
+      }
+    },
+    "permitted_changes": [
+      "S2/S3 stored log-return to simple-return conversion",
+      "initial entry fee and initial-NAV drawdown corrections",
+      "fees on actual drifted pretrade notionals, including maintenance turnover at every declared rebalance",
+      "ENet saved failure rows replaced by the declared baseline with explicit coverage diagnostics; no refit"
+    ],
+    "forecast_cells": {
+      "symbols": [
+        "BTCUSDT",
+        "ETHUSDT"
+      ],
+      "grids": [
+        "1h",
+        "24h"
+      ],
+      "targets": [
+        "T1_ret",
+        "T2_dir",
+        "T3_rv",
+        "T4_vol"
+      ],
+      "model": "enet",
+      "scope": "existing saved development origins only; shared baseline, identical timestamps, no new fits"
+    },
+    "comparison_rule": "Every original S2/S3 cell is reported; apply the original registered development criteria verbatim. ENet is a diagnostic rescore with no adoption or validation claim. No cell or parameter is selected from corrected results.",
+    "stop_rule": "One immutable correction artifact; stop on missing source/forecast provenance or unregistered window. Any further empirical correction requires a separately committed amendment.",
+    "forensics": [
+      "caller-level simple-return test",
+      "synthetic long/short round trips",
+      "report original and corrected values and all denominators",
+      "hash inputs and pin exact clean code commit"
+    ],
+    "holdout": "No holdout is evaluated; all pre-existing spending status is preserved.",
+    "original_artifacts_sha256": {
+      "pp_dev_results.json": "9cd0306e39f0d23c8205226dd90a935aae1690876889434e8ed530373ed38711",
+      "pp_holdout_verdicts.json": "2c7ee38e8d7cca6ecf2a1cf3f0c938816bf18a797072a406cce277c193463b57",
+      "gates.json": "4225cc9965940d226bd8d77e9633b3995cc7dc7935527bbd352a2750a828f85e",
+      "trial_ledger.jsonl": "d4aa4a780caa03f945d0d9d2743950dce8002a0b36885ca667939ebdd78ebda8"
+    },
+    "output": "data/predlab/audit_correction_2026_09_09/result.json",
+    "status": "registered_not_run"
+  },
+  "source_data": "/home/malecada/master_thesis/TradingAgents-predlab/data",
+  "status": "completed",
+  "strategies": {
+    "S2": {
+      "harq": {
+        "original": {
+          "sr_net": 0.20371971356354232,
+          "maxdd": 0.42451648625402316,
+          "tracking_err": 0.04249449537627945,
+          "avg_pos": 0.3456806835876604
+        },
+        "corrected": {
+          "sr_net": 0.4909495396613525,
+          "maxdd": 0.35579439485585074,
+          "tracking_err": 0.04245066910187004,
+          "avg_pos": 0.3456806835876604
+        },
+        "n_days": 1551,
+        "first": "2021-01-01 00:00:00+00:00",
+        "last": "2025-03-31 00:00:00+00:00"
+      },
+      "har_levels": {
+        "original": {
+          "sr_net": 0.3422577608536525,
+          "maxdd": 0.3598844508495884,
+          "tracking_err": 0.054127668744281716,
+          "avg_pos": 0.3008087949933947
+        },
+        "corrected": {
+          "sr_net": 0.6400319975180243,
+          "maxdd": 0.31000510961062167,
+          "tracking_err": 0.05397202325946252,
+          "avg_pos": 0.3008087949933947
+        },
+        "n_days": 1551,
+        "first": "2021-01-01 00:00:00+00:00",
+        "last": "2025-03-31 00:00:00+00:00"
+      },
+      "naive20": {
+        "original": {
+          "sr_net": 0.45047166927119536,
+          "maxdd": 0.43833376683223,
+          "tracking_err": 0.057615386307152704,
+          "avg_pos": 0.36926072682685346
+        },
+        "corrected": {
+          "sr_net": 0.7347629905350334,
+          "maxdd": 0.39623331317213994,
+          "tracking_err": 0.056984336857641094,
+          "avg_pos": 0.36926072682685346
+        },
+        "n_days": 1551,
+        "first": "2021-01-01 00:00:00+00:00",
+        "last": "2025-03-31 00:00:00+00:00"
+      }
+    },
+    "S3": {
+      "s3_t0.5_h1": {
+        "original": {
+          "sr_net": -2.139065758399077,
+          "maxdd": 0.9949827387816792,
+          "time_in_mkt": 0.6243380554286175
+        },
+        "corrected": {
+          "sr_net": -1.8877368461901423,
+          "maxdd": 0.9914071719194805,
+          "time_in_mkt": 0.6243380554286175
+        },
+        "n_hours": 37201,
+        "sr_floor_pass": false,
+        "eligible_to_graduate": false,
+        "reason": "Original registration: exploratory forecast claim failed; cannot graduate past development this cycle."
+      },
+      "s3_t0.5_h24": {
+        "original": {
+          "sr_net": -0.08042308245430832,
+          "maxdd": 0.8124451717929622,
+          "time_in_mkt": 0.7720760194618425
+        },
+        "corrected": {
+          "sr_net": 0.20555927598913704,
+          "maxdd": 0.7275413453049113,
+          "time_in_mkt": 0.7720760194618425
+        },
+        "n_hours": 37201,
+        "sr_floor_pass": false,
+        "eligible_to_graduate": false,
+        "reason": "Original registration: exploratory forecast claim failed; cannot graduate past development this cycle."
+      },
+      "s3_t0.52_h1": {
+        "original": {
+          "sr_net": -2.692556753894445,
+          "maxdd": 0.9952149183353214,
+          "time_in_mkt": 0.399612913631354
+        },
+        "corrected": {
+          "sr_net": -2.4833775810837984,
+          "maxdd": 0.9929734895911967,
+          "time_in_mkt": 0.399612913631354
+        },
+        "n_hours": 37201,
+        "sr_floor_pass": false,
+        "eligible_to_graduate": false,
+        "reason": "Original registration: exploratory forecast claim failed; cannot graduate past development this cycle."
+      },
+      "s3_t0.52_h24": {
+        "original": {
+          "sr_net": -0.16025907798801417,
+          "maxdd": 0.7537036690930433,
+          "time_in_mkt": 0.28526114889384696
+        },
+        "corrected": {
+          "sr_net": 0.03587844057342808,
+          "maxdd": 0.6913927320911113,
+          "time_in_mkt": 0.28526114889384696
+        },
+        "n_hours": 37201,
+        "sr_floor_pass": false,
+        "eligible_to_graduate": false,
+        "reason": "Original registration: exploratory forecast claim failed; cannot graduate past development this cycle."
+      }
+    },
+    "S2_criteria": {
+      "original_rule": "HARQ TE reduction >=15% versus BOTH baselines, bootstrap p<.05, SR and MaxDD not worse",
+      "comparisons": {
+        "har_levels": {
+          "n_paired_volatility_windows": 1532,
+          "te_reduction_pct": 21.34690060108601,
+          "p_harq_better": 0.0,
+          "checks": {
+            "te_reduction_ge15pct": true,
+            "bootstrap_p_lt05": true,
+            "sr_not_worse": false,
+            "maxdd_not_worse": false
+          },
+          "all_pass": false
+        },
+        "naive20": {
+          "n_paired_volatility_windows": 1532,
+          "te_reduction_pct": 25.504671208299268,
+          "p_harq_better": 0.0,
+          "checks": {
+            "te_reduction_ge15pct": true,
+            "bootstrap_p_lt05": true,
+            "sr_not_worse": false,
+            "maxdd_not_worse": true
+          },
+          "all_pass": false
+        }
+      },
+      "passes_specific_gate": false,
+      "validation_status": "No strategy validation; development-only accounting correction."
+    },
+    "scope": "All 7 original cells. No S1 rerun, no parameter selection, no holdout. DSR across 13 legacy cells is not recomputed from invalidated S1 evidence; no candidate promotion."
+  },
+  "enet": [
+    {
+      "cell": "BTCUSDT|1h|T1_ret",
+      "model": "enet",
+      "baseline": "rw_zero",
+      "status": "diagnostic_complete",
+      "loss": "se",
+      "n_saved": 37201,
+      "n_scoreable": 37201,
+      "n_reconstructed_unavailable": 10395,
+      "n_fallback": 10395,
+      "raw_valid_coverage": 0.7205720276336658,
+      "n_original_finite_loss": 37201,
+      "original_loss_mean": 4.540349619614e-05,
+      "corrected_loss_mean": 4.540349619614e-05,
+      "baseline_loss_mean": 4.523779692573201e-05,
+      "n_saved_sentinel_without_reconstructed_failure": 0,
+      "interpretation": "Diagnostic replacement with the declared baseline; valid boundary/zero forecasts are preserved. No refit, selection, significance verdict or strategy validation."
+    },
+    {
+      "cell": "BTCUSDT|1h|T2_dir",
+      "model": "enet",
+      "baseline": "base_rate",
+      "status": "diagnostic_complete",
+      "loss": "brier",
+      "n_saved": 37201,
+      "n_scoreable": 37201,
+      "n_reconstructed_unavailable": 10395,
+      "n_fallback": 10395,
+      "raw_valid_coverage": 0.7205720276336658,
+      "n_original_finite_loss": 37201,
+      "original_loss_mean": 0.31507761755310876,
+      "corrected_loss_mean": 0.24958450203208346,
+      "baseline_loss_mean": 0.24999126522396567,
+      "n_saved_sentinel_without_reconstructed_failure": 1,
+      "interpretation": "Diagnostic replacement with the declared baseline; valid boundary/zero forecasts are preserved. No refit, selection, significance verdict or strategy validation."
+    },
+    {
+      "cell": "BTCUSDT|1h|T3_rv",
+      "model": "enet",
+      "baseline": "har_levels",
+      "status": "diagnostic_complete",
+      "loss": "qlike",
+      "n_saved": 37201,
+      "n_scoreable": 37200,
+      "n_reconstructed_unavailable": 10395,
+      "n_fallback": 11328,
+      "raw_valid_coverage": 0.6954838709677419,
+      "n_original_finite_loss": 25872,
+      "original_loss_mean": 0.929794083835031,
+      "corrected_loss_mean": 0.82253716558754,
+      "baseline_loss_mean": 0.6066913093049647,
+      "n_saved_sentinel_without_reconstructed_failure": 0,
+      "interpretation": "Diagnostic replacement with the declared baseline; valid boundary/zero forecasts are preserved. No refit, selection, significance verdict or strategy validation."
+    },
+    {
+      "cell": "BTCUSDT|1h|T4_vol",
+      "model": "enet",
+      "baseline": "seasonal_naive_m24",
+      "status": "diagnostic_complete",
+      "loss": "mase",
+      "n_saved": 37200,
+      "n_scoreable": 37200,
+      "n_reconstructed_unavailable": 949,
+      "n_fallback": 949,
+      "raw_valid_coverage": 0.974489247311828,
+      "n_original_finite_loss": 37200,
+      "original_loss_mean": 1.4926557960583473,
+      "corrected_loss_mean": 0.669186787777034,
+      "baseline_loss_mean": 1.093871094763916,
+      "n_saved_sentinel_without_reconstructed_failure": 0,
+      "interpretation": "Diagnostic replacement with the declared baseline; valid boundary/zero forecasts are preserved. No refit, selection, significance verdict or strategy validation."
+    },
+    {
+      "cell": "BTCUSDT|24h|T1_ret",
+      "model": "enet",
+      "baseline": "rw_zero",
+      "status": "diagnostic_complete",
+      "loss": "se",
+      "n_saved": 1551,
+      "n_scoreable": 1551,
+      "n_reconstructed_unavailable": 425,
+      "n_fallback": 425,
+      "raw_valid_coverage": 0.7259832366215345,
+      "n_original_finite_loss": 1551,
+      "original_loss_mean": 0.0010774643738968193,
+      "corrected_loss_mean": 0.0010774643738968193,
+      "baseline_loss_mean": 0.0010384735103098255,
+      "n_saved_sentinel_without_reconstructed_failure": 0,
+      "interpretation": "Diagnostic replacement with the declared baseline; valid boundary/zero forecasts are preserved. No refit, selection, significance verdict or strategy validation."
+    },
+    {
+      "cell": "BTCUSDT|24h|T2_dir",
+      "model": "enet",
+      "baseline": "base_rate",
+      "status": "diagnostic_complete",
+      "loss": "brier",
+      "n_saved": 1551,
+      "n_scoreable": 1551,
+      "n_reconstructed_unavailable": 425,
+      "n_fallback": 425,
+      "raw_valid_coverage": 0.7259832366215345,
+      "n_original_finite_loss": 1551,
+      "original_loss_mean": 0.3124677307527943,
+      "corrected_loss_mean": 0.25660964726419155,
+      "baseline_loss_mean": 0.25139455133714755,
+      "n_saved_sentinel_without_reconstructed_failure": 1,
+      "interpretation": "Diagnostic replacement with the declared baseline; valid boundary/zero forecasts are preserved. No refit, selection, significance verdict or strategy validation."
+    },
+    {
+      "cell": "BTCUSDT|24h|T3_rv",
+      "model": "enet",
+      "baseline": "har_levels",
+      "status": "diagnostic_complete",
+      "loss": "qlike",
+      "n_saved": 1551,
+      "n_scoreable": 1551,
+      "n_reconstructed_unavailable": 425,
+      "n_fallback": 448,
+      "raw_valid_coverage": 0.7111540941328175,
+      "n_original_finite_loss": 1103,
+      "original_loss_mean": 0.7996074913323802,
+      "corrected_loss_mean": 0.6733043794869604,
+      "baseline_loss_mean": 0.39795122908700614,
+      "n_saved_sentinel_without_reconstructed_failure": 0,
+      "interpretation": "Diagnostic replacement with the declared baseline; valid boundary/zero forecasts are preserved. No refit, selection, significance verdict or strategy validation."
+    },
+    {
+      "cell": "BTCUSDT|24h|T4_vol",
+      "model": "enet",
+      "baseline": "seasonal_naive_m7",
+      "status": "diagnostic_complete",
+      "loss": "mase",
+      "n_saved": 1551,
+      "n_scoreable": 1551,
+      "n_reconstructed_unavailable": 93,
+      "n_fallback": 93,
+      "raw_valid_coverage": 0.9400386847195358,
+      "n_original_finite_loss": 1551,
+      "original_loss_mean": 4.166428468302866,
+      "corrected_loss_mean": 0.7484930972876254,
+      "baseline_loss_mean": 0.9035881708305118,
+      "n_saved_sentinel_without_reconstructed_failure": 0,
+      "interpretation": "Diagnostic replacement with the declared baseline; valid boundary/zero forecasts are preserved. No refit, selection, significance verdict or strategy validation."
+    },
+    {
+      "cell": "ETHUSDT|1h|T1_ret",
+      "model": "enet",
+      "baseline": "rw_zero",
+      "status": "diagnostic_complete",
+      "loss": "se",
+      "n_saved": 29185,
+      "n_scoreable": 29185,
+      "n_reconstructed_unavailable": 9470,
+      "n_fallback": 9470,
+      "raw_valid_coverage": 0.6755182456741476,
+      "n_original_finite_loss": 29185,
+      "original_loss_mean": 5.42510851493987e-05,
+      "corrected_loss_mean": 5.42510851493987e-05,
+      "baseline_loss_mean": 5.423663596887366e-05,
+      "n_saved_sentinel_without_reconstructed_failure": 0,
+      "interpretation": "Diagnostic replacement with the declared baseline; valid boundary/zero forecasts are preserved. No refit, selection, significance verdict or strategy validation."
+    },
+    {
+      "cell": "ETHUSDT|1h|T2_dir",
+      "model": "enet",
+      "baseline": "base_rate",
+      "status": "diagnostic_complete",
+      "loss": "brier",
+      "n_saved": 29185,
+      "n_scoreable": 29185,
+      "n_reconstructed_unavailable": 9470,
+      "n_fallback": 9470,
+      "raw_valid_coverage": 0.6755182456741476,
+      "n_original_finite_loss": 29185,
+      "original_loss_mean": 0.323875556656924,
+      "corrected_loss_mean": 0.24942852771944815,
+      "baseline_loss_mean": 0.2500564532566824,
+      "n_saved_sentinel_without_reconstructed_failure": 5,
+      "interpretation": "Diagnostic replacement with the declared baseline; valid boundary/zero forecasts are preserved. No refit, selection, significance verdict or strategy validation."
+    },
+    {
+      "cell": "ETHUSDT|1h|T3_rv",
+      "model": "enet",
+      "baseline": "har_levels",
+      "status": "diagnostic_complete",
+      "loss": "qlike",
+      "n_saved": 29185,
+      "n_scoreable": 29184,
+      "n_reconstructed_unavailable": 9470,
+      "n_fallback": 9558,
+      "raw_valid_coverage": 0.6724917763157895,
+      "n_original_finite_loss": 19626,
+      "original_loss_mean": 0.7115381767711072,
+      "corrected_loss_mean": 0.6652794467249941,
+      "baseline_loss_mean": 0.7415464936926256,
+      "n_saved_sentinel_without_reconstructed_failure": 0,
+      "interpretation": "Diagnostic replacement with the declared baseline; valid boundary/zero forecasts are preserved. No refit, selection, significance verdict or strategy validation."
+    },
+    {
+      "cell": "ETHUSDT|1h|T4_vol",
+      "model": "enet",
+      "baseline": "seasonal_naive_m24",
+      "status": "diagnostic_complete",
+      "loss": "mase",
+      "n_saved": 29184,
+      "n_scoreable": 29184,
+      "n_reconstructed_unavailable": 860,
+      "n_fallback": 860,
+      "raw_valid_coverage": 0.9705317982456141,
+      "n_original_finite_loss": 29184,
+      "original_loss_mean": 1.6647260431932616,
+      "corrected_loss_mean": 0.7059445504319267,
+      "baseline_loss_mean": 1.1231666923784003,
+      "n_saved_sentinel_without_reconstructed_failure": 0,
+      "interpretation": "Diagnostic replacement with the declared baseline; valid boundary/zero forecasts are preserved. No refit, selection, significance verdict or strategy validation."
+    },
+    {
+      "cell": "ETHUSDT|24h|T1_ret",
+      "model": "enet",
+      "baseline": "rw_zero",
+      "status": "diagnostic_complete",
+      "loss": "se",
+      "n_saved": 1217,
+      "n_scoreable": 1217,
+      "n_reconstructed_unavailable": 399,
+      "n_fallback": 399,
+      "raw_valid_coverage": 0.6721446179129006,
+      "n_original_finite_loss": 1217,
+      "original_loss_mean": 0.0013166932689251674,
+      "corrected_loss_mean": 0.0013166932689251674,
+      "baseline_loss_mean": 0.00130491773976297,
+      "n_saved_sentinel_without_reconstructed_failure": 0,
+      "interpretation": "Diagnostic replacement with the declared baseline; valid boundary/zero forecasts are preserved. No refit, selection, significance verdict or strategy validation."
+    },
+    {
+      "cell": "ETHUSDT|24h|T2_dir",
+      "model": "enet",
+      "baseline": "base_rate",
+      "status": "diagnostic_complete",
+      "loss": "brier",
+      "n_saved": 1217,
+      "n_scoreable": 1217,
+      "n_reconstructed_unavailable": 399,
+      "n_fallback": 399,
+      "raw_valid_coverage": 0.6721446179129006,
+      "n_original_finite_loss": 1217,
+      "original_loss_mean": 0.32716955022723965,
+      "corrected_loss_mean": 0.2587097317817003,
+      "baseline_loss_mean": 0.2514556176585474,
+      "n_saved_sentinel_without_reconstructed_failure": 1,
+      "interpretation": "Diagnostic replacement with the declared baseline; valid boundary/zero forecasts are preserved. No refit, selection, significance verdict or strategy validation."
+    },
+    {
+      "cell": "ETHUSDT|24h|T3_rv",
+      "model": "enet",
+      "baseline": "har_levels",
+      "status": "diagnostic_complete",
+      "loss": "qlike",
+      "n_saved": 1217,
+      "n_scoreable": 1217,
+      "n_reconstructed_unavailable": 399,
+      "n_fallback": 403,
+      "raw_valid_coverage": 0.6688578471651603,
+      "n_original_finite_loss": 814,
+      "original_loss_mean": 0.5052112750094372,
+      "corrected_loss_mean": 0.4632303729859192,
+      "baseline_loss_mean": 0.49205736153374996,
+      "n_saved_sentinel_without_reconstructed_failure": 0,
+      "interpretation": "Diagnostic replacement with the declared baseline; valid boundary/zero forecasts are preserved. No refit, selection, significance verdict or strategy validation."
+    },
+    {
+      "cell": "ETHUSDT|24h|T4_vol",
+      "model": "enet",
+      "baseline": "seasonal_naive_m7",
+      "status": "diagnostic_complete",
+      "loss": "mase",
+      "n_saved": 1217,
+      "n_scoreable": 1217,
+      "n_reconstructed_unavailable": 87,
+      "n_fallback": 87,
+      "raw_valid_coverage": 0.9285127362366475,
+      "n_original_finite_loss": 1217,
+      "original_loss_mean": 3.7397984645836337,
+      "corrected_loss_mean": 0.5898157741379342,
+      "baseline_loss_mean": 0.7597457585548971,
+      "n_saved_sentinel_without_reconstructed_failure": 0,
+      "interpretation": "Diagnostic replacement with the declared baseline; valid boundary/zero forecasts are preserved. No refit, selection, significance verdict or strategy validation."
+    }
+  ],
+  "input_sha256": {
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/pp_dev_results.json": "9cd0306e39f0d23c8205226dd90a935aae1690876889434e8ed530373ed38711",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/pp_holdout_verdicts.json": "2c7ee38e8d7cca6ecf2a1cf3f0c938816bf18a797072a406cce277c193463b57",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/gates.json": "4225cc9965940d226bd8d77e9633b3995cc7dc7935527bbd352a2750a828f85e",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/trial_ledger.jsonl": "d4aa4a780caa03f945d0d9d2743950dce8002a0b36885ca667939ebdd78ebda8",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/rv_1d/BTCUSDT.parquet": "d0439d26f3373d23f7e4669bf7cc3e1840e53bd816dbc0932a234dbb565b136e",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/rv_1h/BTCUSDT.parquet": "32bd1f9173664206109dd3608dc259e6cd86ff9c1ccb2a61abeb87019ca1e24a",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_24h_T3_rv/harq.parquet": "184b57e3b418dbf32cb619aed3642c0e7ba26c05a6ef921c7499202c6cc6e6fe",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_24h_T3_rv/har_levels.parquet": "f7f4bbb66eaca389db038a7e78dbf8fb71bf69cc52c383d184d68b07f663ed67",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_1h_T2_dir/logit_lags5.parquet": "8c6a21e5e858b47c928d54b00f3e2b267c1dd684a0618787029133b8f8a86fdc",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/oi_5m/BTCUSDT.parquet": "3f5b04520a637080ddf69e0d4cb7e9d42d0e86efd3de5c4a87c40a28aa5cbf1e",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/funding/BTCUSDT.parquet": "dd391468e85a7610dd5523cace78a75eadea1da15c8a7ce9ff66ca7294786076",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/rv_1h/ETHUSDT.parquet": "e2370767a6a04af7149d4e9d7bffb3cd463c6095e7a8b6f6774417fe3c2e745e",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/oi_5m/ETHUSDT.parquet": "b95a67e292786f59f6f40cc0ffcd52914171dd26b1b0f0311c15a63164ed4754",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/funding/ETHUSDT.parquet": "d319e371cb95dd90af7d5c56b4e823cd6d6a715717c1f1d6b95e23bd91c1ed6f",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/rv_1d/ETHUSDT.parquet": "565864b6100225ab16bdc288dc6a0115ed154e28ab4b9ffefc823e54a7a04c26",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_1h_T1_ret/enet.parquet": "98256eaac9b6b53d6d8c21fa51aaf4ccb2f9894851a4e64f028617c2d4d83818",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_1h_T1_ret/rw_zero.parquet": "b036adeb2774dd355606bedc237a1c1efca2b49fef8a58376594fc1127b60c44",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_1h_T2_dir/enet.parquet": "3093d708017839d39b93e79e755da49f8fdd3e7f3c8c9eae7630621d72d2535e",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_1h_T2_dir/base_rate.parquet": "7f0a7d5795130b6255f9c4284d24c3edb5178de7600260b767f286b68ea9385c",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_1h_T3_rv/enet.parquet": "083c0339ff2a113e31c90fd15aaf3e08c26613679962c68436b0d256f3211050",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_1h_T3_rv/har_levels.parquet": "f6424bfc23de785b8ebf363ac97a630f01c4433493ae70793010a1289083c6df",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_1h_T4_vol/enet.parquet": "dd5d34ca8a29fad7f06c3e063fb3f97b414d02e76f21aef3619b6e9899670df8",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_1h_T4_vol/seasonal_naive_m24.parquet": "cfbd6a76032f2076e28b9f3a0c856303feabbb95358554d26e3bb4189c7fd896",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_24h_T1_ret/enet.parquet": "b39c647b8d22b4ade3d8272823da0de9eb63bc2c01670a0f1ac6d6c2e703b3c4",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_24h_T1_ret/rw_zero.parquet": "3ff6c5b5ab6da1056e8c4a739fd003df964b9d765ef0ad18fa77e610c803cb95",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_24h_T2_dir/enet.parquet": "8b9dd3ee76c22d22c412cb1f12c9576c5a103e4e452b6e45b8cf7f20872ef180",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_24h_T2_dir/base_rate.parquet": "e60c73f1d7541c6a46fbf050b2ad313921edfbca9883c038e306e0fe9e77e10e",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_24h_T3_rv/enet.parquet": "a848d9c5aedcaa72cc6df9dfb61cee2a889f61d1e8232cfe152058f4a0280de9",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_24h_T4_vol/enet.parquet": "c6c68032fb6519cf8995ed24c44e6316318e06a5928fc1f3a84818976a3e49ae",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/BTCUSDT_24h_T4_vol/seasonal_naive_m7.parquet": "5da8a63316dfa4a840db09f8cf9769b42564bc496f4c358c26ef2c0551ffe9ba",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/ETHUSDT_1h_T1_ret/enet.parquet": "edab7564b66de37d10e77ff1ed3aa83cbcf2103eb8948249433082421b94fee5",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/ETHUSDT_1h_T1_ret/rw_zero.parquet": "dc1f2230802babd6ca3e2a7bb07741b52491cffcf463a093388c469cbd4a3993",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/ETHUSDT_1h_T2_dir/enet.parquet": "36e767f57d6ea472640b123e7a54fa5161717c0c4066e910a2334f1d0812decb",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/ETHUSDT_1h_T2_dir/base_rate.parquet": "3ed5de057daa6ec5f4315fb185944680652686041ad80b8bfc97a0fd21d0da6b",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/ETHUSDT_1h_T3_rv/enet.parquet": "f332ba6c76618fe523f1ce61198b9147b6df80da0478ee637104bea3f7a5e7dc",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/ETHUSDT_1h_T3_rv/har_levels.parquet": "98b7488308b3ab1af7eec113768ec8c980f8ec2e78de79e2267fcf83bc1fb3f7",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/ETHUSDT_1h_T4_vol/enet.parquet": "7c4cb16df8719b16ebe2a7103427c776353fe4ff48bd353a6f38737785661173",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/ETHUSDT_1h_T4_vol/seasonal_naive_m24.parquet": "c7b9ea4b0744552436261fb4c4ee0fe22432d04ff24199ce0485b5b5b2fd9c17",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/ETHUSDT_24h_T1_ret/enet.parquet": "356880dcb1016947a80a53bcf31d82d7cdfa1f8d3d57bfb330086b78d15e4aab",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/ETHUSDT_24h_T1_ret/rw_zero.parquet": "d1f43c5ef704dbb6ba1d14acb2f7f69844818bce05cc6306a6b274f245ded889",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/ETHUSDT_24h_T2_dir/enet.parquet": "1cd66871703a4b766f3ec1ee23659cf78f746c0493333f1f9202c08343693f40",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/ETHUSDT_24h_T2_dir/base_rate.parquet": "2ea5e8e5aa16ce2809322ea34c491c826abad7fb8546376818f934ac297d68de",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/ETHUSDT_24h_T3_rv/enet.parquet": "f12f84d5d64cd36815ccfaf673370a7b2455420dccf0b901d74f7c523639ec57",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/ETHUSDT_24h_T3_rv/har_levels.parquet": "c69eabf80b889ec8d86073c96fd83425b44f6b33f4ba183d08490ead95b5aac1",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/ETHUSDT_24h_T4_vol/enet.parquet": "f55189a2810e1e02221802b430c27dc5322ee5124aa53e294b8284cc3c480e1b",
+    "/home/malecada/master_thesis/TradingAgents-predlab/data/predlab/forecasts/predlab_p2_ml/ETHUSDT_24h_T4_vol/seasonal_naive_m7.parquet": "61fbe64aaca28cd03676769d1a7330c719c2053fbc3014e6ea18fb05df317ce4"
+  },
+  "input_unchanged_after_run": true,
+  "output_sha256": {
+    "ETHUSDT_1h_T3_rv_enet.parquet": "aba765a27857de75726307939b487585c3b3ca5ca67a3da7e8caf5a0e12d045e",
+    "BTCUSDT_1h_T1_ret_enet.parquet": "a86684eea02163bc38501eda7033e4c1b876d03a0a59908f327e8dac391d4d56",
+    "ETHUSDT_24h_T3_rv_enet.parquet": "1efb0f6bb3a9516432971bc84140f021dfa2683a8db2fe271c59df5c25f6fa8d",
+    "BTCUSDT_1h_T4_vol_enet.parquet": "99f830cca8c9c21a39f5b8bc3d52bfb9208a0c8f85a2d0e04a5774914ab0c336",
+    "s3_t0.52_h1.parquet": "035d87d13212755e195f603868d8c7f68ad1e3f928f91737e87e820fd8ff0bc2",
+    "BTCUSDT_24h_T3_rv_enet.parquet": "7d108bb025690b3bbffb4f7fe76d7cb62198d734d3b0720f65c8ec442d3a1873",
+    "BTCUSDT_24h_T2_dir_enet.parquet": "fed1368b22b1477b8be5f443a843a3b4b1f9e933ffd305d34200e40f17cb439c",
+    "ETHUSDT_24h_T1_ret_enet.parquet": "69199aa461fc120c256b4816a76d0ae25c7a8ba39e30c93f36e5b32f44589e4a",
+    "BTCUSDT_24h_T4_vol_enet.parquet": "d624f38768ee259b55be7bef912da51f724c0b111a7ff3f7201d5f00ff7e8dc6",
+    "ETHUSDT_24h_T4_vol_enet.parquet": "8f87b8f9b9e06bd463129e7266fc3c5589d08004fbcec6ef55f7549909f88e8b",
+    "BTCUSDT_24h_T1_ret_enet.parquet": "95748ece217123cec320f4897ca8246be52505ed42d6d1e413f0b60ff2ce4e7d",
+    "ETHUSDT_1h_T4_vol_enet.parquet": "66e095ff521a6f752fff2739cbc8e8daf8a41b6adf937d66c2fc820406fb838c",
+    "BTCUSDT_1h_T2_dir_enet.parquet": "d668a3002e374dacf8a6fa89b12b768eedefedadd3e429e6457c7fd660b6033b",
+    "s3_t0.52_h24.parquet": "906f8d8e741921c35f8d88877cc32630e3717f969fe65fbb4d9588beca4b6e5c",
+    "s3_t0.5_h24.parquet": "b3251cf9435ef07a123891963f8ea0fc2cddbec16645cff7dc92263334b4b0b9",
+    "ETHUSDT_1h_T1_ret_enet.parquet": "f02353acffe3ab6b2fc4f303b5d6cf34750d25fa23155ca0057840dc233bd34a",
+    "s2_naive20.parquet": "b90e30467b75bfa60c64a81dd69d8ac6b1f575e79c54dec9b85b0ab299ca7401",
+    "BTCUSDT_1h_T3_rv_enet.parquet": "1afaeeb1ea18df54cb4c75194aaa05e3003c38d97dacc6d6e664ac679288f860",
+    "s2_har_levels.parquet": "c1b03532763647b14ec50a8ce715c35c5cfb9c6335d3253ce0eacb120890a778",
+    "s3_t0.5_h1.parquet": "07944978f3d092515eef8deb7ef9223dc26563d32e5bf2c4c5d8785c75db3089",
+    "s2_harq.parquet": "f2caa67eba9cd23c1e70f0852e12ae2fba3571cb67f4ffff0cbce519e2eaa337",
+    "ETHUSDT_24h_T2_dir_enet.parquet": "9394f1ea5c5d45f97a8c4ce1c27054eb55c4110271de20d947e65c5b42781d4d",
+    "ETHUSDT_1h_T2_dir_enet.parquet": "8973731fda156d0b89dd19b50238144ab93f97680f8723f2e047a1e8277dc22f"
+  }
+}

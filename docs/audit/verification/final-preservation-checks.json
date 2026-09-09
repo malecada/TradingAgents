@@ -1,0 +1,497 @@
+{
+  "checked_utc": "2026-09-09T15:27:01.109220+00:00",
+  "audit_checkout_head": "cc6801e81e25f05cdfbae77d560b59fa43e16dd9",
+  "gate_comparison_base": "b7dff69e8d4922f053cf7b5d3ce9a61ffe87d48b",
+  "original_worktrees": {
+    "TradingAgents": {
+      "status": [
+        " M uv.lock",
+        "?? scripts/trend_mult_robustness.py"
+      ],
+      "matches_recorded_status": true,
+      "head": "017986777996647a71b7c3097845b3c6ac53883c",
+      "matches_recorded_head": true,
+      "branch": "feature/llm-event-xs",
+      "matches_recorded_branch": true
+    },
+    "TradingAgents-predlab": {
+      "status": [
+        " D .claude/ralph-loop.local.md",
+        " M data/predlab/champion_backtest_equity.png",
+        " M data/predlab/champion_backtest_yearly.png",
+        " M data/predlab/nlst/nlst2_features.parquet",
+        " M data/predlab/trial_ledger.jsonl",
+        "?? scripts/predlab_champion_backtest_hold.py"
+      ],
+      "matches_recorded_status": true,
+      "head": "c5f1a4452aa3ba1124595bcf6a222422af8fb16e",
+      "matches_recorded_head": true,
+      "branch": "research/prediction-lab",
+      "matches_recorded_branch": true
+    },
+    "TradingAgents-monitor-nav": {
+      "status": [
+        " M CLAUDE.md"
+      ],
+      "matches_recorded_status": true,
+      "head": "ed5e22f63d9e2d8ab4bf163103f40b0029eb0e7b",
+      "matches_recorded_head": true,
+      "branch": "main",
+      "matches_recorded_branch": true
+    }
+  },
+  "gate_comparisons": {
+    "data/llm_event_xs/gates.json": {
+      "original_key_count": 1,
+      "current_key_count": 1,
+      "added": [],
+      "removed": [],
+      "changed_existing_keys": [],
+      "permitted_only": true
+    },
+    "data/llm_pair_xs/gates.json": {
+      "original_key_count": 2,
+      "current_key_count": 2,
+      "added": [],
+      "removed": [],
+      "changed_existing_keys": [],
+      "permitted_only": true
+    },
+    "data/llm_rank_xs/gates.json": {
+      "original_key_count": 1,
+      "current_key_count": 1,
+      "added": [],
+      "removed": [],
+      "changed_existing_keys": [],
+      "permitted_only": true
+    },
+    "data/predlab/gates.json": {
+      "original_key_count": 30,
+      "current_key_count": 31,
+      "added": [
+        "audit_correction_2026_09_09"
+      ],
+      "removed": [],
+      "changed_existing_keys": [],
+      "permitted_only": true
+    },
+    "data/rebuild/gates.json": {
+      "original_key_count": 21,
+      "current_key_count": 21,
+      "added": [],
+      "removed": [],
+      "changed_existing_keys": [],
+      "permitted_only": true
+    }
+  },
+  "workspace_evidence_hashes_excluding_intentionally_changed_thesis": {
+    "AGENTS.md": {
+      "expected": "e352321d0296414ea735c4356dc8b1c7a048bed4950a1fe5e5b6a00381bb10f8",
+      "actual": "ee22b344cc0cb3a25dca43309b7cf1452f34d4b7c4f88e33e2d53f7ff07c93f9",
+      "match": false
+    },
+    "CLAUDE.md": {
+      "expected": "3c575a92494f5e11709602f7e9c2a311d34a29cff3e96433abd73fad2096d6a8",
+      "actual": "c8d9a3a36cce51703aba130682bb3048c0861e9f686d17985c07c97ef1a9f54b",
+      "match": false
+    },
+    "topic/thesis_assignment.md": {
+      "expected": "921452d60f8238b0f71d77882892677d0b8ca21b4790106099fe8181d3d3cc20",
+      "actual": "921452d60f8238b0f71d77882892677d0b8ca21b4790106099fe8181d3d3cc20",
+      "match": true
+    },
+    "AUDIT_BACKTEST_2026-07-07.md": {
+      "expected": "0405cc0d2aa2847a0cd175afe6090403d77aff8978bead6b74733c367da85286",
+      "actual": "0405cc0d2aa2847a0cd175afe6090403d77aff8978bead6b74733c367da85286",
+      "match": true
+    },
+    "AUDIT_BACKTEST_2026-08-24.md": {
+      "expected": "821971276c412f32fab7c35b34be2a194ca47c793f8bbd64635a9f767bb5528c",
+      "actual": "821971276c412f32fab7c35b34be2a194ca47c793f8bbd64635a9f767bb5528c",
+      "match": true
+    },
+    "AUDIT_GATES_2026-08-25.md": {
+      "expected": "bccd644a7dd2b9c41a7be52ea220b88f38da91d8d4765051138f4f05717d4129",
+      "actual": "bccd644a7dd2b9c41a7be52ea220b88f38da91d8d4765051138f4f05717d4129",
+      "match": true
+    },
+    "AUDIT_RESEARCH_PROGRAM_2026-09-02.md": {
+      "expected": "4d5637a694c5d9e7c9756c1c171eefba13bf69cb367aee1a7c7efad4d478f440",
+      "actual": "4d5637a694c5d9e7c9756c1c171eefba13bf69cb367aee1a7c7efad4d478f440",
+      "match": true
+    },
+    "TradingAgents-predlab/data/predlab/gates.json": {
+      "expected": "4225cc9965940d226bd8d77e9633b3995cc7dc7935527bbd352a2750a828f85e",
+      "actual": "4225cc9965940d226bd8d77e9633b3995cc7dc7935527bbd352a2750a828f85e",
+      "match": true
+    },
+    "TradingAgents-predlab/data/predlab/trial_ledger.jsonl": {
+      "expected": "d4aa4a780caa03f945d0d9d2743950dce8002a0b36885ca667939ebdd78ebda8",
+      "actual": "d4aa4a780caa03f945d0d9d2743950dce8002a0b36885ca667939ebdd78ebda8",
+      "match": true
+    },
+    "TradingAgents-predlab/scripts/predlab_pp_dev.py": {
+      "expected": "6e1158ef4c0b882a855a455a0a27cb3cb7c05badc422cc00a10f938b04ff8973",
+      "actual": "6e1158ef4c0b882a855a455a0a27cb3cb7c05badc422cc00a10f938b04ff8973",
+      "match": true
+    },
+    "TradingAgents-predlab/tradingagents/predlab/pp.py": {
+      "expected": "992fa7efda516ec06ceed36feca8587ae7f70e6c2cf9dc0c9c1c686fad79ae76",
+      "actual": "992fa7efda516ec06ceed36feca8587ae7f70e6c2cf9dc0c9c1c686fad79ae76",
+      "match": true
+    },
+    "TradingAgents-predlab/scripts/predlab_s1_live.py": {
+      "expected": "970f35c30d9267ddd03813939ac3e1286ef5f2f996febf749d3d80109c6e742f",
+      "actual": "970f35c30d9267ddd03813939ac3e1286ef5f2f996febf749d3d80109c6e742f",
+      "match": true
+    },
+    "TradingAgents-predlab/scripts/predlab_s1_paper.py": {
+      "expected": "2df3f2c383b3738cbbfbf03c9ac1cd658882f2cba5e8c0cf07df35eeefecb472",
+      "actual": "2df3f2c383b3738cbbfbf03c9ac1cd658882f2cba5e8c0cf07df35eeefecb472",
+      "match": true
+    },
+    "TradingAgents-predlab/tradingagents/predlab/live_exec.py": {
+      "expected": "08e5fdb2b9822868ed282b71f08e15efaace006b60e40e048164c9669bf500a5",
+      "actual": "08e5fdb2b9822868ed282b71f08e15efaace006b60e40e048164c9669bf500a5",
+      "match": true
+    },
+    "TradingAgents-predlab/tradingagents/predlab/binance_client.py": {
+      "expected": "5081e903702e1a5aee6451d741244d829565202fb8650983e51ef85415f37687",
+      "actual": "5081e903702e1a5aee6451d741244d829565202fb8650983e51ef85415f37687",
+      "match": true
+    },
+    "TradingAgents-predlab/data/predlab/champion_backtest_equity_logret_superseded.png": {
+      "expected": "af54d5146ac391288d6296035f3b5e0bde5e11eedbe5e2f40542265c9a38db81",
+      "actual": "af54d5146ac391288d6296035f3b5e0bde5e11eedbe5e2f40542265c9a38db81",
+      "match": true
+    }
+  },
+  "data_manifest_hashes": {
+    "TradingAgents-predlab/data/predlab/klines_5m_manifest.json": {
+      "expected": "ab07bb227380b3a761b230085e0a0b6a0c9e6614b206fb2689f3be1cd935d1b2",
+      "actual": "ab07bb227380b3a761b230085e0a0b6a0c9e6614b206fb2689f3be1cd935d1b2",
+      "match": true
+    },
+    "TradingAgents-predlab/data/predlab/oi_5m_manifest.json": {
+      "expected": "d49188ab639510db9e6e559b218a89f0fa04ac90eaa849b1489602e637d4fdda",
+      "actual": "d49188ab639510db9e6e559b218a89f0fa04ac90eaa849b1489602e637d4fdda",
+      "match": true
+    },
+    "TradingAgents-predlab/data/predlab/bybit/manifest.json": {
+      "expected": "24c8640c75bc36faffc0c2c646e88f0a82a5dd9a2f6521154617bc9c0237994d",
+      "actual": "24c8640c75bc36faffc0c2c646e88f0a82a5dd9a2f6521154617bc9c0237994d",
+      "match": true
+    },
+    "TradingAgents/data/xsect/klines_manifest.json": {
+      "expected": "65a2517db5e02862c8b7a5cb365ef3327c102c674030ba0e8476ad14d3588dba",
+      "actual": "65a2517db5e02862c8b7a5cb365ef3327c102c674030ba0e8476ad14d3588dba",
+      "match": true
+    },
+    "TradingAgents/data/xsect/funding_manifest.json": {
+      "expected": "aede4abaccb7d031c7247802ddc13c148f211fc53abc59ccb4e0a4202648c62a",
+      "actual": "aede4abaccb7d031c7247802ddc13c148f211fc53abc59ccb4e0a4202648c62a",
+      "match": true
+    }
+  },
+  "gates_inventory_hashes": {
+    "TradingAgents-predlab/data/predlab/gates.json": {
+      "expected": "4225cc9965940d226bd8d77e9633b3995cc7dc7935527bbd352a2750a828f85e",
+      "actual": "4225cc9965940d226bd8d77e9633b3995cc7dc7935527bbd352a2750a828f85e",
+      "match": true
+    },
+    "TradingAgents-predlab/data/predlab/trial_ledger.jsonl": {
+      "expected": "d4aa4a780caa03f945d0d9d2743950dce8002a0b36885ca667939ebdd78ebda8",
+      "actual": "d4aa4a780caa03f945d0d9d2743950dce8002a0b36885ca667939ebdd78ebda8",
+      "match": true
+    }
+  },
+  "engine_source_snapshot_checks": [
+    {
+      "path": "TradingAgents/tradingagents/predlab/opt.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents/tradingagents/predlab/pp.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents/tradingagents/predlab/rv.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents/scripts/predlab_pp_dev.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents/scripts/predlab_opt_o1.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents/scripts/predlab_opt_o4.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents/tradingagents/backtesting/engine.py",
+      "expected_sha256_prefix": "b9079f6d2803c95d",
+      "actual_sha256_prefix": "b9079f6d2803c95d",
+      "match": true
+    },
+    {
+      "path": "TradingAgents/tradingagents/models/lgb_model.py",
+      "expected_sha256_prefix": "b1ec322e3840763f",
+      "actual_sha256_prefix": "b1ec322e3840763f",
+      "match": true
+    },
+    {
+      "path": "TradingAgents/scripts/baseline_strategy_v2.py",
+      "expected_sha256_prefix": "d278c2084a39385d",
+      "actual_sha256_prefix": "d278c2084a39385d",
+      "match": true
+    },
+    {
+      "path": "TradingAgents/scripts/baseline_v5_mix.py",
+      "expected_sha256_prefix": "6c0db31674041eb8",
+      "actual_sha256_prefix": "6c0db31674041eb8",
+      "match": true
+    },
+    {
+      "path": "TradingAgents/tradingagents/xsect/portfolio.py",
+      "expected_sha256_prefix": "b45f5e3ae38b1150",
+      "actual_sha256_prefix": "b45f5e3ae38b1150",
+      "match": true
+    },
+    {
+      "path": "TradingAgents/tradingagents/xsect/trend.py",
+      "expected_sha256_prefix": "8a19b7a50d05e4a6",
+      "actual_sha256_prefix": "8a19b7a50d05e4a6",
+      "match": true
+    },
+    {
+      "path": "TradingAgents/tradingagents/xsect/carry_xs.py",
+      "expected_sha256_prefix": "96857945c34116cc",
+      "actual_sha256_prefix": "96857945c34116cc",
+      "match": true
+    },
+    {
+      "path": "TradingAgents/tradingagents/xsect/liq_fade.py",
+      "expected_sha256_prefix": "cef8b14cf16e4a28",
+      "actual_sha256_prefix": "cef8b14cf16e4a28",
+      "match": true
+    },
+    {
+      "path": "TradingAgents/tradingagents/xsect/combo.py",
+      "expected_sha256_prefix": "5ce12ea651ff1e9e",
+      "actual_sha256_prefix": "5ce12ea651ff1e9e",
+      "match": true
+    },
+    {
+      "path": "TradingAgents-predlab/tradingagents/predlab/opt.py",
+      "expected_sha256_prefix": "53deeb6b065d032d",
+      "actual_sha256_prefix": "53deeb6b065d032d",
+      "match": true
+    },
+    {
+      "path": "TradingAgents-predlab/tradingagents/predlab/pp.py",
+      "expected_sha256_prefix": "992fa7efda516ec0",
+      "actual_sha256_prefix": "992fa7efda516ec0",
+      "match": true
+    },
+    {
+      "path": "TradingAgents-predlab/tradingagents/predlab/rv.py",
+      "expected_sha256_prefix": "88bf0c884fcd0fcd",
+      "actual_sha256_prefix": "88bf0c884fcd0fcd",
+      "match": true
+    },
+    {
+      "path": "TradingAgents-predlab/scripts/predlab_pp_dev.py",
+      "expected_sha256_prefix": "6e1158ef4c0b882a",
+      "actual_sha256_prefix": "6e1158ef4c0b882a",
+      "match": true
+    },
+    {
+      "path": "TradingAgents-predlab/scripts/predlab_opt_o1.py",
+      "expected_sha256_prefix": "5951fda993a461e0",
+      "actual_sha256_prefix": "5951fda993a461e0",
+      "match": true
+    },
+    {
+      "path": "TradingAgents-predlab/scripts/predlab_opt_o4.py",
+      "expected_sha256_prefix": "5934b08515e55a9d",
+      "actual_sha256_prefix": "5934b08515e55a9d",
+      "match": true
+    },
+    {
+      "path": "TradingAgents-predlab/tradingagents/backtesting/engine.py",
+      "expected_sha256_prefix": "b9079f6d2803c95d",
+      "actual_sha256_prefix": "b9079f6d2803c95d",
+      "match": true
+    },
+    {
+      "path": "TradingAgents-predlab/tradingagents/models/lgb_model.py",
+      "expected_sha256_prefix": "1deda94910cb6ffb",
+      "actual_sha256_prefix": "1deda94910cb6ffb",
+      "match": true
+    },
+    {
+      "path": "TradingAgents-predlab/scripts/baseline_strategy_v2.py",
+      "expected_sha256_prefix": "51d202347934fa68",
+      "actual_sha256_prefix": "51d202347934fa68",
+      "match": true
+    },
+    {
+      "path": "TradingAgents-predlab/scripts/baseline_v5_mix.py",
+      "expected_sha256_prefix": "5a598824b39b62e0",
+      "actual_sha256_prefix": "5a598824b39b62e0",
+      "match": true
+    },
+    {
+      "path": "TradingAgents-predlab/tradingagents/xsect/portfolio.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents-predlab/tradingagents/xsect/trend.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents-predlab/tradingagents/xsect/carry_xs.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents-predlab/tradingagents/xsect/liq_fade.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents-predlab/tradingagents/xsect/combo.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents-monitor-nav/tradingagents/predlab/opt.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents-monitor-nav/tradingagents/predlab/pp.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents-monitor-nav/tradingagents/predlab/rv.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents-monitor-nav/scripts/predlab_pp_dev.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents-monitor-nav/scripts/predlab_opt_o1.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents-monitor-nav/scripts/predlab_opt_o4.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents-monitor-nav/tradingagents/backtesting/engine.py",
+      "expected_sha256_prefix": "b9079f6d2803c95d",
+      "actual_sha256_prefix": "b9079f6d2803c95d",
+      "match": true
+    },
+    {
+      "path": "TradingAgents-monitor-nav/tradingagents/models/lgb_model.py",
+      "expected_sha256_prefix": "1deda94910cb6ffb",
+      "actual_sha256_prefix": "1deda94910cb6ffb",
+      "match": true
+    },
+    {
+      "path": "TradingAgents-monitor-nav/scripts/baseline_strategy_v2.py",
+      "expected_sha256_prefix": "51d202347934fa68",
+      "actual_sha256_prefix": "51d202347934fa68",
+      "match": true
+    },
+    {
+      "path": "TradingAgents-monitor-nav/scripts/baseline_v5_mix.py",
+      "expected_sha256_prefix": "5a598824b39b62e0",
+      "actual_sha256_prefix": "5a598824b39b62e0",
+      "match": true
+    },
+    {
+      "path": "TradingAgents-monitor-nav/tradingagents/xsect/portfolio.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents-monitor-nav/tradingagents/xsect/trend.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents-monitor-nav/tradingagents/xsect/carry_xs.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents-monitor-nav/tradingagents/xsect/liq_fade.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    },
+    {
+      "path": "TradingAgents-monitor-nav/tradingagents/xsect/combo.py",
+      "expected_sha256_prefix": null,
+      "actual_sha256_prefix": null,
+      "match": true
+    }
+  ],
+  "final_offline_logs": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/docs/audit/verification/integrated-offline-final.log": {
+      "sha256": "9f93c8ed93d72a1e45c417eb803413e877a4407c4fd506872fe5bd2dbe3cb059",
+      "last_line": "779 passed, 2 deselected, 3502 warnings in 223.37s (0:03:43)"
+    },
+    "/home/malecada/master_thesis/data/audit_2026-09-09/integrated-offline-final.log": {
+      "sha256": "9f93c8ed93d72a1e45c417eb803413e877a4407c4fd506872fe5bd2dbe3cb059",
+      "last_line": "779 passed, 2 deselected, 3502 warnings in 223.37s (0:03:43)"
+    }
+  },
+  "excluded_thesis_inventory_paths": [
+    "thesis-latex/frontmatter/abstract.tex",
+    "thesis-latex/chapters/06_conclusion.tex",
+    "thesis-latex/chapters/05_post_audit.tex",
+    "thesis-latex/main.pdf",
+    "thesis-latex/figures/F-5.1-champion-equity.png"
+  ]
+}

@@ -4,7 +4,7 @@ Branch `fix/system-audit-2026-09-09` combines committed research/prediction-lab 
 
 ## Current status
 
-Zero validated strategies. The September 9 system audit identifies unrepaired accounting, missing-data, causal-data, provenance, execution and manuscript defects. Historical results remain subject to their explicit corrections and qualifications. NLST4 is closed; value_rev and llm_c3p_conf retain their existing prospective dates. No family is reopened by software repairs.
+Zero validated strategies. The confirmed September 9 accounting, missing-data, causal-data, provenance, execution and manuscript defects have been repaired and reviewed locally; 779 offline tests passed. The registered bounded correction completed seven S2/S3 development cells and sixteen saved ENet diagnostics, with no strategy graduation. See docs/audit/AUDIT_REPAIRS_2026-09-09.md and THESIS_FINDINGS §88. Historical results remain subject to their explicit corrections and qualifications. NLST4 is closed; value_rev and llm_c3p_conf retain their existing prospective dates. No family is reopened by software repairs.
 
 ## Required research discipline
 

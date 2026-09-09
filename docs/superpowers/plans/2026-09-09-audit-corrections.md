@@ -59,17 +59,17 @@ Files: tradingagents/predlab/{registry,dm,rollup}.py; scripts/predlab_xfam_lib.p
 
 Files: scripts/audit_correction_2026_09_09.py; new result directory and evidence tests.
 
-- [ ] Preflight exact gate, clean committed source, source data/forecast hashes and original 2021–2025Q1 interval; refuse pre-existing output.
-- [ ] Execute seven original S2/S3 cells once; report paired original/corrected metrics and original criteria. Reassess saved ENet only with the fixed fallback rule and explicit diagnostics, no fits.
-- [ ] Preserve every denominator and failed cell; append correction/ledger records and THESIS_FINDINGS addendum. Any historical recalculation outside this narrow charter remains explicitly unvalidated, with no new profit claim.
+- [x] Preflight exact gate, clean committed source, source data/forecast hashes and original 2021–2025Q1 interval; refuse pre-existing output.
+- [x] Execute seven original S2/S3 cells once; report paired original/corrected metrics and original criteria. Reassess saved ENet only with the fixed fallback rule and explicit diagnostics, no fits.
+- [x] Preserve every denominator and failed cell; append correction/ledger records and THESIS_FINDINGS addendum. Any historical recalculation outside this narrow charter remains explicitly unvalidated, with no new profit claim.
 
 ### F. Manuscript and final review (root, may delegate after implementation slots free)
 
 Files: thesis-latex abstracts, introduction, post-audit, discussion, conclusion, included literature/results tables and figures, reproducibility appendix; root AGENTS/CLAUDE status and RESEARCH_LOOP_GUIDE.
 
-- [ ] Withdraw invalidated positives and qualify forecast/closure claims. Replace invalidated champion chart in the included thesis with transparent corrected evidence or remove the unsupported performance illustration; preserve source provenance in Git.
-- [ ] Map assignment requirements to engineering and corrected evaluation; no assertion of a validated strategy, exhaustive impossibility, or actual deployment health.
-- [ ] Compile/inspect PDF and reconcile cross-references. Review changes across code and thesis, run offline relevant suites, commit only task-owned changes, push reviewed correction branch and thesis backup.
+- [x] Withdraw invalidated positives and qualify forecast/closure claims. Replace invalidated champion chart in the included thesis with transparent corrected evidence or remove the unsupported performance illustration; preserve source provenance in Git.
+- [x] Map assignment requirements to engineering and corrected evaluation; no assertion of a validated strategy, exhaustive impossibility, or actual deployment health.
+- [x] Compile/inspect PDF and reconcile cross-references. Review changes across code and thesis, run offline relevant suites, commit only task-owned changes, push reviewed correction branch and thesis backup.
 
 ## Interface and conflict review
 
@@ -85,4 +85,4 @@ Files: thesis-latex abstracts, introduction, post-audit, discussion, conclusion,
 ## Progress ledger
 
 - Initial integration: b7dff69 combines both committed research branches; only CLAUDE and THESIS_FINDINGS conflicted, resolved using the canonical current findings and consolidated worktree instructions.
-- Current state: A–D implemented with failing-before/fixed-after synthetic regressions and independent review. Final integrated offline verification passed779tests;2historical parity/marker tests were deselected and the3-test physical-data coverage file was excluded because raw stores remain in the preserved source worktree. The bounded correction has not yet executed; its source is committed after these checks, before any outcomes.
+- Current state: A–D implemented with failing-before/fixed-after synthetic regressions and independent review. Final integrated offline verification passed779tests;2historical parity/marker tests were deselected and the3-test physical-data coverage file was excluded because raw stores remain in the preserved source worktree. The bounded correction subsequently completed once on committed source cc6801e: all seven S2/S3 cells and sixteen saved ENet diagnostics are retained, with unchanged inputs. S2 fails its original paired gate; S3 remains below SR1 and ineligible. Completion is appended in the ledger, corrections register and THESIS_FINDINGS §88. The final 92-page manuscript passed compilation and visual inspection and was pushed to its private backup. Independent artifact checks passed 108/108; all 55 original gate entries and the recorded original evidence hashes remain unchanged. Completed source, outcomes, correction records and reports are retained on the reviewed correction branch.
