@@ -2706,7 +2706,8 @@
           "P1": "proxy triggers (thr=2.5) aggregated daily on 8 Coinglass coins must flag >= 4 of 5 benchmark cascade dates (2021-05-19, 2022-06-13, 2022-11-09, 2024-08-05, 2025-02-03); FAIL -> STOP",
           "P2": "mean cumulative GROSS forward return t+1..t+H over all dev triggers must exceed +25 bps in at least one grid cell; FAIL -> STOP (NEGATIVE-at-probe)"
         },
-        "placebo": "original independently shifted trigger trains (min24bars) and count-matched uniform trigger timestamps, 500 draws each, default_rng(p), worse p; rebuild event weights and audited PnL"
+        "placebo": "Original independent circular trigger shifts (min24bars) and count-matched uniform trigger timestamps, 500 draws each, one default_rng(48) through original six-cell GRID order and both families. For skipped PnL tests, consume identical random draws without portfolio evaluation so later-cell streams remain original. Gate worse p.",
+        "P2_correction": "Cumulative gross event return compounds t+1..t+H simple returns; original additive sum retained only as historical diagnostic. Same25bp threshold and any-cell rule. End-of-development censored windows excluded with explicit counts; internal missing prices remain unavailable, never zero."
       },
       "prx": {
         "original_gate": "data/predlab/gates.json:predlab_xfam",
@@ -2789,6 +2790,6 @@
     "original_rebuild_ledger_sha256": "45a5fe9e1b0c92de5dd853c9fa091a8dfdb8636e260a4c5b4cc89db6903f9627",
     "diagnostic_trials": "benchmarks, paired contract/cost/convention attribution, declared bootstrap/placebos and dependence sensitivity are predeclared diagnostics; no candidate selection among them",
     "stop_rule": "One completed artifact per family. Missing provenance or held prices/funding is an explicit blocked/incomplete cell, never zero-filled. Infrastructure failure without completed outcome may resume only documented identical code/input specification; outcome-informed amendments or parameter changes prohibited. Any additional family, model fit, data source, changed acceptance threshold or holdout requires a new committed registration.",
-    "pre_result_clarification": "Before source implementation or empirical outcomes: metadata-only inventory pinned DEX settlement quote bound and creation interpolation; no original cell, threshold or membership changed."
+    "pre_result_clarification": "Before source implementation or empirical outcomes: metadata-only inventory pinned DEX settlement quote bound and creation interpolation; no original cell, threshold or membership changed. Further source inspection before outcomes pins original shared liq-fade RNG48 and corrects the P2 cumulative-return arithmetic without changing25bp threshold or signals."
   }
 }
