@@ -2054,6 +2054,15 @@
    "utc": "2026-09-04T17:10Z",
    "reason": "dRPC public endpoint quota exhausted mid phase B (screened 105,482; 2022Q4 in progress); job died on 'rpc gave up'",
    "change": "predlab_nlst4_screen.py routes the closed fetch module's rpc() through tradingagents/predlab/rpc_pool.py (tenderly, mevblocker, drpc, nodereal, onfinality, 0xrpc; startup self-check disables endpoints that return empty logs for pruned history). Chain data, phases, quota, seeds and caches unchanged; no pool outcome seen."
+  },
+  "verdicts": {
+   "nlst4_p0": "FAIL at P0 \u2014 T1 IC=+0.092 (boot p5 +0.029) PASS; T2 top-quintile mean ret7=+0.065 p1=0.4019 ex-top=-0.124 top1=0.15 s5k=-0.292 FAIL; family CLOSED (final)"
+  },
+  "post_verdict_notes": {
+   "utc": "2026-09-09",
+   "H2_enumeration": "NOT fetched: family CLOSED (final) at P0; the 2025-04..2026-06 pool enumeration stays virgin for any future registered cycle",
+   "forensic": "data/predlab/nlst/nlst4_forensic_posthoc.json \u2014 top quintile (n 554): median -68%, 58% lose >50%, 15% positive, moon rate 5.2% vs 3.0% rest, ex-top-3 mean -31%, trimmed-1% mean -45%, 6/17 quarters positive (single-moonshot carried); closed nlst3 pools recomputed: top mean +3.9% (the \u00a775 +72.6% was the one-event carry)",
+   "screening_final": "9,908 KEEP (3,060 prior + 6,848 new); 2021Q4 567, 2022Q3 423, 2022Q4 554, 2023Q1 564 exhausted, others 600; 3,981 entered pools, 2,776 new-set, 2,770 evaluated"
   }
  },
  "predlab_oflow": {
