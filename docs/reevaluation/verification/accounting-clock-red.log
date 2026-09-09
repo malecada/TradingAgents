@@ -1,0 +1,108 @@
+................FF                                                       [100%]
+=================================== FAILURES ===================================
+_ test_daily_return_builder_accepts_market_utc_index_and_registered_date_endpoint _
+
+start = Timestamp('2021-01-01 00:00:00+0000', tz='UTC')
+end = Timestamp('2025-03-31 00:00:00'), tz = 'UTC'
+
+    def _infer_tz_from_endpoints(
+        start: Timestamp, end: Timestamp, tz: tzinfo | None
+    ) -> tzinfo | None:
+        """
+        If a timezone is not explicitly given via `tz`, see if one can
+        be inferred from the `start` and `end` endpoints.  If more than one
+        of these inputs provides a timezone, require that they all agree.
+    
+        Parameters
+        ----------
+        start : Timestamp
+        end : Timestamp
+        tz : tzinfo or None
+    
+        Returns
+        -------
+        tz : tzinfo or None
+    
+        Raises
+        ------
+        TypeError : if start and end timezones do not agree
+        """
+        try:
+>           inferred_tz = timezones.infer_tzinfo(start, end)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/arrays/datetimes.py:2663: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: Inputs must both have the same timezone, UTC != None
+
+pandas/_libs/tslibs/timezones.pyx:369: AssertionError
+
+The above exception was the direct cause of the following exception:
+
+    def test_daily_return_builder_accepts_market_utc_index_and_registered_date_endpoint():
+        ix = pd.date_range('2021-01-01', periods=3, tz='UTC')
+        frame = pd.DataFrame({'close': [100., 110., 121.]}, index=ix)
+>       returns = subject._daily_returns({'a': frame}, ['a'])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/predlab/test_audit_reevaluate_accounting.py:197: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/audit_reevaluate_accounting_2026_09_09.py:218: in _daily_returns
+    days = pd.date_range(min(klines[s].index.min() for s in names), DEV[1], freq='D', tz='UTC')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexes/datetimes.py:1008: in date_range
+    dtarr = DatetimeArray._generate_range(
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/arrays/datetimes.py:447: in _generate_range
+    tz = _infer_tz_from_endpoints(start, end, tz)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start = Timestamp('2021-01-01 00:00:00+0000', tz='UTC')
+end = Timestamp('2025-03-31 00:00:00'), tz = 'UTC'
+
+    def _infer_tz_from_endpoints(
+        start: Timestamp, end: Timestamp, tz: tzinfo | None
+    ) -> tzinfo | None:
+        """
+        If a timezone is not explicitly given via `tz`, see if one can
+        be inferred from the `start` and `end` endpoints.  If more than one
+        of these inputs provides a timezone, require that they all agree.
+    
+        Parameters
+        ----------
+        start : Timestamp
+        end : Timestamp
+        tz : tzinfo or None
+    
+        Returns
+        -------
+        tz : tzinfo or None
+    
+        Raises
+        ------
+        TypeError : if start and end timezones do not agree
+        """
+        try:
+            inferred_tz = timezones.infer_tzinfo(start, end)
+        except AssertionError as err:
+            # infer_tzinfo raises AssertionError if passed mismatched timezones
+>           raise TypeError(
+                "Start and end cannot both be tz-aware with different timezones"
+            ) from err
+E           TypeError: Start and end cannot both be tz-aware with different timezones
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/arrays/datetimes.py:2666: TypeError
+___ test_registered_clocks_include_last_hour_without_mixed_timezone_failure ____
+
+    def test_registered_clocks_include_last_hour_without_mixed_timezone_failure():
+>       ix = subject.utc_clock('2021-01-01', '2025-03-31T23:00:00Z', 'h')
+             ^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.audit_reevaluate_accounting_2026_09_09' has no attribute 'utc_clock'
+
+tests/predlab/test_audit_reevaluate_accounting.py:204: AttributeError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_reevaluate_accounting.py::test_daily_return_builder_accepts_market_utc_index_and_registered_date_endpoint
+FAILED tests/predlab/test_audit_reevaluate_accounting.py::test_registered_clocks_include_last_hour_without_mixed_timezone_failure
+2 failed, 16 passed in 1.40s

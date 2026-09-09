@@ -1,0 +1,66 @@
+........F.F.                                                             [100%]
+=================================== FAILURES ===================================
+_____ test_missing_pool_metadata_is_an_unavailable_row_not_a_cohort_abort ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-83/test_missing_pool_metadata_is_0')
+
+    def test_missing_pool_metadata_is_an_unavailable_row_not_a_cohort_abort(tmp_path):
+        mod = module()
+        source, pairs, ctx = fixture(tmp_path)
+        path = source / "predlab/nlst/dex_raw/pools" / f"{pairs[0]}.json"
+        pool = json.loads(path.read_text())
+        del pool["meta"]["block"]
+        write_json(path, pool)
+>       frame = build(mod, ctx, source)
+                ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/predlab/test_audit_reevaluate_nlst4.py:243: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/predlab/test_audit_reevaluate_nlst4.py:109: in build
+    return mod.build_cohort(ctx, source, expected_total=4, expected_new=1)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/audit_reevaluate_nlst4_2026_09_09.py:188: in build_cohort
+    row.update(_timing(pool, ts_of))
+               ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+pool = {'meta': {'pair': '0x0000000000000000000000000000000000000001', 'quarter': '2021Q1', 'weth_is_0': True, 'first_weth_re...'r0': 10000000000000000000, 'r1': 10000}, {'kind': 'sync', 'block': 1728010, 'r0': 10000000000000000000, 'r1': 10000}]}
+ts_of = <function _anchors.<locals>.ts_of at 0x7159e5bd7880>
+
+    def _timing(pool, ts_of):
+        """Exactly the original helper's Sync selection, with exact exit availability."""
+        syncs = [r for r in pool["logs"] if r["kind"] == "sync"]
+>       created = ts_of(pool["meta"]["block"])
+                        ^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'block'
+
+scripts/audit_reevaluate_nlst4_2026_09_09.py:112: KeyError
+__ test_caller_archives_complete_synthetic_cohort_and_qualifies_the_only_cell __
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-83/test_caller_archives_complete_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7159e5dd2b10>
+
+    def test_caller_archives_complete_synthetic_cohort_and_qualifies_the_only_cell(tmp_path, monkeypatch):
+        mod = module()
+        source, pairs, ctx = fixture(tmp_path)
+        real_build = mod.build_cohort
+        monkeypatch.setattr(mod, "build_cohort", lambda c, s: real_build(c, s, expected_total=4, expected_new=1))
+        result = mod.run(ctx, source)
+        assert result == ctx.output_dir / "result.json"
+        assert list(ctx.frames) == ["cohort_causal_v2.parquet"]
+        assert ctx.frames["cohort_causal_v2.parquet"].index.tolist() == pairs
+        payload, cells = ctx.finished
+        assert len(cells) == 1 and cells[0]["id"] == mod.CELL
+        assert cells[0]["metrics"]["n_new_requested"] == 1
+        assert not cells[0]["metrics"]["promotion_eligible"]
+        assert not cells[0]["config"]["promotion_eligible"]
+        assert payload["network_used"] is False
+>       assert cells[0]["metrics"]["diagnostic_verdict"] == "UNAVAILABLE"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'diagnostic_verdict'
+
+tests/predlab/test_audit_reevaluate_nlst4.py:277: KeyError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_reevaluate_nlst4.py::test_missing_pool_metadata_is_an_unavailable_row_not_a_cohort_abort
+FAILED tests/predlab/test_audit_reevaluate_nlst4.py::test_caller_archives_complete_synthetic_cohort_and_qualifies_the_only_cell
+2 failed, 10 passed in 5.81s

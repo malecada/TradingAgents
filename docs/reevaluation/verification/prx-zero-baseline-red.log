@@ -1,0 +1,21 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_zero_random_rate_preserves_declared_legacy_denominator_floor _______
+
+    def test_zero_random_rate_preserves_declared_legacy_denominator_floor():
+        rows = month_rows()
+        for row in rows:
+            row['selected_rate'] = .1
+            row['random_rate'] = 0.
+        gate = module().summarize_months(rows)['historical_conditional_gate']
+>       assert gate['ratio'] == pytest.approx(1e8)
+E       assert None == 100000000.0 ± 100
+E         
+E         comparison failed
+E         Obtained: None
+E         Expected: 100000000.0 ± 100
+
+tests/predlab/test_audit_reevaluate_prx.py:267: AssertionError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_zero_random_rate_preserves_declared_legacy_denominator_floor
+1 failed in 1.35s

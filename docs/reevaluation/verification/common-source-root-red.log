@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_unregistered_input_root_cannot_replace_frozen_sources __________
+
+setup_run = (PosixPath('/tmp/pytest-of-malecada/pytest-69/test_unregistered_input_root_c0'), [])
+
+    def test_unregistered_input_root_cannot_replace_frozen_sources(setup_run):
+        root, _ = setup_run
+        path = root / "alternative.json"
+        path.write_text("not a registered source")
+        ctx = common.RunContext("momentum", root=root)
+        ctx.gate["source_roots"] = [str(root / "allowed")]
+>       with pytest.raises(ValueError, match="registered source"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/predlab/test_audit_reeval_common.py:96: Failed
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_reeval_common.py::test_unregistered_input_root_cannot_replace_frozen_sources
+1 failed in 0.45s

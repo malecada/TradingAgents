@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+__________ test_unserializable_result_cannot_partially_append_ledger ___________
+
+setup_run = (PosixPath('/tmp/pytest-of-malecada/pytest-80/test_unserializable_result_can0'), [{'experiment': 'audit_reevaluation_2...eriment': 'audit_reevaluation_2026_09_09', 'cell': 'momentum:b', 'model': 'fixed_lead_correction', 'config': {}, ...}])
+
+    def test_unserializable_result_cannot_partially_append_ledger(setup_run):
+        root, rows = setup_run
+        ctx = common.RunContext("momentum", root=root)
+        cells = [{"id": x, "config": {}, "metrics": {}} for x in ("a", "b")]
+        with pytest.raises(TypeError):
+            ctx.finish({"unsupported": object()}, cells)
+>       assert rows == []
+E       AssertionError: assert [{'experiment...ig': {}, ...}] == []
+E         
+E         Left contains 2 more items, first extra item: {'experiment': 'audit_reevaluation_2026_09_09', 'cell': 'momentum:a', 'model': 'fixed_lead_correction', 'config': {}, ...}
+E         Use -v to get more diff
+
+tests/predlab/test_audit_reeval_common.py:106: AssertionError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_reeval_common.py::test_unserializable_result_cannot_partially_append_ledger
+1 failed in 0.49s

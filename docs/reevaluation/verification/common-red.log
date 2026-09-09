@@ -1,0 +1,16 @@
+
+==================================== ERRORS ====================================
+__________ ERROR collecting tests/predlab/test_audit_reeval_common.py __________
+ImportError while importing test module '/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/predlab/test_audit_reeval_common.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/predlab/test_audit_reeval_common.py:7: in <module>
+    from scripts import audit_reeval_common as common
+E   ImportError: cannot import name 'audit_reeval_common' from 'scripts' (/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/__init__.py)
+=========================== short test summary info ============================
+ERROR tests/predlab/test_audit_reeval_common.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.55s

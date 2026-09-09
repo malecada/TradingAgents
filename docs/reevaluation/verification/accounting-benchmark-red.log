@@ -1,0 +1,89 @@
+....................FFF                                                  [100%]
+=================================== FAILURES ===================================
+_______ test_unavailable_required_benchmark_preserves_actual_cell[True] ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7318699399d0>
+primary_pass = True
+
+    @pytest.mark.parametrize('primary_pass', [True, False])
+    def test_unavailable_required_benchmark_preserves_actual_cell(monkeypatch, primary_pass):
+        f = gate()['families']['momentum']
+        ix = pd.date_range('2021-01-01', periods=100, tz='UTC')
+        ret = pd.Series(np.tile([.001, .002] if primary_pass else [-.02, .001], 50), index=ix)
+        monkeypatch.setattr(subject, 'dsr', lambda *a: .99)
+        placebo = Mock(return_value={'status': 'computed', 'placebo_p': .01})
+>       p = subject.Prepared(replay=lambda *a: ret, expected_clock=ix, placebo=placebo,
+                             benchmark=None, benchmark_required=True)
+E       TypeError: Prepared.__init__() got an unexpected keyword argument 'benchmark_required'
+
+tests/predlab/test_audit_reevaluate_accounting.py:242: TypeError
+_______ test_unavailable_required_benchmark_preserves_actual_cell[False] _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7318699397b0>
+primary_pass = False
+
+    @pytest.mark.parametrize('primary_pass', [True, False])
+    def test_unavailable_required_benchmark_preserves_actual_cell(monkeypatch, primary_pass):
+        f = gate()['families']['momentum']
+        ix = pd.date_range('2021-01-01', periods=100, tz='UTC')
+        ret = pd.Series(np.tile([.001, .002] if primary_pass else [-.02, .001], 50), index=ix)
+        monkeypatch.setattr(subject, 'dsr', lambda *a: .99)
+        placebo = Mock(return_value={'status': 'computed', 'placebo_p': .01})
+>       p = subject.Prepared(replay=lambda *a: ret, expected_clock=ix, placebo=placebo,
+                             benchmark=None, benchmark_required=True)
+E       TypeError: Prepared.__init__() got an unexpected keyword argument 'benchmark_required'
+
+tests/predlab/test_audit_reevaluate_accounting.py:242: TypeError
+_______ test_momentum_benchmark_failure_does_not_abort_cell_preparation ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7318698ea550>
+
+    def test_momentum_benchmark_failure_does_not_abort_cell_preparation(monkeypatch):
+        names = ['BTCUSDT']+[f'S{i}' for i in range(19)]
+        ix = subject.utc_clock('2020-12-01', subject.DEV[1])
+        market = {name: pd.DataFrame({'close': 100., 'quote_volume': 1e7}, index=ix) for name in names}
+        monkeypatch.setattr(subject, 'load_daily', lambda ctx: market)
+        monkeypatch.setattr(subject.universe, 'eligibility', lambda *a, **k: names)
+        monkeypatch.setattr(subject.portfolio, 'momentum_scores', lambda *a: {name: i for i, name in enumerate(names)})
+        monkeypatch.setattr(subject, 'weekly_book', Mock(side_effect=ValueError('missing_held_return benchmark_only')))
+        g = gate()
+        ctx = Mock(gate=g, family_gate=g['families']['momentum'])
+>       prepared = subject.prepare_momentum(ctx)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/predlab/test_audit_reevaluate_accounting.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/audit_reevaluate_accounting_2026_09_09.py:240: in prepare_momentum
+    bench = weekly_book(eligible, reb, simple, ctx.family_gate['cost_bps'])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py:1169: in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py:1173: in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <Mock id='126548687505456'>
+args = ({Timestamp('2021-01-04 00:00:00+0000', tz='UTC'): ['BTCUSDT', 'S0', 'S1', 'S2', 'S3', 'S4', ...], Timestamp('2021-01-...0.0
+2025-03-31 00:00:00+00:00      0.0  0.0  0.0  0.0  0.0  ...  0.0  0.0  0.0  0.0  0.0
+
+[1582 rows x 20 columns], 10)
+kwargs = {}
+
+    def _execute_mock_call(self, /, *args, **kwargs):
+        # separate from _increment_mock_call so that awaited functions are
+        # executed separately from their call, also AsyncMock overrides this method
+    
+        effect = self.side_effect
+        if effect is not None:
+            if _is_exception(effect):
+>               raise effect
+E               ValueError: missing_held_return benchmark_only
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py:1234: ValueError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_reevaluate_accounting.py::test_unavailable_required_benchmark_preserves_actual_cell[True]
+FAILED tests/predlab/test_audit_reevaluate_accounting.py::test_unavailable_required_benchmark_preserves_actual_cell[False]
+FAILED tests/predlab/test_audit_reevaluate_accounting.py::test_momentum_benchmark_failure_does_not_abort_cell_preparation
+3 failed, 20 passed in 1.60s

@@ -1,0 +1,323 @@
+FFFFFFFFFFF                                                              [100%]
+=================================== FAILURES ===================================
+_______________ test_estimated_residual_uses_cointegration_null ________________
+
+    def test_estimated_residual_uses_cointegration_null():
+        rng = np.random.default_rng(11)
+        a, b = np.cumsum(rng.normal(size=200)), np.cumsum(rng.normal(size=200))
+        a, b = pd.Series(a), pd.Series(b)
+>       got = module().fit_pair(a, b)
+              ^^^^^^^^
+
+tests/predlab/test_audit_reevaluate_prx.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/predlab/test_audit_reevaluate_prx.py:15: in module
+    return importlib.import_module('scripts.audit_reevaluate_prx_2026_09_09')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.audit_reevaluate_prx_2026_09_09'
+import_ = <function _gcd_import at 0x7016d1fd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.audit_reevaluate_prx_2026_09_09'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+___________ test_formation_is_unchanged_by_future_prices_and_volume ____________
+
+    def test_formation_is_unchanged_by_future_prices_and_volume():
+>       m = module()
+            ^^^^^^^^
+
+tests/predlab/test_audit_reevaluate_prx.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/predlab/test_audit_reevaluate_prx.py:15: in module
+    return importlib.import_module('scripts.audit_reevaluate_prx_2026_09_09')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.audit_reevaluate_prx_2026_09_09'
+import_ = <function _gcd_import at 0x7016d1fd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.audit_reevaluate_prx_2026_09_09'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+___________ test_missing_selected_spread_is_explicit_not_a_rejection ___________
+
+    def test_missing_selected_spread_is_explicit_not_a_rejection():
+>       m = module()
+            ^^^^^^^^
+
+tests/predlab/test_audit_reevaluate_prx.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/predlab/test_audit_reevaluate_prx.py:15: in module
+    return importlib.import_module('scripts.audit_reevaluate_prx_2026_09_09')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.audit_reevaluate_prx_2026_09_09'
+import_ = <function _gcd_import at 0x7016d1fd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.audit_reevaluate_prx_2026_09_09'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_______________ test_every_original_month_survives_empty_inputs ________________
+
+    def test_every_original_month_survives_empty_inputs():
+>       m = module()
+            ^^^^^^^^
+
+tests/predlab/test_audit_reevaluate_prx.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/predlab/test_audit_reevaluate_prx.py:15: in module
+    return importlib.import_module('scripts.audit_reevaluate_prx_2026_09_09')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.audit_reevaluate_prx_2026_09_09'
+import_ = <function _gcd_import at 0x7016d1fd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.audit_reevaluate_prx_2026_09_09'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+______________ test_repeated_random_pairs_are_reported_and_seeded ______________
+
+    def test_repeated_random_pairs_are_reported_and_seeded():
+>       m = module()
+            ^^^^^^^^
+
+tests/predlab/test_audit_reevaluate_prx.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/predlab/test_audit_reevaluate_prx.py:15: in module
+    return importlib.import_module('scripts.audit_reevaluate_prx_2026_09_09')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.audit_reevaluate_prx_2026_09_09'
+import_ = <function _gcd_import at 0x7016d1fd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.audit_reevaluate_prx_2026_09_09'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+________________ test_missing_panel_day_keeps_rates_conditional ________________
+
+    def test_missing_panel_day_keeps_rates_conditional():
+>       m = module()
+            ^^^^^^^^
+
+tests/predlab/test_audit_reevaluate_prx.py:103: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/predlab/test_audit_reevaluate_prx.py:15: in module
+    return importlib.import_module('scripts.audit_reevaluate_prx_2026_09_09')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.audit_reevaluate_prx_2026_09_09'
+import_ = <function _gcd_import at 0x7016d1fd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.audit_reevaluate_prx_2026_09_09'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+__________ test_no_compressed_bootstrap_when_month_missing_or_partial __________
+
+    def test_no_compressed_bootstrap_when_month_missing_or_partial():
+>       m = module()
+            ^^^^^^^^
+
+tests/predlab/test_audit_reevaluate_prx.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/predlab/test_audit_reevaluate_prx.py:15: in module
+    return importlib.import_module('scripts.audit_reevaluate_prx_2026_09_09')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.audit_reevaluate_prx_2026_09_09'
+import_ = <function _gcd_import at 0x7016d1fd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.audit_reevaluate_prx_2026_09_09'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+____ test_fixed_stationary_bootstrap_reports_sensitivity_without_selection _____
+
+    def test_fixed_stationary_bootstrap_reports_sensitivity_without_selection():
+        from tradingagents.predlab.meanstats import stationary_bootstrap_means
+>       m = module()
+            ^^^^^^^^
+
+tests/predlab/test_audit_reevaluate_prx.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/predlab/test_audit_reevaluate_prx.py:15: in module
+    return importlib.import_module('scripts.audit_reevaluate_prx_2026_09_09')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.audit_reevaluate_prx_2026_09_09'
+import_ = <function _gcd_import at 0x7016d1fd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.audit_reevaluate_prx_2026_09_09'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+________________ test_zero_difference_has_no_wilcoxon_evidence _________________
+
+    def test_zero_difference_has_no_wilcoxon_evidence():
+        rows = month_rows()
+        for row in rows:
+            row['selected_rate'] = row['random_rate']
+>       got = module().summarize_months(rows)
+              ^^^^^^^^
+
+tests/predlab/test_audit_reevaluate_prx.py:148: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/predlab/test_audit_reevaluate_prx.py:15: in module
+    return importlib.import_module('scripts.audit_reevaluate_prx_2026_09_09')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.audit_reevaluate_prx_2026_09_09'
+import_ = <function _gcd_import at 0x7016d1fd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.audit_reevaluate_prx_2026_09_09'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+______________ test_evaluation_does_not_read_or_trade_future_rows ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x70167fced350>
+
+    def test_evaluation_does_not_read_or_trade_future_rows(monkeypatch):
+>       m = module()
+            ^^^^^^^^
+
+tests/predlab/test_audit_reevaluate_prx.py:154: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/predlab/test_audit_reevaluate_prx.py:15: in module
+    return importlib.import_module('scripts.audit_reevaluate_prx_2026_09_09')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.audit_reevaluate_prx_2026_09_09'
+import_ = <function _gcd_import at 0x7016d1fd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.audit_reevaluate_prx_2026_09_09'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_____________ test_gate_rejects_changed_seed_before_any_data_read ______________
+
+    def test_gate_rejects_changed_seed_before_any_data_read():
+        gate = json.loads((Path(__file__).parents[2] / 'data/predlab/gates.json').read_text())
+        g = gate['audit_reevaluation_2026_09_09']['families']['prx']
+>       module().validate_gate(g)
+        ^^^^^^^^
+
+tests/predlab/test_audit_reevaluate_prx.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/predlab/test_audit_reevaluate_prx.py:15: in module
+    return importlib.import_module('scripts.audit_reevaluate_prx_2026_09_09')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'scripts.audit_reevaluate_prx_2026_09_09'
+import_ = <function _gcd_import at 0x7016d1fd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'scripts.audit_reevaluate_prx_2026_09_09'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_estimated_residual_uses_cointegration_null
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_formation_is_unchanged_by_future_prices_and_volume
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_missing_selected_spread_is_explicit_not_a_rejection
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_every_original_month_survives_empty_inputs
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_repeated_random_pairs_are_reported_and_seeded
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_missing_panel_day_keeps_rates_conditional
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_no_compressed_bootstrap_when_month_missing_or_partial
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_fixed_stationary_bootstrap_reports_sensitivity_without_selection
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_zero_difference_has_no_wilcoxon_evidence
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_evaluation_does_not_read_or_trade_future_rows
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_gate_rejects_changed_seed_before_any_data_read
+11 failed in 1.57s

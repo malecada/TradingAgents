@@ -1,0 +1,39 @@
+# Statistics and execution reevaluation triage — 2026-09-09
+
+This is a read-only review of the September 2 open-leads map, frozen gates, ledgers, saved results, input availability and reached code. No empirical statistic or backtest was rerun, no model fitted, and no source/result/store changed. The newly authorised cycle must distinguish a corrected measurement from a new strategy search.
+
+## Priorities
+
+| Priority | Construction | Material cause and bounded action | Interpretation limit |
+|---|---|---|---|
+| 1 | XFAM PRX main P0 | Formation used ordinary ADF p-values on estimated residuals. The corrected augmented Engle–Granger test can change the selected basket and remove spurious formation pairs that dilute persistence. Recompute the original 50 months with the frozen screen and random seed, stopping at P0. | A reversal of the old gate is possible, not predicted. No tradeability or all-pairs claim follows. |
+| 2, measurement only | `exec_fcst` schedule cell a | The monthly held book uses target-weight differences instead of actual drifted holdings; names with missing execution inputs disappear. Absolute annual cost is also annualised over 50 rebalance days rather than the full calendar. A bounded accounting/coverage correction is warranted if this cost estimate is used. | Annualisation alone cannot change the relative 0.405% improvement or its FAIL against 5%. Reweighting trade notionals could change the comparison; magnitude is unknown. No new schedule/grid is justified by that uncertainty. |
+| Deferred, requires more code repair | `exec_pf` R2 passive versus taker | `xsect/fills.py` still charges target dW, sums hourly net returns into days and uses a separate segment/holdings contract; `exec_pf_common.maxdd_simple` omits initial NAV. The repaired parent and unrepaired overlay no longer share a contract. A comparison can be corrected only after explicit executable held-unit/fee/funding semantics and synthetic tests. | Saved LTM 1.265 versus taker 1.305 is close enough that ordering cannot be guaranteed after correction. It was already a development PASS, not a hidden negative strategy; the liquidation holdout is spent. No new parameter/fill search or holdout should follow from this triage. |
+
+## PRX: exact reached-P0 audit
+
+`data/predlab/xfam/prx_result.json` records 50 months, **2021-01 through 2025-02**. It is neither 54 months nor the complete 51-month calendar through March 2025. Forty-six months have 20 scoreable selected pairs; one each has 16, 17, 18 and 19. Saved selected persistence is 10.6528%, random 11.3000%, ratio 0.94272 and one-sided paired Wilcoxon p=0.69092. Formation is prior 90 days, monthly top50 by prior-90-day median quote volume, p<.05, half-life 2–20 days, cap20; random seed42 and 20 scoreable random pairs/month, at most200 attempts. Preserve pre-2021 formation warmup; `clip_dev` clips only the upper bound.
+
+The reached formation call now uses `coint(..., trend='c', maxlag=5, autolag=None)`. This uses the estimated-residual null; next-month ADF on the **frozen** beta spread is a different descriptive persistence test and remains frozen. [Statsmodels documents the augmented Engle–Granger null and I(1) assumption](https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.coint.html).
+
+Further limitations to expose before execution:
+
+- Failed/unscoreable selected pairs are dropped, and an entire month is omitted when either arm is empty. A stricter formation screen can worsen this denominator problem. Retain all50 months and report selected, scoreable, missing and random-attempt counts; absent measurements must not create a favourable reduced calendar.
+- Monthly observations share rolling90-day formation data and names. The original Wilcoxon gate is a conditional historical diagnostic, not dependence-robust validation. The new fixed sensitivity is a stationary bootstrap of monthly selected-minus-random rates, mean block3, B2000, seed4242. Do not select whichever method looks better.
+- Random draws can duplicate a pair or reverse its orientation. Preserve the original seed/algorithm for comparability and disclose this; do not replace it after seeing outcomes.
+- Ordinary ADF has little information in roughly28–31 next-month prices, and input log prices are assumed I(1). Neither old failure nor a corrected P0 pass establishes a universal statement about pairs.
+- The separate ETHBTC half-life subcell is unchanged by the cointegration p-value fix: 58.16/28.58/12.68/40.35 days in2021–24, in-band2/4. No rerun is needed to rediscover that fail. Its full-year fitted beta is not an executable trading beta.
+- The saved short commit `a9e3cf7` does not contain the PRX script in Git. A new clean executable commit and input hashes are required; historical source provenance remains qualified.
+
+The original local daily panels exist at `TradingAgents-predlab/data/predlab/t7_panels/{close,qv}.parquet`, each2490 rows and799 symbols plus index,2019-09-08→2026-07-02. SHA-256 close=`9cf905105d9a088b726ab861e7162b5af19db2d1bf27035ca0986b042b01f00a`; qv=`a8a51578c0f98558ae4dccf6c404cf7515902dfcb29e195cc2fc8a86a32a706a`. Only pre-result formation/development rows may enter calculations; no data fetching or cache rebuilding is needed.
+
+## Do not repeat on the basis of these fixes
+
+- **OFLOW sign correction:** already advanced XS24h at P0. Saved P1 is gross SR−0.630/net−2.421, placebo p=.894, stress−3.989. Forensics reproduce the IC alignment and show non-monotone deciles; the quintile extremes have the wrong spread. Target-book accounting can warrant a numerical addendum, but the sign fix is not a new reason to rerun or re-sign the book. No TS survivor exists; hourly effects were0.15/0.33bp and all six TS p floors failed.
+- **`exec_pf` R1/R0:** R1 BTC LTM SR.216 and ETH−.112 fail SR/placebo after already using simple returns. The completed September S3 correction still fails its floor. R0's frozen arithmetic precheck is5.57bp versus8bp; do not tune thresholds or maker fees. Live order reconciliation repairs do not alter these historical tests.
+- **`exec_fcst` cell b:** already uses explicit NW/HAC lag5, bypassing the formerly defective generic DM path. ETH improvement3.066%<5% and p=.421 fails independently; BTC14.677% passes that measurement only. Both saved classical forecast files contain1551 development origins. No generic DM fix rescues the two-coin gate.
+- **Denominator-only reopens:** latest CAL2/OFLOW have every registered p-value finite; SMW substitutes p=1. Correcting missing-test denominators cannot rescue their failures. `exec_pf` family/cumulative DSR is reported, not part of its five actual gates. The config-hash issue is not an established historical rejection reversal.
+- **Broad inference-based reopens:** selection correction and dependence control qualify significance and commonly strengthen correction, not effect sizes. No specific p-only failed candidate was identified here. The separate forecast review owns any saved-model census. Low power is a limitation, not authority to lower thresholds or scan variants.
+- **Oracle/no-alpha rhetoric:** a fixed future-volume heuristic is not an objective upper bound. In `exec_fcst`, varying sigma also means volume-proportional allocation is not the general impact-minimising oracle (the unconstrained solution is proportional to V/sigma²). Correct the inference; do not treat it as evidence for a profitable new strategy.
+
+Sources: root `AUDIT_RESEARCH_PROGRAM_2026-09-02.md` §6, `LEADS_SCOPE_2026-09-02.md`; `THESIS_FINDINGS.md` §§72/77/80/85; both `data/predlab` and `data/rebuild` gates/ledgers; saved PRX/OFLOW/exec_fcst results in the predlab checkout and exec_pf results/inputs in the original TradingAgents checkout; `docs/audit/evidence-repair.md`; September9 `gates_report.md`. Original stores and outputs were read only.

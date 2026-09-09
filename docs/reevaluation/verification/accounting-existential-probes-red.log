@@ -1,0 +1,47 @@
+...............F..FF                                                     [100%]
+=================================== FAILURES ===================================
+__________ test_p1_missing_benchmark_hour_is_unavailable_not_negative __________
+
+    def test_p1_missing_benchmark_hour_is_unavailable_not_negative():
+        ix = pd.date_range('2021-01-01T00:00:00Z', '2021-04-05T23:00:00Z', freq='h', tz='UTC')
+        close = pd.DataFrame(100., index=ix, columns=subject.MAJORS)
+        volume = close*1e5
+>       observed = subject.p1_probe(close, volume, benchmark_dates=('2021-04-05',), required=1)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: p1_probe() got an unexpected keyword argument 'required'
+
+tests/predlab/test_audit_reevaluate_accounting.py:186: TypeError
+__________ test_p1_known_hits_cannot_be_undone_by_other_missing_coin ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7497903ef410>
+
+    def test_p1_known_hits_cannot_be_undone_by_other_missing_coin(monkeypatch):
+        ix = subject.utc_clock('2021-01-01', '2021-04-09T23:00:00Z', 'h')
+        close = pd.DataFrame(100., index=ix, columns=subject.MAJORS)
+        volume = close*1e5
+        dates = tuple(f'2021-04-{i:02}' for i in range(5, 10))
+        triggers = pd.DataFrame(False, index=ix, columns=subject.MAJORS)
+        for day in dates[:4]:
+            triggers.loc[pd.Timestamp(day, tz='UTC'), 'BTCUSDT'] = True
+            close.loc[pd.Timestamp(day, tz='UTC'), 'ETHUSDT'] = np.nan
+        monkeypatch.setattr(subject.liq_fade, 'cascade_triggers', lambda *a: triggers)
+        result = subject.p1_probe(close, volume, dates)
+>       assert result['pass'] is True
+E       assert None is True
+
+tests/predlab/test_audit_reevaluate_accounting.py:220: AssertionError
+_________ test_p2_known_passing_cell_survives_another_unavailable_cell _________
+
+    def test_p2_known_passing_cell_survives_another_unavailable_cell():
+        cells = {'a': {'status': 'computed', 'gate_value': .003},
+                 'b': {'status': 'unavailable', 'gate_value': .2}}
+>       assert subject.p2_gate(cells)['pass'] is True
+               ^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.audit_reevaluate_accounting_2026_09_09' has no attribute 'p2_gate'
+
+tests/predlab/test_audit_reevaluate_accounting.py:228: AttributeError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_reevaluate_accounting.py::test_p1_missing_benchmark_hour_is_unavailable_not_negative
+FAILED tests/predlab/test_audit_reevaluate_accounting.py::test_p1_known_hits_cannot_be_undone_by_other_missing_coin
+FAILED tests/predlab/test_audit_reevaluate_accounting.py::test_p2_known_passing_cell_survives_another_unavailable_cell
+3 failed, 17 passed in 1.38s

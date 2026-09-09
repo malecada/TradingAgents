@@ -1,0 +1,72 @@
+..............FFFF                                                       [100%]
+=================================== FAILURES ===================================
+_ test_invalid_prior_window_preserves_known_deployer_count_and_qualifies_wallet_history _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_invalid_prior_window_pres0')
+
+    def test_invalid_prior_window_preserves_known_deployer_count_and_qualifies_wallet_history(tmp_path):
+        mod = module()
+        source, pairs, ctx = fixture(tmp_path)
+        mature_priors(source, pairs)
+        path = source / "predlab/nlst/nlst2_raw" / f"{pairs[0]}.json"
+        raw2 = json.loads(path.read_text())
+        raw2["b24"] += 10
+        write_json(path, raw2)
+        frame = build(mod, ctx, source)
+>       assert frame.loc[pairs[3], "serial_deployer_count"] == 3
+E       assert np.float64(2.0) == 3
+
+tests/predlab/test_audit_reevaluate_nlst4.py:354: AssertionError
+____ test_missing_prior_raw2_propagates_unknown_identity_and_wallet_history ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_missing_prior_raw2_propag0')
+
+    def test_missing_prior_raw2_propagates_unknown_identity_and_wallet_history(tmp_path):
+        mod = module()
+        source, pairs, ctx = fixture(tmp_path)
+        mature_priors(source, pairs)
+        (source / "predlab/nlst/nlst2_raw" / f"{pairs[0]}.json").unlink()
+        frame = build(mod, ctx, source)
+>       assert np.isnan(frame.loc[pairs[3], "serial_deployer_count"])
+E       AssertionError: assert np.False_
+E        +  where np.False_ = <ufunc 'isnan'>(np.float64(2.0))
+E        +    where <ufunc 'isnan'> = np.isnan
+
+tests/predlab/test_audit_reevaluate_nlst4.py:367: AssertionError
+_ test_missing_prior_entry_header_preserves_identity_but_not_known_return_history _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_missing_prior_entry_heade0')
+
+    def test_missing_prior_entry_header_preserves_identity_but_not_known_return_history(tmp_path):
+        mod = module()
+        source, pairs, ctx = fixture(tmp_path)
+        mature_priors(source, pairs)
+        hp = source / "predlab/nlst/dex_raw/headers.jsonl"
+        hp.write_text("\n".join(l for l in hp.read_text().splitlines() if json.loads(l)["block"] != DAY + 10))
+        frame = build(mod, ctx, source)
+>       assert frame.loc[pairs[3], "serial_deployer_count"] == 3
+E       assert np.float64(2.0) == 3
+
+tests/predlab/test_audit_reevaluate_nlst4.py:382: AssertionError
+________ test_pool_creation_block_must_match_immutable_screening_record ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-92/test_pool_creation_block_must_0')
+
+    def test_pool_creation_block_must_match_immutable_screening_record(tmp_path):
+        mod = module()
+        source, pairs, ctx = fixture(tmp_path)
+        path = source / "predlab/nlst/dex_raw/pools" / f"{pairs[0]}.json"
+        pool = json.loads(path.read_text())
+        pool["meta"]["block"] += 1
+        write_json(path, pool)
+>       with pytest.raises(ValueError, match="frozen cohort creation block mismatch"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/predlab/test_audit_reevaluate_nlst4.py:395: Failed
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_reevaluate_nlst4.py::test_invalid_prior_window_preserves_known_deployer_count_and_qualifies_wallet_history
+FAILED tests/predlab/test_audit_reevaluate_nlst4.py::test_missing_prior_raw2_propagates_unknown_identity_and_wallet_history
+FAILED tests/predlab/test_audit_reevaluate_nlst4.py::test_missing_prior_entry_header_preserves_identity_but_not_known_return_history
+FAILED tests/predlab/test_audit_reevaluate_nlst4.py::test_pool_creation_block_must_match_immutable_screening_record
+4 failed, 14 passed in 5.67s

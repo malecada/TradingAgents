@@ -1,0 +1,68 @@
+...........FFFF                                                          [100%]
+=================================== FAILURES ===================================
+__________ test_one_random_orientation_is_not_reported_as_a_reversal ___________
+
+    def test_one_random_orientation_is_not_reported_as_a_reversal():
+        class OneDirection:
+            def choice(self, values, size, replace):
+                return np.array(['B', 'A'])
+        c, q = panels('2021-01-31')
+        got = module().score_month(c, q, pd.Timestamp('2021-01-01', tz='UTC'), OneDirection())
+        assert got['random_ordered_duplicates'] == 19
+>       assert got['random_reversed_pairs'] == 0
+E       assert 1 == 0
+
+tests/predlab/test_audit_reevaluate_prx.py:182: AssertionError
+_________________ test_changed_formation_contract_is_rejected __________________
+
+    def test_changed_formation_contract_is_rejected():
+        gates = json.loads((Path(__file__).parents[2] / 'data/predlab/gates.json').read_text())
+        g = gates['audit_reevaluation_2026_09_09']['families']['prx']
+        g['formation'] = 'ordinary ADF or changed window'
+>       with pytest.raises(ValueError, match='registered'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/predlab/test_audit_reevaluate_prx.py:189: Failed
+_________ test_real_context_writes_one_cell_filters_dates_and_never_p1 _________
+
+synthetic_context = (<scripts.audit_reeval_common.RunContext object at 0x77995ef05a90>, PosixPath('/tmp/pytest-of-malecada/pytest-63/test_real_context_writes_one_c0/source'), [])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77995ef75480>
+
+    def test_real_context_writes_one_cell_filters_dates_and_never_p1(synthetic_context, monkeypatch):
+        ctx, data_root, recorded = synthetic_context
+        write_synthetic_inputs(data_root)
+        m = module()
+        from scripts import predlab_xfam_lib
+        def forbidden(*args, **kwargs):
+            pytest.fail('P1 engine was called')
+        monkeypatch.setattr(predlab_xfam_lib, 'pair_zmr_backtest', forbidden)
+        actual_evaluate = m.evaluate_p0
+        def bounded(close, qv):
+            assert close.index.min() == pd.Timestamp('2020-10-03', tz='UTC')
+            assert close.index.max() == pd.Timestamp('2025-02-28', tz='UTC')
+            assert qv.index.max() == close.index.max()
+            return actual_evaluate(close, qv)
+        monkeypatch.setattr(m, 'evaluate_p0', bounded)
+>       output = m.run(ctx, data_root)
+                 ^^^^^
+E       AttributeError: module 'scripts.audit_reevaluate_prx_2026_09_09' has no attribute 'run'
+
+tests/predlab/test_audit_reevaluate_prx.py:234: AttributeError
+_______________ test_missing_source_retains_blocked_primary_cell _______________
+
+synthetic_context = (<scripts.audit_reeval_common.RunContext object at 0x77995cd27390>, PosixPath('/tmp/pytest-of-malecada/pytest-63/test_missing_source_retains_bl0/source'), [])
+
+    def test_missing_source_retains_blocked_primary_cell(synthetic_context):
+        ctx, data_root, recorded = synthetic_context
+>       output = module().run(ctx, data_root)
+                 ^^^^^^^^^^^^
+E       AttributeError: module 'scripts.audit_reevaluate_prx_2026_09_09' has no attribute 'run'
+
+tests/predlab/test_audit_reevaluate_prx.py:252: AttributeError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_one_random_orientation_is_not_reported_as_a_reversal
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_changed_formation_contract_is_rejected
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_real_context_writes_one_cell_filters_dates_and_never_p1
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_missing_source_retains_blocked_primary_cell
+4 failed, 11 passed in 2.01s

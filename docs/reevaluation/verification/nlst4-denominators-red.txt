@@ -1,0 +1,66 @@
+............FF                                                           [100%]
+=================================== FAILURES ===================================
+_____ test_missing_global_cohort_still_records_the_registered_blocked_cell _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-87/test_missing_global_cohort_sti0')
+
+    def test_missing_global_cohort_still_records_the_registered_blocked_cell(tmp_path):
+        mod = module()
+        source = tmp_path / "absent_data"
+        ctx = Context(tmp_path)
+>       mod.run(ctx, source)
+
+tests/predlab/test_audit_reevaluate_nlst4.py:296: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/audit_reevaluate_nlst4_2026_09_09.py:316: in run
+    frame = build_cohort(ctx, source)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/audit_reevaluate_nlst4_2026_09_09.py:149: in build_cohort
+    frozen = pd.read_parquet(ctx.track(nl / "nlst4_features.parquet"), columns=["quarter", "new_set"])
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/predlab/test_audit_reevaluate_nlst4.py:36: in track
+    self.hashes[str(path)] = hashlib.sha256(path.read_bytes()).hexdigest()
+                                            ^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py:625: in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/tmp/pytest-of-malecada/pytest-87/test_missing_global_cohort_sti0/absent_data/predlab/nlst/nlst4_features.parquet')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/tmp/pytest-of-malecada/pytest-87/test_missing_global_cohort_sti0/absent_data/predlab/nlst/nlst4_features.parquet'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py:537: FileNotFoundError
+_ test_one_unavailable_bootstrap_draw_keeps_full_denominator_and_prevents_t1_pass _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x744ebffbd130>
+
+    def test_one_unavailable_bootstrap_draw_keeps_full_denominator_and_prevents_t1_pass(monkeypatch):
+        mod = module()
+        frame = pd.DataFrame({"new_set": True, "quarter": "2021Q1", "legit3_score": [1., 2., 3.],
+                              "ret7": [.1, .2, .3], "ret7_s5000": [.05, .1, .15],
+                              "list_date": pd.date_range("2021-01-01", periods=3, tz="UTC"),
+                              "missing_reasons": ""})
+        draws = np.ones(1000)
+        draws[321] = np.nan
+        monkeypatch.setattr(mod, "block_bootstrap_ic", lambda *a, **kw: draws.copy())
+        result = mod.evaluate_cohort(frame)
+>       assert result["T1"]["available"] is False
+E       assert True is False
+
+tests/predlab/test_audit_reevaluate_nlst4.py:320: AssertionError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_reevaluate_nlst4.py::test_missing_global_cohort_still_records_the_registered_blocked_cell
+FAILED tests/predlab/test_audit_reevaluate_nlst4.py::test_one_unavailable_bootstrap_draw_keeps_full_denominator_and_prevents_t1_pass
+2 failed, 12 passed in 5.82s

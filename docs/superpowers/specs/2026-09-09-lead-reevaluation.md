@@ -1,6 +1,6 @@
 # September 9 lead reevaluation charter
 
-The user has authorized reevaluating leads where the repaired system changes the evidential basis. This cycle is limited to fixed historical constructions affected by a concrete defect. The previous repair and its S2/S3/ENet correction remain complete; they are not repeated. No new strategy, threshold, model fit, venue, or holdout is introduced.
+The user has authorized reevaluating leads where the repaired system changes the evidential basis. This cycle is limited to fixed historical constructions affected by a concrete defect. The previous repair and its S2/S3/ENet correction remain complete; they are not repeated. No new strategy, threshold, forecast-model fit, venue, or holdout is introduced.
 
 ## Fixed slate and interpretation
 
@@ -31,3 +31,5 @@ New wrappers call audited library functions, not legacy script main functions or
 Pre-result metadata clarification: NLST4 pins original pair/quarter/block membership; creation timestamps were interpolated and cannot be relabelled exact. Some original entries occur as late as April8; original helper settlements end April15 at09:21:35UTC. ETH quote reads are capped at open timestamps strictly before April15 at09:20UTC and used only for those existing pools. No April-created sample is admitted.
 
 Pre-result source clarification: liquidation-fade keeps the original shared RNG48, including consuming identical draws for skipped portfolio tests. Its P2 cumulative event return is compounded; the old additive sum is a historical diagnostic, not the corrected25bp probe. Right-censored development-end outcomes are counted and excluded; internal missing prices are unavailable. This is an arithmetic correction, with no signal or threshold change.
+
+PRX formation regressions are recomputed as the original rolling statistical selector requires. The no-fit restriction applies to forecast-model retraining; no new model class or formation setting is introduced.

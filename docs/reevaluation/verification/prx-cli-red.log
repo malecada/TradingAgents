@@ -1,0 +1,48 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+___________ test_default_cli_cannot_create_run_state_or_read_inputs ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71c3790b6fd0>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-72/test_default_cli_cannot_create0')
+
+    def test_default_cli_cannot_create_run_state_or_read_inputs(monkeypatch, tmp_path):
+        from scripts import audit_reeval_common
+        def forbidden(*args, **kwargs):
+            (tmp_path / 'incorrect-start').write_text('consumed')
+            raise AssertionError('RunContext must not exist without --execute')
+        monkeypatch.setattr(audit_reeval_common, 'RunContext', forbidden)
+>       assert module().main([]) == 0
+               ^^^^^^^^^^^^^^^^^
+
+tests/predlab/test_audit_reevaluate_prx.py:281: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/audit_reevaluate_prx_2026_09_09.py:345: in main
+    ctx = RunContext('prx')
+          ^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('prx',), kwargs = {}
+
+    def forbidden(*args, **kwargs):
+        (tmp_path / 'incorrect-start').write_text('consumed')
+>       raise AssertionError('RunContext must not exist without --execute')
+E       AssertionError: RunContext must not exist without --execute
+
+tests/predlab/test_audit_reevaluate_prx.py:279: AssertionError
+__________ test_run_rejects_replacement_input_root_before_consumption __________
+
+synthetic_context = (<scripts.audit_reeval_common.RunContext object at 0x71c329199a90>, PosixPath('/tmp/pytest-of-malecada/pytest-72/test_...on', 'config': {'months': ['2021-01-01', '2025-02-01'], 'n_months': 50, 'top_n': 50, 'formation_days': 90, ...}, ...}])
+
+    def test_run_rejects_replacement_input_root_before_consumption(synthetic_context):
+        ctx, data_root, recorded = synthetic_context
+        unregistered = data_root.parent / 'replacement'
+        write_synthetic_inputs(unregistered)
+>       with pytest.raises(ValueError, match='registered'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/predlab/test_audit_reevaluate_prx.py:301: Failed
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_default_cli_cannot_create_run_state_or_read_inputs
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_run_rejects_replacement_input_root_before_consumption
+2 failed, 1 passed in 1.51s

@@ -1,0 +1,15 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______________ test_progress_reports_only_fixed_calendar_counts _______________
+
+    def test_progress_reports_only_fixed_calendar_counts():
+        c, q = panels()
+        q[:] = np.nan
+        counts = []
+>       module().evaluate_p0(c, q, progress=lambda done, total: counts.append((done, total)))
+E       TypeError: evaluate_p0() got an unexpected keyword argument 'progress'
+
+tests/predlab/test_audit_reevaluate_prx.py:312: TypeError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_reevaluate_prx.py::test_progress_reports_only_fixed_calendar_counts
+1 failed in 1.42s

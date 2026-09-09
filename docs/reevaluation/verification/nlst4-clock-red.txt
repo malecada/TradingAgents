@@ -1,0 +1,26 @@
+...................F                                                     [100%]
+=================================== FAILURES ===================================
+______ test_entry_reference_mismatch_cannot_donate_to_later_normalization ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-94/test_entry_reference_mismatch_0')
+
+    def test_entry_reference_mismatch_cannot_donate_to_later_normalization(tmp_path):
+        mod = module()
+        source, pairs, ctx = fixture(tmp_path)
+        path = source / "predlab/nlst/nlst4_events.parquet"
+        reference = pd.read_parquet(path)
+        reference.loc[pairs[0], "entry_ts"] += 60
+        reference.to_parquet(path)
+        frame = build(mod, ctx, source)
+        assert "original_entry_clock_mismatch" in frame.loc[pairs[0], "missing_reasons"]
+>       assert frame.loc[pairs[0], ["decision_ts", "available_ts", "complete_ts"]].isna().all()
+E       assert np.False_
+E        +  where np.False_ = all()
+E        +    where all = decision_ts     False\navailable_ts    False\ncomplete_ts     False\nName: 0x0000000000000000000000000000000000000001, dtype: bool.all
+E        +      where decision_ts     False\navailable_ts    False\ncomplete_ts     False\nName: 0x0000000000000000000000000000000000000001, dtype: bool = isna()
+E        +        where isna = decision_ts     1609545610\navailable_ts    1609545610\ncomplete_ts     1611187210\nName: 0x0000000000000000000000000000000000000001, dtype: object.isna
+
+tests/predlab/test_audit_reevaluate_nlst4.py:421: AssertionError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_reevaluate_nlst4.py::test_entry_reference_mismatch_cannot_donate_to_later_normalization
+1 failed, 19 passed in 6.35s

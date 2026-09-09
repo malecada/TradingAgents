@@ -1,0 +1,94 @@
+...............F                                                         [100%]
+=================================== FAILURES ===================================
+__________ test_p1_missing_benchmark_hour_is_unavailable_not_negative __________
+
+start = Timestamp('2021-01-01 00:00:00')
+end = Timestamp('2021-04-05 23:00:00+0000', tz='UTC'), tz = 'UTC'
+
+    def _infer_tz_from_endpoints(
+        start: Timestamp, end: Timestamp, tz: tzinfo | None
+    ) -> tzinfo | None:
+        """
+        If a timezone is not explicitly given via `tz`, see if one can
+        be inferred from the `start` and `end` endpoints.  If more than one
+        of these inputs provides a timezone, require that they all agree.
+    
+        Parameters
+        ----------
+        start : Timestamp
+        end : Timestamp
+        tz : tzinfo or None
+    
+        Returns
+        -------
+        tz : tzinfo or None
+    
+        Raises
+        ------
+        TypeError : if start and end timezones do not agree
+        """
+        try:
+>           inferred_tz = timezones.infer_tzinfo(start, end)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/arrays/datetimes.py:2663: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   AssertionError: Inputs must both have the same timezone, None != UTC
+
+pandas/_libs/tslibs/timezones.pyx:369: AssertionError
+
+The above exception was the direct cause of the following exception:
+
+    def test_p1_missing_benchmark_hour_is_unavailable_not_negative():
+>       ix = pd.date_range('2021-01-01', '2021-04-05T23:00:00Z', freq='h', tz='UTC')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/predlab/test_audit_reevaluate_accounting.py:183: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexes/datetimes.py:1008: in date_range
+    dtarr = DatetimeArray._generate_range(
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/arrays/datetimes.py:447: in _generate_range
+    tz = _infer_tz_from_endpoints(start, end, tz)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+start = Timestamp('2021-01-01 00:00:00')
+end = Timestamp('2021-04-05 23:00:00+0000', tz='UTC'), tz = 'UTC'
+
+    def _infer_tz_from_endpoints(
+        start: Timestamp, end: Timestamp, tz: tzinfo | None
+    ) -> tzinfo | None:
+        """
+        If a timezone is not explicitly given via `tz`, see if one can
+        be inferred from the `start` and `end` endpoints.  If more than one
+        of these inputs provides a timezone, require that they all agree.
+    
+        Parameters
+        ----------
+        start : Timestamp
+        end : Timestamp
+        tz : tzinfo or None
+    
+        Returns
+        -------
+        tz : tzinfo or None
+    
+        Raises
+        ------
+        TypeError : if start and end timezones do not agree
+        """
+        try:
+            inferred_tz = timezones.infer_tzinfo(start, end)
+        except AssertionError as err:
+            # infer_tzinfo raises AssertionError if passed mismatched timezones
+>           raise TypeError(
+                "Start and end cannot both be tz-aware with different timezones"
+            ) from err
+E           TypeError: Start and end cannot both be tz-aware with different timezones
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/arrays/datetimes.py:2666: TypeError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_reevaluate_accounting.py::test_p1_missing_benchmark_hour_is_unavailable_not_negative
+1 failed, 15 passed in 1.30s
