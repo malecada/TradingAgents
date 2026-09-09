@@ -2755,7 +2755,15 @@
         "economics": "original first Sync>=create+24h entry, first Sync>=entry+7days or original lastSync dead-pool rule, $1000 headline/$5000 stress, exact constant-product .3%LP eachside, two swaps gas basefee+2gwei; correctedFX only",
         "T1": "original SpearmanIC(score,ret7)>0 AND quarter-block bootstrap1000draws seed7 lower5percentile>0; complete coverage disclosed",
         "T2": "original global-q80 cohort mean, NW one-sidedp<.05, ex-topmean>0, top1share<=.25 and5kstresssign; global topquintile remains retrospective cohort diagnostic, NOT a causal entry rule",
-        "promotion": "none regardless of diagnostic thresholds; no P1 and no online threshold variant in this cycle"
+        "promotion": "none regardless of diagnostic thresholds; no P1 and no online threshold variant in this cycle",
+        "creation_membership": "Immutable original pair IDs, original quarter and block membership; creation time interpolation from cached anchors is retained and disclosed, not represented as exact header time.",
+        "settlement_fx_end_exclusive": "2025-04-15T09:20:00Z",
+        "settlement_metadata": {
+          "latest_entry": "2025-04-08T21:58:35Z",
+          "latest_selected_7d_exit": "2025-04-13T03:07:11Z",
+          "latest_helper_exit": "2025-04-15T09:21:35Z",
+          "scope": "Only original declared development-created pool IDs; late entry/settlement does not admit new holdout cohorts."
+        }
       }
     },
     "primary_cells": 26,
@@ -2780,6 +2788,7 @@
     },
     "original_rebuild_ledger_sha256": "45a5fe9e1b0c92de5dd853c9fa091a8dfdb8636e260a4c5b4cc89db6903f9627",
     "diagnostic_trials": "benchmarks, paired contract/cost/convention attribution, declared bootstrap/placebos and dependence sensitivity are predeclared diagnostics; no candidate selection among them",
-    "stop_rule": "One completed artifact per family. Missing provenance or held prices/funding is an explicit blocked/incomplete cell, never zero-filled. Infrastructure failure without completed outcome may resume only documented identical code/input specification; outcome-informed amendments or parameter changes prohibited. Any additional family, model fit, data source, changed acceptance threshold or holdout requires a new committed registration."
+    "stop_rule": "One completed artifact per family. Missing provenance or held prices/funding is an explicit blocked/incomplete cell, never zero-filled. Infrastructure failure without completed outcome may resume only documented identical code/input specification; outcome-informed amendments or parameter changes prohibited. Any additional family, model fit, data source, changed acceptance threshold or holdout requires a new committed registration.",
+    "pre_result_clarification": "Before source implementation or empirical outcomes: metadata-only inventory pinned DEX settlement quote bound and creation interpolation; no original cell, threshold or membership changed."
   }
 }
