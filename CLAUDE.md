@@ -6,9 +6,11 @@ The repaired base branch `fix/system-audit-2026-09-09` combines committed resear
 
 Zero validated strategies. The confirmed September 9 accounting, missing-data, causal-data, provenance, execution and manuscript defects have been repaired and reviewed locally; 779 offline tests passed. The registered bounded correction completed seven S2/S3 development cells and sixteen saved ENet diagnostics, with no strategy graduation. See docs/audit/AUDIT_REPAIRS_2026-09-09.md and THESIS_FINDINGS §88. Historical results remain subject to their explicit corrections and qualifications. NLST4 is closed; value_rev and llm_c3p_conf retain their existing prospective dates. No family is reopened by software repairs.
 
-## Active reevaluation
+## Completed reevaluation
 
-Current branch: `research/audit-reevaluation-2026-09-09`. The user authorized reevaluating materially affected leads after repairs. Gate `audit_reevaluation_2026_09_09` freezes26 primary cases across momentum, carry, liquidation fade, PRX and NLST4. Use only the new wrappers and immutable output namespace; no legacy main calls, forecast-model retraining, new signals, holdout cohorts or deployment. Details: docs/superpowers/specs/2026-09-09-lead-reevaluation.md and corresponding plan. S2/S3 and the16 ENet diagnostics were already corrected and are not repeated.
+Current branch: `research/audit-reevaluation-2026-09-09`. The user-authorized `audit_reevaluation_2026_09_09` cycle completed all 26 fixed cases on source `49fb9e4`. Twenty-one accounting cases are unavailable, three liquidation-fade cases fail, PRX fails its conditional comparison with six unavailable selected-pair outcomes, and NLST4 passes descriptive ranking but fails economics. No strategy was validated or promoted. See docs/reevaluation/REEVALUATION_LEADS_2026-09-09.md, the immutable results and THESIS_FINDINGS §89. S2/S3 and the 16 ENet diagnostics were not repeated.
+
+Do not convert unavailable measurements into negative verdicts or rerun these output directories. Settlement events and internal hourly coverage must be recovered under explicit provenance before a separately registered correction. Original samples, criteria and spent holdouts remain preserved. The stronger NLST4 IC is a retrospective ranking association; no online entry policy was tested.
 
 ## Required research discipline
 
