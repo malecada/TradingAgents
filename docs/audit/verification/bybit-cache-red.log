@@ -1,0 +1,54 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+___ test_existing_files_do_not_skip_requested_tail_and_metadata_is_preserved ___
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-46/test_existing_files_do_not_ski0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72676b2a2fd0>
+
+    def test_existing_files_do_not_skip_requested_tail_and_metadata_is_preserved(tmp_path, monkeypatch):
+        store=tmp_path/'bybit'
+        for folder in ('klines','funding'): (store/folder).mkdir(parents=True)
+        oldidx=pd.date_range('2024-01-01',periods=2,tz='UTC')
+        pd.DataFrame({'close':[1.,2.]},index=oldidx).to_parquet(store/'klines/A.parquet')
+        pd.DataFrame({'fundingRate':[0.,0.]},index=oldidx).to_parquet(store/'funding/A.parquet')
+        (store/'manifest.json').write_text(json.dumps({'symbols':{'A':{'note':'original'},'B':{'kline_days':100}}}))
+        monkeypatch.setattr(fetch,'STORE',store);monkeypatch.setattr(fetch,'DATA_ROOT',tmp_path)
+        monkeypatch.setattr(fetch,'enumerate_symbols',lambda:[{'symbol':'A','status':'Trading','fundingInterval':480}])
+        monkeypatch.setattr(fetch.sys,'argv',['fetch','--end','2024-01-03'])
+        calls=[]
+        def klines(*args):
+            calls.append('kline')
+            return pd.DataFrame({'close':[3.]},index=pd.DatetimeIndex(['2024-01-03'],tz='UTC'))
+        monkeypatch.setattr(fetch,'fetch_klines',klines)
+        monkeypatch.setattr(fetch,'fetch_funding',lambda *args:pd.DataFrame({'fundingRate':[.001]},index=pd.DatetimeIndex(['2024-01-03'],tz='UTC')))
+        fetch.main()
+>       assert calls==['kline']
+E       AssertionError: assert [] == ['kline']
+E         
+E         Right contains one more item: 'kline'
+E         Use -v to get more diff
+
+tests/predlab/test_audit_bybit_cache.py:25: AssertionError
+----------------------------- Captured stdout call -----------------------------
+enumerated 1 linear USDT perps (0 non-Trading)
++0 Binance-known symbols probed for delisted history
+done: 0 symbols with klines; manifest written
+__________________ test_cache_requires_explicit_complete_end ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-46/test_cache_requires_explicit_c0')
+
+    def test_cache_requires_explicit_complete_end(tmp_path):
+        kp=tmp_path/'k.parquet';fp=tmp_path/'f.parquet'
+        idx=pd.date_range('2024-01-01',periods=3,freq='D',tz='UTC')
+        pd.DataFrame({'close':[1.,2.,3.]},index=idx).to_parquet(kp)
+        pd.DataFrame({'fundingRate':[0.]},index=idx[:1]).to_parquet(fp)
+        end=int(idx[-1].timestamp()*1000)
+>       assert not fetch.cache_current(kp,fp,end,480)
+                   ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.predlab_bybit_fetch' has no attribute 'cache_current'
+
+tests/predlab/test_audit_bybit_cache.py:40: AttributeError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_bybit_cache.py::test_existing_files_do_not_skip_requested_tail_and_metadata_is_preserved
+FAILED tests/predlab/test_audit_bybit_cache.py::test_cache_requires_explicit_complete_end
+2 failed in 0.56s

@@ -1,0 +1,23 @@
+........................................................................ [  9%]
+........................................................................ [ 18%]
+........................................................................ [ 27%]
+........................................................................ [ 36%]
+........................................................................ [ 46%]
+........................................................................ [ 55%]
+........................................................................ [ 64%]
+........................................................................ [ 73%]
+........................................................................ [ 83%]
+........................................................................ [ 92%]
+...........................................................              [100%]
+=============================== warnings summary ===============================
+tests/predlab/test_tier2.py: 3500 warnings
+tests/models/test_lgb_full_fit.py: 1 warning
+  /home/malecada/master_thesis/TradingAgents-predlab/.venv/lib/python3.13/site-packages/sklearn/utils/validation.py:2749: UserWarning: X does not have valid feature names, but LGBMRegressor was fitted with feature names
+    warnings.warn(
+
+tests/xsect/test_liq_fade_pandas_pin.py::test_padding_actually_changes_gap_bar_returns
+  /home/malecada/master_thesis/TradingAgents-audit-fixes/tests/xsect/test_liq_fade_pandas_pin.py:65: FutureWarning: The 'fill_method' keyword being not None and the 'limit' keyword in Series.pct_change are deprecated and will be removed in a future version. Either fill in any non-leading NA values prior to calling pct_change or specify 'fill_method=None' to not fill NA values.
+    padded = s.pct_change(fill_method="pad")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+779 passed, 2 deselected, 3502 warnings in 223.37s (0:03:43)

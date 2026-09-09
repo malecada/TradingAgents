@@ -25,7 +25,7 @@ from predlab_s1_paper import (  # noqa: E402
 
 
 def _rows(pairs: "list[tuple[str, float | None]]") -> "list[dict]":
-    return [{"asof": d, "realized_book_ret": r} for d, r in pairs]
+    return [{"journal_version": 2, "asof": d, "realized_base_net_ret": r} for d, r in pairs]
 
 
 def _seq(start: str, rets: "list[float | None]") -> "list[tuple[str, float | None]]":
@@ -41,16 +41,17 @@ def test_vt_scale_ignores_return_measured_across_a_journal_gap():
     clean = _rows(_seq("2026-01-01", [None] + VALS))
 
     gap = _rows(_seq("2026-01-01", [None] + VALS[:9]))
-    gap.append({"asof": "2026-01-14", "realized_book_ret": 0.30})  # spans 4d
+    gap.append({"asof": "2026-01-14", "realized_base_net_ret": 0.30})  # spans 4d
     gap += _rows(_seq("2026-01-15", VALS[9:]))
 
-    assert vt_scale(gap, 0.15) == pytest.approx(vt_scale(clean, 0.15))
+    assert vt_scale(gap, 0.15) is None
+    assert vt_scale(clean, 0.15) is not None
 
 
-def test_vt_scale_needs_21_gap_free_returns():
+def test_vt_scale_needs_a_current_unbroken_window():
     """Dropping gap rows must also drop them from the sufficiency count."""
     rows = _rows(_seq("2026-01-01", [None] + VALS[:20]))
-    rows.append({"asof": "2026-01-25", "realized_book_ret": 0.02})  # spans 4d
+    rows.append({"asof": "2026-01-25", "realized_base_net_ret": 0.02})  # spans 4d
     assert vt_scale(rows, 0.15) is None
 
 
@@ -67,11 +68,11 @@ def test_realized_prev_mark_return_is_none_for_a_row_written_without_marks():
     assert realized_prev_mark_return(prev, {"AAA": 110.0}) is None
 
 
-def test_realized_prev_mark_return_skips_symbols_absent_from_current_marks():
+def test_realized_prev_mark_return_is_incomplete_for_missing_held_mark():
     prev = {"weights": {"AAA": 0.5, "BBB": -0.5},
             "mark_px": {"AAA": 100.0, "BBB": 50.0}}
     got = realized_prev_mark_return(prev, {"AAA": 110.0})
-    assert got == pytest.approx(0.5 * 0.1)
+    assert got is None
 
 
 @pytest.fixture()

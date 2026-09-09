@@ -1,14 +1,10 @@
 """O-07 / stage O6 — volume/liquidity weighting inside the book
 (predlab_opt.stages.O6).
 
-The P5-usable LGB volume champions cover BTC/ETH only — they cannot weight
-a 200-name cross-section directly. Dominance design instead: weight legs by
-(a) PIT trailing quote-volume (what a deployable liquidity weighting can
-use), and (b) ORACLE future volume (perfect-foresight upper bound on ANY
-volume forecast, incl. per-alt LGB generalization — DIAGNOSTIC ONLY, never
-adoptable). If the oracle itself cannot clear the adoption floor, the whole
-forecast-based-weighting axis is closed without building per-alt models
-(predlab_p6 alt-generalization claim untouched).
+The saved BTC/ETH volume forecasts cannot directly weight a 200-name book.
+This diagnostic compares fixed trailing-volume and future-volume tilts.
+Future volume is perfect knowledge of ONE input, not an objective upper bound
+over decision rules. Failure closes only these registered constructions.
 
 Weightings via the leg-preserving tilt hook (multiplier within leg, legs
 renormed to +/-1): qv ∝ trailing median qv, qv_sqrt ∝ sqrt(same),
@@ -57,13 +53,12 @@ def register() -> None:
         sys.exit(1)
     stages["O6"] = {
         "frozen_utc": "2026-08-03",
-        "axis": "volume/liquidity weighting (dominance design; LGB champions are BTC/ETH-only)",
+        "axis": "fixed volume/liquidity weighting constructions (BTC/ETH forecasts only)",
         "base_book": "ewma_20 eq-quintile-daily top-200 (chain seq 1)",
         "grid": GRID,
         "n_configs": len(GRID),
-        "diagnostic_rule": ("oracle_* use FUTURE volume: upper bound on any volume "
-                            "forecast; NEVER adoptable; if oracle < adoption floor, "
-                            "forecast-weighting axis closes without per-alt models"),
+        "diagnostic_rule": ("oracle_* use FUTURE volume in fixed weights; diagnostic and never adoptable; "
+                            "failure concerns only these constructions, not the whole forecast axis"),
         "window": list(FULL),
     }
     GATES.write_text(json.dumps(gates, indent=1))
@@ -92,7 +87,14 @@ def make_tilt(measure: pd.DataFrame):
     return tilt
 
 
+def oracle_scope(oracle_best: float, reference: float) -> dict:
+    return {"tested_oracle_weights_below_floor": bool(oracle_best < reference + .10),
+            "axis_dominance_closed": False, "objective_upper_bound": False,
+            "interpretation": "Evidence applies only to the preregistered weighting rules."}
+
+
 def run() -> None:
+    registry.preflight("predlab_opt", FULL)
     gates = json.loads(GATES.read_text())
     if gates["predlab_opt"]["stages"].get("O6") is None:
         print("stage O6 not frozen — run `register` first")
@@ -158,10 +160,10 @@ def run() -> None:
     oracle_best = max(res["configs"][k]["sr_net_full"]
                       for k in ("oracle_next1", "oracle_next7"))
     res["oracle_best_sr"] = oracle_best
-    res["axis_dominance_closed"] = bool(oracle_best < ref_sr + 0.10)
+    res.update(oracle_scope(oracle_best, ref_sr))
     print(f"\nincumbent raw SR {ref_sr:+.3f}; candidates: {cands or 'NONE'}; "
           f"oracle best {oracle_best:+.3f} -> forecast axis "
-          f"{'CLOSED by dominance' if res['axis_dominance_closed'] else 'still open'}")
+          "not established by this fixed-weight diagnostic")
     OUT.write_text(json.dumps(res, indent=1, default=float))
     print(f"written {OUT}")
 

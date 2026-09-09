@@ -1,0 +1,44 @@
+.FFF                                                                     [100%]
+=================================== FAILURES ===================================
+____________ test_supplied_missing_funding_fails_for_held_position _____________
+
+    def test_supplied_missing_funding_fails_for_held_position():
+        from tradingagents.accounting import accounting_step
+>       with pytest.raises(ValueError,match='missing_held_funding'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_accounting_audit.py:277: Failed
+_______________ test_target_without_return_column_is_not_dropped _______________
+
+    def test_target_without_return_column_is_not_dropped():
+        from tradingagents.accounting import run_target_book
+        ix=pd.date_range('2024-01-01',periods=1,tz='UTC')
+>       with pytest.raises(ValueError,match='missing_held_return.*B'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_accounting_audit.py:285: Failed
+________________ test_overlay_preserves_declared_capital_charge ________________
+
+    def test_overlay_preserves_declared_capital_charge():
+        from tradingagents.accounting import run_target_book,scaled_overlay
+        ix=pd.date_range('2024-01-01',periods=2,tz='UTC')
+        base=run_target_book(pd.DataFrame({'A':1.},index=ix),pd.DataFrame({'A':0.},index=ix),capital_charge=.01)
+        net=scaled_overlay(base,pd.Series(.5,index=ix),fee_rate=0.)
+>       assert net.tolist() == pytest.approx([-.01,-.01])
+E       assert [0.0, 0.0] == approx([-0.01...01 ± 1.0e-08])
+E         
+E         comparison failed. Mismatched elements: 2 / 2:
+E         Max absolute difference: 0.01
+E         Max relative difference: inf
+E         Index | Obtained | Expected       
+E         0     | 0.0      | -0.01 ± 1.0e-08
+E         1     | 0.0      | -0.01 ± 1.0e-08
+
+tests/test_accounting_audit.py:294: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_accounting_audit.py::test_supplied_missing_funding_fails_for_held_position
+FAILED tests/test_accounting_audit.py::test_target_without_return_column_is_not_dropped
+FAILED tests/test_accounting_audit.py::test_overlay_preserves_declared_capital_charge
+3 failed, 1 passed, 31 deselected in 1.67s

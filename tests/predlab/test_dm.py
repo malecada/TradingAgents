@@ -11,7 +11,7 @@ def test_dm_matches_reference_package_h1():
     actual = rng.normal(0, 1, 300)
     p1 = actual + rng.normal(0, 1.0, 300)  # worse
     p2 = actual + rng.normal(0, 0.6, 300)  # better
-    ours = dm.dm_test((actual - p1) ** 2, (actual - p2) ** 2, h=1, alternative="two-sided")
+    ours = dm.dm_test((actual - p1) ** 2, (actual - p2) ** 2, h=1, alternative="two-sided", variance="legacy")
     ref_stat, ref_p = ref_dm(actual, p1, p2, one_sided=False)
     assert np.isclose(ours.stat, ref_stat, rtol=1e-4)
     assert np.isclose(ours.pvalue, ref_p, rtol=1e-3)
@@ -22,7 +22,7 @@ def test_dm_matches_reference_package_h7():
     actual = rng.normal(0, 1, 400)
     p1 = actual + rng.normal(0, 0.9, 400)
     p2 = actual + rng.normal(0, 0.7, 400)
-    ours = dm.dm_test((actual - p1) ** 2, (actual - p2) ** 2, h=7, alternative="two-sided")
+    ours = dm.dm_test((actual - p1) ** 2, (actual - p2) ** 2, h=7, alternative="two-sided", variance="legacy")
     ref_stat, ref_p = ref_dm(actual, p1, p2, h=7, one_sided=False)
     assert np.isclose(ours.stat, ref_stat, rtol=1e-4)
     assert np.isclose(ours.pvalue, ref_p, rtol=1e-3)
@@ -73,7 +73,7 @@ def test_clark_west_nested_null_not_rejected_and_alt_rejected():
 def test_gw_equals_nw_on_loss_diff():
     rng = np.random.default_rng(9)
     a, b = rng.normal(1, 0.2, 300), rng.normal(0.8, 0.2, 300)
-    assert np.isclose(dm.gw_test(a, b, h=3).stat, meanstats.nw_tstat(a - b, lag=2), rtol=1e-9)
+    assert np.isclose(dm.gw_test(a, b, h=3, hac_lag=2).stat, meanstats.nw_tstat(a - b, lag=2), rtol=1e-9)
 
 
 def test_gw_two_sided_pvalue_range():

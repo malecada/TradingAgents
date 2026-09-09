@@ -1,0 +1,20 @@
+........FF                                                               [100%]
+=================================== FAILURES ===================================
+__________ test_oflow_reversal_meets_the_preregistered_absolute_gate ___________
+
+    def test_oflow_reversal_meets_the_preregistered_absolute_gate():
+>       from scripts.predlab_oflow_p0 import floor_pass
+E       ImportError: cannot import name 'floor_pass' from 'scripts.predlab_oflow_p0' (/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_oflow_p0.py)
+
+tests/predlab/test_audit_evidence.py:99: ImportError
+_____________ test_fixed_oracle_weighting_is_not_a_dominance_bound _____________
+
+    def test_fixed_oracle_weighting_is_not_a_dominance_bound():
+>       from scripts.predlab_opt_o6 import oracle_scope
+E       ImportError: cannot import name 'oracle_scope' from 'scripts.predlab_opt_o6' (/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_opt_o6.py)
+
+tests/predlab/test_audit_evidence.py:105: ImportError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_evidence.py::test_oflow_reversal_meets_the_preregistered_absolute_gate
+FAILED tests/predlab/test_audit_evidence.py::test_fixed_oracle_weighting_is_not_a_dominance_bound
+2 failed, 8 passed in 1.58s

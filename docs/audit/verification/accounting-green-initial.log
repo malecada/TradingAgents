@@ -1,0 +1,19 @@
+.......F............                                                     [100%]
+=================================== FAILURES ===================================
+_______________________ test_opt_cadence_holds_contracts _______________________
+
+    def test_opt_cadence_holds_contracts():
+        ix, cols, sig, ret, uni = panels()
+        ret.loc[ix[1]:, cols[0]] = .1
+        result = opt.run_ls(sig, ret, uni, None, opt.OptConfig(cadence=3,taker_bp=0.), str(ix[0].date()),str(ix[-1].date()))
+        assert (1+result['rets'].net).prod() == pytest.approx(1.035)
+>       assert result['rets'].turnover.tolist() == [2., 0., 0.]
+E       assert [2.0000000000000004, 0.0, 0.0] == [2.0, 0.0, 0.0]
+E         
+E         At index 0 diff: 2.0000000000000004 != 2.0
+E         Use -v to get more diff
+
+tests/test_accounting_audit.py:83: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_accounting_audit.py::test_opt_cadence_holds_contracts - ass...
+1 failed, 19 passed in 2.11s

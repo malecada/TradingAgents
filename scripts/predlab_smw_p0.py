@@ -97,7 +97,9 @@ def score(sig: pd.DataFrame, y: pd.DataFrame, lag: int) -> dict:
         subs[label] = float(sub.mean()) if len(sub) > 20 else float("nan")
     s["sub_periods"] = subs
     s["p_two_sided"] = float(2 * (1 - stats.norm.cdf(abs(s["nw_t"])))) if np.isfinite(s["nw_t"]) else float("nan")
-    s["ic_se"] = float(s["ic_std"] / np.sqrt(s["n_days"])) if s["n_days"] > 1 else float("nan")
+    s["ic_se_iid_diagnostic"] = float(s["ic_std"] / np.sqrt(s["n_days"])) if s["n_days"] > 1 else float("nan")
+    s["ic_se"] = abs(float(s["mean_ic"] / s["nw_t"])) if np.isfinite(s["nw_t"]) and s["nw_t"] != 0 else float("nan")
+    s["ic_se_method"] = "HAC consistent with the decision statistic"
     s["subs_positive"] = int(sum(1 for v in subs.values() if np.isfinite(v) and v > 0))
     return s
 
@@ -110,7 +112,7 @@ def main() -> None:
         raise SystemExit("p0_result.json exists — one-shot already spent")
     entry = registry.get_experiment(EXP)
     dev_start, dev_end = entry["universe"]["dev_window"]
-    registry.assert_dev_window(dev_end)
+    registry.preflight(EXP, (dev_start, dev_end))
 
     F = pd.read_parquet(SMW / "features.parquet")
     Q = pd.read_parquet(SMW / "qualified_daily.parquet")

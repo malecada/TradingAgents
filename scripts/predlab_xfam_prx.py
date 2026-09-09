@@ -21,7 +21,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from scipy.stats import wilcoxon
-from statsmodels.tsa.stattools import adfuller
+from statsmodels.tsa.stattools import adfuller, coint
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from predlab_xfam_lib import (  # noqa: E402
@@ -63,6 +63,8 @@ def month_starts(index: pd.DatetimeIndex, lo: str, hi: str):
 
 
 def main():
+    from tradingagents.predlab import registry
+    registry.preflight("predlab_xfam", DEV)
     rng = np.random.default_rng(42)
     panels = load_daily_panels()
     close = clip_dev(panels["close"])
@@ -85,7 +87,8 @@ def main():
             beta, resid = eg_beta_resid(lw[a], lw[b])
             if resid is None:
                 continue
-            p = adf_p_fast(resid.to_numpy())
+            paired = pd.concat([lw[a], lw[b]], axis=1).dropna()
+            p = float(coint(paired.iloc[:, 0], paired.iloc[:, 1], trend="c", maxlag=5, autolag=None)[1])
             if np.isnan(p) or p >= 0.05:
                 continue
             hl = ar1_half_life(resid)
@@ -94,7 +97,7 @@ def main():
             selected.append((p, a, b, beta))
         selected.sort()
         selected = selected[:20]
-        # OOS persistence of selected pairs
+        # Descriptive OOS fixed-beta spread persistence; not a new EG formation test
         sel_flags = []
         for _, a, b, beta in selected:
             sp = (tw[a] - beta * tw[b]).to_numpy()

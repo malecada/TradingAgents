@@ -40,17 +40,29 @@ def load_anchors():
 
 
 def eth_usd_series() -> pd.Series:
-    c = pd.read_parquet(ROOT / "data" / "xsect" / "klines" / "ETHUSDT.parquet",
-                        columns=["close"])["close"]
+    """Open-labeled Binance ETHUSDT five-minute closes, available open+5min."""
+    path = ROOT / "data" / "predlab" / "klines_5m" / "ETHUSDT.parquet"
+    if not path.exists():
+        raise ValueError(f"completed 5m ETH quotes required; unavailable source: {path}")
+    c = pd.read_parquet(path, columns=["close"])["close"]
+    c.attrs.update(bar_interval="5min", timestamp_label="open", source=str(path))
     return c
 
 
 def eth_usd_at(ts: float, ser: pd.Series) -> float:
-    d = pd.Timestamp(int(ts), unit="s", tz="UTC").floor("D")
-    s = ser.reindex([d]).iloc[0]
-    if np.isnan(s):
-        s = ser[ser.index <= d].iloc[-1]
-    return float(s)
+    """Use exactly the last fully completed 5m candle; reject missing/stale data."""
+    if (ser.attrs.get("bar_interval") != "5min" or
+            ser.attrs.get("timestamp_label") != "open"):
+        raise ValueError("ETH conversion requires explicit open-labeled 5m quotes")
+    if not isinstance(ser.index, pd.DatetimeIndex) or ser.index.tz is None or not ser.index.is_unique:
+        raise ValueError("ETH 5m quotes require unique timezone-aware timestamps")
+    event = pd.Timestamp(ts, unit="s", tz="UTC")
+    last_open = event.floor("5min") - pd.Timedelta(minutes=5)
+    price = ser.get(last_open, np.nan)
+    if not np.isfinite(price) or price <= 0:
+        raise ValueError(f"missing/stale completed 5m ETH quote at {last_open}; "
+                         "historical event remains unvalidated")
+    return float(price)
 
 
 def pool_event(pool: dict, ts_of, ethusd: pd.Series) -> "dict | None":
@@ -117,7 +129,7 @@ def main() -> None:
         rows.append(r)
     tab = pd.DataFrame(rows).set_index("pair").sort_values("list_date")
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    tab.to_parquet(OUT_DIR / "dex_events.parquet")
+    tab.to_parquet(OUT_DIR / "dex_events_causal_v2.parquet")
     stats = {}
     for h in HORIZONS_DEX:
         st = p0_stats(tab, f"ret{h}")

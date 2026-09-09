@@ -51,8 +51,8 @@ def test_round_trip_short_pin_simple_loses_log_books_zero():
     close = pd.Series([100.0, 200.0, 100.0], index=days)
     R_simple = pd.DataFrame({"A": returns_from_close(close, "simple")})
     R_log = pd.DataFrame({"A": returns_from_close(close, "log")})
-    W = pd.DataFrame({"A": [-1.0, -1.0, -1.0]}, index=days)
-    assert run_daily_portfolio(W, R_simple, cost_bps=0.0).sum() == pytest.approx(-0.5)
+    W = pd.DataFrame({"A": [-0.5, -0.5, -0.5]}, index=days)
+    assert run_daily_portfolio(W, R_simple, cost_bps=0.0).sum() == pytest.approx(-0.25)
     assert run_daily_portfolio(W, R_log, cost_bps=0.0).sum() == pytest.approx(0.0)
 
 
@@ -84,7 +84,7 @@ def test_fast_engine_matches_reference(convention):
     for s in ("A", "B", "C", "D"):
         path = 100 * np.exp(np.cumsum(rng.normal(0, 0.05, n)))
         kl[s] = _kl(path)
-    kl["C"] = kl["C"].iloc[:70]  # delists mid-sample
+    # Complete marks are required; missing settlement is tested separately.
     idx = kl["A"].index
     reb = idx[idx.dayofweek == 0]
     members = {t: sorted(rng.choice(["A", "B", "C", "D"], size=2, replace=False)) for t in reb}

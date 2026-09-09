@@ -1,0 +1,399 @@
+FFFFFFFFFFFFFFFFFFFF                                                     [100%]
+=================================== FAILURES ===================================
+_________ test_drawdown_counts_loss_from_initial_capital[max_drawdown] _________
+
+metric = <function max_drawdown at 0x787b57692b60>
+
+    @pytest.mark.parametrize('metric', [pp.max_drawdown, combo.maxdd_simple])
+    def test_drawdown_counts_loss_from_initial_capital(metric):
+>       assert metric(pd.Series([-.2, 0., 0.])) == pytest.approx(.2)
+E       assert 0.0 == 0.2 ± 2.0e-07
+E         
+E         comparison failed
+E         Obtained: 0.0
+E         Expected: 0.2 ± 2.0e-07
+
+tests/test_accounting_audit.py:35: AssertionError
+_________ test_drawdown_counts_loss_from_initial_capital[maxdd_simple] _________
+
+metric = <function maxdd_simple at 0x787b576e6200>
+
+    @pytest.mark.parametrize('metric', [pp.max_drawdown, combo.maxdd_simple])
+    def test_drawdown_counts_loss_from_initial_capital(metric):
+>       assert metric(pd.Series([-.2, 0., 0.])) == pytest.approx(.2)
+E       assert -0.0 == 0.2 ± 2.0e-07
+E         
+E         comparison failed
+E         Obtained: -0.0
+E         Expected: 0.2 ± 2.0e-07
+
+tests/test_accounting_audit.py:35: AssertionError
+____ test_strategy_callers_convert_stored_log_returns[run_s2_dev-run_s2-D] _____
+
+caller = 'run_s2_dev', engine = 'run_s2', freq = 'D'
+
+    @pytest.mark.parametrize('caller,engine,freq', [('run_s2_dev','run_s2','D'), ('run_s3_dev','run_s3','h')])
+    def test_strategy_callers_convert_stored_log_returns(caller, engine, freq):
+        ix = pd.date_range('2024-01-01', periods=40, freq=freq, tz='UTC')
+        expected = pd.Series(np.tile([.1, -.095], 20), index=ix)
+        store = pd.DataFrame({'ret': np.log1p(expected), 'rv': .04/365}, index=ix)
+        captured = []
+        def boundary(_forecast, returns, *args):
+            captured.append(returns)
+            raise StopIteration
+        ns = load_functions('scripts/predlab_pp_dev.py', {caller},
+            dict(pd=pd, np=np, DATA_ROOT=Path('/unused'), DEV=('2024-01-01','2024-12-31'),
+                 pp=SimpleNamespace(**{engine: boundary}),
+                 _load_fc=lambda *args: pd.DataFrame({'pred': .8}, index=ix)))
+        with patch.object(pd, 'read_parquet', return_value=store), pytest.raises(StopIteration):
+            ns[caller]()
+>       np.testing.assert_allclose(captured[0], expected, rtol=1e-13)
+E       AssertionError: 
+E       Not equal to tolerance rtol=1e-13, atol=0
+E       
+E       Mismatched elements: 40 / 40 (100%)
+E       Max absolute difference among violations: 0.00482034
+E       Max relative difference among violations: 0.05074037
+E        ACTUAL: array([ 0.09531, -0.09982,  0.09531, -0.09982,  0.09531, -0.09982,
+E               0.09531, -0.09982,  0.09531, -0.09982,  0.09531, -0.09982,
+E               0.09531, -0.09982,  0.09531, -0.09982,  0.09531, -0.09982,...
+E        DESIRED: array([ 0.1  , -0.095,  0.1  , -0.095,  0.1  , -0.095,  0.1  , -0.095,
+E               0.1  , -0.095,  0.1  , -0.095,  0.1  , -0.095,  0.1  , -0.095,
+E               0.1  , -0.095,  0.1  , -0.095,  0.1  , -0.095,  0.1  , -0.095,...
+
+tests/test_accounting_audit.py:54: AssertionError
+____ test_strategy_callers_convert_stored_log_returns[run_s3_dev-run_s3-h] _____
+
+caller = 'run_s3_dev', engine = 'run_s3', freq = 'h'
+
+    @pytest.mark.parametrize('caller,engine,freq', [('run_s2_dev','run_s2','D'), ('run_s3_dev','run_s3','h')])
+    def test_strategy_callers_convert_stored_log_returns(caller, engine, freq):
+        ix = pd.date_range('2024-01-01', periods=40, freq=freq, tz='UTC')
+        expected = pd.Series(np.tile([.1, -.095], 20), index=ix)
+        store = pd.DataFrame({'ret': np.log1p(expected), 'rv': .04/365}, index=ix)
+        captured = []
+        def boundary(_forecast, returns, *args):
+            captured.append(returns)
+            raise StopIteration
+        ns = load_functions('scripts/predlab_pp_dev.py', {caller},
+            dict(pd=pd, np=np, DATA_ROOT=Path('/unused'), DEV=('2024-01-01','2024-12-31'),
+                 pp=SimpleNamespace(**{engine: boundary}),
+                 _load_fc=lambda *args: pd.DataFrame({'pred': .8}, index=ix)))
+        with patch.object(pd, 'read_parquet', return_value=store), pytest.raises(StopIteration):
+            ns[caller]()
+>       np.testing.assert_allclose(captured[0], expected, rtol=1e-13)
+E       AssertionError: 
+E       Not equal to tolerance rtol=1e-13, atol=0
+E       
+E       Mismatched elements: 40 / 40 (100%)
+E       Max absolute difference among violations: 0.00482034
+E       Max relative difference among violations: 0.05074037
+E        ACTUAL: array([ 0.09531, -0.09982,  0.09531, -0.09982,  0.09531, -0.09982,
+E               0.09531, -0.09982,  0.09531, -0.09982,  0.09531, -0.09982,
+E               0.09531, -0.09982,  0.09531, -0.09982,  0.09531, -0.09982,...
+E        DESIRED: array([ 0.1  , -0.095,  0.1  , -0.095,  0.1  , -0.095,  0.1  , -0.095,
+E               0.1  , -0.095,  0.1  , -0.095,  0.1  , -0.095,  0.1  , -0.095,
+E               0.1  , -0.095,  0.1  , -0.095,  0.1  , -0.095,  0.1  , -0.095,...
+
+tests/test_accounting_audit.py:54: AssertionError
+________________________ test_s2_charges_initial_entry _________________________
+
+    def test_s2_charges_initial_entry():
+        ix = pd.date_range('2024-01-01', periods=21, tz='UTC')
+        result = pp.run_s2(pd.Series(.04/365,index=ix), pd.Series(0.,index=ix))
+>       assert result['rets'].iloc[0] == pytest.approx(-.0005)
+E       assert np.float64(0.0) == -0.0005 ± 5.0e-10
+E         
+E         comparison failed
+E         Obtained: 0.0
+E         Expected: -0.0005 ± 5.0e-10
+
+tests/test_accounting_audit.py:60: AssertionError
+___________ test_weekly_engine_holds_units_between_rebalances[False] ___________
+
+fast = False
+
+    @pytest.mark.parametrize('fast', [False, True])
+    def test_weekly_engine_holds_units_between_rebalances(fast):
+        ix = pd.date_range('2024-01-01', periods=3, tz='UTC')
+        kl = {s: pd.DataFrame({'close': p}, index=ix) for s,p in
+              {'A':[100.,110.,121.], 'B':[100.,100.,100.]}.items()}
+        reb = ix[:1]
+        if fast:
+            result = portfolio.fast_weekly_portfolio({ix[0]: ['A','B']}, reb,
+                *portfolio.build_fast_arrays(kl), cost_bps=0.)
+        else:
+            result = portfolio.run_weekly_portfolio(kl, reb, lambda _: ['A','B'], cost_bps=0.)
+>       assert (1+result).prod() == pytest.approx(1.105)
+E       assert np.float64(1.1025) == 1.105 ± 1.1e-06
+E         
+E         comparison failed
+E         Obtained: 1.1025
+E         Expected: 1.105 ± 1.1e-06
+
+tests/test_accounting_audit.py:74: AssertionError
+___________ test_weekly_engine_holds_units_between_rebalances[True] ____________
+
+fast = True
+
+    @pytest.mark.parametrize('fast', [False, True])
+    def test_weekly_engine_holds_units_between_rebalances(fast):
+        ix = pd.date_range('2024-01-01', periods=3, tz='UTC')
+        kl = {s: pd.DataFrame({'close': p}, index=ix) for s,p in
+              {'A':[100.,110.,121.], 'B':[100.,100.,100.]}.items()}
+        reb = ix[:1]
+        if fast:
+            result = portfolio.fast_weekly_portfolio({ix[0]: ['A','B']}, reb,
+                *portfolio.build_fast_arrays(kl), cost_bps=0.)
+        else:
+            result = portfolio.run_weekly_portfolio(kl, reb, lambda _: ['A','B'], cost_bps=0.)
+>       assert (1+result).prod() == pytest.approx(1.105)
+E       assert np.float64(1.1025) == 1.105 ± 1.1e-06
+E         
+E         comparison failed
+E         Obtained: 1.1025
+E         Expected: 1.105 ± 1.1e-06
+
+tests/test_accounting_audit.py:74: AssertionError
+_______________________ test_opt_cadence_holds_contracts _______________________
+
+    def test_opt_cadence_holds_contracts():
+        ix, cols, sig, ret, uni = panels()
+        ret.loc[ix[1]:, cols[0]] = .1
+        result = opt.run_ls(sig, ret, uni, None, opt.OptConfig(cadence=3,taker_bp=0.), str(ix[0].date()),str(ix[-1].date()))
+>       assert (1+result['rets'].net).prod() == pytest.approx(1.035)
+E       assert np.float64(1.033611111111111) == 1.035 ± 1.0e-06
+E         
+E         comparison failed
+E         Obtained: 1.033611111111111
+E         Expected: 1.035 ± 1.0e-06
+
+tests/test_accounting_audit.py:82: AssertionError
+______________ test_missing_signal_retains_exposure_and_clock[s1] ______________
+
+engine = 's1'
+
+    @pytest.mark.parametrize('engine', ['s1', 'opt'])
+    def test_missing_signal_retains_exposure_and_clock(engine):
+        ix, cols, sig, ret, uni = panels()
+        sig.loc[ix[1]] = np.nan
+        ret.loc[ix[1], cols[:6]] = -.1
+        with patch.object(pp, 'TAKER_BP', 0.):
+            result = (pp.run_s1(sig,ret,uni,None,'eq',1,'2024-01-01','2024-01-03') if engine=='s1'
+                      else opt.run_ls(sig,ret,uni,None,opt.OptConfig(taker_bp=0.),'2024-01-01','2024-01-03'))
+>       assert result['rets'].index.equals(ix)
+E       AssertionError: assert False
+E        +  where False = equals(DatetimeIndex(['2024-01-01 00:00:00+00:00', '2024-01-02 00:00:00+00:00',\n               '2024-01-03 00:00:00+00:00'],\n              dtype='datetime64[ns, UTC]', freq='D'))
+E        +    where equals = DatetimeIndex(['2024-01-01 00:00:00+00:00', '2024-01-03 00:00:00+00:00'], dtype='datetime64[ns, UTC]', name='date', freq=None).equals
+E        +      where DatetimeIndex(['2024-01-01 00:00:00+00:00', '2024-01-03 00:00:00+00:00'], dtype='datetime64[ns, UTC]', name='date', freq=None) =                            gross  net  turnover  carry\ndate                                                  \n2024-01-01 00:00:00+00:00    0.0  0.0       2.0    0.0\n2024-01-03 00:00:00+00:00    0.0  0.0       0.0    0.0.index
+
+tests/test_accounting_audit.py:94: AssertionError
+_____________ test_missing_signal_retains_exposure_and_clock[opt] ______________
+
+engine = 'opt'
+
+    @pytest.mark.parametrize('engine', ['s1', 'opt'])
+    def test_missing_signal_retains_exposure_and_clock(engine):
+        ix, cols, sig, ret, uni = panels()
+        sig.loc[ix[1]] = np.nan
+        ret.loc[ix[1], cols[:6]] = -.1
+        with patch.object(pp, 'TAKER_BP', 0.):
+            result = (pp.run_s1(sig,ret,uni,None,'eq',1,'2024-01-01','2024-01-03') if engine=='s1'
+                      else opt.run_ls(sig,ret,uni,None,opt.OptConfig(taker_bp=0.),'2024-01-01','2024-01-03'))
+>       assert result['rets'].index.equals(ix)
+E       AssertionError: assert False
+E        +  where False = equals(DatetimeIndex(['2024-01-01 00:00:00+00:00', '2024-01-02 00:00:00+00:00',\n               '2024-01-03 00:00:00+00:00'],\n              dtype='datetime64[ns, UTC]', freq='D'))
+E        +    where equals = DatetimeIndex(['2024-01-01 00:00:00+00:00', '2024-01-03 00:00:00+00:00'], dtype='datetime64[ns, UTC]', name='date', freq=None).equals
+E        +      where DatetimeIndex(['2024-01-01 00:00:00+00:00', '2024-01-03 00:00:00+00:00'], dtype='datetime64[ns, UTC]', name='date', freq=None) =                            gross  net  turnover  cost  carry\ndate                                                     ...24-01-01 00:00:00+00:00    0.0  0.0       2.0   0.0    0.0\n2024-01-03 00:00:00+00:00    0.0  0.0       0.0   0.0    0.0.index
+
+tests/test_accounting_audit.py:94: AssertionError
+________________ test_missing_held_return_fails_explicitly[s1] _________________
+
+engine = 's1'
+
+    @pytest.mark.parametrize('engine', ['s1', 'opt'])
+    def test_missing_held_return_fails_explicitly(engine):
+        ix, cols, sig, ret, uni = panels()
+        ret.loc[ix[1], cols[0]] = np.nan
+>       with pytest.raises(ValueError, match='missing_held_return.*S00'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_accounting_audit.py:102: Failed
+________________ test_missing_held_return_fails_explicitly[opt] ________________
+
+engine = 'opt'
+
+    @pytest.mark.parametrize('engine', ['s1', 'opt'])
+    def test_missing_held_return_fails_explicitly(engine):
+        ix, cols, sig, ret, uni = panels()
+        ret.loc[ix[1], cols[0]] = np.nan
+>       with pytest.raises(ValueError, match='missing_held_return.*S00'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_accounting_audit.py:102: Failed
+_________ test_daily_rebalance_charges_actual_drifted_turnover[trend] __________
+
+engine = 'trend'
+
+    @pytest.mark.parametrize('engine', ['trend','carry'])
+    def test_daily_rebalance_charges_actual_drifted_turnover(engine):
+        ix = pd.date_range('2024-01-01',periods=3,tz='UTC')
+        w = pd.DataFrame({'A': .5, 'B': .5},index=ix)
+        r = pd.DataFrame({'A': [0.,.1,0.], 'B': 0.},index=ix)
+        if engine == 'trend':
+            result = trend.run_daily_portfolio(w,r,cost_bps=100.)
+        else:
+            result = carry_xs.run_ls_portfolio(w,r,r*0,cost_bps=100.,rf_daily=0.)
+        # Initial fee .01, gain .05 => NAV1=1.04; notionals .55/.50.
+        # Next targets .52/.52; turnover dollars=.03+.02=.05; fee=.0005.
+>       assert result.iloc[1] == pytest.approx(-.0005/1.04)
+E       assert np.float64(0.0) == -0.0004807692...3074 ± 4.8e-10
+E         
+E         comparison failed
+E         Obtained: 0.0
+E         Expected: -0.00048076923076923074 ± 4.8e-10
+
+tests/test_accounting_audit.py:120: AssertionError
+_________ test_daily_rebalance_charges_actual_drifted_turnover[carry] __________
+
+engine = 'carry'
+
+    @pytest.mark.parametrize('engine', ['trend','carry'])
+    def test_daily_rebalance_charges_actual_drifted_turnover(engine):
+        ix = pd.date_range('2024-01-01',periods=3,tz='UTC')
+        w = pd.DataFrame({'A': .5, 'B': .5},index=ix)
+        r = pd.DataFrame({'A': [0.,.1,0.], 'B': 0.},index=ix)
+        if engine == 'trend':
+            result = trend.run_daily_portfolio(w,r,cost_bps=100.)
+        else:
+            result = carry_xs.run_ls_portfolio(w,r,r*0,cost_bps=100.,rf_daily=0.)
+        # Initial fee .01, gain .05 => NAV1=1.04; notionals .55/.50.
+        # Next targets .52/.52; turnover dollars=.03+.02=.05; fee=.0005.
+>       assert result.iloc[1] == pytest.approx(-.0005/1.04)
+E       assert np.float64(0.0) == -0.0004807692...3074 ± 4.8e-10
+E         
+E         comparison failed
+E         Obtained: 0.0
+E         Expected: -0.00048076923076923074 ± 4.8e-10
+
+tests/test_accounting_audit.py:120: AssertionError
+______________ test_weekly_ls_metadata_preserves_declared_cadence ______________
+
+    def test_weekly_ls_metadata_preserves_declared_cadence():
+        ix = pd.date_range('2024-01-01',periods=3,tz='UTC')
+        s = pd.DataFrame(np.tile(np.arange(6.),(3,1)),index=ix,columns=list('ABCDEF'))
+        w = ls_common.ls_weights(ix,s,s.notna(),ix[:1],.2)
+        r = pd.DataFrame(0.,index=ix,columns=s.columns)
+        r.loc[ix[1]:,'A'] = .1
+        result = carry_xs.run_ls_portfolio(w,r,r*0,cost_bps=0.,rf_daily=0.)
+>       assert (1+result).prod() == pytest.approx(1.105)
+E       assert np.float64(1.1025) == 1.105 ± 1.1e-06
+E         
+E         comparison failed
+E         Obtained: 1.1025
+E         Expected: 1.105 ± 1.1e-06
+
+tests/test_accounting_audit.py:130: AssertionError
+__________________ test_hourly_returns_compound_to_daily_nav ___________________
+
+    def test_hourly_returns_compound_to_daily_nav():
+        ix = pd.date_range('2024-01-01',periods=2,freq='h',tz='UTC')
+        w = pd.DataFrame({'A':[1.,1.]},index=ix)
+        r = pd.DataFrame({'A':[1.,-.5]},index=ix)
+>       assert liq_fade.run_hourly_portfolio(w,r,cost_bps=0.,rf_annual=0.).iloc[0] == pytest.approx(0.)
+E       assert np.float64(0.5) == 0.0 ± 1.0e-12
+E         
+E         comparison failed
+E         Obtained: 0.5
+E         Expected: 0.0 ± 1.0e-12
+
+tests/test_accounting_audit.py:137: AssertionError
+_________ test_missing_calendar_day_does_not_disappear_with_held_book __________
+
+    def test_missing_calendar_day_does_not_disappear_with_held_book():
+        ix, cols, sig, ret, uni = panels()
+        ret = ret.drop(ix[1])
+>       with pytest.raises(ValueError,match='missing_held_return'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_accounting_audit.py:143: Failed
+_________________ test_calendar_sharpe_includes_inactive_days __________________
+
+    def test_calendar_sharpe_includes_inactive_days():
+        returns = [.01,.03]+[0.]*8
+        result = compute_metrics(returns,[1.,1.]+[0.]*8,1.,[1.]+np.cumprod(1+np.array(returns)).tolist(),risk_free_rate=0.)
+>       assert result['sharpe_ratio'] == pytest.approx(7.910214072718)
+E       assert 22.449944320643652 == 7.910214072718 ± 7.9e-06
+E         
+E         comparison failed
+E         Obtained: 22.449944320643652
+E         Expected: 7.910214072718 ± 7.9e-06
+
+tests/test_accounting_audit.py:150: AssertionError
+_ test_overlay_does_not_charge_underlying_fee_twice[predlab_correction_aug24.py] _
+
+script = 'predlab_correction_aug24.py'
+
+    @pytest.mark.parametrize('script', ['predlab_correction_aug24.py','predlab_champion_backtest.py'])
+    def test_overlay_does_not_charge_underlying_fee_twice(script):
+        ix = pd.date_range('2024-01-01',periods=40,tz='UTC')
+        base = pd.DataFrame({'net':np.tile([.01,-.01],20)-.0005,'turnover':1.},index=ix)
+        ns = load_functions('scripts/'+script, {'overlay_o4'},dict(pd=pd,np=np,ANN_DAYS=365.,TAKER_BP=5.))
+        result = ns['overlay_o4'](base,pd.Series(200.,index=ix),target=.15)
+        if isinstance(result,tuple): result = result[0]
+        scale = .15/(base.net.rolling(20).std().shift(1)*np.sqrt(365))
+        # At day25 scale is unchanged: only existing scaled underlying fees apply.
+>       assert result.iloc[25] == pytest.approx(scale.iloc[25]*base.net.iloc[25])
+E       assert np.float64(-0...7813792256033) == -0.0080351858...8031 ± 8.0e-09
+E         
+E         comparison failed
+E         Obtained: -0.008417813792256033
+E         Expected: -0.008035185892608031 ± 8.0e-09
+
+tests/test_accounting_audit.py:162: AssertionError
+_ test_overlay_does_not_charge_underlying_fee_twice[predlab_champion_backtest.py] _
+
+script = 'predlab_champion_backtest.py'
+
+    @pytest.mark.parametrize('script', ['predlab_correction_aug24.py','predlab_champion_backtest.py'])
+    def test_overlay_does_not_charge_underlying_fee_twice(script):
+        ix = pd.date_range('2024-01-01',periods=40,tz='UTC')
+        base = pd.DataFrame({'net':np.tile([.01,-.01],20)-.0005,'turnover':1.},index=ix)
+        ns = load_functions('scripts/'+script, {'overlay_o4'},dict(pd=pd,np=np,ANN_DAYS=365.,TAKER_BP=5.))
+        result = ns['overlay_o4'](base,pd.Series(200.,index=ix),target=.15)
+        if isinstance(result,tuple): result = result[0]
+        scale = .15/(base.net.rolling(20).std().shift(1)*np.sqrt(365))
+        # At day25 scale is unchanged: only existing scaled underlying fees apply.
+>       assert result.iloc[25] == pytest.approx(scale.iloc[25]*base.net.iloc[25])
+E       assert np.float64(-0...7813792256033) == -0.0080351858...8031 ± 8.0e-09
+E         
+E         comparison failed
+E         Obtained: -0.008417813792256033
+E         Expected: -0.008035185892608031 ± 8.0e-09
+
+tests/test_accounting_audit.py:162: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_accounting_audit.py::test_drawdown_counts_loss_from_initial_capital[max_drawdown]
+FAILED tests/test_accounting_audit.py::test_drawdown_counts_loss_from_initial_capital[maxdd_simple]
+FAILED tests/test_accounting_audit.py::test_strategy_callers_convert_stored_log_returns[run_s2_dev-run_s2-D]
+FAILED tests/test_accounting_audit.py::test_strategy_callers_convert_stored_log_returns[run_s3_dev-run_s3-h]
+FAILED tests/test_accounting_audit.py::test_s2_charges_initial_entry - assert...
+FAILED tests/test_accounting_audit.py::test_weekly_engine_holds_units_between_rebalances[False]
+FAILED tests/test_accounting_audit.py::test_weekly_engine_holds_units_between_rebalances[True]
+FAILED tests/test_accounting_audit.py::test_opt_cadence_holds_contracts - ass...
+FAILED tests/test_accounting_audit.py::test_missing_signal_retains_exposure_and_clock[s1]
+FAILED tests/test_accounting_audit.py::test_missing_signal_retains_exposure_and_clock[opt]
+FAILED tests/test_accounting_audit.py::test_missing_held_return_fails_explicitly[s1]
+FAILED tests/test_accounting_audit.py::test_missing_held_return_fails_explicitly[opt]
+FAILED tests/test_accounting_audit.py::test_daily_rebalance_charges_actual_drifted_turnover[trend]
+FAILED tests/test_accounting_audit.py::test_daily_rebalance_charges_actual_drifted_turnover[carry]
+FAILED tests/test_accounting_audit.py::test_weekly_ls_metadata_preserves_declared_cadence
+FAILED tests/test_accounting_audit.py::test_hourly_returns_compound_to_daily_nav
+FAILED tests/test_accounting_audit.py::test_missing_calendar_day_does_not_disappear_with_held_book
+FAILED tests/test_accounting_audit.py::test_calendar_sharpe_includes_inactive_days
+FAILED tests/test_accounting_audit.py::test_overlay_does_not_charge_underlying_fee_twice[predlab_correction_aug24.py]
+FAILED tests/test_accounting_audit.py::test_overlay_does_not_charge_underlying_fee_twice[predlab_champion_backtest.py]
+20 failed in 1.89s

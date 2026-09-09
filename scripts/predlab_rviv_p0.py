@@ -219,6 +219,10 @@ def git_commit_short() -> str:
 
 
 def main():
+    from tradingagents.predlab import registry
+    registry.preflight("predlab_rviv_p0", (EVAL_START, EVAL_END))
+    if (OUT_DIR / "p0_results.json").exists():
+        raise RuntimeError("Existing immutable result; a new registration is required")
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     commit = git_commit_short()
     ts = datetime.now(timezone.utc).isoformat()
@@ -259,24 +263,11 @@ def main():
     out_path = OUT_DIR / "p0_results.json"
     out_path.write_text(json.dumps(results, indent=1))
 
-    with LEDGER.open("a") as fh:
-        for sym in ASSETS:
-            for model, m in results[sym]["models"].items():
-                cfg = {"model": model, "eval": [EVAL_START, EVAL_END], "loss": "qlike_var"}
-                row = {
-                    "ts_utc": ts,
-                    "experiment": "predlab_rviv_p0",
-                    "cell": f"{sym}|1d|RV30",
-                    "model": model,
-                    "config": cfg,
-                    "config_hash": hashlib.sha1(
-                        json.dumps(cfg, sort_keys=True).encode()
-                    ).hexdigest()[:12],
-                    "git_commit": commit,
-                    "window": [EVAL_START, EVAL_END],
-                    "metrics": m,
-                }
-                fh.write(json.dumps(row) + "\n")
+    for sym in ASSETS:
+        for model, m in results[sym]["models"].items():
+            cfg = {"model": model, "eval": [EVAL_START, EVAL_END], "loss": "qlike_var"}
+            registry.log_trial("predlab_rviv_p0", f"{sym}|1d|RV30", model, cfg,
+                               (EVAL_START, EVAL_END), m)
 
     print(json.dumps(results["primary_criterion"], indent=1))
     for sym in ASSETS:

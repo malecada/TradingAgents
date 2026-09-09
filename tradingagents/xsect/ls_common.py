@@ -2,8 +2,8 @@
 
 Generalises the algorithm in ``carry_xs.carry_weights`` (which hardcodes a
 funding-validity mask and recomputes daily) so value and unlock signals can
-share it. ``carry_xs`` is deliberately NOT refactored onto this: its results
-are published (THESIS section 46) and must stay byte-reproducible.
+share it. Historical result artifacts are preserved; corrected engines use
+explicit rebalance metadata to retain contracts between scheduled decisions.
 
 Tie-break and sort logic follow carry_xs exactly: two independent sorts,
 short leg first (descending signal, then ascending symbol), long leg excluding
@@ -22,7 +22,7 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-MIN_VALID = 5   # fewer valid names than this on a rebalance date => flat
+MIN_VALID = 5   # fewer names => no new instruction; existing contracts remain
 
 
 def ls_weights(all_days: pd.DatetimeIndex, S: pd.DataFrame, valid: pd.DataFrame,
@@ -30,7 +30,8 @@ def ls_weights(all_days: pd.DatetimeIndex, S: pd.DataFrame, valid: pd.DataFrame,
     """Dollar-neutral L/S weights, recomputed only on ``rebalance_dates``.
 
     Short the top ``leg_frac`` by signal, long the bottom ``leg_frac``.
-    Weights are held constant until the next rebalance date. Rows sum to 0.
+    Rows contain declared target weights; rebalance_dates metadata instructs
+    the accounting engine to hold contracts between those dates. Rows sum to 0.
 
     At exactly leg_frac=0.5, banker's rounding can cause legs to become
     imbalanced (short leg larger than long leg) when valid-name count is
@@ -38,13 +39,13 @@ def ls_weights(all_days: pd.DatetimeIndex, S: pd.DataFrame, valid: pd.DataFrame,
     """
     if not 0.0 < leg_frac < 0.5:
         raise ValueError("leg_frac must be in (0, 0.5)")
-    W = pd.DataFrame(0.0, index=all_days, columns=S.columns)
+    W = pd.DataFrame(np.nan, index=all_days, columns=S.columns)
+    valid_rebalances = []
     days_set = set(all_days)
     rbs = [d for d in rebalance_dates if d in days_set]
-    for i, t in enumerate(rbs):
+    for t in rbs:
         v = valid.loc[t] & S.loc[t].notna()
         names = list(v.index[v])
-        hi = rbs[i + 1] if i + 1 < len(rbs) else None
         if len(names) < MIN_VALID:
             continue
         n_leg = max(1, int(round(leg_frac * len(names))))
@@ -54,9 +55,12 @@ def ls_weights(all_days: pd.DatetimeIndex, S: pd.DataFrame, valid: pd.DataFrame,
                  if s not in shorts_set][:n_leg]
         if not longs:
             continue
-        seg = W.loc[t:] if hi is None else W.loc[t:hi - pd.Timedelta(days=1)]
-        W.loc[seg.index, shorts] = -0.5 / len(shorts)
-        W.loc[seg.index, longs] = +0.5 / len(longs)
+        W.loc[t] = 0.
+        W.loc[t, shorts] = -0.5 / len(shorts)
+        W.loc[t, longs] = +0.5 / len(longs)
+        valid_rebalances.append(t)
+    W = W.ffill().fillna(0.)
+    W.attrs["rebalance_dates"] = valid_rebalances
     return W
 
 

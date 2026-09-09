@@ -1,0 +1,130 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+______________ test_small_live_book_cannot_bypass_per_symbol_cap _______________
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-22', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+
+    def test_small_live_book_cannot_bypass_per_symbol_cap(live):
+        mod,_=live
+        c=Exchange()
+>       assert 'cap violation' in mod.run(c,False)
+E       AssertionError: assert 'cap violation' in 'done 2026-08-22: 2 filled, 0 residual positions'
+E        +  where 'done 2026-08-22: 2 filled, 0 residual positions' = <function _locked.<locals>.wrapped at 0x748334de0fe0>(<predlab.test_execution_repair.Exchange object at 0x748334d327b0>, False)
+E        +    where <function _locked.<locals>.wrapped at 0x748334de0fe0> = <module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>.run
+
+tests/predlab/test_execution_repair.py:201: AssertionError
+________ test_frozen_unfilled_target_remains_in_quote_and_risk_universe ________
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-22', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+
+    def test_frozen_unfilled_target_remains_in_quote_and_risk_universe(live):
+        mod,row=live
+        c=Exchange(reject={'BBBUSDT'})
+        mod.run(c,False)
+        row['weights'].pop('BBBUSDT')
+        row['mark_px'].pop('BBBUSDT')
+        mod.CH_JOURNAL.write_text(json.dumps(row)+'\n')
+        c.reject.clear()
+>       assert mod.run(c,False).startswith('done')
+               ^^^^^^^^^^^^^^^^
+
+tests/predlab/test_execution_repair.py:213: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/predlab_s1_live.py:237: in wrapped
+    return action(client, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+client = <predlab.test_execution_repair.Exchange object at 0x748334d68e10>
+dry_run = False, today = '2026-08-23'
+
+    @_locked
+    def run(client, dry_run: bool, today: str | None = None) -> str:
+        if HALT_FLAG.exists():
+            return f'halt: {HALT_FLAG} present; run close-all to retry residual closure'
+        now = datetime.now(timezone.utc)
+        today = today or str(now.date())
+        if not dry_run and client.position_mode():
+            return 'ERROR: account in hedge mode; one-way mode required before any order'
+        equity = client.equity()
+        if not math.isfinite(equity) or equity <= 0:
+            return 'ERROR: invalid account equity'
+        day_eq = equity if dry_run else day_start_equity(today, equity)
+        if live_exec.daily_loss_breached(equity, day_eq):
+            if dry_run:
+                return 'dry-run: daily loss breached; would halt and flatten'
+            return 'halt: daily loss breached; ' + _close_all(client)
+        if not dry_run:
+            pending = _reconcile_pending(client)
+            if pending:
+                return f'incomplete: {len(pending)} unresolved order intents; no new submissions'
+        row = read_champion_row()
+        if row is None:
+            return 'ERROR: no champion journal row'
+        asof = row['asof']
+        if row.get('journal_version') != 2:
+            return 'WAIT: champion journal requires corrected measurement version 2'
+        try:
+            age = (date.fromisoformat(today) - date.fromisoformat(asof)).days
+            if age != 1 or row.get('trade_day') != today:
+                return 'WAIT: stale or future champion signal date'
+        except ValueError:
+            return 'WAIT: invalid champion signal date'
+        if not dry_run and _asof_already_executed(asof):
+            # Completion is backed by an actual position check even on later wakes.
+            prior = [r for r in _rows(LIVE_JOURNAL) if r.get('asof') == asof and
+                     r.get('status') == 'reconciled' and not r.get('dry_run')][-1]
+            if not _residual(prior['target_qty'], client.positions()):
+                return f'skip: {asof} already reconciled'
+        scale = row.get('vt15_b100_scale')
+        if scale is None:
+            return 'WAIT: vt15_b100_scale is null (net vol window not accrued)'
+        if not math.isfinite(scale) or scale < 0:
+            return 'WAIT: invalid scale'
+        weights = row.get('weights') or {}
+        if any(not math.isfinite(w) for w in weights.values()):
+            return 'WAIT: invalid desired weights'
+        paper_marks = row.get('mark_px') or {}
+        if any(s not in paper_marks or not math.isfinite(paper_marks[s]) or paper_marks[s] <= 0
+               for s, w in weights.items() if w):
+            return 'WAIT: champion row has missing or invalid marks'
+        try:
+            age_s = (now - datetime.fromisoformat(row['mark_ts'])).total_seconds()
+            if not 0 <= age_s <= MARK_MAX_AGE_S:
+                return 'WAIT: stale or future champion marks'
+        except (KeyError, TypeError, ValueError):
+            return 'WAIT: champion mark timestamp unavailable'
+        filters = load_filters(client)
+        positions = client.positions()
+        symbols = set(weights) | set(positions)
+        try:
+            marks = _current_marks(client, symbols, now)
+        except Exception as exc:
+            return f'WAIT: current quotes unavailable: {exc}'
+        if symbols - marks.keys():
+            return 'WAIT: missing or stale current quotes for desired/held exposure'
+        scale_executed = min(scale, SCALE_CLAMP)
+        targets_qty, dropped = live_exec.build_targets(weights, scale_executed, equity, marks, filters)
+        unavailable = {d['symbol'] for d in dropped if d['reason'] in ('no_mark', 'no_filter')}
+        if unavailable:
+            return 'WAIT: desired target unavailable: ' + ', '.join(sorted(unavailable))
+        intents = [r for r in _rows(LIVE_JOURNAL) if r.get('asof') == asof and
+                   not r.get('dry_run') and 'target_qty' in r]
+        if intents:
+            targets_qty = intents[0]['target_qty']
+        orders, skipped = live_exec.diff_orders(targets_qty, positions, marks, filters,
+                                                unavailable=unavailable)
+        # Accepted dust is an explicit retained holding, frozen in the batch target.
+        if not intents:
+            for skip in skipped:
+                if skip['reason'] in ('dust', 'increase_below_min_notional'):
+                    targets_qty[skip['symbol']] = positions.get(skip['symbol'], 0)
+>       tn = {s: q * marks[s] for s, q in targets_qty.items()}
+                     ^^^^^^^^
+E       KeyError: 'BBBUSDT'
+
+scripts/predlab_s1_live.py:322: KeyError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_execution_repair.py::test_small_live_book_cannot_bypass_per_symbol_cap
+FAILED tests/predlab/test_execution_repair.py::test_frozen_unfilled_target_remains_in_quote_and_risk_universe
+2 failed in 0.17s

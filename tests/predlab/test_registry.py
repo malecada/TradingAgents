@@ -18,6 +18,7 @@ def test_assert_dev_window_blocks_holdout(monkeypatch, tmp_path):
 
 
 def test_log_trial_appends_hash_and_commit(monkeypatch, tmp_path):
+    monkeypatch.setattr(registry, "preflight", lambda *args: {"git_commit":"test", "gate_sha256":"test"})
     monkeypatch.setenv("TRADINGAGENTS_DATA_ROOT", str(tmp_path))
     row = registry.log_trial(
         "predlab_p1_classical", "BTCUSDT|24h|T3_rv", "har_levels",
@@ -36,11 +37,12 @@ def test_log_trial_appends_hash_and_commit(monkeypatch, tmp_path):
 
 
 def test_same_config_same_hash(monkeypatch, tmp_path):
+    monkeypatch.setattr(registry, "preflight", lambda *args: {"git_commit":"test", "gate_sha256":"test"})
     monkeypatch.setenv("TRADINGAGENTS_DATA_ROOT", str(tmp_path))
     r1 = registry.log_trial("e", "c", "m", {"b": 2, "a": 1}, ("x", "y"), {})
     r2 = registry.log_trial("e", "c2", "m2", {"a": 1, "b": 2}, ("x", "y"), {})
     assert r1["config_hash"] == r2["config_hash"]  # canonical json, key order irrelevant
-    assert registry.trial_count() == 1  # unique hashes
+    assert registry.trial_count() == 2  # cell/model identify separate hypotheses
 
 
 def test_load_gates_roundtrip(monkeypatch, tmp_path):

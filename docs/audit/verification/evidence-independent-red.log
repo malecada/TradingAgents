@@ -1,0 +1,28 @@
+...F..........F                                                          [100%]
+=================================== FAILURES ===================================
+________________ test_strategy_clock_rejects_truncated_endpoint ________________
+
+    def test_strategy_clock_rejects_truncated_endpoint():
+>       from scripts.audit_correction_2026_09_09 import require_strategy_clock
+E       ImportError: cannot import name 'require_strategy_clock' from 'scripts.audit_correction_2026_09_09' (/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/audit_correction_2026_09_09.py)
+
+tests/predlab/test_bounded_audit_correction.py:37: ImportError
+________ test_uncommitted_policy_change_cannot_authorize_old_experiment ________
+
+registered_repo = PosixPath('/tmp/pytest-of-malecada/pytest-51/test_uncommitted_policy_change0/repo')
+
+    def test_uncommitted_policy_change_cannot_authorize_old_experiment(registered_repo):
+        policy=registered_repo/'docs/audit/corrections.jsonl'
+        policy.parent.mkdir(parents=True)
+        policy.write_text(json.dumps({'id':'old','claim':'new','status':'invalid','reason':'audit','rerun_requires_new_registration':True})+'\n')
+        _git(registered_repo,'add','.');_git(registered_repo,'commit','-m','freeze correction policy')
+        policy.write_text('')
+>       with pytest.raises(RuntimeError,match='uncommitted'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE RuntimeError
+
+tests/predlab/test_audit_evidence.py:118: Failed
+=========================== short test summary info ============================
+FAILED tests/predlab/test_bounded_audit_correction.py::test_strategy_clock_rejects_truncated_endpoint
+FAILED tests/predlab/test_audit_evidence.py::test_uncommitted_policy_change_cannot_authorize_old_experiment
+2 failed, 13 passed in 1.71s

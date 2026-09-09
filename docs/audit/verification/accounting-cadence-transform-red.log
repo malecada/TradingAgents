@@ -1,0 +1,104 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+___ test_placebo_transform_preserves_weekly_execution_cadence[combo_shared] ____
+
+shift = 'combo_shared'
+
+    @pytest.mark.parametrize('shift', ['combo_shared','combo_independent','trend_shared','trend_independent'])
+    def test_placebo_transform_preserves_weekly_execution_cadence(shift):
+        ix=pd.date_range('2024-01-01',periods=6,tz='UTC')
+        s=pd.DataFrame(np.tile(np.arange(6.),(6,1)),index=ix,columns=list('ABCDEF'))
+        w=ls_common.ls_weights(ix,s,s.notna(),ix[:1],.2)
+        if shift=='combo_shared': shifted=combo.shared_shift(w,0)
+        elif shift=='combo_independent': shifted=combo.indep_shift(w,np.random.default_rng(0),1)
+        elif shift=='trend_shared': shifted=trend.shared_shift_weights(w,np.random.default_rng(0),1)
+        else: shifted=trend.circular_shift_weights(w,np.random.default_rng(0),1)
+        r=pd.DataFrame(0.,index=ix,columns=s.columns)
+        r.loc[ix[1:3],'A']=.1
+        net=carry_xs.run_ls_portfolio(shifted,r,r*0,cost_bps=0.,rf_daily=0.)
+>       assert (1+net).prod() == pytest.approx(1.105)
+E       assert np.float64(1.1025) == 1.105 ± 1.1e-06
+E         
+E         comparison failed
+E         Obtained: 1.1025
+E         Expected: 1.105 ± 1.1e-06
+
+tests/test_accounting_audit.py:321: AssertionError
+_ test_placebo_transform_preserves_weekly_execution_cadence[combo_independent] _
+
+shift = 'combo_independent'
+
+    @pytest.mark.parametrize('shift', ['combo_shared','combo_independent','trend_shared','trend_independent'])
+    def test_placebo_transform_preserves_weekly_execution_cadence(shift):
+        ix=pd.date_range('2024-01-01',periods=6,tz='UTC')
+        s=pd.DataFrame(np.tile(np.arange(6.),(6,1)),index=ix,columns=list('ABCDEF'))
+        w=ls_common.ls_weights(ix,s,s.notna(),ix[:1],.2)
+        if shift=='combo_shared': shifted=combo.shared_shift(w,0)
+        elif shift=='combo_independent': shifted=combo.indep_shift(w,np.random.default_rng(0),1)
+        elif shift=='trend_shared': shifted=trend.shared_shift_weights(w,np.random.default_rng(0),1)
+        else: shifted=trend.circular_shift_weights(w,np.random.default_rng(0),1)
+        r=pd.DataFrame(0.,index=ix,columns=s.columns)
+        r.loc[ix[1:3],'A']=.1
+        net=carry_xs.run_ls_portfolio(shifted,r,r*0,cost_bps=0.,rf_daily=0.)
+>       assert (1+net).prod() == pytest.approx(1.105)
+E       assert np.float64(1.1025) == 1.105 ± 1.1e-06
+E         
+E         comparison failed
+E         Obtained: 1.1025
+E         Expected: 1.105 ± 1.1e-06
+
+tests/test_accounting_audit.py:321: AssertionError
+___ test_placebo_transform_preserves_weekly_execution_cadence[trend_shared] ____
+
+shift = 'trend_shared'
+
+    @pytest.mark.parametrize('shift', ['combo_shared','combo_independent','trend_shared','trend_independent'])
+    def test_placebo_transform_preserves_weekly_execution_cadence(shift):
+        ix=pd.date_range('2024-01-01',periods=6,tz='UTC')
+        s=pd.DataFrame(np.tile(np.arange(6.),(6,1)),index=ix,columns=list('ABCDEF'))
+        w=ls_common.ls_weights(ix,s,s.notna(),ix[:1],.2)
+        if shift=='combo_shared': shifted=combo.shared_shift(w,0)
+        elif shift=='combo_independent': shifted=combo.indep_shift(w,np.random.default_rng(0),1)
+        elif shift=='trend_shared': shifted=trend.shared_shift_weights(w,np.random.default_rng(0),1)
+        else: shifted=trend.circular_shift_weights(w,np.random.default_rng(0),1)
+        r=pd.DataFrame(0.,index=ix,columns=s.columns)
+        r.loc[ix[1:3],'A']=.1
+        net=carry_xs.run_ls_portfolio(shifted,r,r*0,cost_bps=0.,rf_daily=0.)
+>       assert (1+net).prod() == pytest.approx(1.105)
+E       assert np.float64(1.1025) == 1.105 ± 1.1e-06
+E         
+E         comparison failed
+E         Obtained: 1.1025
+E         Expected: 1.105 ± 1.1e-06
+
+tests/test_accounting_audit.py:321: AssertionError
+_ test_placebo_transform_preserves_weekly_execution_cadence[trend_independent] _
+
+shift = 'trend_independent'
+
+    @pytest.mark.parametrize('shift', ['combo_shared','combo_independent','trend_shared','trend_independent'])
+    def test_placebo_transform_preserves_weekly_execution_cadence(shift):
+        ix=pd.date_range('2024-01-01',periods=6,tz='UTC')
+        s=pd.DataFrame(np.tile(np.arange(6.),(6,1)),index=ix,columns=list('ABCDEF'))
+        w=ls_common.ls_weights(ix,s,s.notna(),ix[:1],.2)
+        if shift=='combo_shared': shifted=combo.shared_shift(w,0)
+        elif shift=='combo_independent': shifted=combo.indep_shift(w,np.random.default_rng(0),1)
+        elif shift=='trend_shared': shifted=trend.shared_shift_weights(w,np.random.default_rng(0),1)
+        else: shifted=trend.circular_shift_weights(w,np.random.default_rng(0),1)
+        r=pd.DataFrame(0.,index=ix,columns=s.columns)
+        r.loc[ix[1:3],'A']=.1
+        net=carry_xs.run_ls_portfolio(shifted,r,r*0,cost_bps=0.,rf_daily=0.)
+>       assert (1+net).prod() == pytest.approx(1.105)
+E       assert np.float64(1.1025) == 1.105 ± 1.1e-06
+E         
+E         comparison failed
+E         Obtained: 1.1025
+E         Expected: 1.105 ± 1.1e-06
+
+tests/test_accounting_audit.py:321: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_accounting_audit.py::test_placebo_transform_preserves_weekly_execution_cadence[combo_shared]
+FAILED tests/test_accounting_audit.py::test_placebo_transform_preserves_weekly_execution_cadence[combo_independent]
+FAILED tests/test_accounting_audit.py::test_placebo_transform_preserves_weekly_execution_cadence[trend_shared]
+FAILED tests/test_accounting_audit.py::test_placebo_transform_preserves_weekly_execution_cadence[trend_independent]
+4 failed, 36 deselected in 1.75s

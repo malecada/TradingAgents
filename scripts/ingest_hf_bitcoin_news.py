@@ -38,7 +38,6 @@ from tradingagents.dataflows import sentiment_store  # noqa: E402
 
 REPO = "edaschau/bitcoin_news"
 FILES = ["BTC_yahoo.csv", "BTC_match_title.csv", "BTC_match_text.csv"]
-INGEST_LAG = timedelta(minutes=30)  # plausible lag between article publish and corpus ingest
 
 log = logging.getLogger("ingest_hf_btc")
 
@@ -62,12 +61,15 @@ def stable_id(url: str, time_unix: int) -> int:
     return int(h[:15], 16)
 
 
-def normalize(df: pd.DataFrame) -> pd.DataFrame:
+def normalize(df: pd.DataFrame, retrieved_at=None) -> pd.DataFrame:
     """Map HF CSV schema → sentiment_store.SCHEMA_COLS."""
+    seen = pd.to_datetime(retrieved_at, utc=True) if retrieved_at is not None else pd.Timestamp.now(tz="UTC")
     event_ts = pd.to_datetime(df["time_unix"], unit="s", utc=True)
     return pd.DataFrame({
         "event_ts": event_ts,
-        "as_of_ts": event_ts + INGEST_LAG,
+        "as_of_ts": seen,
+        "retrieved_at": seen, "source_updated_at": pd.NaT,
+        "availability_basis": "retrieved_snapshot",
         "id": [stable_id(str(u), int(t)) for u, t in zip(df["url"], df["time_unix"])],
         "headline": df["title"].fillna("").astype(str),
         "content": df["article_text"].fillna("").astype(str),

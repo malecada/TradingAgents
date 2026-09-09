@@ -89,8 +89,9 @@ def month_needs_fetch(month: pd.Period, existing: pd.DataFrame | None,
         return False
     if existing is not None and not existing.empty:
         month_start = month.to_timestamp(how="start").tz_localize("UTC")
-        month_end = month.to_timestamp(how="end").tz_localize("UTC")
-        if ((existing.index >= month_start) & (existing.index <= month_end)).any():
+        month_end = (month + 1).to_timestamp(how="start").tz_localize("UTC")
+        expected = pd.date_range(month_start, month_end, freq="5min", inclusive="left")
+        if expected.isin(existing.index).all():
             return False
     return True
 
@@ -151,9 +152,12 @@ def fetch_fapi_tail(sym: str, start_ms: int, end_ms: int) -> pd.DataFrame:
 
 
 def fetch_symbol(sym: str, start: str, existing: pd.DataFrame | None,
-                 confirmed_missing: "set[pd.Period]") -> pd.DataFrame:
+                 confirmed_missing: "set[pd.Period]", *, now: pd.Timestamp | None = None) -> pd.DataFrame:
     """Fetch missing 5m history for sym, tail-appending onto existing."""
-    now = pd.Timestamp.now(tz="UTC")
+    now = pd.Timestamp.now(tz="UTC") if now is None else pd.Timestamp(now)
+    if now.tz is None:
+        raise ValueError("fetch cutoff must be timezone-aware")
+    now = now.tz_convert("UTC")
     start_ts = pd.Timestamp(start, tz="UTC")
     df = existing
 
@@ -173,7 +177,7 @@ def fetch_symbol(sym: str, start: str, existing: pd.DataFrame | None,
             time.sleep(0.1)
 
     if df is not None and not df.empty:
-        tail_start_ms = int(df.index.max().timestamp() * 1000) + INTERVAL_MS
+        tail_start_ms = int(df.index.max().timestamp() * 1000)
     else:
         tail_start_ms = int(start_ts.timestamp() * 1000)
     end_ms = int(now.timestamp() * 1000)
@@ -182,7 +186,9 @@ def fetch_symbol(sym: str, start: str, existing: pd.DataFrame | None,
         if not tail.empty:
             df = merge_tail(df, tail)
 
-    return df if df is not None else _rows_to_df([])
+    if df is None:
+        return _rows_to_df([])
+    return df.loc[df.index + pd.Timedelta(minutes=5) <= now]
 
 
 def main() -> None:

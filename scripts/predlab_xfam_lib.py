@@ -55,13 +55,8 @@ def nw_tstat(x: np.ndarray, lag: int) -> tuple[float, float, float]:
 
 def bh_fdr(pvals: dict[str, float], q: float = 0.10) -> set[str]:
     """Benjamini-Hochberg: returns the set of keys rejected at level q."""
-    items = sorted((p, k) for k, p in pvals.items() if not np.isnan(p))
-    n = len(items)
-    passed_upto = -1
-    for i, (p, _) in enumerate(items):
-        if p <= (i + 1) / n * q:
-            passed_upto = i
-    return {k for _, k in items[: passed_upto + 1]}
+    from tradingagents.predlab.rollup import bh_fdr as shared_bh
+    return {k for k, passed in shared_bh(pvals, q).items() if passed}
 
 
 def year_sign_consistency(series: pd.Series, years=(2021, 2022, 2023, 2024)) -> dict:
@@ -169,34 +164,18 @@ def thin_ls_backtest(sig: pd.DataFrame, ret: pd.DataFrame, n_leg: int = 2,
     Each leg sums to +/-1. Costs taker_bp x turnover; longs pay positive
     funding. Returns a frame with gross/net/turnover/cost/carry per day.
     """
-    prev_w = pd.Series(dtype=np.float64)
-    rows = []
+    from tradingagents.accounting import calendar_index, run_target_book
+    clock = calendar_index(sig.index)
+    targets = pd.DataFrame(np.nan,index=clock,columns=ret.columns.union(sig.columns,sort=False))
     for d in sig.index:
-        if d not in ret.index:
-            continue
         s = sig.loc[d].dropna()
         if len(s) < min_names:
             continue
         order = s.sort_values()
-        w = pd.Series(0.0, index=s.index)
-        w[order.index[-n_leg:]] = 1.0 / n_leg
-        w[order.index[:n_leg]] = -1.0 / n_leg
-        r_row = ret.loc[d].reindex(w.index)
-        gross = float((w * r_row).fillna(0.0).sum())
-        both = w.index.union(prev_w.index)
-        turn = float((w.reindex(both, fill_value=0.0)
-                      - prev_w.reindex(both, fill_value=0.0)).abs().sum())
-        cost = taker_bp / 1e4 * turn
-        carry = 0.0
-        if fund_daily is not None and d in fund_daily.index:
-            f = fund_daily.loc[d].reindex(w.index).fillna(0.0)
-            carry = float(-(w * f).sum())
-        rows.append({"date": d, "gross": gross, "net": gross - cost + carry,
-                     "turnover": turn, "cost": cost, "carry": carry})
-        prev_w = w
-    if not rows:
-        return pd.DataFrame(columns=["gross", "net", "turnover", "cost", "carry"])
-    return pd.DataFrame(rows).set_index("date")
+        targets.loc[d] = 0.
+        targets.loc[d,order.index[-n_leg:]] = 1./n_leg
+        targets.loc[d,order.index[:n_leg]] = -1./n_leg
+    return run_target_book(targets,ret.reindex(clock),funding=fund_daily,fee_rate=taker_bp/1e4)
 
 
 def ar1_half_life(spread: pd.Series) -> float:
@@ -213,19 +192,15 @@ def ar1_half_life(spread: pd.Series) -> float:
 
 
 def eg_fit(log_pa: pd.Series, log_pb: pd.Series) -> tuple[float, float, pd.Series]:
-    """Engle-Granger: OLS hedge ratio, ADF p on residual. Returns (beta, adf_p, resid)."""
-    from statsmodels.tsa.stattools import adfuller
-
-    df = pd.concat({"a": log_pa, "b": log_pb}, axis=1).dropna()
-    if len(df) < 60:
-        return np.nan, np.nan, pd.Series(dtype=np.float64)
-    beta = float(np.polyfit(df["b"].to_numpy(), df["a"].to_numpy(), 1)[0])
-    resid = df["a"] - beta * df["b"]
-    try:
-        adf_p = float(adfuller(resid.to_numpy(), maxlag=10, autolag="AIC")[1])
-    except Exception:
-        adf_p = np.nan
-    return beta, adf_p, resid
+    """OLS spread with the Engle-Granger (estimated residual) null distribution."""
+    from statsmodels.tsa.stattools import coint
+    df = pd.concat([log_pa.rename("a"), log_pb.rename("b")], axis=1).dropna()
+    if len(df) < 30:
+        return np.nan, np.nan, pd.Series(dtype=float)
+    beta, intercept = np.polyfit(df.b, df.a, 1)
+    resid = df.a - intercept - beta * df.b
+    p = coint(df.a, df.b, trend="c", maxlag=10, autolag="AIC")[1]
+    return float(beta), float(p), resid
 
 
 def pair_zmr_backtest(log_pa: pd.Series, log_pb: pd.Series, ret_a: pd.Series,
@@ -298,20 +273,8 @@ def git_commit_short() -> str:
 
 def ledger_append(experiment: str, cell: str, model: str, config: dict,
                   metrics: dict, window=DEV) -> None:
-    row = {
-        "ts_utc": datetime.now(timezone.utc).isoformat(),
-        "experiment": experiment,
-        "cell": cell,
-        "model": model,
-        "config": config,
-        "config_hash": hashlib.sha1(
-            json.dumps(config, sort_keys=True).encode()).hexdigest()[:12],
-        "git_commit": git_commit_short(),
-        "window": list(window),
-        "metrics": metrics,
-    }
-    with LEDGER.open("a") as fh:
-        fh.write(json.dumps(row) + "\n")
+    from tradingagents.predlab import registry
+    registry.log_trial(experiment, cell, model, config, window, metrics)
 
 
 def write_result(fam: str, payload: dict) -> Path:
@@ -319,5 +282,6 @@ def write_result(fam: str, payload: dict) -> Path:
     p = OUT_DIR / f"{fam}_result.json"
     payload = {"ts_utc": datetime.now(timezone.utc).isoformat(),
                "git_commit": git_commit_short(), **payload}
-    p.write_text(json.dumps(payload, indent=1, default=str))
+    with p.open("x") as fh:
+        fh.write(json.dumps(payload, indent=1, default=str))
     return p

@@ -116,7 +116,7 @@ def run() -> None:
     sig = opt.build_signal(park, close, "ewma_20")
     raw = opt.run_ls(sig, ret, uni, fund, opt.OptConfig(), *FULL)
     df = raw["rets"]
-    net, gross_to = df["net"], df["turnover"]
+    net = df["net"]
     breadth = (~sig.where(uni).isna()).sum(axis=1).reindex(df.index)
 
     raw_sr, raw_dd = raw["sr_net"], raw["maxdd"]
@@ -130,9 +130,8 @@ def run() -> None:
         scale = (spec["target"] / sh).clip(0.0, spec["cap"]).fillna(0.0)
         if "breadth_floor" in spec:
             scale = scale.where(breadth >= spec["breadth_floor"], 0.0)
-        o_gross = scale * net
-        cost = 5.0 / 1e4 * (scale * gross_to + scale.diff().abs().fillna(0.0) * 2.0)
-        o_net = o_gross - cost
+        from tradingagents.accounting import scaled_overlay
+        o_net = scaled_overlay(df, scale, fee_rate=5./1e4)
         dd = max_drawdown(o_net.to_numpy())
         sr = ann_sr(o_net.to_numpy())
         sr_d = ann_sr(o_net[o_net.index <= D_hi].to_numpy())

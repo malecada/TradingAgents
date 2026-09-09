@@ -1,89 +1,27 @@
-# S1 Live Executor — Runbook
+# S1 execution and paper measurement — version 2
 
-## Deployment (VPS tabot@46.225.169.184)
+The September 9 correction is local source work. Production state and deployment have not been checked or changed. Historical instructions and journal definitions remain available in Git; the current execution contract is documented in `docs/audit/execution-repair.md`.
 
-Code path: /opt/tradingagents (same checkout as paper trader), branch
-research/prediction-lab. Data: /opt/tradingagents/predlab-data/predlab/s1_live/
-(TRADINGAGENTS_DATA_ROOT=/opt/tradingagents/predlab-data as for s1_paper).
+## Journal boundary
 
-API key: Binance key with **futures trading only** (reading + trading;
-withdrawals DISABLED), IP-whitelisted to the VPS IP. Stored in
-/opt/tradingagents/.env.trading as BINANCE_API_KEY / BINANCE_API_SECRET,
-chmod 600, owner tabot. Never in the repo.
+The paper trader writes `predlab/s1_paper/journal_v2.jsonl` and `journal_champion_v2.jsonl`. The executor reads the latter and writes `predlab/s1_live/journal_live_v2.jsonl`, `fills_v2.jsonl`, `order_state_v2.jsonl`, `closure_v2.jsonl` and `journal_dry_v2.jsonl`. The account's `halt.flag` and day-equity baseline remain shared safety state. Testnet execution uses `predlab/s1_testnet/` for its own execution state. Existing journals are never rewritten or copied into the new files.
 
-Fund with $3,000 USDT (decided 2026-08-21); the account must be dedicated to this executor — any position outside the champion book will be force-flattened.
+Paper net returns require complete held closing prices and observed daily funding. Both loaders read the existing local `xsect/funding/` store; an absent or stale store produces explicit incomplete measurement. The event-coverage check records its inferred cadence because historical exchange schedules are unavailable. No funding fetch is triggered by the paper trader. Gross close/mark diagnostics are not funded returns. The base/overlay accounts include actual drift turnover, fees and signed funding; a missing measurement or clock gap cannot be silently converted to zero. The volatility scale requires 20 contiguous corrected base-net observations.
 
-Leverage is set to **4x** per symbol (raised from 2x in the final pre-deploy
-review, 2026-08-21) with a hard clamp on the *executed* overlay scale at
-**1.1** (`vt15_b100_scale` can reach ~2.0, and champion gross weight is
-2.0x, so unclamped gross target notional could reach 4x equity — at 2x
-leverage that would exceed the 2.2x gross cap and refuse every batch). The
-live run always sizes off `min(vt15_b100_scale, 1.1)`; the unclamped value
-is recorded as `scale_raw` in `journal_live.jsonl` alongside the executed
-`scale`, so a capped-replica day is legible in the journal, not silently
-mislabeled as full-scale.
+## Execution interpretation
 
-Cron (chained after the paper trader, same hourly guard pattern):
-  <existing paper cron command> && \
-  cd /opt/tradingagents && set -a && . ./.env.trading && set +a && \
-  TRADINGAGENTS_DATA_ROOT=/opt/tradingagents/predlab-data \
-  .venv/bin/python scripts/predlab_s1_live.py run >> \
-  /opt/tradingagents/logs/s1_live.log 2>&1
+A current paper row must name yesterday's as-of date and today's trade day, with version 2 and complete desired marks no older than 10 minutes. Sizing additionally fetches bid/ask quotes with exchange timestamps, requiring coverage of every desired and held symbol within 90 seconds. Missing prices cause WAIT. The live scale remains capped at 1.1, with the uncapped requested scale preserved separately. Whole-book risk includes positions that could remain if a departure order fails and frozen targets not yet filled. The per-name cap remains 5% of gross for every book size.
 
-During Phase 1 the cron line uses `run --dry-run`.
+`run --dry-run` writes only its separate hypothetical journal. It places no orders, changes no leverage and consumes no live completion or day-equity key. An ordinary `run` first validates one-way position mode and handles outstanding order intents. `done` means actual positions were reconciled to the stored target quantities. `incomplete` means residual positions, rejected orders, working orders or unknown execution remain. A journal date alone is not proof of completion.
 
-## Phase 1b — Testnet rehearsal (before any real money)
+Order intents are durably recorded before POST and assigned stable client IDs. GET requests may retry; an order POST does not. Unknown execution is resolved through order-status lookup. A lookup that does not find an uncertain order does not authorize a second submission. Do not delete or hand-edit intent records to force a retry. Definitively rejected orders can be retried on a later wake against actual residual positions. The executor assumes a dedicated account, with no other host placing concurrent orders.
 
-After ~1 clean dry-run day, switch the cron line to testnet mode for a few days:
-  ... predlab_s1_live.py --testnet run ...
-(--testnet goes BEFORE the subcommand.)
+`status` reports incomplete reconciliation, stale rows, halt flags and positions. `compare` reports gross fill-versus-paper-mark differences; it marks incomplete fee coverage and does not turn missing commissions into a zero total.
 
-Testnet specifics:
-- Keys: BINANCE_TESTNET_API_KEY / BINANCE_TESTNET_API_SECRET in .env.trading
-  (register at https://testnet.binancefuture.com — separate login from binance.com).
-- Data dir: data/predlab/s1_testnet/ (own journal, fills, halt.flag, day_equity).
-- Purpose: plumbing validation ONLY — orders accepted, precision, reduceOnly,
-  positions match targets, cron idempotency. Testnet books are thin and many
-  champion symbols are unlisted there (dropped with no_filter logs): fills and
-  slippage numbers from testnet feed NO conclusions.
-- Exit criteria: >= 2 consecutive testnet days with a journal row, zero
-  unexplained order errors, positions matching targets for listed symbols.
-  Then user go/no-go for real funding.
+## Emergency closure
 
-## Daily watch checklist (Phase 1b + Phase 2, first 2 weeks — REQUIRED)
+`predlab_s1_live.py close-all` writes `halt.flag` before account reads and orders, checks one-way mode, resolves outstanding order states, then attempts reduce-only closure. The response reports success only after positions are actually zero and no unknown or working order remains. `closure_v2.jsonl` records residual positions when closure is incomplete.
 
-1. `predlab_s1_live.py status` — no WARN lines.
-2. Last journal_live row: orders_placed sane (day 1: ~80; after: ~15-40
-   from est_turnover ~0.45), gross_target ≈ 2 x scale x equity,
-   legs_dropped list small (BTCUSDT at scale <= ~0.98 is expected).
-3. fills.jsonl tail: no "error" rows; avg_price within ~1% of mark_px.
-4. `predlab_s1_live.py compare` — mean slippage bps drifting? (> ~15 bps
-   mean = investigate before continuing).
-5. Binance app/web: positions match journal targets (~80 small positions).
-6. Equity vs yesterday: moves should match scale x champion book return
-   (paper journal realized_mark_ret) within fees+slippage.
+Ordinary wakes remain halted while the flag exists. Repeat `close-all` to retry a definite rejected close; the flag remains set. Unknown submissions, unavailable position snapshots, hedge mode, untradeable instruments or residual quantity below lot precision require account evidence and operator action. Inspect and resolve the cause before explicitly resuming. Never interpret a halt flag as evidence that the account is flat.
 
-## Emergencies
-
-- Stop everything NOW: `predlab_s1_live.py close-all`
-  (flattens reduce-only + writes halt.flag; cron becomes a no-op).
-- Resume after halt: inspect cause, then `rm .../s1_live/halt.flag`.
-- Daily-loss halt fired: do NOT remove the flag same-day; review first.
-- Positions in halted/delisted symbols can't be market-ordered — close
-  manually in the Binance UI (executor logs them as `no_filter`).
-
-## Invariants
-
-- Executor never writes into s1_paper/ (registered forward test).
-- Null scale -> WAIT is normal until the vol window accrues.
-- Null/empty marks with a non-empty book -> WAIT, no journal row written
-  (retried on the next wake; not a flat day).
-- scale 0.0 (breadth floor) -> executor flattens the book; not an error.
-- Executed sizing scale is `min(vt15_b100_scale, 1.1)`; the raw overlay
-  scale is preserved as `scale_raw` in the journal.
-- A symbol that leaves the champion book while still held is always closed
-  reduce-only, even with no mark for it that day (never a silent zombie
-  position).
-- Daily-loss check reads equity and can halt on every wake, including an
-  hourly wake whose asof was already executed earlier that day.
-- Hedge (dual-side) position mode is rejected before any live order.
+Any production deployment and system service edits require separate operator execution. This repair performed no VPS or live/testnet account operations and makes no deployment-health or strategy-validation claim.

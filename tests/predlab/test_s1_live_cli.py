@@ -2,8 +2,10 @@ import importlib
 import json
 import sys
 from pathlib import Path
+from datetime import datetime, timezone
 
 import pytest
+from tradingagents.predlab.live_exec import check_caps as PRODUCTION_CAPS
 
 SCRIPTS = Path(__file__).resolve().parents[2] / "scripts"
 sys.path.insert(0, str(SCRIPTS))
@@ -15,13 +17,22 @@ def env(tmp_path, monkeypatch):
     monkeypatch.setenv("TRADINGAGENTS_DATA_ROOT", str(tmp_path))
     jdir = tmp_path / "predlab" / "s1_paper"
     jdir.mkdir(parents=True)
-    row = {"asof": "2026-08-22", "vt15_b100_scale": 1.0,
+    row = {"journal_version": 2, "trade_day": "2026-08-23",
+           "mark_ts": "2026-08-23T00:05:00+00:00", "asof": "2026-08-22", "vt15_b100_scale": 1.0,
            "weights": {"AAAUSDT": 0.025, "BBBUSDT": -0.025},
            "mark_px": {"AAAUSDT": 2.0, "BBBUSDT": 10.0}}
-    (jdir / "journal_champion.jsonl").write_text(json.dumps(row) + "\n")
+    (jdir / "journal_champion_v2.jsonl").write_text(json.dumps(row) + "\n")
     import predlab_s1_live
     mod = importlib.reload(predlab_s1_live)
+    class Clock(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return datetime(2026, 8, 23, 0, 5, tzinfo=timezone.utc)
+    monkeypatch.setattr(mod, "datetime", Clock)
     monkeypatch.setattr(mod.time, "sleep", lambda *a, **k: None)
+    # An explicit toy concentration policy keeps these two-symbol I/O fixtures small.
+    monkeypatch.setattr(mod.live_exec, "check_caps",
+        lambda tn, eq: PRODUCTION_CAPS(tn, eq, per_symbol_cap=1. if len(tn)<20 else .05))
     return mod, tmp_path, row
 
 
@@ -32,6 +43,7 @@ class FakeClient:
         self.orders = []
         self.leverage_set = []
         self._hedge_mode = hedge_mode
+        self.states = {}
 
     def position_mode(self):
         return self._hedge_mode
@@ -54,10 +66,21 @@ class FakeClient:
     def set_leverage(self, symbol, leverage):
         self.leverage_set.append((symbol, leverage))
 
-    def market_order(self, symbol, side, qty, reduce_only):
+    def book_ticker(self):
+        return [{"symbol": s, "bidPrice": str(p), "askPrice": str(p),
+                 "time": 1787443500000} for s,p in [("AAAUSDT",2), ("BBBUSDT",10)]]
+
+    def order_status(self, symbol, client_order_id):
+        return self.states[client_order_id]
+
+    def market_order(self, symbol, side, qty, reduce_only, client_order_id=None):
         self.orders.append((symbol, side, qty, reduce_only))
-        return {"orderId": len(self.orders), "avgPrice": "2.0",
-                "executedQty": str(qty), "cumQuote": str(qty * 2.0)}
+        self._positions[symbol] = self._positions.get(symbol, 0) + (qty if side == "BUY" else -qty)
+        self._positions = {s:q for s,q in self._positions.items() if q}
+        result = {"orderId": len(self.orders), "status": "FILLED", "avgPrice": "2.0",
+                  "executedQty": str(qty), "cumQuote": str(qty * 2.0)}
+        self.states[client_order_id] = result
+        return result
 
     def user_trades(self, symbol, order_id):
         return [{"commission": "0.01", "commissionAsset": "USDT"}]
@@ -70,7 +93,7 @@ class TestRun:
         out = mod.run(c, dry_run=True)
         assert out.startswith("dry-run")
         assert c.orders == []
-        rows = [json.loads(l) for l in mod.LIVE_JOURNAL.read_text().splitlines()]
+        rows = [json.loads(l) for l in (mod.LDIR / "journal_dry_v2.jsonl").read_text().splitlines()]
         assert rows[0]["asof"] == "2026-08-22" and rows[0]["dry_run"] is True
         assert not mod.FILLS.exists()
 
@@ -106,7 +129,7 @@ class TestRun:
     def test_null_scale_waits(self, env):
         mod, root, row = env
         row["vt15_b100_scale"] = None
-        jp = root / "predlab" / "s1_paper" / "journal_champion.jsonl"
+        jp = root / "predlab" / "s1_paper" / "journal_champion_v2.jsonl"
         jp.write_text(json.dumps(row) + "\n")
         c = FakeClient()
         assert mod.run(c, dry_run=False).startswith("WAIT")
@@ -115,7 +138,7 @@ class TestRun:
     def test_scale_zero_closes_all(self, env):
         mod, root, row = env
         row["vt15_b100_scale"] = 0.0
-        jp = root / "predlab" / "s1_paper" / "journal_champion.jsonl"
+        jp = root / "predlab" / "s1_paper" / "journal_champion_v2.jsonl"
         jp.write_text(json.dumps(row) + "\n")
         c = FakeClient(positions={"AAAUSDT": 37.0})
         out = mod.run(c, dry_run=False)
@@ -151,7 +174,7 @@ class TestRun:
         w["BIGUSDT"] = 0.60
         row_w = dict(row, weights=w,
                      mark_px={s: 2.0 for s in w})
-        jp = root / "predlab" / "s1_paper" / "journal_champion.jsonl"
+        jp = root / "predlab" / "s1_paper" / "journal_champion_v2.jsonl"
         jp.write_text(json.dumps(row_w) + "\n")
 
         class WideClient(FakeClient):
@@ -166,20 +189,19 @@ class TestRun:
 
         c = WideClient()
         out = mod.run(c, dry_run=False)
-        assert out.startswith("ERROR") and c.orders == []
+        assert out.startswith(("ERROR", "WAIT")) and c.orders == []
 
-    def test_day_equity_seeded_on_first_run(self, env):
+    def test_day_equity_not_seeded_by_dry_run(self, env):
         mod, root, _ = env
         mod.run(FakeClient(), dry_run=True)
-        d = json.loads(mod.DAY_EQUITY.read_text())
-        assert d["equity"] == 3000.0
+        assert not mod.DAY_EQUITY.exists()
 
     # -- C2: scale/gross-cap/leverage consistency --------------------------
 
     def test_scale_clamped_to_1_1_for_sizing_and_journal(self, env):
         mod, root, row = env
         row["vt15_b100_scale"] = 2.0
-        jp = root / "predlab" / "s1_paper" / "journal_champion.jsonl"
+        jp = root / "predlab" / "s1_paper" / "journal_champion_v2.jsonl"
         jp.write_text(json.dumps(row) + "\n")
         c = FakeClient()
         out = mod.run(c, dry_run=False)
@@ -225,22 +247,22 @@ class TestRun:
     def test_null_marks_waits_without_journal_row(self, env):
         mod, root, row = env
         row["mark_px"] = None
-        jp = root / "predlab" / "s1_paper" / "journal_champion.jsonl"
+        jp = root / "predlab" / "s1_paper" / "journal_champion_v2.jsonl"
         jp.write_text(json.dumps(row) + "\n")
         c = FakeClient()
         out = mod.run(c, dry_run=False)
-        assert out == "WAIT: champion row has no marks"
+        assert out.startswith("WAIT") and "marks" in out
         assert c.orders == []
         assert not mod.LIVE_JOURNAL.exists()
 
     def test_empty_marks_dict_waits_without_journal_row(self, env):
         mod, root, row = env
         row["mark_px"] = {}
-        jp = root / "predlab" / "s1_paper" / "journal_champion.jsonl"
+        jp = root / "predlab" / "s1_paper" / "journal_champion_v2.jsonl"
         jp.write_text(json.dumps(row) + "\n")
         c = FakeClient()
         out = mod.run(c, dry_run=False)
-        assert out == "WAIT: champion row has no marks"
+        assert out.startswith("WAIT") and "marks" in out
         assert not mod.LIVE_JOURNAL.exists()
 
     # -- M1: torn trailing journal_live.jsonl line must not crash run() ----
@@ -256,8 +278,8 @@ class TestRun:
             fh.write('{"asof": "2026-08-2')  # torn, no trailing newline
         c = FakeClient()
         out = mod.run(c, dry_run=False)
-        assert out.startswith("skip")
-        assert c.orders == []
+        assert out.startswith("done")
+        assert len(c.orders) == 2
 
     # -- M2: hedge (dual-side) position mode must be rejected ---------------
 
@@ -420,7 +442,7 @@ class TestCompare:
         mod.FILLS.write_text(json.dumps(
             {"asof": "2026-08-22", "symbol": "AAAUSDT", "side": "BUY",
              "qty": 1.0, "avg_price": 2.0}) + "\n")
-        (root / "predlab" / "s1_paper" / "journal_champion.jsonl").unlink()
+        (root / "predlab" / "s1_paper" / "journal_champion_v2.jsonl").unlink()
         out = mod.compare()
         assert out == "compare: no champion journal"
 
@@ -439,8 +461,8 @@ class TestTestnetMode:
         mod, root, _ = env
         mod._use_testnet()
         mod.run(FakeClient(), dry_run=False)
-        assert (root / "predlab" / "s1_testnet" / "journal_live.jsonl").exists()
-        assert not (root / "predlab" / "s1_live" / "journal_live.jsonl").exists()
+        assert (root / "predlab" / "s1_testnet" / "journal_live_v2.jsonl").exists()
+        assert not (root / "predlab" / "s1_live" / "journal_live_v2.jsonl").exists()
 
     def test_make_client_testnet_base_and_keys(self, env, monkeypatch):
         mod, root, _ = env

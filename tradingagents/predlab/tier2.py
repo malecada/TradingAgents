@@ -41,7 +41,7 @@ class ElasticNetForecaster(Forecaster):
             return
         y = np.asarray(y_train, dtype=np.float64)
         X = self._slice(np.asarray(X_train, dtype=np.float64))
-        ok = ~(np.isnan(y) | np.isnan(X).any(axis=1))
+        ok = np.isfinite(y) & np.isfinite(X).all(axis=1)
         y, X = y[ok], X[ok]
         if len(y) < 60:
             return
@@ -63,10 +63,10 @@ class ElasticNetForecaster(Forecaster):
 
     def predict(self, y_hist, x_now=None):
         if self._model is None or x_now is None:
-            return 0.0
+            return float("nan")
         x = self._slice(np.asarray(x_now, dtype=np.float64))
-        if np.isnan(x).any():
-            return 0.0
+        if not np.isfinite(x).all():
+            return float("nan")
         xs = (x - self._mu) / self._sd
         return float(self._model.predict(xs.reshape(1, -1))[0])
 
@@ -88,13 +88,15 @@ class ProbClip(Forecaster):
     def fit(self, y_train, X_train=None):
         import numpy as _np
 
-        self.inner.fit((_np.asarray(y_train, dtype=float) > 0).astype(float), X_train)
+        y = _np.asarray(y_train, dtype=float)
+        self.inner.fit(_np.where(_np.isfinite(y), (y > 0).astype(float), _np.nan), X_train)
 
     def predict(self, y_hist, x_now=None):
         import numpy as _np
 
-        p = self.inner.predict((_np.asarray(y_hist, dtype=float) > 0).astype(float), x_now)
-        return float(min(max(p, self.lo), self.hi))
+        y = _np.asarray(y_hist, dtype=float)
+        p = self.inner.predict(_np.where(_np.isfinite(y), (y > 0).astype(float), _np.nan), x_now)
+        return float(np.clip(p, self.lo, self.hi)) if np.isfinite(p) else float("nan")
 
 
 class LGBForecaster(Forecaster):
@@ -135,6 +137,6 @@ class LGBForecaster(Forecaster):
 
     def predict(self, y_hist, x_now=None):
         if self._model is None or x_now is None:
-            return 0.0
+            return float("nan")
         x = self._slice(np.asarray(x_now, dtype=np.float64)).reshape(1, -1)
         return float(self._model.predict(x)[0])

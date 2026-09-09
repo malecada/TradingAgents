@@ -1,13 +1,13 @@
 """S1 champion live executor: journal-follower placing real Binance orders.
 
-Reads the latest row of the paper trader's journal_champion.jsonl (never
+Reads the latest row of the paper trader's journal_champion_v2.jsonl (never
 recomputes signals, never writes into s1_paper/) and rebalances a real
 USDT-M futures account to weights x vt15_b100_scale x equity. Measurement
 run for fill/slippage quality — not a registered gate. Spec:
 docs/superpowers/specs/2026-08-21-s1-live-executor-design.md
 
 Subcommands:
-  run [--dry-run]      daily rebalance (idempotent per asof date)
+  run [--dry-run]      daily rebalance with persisted reconciliation state
   close-all            flatten every position (reduce-only) + write halt.flag
   status               one-line health summary + WARN lines
   compare              fills vs paper marks -> slippage report JSON
@@ -18,11 +18,14 @@ Flags:
 from __future__ import annotations
 
 import argparse
+import fcntl
+import hashlib
+import math
 import json
 import os
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -34,13 +37,16 @@ from tradingagents.predlab.binance_client import (  # noqa: E402
 
 DATA_ROOT = Path(os.environ.get("TRADINGAGENTS_DATA_ROOT",
                                 PROJECT_ROOT / "data"))
-CH_JOURNAL = DATA_ROOT / "predlab" / "s1_paper" / "journal_champion.jsonl"
+CH_JOURNAL = DATA_ROOT / "predlab" / "s1_paper" / "journal_champion_v2.jsonl"
 LDIR = DATA_ROOT / "predlab" / "s1_live"
-LIVE_JOURNAL = LDIR / "journal_live.jsonl"
-FILLS = LDIR / "fills.jsonl"
+LIVE_JOURNAL = LDIR / "journal_live_v2.jsonl"
+FILLS = LDIR / "fills_v2.jsonl"
 HALT_FLAG = LDIR / "halt.flag"
 DAY_EQUITY = LDIR / "day_equity.json"
 LEVERAGE = 4
+MARK_MAX_AGE_S = 600
+QUOTE_MAX_AGE_S = 90
+TERMINAL = {"FILLED", "CANCELED", "EXPIRED", "EXPIRED_IN_MATCH", "REJECTED"}
 # Champion book gross is 2.0x; vt15_b100_scale can reach ~2.0 -> gross target
 # up to 4x equity. Gross cap is 2.2x and leverage 4 means margin = gross/4,
 # so an unclamped scale can refuse the whole batch (cap violation) or exceed
@@ -55,8 +61,8 @@ def _use_testnet() -> None:
     """Rebind journal/flag paths to the testnet data dir (Phase 1b rehearsal)."""
     global LDIR, LIVE_JOURNAL, FILLS, HALT_FLAG, DAY_EQUITY
     LDIR = DATA_ROOT / "predlab" / "s1_testnet"
-    LIVE_JOURNAL = LDIR / "journal_live.jsonl"
-    FILLS = LDIR / "fills.jsonl"
+    LIVE_JOURNAL = LDIR / "journal_live_v2.jsonl"
+    FILLS = LDIR / "fills_v2.jsonl"
     HALT_FLAG = LDIR / "halt.flag"
     DAY_EQUITY = LDIR / "day_equity.json"
 
@@ -103,181 +109,299 @@ def _append(path: Path, row: dict) -> None:
     LDIR.mkdir(parents=True, exist_ok=True)
     with path.open("a") as fh:
         fh.write(json.dumps(row, sort_keys=True) + "\n")
+        fh.flush()
+        os.fsync(fh.fileno())
 
 
-def _flatten(client, positions: "dict[str, float]", filters, marks,
-             asof: str, dry_run: bool) -> "list[live_exec.Order]":
-    orders, _ = live_exec.diff_orders({}, positions, marks, filters)
-    if not dry_run:
-        _place(client, orders, asof)
-    return orders
+def _rows(path: Path, *, strict: bool = False) -> list[dict]:
+    out = []
+    if path.exists():
+        for line in path.read_text().splitlines():
+            try:
+                out.append(json.loads(line))
+            except ValueError:
+                if strict:
+                    raise ValueError(f"unreadable execution state: {path.name}")
+    return out
 
 
-def _place(client, orders: "list[live_exec.Order]", asof: str) -> None:
-    for o in orders:
-        try:
-            r = client.market_order(o.symbol, o.side, o.qty, o.reduce_only)
-        except BinanceAPIError as e:
-            _append(FILLS, {"asof": asof, "symbol": o.symbol, "side": o.side,
-                            "qty": o.qty, "error": str(e),
-                            "ts_utc": datetime.now(timezone.utc).isoformat()})
-            continue
+def _states() -> dict[str, dict]:
+    return {r['client_order_id']: r for r in _rows(LDIR / 'order_state_v2.jsonl', strict=True)}
+
+
+def _event(intent: dict, status: str, **extra) -> dict:
+    row = dict(intent, status=status, ts_utc=datetime.now(timezone.utc).isoformat(), **extra)
+    _append(LDIR / 'order_state_v2.jsonl', row)
+    return row
+
+
+def _observe(client, intent: dict, response: dict) -> dict:
+    status = response.get('status', 'UNKNOWN')
+    observed = _event(intent, status, response=response)
+    executed = float(response.get('executedQty', 0))
+    if executed > 0:
         fee = None
         try:
-            trades = client.user_trades(o.symbol, r["orderId"])
-            fee = round(sum(float(t["commission"]) for t in trades
-                            if t.get("commissionAsset") == "USDT"), 6)
+            trades = client.user_trades(intent['symbol'], response['orderId'])
+            complete = (trades and all(t.get('commissionAsset') == 'USDT' for t in trades)
+                        and math.isclose(sum(float(t.get('qty', 0)) for t in trades),
+                                         executed, rel_tol=1e-8, abs_tol=1e-9))
+            if complete:
+                fee = sum(float(t['commission']) for t in trades)
         except Exception:
-            pass  # fee is best-effort; avgPrice already captured
-        _append(FILLS, {
-            "asof": asof, "symbol": o.symbol, "side": o.side,
-            "qty": float(r.get("executedQty", o.qty)),
-            "avg_price": float(r.get("avgPrice", 0.0)),
-            "quote_qty": float(r.get("cumQuote", 0.0)),
-            "fee_usdt": fee, "order_id": r.get("orderId"),
-            "reduce_only": o.reduce_only,
-            "ts_utc": datetime.now(timezone.utc).isoformat()})
+            pass
+        # Exchange responses are cumulative per order, including partial orders
+        # later cancelled. Append revisions; report readers select the latest.
+        quote_qty = float(response.get('cumQuote', 0))
+        avg_price = float(response.get('avgPrice', 0)) or quote_qty / executed
+        fill = dict(intent, status=status, qty=executed, avg_price=avg_price,
+            quote_qty=quote_qty, fee_usdt=fee,
+            fee_coverage='complete' if fee is not None else 'incomplete',
+            order_id=response.get('orderId'))
+        prior = [f for f in _rows(FILLS) if f.get('client_order_id') == intent['client_order_id']]
+        compared = {k: v for k, v in fill.items() if k not in ('ts_utc', 'response', 'error')}
+        old = {k: v for k, v in prior[-1].items() if k not in ('ts_utc', 'response', 'error')} if prior else None
+        if old != compared:
+            _append(FILLS, dict(compared, ts_utc=datetime.now(timezone.utc).isoformat()))
+    return observed
+
+
+def _reconcile_pending(client) -> list[dict]:
+    """An absent lookup after an ambiguous POST does NOT prove nonexecution."""
+    pending = []
+    for intent in _states().values():
+        if intent['status'] in TERMINAL:
+            continue
+        try:
+            r = client.order_status(intent['symbol'], intent['client_order_id'])
+            intent = _observe(client, intent, r)
+        except Exception as exc:
+            intent = _event(intent, 'UNKNOWN', error=str(exc))
+        if intent['status'] not in TERMINAL:
+            pending.append(intent)
+    return pending
+
+
+def _place(client, orders: list[live_exec.Order], asof: str, marks: dict | None = None) -> list[dict]:
+    results = []
+    for o in orders:
+        old = _states()
+        sequence = sum(r['asof'] == asof and r['symbol'] == o.symbol for r in old.values())
+        raw = json.dumps([asof, o.symbol, o.side, o.qty, o.reduce_only, sequence])
+        cid = 's1v2-' + hashlib.sha256(raw.encode()).hexdigest()[:30]
+        intent = {'asof': asof, 'symbol': o.symbol, 'side': o.side, 'qty': o.qty,
+                  'reduce_only': o.reduce_only, 'client_order_id': cid,
+                  'reference_mark': (marks or {}).get(o.symbol)}
+        # Durable intent precedes POST. A crash here leaves a query-only state.
+        intent = _event(intent, 'SUBMITTING')
+        try:
+            response = client.market_order(o.symbol, o.side, o.qty, o.reduce_only,
+                                           client_order_id=cid)
+            result = _observe(client, intent, response)
+        except Exception as exc:
+            rejected = isinstance(exc, BinanceAPIError) and not exc.execution_unknown
+            result = _event(intent, 'REJECTED' if rejected else 'UNKNOWN', error=str(exc))
+        results.append(result)
+        if result['status'] not in TERMINAL:
+            _reconcile_pending(client)
+            if _states()[cid]['status'] not in TERMINAL:
+                break
         time.sleep(ORDER_PACE_S)
+    return results
 
 
 def _asof_already_executed(asof: str) -> bool:
-    """True if `asof` has a row in journal_live.jsonl. Skips any line that
-    fails to parse (a torn trailing line from a killed process must not
-    crash the hourly idempotency scan — M1)."""
-    if not LIVE_JOURNAL.exists():
-        return False
-    for l in LIVE_JOURNAL.read_text().splitlines():
-        try:
-            parsed = json.loads(l)
-        except (json.JSONDecodeError, ValueError):
+    return any(r.get('asof') == asof and r.get('status') == 'reconciled'
+               and not r.get('dry_run') and r.get('journal_version') == 2
+               for r in _rows(LIVE_JOURNAL))
+
+
+def _current_marks(client, symbols: set[str]) -> dict[str, float]:
+    marks = {}
+    quotes = client.book_ticker()
+    now = datetime.now(timezone.utc)
+    for row in quotes:
+        if row['symbol'] not in symbols:
             continue
-        if parsed.get("asof") == asof:
-            return True
-    return False
+        bid, ask = float(row['bidPrice']), float(row['askPrice'])
+        age = now.timestamp() - float(row.get('time', 0)) / 1000
+        if 0 <= age <= QUOTE_MAX_AGE_S and 0 < bid <= ask and math.isfinite(ask):
+            marks[row['symbol']] = (bid + ask) / 2
+    return marks
 
 
-def run(client, dry_run: bool, today: "str | None" = None) -> str:
+def _residual(targets: dict, positions: dict) -> dict:
+    return {s: targets.get(s, 0) - positions.get(s, 0)
+            for s in sorted(set(targets) | set(positions))
+            if not math.isclose(targets.get(s, 0), positions.get(s, 0), abs_tol=1e-9)}
+
+
+def _locked(action):
+    """Serialize state+POST across cron/manual invocations on this host."""
+    def wrapped(client, *args, **kwargs):
+        LDIR.mkdir(parents=True, exist_ok=True)
+        with (LDIR / 'execution_v2.lock').open('a') as lock:
+            try:
+                fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+                return 'WAIT: another executor holds the state lock'
+            return action(client, *args, **kwargs)
+    return wrapped
+
+
+@_locked
+def run(client, dry_run: bool, today: str | None = None) -> str:
+    if HALT_FLAG.exists():
+        return f'halt: {HALT_FLAG} present; run close-all to retry residual closure'
+    now = datetime.now(timezone.utc)
+    today = today or str(now.date())
+    if not dry_run and client.position_mode():
+        return 'ERROR: account in hedge mode; one-way mode required before any order'
+    equity = client.equity()
+    if not math.isfinite(equity) or equity <= 0:
+        return 'ERROR: invalid account equity'
+    day_eq = equity if dry_run else day_start_equity(today, equity)
+    if live_exec.daily_loss_breached(equity, day_eq):
+        if dry_run:
+            return 'dry-run: daily loss breached; would halt and flatten'
+        return 'halt: daily loss breached; ' + _close_all(client)
+    if not dry_run:
+        pending = _reconcile_pending(client)
+        if pending:
+            return f'incomplete: {len(pending)} unresolved order intents; no new submissions'
     row = read_champion_row()
     if row is None:
-        return "ERROR: no champion journal row"
-    asof = row["asof"]
-
-    # Halt flag is checked first, before any API call, so a halted account
-    # costs zero network traffic per wake.
-    if HALT_FLAG.exists():
-        return f"halt: {HALT_FLAG} present — no orders (remove flag to resume)"
-
-    # Daily-loss check runs on EVERY wake — including an hourly wake whose
-    # asof was already executed earlier in the day — because it is the only
-    # place equity is read. Checking it after the idempotency skip (the old
-    # order) meant the breach could never fire on any wake but the first of
-    # the day, since every later wake short-circuited on "already executed"
-    # before equity was ever read (I1).
-    today = today or str(datetime.now(timezone.utc).date())
-    equity = client.equity()
-    day_eq = day_start_equity(today, equity)
-
-    if live_exec.daily_loss_breached(equity, day_eq):
-        filters = load_filters(client)
-        positions = client.positions()
-        marks = row.get("mark_px") or {}
-        orders = _flatten(client, positions, filters, marks, asof, dry_run)
-        HALT_FLAG.write_text(
-            f"daily loss: equity {equity:.2f} < 95% of {day_eq:.2f} "
-            f"at {datetime.now(timezone.utc).isoformat()}\n")
-        return (f"halt: daily loss breached, flattened "
-                f"{len(orders)} positions, halt.flag written")
-
-    if _asof_already_executed(asof):
-        return f"skip: {asof} already executed"
-
-    scale = row.get("vt15_b100_scale")
+        return 'ERROR: no champion journal row'
+    asof = row['asof']
+    if row.get('journal_version') != 2:
+        return 'WAIT: champion journal requires corrected measurement version 2'
+    try:
+        age = (date.fromisoformat(today) - date.fromisoformat(asof)).days
+        if age != 1 or row.get('trade_day') != today:
+            return 'WAIT: stale or future champion signal date'
+    except ValueError:
+        return 'WAIT: invalid champion signal date'
+    intents = [r for r in _rows(LIVE_JOURNAL) if r.get('asof') == asof and
+               not r.get('dry_run') and 'target_qty' in r]
+    if not dry_run and _asof_already_executed(asof):
+        # Completion is backed by an actual position check even on later wakes.
+        prior = [r for r in _rows(LIVE_JOURNAL) if r.get('asof') == asof and
+                 r.get('status') == 'reconciled' and not r.get('dry_run')][-1]
+        if not _residual(prior['target_qty'], client.positions()):
+            return f'skip: {asof} already reconciled'
+    scale = row.get('vt15_b100_scale')
     if scale is None:
-        return "WAIT: vt15_b100_scale is null (vol window not accrued)"
-
-    weights = row.get("weights") or {}
-    marks = row.get("mark_px") or {}
-    if weights and not marks:
-        # Champion row has a live book but no marks this wake (paper-trader
-        # data gap) -- retry on a later wake/next day rather than journaling
-        # a false "flat" day (I2).
-        return "WAIT: champion row has no marks"
-
-    # Champion gross is 2.0x; scale can reach ~2.0 -> up to 4x equity gross.
-    # Clamp the *executed* scale so the batch never refuses on cap/margin;
-    # the raw (unclamped) overlay scale is still recorded (scale_raw) so a
-    # capped live run is legible as a capped replica, not full-scale (C2).
-    scale_executed = min(scale, SCALE_CLAMP)
-
+        return 'WAIT: vt15_b100_scale is null (net vol window not accrued)'
+    if not math.isfinite(scale) or scale < 0:
+        return 'WAIT: invalid scale'
+    weights = row.get('weights') or {}
+    if any(not math.isfinite(w) for w in weights.values()):
+        return 'WAIT: invalid desired weights'
+    paper_marks = row.get('mark_px') or {}
+    if any(s not in paper_marks or not math.isfinite(paper_marks[s]) or paper_marks[s] <= 0
+           for s, w in weights.items() if w):
+        return 'WAIT: champion row has missing or invalid marks'
+    # A frozen incomplete batch was admitted with valid paper marks already.
+    # Its residuals are reconciled using fresh exchange quotes below; the old
+    # immutable paper quote must not strand an otherwise retryable batch.
+    if not intents:
+        try:
+            age_s = (now - datetime.fromisoformat(row['mark_ts'])).total_seconds()
+            if not 0 <= age_s <= MARK_MAX_AGE_S:
+                return 'WAIT: stale or future champion marks'
+        except (KeyError, TypeError, ValueError):
+            return 'WAIT: champion mark timestamp unavailable'
     filters = load_filters(client)
     positions = client.positions()
-
-    targets_qty, dropped = live_exec.build_targets(
-        weights, scale_executed, equity, marks, filters)
-    tn = {s: q * marks[s] for s, q in targets_qty.items()}
-    caps = (live_exec.check_caps(tn, equity) if len(tn) >= 20
-            else live_exec.check_caps(tn, equity, per_symbol_cap=1.0))
-    if caps:
-        return "ERROR: cap violation — no orders: " + "; ".join(caps)
-
-    orders, skipped = live_exec.diff_orders(targets_qty, positions,
-                                            marks, filters)
-    jrow = live_exec.build_journal_row(
-        asof=asof, executed_utc=datetime.now(timezone.utc).isoformat(),
-        equity_before=equity, equity_day_start=day_eq, scale=scale_executed,
-        targets_notional=tn, orders=orders, dropped=dropped,
-        skipped=skipped, halt=False, dry_run=dry_run, scale_raw=scale)
-    if dry_run:
-        jrow["intended_orders"] = [
-            {"symbol": o.symbol, "side": o.side, "qty": o.qty,
-             "reduce_only": o.reduce_only} for o in orders]
-        _append(LIVE_JOURNAL, jrow)
-        return (f"dry-run {asof}: {len(orders)} intended orders, "
-                f"gross {jrow['gross_target']:.0f}, "
-                f"{len(dropped)} legs dropped")
-    if client.position_mode():
-        # One-way mode is assumed throughout diff_orders' reduceOnly
-        # semantics; hedge mode must be caught before any order is placed
-        # (M2).
-        return "ERROR: account in hedge mode — set one-way position mode"
-    # live: set leverage lazily on symbols we are about to touch
-    seen_path = LDIR / "leverage_set.json"
-    seen = set(json.loads(seen_path.read_text())) if seen_path.exists() else set()
-    for o in orders:
-        if o.symbol not in seen:
-            try:
-                client.set_leverage(o.symbol, LEVERAGE)
-                seen.add(o.symbol)
-            except BinanceAPIError:
-                pass  # cross-margin default leverage still bounded by caps
-    LDIR.mkdir(parents=True, exist_ok=True)
-    seen_path.write_text(json.dumps(sorted(seen)))
-    _place(client, orders, asof)
-    _append(LIVE_JOURNAL, jrow)
-    verb = "flat" if not targets_qty else "done"
-    return (f"{verb} {asof}: {len(orders)} orders, "
-            f"gross {jrow['gross_target']:.0f}, {len(dropped)} dropped, "
-            f"{len(skipped)} skipped")
-
-
-def close_all(client) -> str:
-    # halt.flag is the FIRST statement (I3): even if positions()/load_filters()
-    # itself raises (network down mid-emergency-stop), the account must
-    # already be flagged halted before any further API call is attempted.
-    LDIR.mkdir(parents=True, exist_ok=True)
-    HALT_FLAG.write_text(
-        f"manual close-all at {datetime.now(timezone.utc).isoformat()}\n")
+    frozen_symbols = set(intents[0]['target_qty']) if intents else set()
+    symbols = set(weights) | set(positions) | frozen_symbols
     try:
-        positions = client.positions()
-        filters = load_filters(client)
-        marks = {s: 1e9 for s in positions}  # dust filter must never skip a close
-        asof = f"close-all-{datetime.now(timezone.utc).date()}"
-        orders = _flatten(client, positions, filters, marks, asof, dry_run=False)
-    finally:
-        # re-write is idempotent/harmless; the flag is already in place above
-        HALT_FLAG.write_text(
-            f"manual close-all at {datetime.now(timezone.utc).isoformat()}\n")
-    return f"close-all: flattened {len(orders)} positions, halt.flag written"
+        marks = _current_marks(client, symbols)
+    except Exception as exc:
+        return f'WAIT: current quotes unavailable: {exc}'
+    if symbols - marks.keys():
+        return 'WAIT: missing or stale current quotes for desired/held exposure'
+    scale_executed = min(scale, SCALE_CLAMP)
+    targets_qty, dropped = live_exec.build_targets(weights, scale_executed, equity, marks, filters)
+    unavailable = {d['symbol'] for d in dropped if d['reason'] in ('no_mark', 'no_filter')}
+    if unavailable:
+        return 'WAIT: desired target unavailable: ' + ', '.join(sorted(unavailable))
+    if intents:
+        targets_qty = intents[0]['target_qty']
+    orders, skipped = live_exec.diff_orders(targets_qty, positions, marks, filters,
+                                            unavailable=unavailable)
+    # Accepted dust is an explicit retained holding, frozen in the batch target.
+    if not intents:
+        for skip in skipped:
+            if skip['reason'] in ('dust', 'increase_below_min_notional'):
+                targets_qty[skip['symbol']] = positions.get(skip['symbol'], 0)
+    tn = {s: q * marks[s] for s, q in targets_qty.items()}
+    # Conservative whole-book envelope includes residuals if reductions fail.
+    envelope = {s: max(abs(positions.get(s, 0)), abs(targets_qty.get(s, 0))) * marks[s]
+                for s in symbols}
+    caps = live_exec.check_caps(envelope, equity)
+    if caps:
+        return 'ERROR: cap violation including held exposure: ' + '; '.join(caps)
+    jrow = live_exec.build_journal_row(asof, now.isoformat(), equity, day_eq,
+        scale_executed, tn, orders, dropped, skipped, False, dry_run, scale)
+    jrow.update(journal_version=2, target_qty=targets_qty, status='intent',
+                orders_intended=len(orders), orders_placed=0, orders_acknowledged=0,
+                orders_filled=0, quote_px=marks)
+    if dry_run:
+        jrow.update(status='dry_run', intended_orders=[vars(o) for o in orders])
+        _append(LDIR / 'journal_dry_v2.jsonl', jrow)
+        return f'dry-run {asof}: {len(orders)} intended orders'
+    _append(LIVE_JOURNAL, jrow)
+    for o in orders:
+        try:
+            client.set_leverage(o.symbol, LEVERAGE)
+        except BinanceAPIError:
+            pass
+    outcomes = _place(client, orders, asof, marks)
+    pending = _reconcile_pending(client)
+    actual = client.positions()
+    residual = _residual(targets_qty, actual)
+    states = _states()
+    outcomes = [states[r['client_order_id']] for r in outcomes]
+    filled = sum(r['status'] == 'FILLED' for r in outcomes)
+    complete = not residual and not pending and not any(
+        r['status'] == 'REJECTED' for r in outcomes) and not any(
+        s['reason'] == 'no_filter' for s in skipped)
+    jrow.update(status='reconciled' if complete else 'incomplete',
+                actual_positions=actual, residual_qty=residual, orders_submitted=len(outcomes),
+                orders_placed=filled, orders_filled=filled,
+                orders_acknowledged=sum('response' in r for r in outcomes))
+    _append(LIVE_JOURNAL, jrow)
+    return f"{'done' if complete else 'incomplete'} {asof}: {filled} filled, {len(residual)} residual positions"
+
+
+def _close_all(client) -> str:
+    LDIR.mkdir(parents=True, exist_ok=True)
+    HALT_FLAG.write_text(f'manual or risk close-all at {datetime.now(timezone.utc).isoformat()}\n')
+    if client.position_mode():
+        return 'close-all incomplete: hedge mode; no orders placed, halt.flag written'
+    pending = _reconcile_pending(client)
+    if pending:
+        return f'close-all incomplete: {len(pending)} unknown/working orders; halt.flag written'
+    positions = client.positions()
+    filters = load_filters(client)
+    orders, skipped = live_exec.diff_orders({}, positions, {}, filters)
+    asof = f'close-all-{datetime.now(timezone.utc).date()}'
+    _place(client, orders, asof)
+    pending = _reconcile_pending(client)
+    residual = client.positions()
+    complete = not residual and not pending and not skipped
+    _append(LDIR / 'closure_v2.jsonl', dict(asof=asof,
+        status='reconciled' if complete else 'incomplete', residual_positions=residual,
+        pending_order_ids=[r['client_order_id'] for r in pending], skipped=skipped))
+    if complete:
+        return f'close-all: flattened {len(positions)} positions, zero residual verified; halt.flag written'
+    return f'close-all incomplete: {len(residual)} residual positions; halt.flag written'
+
+
+@_locked
+def close_all(client) -> str:
+    return _close_all(client)
 
 
 def status(client) -> str:
@@ -292,6 +416,8 @@ def status(client) -> str:
                 f"last run {last['asof']} ({'dry' if last['dry_run'] else 'live'}): "
                 f"{last['orders_placed']} orders, gross {last['gross_target']:.0f}, "
                 f"equity {last['equity_before']:.2f}, scale {last['scale']}")
+            if last.get("status") != "reconciled":
+                lines.append(f"WARN: execution {last.get('status', 'unverified legacy')}; residual {last.get('residual_qty')}")
             age = (datetime.now(timezone.utc).date()
                    - datetime.strptime(last["asof"], "%Y-%m-%d").date()).days
             if age > 2:
@@ -321,7 +447,11 @@ def compare() -> str:
         return "compare: no fills yet"
     if not CH_JOURNAL.exists():
         return "compare: no champion journal"
-    fills = [json.loads(l) for l in FILLS.read_text().splitlines()]
+    records = [json.loads(l) for l in FILLS.read_text().splitlines()]
+    cumulative = {}
+    for i, record in enumerate(records):
+        cumulative[record.get('client_order_id', f'legacy-row-{i}')] = record
+    fills = list(cumulative.values())
     ch = {r["asof"]: r.get("mark_px") or {}
           for r in (json.loads(l)
                     for l in CH_JOURNAL.read_text().splitlines())}
@@ -329,14 +459,15 @@ def compare() -> str:
     for f in fills:
         if "error" in f or not f.get("avg_price"):
             continue
-        mark = ch.get(f["asof"], {}).get(f["symbol"])
+        mark = f.get("reference_mark") or ch.get(f["asof"], {}).get(f["symbol"])
         if not mark:
             continue
         sign = 1.0 if f["side"] == "BUY" else -1.0
         bps = (f["avg_price"] / mark - 1.0) * 1e4 * sign
         per_leg.append({"asof": f["asof"], "symbol": f["symbol"],
                         "side": f["side"], "fill": f["avg_price"],
-                        "mark": mark, "bps": round(bps, 2)})
+                        "mark": mark, "bps": round(bps, 2),
+                        "benchmark": "execution_quote" if f.get("reference_mark") else "paper_quote_diagnostic"})
     vals = [x["bps"] for x in per_leg]
     by_side = {}
     for side in ("BUY", "SELL"):
@@ -352,8 +483,10 @@ def compare() -> str:
                     if vals else None),
             "by_side": by_side,
         },
-        "total_fees_usdt": round(sum(f.get("fee_usdt") or 0.0
-                                     for f in fills), 6),
+        "total_fees_usdt": (round(sum(f["fee_usdt"] for f in fills), 6)
+                            if fills and all(f.get("fee_usdt") is not None for f in fills) else None),
+        "fee_coverage": ("complete" if fills and all(f.get("fee_usdt") is not None for f in fills) else "incomplete"),
+        "known_fees_usdt": round(sum(f.get("fee_usdt") or 0.0 for f in fills), 6),
         "per_leg": per_leg,
     }
     LDIR.mkdir(parents=True, exist_ok=True)

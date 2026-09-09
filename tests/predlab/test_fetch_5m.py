@@ -48,9 +48,9 @@ def test_month_needs_fetch_semantics():
     assert not f5.month_needs_fetch(month, None, {month})
     # no data at all, not confirmed-missing -> fetch (incl. failed-last-run months)
     assert f5.month_needs_fetch(month, None, set())
-    # data present inside the month -> covered
+    # one observed bar does not establish whole-month coverage
     inside = _df([int(pd.Timestamp("2021-02-10", tz="UTC").timestamp() * 1000)], [1.0])
-    assert not f5.month_needs_fetch(month, inside, set())
+    assert f5.month_needs_fetch(month, inside, set())
     # data only in other months -> still needs fetch
     outside = _df([int(pd.Timestamp("2021-03-10", tz="UTC").timestamp() * 1000)], [1.0])
     assert f5.month_needs_fetch(month, outside, set())

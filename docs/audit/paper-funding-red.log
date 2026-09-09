@@ -1,0 +1,21 @@
+.......F.                                                                [100%]
+=================================== FAILURES ===================================
+_______ test_local_funding_loader_requires_all_daily_events_and_boundary _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-22/test_local_funding_loader_requ0')
+
+    def test_local_funding_loader_requires_all_daily_events_and_boundary(tmp_path):
+        index=pd.date_range('2026-08-20','2026-08-24',freq='8h',tz='UTC')
+        raw=pd.DataFrame({'fundingRate':.001},index=index)
+        raw.to_parquet(tmp_path/'AAA.parquet')
+        raw.drop(pd.Timestamp('2026-08-22T08:00Z')).to_parquet(tmp_path/'GAP.parquet')
+        raw.iloc[:-1].to_parquet(tmp_path/'TAIL.parquet')
+        days=pd.date_range('2026-08-22','2026-08-23',tz='UTC')
+>       daily,coverage=paper.load_observed_funding(['AAA','GAP','TAIL','MISSING'],days,tmp_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'predlab_s1_paper' has no attribute 'load_observed_funding'
+
+tests/predlab/test_paper_repair.py:105: AttributeError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_paper_repair.py::test_local_funding_loader_requires_all_daily_events_and_boundary
+1 failed, 8 passed in 0.84s

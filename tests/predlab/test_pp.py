@@ -118,7 +118,9 @@ class TestS3:
         ret = pd.Series(0.0, index=idx)
         r = pp.run_s3(prob, ret, 0.5, 1)
         # entry from flat + 3 flips = 4 position changes charged
-        assert r["rets"].sum() == pytest.approx(-4 * pp.TAKER_BP / 1e4)
+        # Closing fee uses the held notional divided by post-entry NAV.
+        c = pp.TAKER_BP / 1e4
+        assert r["rets"].sum() == pytest.approx(-2*c - 2*c/(1-c))
 
 
 class TestStats:

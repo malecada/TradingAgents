@@ -85,12 +85,14 @@ def test_composite_signs_and_min_features():
     rng = np.random.default_rng(1)
     df = pd.DataFrame({c: rng.normal(0, 1, n) for c in SIGNS})
     df["quarter"] = ["2021Q1"] * 20 + ["2021Q2"] * 20
+    df["decision_ts"] = np.arange(n, dtype=float)
+    df["available_ts"] = df["decision_ts"]
     # pool 0: strongly legit on a + feature; pool 1: same value on a - feature
-    df.loc[0, "lp_secured"] = 5.0
-    df.loc[1, "deployer_supply_share"] = 5.0
+    df.loc[10, "lp_secured"] = 5.0
+    df.loc[11, "deployer_supply_share"] = 5.0
     score = composite(df)
-    assert score.loc[0] > score.drop([0, 1]).mean()
-    assert score.loc[1] < score.drop([0, 1]).mean()
+    assert score.loc[10] > score.drop([10, 11]).mean()
+    assert score.loc[11] < score.drop([10, 11]).mean()
     # sparse row excluded
     df2 = df.copy()
     df2.loc[2, list(SIGNS)] = np.nan

@@ -73,7 +73,8 @@ def day_needs_fetch(day: pd.Timestamp, existing: "pd.DataFrame | None",
     if existing is not None and not existing.empty:
         start = day.tz_localize("UTC") if day.tz is None else day
         end = start + pd.Timedelta(days=1)
-        if ((existing.index >= start) & (existing.index < end)).any():
+        expected = pd.date_range(start, end, freq="5min", inclusive="left")
+        if expected.isin(existing.index).all():
             return False
     return True
 

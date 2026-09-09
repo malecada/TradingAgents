@@ -48,8 +48,8 @@ def overlay_o4(base: pd.DataFrame, breadth: pd.Series, target: float = 0.15,
     sh = net.rolling(20).std().shift(1) * np.sqrt(ANN_DAYS)
     s = (target / sh).clip(0.0, cap).fillna(0.0)
     s = s.where(breadth >= breadth_floor, 0.0)
-    cost = TAKER_BP / 1e4 * (s * base["turnover"] + s.diff().abs().fillna(0.0) * 2.0)
-    return s * net - cost
+    from tradingagents.accounting import scaled_overlay
+    return scaled_overlay(base, s, fee_rate=TAKER_BP/1e4)
 
 
 def metrics(net: pd.Series) -> dict:

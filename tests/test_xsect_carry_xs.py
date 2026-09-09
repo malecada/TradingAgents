@@ -166,13 +166,13 @@ def test_costs_on_weight_change_and_rf_every_day():
     W, R, F = _one_symbol_frames([0.0, 1.0, 1.0, 1.0], [0.0] * 4, [0.0] * 4)
     p = run_ls_portfolio(W, R, F, cost_bps=10.0)
     assert p.iloc[1] == pytest.approx(-10 / 1e4 * 1.0 - RF_DAILY)  # |dW|=1 charged
-    assert p.iloc[2] == pytest.approx(-RF_DAILY)                    # rf alone
+    assert p.iloc[2] == pytest.approx(-RF_DAILY - .001*(.001+RF_DAILY)/(1-.001-RF_DAILY))                    # rf alone
 
 
-def test_nan_funding_on_held_symbol_accrues_zero():
+def test_nan_funding_on_held_symbol_fails_explicitly():
     W, R, F = _one_symbol_frames([0.5] * 4, [0.0] * 4, [np.nan] * 4)
-    p = run_ls_portfolio(W, R, F, cost_bps=0.0, rf_daily=0.0)
-    assert (p == 0).all()
+    with pytest.raises(ValueError,match="missing_held_funding"):
+        run_ls_portfolio(W, R, F, cost_bps=0.0, rf_daily=0.0)
 
 
 from tradingagents.xsect.portfolio import rank_placebo_pvalue, sr

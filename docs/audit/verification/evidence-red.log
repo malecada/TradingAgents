@@ -1,0 +1,106 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+________________ test_trial_identity_uses_whole_evaluated_cell _________________
+
+    def test_trial_identity_uses_whole_evaluated_cell():
+        a = dict(experiment='e', cell='c', model='m', config={'a': 1}, window=['2021', '2022'])
+>       assert registry.trial_identity(a) == registry.trial_identity(dict(a))
+               ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'tradingagents.predlab.registry' has no attribute 'trial_identity'
+
+tests/predlab/test_audit_evidence.py:15: AttributeError
+________________ test_failed_tests_remain_in_family_denominator ________________
+
+    def test_failed_tests_remain_in_family_denominator():
+>       assert rollup.bh_fdr({'valid': .075, 'failed': np.nan}) == {'valid': False, 'failed': False}
+E       AssertionError: assert {'valid': Tru...ailed': False} == {'valid': Fal...ailed': False}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Differing items:
+E         {'valid': True} != {'valid': False}
+E         Use -v to get more diff
+
+tests/predlab/test_audit_evidence.py:21: AssertionError
+_______________ test_selected_winner_accounts_for_all_contenders _______________
+
+    def test_selected_winner_accounts_for_all_contenders():
+        card={'strong_baseline':'base','per_model':{'base':{'loss_mean':1}, 'a':{'loss_mean':.8,'dm_p':.04}, 'b':{'loss_mean':.9,'dm_p':.5}, 'failed':{'loss_mean':np.nan,'dm_p':np.nan}}}
+        ch = rollup.champion(card)
+>       assert ch['raw_dm_p'] == .04
+               ^^^^^^^^^^^^^^
+E       KeyError: 'raw_dm_p'
+
+tests/predlab/test_audit_evidence.py:27: KeyError
+_________________ test_h1_hac_matches_independent_statsmodels __________________
+
+    def test_h1_hac_matches_independent_statsmodels():
+        rng=np.random.default_rng(415)
+        d=np.zeros(400)
+        for i in range(1,400): d[i]=.9*d[i-1]+rng.normal()+.04
+        fit=OLS(d,np.ones((len(d),1))).fit()
+        lag=int(np.floor(4*(len(d)/100)**(2/9)))
+        expected=fit.params[0]/np.sqrt(cov_hac(fit,nlags=lag,use_correction=False)[0,0])
+>       assert dm.dm_test(d,np.zeros_like(d)).stat == pytest.approx(expected)
+E       assert 10.459925079200039 == 4.574981312021038 ± 4.6e-06
+E         
+E         comparison failed
+E         Obtained: 10.459925079200039
+E         Expected: 4.574981312021038 ± 4.6e-06
+
+tests/predlab/test_audit_evidence.py:39: AssertionError
+__________________ test_engle_granger_uses_cointegration_null __________________
+
+    def test_engle_granger_uses_cointegration_null():
+        from scripts.predlab_xfam_lib import eg_fit
+        rng=np.random.default_rng(9)
+        a=pd.Series(rng.normal(size=300).cumsum())
+        b=pd.Series(rng.normal(size=300).cumsum())
+        _,p,resid=eg_fit(a,b)
+>       assert p == pytest.approx(coint(a,b,trend='c',maxlag=10,autolag='AIC')[1])
+E       assert 0.3195618659990134 == 0.5646545645170554 ± 5.6e-07
+E         
+E         comparison failed
+E         Obtained: 0.3195618659990134
+E         Expected: 0.5646545645170554 ± 5.6e-07
+
+tests/predlab/test_audit_evidence.py:49: AssertionError
+__________ test_preflight_pins_committed_gate_and_rejects_dirty_code ___________
+
+registered_repo = PosixPath('/tmp/pytest-of-malecada/pytest-7/test_preflight_pins_committed_0/repo')
+
+    def test_preflight_pins_committed_gate_and_rejects_dirty_code(registered_repo):
+>       p=registry.preflight('new',('2021-01-01','2022-01-01'))
+          ^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'tradingagents.predlab.registry' has no attribute 'preflight'
+
+tests/predlab/test_audit_evidence.py:71: AttributeError
+____________ test_preflight_rejects_uncommitted_gate_and_bad_window ____________
+
+registered_repo = PosixPath('/tmp/pytest-of-malecada/pytest-7/test_preflight_rejects_uncommi0/repo')
+
+    def test_preflight_rejects_uncommitted_gate_and_bad_window(registered_repo):
+        with pytest.raises(RuntimeError,match='window'):
+>           registry.preflight('new',('2020-01-01','2022-01-01'))
+            ^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.predlab.registry' has no attribute 'preflight'
+
+tests/predlab/test_audit_evidence.py:80: AttributeError
+_____________ test_correction_history_is_append_only_and_resolves ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-7/test_correction_history_is_app0')
+
+    def test_correction_history_is_append_only_and_resolves(tmp_path):
+>       from tradingagents.predlab.evidence import append_correction, resolve
+E       ModuleNotFoundError: No module named 'tradingagents.predlab.evidence'
+
+tests/predlab/test_audit_evidence.py:88: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_evidence.py::test_trial_identity_uses_whole_evaluated_cell
+FAILED tests/predlab/test_audit_evidence.py::test_failed_tests_remain_in_family_denominator
+FAILED tests/predlab/test_audit_evidence.py::test_selected_winner_accounts_for_all_contenders
+FAILED tests/predlab/test_audit_evidence.py::test_h1_hac_matches_independent_statsmodels
+FAILED tests/predlab/test_audit_evidence.py::test_engle_granger_uses_cointegration_null
+FAILED tests/predlab/test_audit_evidence.py::test_preflight_pins_committed_gate_and_rejects_dirty_code
+FAILED tests/predlab/test_audit_evidence.py::test_preflight_rejects_uncommitted_gate_and_bad_window
+FAILED tests/predlab/test_audit_evidence.py::test_correction_history_is_append_only_and_resolves
+8 failed in 1.55s

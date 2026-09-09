@@ -41,7 +41,7 @@ def build_targets(weights: "dict[str, float]", scale: float, equity: float,
 
     for sym, w in weights.items():
         notional = abs(w) * scale * equity
-        if sym not in marks or not marks[sym]:
+        if sym not in marks or not math.isfinite(marks[sym]) or marks[sym] <= 0:
             drop(sym, "no_mark", notional)
             continue
         if sym not in filters:
@@ -69,7 +69,8 @@ class Order:
 
 def diff_orders(targets: "dict[str, float]", positions: "dict[str, float]",
                 marks: "dict[str, float]", filters: "dict[str, SymbolFilter]",
-                dust_usd: float = 7.0) -> "tuple[list[Order], list[dict]]":
+                dust_usd: float = 7.0, *,
+                unavailable: set[str] | None = None) -> "tuple[list[Order], list[dict]]":
     """Delta market orders taking `positions` to `targets`.
 
     Reduce-only when the order only shrinks an existing position (exempt
@@ -89,6 +90,9 @@ def diff_orders(targets: "dict[str, float]", positions: "dict[str, float]",
     orders: "list[Order]" = []
     skipped: "list[dict]" = []
     for sym in sorted(set(targets) | set(positions)):
+        if sym in (unavailable or set()):
+            skipped.append({"symbol": sym, "reason": "unavailable_target"})
+            continue
         tgt = targets.get(sym, 0.0)
         cur = positions.get(sym, 0.0)
         f = filters.get(sym)

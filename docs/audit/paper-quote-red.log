@@ -1,0 +1,19 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_public_marks_without_exchange_timestamp_are_unavailable _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78ef372b6fd0>
+
+    def test_public_marks_without_exchange_timestamp_are_unavailable(monkeypatch):
+        import io
+        monkeypatch.setattr('urllib.request.urlopen',lambda *a,**k:io.BytesIO(
+            b'[{"symbol":"AAA","price":"100","bidPrice":"99","askPrice":"101"}]'))
+>       assert not paper.fetch_marks()
+E       AssertionError: assert not {'AAA': 100.0}
+E        +  where {'AAA': 100.0} = <function fetch_marks at 0x78ef0a3fe840>()
+E        +    where <function fetch_marks at 0x78ef0a3fe840> = paper.fetch_marks
+
+tests/predlab/test_paper_repair.py:145: AssertionError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_paper_repair.py::test_public_marks_without_exchange_timestamp_are_unavailable
+1 failed in 0.45s

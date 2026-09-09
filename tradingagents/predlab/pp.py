@@ -7,8 +7,8 @@ S3: exploratory 1h sign filter (cannot graduate past dev this cycle)
 
 Timing conventions (all verified against the P5 runner):
 - T7: signal row t is pre-shifted (info through day t-1); return row t is the
-  day-t log return -> weights formed from row t trade day t. Positions are
-  therefore w_t applied to ret_t, turnover charged on w_t - w_{t-1}.
+  day-t simple return -> weights formed from row t trade day t. Contracts
+  drift between rebalances; costs apply to actual notional changes.
 - S2/S3: stored forecast row ts predicts the bar labeled ts using info
   through ts-1 -> position from row ts applies to store ret row ts.
 """
@@ -16,6 +16,8 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
+
+from tradingagents.accounting import calendar_index, run_target_book
 
 TAKER_BP = 5.0  # per side, per unit turnover
 ANN_DAYS = 365.0
@@ -32,7 +34,7 @@ def ann_sr(rets: np.ndarray, periods_per_year: float = ANN_DAYS) -> float:
 
 
 def max_drawdown(rets: np.ndarray) -> float:
-    eq = np.cumprod(1 + np.asarray(rets, dtype=np.float64))
+    eq = np.r_[1.0, np.cumprod(1 + np.asarray(rets, dtype=np.float64))]
     peak = np.maximum.accumulate(eq)
     return float(np.max(1 - eq / peak))
 
@@ -90,41 +92,14 @@ def run_s1(sig: pd.DataFrame, ret: pd.DataFrame, uni: pd.DataFrame,
            start: str, end: str) -> dict:
     """Daily long-short on park_5 ranks. Costs: TAKER_BP x turnover +
     funding carry (position pays +funding when long)."""
-    lo, hi = pd.Timestamp(start, tz="UTC"), pd.Timestamp(end, tz="UTC")
-    sig = sig.where(uni)
-    days = [d for d in ret.index if lo <= d <= hi]
-    prev_w = pd.Series(dtype=np.float64)
-    targets: "list[pd.Series]" = []
-    out = []
-    for d in days:
-        if d not in sig.index:
-            continue
-        w_tgt = quintile_weights(sig.loc[d], weighting)
-        if len(w_tgt) == 0:
-            continue
-        targets.append(w_tgt)
-        if len(targets) > smooth:
-            targets.pop(0)
-        w = pd.concat(targets, axis=1).fillna(0.0).mean(axis=1)
-        r_row = ret.loc[d].reindex(w.index)
-        gross = float((w * r_row).sum())
-        both = w.index.union(prev_w.index)
-        turn = float((w.reindex(both, fill_value=0.0)
-                      - prev_w.reindex(both, fill_value=0.0)).abs().sum())
-        cost = TAKER_BP / 1e4 * turn
-        carry = 0.0
-        if fund_daily is not None and d in fund_daily.index:
-            f = fund_daily.loc[d].reindex(w.index).fillna(0.0)
-            carry = float(-(w * f).sum())  # long pays positive funding
-        out.append({"date": d, "gross": gross, "net": gross - cost + carry,
-                    "turnover": turn, "carry": carry})
-        prev_w = w
-    df = pd.DataFrame(out).set_index("date")
-    return {"rets": df, "sr_gross": ann_sr(df["gross"].to_numpy()),
-            "sr_net": ann_sr(df["net"].to_numpy()),
-            "maxdd": max_drawdown(df["net"].to_numpy()),
-            "avg_turnover": float(df["turnover"].mean()),
-            "n_days": int(len(df))}
+    # A single accounting implementation keeps S1 and the default Opt cell in
+    # parity, including held units, missing signals and entry/maintenance fees.
+    from tradingagents.predlab.opt import OptConfig, run_ls
+    result = run_ls(sig, ret, uni, fund_daily,
+                    OptConfig(weighting=weighting, smooth=smooth, taker_bp=TAKER_BP),
+                    start, end)
+    return {key: result[key] for key in
+            ("rets", "sr_gross", "sr_net", "maxdd", "avg_turnover", "n_days")}
 
 
 def build_funding_daily(symbols: "list[str]", store_dir, index: pd.DatetimeIndex
@@ -147,19 +122,19 @@ def run_s2(var_fc: pd.Series, ret: pd.Series, target_ann: float = 0.20,
     """Vol-target overlay: pos_t = clip(target / ann_vol_hat_t, 0, cap),
     applied to same-row daily return; 5bp on position changes."""
     common = var_fc.index.intersection(ret.index)
-    v = np.maximum(var_fc.loc[common].to_numpy(dtype=np.float64), 1e-10)
-    sig_ann = np.sqrt(v * ANN_DAYS)
-    pos = np.clip(target_ann / sig_ann, 0.0, lev_cap)
-    r = ret.loc[common].to_numpy(dtype=np.float64)
-    strat = pos * r
-    cost = TAKER_BP / 1e4 * np.abs(np.diff(pos, prepend=pos[0]))
-    net = strat - cost
-    real = pd.Series(net, index=common)
+    clock = calendar_index(common)
+    v = var_fc.reindex(clock).where(lambda x: np.isfinite(x) & (x > 0))
+    pos = (target_ann / np.sqrt(v * ANN_DAYS)).clip(0., lev_cap)
+    book = run_target_book(pos.to_frame("asset"), ret.reindex(clock).to_frame("asset"),
+                           fee_rate=TAKER_BP/1e4)
+    real = book["net"]
     roll_vol = real.rolling(20).std() * np.sqrt(ANN_DAYS)
-    te = float(np.sqrt(np.nanmean((roll_vol - target_ann) ** 2)))
-    return {"rets": real, "sr_net": ann_sr(net), "maxdd": max_drawdown(net),
+    errors = (roll_vol.dropna() - target_ann) ** 2
+    te = float(np.sqrt(errors.mean())) if len(errors) else float('nan')
+    return {"rets": real, "sr_net": ann_sr(real.to_numpy()), "maxdd": max_drawdown(real.to_numpy()),
             "tracking_err": te, "roll_vol": roll_vol,
-            "avg_pos": float(np.mean(pos)), "n_days": int(len(net))}
+            "avg_pos": float(book.attrs['accounting_inputs'].weights.asset.mean()) if len(book) else 0.,
+            "n_days": int(len(real)), "accounting": book}
 
 
 # ------------------------------------------------------------ S3: sign filter
@@ -167,18 +142,18 @@ def run_s2(var_fc: pd.Series, ret: pd.Series, target_ann: float = 0.20,
 def run_s3(prob: pd.Series, ret: pd.Series, thresh: float, smooth: int) -> dict:
     """Long/flat 1h filter: long when smoothed P(up) > thresh."""
     common = prob.index.intersection(ret.index)
-    p = prob.loc[common]
-    if smooth > 1:
-        p = p.rolling(smooth, min_periods=1).mean()
-    pos = (p > thresh).astype(float).to_numpy()
-    r = ret.loc[common].to_numpy(dtype=np.float64)
-    strat = pos * r
-    cost = TAKER_BP / 1e4 * np.abs(np.diff(pos, prepend=0.0))
-    net = strat - cost
-    return {"rets": pd.Series(net, index=common),
-            "sr_net": ann_sr(net, periods_per_year=24 * ANN_DAYS),
-            "maxdd": max_drawdown(net),
-            "time_in_mkt": float(np.mean(pos)), "n_hours": int(len(net))}
+    clock = calendar_index(common, 'h')
+    raw = prob.reindex(clock).where(lambda x: np.isfinite(x))
+    p = raw.rolling(smooth, min_periods=1).mean() if smooth > 1 else raw
+    pos = (p > thresh).astype(float).where(raw.notna())
+    book = run_target_book(pos.to_frame("asset"), ret.reindex(clock).to_frame("asset"),
+                           fee_rate=TAKER_BP/1e4)
+    real = book["net"]
+    return {"rets": real,
+            "sr_net": ann_sr(real.to_numpy(), periods_per_year=24 * ANN_DAYS),
+            "maxdd": max_drawdown(real.to_numpy()),
+            "time_in_mkt": float((book.attrs['accounting_inputs'].weights.asset != 0).mean()) if len(book) else 0.,
+            "n_hours": int(len(real)), "accounting": book}
 
 
 # ---------------------------------------------------------------- placebos

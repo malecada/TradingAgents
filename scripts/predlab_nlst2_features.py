@@ -16,8 +16,8 @@ feature-outcome statistic is computed:
     F7 sell_tax_proxy        -   median sell-output shortfall vs AMM expectation
     F8 depth_growth          +   WETH reserve at h24 / first-Sync reserve
 
-Composite legit-score = mean over available features of sign * per-quarter
-z-score; pools with <5 available features are excluded (count reported).
+Composite legit-score = mean over available features of sign * strictly prior within-quarter
+z-score (prospective causal v2; original retrospective evidence is preserved); pools with <5 available features are excluded (count reported).
 NO fitting, NO weight tuning, NO threshold search.
 
 Phases (resumable): fetch -> data/predlab/nlst/nlst2_raw/{pair}.json,
@@ -41,7 +41,7 @@ from predlab_nlst_dex_fetch import (  # noqa: E402
 )
 
 RAW2 = ROOT / "data" / "predlab" / "nlst" / "nlst2_raw"
-OUT = ROOT / "data" / "predlab" / "nlst" / "nlst2_features.parquet"
+OUT = ROOT / "data" / "predlab" / "nlst" / "nlst2_features_causal_v2.parquet"
 DAY = 86_400
 
 TRANSFER = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
@@ -140,12 +140,34 @@ def buyer_breadth(swap_logs: list[dict], weth_is_0: bool) -> float:
 
 
 def per_quarter_z(df: pd.DataFrame, cols) -> pd.DataFrame:
-    z = pd.DataFrame(index=df.index, columns=cols, dtype=float)
-    for q, sub in df.groupby("quarter"):
-        for c in cols:
-            v = sub[c].astype(float)
-            sd = v.std()
-            z.loc[sub.index, c] = (v - v.mean()) / sd if sd and sd > 0 else 0.0
+    """Causal v2: standardize from strictly earlier known rows in the quarter.
+
+    decision_ts and available_ts are UTC epoch seconds. Same-time decisions
+    never normalize each other. Fewer than two prior observations leaves the
+    standardized feature unavailable; constant known history gives zero only
+    for a known current value. Legacy whole-quarter scores remain invalidated.
+    """
+    required = {"decision_ts", "available_ts", "quarter"}
+    if not required.issubset(df):
+        raise ValueError("causal normalization requires decision_ts and available_ts; "
+                         "legacy tables need reconstructable feature availability")
+    if not df.index.is_unique or not np.isfinite(df[["decision_ts", "available_ts"]].to_numpy(float)).all():
+        raise ValueError("unique rows and finite decision/availability timestamps required")
+    z = pd.DataFrame(np.nan, index=df.index, columns=cols)
+    for _, sub in df.groupby("quarter"):
+        values = sub[list(cols)].astype(float).replace([np.inf, -np.inf], np.nan)
+        for idx, row in sub.iterrows():
+            if row["available_ts"] > row["decision_ts"]:
+                continue
+            prior = values.loc[(sub["decision_ts"] < row["decision_ts"]) &
+                               (sub["available_ts"] < row["decision_ts"])]
+            for c in cols:
+                history = prior[c].dropna()
+                current = values.at[idx, c]
+                if len(history) < 2 or pd.isna(current):
+                    continue
+                sd = history.std()
+                z.at[idx, c] = (current - history.mean()) / sd if sd > 0 else 0.0
     return z
 
 
@@ -204,7 +226,9 @@ def build_row(meta: dict, logs: list[dict], raw2: dict, ts_of) -> dict:
     weth_is_0 = meta["weth_is_0"]
     syncs = [r for r in logs if r["kind"] == "sync"]
     syncs24 = [s for s in syncs if s["block"] <= raw2["b24"]]
-    row = {"pair": meta["pair"], "quarter": meta["quarter"]}
+    row = {"pair": meta["pair"], "quarter": meta["quarter"],
+           "decision_ts": ts_of(meta["block"]) + DAY,
+           "available_ts": ts_of(meta["block"]) + DAY}
     row["lp_secured"] = lp_secured(raw2["transfers"])
     row["deployer_age"] = float(raw2["nonce"]) if raw2["nonce"] is not None else np.nan
     sup = raw2["supply"]

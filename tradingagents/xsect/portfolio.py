@@ -2,7 +2,9 @@
 import numpy as np
 import pandas as pd
 
-from tradingagents.stress.overlay import _maxdd as maxdd  # positive magnitude
+from tradingagents.accounting import calendar_index, run_target_book
+
+from tradingagents.predlab.pp import max_drawdown as maxdd  # initial-capital simple NAV
 from tradingagents.stress.overlay import _sr as sr  # sqrt(365), 0.0 on zero variance
 
 
@@ -44,52 +46,16 @@ def returns_from_close(close: pd.Series, convention: str) -> pd.Series:
 def run_weekly_portfolio(klines: dict, rebalance_dates: pd.DatetimeIndex,
                           select_fn, cost_bps: float = 10.0,
                           convention: str = "simple") -> pd.Series:
-    """Daily net-return series for a weekly-rebalanced EW long-only portfolio.
+    """Fixed contracts between weekly rebalances, with decisions at close t.
 
-    Mechanics: at each rebalance date t (Monday, using close t), target = EW over
-    select_fn(t) (list of symbols); positions apply from bar t+1 (no look-ahead —
-    the decision bar itself never accrues the return that produced the signal).
-    Daily portfolio return = weight-anchored sum: Sum_s weights[s] * r_s over
-    members whose return exists that day (a member missing a kline that day
-    contributes 0 — its weight is NOT redistributed to survivors intra-week;
-    weights only change at the next rebalance).
-    Costs: cost = cost_bps/1e4 * Sum|w_new - w_old| (one-side rate times summed
-    one-side turnover across both legs of each trade), deducted on the first
-    accrual day after each rebalance (even if the book is empty/flat that day).
-
-    ``convention``: r_s is the SIMPLE close-to-close return by default (lead-0
-    fix, 2026-09-02; the July xsect cycles booked Sum w*dlog, which drops
-    half-sigma-squared per day on long books — AUDIT_RESEARCH_PROGRAM_2026-09-02
-    section 2). ``"log"`` reproduces the registered July numbers for the
-    convention-swap kill-test only.
+    Targets apply on t+1; pretrade NAV sizes contracts, actual drifted notional
+    changes incur fees once. A missing held mark raises an explicit error.
+    An empty member list is an explicit close instruction. The log convention
+    is retained solely as a non-executable convention-swap diagnostic.
     """
-    logret = {s: returns_from_close(df["close"], convention) for s, df in klines.items()}
-    all_days = sorted(set().union(*[df.index for df in klines.values()]))
-    all_days = pd.DatetimeIndex(all_days)
-    port = pd.Series(0.0, index=all_days)
-    weights: dict = {}
-    pending_cost = 0.0
-    reb = set(rebalance_dates)
-    for day in all_days:
-        if weights:
-            total = 0.0
-            for s, w in weights.items():
-                r = logret[s].get(day)
-                if r is not None and not np.isnan(r):
-                    total += w * r
-            port.loc[day] = total
-        if pending_cost:
-            port.loc[day] -= pending_cost
-            pending_cost = 0.0
-        if day in reb:
-            members = select_fn(day)
-            new_w = {s: 1.0 / len(members) for s in members} if members else {}
-            keys = set(new_w) | set(weights)
-            turnover = sum(abs(new_w.get(k, 0.0) - weights.get(k, 0.0)) for k in keys)
-            pending_cost += cost_bps / 1e4 * turnover
-            weights = new_w
-    start = rebalance_dates[0] if len(rebalance_dates) else all_days[0]
-    return port.loc[port.index > start]
+    arrays = build_fast_arrays(klines, convention=convention)
+    members = {d: select_fn(d) for d in rebalance_dates}
+    return fast_weekly_portfolio(members, rebalance_dates, *arrays, cost_bps=cost_bps)
 
 
 def _stationary_indices(n: int, block: int, rng) -> np.ndarray:
@@ -138,43 +104,36 @@ def build_fast_arrays(klines: dict, convention: str = "simple"):
     R is days x symbols, NaN where a symbol has no kline. ``convention`` picks
     the PnL return series (see :func:`returns_from_close`).
     """
-    all_days = pd.DatetimeIndex(sorted(set().union(*[df.index for df in klines.values()])))
+    all_days = calendar_index(pd.DatetimeIndex(sorted(set().union(*[df.index for df in klines.values()]))))
     day_pos = {d: i for i, d in enumerate(all_days)}
     sym_list = sorted(klines)
     sym_idx = {s: j for j, s in enumerate(sym_list)}
     R = np.full((len(all_days), len(sym_list)), np.nan)
     for s, j in sym_idx.items():
-        R[:, j] = returns_from_close(klines[s]["close"], convention).reindex(all_days).to_numpy()
+        R[:, j] = returns_from_close(klines[s]["close"].reindex(all_days), convention).to_numpy()
     return all_days, day_pos, R, sym_idx
 
 
 def fast_weekly_portfolio(members_by_t: dict, reb_dates, all_days, day_pos, R, sym_idx,
                           cost_bps: float = 10.0) -> pd.Series:
-    """Vectorised twin of :func:`run_weekly_portfolio` (same mechanics, same
-    output bar-for-bar): EW over members_by_t[t] takes effect the day AFTER
-    rebalance date t; turnover cost charged once on the first accrual day; a
-    missing kline contributes 0 without re-weighting.
-    """
-    n_days = len(all_days)
-    ret = np.zeros(n_days)
-    events = sorted((day_pos[t], t) for t in reb_dates if t in day_pos)
-    weights: dict = {}
-    for i, (pos, date) in enumerate(events):
-        members = members_by_t.get(date, [])
-        new_w = {s: 1.0 / len(members) for s in members} if members else {}
-        keys = set(new_w) | set(weights)
-        turnover = sum(abs(new_w.get(k, 0.0) - weights.get(k, 0.0)) for k in keys)
-        cost = cost_bps / 1e4 * turnover
-        start = pos + 1
-        end = events[i + 1][0] if i + 1 < len(events) else n_days - 1
-        if start <= end and new_w:
-            idxs = [sym_idx[s] for s in new_w]
-            warr = np.array([new_w[s] for s in new_w])
-            block = np.nan_to_num(R[start:end + 1, idxs], nan=0.0)
-            ret[start:end + 1] = block @ warr
-        if start < n_days:
-            ret[start] -= cost
-        weights = new_w
-    port = pd.Series(ret, index=all_days)
-    start_date = reb_dates[0] if len(reb_dates) else all_days[0]
-    return port.loc[port.index > start_date]
+    """Array-input twin of the fixed-contract weekly engine."""
+    if len(all_days) == 0:
+        return pd.Series(dtype=float, index=all_days)
+    columns = sorted(sym_idx, key=sym_idx.get)
+    clock = calendar_index(all_days)
+    returns = pd.DataFrame(R,index=all_days,columns=columns).reindex(clock)
+    targets = pd.DataFrame(np.nan,index=clock,columns=columns)
+    for d in reb_dates:
+        next_day = d + pd.Timedelta(days=1)
+        if next_day not in clock:
+            continue
+        members = members_by_t.get(d, [])
+        unknown = set(members) - set(columns)
+        if unknown:
+            raise ValueError(f'unknown_target_symbols at {d}: {sorted(unknown)}')
+        targets.loc[next_day] = 0.
+        if members:
+            targets.loc[next_day,members] = 1./len(members)
+    start = reb_dates[0] if len(reb_dates) else all_days[0]
+    result = run_target_book(targets,returns,fee_rate=cost_bps/1e4)
+    return result.net.loc[result.index > start]

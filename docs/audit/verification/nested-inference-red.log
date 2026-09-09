@@ -1,0 +1,751 @@
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+_ test_runner_requires_explicit_nesting_and_matching_registered_test[qlike-True-clark_west-unavailable_nested_loss_test-False] _
+
+self = Index(['loss_mean', 'forecast_policy', 'inference_policy',
+       'n_requested_origins', 'n_scoreable_origins', 'n_exc...     'dm_stat', 'dm_p', 'cw_p', 'gw_p', 'pt_p', 'degenerate', 'n_origins',
+       'sub_periods'],
+      dtype='object')
+key = 'nested'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list('abc'))
+        >>> unique_index.get_loc('b')
+        1
+    
+        >>> monotonic_index = pd.Index(list('abbc'))
+        >>> monotonic_index.get_loc('b')
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list('abcb'))
+        >>> non_monotonic_index.get_loc('b')
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+>           return self._engine.get_loc(casted_key)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexes/base.py:3812: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/index.pyx:167: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/index.pyx:196: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/hashtable_class_helper.pxi:7088: in pandas._libs.hashtable.PyObjectHashTable.get_item
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   KeyError: 'nested'
+
+pandas/_libs/hashtable_class_helper.pxi:7096: KeyError
+
+The above exception was the direct cause of the following exception:
+
+loss = 'qlike', nested = True, registered = 'clark_west'
+primary = 'unavailable_nested_loss_test', eligible = False
+
+    @pytest.mark.parametrize('loss,nested,registered,primary,eligible', [
+        ('qlike', True, 'clark_west', 'unavailable_nested_loss_test', False),
+        ('se', True, 'clark_west', 'clark_west', True),
+        ('se', True, None, 'unavailable_nested_loss_test', False),
+        ('se', False, 'clark_west', 'dm_hac', True),
+    ])
+    def test_runner_requires_explicit_nesting_and_matching_registered_test(loss, nested, registered, primary, eligible):
+        rows = runner.run_cell(cell(loss, nested, registered), series(),
+            [ColumnForecast('har_levels', 0), ColumnForecast('harq', 1), ColumnForecast('log_har', 1)],
+            'synthetic', 'test', dry=True).set_index('model')
+>       assert bool(rows.loc['harq', 'nested']) is nested
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/predlab/test_audit_nested_inference.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexing.py:1184: in __getitem__
+    return self.obj._get_value(*key, takeable=self._takeable)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/frame.py:4225: in _get_value
+    series = self._get_item_cache(col)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/frame.py:4649: in _get_item_cache
+    loc = self.columns.get_loc(item)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Index(['loss_mean', 'forecast_policy', 'inference_policy',
+       'n_requested_origins', 'n_scoreable_origins', 'n_exc...     'dm_stat', 'dm_p', 'cw_p', 'gw_p', 'pt_p', 'degenerate', 'n_origins',
+       'sub_periods'],
+      dtype='object')
+key = 'nested'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list('abc'))
+        >>> unique_index.get_loc('b')
+        1
+    
+        >>> monotonic_index = pd.Index(list('abbc'))
+        >>> monotonic_index.get_loc('b')
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list('abcb'))
+        >>> non_monotonic_index.get_loc('b')
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+            return self._engine.get_loc(casted_key)
+        except KeyError as err:
+            if isinstance(casted_key, slice) or (
+                isinstance(casted_key, abc.Iterable)
+                and any(isinstance(x, slice) for x in casted_key)
+            ):
+                raise InvalidIndexError(key)
+>           raise KeyError(key) from err
+E           KeyError: 'nested'
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexes/base.py:3819: KeyError
+_ test_runner_requires_explicit_nesting_and_matching_registered_test[se-True-clark_west-clark_west-True] _
+
+self = Index(['loss_mean', 'forecast_policy', 'inference_policy',
+       'n_requested_origins', 'n_scoreable_origins', 'n_exc...     'dm_stat', 'dm_p', 'cw_p', 'gw_p', 'pt_p', 'degenerate', 'n_origins',
+       'sub_periods'],
+      dtype='object')
+key = 'nested'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list('abc'))
+        >>> unique_index.get_loc('b')
+        1
+    
+        >>> monotonic_index = pd.Index(list('abbc'))
+        >>> monotonic_index.get_loc('b')
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list('abcb'))
+        >>> non_monotonic_index.get_loc('b')
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+>           return self._engine.get_loc(casted_key)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexes/base.py:3812: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/index.pyx:167: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/index.pyx:196: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/hashtable_class_helper.pxi:7088: in pandas._libs.hashtable.PyObjectHashTable.get_item
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   KeyError: 'nested'
+
+pandas/_libs/hashtable_class_helper.pxi:7096: KeyError
+
+The above exception was the direct cause of the following exception:
+
+loss = 'se', nested = True, registered = 'clark_west', primary = 'clark_west'
+eligible = True
+
+    @pytest.mark.parametrize('loss,nested,registered,primary,eligible', [
+        ('qlike', True, 'clark_west', 'unavailable_nested_loss_test', False),
+        ('se', True, 'clark_west', 'clark_west', True),
+        ('se', True, None, 'unavailable_nested_loss_test', False),
+        ('se', False, 'clark_west', 'dm_hac', True),
+    ])
+    def test_runner_requires_explicit_nesting_and_matching_registered_test(loss, nested, registered, primary, eligible):
+        rows = runner.run_cell(cell(loss, nested, registered), series(),
+            [ColumnForecast('har_levels', 0), ColumnForecast('harq', 1), ColumnForecast('log_har', 1)],
+            'synthetic', 'test', dry=True).set_index('model')
+>       assert bool(rows.loc['harq', 'nested']) is nested
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/predlab/test_audit_nested_inference.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexing.py:1184: in __getitem__
+    return self.obj._get_value(*key, takeable=self._takeable)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/frame.py:4225: in _get_value
+    series = self._get_item_cache(col)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/frame.py:4649: in _get_item_cache
+    loc = self.columns.get_loc(item)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Index(['loss_mean', 'forecast_policy', 'inference_policy',
+       'n_requested_origins', 'n_scoreable_origins', 'n_exc...     'dm_stat', 'dm_p', 'cw_p', 'gw_p', 'pt_p', 'degenerate', 'n_origins',
+       'sub_periods'],
+      dtype='object')
+key = 'nested'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list('abc'))
+        >>> unique_index.get_loc('b')
+        1
+    
+        >>> monotonic_index = pd.Index(list('abbc'))
+        >>> monotonic_index.get_loc('b')
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list('abcb'))
+        >>> non_monotonic_index.get_loc('b')
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+            return self._engine.get_loc(casted_key)
+        except KeyError as err:
+            if isinstance(casted_key, slice) or (
+                isinstance(casted_key, abc.Iterable)
+                and any(isinstance(x, slice) for x in casted_key)
+            ):
+                raise InvalidIndexError(key)
+>           raise KeyError(key) from err
+E           KeyError: 'nested'
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexes/base.py:3819: KeyError
+_ test_runner_requires_explicit_nesting_and_matching_registered_test[se-True-None-unavailable_nested_loss_test-False] _
+
+self = Index(['loss_mean', 'forecast_policy', 'inference_policy',
+       'n_requested_origins', 'n_scoreable_origins', 'n_exc...     'dm_stat', 'dm_p', 'cw_p', 'gw_p', 'pt_p', 'degenerate', 'n_origins',
+       'sub_periods'],
+      dtype='object')
+key = 'nested'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list('abc'))
+        >>> unique_index.get_loc('b')
+        1
+    
+        >>> monotonic_index = pd.Index(list('abbc'))
+        >>> monotonic_index.get_loc('b')
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list('abcb'))
+        >>> non_monotonic_index.get_loc('b')
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+>           return self._engine.get_loc(casted_key)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexes/base.py:3812: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/index.pyx:167: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/index.pyx:196: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/hashtable_class_helper.pxi:7088: in pandas._libs.hashtable.PyObjectHashTable.get_item
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   KeyError: 'nested'
+
+pandas/_libs/hashtable_class_helper.pxi:7096: KeyError
+
+The above exception was the direct cause of the following exception:
+
+loss = 'se', nested = True, registered = None
+primary = 'unavailable_nested_loss_test', eligible = False
+
+    @pytest.mark.parametrize('loss,nested,registered,primary,eligible', [
+        ('qlike', True, 'clark_west', 'unavailable_nested_loss_test', False),
+        ('se', True, 'clark_west', 'clark_west', True),
+        ('se', True, None, 'unavailable_nested_loss_test', False),
+        ('se', False, 'clark_west', 'dm_hac', True),
+    ])
+    def test_runner_requires_explicit_nesting_and_matching_registered_test(loss, nested, registered, primary, eligible):
+        rows = runner.run_cell(cell(loss, nested, registered), series(),
+            [ColumnForecast('har_levels', 0), ColumnForecast('harq', 1), ColumnForecast('log_har', 1)],
+            'synthetic', 'test', dry=True).set_index('model')
+>       assert bool(rows.loc['harq', 'nested']) is nested
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/predlab/test_audit_nested_inference.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexing.py:1184: in __getitem__
+    return self.obj._get_value(*key, takeable=self._takeable)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/frame.py:4225: in _get_value
+    series = self._get_item_cache(col)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/frame.py:4649: in _get_item_cache
+    loc = self.columns.get_loc(item)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Index(['loss_mean', 'forecast_policy', 'inference_policy',
+       'n_requested_origins', 'n_scoreable_origins', 'n_exc...     'dm_stat', 'dm_p', 'cw_p', 'gw_p', 'pt_p', 'degenerate', 'n_origins',
+       'sub_periods'],
+      dtype='object')
+key = 'nested'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list('abc'))
+        >>> unique_index.get_loc('b')
+        1
+    
+        >>> monotonic_index = pd.Index(list('abbc'))
+        >>> monotonic_index.get_loc('b')
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list('abcb'))
+        >>> non_monotonic_index.get_loc('b')
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+            return self._engine.get_loc(casted_key)
+        except KeyError as err:
+            if isinstance(casted_key, slice) or (
+                isinstance(casted_key, abc.Iterable)
+                and any(isinstance(x, slice) for x in casted_key)
+            ):
+                raise InvalidIndexError(key)
+>           raise KeyError(key) from err
+E           KeyError: 'nested'
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexes/base.py:3819: KeyError
+_ test_runner_requires_explicit_nesting_and_matching_registered_test[se-False-clark_west-dm_hac-True] _
+
+self = Index(['loss_mean', 'forecast_policy', 'inference_policy',
+       'n_requested_origins', 'n_scoreable_origins', 'n_exc...     'dm_stat', 'dm_p', 'cw_p', 'gw_p', 'pt_p', 'degenerate', 'n_origins',
+       'sub_periods'],
+      dtype='object')
+key = 'nested'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list('abc'))
+        >>> unique_index.get_loc('b')
+        1
+    
+        >>> monotonic_index = pd.Index(list('abbc'))
+        >>> monotonic_index.get_loc('b')
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list('abcb'))
+        >>> non_monotonic_index.get_loc('b')
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+>           return self._engine.get_loc(casted_key)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexes/base.py:3812: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/index.pyx:167: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/index.pyx:196: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/hashtable_class_helper.pxi:7088: in pandas._libs.hashtable.PyObjectHashTable.get_item
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   KeyError: 'nested'
+
+pandas/_libs/hashtable_class_helper.pxi:7096: KeyError
+
+The above exception was the direct cause of the following exception:
+
+loss = 'se', nested = False, registered = 'clark_west', primary = 'dm_hac'
+eligible = True
+
+    @pytest.mark.parametrize('loss,nested,registered,primary,eligible', [
+        ('qlike', True, 'clark_west', 'unavailable_nested_loss_test', False),
+        ('se', True, 'clark_west', 'clark_west', True),
+        ('se', True, None, 'unavailable_nested_loss_test', False),
+        ('se', False, 'clark_west', 'dm_hac', True),
+    ])
+    def test_runner_requires_explicit_nesting_and_matching_registered_test(loss, nested, registered, primary, eligible):
+        rows = runner.run_cell(cell(loss, nested, registered), series(),
+            [ColumnForecast('har_levels', 0), ColumnForecast('harq', 1), ColumnForecast('log_har', 1)],
+            'synthetic', 'test', dry=True).set_index('model')
+>       assert bool(rows.loc['harq', 'nested']) is nested
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/predlab/test_audit_nested_inference.py:45: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexing.py:1184: in __getitem__
+    return self.obj._get_value(*key, takeable=self._takeable)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/frame.py:4225: in _get_value
+    series = self._get_item_cache(col)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/frame.py:4649: in _get_item_cache
+    loc = self.columns.get_loc(item)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Index(['loss_mean', 'forecast_policy', 'inference_policy',
+       'n_requested_origins', 'n_scoreable_origins', 'n_exc...     'dm_stat', 'dm_p', 'cw_p', 'gw_p', 'pt_p', 'degenerate', 'n_origins',
+       'sub_periods'],
+      dtype='object')
+key = 'nested'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list('abc'))
+        >>> unique_index.get_loc('b')
+        1
+    
+        >>> monotonic_index = pd.Index(list('abbc'))
+        >>> monotonic_index.get_loc('b')
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list('abcb'))
+        >>> non_monotonic_index.get_loc('b')
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+            return self._engine.get_loc(casted_key)
+        except KeyError as err:
+            if isinstance(casted_key, slice) or (
+                isinstance(casted_key, abc.Iterable)
+                and any(isinstance(x, slice) for x in casted_key)
+            ):
+                raise InvalidIndexError(key)
+>           raise KeyError(key) from err
+E           KeyError: 'nested'
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexes/base.py:3819: KeyError
+_______ test_written_card_and_trial_keep_nested_inference_qualification ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-55/test_written_card_and_trial_ke0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71fab6384510>
+
+    def test_written_card_and_trial_keep_nested_inference_qualification(tmp_path, monkeypatch):
+        monkeypatch.setattr(registry, 'preflight', lambda *a, **k: {'git_commit': 'synthetic'})
+        monkeypatch.setattr(registry, 'gates_path', lambda: tmp_path / 'gates.json')
+        monkeypatch.setattr(registry, 'get_experiment', lambda *a: {'tests': {'nested': 'clark_west'}})
+        logged = []
+        monkeypatch.setattr(registry, 'log_trial', lambda *a, **k: logged.append(a))
+        runner.run_cell(cell(), series(), [ColumnForecast('har_levels', 0), ColumnForecast('harq', 1)],
+                        'synthetic', 'test', dry=False)
+        card = json.loads((tmp_path / 'cards/synthetic/SYN.json').read_text())['test']
+>       assert card['nested_models'] == {'harq': 'har_levels'}
+               ^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'nested_models'
+
+tests/predlab/test_audit_nested_inference.py:62: KeyError
+_ test_actual_harq_battery_call_cannot_select_dm_for_nested_qlike[run_tier1_t3_24h-24h] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71fab6387360>
+call = 'run_tier1_t3_24h', horizon = '24h'
+
+    @pytest.mark.parametrize('call,horizon', [
+        ('run_tier1_t3_24h', '24h'), ('run_tier1_1h', '1h'),
+        ('run_tier1_7d', '7d'), ('run_tier2_t3t4', '24h'),
+    ])
+    def test_actual_harq_battery_call_cannot_select_dm_for_nested_qlike(monkeypatch, call, horizon):
+        entry = {'protocol': {'refit_every': {'arima_ets_garch': {'1h': 1, '24h': 1}, '24h': 1},
+                              'min_train': {'1h': 30, '24h': 30, '7d': 30}, 'loss': {'T3': 'qlike'}},
+                 'cells': [{'cell': 'SYN', 'symbol': 'BTCUSDT', 'horizon': horizon,
+                            'target': 'T3_rv', 'strong_baseline': 'har_levels', 'eval_start': '2021-01-01'}],
+                 'dev_window': ['2021-01-01', '2021-03-01'],
+                 'tests': {'nested': 'clark_west'}, 'feature_sets': {'T3_rv': ['rq_lag1']}}
+        toy = series()
+        store = pd.DataFrame({'rv': toy.y, 'ret': .01, 'rq': .2}, index=toy.index)
+        monkeypatch.setattr(registry, 'get_experiment', lambda *a: entry)
+        monkeypatch.setattr(battery, '_rv_store', lambda *a: store)
+        monkeypatch.setattr(battery, '_t2_features', lambda *a: store.rq.to_frame('rq_lag1'))
+        real_runner = runner.run_cell
+        captured = []
+        def offline_run(cell, supplied_series, models, **kwargs):
+            # Exercise actual cell/model construction, with synthetic forecasts at the
+            # expensive fit boundary. No stored data or empirical model fit is used.
+            assert any(m.name == 'harq' for m in models)
+            rows = real_runner(cell, toy,
+                [ColumnForecast(m.name, int(m.name == 'harq')) for m in models],
+                kwargs['gates_key'], kwargs['tier'], dry=True)
+            captured.append((cell, rows))
+            return rows
+        monkeypatch.setattr(runner, 'run_cell', offline_run)
+        args = ('synthetic', '*') if call == 'run_tier2_t3t4' else ('synthetic',)
+        getattr(battery, call)(*args)
+        assert len(captured) == 1
+        declared, rows = captured[0]
+>       assert declared['nested_models'] == {'harq': 'har_levels'}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'nested_models'
+
+tests/predlab/test_audit_nested_inference.py:103: KeyError
+----------------------------- Captured stdout call -----------------------------
+tier t1_t3_24h: 1 cells, refit_every(garch)=1
+  SYN ewma_0.94: qlike=0.0241892 dm_p=nan gw_p=nan
+  SYN har_levels: qlike=0.0241892 dm_p=nan gw_p=nan
+  SYN log_har: qlike=0.0241892 dm_p=nan gw_p=nan
+  SYN harq: qlike=0.00031397 dm_p=3.016e-233 gw_p=6.032e-233
+  SYN garch11: qlike=0.0241892 dm_p=nan gw_p=nan
+  SYN egarch11: qlike=0.0241892 dm_p=nan gw_p=nan
+  SYN gjr11: qlike=0.0241892 dm_p=nan gw_p=nan
+_ test_actual_harq_battery_call_cannot_select_dm_for_nested_qlike[run_tier1_1h-1h] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71fab5faf770>
+call = 'run_tier1_1h', horizon = '1h'
+
+    @pytest.mark.parametrize('call,horizon', [
+        ('run_tier1_t3_24h', '24h'), ('run_tier1_1h', '1h'),
+        ('run_tier1_7d', '7d'), ('run_tier2_t3t4', '24h'),
+    ])
+    def test_actual_harq_battery_call_cannot_select_dm_for_nested_qlike(monkeypatch, call, horizon):
+        entry = {'protocol': {'refit_every': {'arima_ets_garch': {'1h': 1, '24h': 1}, '24h': 1},
+                              'min_train': {'1h': 30, '24h': 30, '7d': 30}, 'loss': {'T3': 'qlike'}},
+                 'cells': [{'cell': 'SYN', 'symbol': 'BTCUSDT', 'horizon': horizon,
+                            'target': 'T3_rv', 'strong_baseline': 'har_levels', 'eval_start': '2021-01-01'}],
+                 'dev_window': ['2021-01-01', '2021-03-01'],
+                 'tests': {'nested': 'clark_west'}, 'feature_sets': {'T3_rv': ['rq_lag1']}}
+        toy = series()
+        store = pd.DataFrame({'rv': toy.y, 'ret': .01, 'rq': .2}, index=toy.index)
+        monkeypatch.setattr(registry, 'get_experiment', lambda *a: entry)
+        monkeypatch.setattr(battery, '_rv_store', lambda *a: store)
+        monkeypatch.setattr(battery, '_t2_features', lambda *a: store.rq.to_frame('rq_lag1'))
+        real_runner = runner.run_cell
+        captured = []
+        def offline_run(cell, supplied_series, models, **kwargs):
+            # Exercise actual cell/model construction, with synthetic forecasts at the
+            # expensive fit boundary. No stored data or empirical model fit is used.
+            assert any(m.name == 'harq' for m in models)
+            rows = real_runner(cell, toy,
+                [ColumnForecast(m.name, int(m.name == 'harq')) for m in models],
+                kwargs['gates_key'], kwargs['tier'], dry=True)
+            captured.append((cell, rows))
+            return rows
+        monkeypatch.setattr(runner, 'run_cell', offline_run)
+        args = ('synthetic', '*') if call == 'run_tier2_t3t4' else ('synthetic',)
+        getattr(battery, call)(*args)
+        assert len(captured) == 1
+        declared, rows = captured[0]
+>       assert declared['nested_models'] == {'harq': 'har_levels'}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'nested_models'
+
+tests/predlab/test_audit_nested_inference.py:103: KeyError
+----------------------------- Captured stdout call -----------------------------
+tier t1_1h: 1 cells, refit(arima/ets/garch)=1, cap=4320
+  SYN ewma_0.94: loss=0.0241892 dm_p=nan
+  SYN har_levels: loss=0.0241892 dm_p=nan
+  SYN log_har: loss=0.0241892 dm_p=nan
+  SYN harq: loss=0.00031397 dm_p=3.016e-233
+  SYN garch11: loss=0.0241892 dm_p=nan
+  SYN egarch11: loss=0.0241892 dm_p=nan
+  SYN gjr11: loss=0.0241892 dm_p=nan
+_ test_actual_harq_battery_call_cannot_select_dm_for_nested_qlike[run_tier1_7d-7d] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71fab52d09e0>
+call = 'run_tier1_7d', horizon = '7d'
+
+    @pytest.mark.parametrize('call,horizon', [
+        ('run_tier1_t3_24h', '24h'), ('run_tier1_1h', '1h'),
+        ('run_tier1_7d', '7d'), ('run_tier2_t3t4', '24h'),
+    ])
+    def test_actual_harq_battery_call_cannot_select_dm_for_nested_qlike(monkeypatch, call, horizon):
+        entry = {'protocol': {'refit_every': {'arima_ets_garch': {'1h': 1, '24h': 1}, '24h': 1},
+                              'min_train': {'1h': 30, '24h': 30, '7d': 30}, 'loss': {'T3': 'qlike'}},
+                 'cells': [{'cell': 'SYN', 'symbol': 'BTCUSDT', 'horizon': horizon,
+                            'target': 'T3_rv', 'strong_baseline': 'har_levels', 'eval_start': '2021-01-01'}],
+                 'dev_window': ['2021-01-01', '2021-03-01'],
+                 'tests': {'nested': 'clark_west'}, 'feature_sets': {'T3_rv': ['rq_lag1']}}
+        toy = series()
+        store = pd.DataFrame({'rv': toy.y, 'ret': .01, 'rq': .2}, index=toy.index)
+        monkeypatch.setattr(registry, 'get_experiment', lambda *a: entry)
+        monkeypatch.setattr(battery, '_rv_store', lambda *a: store)
+        monkeypatch.setattr(battery, '_t2_features', lambda *a: store.rq.to_frame('rq_lag1'))
+        real_runner = runner.run_cell
+        captured = []
+        def offline_run(cell, supplied_series, models, **kwargs):
+            # Exercise actual cell/model construction, with synthetic forecasts at the
+            # expensive fit boundary. No stored data or empirical model fit is used.
+            assert any(m.name == 'harq' for m in models)
+            rows = real_runner(cell, toy,
+                [ColumnForecast(m.name, int(m.name == 'harq')) for m in models],
+                kwargs['gates_key'], kwargs['tier'], dry=True)
+            captured.append((cell, rows))
+            return rows
+        monkeypatch.setattr(runner, 'run_cell', offline_run)
+        args = ('synthetic', '*') if call == 'run_tier2_t3t4' else ('synthetic',)
+        getattr(battery, call)(*args)
+        assert len(captured) == 1
+        declared, rows = captured[0]
+>       assert declared['nested_models'] == {'harq': 'har_levels'}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'nested_models'
+
+tests/predlab/test_audit_nested_inference.py:103: KeyError
+----------------------------- Captured stdout call -----------------------------
+tier t1_7d: 1 cells (direct aggregation)
+  SYN ewma_0.94: loss=0.024207 dm_p=nan
+  SYN har_levels: loss=0.024207 dm_p=nan
+  SYN log_har: loss=0.024207 dm_p=nan
+  SYN harq: loss=0.000314382 dm_p=0
+  SYN garch11: loss=0.024207 dm_p=nan
+_ test_actual_harq_battery_call_cannot_select_dm_for_nested_qlike[run_tier2_t3t4-24h] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71fab52d1040>
+call = 'run_tier2_t3t4', horizon = '24h'
+
+    @pytest.mark.parametrize('call,horizon', [
+        ('run_tier1_t3_24h', '24h'), ('run_tier1_1h', '1h'),
+        ('run_tier1_7d', '7d'), ('run_tier2_t3t4', '24h'),
+    ])
+    def test_actual_harq_battery_call_cannot_select_dm_for_nested_qlike(monkeypatch, call, horizon):
+        entry = {'protocol': {'refit_every': {'arima_ets_garch': {'1h': 1, '24h': 1}, '24h': 1},
+                              'min_train': {'1h': 30, '24h': 30, '7d': 30}, 'loss': {'T3': 'qlike'}},
+                 'cells': [{'cell': 'SYN', 'symbol': 'BTCUSDT', 'horizon': horizon,
+                            'target': 'T3_rv', 'strong_baseline': 'har_levels', 'eval_start': '2021-01-01'}],
+                 'dev_window': ['2021-01-01', '2021-03-01'],
+                 'tests': {'nested': 'clark_west'}, 'feature_sets': {'T3_rv': ['rq_lag1']}}
+        toy = series()
+        store = pd.DataFrame({'rv': toy.y, 'ret': .01, 'rq': .2}, index=toy.index)
+        monkeypatch.setattr(registry, 'get_experiment', lambda *a: entry)
+        monkeypatch.setattr(battery, '_rv_store', lambda *a: store)
+        monkeypatch.setattr(battery, '_t2_features', lambda *a: store.rq.to_frame('rq_lag1'))
+        real_runner = runner.run_cell
+        captured = []
+        def offline_run(cell, supplied_series, models, **kwargs):
+            # Exercise actual cell/model construction, with synthetic forecasts at the
+            # expensive fit boundary. No stored data or empirical model fit is used.
+            assert any(m.name == 'harq' for m in models)
+            rows = real_runner(cell, toy,
+                [ColumnForecast(m.name, int(m.name == 'harq')) for m in models],
+                kwargs['gates_key'], kwargs['tier'], dry=True)
+            captured.append((cell, rows))
+            return rows
+        monkeypatch.setattr(runner, 'run_cell', offline_run)
+        args = ('synthetic', '*') if call == 'run_tier2_t3t4' else ('synthetic',)
+        getattr(battery, call)(*args)
+        assert len(captured) == 1
+        declared, rows = captured[0]
+>       assert declared['nested_models'] == {'harq': 'har_levels'}
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'nested_models'
+
+tests/predlab/test_audit_nested_inference.py:103: KeyError
+----------------------------- Captured stdout call -----------------------------
+tier t2_t3t4: 1 cells
+  SYN har_levels: loss=0.0241892 dm_p=nan
+  SYN harq: loss=0.00031397 dm_p=3.016e-233
+  SYN enet: loss=0.0241892 dm_p=nan
+  SYN lgb: loss=0.0241892 dm_p=nan
+=========================== short test summary info ============================
+FAILED tests/predlab/test_audit_nested_inference.py::test_runner_requires_explicit_nesting_and_matching_registered_test[qlike-True-clark_west-unavailable_nested_loss_test-False]
+FAILED tests/predlab/test_audit_nested_inference.py::test_runner_requires_explicit_nesting_and_matching_registered_test[se-True-clark_west-clark_west-True]
+FAILED tests/predlab/test_audit_nested_inference.py::test_runner_requires_explicit_nesting_and_matching_registered_test[se-True-None-unavailable_nested_loss_test-False]
+FAILED tests/predlab/test_audit_nested_inference.py::test_runner_requires_explicit_nesting_and_matching_registered_test[se-False-clark_west-dm_hac-True]
+FAILED tests/predlab/test_audit_nested_inference.py::test_written_card_and_trial_keep_nested_inference_qualification
+FAILED tests/predlab/test_audit_nested_inference.py::test_actual_harq_battery_call_cannot_select_dm_for_nested_qlike[run_tier1_t3_24h-24h]
+FAILED tests/predlab/test_audit_nested_inference.py::test_actual_harq_battery_call_cannot_select_dm_for_nested_qlike[run_tier1_1h-1h]
+FAILED tests/predlab/test_audit_nested_inference.py::test_actual_harq_battery_call_cannot_select_dm_for_nested_qlike[run_tier1_7d-7d]
+FAILED tests/predlab/test_audit_nested_inference.py::test_actual_harq_battery_call_cannot_select_dm_for_nested_qlike[run_tier2_t3t4-24h]
+9 failed in 2.67s

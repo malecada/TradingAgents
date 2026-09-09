@@ -50,6 +50,7 @@ T2_EDGE = {
 
 
 def main() -> None:
+    registry.preflight(GATES_KEY, ("2021-01-01", "2025-03-31"))
     cards_dir = registry.gates_path().parent / "cards" / GATES_KEY
     rows = []
     for path in sorted(cards_dir.glob("*.json")):
@@ -71,7 +72,7 @@ def main() -> None:
         })
 
     fdr = rollup.bh_fdr(
-        {r["cell"]: r["dm_p"] for r in rows if r["dm_p"] == r["dm_p"]}, q=0.10
+        {r["cell"]: r["dm_p"] for r in rows}, q=0.10
     )
     lines = [
         "# Phase-1 Predictability Map (P1-08 roll-up, 2026-07-31)",
@@ -93,6 +94,7 @@ def main() -> None:
                 fdr_pass=fdr_pass, floor_pass=bool(r["floor_pass"]),
                 stable=bool(r["subperiod_stable"]),
                 baseline_wins=r["baseline_wins"], override=None,
+                inference_eligible=r.get("inference_eligible", True),
             )
             reason = ""
         if verdict.startswith("SKILL-CANDIDATE"):
@@ -109,7 +111,7 @@ def main() -> None:
     lines += [
         "",
         f"**{n_cand} SKILL-CANDIDATE cells.** Ledger trials: "
-        f"{registry.trial_count()} unique configs.",
+        f"{registry.trial_count()} distinct experiment/cell/model/config/window identities.",
     ]
     out = PROJECT_ROOT / "docs" / "predlab" / "reports" / "phase1_map.md"
     out.write_text("\n".join(lines) + "\n")

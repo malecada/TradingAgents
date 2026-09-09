@@ -94,134 +94,74 @@ def run_coin_backtest(
     lows: np.ndarray | None = None,
     price_stop_pct: float = 0.0,
 ) -> tuple[list, dict]:
-    """Run backtest for a single coin with full cost and risk model."""
+    """Executable contracts with signed funding and explicit risk-stop exits.
+
+    Positions are same-row pretrade NAV targets. Fee, slippage and spread
+    inputs are one-way rates; impact remains the declared quadratic turnover
+    model. Historical results from the former doubled-fee model are unchanged.
+    """
+    from tradingagents.accounting import accounting_step
+    from tradingagents.backtesting.engine import compute_metrics
     equity = [initial_capital]
-    daily_returns = []
-    prev_pos = 0.0
-    entry_equity = initial_capital
-    peak_equity = initial_capital
+    daily_returns, actual_positions = [], []
+    notionals = pd.Series(dtype=float)
+    previous_target = 0.
+    entry_equity = peak_equity = initial_capital
     halted = False
     use_price_stop = price_stop_pct > 0 and highs is not None and lows is not None
-    entry_price = 0.0  # price-axis entry for the live-style STOP_MARKET
-
-    for i in range(1, len(dates)):
-        p_prev = prices[i - 1]
-        p_curr = prices[i]
-
-        if np.isnan(p_prev) or np.isnan(p_curr) or p_prev == 0:
-            daily_returns.append(0.0)
-            equity.append(equity[-1])
-            continue
-
-        if halted:
-            daily_returns.append(0.0)
-            equity.append(equity[-1])
-            prev_pos = 0.0
-            continue
-
-        target_pos = positions[i]
-        trade_notional = abs(target_pos - prev_pos)
-
-        if target_pos != prev_pos and target_pos != 0:
-            entry_equity = equity[-1]
-        if target_pos == 0 and prev_pos != 0:
-            entry_equity = equity[-1]
-
-        if use_price_stop and target_pos != 0:
-            opened = (prev_pos == 0) or (np.sign(target_pos) != np.sign(prev_pos))
-            if opened:
-                entry_price = p_prev
-            stop_level = (entry_price * (1 - price_stop_pct) if target_pos > 0
-                          else entry_price * (1 + price_stop_pct))
-            hit = (lows[i] <= stop_level) if target_pos > 0 else (highs[i] >= stop_level)
-            if hit and entry_price > 0:
-                gross_ret = target_pos * (stop_level - p_prev) / p_prev
-                trade_notional = abs(target_pos - prev_pos)
-                exit_notional = abs(target_pos)
-                fee_cost = (2 * fee_rate + slippage + 2 * spread) * (trade_notional + exit_notional)
-                impact_cost = price_impact * trade_notional * trade_notional
-                holding_cost = funding_rate * abs(target_pos)
-                net_ret = gross_ret - fee_cost - impact_cost - holding_cost
-                new_equity = equity[-1] * (1 + net_ret)
-                daily_returns.append(net_ret)
-                equity.append(new_equity)
-                prev_pos = 0.0
-                entry_price = 0.0
-                peak_equity = max(peak_equity, new_equity)
-                dd_from_peak = (peak_equity - new_equity) / peak_equity if peak_equity > 0 else 0
-                if dd_from_peak >= max_portfolio_dd:
-                    halted = True
-                continue
-
-        price_return = (p_curr - p_prev) / p_prev
-        gross_ret = target_pos * price_return
-
-        fee_cost = (2 * fee_rate + slippage + 2 * spread) * trade_notional
-        impact_cost = price_impact * trade_notional * trade_notional
-        holding_cost = funding_rate * abs(target_pos)
-        total_cost = fee_cost + impact_cost + holding_cost
-        net_ret = gross_ret - total_cost
-
-        new_equity = equity[-1] * (1 + net_ret)
-
-        if target_pos != 0 and entry_equity > 0:
-            trade_dd = (entry_equity - new_equity) / entry_equity
-            if trade_dd >= stop_loss:
-                target_pos = 0.0
-            trade_up = (new_equity - entry_equity) / entry_equity
-            if take_profit > 0 and trade_up >= take_profit:
-                target_pos = 0.0
-
-        daily_returns.append(net_ret)
+    entry_price = 0.
+    trades = 0
+    fee = fee_rate + slippage + spread
+    for i in range(1,len(dates)):
+        nav = equity[-1]
+        p_prev, p_curr = prices[i-1], prices[i]
+        target_pos = 0. if halted else positions[i]
+        target = pd.Series({'asset':target_pos}) if np.isfinite(target_pos) else None
+        exposure = float(target_pos) if target is not None else notionals.get('asset',0.)/nav
+        if target is not None and target_pos != previous_target:
+            entry_equity = nav
+        if exposure != 0 and (previous_target == 0 or np.sign(exposure) != np.sign(previous_target)):
+            entry_price = p_prev
+        valid_price = np.isfinite(p_prev) and np.isfinite(p_curr) and p_prev > 0 and p_curr > 0
+        mark = p_curr
+        price_stop_hit = False
+        if use_price_stop and exposure != 0 and valid_price and entry_price > 0:
+            stop_level = entry_price*(1-price_stop_pct if exposure > 0 else 1+price_stop_pct)
+            price_stop_hit = bool(lows[i] <= stop_level if exposure > 0 else highs[i] >= stop_level)
+            if price_stop_hit:
+                mark = stop_level
+        ret = mark/p_prev-1 if valid_price else np.nan
+        trade_fraction = abs(exposure-notionals.get('asset',0.)/nav) if target is not None else 0.
+        row = accounting_step(nav,notionals,pd.Series({'asset':ret}),target_weights=target,
+            funding=pd.Series({'asset':funding_rate}),fee_rate=fee,date=dates[i],
+            capital_charge=price_impact*trade_fraction**2)
+        new_equity, notionals = row['nav'],row['notionals']
+        actual_positions.append(float(row['weights'].get('asset',0.)))
+        trades += int(row['turnover'] > 1e-9)
+        trade_dd = (entry_equity-new_equity)/entry_equity
+        trade_up = (new_equity-entry_equity)/entry_equity
+        peak_equity = max(peak_equity,new_equity)
+        portfolio_stop = (peak_equity-new_equity)/peak_equity >= max_portfolio_dd
+        close_now = price_stop_hit or portfolio_stop or (exposure != 0 and
+                    (trade_dd >= stop_loss or (take_profit > 0 and trade_up >= take_profit)))
+        if close_now and len(notionals):
+            exit_fraction = float(notionals.abs().sum())/new_equity
+            closed = accounting_step(new_equity,notionals,pd.Series({'asset':0.}),
+                target_weights=pd.Series(dtype=float),fee_rate=fee,date=dates[i],
+                capital_charge=price_impact*exit_fraction**2)
+            new_equity, notionals = closed['nav'],closed['notionals']
+            trades += int(closed['turnover'] > 1e-9)
+            previous_target, entry_price = 0.,0.
+        else:
+            previous_target = exposure
+        peak_equity = max(peak_equity,new_equity)
+        halted = halted or (peak_equity-new_equity)/peak_equity >= max_portfolio_dd
+        daily_returns.append((new_equity-nav)/nav)
         equity.append(new_equity)
-        prev_pos = target_pos
-
-        peak_equity = max(peak_equity, new_equity)
-        dd_from_peak = (peak_equity - new_equity) / peak_equity if peak_equity > 0 else 0
-        if dd_from_peak >= max_portfolio_dd:
-            halted = True
-
-    # Compute metrics
-    returns = np.array(daily_returns)
-    total_return = (equity[-1] - initial_capital) / initial_capital
-    n_days = len(returns)
-    ann_return = (1 + total_return) ** (252 / n_days) - 1 if n_days > 0 else 0
-
-    daily_rf = (1 + 0.045) ** (1 / 252) - 1
-    traded_mask = np.abs(np.array([positions[i] for i in range(1, len(dates))])) > 1e-9
-    traded_returns = returns[traded_mask]
-
-    if len(traded_returns) > 1:
-        excess = traded_returns - daily_rf
-        std_ex = np.std(excess, ddof=1)
-        sharpe = float(np.mean(excess) / std_ex * np.sqrt(252)) if std_ex > 0 else 0
-    else:
-        sharpe = 0
-
-    eq = np.array(equity)
-    running_max = np.maximum.accumulate(eq)
-    dd = np.where(running_max > 0, (running_max - eq) / running_max, 0)
-    max_dd = float(np.max(dd))
-
-    n_trades = int(np.sum(np.abs(np.diff(positions)) > 1e-9))
-    wins = int(np.sum(traded_returns > 0))
-    win_rate = wins / len(traded_returns) if len(traded_returns) > 0 else 0
-
-    gross_profit = float(np.sum(traded_returns[traded_returns > 0]))
-    gross_loss = float(np.abs(np.sum(traded_returns[traded_returns < 0])))
-    pf = gross_profit / gross_loss if gross_loss > 0 else (float("inf") if gross_profit > 0 else 0)
-
-    metrics = {
-        "total_return": total_return,
-        "annualized_return": ann_return,
-        "sharpe_ratio": sharpe,
-        "max_drawdown": max_dd,
-        "win_rate": win_rate,
-        "n_trades": n_trades,
-        "profit_factor": pf,
-        "halted": halted,
-    }
-    return equity, metrics
+    metrics = compute_metrics(daily_returns,actual_positions,initial_capital,equity,
+                              risk_free_rate=.045,periods_per_year=365.)
+    metrics.update(n_trades=trades,halted=halted)
+    return equity,metrics
 
 
 # ── CLI ──────────────────────────────────────────────────────────────

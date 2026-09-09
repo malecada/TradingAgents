@@ -41,7 +41,7 @@ def test_run_daily_portfolio_t_plus_1_and_costs():
     # day1 accrual: W[day0]=0 -> 0.0, cost |W[day0]-W[-1]|=0
     assert port.loc[days[1]] == pytest.approx(0.0)
     assert port.loc[days[2]] == pytest.approx(0.20 - 0.001)
-    assert port.loc[days[3]] == pytest.approx(-0.05)
+    assert port.loc[days[3]] == pytest.approx(-0.05 - .000001/1.199)
 
 
 def test_run_daily_portfolio_rejects_misaligned_index():
@@ -61,15 +61,15 @@ def test_exit_cost_charged_after_flatten():
     port = run_daily_portfolio(W, R, cost_bps=10.0)
     # entry cost on days[1] (first accrual after day0 change); exit Δ|0-1| on days[2]
     assert port.loc[days[1]] == pytest.approx(-0.001)
-    assert port.loc[days[2]] == pytest.approx(-0.001)
+    assert port.loc[days[2]] == pytest.approx(-0.001/.999)
 
 
-def test_missing_kline_contributes_zero_not_redistributed():
+def test_missing_held_kline_fails_explicitly():
     days = _idx("2021-01-01", 3)
     R = pd.DataFrame({"A": [np.nan, np.nan, 0.10], "B": [np.nan, 0.02, 0.02]}, index=days)
     W = pd.DataFrame({"A": [0.5, 0.5, 0.5], "B": [0.5, 0.5, 0.5]}, index=days)
-    port = run_daily_portfolio(W, R, cost_bps=0.0)
-    assert port.loc[days[1]] == pytest.approx(0.5 * 0.02)  # A missing -> 0, no redistribution
+    with pytest.raises(ValueError,match="missing_held_return.*A"):
+        run_daily_portfolio(W, R, cost_bps=0.0)
 
 
 def test_trend_weights_no_look_ahead():

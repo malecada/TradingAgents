@@ -32,7 +32,6 @@ if str(PROJECT_ROOT) not in sys.path:
 from tradingagents.dataflows import sentiment_store  # noqa: E402
 
 ALPACA_NEWS_URL = "https://data.alpaca.markets/v1beta1/news"
-INGEST_LAG_SECONDS = 60
 HTML_TAG_RE = re.compile(r"<[^>]+>")
 
 log = logging.getLogger("backfill_alpaca_news")
@@ -103,12 +102,18 @@ def fetch_window(symbols: list[str], start: datetime, end: datetime,
         time.sleep(0.35)  # stay well under 200 req/min
 
 
-def normalize(item: dict) -> dict:
+def normalize(item: dict, retrieved_at=None) -> dict:
     created = pd.to_datetime(item["created_at"], utc=True).to_pydatetime()
+    seen = pd.to_datetime(retrieved_at, utc=True) if retrieved_at is not None else pd.Timestamp.now(tz="UTC")
+    updated = pd.to_datetime(item.get("updated_at", item["created_at"]), utc=True)
+    if updated > seen or created > seen:
+        raise ValueError("article version timestamp is later than retrieval")
     symbols = ",".join(item.get("symbols") or [])
     return {
         "event_ts": created,
-        "as_of_ts": created + timedelta(seconds=INGEST_LAG_SECONDS),
+        "as_of_ts": seen,
+        "retrieved_at": seen, "source_updated_at": updated,
+        "availability_basis": "retrieved_snapshot",
         "id": int(item["id"]),
         "headline": item.get("headline") or "",
         "content": strip_html(item.get("content")),

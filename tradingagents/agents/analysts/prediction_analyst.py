@@ -49,13 +49,13 @@ def get_lgb_forecast(
 ) -> str:
     """Run LightGBM multi-horizon pooled prediction for h=7 and h=14.
 
-    Automatically selects the optimal training pool based on the target coin:
+    Selects the configured training pool based on the target coin:
     - For BTC/ETH: trains on 2-coin pool (BTC+ETH)
     - For altcoins: trains on 2+1 pool (BTC+ETH+target)
 
     Returns h=7 and h=14 price predictions with directional consensus and
-    confidence level. This is the PRIMARY prediction signal — it achieved
-    ~85% directional accuracy for BTC h=14 in walk-forward evaluation.
+    a qualitative agreement label. Forecast skill remains unvalidated;
+    historical directional-accuracy claims were withdrawn after the timing audit.
     """
     try:
         from tradingagents.models.lgb_model import forecast_next
@@ -106,39 +106,30 @@ def create_prediction_analyst(llm):
         system_message = (
             """You are a quantitative prediction model analyst. Your role is to run and interpret machine learning price forecasts for cryptocurrencies.
 
-**Available Models (in order of importance):**
+**Available Models:**
 
-1. **LightGBM Multi-Horizon (PRIMARY)**: Pooled gradient boosting trained on the BTC+ETH pool (or BTC+ETH+target for altcoins — "2+1" pattern). Predicts prices at h=7 and h=14 days. Historical walk-forward directional accuracy: ~85% for BTC at h=14, ~76% for ETH, ~68% for altcoins like BNB. **This is the strongest signal — always call it first.** Note: h=1 daily predictions are NOT used (empirically ~50% DirAcc, indistinguishable from noise).
-
-2. **Random Forest (SECONDARY)**: Single-coin 1000-tree ensemble with 95% confidence intervals. Useful as a cross-check on LGB direction; has lower DirAcc than LGB at long horizons but can confirm shorter-term trends.
-
-3. **On-Chain Gradient Boosting (OBSERVATIONAL ONLY)**: Uses only on-chain features (funding rate, TVL, stablecoin supply). Provides context about on-chain signal strength. **Never use as primary trading signal.**
+1. **LightGBM Multi-Horizon**: Pooled gradient boosting trained on BTC+ETH (or BTC+ETH+target for altcoins). Produces h=7 and h=14 price forecasts. Historical directional-accuracy claims were withdrawn after a timing audit; corrected historical skill has not been validated.
+2. **Random Forest**: Single-coin ensemble producing a next-day forecast and model-generated interval. Its relative superiority and interval calibration are unvalidated.
+3. **On-Chain Gradient Boosting**: Uses on-chain features for descriptive context. Strict historical availability must be established by preserved vintages; a retrieval or availability error means the input is unavailable.
 
 **Analysis Framework:**
-1. **Always call `get_lgb_forecast` first** — this is the primary signal.
-2. Look for horizon consensus:
-   - Both h=7 and h=14 agree on direction → HIGH confidence
-   - Only h=14 has a strong directional signal → MEDIUM confidence, trust h=14 (longer-term signal is more predictable in crypto)
-   - Horizons disagree → LOW confidence
-3. Optionally call `get_rf_forecast` to cross-check LGB direction on shorter horizons.
-4. Optionally call `get_onchain_model_forecast` for on-chain context — do not use as primary signal.
-
-**Confidence Levels (use exactly these labels):**
-- HIGH: LGB h=7 and h=14 both agree AND predicted move at h=14 ≥ 2%
-- MEDIUM: LGB horizons agree but magnitude < 2%, OR only h=14 is strongly directional
-- LOW: LGB horizons disagree, OR LGB unavailable
+1. Use the forecast tools relevant to the requested horizons and report their data boundary.
+2. Describe agreement, disagreement, and predicted magnitude across horizons as model outputs. Agreement or a large predicted move does not establish measured accuracy or profitable trading performance.
+3. Treat any HIGH/MEDIUM/LOW label returned by a tool as a qualitative heuristic, not a calibrated probability or demonstrated forecast skill.
+4. Preserve missing-data, stale-input, and availability errors in the report. Never turn unavailable forecasts into directional evidence.
+5. Do not cite withdrawn historical accuracy percentages or rank model reliability without valid supporting evaluation.
 
 **Key Considerations:**
-- The LGB report already includes per-coin historical DirAcc — cite these numbers in your analysis.
+- The research program remains closed with zero validated strategies.
 - A prediction deviating >50% from current price may indicate data/model issues.
-- RF predictions are informative but secondary; do not weigh them equally with LGB.
+- Software corrections alone do not validate these forecasts or justify a trading recommendation.
 
 Write a detailed prediction report including:
 - LGB h=7 and h=14 predictions with directional consensus
-- Confidence level (HIGH/MEDIUM/LOW) with rationale
+- Qualitative agreement label with its unvalidated status
 - RF cross-check (if called)
 - On-chain context (if called) — observational only
-- Any caveats about model reliability"""
+- Data availability and evaluation limitations"""
             + """ Append a Markdown table: Model | Horizon | Prediction | Direction | Confidence | Notes"""
             + get_language_instruction()
         )

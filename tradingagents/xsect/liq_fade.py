@@ -2,6 +2,8 @@
 import numpy as np
 import pandas as pd
 
+from tradingagents.accounting import calendar_index, run_target_book
+
 
 def monthly_top_n(daily, start, end, n=50, lookback=30, min_age_days=60):
     months = pd.date_range(pd.Timestamp(start, tz="UTC"),
@@ -85,20 +87,22 @@ def run_hourly_portfolio(W, R, cost_bps=10.0, rf_annual=0.045):
 
     Args:
         W: pd.DataFrame of float weights (index hourly UTC, columns = symbols)
-        R: pd.DataFrame of float simple returns, same shape (fillna(0.0) for missing)
+        R: pd.DataFrame of float simple returns, same shape (missing held returns raise an error)
         cost_bps: float, transaction cost in basis points (default 10.0)
         rf_annual: float, annual risk-free rate (default 0.045 = 4.5%)
 
     Returns:
         pd.Series of daily (UTC calendar-day) net simple returns, indexed by calendar date
     """
-    gross = (W * R.fillna(0.0)).sum(axis=1)
-    turn = (W - W.shift().fillna(0.0)).abs().sum(axis=1)
-    hourly = gross - cost_bps / 1e4 * turn
-    daily = hourly.groupby(hourly.index.tz_convert("UTC").normalize()).sum()
-    daily = daily.asfreq("D", fill_value=0.0)      # rf accrues on gap days too
+    if not W.index.equals(R.index) or list(W.columns) != list(R.columns):
+        raise ValueError('W and R must share identical index and columns')
+    clock = calendar_index(R.index, 'h')
     rf_d = (1 + rf_annual) ** (1 / 365) - 1
-    return daily - rf_d
+    result = run_target_book(W.reindex(clock),R.reindex(clock),fee_rate=cost_bps/1e4,
+                             daily_capital_charge=rf_d)
+    hourly = result.net
+    daily = (1.+hourly).groupby(hourly.index.tz_convert('UTC').normalize()).prod()-1.
+    return daily
 
 
 def sharpe_daily(net):

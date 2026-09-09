@@ -18,6 +18,7 @@ from typing import Iterable, Optional
 import pandas as pd
 
 from . import onchain_store
+from .vintages import parquet_view, require_known_availability
 
 # Coin → CM asset / DefiLlama slug mapping for feature lookup.
 COIN_ALIAS = {
@@ -73,16 +74,16 @@ def _load_metric_series(
     con = duckdb.connect(":memory:")
     try:
         try:
-            con.execute(f"CREATE VIEW onchain AS SELECT * FROM read_parquet('{glob}')")
+            parquet_view(con, "onchain", glob)
         except duckdb.IOException:
             return pd.DataFrame(columns=["event_ts", "as_of_ts", "value"])
         sql = """
-        SELECT event_ts, as_of_ts, value
+        SELECT event_ts, as_of_ts, value, availability_basis
         FROM onchain
         WHERE coin = ? AND metric = ?
         ORDER BY as_of_ts ASC, event_ts ASC
         """
-        return con.execute(sql, [coin.lower(), metric]).fetchdf()
+        return require_known_availability(con.execute(sql, [coin.lower(), metric]).fetchdf(), True)
     finally:
         con.close()
 
@@ -99,7 +100,11 @@ def _pit_align(
         return pd.Series(index=dates, dtype="float64", name=col_name)
     left = pd.DataFrame({"date": dates})
     # merge_asof needs sorted keys. as_of_ts is already ascending per loader.
-    right = series[["as_of_ts", "value"]].copy()
+    # A late revision of an older event cannot displace an already available
+    # newer event. Keep the latest-event frontier before aligning cutoffs.
+    ordered = series.sort_values(["as_of_ts", "event_ts"])
+    frontier = ordered.loc[ordered["event_ts"].eq(ordered["event_ts"].cummax())]
+    right = frontier[["as_of_ts", "value"]].copy()
     # Normalize both sides to datetime64[ns, UTC] — Parquet/DuckDB returns
     # microsecond precision which otherwise triggers merge_asof dtype errors.
     right["as_of_ts"] = pd.to_datetime(right["as_of_ts"], utc=True).astype(

@@ -191,8 +191,9 @@ class TestRunLS:
         r = opt.run_ls(sig, ret, uni, None, opt.OptConfig(), "2024-01-01", "2024-12-31")
         s = opt.cost_stress(r, mult=2.0)
         df = r["rets"]
-        np.testing.assert_allclose(s, df["gross"] - 2.0 * df["cost"] + df["carry"],
-                                   atol=1e-14)
+        direct = opt.run_ls(sig, ret, uni, None, opt.OptConfig(taker_bp=10.),
+                            "2024-01-01", "2024-12-31")
+        np.testing.assert_allclose(s, direct["rets"]["net"], atol=1e-14)
 
 
 class TestEvaluate:
@@ -294,7 +295,7 @@ class TestEngineCorrection20260824:
         uni = pd.DataFrame(True, index=idx, columns=syms)
         r = opt.run_ls(sig, ret, uni, None,
                        opt.OptConfig(taker_bp=0.0, smooth=1),
-                       "2024-01-01", "2024-01-04")
+                       "2024-01-02", "2024-01-04")
         # short leg = top sextile (6 names), w = -1/6 each
         # S29 short PnL: -(1/6)*0.10 + -(1/6)*(-1/11) < 0
         assert r["rets"]["gross"].sum() < -0.001
@@ -304,7 +305,7 @@ class TestEngineCorrection20260824:
         ret_log = np.log(close).diff()
         r_log = opt.run_ls(sig, ret_log, uni, None,
                            opt.OptConfig(taker_bp=0.0, smooth=1),
-                           "2024-01-01", "2024-01-04")
+                           "2024-01-02", "2024-01-04")
         assert abs(r_log["rets"]["gross"].sum()) < 1e-12
 
     def test_runner_scripts_construct_simple_pnl_returns(self):

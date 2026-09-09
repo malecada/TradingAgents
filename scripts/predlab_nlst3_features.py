@@ -59,9 +59,9 @@ def build_events3() -> "pd.DataFrame":
 
 RAW2 = ROOT / "data" / "predlab" / "nlst" / "nlst2_raw"
 RAW3 = ROOT / "data" / "predlab" / "nlst" / "nlst3_raw"
-OUT = ROOT / "data" / "predlab" / "nlst" / "nlst3_features.parquet"
-NLST2_FEATS = ROOT / "data" / "predlab" / "nlst" / "nlst2_features.parquet"
-EVENTS3 = ROOT / "data" / "predlab" / "nlst" / "nlst3_events.parquet"
+OUT = ROOT / "data" / "predlab" / "nlst" / "nlst3_features_causal_v2.parquet"
+NLST2_FEATS = ROOT / "data" / "predlab" / "nlst" / "nlst2_features_causal_v2.parquet"
+EVENTS3 = ROOT / "data" / "predlab" / "nlst" / "nlst3_events_causal_v2.parquet"
 
 OWN_XFER = "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
 ZERO_PAD = "0x" + "0" * 64
@@ -194,11 +194,14 @@ def composite(df: pd.DataFrame) -> pd.Series:
 # ------------------------------------------------------------ fetch + build
 
 
-def fetch_ownership(meta: dict, b24: int) -> bool:
+def fetch_ownership(meta: dict, b24: int) -> float:
     token = meta["token1"] if meta["weth_is_0"] else meta["token0"]
     cache = RAW3 / f"{meta['pair']}.json"
     if cache.exists():
-        return jload(cache)["renounced"]
+        cached = jload(cache)
+        if cached.get("retrieval_status") != "ok":
+            return float("nan")  # legacy negatives cannot distinguish failed fetches
+        return float(cached["renounced"])
     ren = False
     try:
         for lg in get_logs(token, [OWN_XFER], meta["block"], b24):
@@ -206,8 +209,8 @@ def fetch_ownership(meta: dict, b24: int) -> bool:
                 ren = True
                 break
     except RuntimeError:
-        pass
-    jdump(cache, {"renounced": ren})
+        return float("nan")  # retryable; failure never becomes a negative cache
+    jdump(cache, {"renounced": ren, "retrieval_status": "ok", "block_end": b24})
     return ren
 
 
@@ -232,6 +235,7 @@ def main() -> None:
         sm_entries.append({**base, "buyers": buyers})
         dep_entries.append({**base, "deployer": raw2.get("deployer")})
         row = {"pair": pair, "quarter": meta["quarter"],
+               "decision_ts": t_create + DAY, "available_ts": t_create + DAY,
                "ownership_renounced": float(fetch_ownership(meta, b24)),
                **flow_features(logs, meta["weth_is_0"],
                                meta.get("first_weth_reserve"), b12, b24)}

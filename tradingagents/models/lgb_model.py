@@ -64,9 +64,9 @@ def _ensure_date_indexed(pooled_df: pd.DataFrame) -> pd.DataFrame:
 def _dir_acc(pred_df: pd.DataFrame, pooled_df: pd.DataFrame, horizon: int) -> float:
     """Directional accuracy of predictions vs actuals.
 
-    For each prediction row, look up the same coin's previous day's `prices`
-    in pooled_df and compare the predicted direction (up/down) to the actual
-    direction.
+    Use the same transformed row's `prices` as the forecast reference.
+    data_transform has already shifted this reference by one day; applying
+    another shift would score a different holding interval.
 
     Vectorised over coins: builds a per-coin date→prev-price map once, then
     uses a vectorised merge to compute directions for the entire pred_df.
@@ -78,11 +78,11 @@ def _dir_acc(pred_df: pd.DataFrame, pooled_df: pd.DataFrame, horizon: int) -> fl
 
     pooled_df = _ensure_date_indexed(pooled_df)
 
-    # Build per-coin previous-price series (shift by 1 bar within each coin)
+    # Match the origin reference; transformed prices are already lagged.
     prev_rows = []
     for coin in pooled_df["coin_id"].unique():
         sub = pooled_df[pooled_df["coin_id"] == coin][["prices"]].sort_index()
-        prev = sub["prices"].shift(1)
+        prev = sub["prices"]
         tmp = pd.DataFrame({
             "date": sub.index,
             "coin_id": coin,
@@ -438,17 +438,8 @@ def predict_pooled(
 # ── Agent-facing single-date multi-horizon forecast ──────────────────
 
 
-# Historical DirAcc benchmarks from walk-forward evaluation (see THESIS_FINDINGS.md).
-# Used to inform agents about prediction quality per (coin, horizon).
-_HISTORICAL_DIRACC = {
-    "bitcoin":     {7: 0.749, 14: 0.846},
-    "ethereum":    {7: 0.744, 14: 0.758},
-    "binancecoin": {7: 0.603, 14: 0.675},
-    "solana":      {7: 0.584, 14: 0.603},
-    "ripple":      {7: 0.488, 14: 0.510},
-    "dogecoin":    {7: 0.479, 14: 0.449},
-    "cardano":     {7: 0.477, 14: 0.452},
-}
+# Legacy accuracy claims were withdrawn by the September9 audit. A corrected
+# metric implementation does not validate the unrerun historical forecasts.
 
 
 def _select_pool(symbol: str, pool_coins: list[str] | None) -> tuple[list[str], str]:
@@ -466,10 +457,7 @@ def _select_pool(symbol: str, pool_coins: list[str] | None) -> tuple[list[str], 
 
 
 def _format_dir_acc_note(symbol: str, horizon: int) -> str:
-    hist = _HISTORICAL_DIRACC.get(symbol, {}).get(horizon)
-    if hist is None:
-        return "not benchmarked"
-    return f"~{hist:.0%}"
+    return "unvalidated; historical accuracy withdrawn after timing audit"
 
 
 def forecast_next(
@@ -640,8 +628,9 @@ def forecast_next(
 
     lines.append("")
     lines.append(
-        f"Note: h=14 is the primary signal (historical DirAcc 85% for BTC, 76% for ETH). "
-        f"h=1 signals are noise (~50%) and are NOT used."
+        "Note: These forecasts remain unvalidated. Historical directional-accuracy "
+        "claims were withdrawn after the timing audit; agreement and predicted "
+        "magnitude do not establish measured forecast skill."
     )
 
     return "\n".join(lines)

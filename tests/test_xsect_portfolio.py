@@ -61,21 +61,12 @@ def test_no_lookahead_second_rebalance():
     assert series.abs().sum() == pytest.approx(0.0)
 
 
-def test_delisted_member_contributes_zero_not_reweighted():
-    # A gets delisted mid-week (klines simply stop); B survives at +1%/day.
-    # Weight must NOT redistribute to the survivor intra-week.
-    up = [100.0 * 1.01 ** i for i in range(10)]
-    kl_full_A = _kl([100.0] * 10)
-    kl = {"A": kl_full_A.iloc[:5], "B": _kl(up)}
-    idx = kl["B"].index
-    reb = pd.DatetimeIndex([idx[0]])
-    series = run_weekly_portfolio(kl, reb, lambda t: ["A", "B"], cost_bps=0.0)
-    delisted_day = idx[6]  # A has no kline from idx[5] onward
-    # lead-0 fix (2026-09-02): PnL books SIMPLE returns -> 0.5 * 1% exactly
-    assert series.loc[delisted_day] == pytest.approx(0.5 * 0.01, rel=1e-9)
-    series_log = run_weekly_portfolio(kl, reb, lambda t: ["A", "B"], cost_bps=0.0,
-                                      convention="log")
-    assert series_log.loc[delisted_day] == pytest.approx(0.5 * np.log(1.01), rel=1e-9)
+def test_delisted_member_requires_explicit_settlement():
+    kl = {"A":_kl([100.]*10).iloc[:5],"B":_kl([100.*1.01**i for i in range(10)])}
+    reb = kl['B'].index[:1]
+    for convention in ('simple','log'):
+        with pytest.raises(ValueError,match='missing_held_return.*A'):
+            run_weekly_portfolio(kl,reb,lambda t:['A','B'],cost_bps=0.,convention=convention)
 
 
 def test_exit_to_empty_charges_sell_side():
@@ -99,9 +90,9 @@ def test_exit_to_empty_charges_sell_side():
     # rebalance's charge (assignment-overwrite bug)
     one_side = 10 / 1e4 * 1.0
     assert cost.loc[idx[6]] == pytest.approx(one_side)   # entry leg
-    assert cost.loc[idx[16]] == pytest.approx(one_side)  # exit-to-empty leg
+    assert cost.loc[idx[16]] == pytest.approx(one_side/(1-one_side))  # exit-to-empty leg
     assert cost.loc[idx[26]] == pytest.approx(one_side)  # re-entry leg
-    assert cost.sum() == pytest.approx(3 * one_side, rel=1e-6)
+    assert cost.sum() == pytest.approx(2*one_side + one_side/(1-one_side), rel=1e-6)
 
 
 def test_momentum_gap_drops_symbol():

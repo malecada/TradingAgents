@@ -90,15 +90,17 @@ def compute_metrics(
     initial_capital: float,
     equity_curve: list[float],
     risk_free_rate: float = 0.045,
+    periods_per_year: float = 365.0,
 ) -> dict[str, float]:
     """Compute standard backtest performance metrics.
 
     Args:
         daily_returns: Sequence of net daily returns.
-        positions: Position weight per day (used to identify traded days).
+        positions: Position weight per day (used for activity metrics only).
         initial_capital: Starting equity.
         equity_curve: Cumulative equity series (length = len(daily_returns) + 1).
         risk_free_rate: Annualised risk-free rate for Sharpe computation.
+        periods_per_year: Calendar annualization, 365 by default for crypto.
 
     Returns:
         Dict with keys: total_return, annualized_return, sharpe_ratio,
@@ -112,20 +114,20 @@ def compute_metrics(
 
     n_days = len(returns)
     if n_days > 0:
-        ann_return = (1 + total_return) ** (252 / n_days) - 1
+        ann_return = (1 + total_return) ** (periods_per_year / n_days) - 1
     else:
         ann_return = 0.0
 
-    # Sharpe ratio: only on days with a non-zero position.
+    # Sharpe uses the delivered calendar equity process, including inactive days.
     traded_mask = np.abs(pos) > 1e-9
     traded_returns = returns[traded_mask]
-    daily_rf = (1 + risk_free_rate) ** (1 / 252) - 1
+    daily_rf = (1 + risk_free_rate) ** (1 / periods_per_year) - 1
 
-    if len(traded_returns) > 1:
-        excess = traded_returns - daily_rf
+    if len(returns) > 1:
+        excess = returns - daily_rf
         std_excess = np.std(excess, ddof=1)
         sharpe = (
-            float(np.mean(excess) / std_excess * np.sqrt(252))
+            float(np.mean(excess) / std_excess * np.sqrt(periods_per_year))
             if std_excess > 0
             else 0.0
         )
@@ -184,6 +186,7 @@ def run_backtest(
     short_cost: float = 0.0003,
     position_size: float = 1.0,
     risk_free_rate: float = 0.045,
+    periods_per_year: float = 365.0,
 ) -> BacktestResult:
     """Run a backtest for a strategy over a historical period.
 
@@ -193,12 +196,13 @@ def run_backtest(
        optionally model predictions).
     2. The position weight from the signal is scaled by ``position_size``.
     3. Gross return = ``position * (actual[i] - actual[i-1]) / actual[i-1]``.
-    4. Transaction costs (fees, slippage, short borrowing) are deducted
-       proportionally to the absolute position weight.
+    4. Fees/slippage use changes from the actual marked book; borrowing
+       uses the held short notional. Missing forecasts retain contracts.
     5. Equity is updated: ``equity[i] = equity[i-1] * (1 + net_return)``.
 
-    Cost model (per trade, proportional to ``|position|``):
-        - Round-trip fees: ``2 * fee_rate``
+    Cost model: fees/slippage on actual notional turnover; short borrowing
+    on held short exposure. Contracts are resized from pretrade NAV:
+        - One-way fees on actual pretrade notional changes: ``fee_rate``
         - Slippage: ``slippage``
         - Short borrowing: ``short_cost`` (only when position < 0)
 
@@ -214,117 +218,56 @@ def run_backtest(
             as ``dates``).  Passed to the strategy for consensus logic.
         predictions_other: Optional secondary model predictions.
         actuals_other: Optional actuals aligned with the secondary model.
-        fee_rate: One-way fee rate (applied twice for round trip).
+        fee_rate: One-way fee rate on actual notional changes.
         slippage: Slippage cost per trade.
         short_cost: Daily borrowing cost for short positions.
         position_size: Global scaling factor for all positions.
         risk_free_rate: Annualised risk-free rate for Sharpe computation.
+        periods_per_year: Calendar annualization, 365 by default for crypto.
 
     Returns:
         A ``BacktestResult`` containing the equity curve, metrics, and
         trade log.
     """
+    from tradingagents.accounting import accounting_step
     config = get_config()
-
     positions: list[float] = []
     daily_returns: list[float] = []
     equity: list[float] = [initial_capital]
     trade_dates: list = []
     trade_log: list[TradeRecord] = []
-
+    notionals = pd.Series(dtype=float)
     for i in range(1, len(dates)):
-        actual_prev = actuals[i - 1]
-        actual_i = actuals[i]
-
-        # Skip if prices are invalid.
-        if (
-            np.isnan(actual_prev)
-            or np.isnan(actual_i)
-            or actual_prev == 0
-        ):
-            positions.append(0.0)
-            daily_returns.append(0.0)
-            equity.append(equity[-1])
-            trade_dates.append(dates.iloc[i])
-            continue
-
-        # Build optional kwargs for the strategy.
+        actual_prev, actual_i = actuals[i-1], actuals[i]
+        target = None
+        level = 'UNAVAILABLE'
         kwargs: dict[str, Any] = {}
+        available = not pd.isna(agent_signals[i])
         if predictions is not None:
-            pred_i = predictions[i]
-            if np.isnan(pred_i):
-                positions.append(0.0)
-                daily_returns.append(0.0)
-                equity.append(equity[-1])
-                trade_dates.append(dates.iloc[i])
-                continue
-            kwargs["prediction"] = pred_i
-            kwargs["actual_prev"] = actual_prev
-
+            available = available and bool(np.isfinite(predictions[i]))
+            kwargs.update(prediction=predictions[i],actual_prev=actual_prev)
         if predictions_other is not None and actuals_other is not None:
-            kwargs["prediction_other"] = predictions_other[i]
-            kwargs["actual_prev_other"] = actuals_other[i - 1]
-
-        # Generate signal through the strategy.
-        signal: Signal = strategy.generate_signal(
-            agent_signal=agent_signals[i],
-            **kwargs,
-        )
-
-        # Scale by global position_size.
-        effective_position = signal.position * position_size
+            kwargs.update(prediction_other=predictions_other[i],actual_prev_other=actuals_other[i-1])
+        if available:
+            signal: Signal = strategy.generate_signal(agent_signal=agent_signals[i],**kwargs)
+            target = pd.Series({'asset':signal.position*position_size})
+            level = signal.level.value
+        valid_price = np.isfinite(actual_prev) and np.isfinite(actual_i) and actual_prev > 0 and actual_i > 0
+        price_return = actual_i/actual_prev-1. if valid_price else np.nan
+        exposure = target.get('asset',0.) if target is not None else notionals.get('asset',0.)/equity[-1]
+        row = accounting_step(equity[-1],notionals,pd.Series({'asset':price_return}),
+                target_weights=target,fee_rate=fee_rate+slippage,date=dates.iloc[i],
+                funding=pd.Series({'asset':-short_cost if exposure < 0 else 0.}))
+        notionals = row['notionals']
+        effective_position = float(row['weights'].get('asset',0.))
         positions.append(effective_position)
-
-        if abs(effective_position) < 1e-9:
-            # No trade: equity unchanged.
-            daily_returns.append(0.0)
-            equity.append(equity[-1])
-            trade_dates.append(dates.iloc[i])
-            trade_log.append(
-                TradeRecord(
-                    date=dates.iloc[i],
-                    signal_level=signal.level.value,
-                    position=effective_position,
-                    entry_price=actual_prev,
-                    exit_price=actual_i,
-                    gross_return=0.0,
-                    cost=0.0,
-                    net_return=0.0,
-                    equity_after=equity[-1],
-                )
-            )
-            continue
-
-        # Gross return: directional price move weighted by position.
-        price_return = (actual_i - actual_prev) / actual_prev
-        gross_ret = effective_position * price_return
-
-        # Transaction costs scale with absolute position size.
-        abs_pos = abs(effective_position)
-        cost = (2 * fee_rate + slippage) * abs_pos
-        # Additional borrowing cost for short exposure.
-        if effective_position < 0:
-            cost += short_cost * abs_pos
-
-        net_ret = gross_ret - cost
-
-        daily_returns.append(net_ret)
-        equity.append(equity[-1] * (1 + net_ret))
+        daily_returns.append(row['net'])
+        equity.append(row['nav'])
         trade_dates.append(dates.iloc[i])
-
-        trade_log.append(
-            TradeRecord(
-                date=dates.iloc[i],
-                signal_level=signal.level.value,
-                position=effective_position,
-                entry_price=actual_prev,
-                exit_price=actual_i,
-                gross_return=gross_ret,
-                cost=cost,
-                net_return=net_ret,
-                equity_after=equity[-1],
-            )
-        )
+        trade_log.append(TradeRecord(date=dates.iloc[i],signal_level=level,
+            position=effective_position,entry_price=actual_prev,exit_price=actual_i,
+            gross_return=row['gross'],cost=row['cost']-row['carry'],
+            net_return=row['net'],equity_after=row['nav']))
 
     metrics = compute_metrics(
         daily_returns,
@@ -332,6 +275,7 @@ def run_backtest(
         initial_capital,
         equity,
         risk_free_rate=risk_free_rate,
+        periods_per_year=periods_per_year,
     )
 
     return BacktestResult(

@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_hourly_daily_capital_charge_changes_next_day_trade_nav __________
+
+    def test_hourly_daily_capital_charge_changes_next_day_trade_nav():
+        ix=pd.date_range('2024-01-01',periods=48,freq='h',tz='UTC')
+        w=pd.DataFrame({'A':.5},index=ix)
+        r=pd.DataFrame({'A':0.},index=ix)
+        net=liq_fade.run_hourly_portfolio(w,r,cost_bps=100.,rf_annual=1.1**365-1.)
+        # Compare cumulative NAV to independent dollar accounting: each hourly
+        # target is half pretrade NAV; day-end charge is 10% of day-start NAV.
+        # No fees are duplicated or omitted after day one's charge reduces NAV.
+        nav=1.; held=0.; day_start=1.
+        for i in range(48):
+            desired=.5*nav
+            nav-=.01*abs(desired-held)
+            held=desired
+            if i in (23,47):
+                nav-=.1*day_start
+                day_start=nav
+>       assert (1+net).prod() == pytest.approx(nav)
+E       assert np.float64(0.8054773869346731) == 0.8049748743718592 ± 8.0e-07
+E         
+E         comparison failed
+E         Obtained: 0.8054773869346731
+E         Expected: 0.8049748743718592 ± 8.0e-07
+
+tests/test_accounting_audit.py:313: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_accounting_audit.py::test_hourly_daily_capital_charge_changes_next_day_trade_nav
+1 failed, 35 deselected in 1.72s

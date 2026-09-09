@@ -12,6 +12,7 @@ from tradingagents.dataflows import sentiment_store
 def _row(ts: datetime, article_id: int, symbols: str = "BTCUSD",
          headline: str = "Example", content: str = "", source: str = "Benzinga") -> dict:
     return {
+        "availability_basis": "observed",
         "event_ts": ts,
         "as_of_ts": ts,
         "id": article_id,
@@ -55,7 +56,8 @@ def test_pit_filter_excludes_future_observations(tmp_path):
         _row(datetime(2024, 1, 10, tzinfo=timezone.utc), 1, headline="Known early"),
         # event ts in Jan but only entered the store in March (NOT visible at Feb 1)
         {
-            "event_ts": datetime(2024, 1, 25, tzinfo=timezone.utc),
+            "availability_basis": "observed",
+        "event_ts": datetime(2024, 1, 25, tzinfo=timezone.utc),
             "as_of_ts": datetime(2024, 3, 5, tzinfo=timezone.utc),
             "id": 2, "headline": "Late ingest", "content": "",
             "summary": "", "symbols": "BTCUSD", "source": "x", "author": "", "url": "",
@@ -133,6 +135,7 @@ def test_revision_history_preserved_across_upserts(tmp_path):
     event_time = datetime(2024, 1, 10, tzinfo=timezone.utc)
     # v1: headline as published
     v1 = pd.DataFrame([{
+        "availability_basis": "observed",
         "event_ts": event_time,
         "as_of_ts": datetime(2024, 1, 10, 12, 0, tzinfo=timezone.utc),
         "id": 42, "headline": "v1 headline", "content": "",
@@ -140,6 +143,7 @@ def test_revision_history_preserved_across_upserts(tmp_path):
     }])
     # v2: corrected headline, observed 5 days later
     v2 = pd.DataFrame([{
+        "availability_basis": "observed",
         "event_ts": event_time,
         "as_of_ts": datetime(2024, 1, 15, 9, 0, tzinfo=timezone.utc),
         "id": 42, "headline": "v2 corrected", "content": "",
@@ -159,14 +163,13 @@ def test_revision_history_preserved_across_upserts(tmp_path):
     assert len(out_between) == 1
     assert out_between["headline"].iloc[0] == "v1 headline"
 
-    # At as_of after v2: both revisions are visible; the later (v2) comes first due to ORDER BY event_ts DESC
-    # (same event_ts → order between them is unspecified but both must be present)
+    # Explicit vintage-history mode preserves both rows; normal queries select v2.
     out_after = sentiment_store.query_news(
         coin="bitcoin",
         ts_start=datetime(2024, 1, 1, tzinfo=timezone.utc),
         ts_end=datetime(2024, 1, 31, tzinfo=timezone.utc),
         as_of=datetime(2024, 2, 1, tzinfo=timezone.utc),
-        root=tmp_path,
+        root=tmp_path, all_vintages=True,
     )
     assert len(out_after) == 2
     assert set(out_after["headline"].tolist()) == {"v1 headline", "v2 corrected"}

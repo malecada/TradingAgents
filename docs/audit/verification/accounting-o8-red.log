@@ -1,0 +1,36 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__________________ test_o8_overlay_does_not_repeat_base_fees ___________________
+
+    def test_o8_overlay_does_not_repeat_base_fees():
+        ix=pd.date_range('2024-01-01',periods=3,tz='UTC')
+        ns=load_functions('scripts/predlab_opt_o8.py',{'overlay_book'},dict(pd=pd,np=np,
+            OVL={'target':.15,'cap':2.,'breadth_floor':100,'est':'unused'},
+            sigma_hat=lambda net,est: pd.Series(.3,index=net.index)))
+        result,_=ns['overlay_book'](pd.Series(.01,index=ix),pd.Series(1.,index=ix),pd.Series(200.,index=ix))
+>       assert result.iloc[1] == pytest.approx(.005)
+E       assert np.float64(0.00475) == 0.005 ± 5.0e-09
+E         
+E         comparison failed
+E         Obtained: 0.00475
+E         Expected: 0.005 ± 5.0e-09
+
+tests/test_accounting_audit.py:265: AssertionError
+__________________ test_o8_drawdown_includes_initial_capital ___________________
+
+    def test_o8_drawdown_includes_initial_capital():
+        ns=load_functions('scripts/predlab_opt_o8.py',{'stats'},dict(pd=pd,np=np))
+        ix=pd.date_range('2024-01-01',periods=3,tz='UTC')
+        _,dd=ns['stats'](pd.Series([-.2,0.,0.],index=ix),'2024-01-01','2024-01-03')
+>       assert dd == pytest.approx(.2)
+E       assert 0.0 == 0.2 ± 2.0e-07
+E         
+E         comparison failed
+E         Obtained: 0.0
+E         Expected: 0.2 ± 2.0e-07
+
+tests/test_accounting_audit.py:272: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_accounting_audit.py::test_o8_overlay_does_not_repeat_base_fees
+FAILED tests/test_accounting_audit.py::test_o8_drawdown_includes_initial_capital
+2 failed, 30 deselected in 1.64s

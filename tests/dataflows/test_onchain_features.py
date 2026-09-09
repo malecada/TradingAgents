@@ -15,6 +15,7 @@ def _row(
     source: str = "coinmetrics_community", status: str = "final",
 ) -> dict:
     return {
+        "availability_basis": "observed",
         "event_ts": event_ts,
         "as_of_ts": as_of_ts if as_of_ts is not None else event_ts + timedelta(days=1),
         "coin": coin,

@@ -1,0 +1,241 @@
+FFFFFFFFFFFFF                                                            [100%]
+=================================== FAILURES ===================================
+_________ test_rejected_batch_remains_retryable_and_never_claims_fills _________
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-22', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+
+    def test_rejected_batch_remains_retryable_and_never_claims_fills(live):
+        mod,_=live
+        c=Exchange(reject={'AAAUSDT','BBBUSDT'})
+>       assert 'incomplete' in mod.run(c,False)
+E       AssertionError: assert 'incomplete' in 'done 2026-08-22: 2 orders, gross 144, 0 dropped, 0 skipped'
+E        +  where 'done 2026-08-22: 2 orders, gross 144, 0 dropped, 0 skipped' = <function run at 0x786758db7a60>(<predlab.test_execution_repair.Exchange object at 0x786758f127b0>, False)
+E        +    where <function run at 0x786758db7a60> = <module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>.run
+
+tests/predlab/test_execution_repair.py:75: AssertionError
+_________________ test_partial_batch_retries_only_residual_leg _________________
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-22', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+
+    def test_partial_batch_retries_only_residual_leg(live):
+        mod,_=live
+        c=Exchange(reject={'BBBUSDT'})
+        mod.run(c,False)
+        c.reject.clear()
+        mod.run(c,False)
+>       assert [o[0] for o in c.orders]==['AAAUSDT','BBBUSDT','BBBUSDT']
+E       AssertionError: assert ['AAAUSDT', 'BBBUSDT'] == ['AAAUSDT', '...T', 'BBBUSDT']
+E         
+E         Right contains one more item: 'BBBUSDT'
+E         Use -v to get more diff
+
+tests/predlab/test_execution_repair.py:89: AssertionError
+___________ test_failed_emergency_is_incomplete_until_actual_flatten ___________
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-22', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+
+    def test_failed_emergency_is_incomplete_until_actual_flatten(live):
+        mod,_=live
+        c=Exchange({'AAAUSDT':37},reject={'AAAUSDT'})
+>       assert 'incomplete' in mod.close_all(c)
+E       AssertionError: assert 'incomplete' in 'close-all: flattened 1 positions, halt.flag written'
+E        +  where 'close-all: flattened 1 positions, halt.flag written' = <function close_all at 0x786758db79c0>(<predlab.test_execution_repair.Exchange object at 0x786758d59810>)
+E        +    where <function close_all at 0x786758db79c0> = <module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>.close_all
+
+tests/predlab/test_execution_repair.py:95: AssertionError
+___________________ test_dry_run_does_not_consume_live_state ___________________
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-22', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+
+    def test_dry_run_does_not_consume_live_state(live):
+        mod,_=live
+        c=Exchange()
+        assert mod.run(c,True).startswith('dry-run')
+>       assert not mod.DAY_EQUITY.exists()
+E       AssertionError: assert not True
+E        +  where True = exists()
+E        +    where exists = PosixPath('/tmp/pytest-of-malecada/pytest-5/test_dry_run_does_not_consume_0/predlab/s1_live/day_equity.json').exists
+E        +      where PosixPath('/tmp/pytest-of-malecada/pytest-5/test_dry_run_does_not_consume_0/predlab/s1_live/day_equity.json') = <module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>.DAY_EQUITY
+
+tests/predlab/test_execution_repair.py:106: AssertionError
+_________________ test_missing_desired_mark_never_becomes_exit _________________
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-22', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+
+    def test_missing_desired_mark_never_becomes_exit(live):
+        mod,row=live
+        row['mark_px'].pop('AAAUSDT')
+        mod.CH_JOURNAL.write_text(json.dumps(row)+'\n')
+        c=Exchange({'AAAUSDT':37})
+>       assert mod.run(c,False).startswith('WAIT')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x786758d8a2c0>('WAIT')
+E        +    where <built-in method startswith of str object at 0x786758d8a2c0> = 'done 2026-08-22: 2 orders, gross 70, 1 dropped, 0 skipped'.startswith
+E        +      where 'done 2026-08-22: 2 orders, gross 70, 1 dropped, 0 skipped' = <function run at 0x786758db77e0>(<predlab.test_execution_repair.Exchange object at 0x786758ec3230>, False)
+E        +        where <function run at 0x786758db77e0> = <module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>.run
+
+tests/predlab/test_execution_repair.py:116: AssertionError
+_________ test_stale_decision_or_marks_refuse_orders[asof-2026-08-01] __________
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-01', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+field = 'asof', value = '2026-08-01'
+
+    @pytest.mark.parametrize('field,value',[('asof','2026-08-01'),('mark_ts','2026-08-22T00:05:00+00:00')])
+    def test_stale_decision_or_marks_refuse_orders(live,field,value):
+        mod,row=live
+        row[field]=value
+        mod.CH_JOURNAL.write_text(json.dumps(row)+'\n')
+        c=Exchange()
+>       assert mod.run(c,False).startswith('WAIT')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x786758d8bbb0>('WAIT')
+E        +    where <built-in method startswith of str object at 0x786758d8bbb0> = 'done 2026-08-01: 2 orders, gross 144, 0 dropped, 0 skipped'.startswith
+E        +      where 'done 2026-08-01: 2 orders, gross 144, 0 dropped, 0 skipped' = <function run at 0x786758db7740>(<predlab.test_execution_repair.Exchange object at 0x786758db1490>, False)
+E        +        where <function run at 0x786758db7740> = <module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>.run
+
+tests/predlab/test_execution_repair.py:126: AssertionError
+_ test_stale_decision_or_marks_refuse_orders[mark_ts-2026-08-22T00:05:00+00:00] _
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-22', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+field = 'mark_ts', value = '2026-08-22T00:05:00+00:00'
+
+    @pytest.mark.parametrize('field,value',[('asof','2026-08-01'),('mark_ts','2026-08-22T00:05:00+00:00')])
+    def test_stale_decision_or_marks_refuse_orders(live,field,value):
+        mod,row=live
+        row[field]=value
+        mod.CH_JOURNAL.write_text(json.dumps(row)+'\n')
+        c=Exchange()
+>       assert mod.run(c,False).startswith('WAIT')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x786758c606c0>('WAIT')
+E        +    where <built-in method startswith of str object at 0x786758c606c0> = 'done 2026-08-22: 2 orders, gross 144, 0 dropped, 0 skipped'.startswith
+E        +      where 'done 2026-08-22: 2 orders, gross 144, 0 dropped, 0 skipped' = <function run at 0x786758db76a0>(<predlab.test_execution_repair.Exchange object at 0x786758cb9e10>, False)
+E        +        where <function run at 0x786758db76a0> = <module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>.run
+
+tests/predlab/test_execution_repair.py:126: AssertionError
+____________________ test_stale_current_quote_blocks_sizing ____________________
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-22', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+
+    def test_stale_current_quote_blocks_sizing(live):
+        mod,_=live
+        c=Exchange(); c.quote_time -= 3600_000
+>       assert mod.run(c,False).startswith('WAIT')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x786758d8bec0>('WAIT')
+E        +    where <built-in method startswith of str object at 0x786758d8bec0> = 'done 2026-08-22: 2 orders, gross 144, 0 dropped, 0 skipped'.startswith
+E        +      where 'done 2026-08-22: 2 orders, gross 144, 0 dropped, 0 skipped' = <function run at 0x786758db68e0>(<predlab.test_execution_repair.Exchange object at 0x786758cb99d0>, False)
+E        +        where <function run at 0x786758db68e0> = <module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>.run
+
+tests/predlab/test_execution_repair.py:132: AssertionError
+____________ test_unknown_post_reconciles_fill_without_resubmitting ____________
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-22', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+
+    def test_unknown_post_reconciles_fill_without_resubmitting(live):
+        mod,_=live
+        c=Exchange(unknown=True)
+>       mod.run(c,False)
+
+tests/predlab/test_execution_repair.py:138: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/predlab_s1_live.py:255: in run
+    _place(client, orders, asof)
+scripts/predlab_s1_live.py:119: in _place
+    r = client.market_order(o.symbol, o.side, o.qty, o.reduce_only)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <predlab.test_execution_repair.Exchange object at 0x786758dad950>
+symbol = 'AAAUSDT', side = 'BUY', qty = 37.0, reduce_only = False
+client_order_id = None
+
+    def market_order(self,symbol,side,qty,reduce_only,client_order_id=None):
+        self.orders.append((symbol, side, qty, reduce_only, client_order_id))
+        if symbol in self.reject: raise BinanceAPIError(-2019,'rejected')
+        fill_qty = qty/2 if self.partial else qty
+        self.pos[symbol] = self.pos.get(symbol,0)+(fill_qty if side=='BUY' else -fill_qty)
+        r={'orderId':len(self.orders),'status':'PARTIALLY_FILLED' if self.partial else 'FILLED',
+           'executedQty':str(fill_qty),'avgPrice':'2','cumQuote':str(fill_qty*2)}
+        self.states[client_order_id] = r
+>       if self.unknown: raise urllib.error.URLError('response lost after fill')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       urllib.error.URLError: <urlopen error response lost after fill>
+
+tests/predlab/test_execution_repair.py:46: URLError
+_________ test_unresolved_partial_fill_does_not_start_duplicate_order __________
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-22', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+
+    def test_unresolved_partial_fill_does_not_start_duplicate_order(live):
+        mod,_=live
+        c=Exchange(partial=True)
+>       assert 'incomplete' in mod.run(c,False)
+E       AssertionError: assert 'incomplete' in 'done 2026-08-22: 2 orders, gross 144, 0 dropped, 0 skipped'
+E        +  where 'done 2026-08-22: 2 orders, gross 144, 0 dropped, 0 skipped' = <function run at 0x786758de40e0>(<predlab.test_execution_repair.Exchange object at 0x786758dac450>, False)
+E        +    where <function run at 0x786758de40e0> = <module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>.run
+
+tests/predlab/test_execution_repair.py:148: AssertionError
+_____________ test_hedge_mode_blocks_daily_loss_and_manual_flatten _____________
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-22', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+
+    def test_hedge_mode_blocks_daily_loss_and_manual_flatten(live):
+        mod,_=live
+        c=Exchange({'AAAUSDT':37},hedge=True)
+        mod.LDIR.mkdir(parents=True)
+        mod.DAY_EQUITY.write_text(json.dumps({'date':'2026-08-23','equity':4000}))
+>       assert 'hedge' in mod.run(c,False).lower()
+E       AssertionError: assert 'hedge' in 'halt: daily loss breached, flattened 1 positions, halt.flag written'
+E        +  where 'halt: daily loss breached, flattened 1 positions, halt.flag written' = <built-in method lower of str object at 0x786758d8b050>()
+E        +    where <built-in method lower of str object at 0x786758d8b050> = 'halt: daily loss breached, flattened 1 positions, halt.flag written'.lower
+E        +      where 'halt: daily loss breached, flattened 1 positions, halt.flag written' = <function run at 0x786758e06480>(<predlab.test_execution_repair.Exchange object at 0x786758d007d0>, False)
+E        +        where <function run at 0x786758e06480> = <module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>.run
+
+tests/predlab/test_execution_repair.py:158: AssertionError
+_______ test_held_exposure_counts_in_risk_when_departing_close_can_fail ________
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-22', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+
+    def test_held_exposure_counts_in_risk_when_departing_close_can_fail(live):
+        mod,_=live
+        c=Exchange({'OLDUSDT':70},reject={'OLDUSDT'})
+        mod.run(c,False)
+>       assert not any(not o[3] for o in c.orders)
+E       assert not True
+E        +  where True = any(<generator object test_held_exposure_counts_in_risk_when_departing_close_can_fail.<locals>.<genexpr> at 0x786758d24110>)
+
+tests/predlab/test_execution_repair.py:166: AssertionError
+________________ test_unknown_503_post_is_never_blindly_retried ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x786758e86d50>
+
+    def test_unknown_503_post_is_never_blindly_retried(monkeypatch):
+        c=FuturesClient(api_key='fake',api_secret='fake',base='https://offline.invalid')
+        calls=[]
+        def fail(req,timeout):
+            calls.append(req)
+            raise urllib.error.HTTPError(req.full_url,503,'unknown',{},io.BytesIO(b'{"code":-1000,"msg":"Unknown execution"}'))
+        monkeypatch.setattr('urllib.request.urlopen',fail)
+        monkeypatch.setattr('time.sleep',lambda *_:None)
+        with pytest.raises(Exception): c.market_order('AAAUSDT','BUY',10,False)
+>       assert len(calls)==1
+E       assert 2 == 1
+E        +  where 2 = len([<urllib.request.Request object at 0x786758f127b0>, <urllib.request.Request object at 0x786758d596d0>])
+
+tests/predlab/test_execution_repair.py:178: AssertionError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_execution_repair.py::test_rejected_batch_remains_retryable_and_never_claims_fills
+FAILED tests/predlab/test_execution_repair.py::test_partial_batch_retries_only_residual_leg
+FAILED tests/predlab/test_execution_repair.py::test_failed_emergency_is_incomplete_until_actual_flatten
+FAILED tests/predlab/test_execution_repair.py::test_dry_run_does_not_consume_live_state
+FAILED tests/predlab/test_execution_repair.py::test_missing_desired_mark_never_becomes_exit
+FAILED tests/predlab/test_execution_repair.py::test_stale_decision_or_marks_refuse_orders[asof-2026-08-01]
+FAILED tests/predlab/test_execution_repair.py::test_stale_decision_or_marks_refuse_orders[mark_ts-2026-08-22T00:05:00+00:00]
+FAILED tests/predlab/test_execution_repair.py::test_stale_current_quote_blocks_sizing
+FAILED tests/predlab/test_execution_repair.py::test_unknown_post_reconciles_fill_without_resubmitting
+FAILED tests/predlab/test_execution_repair.py::test_unresolved_partial_fill_does_not_start_duplicate_order
+FAILED tests/predlab/test_execution_repair.py::test_hedge_mode_blocks_daily_loss_and_manual_flatten
+FAILED tests/predlab/test_execution_repair.py::test_held_exposure_counts_in_risk_when_departing_close_can_fail
+FAILED tests/predlab/test_execution_repair.py::test_unknown_503_post_is_never_blindly_retried
+13 failed in 0.25s

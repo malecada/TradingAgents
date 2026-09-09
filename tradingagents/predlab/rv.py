@@ -10,8 +10,9 @@ Per period (UTC hour or day, labeled by period START):
   rq      = (n/3) * sum r_i^4               (realized quarticity)
   park    = (ln(high_period/low_period))^2 / (4 ln 2)   (Parkinson range var)
   ret     = sum r_i                          (period log-return, T1/T2 target)
-  n_bars  = bar count (honest denominator); rv is nan'd when the period has
-            fewer than 80% of expected bars (12 per 1h, 288 per 1d)
+  n_bars  = bar count (honest denominator); missing/partial periods remain
+            on the output clock with unknown aggregate targets. Returns never
+            bridge a missing 5m close (prospective completeness policy v2).
 plus summed quote_volume, taker_buy_quote_volume, n_trades.
 
 No look-ahead by construction: every output row uses only bars inside its own
@@ -24,7 +25,6 @@ import numpy as np
 import pandas as pd
 
 _EXPECTED = {"1h": 12, "1d": 288}
-_FLOOR_FRAC = 0.8
 
 
 def aggregate_rv(df_5m: pd.DataFrame, freq: str) -> pd.DataFrame:
@@ -35,10 +35,12 @@ def aggregate_rv(df_5m: pd.DataFrame, freq: str) -> pd.DataFrame:
 
     df = df_5m.sort_values("ts").reset_index(drop=True)
     times = pd.to_datetime(df["ts"].astype("int64"), unit="ms", utc=True)
+    if times.duplicated().any():
+        raise ValueError("duplicate 5m timestamps make realized measures ambiguous")
     label = times.dt.floor("h" if freq == "1h" else "D")
 
     logc = np.log(df["close"].astype(np.float64))
-    r = logc.diff()
+    r = logc.diff().where(times.diff().eq(pd.Timedelta(minutes=5)))
     absr = r.abs()
 
     work = pd.DataFrame(
@@ -65,6 +67,7 @@ def aggregate_rv(df_5m: pd.DataFrame, freq: str) -> pd.DataFrame:
             "bv": (np.pi / 2.0) * g["bp"].sum(min_count=1),
             "rq": (n_ret / 3.0) * g["r4"].sum(min_count=1),
             "n_bars": g["r2"].size(),
+            "n_returns": n_ret,
             "quote_volume": g["quote_volume"].sum(),
             "taker_buy_quote_volume": g["taker_buy_quote_volume"].sum(),
             "n_trades": g["n_trades"].sum(),
@@ -72,11 +75,21 @@ def aggregate_rv(df_5m: pd.DataFrame, freq: str) -> pd.DataFrame:
             "ret": g["r"].sum(min_count=1),
         }
     )
+    if out.empty:
+        out.index.name = "ts"
+        return out
+    clock = pd.date_range(out.index.min(), out.index.max(), freq=freq)
+    out = out.reindex(clock)
+    out[["n_bars", "n_returns"]] = out[["n_bars", "n_returns"]].fillna(0).astype(int)
     out.index.name = "ts"
 
     # first period has no return seed
     out = out.iloc[1:]
 
-    incomplete = out["n_bars"] < _FLOOR_FRAC * expected
-    out.loc[incomplete, "rv"] = np.nan
+    incomplete = out["n_bars"] != expected
+    out.loc[incomplete, ["quote_volume", "taker_buy_quote_volume", "n_trades", "park"]] = np.nan
+    missing_returns = incomplete | (out["n_returns"] != expected)
+    out.loc[missing_returns, ["rv", "bv", "rq", "ret"]] = np.nan
+    out["bar_coverage"] = out["n_bars"] / expected
+    out["return_coverage"] = out["n_returns"] / expected
     return out

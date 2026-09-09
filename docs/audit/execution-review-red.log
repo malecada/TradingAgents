@@ -1,0 +1,51 @@
+.............FF.........F                                                [100%]
+=================================== FAILURES ===================================
+_____ test_status_warns_incomplete_reconciliation_and_compare_missing_fees _____
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-22', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+
+    def test_status_warns_incomplete_reconciliation_and_compare_missing_fees(live):
+        mod,_=live
+        c=Exchange(reject={'BBBUSDT'})
+        mod.run(c,False)
+>       assert 'incomplete' in mod.status(c).lower()
+E       AssertionError: assert 'incomplete' in 'last run 2026-08-22 (live): 1 orders, gross 144, equity 3000.00, scale 1.0\nopen positions: 1'
+E        +  where 'last run 2026-08-22 (live): 1 orders, gross 144, equity 3000.00, scale 1.0\nopen positions: 1' = <built-in method lower of str object at 0x7d0386999740>()
+E        +    where <built-in method lower of str object at 0x7d0386999740> = 'last run 2026-08-22 (live): 1 orders, gross 144, equity 3000.00, scale 1.0\nopen positions: 1'.lower
+E        +      where 'last run 2026-08-22 (live): 1 orders, gross 144, equity 3000.00, scale 1.0\nopen positions: 1' = <function status at 0x7d035dcfc220>(<predlab.test_execution_repair.Exchange object at 0x7d035dcc1c50>)
+E        +        where <function status at 0x7d035dcfc220> = <module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>.status
+
+tests/predlab/test_execution_repair.py:185: AssertionError
+_______________ test_missing_position_mode_never_assumed_one_way _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d035db13330>
+
+    def test_missing_position_mode_never_assumed_one_way(monkeypatch):
+        c=FuturesClient(api_key='fake',api_secret='fake')
+        monkeypatch.setattr(c,'_http',lambda *a,**k:{})
+>       with pytest.raises(ValueError): c.position_mode()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/predlab/test_execution_repair.py:195: Failed
+_________ test_missing_signal_panel_does_not_write_an_intentional_exit _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-25/test_missing_signal_panel_does0')
+
+    def test_missing_signal_panel_does_not_write_an_intentional_exit(tmp_path):
+        p=panel()
+        p['park'].loc['2026-09-02']=np.nan
+        j=tmp_path/'v2.jsonl'
+>       assert paper.journal_one(j,p,'ewma_20','scale',.15).startswith('WAIT')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x7d035d79e6d0>('WAIT')
+E        +    where <built-in method startswith of str object at 0x7d035d79e6d0> = 'v2.jsonl 2026-09-02: 0 legs, incomplete, scale None'.startswith
+E        +      where 'v2.jsonl 2026-09-02: 0 legs, incomplete, scale None' = <function journal_one at 0x7d035dcd1bc0>(PosixPath('/tmp/pytest-of-malecada/pytest-25/test_missing_signal_panel_does0/v2.jsonl'), {'close':                             N000   N001   N002  ...     B2     B3     B4\n2026-06-20 00:00:00+00:00  100.0  1...0.0  0.0  0.0  0.0\n2026-09-02 00:00:00+00:00   0.0   0.0   0.0   0.0  ...  0.0  0.0  0.0  0.0\n\n[75 rows x 205 columns]}, 'ewma_20', 'scale', 0.15)
+E        +        where <function journal_one at 0x7d035dcd1bc0> = paper.journal_one
+
+tests/predlab/test_paper_repair.py:137: AssertionError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_execution_repair.py::test_status_warns_incomplete_reconciliation_and_compare_missing_fees
+FAILED tests/predlab/test_execution_repair.py::test_missing_position_mode_never_assumed_one_way
+FAILED tests/predlab/test_paper_repair.py::test_missing_signal_panel_does_not_write_an_intentional_exit
+3 failed, 22 passed in 1.50s

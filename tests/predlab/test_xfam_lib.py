@@ -108,12 +108,14 @@ class TestThinLS:
         assert (df0["net"] - df5["net"]).sum() > 0
         assert np.isclose(df5["cost"].iloc[0], 5.0 / 1e4 * 2.0)  # day-1 full gross build
 
-    def test_min_names_skips(self):
+    def test_min_names_retains_cash_clock(self):
         idx = _days("2021-01-01", 10)
         ret = pd.DataFrame(0.01, index=idx, columns=list("ABC"))
         sig = pd.DataFrame(1.0, index=idx, columns=list("ABC"))
         df = thin_ls_backtest(sig, ret, n_leg=2, min_names=4)
-        assert len(df) == 0
+        assert df.index.equals(idx)
+        assert (df.net == 0.).all()
+        assert (df.nav == 1.).all()
 
 
 class TestEGandHalfLife:

@@ -31,9 +31,8 @@ def overlay(base: pd.DataFrame, target: float, cap: float = 2.0) -> dict:
     raw_pre_cost = base["gross"] + base["carry"]  # unit-book P&L before fees
     vol = raw_pre_cost.rolling(20).std().shift(1) * np.sqrt(pp.ANN_DAYS)
     s = (target / vol).clip(upper=cap).fillna(0.0)
-    ds = s.diff().abs().fillna(s.iloc[0] if len(s) else 0.0)
-    cost = pp.TAKER_BP / 1e4 * (s * base["turnover"] + ds * 2.0)
-    net = s * raw_pre_cost - cost
+    from tradingagents.accounting import scaled_overlay
+    net = scaled_overlay(base,s,fee_rate=pp.TAKER_BP/1e4)
     return {"rets": net, "sr_net": pp.ann_sr(net.to_numpy()),
             "maxdd": pp.max_drawdown(net.dropna().to_numpy()),
             "avg_scale": float(s.mean())}

@@ -1,0 +1,70 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________________ test_v2_short_receives_signed_positive_funding ________________
+
+    def test_v2_short_receives_signed_positive_funding():
+        equity,_ = v2_result([100.,100.],[0.,-1.],funding_rate=.01)
+>       assert equity[-1] == pytest.approx(1.01)
+E       assert np.float64(0.99) == 1.01 ± 1.0e-06
+E         
+E         comparison failed
+E         Obtained: 0.99
+E         Expected: 1.01 ± 1.0e-06
+
+tests/test_accounting_audit.py:216: AssertionError
+______________ test_v2_charges_one_fee_on_actual_notional_change _______________
+
+    def test_v2_charges_one_fee_on_actual_notional_change():
+        equity,_ = v2_result([100.,110.,110.],[0.,.5,.5],fee_rate=.01)
+        # Fee .005 + gain .05 -> NAV1.045; next target .5225 vs held .55.
+>       assert equity == pytest.approx([1.,1.045,1.044725])
+E       assert [1.0, np.floa...float64(1.04)] == approx([1.0 ±...25 ± 1.0e-06])
+E         
+E         comparison failed. Mismatched elements: 2 / 3:
+E         Max absolute difference: 0.004999999999999893
+E         Max relative difference: 0.004807692307692205
+E         Index | Obtained | Expected          
+E         1     | 1.04     | 1.045 ± 1.0e-06   
+E         2     | 1.04     | 1.044725 ± 1.0e-06
+
+tests/test_accounting_audit.py:222: AssertionError
+________________ test_v2_marks_missing_held_price_as_incomplete ________________
+
+    def test_v2_marks_missing_held_price_as_incomplete():
+>       with pytest.raises(ValueError,match='missing_held_return'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_accounting_audit.py:226: Failed
+_________ test_v2_price_stop_closes_actual_contracts_with_one_exit_fee _________
+
+    def test_v2_price_stop_closes_actual_contracts_with_one_exit_fee():
+        equity,_ = v2_result([100.,90.],[0.,1.],fee_rate=.01,price_stop_pct=.05,
+                             highs=np.array([100.,100.]),lows=np.array([100.,90.]))
+>       assert equity[-1] == pytest.approx(.9305)
+E       assert np.float64(0.91) == 0.9305 ± 9.3e-07
+E         
+E         comparison failed
+E         Obtained: 0.91
+E         Expected: 0.9305 ± 9.3e-07
+
+tests/test_accounting_audit.py:242: AssertionError
+_______________ test_v2_equity_stop_charges_close_at_actual_mark _______________
+
+    def test_v2_equity_stop_charges_close_at_actual_mark():
+        equity,_ = v2_result([100.,90.],[0.,1.],fee_rate=.01,stop_loss=.05)
+>       assert equity[-1] == pytest.approx(.881)
+E       assert np.float64(0.88) == 0.881 ± 8.8e-07
+E         
+E         comparison failed
+E         Obtained: 0.88
+E         Expected: 0.881 ± 8.8e-07
+
+tests/test_accounting_audit.py:247: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_accounting_audit.py::test_v2_short_receives_signed_positive_funding
+FAILED tests/test_accounting_audit.py::test_v2_charges_one_fee_on_actual_notional_change
+FAILED tests/test_accounting_audit.py::test_v2_marks_missing_held_price_as_incomplete
+FAILED tests/test_accounting_audit.py::test_v2_price_stop_closes_actual_contracts_with_one_exit_fee
+FAILED tests/test_accounting_audit.py::test_v2_equity_stop_charges_close_at_actual_mark
+5 failed, 24 deselected in 1.71s

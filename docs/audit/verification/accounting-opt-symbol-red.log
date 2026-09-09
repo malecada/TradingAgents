@@ -1,0 +1,14 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______________ test_opt_selected_name_missing_return_column_fails ______________
+
+    def test_opt_selected_name_missing_return_column_fails():
+        ix,cols,sig,ret,uni=panels()
+>       with pytest.raises(ValueError,match='missing_held_return.*S00'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_accounting_audit.py:326: Failed
+=========================== short test summary info ============================
+FAILED tests/test_accounting_audit.py::test_opt_selected_name_missing_return_column_fails
+1 failed, 40 deselected in 1.67s

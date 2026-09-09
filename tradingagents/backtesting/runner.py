@@ -226,7 +226,9 @@ def run_system_backtest(
     price_df["date"] = pd.to_datetime(price_df["date"])
 
     df_signals["date"] = pd.to_datetime(df_signals["date"])
-    merged = pd.merge(df_signals, price_df, on="date", how="inner").sort_values("date")
+    clock = pd.DataFrame({"date": pd.date_range(start_date, end_date, freq="D")})
+    merged = clock.merge(df_signals, on="date", how="left").merge(
+        price_df, on="date", how="left").sort_values("date")
 
     if len(merged) < 2:
         logger.error(f"Only {len(merged)} dates after merge — need at least 2")
@@ -254,6 +256,7 @@ def run_system_backtest(
             fee_rate=fee_rate,
             slippage=slippage,
             short_cost=short_cost,
+            periods_per_year=365.0,
         )
         results.append(result)
         logger.info(

@@ -113,7 +113,7 @@ def top_name_share(pnl_by_sleeve: dict) -> tuple:
 
 
 def maxdd_simple(series: pd.Series) -> float:
-    wealth = (1.0 + series.astype(float)).cumprod()
+    wealth = pd.Series(np.r_[1., (1.0 + series.astype(float)).cumprod()])
     dd = wealth / wealth.cummax() - 1.0
     return float(-dd.min()) if len(dd) else 0.0
 
@@ -133,7 +133,9 @@ def indep_shift(W: pd.DataFrame, rng: np.random.Generator, min_shift: int) -> pd
     for col in W.columns:
         k = int(rng.integers(min_shift, n - min_shift))
         out[col] = np.roll(W[col].to_numpy(), k)
-    return pd.DataFrame(out, index=W.index, columns=W.columns)
+    shifted = pd.DataFrame(out, index=W.index, columns=W.columns)
+    shifted.attrs.update(W.attrs)
+    return shifted
 
 
 def shared_shift(W: pd.DataFrame, offset_days: int) -> pd.DataFrame:
@@ -141,7 +143,9 @@ def shared_shift(W: pd.DataFrame, offset_days: int) -> pd.DataFrame:
     step = pd.infer_freq(W.index[:3]) if len(W) >= 3 else "D"
     per_day = 24 if (step is not None and step.lower().startswith("h")) else 1
     k = int(offset_days) * per_day
-    return pd.DataFrame(np.roll(W.to_numpy(), k, axis=0), index=W.index, columns=W.columns)
+    shifted = pd.DataFrame(np.roll(W.to_numpy(), k, axis=0), index=W.index, columns=W.columns)
+    shifted.attrs.update(W.attrs)
+    return shifted
 
 
 def draw_shared_offset(rng: np.random.Generator, n_days: int, min_shift: int = 30) -> int:

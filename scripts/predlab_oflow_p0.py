@@ -149,7 +149,17 @@ def xs_cells(p1h: dict) -> dict:
     return out
 
 
+def floor_pass(cell: str, row: dict) -> bool:
+    """Registered reversal-admissible floor; direction is not selected here."""
+    if cell.startswith("TS"):
+        return bool(row["p"] < FLOOR["ts_p"] and row["n_year_agree"] >= FLOOR["ts_years"])
+    return bool(abs(row["mean_ic"]) >= FLOOR["xs_abs_ic"]
+                and abs(row["nw_t"]) >= FLOOR["xs_nw_t"]
+                and row["n_sub_right_sign"] >= FLOOR["xs_subperiods"])
+
+
 def main() -> None:
+    registry.preflight(KEY, DEV)
     gates = registry.load_gates()
     if gates[KEY].get("verdicts"):
         raise SystemExit("REFUSED: predlab_oflow verdicts already recorded (one-shot)")
@@ -164,14 +174,11 @@ def main() -> None:
     print(f"XS cells done ({time.time()-t0:.0f}s)", flush=True)
     assert set(res) == set(CELLS), set(res) ^ set(CELLS)
     pvals = {k: res[k]["p"] for k in CELLS}
-    fdr = bh_fdr({k: v for k, v in pvals.items() if np.isfinite(v)}, q=0.10)
+    fdr = bh_fdr(pvals, q=0.10)
     survivors = []
     for k in CELLS:
         r = res[k]
-        if k.startswith("TS"):
-            floor_ok = r["p"] < FLOOR["ts_p"] and r["n_year_agree"] >= FLOOR["ts_years"]
-        else:
-            floor_ok = abs(r["mean_ic"]) >= FLOOR["xs_abs_ic"] and r["nw_t"] >= FLOOR["xs_nw_t"] and r["n_sub_right_sign"] >= FLOOR["xs_subperiods"]
+        floor_ok = floor_pass(k, r)
         r["floor_pass"] = bool(floor_ok)
         r["fdr_reject"] = k in fdr
         r["survive"] = bool(floor_ok and k in fdr)

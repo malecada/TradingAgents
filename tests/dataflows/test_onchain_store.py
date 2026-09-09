@@ -19,6 +19,7 @@ def _row(
     status: str = "final",
 ) -> dict:
     return {
+        "availability_basis": "observed",
         "event_ts": event_ts,
         "as_of_ts": as_of_ts if as_of_ts is not None else event_ts,
         "coin": coin,
@@ -134,7 +135,7 @@ def test_revision_history_preserved(tmp_path):
         ts_start=datetime(2025, 12, 1, tzinfo=timezone.utc),
         ts_end=datetime(2025, 12, 31, tzinfo=timezone.utc),
         as_of=datetime(2026, 2, 1, tzinfo=timezone.utc),
-        root=tmp_path,
+        root=tmp_path, all_vintages=True,
     )
     assert len(later) == 2
     assert set(later["status"].tolist()) == {"flash", "final"}

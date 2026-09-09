@@ -44,7 +44,8 @@ def get_crypto_news_pit(
 
     Returns raw headlines and article content for the LLM analyst to
     interpret sentiment. Every row satisfies as_of_ts <= end-of-day(end_date),
-    so there is no look-ahead.
+    and strict retrieval/version availability is required. Legacy assumed-lag
+    stores raise an actionable error instead of claiming an exact PIT history.
     """
     coin = coin_name.lower()
     if coin not in sentiment_store.COIN_TO_SYMBOL:
@@ -62,16 +63,12 @@ def get_crypto_news_pit(
     def _query(root: Path) -> pd.DataFrame:
         if not Path(root).exists():
             return pd.DataFrame(columns=sentiment_store.SCHEMA_COLS)
-        try:
-            return sentiment_store.query_news(
-                coin=coin,
-                ts_start=ts_start, ts_end=ts_end, as_of=ts_end,
-                limit=50, root=root,
-            )
-        except ValueError as e:
-            if "Unsupported coin" in str(e):
-                raise
-            return pd.DataFrame(columns=sentiment_store.SCHEMA_COLS)
+        return sentiment_store.query_news(
+            coin=coin,
+            ts_start=ts_start, ts_end=ts_end, as_of=ts_end,
+            limit=50, root=root,
+        )
+
 
     alpaca_df = _query(sentiment_store.DEFAULT_ROOT)
     gdelt_df = _query(GDELT_ROOT)

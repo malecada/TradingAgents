@@ -11,8 +11,8 @@ Knobs (axes O1-O3 + plumbing for O4-O7):
   lesson), explicit cost column, cost-stress recomputation
 
 Timing conventions inherited from pp.py: signal row t is pre-shifted (info
-through t-1); weights formed from row t trade the day-t log return;
-turnover charged on w_t - w_{t-1}; longs pay positive funding.
+through t-1); weights formed from row t trade the day-t simple return.
+Held units drift between rebalances; fees use actual notional changes.
 """
 from __future__ import annotations
 
@@ -22,6 +22,7 @@ import numpy as np
 import pandas as pd
 
 from tradingagents.predlab.pp import ann_sr, max_drawdown
+from tradingagents.accounting import calendar_index, run_target_book
 
 MIN_NAMES = 25
 
@@ -168,70 +169,50 @@ def run_ls(sig: pd.DataFrame, ret: pd.DataFrame, uni: pd.DataFrame,
     tilt: optional callable (date, target_weights) -> adjusted weights,
     applied to each rebalance target BEFORE smoothing; the engine renorms
     each leg back to +/-1 so a tilt can only redistribute within legs."""
+    if cfg.cadence < 1 or cfg.smooth < 1:
+        raise ValueError("cadence and smooth must be positive")
     lo_ts, hi_ts = pd.Timestamp(start, tz="UTC"), pd.Timestamp(end, tz="UTC")
     sig = sig.where(uni)
-    days = [d for d in ret.index if lo_ts <= d <= hi_ts]
-    prev_w = pd.Series(dtype=np.float64)
+    span = ret.index[(ret.index >= lo_ts) & (ret.index <= hi_ts)]
+    days = calendar_index(span)
+    columns = ret.columns.union(sig.columns, sort=False)
+    target_rows = pd.DataFrame(np.nan, index=days, columns=columns)
     held_long: set = set()
     held_short: set = set()
-    targets: "list[pd.Series]" = []
-    name_pnl: "dict[str, float]" = {}
-    out = []
-    traded = 0
-    for d in days:
-        if d not in sig.index:
+    targets: list[pd.Series] = []
+    for i, d in enumerate(days):
+        if i % cfg.cadence or d not in sig.index:
             continue
-        rebalance = traded % cfg.cadence == 0
-        if rebalance:
-            w_tgt = leg_weights(sig.loc[d], cfg.q_frac, cfg.weighting,
-                                cfg.buffer, held_long, held_short)
-            if len(w_tgt) == 0:
-                continue
-            if tilt is not None:
-                w_tgt = _renorm_legs(tilt(d, w_tgt))
-            held_long = set(w_tgt.index[w_tgt > 0])
-            held_short = set(w_tgt.index[w_tgt < 0])
-            targets.append(w_tgt)
-            if len(targets) > cfg.smooth:
-                targets.pop(0)
-            w = pd.concat(targets, axis=1).fillna(0.0).mean(axis=1)
-        else:
-            if len(prev_w) == 0:
-                continue
-            w = prev_w
-        traded += 1
-        r_row = ret.loc[d].reindex(w.index)
-        contrib = (w * r_row).fillna(0.0)
-        gross = float(contrib.sum())
-        for sym, v in contrib[contrib != 0].items():
-            name_pnl[sym] = name_pnl.get(sym, 0.0) + float(v)
-        if rebalance:
-            both = w.index.union(prev_w.index)
-            turn = float((w.reindex(both, fill_value=0.0)
-                          - prev_w.reindex(both, fill_value=0.0)).abs().sum())
-        else:
-            turn = 0.0
-        cost = cfg.taker_bp / 1e4 * turn
-        carry = 0.0
-        if fund_daily is not None and d in fund_daily.index:
-            f = fund_daily.loc[d].reindex(w.index).fillna(0.0)
-            carry = float(-(w * f).sum())
-        out.append({"date": d, "gross": gross, "net": gross - cost + carry,
-                    "turnover": turn, "cost": cost, "carry": carry})
-        prev_w = w
-    df = pd.DataFrame(out).set_index("date")
+        w_tgt = leg_weights(sig.loc[d], cfg.q_frac, cfg.weighting,
+                            cfg.buffer, held_long, held_short)
+        if len(w_tgt) == 0:
+            continue  # No new instruction: contracts still mark on this date.
+        if tilt is not None:
+            w_tgt = _renorm_legs(tilt(d, w_tgt))
+        held_long = set(w_tgt.index[w_tgt > 0])
+        held_short = set(w_tgt.index[w_tgt < 0])
+        targets.append(w_tgt)
+        targets = targets[-cfg.smooth:]
+        target_rows.loc[d] = pd.concat(targets,axis=1).fillna(0.).mean(axis=1).reindex(columns,fill_value=0.)
+    df = run_target_book(target_rows, ret.reindex(days), funding=fund_daily,
+                         fee_rate=cfg.taker_bp/1e4)
     return {"rets": df, "sr_gross": ann_sr(df["gross"].to_numpy()),
             "sr_net": ann_sr(df["net"].to_numpy()),
             "maxdd": max_drawdown(df["net"].to_numpy()),
-            "avg_turnover": float(df["turnover"].mean()),
+            "avg_turnover": float(df["turnover"].mean()) if len(df) else 0.,
             "n_days": int(len(df)),
-            "name_pnl": pd.Series(name_pnl, dtype=np.float64).sort_values()}
+            "name_pnl": df.attrs['accounting_inputs'].name_pnl.sort_values()}
 
 
 def cost_stress(result: dict, mult: float = 2.0) -> pd.Series:
     """Net return series under mult x taker costs (carry unchanged)."""
     df = result["rets"]
-    return df["gross"] - mult * df["cost"] + df["carry"]
+    inputs = df.attrs.get("accounting_inputs")
+    if inputs is None:
+        raise ValueError("cost_stress_requires_executable_inputs")
+    return run_target_book(inputs.targets,inputs.returns,funding=inputs.funding,
+                           fee_rate=mult*inputs.fee_rate,capital_charge=inputs.capital_charge,
+                           daily_capital_charge=inputs.daily_capital_charge).net
 
 
 # ------------------------------------------------------------------ metrics

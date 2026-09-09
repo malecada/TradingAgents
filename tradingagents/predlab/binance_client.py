@@ -13,13 +13,15 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+import uuid
 
 
 class BinanceAPIError(Exception):
-    def __init__(self, code: int, msg: str):
+    def __init__(self, code: int, msg: str, *, execution_unknown: bool = False):
         super().__init__(f"binance error {code}: {msg}")
         self.code = code
         self.msg = msg
+        self.execution_unknown = execution_unknown
 
 
 def _fmt(x: float) -> str:
@@ -67,17 +69,18 @@ class FuturesClient:
                     return json.load(r)
             except urllib.error.HTTPError as e:
                 body = e.read().decode(errors="replace")
-                if 500 <= e.code < 600 and attempt == 1:
+                if method == "GET" and 500 <= e.code < 600 and attempt == 1:
                     time.sleep(2)
                     continue
                 try:
                     err = json.loads(body)
                     raise BinanceAPIError(err.get("code", e.code),
-                                          err.get("msg", body)) from None
+                                          err.get("msg", body),
+                                          execution_unknown=(method != "GET" and (e.code >= 500 or err.get("code") in (-1000, -1001, -1006, -1007)))) from None
                 except (ValueError, AttributeError, TypeError):
-                    raise BinanceAPIError(e.code, body) from None
-            except urllib.error.URLError:
-                if attempt == 1:
+                    raise BinanceAPIError(e.code, body, execution_unknown=method != "GET" and e.code >= 500) from None
+            except (urllib.error.URLError, TimeoutError, ConnectionError):
+                if method == "GET" and attempt == 1:
                     time.sleep(2)
                     continue
                 raise
@@ -108,15 +111,29 @@ class FuturesClient:
         """
         r = self._http("GET", "/fapi/v1/positionSide/dual", {}, signed=True)
         v = r.get("dualSidePosition")
-        return v.lower() == "true" if isinstance(v, str) else bool(v)
+        if isinstance(v, bool):
+            return v
+        if isinstance(v, str) and v.lower() in ("true", "false"):
+            return v.lower() == "true"
+        raise ValueError("position mode unavailable or invalid")
 
     def market_order(self, symbol: str, side: str, qty: float,
-                     reduce_only: bool) -> dict:
+                     reduce_only: bool, client_order_id: str | None = None) -> dict:
         params = {"symbol": symbol, "side": side, "type": "MARKET",
-                  "quantity": _fmt(qty), "newOrderRespType": "RESULT"}
+                  "quantity": _fmt(qty), "newOrderRespType": "RESULT",
+                  "newClientOrderId": client_order_id or "s1-" + uuid.uuid4().hex}
         if reduce_only:
             params["reduceOnly"] = "true"
         return self._http("POST", "/fapi/v1/order", params, signed=True)
+
+    def order_status(self, symbol: str, client_order_id: str) -> dict:
+        """Lookup even completed orders by the persisted client intent ID."""
+        return self._http("GET", "/fapi/v1/order",
+                          {"symbol": symbol, "origClientOrderId": client_order_id}, signed=True)
+
+    def book_ticker(self) -> list[dict]:
+        """Best bid/ask with exchange event time; missing time is not fresh."""
+        return self._http("GET", "/fapi/v1/ticker/bookTicker", {}, signed=False)
 
     def user_trades(self, symbol: str, order_id: int) -> "list[dict]":
         return self._http("GET", "/fapi/v1/userTrades",

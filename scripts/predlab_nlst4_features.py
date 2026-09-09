@@ -36,8 +36,8 @@ f2.rpc = rpc_pool.rpc         # nlst2's bound name (eth_call / getTransactionCou
 from predlab_nlst_dex_p0 import eth_usd_series, load_anchors, pool_event  # noqa: E402
 
 NL = ROOT / "data" / "predlab" / "nlst"
-EVENTS4 = NL / "nlst4_events.parquet"
-FEATS4 = NL / "nlst4_features.parquet"
+EVENTS4 = NL / "nlst4_events_causal_v2.parquet"
+FEATS4 = NL / "nlst4_features_causal_v2.parquet"
 DAY = 86_400
 NEW_FROM = 180   # KEEP index (0-based) at which the nlst4 evaluation set starts
 
@@ -101,6 +101,7 @@ def main() -> None:
         sm_entries.append({**base, "buyers": buyers})
         dep_entries.append({**base, "deployer": raw2.get("deployer")})
         rows3.append({"pair": pair, "quarter": meta["quarter"],
+                      "decision_ts": t_create + DAY, "available_ts": t_create + DAY,
                       "ownership_renounced": float(f3.fetch_ownership(meta, raw2["b24"])),
                       **f3.flow_features(logs, meta["weth_is_0"], meta.get("first_weth_reserve"), b12, raw2["b24"])})
         if i % 100 == 0:

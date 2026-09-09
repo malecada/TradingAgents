@@ -1,0 +1,53 @@
+............................................................FF.......... [ 62%]
+............................................                             [100%]
+=================================== FAILURES ===================================
+____________ test_frozen_residual_retries_after_paper_quote_expires ____________
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-22', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x703122ced8b0>
+
+    def test_frozen_residual_retries_after_paper_quote_expires(live, monkeypatch):
+        from datetime import timedelta
+        mod,_=live
+        c=Exchange(reject={'BBBUSDT'})
+        assert 'incomplete' in mod.run(c,False)
+        later=NOW+timedelta(minutes=11)
+        class Later(datetime):
+            @classmethod
+            def now(cls,tz=None): return later
+        monkeypatch.setattr(mod,'datetime',Later)
+        c.quote_time=int(later.timestamp()*1000)
+        c.reject.clear()
+>       assert mod.run(c,False).startswith('done')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x703122d1a420>('done')
+E        +    where <built-in method startswith of str object at 0x703122d1a420> = 'WAIT: stale or future champion marks'.startswith
+E        +      where 'WAIT: stale or future champion marks' = <function _locked.<locals>.wrapped at 0x703122d34220>(<predlab.test_execution_repair.Exchange object at 0x703122f63d10>, False)
+E        +        where <function _locked.<locals>.wrapped at 0x703122d34220> = <module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>.run
+
+tests/predlab/test_execution_repair.py:235: AssertionError
+__ test_partial_cancel_is_counted_and_cumulative_snapshots_not_double_counted __
+
+live = (<module 'predlab_s1_live' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_s1_live.py'>, {'journal_version': 2, 'asof': '2026-08-22', 'trade_day': '2026-08-23', 'vt15_b100_scale': 1.0, ...})
+
+    def test_partial_cancel_is_counted_and_cumulative_snapshots_not_double_counted(live):
+        mod,_=live
+        class Commissions(Exchange):
+            def user_trades(self,*args):
+                return [{'commissionAsset':'USDT','commission':'0.01','qty':'1'}]
+        c=Commissions()
+        one={'asof':'2026-08-22','symbol':'AAAUSDT','side':'BUY','qty':2.,'reduce_only':False,'client_order_id':'first'}
+        response={'orderId':1,'status':'PARTIALLY_FILLED','executedQty':'1','avgPrice':'2','cumQuote':'2'}
+        mod._observe(c,one,response)
+        mod._observe(c,one,dict(response,status='CANCELED'))
+        mod._observe(c,dict(one,client_order_id='second'),dict(response,status='FILLED',orderId=2))
+        mod.compare()
+        report=json.loads((mod.LDIR/'compare_report.json').read_text())
+>       assert report['n_fills']==2
+E       assert 1 == 2
+
+tests/predlab/test_execution_repair.py:252: AssertionError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_execution_repair.py::test_frozen_residual_retries_after_paper_quote_expires
+FAILED tests/predlab/test_execution_repair.py::test_partial_cancel_is_counted_and_cumulative_snapshots_not_double_counted
+2 failed, 114 passed in 2.89s

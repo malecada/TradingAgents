@@ -10,6 +10,7 @@ from tradingagents.dataflows import sentiment_store, crypto_sentiment_pit, fng_s
 
 def _row(ts, article_id, symbols="BTCUSD", headline="H", content="body"):
     return {
+        "availability_basis": "observed",
         "event_ts": ts, "as_of_ts": ts, "id": article_id,
         "headline": headline, "content": content, "summary": "",
         "symbols": symbols, "source": "Benzinga", "author": "", "url": "",
@@ -43,7 +44,8 @@ def test_get_crypto_news_pit_respects_pit_cutoff(tmp_path, monkeypatch):
     rows = pd.DataFrame([
         _row(datetime(2024, 1, 10, tzinfo=timezone.utc), 1, headline="visible"),
         {
-            "event_ts": datetime(2024, 1, 12, tzinfo=timezone.utc),
+            "availability_basis": "observed",
+        "event_ts": datetime(2024, 1, 12, tzinfo=timezone.utc),
             "as_of_ts": datetime(2024, 3, 1, tzinfo=timezone.utc),
             "id": 2, "headline": "leaked future", "content": "",
             "summary": "", "symbols": "BTCUSD", "source": "x", "author": "", "url": "",

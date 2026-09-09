@@ -1,0 +1,21 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_cost_stress_replays_fee_changed_nav_with_held_contracts _________
+
+    def test_cost_stress_replays_fee_changed_nav_with_held_contracts():
+        ix,cols,sig,ret,uni = panels()
+        ret.loc[ix[1]:,cols[0]] = .1
+        result = opt.run_ls(sig,ret,uni,None,opt.OptConfig(cadence=3,taker_bp=100.),
+                            '2024-01-01','2024-01-03')
+        # Initial fees .04 under 2x costs; same initial units gain .035 thereafter.
+>       assert (1+opt.cost_stress(result,2.)).prod() == pytest.approx(.995)
+E       assert np.float64(0.9942857142857142) == 0.995 ± 1.0e-06
+E         
+E         comparison failed
+E         Obtained: 0.9942857142857142
+E         Expected: 0.995 ± 1.0e-06
+
+tests/test_accounting_audit.py:256: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_accounting_audit.py::test_cost_stress_replays_fee_changed_nav_with_held_contracts
+1 failed, 29 deselected in 1.83s

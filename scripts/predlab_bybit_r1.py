@@ -187,9 +187,8 @@ def run() -> None:
     net = base["net"]
     sh = net.rolling(20).std().shift(1) * np.sqrt(ANN_DAYS)
     scale = (0.15 / sh).clip(0.0, 2.0).fillna(0.0).where(breadth >= 100, 0.0)
-    cost = TAKER_BP / 1e4 * (scale * base["turnover"]
-                             + scale.diff().abs().fillna(0.0) * 2.0)
-    ovl = scale * net - cost
+    from tradingagents.accounting import scaled_overlay
+    ovl = scaled_overlay(base, scale, fee_rate=TAKER_BP/1e4)
     ovl_sr = ann_sr(ovl.to_numpy())
 
     def shifted_sr(shifted_sig) -> float:

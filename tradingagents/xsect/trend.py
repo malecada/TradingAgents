@@ -8,6 +8,8 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
+from tradingagents.accounting import calendar_index, run_target_book
+
 from tradingagents.xsect.trend_signal import compute_votes
 
 ANN = 365.0
@@ -42,12 +44,12 @@ def build_matrices(klines: dict, symbols: list, with_simple: bool = False) -> tu
     SIGMA: rolling(30, min_periods=30).std() of R on the full daily calendar,
     so any missing day inside the window yields NaN (gapless house convention).
     """
-    all_days = pd.DatetimeIndex(sorted(set().union(*[klines[s].index for s in symbols])))
+    all_days = calendar_index(pd.DatetimeIndex(sorted(set().union(*[klines[s].index for s in symbols]))))
     R = pd.DataFrame(index=all_days, columns=symbols, dtype=float)
     VOTES = pd.DataFrame(index=all_days, columns=symbols, dtype=float)
     for s in symbols:
         close = klines[s]["close"]
-        R[s] = np.log(close).diff().reindex(all_days)
+        R[s] = np.log(close.reindex(all_days)).diff()
         VOTES[s] = compute_votes(close).reindex(all_days)
     SIGMA = R.rolling(VOL_WINDOW, min_periods=VOL_WINDOW).std()
     if with_simple:
@@ -83,14 +85,10 @@ def ew_benchmark_weights(all_days, R, members_by_refresh, n_slots: int) -> pd.Da
 def run_daily_portfolio(W: pd.DataFrame, R: pd.DataFrame, cost_bps: float = 10.0) -> pd.Series:
     if not W.index.equals(R.index) or list(W.columns) != list(R.columns):
         raise ValueError("W and R must share identical index and columns")
-    Wv = W.to_numpy()
-    Rv = np.nan_to_num(R.to_numpy(), nan=0.0)
-    Wprev = np.vstack([np.zeros((1, Wv.shape[1])), Wv[:-1]])       # W[t-1]
-    Wprev2 = np.vstack([np.zeros((2, Wv.shape[1])), Wv[:-2]])      # W[t-2]
-    gross = (Wprev * Rv).sum(axis=1)
-    cost = cost_bps / 1e4 * np.abs(Wprev - Wprev2).sum(axis=1)
-    port = pd.Series(gross - cost, index=W.index)
-    return port.iloc[1:]
+    clock = calendar_index(R.index)
+    targets = W.reindex(clock).shift(1)
+    result = run_target_book(targets, R.reindex(clock), fee_rate=cost_bps/1e4)
+    return result.net.iloc[1:]
 
 
 def circular_shift_weights(W: pd.DataFrame, rng: np.random.Generator,
@@ -103,7 +101,9 @@ def circular_shift_weights(W: pd.DataFrame, rng: np.random.Generator,
     for col in W.columns:
         k = int(rng.integers(min_shift, n - min_shift))
         out[col] = np.roll(W[col].to_numpy(), k)
-    return pd.DataFrame(out, index=W.index, columns=W.columns)
+    shifted = pd.DataFrame(out, index=W.index, columns=W.columns)
+    shifted.attrs.update(W.attrs)
+    return shifted
 
 
 def shared_shift_weights(W: pd.DataFrame, rng: np.random.Generator,
@@ -113,8 +113,9 @@ def shared_shift_weights(W: pd.DataFrame, rng: np.random.Generator,
     Second placebo family per amended spec (gate = worse of both p's)."""
     n = len(W)
     k = int(rng.integers(min_shift, n - min_shift))
-    return pd.DataFrame(np.roll(W.to_numpy(), k, axis=0), index=W.index,
-                        columns=W.columns)
+    shifted = pd.DataFrame(np.roll(W.to_numpy(), k, axis=0), index=W.index, columns=W.columns)
+    shifted.attrs.update(W.attrs)
+    return shifted
 
 
 def placebo_srs(W: pd.DataFrame, R: pd.DataFrame, n_placebo: int,

@@ -190,6 +190,10 @@ def run_tier1_t3_24h(gates_key: str) -> None:
         cell = {
             "cell": c["cell"], "target": "T3_rv", "horizon_bars": 1,
             "strong_baseline": "har_levels", "loss": "qlike",
+            # HARQ adds a quarticity interaction to this exact levels design.
+            # CW is a squared-error test; it cannot license QLIKE inference.
+            "nested_models": {"harq": "har_levels"},
+            "registered_nested_test": entry.get("tests", {}).get("nested"),
             "min_train": proto["min_train"]["24h"], "step": 1,
             "refit_every": refit, "embargo": 0,
             "eval_start": entry["dev_window"][0],
@@ -285,6 +289,8 @@ def run_tier1_1h(gates_key: str) -> None:
             "cell": c["cell"], "target": tgt, "horizon_bars": 1,
             "strong_baseline": c["strong_baseline"] if tgt not in ("T3_rv", "T4_vol")
             else ("har_levels" if tgt == "T3_rv" else "seasonal_naive_m24"),
+            "nested_models": {"harq": "har_levels"} if tgt == "T3_rv" else {},
+            "registered_nested_test": entry.get("tests", {}).get("nested"),
             "loss": proto["loss"][tgt.split("_")[0]],
             "min_train": proto["min_train"]["1h"], "step": 1,
             "refit_every": refit_cell, "embargo": 0, "mase_m": 24,
@@ -331,6 +337,8 @@ def run_tier1_7d(gates_key: str) -> None:
             "cell": c["cell"], "target": tgt, "horizon_bars": 7,
             "strong_baseline": c["strong_baseline"] if tgt not in ("T3_rv",)
             else "har_levels",
+            "nested_models": {"harq": "har_levels"} if tgt == "T3_rv" else {},
+            "registered_nested_test": entry.get("tests", {}).get("nested"),
             "loss": proto["loss"][tgt.split("_")[0]],
             "min_train": proto["min_train"]["7d"], "step": 1,
             "refit_every": 5, "embargo": 0, "mase_m": 1,
@@ -425,6 +433,8 @@ def run_tier2_t3t4(gates_key: str, pattern: str) -> None:
         cell = {
             "cell": c["cell"], "target": tgt, "horizon_bars": 1,
             "strong_baseline": base_name, "loss": loss, "mase_m": mase_m,
+            "nested_models": {"harq": "har_levels"} if tgt == "T3_rv" and sym == "BTCUSDT" else {},
+            "registered_nested_test": entry.get("tests", {}).get("nested"),
             "min_train": proto["min_train"][hz], "step": 1,
             "refit_every": refit, "embargo": 0,
             "eval_start": c["eval_start"],

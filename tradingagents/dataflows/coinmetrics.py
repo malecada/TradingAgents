@@ -10,8 +10,8 @@ Supported community metrics (verified 2026-04):
 Not in community tier: CapRealUSD, NVTAdj, SOPR, TxTfrValAdjUSD.
 
 Flow* metrics carry a `-status: flash` flag indicating up-to-~3mo revision
-window. Callers needing PIT correctness must apply a wider as_of_ts lag
-for flow metrics (see :data:`FLASH_METRICS`).
+window. Historical values are not strict PIT without a preserved contemporaneous
+vintage; this client timestamps new snapshots at actual retrieval.
 """
 from __future__ import annotations
 
@@ -152,14 +152,17 @@ def normalize_rows(
     metrics: Iterable[str],
     ingest_lag_days_stable: int = 1,
     ingest_lag_days_flash: int = 7,
+    retrieved_at=None,
 ) -> pd.DataFrame:
     """Convert raw CM rows into long-format bitemporal frame.
 
     Columns: event_ts, as_of_ts, coin, metric, value, source, status.
 
-    as_of_ts = event_ts + lag. Flash metrics (flow) get a wider lag to
-    respect the ~3-month revision window conservatively.
+    as_of_ts is the actual retrieval time for this returned version. Legacy
+    ingest_lag arguments are retained for call compatibility but never backdate
+    availability; no assumed delay reconstructs a historical vintage.
     """
+    seen = pd.to_datetime(retrieved_at, utc=True) if retrieved_at is not None else pd.Timestamp.now(tz="UTC")
     records: list[dict] = []
     metric_list = list(metrics)
     for row in rows:
@@ -177,14 +180,13 @@ def normalize_rows(
             except (TypeError, ValueError):
                 continue
             status = row.get(f"{m}-status", "final")
-            lag_days = (
-                ingest_lag_days_flash
-                if (m in FLASH_METRICS or status == "flash")
-                else ingest_lag_days_stable
-            )
-            as_of_ts = event_ts + pd.Timedelta(days=lag_days)
+            if event_ts > seen:
+                raise ValueError("metric event timestamp is later than retrieval")
+            as_of_ts = seen
             records.append({
                 "event_ts": event_ts,
+                "availability_basis": "retrieved_snapshot",
+                "retrieved_at": seen, "source_updated_at": pd.NaT,
                 "as_of_ts": as_of_ts.to_pydatetime() if isinstance(as_of_ts, pd.Timestamp) else as_of_ts,
                 "coin": asset.lower(),
                 "metric": m,
@@ -194,7 +196,8 @@ def normalize_rows(
             })
     return pd.DataFrame.from_records(
         records,
-        columns=["event_ts", "as_of_ts", "coin", "metric", "value", "source", "status"],
+        columns=["event_ts", "as_of_ts", "coin", "metric", "value", "source", "status",
+                 "availability_basis", "retrieved_at", "source_updated_at"],
     )
 
 

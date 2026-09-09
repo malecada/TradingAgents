@@ -25,6 +25,9 @@ from typing import Iterable, Optional
 import duckdb
 import pandas as pd
 
+from .vintages import (with_availability, merge_vintages, write_preserving_vintage,
+                       parquet_view, require_known_availability)
+
 _DATA_ROOT_ENV = _os.environ.get("TRADINGAGENTS_DATA_ROOT", "data")
 DEFAULT_ROOT = Path(_DATA_ROOT_ENV) / "onchain"
 
@@ -50,7 +53,7 @@ def upsert_rows(df: pd.DataFrame, root: Path = DEFAULT_ROOT) -> int:
     missing = set(SCHEMA_COLS) - set(df.columns)
     if missing:
         raise ValueError(f"upsert missing columns: {sorted(missing)}")
-    df = df[SCHEMA_COLS].copy()
+    df = with_availability(df)
     df["event_ts"] = pd.to_datetime(df["event_ts"], utc=True)
     df["as_of_ts"] = pd.to_datetime(df["as_of_ts"], utc=True)
     df["_year"] = df["event_ts"].dt.year
@@ -58,15 +61,10 @@ def upsert_rows(df: pd.DataFrame, root: Path = DEFAULT_ROOT) -> int:
     total_written = 0
     for (year, month), chunk in df.groupby(["_year", "_month"], sort=False):
         target = _month_path(root, int(year), int(month))
-        target.parent.mkdir(parents=True, exist_ok=True)
-        body = chunk[SCHEMA_COLS]
-        if target.exists():
-            existing = pd.read_parquet(target)
-            combined = pd.concat([existing, body], ignore_index=True)
-        else:
-            combined = body
-        combined = combined.drop_duplicates(subset=DEDUPE_KEYS, keep="last")
-        combined.to_parquet(target, index=False)
+        body = chunk.drop(columns=["_year", "_month"])
+        existing = pd.read_parquet(target) if target.exists() else body.iloc[:0]
+        combined = merge_vintages(existing, body, DEDUPE_KEYS)
+        write_preserving_vintage(combined, target)
         total_written += len(combined)
     return total_written
 
@@ -78,22 +76,25 @@ def query_metrics(
     as_of: datetime,
     metrics: Optional[Iterable[str]] = None,
     root: Path = DEFAULT_ROOT,
+    strict_pit: bool = True,
+    all_vintages: bool = False,
 ) -> pd.DataFrame:
     """Return rows where event_ts in [ts_start, ts_end] AND as_of_ts <= as_of,
     filtered to the given coin. Enforces the PIT rule.
 
     If `metrics` is None, returns every metric available for the coin.
-    Output is long-format. Pivot downstream if a wide DataFrame is needed.
+    Output is the latest eligible vintage per event/coin/metric/source.
+    all_vintages=True exposes preserved history for explicit diagnostics.
     """
     glob = f"{root}/*/*.parquet"
     con = duckdb.connect(":memory:")
     try:
         try:
-            con.execute(f"CREATE VIEW onchain AS SELECT * FROM read_parquet('{glob}')")
+            parquet_view(con, "onchain", glob)
         except duckdb.IOException:
             return pd.DataFrame(columns=SCHEMA_COLS)
         sql = """
-        SELECT event_ts, as_of_ts, coin, metric, value, source, status
+        SELECT event_ts, as_of_ts, coin, metric, value, source, status, availability_basis
         FROM onchain
         WHERE coin = ?
           AND event_ts BETWEEN ? AND ?
@@ -105,8 +106,11 @@ def query_metrics(
             placeholders = ",".join(["?"] * len(metric_list))
             sql += f" AND metric IN ({placeholders})"
             args.extend(metric_list)
+        if not all_vintages:
+            sql += (" QUALIFY ROW_NUMBER() OVER (PARTITION BY event_ts, coin, metric, source "
+                    "ORDER BY as_of_ts DESC) = 1")
         sql += " ORDER BY event_ts ASC, metric ASC"
-        return con.execute(sql, args).fetchdf()
+        return require_known_availability(con.execute(sql, args).fetchdf(), strict_pit)
     finally:
         con.close()
 
@@ -116,6 +120,7 @@ def latest_snapshot(
     as_of: datetime,
     metrics: Optional[Iterable[str]] = None,
     root: Path = DEFAULT_ROOT,
+    strict_pit: bool = True,
 ) -> pd.DataFrame:
     """Return the most recent PIT-valid row per metric for `coin` as of `as_of`.
 
@@ -125,7 +130,7 @@ def latest_snapshot(
     con = duckdb.connect(":memory:")
     try:
         try:
-            con.execute(f"CREATE VIEW onchain AS SELECT * FROM read_parquet('{glob}')")
+            parquet_view(con, "onchain", glob)
         except duckdb.IOException:
             return pd.DataFrame(columns=["metric", "event_ts", "value", "source", "status"])
         sql = """
@@ -142,7 +147,7 @@ def latest_snapshot(
                    ) AS rk
             FROM filtered
         )
-        SELECT metric, event_ts, value, source, status
+        SELECT metric, event_ts, value, source, status, availability_basis
         FROM ranked
         WHERE rk = 1
         """
@@ -153,6 +158,6 @@ def latest_snapshot(
             sql += f" AND metric IN ({placeholders})"
             args.extend(metric_list)
         sql += " ORDER BY metric ASC"
-        return con.execute(sql, args).fetchdf()
+        return require_known_availability(con.execute(sql, args).fetchdf(), strict_pit)
     finally:
         con.close()

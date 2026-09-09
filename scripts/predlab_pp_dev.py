@@ -125,7 +125,7 @@ def run_s2_dev():
     harq = _load_fc("predlab_p2_ml/BTCUSDT_24h_T3_rv", "harq")["pred"]
     har = _load_fc("predlab_p2_ml/BTCUSDT_24h_T3_rv", "har_levels")["pred"]
     naive = store["rv"].rolling(20).mean().shift(1)
-    ret = store["ret"]
+    ret = np.expm1(store["ret"])  # RV store retains log targets; trading PnL is simple.
     lo, hi = pd.Timestamp(DEV[0], tz="UTC"), pd.Timestamp(DEV[1], tz="UTC")
     rows = {}
     for name, fc in (("harq", harq), ("har_levels", har), ("naive20", naive)):
@@ -160,7 +160,7 @@ def run_s2_dev():
 def run_s3_dev():
     fc = _load_fc("predlab_p2_ml/BTCUSDT_1h_T2_dir", "logit_lags5")
     store = pd.read_parquet(DATA_ROOT / "predlab" / "rv_1h" / "BTCUSDT.parquet")
-    ret = store["ret"]
+    ret = np.expm1(store["ret"])  # RV store retains log targets; trading PnL is simple.
     lo, hi = pd.Timestamp(DEV[0], tz="UTC"), pd.Timestamp(DEV[1], tz="UTC")
     prob = fc["pred"][(fc.index >= lo) & (fc.index <= hi)]
     rows = {}

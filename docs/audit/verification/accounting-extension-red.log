@@ -1,0 +1,254 @@
+.....................FFFFFF                                              [100%]
+=================================== FAILURES ===================================
+__________ test_overlay_executes_scaled_contracts_and_actual_turnover __________
+
+    def test_overlay_executes_scaled_contracts_and_actual_turnover():
+        from tradingagents.accounting import run_target_book
+        ix = pd.date_range('2024-01-01',periods=3,tz='UTC')
+        base = run_target_book(pd.DataFrame({'A':1.},index=ix),
+                              pd.DataFrame({'A':[.1,0.,0.]},index=ix),fee_rate=.01)
+        # Volatility target tuned to obtain half exposure at final timestamp.
+        # The shared helper is the production boundary used by all four scripts.
+>       from tradingagents.accounting import scaled_overlay
+E       ImportError: cannot import name 'scaled_overlay' from 'tradingagents.accounting' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/accounting.py)
+
+tests/test_accounting_audit.py:186: ImportError
+___________ test_thin_ls_keeps_unavailable_signal_day_and_held_loss ____________
+
+    def test_thin_ls_keeps_unavailable_signal_day_and_held_loss():
+>       ns = load_functions('scripts/predlab_xfam_lib.py', {'thin_ls_backtest'},dict(pd=pd,np=np))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_accounting_audit.py:194: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_accounting_audit.py:29: in load_functions
+    exec(compile(ast.Module(body=body, type_ignores=[]), path, 'exec'), ns)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """Shared library for the xfam five-family hunt.
+    
+    Charter: docs/superpowers/specs/2026-08-25-xfam-hunt-charter.md
+    Gates key: predlab_xfam (registered 2026-08-25, pre-result).
+    
+    All position PnL uses simple returns (house rule). Novel engines here
+    (thin-panel LS, pair z-MR) are unit-tested in tests/predlab/test_xfam_lib.py
+    before first registered use.
+    """
+    
+    from __future__ import annotations
+    
+    import hashlib
+    import json
+    import subprocess
+    from datetime import datetime, timezone
+    from math import erf, sqrt
+    from pathlib import Path
+    
+    import numpy as np
+    import pandas as pd
+    
+    ROOT = Path(__file__).resolve().parents[1]
+    MAIN_WT = ROOT.parent / "TradingAgents"  # read-only stores (1h, coinglass)
+    OUT_DIR = ROOT / "data" / "predlab" / "xfam"
+    LEDGER = ROOT / "data" / "predlab" / "trial_ledger.jsonl"
+    
+    DEV = ("2021-01-01", "2025-03-31")
+    HOLDOUT = ("2025-04-01", "2026-07-01")
+    TAKER_BP = 5.0
+    ANN_DAYS = 365.0
+    
+    # ------------------------------------------------------------------ stats
+    
+    
+    def nw_tstat(x: np.ndarray, lag: int) -> tuple[float, float, float]:
+        """Mean, NW/Bartlett HAC t-stat, two-sided normal p for mean(x) != 0."""
+        x = np.asarray(x, dtype=np.float64)
+        x = x[~np.isnan(x)]
+        n = len(x)
+        if n < 10:
+            return np.nan, np.nan, np.nan
+        m = x.mean()
+        xc = x - m
+        var = float(xc @ xc) / n
+        for j in range(1, min(lag, n - 1) + 1):
+            w = 1.0 - j / (lag + 1.0)
+            var += 2.0 * w * float(xc[j:] @ xc[:-j]) / n
+        if var <= 0:
+            return m, 0.0, 1.0
+        t = m / np.sqrt(var / n)
+        p = 2.0 * (1.0 - 0.5 * (1.0 + erf(abs(t) / sqrt(2.0))))
+        return float(m), float(t), float(p)
+    
+    
+    def bh_fdr(pvals: dict[str, float], q: float = 0.10) -> set[str]:
+        """Benjamini-Hochberg: returns the set of keys rejected at level q."""
+        from tradingagents.predlab.rollup import bh_fdr as shared_bh
+        return {k for k, passed in shared_bh(pvals, q).items() if passed}
+    
+    
+    def year_sign_consistency(series: pd.Series, years=(2021, 2022, 2023, 2024)) -> dict:
+        """Per-year mean and how many of the listed years share the overall sign."""
+        overall = np.sign(series.mean())
+        per_year, agree = {}, 0
+        for y in years:
+            sub = series[series.index.year == y]
+            m = float(sub.mean()) if len(sub) else np.nan
+            per_year[str(y)] = m
+            if not np.isnan(m) and np.sign(m) == overall:
+                agree += 1
+        return {"per_year": per_year, "n_agree": agree, "overall_sign": float(overall)}
+    
+    
+    def ann_sr(rets: np.ndarray, periods_per_year: float = ANN_DAYS) -> float:
+        r = np.asarray(rets, dtype=np.float64)
+        r = r[~np.isnan(r)]
+        if len(r) == 0 or r.std(ddof=1) == 0:
+            return 0.0  # house rule: SR:=0 on zero variance
+        return float(r.mean() / r.std(ddof=1) * np.sqrt(periods_per_year))
+    
+    
+    def circular_shift_placebo(run_fn, sig, n_draws: int = 200, min_shift: int = 30,
+                               seed: int = 7) -> list[float]:
+        """Null SRs from circularly shifting the signal object (Series or DataFrame)."""
+        rng = np.random.default_rng(seed)
+        n = len(sig)
+        out = []
+        for _ in range(n_draws):
+            k = int(rng.integers(min_shift, n - min_shift))
+            shifted = sig.copy()
+            shifted.iloc[:] = np.roll(np.asarray(sig), k, axis=0)
+            out.append(run_fn(shifted))
+        return out
+    
+    
+    def placebo_pvalue(real_sr: float, null_srs: list[float]) -> float:
+        null = np.asarray(null_srs, dtype=np.float64)
+        return float((np.sum(np.abs(null) >= abs(real_sr)) + 1) / (len(null) + 1))
+    
+    
+    # ------------------------------------------------------------------ data
+    
+    
+    def load_daily_panels() -> dict[str, pd.DataFrame]:
+        import sys
+    
+        sys.path.insert(0, str(ROOT / "scripts"))
+        from predlab_t7 import build_panels
+    
+        return build_panels()
+    
+    
+    def load_1h_panels(rebuild: bool = False) -> dict[str, pd.DataFrame]:
+        """close + qv 1h panels from the main worktree's 333-sym store (read-only),
+        cached to this worktree."""
+        cache = OUT_DIR / "cache_1h"
+        cache.mkdir(parents=True, exist_ok=True)
+        names = ["close", "qv"]
+        if not rebuild and all((cache / f"{n}.parquet").exists() for n in names):
+            return {n: pd.read_parquet(cache / f"{n}.parquet") for n in names}
+        closes, qvs = {}, {}
+        for path in sorted((MAIN_WT / "data" / "xsect" / "klines_1h").glob("*.parquet")):
+            df = pd.read_parquet(path)
+            closes[path.stem] = df["close"]
+            qvs[path.stem] = df["quote_volume"]
+        panels = {"close": pd.DataFrame(closes), "qv": pd.DataFrame(qvs)}
+        for n, p in panels.items():
+            p.to_parquet(cache / f"{n}.parquet")
+        return panels
+    
+    
+    def load_coinglass_ls() -> dict[str, pd.DataFrame]:
+        """8-sym daily panels: ls_global ratio, ls_top_position ratio."""
+        d = MAIN_WT / "data" / "derivatives_raw"
+        out = {}
+        for kind, col in [
+            ("ls_global", "ls_global_global_account_long_short_ratio"),
+            ("ls_top_position", "ls_top_position_top_position_long_short_ratio"),
+        ]:
+            cols = {}
+            for path in sorted(d.glob(f"*_cg_{kind}.parquet")):
+                sym = path.name.split("_cg_")[0]
+                cols[sym] = pd.read_parquet(path)[col]
+            out[kind] = pd.DataFrame(cols)
+        return out
+    
+    
+    def clip_dev(obj, end: str = DEV[1]):
+        hi = pd.Timestamp(end, tz="UTC")
+        return obj[obj.index <= hi]
+    
+    
+    # ------------------------------------------------------------------ engines
+    
+    
+    def thin_ls_backtest(sig: pd.DataFrame, ret: pd.DataFrame, n_leg: int = 2,
+>                        taker_bp: float = TAKER_BP,
+                                           ^^^^^^^^
+                         fund_daily: "pd.DataFrame | None" = None,
+                         min_names: int = 4) -> pd.DataFrame:
+E                        NameError: name 'TAKER_BP' is not defined
+
+scripts/predlab_xfam_lib.py:158: NameError
+________________ test_v2_short_receives_signed_positive_funding ________________
+
+    def test_v2_short_receives_signed_positive_funding():
+        equity,_ = v2_result([100.,100.],[0.,-1.],funding_rate=.01)
+>       assert equity[-1] == pytest.approx(1.01)
+E       assert np.float64(0.99) == 1.01 ± 1.0e-06
+E         
+E         comparison failed
+E         Obtained: 0.99
+E         Expected: 1.01 ± 1.0e-06
+
+tests/test_accounting_audit.py:216: AssertionError
+______________ test_v2_charges_one_fee_on_actual_notional_change _______________
+
+    def test_v2_charges_one_fee_on_actual_notional_change():
+        equity,_ = v2_result([100.,110.,110.],[0.,.5,.5],fee_rate=.01)
+        # Fee .005 + gain .05 -> NAV1.045; next target .5225 vs held .55.
+>       assert equity == pytest.approx([1.,1.045,1.044725])
+E       assert [1.0, np.floa...float64(1.04)] == approx([1.0 ±...25 ± 1.0e-06])
+E         
+E         comparison failed. Mismatched elements: 2 / 3:
+E         Max absolute difference: 0.004999999999999893
+E         Max relative difference: 0.004807692307692205
+E         Index | Obtained | Expected          
+E         1     | 1.04     | 1.045 ± 1.0e-06   
+E         2     | 1.04     | 1.044725 ± 1.0e-06
+
+tests/test_accounting_audit.py:222: AssertionError
+________________ test_v2_marks_missing_held_price_as_incomplete ________________
+
+    def test_v2_marks_missing_held_price_as_incomplete():
+>       with pytest.raises(ValueError,match='missing_held_return'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_accounting_audit.py:226: Failed
+_____ test_classic_engine_charges_entry_and_actual_drift_maintenance_once ______
+
+    def test_classic_engine_charges_entry_and_actual_drift_maintenance_once():
+        from tradingagents.backtesting.engine import run_backtest
+        from tradingagents.backtesting.strategies import FiveLevelSignal
+        result = run_backtest(pd.Series(pd.date_range('2024-01-01',periods=3)),
+            np.array([100.,110.,110.]),['OVERWEIGHT']*3,FiveLevelSignal(),
+            initial_capital=1.,fee_rate=.01,slippage=0.,short_cost=0.)
+>       assert result.equity_curve == pytest.approx([1.,1.045,1.044725])
+E       assert [1.0, np.floa...oat64(1.0296)] == approx([1.0 ±...25 ± 1.0e-06])
+E         
+E         comparison failed. Mismatched elements: 2 / 3:
+E         Max absolute difference: 0.015124999999999833
+E         Max relative difference: 0.014690170940170777
+E         Index | Obtained | Expected          
+E         1     | 1.04     | 1.045 ± 1.0e-06   
+E         2     | 1.0296   | 1.044725 ± 1.0e-06
+
+tests/test_accounting_audit.py:236: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_accounting_audit.py::test_overlay_executes_scaled_contracts_and_actual_turnover
+FAILED tests/test_accounting_audit.py::test_thin_ls_keeps_unavailable_signal_day_and_held_loss
+FAILED tests/test_accounting_audit.py::test_v2_short_receives_signed_positive_funding
+FAILED tests/test_accounting_audit.py::test_v2_charges_one_fee_on_actual_notional_change
+FAILED tests/test_accounting_audit.py::test_v2_marks_missing_held_price_as_incomplete
+FAILED tests/test_accounting_audit.py::test_classic_engine_charges_entry_and_actual_drift_maintenance_once
+6 failed, 21 passed in 2.07s

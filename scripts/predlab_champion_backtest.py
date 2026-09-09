@@ -51,9 +51,8 @@ def overlay_pp2(base: pd.DataFrame, target: float, cap: float = 2.0) -> "tuple[p
     raw_pre_cost = base["gross"] + base["carry"]
     vol = raw_pre_cost.rolling(20).std().shift(1) * np.sqrt(ANN_DAYS)
     s = (target / vol).clip(upper=cap).fillna(0.0)
-    ds = s.diff().abs().fillna(s.iloc[0] if len(s) else 0.0)
-    cost = TAKER_BP / 1e4 * (s * base["turnover"] + ds * 2.0)
-    return s * raw_pre_cost - cost, s
+    from tradingagents.accounting import scaled_overlay
+    return scaled_overlay(base,s,fee_rate=TAKER_BP/1e4), s
 
 
 def overlay_o4(base: pd.DataFrame, breadth: pd.Series, target: float,
@@ -64,8 +63,8 @@ def overlay_o4(base: pd.DataFrame, breadth: pd.Series, target: float,
     sh = net.rolling(20).std().shift(1) * np.sqrt(ANN_DAYS)
     s = (target / sh).clip(0.0, cap).fillna(0.0)
     s = s.where(breadth >= breadth_floor, 0.0)
-    cost = TAKER_BP / 1e4 * (s * base["turnover"] + s.diff().abs().fillna(0.0) * 2.0)
-    return s * net - cost, s
+    from tradingagents.accounting import scaled_overlay
+    return scaled_overlay(base, s, fee_rate=TAKER_BP/1e4), s
 
 
 def seg_metrics(net: pd.Series, lo: str, hi: str) -> dict:
@@ -141,7 +140,7 @@ def main() -> None:
         net = systems[name]["ovl"].dropna()
         eq = (1 + net).cumprod()
         ax1.plot(eq.index, eq, color=color, lw=2, label=label)
-        dd = 1 - eq / eq.cummax()
+        dd = 1 - eq / eq.cummax().clip(lower=1.0)
         ax2.plot(dd.index, -dd * 100, color=color, lw=1.5)
     ax1.set_yscale("log")
     ax1.set_ylabel("equity (log, start = 1)")

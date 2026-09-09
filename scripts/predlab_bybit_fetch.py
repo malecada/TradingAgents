@@ -18,6 +18,8 @@ Usage:  python scripts/predlab_bybit_fetch.py [--end 2026-07-01] [--limit-syms N
 from __future__ import annotations
 
 import argparse
+import hashlib
+import shutil
 import json
 import os
 import sys
@@ -66,7 +68,8 @@ def enumerate_symbols() -> "list[dict]":
             if (s["quoteCoin"] == "USDT"
                     and s.get("contractType") == "LinearPerpetual"):
                 out.append({"symbol": s["symbol"], "status": s["status"],
-                            "launchTime": int(s.get("launchTime") or 0)})
+                            "launchTime": int(s.get("launchTime") or 0),
+                            "fundingInterval": int(s.get("fundingInterval") or 0)})
         cursor = res.get("nextPageCursor") or ""
         if not cursor:
             break
@@ -124,13 +127,83 @@ def fetch_funding(symbol: str, end_ms: int) -> "pd.DataFrame | None":
     return df[~df.index.duplicated(keep="last")]
 
 
+def cache_current(kp: Path, fp: Path, end_ms: int, funding_minutes: int) -> bool:
+    """Check coverage rather than file existence; a missing schedule is unknown.
+
+    The current instrument interval is only a conservative cache-reuse check,
+    not evidence of the historical funding schedule.
+    """
+    if not kp.exists() or not fp.exists() or funding_minutes not in (60, 120, 240, 480):
+        return False
+    end = pd.Timestamp(end_ms, unit="ms", tz="UTC").floor("D")
+    if end >= pd.Timestamp.now(tz="UTC").floor("D"):
+        return False  # never treat an unfinished requested daily candle as final
+    k, f = pd.read_parquet(kp), pd.read_parquet(fp)
+    if k.empty or f.empty or not k.index.is_unique or not f.index.is_unique:
+        return False
+    k = k.sort_index(); f = f.sort_index()
+    days = pd.date_range(k.index.min().floor("D"), end, freq="D")
+    if len(days) == 0 or not days.isin(k.index).all():
+        return False
+    if not (k.reindex(days)["close"] > 0).all():
+        return False
+    # Inspect the complete requested final day, not merely its midnight print.
+    events = pd.date_range(end, end + pd.Timedelta(days=1),
+                           freq=pd.Timedelta(minutes=funding_minutes), inclusive="left")
+    return bool(events.isin(f.index).all() and f.reindex(events).fundingRate.notna().all())
+
+
+def _preserve(path: Path) -> None:
+    if not path.exists():
+        return
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    archive = STORE / "snapshots" / path.parent.name / f"{path.stem}_{digest}{path.suffix}"
+    archive.parent.mkdir(parents=True, exist_ok=True)
+    if not archive.exists():
+        shutil.copyfile(path, archive)
+
+
+def _merge_store(path: Path, incoming: pd.DataFrame | None) -> pd.DataFrame | None:
+    old = pd.read_parquet(path) if path.exists() else None
+    if incoming is None or incoming.empty:
+        return old
+    frame = pd.concat([old, incoming]) if old is not None else incoming
+    frame = frame[~frame.index.duplicated(keep="last")].sort_index()
+    if old is None or not frame.equals(old):
+        _preserve(path)
+        temp = path.with_suffix(".parquet.tmp")
+        frame.to_parquet(temp)
+        temp.replace(path)
+    return frame
+
+
+def _record_metadata(kp: Path, fp: Path) -> dict:
+    result = {}
+    for label, path in (("kline", kp), ("funding", fp)):
+        frame = pd.read_parquet(path) if path.exists() else None
+        count = 0 if frame is None else len(frame)
+        result["kline_days" if label == "kline" else "funding_prints"] = count
+        result[label + "_start"] = str(frame.index.min().date()) if count else None
+        result[label + "_end"] = str(frame.index.max().date()) if count else None
+        result[label + "_sha256"] = hashlib.sha256(path.read_bytes()).hexdigest() if path.exists() else None
+    return result
+
+
+def _write_manifest(manifest: dict) -> None:
+    path = STORE / "manifest.json"
+    _preserve(path)
+    temp = path.with_suffix(".json.tmp")
+    temp.write_text(json.dumps(manifest, indent=1))
+    temp.replace(path)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--end", default="2026-07-01",
                     help="panel end date (matches sealed Binance panels)")
     ap.add_argument("--limit-syms", type=int, default=0)
     args = ap.parse_args()
-    end_ms = int(pd.Timestamp(args.end, tz="UTC").timestamp() * 1000)
+    end_ms = int((pd.Timestamp(args.end, tz="UTC") + pd.Timedelta(days=1)).timestamp() * 1000) - 1
 
     (STORE / "klines").mkdir(parents=True, exist_ok=True)
     (STORE / "funding").mkdir(parents=True, exist_ok=True)
@@ -154,38 +227,41 @@ def main() -> None:
     if args.limit_syms:
         syms = syms[:args.limit_syms]
 
-    manifest = {"fetched_utc": datetime.now(timezone.utc).isoformat(),
-                "end": args.end, "n_enumerated": len(syms),
-                "symbols": {}}
+    manifest_path = STORE / "manifest.json"
+    manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {"symbols": {}}
+    manifest.update(checked_utc=datetime.now(timezone.utc).isoformat(), end=args.end,
+                    n_enumerated=len(syms), source=API,
+                    transformation="daily/funding history merge; immutable file snapshots; cache coverage v2")
+    manifest.setdefault("symbols", {})
     for i, s in enumerate(syms):
         sym = s["symbol"]
         kp = STORE / "klines" / f"{sym}.parquet"
         fp = STORE / "funding" / f"{sym}.parquet"
-        if kp.exists() and fp.exists():
-            manifest["symbols"][sym] = {"status": s["status"], "skipped": True}
+        previous = manifest["symbols"].get(sym, {})
+        interval = int(s.get("fundingInterval") or 0)
+        if cache_current(kp, fp, end_ms, interval):
+            manifest["symbols"][sym] = {**previous, **_record_metadata(kp, fp),
+                "status": s["status"], "skipped": True,
+                "coverage_checked_end": args.end,
+                "funding_schedule_basis": "current_instrument_interval_cache_check_only"}
             continue
         try:
-            kl = fetch_klines(sym, end_ms)
-            if kl is not None and len(kl):
-                kl.to_parquet(kp)
-            fu = fetch_funding(sym, end_ms)
-            if fu is not None and len(fu):
-                fu.to_parquet(fp)
-            manifest["symbols"][sym] = {
-                "status": s["status"],
-                "kline_days": 0 if kl is None else int(len(kl)),
-                "kline_start": None if kl is None or not len(kl)
-                else str(kl.index[0].date()),
-                "funding_prints": 0 if fu is None else int(len(fu)),
-            }
-        except Exception as e:  # record and continue — coverage probe will judge
-            manifest["symbols"][sym] = {"status": s["status"], "error": str(e)}
+            _merge_store(kp, fetch_klines(sym, end_ms))
+            _merge_store(fp, fetch_funding(sym, end_ms))
+            manifest["symbols"][sym] = {**previous, **_record_metadata(kp, fp),
+                "status": s["status"], "skipped": False, "error": None,
+                "requested_end": args.end, "retrieved_utc": datetime.now(timezone.utc).isoformat(),
+                "coverage_current": cache_current(kp, fp, end_ms, interval),
+                "funding_schedule_basis": "current_instrument_interval_cache_check_only"}
+        except Exception as e:
+            manifest["symbols"][sym] = {**previous, **_record_metadata(kp, fp),
+                                        "status": s["status"], "error": str(e), "skipped": False}
         if i % 20 == 0:
             print(f"[{i}/{len(syms)}] {sym}", flush=True)
-            (STORE / "manifest.json").write_text(json.dumps(manifest, indent=1))
+            _write_manifest(manifest)
         time.sleep(PAUSE)
 
-    (STORE / "manifest.json").write_text(json.dumps(manifest, indent=1))
+    _write_manifest(manifest)
     ok = sum(1 for v in manifest["symbols"].values() if v.get("kline_days"))
     print(f"done: {ok} symbols with klines; manifest written", flush=True)
 

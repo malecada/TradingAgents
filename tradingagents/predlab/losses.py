@@ -34,7 +34,7 @@ def qlike(var_forecast: np.ndarray, rv: np.ndarray) -> np.ndarray:
     var_forecast = np.asarray(var_forecast, dtype=np.float64)
     rv = np.asarray(rv, dtype=np.float64)
     out = np.full(np.broadcast(var_forecast, rv).shape, np.nan, dtype=np.float64)
-    ok = (var_forecast > 0) & (rv > 0)
+    ok = np.isfinite(var_forecast) & np.isfinite(rv) & (var_forecast > 0) & (rv > 0)
     r = np.divide(rv, var_forecast, out=np.ones_like(out), where=ok)
     np.subtract(r - np.log(r, out=np.zeros_like(out), where=ok), 1.0, out=out, where=ok)
     return out

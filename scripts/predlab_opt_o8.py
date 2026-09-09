@@ -61,20 +61,22 @@ def register() -> None:
 
 def overlay_book(net: pd.Series, turnover: pd.Series,
                  breadth: pd.Series) -> "tuple[pd.Series, pd.Series]":
-    """Exact O4 overlay math (sigma_hat is ALREADY annualized)."""
+    """Corrected O4 execution; legacy series inputs retain their attrs."""
     sh = sigma_hat(net, OVL["est"])
     scale = (OVL["target"] / sh).clip(0.0, OVL["cap"]).fillna(0.0)
     scale = scale.where(breadth.reindex(net.index) >= OVL["breadth_floor"], 0.0)
-    cost = 5.0 / 1e4 * (scale * turnover + scale.diff().abs().fillna(0.0) * 2.0)
-    onet = net * scale - cost
+    from tradingagents.accounting import scaled_overlay
+    base = pd.DataFrame({"net":net,"turnover":turnover})
+    base.attrs.update(net.attrs)
+    onet = scaled_overlay(base,scale,fee_rate=5./1e4)
     return onet, scale
 
 
 def stats(x: pd.Series, a: str, b: str) -> "tuple[float, float]":
     s = x.loc[a:b]
     sr = float(s.mean() / s.std() * np.sqrt(365.0)) if s.std() else 0.0
-    eq = (1 + s).cumprod()
-    return sr, float((1 - eq / eq.cummax()).max())
+    from tradingagents.predlab.pp import max_drawdown
+    return sr, max_drawdown(s.to_numpy())
 
 
 def dsr_corrected(sr_ann: float, n_days: int) -> "tuple[float, int]":
