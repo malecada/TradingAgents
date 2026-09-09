@@ -2501,5 +2501,285 @@
     },
     "output": "data/predlab/audit_correction_2026_09_09/result.json",
     "status": "registered_not_run"
+  },
+  "audit_reevaluation_2026_09_09": {
+    "registered_utc": "2026-09-09T15:46:07.804069+00:00",
+    "authorization": "User requested reevaluation of leads materially affected by applied repairs, September9. This is a new bounded correction cycle, not unrestricted strategy search.",
+    "charter": "docs/superpowers/specs/2026-09-09-lead-reevaluation.md",
+    "development_window": [
+      "2021-01-01",
+      "2025-03-31"
+    ],
+    "allow_holdout": false,
+    "source_commit_at_registration": "b1290ae24d2a72661d48d01d1025cb2e7a733fe5",
+    "families": {
+      "momentum": {
+        "original_gate": "data/rebuild/gates.json:xs_mom_p1",
+        "cells": [
+          {
+            "id": "L7_skip0_K10",
+            "L": 7,
+            "skip": 0,
+            "K": 10
+          },
+          {
+            "id": "L7_skip0_K20",
+            "L": 7,
+            "skip": 0,
+            "K": 20
+          },
+          {
+            "id": "L7_skip1_K10",
+            "L": 7,
+            "skip": 1,
+            "K": 10
+          },
+          {
+            "id": "L7_skip1_K20",
+            "L": 7,
+            "skip": 1,
+            "K": 20
+          },
+          {
+            "id": "L14_skip0_K10",
+            "L": 14,
+            "skip": 0,
+            "K": 10
+          },
+          {
+            "id": "L14_skip0_K20",
+            "L": 14,
+            "skip": 0,
+            "K": 20
+          },
+          {
+            "id": "L14_skip1_K10",
+            "L": 14,
+            "skip": 1,
+            "K": 10
+          },
+          {
+            "id": "L14_skip1_K20",
+            "L": 14,
+            "skip": 1,
+            "K": 20
+          },
+          {
+            "id": "L28_skip0_K10",
+            "L": 28,
+            "skip": 0,
+            "K": 10
+          },
+          {
+            "id": "L28_skip0_K20",
+            "L": 28,
+            "skip": 0,
+            "K": 20
+          },
+          {
+            "id": "L28_skip1_K10",
+            "L": 28,
+            "skip": 1,
+            "K": 10
+          },
+          {
+            "id": "L28_skip1_K20",
+            "L": 28,
+            "skip": 1,
+            "K": 20
+          }
+        ],
+        "cost_bps": 10,
+        "stress_cost_bps": 20,
+        "original_dsr_n": 74,
+        "primary_thresholds": {
+          "net_sr_min": 0.8,
+          "delta_sr_vs_benchmark_min": 0.0,
+          "p_pos_min": 0.85,
+          "placebo_p_max": 0.05,
+          "dsr_min": 0.9,
+          "tiebreak": "highest DSR, then lowest placebo p"
+        },
+        "benchmark": "full eligible EW universe, identical repaired weekly contract",
+        "bootstrap": {
+          "mean_block": 21,
+          "draws": 2000,
+          "seed": 0
+        },
+        "placebo": "original within-rebalance rank permutations, 500 draws, independent default_rng(p) for p=0..499; retain scored names and original ranking ties"
+      },
+      "carry": {
+        "original_gate": "data/rebuild/gates.json:carry_xs_t1",
+        "cells": [
+          {
+            "id": "L1_leg0.1",
+            "L": 1,
+            "leg_frac": 0.1
+          },
+          {
+            "id": "L1_leg0.2",
+            "L": 1,
+            "leg_frac": 0.2
+          },
+          {
+            "id": "L7_leg0.1",
+            "L": 7,
+            "leg_frac": 0.1
+          },
+          {
+            "id": "L7_leg0.2",
+            "L": 7,
+            "leg_frac": 0.2
+          },
+          {
+            "id": "L30_leg0.1",
+            "L": 30,
+            "leg_frac": 0.1
+          },
+          {
+            "id": "L30_leg0.2",
+            "L": 30,
+            "leg_frac": 0.2
+          }
+        ],
+        "cost_bps": 10,
+        "stress_cost_bps": 20,
+        "original_dsr_n": 87,
+        "primary_thresholds": {
+          "net_sr_min": 1.0,
+          "placebo_p_max": 0.05,
+          "dsr_min": 0.9,
+          "tiebreak": "highest DSR, then lowest placebo p"
+        },
+        "rf_annual": 0.045,
+        "funding": "original realized signed daily funding; absent held funding fails",
+        "placebo": "original independent and shared circular weight shifts, min30days, 500 draws each, default_rng(p), gate worse p"
+      },
+      "liq_fade": {
+        "original_gate": "data/rebuild/gates.json:liq_fade_i1",
+        "cells": [
+          {
+            "id": "thr2.5_H6",
+            "thr": 2.5,
+            "H": 6
+          },
+          {
+            "id": "thr2.5_H24",
+            "thr": 2.5,
+            "H": 24
+          },
+          {
+            "id": "thr2.5_H48",
+            "thr": 2.5,
+            "H": 48
+          },
+          {
+            "id": "thr3.5_H6",
+            "thr": 3.5,
+            "H": 6
+          },
+          {
+            "id": "thr3.5_H24",
+            "thr": 3.5,
+            "H": 24
+          },
+          {
+            "id": "thr3.5_H48",
+            "thr": 3.5,
+            "H": 48
+          }
+        ],
+        "cost_bps": 10,
+        "stress_cost_bps": 20,
+        "original_dsr_n": 100,
+        "primary_thresholds": {
+          "net_sr_min": 1,
+          "placebo_p_max": 0.05,
+          "dsr_min": 0.9
+        },
+        "rf_annual": 0.045,
+        "funding": "excluded as original registration; qualified economics",
+        "warmup_start": "2020-06-01",
+        "hourly_end": "2025-03-31T23:00:00Z",
+        "probes": {
+          "P0": "1h bars open-stamped; daily aggregation of 1h closes reconciles with daily store (corr > 0.99 on overlapping returns, BTCUSDT)",
+          "P1": "proxy triggers (thr=2.5) aggregated daily on 8 Coinglass coins must flag >= 4 of 5 benchmark cascade dates (2021-05-19, 2022-06-13, 2022-11-09, 2024-08-05, 2025-02-03); FAIL -> STOP",
+          "P2": "mean cumulative GROSS forward return t+1..t+H over all dev triggers must exceed +25 bps in at least one grid cell; FAIL -> STOP (NEGATIVE-at-probe)"
+        },
+        "placebo": "original independently shifted trigger trains (min24bars) and count-matched uniform trigger timestamps, 500 draws each, default_rng(p), worse p; rebuild event weights and audited PnL"
+      },
+      "prx": {
+        "original_gate": "data/predlab/gates.json:predlab_xfam",
+        "cells": [
+          {
+            "id": "top50_90d_persistence"
+          }
+        ],
+        "scope": "P0 only; no P1 or new trading-beta construction, ETHBTC unchanged descriptive subcell not rerun",
+        "formation": "original top50 prior90d median quote volume; at least60 paired rows; coint trend=c maxlag5 autolag=None; p<.05 and original AR1 half-life2..20; cap20 lowest p",
+        "months": [
+          "2021-01-01",
+          "2025-02-01"
+        ],
+        "n_months": 50,
+        "random_seed": 42,
+        "random_pairs": "original random ordered pairs and retry algorithm, max200 tries to obtain20 scoreable; duplicates/reversals disclosed",
+        "persistence": "next-month fixed-beta spread ADF maxlag5 autolag=None p<.10",
+        "original_gate_thresholds": "mean selected rate >=1.5x mean random rate AND paired greater Wilcoxon p<.05",
+        "denominators": "retain every one of50 month records, selected/scoreable/random counts and missing reasons; historical conditional gate reported on paired scoreable months; any missing month makes complete-panel verdict unavailable",
+        "dependence_diagnostic": {
+          "statistic": "paired monthly mean(selected_rate-random_rate)",
+          "bootstrap": "stationary",
+          "mean_block": 3,
+          "draws": 2000,
+          "seed": 4242,
+          "interval": [
+            0.025,
+            0.975
+          ]
+        },
+        "promotion": "none; original gate and dependence sensitivity descriptive; any improved P0 motivates separately registered P1 only"
+      },
+      "nlst4": {
+        "original_gate": "data/predlab/gates.json:predlab_nlst4",
+        "cells": [
+          {
+            "id": "original_new_pool_cohort_causal_v2"
+          }
+        ],
+        "scope": "original3981 entered pools, including1205 prior-history and2776 new_set pools; all denominators retained; new_set is no longer virgin after prior evaluation",
+        "features": "original ten signs and >=6 features; prior-only available-observation z scores, same-time peers excluded; no new feature or fitted weights",
+        "availability": "decision_ts=exact cached entry header; raw2.b24 must be strictly less than entry block else dependent features unavailable; legacy ownership without retrieval_status makes G7 NaN; wallet/deployer completed outcome time=max(entry_ts+7days, exact cached selected7day exit header timestamp)",
+        "data": "existing raw pool/windows/feature/ownership/header/anchor caches only, no RPC or HTTP; missing required cache means affected pool unavailable with reason",
+        "fx": "last completed5minute ETH quote, cadence explicit; only existing pre-April2025 creation cohorts may consume their original cached settlement horizons; no post-March2025 created pools or new holdout sample",
+        "economics": "original first Sync>=create+24h entry, first Sync>=entry+7days or original lastSync dead-pool rule, $1000 headline/$5000 stress, exact constant-product .3%LP eachside, two swaps gas basefee+2gwei; correctedFX only",
+        "T1": "original SpearmanIC(score,ret7)>0 AND quarter-block bootstrap1000draws seed7 lower5percentile>0; complete coverage disclosed",
+        "T2": "original global-q80 cohort mean, NW one-sidedp<.05, ex-topmean>0, top1share<=.25 and5kstresssign; global topquintile remains retrospective cohort diagnostic, NOT a causal entry rule",
+        "promotion": "none regardless of diagnostic thresholds; no P1 and no online threshold variant in this cycle"
+      }
+    },
+    "primary_cells": 26,
+    "accounting_cells": 24,
+    "current_dsr": {
+      "strategy_namespace": "original rebuild ledger",
+      "prior_unique_full_trial_identities": 126,
+      "registered_accounting_cells": 24,
+      "n_trials": 150,
+      "interpretation": "fixed cumulative accounting-family diagnostic alongside original-denominator DSR; not mixed with forecast rows or rebased after results"
+    },
+    "stage_rule": "All26primary cells retained including failures/blocked. Accounting primary SR and both DSR statistics, original/corrected metrics, simple/log swap, zero-cost and2xcost diagnostics first. If original SR or original-denominator DSR fails, skip expensive bootstrap/placebo gates with explicit unknown status, without shrinking any trial denominator. Otherwise complete original required gates. No selected champion or holdout spend in this cycle.",
+    "integrity": "Clean committed executable source, gate and correction policy required before any empirical run. Input checksums captured before consumption and checked unchanged at completion; output per family immutable, exclusive start marker and no overwrite. Filter market Parquet dates before materialization; preserve original files.",
+    "outputs": "data/predlab/audit_reevaluation_2026_09_09/{momentum,carry,liq_fade,prx,nlst4}/result.json",
+    "source_roots": [
+      "/home/malecada/master_thesis/TradingAgents/data",
+      "/home/malecada/master_thesis/TradingAgents-predlab/data"
+    ],
+    "original_gate_sha256": {
+      "predlab": "a832e08d0d39e92374dc187be060b2e4ecd1a97cfa463b8d801b3d6d40f34a84",
+      "rebuild": "e56ec8ac97bfa525a336ca33dca6e06943b9029ff548e7bcff73f26c8a85bf88"
+    },
+    "original_rebuild_ledger_sha256": "45a5fe9e1b0c92de5dd853c9fa091a8dfdb8636e260a4c5b4cc89db6903f9627",
+    "diagnostic_trials": "benchmarks, paired contract/cost/convention attribution, declared bootstrap/placebos and dependence sensitivity are predeclared diagnostics; no candidate selection among them",
+    "stop_rule": "One completed artifact per family. Missing provenance or held prices/funding is an explicit blocked/incomplete cell, never zero-filled. Infrastructure failure without completed outcome may resume only documented identical code/input specification; outcome-informed amendments or parameter changes prohibited. Any additional family, model fit, data source, changed acceptance threshold or holdout requires a new committed registration."
   }
 }
