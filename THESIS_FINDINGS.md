@@ -6644,3 +6644,67 @@ no new features, no re-weighting, no universe re-cut). Reusable assets: the
 RPC pool, the 395-token ERC-20 map with pool list and monthly depth
 (`data/predlab/smw/`), the 15.3M-swap compact store, and the PIT
 wallet-record machinery. Ledger: 10 trials this experiment, 508 program-wide.
+
+## Section 79: DEX Smart-Money Ranking at Scale (nlst4) — Rank Skill Replicates on 2,770 Virgin Pools, Economics Fail; Family CLOSED (2026-09-04 → 09-09)
+
+Lead 3 of the post-audit map and the fourth, final bite at the new-pool
+family (§73 nlst, §74 nlst2, §75 nlst3). Question: does the frozen nlst3
+composite (ten features, signs, per-quarter equal-weight z, ≥ 6 features)
+power the economic claim on a sample 3.6× larger, or does the top quintile
+stay a lottery? Registered pre-result in `TradingAgents-predlab` (gates
+`predlab_nlst4`, charter `docs/superpowers/specs/2026-09-04-nlst4-charter.md`,
+commit ea81dcf; afk autonomy grant: quota 600 KEEP per quarter in the
+seed-7 order, C-LLM cell dropped for want of an Etherscan key, H2
+enumeration deferred). Contamination control: every statistic on the *new*
+pools only (KEEP #181 onward per quarter); the 3,060 prior pools serve as
+PIT wallet and deployer history.
+
+**Screening and data.** The closed family's phases A–C re-run with the
+quota raised (closed script unedited); 63,052 → 182,700 pools screened,
+9,908 KEEP (3,060 prior + 6,848 new; 2021Q4, 2022Q3, 2022Q4 and 2023Q1
+exhausted their candidate lists at 567 / 423 / 554 / 564, every other
+quarter reached 600). The public dRPC endpoint hit its quota on 2026-09-04
+and the job died; it was restarted through the multi-endpoint RPC pool
+introduced for §82 (transport amendment declared in gates before any new
+pool outcome was seen) and survived a machine reboot on 09-08 (resume =
+re-run; append-only caches). Phase C (16-day windows) finished 09-09; the
+feature stage (nlst2 + nlst3 caches, same functions) produced 3,981 entered
+pools, 2,776 in the new set, 2,770 with a composite (feature availability
+≥ 96 % for nine features; serial-deployer performance 4.8 %, as before).
+
+**P0 (one-shot, new pools only).**
+
+| gate | statistic | result |
+|---|---|---|
+| T1 existence | Spearman IC(composite, net ret7) | **+0.092** (p 1e-6); quarter-block bootstrap 5th pct **+0.029** → PASS |
+| T2 economics | top-quintile (n 554) mean net ret7 | +6.5 %, NW one-sided p 0.40 |
+| | ex-top-event mean | **−12.4 %** |
+| | top-1 share of |ret| | 0.15 (≤ 0.25 ok) |
+| | $5k cost-stress mean | **−29.2 %** |
+| | median disclosed | **−68.4 %** |
+
+T1 PASS, T2 FAIL ⇒ **FAIL at P0, family CLOSED (final)**; P1 and the H2
+enumeration (2025-04 → 2026-06) were not run — the holdout pools stay
+virgin for any future registered cycle.
+
+**Post-verdict forensic (descriptive, `nlst4_forensic_posthoc.json`).**
+The top quintile is a lottery with a slightly better ticket: 15 % of picks
+end positive, 58 % lose more than half, the moonshot rate (ret7 > 100 %) is
+5.2 % against 3.0 % in the rest — that difference *is* the rank skill.
+Ex-top-3 mean −31 %, 1 %-trimmed mean −45 %; only 6 of 17 quarters have a
+positive top-quintile mean and each is a single moonshot (2023Q1 mean
++271 % with median −80 %; 2024Q2 +307 % / −90 %). Decile medians run from
+−100 % to −63 % monotonically — the composite orders *how badly* pools die,
+while the means are noise from a handful of 10–100× events. The closed
+nlst3 pools, recomputed on the same machinery, give a top-quintile mean of
++3.9 % (median −63 %): the +72.6 % of §75 was the one-event carry that
+cycle already flagged, now measured on 3.6× the sample.
+
+**Verdict.** The wallet-intelligence ranking of day-old pools is real and
+replicates out of sample for the second time (IC +0.136 → +0.092), and it
+is worthless as a trade: the base rate of rug and dump losses in the top
+quintile is −68 % at the median, no cost model at $1k or $5k turns the mean
+positive without the lottery tail, and the tail is not selectable. Four
+bites, four closures; the new-pool family is CLOSED. Reusable: the
+182,700-pool screening state, 9,908-pool 16-day window store, and the
+PIT wallet/deployer ledgers under `data/predlab/nlst/`.
