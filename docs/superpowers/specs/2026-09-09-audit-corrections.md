@@ -19,3 +19,5 @@ Gate `audit_correction_2026_09_09` permits only original Phase-P S2/S3 developme
 ## Resolution of design alternatives
 
 Existing raw data and results remain immutable. Unsupported historical availability cannot be recreated; it is quarantined or qualified. Explicit baseline fallback was selected over confident numeric zero or silent row deletion. Fixed contract holdings between declared rebalances were selected over free constant-mix maintenance. Strictly prior normalization was selected over retrospective cohort scaling. A unified correction branch contains both previously separate research packages; original branches stay available for provenance. These choices are versioned corrections, not new alpha claims.
+
+Pre-result clarification (September 9): the bounded S2/S3 correction also includes fees on actual drifted pretrade notionals at each declared rebalance, including maintenance turnover. This is part of the executable accounting contract; the fixed cells, windows and acceptance thresholds are unchanged.
