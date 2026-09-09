@@ -1,0 +1,4293 @@
+{
+ "experiment": "unlock_xs_t1",
+ "probes": [
+  {
+   "probe": "P0_silent_restatement",
+   "emissions_fetched_utc": "2026-08-08T08:32:27.662825+00:00",
+   "refs_fetched_utc": "2026-08-08T09:17:40.254543+00:00",
+   "n_comparable": 108,
+   "n_no_reference": 4,
+   "no_reference_symbols": [
+    "AIUSDT",
+    "BNBUSDT",
+    "FTMUSDT",
+    "LDOUSDT"
+   ],
+   "n_flagged": 8,
+   "flagged_symbols": [
+    "ARKMUSDT",
+    "BBUSDT",
+    "BIGTIMEUSDT",
+    "IMXUSDT",
+    "SNXUSDT",
+    "STGUSDT",
+    "VANAUSDT",
+    "YFIUSDT"
+   ],
+   "median_growth": -0.00029564212142598373,
+   "thresholds": {
+    "min_overlap_days": 180,
+    "window_days": 90,
+    "flag_growth": 0.25,
+    "max_flag_share": 0.25,
+    "max_median_growth": 0.1,
+    "min_comparable": 30
+   },
+   "checks": {
+    "min_comparable": true,
+    "flag_share": true,
+    "median_growth": true
+   },
+   "per_name": {
+    "AAVEUSDT": {
+     "overlap_days": 2136,
+     "median_absdiv_first": 0.2076393647782445,
+     "median_absdiv_last": 0.2076393647782445,
+     "growth": 0.0,
+     "source": "coinmetrics:aave",
+     "flag": false
+    },
+    "ALPHAUSDT": {
+     "overlap_days": 2108,
+     "median_absdiv_first": 1.3918933395203723,
+     "median_absdiv_last": 0.015397095916204563,
+     "growth": -1.3764962436041677,
+     "source": "coinmetrics:alpha",
+     "flag": false
+    },
+    "ALTUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.05329087883298747,
+     "median_absdiv_last": 0.03441993672334152,
+     "growth": -0.018870942109645954,
+     "source": "coingecko:altlayer",
+     "flag": false
+    },
+    "ANKRUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.9162059189966634,
+     "median_absdiv_last": 0.916290731874155,
+     "growth": 8.481287749162458e-05,
+     "source": "coingecko:ankr",
+     "flag": false
+    },
+    "APEUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.12766349109661168,
+     "median_absdiv_last": 2.2204460492503136e-16,
+     "growth": -0.12766349109661146,
+     "source": "coingecko:apecoin",
+     "flag": false
+    },
+    "API3USDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.09511877584425912,
+     "median_absdiv_last": 0.1696737577972635,
+     "growth": 0.07455498195300439,
+     "source": "coingecko:api3",
+     "flag": false
+    },
+    "APTUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.0026845930588199523,
+     "median_absdiv_last": 0.0021362996734181072,
+     "growth": -0.000548293385401845,
+     "source": "coingecko:aptos",
+     "flag": false
+    },
+    "ARBUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.03678772263636938,
+     "median_absdiv_last": 0.04355406918922432,
+     "growth": 0.006766346552854935,
+     "source": "coingecko:arbitrum",
+     "flag": false
+    },
+    "ARKMUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.7630635540340629,
+     "median_absdiv_last": 1.0487881475135332,
+     "growth": 0.2857245934794703,
+     "source": "coingecko:arkham",
+     "flag": true
+    },
+    "AVAXUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.11369380381144892,
+     "median_absdiv_last": 0.0989021020012191,
+     "growth": -0.014791701810229818,
+     "source": "coingecko:avalanche-2",
+     "flag": false
+    },
+    "AXLUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.03843529521887098,
+     "median_absdiv_last": 0.007611204659175666,
+     "growth": -0.030824090559695313,
+     "source": "coingecko:axelar",
+     "flag": false
+    },
+    "AXSUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.7731846883469238,
+     "median_absdiv_last": 0.759601152610642,
+     "growth": -0.013583535736281793,
+     "source": "coingecko:axie-infinity",
+     "flag": false
+    },
+    "BALUSDT": {
+     "overlap_days": 2240,
+     "median_absdiv_first": 0.5744076040798372,
+     "median_absdiv_last": 0.20686591516206815,
+     "growth": -0.367541688917769,
+     "source": "coinmetrics:bal",
+     "flag": false
+    },
+    "BATUSDT": {
+     "overlap_days": 2259,
+     "median_absdiv_first": 0.0,
+     "median_absdiv_last": 0.0,
+     "growth": 0.0,
+     "source": "coinmetrics:bat",
+     "flag": false
+    },
+    "BBUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.6821808785222144,
+     "median_absdiv_last": 1.0741399648757313,
+     "growth": 0.39195908635351684,
+     "source": "coingecko:bouncebit",
+     "flag": true
+    },
+    "BICOUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.10066153285480994,
+     "median_absdiv_last": 0.34611006455328447,
+     "growth": 0.24544853169847453,
+     "source": "coingecko:biconomy",
+     "flag": false
+    },
+    "BIGTIMEUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.475413502486576,
+     "median_absdiv_last": 1.3180334887445366,
+     "growth": 0.8426199862579606,
+     "source": "coingecko:big-time",
+     "flag": true
+    },
+    "BLURUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.0042375512052531365,
+     "median_absdiv_last": 0.040313435767235964,
+     "growth": 0.036075884561982824,
+     "source": "coingecko:blur",
+     "flag": false
+    },
+    "CAKEUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 2.130099364146342,
+     "median_absdiv_last": 1.928072529417571,
+     "growth": -0.20202683472877103,
+     "source": "coingecko:pancakeswap-token",
+     "flag": false
+    },
+    "CELOUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.0004815402870638802,
+     "median_absdiv_last": 0.00019141621949125408,
+     "growth": -0.0002901240675726261,
+     "source": "coingecko:celo",
+     "flag": false
+    },
+    "CETUSUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.018480011833912804,
+     "median_absdiv_last": 0.0021284234279000977,
+     "growth": -0.016351588406012706,
+     "source": "coingecko:cetus-protocol",
+     "flag": false
+    },
+    "COMPUSDT": {
+     "overlap_days": 2246,
+     "median_absdiv_first": 1.1669446058409525,
+     "median_absdiv_last": 0.4141581745196778,
+     "growth": -0.7527864313212747,
+     "source": "coinmetrics:comp",
+     "flag": false
+    },
+    "COWUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.7400503461134442,
+     "median_absdiv_last": 0.851276115162677,
+     "growth": 0.11122576904923276,
+     "source": "coingecko:cow-protocol",
+     "flag": false
+    },
+    "CRVUSDT": {
+     "overlap_days": 2187,
+     "median_absdiv_first": 1.8909421350272466,
+     "median_absdiv_last": 0.6761634761149506,
+     "growth": -1.214778658912296,
+     "source": "coinmetrics:crv",
+     "flag": false
+    },
+    "CYBERUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.12839215643344348,
+     "median_absdiv_last": 0.12763407181247574,
+     "growth": -0.0007580846209677417,
+     "source": "coingecko:cyberconnect",
+     "flag": false
+    },
+    "DODOUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.29453659140609506,
+     "median_absdiv_last": 0.29453751740875483,
+     "growth": 9.260026597734949e-07,
+     "source": "coingecko:dodo",
+     "flag": false
+    },
+    "DOGEUSDT": {
+     "overlap_days": 2259,
+     "median_absdiv_first": 0.2433229710474174,
+     "median_absdiv_last": 0.4544964960348256,
+     "growth": 0.2111735249874082,
+     "source": "coinmetrics:doge",
+     "flag": false
+    },
+    "DOTUSDT": {
+     "overlap_days": 716,
+     "median_absdiv_first": 0.13416386313958129,
+     "median_absdiv_last": 0.049924773863608926,
+     "growth": -0.08423908927597236,
+     "source": "coinmetrics:dot",
+     "flag": false
+    },
+    "DRIFTUSDT": {
+     "overlap_days": 244,
+     "median_absdiv_first": 0.11196274624837016,
+     "median_absdiv_last": 0.303258688839518,
+     "growth": 0.19129594259114785,
+     "source": "coingecko:drift-protocol",
+     "flag": false
+    },
+    "DYDXUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.20233873416068535,
+     "median_absdiv_last": 0.15289822042085804,
+     "growth": -0.0494405137398273,
+     "source": "coingecko:dydx-chain",
+     "flag": false
+    },
+    "DYMUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.4321515854309659,
+     "median_absdiv_last": 0.035991032456622614,
+     "growth": -0.39616055297434327,
+     "source": "coingecko:dymension",
+     "flag": false
+    },
+    "EIGENUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.06362150116345888,
+     "median_absdiv_last": 0.12192278043673638,
+     "growth": 0.058301279273277495,
+     "source": "coingecko:eigenlayer",
+     "flag": false
+    },
+    "ENAUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.1446024658293638,
+     "median_absdiv_last": 0.23596004313562072,
+     "growth": 0.0913575773062569,
+     "source": "coingecko:ethena",
+     "flag": false
+    },
+    "ENSUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 1.0307069942625275,
+     "median_absdiv_last": 0.8455370359396014,
+     "growth": -0.18516995832292615,
+     "source": "coingecko:ethereum-name-service",
+     "flag": false
+    },
+    "ETHFIUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.12756098114481057,
+     "median_absdiv_last": 0.14572731972450959,
+     "growth": 0.018166338579699015,
+     "source": "coingecko:ether-fi",
+     "flag": false
+    },
+    "ETHUSDT": {
+     "overlap_days": 2259,
+     "median_absdiv_first": 0.03535385539647884,
+     "median_absdiv_last": 0.22771784013823998,
+     "growth": 0.19236398474176114,
+     "source": "coinmetrics:eth",
+     "flag": false
+    },
+    "FILUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.35802404175713515,
+     "median_absdiv_last": 0.3553174805427404,
+     "growth": -0.0027065612143947204,
+     "source": "coingecko:filecoin",
+     "flag": false
+    },
+    "FLOWUSDT": {
+     "overlap_days": 752,
+     "median_absdiv_first": 0.14755341270025665,
+     "median_absdiv_last": 0.24082753454781247,
+     "growth": 0.09327412184755582,
+     "source": "coinmetrics:flow",
+     "flag": false
+    },
+    "GLMUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.00028021830868708375,
+     "median_absdiv_last": 0.0,
+     "growth": -0.00028021830868708375,
+     "source": "coingecko:golem",
+     "flag": false
+    },
+    "GMTUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.2645463871956839,
+     "median_absdiv_last": 0.38341568706149637,
+     "growth": 0.11886929986581246,
+     "source": "coingecko:stepn",
+     "flag": false
+    },
+    "GMXUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.028077511474069693,
+     "median_absdiv_last": 0.03989596902221226,
+     "growth": 0.01181845754814257,
+     "source": "coingecko:gmx",
+     "flag": false
+    },
+    "GRASSUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.07790489082330442,
+     "median_absdiv_last": 0.05021844714379699,
+     "growth": -0.027686443679507428,
+     "source": "coingecko:grass",
+     "flag": false
+    },
+    "GRTUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.012599621554403272,
+     "median_absdiv_last": 0.015289366442233202,
+     "growth": 0.0026897448878299302,
+     "source": "coingecko:the-graph",
+     "flag": false
+    },
+    "HBARUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.0009673062901598272,
+     "median_absdiv_last": 0.08399428346493445,
+     "growth": 0.08302697717477463,
+     "source": "coingecko:hedera-hashgraph",
+     "flag": false
+    },
+    "HFTUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.15148426117693486,
+     "median_absdiv_last": 0.04525731565259531,
+     "growth": -0.10622694552433956,
+     "source": "coingecko:hashflow",
+     "flag": false
+    },
+    "HNTUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.2650002315046981,
+     "median_absdiv_last": 0.21208059113383917,
+     "growth": -0.05291964037085892,
+     "source": "coingecko:helium",
+     "flag": false
+    },
+    "ICPUSDT": {
+     "overlap_days": 1920,
+     "median_absdiv_first": 0.10620757314821488,
+     "median_absdiv_last": 0.02184272964914703,
+     "growth": -0.08436484349906785,
+     "source": "coinmetrics:icp",
+     "flag": false
+    },
+    "IMXUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.007959900851810139,
+     "median_absdiv_last": 0.8333267230895284,
+     "growth": 0.8253668222377183,
+     "source": "coingecko:immutable-x",
+     "flag": true
+    },
+    "INJUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.01937820479377044,
+     "median_absdiv_last": 0.0035663518796084106,
+     "growth": -0.015811852914162032,
+     "source": "coingecko:injective-protocol",
+     "flag": false
+    },
+    "JOEUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.21584151074213104,
+     "median_absdiv_last": 0.08852497817106972,
+     "growth": -0.12731653257106132,
+     "source": "coingecko:joe",
+     "flag": false
+    },
+    "JTOUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.17467847159953426,
+     "median_absdiv_last": 0.42221202921164663,
+     "growth": 0.24753355761211238,
+     "source": "coingecko:jito-governance-token",
+     "flag": false
+    },
+    "JUPUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.00044504558946168826,
+     "median_absdiv_last": 0.04036355362520032,
+     "growth": 0.03991850803573863,
+     "source": "coingecko:jupiter-exchange-solana",
+     "flag": false
+    },
+    "LINKUSDT": {
+     "overlap_days": 2259,
+     "median_absdiv_first": 0.9623095947999044,
+     "median_absdiv_last": 0.2903394949532941,
+     "growth": -0.6719700998466103,
+     "source": "coinmetrics:link",
+     "flag": false
+    },
+    "LISTAUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.35088795046823046,
+     "median_absdiv_last": 0.04794526995129861,
+     "growth": -0.30294268051693185,
+     "source": "coingecko:lista",
+     "flag": false
+    },
+    "LQTYUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.03007393210216914,
+     "median_absdiv_last": 0.029772771926889798,
+     "growth": -0.00030116017527934136,
+     "source": "coingecko:liquity",
+     "flag": false
+    },
+    "LTCUSDT": {
+     "overlap_days": 2259,
+     "median_absdiv_first": 0.00022632117263729685,
+     "median_absdiv_last": 0.05072674703977918,
+     "growth": 0.05050042586714189,
+     "source": "coinmetrics:ltc",
+     "flag": false
+    },
+    "MANTAUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.11643340073662073,
+     "median_absdiv_last": 0.03028804974929118,
+     "growth": -0.08614535098732955,
+     "source": "coingecko:manta-network",
+     "flag": false
+    },
+    "MAVUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.08649594027108294,
+     "median_absdiv_last": 0.08736114888740054,
+     "growth": 0.0008652086163176004,
+     "source": "coingecko:maverick-protocol",
+     "flag": false
+    },
+    "MEMEUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.06099856736972098,
+     "median_absdiv_last": 0.1998616675728221,
+     "growth": 0.1388631002031011,
+     "source": "coingecko:memecoin-2",
+     "flag": false
+    },
+    "MEUSDT": {
+     "overlap_days": 222,
+     "median_absdiv_first": 0.3807989453387255,
+     "median_absdiv_last": 0.13539771197858813,
+     "growth": -0.24540123336013736,
+     "source": "coingecko:magic-eden",
+     "flag": false
+    },
+    "MOCAUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.0374506822244436,
+     "median_absdiv_last": 0.11773290531195825,
+     "growth": 0.08028222308751465,
+     "source": "coingecko:mocaverse",
+     "flag": false
+    },
+    "MORPHOUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.3690311123770823,
+     "median_absdiv_last": 0.12693498010446103,
+     "growth": -0.24209613227262128,
+     "source": "coingecko:morpho",
+     "flag": false
+    },
+    "MOVEUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.0007099573741103273,
+     "median_absdiv_last": 0.028228715622546696,
+     "growth": 0.02751875824843637,
+     "source": "coingecko:movement",
+     "flag": false
+    },
+    "NEARUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 1.2563362133447633,
+     "median_absdiv_last": 1.2949992559445715,
+     "growth": 0.03866304259980824,
+     "source": "coingecko:near",
+     "flag": false
+    },
+    "OMNIUSDT": {
+     "overlap_days": 277,
+     "median_absdiv_first": 4.150931654144142,
+     "median_absdiv_last": 4.0699988121622,
+     "growth": -0.08093284198194262,
+     "source": "coingecko:omni-network",
+     "flag": false
+    },
+    "ONDOUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.43568715847482964,
+     "median_absdiv_last": 0.3053852511236246,
+     "growth": -0.13030190735120506,
+     "source": "coingecko:ondo-finance",
+     "flag": false
+    },
+    "OPUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.31678870602104203,
+     "median_absdiv_last": 0.2282918338713597,
+     "growth": -0.08849687214968233,
+     "source": "coingecko:optimism",
+     "flag": false
+    },
+    "PENDLEUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.06579701715608652,
+     "median_absdiv_last": 0.07808272405294309,
+     "growth": 0.012285706896856569,
+     "source": "coingecko:pendle",
+     "flag": false
+    },
+    "PENGUUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.0006007940575548389,
+     "median_absdiv_last": 2.9050168032700958e-05,
+     "growth": -0.0005717438895221379,
+     "source": "coingecko:pudgy-penguins",
+     "flag": false
+    },
+    "PERPUSDT": {
+     "overlap_days": 2163,
+     "median_absdiv_first": 2.289339866244025,
+     "median_absdiv_last": 0.020321296467518117,
+     "growth": -2.269018569776507,
+     "source": "coinmetrics:perp",
+     "flag": false
+    },
+    "POLUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.054395104124271995,
+     "median_absdiv_last": 0.06825070527188187,
+     "growth": 0.013855601147609878,
+     "source": "coingecko:polygon-ecosystem-token",
+     "flag": false
+    },
+    "PYTHUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.0005653166867254988,
+     "median_absdiv_last": 2.317867135821051e-06,
+     "growth": -0.0005629988195896777,
+     "source": "coingecko:pyth-network",
+     "flag": false
+    },
+    "RAREUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.14783138372192964,
+     "median_absdiv_last": 0.14653698260886178,
+     "growth": -0.0012944011130678612,
+     "source": "coingecko:superrare",
+     "flag": false
+    },
+    "RAYUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.2400845310004626,
+     "median_absdiv_last": 0.24410347276361155,
+     "growth": 0.004018941763148959,
+     "source": "coingecko:raydium",
+     "flag": false
+    },
+    "RDNTUSDT": {
+     "overlap_days": 189,
+     "median_absdiv_first": 0.7300051175544222,
+     "median_absdiv_last": 0.73206976848898,
+     "growth": 0.0020646509345577657,
+     "source": "coingecko:radiant-capital",
+     "flag": false
+    },
+    "REZUSDT": {
+     "overlap_days": 276,
+     "median_absdiv_first": 0.746510335802238,
+     "median_absdiv_last": 0.09216690333440283,
+     "growth": -0.6543434324678352,
+     "source": "coingecko:renzo",
+     "flag": false
+    },
+    "RUNEUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.9221186838366119,
+     "median_absdiv_last": 1.066280946187428,
+     "growth": 0.1441622623508162,
+     "source": "coingecko:thorchain",
+     "flag": false
+    },
+    "SAGAUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.9111094843183707,
+     "median_absdiv_last": 0.5946895361386169,
+     "growth": -0.31641994817975383,
+     "source": "coingecko:saga-2",
+     "flag": false
+    },
+    "SEIUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.019809652727147332,
+     "median_absdiv_last": 0.08611713441493993,
+     "growth": 0.0663074816877926,
+     "source": "coingecko:sei-network",
+     "flag": false
+    },
+    "SNXUSDT": {
+     "overlap_days": 2259,
+     "median_absdiv_first": 0.25944897891998675,
+     "median_absdiv_last": 0.844473803832272,
+     "growth": 0.5850248249122852,
+     "source": "coinmetrics:snx",
+     "flag": true
+    },
+    "SOLUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.22518430078062635,
+     "median_absdiv_last": 0.2082484503037098,
+     "growth": -0.016935850476916536,
+     "source": "coingecko:solana",
+     "flag": false
+    },
+    "SPELLUSDT": {
+     "overlap_days": 300,
+     "median_absdiv_first": 2.4425913012182754,
+     "median_absdiv_last": 2.4567972347633837,
+     "growth": 0.014205933545108351,
+     "source": "coingecko:spell-token",
+     "flag": false
+    },
+    "STGUSDT": {
+     "overlap_days": 277,
+     "median_absdiv_first": 0.6010072981552455,
+     "median_absdiv_last": 2.7203729721936076,
+     "growth": 2.119365674038362,
+     "source": "coingecko:stargate-finance",
+     "flag": true
+    },
+    "STRKUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.07542083794562979,
+     "median_absdiv_last": 0.008019128416816448,
+     "growth": -0.06740170952881334,
+     "source": "coingecko:starknet",
+     "flag": false
+    },
+    "SUIUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.023406946667507852,
+     "median_absdiv_last": 0.006498314754562638,
+     "growth": -0.016908631912945213,
+     "source": "coingecko:sui",
+     "flag": false
+    },
+    "SUNUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.6004117962281078,
+     "median_absdiv_last": 0.6036796168735409,
+     "growth": 0.0032678206454330727,
+     "source": "coingecko:sun-token",
+     "flag": false
+    },
+    "SUPERUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.4437181998921133,
+     "median_absdiv_last": 0.46272449414028893,
+     "growth": 0.019006294248175626,
+     "source": "coingecko:superfarm",
+     "flag": false
+    },
+    "TAOUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.05376998636001185,
+     "median_absdiv_last": 0.17367081766753883,
+     "growth": 0.11990083130752699,
+     "source": "coingecko:bittensor",
+     "flag": false
+    },
+    "THEUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.7592518639977479,
+     "median_absdiv_last": 0.6978648112553398,
+     "growth": -0.06138705274240808,
+     "source": "coingecko:thena",
+     "flag": false
+    },
+    "TIAUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.14895232824272472,
+     "median_absdiv_last": 0.12754875245355865,
+     "growth": -0.021403575789166074,
+     "source": "coingecko:celestia",
+     "flag": false
+    },
+    "TNSRUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.46957581900832923,
+     "median_absdiv_last": 0.32496718360288984,
+     "growth": -0.1446086354054394,
+     "source": "coingecko:tensor",
+     "flag": false
+    },
+    "TRUUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.08692020064201986,
+     "median_absdiv_last": 0.14281894024917108,
+     "growth": 0.05589873960715122,
+     "source": "coingecko:truefi",
+     "flag": false
+    },
+    "TRXUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.044757011388910056,
+     "median_absdiv_last": 0.04291528314667449,
+     "growth": -0.0018417282422355657,
+     "source": "coingecko:tron",
+     "flag": false
+    },
+    "UNIUSDT": {
+     "overlap_days": 2154,
+     "median_absdiv_first": 1.8971199848858813,
+     "median_absdiv_last": 1.8971199848858813,
+     "growth": 0.0,
+     "source": "coinmetrics:uni",
+     "flag": false
+    },
+    "USUALUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.2351366979438128,
+     "median_absdiv_last": 0.1461167308814442,
+     "growth": -0.08901996706236862,
+     "source": "coingecko:usual",
+     "flag": false
+    },
+    "UXLINKUSDT": {
+     "overlap_days": 344,
+     "median_absdiv_first": 0.5587993376539818,
+     "median_absdiv_last": 0.1046865242678072,
+     "growth": -0.4541128133861746,
+     "source": "coingecko:uxlink",
+     "flag": false
+    },
+    "VANAUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.4327853733516419,
+     "median_absdiv_last": 0.8389819871729485,
+     "growth": 0.40619661382130656,
+     "source": "coingecko:vana",
+     "flag": true
+    },
+    "VIRTUALUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.42215650098156304,
+     "median_absdiv_last": 0.4199642119730019,
+     "growth": -0.0021922890085611657,
+     "source": "coingecko:virtual-protocol",
+     "flag": false
+    },
+    "WLDUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.43044357344736056,
+     "median_absdiv_last": 0.35299235436052656,
+     "growth": -0.077451219086834,
+     "source": "coingecko:worldcoin-wld",
+     "flag": false
+    },
+    "WOOUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.20362204454834903,
+     "median_absdiv_last": 0.21222444134789314,
+     "growth": 0.00860239679954411,
+     "source": "coingecko:woo-network",
+     "flag": false
+    },
+    "WUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.014473372354426094,
+     "median_absdiv_last": 0.0059860158419322695,
+     "growth": -0.008487356512493825,
+     "source": "coingecko:wormhole",
+     "flag": false
+    },
+    "XAIUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.36544885215424816,
+     "median_absdiv_last": 0.3604156471327718,
+     "growth": -0.005033205021476361,
+     "source": "coingecko:xai-blockchain",
+     "flag": false
+    },
+    "XTZUSDT": {
+     "overlap_days": 697,
+     "median_absdiv_first": 0.04227805341285262,
+     "median_absdiv_last": 0.04963665232074123,
+     "growth": 0.0073585989078886055,
+     "source": "coinmetrics:xtz",
+     "flag": false
+    },
+    "XVSUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.0008776518782115685,
+     "median_absdiv_last": 0.008172224277643704,
+     "growth": 0.007294572399432135,
+     "source": "coingecko:venus",
+     "flag": false
+    },
+    "YFIUSDT": {
+     "overlap_days": 2213,
+     "median_absdiv_first": 1.620284498445577,
+     "median_absdiv_last": 2.9209059184801114,
+     "growth": 1.3006214200345343,
+     "source": "coinmetrics:yfi",
+     "flag": true
+    },
+    "ZETAUSDT": {
+     "overlap_days": 365,
+     "median_absdiv_first": 0.039312344974290786,
+     "median_absdiv_last": 0.02755890313830779,
+     "growth": -0.011753441835982995,
+     "source": "coingecko:zetachain",
+     "flag": false
+    },
+    "ZKUSDT": {
+     "overlap_days": 243,
+     "median_absdiv_first": 0.34224941364702977,
+     "median_absdiv_last": 0.3985405534728686,
+     "growth": 0.05629113982583883,
+     "source": "coingecko:zksync",
+     "flag": false
+    },
+    "ZROUSDT": {
+     "overlap_days": 364,
+     "median_absdiv_first": 1.2660659324518657,
+     "median_absdiv_last": 0.7969692403483385,
+     "growth": -0.4690966921035272,
+     "source": "coingecko:layerzero",
+     "flag": false
+    }
+   },
+   "coingecko_truncation_note": "market_chart limited to trailing 365 days on the public tier (error 10012, verified 2026-08-08); CoinGecko-referenced names therefore get a recent-window P0 comparison only",
+   "pass": true
+  },
+  {
+   "probe": "P1_breadth",
+   "median_breadth": 45,
+   "min_breadth": 25,
+   "breadth_by_year": {
+    "2021": 31.0,
+    "2022": 39.5,
+    "2023": 48.5,
+    "2024": 65.5,
+    "2025": 72
+   },
+   "median_signal_valid_breadth": {
+    "lookahead_14": 42.0,
+    "lookahead_30": 42.0
+   },
+   "min_signal_valid_breadth": {
+    "lookahead_14": 23.0,
+    "lookahead_30": 23.0
+   },
+   "registered_n_candidates": 129,
+   "realized_n_candidates": 195,
+   "candidate_delta_note": "the registered recipe is the intersection itself; the protocol list and CoinGecko mapping grew between registration (129) and execution",
+   "dev_truncation_triggered": false,
+   "floor": 20,
+   "pass": true
+  },
+  {
+   "probe": "P2_event_study",
+   "n_events": 556,
+   "events_by_year": {
+    "2021": 29,
+    "2022": 73,
+    "2023": 136,
+    "2024": 256,
+    "2025": 62
+   },
+   "min_cliff_pct": 0.01,
+   "fwd_days": 14,
+   "mean_fwd_ret": 0.007148131996333866,
+   "median_fwd_ret": -0.030496195004025284,
+   "tstat_informational": 0.6135898101462853,
+   "events": [
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2021-01-29",
+     "pct_of_supply": 0.2839913596543862,
+     "fwd_ret": 0.021836680711168288
+    },
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2021-04-30",
+     "pct_of_supply": 0.22117855974578252,
+     "fwd_ret": 0.14536055828379424
+    },
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2021-07-30",
+     "pct_of_supply": 0.18111893463952244,
+     "fwd_ret": 0.6072602096698481
+    },
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2021-10-30",
+     "pct_of_supply": 0.052687291103264776,
+     "fwd_ret": 0.15743842364532035
+    },
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2022-01-29",
+     "pct_of_supply": 0.05005027755967878,
+     "fwd_ret": 0.02507676560900718
+    },
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2022-04-30",
+     "pct_of_supply": 0.04766464866424857,
+     "fwd_ret": -0.3761363636363636
+    },
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2022-07-31",
+     "pct_of_supply": 0.04549609335870981,
+     "fwd_ret": 0.02112211221122129
+    },
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2022-10-30",
+     "pct_of_supply": 0.043516272942303674,
+     "fwd_ret": -0.269322033898305
+    },
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2023-01-29",
+     "pct_of_supply": 0.041701575788181025,
+     "fwd_ret": -0.20691229214215834
+    },
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2023-05-01",
+     "pct_of_supply": 0.040032171168243105,
+     "fwd_ret": -0.23674085250848742
+    },
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2023-07-31",
+     "pct_of_supply": 0.03849128159494906,
+     "fwd_ret": -0.0146598905394838
+    },
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2023-10-30",
+     "pct_of_supply": 0.03706461698535676,
+     "fwd_ret": 0.0651477832512315
+    },
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2024-01-30",
+     "pct_of_supply": 0.03573993016278957,
+     "fwd_ret": 0.054318697175840036
+    },
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2024-04-30",
+     "pct_of_supply": 0.01771523258791191,
+     "fwd_ret": -0.03862946089597563
+    },
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2024-07-30",
+     "pct_of_supply": 0.01740686590969507,
+     "fwd_ret": -0.1918486171761281
+    },
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2024-10-29",
+     "pct_of_supply": 0.01710905095389842,
+     "fwd_ret": 0.019010901356022236
+    },
+    {
+     "symbol": "ALPHAUSDT",
+     "date": "2025-01-29",
+     "pct_of_supply": 0.01682125524087378,
+     "fwd_ret": -0.103201690232407
+    },
+    {
+     "symbol": "ALTUSDT",
+     "date": "2024-01-26",
+     "pct_of_supply": 1.0,
+     "fwd_ret": -0.032063518410933134
+    },
+    {
+     "symbol": "ALTUSDT",
+     "date": "2024-02-16",
+     "pct_of_supply": 0.24889380537856576,
+     "fwd_ret": 0.19619612202050152
+    },
+    {
+     "symbol": "ALTUSDT",
+     "date": "2024-02-25",
+     "pct_of_supply": 0.08036622562582209,
+     "fwd_ret": 0.18469207976295343
+    },
+    {
+     "symbol": "ALTUSDT",
+     "date": "2024-03-26",
+     "pct_of_supply": 0.07438794708643216,
+     "fwd_ret": -0.0803798063363731
+    },
+    {
+     "symbol": "ALTUSDT",
+     "date": "2024-04-26",
+     "pct_of_supply": 0.06923751079687775,
+     "fwd_ret": -0.10934540963359407
+    },
+    {
+     "symbol": "ALTUSDT",
+     "date": "2024-05-26",
+     "pct_of_supply": 0.06475409822208411,
+     "fwd_ret": -0.18383513910818305
+    },
+    {
+     "symbol": "ALTUSDT",
+     "date": "2024-06-26",
+     "pct_of_supply": 0.06081601219493766,
+     "fwd_ret": -0.2830015644386902
+    },
+    {
+     "symbol": "ALTUSDT",
+     "date": "2024-07-26",
+     "pct_of_supply": 0.25054089160583376,
+     "fwd_ret": -0.37366136034732267
+    },
+    {
+     "symbol": "ALTUSDT",
+     "date": "2024-12-25",
+     "pct_of_supply": 0.09411508026984759,
+     "fwd_ret": -0.12676287307313872
+    },
+    {
+     "symbol": "ALTUSDT",
+     "date": "2025-01-25",
+     "pct_of_supply": 0.08601936118697448,
+     "fwd_ret": -0.3531229877656149
+    },
+    {
+     "symbol": "ALTUSDT",
+     "date": "2025-02-24",
+     "pct_of_supply": 0.07920610282026543,
+     "fwd_ret": -0.16701191092698098
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2022-03-17",
+     "pct_of_supply": 1.0,
+     "fwd_ret": 0.48880553276286487
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2022-04-16",
+     "pct_of_supply": 0.025133689839572194,
+     "fwd_ret": 0.7057461406518009
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2022-05-16",
+     "pct_of_supply": 0.024517475221700575,
+     "fwd_ret": -0.10532837670384143
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2022-06-16",
+     "pct_of_supply": 0.023930753564154784,
+     "fwd_ret": 0.3732582270975391
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2022-07-16",
+     "pct_of_supply": 0.023371456986573842,
+     "fwd_ret": 0.4036081392909585
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2022-08-16",
+     "pct_of_supply": 0.0228377065111759,
+     "fwd_ret": -0.22351421188630494
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2022-09-15",
+     "pct_of_supply": 0.0913907284768212,
+     "fwd_ret": 0.10737571312143412
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2022-10-16",
+     "pct_of_supply": 0.02032871972318339,
+     "fwd_ret": 0.06277728482697431
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2022-11-15",
+     "pct_of_supply": 0.019923696481559984,
+     "fwd_ret": 0.387129724208376
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2022-12-15",
+     "pct_of_supply": 0.019534497090606815,
+     "fwd_ret": -0.08921370967741937
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2023-01-15",
+     "pct_of_supply": 0.019160211985324093,
+     "fwd_ret": 0.2136319376825706
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2023-02-14",
+     "pct_of_supply": 0.0188,
+     "fwd_ret": -0.04504676464974222
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2023-03-17",
+     "pct_of_supply": 0.09415317046390338,
+     "fwd_ret": -0.05882352941176472
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2023-04-16",
+     "pct_of_supply": 0.034915757126205364,
+     "fwd_ret": -0.14273088820150237
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2023-05-17",
+     "pct_of_supply": 0.033737777095172276,
+     "fwd_ret": -0.0798946444249341
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2023-06-16",
+     "pct_of_supply": 0.03263668779714739,
+     "fwd_ret": 0.06005719733079129
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2023-07-16",
+     "pct_of_supply": 0.03160519879142487,
+     "fwd_ret": -0.040929762506316414
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2023-08-16",
+     "pct_of_supply": 0.03063691306369131,
+     "fwd_ret": -0.147484094852516
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2023-09-15",
+     "pct_of_supply": 0.07384284176533908,
+     "fwd_ret": 0.0864086408640865
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2023-10-16",
+     "pct_of_supply": 0.027591693183721323,
+     "fwd_ret": 0.28824626865671643
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2023-11-15",
+     "pct_of_supply": 0.026850833231471298,
+     "fwd_ret": 0.07488087134104826
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2023-12-16",
+     "pct_of_supply": 0.026148718355686062,
+     "fwd_ret": -0.054888507718696466
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2024-01-15",
+     "pct_of_supply": 0.025482386605313025,
+     "fwd_ret": -0.00694444444444442
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2024-02-15",
+     "pct_of_supply": 0.024849170437405737,
+     "fwd_ret": 0.18979693534321673
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2024-03-16",
+     "pct_of_supply": 0.024246661025056113,
+     "fwd_ret": -0.045772777750953564
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2024-04-15",
+     "pct_of_supply": 0.02367267763488757,
+     "fwd_ret": 0.04191667370911856
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2024-05-16",
+     "pct_of_supply": 0.02312524125346528,
+     "fwd_ret": 0.05596830113917761
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2024-06-15",
+     "pct_of_supply": 0.022602551790369053,
+     "fwd_ret": -0.10084113936149874
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2024-07-16",
+     "pct_of_supply": 0.022102968304544696,
+     "fwd_ret": -0.04414847700086322
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2024-08-15",
+     "pct_of_supply": 0.021624991796285364,
+     "fwd_ret": 0.09423076923076934
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2024-09-15",
+     "pct_of_supply": 0.02116725018469149,
+     "fwd_ret": 0.1501856690964105
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2024-10-15",
+     "pct_of_supply": 0.02072848515349774,
+     "fwd_ret": 0.4532335649385355
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2024-11-14",
+     "pct_of_supply": 0.02030754059967336,
+     "fwd_ret": 0.32008746078524575
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2024-12-15",
+     "pct_of_supply": 0.019903352461492,
+     "fwd_ret": -0.2546911892630793
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2025-01-14",
+     "pct_of_supply": 0.019514939737629192,
+     "fwd_ret": -0.19960970170058556
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2025-02-14",
+     "pct_of_supply": 0.019141396537701874,
+     "fwd_ret": -0.1431244153414406
+    },
+    {
+     "symbol": "APEUSDT",
+     "date": "2025-03-16",
+     "pct_of_supply": 0.018781885028643093,
+     "fwd_ret": -0.05618649133293485
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2022-11-11",
+     "pct_of_supply": 0.031199766521137918,
+     "fwd_ret": -0.14581081081081082
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2022-12-11",
+     "pct_of_supply": 0.029046841116134755,
+     "fwd_ret": -0.23270386266094423
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2023-01-11",
+     "pct_of_supply": 0.02715167827567658,
+     "fwd_ret": 2.459480396787907
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2023-02-10",
+     "pct_of_supply": 0.02552979343058008,
+     "fwd_ret": -0.05969384018164514
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2023-03-13",
+     "pct_of_supply": 0.024075596250341703,
+     "fwd_ret": -0.09610853846778777
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2023-04-12",
+     "pct_of_supply": 0.022810858756487286,
+     "fwd_ret": -0.11817541387812613
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2023-05-13",
+     "pct_of_supply": 0.021661562602714027,
+     "fwd_ret": -0.006761651774933486
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2023-06-12",
+     "pct_of_supply": 0.02064879229825503,
+     "fwd_ret": 0.16480000000000006
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2023-07-12",
+     "pct_of_supply": 0.01973421813597269,
+     "fwd_ret": 0.005301619143143643
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2023-08-12",
+     "pct_of_supply": 0.018890052156677314,
+     "fwd_ret": -0.20522439905516188
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2023-09-11",
+     "pct_of_supply": 0.018135070279672746,
+     "fwd_ret": 0.11040127770013974
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2023-10-12",
+     "pct_of_supply": 0.017432440586030065,
+     "fwd_ret": 0.3507864238410596
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2023-11-11",
+     "pct_of_supply": 0.08544168621572926,
+     "fwd_ret": -0.0347792106291519
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2023-12-12",
+     "pct_of_supply": 0.07740368806681079,
+     "fwd_ret": 0.179903466432646
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2024-01-11",
+     "pct_of_supply": 0.07080273994674965,
+     "fwd_ret": -0.11784012705134983
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2024-02-10",
+     "pct_of_supply": 0.0652568023030198,
+     "fwd_ret": 0.04405286343612347
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2024-03-12",
+     "pct_of_supply": 0.060507772302732146,
+     "fwd_ret": 0.35095974307267164
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2024-04-11",
+     "pct_of_supply": 0.056437079380983045,
+     "fwd_ret": -0.23916708818074517
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2024-05-12",
+     "pct_of_supply": 0.024785201408404303,
+     "fwd_ret": 0.08445136559654998
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2024-06-11",
+     "pct_of_supply": 0.023952154623492868,
+     "fwd_ret": -0.12827915149993718
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2024-07-12",
+     "pct_of_supply": 0.02317152193715898,
+     "fwd_ret": 0.14299754299754297
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2024-08-11",
+     "pct_of_supply": 0.022451557610458157,
+     "fwd_ret": 0.28087336244541494
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2024-09-11",
+     "pct_of_supply": 0.02177372276101221,
+     "fwd_ret": 0.3160755336617407
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2024-10-11",
+     "pct_of_supply": 0.021145633824097083,
+     "fwd_ret": 0.05046707008988882
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2024-11-10",
+     "pct_of_supply": 0.020556993717479006,
+     "fwd_ret": 0.14763366472717254
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2024-12-11",
+     "pct_of_supply": 0.019999710487472403,
+     "fwd_ret": -0.25830699581447003
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2025-01-10",
+     "pct_of_supply": 0.019480080372335454,
+     "fwd_ret": -0.10131502589538921
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2025-02-10",
+     "pct_of_supply": 0.0189865949103329,
+     "fwd_ret": -0.12687459599224304
+    },
+    {
+     "symbol": "APTUSDT",
+     "date": "2025-03-12",
+     "pct_of_supply": 0.018524785513595033,
+     "fwd_ret": 0.14253028263795442
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2023-03-23",
+     "pct_of_supply": 1.0,
+     "fwd_ret": -0.08194118981026532
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2023-10-18",
+     "pct_of_supply": 0.0351699930140351,
+     "fwd_ret": 0.3324383071218515
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2023-12-06",
+     "pct_of_supply": 0.014629402216840713,
+     "fwd_ret": 0.04408155559750826
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2024-02-28",
+     "pct_of_supply": 0.029253508637632323,
+     "fwd_ret": 0.11341886633715448
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2024-03-16",
+     "pct_of_supply": 0.43377830600787376,
+     "fwd_ret": -0.06525573192239864
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2024-04-10",
+     "pct_of_supply": 0.012482771681901896,
+     "fwd_ret": -0.24013628620102212
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2024-04-15",
+     "pct_of_supply": 0.03169861375750328,
+     "fwd_ret": -0.08237847222222217
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2024-05-15",
+     "pct_of_supply": 0.04239899239976447,
+     "fwd_ret": 0.1493003120910097
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2024-06-12",
+     "pct_of_supply": 0.06796389884028249,
+     "fwd_ret": -0.1657248535908764
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2024-06-15",
+     "pct_of_supply": 0.027199517387721216,
+     "fwd_ret": -0.15477223427331888
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2024-07-15",
+     "pct_of_supply": 0.02634152846302593,
+     "fwd_ret": -0.08978007761966367
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2024-08-15",
+     "pct_of_supply": 0.025526831709327916,
+     "fwd_ret": -0.04312920089619121
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2024-09-14",
+     "pct_of_supply": 0.024742937666484353,
+     "fwd_ret": 0.21987554214595528
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2024-10-15",
+     "pct_of_supply": 0.02400016126305669,
+     "fwd_ret": -0.035406024308613726
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2024-10-23",
+     "pct_of_supply": 0.06074923718673336,
+     "fwd_ret": -0.019124218051832065
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2024-11-14",
+     "pct_of_supply": 0.02187568443698791,
+     "fwd_ret": 0.5747502583534274
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2024-12-14",
+     "pct_of_supply": 0.021292348918567707,
+     "fwd_ret": -0.2114895780376208
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2025-01-14",
+     "pct_of_supply": 0.020652480328581087,
+     "fwd_ret": -0.1981310942578548
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2025-02-13",
+     "pct_of_supply": 0.02016676168613617,
+     "fwd_ret": -0.1277207392197125
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2025-02-19",
+     "pct_of_supply": 0.013859140976330012,
+     "fwd_ret": -0.11894647408666104
+    },
+    {
+     "symbol": "ARBUSDT",
+     "date": "2025-03-16",
+     "pct_of_supply": 0.01932304404021146,
+     "fwd_ret": -0.04655172413793096
+    },
+    {
+     "symbol": "AVAXUSDT",
+     "date": "2021-01-23",
+     "pct_of_supply": 0.47476499905368746,
+     "fwd_ret": 0.4054125330623706
+    },
+    {
+     "symbol": "AVAXUSDT",
+     "date": "2021-04-25",
+     "pct_of_supply": 0.3219258657198469,
+     "fwd_ret": 0.8054257612628033
+    },
+    {
+     "symbol": "AVAXUSDT",
+     "date": "2021-07-25",
+     "pct_of_supply": 0.2435279269950165,
+     "fwd_ret": 0.31978295676925805
+    },
+    {
+     "symbol": "AVAXUSDT",
+     "date": "2021-10-24",
+     "pct_of_supply": 0.09534822447963934,
+     "fwd_ret": 0.3564914453820547
+    },
+    {
+     "symbol": "AVAXUSDT",
+     "date": "2022-01-23",
+     "pct_of_supply": 0.08704832157365833,
+     "fwd_ret": 0.21834465719579987
+    },
+    {
+     "symbol": "AVAXUSDT",
+     "date": "2022-04-25",
+     "pct_of_supply": 0.040771156820687236,
+     "fwd_ret": -0.4348661633493479
+    },
+    {
+     "symbol": "AVAXUSDT",
+     "date": "2022-07-25",
+     "pct_of_supply": 0.039173988012152064,
+     "fwd_ret": 0.3354066985645934
+    },
+    {
+     "symbol": "AVAXUSDT",
+     "date": "2022-10-24",
+     "pct_of_supply": 0.03755858090485171,
+     "fwd_ret": 0.1477128335451081
+    },
+    {
+     "symbol": "AVAXUSDT",
+     "date": "2023-01-24",
+     "pct_of_supply": 0.03555478430466568,
+     "fwd_ret": 0.22689026184171812
+    },
+    {
+     "symbol": "AVAXUSDT",
+     "date": "2023-04-25",
+     "pct_of_supply": 0.033651101147318445,
+     "fwd_ret": -0.13133549009591916
+    },
+    {
+     "symbol": "AVAXUSDT",
+     "date": "2023-07-25",
+     "pct_of_supply": 0.03168441311306078,
+     "fwd_ret": -0.04839072698627067
+    },
+    {
+     "symbol": "AVAXUSDT",
+     "date": "2023-10-25",
+     "pct_of_supply": 0.030443080500285043,
+     "fwd_ret": 0.23423252279635243
+    },
+    {
+     "symbol": "AVAXUSDT",
+     "date": "2024-01-24",
+     "pct_of_supply": 0.0292623999277313,
+     "fwd_ret": 0.13201193110747633
+    },
+    {
+     "symbol": "AVAXUSDT",
+     "date": "2024-04-24",
+     "pct_of_supply": 0.0280775578535824,
+     "fwd_ret": -0.06486575704225339
+    },
+    {
+     "symbol": "AVAXUSDT",
+     "date": "2024-07-25",
+     "pct_of_supply": 0.026826786092468028,
+     "fwd_ret": -0.16523400191021975
+    },
+    {
+     "symbol": "AXLUSDT",
+     "date": "2024-03-27",
+     "pct_of_supply": 0.01161652874974269,
+     "fwd_ret": -0.3381533435818601
+    },
+    {
+     "symbol": "AXLUSDT",
+     "date": "2024-04-27",
+     "pct_of_supply": 0.011083142118230837,
+     "fwd_ret": -0.08773333333333333
+    },
+    {
+     "symbol": "AXLUSDT",
+     "date": "2024-05-27",
+     "pct_of_supply": 0.010607710853744411,
+     "fwd_ret": -0.15445876558734162
+    },
+    {
+     "symbol": "AXLUSDT",
+     "date": "2024-06-27",
+     "pct_of_supply": 0.010160646128599567,
+     "fwd_ret": 0.06569468267581469
+    },
+    {
+     "symbol": "BICOUSDT",
+     "date": "2023-10-24",
+     "pct_of_supply": 0.014102686589660721,
+     "fwd_ret": 0.06036745406824151
+    },
+    {
+     "symbol": "BICOUSDT",
+     "date": "2023-11-23",
+     "pct_of_supply": 0.013485874623472253,
+     "fwd_ret": 0.19817767653758533
+    },
+    {
+     "symbol": "BICOUSDT",
+     "date": "2023-12-23",
+     "pct_of_supply": 0.012920756945671349,
+     "fwd_ret": -0.2068806280304779
+    },
+    {
+     "symbol": "BICOUSDT",
+     "date": "2024-01-23",
+     "pct_of_supply": 0.01238960781483363,
+     "fwd_ret": -0.028890160183066338
+    },
+    {
+     "symbol": "BICOUSDT",
+     "date": "2024-02-22",
+     "pct_of_supply": 0.01191100231332851,
+     "fwd_ret": 0.4484863902314933
+    },
+    {
+     "symbol": "BICOUSDT",
+     "date": "2024-03-24",
+     "pct_of_supply": 0.011458172889264836,
+     "fwd_ret": 0.718554039099963
+    },
+    {
+     "symbol": "BICOUSDT",
+     "date": "2024-04-23",
+     "pct_of_supply": 0.011047632027580237,
+     "fwd_ret": -0.19349005424954802
+    },
+    {
+     "symbol": "BICOUSDT",
+     "date": "2024-05-24",
+     "pct_of_supply": 0.010656993685785729,
+     "fwd_ret": -0.11635325721961054
+    },
+    {
+     "symbol": "BICOUSDT",
+     "date": "2024-06-23",
+     "pct_of_supply": 0.010300965438163306,
+     "fwd_ret": -0.21617206643071063
+    },
+    {
+     "symbol": "BIGTIMEUSDT",
+     "date": "2023-11-30",
+     "pct_of_supply": 0.029612756264236904,
+     "fwd_ret": 2.3562470970738505
+    },
+    {
+     "symbol": "BIGTIMEUSDT",
+     "date": "2024-01-04",
+     "pct_of_supply": 0.028761061946902654,
+     "fwd_ret": 0.0340279609601688
+    },
+    {
+     "symbol": "BIGTIMEUSDT",
+     "date": "2024-02-29",
+     "pct_of_supply": 0.35428571428571426,
+     "fwd_ret": 0.22142325812050578
+    },
+    {
+     "symbol": "BIGTIMEUSDT",
+     "date": "2024-05-30",
+     "pct_of_supply": 0.011299435028248588,
+     "fwd_ret": -0.25988983475212823
+    },
+    {
+     "symbol": "BIGTIMEUSDT",
+     "date": "2024-08-29",
+     "pct_of_supply": 0.0111731843575419,
+     "fwd_ret": 0.5951008645533142
+    },
+    {
+     "symbol": "BIGTIMEUSDT",
+     "date": "2024-11-28",
+     "pct_of_supply": 0.011049723756906077,
+     "fwd_ret": 0.10124809741248098
+    },
+    {
+     "symbol": "BIGTIMEUSDT",
+     "date": "2024-12-05",
+     "pct_of_supply": 0.24896265560165975,
+     "fwd_ret": -0.36044034090909083
+    },
+    {
+     "symbol": "BLURUSDT",
+     "date": "2023-06-15",
+     "pct_of_supply": 0.46801802408984067,
+     "fwd_ret": 0.0619822031297943
+    },
+    {
+     "symbol": "BNBUSDT",
+     "date": "2021-07-24",
+     "pct_of_supply": 0.09516480361142816,
+     "fwd_ret": 0.18170962284804437
+    },
+    {
+     "symbol": "CAKEUSDT",
+     "date": "2024-04-29",
+     "pct_of_supply": 0.06962002728861565,
+     "fwd_ret": -0.03429314508638304
+    },
+    {
+     "symbol": "CAKEUSDT",
+     "date": "2024-09-02",
+     "pct_of_supply": 0.07924403128320585,
+     "fwd_ret": -0.017304031839418643
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2021-09-30",
+     "pct_of_supply": 0.038557123659171945,
+     "fwd_ret": 0.04764434998228828
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2021-10-31",
+     "pct_of_supply": 0.03712566481015772,
+     "fwd_ret": -0.06598334401024986
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2021-11-30",
+     "pct_of_supply": 0.03579668893542756,
+     "fwd_ret": -0.334884622842738
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2021-12-31",
+     "pct_of_supply": 0.02796485441893202,
+     "fwd_ret": 0.03785229376671473
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2022-01-30",
+     "pct_of_supply": 0.033405104655043566,
+     "fwd_ret": -0.03408338848444736
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2022-03-02",
+     "pct_of_supply": 0.026156911175146104,
+     "fwd_ret": -0.008894044856921801
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2022-04-01",
+     "pct_of_supply": 0.03131307177557558,
+     "fwd_ret": -0.07957870099473385
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2022-05-01",
+     "pct_of_supply": 0.030362333836867754,
+     "fwd_ret": -0.35232323232323237
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2022-06-01",
+     "pct_of_supply": 0.029467627881741718,
+     "fwd_ret": -0.2849584278155707
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2022-07-01",
+     "pct_of_supply": 0.02862414230778198,
+     "fwd_ret": 0.06557377049180335
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2022-08-01",
+     "pct_of_supply": 0.022517490724982468,
+     "fwd_ret": -0.007414272474513428
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2022-08-31",
+     "pct_of_supply": 0.027074191298584398,
+     "fwd_ret": -0.027811366384522307
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2022-10-01",
+     "pct_of_supply": 0.02133034600531724,
+     "fwd_ret": -0.06480304955527327
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2022-10-31",
+     "pct_of_supply": 0.02568347278765451,
+     "fwd_ret": -0.4411764705882353
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2022-11-30",
+     "pct_of_supply": 0.025040349648854793,
+     "fwd_ret": -0.11111111111111105
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2022-12-31",
+     "pct_of_supply": 0.02442864776731257,
+     "fwd_ret": 0.3333333333333335
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2023-01-30",
+     "pct_of_supply": 0.023846119317878802,
+     "fwd_ret": 0.04815864022662897
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2023-03-02",
+     "pct_of_supply": 0.02329072588932202,
+     "fwd_ret": -0.1864181091877497
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2023-04-01",
+     "pct_of_supply": 0.02110663523282298,
+     "fwd_ret": 0.07922272047832579
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2023-05-02",
+     "pct_of_supply": 0.01806722836624472,
+     "fwd_ret": -0.046312178387649894
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2023-06-01",
+     "pct_of_supply": 0.017701335501894542,
+     "fwd_ret": -0.24288425047438333
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2023-07-02",
+     "pct_of_supply": 0.017349968401955896,
+     "fwd_ret": -0.053505535055350606
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2023-08-01",
+     "pct_of_supply": 0.01701227890383037,
+     "fwd_ret": -0.06000000000000005
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2023-08-31",
+     "pct_of_supply": 0.019091815323043486,
+     "fwd_ret": -0.0273972602739726
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2023-10-01",
+     "pct_of_supply": 0.01637485785467185,
+     "fwd_ret": -0.09267241379310354
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2023-10-31",
+     "pct_of_supply": 0.013261536199756053,
+     "fwd_ret": 0.10905349794238695
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2023-12-01",
+     "pct_of_supply": 0.010790437608083384,
+     "fwd_ret": 0.030965391621129212
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2023-12-31",
+     "pct_of_supply": 0.010651037157379131,
+     "fwd_ret": -0.027166882276843496
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2024-01-31",
+     "pct_of_supply": 0.01051519256643273,
+     "fwd_ret": 0.14220877458396375
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2024-03-01",
+     "pct_of_supply": 0.010382769493088907,
+     "fwd_ret": 0.09591326105087572
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2024-03-31",
+     "pct_of_supply": 0.012024844298520004,
+     "fwd_ret": -0.34883720930232565
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2024-05-31",
+     "pct_of_supply": 0.011742442219765899,
+     "fwd_ret": -0.18192918192918184
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2024-12-30",
+     "pct_of_supply": 0.0108505578772824,
+     "fwd_ret": -0.09711684370257978
+    },
+    {
+     "symbol": "CELOUSDT",
+     "date": "2025-03-01",
+     "pct_of_supply": 0.010620090073278283,
+     "fwd_ret": -0.10309278350515472
+    },
+    {
+     "symbol": "CETUSUSDT",
+     "date": "2024-12-01",
+     "pct_of_supply": 0.012934820625820574,
+     "fwd_ret": 0.24059556862104636
+    },
+    {
+     "symbol": "CETUSUSDT",
+     "date": "2024-12-31",
+     "pct_of_supply": 0.012494277620849623,
+     "fwd_ret": 0.031596452328159774
+    },
+    {
+     "symbol": "CETUSUSDT",
+     "date": "2025-01-31",
+     "pct_of_supply": 0.012074361507763462,
+     "fwd_ret": -0.37738371056852604
+    },
+    {
+     "symbol": "CETUSUSDT",
+     "date": "2025-03-02",
+     "pct_of_supply": 0.011689609473526718,
+     "fwd_ret": -0.28153857895138523
+    },
+    {
+     "symbol": "COMPUSDT",
+     "date": "2021-01-15",
+     "pct_of_supply": 0.025645249677712048,
+     "fwd_ret": 0.46082698585418935
+    },
+    {
+     "symbol": "COMPUSDT",
+     "date": "2021-02-16",
+     "pct_of_supply": 0.022104313638723182,
+     "fwd_ret": 0.09098459184788554
+    },
+    {
+     "symbol": "COMPUSDT",
+     "date": "2021-03-22",
+     "pct_of_supply": 0.02228053492300578,
+     "fwd_ret": 0.3560606060606062
+    },
+    {
+     "symbol": "COMPUSDT",
+     "date": "2021-05-25",
+     "pct_of_supply": 0.03787750346572947,
+     "fwd_ret": -0.18188200603777127
+    },
+    {
+     "symbol": "COMPUSDT",
+     "date": "2021-08-01",
+     "pct_of_supply": 0.03651246646587908,
+     "fwd_ret": 0.195578895945286
+    },
+    {
+     "symbol": "COMPUSDT",
+     "date": "2021-10-03",
+     "pct_of_supply": 0.031482000935016366,
+     "fwd_ret": -0.04813930713673653
+    },
+    {
+     "symbol": "COMPUSDT",
+     "date": "2021-12-30",
+     "pct_of_supply": 0.03264305614431867,
+     "fwd_ret": -0.06419443748433973
+    },
+    {
+     "symbol": "COMPUSDT",
+     "date": "2022-04-01",
+     "pct_of_supply": 0.03783564310558768,
+     "fwd_ret": -0.0688830122150863
+    },
+    {
+     "symbol": "COMPUSDT",
+     "date": "2022-05-02",
+     "pct_of_supply": 0.012199684492089576,
+     "fwd_ret": -0.358430845962018
+    },
+    {
+     "symbol": "COMPUSDT",
+     "date": "2022-08-22",
+     "pct_of_supply": 0.03856477697863925,
+     "fwd_ret": -0.0397716085843669
+    },
+    {
+     "symbol": "COMPUSDT",
+     "date": "2022-12-06",
+     "pct_of_supply": 0.03761472612761445,
+     "fwd_ret": -0.12597605413846968
+    },
+    {
+     "symbol": "COMPUSDT",
+     "date": "2023-03-03",
+     "pct_of_supply": 0.02963206833787859,
+     "fwd_ret": -0.02013845185651353
+    },
+    {
+     "symbol": "COMPUSDT",
+     "date": "2023-07-08",
+     "pct_of_supply": 0.03900220009805139,
+     "fwd_ret": 0.3077208611729767
+    },
+    {
+     "symbol": "COMPUSDT",
+     "date": "2023-11-29",
+     "pct_of_supply": 0.03181027014994623,
+     "fwd_ret": -0.005467682093341142
+    },
+    {
+     "symbol": "COMPUSDT",
+     "date": "2024-04-09",
+     "pct_of_supply": 0.013393426210301537,
+     "fwd_ret": -0.18854252119223402
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2023-09-14",
+     "pct_of_supply": 0.11101151091380165,
+     "fwd_ret": 0.02292943269420822
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2023-10-14",
+     "pct_of_supply": 0.09991931660770573,
+     "fwd_ret": 0.3502661934338953
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2023-11-14",
+     "pct_of_supply": 0.14037945485999176,
+     "fwd_ret": -0.16798580786026196
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2023-12-14",
+     "pct_of_supply": 0.07909869696795473,
+     "fwd_ret": 0.0770509140353528
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2024-01-14",
+     "pct_of_supply": 0.07330070658986595,
+     "fwd_ret": -0.07836949375410918
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2024-02-13",
+     "pct_of_supply": 0.08925589064880732,
+     "fwd_ret": 0.13675432969852475
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2024-03-15",
+     "pct_of_supply": 0.04480556473197731,
+     "fwd_ret": 0.28634480273824536
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2024-04-14",
+     "pct_of_supply": 0.04288411762380996,
+     "fwd_ret": -0.031124497991967814
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2024-05-14",
+     "pct_of_supply": 0.07544427458145343,
+     "fwd_ret": 0.2446170618697192
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2024-06-14",
+     "pct_of_supply": 0.03813668436723746,
+     "fwd_ret": -0.33494593056346034
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2024-07-14",
+     "pct_of_supply": 0.03673570632992556,
+     "fwd_ret": -0.019078641228478355
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2024-08-14",
+     "pct_of_supply": 0.13546003078759244,
+     "fwd_ret": 0.16319099635882162
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2024-09-13",
+     "pct_of_supply": 0.03078187003609271,
+     "fwd_ret": 0.14619377162629754
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2024-10-14",
+     "pct_of_supply": 0.029862642068990683,
+     "fwd_ret": -0.07488151658767772
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2024-11-13",
+     "pct_of_supply": 0.14493034130073112,
+     "fwd_ret": 0.23585434173669473
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2024-12-13",
+     "pct_of_supply": 0.02489885586181736,
+     "fwd_ret": -0.31464110929853173
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2025-01-13",
+     "pct_of_supply": 0.024293963954989884,
+     "fwd_ret": -0.09891646277525357
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2025-02-12",
+     "pct_of_supply": 0.12117925367422505,
+     "fwd_ret": -0.26062052505966593
+    },
+    {
+     "symbol": "CYBERUSDT",
+     "date": "2025-03-15",
+     "pct_of_supply": 0.020903743778062606,
+     "fwd_ret": -0.0368946963873944
+    },
+    {
+     "symbol": "DYMUSDT",
+     "date": "2024-02-07",
+     "pct_of_supply": 0.9997676259819893,
+     "fwd_ret": 0.258593613679986
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2021-12-08",
+     "pct_of_supply": 0.02903411367887456,
+     "fwd_ret": -0.08583647492804736
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2022-01-07",
+     "pct_of_supply": 0.02787827882543929,
+     "fwd_ret": -0.4064277872043117
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2022-02-07",
+     "pct_of_supply": 0.026800696421967134,
+     "fwd_ret": -0.36260610231704526
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2022-03-09",
+     "pct_of_supply": 0.02581281963154125,
+     "fwd_ret": 0.2349061735110145
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2022-04-09",
+     "pct_of_supply": 0.024886341943230313,
+     "fwd_ret": -0.1057889344262295
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2022-05-09",
+     "pct_of_supply": 0.024032302930721592,
+     "fwd_ret": -0.044183949504057685
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2022-06-09",
+     "pct_of_supply": 0.023227237095283446,
+     "fwd_ret": -0.1996523250760539
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2022-07-09",
+     "pct_of_supply": 0.02248156922415187,
+     "fwd_ret": 0.2573383577945261
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2022-08-08",
+     "pct_of_supply": 0.021782288770383094,
+     "fwd_ret": -0.18087592115511342
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2022-09-08",
+     "pct_of_supply": 0.02111883313981798,
+     "fwd_ret": -0.113114963038491
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2022-10-08",
+     "pct_of_supply": 0.020500592447597582,
+     "fwd_ret": -0.05541120650700415
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2022-11-08",
+     "pct_of_supply": 0.019911861680330156,
+     "fwd_ret": -0.08510005207171023
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2022-12-08",
+     "pct_of_supply": 0.01936134726300054,
+     "fwd_ret": -0.18413929329138934
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2023-01-08",
+     "pct_of_supply": 0.018835392133777953,
+     "fwd_ret": 0.20235138267925157
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2023-02-07",
+     "pct_of_supply": 0.01834205488144086,
+     "fwd_ret": 0.025396825396825307
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2023-03-09",
+     "pct_of_supply": 0.017873901037664324,
+     "fwd_ret": 0.1480016481252575
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2023-04-09",
+     "pct_of_supply": 0.017424717784624455,
+     "fwd_ret": -0.06588454665527155
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2023-05-09",
+     "pct_of_supply": 0.017001680297113755,
+     "fwd_ret": 0.001643623706854891
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2023-06-09",
+     "pct_of_supply": 0.016594767387257913,
+     "fwd_ret": -0.05354767184035458
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2023-07-09",
+     "pct_of_supply": 0.01621062504020265,
+     "fwd_ret": 0.05165402791515561
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2023-08-09",
+     "pct_of_supply": 0.015840284553061697,
+     "fwd_ret": -0.11404561824729886
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2023-09-08",
+     "pct_of_supply": 0.015489909548370014,
+     "fwd_ret": -0.020571278825995853
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2023-10-09",
+     "pct_of_supply": 0.015151423499614581,
+     "fwd_ret": 0.07265854682906348
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2023-11-08",
+     "pct_of_supply": 0.014830551374250616,
+     "fwd_ret": -0.01243839474301811
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2023-12-08",
+     "pct_of_supply": 0.014522988058817785,
+     "fwd_ret": -0.06287268542734592
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2024-01-08",
+     "pct_of_supply": 0.014225035047235235,
+     "fwd_ret": 0.29010289436671854
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2024-02-07",
+     "pct_of_supply": 0.013941834221489568,
+     "fwd_ret": 0.0458578500046698
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2024-03-09",
+     "pct_of_supply": 0.01366702434527644,
+     "fwd_ret": -0.15575558110948096
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2024-04-08",
+     "pct_of_supply": 0.013405401863205121,
+     "fwd_ret": -0.29484600598989763
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2024-05-09",
+     "pct_of_supply": 0.013151139731375988,
+     "fwd_ret": 0.651533911129454
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2024-06-08",
+     "pct_of_supply": 0.012908720074980852,
+     "fwd_ret": 0.1698949824970828
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2024-07-08",
+     "pct_of_supply": 0.012675075873728786,
+     "fwd_ret": -0.048874550376385884
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2024-08-08",
+     "pct_of_supply": 0.012447528333419952,
+     "fwd_ret": -0.014472640761300504
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2024-09-07",
+     "pct_of_supply": 0.012230140209123134,
+     "fwd_ret": 0.1746459456072189
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2024-10-08",
+     "pct_of_supply": 0.012018153977852702,
+     "fwd_ret": 0.07504363001745196
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2024-11-07",
+     "pct_of_supply": 0.011815382527983372,
+     "fwd_ret": 0.008365985386000307
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2024-12-08",
+     "pct_of_supply": 0.011617414200284781,
+     "fwd_ret": -0.18065385911695309
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2025-01-07",
+     "pct_of_supply": 0.011427833280720626,
+     "fwd_ret": 0.04944346104227293
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2025-02-07",
+     "pct_of_supply": 0.011242537011203068,
+     "fwd_ret": 0.050239043824701124
+    },
+    {
+     "symbol": "ENSUSDT",
+     "date": "2025-03-09",
+     "pct_of_supply": 0.011064900153882088,
+     "fwd_ret": -0.03732230843291606
+    },
+    {
+     "symbol": "ETHFIUSDT",
+     "date": "2024-07-17",
+     "pct_of_supply": 0.22086643964228714,
+     "fwd_ret": -0.18016528925619835
+    },
+    {
+     "symbol": "ETHFIUSDT",
+     "date": "2024-09-25",
+     "pct_of_supply": 0.0932313548344537,
+     "fwd_ret": -0.07341976220863833
+    },
+    {
+     "symbol": "ETHFIUSDT",
+     "date": "2025-02-04",
+     "pct_of_supply": 0.04296070061656808,
+     "fwd_ret": -0.07627190383475835
+    },
+    {
+     "symbol": "FLOWUSDT",
+     "date": "2022-10-14",
+     "pct_of_supply": 0.1978699333230764,
+     "fwd_ret": 0.14421123899796884
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2022-04-08",
+     "pct_of_supply": 0.02912621359223301,
+     "fwd_ret": 0.4585914095094563
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2022-05-08",
+     "pct_of_supply": 0.02830188679245283,
+     "fwd_ret": -0.47853437810396204
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2022-06-08",
+     "pct_of_supply": 0.027522935779816515,
+     "fwd_ret": -0.24545078577336632
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2022-07-08",
+     "pct_of_supply": 0.026785714285714284,
+     "fwd_ret": -0.0574506283662477
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2022-08-08",
+     "pct_of_supply": 0.02608695652173913,
+     "fwd_ret": -0.1690574859207311
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2022-09-07",
+     "pct_of_supply": 0.0648885997723207,
+     "fwd_ret": -0.08185874749961541
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2022-10-08",
+     "pct_of_supply": 0.06093463653023824,
+     "fwd_ret": -0.2623490669593853
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2022-11-07",
+     "pct_of_supply": 0.057434863970059015,
+     "fwd_ret": -0.38613861386138615
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2022-12-07",
+     "pct_of_supply": 0.05431527361829567,
+     "fwd_ret": -0.29104659673090993
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2023-01-07",
+     "pct_of_supply": 0.05151710781149128,
+     "fwd_ret": 0.8783371472158659
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2023-02-06",
+     "pct_of_supply": 0.04899312377210216,
+     "fwd_ret": -0.09622604228413356
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2023-03-09",
+     "pct_of_supply": 0.10092612116521918,
+     "fwd_ret": 0.3358306188925082
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2023-04-08",
+     "pct_of_supply": 0.09167383644090402,
+     "fwd_ret": -0.10996015936254977
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2023-05-09",
+     "pct_of_supply": 0.08397548185251083,
+     "fwd_ret": 0.16509803921568622
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2023-06-08",
+     "pct_of_supply": 0.07746990892173777,
+     "fwd_ret": -0.06660899653979235
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2023-07-08",
+     "pct_of_supply": 0.07189983523462354,
+     "fwd_ret": 0.049860205032618676
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2023-08-08",
+     "pct_of_supply": 0.06707700931672006,
+     "fwd_ret": -0.19602134885977684
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2023-09-07",
+     "pct_of_supply": 0.06286051403138315,
+     "fwd_ret": -0.07063197026022305
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2023-10-08",
+     "pct_of_supply": 0.05914276916070199,
+     "fwd_ret": 0.00721311475409836
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2023-11-07",
+     "pct_of_supply": 0.05584022370050128,
+     "fwd_ret": 0.1420224719101124
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2023-12-08",
+     "pct_of_supply": 0.05037974624806995,
+     "fwd_ret": -0.044993234100135227
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2024-01-07",
+     "pct_of_supply": 0.047963364133805066,
+     "fwd_ret": -0.2478058853897781
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2024-02-07",
+     "pct_of_supply": 0.0457681687884664,
+     "fwd_ret": 0.11106506423539164
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2024-03-08",
+     "pct_of_supply": 0.043765119415988075,
+     "fwd_ret": -0.04985044865403798
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2024-04-07",
+     "pct_of_supply": 0.04193004594795783,
+     "fwd_ret": -0.21864247732248976
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2024-05-08",
+     "pct_of_supply": 0.040242668988213576,
+     "fwd_ret": 0.06832007487131486
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2024-06-07",
+     "pct_of_supply": 0.03868584724308165,
+     "fwd_ret": -0.23327128897161475
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2024-07-08",
+     "pct_of_supply": 0.037244993128348725,
+     "fwd_ret": 0.14393486704511504
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2024-08-07",
+     "pct_of_supply": 0.042617086245727374,
+     "fwd_ret": 0.1982410028305701
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2024-09-07",
+     "pct_of_supply": 0.030577829745175134,
+     "fwd_ret": 0.2770921538600126
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2024-10-07",
+     "pct_of_supply": 0.029670568163431124,
+     "fwd_ret": 0.02702497532832293
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2024-11-06",
+     "pct_of_supply": 0.02881559314291458,
+     "fwd_ret": 0.16814292148326082
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2024-12-07",
+     "pct_of_supply": 0.02800851127740611,
+     "fwd_ret": -0.45377526139604074
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2025-01-06",
+     "pct_of_supply": 0.027245407961265476,
+     "fwd_ret": -0.3884956813819578
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2025-02-06",
+     "pct_of_supply": 0.026522783893810138,
+     "fwd_ret": 0.11964314162816603
+    },
+    {
+     "symbol": "GMTUSDT",
+     "date": "2025-03-08",
+     "pct_of_supply": 0.024126915254968132,
+     "fwd_ret": 0.041402535657686146
+    },
+    {
+     "symbol": "GRASSUSDT",
+     "date": "2024-11-27",
+     "pct_of_supply": 0.010832530030908227,
+     "fwd_ret": -0.026127449448385853
+    },
+    {
+     "symbol": "GRASSUSDT",
+     "date": "2024-12-27",
+     "pct_of_supply": 0.010674842721650145,
+     "fwd_ret": -0.018940003216985635
+    },
+    {
+     "symbol": "GRASSUSDT",
+     "date": "2025-01-27",
+     "pct_of_supply": 0.010520338602548644,
+     "fwd_ret": -0.21517307283924403
+    },
+    {
+     "symbol": "GRASSUSDT",
+     "date": "2025-02-26",
+     "pct_of_supply": 0.010371546935068685,
+     "fwd_ret": -0.23038695627896577
+    },
+    {
+     "symbol": "GRTUSDT",
+     "date": "2021-03-18",
+     "pct_of_supply": 0.01198882565329585,
+     "fwd_ret": 0.04872796356170195
+    },
+    {
+     "symbol": "GRTUSDT",
+     "date": "2021-06-17",
+     "pct_of_supply": 0.5128479289777415,
+     "fwd_ret": -0.2177506498057884
+    },
+    {
+     "symbol": "GRTUSDT",
+     "date": "2021-12-17",
+     "pct_of_supply": 0.3024596681243248,
+     "fwd_ret": 0.08983977187860681
+    },
+    {
+     "symbol": "HBARUSDT",
+     "date": "2021-04-01",
+     "pct_of_supply": 0.08122643664522666,
+     "fwd_ret": 0.1015523371780418
+    },
+    {
+     "symbol": "HBARUSDT",
+     "date": "2021-07-01",
+     "pct_of_supply": 0.11474967103287487,
+     "fwd_ret": -0.17237129041433574
+    },
+    {
+     "symbol": "HBARUSDT",
+     "date": "2021-10-01",
+     "pct_of_supply": 0.2024226191393161,
+     "fwd_ret": -0.0013966097981762404
+    },
+    {
+     "symbol": "HBARUSDT",
+     "date": "2022-01-01",
+     "pct_of_supply": 0.07060162664804079,
+     "fwd_ret": -0.06925253870484427
+    },
+    {
+     "symbol": "HBARUSDT",
+     "date": "2022-04-01",
+     "pct_of_supply": 0.07281982763101186,
+     "fwd_ret": -0.19023896314297295
+    },
+    {
+     "symbol": "HBARUSDT",
+     "date": "2022-07-01",
+     "pct_of_supply": 0.12220129361184191,
+     "fwd_ret": 0.056132381570408896
+    },
+    {
+     "symbol": "HBARUSDT",
+     "date": "2022-10-01",
+     "pct_of_supply": 0.03371185240581081,
+     "fwd_ret": 0.045982994967898705
+    },
+    {
+     "symbol": "HBARUSDT",
+     "date": "2023-01-01",
+     "pct_of_supply": 0.1761601645321981,
+     "fwd_ret": 0.37684210526315787
+    },
+    {
+     "symbol": "HBARUSDT",
+     "date": "2023-04-01",
+     "pct_of_supply": 0.05350597380770569,
+     "fwd_ret": -0.0333238797504255
+    },
+    {
+     "symbol": "HBARUSDT",
+     "date": "2023-07-01",
+     "pct_of_supply": 0.03629534964085528,
+     "fwd_ret": 0.02719211822660106
+    },
+    {
+     "symbol": "HBARUSDT",
+     "date": "2024-04-01",
+     "pct_of_supply": 0.05708073915926952,
+     "fwd_ret": -0.27817636908546006
+    },
+    {
+     "symbol": "HBARUSDT",
+     "date": "2024-07-01",
+     "pct_of_supply": 0.04956994988337939,
+     "fwd_ret": 0.0194440819522379
+    },
+    {
+     "symbol": "HBARUSDT",
+     "date": "2024-10-01",
+     "pct_of_supply": 0.016355199243769745,
+     "fwd_ret": 0.061931818181818254
+    },
+    {
+     "symbol": "HBARUSDT",
+     "date": "2025-01-01",
+     "pct_of_supply": 0.09396955523618179,
+     "fwd_ret": 0.09312345218305818
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2023-11-07",
+     "pct_of_supply": 0.4234445693602786,
+     "fwd_ret": -0.067815249266862
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2023-12-07",
+     "pct_of_supply": 0.055588932970095005,
+     "fwd_ret": 0.021424435437174427
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2024-01-07",
+     "pct_of_supply": 0.044492201107889186,
+     "fwd_ret": 0.09932349323493228
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2024-02-06",
+     "pct_of_supply": 0.05002703408158701,
+     "fwd_ret": 0.19397116644823065
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2024-03-07",
+     "pct_of_supply": 0.04764356769665791,
+     "fwd_ret": -0.10648714810281523
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2024-04-07",
+     "pct_of_supply": 0.045476886572602876,
+     "fwd_ret": -0.2551789077212806
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2024-05-07",
+     "pct_of_supply": 0.04349870107763951,
+     "fwd_ret": 0.0022653721682848182
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2024-06-07",
+     "pct_of_supply": 0.041640514806550975,
+     "fwd_ret": -0.2667607621736061
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2024-07-07",
+     "pct_of_supply": 0.03993458132086698,
+     "fwd_ret": 0.2419168591224019
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2024-08-07",
+     "pct_of_supply": 0.032411720833144704,
+     "fwd_ret": 0.2460059059589612
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2024-09-06",
+     "pct_of_supply": 0.036910291069228066,
+     "fwd_ret": 0.19871303814922636
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2024-10-07",
+     "pct_of_supply": 0.030046698073612436,
+     "fwd_ret": 0.04025721749614841
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2024-11-06",
+     "pct_of_supply": 0.03431181887059462,
+     "fwd_ret": 0.4131694331349829
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2024-12-06",
+     "pct_of_supply": 0.03314511629630597,
+     "fwd_ret": -0.3003249417402435
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2025-01-06",
+     "pct_of_supply": 0.0320551471844851,
+     "fwd_ret": -0.19519851445751168
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2025-02-05",
+     "pct_of_supply": 0.03103458246588018,
+     "fwd_ret": -0.07173076923076915
+    },
+    {
+     "symbol": "HFTUSDT",
+     "date": "2025-03-08",
+     "pct_of_supply": 0.025411181829192844,
+     "fwd_ret": -0.009702540533639725
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2022-03-07",
+     "pct_of_supply": 0.030780774923739627,
+     "fwd_ret": 0.3540600315955764
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2022-04-07",
+     "pct_of_supply": 0.027619712201326137,
+     "fwd_ret": -0.12364940387481382
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2022-11-06",
+     "pct_of_supply": 0.057724856676201544,
+     "fwd_ret": -0.34426229508196715
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2022-12-06",
+     "pct_of_supply": 0.05235123567460142,
+     "fwd_ret": -0.05679471292854199
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2023-01-06",
+     "pct_of_supply": 0.04783345172810675,
+     "fwd_ret": 0.512668718920199
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2023-02-05",
+     "pct_of_supply": 0.044083823511617375,
+     "fwd_ret": 0.1394047885432983
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2023-03-07",
+     "pct_of_supply": 0.040879711309120756,
+     "fwd_ret": 0.16659001011866437
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2023-04-07",
+     "pct_of_supply": 0.038082283275155435,
+     "fwd_ret": -0.09388072769724687
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2023-05-07",
+     "pct_of_supply": 0.03567686705831049,
+     "fwd_ret": -0.16032672112018664
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2023-06-07",
+     "pct_of_supply": 0.033529269091687124,
+     "fwd_ret": 0.01911202587474281
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2023-07-07",
+     "pct_of_supply": 0.031651999226552464,
+     "fwd_ret": 0.059855667185510164
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2023-08-07",
+     "pct_of_supply": 0.029951502987747614,
+     "fwd_ret": -0.17851307189542498
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2023-09-06",
+     "pct_of_supply": 0.028445735672118545,
+     "fwd_ret": 0.011911306578706427
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2023-10-07",
+     "pct_of_supply": 0.0270659557425008,
+     "fwd_ret": -0.0023255813953489968
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2023-11-06",
+     "pct_of_supply": 0.02583137481544684,
+     "fwd_ret": 0.4707487448155423
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2023-12-06",
+     "pct_of_supply": 0.024704536739448363,
+     "fwd_ret": 0.7136899626114466
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2024-01-06",
+     "pct_of_supply": 0.023658397542457563,
+     "fwd_ret": -0.042020161692783775
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2024-02-05",
+     "pct_of_supply": 0.02271079163878901,
+     "fwd_ret": 0.42438472910687897
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2024-03-07",
+     "pct_of_supply": 0.02182442173250362,
+     "fwd_ret": -0.14627213977979903
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2024-04-06",
+     "pct_of_supply": 0.021016207091383528,
+     "fwd_ret": -0.18504417255017924
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2024-05-07",
+     "pct_of_supply": 0.020255614737402564,
+     "fwd_ret": 0.15358977919733396
+    },
+    {
+     "symbol": "IMXUSDT",
+     "date": "2024-06-06",
+     "pct_of_supply": 0.019558150449835707,
+     "fwd_ret": -0.3021656619781201
+    },
+    {
+     "symbol": "INJUSDT",
+     "date": "2022-10-31",
+     "pct_of_supply": 0.03952286850313088,
+     "fwd_ret": -0.27590460526315796
+    },
+    {
+     "symbol": "INJUSDT",
+     "date": "2022-12-31",
+     "pct_of_supply": 0.04906266980619453,
+     "fwd_ret": 0.26609105180533743
+    },
+    {
+     "symbol": "INJUSDT",
+     "date": "2023-01-31",
+     "pct_of_supply": 0.03622239678798987,
+     "fwd_ret": 0.10941475826972002
+    },
+    {
+     "symbol": "INJUSDT",
+     "date": "2023-05-02",
+     "pct_of_supply": 0.034956199460916444,
+     "fwd_ret": -0.21742453190676347
+    },
+    {
+     "symbol": "INJUSDT",
+     "date": "2023-07-02",
+     "pct_of_supply": 0.043641123753901924,
+     "fwd_ret": 0.01605136436597121
+    },
+    {
+     "symbol": "JTOUSDT",
+     "date": "2024-12-06",
+     "pct_of_supply": 0.4253745711260569,
+     "fwd_ret": -0.11919012571952226
+    },
+    {
+     "symbol": "JUPUSDT",
+     "date": "2024-01-31",
+     "pct_of_supply": 1.0,
+     "fwd_ret": -0.20138784130336407
+    },
+    {
+     "symbol": "JUPUSDT",
+     "date": "2024-07-06",
+     "pct_of_supply": 0.07055669230226487,
+     "fwd_ret": 0.2963287808545294
+    },
+    {
+     "symbol": "JUPUSDT",
+     "date": "2025-01-22",
+     "pct_of_supply": 0.33060973881830635,
+     "fwd_ret": 0.10657482780212901
+    },
+    {
+     "symbol": "JUPUSDT",
+     "date": "2025-01-31",
+     "pct_of_supply": 0.18060088495490653,
+     "fwd_ret": -0.07925947353196405
+    },
+    {
+     "symbol": "JUPUSDT",
+     "date": "2025-02-01",
+     "pct_of_supply": 0.020274298086920318,
+     "fwd_ret": 0.008554412560909608
+    },
+    {
+     "symbol": "JUPUSDT",
+     "date": "2025-03-03",
+     "pct_of_supply": 0.019871419014412035,
+     "fwd_ret": -0.2260416666666667
+    },
+    {
+     "symbol": "LINKUSDT",
+     "date": "2022-08-26",
+     "pct_of_supply": 0.04272551522424602,
+     "fwd_ret": 0.19070340156995536
+    },
+    {
+     "symbol": "LINKUSDT",
+     "date": "2022-11-22",
+     "pct_of_supply": 0.0322892118565909,
+     "fwd_ret": 0.11014176663031638
+    },
+    {
+     "symbol": "LINKUSDT",
+     "date": "2023-03-03",
+     "pct_of_supply": 0.017601221272877058,
+     "fwd_ret": 0.03623813632441775
+    },
+    {
+     "symbol": "LINKUSDT",
+     "date": "2023-06-16",
+     "pct_of_supply": 0.03903276227799343,
+     "fwd_ret": 0.18605525277203538
+    },
+    {
+     "symbol": "LINKUSDT",
+     "date": "2023-09-15",
+     "pct_of_supply": 0.03367701375522588,
+     "fwd_ret": 0.24858490566037728
+    },
+    {
+     "symbol": "LINKUSDT",
+     "date": "2023-12-15",
+     "pct_of_supply": 0.019806004011418372,
+     "fwd_ret": 0.08846584546472558
+    },
+    {
+     "symbol": "LINKUSDT",
+     "date": "2024-02-02",
+     "pct_of_supply": 0.032367444552934076,
+     "fwd_ret": 0.09785658175288958
+    },
+    {
+     "symbol": "LINKUSDT",
+     "date": "2024-06-21",
+     "pct_of_supply": 0.03453892952621621,
+     "fwd_ret": -0.11111913879054969
+    },
+    {
+     "symbol": "LINKUSDT",
+     "date": "2024-09-20",
+     "pct_of_supply": 0.02991577732280524,
+     "fwd_ret": -0.03158355205599295
+    },
+    {
+     "symbol": "LINKUSDT",
+     "date": "2024-12-20",
+     "pct_of_supply": 0.01763296409719944,
+     "fwd_ret": 0.004277159965782706
+    },
+    {
+     "symbol": "LINKUSDT",
+     "date": "2025-03-14",
+     "pct_of_supply": 0.02891890865458628,
+     "fwd_ret": 0.04305799648506148
+    },
+    {
+     "symbol": "LISTAUSDT",
+     "date": "2024-06-20",
+     "pct_of_supply": 1.0,
+     "fwd_ret": -0.24706407016500675
+    },
+    {
+     "symbol": "LISTAUSDT",
+     "date": "2024-09-19",
+     "pct_of_supply": 0.02577319587628866,
+     "fwd_ret": -0.1671137339055795
+    },
+    {
+     "symbol": "LISTAUSDT",
+     "date": "2024-12-19",
+     "pct_of_supply": 0.02512562814070352,
+     "fwd_ret": 0.018676122931442052
+    },
+    {
+     "symbol": "MANTAUSDT",
+     "date": "2024-01-18",
+     "pct_of_supply": 0.9997626522153864,
+     "fwd_ret": 0.3975492905841165
+    },
+    {
+     "symbol": "MANTAUSDT",
+     "date": "2024-02-17",
+     "pct_of_supply": 0.03160766478110127,
+     "fwd_ret": -0.00013725422914590002
+    },
+    {
+     "symbol": "MANTAUSDT",
+     "date": "2024-03-18",
+     "pct_of_supply": 0.0304372230660682,
+     "fwd_ret": -0.022769420976715415
+    },
+    {
+     "symbol": "MANTAUSDT",
+     "date": "2024-04-18",
+     "pct_of_supply": 0.076956151562073,
+     "fwd_ret": -0.06453028972783137
+    },
+    {
+     "symbol": "MANTAUSDT",
+     "date": "2024-05-18",
+     "pct_of_supply": 0.026988537913730085,
+     "fwd_ret": 0.120877025738799
+    },
+    {
+     "symbol": "MANTAUSDT",
+     "date": "2024-06-18",
+     "pct_of_supply": 0.026125622519132075,
+     "fwd_ret": 0.0016745468873127223
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2023-12-01",
+     "pct_of_supply": 0.03601135749723683,
+     "fwd_ret": 0.059573002754820914
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2023-12-31",
+     "pct_of_supply": 0.034759616520258926,
+     "fwd_ret": 0.1597114889232354
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2024-01-30",
+     "pct_of_supply": 0.03359197244008255,
+     "fwd_ret": -0.08541545613015689
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2024-03-01",
+     "pct_of_supply": 0.03250022575231434,
+     "fwd_ret": -0.09773557341124905
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2024-03-31",
+     "pct_of_supply": 0.031477209342626135,
+     "fwd_ret": -0.38030917004352394
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2024-04-01",
+     "pct_of_supply": 0.10955249538583575,
+     "fwd_ret": -0.5052102950408035
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2024-05-01",
+     "pct_of_supply": 0.02726460819277425,
+     "fwd_ret": -0.03517186250999216
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2024-05-31",
+     "pct_of_supply": 0.02654097880461373,
+     "fwd_ret": -0.14328634157614972
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2024-07-01",
+     "pct_of_supply": 0.115200536112902,
+     "fwd_ret": -0.11611650485436897
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2024-07-31",
+     "pct_of_supply": 0.02257775354214165,
+     "fwd_ret": -0.08966900702106317
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2024-08-30",
+     "pct_of_supply": 0.021751486823289916,
+     "fwd_ret": 0.010297539482152507
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2024-09-30",
+     "pct_of_supply": 0.09515003480123964,
+     "fwd_ret": -0.10338101430429125
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2024-10-30",
+     "pct_of_supply": 0.01877223856748221,
+     "fwd_ret": 0.03947042811185342
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2024-11-30",
+     "pct_of_supply": 0.01818995936962461,
+     "fwd_ret": -0.07407027618266326
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2024-12-30",
+     "pct_of_supply": 0.08104436926317643,
+     "fwd_ret": -0.17823024220785488
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2025-01-30",
+     "pct_of_supply": 0.016058667555485403,
+     "fwd_ret": -0.2356070087609512
+    },
+    {
+     "symbol": "MAVUSDT",
+     "date": "2025-03-01",
+     "pct_of_supply": 0.015636201945320925,
+     "fwd_ret": -0.015512674990540987
+    },
+    {
+     "symbol": "MEMEUSDT",
+     "date": "2024-04-30",
+     "pct_of_supply": 0.17703415471600473,
+     "fwd_ret": -0.022906168006330496
+    },
+    {
+     "symbol": "MEMEUSDT",
+     "date": "2024-10-27",
+     "pct_of_supply": 0.11908156197534338,
+     "fwd_ret": -0.07071077532458003
+    },
+    {
+     "symbol": "MEUSDT",
+     "date": "2024-12-10",
+     "pct_of_supply": 1.0,
+     "fwd_ret": -0.4358293503274916
+    },
+    {
+     "symbol": "MEUSDT",
+     "date": "2025-01-09",
+     "pct_of_supply": 0.03682260305697082,
+     "fwd_ret": -0.21873833519970132
+    },
+    {
+     "symbol": "MEUSDT",
+     "date": "2025-02-08",
+     "pct_of_supply": 0.03551485369667188,
+     "fwd_ret": -0.15461071231363888
+    },
+    {
+     "symbol": "MEUSDT",
+     "date": "2025-03-11",
+     "pct_of_supply": 0.034296807592752374,
+     "fwd_ret": 0.23217726396917127
+    },
+    {
+     "symbol": "MOVEUSDT",
+     "date": "2024-12-09",
+     "pct_of_supply": 1.0,
+     "fwd_ret": 0.18380654802336638
+    },
+    {
+     "symbol": "MOVEUSDT",
+     "date": "2025-01-08",
+     "pct_of_supply": 0.02127659574468085,
+     "fwd_ret": -0.24267643142476703
+    },
+    {
+     "symbol": "MOVEUSDT",
+     "date": "2025-02-07",
+     "pct_of_supply": 0.020833333333333332,
+     "fwd_ret": -0.12155297532656029
+    },
+    {
+     "symbol": "MOVEUSDT",
+     "date": "2025-03-10",
+     "pct_of_supply": 0.02040816326530612,
+     "fwd_ret": -0.12264342185282784
+    },
+    {
+     "symbol": "NEARUSDT",
+     "date": "2021-04-22",
+     "pct_of_supply": 0.09836637935118632,
+     "fwd_ret": 0.08882025168520569
+    },
+    {
+     "symbol": "OMNIUSDT",
+     "date": "2024-04-17",
+     "pct_of_supply": 1.0,
+     "fwd_ret": -0.3418047882136279
+    },
+    {
+     "symbol": "ONDOUSDT",
+     "date": "2025-01-17",
+     "pct_of_supply": 0.3511689964057487,
+     "fwd_ret": 0.138601730607244
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2022-06-01",
+     "pct_of_supply": 1.0,
+     "fwd_ret": -0.5196984435797665
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2022-07-01",
+     "pct_of_supply": 0.09952606635071092,
+     "fwd_ret": -0.08926212492923202
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2022-11-01",
+     "pct_of_supply": 0.06112481473042962,
+     "fwd_ret": -0.0674034249303066
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2023-05-31",
+     "pct_of_supply": 0.3025723228146077,
+     "fwd_ret": -0.21575862817451708
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2023-06-30",
+     "pct_of_supply": 0.022745399571756537,
+     "fwd_ret": 0.09221772379667126
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2023-07-30",
+     "pct_of_supply": 0.022239552073546828,
+     "fwd_ret": -0.05236892366459245
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2023-08-30",
+     "pct_of_supply": 0.02175571472306597,
+     "fwd_ret": -0.08943638204522453
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2023-09-29",
+     "pct_of_supply": 0.021292481568319473,
+     "fwd_ret": -0.09566259644917219
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2023-10-30",
+     "pct_of_supply": 0.020848563905632854,
+     "fwd_ret": 0.2603067398339667
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2023-11-29",
+     "pct_of_supply": 0.020422778306969428,
+     "fwd_ret": 0.3311438546659564
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2023-12-30",
+     "pct_of_supply": 0.02001403608497823,
+     "fwd_ret": 0.056239942289551204
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2024-01-29",
+     "pct_of_supply": 0.01962133399830083,
+     "fwd_ret": 0.2064163693201555
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2024-02-28",
+     "pct_of_supply": 0.01924374603006642,
+     "fwd_ret": 0.17218788955786013
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2024-03-30",
+     "pct_of_supply": 0.018880416097739543,
+     "fwd_ret": -0.42204492048745834
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2024-04-29",
+     "pct_of_supply": 0.01853055157351103,
+     "fwd_ret": 0.00024061597690105962
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2024-05-30",
+     "pct_of_supply": 0.018193417512006378,
+     "fwd_ret": -0.18702074420857195
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2024-06-29",
+     "pct_of_supply": 0.01786833149684141,
+     "fwd_ret": -0.029867892016082753
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2024-07-01",
+     "pct_of_supply": 0.015634636830873874,
+     "fwd_ret": 0.05571412261673703
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2024-07-30",
+     "pct_of_supply": 0.017284942349054644,
+     "fwd_ret": -0.16200122774708414
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2024-08-29",
+     "pct_of_supply": 0.0169912495796323,
+     "fwd_ret": 0.07918012073564507
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2024-09-28",
+     "pct_of_supply": 0.01666869131349877,
+     "fwd_ret": -0.08685933258821654
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2024-10-29",
+     "pct_of_supply": 0.016395401428132336,
+     "fwd_ret": -0.02212960788917595
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2024-11-28",
+     "pct_of_supply": 0.01613092838190259,
+     "fwd_ret": 0.07946122241518072
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2024-12-29",
+     "pct_of_supply": 0.015839927763096666,
+     "fwd_ret": -0.014434243999557617
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2025-01-28",
+     "pct_of_supply": 0.015592936771029034,
+     "fwd_ret": -0.21866102066145865
+    },
+    {
+     "symbol": "OPUSDT",
+     "date": "2025-02-28",
+     "pct_of_supply": 0.015353530146246522,
+     "fwd_ret": -0.19751828873043809
+    },
+    {
+     "symbol": "PENGUUSDT",
+     "date": "2024-12-17",
+     "pct_of_supply": 1.0,
+     "fwd_ret": 0.1631948079137442
+    },
+    {
+     "symbol": "PERPUSDT",
+     "date": "2023-03-16",
+     "pct_of_supply": 0.02694081695745629,
+     "fwd_ret": -0.06643796455117212
+    },
+    {
+     "symbol": "PERPUSDT",
+     "date": "2023-06-15",
+     "pct_of_supply": 0.025505787265587367,
+     "fwd_ret": 0.195593635250918
+    },
+    {
+     "symbol": "PERPUSDT",
+     "date": "2023-06-29",
+     "pct_of_supply": 0.037352146822804,
+     "fwd_ret": 0.09295659295659298
+    },
+    {
+     "symbol": "PERPUSDT",
+     "date": "2023-09-14",
+     "pct_of_supply": 0.023351961518922784,
+     "fwd_ret": 0.03414717432132486
+    },
+    {
+     "symbol": "PERPUSDT",
+     "date": "2023-12-15",
+     "pct_of_supply": 0.0222660893396383,
+     "fwd_ret": 0.4638855137032536
+    },
+    {
+     "symbol": "PYTHUSDT",
+     "date": "2024-05-19",
+     "pct_of_supply": 0.5862068965517241,
+     "fwd_ret": 0.11230366492146593
+    },
+    {
+     "symbol": "REZUSDT",
+     "date": "2024-04-30",
+     "pct_of_supply": 1.0,
+     "fwd_ret": -0.31917551530293564
+    },
+    {
+     "symbol": "REZUSDT",
+     "date": "2024-07-29",
+     "pct_of_supply": 0.3882858132250148,
+     "fwd_ret": -0.23109707971586424
+    },
+    {
+     "symbol": "SAGAUSDT",
+     "date": "2024-04-09",
+     "pct_of_supply": 1.0,
+     "fwd_ret": -0.38476663719781734
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2023-09-13",
+     "pct_of_supply": 0.06097560975609756,
+     "fwd_ret": -0.012701100762066098
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2023-10-13",
+     "pct_of_supply": 0.05747126436781609,
+     "fwd_ret": 0.024084778420038644
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2023-11-13",
+     "pct_of_supply": 0.05434782608695652,
+     "fwd_ret": 0.5725971370143148
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2023-12-13",
+     "pct_of_supply": 0.05154639175257732,
+     "fwd_ret": 0.7406967537608868
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2024-01-13",
+     "pct_of_supply": 0.049019607843137254,
+     "fwd_ret": -0.11249309010503039
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2024-02-12",
+     "pct_of_supply": 0.04672897196261682,
+     "fwd_ret": 0.17862333201215486
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2024-03-14",
+     "pct_of_supply": 0.044642857142857144,
+     "fwd_ret": 0.0016168148746968924
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2024-04-13",
+     "pct_of_supply": 0.042735042735042736,
+     "fwd_ret": 0.19270727235689544
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2024-05-13",
+     "pct_of_supply": 0.040983606557377046,
+     "fwd_ret": 0.17613049762543875
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2024-06-13",
+     "pct_of_supply": 0.03937007874015748,
+     "fwd_ret": -0.1854783985523638
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2024-07-13",
+     "pct_of_supply": 0.040302266905823905,
+     "fwd_ret": 0.16253968253968254
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2024-08-13",
+     "pct_of_supply": 0.06364243848664969,
+     "fwd_ret": 0.0704800817160367
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2024-09-12",
+     "pct_of_supply": 0.05983442948854141,
+     "fwd_ret": 0.5461157024793388
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2024-10-13",
+     "pct_of_supply": 0.056456393398558034,
+     "fwd_ret": -0.23597797266979403
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2024-11-12",
+     "pct_of_supply": 0.05343939773693938,
+     "fwd_ret": 0.4353038445638693
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2024-12-12",
+     "pct_of_supply": 0.0507284973884032,
+     "fwd_ret": -0.3116179849031836
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2025-01-12",
+     "pct_of_supply": 0.04827935809725293,
+     "fwd_ret": -0.11849332984567085
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2025-02-11",
+     "pct_of_supply": 0.04605581300855288,
+     "fwd_ret": 0.2160140783106026
+    },
+    {
+     "symbol": "SEIUSDT",
+     "date": "2025-03-14",
+     "pct_of_supply": 0.04402806469388294,
+     "fwd_ret": -0.055992141453831024
+    },
+    {
+     "symbol": "SOLUSDT",
+     "date": "2021-01-07",
+     "pct_of_supply": 0.9284387212329922,
+     "fwd_ret": 0.2596930362352543
+    },
+    {
+     "symbol": "STRKUSDT",
+     "date": "2024-02-20",
+     "pct_of_supply": 0.9233118013502011,
+     "fwd_ret": 0.15102811367926927
+    },
+    {
+     "symbol": "STRKUSDT",
+     "date": "2024-03-15",
+     "pct_of_supply": 0.12040939531673163,
+     "fwd_ret": -0.0073656451759570585
+    },
+    {
+     "symbol": "STRKUSDT",
+     "date": "2024-04-14",
+     "pct_of_supply": 0.10746910532885415,
+     "fwd_ret": -0.15151923465606676
+    },
+    {
+     "symbol": "STRKUSDT",
+     "date": "2024-05-14",
+     "pct_of_supply": 0.09704027391079416,
+     "fwd_ret": 0.0851581508515813
+    },
+    {
+     "symbol": "STRKUSDT",
+     "date": "2024-06-14",
+     "pct_of_supply": 0.08845643703203278,
+     "fwd_ret": -0.30260924904539666
+    },
+    {
+     "symbol": "STRKUSDT",
+     "date": "2024-07-14",
+     "pct_of_supply": 0.08126777886787355,
+     "fwd_ret": -0.1137055837563451
+    },
+    {
+     "symbol": "STRKUSDT",
+     "date": "2024-08-14",
+     "pct_of_supply": 0.07515971571164716,
+     "fwd_ret": -0.11301966641772465
+    },
+    {
+     "symbol": "STRKUSDT",
+     "date": "2024-09-13",
+     "pct_of_supply": 0.06990562854366156,
+     "fwd_ret": 0.18743890518084072
+    },
+    {
+     "symbol": "STRKUSDT",
+     "date": "2024-10-14",
+     "pct_of_supply": 0.06533812579228691,
+     "fwd_ret": -0.14522350805536643
+    },
+    {
+     "symbol": "STRKUSDT",
+     "date": "2024-11-13",
+     "pct_of_supply": 0.061330880976117566,
+     "fwd_ret": 0.35649033354578274
+    },
+    {
+     "symbol": "STRKUSDT",
+     "date": "2024-12-13",
+     "pct_of_supply": 0.05778676760984368,
+     "fwd_ret": -0.28449848024316116
+    },
+    {
+     "symbol": "STRKUSDT",
+     "date": "2025-01-13",
+     "pct_of_supply": 0.06091676004409941,
+     "fwd_ret": -0.12063492063492065
+    },
+    {
+     "symbol": "STRKUSDT",
+     "date": "2025-02-12",
+     "pct_of_supply": 0.057418981713105624,
+     "fwd_ret": -0.12937347436940605
+    },
+    {
+     "symbol": "STRKUSDT",
+     "date": "2025-03-15",
+     "pct_of_supply": 0.0736994127178513,
+     "fwd_ret": -0.21145610278372595
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2023-05-03",
+     "pct_of_supply": 1.0,
+     "fwd_ret": -0.1299885156474304
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2023-06-02",
+     "pct_of_supply": 0.11197792719488374,
+     "fwd_ret": -0.2489639783232388
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2023-07-02",
+     "pct_of_supply": 0.10393800585778444,
+     "fwd_ret": -0.02736354423049081
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2023-08-02",
+     "pct_of_supply": 0.09243968161166577,
+     "fwd_ret": -0.14146023468057367
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2023-09-01",
+     "pct_of_supply": 0.08309452784235073,
+     "fwd_ret": -0.08718788374948827
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2023-10-02",
+     "pct_of_supply": 0.07535587282853905,
+     "fwd_ret": -0.11976819059884092
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2023-11-01",
+     "pct_of_supply": 0.10358038075192944,
+     "fwd_ret": 0.3304702598239211
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2023-12-02",
+     "pct_of_supply": 0.06108508322358864,
+     "fwd_ret": 0.010866091403004097
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2024-01-01",
+     "pct_of_supply": 0.05659063854440199,
+     "fwd_ret": 0.6247483718176436
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2024-01-31",
+     "pct_of_supply": 0.0526665680461831,
+     "fwd_ret": 0.25653863890901896
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2024-03-02",
+     "pct_of_supply": 0.04921336078886435,
+     "fwd_ret": 0.007268695330787223
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2024-04-01",
+     "pct_of_supply": 0.04615330745658485,
+     "fwd_ret": -0.39706412567602367
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2024-05-01",
+     "pct_of_supply": 0.12403163687545951,
+     "fwd_ret": -0.13535670678527834
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2024-05-02",
+     "pct_of_supply": 0.34750003874709884,
+     "fwd_ret": -0.08623460096411362
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2024-05-31",
+     "pct_of_supply": 0.010715781834527665,
+     "fwd_ret": -0.09250757057731762
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2024-06-01",
+     "pct_of_supply": 0.03444670732028394,
+     "fwd_ret": -0.07784723578823993
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2024-06-30",
+     "pct_of_supply": 0.010240701394512419,
+     "fwd_ret": -0.015375228798047647
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2024-07-02",
+     "pct_of_supply": 0.0283027104491868,
+     "fwd_ret": 0.05052095953477087
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2024-08-01",
+     "pct_of_supply": 0.026930265227315484,
+     "fwd_ret": 0.21420356526739504
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2024-08-31",
+     "pct_of_supply": 0.025675662896072024,
+     "fwd_ret": 0.31205228101043114
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2024-10-01",
+     "pct_of_supply": 0.02452502274093157,
+     "fwd_ret": 0.17202892773760037
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2024-10-31",
+     "pct_of_supply": 0.02346653375844484,
+     "fwd_ret": 0.7028165440243594
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2024-12-01",
+     "pct_of_supply": 0.02249008351087173,
+     "fwd_ret": 0.37418112860590735
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2024-12-31",
+     "pct_of_supply": 0.021586964082022604,
+     "fwd_ret": 0.11237591320599027
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2025-01-31",
+     "pct_of_supply": 0.020749637071674393,
+     "fwd_ret": -0.1310083210964269
+    },
+    {
+     "symbol": "SUIUSDT",
+     "date": "2025-03-02",
+     "pct_of_supply": 0.020035143964690017,
+     "fwd_ret": -0.30196004759220985
+    },
+    {
+     "symbol": "THEUSDT",
+     "date": "2024-12-12",
+     "pct_of_supply": 0.03377512854485548,
+     "fwd_ret": -0.22932013720969457
+    },
+    {
+     "symbol": "TIAUSDT",
+     "date": "2023-10-31",
+     "pct_of_supply": 0.9991804474981195,
+     "fwd_ret": 1.6322889660324296
+    },
+    {
+     "symbol": "TIAUSDT",
+     "date": "2024-10-30",
+     "pct_of_supply": 0.3374676248065046,
+     "fwd_ret": 0.05739115831898922
+    },
+    {
+     "symbol": "TNSRUSDT",
+     "date": "2024-04-09",
+     "pct_of_supply": 0.99926662011214,
+     "fwd_ret": -0.37067545304777594
+    },
+    {
+     "symbol": "TNSRUSDT",
+     "date": "2024-10-08",
+     "pct_of_supply": 0.014604491855483091,
+     "fwd_ret": 0.194546568627451
+    },
+    {
+     "symbol": "USUALUSDT",
+     "date": "2024-12-19",
+     "pct_of_supply": 0.15589505679091345,
+     "fwd_ret": -0.30821061405946093
+    },
+    {
+     "symbol": "USUALUSDT",
+     "date": "2025-01-18",
+     "pct_of_supply": 0.13486955920005536,
+     "fwd_ret": -0.42417061611374407
+    },
+    {
+     "symbol": "USUALUSDT",
+     "date": "2025-02-18",
+     "pct_of_supply": 0.11884146341463414,
+     "fwd_ret": -0.04397617956939992
+    },
+    {
+     "symbol": "UXLINKUSDT",
+     "date": "2024-10-17",
+     "pct_of_supply": 0.03655913978494624,
+     "fwd_ret": 0.026671896450284338
+    },
+    {
+     "symbol": "UXLINKUSDT",
+     "date": "2025-01-16",
+     "pct_of_supply": 0.049079754601226995,
+     "fwd_ret": -0.28762939080264727
+    },
+    {
+     "symbol": "VANAUSDT",
+     "date": "2024-12-16",
+     "pct_of_supply": 1.0,
+     "fwd_ret": -0.4757564484126984
+    },
+    {
+     "symbol": "VANAUSDT",
+     "date": "2025-01-15",
+     "pct_of_supply": 0.09159941031879301,
+     "fwd_ret": -0.31875388440024854
+    },
+    {
+     "symbol": "WLDUSDT",
+     "date": "2023-07-24",
+     "pct_of_supply": 0.9932112374757155,
+     "fwd_ret": -0.05464987032234159
+    },
+    {
+     "symbol": "WUSDT",
+     "date": "2024-04-03",
+     "pct_of_supply": 1.0,
+     "fwd_ret": -0.5677616501145912
+    },
+    {
+     "symbol": "WUSDT",
+     "date": "2024-08-02",
+     "pct_of_supply": 0.23447444228579117,
+     "fwd_ret": -0.08998226950354604
+    },
+    {
+     "symbol": "XAIUSDT",
+     "date": "2024-01-09",
+     "pct_of_supply": 1.0,
+     "fwd_ret": 0.21961371961371956
+    },
+    {
+     "symbol": "ZETAUSDT",
+     "date": "2024-03-02",
+     "pct_of_supply": 0.021515579326115617,
+     "fwd_ret": -0.13922339121984195
+    },
+    {
+     "symbol": "ZETAUSDT",
+     "date": "2024-04-01",
+     "pct_of_supply": 0.020707197778640447,
+     "fwd_ret": -0.3854813468625372
+    },
+    {
+     "symbol": "ZETAUSDT",
+     "date": "2024-05-02",
+     "pct_of_supply": 0.019946554403461682,
+     "fwd_ret": 0.24072515872408795
+    },
+    {
+     "symbol": "ZETAUSDT",
+     "date": "2024-06-01",
+     "pct_of_supply": 0.019249867500911913,
+     "fwd_ret": -0.22200243457090696
+    },
+    {
+     "symbol": "ZETAUSDT",
+     "date": "2024-07-02",
+     "pct_of_supply": 0.161651827667857,
+     "fwd_ret": -0.16881487395916506
+    },
+    {
+     "symbol": "ZETAUSDT",
+     "date": "2024-08-01",
+     "pct_of_supply": 0.13762454240058178,
+     "fwd_ret": 0.12065238750245633
+    },
+    {
+     "symbol": "ZETAUSDT",
+     "date": "2024-09-01",
+     "pct_of_supply": 0.11977734902133136,
+     "fwd_ret": 0.2271386430678466
+    },
+    {
+     "symbol": "ZETAUSDT",
+     "date": "2024-10-01",
+     "pct_of_supply": 0.10605764132491916,
+     "fwd_ret": 0.09804910864446681
+    },
+    {
+     "symbol": "ZETAUSDT",
+     "date": "2024-10-31",
+     "pct_of_supply": 0.09515792657671063,
+     "fwd_ret": -0.05361813426329565
+    },
+    {
+     "symbol": "ZETAUSDT",
+     "date": "2024-12-01",
+     "pct_of_supply": 0.08626993218765477,
+     "fwd_ret": -0.1674597779288466
+    },
+    {
+     "symbol": "ZETAUSDT",
+     "date": "2024-12-31",
+     "pct_of_supply": 0.06574768310319713,
+     "fwd_ret": -0.04969741426737573
+    },
+    {
+     "symbol": "ZETAUSDT",
+     "date": "2025-01-31",
+     "pct_of_supply": 0.061310879582291235,
+     "fwd_ret": -0.2620393398146055
+    },
+    {
+     "symbol": "ZETAUSDT",
+     "date": "2025-03-02",
+     "pct_of_supply": 0.05744574586043774,
+     "fwd_ret": -0.3421980134572252
+    },
+    {
+     "symbol": "ZKUSDT",
+     "date": "2024-06-17",
+     "pct_of_supply": 1.0,
+     "fwd_ret": -0.1394366197183099
+    },
+    {
+     "symbol": "ZROUSDT",
+     "date": "2024-06-20",
+     "pct_of_supply": 1.0,
+     "fwd_ret": -0.1007571345369831
+    }
+   ],
+   "pass": false
+  }
+ ],
+ "verdict": "NEGATIVE-at-probe"
+}

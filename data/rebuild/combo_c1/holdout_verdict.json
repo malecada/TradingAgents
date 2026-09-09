@@ -1,0 +1,228 @@
+{
+ "verdict": "FAIL",
+ "gated_variant": "W1",
+ "spent": "2026-09-03T06:49:56.705719+00:00",
+ "holdout_window": [
+  "2025-04-01",
+  "2026-07-01"
+ ],
+ "weights_W1": {
+  "carry": 0.3002600079989425,
+  "liq_fade": 0.28297737642631726,
+  "momentum": 0.06977487224589189,
+  "value": 0.3469877433288483
+ },
+ "weights_W2": {
+  "carry": 0.25,
+  "liq_fade": 0.25,
+  "momentum": 0.25,
+  "value": 0.25
+ },
+ "W1": {
+  "sr_h": -0.5249264877757486,
+  "sr_dev": 1.5990371476744596,
+  "sr_floor": 0.7995185738372298,
+  "placebo_p_indep": 0.6207584830339321,
+  "placebo_p_shared": 0.2634730538922156,
+  "placebo_p_worse": 0.6207584830339321,
+  "placebo_sr_indep_q95": 1.1394545965946605,
+  "placebo_sr_shared_q95": 3.0623260499078615,
+  "contrib": {
+   "carry": -4.4311585792115495e-05,
+   "liq_fade": -0.00012060773224947452,
+   "momentum": 4.797980137604228e-05,
+   "value": -0.0001280888097763521
+  },
+  "min_contrib": -0.0001280888097763521,
+  "maxdd": 0.15665234826926056,
+  "top_name": "MYXUSDT",
+  "top_name_share": 0.07075087197823944,
+  "sr_log_convention": -2.905380659648161,
+  "convention_swap_flips": true,
+  "sr_cost_2x": -0.6641666578592831,
+  "sr_halves": [
+   -0.39566166726752705,
+   -0.646595715591614
+  ],
+  "mean_bp_day": -2.450283264418999,
+  "total_return": -0.12185073746796593,
+  "n_days": 457,
+  "dsr_n1": 0.28397560582022185,
+  "dsr_family28": 0.004450032499088517,
+  "dsr_cumulative": 0.0008878533018043907,
+  "n_cumulative": 107,
+  "gate": {
+   "pass": false,
+   "checks": {
+    "sr_ratio": false,
+    "sr_abs": false,
+    "same_sign": false,
+    "placebo": false,
+    "sleeve_contribution": false,
+    "maxdd": true,
+    "concentration": true,
+    "convention_swap": false
+   }
+  }
+ },
+ "W2": {
+  "sr_h": -0.07033553938518523,
+  "sr_dev": 1.2031395593728287,
+  "sr_floor": 0.6015697796864143,
+  "placebo_p_indep": 0.6287425149700598,
+  "placebo_p_shared": 0.313373253493014,
+  "placebo_p_worse": 0.6287425149700598,
+  "placebo_sr_indep_q95": 1.135312127090158,
+  "placebo_sr_shared_q95": 3.1785118453334693,
+  "contrib": {
+   "carry": -3.689434541035478e-05,
+   "liq_fade": -0.00010655245109398245,
+   "momentum": 0.0001719093128789898,
+   "value": -9.228626388033495e-05
+  },
+  "min_contrib": -0.00010655245109398245,
+  "maxdd": 0.32453870884892044,
+  "top_name": "MYXUSDT",
+  "top_name_share": 0.07075087197823944,
+  "sr_log_convention": -3.088607721951602,
+  "convention_swap_flips": true,
+  "sr_cost_2x": -0.15888964556016774,
+  "sr_halves": [
+   -0.04880912761636353,
+   -0.09276307364839911
+  ],
+  "mean_bp_day": -0.6382374750568228,
+  "total_return": -0.09226124773358646,
+  "n_days": 457,
+  "dsr_n1": 0.4687421396549304,
+  "dsr_family28": 0.01686729554466241,
+  "dsr_cumulative": 0.004234848796553204,
+  "n_cumulative": 107,
+  "gate": {
+   "pass": false,
+   "checks": {
+    "sr_ratio": false,
+    "sr_abs": false,
+    "same_sign": false,
+    "placebo": false,
+    "sleeve_contribution": false,
+    "maxdd": false,
+    "concentration": true,
+    "convention_swap": false
+   }
+  }
+ },
+ "per_sleeve": {
+  "liq_fade": {
+   "sr_h": -0.7857965300915157,
+   "sr_h_native": -0.7857965300915157,
+   "n_days_native": 457,
+   "maxdd": 0.22350245214060982,
+   "mean_bp_day": -4.2620980437592975,
+   "sr_log_convention": -1.0803753707350587,
+   "sr_cost_2x": -0.893986494649296,
+   "meta": {
+    "n_events": 198,
+    "n_active_symbols": 50,
+    "n_panel_symbols": 144
+   }
+  },
+  "carry": {
+   "sr_h": -0.15114362506026774,
+   "sr_h_native": -0.15231212650064643,
+   "n_days_native": 450,
+   "maxdd": 0.3250156673457263,
+   "mean_bp_day": -1.4757738164141911,
+   "sr_log_convention": -1.334077961841908,
+   "sr_cost_2x": -0.26473385884709183,
+   "meta": {
+    "refreshes": 15,
+    "funding_files": 151
+   }
+  },
+  "momentum": {
+   "sr_h": 0.22403431477260613,
+   "sr_h_native": 0.2257664708449329,
+   "n_days_native": 450,
+   "maxdd": 0.8270145178091216,
+   "mean_bp_day": 6.876372515159591,
+   "sr_log_convention": -2.8564017381698648,
+   "sr_cost_2x": 0.1800575913998382,
+   "meta": {
+    "rebalances": 65
+   }
+  },
+  "value": {
+   "sr_h": -0.9639710994491899,
+   "sr_h_native": -0.9650278857595548,
+   "n_days_native": 456,
+   "maxdd": 0.23615867675362645,
+   "mean_bp_day": -3.6914505552133976,
+   "sr_log_convention": -1.1210222239519392,
+   "sr_cost_2x": -1.0096468265909129,
+   "meta": {
+    "rebalances": 65,
+    "breadth_median": 24.0,
+    "breadth_min": 19,
+    "n_symbols": 44,
+    "fund_symbols": 44
+   }
+  }
+ },
+ "corr_holdout": {
+  "carry": {
+   "carry": 1.0,
+   "liq_fade": -0.02661204256740514,
+   "momentum": 0.26952204285981834,
+   "value": -0.0010393290412599413
+  },
+  "liq_fade": {
+   "carry": -0.02661204256740514,
+   "liq_fade": 1.0,
+   "momentum": 0.27831230853752276,
+   "value": -0.03536639013199377
+  },
+  "momentum": {
+   "carry": 0.26952204285981834,
+   "liq_fade": 0.27831230853752276,
+   "momentum": 1.0,
+   "value": -0.05912690706362748
+  },
+  "value": {
+   "carry": -0.0010393290412599413,
+   "liq_fade": -0.03536639013199377,
+   "momentum": -0.05912690706362748,
+   "value": 1.0
+  }
+ },
+ "n_placebo": 500,
+ "runtime_sec": 32.92854166030884,
+ "sleeve_configs": {
+  "liq_fade": {
+   "thr": 3.5,
+   "H": 48,
+   "w_per": 0.1,
+   "cap": 1.0,
+   "top_n": 50,
+   "z_window": 2160,
+   "z_min_periods": 1440
+  },
+  "carry": {
+   "L": 30,
+   "leg_frac": 0.2,
+   "top_n": 50
+  },
+  "momentum": {
+   "L": 28,
+   "skip": 0,
+   "K": 10,
+   "top_n": 100
+  },
+  "value": {
+   "metric": "nvt_proxy",
+   "leg_frac": 0.3333333333333333,
+   "lag_days": 2,
+   "liquidity_floor_rank": 150
+  }
+ }
+}

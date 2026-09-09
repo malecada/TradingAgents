@@ -259,6 +259,7 @@ def data_transform(
     first_day_future,
     include_future_row: bool = True,
     horizons=(1,),
+    target_mode: str = "level",
 ):
     """Transform model DataFrame into features suitable for model training.
 
@@ -274,11 +275,24 @@ def data_transform(
             the price h days *after* the row's features. The default (1,) is
             backward-compatible with the original single-horizon behavior; the
             existing `prices` target column remains unchanged.
+        target_mode: "level" (default, backward-compatible) targets the raw
+            future price `P_{t+h}`. "logret" targets `log(P_{t+h} / P_t)`
+            instead -- a stationary return that a tree model can extrapolate
+            beyond the trained range (unlike a price level, which trees can
+            only interpolate). The target column keeps the name `prices_h{h}`
+            in both modes so downstream selection logic is unchanged; the
+            chosen mode is recorded in `reframed_lags.attrs["target_mode"]`
+            for callers that need to know how to invert predictions back to
+            price level (see `lgb_model.walk_forward_pooled` /
+            `fit_pooled_full`).
 
     Returns:
         (reframed_lags, df_final) — same as before, but reframed_lags has a
         `date` column with the row date so callers can re-index if needed.
     """
+    if target_mode not in ("level", "logret"):
+        raise ValueError(f"target_mode must be 'level' or 'logret', got {target_mode!r}")
+
     cfg = get_config().get("prediction_models", {})
     n_lags = cfg.get("lag_features", 7)
 
@@ -292,11 +306,23 @@ def data_transform(
         df_all = df_all.drop(columns="index")
 
     # Add multi-horizon targets BEFORE the shift. These hold the price h days
-    # ahead of the row, so after the shift below they become "h days ahead of
-    # the day from which features were drawn".
+    # ahead of the row (or, in "logret" mode, the log return to that price),
+    # so after the shift below they become "h days ahead of the day from
+    # which features were drawn".
     horizons = tuple(int(h) for h in horizons)
+    if target_mode == "logret":
+        # Guard positivity before the log: a literal 0.0 (or negative) close
+        # survives the fetch layer's dropna (it isn't NaN) and would yield
+        # ±inf here, which then passes the NaN-only target dropna downstream
+        # and silently poisons LGB training. Masking to NaN routes bad rows
+        # through the existing dropna instead. (Same pattern as the
+        # replace-0-with-NaN-before-log guard in onchain_features.py.)
+        _pos_prices = df_all["prices"].where(df_all["prices"] > 0)
     for h in horizons:
-        df_all[f"prices_h{h}"] = df_all["prices"].shift(-h)
+        if target_mode == "logret":
+            df_all[f"prices_h{h}"] = np.log(_pos_prices.shift(-h) / _pos_prices)
+        else:
+            df_all[f"prices_h{h}"] = df_all["prices"].shift(-h)
 
     if include_future_row:
         # Build a placeholder row for the forecast date, copying the last
@@ -367,6 +393,9 @@ def data_transform(
     prices = reframed_lags["prices"].values
     for k in range(1, n_lags + 1):
         reframed_lags[f"lag{k}"] = pd.Series(prices).shift(k).values
+
+    reframed_lags.attrs["target_mode"] = target_mode
+    df_final.attrs["target_mode"] = target_mode
 
     return reframed_lags, df_final
 

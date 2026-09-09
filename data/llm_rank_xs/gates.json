@@ -1,0 +1,47 @@
+{
+ "llm_c3_rank_xs": {
+  "registered_utc": "2026-08-14",
+  "spec": "docs/superpowers/specs/2026-08-14-llm-c3-rank-xs-charter.md",
+  "proposal": "master_thesis/LLM_INTEGRATION_PROPOSAL_2026-08.md \u00a77 (charter C3)",
+  "hypothesis": "LLM ordinal ranking of anonymized numeric PIT cards has residual IC (after vol/momentum/size neutralization) vs 5d forward returns AND beats a GBDT twin on identical inputs",
+  "universe": "top-200 by 30d median dollar volume, monthly PIT, 799-sym store",
+  "cadence": "weekly (Friday cards), partition-rank-average batches of 25, R=2 rounds, temp 0, gpt-5.4-mini",
+  "card_fields": [
+   "ret_4w",
+   "ret_12w",
+   "dist_26w_high",
+   "vol_ewma20",
+   "volvol_20",
+   "dvol_rank_30d",
+   "mcap_cm",
+   "funding_3d",
+   "funding_30d",
+   "d_adract_30d",
+   "d_txcnt_30d",
+   "unlock_next30_pct",
+   "unlock_prev30_pct",
+   "age_weeks",
+   "category"
+  ],
+  "anonymization": "per-week random tags ASSET_NNN, 3-sig-digit rounding; named cards only for P1",
+  "windows": {
+   "dev": [
+    "2021-01-01",
+    "2025-03-31"
+   ],
+   "holdout": [
+    "2025-04-01",
+    "2026-07-01 \u2014 SEALED, virgin for this family, one-shot only if P3 passes"
+   ]
+  },
+  "probes": {
+   "P0_stability": "8 seeded weeks; identical-input rerun Spearman >=0.9; batch-order shuffle Spearman >=0.8; STOP else",
+   "P1_anonymization": "52-week seeded subset named vs anon; named IC > 1.5x anon IC => memorization STOP; primary eval anonymous only",
+   "P2_incremental": "full anon dev run; weekly residualization on {vol rank, 4w momentum, size rank}; mean residual IC>0 with NW-t>=2.0 AND LLM residual IC >= LightGBM twin (walk-forward, identical features/targets); STOP on either",
+   "P3_decile_ls": "s43 harness, 5bp+funding: net SR>=0.8, dual-family placebo p<0.05, DSR>0.5 at declared n, >=3/4 subperiods nonneg"
+  },
+  "multiplicity": "<=10 ledgered configs; ledger data/llm_rank_xs/trial_ledger.jsonl append-only",
+  "llm_spend_cap_usd": 80,
+  "stop_rule": "any STOP = dead this cycle; no prompt/field/frequency changes after P0 runs; holdout untouched until registered one-shot"
+ }
+}

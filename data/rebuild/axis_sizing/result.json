@@ -1,0 +1,210 @@
+{
+  "window": {
+    "start": "2021-11-07",
+    "end": "2025-03-31"
+  },
+  "pred_dir": "btc_eth_78f",
+  "coins": [
+    "bitcoin",
+    "ethereum"
+  ],
+  "horizons": [
+    3
+  ],
+  "incumbent": {
+    "sharpe": 0.3763016494366424,
+    "portfolio": {
+      "sharpe": 0.3763016494366424,
+      "total_return": 0.11059230642387652,
+      "max_drawdown": -0.11583722637911531,
+      "ann_vol": 0.06180319613199186,
+      "n_bars": 1238
+    },
+    "per_coin": {
+      "bitcoin": {
+        "sharpe": 0.3721560244577207,
+        "total_return": 0.13945095255788464,
+        "max_drawdown": -0.11151925321670497,
+        "ann_vol": 0.0799184248859097,
+        "n_bars": 1238
+      },
+      "ethereum": {
+        "sharpe": 0.1920043111783232,
+        "total_return": 0.0658131915702902,
+        "max_drawdown": -0.1467909189212494,
+        "ann_vol": 0.08734786162072392,
+        "n_bars": 1238
+      }
+    },
+    "identity_diff_vs_anchor": 2.7755575615628914e-16,
+    "identity_ok": true
+  },
+  "arms": {
+    "no_trend_filter": {
+      "note": "trend filter skipped (sma_period<=0 -> apply_trend_filter is a no-op)",
+      "override": {
+        "trend_sma": 0
+      },
+      "sharpe": 0.13254247169995081,
+      "total_return": 0.030090673394113976,
+      "max_drawdown": -0.10454717051999318,
+      "ann_vol": 0.05835298703785429,
+      "n_bars": 1238,
+      "bootstrap_vs_incumbent": {
+        "sr_a": 0.3763016494366421,
+        "sr_b": 0.13254247169995084,
+        "delta_sr": -0.24375917773669128,
+        "p_pos": 0.0795,
+        "ci_low": -0.5415345276255171,
+        "ci_high": 0.0974342285782136
+      },
+      "max_drawdown_worsening": -0.011290055859122128,
+      "removal_improves": false
+    },
+    "trend_mult_1": {
+      "note": "trend filter runs but multiplier=1.0 -> up/down scale by 1.0 or 1/1.0 (numerically identical to no_trend_filter; verified)",
+      "override": {
+        "trend_multiplier": 1.0
+      },
+      "sharpe": 0.13254247169995081,
+      "total_return": 0.030090673394113976,
+      "max_drawdown": -0.10454717051999318,
+      "ann_vol": 0.05835298703785429,
+      "n_bars": 1238,
+      "bootstrap_vs_incumbent": {
+        "sr_a": 0.3763016494366421,
+        "sr_b": 0.13254247169995084,
+        "delta_sr": -0.24375917773669128,
+        "p_pos": 0.0795,
+        "ci_low": -0.5415345276255171,
+        "ci_high": 0.0974342285782136
+      },
+      "max_drawdown_worsening": -0.011290055859122128,
+      "removal_improves": false
+    },
+    "no_vol_target": {
+      "note": "vol-targeted Kelly replaced by fixed base size 1.0 pre-leverage",
+      "override": {
+        "use_vol_target": false
+      },
+      "sharpe": 0.05336992292152034,
+      "total_return": -0.003310898314172972,
+      "max_drawdown": -0.2308356812010257,
+      "ann_vol": 0.11167469805117299,
+      "n_bars": 1238,
+      "bootstrap_vs_incumbent": {
+        "sr_a": 0.3763016494366421,
+        "sr_b": 0.053369922921521304,
+        "delta_sr": -0.3229317265151208,
+        "p_pos": 0.2375,
+        "ci_low": -1.1630916361569994,
+        "ci_high": 0.707754149972372
+      },
+      "max_drawdown_worsening": 0.1149984548219104,
+      "removal_improves": false
+    },
+    "kelly_025": {
+      "note": "half-Kelly (0.5) -> quarter-Kelly (0.25)",
+      "override": {
+        "kelly_fraction": 0.25
+      },
+      "sharpe": 0.37750972538502736,
+      "total_return": 0.056506274500245146,
+      "max_drawdown": -0.05876009366311907,
+      "ann_vol": 0.030901613449962995,
+      "n_bars": 1238,
+      "bootstrap_vs_incumbent": {
+        "sr_a": 0.3763016494366421,
+        "sr_b": 0.37750972538502725,
+        "delta_sr": 0.0012080759483851233,
+        "p_pos": 1.0,
+        "ci_low": 0.0009558352871239156,
+        "ci_high": 0.0015243134849284715
+      },
+      "max_drawdown_worsening": -0.05707713271599624,
+      "removal_improves": true
+    },
+    "min_hold_1": {
+      "note": "7-day min hold -> 1-day (near-immediate flip allowed)",
+      "override": {
+        "min_hold": 1
+      },
+      "sharpe": -0.6188034292684222,
+      "total_return": -0.1002159165237736,
+      "max_drawdown": -0.14944517652864087,
+      "ann_vol": 0.0338168213831232,
+      "n_bars": 1238,
+      "bootstrap_vs_incumbent": {
+        "sr_a": 0.3763016494366421,
+        "sr_b": -0.6188034292684231,
+        "delta_sr": -0.9951050787050653,
+        "p_pos": 0.029,
+        "ci_low": -2.168602136027302,
+        "ci_high": 0.040541567184606976
+      },
+      "max_drawdown_worsening": 0.033607950149525556,
+      "removal_improves": false
+    },
+    "no_early_exit": {
+      "note": "adaptive early exit disabled (inf; 0.0 would exit-at-any-loss, not disable -> inf is the disabling value the code implies)",
+      "override": {
+        "early_exit_loss": null
+      },
+      "sharpe": 0.3434686433455292,
+      "total_return": 0.08440769298763473,
+      "max_drawdown": -0.10697177464981966,
+      "ann_vol": 0.05193119469534385,
+      "n_bars": 1238,
+      "bootstrap_vs_incumbent": {
+        "sr_a": 0.3763016494366421,
+        "sr_b": 0.34346864334552973,
+        "delta_sr": -0.03283300609111239,
+        "p_pos": 0.4355,
+        "ci_low": -0.7350696991030388,
+        "ci_high": 0.6349176623670266
+      },
+      "max_drawdown_worsening": -0.008865451729295648,
+      "removal_improves": false
+    }
+  },
+  "arm1_vs_arm2": {
+    "max_abs_diff": 0.0,
+    "identical": true
+  },
+  "removal_rule": "delta_sr > 0 AND p_pos >= 0.85 (paired block bootstrap, block=21, n=2000; arm improves over incumbent)",
+  "removed_components": [
+    "kelly_025"
+  ],
+  "composed_config": {
+    "trend_sma": 30,
+    "trend_multiplier": 1.5,
+    "use_vol_target": true,
+    "kelly_fraction": 0.25,
+    "min_hold": 7,
+    "early_exit_loss": 0.015,
+    "price_stop_pct": 0.03,
+    "horizons": [
+      3
+    ],
+    "target": "level",
+    "pool": "2-coin",
+    "features": "78f",
+    "pred_dir": "btc_eth_78f"
+  },
+  "composed_bootstrap_vs_incumbent": {
+    "sr_a": 0.3763016494366421,
+    "sr_b": 0.37750972538502725,
+    "delta_sr": 0.0012080759483851233,
+    "p_pos": 1.0,
+    "ci_low": 0.0009558352871239156,
+    "ci_high": 0.0015243134849284715
+  },
+  "composed_metrics": {
+    "sharpe": 0.37750972538502736,
+    "total_return": 0.056506274500245146,
+    "max_drawdown": -0.05876009366311907,
+    "ann_vol": 0.030901613449962995,
+    "n_bars": 1238
+  },
+  "concerns": []
+}

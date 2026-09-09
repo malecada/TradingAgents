@@ -51,6 +51,56 @@ def _extract_multiplier(text: str) -> Optional[float]:
     return v
 
 
+_SYS_V1 = (
+    "You are the Layer 2 LLM modulator in a hybrid quant+LLM trading "
+    "stack. Your job is NOT to pick a direction — the Layer 1 quant "
+    "engine has already done that. Your job is to scale the Layer 1 "
+    "position by a multiplier ∈ [0.0, 1.5] reflecting how much you "
+    "trust the LLM-side qualitative signal versus the pure quant.\n\n"
+    "Multiplier semantics:\n"
+    "  0.0  — fully damp the LLM signal; trust quant only.\n"
+    "  1.0  — neutral; LLM does not adjust the quant magnitude.\n"
+    "  1.5  — amplify; LLM strongly corroborates the quant direction.\n\n"
+    "Rules:\n"
+    "1. Output exactly one line of the form 'Multiplier: X.YZ'.\n"
+    "2. Then 2-3 sentences of narrative explaining the multiplier.\n"
+    "3. Do NOT propose flipping the quant direction. If you believe "
+    "the quant signal is wrong, return Multiplier: 0.0 and explain.\n"
+    "4. The asset is intentionally referred to by an alias to reduce "
+    "training-corpus bias. Treat it as one cryptocurrency among many."
+)
+
+# v2 — semantics realigned with the composition formula
+# position = base * (1 + effective_weight * (multiplier - 1)).
+# Neutral / "defer to quant" is 1.0 (the (mult-1) term vanishes), NOT 0.0.
+# Values below 1.0 shrink the position; 0.0 is the maximal shrink, not a no-op.
+_SYS_V2 = (
+    "You are the Layer 2 LLM modulator in a hybrid quant+LLM trading "
+    "stack. Your job is NOT to pick a direction — the Layer 1 quant "
+    "engine has already done that. Your job is to scale the Layer 1 "
+    "position by a multiplier ∈ [0.0, 1.5]. The position is computed as "
+    "base × (1 + weight × (multiplier − 1)), so 1.0 leaves the quant "
+    "magnitude untouched.\n\n"
+    "Multiplier semantics:\n"
+    "  1.0  — neutral; defer entirely to quant, do NOT adjust the "
+    "magnitude. This is the 'trust quant only' value.\n"
+    "  <1.0 — reduce conviction; you judge the quant position oversized "
+    "or weakly supported by the qualitative signal. 0.0 is the maximal "
+    "shrink (toward base × (1 − weight)).\n"
+    "  >1.0 — amplify (up to 1.5); the qualitative signal strongly "
+    "corroborates the quant direction.\n\n"
+    "Rules:\n"
+    "1. Output exactly one line of the form 'Multiplier: X.YZ'.\n"
+    "2. Then 2-3 sentences of narrative explaining the multiplier.\n"
+    "3. You CANNOT flip the quant direction — you only scale magnitude. "
+    "If you believe the quant position is too large or weakly supported, "
+    "emit a multiplier below 1.0 (toward 0.0) and explain. To defer "
+    "entirely to quant, emit exactly 1.0.\n"
+    "4. The asset is intentionally referred to by an alias to reduce "
+    "training-corpus bias. Treat it as one cryptocurrency among many."
+)
+
+
 def _build_prompt(
     coin_alias: str,
     quant_signal: QuantSignal,
@@ -59,6 +109,7 @@ def _build_prompt(
     subjective_report: str,
     regime_note: str,
     belief: str = "",
+    prompt_version: str = "v1",
 ) -> list[dict]:
     pack = quant_signal.deterministic_signals
     det_block = "\n".join(
@@ -69,24 +120,7 @@ def _build_prompt(
         )
         if k in pack
     )
-    sys = (
-        "You are the Layer 2 LLM modulator in a hybrid quant+LLM trading "
-        "stack. Your job is NOT to pick a direction — the Layer 1 quant "
-        "engine has already done that. Your job is to scale the Layer 1 "
-        "position by a multiplier ∈ [0.0, 1.5] reflecting how much you "
-        "trust the LLM-side qualitative signal versus the pure quant.\n\n"
-        "Multiplier semantics:\n"
-        "  0.0  — fully damp the LLM signal; trust quant only.\n"
-        "  1.0  — neutral; LLM does not adjust the quant magnitude.\n"
-        "  1.5  — amplify; LLM strongly corroborates the quant direction.\n\n"
-        "Rules:\n"
-        "1. Output exactly one line of the form 'Multiplier: X.YZ'.\n"
-        "2. Then 2-3 sentences of narrative explaining the multiplier.\n"
-        "3. Do NOT propose flipping the quant direction. If you believe "
-        "the quant signal is wrong, return Multiplier: 0.0 and explain.\n"
-        "4. The asset is intentionally referred to by an alias to reduce "
-        "training-corpus bias. Treat it as one cryptocurrency among many."
-    )
+    sys = _SYS_V2 if str(prompt_version) == "v2" else _SYS_V1
     belief_block = (
         f"\nLast week's investment belief (FinCon CVRF):\n{belief}\n"
         if belief else ""
@@ -145,9 +179,13 @@ def create_modulator(llm, n_samples: int = 5, temperature: float = 0.5):
         from tradingagents.agents.utils.anonymizer import is_enabled, mask
         coin_label = mask(coin) if is_enabled() else coin
         belief = latest_belief(coin) or ""
+        prompt_version = str(
+            state.get("config", {}).get("modulator_prompt_version", "v1")
+        )
         messages = _build_prompt(
             coin_label, quant_signal, trader_plan,
             factual_report, subjective_report, regime_note, belief,
+            prompt_version=prompt_version,
         )
 
         samples = sampler.sample_n(messages)

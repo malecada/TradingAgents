@@ -215,6 +215,7 @@ def run_coin(
     early_exit_loss: float = EARLY_EXIT_DEFAULT,
     costs_override: dict[str, float] | None = None,
     convention: str = "causal",
+    price_stop_pct: float = 0.0,
 ) -> pd.Series:
     """Run V2 sizing on one coin's routed predictions → daily return series.
 
@@ -232,7 +233,8 @@ def run_coin(
         raise ValueError(f"{coin}: no predictions in [{start}, {end}] under {pred_dir}")
     ohlcv = _load_crypto_ohlcv(coin, end)
     ohlcv["Date"] = pd.to_datetime(ohlcv["Date"]).dt.tz_localize(None).dt.normalize()
-    merged = preds.merge(ohlcv[["Date", "Close"]], left_on="date", right_on="Date")
+    cols = ["Date", "Close"] + (["High", "Low"] if price_stop_pct > 0 else [])
+    merged = preds.merge(ohlcv[cols], left_on="date", right_on="Date")
     merged = merged.dropna(subset=["Close"]).reset_index(drop=True)
     if convention == "legacy":
         merged["ref_price"] = merged["Close"]
@@ -243,9 +245,14 @@ def run_coin(
         convention=convention,
     )
     costs = dict(COSTS if costs_override is None else costs_override)
+    stop_kwargs = {}
+    if price_stop_pct > 0:
+        costs["stop_loss"] = 1.0  # price-axis stop replaces the equity-axis proxy
+        stop_kwargs = dict(highs=merged["High"].values, lows=merged["Low"].values,
+                           price_stop_pct=price_stop_pct)
     equity, _m = run_coin_backtest(
         dates=merged["date"].values, prices=merged["Close"].values,
-        positions=pos, initial_capital=10_000.0, **costs,
+        positions=pos, initial_capital=10_000.0, **costs, **stop_kwargs,
     )
     eq = np.asarray(equity, dtype=float)
     rets = eq[1:] / eq[:-1] - 1.0
@@ -272,6 +279,9 @@ def main() -> None:
                    help="'causal' (default): sizing inputs see close(D-1) only "
                         "— the live contract. 'legacy': pre-audit same-bar "
                         "convention (reproduces the inflated published numbers).")
+    p.add_argument("--price-stop-pct", type=float, default=0.0,
+                   help="Intrabar live-style price stop (0=off; live uses 0.03). "
+                        "Replaces the equity-axis per-trade stop when set.")
     args = p.parse_args()
 
     if args.data_root:
@@ -296,7 +306,8 @@ def main() -> None:
                      kelly_fraction=args.kelly,
                      costs_override=costs_for_coin(coin, args.sat_haircut,
                                                    convention=args.convention),
-                     convention=args.convention)
+                     convention=args.convention,
+                     price_stop_pct=args.price_stop_pct)
         coin_rets[coin] = r
         m = _metrics(r)
         feat = "193f extended" if "pit" in pdir else "78f canonical"

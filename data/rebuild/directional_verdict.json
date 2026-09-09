@@ -1,0 +1,81 @@
+{
+  "window": {
+    "start": "2021-11-07",
+    "end": "2025-03-31"
+  },
+  "candidate": {
+    "source": "composed config from F6 sizing ablation",
+    "config": {
+      "trend_sma": 30,
+      "trend_multiplier": 1.5,
+      "use_vol_target": true,
+      "kelly_fraction": 0.25,
+      "min_hold": 7,
+      "early_exit_loss": 0.015,
+      "price_stop_pct": 0.03,
+      "horizons": [
+        3
+      ],
+      "target": "level",
+      "pool": "2-coin",
+      "features": "78f",
+      "pred_dir": "btc_eth_78f"
+    },
+    "portfolio": {
+      "sharpe": 0.37750972538502736,
+      "total_return": 0.056506274500245146,
+      "max_drawdown": -0.05876009366311907,
+      "ann_vol": 0.030901613449962995,
+      "n_bars": 1238
+    },
+    "sr_annualized": 0.37750972538502736,
+    "sr_per_bar": 0.023780877401834984
+  },
+  "floor": {
+    "config": "macross_10_50_ls",
+    "source": "data/rebuild/factor_floor/BEST/daily_returns.csv",
+    "portfolio_full_series": {
+      "sharpe": 0.6322181732492197,
+      "total_return": 0.36724345239621004,
+      "max_drawdown": -0.126995424181794,
+      "ann_vol": 0.11003118100685866,
+      "n_bars": 1240
+    },
+    "sr_full_series": 0.6322181732492197,
+    "sr_active_note": "floor_table.md reports sr_active +1.016 (halt-latch trailing-zero tail excluded); full-series +0.632 is the gate metric (identical-engine policy applied to both arms)"
+  },
+  "bootstrap_floor_vs_candidate": {
+    "sr_a": 0.6327290430008253,
+    "sr_b": 0.37750972538502725,
+    "delta_sr": -0.2552193176157981,
+    "p_pos": 0.354,
+    "ci_low": -1.3303701207312126,
+    "ci_high": 0.8151348380831456
+  },
+  "dsr": {
+    "sr_observed_per_bar": 0.023780877401834984,
+    "var_sr": 0.000794281710997491,
+    "se_sr": 0.028183003938499724,
+    "n_trials": 49,
+    "n_trials_note": "UNIQUE config_hash count in trial_ledger.jsonl at evaluation time (honest dedupe: the factor floor's 18 configs were double-appended in a re-run, so raw row count overstates the search; unique-hash count is the honest multiple-testing n_trials)",
+    "expected_max_sr_null": 0.06393457694104876,
+    "dsr": 0.07711492131758425,
+    "impl": "tradingagents.strategies.v3.backtest.dsr (Bailey & Lopez de Prado 2014; same impl as scripts/validate_v5_mix.py)"
+  },
+  "gate": {
+    "thresholds": {
+      "vs": "best factor-floor config",
+      "delta_sharpe_min": 0.0,
+      "p_pos_min": 0.85,
+      "dsr_min": 0.9,
+      "dsr_trials": "trial_count() from ledger at evaluation time"
+    },
+    "delta_sharpe": -0.2552193176157981,
+    "p_pos": 0.354,
+    "dsr": 0.07711492131758425,
+    "pass": false
+  },
+  "sleeve": "factor",
+  "verdict": "Directional sleeve = FACTOR. LGB candidate does NOT beat the factor floor at the ml_survival gate; the model-free factor floor is the honest directional sleeve.",
+  "concerns": []
+}

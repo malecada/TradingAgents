@@ -1,0 +1,124 @@
+{
+  "window": [
+    "2021-11-08",
+    "2025-03-31"
+  ],
+  "annualization": "sqrt(252)",
+  "source_csv": "data/rebuild/carry_audit/sleeve_stressed_daily.csv",
+  "n_days": 1239,
+  "funding_sign_share": {
+    "window_days": 30,
+    "per_leg": {
+      "btc": {
+        "min": 0.4,
+        "median": 0.9666666666666667,
+        "current": 0.7666666666666667,
+        "mean": 0.8929201101928376,
+        "std": 0.13285831447314658,
+        "count": 1210,
+        "min_date": "2024-09-12"
+      },
+      "eth": {
+        "min": 0.13333333333333333,
+        "median": 0.9666666666666667,
+        "current": 0.8,
+        "mean": 0.8646831955922865,
+        "std": 0.1876327841007663,
+        "count": 1210,
+        "min_date": "2022-09-25"
+      }
+    },
+    "construction": "share of the trailing 30 calendar days (contiguous daily index, no gaps) with funding_daily_income(symbol) > 0, per leg, over the same window as the stressed CSV."
+  },
+  "worst_90d": {
+    "window_days": 90,
+    "return": -0.018221768679029804,
+    "start_date": "2022-08-24",
+    "end_date": "2022-11-21"
+  },
+  "per_year_sharpe": {
+    "2021": {
+      "sharpe": 8.500083775168871,
+      "n_days": 54
+    },
+    "2022": {
+      "sharpe": -2.029670893215954,
+      "n_days": 365
+    },
+    "2023": {
+      "sharpe": 6.902328071983671,
+      "n_days": 365
+    },
+    "2024": {
+      "sharpe": 8.743655757282193,
+      "n_days": 366
+    },
+    "2025": {
+      "sharpe": 1.8904449906609861,
+      "n_days": 89
+    }
+  },
+  "haircut_curve": {
+    "construction": "haircut_series = stressed_sleeve - (1 - h) * 0.5 * (funding_btc + funding_eth), where funding_btc/funding_eth are the per-1.0-notional daily funding-income series from funding_daily_income(), reindexed to the stressed CSV's date index (each leg contributes half the book, matching the sleeve's 50/50 BTC/ETH blend). h=1.00 is the identity (subtract zero); h=0.00 would remove all funding income. Only funding income is scaled -- hedge P&L and execution costs already baked into the stressed CSV are untouched.",
+    "haircuts": [
+      1.0,
+      0.75,
+      0.5,
+      0.25
+    ],
+    "sharpe_by_haircut": {
+      "1.00": 3.7503661753109525,
+      "0.75": 2.0416594014804583,
+      "0.50": -0.12718532512675948,
+      "0.25": -2.731665647075739
+    },
+    "rows_written_to": "data/rebuild/carry_audit/haircut_curve.csv"
+  },
+  "sanity_checks": {
+    "h1.00_equals_stressed_csv_sr": "PASS",
+    "stressed_csv_sr": 3.7503661753109525
+  },
+  "longest_drawdown": {
+    "longest_days": 666,
+    "peak_date": "2022-01-05",
+    "trough_or_end_date": "2023-11-02",
+    "still_open_at_series_end": false
+  },
+  "stress_episodes": {
+    "luna_2022_05": {
+      "window": [
+        "2022-05-01",
+        "2022-06-15"
+      ],
+      "sleeve_compounded_return": -0.0029236484619985514
+    },
+    "ftx_2022_11": {
+      "window": [
+        "2022-11-01",
+        "2022-12-15"
+      ],
+      "sleeve_compounded_return": -0.00788233852706055
+    },
+    "worst_funding_stretch": {
+      "window": [
+        "2022-08-23",
+        "2022-09-21"
+      ],
+      "blended_30d_funding_sign_share": 0.26666666666666666,
+      "sleeve_compounded_return": -0.011237426128944517
+    }
+  },
+  "gate": {
+    "bound": 0.05,
+    "sleeve_worst_90d_return_raw": -0.018221768679029804,
+    "sleeve_raw_loses_more_than_5pct": false,
+    "implied_max_allocation_to_keep_gate": 1.0,
+    "intended_allocation_range": [
+      0.2,
+      0.5
+    ],
+    "gate_pass_at_20pct_alloc": true,
+    "gate_pass_at_50pct_alloc": true,
+    "note": "Gate is defined at-allocation: sleeve_worst_90d_return * allocation must be >= -5%. The raw (100%-notional) sleeve number is recorded above; implied_max_allocation_to_keep_gate is the largest allocation fraction (capped at 1.0) that keeps the -5% floor."
+  }
+}

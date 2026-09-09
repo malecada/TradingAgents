@@ -1,0 +1,176 @@
+{
+  "window": {
+    "start": "2021-11-07",
+    "end": "2025-03-31"
+  },
+  "coins": [
+    "bitcoin",
+    "ethereum"
+  ],
+  "horizons": [
+    3
+  ],
+  "arms": {
+    "pool2": "btc_eth_78f",
+    "pool3": "pool3_sol",
+    "pool5": "pool5"
+  },
+  "verification": {
+    "pool3": {
+      "h3": {
+        "coin_ids": [
+          "bitcoin",
+          "ethereum",
+          "solana"
+        ],
+        "max_date": "2025-03-29",
+        "max_date_ok": true,
+        "per_coin": {
+          "bitcoin": {
+            "n": 1239,
+            "dir_acc": 0.48991121872477805,
+            "dir_acc_sane": true
+          },
+          "ethereum": {
+            "n": 1239,
+            "dir_acc": 0.5302663438256658,
+            "dir_acc_sane": true
+          }
+        },
+        "ok": true
+      }
+    },
+    "pool5": {
+      "h3": {
+        "coin_ids": [
+          "binancecoin",
+          "bitcoin",
+          "ethereum",
+          "ripple",
+          "solana"
+        ],
+        "max_date": "2025-03-29",
+        "max_date_ok": true,
+        "per_coin": {
+          "bitcoin": {
+            "n": 1239,
+            "dir_acc": 0.5076674737691687,
+            "dir_acc_sane": true
+          },
+          "ethereum": {
+            "n": 1239,
+            "dir_acc": 0.5213882163034705,
+            "dir_acc_sane": true
+          }
+        },
+        "ok": true
+      }
+    },
+    "ok": true
+  },
+  "anchor_check": {
+    "f3_anchor_sr": 0.3763016494366421,
+    "pool2_sr": 0.3763016494366421,
+    "diff": 0.0,
+    "ok": true
+  },
+  "configs": {
+    "pool2": {
+      "pred_dir": "btc_eth_78f",
+      "horizons": [
+        3
+      ],
+      "portfolio": {
+        "sharpe": 0.3763016494366421,
+        "total_return": 0.11059230642387652,
+        "max_drawdown": -0.11583722637911531,
+        "ann_vol": 0.06180319613199191,
+        "n_bars": 1238
+      },
+      "per_coin": {
+        "bitcoin": {
+          "sharpe": 0.3721560244577205,
+          "total_return": 0.13945095255788464,
+          "max_drawdown": -0.11151925321670497,
+          "ann_vol": 0.07991842488590974,
+          "n_bars": 1238
+        },
+        "ethereum": {
+          "sharpe": 0.1920043111783232,
+          "total_return": 0.0658131915702902,
+          "max_drawdown": -0.1467909189212494,
+          "ann_vol": 0.08734786162072392,
+          "n_bars": 1238
+        }
+      }
+    },
+    "pool3": {
+      "pred_dir": "pool3_sol",
+      "horizons": [
+        3
+      ],
+      "portfolio": {
+        "sharpe": -0.2709908881837028,
+        "total_return": -0.06563993291598225,
+        "max_drawdown": -0.12932088225211746,
+        "ann_vol": 0.046962348841919,
+        "n_bars": 1238
+      },
+      "per_coin": {
+        "bitcoin": {
+          "sharpe": -0.1310180233684399,
+          "total_return": -0.04239349246229962,
+          "max_drawdown": -0.15369086624377892,
+          "ann_vol": 0.05560451113165268,
+          "n_bars": 1238
+        },
+        "ethereum": {
+          "sharpe": -0.2700082293030553,
+          "total_return": -0.09539620415783168,
+          "max_drawdown": -0.15307097520669422,
+          "ann_vol": 0.0672851496259411,
+          "n_bars": 1238
+        }
+      }
+    },
+    "pool5": {
+      "pred_dir": "pool5",
+      "horizons": [
+        3
+      ],
+      "portfolio": {
+        "sharpe": -0.03313883841898737,
+        "total_return": -0.010147328250046939,
+        "max_drawdown": -0.08992679426218486,
+        "ann_vol": 0.03936823798740096,
+        "n_bars": 1238
+      },
+      "per_coin": {
+        "bitcoin": {
+          "sharpe": -0.4540136780725037,
+          "total_return": -0.10257368853481219,
+          "max_drawdown": -0.15112587446798276,
+          "ann_vol": 0.046187673394085235,
+          "n_bars": 1238
+        },
+        "ethereum": {
+          "sharpe": 0.289561221956057,
+          "total_return": 0.08371130143241357,
+          "max_drawdown": -0.09906031953179284,
+          "ann_vol": 0.06340835281817214,
+          "n_bars": 1238
+        }
+      }
+    }
+  },
+  "bootstrap_vs_incumbent": null,
+  "gate": {
+    "note": "best arm IS the incumbent (2-pool) \u2014 no bootstrap needed, incumbent retained trivially"
+  },
+  "decision": {
+    "winner": "pool2",
+    "adopted": false,
+    "incumbent": "pool2"
+  },
+  "concerns": []
+}

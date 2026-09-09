@@ -1,0 +1,95 @@
+{
+ "experiment": "value_xs_t1",
+ "probes": [
+  {
+   "probe": "P0_publication_lag",
+   "fund_last": "2025-04-15",
+   "fetched_utc": "2026-07-30",
+   "vendor_max_time": "2026-07-29",
+   "vendor_reference_assets": [
+    "btc",
+    "eth",
+    "ada",
+    "doge"
+   ],
+   "vendor_metrics": [
+    "AdrActCnt",
+    "TxCnt",
+    "CapMrktCurUSD"
+   ],
+   "vendor_max_time_scope": "measured_lag_days / vendor_max_time reflect CoinMetrics' publishing cadence on actively-covered majors (vendor_reference_assets) -- how many days behind fetch time the vendor's newest datapoint is for assets it is actively publishing. This does NOT measure per-asset coverage termination: several value_xs_t1 candidates (bnb, eos_eth, trx_eth empty; xtz, dot, bsv truncated in 2022-23) have genuinely stopped receiving CoinMetrics updates years ago -- a separate, already-disclosed gap tracked per-asset in fundamentals_manifest.json's rows/first/last fields, not a publishing-lag issue. A thin-coverage or delisted-on-CM asset would register as a large apparent lag for reasons unrelated to publishing cadence if used as a lag reference, which is exactly why vendor_reference_assets is restricted to majors with full, continuous coverage instead of being expanded toward the universe tail.",
+   "measured_lag_days": 1,
+   "registered_lag_days": 2,
+   "lag_pass": true,
+   "stamp_alignment": {
+    "tz_ok": true,
+    "midnight_aligned_ok": true,
+    "dev_overlap_ok": true,
+    "dev_overlap_end": "2025-03-31",
+    "pass": true
+   },
+   "pass": true,
+   "note": "within registered lag and stamp-aligned",
+   "superseded_measurements": [
+    {
+     "measured_lag_days": 443,
+     "method": "differenced the last dates of two stores fetched to different end bounds (fundamentals capped at the sealed-holdout MAX_END=2025-04-15; klines fetched to present, 2026-07-02)"
+    },
+    {
+     "measured_lag_days": 471,
+     "method": "differenced fetch date against store last observation, which is the deliberate holdout cap (MAX_END=2025-04-15) rather than the vendor frontier"
+    }
+   ],
+   "correction_rationale": "the store is truncated at MAX_END by design, so publication lag cannot be derived from its endpoint; the vendor frontier is captured at fetch time (catalog endpoint, not subject to --end truncation) and compared against the fetch date",
+   "live_verification": {
+    "assets": [
+     "btc",
+     "eth",
+     "ada",
+     "doge"
+    ],
+    "metrics": [
+     "AdrActCnt",
+     "TxCnt",
+     "CapMrktCurUSD"
+    ],
+    "max_time_observed": "2026-07-29",
+    "observed_lag_days": 1,
+    "observed_on": "2026-07-30",
+    "note": "independent live check against CoinMetrics wall clock, run by the coordinator outside this probe and outside the on-disk holdout-capped fundamentals store; confirms the registered t-2 convention is conservative for the true vendor lag"
+   }
+  },
+  {
+   "probe": "P1_breadth",
+   "median_breadth": 45,
+   "min_breadth": 29,
+   "breadth_by_year": {
+    "2021": 44.5,
+    "2022": 48.5,
+    "2023": 47.5,
+    "2024": 33.5,
+    "2025": 34
+   },
+   "median_signal_valid_breadth": {
+    "nvt_proxy": 39.0,
+    "metcalfe_proxy": 39.0
+   },
+   "min_signal_valid_breadth": {
+    "nvt_proxy": 25.0,
+    "metcalfe_proxy": 25.0
+   },
+   "floor": 20,
+   "pass": true
+  },
+  {
+   "probe": "P2_monotonicity",
+   "spread_by_metric": {
+    "nvt_proxy": 0.00023498307175623403,
+    "metcalfe_proxy": 0.0004897620362825133
+   },
+   "pass": true,
+   "note": "cheap-minus-expensive gross daily spread must be positive for at least one metric"
+  }
+ ],
+ "verdict": "CONTINUE"
+}

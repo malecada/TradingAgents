@@ -1,0 +1,124 @@
+{
+ "experiment": "llm_c3p_pair_xs",
+ "probe": "P0_swap_stability",
+ "weeks": [
+  {
+   "week": "2021-02-12",
+   "n": 78,
+   "resolution": 1.0,
+   "swap_consistency": 0.7076923076923077,
+   "slot1_rate": 0.5051282051282051,
+   "rerun_agreement": 0.9473684210526315,
+   "rerun_rho": 0.9706369579787301
+  },
+  {
+   "week": "2021-08-20",
+   "n": 112,
+   "resolution": 1.0,
+   "swap_consistency": 0.7303571428571428,
+   "slot1_rate": 0.5366071428571428
+  },
+  {
+   "week": "2021-10-08",
+   "n": 113,
+   "resolution": 1.0,
+   "swap_consistency": 0.7839285714285714,
+   "slot1_rate": 0.4955357142857143,
+   "rerun_agreement": 0.9366071428571429,
+   "rerun_rho": 0.9649760463104664
+  },
+  {
+   "week": "2021-10-29",
+   "n": 113,
+   "resolution": 1.0,
+   "swap_consistency": 0.7714285714285715,
+   "slot1_rate": 0.5339285714285714
+  },
+  {
+   "week": "2023-09-29",
+   "n": 186,
+   "resolution": 1.0,
+   "swap_consistency": 0.8,
+   "slot1_rate": 0.5419354838709678,
+   "shuffle_agreement": 0.8188172043010753,
+   "shuffle_rho": 0.9286676706031545
+  },
+  {
+   "week": "2024-01-12",
+   "n": 200,
+   "resolution": 0.9995,
+   "swap_consistency": 0.8138138138138138,
+   "slot1_rate": 0.48874437218609307,
+   "shuffle_agreement": 0.8224112056028015,
+   "shuffle_rho": 0.9014565364134105
+  },
+  {
+   "week": "2024-09-20",
+   "n": 198,
+   "resolution": 1.0,
+   "swap_consistency": 0.8111111111111111,
+   "slot1_rate": 0.4782828282828283,
+   "shuffle_agreement": 0.8626262626262626,
+   "shuffle_rho": 0.9449794735869781
+  },
+  {
+   "week": "2025-01-03",
+   "n": 199,
+   "resolution": 1.0,
+   "swap_consistency": 0.8353535353535354,
+   "slot1_rate": 0.47929292929292927,
+   "rerun_agreement": 0.9641414141414142,
+   "rerun_rho": 0.9862357240749201
+  }
+ ],
+ "P0b": {
+  "pooled_swap_consistency": 0.7817106317106317,
+  "weeks_ge_055": 8,
+  "slot1_rate": 0.5074319059165565,
+  "criteria": {
+   "pooled_min": 0.6,
+   "weekly_min": 0.55,
+   "weeks_needed": 6,
+   "slot1_band": [
+    0.35,
+    0.65
+   ]
+  },
+  "pass": true
+ },
+ "P0a": {
+  "min_agreement": 0.9366071428571429,
+  "min_rho": 0.9649760463104664,
+  "criteria": {
+   "agreement_min": 0.9,
+   "rho_min": 0.9
+  },
+  "pass": true
+ },
+ "P0c": {
+  "min_agreement": 0.8188172043010753,
+  "min_rho": 0.9014565364134105,
+  "criteria": {
+   "agreement_min": 0.8,
+   "rho_min": 0.8
+  },
+  "pass": true
+ },
+ "P0d_cost": {
+  "fresh_calls": 0,
+  "instances_total": 21680,
+  "token_basis": "estimated_from_chars",
+  "tokens_in_per_instance": 160.1009225092251,
+  "tokens_out_per_instance": 7.0,
+  "p0_cost_usd_assumed": 1.22,
+  "projected_total_usd_assumed": 25.03,
+  "price_assumption_per_1M": [
+   0.3,
+   1.2
+  ],
+  "cap_usd": 150.0,
+  "over_cap": false
+ },
+ "verdict": "PASS",
+ "n_weeks": 8
+}

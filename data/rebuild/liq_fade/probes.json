@@ -1,0 +1,195 @@
+{
+ "smoke": false,
+ "generated_at": "2026-07-29T04:56:54.298308+00:00",
+ "dev_window": [
+  "2021-01-01",
+  "2025-03-31"
+ ],
+ "runtime_sec": 11.291777610778809,
+ "p0": {
+  "pass": true,
+  "corr": 0.9999311450585964,
+  "n_overlap_days": 1565,
+  "required_corr": 0.99,
+  "window": [
+   "2021-01-01",
+   "2025-04-15"
+  ]
+ },
+ "p1": {
+  "thr": 2.5,
+  "coins_used": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "BNBUSDT",
+   "SOLUSDT",
+   "ADAUSDT",
+   "DOGEUSDT",
+   "XRPUSDT",
+   "TRXUSDT"
+  ],
+  "n_coins_used": 8,
+  "benchmark_dates": [
+   "2021-05-19",
+   "2022-06-13",
+   "2022-11-09",
+   "2024-08-05",
+   "2025-02-03"
+  ],
+  "matched_dates": {
+   "2021-05-19": [
+    "ADAUSDT",
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+   ],
+   "2022-06-13": [
+    "BNBUSDT",
+    "BTCUSDT",
+    "ETHUSDT",
+    "TRXUSDT"
+   ],
+   "2022-11-09": [
+    "BNBUSDT",
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT",
+    "TRXUSDT"
+   ],
+   "2024-08-05": [
+    "ADAUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "SOLUSDT",
+    "TRXUSDT",
+    "XRPUSDT"
+   ],
+   "2025-02-03": [
+    "ADAUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT",
+    "TRXUSDT",
+    "XRPUSDT"
+   ]
+  },
+  "n_matched": 5,
+  "required": 4,
+  "pass": true
+ },
+ "p1_liq_zscore_diag": {
+  "thr": 2.5,
+  "coins_used": [
+   "BTCUSDT",
+   "ETHUSDT",
+   "BNBUSDT",
+   "SOLUSDT",
+   "ADAUSDT",
+   "DOGEUSDT",
+   "XRPUSDT",
+   "TRXUSDT"
+  ],
+  "matched_dates": {
+   "2021-05-19": [
+    "ADAUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "SOLUSDT",
+    "TRXUSDT",
+    "XRPUSDT"
+   ],
+   "2022-06-13": [
+    "BNBUSDT",
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT",
+    "TRXUSDT"
+   ],
+   "2022-11-09": [
+    "ADAUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "SOLUSDT",
+    "TRXUSDT",
+    "XRPUSDT"
+   ],
+   "2024-08-05": [
+    "ADAUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "SOLUSDT",
+    "TRXUSDT",
+    "XRPUSDT"
+   ],
+   "2025-02-03": [
+    "ADAUSDT",
+    "BNBUSDT",
+    "BTCUSDT",
+    "DOGEUSDT",
+    "ETHUSDT",
+    "TRXUSDT",
+    "XRPUSDT"
+   ]
+  },
+  "n_matched": 5
+ },
+ "p2": {
+  "grid": [
+   {
+    "thr": 2.5,
+    "H": 6,
+    "n_events": 5064,
+    "n_events_with_full_forward_window": 5064,
+    "mean_fwd_ret": 0.008984988874168395
+   },
+   {
+    "thr": 2.5,
+    "H": 24,
+    "n_events": 5064,
+    "n_events_with_full_forward_window": 5064,
+    "mean_fwd_ret": 0.020657618489437965
+   },
+   {
+    "thr": 2.5,
+    "H": 48,
+    "n_events": 5064,
+    "n_events_with_full_forward_window": 5064,
+    "mean_fwd_ret": 0.023671493080692375
+   },
+   {
+    "thr": 3.5,
+    "H": 6,
+    "n_events": 710,
+    "n_events_with_full_forward_window": 710,
+    "mean_fwd_ret": 0.027292785682861236
+   },
+   {
+    "thr": 3.5,
+    "H": 24,
+    "n_events": 710,
+    "n_events_with_full_forward_window": 710,
+    "mean_fwd_ret": 0.026453053653502534
+   },
+   {
+    "thr": 3.5,
+    "H": 48,
+    "n_events": 710,
+    "n_events_with_full_forward_window": 710,
+    "mean_fwd_ret": 0.027718009760558316
+   }
+  ],
+  "n_symbols_loaded": 217,
+  "required": 0.0025,
+  "pass": true,
+  "best_mean_fwd_ret": 0.027718009760558316
+ },
+ "stop": false
+}

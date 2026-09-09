@@ -1,0 +1,33 @@
+{
+ "fetched_utc": "2026-09-02T19:09:35.599255+00:00",
+ "source_url": "https://community-api.coinmetrics.io/v4/timeseries/asset-metrics (community tier)",
+ "note": "vendor may restate; this stamp is what makes restatement detectable",
+ "vendor_max_time": "2026-09-01",
+ "vendor_max_time_source": "https://community-api.coinmetrics.io/v4/catalog-v2/asset-metrics",
+ "vendor_reference_assets": [
+  "btc",
+  "eth",
+  "ada",
+  "doge"
+ ],
+ "vendor_metrics": [
+  "AdrActCnt",
+  "TxCnt",
+  "CapMrktCurUSD"
+ ],
+ "vendor_per_asset_metric_max_time": {
+  "ada:AdrActCnt": "2026-09-01",
+  "ada:CapMrktCurUSD": "2026-09-01",
+  "ada:TxCnt": "2026-09-01",
+  "btc:AdrActCnt": "2026-09-01",
+  "btc:CapMrktCurUSD": "2026-09-01",
+  "btc:TxCnt": "2026-09-01",
+  "doge:AdrActCnt": "2026-09-01",
+  "doge:CapMrktCurUSD": "2026-09-01",
+  "doge:TxCnt": "2026-09-01",
+  "eth:AdrActCnt": "2026-09-01",
+  "eth:CapMrktCurUSD": "2026-09-01",
+  "eth:TxCnt": "2026-09-01"
+ },
+ "vendor_max_time_note": "min(max_time) across vendor_reference_assets x vendor_metrics, 1d/community frequency; captured from the catalog endpoint, not subject to the --end/MAX_END truncation applied to the stored timeseries -- this is the true vendor frontier at fetch time. SCOPE: this measures CoinMetrics' publishing cadence on actively-covered majors (vendor_reference_assets) -- how many days behind fetch time the vendor's newest datapoint is for assets it is actively publishing. It does NOT measure per-asset coverage termination: several value_xs_t1 candidates have genuinely stopped receiving CoinMetrics updates years ago (a separate, already-disclosed gap tracked per-asset in fundamentals_manifest.json's rows/first/last fields, not a publishing-lag issue). A thin-coverage or delisted-on-CM asset would register as a large apparent lag for reasons unrelated to publishing cadence if used as a lag reference -- which is exactly why vendor_reference_assets is restricted to majors with full, continuous coverage instead of being expanded toward the universe tail."
+}

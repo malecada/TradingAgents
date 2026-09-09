@@ -1,0 +1,62 @@
+{
+ "experiment": "llm_c3_rank_xs",
+ "probe": "P0_stability",
+ "weeks": [
+  {
+   "week": "2021-06-25",
+   "n": 108,
+   "rerun_rho": 0.9459616613160644,
+   "shuffle_rho": 0.6327350900619871
+  },
+  {
+   "week": "2021-10-15",
+   "n": 113,
+   "rerun_rho": 0.9522385865607198,
+   "shuffle_rho": 0.858191350001323
+  },
+  {
+   "week": "2021-11-12",
+   "n": 124,
+   "rerun_rho": 0.9851589647715454,
+   "shuffle_rho": 0.8758158721962138
+  },
+  {
+   "week": "2022-02-11",
+   "n": 131,
+   "rerun_rho": 0.9500660290444487,
+   "shuffle_rho": 0.8142847081342276
+  },
+  {
+   "week": "2022-03-11",
+   "n": 132,
+   "rerun_rho": 0.936324534535134,
+   "shuffle_rho": 0.7941436785830525
+  },
+  {
+   "week": "2023-04-28",
+   "n": 164,
+   "rerun_rho": 0.9428888117596507,
+   "shuffle_rho": 0.8371074818943122
+  },
+  {
+   "week": "2024-03-01",
+   "n": 200,
+   "rerun_rho": 0.9637236442567407,
+   "shuffle_rho": 0.687436714793766
+  },
+  {
+   "week": "2025-02-28",
+   "n": 199,
+   "rerun_rho": 0.9415934467312358,
+   "shuffle_rho": 0.8301032945838399
+  }
+ ],
+ "min_rerun_rho": 0.936324534535134,
+ "min_shuffle_rho": 0.6327350900619871,
+ "criteria": {
+  "rerun_min": 0.9,
+  "shuffle_min": 0.8
+ },
+ "verdict": "STOP",
+ "forensic_note": "rerun rho 0.936-0.985 vs shuffle rho 0.633-0.876: reproducibility high, order-invariance low => presentation-position bias is the cause, not sampling noise"
+}

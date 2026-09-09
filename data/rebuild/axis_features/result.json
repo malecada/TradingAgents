@@ -1,0 +1,207 @@
+{
+  "window": {
+    "start": "2021-11-07",
+    "end": "2025-03-31"
+  },
+  "coins": [
+    "bitcoin",
+    "ethereum"
+  ],
+  "horizons": [
+    3
+  ],
+  "arms": {
+    "78f": "btc_eth_78f",
+    "193f": "btc_eth_193f"
+  },
+  "incumbent_arm": "78f",
+  "verification": {
+    "78f": {
+      "h3": {
+        "coin_ids": [
+          "bitcoin",
+          "ethereum"
+        ],
+        "max_date": "2025-03-29",
+        "max_date_ok": true,
+        "per_coin": {
+          "bitcoin": {
+            "n": 1239,
+            "dir_acc": 0.47861178369652946,
+            "dir_acc_sane": true,
+            "pred_ref_ratio_mean": 1.0010154959886766,
+            "pred_ref_ratio_sane": true
+          },
+          "ethereum": {
+            "n": 1239,
+            "dir_acc": 0.5262308313155771,
+            "dir_acc_sane": true,
+            "pred_ref_ratio_mean": 1.0082121455779174,
+            "pred_ref_ratio_sane": true
+          }
+        },
+        "ok": true
+      }
+    },
+    "193f": {
+      "h3": {
+        "coin_ids": [
+          "bitcoin",
+          "ethereum"
+        ],
+        "max_date": "2025-03-29",
+        "max_date_ok": true,
+        "per_coin": {
+          "bitcoin": {
+            "n": 1239,
+            "dir_acc": 0.5108958837772397,
+            "dir_acc_sane": true,
+            "pred_ref_ratio_mean": 0.999166303554634,
+            "pred_ref_ratio_sane": true
+          },
+          "ethereum": {
+            "n": 1239,
+            "dir_acc": 0.5359160613397902,
+            "dir_acc_sane": true,
+            "pred_ref_ratio_mean": 1.0098173261249115,
+            "pred_ref_ratio_sane": true
+          }
+        },
+        "ok": true
+      }
+    },
+    "ok": true
+  },
+  "anchor_check": {
+    "per_coin_source": "data/rebuild/axis_pool/result.json (F4, configs.pool2.per_coin) \u2014 F3's axis_horizons/result.json does not record per-coin SRs for config '3'",
+    "per_coin": {
+      "bitcoin": {
+        "anchor_sr": 0.3721560244577205,
+        "recomputed_sr": 0.3721560244577205,
+        "diff": 0.0,
+        "ok": true
+      },
+      "ethereum": {
+        "anchor_sr": 0.1920043111783232,
+        "recomputed_sr": 0.1920043111783232,
+        "diff": 0.0,
+        "ok": true
+      }
+    },
+    "portfolio": {
+      "anchor_sr": 0.3763016494366421,
+      "recomputed_sr": 0.3763016494366421,
+      "diff": 0.0,
+      "ok": true
+    }
+  },
+  "per_coin": {
+    "bitcoin": {
+      "78f": {
+        "sharpe": 0.3721560244577205,
+        "total_return": 0.13945095255788464,
+        "max_drawdown": -0.11151925321670497,
+        "ann_vol": 0.07991842488590974,
+        "n_bars": 1238
+      },
+      "193f": {
+        "sharpe": -0.2749586737754076,
+        "total_return": -0.07335277109502192,
+        "max_drawdown": -0.13448501380368783,
+        "ann_vol": 0.05156603390150442,
+        "n_bars": 1238
+      },
+      "bootstrap_193f_vs_78f": {
+        "sr_a": 0.3721560244577205,
+        "sr_b": -0.2749586737754076,
+        "delta_sr": -0.6471146982331282,
+        "p_pos": 0.1685,
+        "ci_low": -1.9205806241865127,
+        "ci_high": 0.6488392701673822
+      },
+      "gate": {
+        "delta_sharpe": -0.6471146982331282,
+        "p_pos": 0.1685,
+        "max_drawdown_worsening": 0.022965760586982853,
+        "rule": "delta_sharpe > 0 AND p_pos >= 0.85 (paired block bootstrap, block=21, n=2000) AND max_drawdown_worsening <= 0.01",
+        "pass": false
+      },
+      "decision": "78f"
+    },
+    "ethereum": {
+      "78f": {
+        "sharpe": 0.1920043111783232,
+        "total_return": 0.0658131915702902,
+        "max_drawdown": -0.1467909189212494,
+        "ann_vol": 0.08734786162072392,
+        "n_bars": 1238
+      },
+      "193f": {
+        "sharpe": -0.8890254348874013,
+        "total_return": -0.1301345031876675,
+        "max_drawdown": -0.15323273579078123,
+        "ann_vol": 0.031365894912838505,
+        "n_bars": 1238
+      },
+      "bootstrap_193f_vs_78f": {
+        "sr_a": 0.1920043111783232,
+        "sr_b": -0.8890254348874013,
+        "delta_sr": -1.0810297460657246,
+        "p_pos": 0.0405,
+        "ci_low": -2.253572886253113,
+        "ci_high": 0.13970629883755403
+      },
+      "gate": {
+        "delta_sharpe": -1.0810297460657246,
+        "p_pos": 0.0405,
+        "max_drawdown_worsening": 0.0064418168695318245,
+        "rule": "delta_sharpe > 0 AND p_pos >= 0.85 (paired block bootstrap, block=21, n=2000) AND max_drawdown_worsening <= 0.01",
+        "pass": false
+      },
+      "decision": "78f"
+    }
+  },
+  "portfolio": {
+    "both_78f_incumbent": {
+      "sharpe": 0.3763016494366421,
+      "total_return": 0.11059230642387652,
+      "max_drawdown": -0.11583722637911531,
+      "ann_vol": 0.06180319613199191,
+      "n_bars": 1238
+    },
+    "both_193f": {
+      "sharpe": -0.6748624763153548,
+      "total_return": -0.10031664484800906,
+      "max_drawdown": -0.1418424464709317,
+      "ann_vol": 0.031164576587955337,
+      "n_bars": 1238
+    },
+    "routed": {
+      "sharpe": 0.3763016494366421,
+      "total_return": 0.11059230642387652,
+      "max_drawdown": -0.11583722637911531,
+      "ann_vol": 0.06180319613199191,
+      "n_bars": 1238
+    },
+    "bootstrap_193f_vs_incumbent": {
+      "sr_a": 0.3763016494366421,
+      "sr_b": -0.6748624763153548,
+      "delta_sr": -1.0511641257519968,
+      "p_pos": 0.034,
+      "ci_low": -2.1515133319643938,
+      "ci_high": 0.07858712893420482
+    }
+  },
+  "routing_decision": {
+    "bitcoin": "78f",
+    "ethereum": "78f"
+  },
+  "sentiment_arm_condition": {
+    "rule": "run sentiment arm iff 193f portfolio delta_sr > -0.2 (both-193f vs both-78f incumbent, paired block bootstrap)",
+    "delta_sr": -1.0511641257519968,
+    "threshold": -0.2,
+    "condition_met": false,
+    "action": "SKIPPED per task amendment (2026-07-09) \u2014 condition not met either way; no further action, incumbent (no sentiment) stands."
+  },
+  "concerns": []
+}
