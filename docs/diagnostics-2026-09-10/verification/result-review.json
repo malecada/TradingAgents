@@ -1,0 +1,572 @@
+{
+  "bootstrap_resampling_calls": 0,
+  "checker_sha256": "869b4a437daa1055cdf159551b7badcf5e1b4b406c4fc02f037193c29a5a2693",
+  "checks": {
+    "financial_ledger": 1,
+    "forecast_clock": 32,
+    "forecast_counts": 96,
+    "forecast_denominator": 3,
+    "forecast_eligibility": 36,
+    "forecast_holm": 48,
+    "forecast_losses": 64,
+    "forecast_masks": 80,
+    "forecast_means": 92,
+    "forecast_source_values": 64,
+    "forecast_stability": 112,
+    "forensic_identity": 52,
+    "input_bounds": 16,
+    "input_hashes": 115,
+    "output_hashes": 112,
+    "provenance": 6,
+    "risk_clocks": 108,
+    "risk_denominator": 2,
+    "risk_distributions": 2880,
+    "risk_events": 5157,
+    "risk_halts": 216,
+    "risk_proxies": 288,
+    "risk_source_values": 1080,
+    "risk_stages": 180,
+    "risk_threshold_denominators": 288,
+    "risk_totals": 360,
+    "risk_turnover": 144,
+    "risk_weights": 108,
+    "saved_bootstrap": 144,
+    "source_hashes": 7
+  },
+  "documentary_correction": {
+    "cell": "tsmom_k180_ls|ethereum",
+    "correct_max_halted_before_rows": 1158,
+    "explanation": "The original immutable trace has1158 already-halted cash rows. Prior prose1157 is off by one; the original result halt date and new diagnostic agree. Old artifacts remain unchanged.",
+    "first_already_halted_cash_date": "2022-01-29",
+    "halt_date": "2022-01-28",
+    "last_date": "2025-03-31",
+    "old_prose_max_halted_cash_rows": 1157,
+    "source_trace_halted_after_rows": 1159
+  },
+  "execution_source": "cd8d9e3f064bb40273ba493e597e371e6f199b66",
+  "forecast_cells": [
+    {
+      "bootstrap_draws": 2000,
+      "cell": "BTCUSDT|1h|T1_ret",
+      "clock_rows": 37201,
+      "conditional_family_reject": false,
+      "fallback_rows": 10395,
+      "inference_eligible": false,
+      "missing_origin_rows": 0,
+      "scoreable_rows": 37201
+    },
+    {
+      "bootstrap_draws": 2000,
+      "cell": "BTCUSDT|1h|T2_dir",
+      "clock_rows": 37201,
+      "conditional_family_reject": false,
+      "fallback_rows": 10395,
+      "inference_eligible": false,
+      "missing_origin_rows": 0,
+      "scoreable_rows": 37201
+    },
+    {
+      "bootstrap_draws": 2000,
+      "cell": "BTCUSDT|1h|T3_rv",
+      "clock_rows": 37201,
+      "conditional_family_reject": false,
+      "fallback_rows": 11328,
+      "inference_eligible": false,
+      "missing_origin_rows": 0,
+      "scoreable_rows": 37200
+    },
+    {
+      "bootstrap_draws": 2000,
+      "cell": "BTCUSDT|1h|T4_vol",
+      "clock_rows": 37201,
+      "conditional_family_reject": true,
+      "fallback_rows": 949,
+      "inference_eligible": true,
+      "missing_origin_rows": 1,
+      "scoreable_rows": 37200
+    },
+    {
+      "bootstrap_draws": 2000,
+      "cell": "BTCUSDT|24h|T1_ret",
+      "clock_rows": 1551,
+      "conditional_family_reject": false,
+      "fallback_rows": 425,
+      "inference_eligible": false,
+      "missing_origin_rows": 0,
+      "scoreable_rows": 1551
+    },
+    {
+      "bootstrap_draws": 2000,
+      "cell": "BTCUSDT|24h|T2_dir",
+      "clock_rows": 1551,
+      "conditional_family_reject": false,
+      "fallback_rows": 425,
+      "inference_eligible": false,
+      "missing_origin_rows": 0,
+      "scoreable_rows": 1551
+    },
+    {
+      "bootstrap_draws": 2000,
+      "cell": "BTCUSDT|24h|T3_rv",
+      "clock_rows": 1551,
+      "conditional_family_reject": false,
+      "fallback_rows": 448,
+      "inference_eligible": false,
+      "missing_origin_rows": 0,
+      "scoreable_rows": 1551
+    },
+    {
+      "bootstrap_draws": 2000,
+      "cell": "BTCUSDT|24h|T4_vol",
+      "clock_rows": 1551,
+      "conditional_family_reject": true,
+      "fallback_rows": 93,
+      "inference_eligible": true,
+      "missing_origin_rows": 0,
+      "scoreable_rows": 1551
+    },
+    {
+      "bootstrap_draws": 2000,
+      "cell": "ETHUSDT|1h|T1_ret",
+      "clock_rows": 29185,
+      "conditional_family_reject": false,
+      "fallback_rows": 9470,
+      "inference_eligible": false,
+      "missing_origin_rows": 0,
+      "scoreable_rows": 29185
+    },
+    {
+      "bootstrap_draws": 2000,
+      "cell": "ETHUSDT|1h|T2_dir",
+      "clock_rows": 29185,
+      "conditional_family_reject": false,
+      "fallback_rows": 9470,
+      "inference_eligible": false,
+      "missing_origin_rows": 0,
+      "scoreable_rows": 29185
+    },
+    {
+      "bootstrap_draws": 2000,
+      "cell": "ETHUSDT|1h|T3_rv",
+      "clock_rows": 29185,
+      "conditional_family_reject": false,
+      "fallback_rows": 9558,
+      "inference_eligible": false,
+      "missing_origin_rows": 0,
+      "scoreable_rows": 29184
+    },
+    {
+      "bootstrap_draws": 2000,
+      "cell": "ETHUSDT|1h|T4_vol",
+      "clock_rows": 29185,
+      "conditional_family_reject": true,
+      "fallback_rows": 860,
+      "inference_eligible": true,
+      "missing_origin_rows": 1,
+      "scoreable_rows": 29184
+    },
+    {
+      "bootstrap_draws": 2000,
+      "cell": "ETHUSDT|24h|T1_ret",
+      "clock_rows": 1217,
+      "conditional_family_reject": false,
+      "fallback_rows": 399,
+      "inference_eligible": false,
+      "missing_origin_rows": 0,
+      "scoreable_rows": 1217
+    },
+    {
+      "bootstrap_draws": 2000,
+      "cell": "ETHUSDT|24h|T2_dir",
+      "clock_rows": 1217,
+      "conditional_family_reject": false,
+      "fallback_rows": 399,
+      "inference_eligible": false,
+      "missing_origin_rows": 0,
+      "scoreable_rows": 1217
+    },
+    {
+      "bootstrap_draws": 2000,
+      "cell": "ETHUSDT|24h|T3_rv",
+      "clock_rows": 1217,
+      "conditional_family_reject": false,
+      "fallback_rows": 403,
+      "inference_eligible": false,
+      "missing_origin_rows": 0,
+      "scoreable_rows": 1217
+    },
+    {
+      "bootstrap_draws": 2000,
+      "cell": "ETHUSDT|24h|T4_vol",
+      "clock_rows": 1217,
+      "conditional_family_reject": true,
+      "fallback_rows": 87,
+      "inference_eligible": true,
+      "missing_origin_rows": 0,
+      "scoreable_rows": 1217
+    }
+  ],
+  "forecast_clock_rows": 276616,
+  "forecast_scoreable_rows": 276612,
+  "input_references_verified": 113,
+  "network_requests": 0,
+  "output_files_verified": {
+    "forecast": 35,
+    "risk": 75
+  },
+  "prior_preservation": {
+    "byte_identical_files": 7214,
+    "external_original_inputs_verified": 270,
+    "financial_ledger": {
+      "byte_identical": true,
+      "bytes": 569325,
+      "new_rows": 0,
+      "path": "data/predlab/trial_ledger.jsonl",
+      "rows": 748,
+      "sha256": "4d176acf273cacc5ada30abd02a0e7317c579968f29b2918196d88ebe3140601"
+    },
+    "prior_gate_objects_unchanged": 62,
+    "tracked_files": 7217
+  },
+  "qualification": "Saved numerical identities, hashes and denominators only. No new method, resampling, strategy replay, source-cache repair or validation claim. Original values were bounded before baseline materialization. Git retention is verified separately.",
+  "registration_commit": "38d9a67e6ff042cb1fd870877b3e0222f40fdc08",
+  "result_sha256": {
+    "forecast": "acbe21b51a346211a8c13c9c04ca82844c6fe90b12f9ac5a604b1dca15ef9cdc",
+    "risk": "d37d6f7ab18b307aa12f4b5f57212ee0dbffd7611358ba3a1beaf8638982f9fa"
+  },
+  "risk_price_stop_events": 852,
+  "risk_sleeves": [
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k7_ls|bitcoin",
+      "halt_date": "2022-10-21T00:00:00+00:00",
+      "halted_cash_rows": 892,
+      "price_stops": 37,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k7_ls|ethereum",
+      "halt_date": "2022-10-24T00:00:00+00:00",
+      "halted_cash_rows": 889,
+      "price_stops": 55,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k14_ls|bitcoin",
+      "halt_date": "2022-11-08T00:00:00+00:00",
+      "halted_cash_rows": 874,
+      "price_stops": 30,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k14_ls|ethereum",
+      "halt_date": "2023-06-20T00:00:00+00:00",
+      "halted_cash_rows": 650,
+      "price_stops": 52,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k30_ls|bitcoin",
+      "halt_date": "2024-08-05T00:00:00+00:00",
+      "halted_cash_rows": 238,
+      "price_stops": 46,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k30_ls|ethereum",
+      "halt_date": "2023-06-30T00:00:00+00:00",
+      "halted_cash_rows": 640,
+      "price_stops": 39,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k90_ls|bitcoin",
+      "halt_date": "2022-05-01T00:00:00+00:00",
+      "halted_cash_rows": 1065,
+      "price_stops": 17,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k90_ls|ethereum",
+      "halt_date": "2022-04-23T00:00:00+00:00",
+      "halted_cash_rows": 1073,
+      "price_stops": 15,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k7_lo|bitcoin",
+      "halt_date": "2022-05-11T00:00:00+00:00",
+      "halted_cash_rows": 1055,
+      "price_stops": 20,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k7_lo|ethereum",
+      "halt_date": "2022-05-09T00:00:00+00:00",
+      "halted_cash_rows": 1057,
+      "price_stops": 25,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k14_lo|bitcoin",
+      "halt_date": "2022-06-16T00:00:00+00:00",
+      "halted_cash_rows": 1019,
+      "price_stops": 22,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k14_lo|ethereum",
+      "halt_date": "2022-06-15T00:00:00+00:00",
+      "halted_cash_rows": 1020,
+      "price_stops": 23,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k30_lo|bitcoin",
+      "halt_date": "2022-06-16T00:00:00+00:00",
+      "halted_cash_rows": 1019,
+      "price_stops": 19,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k30_lo|ethereum",
+      "halt_date": "2022-02-24T00:00:00+00:00",
+      "halted_cash_rows": 1131,
+      "price_stops": 22,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k90_lo|bitcoin",
+      "halt_date": "2022-05-06T00:00:00+00:00",
+      "halted_cash_rows": 1060,
+      "price_stops": 18,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k90_lo|ethereum",
+      "halt_date": "2022-02-24T00:00:00+00:00",
+      "halted_cash_rows": 1131,
+      "price_stops": 22,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k180_ls|bitcoin",
+      "halt_date": "2022-01-29T00:00:00+00:00",
+      "halted_cash_rows": 1157,
+      "price_stops": 16,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "tsmom_k180_ls|ethereum",
+      "halt_date": "2022-01-28T00:00:00+00:00",
+      "halted_cash_rows": 1158,
+      "price_stops": 22,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "macross_10_50_ls|bitcoin",
+      "halt_date": "2023-03-03T00:00:00+00:00",
+      "halted_cash_rows": 759,
+      "price_stops": 19,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "macross_10_50_ls|ethereum",
+      "halt_date": "2022-07-18T00:00:00+00:00",
+      "halted_cash_rows": 987,
+      "price_stops": 7,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "macross_20_100_ls|bitcoin",
+      "halt_date": "2023-08-18T00:00:00+00:00",
+      "halted_cash_rows": 591,
+      "price_stops": 23,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "macross_20_100_ls|ethereum",
+      "halt_date": "2022-04-24T00:00:00+00:00",
+      "halted_cash_rows": 1072,
+      "price_stops": 13,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "macross_50_200_ls|bitcoin",
+      "halt_date": "2022-03-27T00:00:00+00:00",
+      "halted_cash_rows": 1100,
+      "price_stops": 14,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "macross_50_200_ls|ethereum",
+      "halt_date": "2022-01-31T00:00:00+00:00",
+      "halted_cash_rows": 1155,
+      "price_stops": 23,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "macross_10_50_lo|bitcoin",
+      "halt_date": "2022-05-27T00:00:00+00:00",
+      "halted_cash_rows": 1039,
+      "price_stops": 14,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "macross_10_50_lo|ethereum",
+      "halt_date": "2022-02-24T00:00:00+00:00",
+      "halted_cash_rows": 1131,
+      "price_stops": 22,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "macross_20_100_lo|bitcoin",
+      "halt_date": "2022-05-06T00:00:00+00:00",
+      "halted_cash_rows": 1060,
+      "price_stops": 18,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "macross_20_100_lo|ethereum",
+      "halt_date": "2022-02-24T00:00:00+00:00",
+      "halted_cash_rows": 1131,
+      "price_stops": 22,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "macross_50_200_lo|bitcoin",
+      "halt_date": "2022-05-06T00:00:00+00:00",
+      "halted_cash_rows": 1060,
+      "price_stops": 18,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "macross_50_200_lo|ethereum",
+      "halt_date": "2022-02-24T00:00:00+00:00",
+      "halted_cash_rows": 1131,
+      "price_stops": 22,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "donchian_n20_ls|bitcoin",
+      "halt_date": "2022-10-27T00:00:00+00:00",
+      "halted_cash_rows": 886,
+      "price_stops": 18,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "donchian_n20_ls|ethereum",
+      "halt_date": "2022-09-19T00:00:00+00:00",
+      "halted_cash_rows": 924,
+      "price_stops": 23,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "donchian_n55_ls|bitcoin",
+      "halt_date": "2023-06-21T00:00:00+00:00",
+      "halted_cash_rows": 649,
+      "price_stops": 12,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "donchian_n55_ls|ethereum",
+      "halt_date": "2022-04-21T00:00:00+00:00",
+      "halted_cash_rows": 1075,
+      "price_stops": 4,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "xsmom_btc_eth_30d|bitcoin",
+      "halt_date": "2022-07-28T00:00:00+00:00",
+      "halted_cash_rows": 977,
+      "price_stops": 39,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    },
+    {
+      "all_four_exposure_summaries_verified": true,
+      "cell": "xsmom_btc_eth_30d|ethereum",
+      "halt_date": "2023-02-20T00:00:00+00:00",
+      "halted_cash_rows": 770,
+      "price_stops": 41,
+      "target_rows": 1241,
+      "trace_rows": 1240
+    }
+  ],
+  "risk_target_rows": 44676,
+  "risk_trace_rows": 44640,
+  "runner_calls": 0,
+  "saved_bootstrap_draw_rows": 32000,
+  "status": "PASS",
+  "strategy_replays": 0,
+  "unique_input_pins": 112,
+  "verified_utc": "2026-09-10T14:16:23.933939+00:00"
+}
