@@ -1,0 +1,198 @@
+{
+  "admission_scope": "These exact development-only artifacts may be pinned in the new pre-result factor/V2 correction registration. No claim of an exact original-run replay or validated strategy follows from this integrity check.",
+  "code_provenance": [
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents/scripts/factor_baselines.py",
+      "sha256": "32ad2180512198d45e5fb76855abd84c8565d29e63019496fce0f5bb35706a69"
+    },
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents/tradingagents/dataflows/coingecko_binance.py",
+      "sha256": "ebee81d70fed7ab10b3c4dcd4fc76e7840ca8df044ab09a8522c96ef19c32679"
+    },
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents/tradingagents/dataflows/stockstats_utils.py",
+      "sha256": "bc4572fec6b3bfb03f1313648a5da540cf212f06811da5b8f1df70583ff83b87"
+    },
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents/tradingagents/default_config.py",
+      "sha256": "5e4086635f47cb5dfa691136a727ebc1e71f4dbec95a4fcdf6d6fd6d3726567b"
+    },
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents/tradingagents/rebuild/ledger.py",
+      "sha256": "adf2223ff7b0485216107dcd0a82e438cdc140de22dc64257f4a2849edee509b"
+    }
+  ],
+  "created_utc": "2026-09-10T12:18:30.478255+00:00",
+  "historical_identity": {
+    "adjacent_provider_manifest_or_receipts_found": false,
+    "cache_git_ignore_rule": ".gitignore:219 **/data_cache/",
+    "conclusion": "Only the present saved-cache proxy is authenticated by these hashes. Exact original factor-run data bytes and original provider vintages cannot be proven.",
+    "current_original_loader_matches_34bbe30_bytes": true,
+    "factor_script_first_committed_revision": "34bbe30",
+    "factor_script_present_at_first_recorded_commit": false,
+    "first_factor_records_commit": "3b425da",
+    "halt_transparency_script_committed_revision": "f359050",
+    "original_trial_ledger": {
+      "factor_records": 37,
+      "path": "/home/malecada/master_thesis/TradingAgents/data/rebuild/trial_ledger.jsonl",
+      "record_schema": [
+        "config",
+        "config_hash",
+        "experiment",
+        "git_commit",
+        "metrics",
+        "ts",
+        "window"
+      ],
+      "recorded_commits": [
+        {
+          "git_commit": "34bbe30",
+          "records": 19
+        },
+        {
+          "git_commit": "3b425da",
+          "records": 18
+        }
+      ],
+      "records_contain_data_hashes": false,
+      "sha256": "45a5fe9e1b0c92de5dd853c9fa091a8dfdb8636e260a4c5b4cc89db6903f9627"
+    }
+  },
+  "holdout_price_rows_parsed": 0,
+  "inputs": [
+    {
+      "coin": "bitcoin",
+      "coverage": {
+        "available_prior_rows": 938,
+        "development_end": "2025-03-31",
+        "development_expected": 1241,
+        "development_missing_dates": [],
+        "development_observed": 1241,
+        "development_start": "2021-11-07",
+        "full_available_calendar_expected": 2179,
+        "full_available_calendar_missing_dates": [],
+        "full_available_calendar_observed": 2179,
+        "history_truncated_to_lookback": false,
+        "longest_finite_lookback_reference_days": 200,
+        "longest_finite_lookback_reference_observed": 200,
+        "longest_finite_lookback_reference_start": "2021-04-21"
+      },
+      "snapshot": {
+        "bytes": 125520,
+        "end": "2025-03-31",
+        "header": [
+          "Date",
+          "Open",
+          "High",
+          "Low",
+          "Close",
+          "Volume"
+        ],
+        "path": "data/factor-correction/2026-09-10/inputs/bitcoin.csv",
+        "row_count": 2179,
+        "sha256": "f4be3daa4d19440046843a8ba2efe01bcedd13e3f4e0a2a7b9df980f8c0c4b2e",
+        "start": "2019-04-14",
+        "transformation": "Exact original header plus all original CSV lines whose Date is <= 2025-03-31. Original line endings and field text are preserved. No sorting, deduplication, coercion, filling, rounding or value transformation."
+      },
+      "source": {
+        "bytes": 154226,
+        "git_tracked": false,
+        "original_run_input_hash": null,
+        "path": "/home/malecada/master_thesis/TradingAgents/tradingagents/dataflows/data_cache/bitcoin-crypto-ohlcv.csv",
+        "retrieval_time_utc": null,
+        "sha256": "95b99d9be1631138cb2b1546cdf64d77baa5a140c6b8b7879319babc30c88401"
+      },
+      "validation": {
+        "fields_checked": "Open, High, Low, Close, Volume on retained rows only",
+        "invalid_ohlc_envelopes": 0,
+        "later_source_rows_skipped_after_date_only_guard": 485,
+        "malformed_csv_rows": 0,
+        "monotonic_unique_midnight_dates": true,
+        "nonfinite_ohlc_values": 0,
+        "nonfinite_or_nonpositive_volume": 0,
+        "nonpositive_ohlc_values": 0,
+        "price_rows_beyond_cutoff_parsed": 0
+      }
+    },
+    {
+      "coin": "ethereum",
+      "coverage": {
+        "available_prior_rows": 937,
+        "development_end": "2025-03-31",
+        "development_expected": 1241,
+        "development_missing_dates": [],
+        "development_observed": 1241,
+        "development_start": "2021-11-07",
+        "full_available_calendar_expected": 2178,
+        "full_available_calendar_missing_dates": [],
+        "full_available_calendar_observed": 2178,
+        "history_truncated_to_lookback": false,
+        "longest_finite_lookback_reference_days": 200,
+        "longest_finite_lookback_reference_observed": 200,
+        "longest_finite_lookback_reference_start": "2021-04-21"
+      },
+      "snapshot": {
+        "bytes": 116298,
+        "end": "2025-03-31",
+        "header": [
+          "Date",
+          "Open",
+          "High",
+          "Low",
+          "Close",
+          "Volume"
+        ],
+        "path": "data/factor-correction/2026-09-10/inputs/ethereum.csv",
+        "row_count": 2178,
+        "sha256": "f1f209b90ec74d8a0591a40168cf955457eae793698faf2896b0d5690d427415",
+        "start": "2019-04-15",
+        "transformation": "Exact original header plus all original CSV lines whose Date is <= 2025-03-31. Original line endings and field text are preserved. No sorting, deduplication, coercion, filling, rounding or value transformation."
+      },
+      "source": {
+        "bytes": 142580,
+        "git_tracked": false,
+        "original_run_input_hash": null,
+        "path": "/home/malecada/master_thesis/TradingAgents/tradingagents/dataflows/data_cache/ethereum-crypto-ohlcv.csv",
+        "retrieval_time_utc": null,
+        "sha256": "5e1320598cd4fcc2ce2ef3c3b18c4f1f1e324000aa9fea412a940952cebfc5b9"
+      },
+      "validation": {
+        "fields_checked": "Open, High, Low, Close, Volume on retained rows only",
+        "invalid_ohlc_envelopes": 0,
+        "later_source_rows_skipped_after_date_only_guard": 485,
+        "malformed_csv_rows": 0,
+        "monotonic_unique_midnight_dates": true,
+        "nonfinite_ohlc_values": 0,
+        "nonfinite_or_nonpositive_volume": 0,
+        "nonpositive_ohlc_values": 0,
+        "price_rows_beyond_cutoff_parsed": 0
+      }
+    }
+  ],
+  "kind": "fixed-factor-v2-development-input-provenance",
+  "limitations": [
+    "The data remain an unverified current spot/mixed-provider cache proxy; they are not certified perpetual-contract OHLC, original-run input bytes, or contemporaneous provider vintages.",
+    "Content hashing authenticates present source and derived bytes only. Mutable cache appends/legacy seeds, absent request receipts, and absent original trial input hashes prevent exact historical provenance reconstruction.",
+    "Historical ledger short commit identifiers do not authenticate the whole executed source state: the initial recorded commit precedes the factor script, and later halt-transparency changes were committed after the corresponding records.",
+    "No holdout price fields were parsed. Whole-file hashing read bytes for identity; rows after the development cutoff were skipped after inspecting only their Date field.",
+    "No strategy signal, position, return, portfolio metric, gate verdict or financial result was computed."
+  ],
+  "loader_semantics": {
+    "cache_behavior": "Canonical date-independent per-coin CSV; reads with on_bad_lines=skip. Missing canonical file may be seeded from the largest legacy cache. Existing last date >= requested end skips fetching without checking internal gaps or the requested history start. Otherwise daily data are appended and overlapping dates retain the last row.",
+    "cleaning": "Legacy _clean_dataframe coerces numeric fields, drops missing Close, forward-fills then backward-fills price/volume fields before applying the end-date filter. Retained source rows contain no invalid or missing numeric fields, so no such fill is needed or performed in these snapshots.",
+    "default_cache_directory": "TradingAgents/tradingagents/dataflows/data_cache; default_config derives this from its source path. No application configuration or environment was imported during inspection.",
+    "entry_point": "scripts/factor_baselines.py:_load_windowed -> tradingagents.dataflows.coingecko_binance._load_crypto_ohlcv(coin,end)",
+    "network_loader_invoked": false,
+    "provider_path": "Intended primary Binance spot /api/v3/klines, interval=1d, bitcoin->BTCUSDT and ethereum->ETHUSDT. Initial empty-cache fallback uses CoinGecko USD market-chart prices, with Open/High/Low set equal to Close. No row-level source receipt or market identity is stored.",
+    "time_convention": "Binance kline openTime is converted from Unix milliseconds to timezone-naive pandas dates; factor loader strips timezone and normalizes dates. Current CSV dates are midnight and timezone-naive. UTC day-open labeling is inferred from this source path, not independently authenticated by cache metadata. Fetch bounds use local time.mktime.",
+    "warmup": "Signals consume all available history through end; only afterwards is the sizing/backtest input sliced to the development window. Sizing volatility warmup remains inside that window in the original caller. All available prior history is preserved, including stateful Donchian history. The 200-day count is a completeness reference only."
+  },
+  "network_requests": 0,
+  "original_checkout": "/home/malecada/master_thesis/TradingAgents",
+  "original_checkout_head_at_inspection": "017986777996647a71b7c3097845b3c6ac53883c",
+  "returns_calculated": 0,
+  "schema_version": 1,
+  "sources_unchanged": true,
+  "status": "available_with_current_cache_proxy_qualification",
+  "strategy_runs": 0
+}
