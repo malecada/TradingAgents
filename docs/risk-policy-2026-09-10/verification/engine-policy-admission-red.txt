@@ -1,0 +1,185 @@
+..................................FF......                               [100%]
+=================================== FAILURES ===================================
+____ test_hook_refuses_nonfinite_output_instead_of_legacy_hold_fallback[1] _____
+
+bad = '1'
+
+    @pytest.mark.parametrize('bad',[np.nan,np.inf,True,'1',1j,None])
+    def test_hook_refuses_nonfinite_output_instead_of_legacy_hold_fallback(bad):
+        class Broken:
+            def decide(self,*args,**kwargs):return bad,{}
+        with pytest.raises(ValueError,match='policy target'):
+>           run_coin_backtest(**engine_args([100,110],[0,1]),target_policy=Broken())
+
+tests/test_factor_risk_policy.py:211: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dates = DatetimeIndex(['2024-01-01 00:00:00+00:00', '2024-01-02 00:00:00+00:00'], dtype='datetime64[ns, UTC]', freq='D')
+prices = array([100., 110.]), positions = array([0., 1.])
+initial_capital = 100.0, fee_rate = 0.001, slippage = 0.0005, spread = 0.0001
+price_impact = 5e-05, funding_rate = 0.0003, stop_loss = 1.0
+max_portfolio_dd = 1.0, take_profit = 0.0, highs = array([100., 110.])
+lows = array([100., 110.]), price_stop_pct = 0.03, trace = None
+target_policy = <test_factor_risk_policy.test_hook_refuses_nonfinite_output_instead_of_legacy_hold_fallback.<locals>.Broken object at 0x7ac8a49a5fd0>
+
+    def run_coin_backtest(
+        dates: np.ndarray,
+        prices: np.ndarray,
+        positions: np.ndarray,
+        initial_capital: float,
+        fee_rate: float,
+        slippage: float,
+        spread: float,
+        price_impact: float,
+        funding_rate: float,
+        stop_loss: float,
+        max_portfolio_dd: float,
+        take_profit: float = 0.0,
+        highs: np.ndarray | None = None,
+        lows: np.ndarray | None = None,
+        price_stop_pct: float = 0.0,
+        *,
+        trace: list[dict] | None = None,
+        target_policy=None,
+    ) -> tuple[list, dict]:
+        """Executable contracts with signed funding and explicit risk-stop exits.
+    
+        Positions are same-row pretrade NAV targets. Fee, slippage and spread
+        inputs are one-way rates; impact remains the declared quadratic turnover
+        model. Historical results from the former doubled-fee model are unchanged.
+    
+        ``trace`` optionally receives one record per return bar (no initial NAV
+        anchor). It observes the existing book without changing targets or risk
+        decisions. Dollar charges include both the opening trade and any stop
+        exit, each using that leg's NAV. Funding remains the declared daily
+        opening-exposure assumption, including on price-stop days. The effective
+        mark return includes an assumed stop fill; it is not the raw close return.
+    
+        An optional target policy resolves each saved raw target before the bar
+        and receives notification after an executed price-stop exit. It changes
+        neither accounting nor the price-stop anchor on same-sign resizing.
+        The default None path and its original trace schema remain unchanged.
+        """
+        from tradingagents.accounting import accounting_step
+        from tradingagents.backtesting.engine import compute_metrics
+        equity = [initial_capital]
+        daily_returns, actual_positions = [], []
+        notionals = pd.Series(dtype=float)
+        previous_target = 0.
+        entry_equity = peak_equity = initial_capital
+        halted = False
+        use_price_stop = price_stop_pct > 0 and highs is not None and lows is not None
+        entry_price = 0.
+        trades = 0
+        fee = fee_rate + slippage + spread
+        for i in range(1,len(dates)):
+            nav = equity[-1]
+            p_prev, p_curr = prices[i-1], prices[i]
+            policy_fields = None
+            if target_policy is None:
+                target_pos = 0. if halted else positions[i]
+            else:
+                target_pos, policy_fields = target_policy.decide(i, positions[i], halted, date=dates[i])
+                if (isinstance(target_pos, (bool, np.bool_)) or not np.isscalar(target_pos)
+>                       or not np.isfinite(target_pos)):
+                               ^^^^^^^^^^^^^^^^^^^^^^^
+E                       TypeError: ufunc 'isfinite' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''
+
+scripts/baseline_strategy_v2.py:139: TypeError
+____ test_hook_refuses_nonfinite_output_instead_of_legacy_hold_fallback[1j] ____
+
+bad = 1j
+
+    @pytest.mark.parametrize('bad',[np.nan,np.inf,True,'1',1j,None])
+    def test_hook_refuses_nonfinite_output_instead_of_legacy_hold_fallback(bad):
+        class Broken:
+            def decide(self,*args,**kwargs):return bad,{}
+        with pytest.raises(ValueError,match='policy target'):
+>           run_coin_backtest(**engine_args([100,110],[0,1]),target_policy=Broken())
+
+tests/test_factor_risk_policy.py:211: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+dates = DatetimeIndex(['2024-01-01 00:00:00+00:00', '2024-01-02 00:00:00+00:00'], dtype='datetime64[ns, UTC]', freq='D')
+prices = array([100., 110.]), positions = array([0., 1.])
+initial_capital = 100.0, fee_rate = 0.001, slippage = 0.0005, spread = 0.0001
+price_impact = 5e-05, funding_rate = 0.0003, stop_loss = 1.0
+max_portfolio_dd = 1.0, take_profit = 0.0, highs = array([100., 110.])
+lows = array([100., 110.]), price_stop_pct = 0.03, trace = None
+target_policy = <test_factor_risk_policy.test_hook_refuses_nonfinite_output_instead_of_legacy_hold_fallback.<locals>.Broken object at 0x7ac8a49a5940>
+
+    def run_coin_backtest(
+        dates: np.ndarray,
+        prices: np.ndarray,
+        positions: np.ndarray,
+        initial_capital: float,
+        fee_rate: float,
+        slippage: float,
+        spread: float,
+        price_impact: float,
+        funding_rate: float,
+        stop_loss: float,
+        max_portfolio_dd: float,
+        take_profit: float = 0.0,
+        highs: np.ndarray | None = None,
+        lows: np.ndarray | None = None,
+        price_stop_pct: float = 0.0,
+        *,
+        trace: list[dict] | None = None,
+        target_policy=None,
+    ) -> tuple[list, dict]:
+        """Executable contracts with signed funding and explicit risk-stop exits.
+    
+        Positions are same-row pretrade NAV targets. Fee, slippage and spread
+        inputs are one-way rates; impact remains the declared quadratic turnover
+        model. Historical results from the former doubled-fee model are unchanged.
+    
+        ``trace`` optionally receives one record per return bar (no initial NAV
+        anchor). It observes the existing book without changing targets or risk
+        decisions. Dollar charges include both the opening trade and any stop
+        exit, each using that leg's NAV. Funding remains the declared daily
+        opening-exposure assumption, including on price-stop days. The effective
+        mark return includes an assumed stop fill; it is not the raw close return.
+    
+        An optional target policy resolves each saved raw target before the bar
+        and receives notification after an executed price-stop exit. It changes
+        neither accounting nor the price-stop anchor on same-sign resizing.
+        The default None path and its original trace schema remain unchanged.
+        """
+        from tradingagents.accounting import accounting_step
+        from tradingagents.backtesting.engine import compute_metrics
+        equity = [initial_capital]
+        daily_returns, actual_positions = [], []
+        notionals = pd.Series(dtype=float)
+        previous_target = 0.
+        entry_equity = peak_equity = initial_capital
+        halted = False
+        use_price_stop = price_stop_pct > 0 and highs is not None and lows is not None
+        entry_price = 0.
+        trades = 0
+        fee = fee_rate + slippage + spread
+        for i in range(1,len(dates)):
+            nav = equity[-1]
+            p_prev, p_curr = prices[i-1], prices[i]
+            policy_fields = None
+            if target_policy is None:
+                target_pos = 0. if halted else positions[i]
+            else:
+                target_pos, policy_fields = target_policy.decide(i, positions[i], halted, date=dates[i])
+                if (isinstance(target_pos, (bool, np.bool_)) or not np.isscalar(target_pos)
+                        or not np.isfinite(target_pos)):
+                    raise ValueError(f'invalid policy target at {dates[i]}')
+                if halted and target_pos != 0.:
+                    raise ValueError(f'policy target attempts to release permanent halt at {dates[i]}')
+                if not isinstance(policy_fields, dict):
+                    raise ValueError('policy trace metadata must be a dictionary')
+            target = pd.Series({'asset':target_pos}) if np.isfinite(target_pos) else None
+>           exposure = float(target_pos) if target is not None else notionals.get('asset',0.)/nav
+                       ^^^^^^^^^^^^^^^^^
+E           TypeError: float() argument must be a string or a real number, not 'complex'
+
+scripts/baseline_strategy_v2.py:146: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_factor_risk_policy.py::test_hook_refuses_nonfinite_output_instead_of_legacy_hold_fallback[1]
+FAILED tests/test_factor_risk_policy.py::test_hook_refuses_nonfinite_output_instead_of_legacy_hold_fallback[1j]
+2 failed, 40 passed in 1.66s

@@ -1,0 +1,16 @@
+
+==================================== ERRORS ====================================
+_________ ERROR collecting tests/test_factor_risk_policy_evaluation.py _________
+ImportError while importing test module '/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/test_factor_risk_policy_evaluation.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_factor_risk_policy_evaluation.py:5: in <module>
+    from tradingagents.strategies import factor_risk_policy_evaluation as ev
+E   ImportError: cannot import name 'factor_risk_policy_evaluation' from 'tradingagents.strategies' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/__init__.py)
+=========================== short test summary info ============================
+ERROR tests/test_factor_risk_policy_evaluation.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.39s

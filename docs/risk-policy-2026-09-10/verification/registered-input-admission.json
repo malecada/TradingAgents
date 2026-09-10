@@ -1,0 +1,4688 @@
+{
+  "baseline_commit": "3202d7982c47bb1472a8f3eb43a0851fd37b1480",
+  "clock_roles": {
+    "returns": 72,
+    "target": 36,
+    "trace": 144
+  },
+  "clocks": [
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-bitcoin-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-ethereum-targets.parquet",
+      "role": "target",
+      "rows": 1241,
+      "start": "2021-11-07T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-primary-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-primary-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-primary-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-zero_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-zero_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-zero_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-double_execution-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-double_execution-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-double_execution-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-zero_funding-returns.parquet",
+      "role": "returns",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "Date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-zero_funding-bitcoin-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    },
+    {
+      "end": "2025-03-31T00:00:00+00:00",
+      "extra": [],
+      "missing": [],
+      "monotonic": true,
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-zero_funding-ethereum-trace.parquet",
+      "role": "trace",
+      "rows": 1240,
+      "start": "2021-11-08T00:00:00+00:00",
+      "timestamp_column": "date",
+      "unique": true
+    }
+  ],
+  "financial_columns_materialized": false,
+  "financial_ledger": {
+    "append_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "current_bytes": 569325,
+    "current_rows": 748,
+    "current_sha256": "4d176acf273cacc5ada30abd02a0e7317c579968f29b2918196d88ebe3140601",
+    "new_rows": 0,
+    "path": "data/predlab/trial_ledger.jsonl",
+    "prefix_byte_identical": true,
+    "prefix_bytes": 569325,
+    "prefix_rows": 748,
+    "prefix_sha256": "4d176acf273cacc5ada30abd02a0e7317c579968f29b2918196d88ebe3140601"
+  },
+  "financial_statistics_computed": false,
+  "identities": 72,
+  "index_evaluations": 288,
+  "inputs": [
+    {
+      "bytes": 62111,
+      "git_blob": "b050286f06f0730ce8cbaa5ded26808b6c855611",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-bitcoin-targets.parquet",
+      "sha256": "a43515230f61e0214b39036e22ec51c6b29eda204b52c5b7fe4674c95b1745da"
+    },
+    {
+      "bytes": 82100,
+      "git_blob": "fb6767f322a80d2e63c994faf1578609ed3d827c",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-double_execution-bitcoin-trace.parquet",
+      "sha256": "2cf108b0f5c9e5a2b7aa870318f5ce7e852c7a694709177068d76425559a85be"
+    },
+    {
+      "bytes": 61511,
+      "git_blob": "c73906f775552fc33f032e2d79a0022d9b55b56d",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-double_execution-ethereum-trace.parquet",
+      "sha256": "1623db83c891ec713b44e7da3dd7d40f0619395576e3215de1bbf4e4b4321c9f"
+    },
+    {
+      "bytes": 20157,
+      "git_blob": "5c720befb6008e39e240fef90b9c9e5de3bb36a1",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-double_execution-returns.parquet",
+      "sha256": "5e5fc93558dd47a0a6b62005d4e39bbf7f6e68bcddc9906e565de2555367c067"
+    },
+    {
+      "bytes": 58965,
+      "git_blob": "431ca21231a03d4659960a590433d06b21acdde4",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-ethereum-targets.parquet",
+      "sha256": "12f0b0aa94d73c95aaf3855e38a29bfcf2d1eb482ef358744f785a3283062012"
+    },
+    {
+      "bytes": 82102,
+      "git_blob": "d911744e038d20d3a13c28f33788f507ad4580c8",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-primary-bitcoin-trace.parquet",
+      "sha256": "fe7c83516bc4ae2b18b16dd79ca2e1cc947da14dbd37e917331a6d9cec6b1d87"
+    },
+    {
+      "bytes": 79652,
+      "git_blob": "242cb88c4c47bb108da60369369400aade356fb7",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-primary-ethereum-trace.parquet",
+      "sha256": "a466562cef0911eb1abace63085923ae46c295365844e5d45f85d5c20a632d76"
+    },
+    {
+      "bytes": 21627,
+      "git_blob": "50a2ffd3666307c29639371d0351faf79bd5a001",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-primary-returns.parquet",
+      "sha256": "509871f4ab81e66264831f6b7487e5f5c359fc34bbf57114b7714b38d2f38312"
+    },
+    {
+      "bytes": 71798,
+      "git_blob": "ede6647d35df67439ec2b1abef26babfca94f8da",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-zero_execution-bitcoin-trace.parquet",
+      "sha256": "9431d985a95a17f441f3b31fba96271ca2ca35cb3009373ee00514d16c222bc0"
+    },
+    {
+      "bytes": 73133,
+      "git_blob": "4b4f22383df29b49b7b00685f618ffdaf39b276b",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-zero_execution-ethereum-trace.parquet",
+      "sha256": "a0d332f5adf36194ec423d4f8d03699a06113fd4394c2ea86d022b2e94fdca25"
+    },
+    {
+      "bytes": 22264,
+      "git_blob": "ac73e867f5b91c97b381cc8137aa7078bce89af5",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-zero_execution-returns.parquet",
+      "sha256": "7489b0215c8ddf28da47d4bc93dabd6613009168f278e92ffcffd894187b266c"
+    },
+    {
+      "bytes": 79604,
+      "git_blob": "09394810733f440b0d64b195558847c92007a2ff",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-zero_funding-bitcoin-trace.parquet",
+      "sha256": "a0ff14ef88b723129aef14a4c2182d70fd8293293662fecf9a0325caa4558173"
+    },
+    {
+      "bytes": 60382,
+      "git_blob": "b2bb55f762be79ccc739ea5465bb348794a710e2",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-zero_funding-ethereum-trace.parquet",
+      "sha256": "78e754d623204da468424cdff707420c3d9d41368c3a3f85af3bbea2a1e54ef9"
+    },
+    {
+      "bytes": 20158,
+      "git_blob": "bdd81e993fcad5ef90907688953eab8ffc79f661",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n20_ls-zero_funding-returns.parquet",
+      "sha256": "c284100b2520de28d20e5913c5f109f36168fc0fc7967fe1045a68dfdef92ef3"
+    },
+    {
+      "bytes": 61760,
+      "git_blob": "71afbf2f12554c4b24faf5154996615caa323776",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-bitcoin-targets.parquet",
+      "sha256": "323f955e2ae632b41e3c41e4e17a7e3c0b23a68fb4eaf828bf2d4e567c0dbb2c"
+    },
+    {
+      "bytes": 120228,
+      "git_blob": "cef37e885ea7cdc237b52563bae24bf2496e3c50",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-double_execution-bitcoin-trace.parquet",
+      "sha256": "0784e21460f4af107f76123b8586747983959948b63d28a60ebc3a88d02ab908"
+    },
+    {
+      "bytes": 58627,
+      "git_blob": "4d4729d5e7d4770466f557a35d8d65c5fc2309b2",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-double_execution-ethereum-trace.parquet",
+      "sha256": "959a7f76a065b9d79c52e9386d3d413d3ef6e181f3f22c4aa980186570dcc5bc"
+    },
+    {
+      "bytes": 25455,
+      "git_blob": "5a45a1873aaa67c4e9ad021436727fd831bdbba5",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-double_execution-returns.parquet",
+      "sha256": "6006078f2318512421365af25c62376a7b9360841f536c9a361d2b809c6bdf6c"
+    },
+    {
+      "bytes": 58661,
+      "git_blob": "50b381171b061f3c69ed13dc37495467405287c5",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-ethereum-targets.parquet",
+      "sha256": "cab676b623a7781e665d7006becda6017287a22efd96243485d98ac10196a2bd"
+    },
+    {
+      "bytes": 120212,
+      "git_blob": "dc51718c012b362d8475188484ccc65bc32200bd",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-primary-bitcoin-trace.parquet",
+      "sha256": "afacfa133f9fe9138bbcbb9c63162ee059f3bfd72c5f141cd7b41781d96eeb00"
+    },
+    {
+      "bytes": 58627,
+      "git_blob": "d5654399659164384eb70666114327c7e8033073",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-primary-ethereum-trace.parquet",
+      "sha256": "0df776dcc0c7224cf6314a18db8304100a887aa3eb732b2f5645599bdcfbc87a"
+    },
+    {
+      "bytes": 25447,
+      "git_blob": "35b83928575d830bf6210f69b63d124bcc57a45d",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-primary-returns.parquet",
+      "sha256": "20066b5adb0d57b4b502eb529f75772e2216e736a6d2cfe985e42324df0f97de"
+    },
+    {
+      "bytes": 98983,
+      "git_blob": "6c9cc71c1e21734edbb9fa0d742042fe03674839",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-zero_execution-bitcoin-trace.parquet",
+      "sha256": "76d960c667535c28605933a55df4aa142a8897b8ef14ec40887a59e9e4a19c91"
+    },
+    {
+      "bytes": 54896,
+      "git_blob": "341e7c4aea63919f5b29f79e73fbc358736485d6",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-zero_execution-ethereum-trace.parquet",
+      "sha256": "b303d546ac761482e1c9c44601dd2d53752b68e83770b60b06b02080ee9950fa"
+    },
+    {
+      "bytes": 25455,
+      "git_blob": "78c5036e8e52bff226bf42098ad77fc1d17d97e6",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-zero_execution-returns.parquet",
+      "sha256": "dd0cca39f32b0f095d02c5d98ef3ccce6f8ae116738103ec9ff3677fe5d184ff"
+    },
+    {
+      "bytes": 114974,
+      "git_blob": "40ab9514edce381e31642769dce0276d1cde0474",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-zero_funding-bitcoin-trace.parquet",
+      "sha256": "1aca225333552974cdedb72d0bfa72a41934d86720821aba2bdc88cddf1b0eee"
+    },
+    {
+      "bytes": 57680,
+      "git_blob": "80ac60d8e8de470017fa875ec3cc950ccce02b5e",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-zero_funding-ethereum-trace.parquet",
+      "sha256": "bb9a058a5e7041da2621c24ddf520ffb0bdd36c9cbb0321eac6d3e1892b481d0"
+    },
+    {
+      "bytes": 25447,
+      "git_blob": "086a9b0b9fc7a3521eecf956c523e2c0dbe97e0e",
+      "path": "data/factor-correction/2026-09-10/results/donchian_n55_ls-zero_funding-returns.parquet",
+      "sha256": "34f7910a8e4166e268f04a53bcfa66684222b5a3b22ab54ac4ddae7018dc22e9"
+    },
+    {
+      "bytes": 61634,
+      "git_blob": "3ecb173d9bac465bb427adb20484b4a3089d90e5",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-bitcoin-targets.parquet",
+      "sha256": "b2872c95d55c2a56a4561e6c8270f651e4d522fe513830eef0331f5c47349f1a"
+    },
+    {
+      "bytes": 59633,
+      "git_blob": "c685f8210fa6bdbb71d6f45e62774a18d9ed6a63",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-double_execution-bitcoin-trace.parquet",
+      "sha256": "0b2ec650b0f40043f5f4555358f022be7b2b7909bb480fc5aa8d511d720e13d1"
+    },
+    {
+      "bytes": 53769,
+      "git_blob": "52748b99d7900b26fd721abed61fee7c3f06d3eb",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-double_execution-ethereum-trace.parquet",
+      "sha256": "7809c9857884f9cbd5331812ef98fd58af623dc3655c13852642473176c28014"
+    },
+    {
+      "bytes": 16946,
+      "git_blob": "fc9d0578eb989f356dafb7039a535c3ebcdbe9b6",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-double_execution-returns.parquet",
+      "sha256": "6e7b088fbb23620eb118ec67cc9ab472e61af5e34df3dc3011d2226d44ed60c4"
+    },
+    {
+      "bytes": 58527,
+      "git_blob": "d891aeba8c0ac41275a9cd5b593dd39ce316258f",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-ethereum-targets.parquet",
+      "sha256": "4b1c85f120040a5ff71db985e230bd27e787804c8577aeed838c0cd347d5cff4"
+    },
+    {
+      "bytes": 59633,
+      "git_blob": "5881c2c1a3cdb440aff89866855221e370de2232",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-primary-bitcoin-trace.parquet",
+      "sha256": "3940a4041d22f4a12d842d7261ed6d54ddbd8f3ec3bc855264c24bc713420f82"
+    },
+    {
+      "bytes": 57516,
+      "git_blob": "4ceb0fab2f2fd0947978ea14be1ad032dcbfc0b6",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-primary-ethereum-trace.parquet",
+      "sha256": "655951d5020e8290812bc38ce51775024656e19cfddf7c1f1c807417952f862f"
+    },
+    {
+      "bytes": 17325,
+      "git_blob": "1ff96f3b185a83c6d9bf4276ad16586316706e53",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-primary-returns.parquet",
+      "sha256": "1d6d8a44453f33b7eb82812ff7fdf43c836ecf0466d765d3624d9308a51d65bb"
+    },
+    {
+      "bytes": 57089,
+      "git_blob": "ade16b849c28da84154c77543382ae4e1c1e2f27",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-zero_execution-bitcoin-trace.parquet",
+      "sha256": "0d7f1ef704d383c8db1611723d750a1223522a3c0436ab40fa81cd11119f153b"
+    },
+    {
+      "bytes": 60663,
+      "git_blob": "732df992f0bb7f17da872d41bfd96c1f6e2901b3",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-zero_execution-ethereum-trace.parquet",
+      "sha256": "5b5d322541756e4f7bfdc2321017b29cbed33eb4cde8bb5b29f763aaf7d1d1f5"
+    },
+    {
+      "bytes": 18280,
+      "git_blob": "f4330a142a09614447ae0b6fdf78b5efcc0db9c8",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-zero_execution-returns.parquet",
+      "sha256": "160276518b5d7e09c7ff1d4002392a42565d3c4165179d2cc58a0335eeb2b90e"
+    },
+    {
+      "bytes": 60616,
+      "git_blob": "c77264be7a17b68e6700f4fc62b848f8c28b995d",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-zero_funding-bitcoin-trace.parquet",
+      "sha256": "a04dfea98f3fbacea6652c212d3a4ee79fb59c06098e175fbfd51bba35ae95fb"
+    },
+    {
+      "bytes": 57988,
+      "git_blob": "f625e0ffc6c6dbae619407008c65904f825a98ed",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-zero_funding-ethereum-trace.parquet",
+      "sha256": "d30d68769cfba55f93399cfb0ab2aad9b1d5a4a1c2d631ec75126e7b3b8cac38"
+    },
+    {
+      "bytes": 17674,
+      "git_blob": "e1d344bc8b668957e746cf0584fc925c49815ee1",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_lo-zero_funding-returns.parquet",
+      "sha256": "4f9fd9e261e60d5ff5ef57f8973c5e99cfb4652db76e333a12c90d37e675d061"
+    },
+    {
+      "bytes": 61901,
+      "git_blob": "8952e42edc1e86aee0539071d26c90ab2c44ee30",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-bitcoin-targets.parquet",
+      "sha256": "54f87db5fc5e9fbe18f1f557fc1823ef83455d018a3ed507665aa512c2b053f8"
+    },
+    {
+      "bytes": 106658,
+      "git_blob": "7b67c0d710610df7b803dc801b925eaa0735e688",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-double_execution-bitcoin-trace.parquet",
+      "sha256": "f69847723585a311ec1e457d621a7ce089550270484b41e9de0667cbd9ddf384"
+    },
+    {
+      "bytes": 75461,
+      "git_blob": "a775ba50c740c31cd2056eca86e2f469e8742d33",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-double_execution-ethereum-trace.parquet",
+      "sha256": "0cbc610fad246f0c576d17e711676eb46a39040d6b5dc680e3b293a78e99d763"
+    },
+    {
+      "bytes": 24619,
+      "git_blob": "d0f0715b56898bb6a1b865876a4137525b94222b",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-double_execution-returns.parquet",
+      "sha256": "a0b9d9c43f4e19bc9013797afcb45e4e54adb116554e85255bdaa56e14192e56"
+    },
+    {
+      "bytes": 58887,
+      "git_blob": "c28ac0521e81a6060369da32a61e4a74d76e868d",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-ethereum-targets.parquet",
+      "sha256": "bba95f38fbac1c4ef9f8c3aa79c0c14996f0d99be889d377cd8486ee529abec2"
+    },
+    {
+      "bytes": 106661,
+      "git_blob": "b8793322562ac3b70db8684f50f738a24d9a7d87",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-primary-bitcoin-trace.parquet",
+      "sha256": "d29682dfb3b2feaf40231b810f8c878b62c8278a7119b503f90228a8ebe31d80"
+    },
+    {
+      "bytes": 75467,
+      "git_blob": "e6a779e691c728989929c283dd99e17955703002",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-primary-ethereum-trace.parquet",
+      "sha256": "71d7b740818b39cadb82eb368635629f31d8e441a42ca40a221c4d87a488f328"
+    },
+    {
+      "bytes": 24620,
+      "git_blob": "a17d0088d501eeef8548c19981d785d46d237460",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-primary-returns.parquet",
+      "sha256": "3a460c1a7a981de4c0cd9d1d94b6c82e7ec959e6a5150b63f1d0e786c6c3a349"
+    },
+    {
+      "bytes": 89279,
+      "git_blob": "8c6ac134778d273354eb0e80c8d3b8a9611b4fdd",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-zero_execution-bitcoin-trace.parquet",
+      "sha256": "c89d69c1aaa5a287f604cb543149e46a13dca095eb2d328915dea74560b8e775"
+    },
+    {
+      "bytes": 66812,
+      "git_blob": "4158ad86b172ae818999c31df4a86023f18eb8ef",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-zero_execution-ethereum-trace.parquet",
+      "sha256": "94cf11423fbb596b37554af94c47b997fede5ab4430fce01df5c63c659d9a43b"
+    },
+    {
+      "bytes": 24618,
+      "git_blob": "2cccc6baec5b16c19b8f6ac42b87ea200eff4726",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-zero_execution-returns.parquet",
+      "sha256": "c753759c3a3d9585153b82f1ad7bf23a1a2261f54ead99515c2372f9a519ccc4"
+    },
+    {
+      "bytes": 102421,
+      "git_blob": "8f41672c06a5d6a8880be5828bbd03879e7c1a98",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-zero_funding-bitcoin-trace.parquet",
+      "sha256": "7d1032ff34c33d0d5b83bb7faa1ff0956979c4cebe4c657bbe0b9fc9128567b3"
+    },
+    {
+      "bytes": 73330,
+      "git_blob": "fecc55d582706fd45a6188e48fb8d987209ea1d4",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-zero_funding-ethereum-trace.parquet",
+      "sha256": "d8dfa0fec397968c87e2e1392b0cada272819d322008215c979dec172bbf319d"
+    },
+    {
+      "bytes": 24620,
+      "git_blob": "0bf8eb8780dcfa7f91d0bd51dbd60659931a4349",
+      "path": "data/factor-correction/2026-09-10/results/macross_10_50_ls-zero_funding-returns.parquet",
+      "sha256": "09feca28ad872a1f344558b6aa599b7f1627b89fb15af66a65aff513028f1771"
+    },
+    {
+      "bytes": 61601,
+      "git_blob": "75122d7d73617af9d4dc8728c2101bb01d05b8a6",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-bitcoin-targets.parquet",
+      "sha256": "965b1cba2137a8a863c08231a5d42dadb51491473d0e33f3d4db9567f06197fa"
+    },
+    {
+      "bytes": 67114,
+      "git_blob": "e797406236bf8a8718eb29c54dfd7583a74b8ae6",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-double_execution-bitcoin-trace.parquet",
+      "sha256": "dd29a370db9894d4192285d4f21699c632a1441ef6c2ea58bcced8373cf995a4"
+    },
+    {
+      "bytes": 53769,
+      "git_blob": "52748b99d7900b26fd721abed61fee7c3f06d3eb",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-double_execution-ethereum-trace.parquet",
+      "sha256": "7809c9857884f9cbd5331812ef98fd58af623dc3655c13852642473176c28014"
+    },
+    {
+      "bytes": 17452,
+      "git_blob": "d4ff9bdb68814a85da3ca2c63ca62f2cc5327785",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-double_execution-returns.parquet",
+      "sha256": "c0aef45bc1e1e736be4694bdb93cdfa170bd2399f0ed4d81d40b02cf94ce8407"
+    },
+    {
+      "bytes": 58494,
+      "git_blob": "0cccf8af89bba4d7746f02002f345e6959a103c2",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-ethereum-targets.parquet",
+      "sha256": "52e6dacb41ddd640b8318706b4227749712ccebbbb2c106f0cfec8cbede1fdf5"
+    },
+    {
+      "bytes": 67333,
+      "git_blob": "c09a00bf6a8608e0c39ac9ceff098bcd7d1a89da",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-primary-bitcoin-trace.parquet",
+      "sha256": "fad2f8b07625027506c69f3cec61f31f70d10cbcde1c162ce1ffff7eb0360d49"
+    },
+    {
+      "bytes": 57516,
+      "git_blob": "4ceb0fab2f2fd0947978ea14be1ad032dcbfc0b6",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-primary-ethereum-trace.parquet",
+      "sha256": "655951d5020e8290812bc38ce51775024656e19cfddf7c1f1c807417952f862f"
+    },
+    {
+      "bytes": 17738,
+      "git_blob": "e2ac3085e92dc3ce4e69f93bc8fd05deee9b17bf",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-primary-returns.parquet",
+      "sha256": "b1847b48956aef6c90d1a1c8336d0f032965f2fc1323dc557059350406506de5"
+    },
+    {
+      "bytes": 61220,
+      "git_blob": "1af9920cce8670b28bc994489a63436fb6f6a9aa",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-zero_execution-bitcoin-trace.parquet",
+      "sha256": "38dd1e010ddaa5c75310124f881d515aed2abfe0c57048b76f23c9478492eecc"
+    },
+    {
+      "bytes": 60663,
+      "git_blob": "732df992f0bb7f17da872d41bfd96c1f6e2901b3",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-zero_execution-ethereum-trace.parquet",
+      "sha256": "5b5d322541756e4f7bfdc2321017b29cbed33eb4cde8bb5b29f763aaf7d1d1f5"
+    },
+    {
+      "bytes": 18423,
+      "git_blob": "56550653ffb6491f18c46210974bba67276bf1f6",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-zero_execution-returns.parquet",
+      "sha256": "f52902e2c669a68fa2d52c4cf7668f5f6ae2edcd79718ba822bc9271fdd09426"
+    },
+    {
+      "bytes": 66164,
+      "git_blob": "6e79068a4d9807828a904739bf5019c73227a002",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-zero_funding-bitcoin-trace.parquet",
+      "sha256": "a5516a02a61b9333edb553dbf79c794b4611bc072348e29581710b0772828561"
+    },
+    {
+      "bytes": 57988,
+      "git_blob": "f625e0ffc6c6dbae619407008c65904f825a98ed",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-zero_funding-ethereum-trace.parquet",
+      "sha256": "d30d68769cfba55f93399cfb0ab2aad9b1d5a4a1c2d631ec75126e7b3b8cac38"
+    },
+    {
+      "bytes": 17841,
+      "git_blob": "6951cffba9caeb061075c7eb4b3af5127ac1200a",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_lo-zero_funding-returns.parquet",
+      "sha256": "fc83829f709f9acfa35c1efe078a5639041a11238eeb93aa90b1fcd62152e706"
+    },
+    {
+      "bytes": 61759,
+      "git_blob": "56e003046995b964f2bd96149f5920fdf996a6dc",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-bitcoin-targets.parquet",
+      "sha256": "9e57c2c8d0d7bb1de0f2c651f06a4513378c58a45832712062c82a6f9adfc852"
+    },
+    {
+      "bytes": 107053,
+      "git_blob": "d0ca9422a0bb338aae9c8449a4c4d57401a73c4a",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-double_execution-bitcoin-trace.parquet",
+      "sha256": "6f7c925c97d2dbe78ccb10dd96560a82d4a3178d28e486f300059755d19d384b"
+    },
+    {
+      "bytes": 64745,
+      "git_blob": "a65b550ae04fb607e245111c7f79601b7408f289",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-double_execution-ethereum-trace.parquet",
+      "sha256": "d537e0158e4e9ed538a92f7eb8389b195c3b2d809082ed61b9c89f9e39f012af"
+    },
+    {
+      "bytes": 23973,
+      "git_blob": "b80a11aa5fc377ef5a60ad9da81797a244746732",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-double_execution-returns.parquet",
+      "sha256": "0e8f21829c4fcf51b73a9a6360c9c22247904e64bf516ed7b68ebe3cb698323d"
+    },
+    {
+      "bytes": 58651,
+      "git_blob": "8912dd14964e190a00b77219f4eae9d9c4177b4e",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-ethereum-targets.parquet",
+      "sha256": "7861439b54c92e2873963785443e4d05a747a07dd9932798ec069f0a1f566120"
+    },
+    {
+      "bytes": 129314,
+      "git_blob": "a58d913eabcbd57cf4841879d893487d3cd67bd6",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-primary-bitcoin-trace.parquet",
+      "sha256": "43e56e375b11808bbea054e5a66f9b918b902b06092094793b258c6c2b8444b0"
+    },
+    {
+      "bytes": 64856,
+      "git_blob": "4441904192d9e6ebd9a160f94f1ed8edfdff364a",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-primary-ethereum-trace.parquet",
+      "sha256": "51272ea3f9e63b3ca6551e6dd3c5f4f851de2e23daa97643e27b546b67b93650"
+    },
+    {
+      "bytes": 27077,
+      "git_blob": "4b165fca4d28cd952e5a6cd2a7772f590440e5e9",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-primary-returns.parquet",
+      "sha256": "9b8b811c2b8630d5699bd0c17265373f61d6fec0d40525b3f51ef8add63e602a"
+    },
+    {
+      "bytes": 105963,
+      "git_blob": "d90878855350c16124ce24aec7db4574b9690be4",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-zero_execution-bitcoin-trace.parquet",
+      "sha256": "bde8c703560680789f5466a3fb9ecc1dbe8c4736e8e7bc5fad76497dbe373e89"
+    },
+    {
+      "bytes": 59333,
+      "git_blob": "3ff9ad2fcba127b2af7166a18edd9b5c26a74c78",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-zero_execution-ethereum-trace.parquet",
+      "sha256": "62cefe0eb6ddc58b867351846d220455a766b3375ed46b00cee36acc771009d9"
+    },
+    {
+      "bytes": 27169,
+      "git_blob": "bd2065a9f8f427719525a49db82172986acb4b59",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-zero_execution-returns.parquet",
+      "sha256": "732915c5899faf9329397425ffd0d96e60c0c5e28d54c3737b24c17fbcbc0b40"
+    },
+    {
+      "bytes": 124162,
+      "git_blob": "4ec9bc4955f914a8d629cbddd21ef9a5f7bc827e",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-zero_funding-bitcoin-trace.parquet",
+      "sha256": "adc2e03e7a78afa86201afce4739420e70ae557329328260a503c3313238ff2b"
+    },
+    {
+      "bytes": 63399,
+      "git_blob": "24ab5f0c02df7eedc0f9bd4b62dd002fa476ec88",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-zero_funding-ethereum-trace.parquet",
+      "sha256": "d34f70755d550b3c84907adb2ae3bf5e2f0592cbcbc8f0bdf03ea3a1440ae6d6"
+    },
+    {
+      "bytes": 27169,
+      "git_blob": "c3cfc975c206967318e91d129ea7cbc2235c4f85",
+      "path": "data/factor-correction/2026-09-10/results/macross_20_100_ls-zero_funding-returns.parquet",
+      "sha256": "39e2e493f2fd942c2783cabb26a99385708317a34a41a57432cb7daa0e2cc289"
+    },
+    {
+      "bytes": 61584,
+      "git_blob": "960ad93f600fc20ebeef2349098b285ffeff4eff",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-bitcoin-targets.parquet",
+      "sha256": "e62a0ee343e9b0acb7b1e993945359f2211166fc73a0a64fad45b34536590152"
+    },
+    {
+      "bytes": 67114,
+      "git_blob": "e797406236bf8a8718eb29c54dfd7583a74b8ae6",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-double_execution-bitcoin-trace.parquet",
+      "sha256": "dd29a370db9894d4192285d4f21699c632a1441ef6c2ea58bcced8373cf995a4"
+    },
+    {
+      "bytes": 53769,
+      "git_blob": "52748b99d7900b26fd721abed61fee7c3f06d3eb",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-double_execution-ethereum-trace.parquet",
+      "sha256": "7809c9857884f9cbd5331812ef98fd58af623dc3655c13852642473176c28014"
+    },
+    {
+      "bytes": 17452,
+      "git_blob": "d4ff9bdb68814a85da3ca2c63ca62f2cc5327785",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-double_execution-returns.parquet",
+      "sha256": "c0aef45bc1e1e736be4694bdb93cdfa170bd2399f0ed4d81d40b02cf94ce8407"
+    },
+    {
+      "bytes": 58477,
+      "git_blob": "eb822c30610ad5d2ab873fd02856b53180944a79",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-ethereum-targets.parquet",
+      "sha256": "0c45298d78441d2f307949d4d1fa9ff3f54e73b2241708b495d382222c0ad7aa"
+    },
+    {
+      "bytes": 67333,
+      "git_blob": "c09a00bf6a8608e0c39ac9ceff098bcd7d1a89da",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-primary-bitcoin-trace.parquet",
+      "sha256": "fad2f8b07625027506c69f3cec61f31f70d10cbcde1c162ce1ffff7eb0360d49"
+    },
+    {
+      "bytes": 57516,
+      "git_blob": "4ceb0fab2f2fd0947978ea14be1ad032dcbfc0b6",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-primary-ethereum-trace.parquet",
+      "sha256": "655951d5020e8290812bc38ce51775024656e19cfddf7c1f1c807417952f862f"
+    },
+    {
+      "bytes": 17738,
+      "git_blob": "e2ac3085e92dc3ce4e69f93bc8fd05deee9b17bf",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-primary-returns.parquet",
+      "sha256": "b1847b48956aef6c90d1a1c8336d0f032965f2fc1323dc557059350406506de5"
+    },
+    {
+      "bytes": 61220,
+      "git_blob": "1af9920cce8670b28bc994489a63436fb6f6a9aa",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-zero_execution-bitcoin-trace.parquet",
+      "sha256": "38dd1e010ddaa5c75310124f881d515aed2abfe0c57048b76f23c9478492eecc"
+    },
+    {
+      "bytes": 60663,
+      "git_blob": "732df992f0bb7f17da872d41bfd96c1f6e2901b3",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-zero_execution-ethereum-trace.parquet",
+      "sha256": "5b5d322541756e4f7bfdc2321017b29cbed33eb4cde8bb5b29f763aaf7d1d1f5"
+    },
+    {
+      "bytes": 18423,
+      "git_blob": "56550653ffb6491f18c46210974bba67276bf1f6",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-zero_execution-returns.parquet",
+      "sha256": "f52902e2c669a68fa2d52c4cf7668f5f6ae2edcd79718ba822bc9271fdd09426"
+    },
+    {
+      "bytes": 66164,
+      "git_blob": "6e79068a4d9807828a904739bf5019c73227a002",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-zero_funding-bitcoin-trace.parquet",
+      "sha256": "a5516a02a61b9333edb553dbf79c794b4611bc072348e29581710b0772828561"
+    },
+    {
+      "bytes": 57988,
+      "git_blob": "f625e0ffc6c6dbae619407008c65904f825a98ed",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-zero_funding-ethereum-trace.parquet",
+      "sha256": "d30d68769cfba55f93399cfb0ab2aad9b1d5a4a1c2d631ec75126e7b3b8cac38"
+    },
+    {
+      "bytes": 17841,
+      "git_blob": "6951cffba9caeb061075c7eb4b3af5127ac1200a",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_lo-zero_funding-returns.parquet",
+      "sha256": "fc83829f709f9acfa35c1efe078a5639041a11238eeb93aa90b1fcd62152e706"
+    },
+    {
+      "bytes": 61645,
+      "git_blob": "11ec50e25f860c4d47fe2b230e0e25d6edfe4f0f",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-bitcoin-targets.parquet",
+      "sha256": "aaeb3f1baadb113d980f51dd8b4db162308cb89cde368e51bbb11eebb08062f3"
+    },
+    {
+      "bytes": 61737,
+      "git_blob": "a4a217f5b32877d48687a03d8825a63dc7d0fe10",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-double_execution-bitcoin-trace.parquet",
+      "sha256": "cecaef14ac94cc36e33a27872e70ba31f228c7a838d6c7a251e33d010fa94750"
+    },
+    {
+      "bytes": 53769,
+      "git_blob": "52748b99d7900b26fd721abed61fee7c3f06d3eb",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-double_execution-ethereum-trace.parquet",
+      "sha256": "7809c9857884f9cbd5331812ef98fd58af623dc3655c13852642473176c28014"
+    },
+    {
+      "bytes": 16708,
+      "git_blob": "ba8b028b8796c018d4ae06116ddfbaee78029be3",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-double_execution-returns.parquet",
+      "sha256": "3159786895a1958abbd7c4ef5df29b5a46eefde99795438c69e813f63de3e7fb"
+    },
+    {
+      "bytes": 58551,
+      "git_blob": "c7d59d7538b75106cba19428c06596ea70912d72",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-ethereum-targets.parquet",
+      "sha256": "53891ab3a5ee942328f192088b28d9a0ede40eb958ed1a7d1455ccbae3b7a887"
+    },
+    {
+      "bytes": 61918,
+      "git_blob": "510a592e8dfecdbffef7491ac87d2a00168074d6",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-primary-bitcoin-trace.parquet",
+      "sha256": "f02ba9722b26c865e1553d27da0f816fa2eaf32b168b0bcbe187b8276fb96845"
+    },
+    {
+      "bytes": 54556,
+      "git_blob": "a667b741e0c9de5b8d809ab59231567ed400c8b5",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-primary-ethereum-trace.parquet",
+      "sha256": "6a91b80097695028ac4ec9defc1ce048b494730fbcf3ffa8af61b5961ee15466"
+    },
+    {
+      "bytes": 16778,
+      "git_blob": "b74cc1b1fb7b45cff315251cb31ef66074c70c70",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-primary-returns.parquet",
+      "sha256": "4fb43d57268dfc40e9f5dbf25a6fcb7c8a2d0c3963108103ee203482820c108b"
+    },
+    {
+      "bytes": 89557,
+      "git_blob": "0c21417e09e1f3fc89f9a71ae0ac79ff4429658e",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-zero_execution-bitcoin-trace.parquet",
+      "sha256": "6b5a27f4c47c205f58ee49798d3620a9ce81a46f1626ea10c3339f39e1baaed5"
+    },
+    {
+      "bytes": 52053,
+      "git_blob": "9cd753aadb07376b8d2ee994b770a655df8613cc",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-zero_execution-ethereum-trace.parquet",
+      "sha256": "6a97fd012ab77f01567aa9cacbe4c04878e03cea83f882a5264384fd1ba83c05"
+    },
+    {
+      "bytes": 23195,
+      "git_blob": "b298d66c1857d685d57420ade0baf50fb6471329",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-zero_execution-returns.parquet",
+      "sha256": "01e2b3d3bfc2598543f01c54c13e0cdc4acef874e72694cbd7af132b0ca7c1ab"
+    },
+    {
+      "bytes": 60829,
+      "git_blob": "f2453195943348fcda7b33d2bc921be01e31dc34",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-zero_funding-bitcoin-trace.parquet",
+      "sha256": "c0d6cec5b8b6e9fd1dc00d633f83ec86a4c716d6f53a5c3e5450566a523cf50a"
+    },
+    {
+      "bytes": 54085,
+      "git_blob": "e882345463af5dcf8ab864a21018f482985fa58d",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-zero_funding-ethereum-trace.parquet",
+      "sha256": "17420a99b5181001517293f1f8ca5d612bf4b6dc0cae8913c2bef059eec8f4c7"
+    },
+    {
+      "bytes": 16761,
+      "git_blob": "0ae6c0f83e6f3ce7e408545b711c1ca7ce157834",
+      "path": "data/factor-correction/2026-09-10/results/macross_50_200_ls-zero_funding-returns.parquet",
+      "sha256": "f4e449a1cc64f0eb0d8a587b20f17d6bc324bafd31f05532adccd1589f9e74f7"
+    },
+    {
+      "bytes": 246430,
+      "git_blob": "b29106e685d5c82b49713a24190805b3395e6c55",
+      "path": "data/factor-correction/2026-09-10/results/result.json",
+      "sha256": "a6886a55966f78d8e9bb36f694212fa626484a3088104bd53c48589a27b4309d"
+    },
+    {
+      "bytes": 61759,
+      "git_blob": "5f9f2aaeed716368faabd33f2fabb0cf322bde32",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-bitcoin-targets.parquet",
+      "sha256": "5eacd9214c1babd4f03d1e333f061a361e7bd105fb58a2fa2ebb1fd29d57dd08"
+    },
+    {
+      "bytes": 64469,
+      "git_blob": "d7c51fe59424f7c7176eacf1f422e2f0fdd0f4ce",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-double_execution-bitcoin-trace.parquet",
+      "sha256": "d78d0a8a33eeb4a996530cb08e9c3b3ac7d7190aeeacb15bb0837dbc75eca239"
+    },
+    {
+      "bytes": 63749,
+      "git_blob": "cef1711799051d9605a4bc75357f55489315f165",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-double_execution-ethereum-trace.parquet",
+      "sha256": "3f2c2760fbf47451b51317ba71a870acd04a05b9fada63a2e5acea925d9021fa"
+    },
+    {
+      "bytes": 17747,
+      "git_blob": "0b8a4fad356237bb64367a2785240e28e1eaf83d",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-double_execution-returns.parquet",
+      "sha256": "2acdc20e549f3f3e1edf5524679bc137096202cb71f4e33512a7c71d695ac672"
+    },
+    {
+      "bytes": 58654,
+      "git_blob": "7f82b3925917ec13e883c980d1b27e0eb85a906a",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-ethereum-targets.parquet",
+      "sha256": "40c753dc42626d7aa56893f53ccf780991345f32659a1f66510aa071dcfb6975"
+    },
+    {
+      "bytes": 64605,
+      "git_blob": "9609f83c46c5cafafaa91fa8e85b6d58aab9be25",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-primary-bitcoin-trace.parquet",
+      "sha256": "76e54a2159e9c855343fc69395724ba80c26c190f32e529c44d023e0f7bc14cc"
+    },
+    {
+      "bytes": 63885,
+      "git_blob": "818cb4b5e8bf7f3dc0290b129ae2d06c7afc88d6",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-primary-ethereum-trace.parquet",
+      "sha256": "a8b425db1d6bd4143a9595b97b745c91dc790b6fd1d32a0d36b02ec489ad68e1"
+    },
+    {
+      "bytes": 17755,
+      "git_blob": "4d35de5cb7993e7db08e4c4fb7b48f811156945c",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-primary-returns.parquet",
+      "sha256": "b36f502b465594e2ed2362240e80676c9526a685dd3e154dc9d96dd963ec5fc3"
+    },
+    {
+      "bytes": 59352,
+      "git_blob": "4592dc310880a7b18c6a6de608a8d6d8fecb49a5",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-zero_execution-bitcoin-trace.parquet",
+      "sha256": "a4eb913e5235902041765149ee85b9880ce2f2f477261bb361a3e86a63f51714"
+    },
+    {
+      "bytes": 58480,
+      "git_blob": "e2943b7d76f06385acb8263a60948ed653d23692",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-zero_execution-ethereum-trace.parquet",
+      "sha256": "83c8e169ea046c6e2ac8557a5ac61453b1ae7f43d9ae396758a509a50eceb12d"
+    },
+    {
+      "bytes": 17747,
+      "git_blob": "58a272f836158774e39ca43af69e66b4ceefca9b",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-zero_execution-returns.parquet",
+      "sha256": "ea4adbe080bb537efddc10c6c232f51e2e0b45ed3588201dfce9c43a3a9f3357"
+    },
+    {
+      "bytes": 63659,
+      "git_blob": "9bcf3b0d0a2f7ffdd11dc778bba0476a9a948673",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-zero_funding-bitcoin-trace.parquet",
+      "sha256": "87fedc5894ce6669969daa9ebb2d4b0dcf1aaa43707678608ca2e4872b4e978f"
+    },
+    {
+      "bytes": 62766,
+      "git_blob": "d55dde570cc5834c33859ab5970a6a82f7f79c08",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-zero_funding-ethereum-trace.parquet",
+      "sha256": "7005e6bc2925c0f0a87119f1154b8f46b0790379d6862531333bd9b3f2563c3c"
+    },
+    {
+      "bytes": 17779,
+      "git_blob": "c56bc4a38f66c13eafe554d0cc5cf5f7e596556a",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_lo-zero_funding-returns.parquet",
+      "sha256": "4ac3bb819577f68dd5f56e94094836cde9568ec7e0c4a60c32c493ef7a2d42cc"
+    },
+    {
+      "bytes": 62863,
+      "git_blob": "c89f6396e36e7a1b59572b721b517a3a5d2411c9",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-bitcoin-targets.parquet",
+      "sha256": "d313c2139a382f4187657991bf71f9967daeae44ca049d335d103fed3cabb540"
+    },
+    {
+      "bytes": 91086,
+      "git_blob": "3bdecf801ed010bddc4a8b4f9e3ed143d8a0038f",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-double_execution-bitcoin-trace.parquet",
+      "sha256": "d10ddc7e8c98acec9cd0cb8bea3500e4717b26377f9d912357336a120b696911"
+    },
+    {
+      "bytes": 121467,
+      "git_blob": "7ec8518186793775419f59e7ae761012a354bf7e",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-double_execution-ethereum-trace.parquet",
+      "sha256": "5ec991bcbcaa454bb77ad54768e73dfdc2bf32b9f8a7dfcc148bd3b02320f1a1"
+    },
+    {
+      "bytes": 27407,
+      "git_blob": "e5ad7471675a6af0eff88b017c4211d071bf310a",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-double_execution-returns.parquet",
+      "sha256": "b50696d155abb14d64dc8d681f06b390e3cfc305fe096549fd51e320ef0aa470"
+    },
+    {
+      "bytes": 59769,
+      "git_blob": "119ffcc3b9491da55b18d164b24ba14ae6301a35",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-ethereum-targets.parquet",
+      "sha256": "66d05b312d872206dcb7a2b243365269f8c8ce96c874d5a55da80f9c456497df"
+    },
+    {
+      "bytes": 93012,
+      "git_blob": "efdec63d7b7d1f6bf9084695ca04e40c0e54c6a6",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-primary-bitcoin-trace.parquet",
+      "sha256": "af6f20b670ba388f9a8777645a9cc03dc2ab65b267cbf3e56a67989835369661"
+    },
+    {
+      "bytes": 123632,
+      "git_blob": "cb1eace6546564f47abcd3ae7864c91552263dbe",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-primary-ethereum-trace.parquet",
+      "sha256": "c4d398a8b2faae23ddabe80c4ae38dad3e435df5653a6e96f6f0dbba4e8aa142"
+    },
+    {
+      "bytes": 27809,
+      "git_blob": "53f73eadc96010fb92ca744f2690d8bd142536d1",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-primary-returns.parquet",
+      "sha256": "b8426982ed24ef99af093306a9f5ca926914ed39ce67b105e0deb4ea1a29af16"
+    },
+    {
+      "bytes": 79591,
+      "git_blob": "f297b868df1de2b0a3e3f10e9916dcc6b3148f33",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-zero_execution-bitcoin-trace.parquet",
+      "sha256": "bd816476960d077d1a319508221dee72a8d3015f692b63ce6f89be56d516f7b1"
+    },
+    {
+      "bytes": 101993,
+      "git_blob": "8a4960c786848c3d3c4ad7815dcc1e7429dd6056",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-zero_execution-ethereum-trace.parquet",
+      "sha256": "f34669cf1560c067154fbd67438e3717b8ed3e6d265ae8dc13d16dd547fcb51b"
+    },
+    {
+      "bytes": 27948,
+      "git_blob": "47cce4233ee95362b0906a53f7631263001c2e69",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-zero_execution-returns.parquet",
+      "sha256": "6822225bcf3cef8870176ad5018f0f0365996b2015fb4e81f751e89be9f76ab1"
+    },
+    {
+      "bytes": 88053,
+      "git_blob": "950a2b10ad38d26e16e90d33830500aa0cb0fed8",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-zero_funding-bitcoin-trace.parquet",
+      "sha256": "1e59d7ffe6220f4eca5eb31b49b81fda132e1b67aca35d61efb3105efb8ced38"
+    },
+    {
+      "bytes": 118331,
+      "git_blob": "1bfeced745196ee42286ad16531aef217cdade73",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-zero_funding-ethereum-trace.parquet",
+      "sha256": "295d58bcd7bfbd979dccd7db6f2ff71e8838a6e32af359f3d102cbef4fdf9c38"
+    },
+    {
+      "bytes": 27665,
+      "git_blob": "018f3eaa071bb0ba83358703ee38573f539da64e",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k14_ls-zero_funding-returns.parquet",
+      "sha256": "26a40bb11602e3eff27f68ca891d008e2b1e50730379d6c3d9d93139ee74d9dc"
+    },
+    {
+      "bytes": 61782,
+      "git_blob": "154983dc798cb4cb4f21b746e081eae8a49a7d89",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-bitcoin-targets.parquet",
+      "sha256": "ff0ea8279a9098e385a11b95a47ce4654f186b373d45973af85a0d3de1a8fef4"
+    },
+    {
+      "bytes": 54528,
+      "git_blob": "8d8fcbd94b1b80b706b50a9ae5c42f920697a0bd",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-double_execution-bitcoin-trace.parquet",
+      "sha256": "b0f0bfbb475c3ec19e426cdb5fedb9d3e8f9a4b855080273841995659c909c96"
+    },
+    {
+      "bytes": 53769,
+      "git_blob": "52748b99d7900b26fd721abed61fee7c3f06d3eb",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-double_execution-ethereum-trace.parquet",
+      "sha256": "7809c9857884f9cbd5331812ef98fd58af623dc3655c13852642473176c28014"
+    },
+    {
+      "bytes": 15671,
+      "git_blob": "82589fb2cd774075844d2b6df1ded3e046dacaa3",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-double_execution-returns.parquet",
+      "sha256": "f169de4ae67dac4e2d417b3b8775d32db1a4156e136d0d4eaa61605c5b267501"
+    },
+    {
+      "bytes": 58987,
+      "git_blob": "cb61628f8183b4636f3e26df34191ce161ccece0",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-ethereum-targets.parquet",
+      "sha256": "02a82a06ec13eacff7ccd7872c7867cedd1bfdb10fee782a89eaef454fcd40d7"
+    },
+    {
+      "bytes": 54814,
+      "git_blob": "8026c264a9eaaf51d089a4a764aa4125c5af2f7a",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-primary-bitcoin-trace.parquet",
+      "sha256": "9b94e7dd80232e0360afa8fd043f3fc78a5c3772ee1a830c14055c90cdae73e4"
+    },
+    {
+      "bytes": 53946,
+      "git_blob": "874388d6987b1de869ad3af60ef646b57b121ca0",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-primary-ethereum-trace.parquet",
+      "sha256": "21ea58332f8f3c5ccb2ff6a92f28e7e080941d458b48e6edffdc738a6bdadb71"
+    },
+    {
+      "bytes": 15688,
+      "git_blob": "be5b9542df6be6e527e5fc52464041d479e27b3e",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-primary-returns.parquet",
+      "sha256": "bad4f21cf671aebd958e48a7ff74e64baee60ce9d2ff951e5760d8122f4e1b84"
+    },
+    {
+      "bytes": 52743,
+      "git_blob": "d388fad92fb7106ca4d96031be45c4c2d1dd5259",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-zero_execution-bitcoin-trace.parquet",
+      "sha256": "7e9f550e49967a99546d45338824b97b292ce15a8dc42f2a08d0ca35c529a469"
+    },
+    {
+      "bytes": 51461,
+      "git_blob": "bd2007ececac01427a654954d84503c0be2d3fab",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-zero_execution-ethereum-trace.parquet",
+      "sha256": "dd3aaa7e563e0f0cbc3d86d5cc7784cc8dd317bf27ab7daf670476aafd2608dd"
+    },
+    {
+      "bytes": 15792,
+      "git_blob": "ed5f6a01f2c3f1614c89e59a5176eb9d60863858",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-zero_execution-returns.parquet",
+      "sha256": "8faeef2721dfc1c2dc6d1e541de2b68cfcdbd877a791bf1f1eee2ba35cb51efd"
+    },
+    {
+      "bytes": 54646,
+      "git_blob": "b887820f81eb3a4198354e0485cad5d37436f382",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-zero_funding-bitcoin-trace.parquet",
+      "sha256": "f0f361be297ebb277b6896b4725c6eb7a63d221f28540c3ae4db63e578315c7a"
+    },
+    {
+      "bytes": 53386,
+      "git_blob": "92a718e3a2f299bc6d3d03168f66917b906f4cde",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-zero_funding-ethereum-trace.parquet",
+      "sha256": "4fd18eb7b28976054b890b9b95486f2caac1694c7efe411c726ef3b0978487e9"
+    },
+    {
+      "bytes": 15752,
+      "git_blob": "4835800d3b8df956ebcfd9407811f26f30cd5f31",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k180_ls-zero_funding-returns.parquet",
+      "sha256": "313efedfdd5a77d3bf0c8495b44d0a66a9747869f6a1e315cb51de46b7d0dd7d"
+    },
+    {
+      "bytes": 61702,
+      "git_blob": "dfc0da43bd433be9c3d5c6ca0b10a0db0727cc0e",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-bitcoin-targets.parquet",
+      "sha256": "7c5368303d7b484c7ffd5f8d6dc3bf05efbb0cc10535f24291bdf25e20d3b0a8"
+    },
+    {
+      "bytes": 62335,
+      "git_blob": "f218378d4d95b7cd49581ff1b02b00e23450b9fe",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-double_execution-bitcoin-trace.parquet",
+      "sha256": "d95c635e1b4f5f25c40ef93b31deb216bb3030dbdfa577749af6eee256ce185c"
+    },
+    {
+      "bytes": 53769,
+      "git_blob": "52748b99d7900b26fd721abed61fee7c3f06d3eb",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-double_execution-ethereum-trace.parquet",
+      "sha256": "7809c9857884f9cbd5331812ef98fd58af623dc3655c13852642473176c28014"
+    },
+    {
+      "bytes": 17231,
+      "git_blob": "f8ddff36d58a533bdbd08bd9fc65d4b6dce477c3",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-double_execution-returns.parquet",
+      "sha256": "a2125ccb7bbaecb1092cbc0e26ade025a65815de2d6ed805306aef88c6e9bbfb"
+    },
+    {
+      "bytes": 58571,
+      "git_blob": "f658474d534bbded937d832ad7aba92ecbab5e71",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-ethereum-targets.parquet",
+      "sha256": "f6c1c89a282bd0c712c954e4f0ffebd0e9628e5088e08c370a8c0808da07ed74"
+    },
+    {
+      "bytes": 62458,
+      "git_blob": "cd8c964e8eb062ee25f5f8b6730994373080f25d",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-primary-bitcoin-trace.parquet",
+      "sha256": "09dacc31f64a6bbac8e397461a3e30a29f6bb2a92c570ed6c1d90a7185bf37fb"
+    },
+    {
+      "bytes": 57516,
+      "git_blob": "4ceb0fab2f2fd0947978ea14be1ad032dcbfc0b6",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-primary-ethereum-trace.parquet",
+      "sha256": "655951d5020e8290812bc38ce51775024656e19cfddf7c1f1c807417952f862f"
+    },
+    {
+      "bytes": 17659,
+      "git_blob": "441bff602ca2c59317558e973f487be89f741e50",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-primary-returns.parquet",
+      "sha256": "7efe065b5b50d6e1a2c522272b38a2f04813dccce874fe21166dc8f38cca9bcd"
+    },
+    {
+      "bytes": 57752,
+      "git_blob": "2f25fe32753a2ca8d0372dc5c7d43c1b09cf960c",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-zero_execution-bitcoin-trace.parquet",
+      "sha256": "9514f7f6543d9f0e3acd53d16b5787f30c7bb0d881b8319157cd6b39e439dce1"
+    },
+    {
+      "bytes": 60663,
+      "git_blob": "732df992f0bb7f17da872d41bfd96c1f6e2901b3",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-zero_execution-ethereum-trace.parquet",
+      "sha256": "5b5d322541756e4f7bfdc2321017b29cbed33eb4cde8bb5b29f763aaf7d1d1f5"
+    },
+    {
+      "bytes": 18333,
+      "git_blob": "8224abfed3dfea98aa1a00270a6419e43532dc5a",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-zero_execution-returns.parquet",
+      "sha256": "f08575fb144e4269fca4c4d2a36ad5aa008cd4f180df6ce30ff71a743199befe"
+    },
+    {
+      "bytes": 61657,
+      "git_blob": "db306250a03ad63c0b22918d8619c4dbfbb96888",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-zero_funding-bitcoin-trace.parquet",
+      "sha256": "42bfccd70ade6856517690581a4308d3857db998d8244f39b52244da8ef917df"
+    },
+    {
+      "bytes": 57988,
+      "git_blob": "f625e0ffc6c6dbae619407008c65904f825a98ed",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-zero_funding-ethereum-trace.parquet",
+      "sha256": "d30d68769cfba55f93399cfb0ab2aad9b1d5a4a1c2d631ec75126e7b3b8cac38"
+    },
+    {
+      "bytes": 17738,
+      "git_blob": "f1c00f818ffad6edf3c9a952052b75b1c95cc73d",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_lo-zero_funding-returns.parquet",
+      "sha256": "dc095f8e9545c3c31aa0b1d103cd6ee2ddfcaa241408528c6b5e46991685a739"
+    },
+    {
+      "bytes": 62529,
+      "git_blob": "048e50fbb41d26da671d22f3a27cbccc470b32f4",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-bitcoin-targets.parquet",
+      "sha256": "0370cb9104acaa35dd2d43c21f4defee484e7cacae5f2976c76617c7eb244872"
+    },
+    {
+      "bytes": 177802,
+      "git_blob": "16fd069e73bc7ef1beb5adbd3a7a1153eda645fc",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-double_execution-bitcoin-trace.parquet",
+      "sha256": "9d0477cde010c929db14793b30dca135155efbb7a56ab47d80e9a75fd02935fb"
+    },
+    {
+      "bytes": 123394,
+      "git_blob": "f23337239037df27733ef4b2537f85530fb4cd8d",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-double_execution-ethereum-trace.parquet",
+      "sha256": "661c3596f73dc6a841aaa814f908a4610a048d4625944bd37698e7a6a9ac0b38"
+    },
+    {
+      "bytes": 37600,
+      "git_blob": "7990ed240d44d0df5c519d01b0d1efc2d7d383a9",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-double_execution-returns.parquet",
+      "sha256": "e68b96a9a39134c8c8d6c98334240a99d44ef2dfa2cacce4309a844b56a133f8"
+    },
+    {
+      "bytes": 59296,
+      "git_blob": "d6c44df5858ae14a4fc7755984e520dec0111449",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-ethereum-targets.parquet",
+      "sha256": "304bd13f89004f97661bd8f5c08cdd5621df7fde59240b656dc8e078de7818c8"
+    },
+    {
+      "bytes": 177900,
+      "git_blob": "705fab33f35b0b4b6e48203e25fab89010b10b5e",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-primary-bitcoin-trace.parquet",
+      "sha256": "72bd5a42e20d889b89ed3cd170ce4a213969b882381507c047c34521397b994a"
+    },
+    {
+      "bytes": 123699,
+      "git_blob": "480fdc52162bfb9d9388bec3f0e4cdd6d68732f6",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-primary-ethereum-trace.parquet",
+      "sha256": "f80a7427c8d846e2d4e96a7ab600bd296f92bd2f05e603984999ddcd3553c645"
+    },
+    {
+      "bytes": 37633,
+      "git_blob": "1b6197625dfac91e3c0e6d8e0bf5c958155fbd12",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-primary-returns.parquet",
+      "sha256": "296988be9028fc694c2f3ba92710e61615eda8618bf5cd4e054d74cc48ac8f31"
+    },
+    {
+      "bytes": 140358,
+      "git_blob": "75631ecdeb4fa76a3f42fd51c70fb49de434e287",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-zero_execution-bitcoin-trace.parquet",
+      "sha256": "8788256a1c67cbb27e7cdf5b01f7d45f7c107fcf24bd3c63a0f5f9faa714a889"
+    },
+    {
+      "bytes": 101990,
+      "git_blob": "ea2d51fa57114eaabb24e197d7a4730c26580f8d",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-zero_execution-ethereum-trace.parquet",
+      "sha256": "5a6f118e9d1efb5731ae19986906c516285a386fb31789f396b1b811c8fd1805"
+    },
+    {
+      "bytes": 37677,
+      "git_blob": "fe1eb8d40972496a7a8a6fdf43c6d7d888ce1234",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-zero_execution-returns.parquet",
+      "sha256": "d6b1748b50f912ab505cc41415d7b005371244c8cc251649b15e4a888737488a"
+    },
+    {
+      "bytes": 168706,
+      "git_blob": "5a77b72dffda9738f5bcffd34e3c1a4d9ba0a2d7",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-zero_funding-bitcoin-trace.parquet",
+      "sha256": "97538b43bc5bf948ad5dfe28bc03e084c889679906bbb24547f0f8c6480b1739"
+    },
+    {
+      "bytes": 119029,
+      "git_blob": "1c6a2c4e80e4eeba6ca29416d1b4d4e32328eead",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-zero_funding-ethereum-trace.parquet",
+      "sha256": "c588429cb7f0bcacbac7bfc964d5461ba770beced4b4631dc37b12497e56493d"
+    },
+    {
+      "bytes": 37668,
+      "git_blob": "e90317f245e7e82a0caed1e656ab38d4efbbf0e4",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k30_ls-zero_funding-returns.parquet",
+      "sha256": "cfdc627c7450b7f0399c3b8ae295497c039fd897472399d4d99ce43c4cbc5a85"
+    },
+    {
+      "bytes": 61801,
+      "git_blob": "ae2e726b761abdb0b335cd4f1fb8b4d297c04931",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-bitcoin-targets.parquet",
+      "sha256": "653eca560cbe58672990273d2fa3a1c82dc6a2ed7666c9b778a2aac4f3afb67a"
+    },
+    {
+      "bytes": 66279,
+      "git_blob": "2d5fdf27eb6f470098ae5fe44d7fa9e2e40a55b5",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-double_execution-bitcoin-trace.parquet",
+      "sha256": "5e7452f2825b46f88acce4788942f747abf5400bb478ec05fdefa51dd78bf7a0"
+    },
+    {
+      "bytes": 57216,
+      "git_blob": "353e016e73f3fedcf33860a3dd4466039bb9782f",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-double_execution-ethereum-trace.parquet",
+      "sha256": "561b195c8fee0bce79aac077c2dd93099f74b1429effed76a9e4c81cf50706b0"
+    },
+    {
+      "bytes": 17598,
+      "git_blob": "7735e55c39d0f319b5fd10b20b24ca68904396d0",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-double_execution-returns.parquet",
+      "sha256": "0a9b483d9c298eb6a627a0bee379cb06f723e9a5a94a88a77da6a95113791356"
+    },
+    {
+      "bytes": 58659,
+      "git_blob": "83a2efc57e8750e9bedbbb1991f8df5576bb6528",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-ethereum-targets.parquet",
+      "sha256": "924ad25bf22da1a5575c857be085b50aa8e1ce72c165205b4790799ae24c2434"
+    },
+    {
+      "bytes": 66569,
+      "git_blob": "fe3c51a44d8828c003cfa521ea0bee9a444d382b",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-primary-bitcoin-trace.parquet",
+      "sha256": "1b156dfbde59f2ba1355f3502acb32d8629b01ab2a9153bc5159a6bfb2daeda6"
+    },
+    {
+      "bytes": 66921,
+      "git_blob": "49ae0db545493e9c6c72899569b89d3fe7a925e1",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-primary-ethereum-trace.parquet",
+      "sha256": "836935d548a920da9fba17a02b47211a853c7ca80cb35496e88e1b6ca14243ed"
+    },
+    {
+      "bytes": 18318,
+      "git_blob": "40c17f9bb0d6ade4638bf519439af4f2ccc1a81e",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-primary-returns.parquet",
+      "sha256": "4200e58718cad7ed17d066e22fe5a7dc8c194d6daf8fc271271943009ba88c7c"
+    },
+    {
+      "bytes": 60512,
+      "git_blob": "637154fc779fdb65310984c88aae4115d2db4d3f",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-zero_execution-bitcoin-trace.parquet",
+      "sha256": "b13c9b160c12a0a4d26d59e78c881becb1038e15e567aad120d71a47dc80d87f"
+    },
+    {
+      "bytes": 60780,
+      "git_blob": "6abe053411dad20bbd436c50ad10f095ee6f5666",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-zero_execution-ethereum-trace.parquet",
+      "sha256": "8f399f319a74c80f81f866495a79a9180f12afc04af9efc75ab1fbb4acb751b5"
+    },
+    {
+      "bytes": 18317,
+      "git_blob": "89ad941e54389ad5767d1c4a8464c108dfda08aa",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-zero_execution-returns.parquet",
+      "sha256": "af0e58a8f0884cfe82782b23eb8773e13feceaeb34c014fb882c8a7a3c34c2d0"
+    },
+    {
+      "bytes": 65320,
+      "git_blob": "c26c8ae241a73a988ddf55b847137ba4c915b8cf",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-zero_funding-bitcoin-trace.parquet",
+      "sha256": "a057004c8eba9f50e89677fa877181b0e19d2dd10fba59f1f64271cee3e0a100"
+    },
+    {
+      "bytes": 65697,
+      "git_blob": "4f03b8c12b33b726b275b04b8d04a68d29550f49",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-zero_funding-ethereum-trace.parquet",
+      "sha256": "d5dd082d1abfe692141755a98d221c7ab80c54ac74aa239a394647d156281f5a"
+    },
+    {
+      "bytes": 18354,
+      "git_blob": "fd3ad3c0dfa667796cfe9f7bc104ac3fc9404484",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_lo-zero_funding-returns.parquet",
+      "sha256": "8ed68a5461d8b19a3bd864caf8245fd2b755e1e3800d150a34614ea9980c4dfb"
+    },
+    {
+      "bytes": 63483,
+      "git_blob": "f9109ca2877d4cd046882013928cb830cb28a68d",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-bitcoin-targets.parquet",
+      "sha256": "218bbdc0e3c061ee8aeba1f7aee75bebdca607e96cf6ffb8d973b38bd9e2d3cc"
+    },
+    {
+      "bytes": 81186,
+      "git_blob": "8466a51201a75aa93251bcaa9684db847ea1f402",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-double_execution-bitcoin-trace.parquet",
+      "sha256": "17b57d64e6cb9def006dcc3133474827d26cf979b70eefbe455bad9e86e06e7e"
+    },
+    {
+      "bytes": 91238,
+      "git_blob": "5302288606f42fdd90e2b73380301cac51715925",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-double_execution-ethereum-trace.parquet",
+      "sha256": "e14af15ba9cacb52a7013445cdfc3dd3dfaf85bf9bf37ec23a200bb11782e16f"
+    },
+    {
+      "bytes": 22412,
+      "git_blob": "ede8a274d523e6d91ea9643ce782976e18e23ad1",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-double_execution-returns.parquet",
+      "sha256": "82c33f800d3247d64b4466cd0c00600a1e478605f131c7800c429900b3f077ff"
+    },
+    {
+      "bytes": 60430,
+      "git_blob": "baa6b8626ea1f85ed3ffeb0413e95337a0c5a392",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-ethereum-targets.parquet",
+      "sha256": "973e33e15d77a3ea7ed7ae4f4bbea6a5e52315234fe7a0511b4ec41296c1bea2"
+    },
+    {
+      "bytes": 91393,
+      "git_blob": "4729dfa0729de88d517195cb9e791e7b5d520be0",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-primary-bitcoin-trace.parquet",
+      "sha256": "40f80f769d94056b3d3f7c27c635e4abad821975c6f789d9a8953ed670436d0d"
+    },
+    {
+      "bytes": 91529,
+      "git_blob": "96c0f53e45e3723a0ee8927a89918af3b0904568",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-primary-ethereum-trace.parquet",
+      "sha256": "97e86b8ca7940acb9aaa6cb2fe053a128d2e6e1b3161dd0e28f2ad69be760640"
+    },
+    {
+      "bytes": 23134,
+      "git_blob": "ec5d9457eedc6b85b475ed60e5c72a4c0330a208",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-primary-returns.parquet",
+      "sha256": "2132b06d8d1646d210a0790cae7dc6c0360fe3e984ea9a77ee6e5c6ee99b01a3"
+    },
+    {
+      "bytes": 78798,
+      "git_blob": "3a8d6ffaebad3ceecac9a27bb999b127bf2d1df1",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-zero_execution-bitcoin-trace.parquet",
+      "sha256": "d49c5c7c77395b73ba07440340f7b7bce701c20ce17350682113a110c947d288"
+    },
+    {
+      "bytes": 108046,
+      "git_blob": "26d4b865c817b96c797c413fadf766a99d96f05e",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-zero_execution-ethereum-trace.parquet",
+      "sha256": "bc3e6eb94b12219cba45fafce57f2c7180235b1e4bef893dd215252ba5ec6ad5"
+    },
+    {
+      "bytes": 28682,
+      "git_blob": "3a03e191e99a180a5f214e0a27c02eeb89c5fdc6",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-zero_execution-returns.parquet",
+      "sha256": "ff2dbb4b9dff8622c929cffa8aea55393d6cd3df42aabff925a3b3ba63559cec"
+    },
+    {
+      "bytes": 88390,
+      "git_blob": "671bf14e91a3cfc5c445bbdbba533aa4c08d1896",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-zero_funding-bitcoin-trace.parquet",
+      "sha256": "8357c871ec54238cde0c28d38a8ffc0dea01f34ae4a93a3bfc7060f9a1377407"
+    },
+    {
+      "bytes": 88470,
+      "git_blob": "ec04d6137881ed30003ec5243554a7badc299cda",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-zero_funding-ethereum-trace.parquet",
+      "sha256": "c3b3e86f4ac90441b16b83a76632802ad5cb9d7f3c3920a4d0f551af58842b4d"
+    },
+    {
+      "bytes": 23090,
+      "git_blob": "e1513060753f2b4342e0b5d02841b9e8fafc2022",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k7_ls-zero_funding-returns.parquet",
+      "sha256": "b189e46787643786bac43c09db3c23622dafcce837ab01d1812e140ad0c0d07b"
+    },
+    {
+      "bytes": 61645,
+      "git_blob": "68b01097e52822b5b5ae56138fa93476893c6d92",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-bitcoin-targets.parquet",
+      "sha256": "5b07437315ed82509056f9771ff5e816e16fcd58b9d9dcc06f97a01bd4f5b0e8"
+    },
+    {
+      "bytes": 67114,
+      "git_blob": "e797406236bf8a8718eb29c54dfd7583a74b8ae6",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-double_execution-bitcoin-trace.parquet",
+      "sha256": "dd29a370db9894d4192285d4f21699c632a1441ef6c2ea58bcced8373cf995a4"
+    },
+    {
+      "bytes": 53769,
+      "git_blob": "52748b99d7900b26fd721abed61fee7c3f06d3eb",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-double_execution-ethereum-trace.parquet",
+      "sha256": "7809c9857884f9cbd5331812ef98fd58af623dc3655c13852642473176c28014"
+    },
+    {
+      "bytes": 17452,
+      "git_blob": "d4ff9bdb68814a85da3ca2c63ca62f2cc5327785",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-double_execution-returns.parquet",
+      "sha256": "c0aef45bc1e1e736be4694bdb93cdfa170bd2399f0ed4d81d40b02cf94ce8407"
+    },
+    {
+      "bytes": 58523,
+      "git_blob": "60461afc7c3441ba97276a62db857b5e3d679ca3",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-ethereum-targets.parquet",
+      "sha256": "c86f02c1a30201687cd03f1f52da4a505afa4efce4b7c0c7b25d75ef9790a0aa"
+    },
+    {
+      "bytes": 67333,
+      "git_blob": "c09a00bf6a8608e0c39ac9ceff098bcd7d1a89da",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-primary-bitcoin-trace.parquet",
+      "sha256": "fad2f8b07625027506c69f3cec61f31f70d10cbcde1c162ce1ffff7eb0360d49"
+    },
+    {
+      "bytes": 57516,
+      "git_blob": "4ceb0fab2f2fd0947978ea14be1ad032dcbfc0b6",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-primary-ethereum-trace.parquet",
+      "sha256": "655951d5020e8290812bc38ce51775024656e19cfddf7c1f1c807417952f862f"
+    },
+    {
+      "bytes": 17738,
+      "git_blob": "e2ac3085e92dc3ce4e69f93bc8fd05deee9b17bf",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-primary-returns.parquet",
+      "sha256": "b1847b48956aef6c90d1a1c8336d0f032965f2fc1323dc557059350406506de5"
+    },
+    {
+      "bytes": 61220,
+      "git_blob": "1af9920cce8670b28bc994489a63436fb6f6a9aa",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-zero_execution-bitcoin-trace.parquet",
+      "sha256": "38dd1e010ddaa5c75310124f881d515aed2abfe0c57048b76f23c9478492eecc"
+    },
+    {
+      "bytes": 60663,
+      "git_blob": "732df992f0bb7f17da872d41bfd96c1f6e2901b3",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-zero_execution-ethereum-trace.parquet",
+      "sha256": "5b5d322541756e4f7bfdc2321017b29cbed33eb4cde8bb5b29f763aaf7d1d1f5"
+    },
+    {
+      "bytes": 18423,
+      "git_blob": "56550653ffb6491f18c46210974bba67276bf1f6",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-zero_execution-returns.parquet",
+      "sha256": "f52902e2c669a68fa2d52c4cf7668f5f6ae2edcd79718ba822bc9271fdd09426"
+    },
+    {
+      "bytes": 66164,
+      "git_blob": "6e79068a4d9807828a904739bf5019c73227a002",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-zero_funding-bitcoin-trace.parquet",
+      "sha256": "a5516a02a61b9333edb553dbf79c794b4611bc072348e29581710b0772828561"
+    },
+    {
+      "bytes": 57988,
+      "git_blob": "f625e0ffc6c6dbae619407008c65904f825a98ed",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-zero_funding-ethereum-trace.parquet",
+      "sha256": "d30d68769cfba55f93399cfb0ab2aad9b1d5a4a1c2d631ec75126e7b3b8cac38"
+    },
+    {
+      "bytes": 17841,
+      "git_blob": "6951cffba9caeb061075c7eb4b3af5127ac1200a",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_lo-zero_funding-returns.parquet",
+      "sha256": "fc83829f709f9acfa35c1efe078a5639041a11238eeb93aa90b1fcd62152e706"
+    },
+    {
+      "bytes": 62210,
+      "git_blob": "8884d38ca7bf29ac5709d2903d8dcb2981bd416d",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-bitcoin-targets.parquet",
+      "sha256": "28d7c353d99c258334ff779b78eede092ef1f191d56ba18a8e926df0c38c2c72"
+    },
+    {
+      "bytes": 66236,
+      "git_blob": "6d3beb7e7c6751d8764dae6a90eac0de384f761d",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-double_execution-bitcoin-trace.parquet",
+      "sha256": "ffc30c3b4ee88870fd31ad5f43c03cbea03c619214f7614937a40e5163b732e4"
+    },
+    {
+      "bytes": 64759,
+      "git_blob": "6151519f0463b7c2dadc80dba5fd8bd17a338cd4",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-double_execution-ethereum-trace.parquet",
+      "sha256": "dd42c875b1aba11adf86918da5cad57656621dda857e637135a86bd4e3d9611a"
+    },
+    {
+      "bytes": 18095,
+      "git_blob": "62215079a3f14d15fac5020d7a59287bb4fedd2b",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-double_execution-returns.parquet",
+      "sha256": "37bc834bb20be9064646c1ddc9d0ee53f20202590d3637c8f86e16b660784b93"
+    },
+    {
+      "bytes": 58862,
+      "git_blob": "72c7aca25cbbb8a854a826d85337d7598a2f0555",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-ethereum-targets.parquet",
+      "sha256": "702fa911954234e52f55a5356a25abca740e8abf89339bf80d0517c0eafb6f35"
+    },
+    {
+      "bytes": 66980,
+      "git_blob": "5de3f48451dc0195ca8652dd23c1fcc1d207c7fb",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-primary-bitcoin-trace.parquet",
+      "sha256": "788829ac995070e9fd5ccbf069e4f75a99e30e0430944fefee8ffd6bb21b882e"
+    },
+    {
+      "bytes": 64871,
+      "git_blob": "5a3d384ba171e99e227767eb531ed5e0f2687c03",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-primary-ethereum-trace.parquet",
+      "sha256": "969e7c14c0a197f4fb43179199c9e2a5edf7e642679899d39801b2f8c2857a7b"
+    },
+    {
+      "bytes": 18215,
+      "git_blob": "2396f24bf4a3398b0854687d4e82a779adf352bd",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-primary-returns.parquet",
+      "sha256": "252c8e0fbf09d1bfca58e7832d744067f9364f77cc8341a31ebb5e435f3254a1"
+    },
+    {
+      "bytes": 61211,
+      "git_blob": "d01dde7c382069ec3190713bfa8c4f86d3376e48",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-zero_execution-bitcoin-trace.parquet",
+      "sha256": "b35bbf9871375513ff572bca8a3e934d14885f4ee925ed192dcf656018cc349b"
+    },
+    {
+      "bytes": 59421,
+      "git_blob": "f196e2d8562c433df760e28b92e6ef56fa2089c2",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-zero_execution-ethereum-trace.parquet",
+      "sha256": "78a6cb1fca2ac52bcc11ea8de35bf6cc11a212e6c9372e05c4bfb83f4e9e165f"
+    },
+    {
+      "bytes": 18271,
+      "git_blob": "2837dd3c4d935fc65f22c9247e53ed8f3e2bab92",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-zero_execution-returns.parquet",
+      "sha256": "a92b71064141e60a8e104f34883856a99d4154cb14cd315bbf99991470ac7aee"
+    },
+    {
+      "bytes": 65416,
+      "git_blob": "9e38089b469ca392219e41a2867fdef41000ce67",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-zero_funding-bitcoin-trace.parquet",
+      "sha256": "03077a7b578a7ba67f55d4ce513775f8f55b083304b61748f283566b7d862f00"
+    },
+    {
+      "bytes": 63257,
+      "git_blob": "ae5b1286f1399b6c89ee5070f05a4522ea21773b",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-zero_funding-ethereum-trace.parquet",
+      "sha256": "ef5c6b83095358ae25ae3023cef5f747f53bd276f9f7c98d68f69ca488e7c890"
+    },
+    {
+      "bytes": 18175,
+      "git_blob": "6e878d12121d5b52ab9a40456bae22682d18277a",
+      "path": "data/factor-correction/2026-09-10/results/tsmom_k90_ls-zero_funding-returns.parquet",
+      "sha256": "e18dde0a1ab2525cecc66c1c8fd59bdf43ec25ae7ff1303708f97f65fd8f71da"
+    },
+    {
+      "bytes": 62544,
+      "git_blob": "ebacaa67d09ded9175a9b33adcfdd5464e3773d0",
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-bitcoin-targets.parquet",
+      "sha256": "9cb093e9cc48a4dbdf2e190e1df2995e1266a884d13406094c0b83a4b074a477"
+    },
+    {
+      "bytes": 77768,
+      "git_blob": "7f1471c1ca927df90c6092b787f232e0e0c47e9e",
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-double_execution-bitcoin-trace.parquet",
+      "sha256": "23d53f0485783071fe2993c78a242fb0d26559dc7ab7e5117335a8c9bacd7f66"
+    },
+    {
+      "bytes": 105361,
+      "git_blob": "320df47d68b08c7df4c05ed1f715b30747a2fc8a",
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-double_execution-ethereum-trace.parquet",
+      "sha256": "de5a21e12456986875c40129689f7431f59872eb0186d0a492052f3784cf8ec9"
+    },
+    {
+      "bytes": 24295,
+      "git_blob": "0ddb569196b77dc2f630bb3c3617f485141b388c",
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-double_execution-returns.parquet",
+      "sha256": "92c2e97aed18f790daeb58e5f2e1914390d9d3ebb4875ffc34e8e2d229b005c5"
+    },
+    {
+      "bytes": 59520,
+      "git_blob": "dd27c6400f3ee4b165b6e39eddb9824a28d3aa86",
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-ethereum-targets.parquet",
+      "sha256": "41a15e77521428a018ac65a4d1971bf1fae6ad8c503208048e8fd90be84e9ff5"
+    },
+    {
+      "bytes": 78992,
+      "git_blob": "17f55ce7ebd3f6a7bee3fb8b55c1687461bd2588",
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-primary-bitcoin-trace.parquet",
+      "sha256": "aec2e8a4b42edde985b3657d3cdbde9b0cd06f9435f277fe308523fad6baea77"
+    },
+    {
+      "bytes": 106028,
+      "git_blob": "f2d48900771711c9f33d94f70c44a1644e5afe08",
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-primary-ethereum-trace.parquet",
+      "sha256": "c78666e7d3a0c842a27a6347fbc5980cebfa798c1fb0504518e63d1f072afabd"
+    },
+    {
+      "bytes": 24483,
+      "git_blob": "2185cdd7aa5b1e7a01dc7b86eccb4eddbe3d2d3c",
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-primary-returns.parquet",
+      "sha256": "f1ceea317889ef4f1fffcb1baead61f40e138caa08034fd0dd468a6814497d14"
+    },
+    {
+      "bytes": 69504,
+      "git_blob": "dab272c77ce6b9fcbe53af5fa5aa611fb82999a7",
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-zero_execution-bitcoin-trace.parquet",
+      "sha256": "d346cfa5b840ee94f2347838f88a77a16cd4595fc2c578704db086ed0a921e87"
+    },
+    {
+      "bytes": 89651,
+      "git_blob": "8851de39a07ae9a15e6ce162ff5c6d56722a2956",
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-zero_execution-ethereum-trace.parquet",
+      "sha256": "cc6df1bfe7cb7edfca94879f4eed74e23db90c108956e6c8761e7624404f9a61"
+    },
+    {
+      "bytes": 24669,
+      "git_blob": "53649170d4abbefa884cb81ab97420edd3ae2ccc",
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-zero_execution-returns.parquet",
+      "sha256": "17415fa6e6665a795d7e01ad01381b95a03484b071ec4ad3e2c65dfc139af5e6"
+    },
+    {
+      "bytes": 76781,
+      "git_blob": "6e615a238d397693e792b2d0dfa9b4125e321d1f",
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-zero_funding-bitcoin-trace.parquet",
+      "sha256": "7a0d952100c5ff5d3c6b9fa62e14bace323577dec512534aa1de3efce390f951"
+    },
+    {
+      "bytes": 102470,
+      "git_blob": "878392e4059c2135a1f8dde0e81cc8dbde1e455f",
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-zero_funding-ethereum-trace.parquet",
+      "sha256": "b6ad03258c7655444b719c259260ec8491e739d7a03448344e9274d1a241ffff"
+    },
+    {
+      "bytes": 24547,
+      "git_blob": "23b05dc53f21195cdacd2567bfe3aa13d0028ec1",
+      "path": "data/factor-correction/2026-09-10/results/xsmom_btc_eth_30d-zero_funding-returns.parquet",
+      "sha256": "79767ad9293af359a6c03e5b2ff11d1c554316222a9d5d24eb00ccb0be87cb80"
+    },
+    {
+      "bytes": 12125,
+      "git_blob": "e4967bf35853a35fc4fbdeda0d7e84f7e9e792cf",
+      "path": "docs/risk-policy-2026-09-10/charter.md",
+      "sha256": "dc51dd3a9bbe026fb1699381bce0cd1f85b8977a0d5bcee6d7e85515c49966a8"
+    },
+    {
+      "bytes": 13626,
+      "git_blob": "15e4be9d1f836daa2820477c758eb919c519fa42",
+      "path": "docs/risk-policy-2026-09-10/design-engine-review.md",
+      "sha256": "63d3fc372026a30c263b4d9fb4d3f95080a93e8305ef74fdbeabeda0d2e1dc1e"
+    },
+    {
+      "bytes": 17611,
+      "git_blob": "4b82e7b2bf2ca36bb2bfe818cad7d1807c1d48ce",
+      "path": "docs/risk-policy-2026-09-10/design-evaluation-review.md",
+      "sha256": "54fb277f26b2c70a8245e23e002a0ea53fd762a0ef98a3272d4427c0ad1a9643"
+    },
+    {
+      "bytes": 10909,
+      "git_blob": "b48dbec2c87b0c459213fdda552c49549b841f2c",
+      "path": "docs/risk-policy-2026-09-10/design-history-review.md",
+      "sha256": "2d78d93527647c810d58c9be8151e22a9123999e7b06837d8e2d969550d9b1de"
+    },
+    {
+      "bytes": 3158,
+      "git_blob": "54eca976dc2af5811d839c1610950f0b54d5194c",
+      "path": "docs/risk-policy-2026-09-10/fresh-validation-plan.md",
+      "sha256": "c50c1c97ad5142531ef87a3031bcc95c97e9bab883b52eedc12c288d9b4777cf"
+    },
+    {
+      "bytes": 260246,
+      "git_blob": "a1340b6b31d5d38a33227035525cd1a1cc40bead",
+      "path": "docs/risk-policy-2026-09-10/original-gates.json",
+      "sha256": "1e5f391b7511c6fe9acfb9654f4c93ba00d3e48f47e94e1ba29f12fce8d0fbae"
+    },
+    {
+      "bytes": 22049,
+      "git_blob": "cd4e204aebba908de0c9208386fc058a681f6ff5",
+      "path": "docs/risk-policy-2026-09-10/original/baseline_strategy_v2.py",
+      "sha256": "8de678e024c7ad7dcd63c2d5e4bbca90c2b466ec665309fee87ddf32b29e6572"
+    },
+    {
+      "bytes": 14507,
+      "git_blob": "a5bdb08db71e5994e9e8835eab844bc06fbbba7f",
+      "path": "scripts/audit_factor_floor_2026_09_10.py",
+      "sha256": "c2cd3be3c8f7096e6f1311bd031d4253d720c1f329e8e80d497a6b8d33552861"
+    },
+    {
+      "bytes": 8396,
+      "git_blob": "498d1bea4b45c149576638de8ec37a7a3b36d49d",
+      "path": "tradingagents/accounting.py",
+      "sha256": "4ed1f01dda1b17ed3fe413996413704b6810af383ac1beb4a0acfeca226d4d3c"
+    },
+    {
+      "bytes": 22208,
+      "git_blob": "bf755131c8e58a7c7651221851027f68bb7084f9",
+      "path": "tradingagents/strategies/factor_risk_diagnostics.py",
+      "sha256": "bb4fd507d00aa2ba2c543d0d237ae50e6328213054971eaab115c0c21e6fbc21"
+    },
+    {
+      "bytes": 8778,
+      "git_blob": "cc08fb15a690bde05b61ae55d1491d33f9faba2e",
+      "path": "tradingagents/strategies/v2_sizing.py",
+      "sha256": "19c7492c36a68a45a69451cb03ca0b846649692dbbe4e389f9abe77939170e9d"
+    }
+  ],
+  "network_requests": 0,
+  "original_external_inputs_verified": 270,
+  "pins": 264,
+  "prior_byte_identical_files": 7374,
+  "prior_gate_objects_unchanged": 64,
+  "prior_tracked_files": 7379,
+  "qualification": "Static preservation and input admission only. Saved inputs remain qualified spot/mixed-provider cache proxies; no claim of executable perpetual prices or funding. Timestamp checks prove the declared development calendar, not causality of values. New executable-source review, committed preflight and control parity are still required. The one engine hook is permitted but its correctness is not certified here.",
+  "registered_gate_sha256": "0d0aff566b8eb3fa25f4d5be582782e788e4a6568c2cf58769c3041c6e746ff6",
+  "registration_commit": "67eb720305ccddff266df396e61d03dc2fa1985e",
+  "script_sha256": "42ad7ca11fbef0c1bf4f2ed71dd6fc6b2c52679b1331760eca63dd590dc46ae8",
+  "shadows": 72,
+  "sleeve_books": 576,
+  "source_provenance": [
+    {
+      "execution_commit": "27640882822d812c6d0478340495e033a11d3915",
+      "result": "data/factor-correction/2026-09-10/results/result.json"
+    },
+    {
+      "git_commit": "27640882822d812c6d0478340495e033a11d3915",
+      "historical_path": "scripts/baseline_strategy_v2.py",
+      "path": "docs/risk-policy-2026-09-10/original/baseline_strategy_v2.py",
+      "sha256": "8de678e024c7ad7dcd63c2d5e4bbca90c2b466ec665309fee87ddf32b29e6572"
+    },
+    {
+      "git_commit": "27640882822d812c6d0478340495e033a11d3915",
+      "historical_path": "tradingagents/accounting.py",
+      "path": "tradingagents/accounting.py",
+      "sha256": "4ed1f01dda1b17ed3fe413996413704b6810af383ac1beb4a0acfeca226d4d3c"
+    },
+    {
+      "git_commit": "27640882822d812c6d0478340495e033a11d3915",
+      "historical_path": "tradingagents/strategies/v2_sizing.py",
+      "path": "tradingagents/strategies/v2_sizing.py",
+      "sha256": "19c7492c36a68a45a69451cb03ca0b846649692dbbe4e389f9abe77939170e9d"
+    },
+    {
+      "git_commit": "3202d7982c47bb1472a8f3eb43a0851fd37b1480",
+      "historical_path": "tradingagents/strategies/factor_risk_diagnostics.py",
+      "path": "tradingagents/strategies/factor_risk_diagnostics.py",
+      "sha256": "bb4fd507d00aa2ba2c543d0d237ae50e6328213054971eaab115c0c21e6fbc21"
+    },
+    {
+      "git_commit": "27640882822d812c6d0478340495e033a11d3915",
+      "historical_path": "scripts/audit_factor_floor_2026_09_10.py",
+      "path": "scripts/audit_factor_floor_2026_09_10.py",
+      "sha256": "c2cd3be3c8f7096e6f1311bd031d4253d720c1f329e8e80d497a6b8d33552861"
+    }
+  ],
+  "started_utc": "2026-09-10T14:52:03.486856+00:00",
+  "status": "PASS",
+  "timestamp_only_files": 252,
+  "verified_utc": "2026-09-10T14:52:06.344291+00:00"
+}

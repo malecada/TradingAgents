@@ -1,0 +1,18 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_undefined_index_preserves_two_complete_sleeves ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7bb434acafd0>
+
+    def test_undefined_index_preserves_two_complete_sleeves(monkeypatch):
+        idx=pd.date_range('2021-11-08',periods=2,tz='UTC',name='Date')
+        frame=pd.DataFrame({'bitcoin':[.1,.2],'ethereum':[.3,.4]},index=idx)
+        monkeypatch.setattr(runner.ev,'return_metrics',lambda *a:(_ for _ in ()).throw(ValueError('synthetic index overflow')))
+>       got=runner.summarize_index(frame,{'return_window':['2021-11-08','2021-11-09'],'reporting':{'periods':[]}})
+            ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'scripts.audit_factor_risk_policy_2026_09_10' has no attribute 'summarize_index'
+
+tests/test_audit_factor_risk_policy.py:76: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_audit_factor_risk_policy.py::test_undefined_index_preserves_two_complete_sleeves
+1 failed, 13 deselected in 0.72s

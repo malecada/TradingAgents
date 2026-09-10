@@ -1,0 +1,878 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF                                         [100%]
+=================================== FAILURES ===================================
+_________ test_daily_sigma_uses_original_estimator_and_exact_once_lag __________
+
+    def test_daily_sigma_uses_original_estimator_and_exact_once_lag():
+        close=np.exp(np.arange(50)**2/10000)
+>       got=module().causal_sigma(close)
+            ^^^^^^^^
+
+tests/test_factor_risk_policy.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+______ test_daily_sizing_preserves_direction_refreshes_size_and_clips[1] _______
+
+side = 1
+
+    @pytest.mark.parametrize('side',[1,-1])
+    def test_daily_sizing_preserves_direction_refreshes_size_and_clips(side):
+>       p=controller(sizing='daily',sigma=[np.nan,.30,.15,.01])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+______ test_daily_sizing_preserves_direction_refreshes_size_and_clips[-1] ______
+
+side = -1
+
+    @pytest.mark.parametrize('side',[1,-1])
+    def test_daily_sizing_preserves_direction_refreshes_size_and_clips(side):
+>       p=controller(sizing='daily',sigma=[np.nan,.30,.15,.01])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+________ test_required_bad_sigma_is_explicit_unavailable_with_date[nan] ________
+
+invalid = nan
+
+    @pytest.mark.parametrize('invalid',[np.nan,np.inf,-np.inf,0.,-.2])
+    def test_required_bad_sigma_is_explicit_unavailable_with_date(invalid):
+>       p=controller(sizing='daily',sigma=[np.nan,invalid])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+________ test_required_bad_sigma_is_explicit_unavailable_with_date[inf] ________
+
+invalid = inf
+
+    @pytest.mark.parametrize('invalid',[np.nan,np.inf,-np.inf,0.,-.2])
+    def test_required_bad_sigma_is_explicit_unavailable_with_date(invalid):
+>       p=controller(sizing='daily',sigma=[np.nan,invalid])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_______ test_required_bad_sigma_is_explicit_unavailable_with_date[-inf] ________
+
+invalid = -inf
+
+    @pytest.mark.parametrize('invalid',[np.nan,np.inf,-np.inf,0.,-.2])
+    def test_required_bad_sigma_is_explicit_unavailable_with_date(invalid):
+>       p=controller(sizing='daily',sigma=[np.nan,invalid])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+________ test_required_bad_sigma_is_explicit_unavailable_with_date[0.0] ________
+
+invalid = 0.0
+
+    @pytest.mark.parametrize('invalid',[np.nan,np.inf,-np.inf,0.,-.2])
+    def test_required_bad_sigma_is_explicit_unavailable_with_date(invalid):
+>       p=controller(sizing='daily',sigma=[np.nan,invalid])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_______ test_required_bad_sigma_is_explicit_unavailable_with_date[-0.2] ________
+
+invalid = -0.2
+
+    @pytest.mark.parametrize('invalid',[np.nan,np.inf,-np.inf,0.,-.2])
+    def test_required_bad_sigma_is_explicit_unavailable_with_date(invalid):
+>       p=controller(sizing='daily',sigma=[np.nan,invalid])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+__________ test_flat_blocked_and_halted_requests_do_not_require_sigma __________
+
+    def test_flat_blocked_and_halted_requests_do_not_require_sigma():
+>       p=controller(sizing='daily',sigma=[np.nan,np.nan,.3,np.nan,np.nan])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_____ test_block_is_raw_direction_based_and_releases_on_opposite_same_bar ______
+
+    def test_block_is_raw_direction_based_and_releases_on_opposite_same_bar():
+>       p=controller()
+          ^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_______ test_raw_flat_releases_but_suppressed_zero_does_not_self_release _______
+
+    def test_raw_flat_releases_but_suppressed_zero_does_not_self_release():
+>       p=controller()
+          ^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_____________ test_immediate_policy_records_stops_without_blocking _____________
+
+    def test_immediate_policy_records_stops_without_blocking():
+>       p=controller(reentry='immediate')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:109: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+__ test_malformed_raw_target_never_becomes_retained_holdings_or_a_reset[nan] ___
+
+raw = nan
+
+    @pytest.mark.parametrize('raw',[np.nan,np.inf,True,'0.5'])
+    def test_malformed_raw_target_never_becomes_retained_holdings_or_a_reset(raw):
+        with pytest.raises(ValueError,match='raw target'):
+>           controller().decide(1,raw,False)
+            ^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+__ test_malformed_raw_target_never_becomes_retained_holdings_or_a_reset[inf] ___
+
+raw = inf
+
+    @pytest.mark.parametrize('raw',[np.nan,np.inf,True,'0.5'])
+    def test_malformed_raw_target_never_becomes_retained_holdings_or_a_reset(raw):
+        with pytest.raises(ValueError,match='raw target'):
+>           controller().decide(1,raw,False)
+            ^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+__ test_malformed_raw_target_never_becomes_retained_holdings_or_a_reset[True] __
+
+raw = True
+
+    @pytest.mark.parametrize('raw',[np.nan,np.inf,True,'0.5'])
+    def test_malformed_raw_target_never_becomes_retained_holdings_or_a_reset(raw):
+        with pytest.raises(ValueError,match='raw target'):
+>           controller().decide(1,raw,False)
+            ^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+__ test_malformed_raw_target_never_becomes_retained_holdings_or_a_reset[0.5] ___
+
+raw = '0.5'
+
+    @pytest.mark.parametrize('raw',[np.nan,np.inf,True,'0.5'])
+    def test_malformed_raw_target_never_becomes_retained_holdings_or_a_reset(raw):
+        with pytest.raises(ValueError,match='raw target'):
+>           controller().decide(1,raw,False)
+            ^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+___ test_controller_rejects_reused_out_of_order_and_false_stop_notifications ___
+
+    def test_controller_rejects_reused_out_of_order_and_false_stop_notifications():
+>       p=controller()
+          ^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_ test_default_none_and_explicit_a00_match_archived_original_fields[1.0-0.0003-1] _
+
+side = 1, scale = 1.0, funding = 0.0003
+
+    @pytest.mark.parametrize('side',[1,-1])
+    @pytest.mark.parametrize('scale,funding',[(1.,.0003),(0.,.0003),(2.,.0003),(1.,0.)])
+    def test_default_none_and_explicit_a00_match_archived_original_fields(side,scale,funding):
+        args=engine_args([100,101,96,105,103,90],[0,.8*side,.8*side,-.5*side,-.5*side,.5*side],
+            fee_rate=.0004*scale,slippage=.0005*scale,spread=.0001*scale,
+            price_impact=.00005*scale,funding_rate=funding,max_portfolio_dd=.15)
+        old_trace=[]; want=archived_engine()(**args,trace=old_trace)
+        none_trace=[]; got=run_coin_backtest(**args,trace=none_trace)
+        assert got==want and none_trace==old_trace
+>       trace=[]; got=run_coin_backtest(**args,target_policy=controller(n=6,reentry='immediate'),trace=trace)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_ test_default_none_and_explicit_a00_match_archived_original_fields[1.0-0.0003--1] _
+
+side = -1, scale = 1.0, funding = 0.0003
+
+    @pytest.mark.parametrize('side',[1,-1])
+    @pytest.mark.parametrize('scale,funding',[(1.,.0003),(0.,.0003),(2.,.0003),(1.,0.)])
+    def test_default_none_and_explicit_a00_match_archived_original_fields(side,scale,funding):
+        args=engine_args([100,101,96,105,103,90],[0,.8*side,.8*side,-.5*side,-.5*side,.5*side],
+            fee_rate=.0004*scale,slippage=.0005*scale,spread=.0001*scale,
+            price_impact=.00005*scale,funding_rate=funding,max_portfolio_dd=.15)
+        old_trace=[]; want=archived_engine()(**args,trace=old_trace)
+        none_trace=[]; got=run_coin_backtest(**args,trace=none_trace)
+        assert got==want and none_trace==old_trace
+>       trace=[]; got=run_coin_backtest(**args,target_policy=controller(n=6,reentry='immediate'),trace=trace)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_ test_default_none_and_explicit_a00_match_archived_original_fields[0.0-0.0003-1] _
+
+side = 1, scale = 0.0, funding = 0.0003
+
+    @pytest.mark.parametrize('side',[1,-1])
+    @pytest.mark.parametrize('scale,funding',[(1.,.0003),(0.,.0003),(2.,.0003),(1.,0.)])
+    def test_default_none_and_explicit_a00_match_archived_original_fields(side,scale,funding):
+        args=engine_args([100,101,96,105,103,90],[0,.8*side,.8*side,-.5*side,-.5*side,.5*side],
+            fee_rate=.0004*scale,slippage=.0005*scale,spread=.0001*scale,
+            price_impact=.00005*scale,funding_rate=funding,max_portfolio_dd=.15)
+        old_trace=[]; want=archived_engine()(**args,trace=old_trace)
+        none_trace=[]; got=run_coin_backtest(**args,trace=none_trace)
+        assert got==want and none_trace==old_trace
+>       trace=[]; got=run_coin_backtest(**args,target_policy=controller(n=6,reentry='immediate'),trace=trace)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_ test_default_none_and_explicit_a00_match_archived_original_fields[0.0-0.0003--1] _
+
+side = -1, scale = 0.0, funding = 0.0003
+
+    @pytest.mark.parametrize('side',[1,-1])
+    @pytest.mark.parametrize('scale,funding',[(1.,.0003),(0.,.0003),(2.,.0003),(1.,0.)])
+    def test_default_none_and_explicit_a00_match_archived_original_fields(side,scale,funding):
+        args=engine_args([100,101,96,105,103,90],[0,.8*side,.8*side,-.5*side,-.5*side,.5*side],
+            fee_rate=.0004*scale,slippage=.0005*scale,spread=.0001*scale,
+            price_impact=.00005*scale,funding_rate=funding,max_portfolio_dd=.15)
+        old_trace=[]; want=archived_engine()(**args,trace=old_trace)
+        none_trace=[]; got=run_coin_backtest(**args,trace=none_trace)
+        assert got==want and none_trace==old_trace
+>       trace=[]; got=run_coin_backtest(**args,target_policy=controller(n=6,reentry='immediate'),trace=trace)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_ test_default_none_and_explicit_a00_match_archived_original_fields[2.0-0.0003-1] _
+
+side = 1, scale = 2.0, funding = 0.0003
+
+    @pytest.mark.parametrize('side',[1,-1])
+    @pytest.mark.parametrize('scale,funding',[(1.,.0003),(0.,.0003),(2.,.0003),(1.,0.)])
+    def test_default_none_and_explicit_a00_match_archived_original_fields(side,scale,funding):
+        args=engine_args([100,101,96,105,103,90],[0,.8*side,.8*side,-.5*side,-.5*side,.5*side],
+            fee_rate=.0004*scale,slippage=.0005*scale,spread=.0001*scale,
+            price_impact=.00005*scale,funding_rate=funding,max_portfolio_dd=.15)
+        old_trace=[]; want=archived_engine()(**args,trace=old_trace)
+        none_trace=[]; got=run_coin_backtest(**args,trace=none_trace)
+        assert got==want and none_trace==old_trace
+>       trace=[]; got=run_coin_backtest(**args,target_policy=controller(n=6,reentry='immediate'),trace=trace)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_ test_default_none_and_explicit_a00_match_archived_original_fields[2.0-0.0003--1] _
+
+side = -1, scale = 2.0, funding = 0.0003
+
+    @pytest.mark.parametrize('side',[1,-1])
+    @pytest.mark.parametrize('scale,funding',[(1.,.0003),(0.,.0003),(2.,.0003),(1.,0.)])
+    def test_default_none_and_explicit_a00_match_archived_original_fields(side,scale,funding):
+        args=engine_args([100,101,96,105,103,90],[0,.8*side,.8*side,-.5*side,-.5*side,.5*side],
+            fee_rate=.0004*scale,slippage=.0005*scale,spread=.0001*scale,
+            price_impact=.00005*scale,funding_rate=funding,max_portfolio_dd=.15)
+        old_trace=[]; want=archived_engine()(**args,trace=old_trace)
+        none_trace=[]; got=run_coin_backtest(**args,trace=none_trace)
+        assert got==want and none_trace==old_trace
+>       trace=[]; got=run_coin_backtest(**args,target_policy=controller(n=6,reentry='immediate'),trace=trace)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_ test_default_none_and_explicit_a00_match_archived_original_fields[1.0-0.0-1] _
+
+side = 1, scale = 1.0, funding = 0.0
+
+    @pytest.mark.parametrize('side',[1,-1])
+    @pytest.mark.parametrize('scale,funding',[(1.,.0003),(0.,.0003),(2.,.0003),(1.,0.)])
+    def test_default_none_and_explicit_a00_match_archived_original_fields(side,scale,funding):
+        args=engine_args([100,101,96,105,103,90],[0,.8*side,.8*side,-.5*side,-.5*side,.5*side],
+            fee_rate=.0004*scale,slippage=.0005*scale,spread=.0001*scale,
+            price_impact=.00005*scale,funding_rate=funding,max_portfolio_dd=.15)
+        old_trace=[]; want=archived_engine()(**args,trace=old_trace)
+        none_trace=[]; got=run_coin_backtest(**args,trace=none_trace)
+        assert got==want and none_trace==old_trace
+>       trace=[]; got=run_coin_backtest(**args,target_policy=controller(n=6,reentry='immediate'),trace=trace)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_ test_default_none_and_explicit_a00_match_archived_original_fields[1.0-0.0--1] _
+
+side = -1, scale = 1.0, funding = 0.0
+
+    @pytest.mark.parametrize('side',[1,-1])
+    @pytest.mark.parametrize('scale,funding',[(1.,.0003),(0.,.0003),(2.,.0003),(1.,0.)])
+    def test_default_none_and_explicit_a00_match_archived_original_fields(side,scale,funding):
+        args=engine_args([100,101,96,105,103,90],[0,.8*side,.8*side,-.5*side,-.5*side,.5*side],
+            fee_rate=.0004*scale,slippage=.0005*scale,spread=.0001*scale,
+            price_impact=.00005*scale,funding_rate=funding,max_portfolio_dd=.15)
+        old_trace=[]; want=archived_engine()(**args,trace=old_trace)
+        none_trace=[]; got=run_coin_backtest(**args,trace=none_trace)
+        assert got==want and none_trace==old_trace
+>       trace=[]; got=run_coin_backtest(**args,target_policy=controller(n=6,reentry='immediate'),trace=trace)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_ test_same_sign_daily_resize_keeps_original_price_stop_anchor[1-prices0-lows0-highs0] _
+
+side = 1, prices = [100, 102, 101, 96], lows = [100, 101, 98, 96]
+highs = [100, 103, 103, 102]
+
+    @pytest.mark.parametrize('side,prices,lows,highs',[
+        (1,[100,102,101,96],[100,101,98,96],[100,103,103,102]),
+        (-1,[100,98,99,104],[100,97,97,98],[100,99,102,104])])
+    def test_same_sign_daily_resize_keeps_original_price_stop_anchor(side,prices,lows,highs):
+        trace=[]
+        args=engine_args(prices,[0,side,side,side],lows=np.array(lows,dtype=float),highs=np.array(highs,dtype=float))
+>       run_coin_backtest(**args,trace=trace,target_policy=controller(sizing='daily',reentry='immediate',sigma=[np.nan,.3,.15,.2]))
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:157: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_ test_same_sign_daily_resize_keeps_original_price_stop_anchor[-1-prices1-lows1-highs1] _
+
+side = -1, prices = [100, 98, 99, 104], lows = [100, 97, 97, 98]
+highs = [100, 99, 102, 104]
+
+    @pytest.mark.parametrize('side,prices,lows,highs',[
+        (1,[100,102,101,96],[100,101,98,96],[100,103,103,102]),
+        (-1,[100,98,99,104],[100,97,97,98],[100,99,102,104])])
+    def test_same_sign_daily_resize_keeps_original_price_stop_anchor(side,prices,lows,highs):
+        trace=[]
+        args=engine_args(prices,[0,side,side,side],lows=np.array(lows,dtype=float),highs=np.array(highs,dtype=float))
+>       run_coin_backtest(**args,trace=trace,target_policy=controller(sizing='daily',reentry='immediate',sigma=[np.nan,.3,.15,.2]))
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:157: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+________ test_waiting_updates_after_executed_stop_with_or_without_trace ________
+
+    def test_waiting_updates_after_executed_stop_with_or_without_trace():
+        args=engine_args([100,96,95,94,93],[0,.5,.5,0,.5])
+>       trace=[]; got=run_coin_backtest(**args,trace=trace,target_policy=controller(n=5))
+                                                                         ^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:168: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+____ test_permanent_halt_beats_opposite_reset_and_requires_no_sigma_in_tail ____
+
+    def test_permanent_halt_beats_opposite_reset_and_requires_no_sigma_in_tail():
+        args=engine_args([100,90,120],[0,3,-3],fee_rate=.03,slippage=0,spread=0,price_impact=0,
+                         funding_rate=0,max_portfolio_dd=.15)
+        trace=[]
+>       run_coin_backtest(**args,trace=trace,target_policy=controller(sizing='daily',sigma=[np.nan,.05,np.nan]))
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:183: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_ test_planted_resize_waiting_tradeoff_does_not_presume_economic_improvement[90.0] _
+
+last = 90.0
+
+    @pytest.mark.parametrize('last',[90.,110.])
+    def test_planted_resize_waiting_tradeoff_does_not_presume_economic_improvement(last):
+        args=engine_args([100,97,last],[0,1,1],fee_rate=0,slippage=0,spread=0,
+                        price_impact=0,funding_rate=0)
+        results={}
+        for sizing in ('saved','daily'):
+            for reentry in ('immediate','new_target_episode'):
+>               results[sizing,reentry]=run_coin_backtest(**args,target_policy=controller(n=3,sizing=sizing,reentry=reentry))[0][-1]
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:197: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+_ test_planted_resize_waiting_tradeoff_does_not_presume_economic_improvement[110.0] _
+
+last = 110.0
+
+    @pytest.mark.parametrize('last',[90.,110.])
+    def test_planted_resize_waiting_tradeoff_does_not_presume_economic_improvement(last):
+        args=engine_args([100,97,last],[0,1,1],fee_rate=0,slippage=0,spread=0,
+                        price_impact=0,funding_rate=0)
+        results={}
+        for sizing in ('saved','daily'):
+            for reentry in ('immediate','new_target_episode'):
+>               results[sizing,reentry]=run_coin_backtest(**args,target_policy=controller(n=3,sizing=sizing,reentry=reentry))[0][-1]
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_policy.py:197: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_factor_risk_policy.py:25: in controller
+    return module().FactorRiskPolicy(sizing=sizing,reentry=reentry,
+           ^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path=ROOT/'tradingagents/strategies/factor_risk_policy.py'
+>       assert path.exists(), 'registered factor risk policy has not been implemented'
+E       AssertionError: registered factor risk policy has not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_policy.py').exists
+
+tests/test_factor_risk_policy.py:18: AssertionError
+______ test_hook_refuses_nonfinite_output_instead_of_legacy_hold_fallback ______
+
+    def test_hook_refuses_nonfinite_output_instead_of_legacy_hold_fallback():
+        class Broken:
+            def decide(self,*args,**kwargs):return np.nan,{}
+        with pytest.raises(ValueError,match='policy target'):
+>           run_coin_backtest(**engine_args([100,110],[0,1]),target_policy=Broken())
+E           TypeError: run_coin_backtest() got an unexpected keyword argument 'target_policy'
+
+tests/test_factor_risk_policy.py:210: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_factor_risk_policy.py::test_daily_sigma_uses_original_estimator_and_exact_once_lag
+FAILED tests/test_factor_risk_policy.py::test_daily_sizing_preserves_direction_refreshes_size_and_clips[1]
+FAILED tests/test_factor_risk_policy.py::test_daily_sizing_preserves_direction_refreshes_size_and_clips[-1]
+FAILED tests/test_factor_risk_policy.py::test_required_bad_sigma_is_explicit_unavailable_with_date[nan]
+FAILED tests/test_factor_risk_policy.py::test_required_bad_sigma_is_explicit_unavailable_with_date[inf]
+FAILED tests/test_factor_risk_policy.py::test_required_bad_sigma_is_explicit_unavailable_with_date[-inf]
+FAILED tests/test_factor_risk_policy.py::test_required_bad_sigma_is_explicit_unavailable_with_date[0.0]
+FAILED tests/test_factor_risk_policy.py::test_required_bad_sigma_is_explicit_unavailable_with_date[-0.2]
+FAILED tests/test_factor_risk_policy.py::test_flat_blocked_and_halted_requests_do_not_require_sigma
+FAILED tests/test_factor_risk_policy.py::test_block_is_raw_direction_based_and_releases_on_opposite_same_bar
+FAILED tests/test_factor_risk_policy.py::test_raw_flat_releases_but_suppressed_zero_does_not_self_release
+FAILED tests/test_factor_risk_policy.py::test_immediate_policy_records_stops_without_blocking
+FAILED tests/test_factor_risk_policy.py::test_malformed_raw_target_never_becomes_retained_holdings_or_a_reset[nan]
+FAILED tests/test_factor_risk_policy.py::test_malformed_raw_target_never_becomes_retained_holdings_or_a_reset[inf]
+FAILED tests/test_factor_risk_policy.py::test_malformed_raw_target_never_becomes_retained_holdings_or_a_reset[True]
+FAILED tests/test_factor_risk_policy.py::test_malformed_raw_target_never_becomes_retained_holdings_or_a_reset[0.5]
+FAILED tests/test_factor_risk_policy.py::test_controller_rejects_reused_out_of_order_and_false_stop_notifications
+FAILED tests/test_factor_risk_policy.py::test_default_none_and_explicit_a00_match_archived_original_fields[1.0-0.0003-1]
+FAILED tests/test_factor_risk_policy.py::test_default_none_and_explicit_a00_match_archived_original_fields[1.0-0.0003--1]
+FAILED tests/test_factor_risk_policy.py::test_default_none_and_explicit_a00_match_archived_original_fields[0.0-0.0003-1]
+FAILED tests/test_factor_risk_policy.py::test_default_none_and_explicit_a00_match_archived_original_fields[0.0-0.0003--1]
+FAILED tests/test_factor_risk_policy.py::test_default_none_and_explicit_a00_match_archived_original_fields[2.0-0.0003-1]
+FAILED tests/test_factor_risk_policy.py::test_default_none_and_explicit_a00_match_archived_original_fields[2.0-0.0003--1]
+FAILED tests/test_factor_risk_policy.py::test_default_none_and_explicit_a00_match_archived_original_fields[1.0-0.0-1]
+FAILED tests/test_factor_risk_policy.py::test_default_none_and_explicit_a00_match_archived_original_fields[1.0-0.0--1]
+FAILED tests/test_factor_risk_policy.py::test_same_sign_daily_resize_keeps_original_price_stop_anchor[1-prices0-lows0-highs0]
+FAILED tests/test_factor_risk_policy.py::test_same_sign_daily_resize_keeps_original_price_stop_anchor[-1-prices1-lows1-highs1]
+FAILED tests/test_factor_risk_policy.py::test_waiting_updates_after_executed_stop_with_or_without_trace
+FAILED tests/test_factor_risk_policy.py::test_permanent_halt_beats_opposite_reset_and_requires_no_sigma_in_tail
+FAILED tests/test_factor_risk_policy.py::test_planted_resize_waiting_tradeoff_does_not_presume_economic_improvement[90.0]
+FAILED tests/test_factor_risk_policy.py::test_planted_resize_waiting_tradeoff_does_not_presume_economic_improvement[110.0]
+FAILED tests/test_factor_risk_policy.py::test_hook_refuses_nonfinite_output_instead_of_legacy_hold_fallback
+32 failed in 1.77s

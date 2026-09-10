@@ -95,6 +95,7 @@ def run_coin_backtest(
     price_stop_pct: float = 0.0,
     *,
     trace: list[dict] | None = None,
+    target_policy=None,
 ) -> tuple[list, dict]:
     """Executable contracts with signed funding and explicit risk-stop exits.
 
@@ -108,6 +109,11 @@ def run_coin_backtest(
     exit, each using that leg's NAV. Funding remains the declared daily
     opening-exposure assumption, including on price-stop days. The effective
     mark return includes an assumed stop fill; it is not the raw close return.
+
+    An optional target policy resolves each saved raw target before the bar
+    and receives notification after an executed price-stop exit. It changes
+    neither accounting nor the price-stop anchor on same-sign resizing.
+    The default None path and its original trace schema remain unchanged.
     """
     from tradingagents.accounting import accounting_step
     from tradingagents.backtesting.engine import compute_metrics
@@ -124,7 +130,19 @@ def run_coin_backtest(
     for i in range(1,len(dates)):
         nav = equity[-1]
         p_prev, p_curr = prices[i-1], prices[i]
-        target_pos = 0. if halted else positions[i]
+        policy_fields = None
+        if target_policy is None:
+            target_pos = 0. if halted else positions[i]
+        else:
+            target_pos, policy_fields = target_policy.decide(i, positions[i], halted, date=dates[i])
+            if (isinstance(target_pos, (bool, np.bool_))
+                    or not isinstance(target_pos, (int, float, np.integer, np.floating))
+                    or not np.isfinite(target_pos)):
+                raise ValueError(f'invalid policy target at {dates[i]}')
+            if halted and target_pos != 0.:
+                raise ValueError(f'policy target attempts to release permanent halt at {dates[i]}')
+            if not isinstance(policy_fields, dict):
+                raise ValueError('policy trace metadata must be a dictionary')
         target = pd.Series({'asset':target_pos}) if np.isfinite(target_pos) else None
         exposure = float(target_pos) if target is not None else notionals.get('asset',0.)/nav
         if target is not None and target_pos != previous_target:
@@ -187,6 +205,8 @@ def run_coin_backtest(
                     exit_executed=True,
                 )
             new_equity, notionals = closed['nav'],closed['notionals']
+            if target_policy is not None and price_stop_hit:
+                policy_fields.update(target_policy.on_price_stop(i, exposure))
             trades += int(closed['turnover'] > 1e-9)
             previous_target, entry_price = 0.,0.
         else:
@@ -205,6 +225,10 @@ def run_coin_backtest(
                 closing_notional=float(notionals.get('asset', 0.)),
                 portfolio_stop_hit=bool(portfolio_stop), halted_after=bool(halted),
             )
+            if policy_fields is not None:
+                if set(policy_fields).intersection(audit_row):
+                    raise ValueError('policy metadata cannot overwrite original accounting trace fields')
+                audit_row.update(policy_fields)
             trace.append(audit_row)
     metrics = compute_metrics(daily_returns,actual_positions,initial_capital,equity,
                               risk_free_rate=.045,periods_per_year=365.)
