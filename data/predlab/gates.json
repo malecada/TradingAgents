@@ -2878,5 +2878,124 @@
       "n_symbols": 49,
       "target_symbol_hours": 6832
     }
+  },
+  "audit_lifecycle_exposure_2026_09_10": {
+    "registered_date": "2026-09-10",
+    "type": "exposure_only_forensic_audit",
+    "charter": "docs/data-recovery/2026-09-10-exposure-charter.md",
+    "purpose": "Determine whether the preserved original September9 liquidation-fade books requested or carried exposure across now-confirmed original-contract terminations. No performance replay or outcome selection.",
+    "strategy_evaluation_permitted": false,
+    "signal_weight_reconstruction_permitted": true,
+    "allow_holdout": false,
+    "development_window": [
+      "2021-01-01",
+      "2025-03-31"
+    ],
+    "source_roots": [
+      "/home/malecada/master_thesis/TradingAgents/data",
+      "/home/malecada/master_thesis/TradingAgents-predlab/data"
+    ],
+    "original_cycle": "audit_reevaluation_2026_09_09",
+    "original_inputs_only": true,
+    "inventory": {
+      "path": "data/recovery/2026-09-10/clock-inventory.json",
+      "sha256": "2a71e5bcbe63e0b6820e2a08111763f8e1f1fff3895d03411262b396d1c4bc0d"
+    },
+    "universe_sha256": "0b9e931f7eae01d6d5f85aa6ef48fc63b2fd7453b5a7990e460b8eb0874d4e96",
+    "families": {
+      "liq_fade": {
+        "cells": [
+          {
+            "id": "thr2.5_H6",
+            "thr": 2.5,
+            "H": 6
+          },
+          {
+            "id": "thr2.5_H24",
+            "thr": 2.5,
+            "H": 24
+          },
+          {
+            "id": "thr2.5_H48",
+            "thr": 2.5,
+            "H": 48
+          },
+          {
+            "id": "thr3.5_H6",
+            "thr": 3.5,
+            "H": 6
+          },
+          {
+            "id": "thr3.5_H24",
+            "thr": 3.5,
+            "H": 24
+          },
+          {
+            "id": "thr3.5_H48",
+            "thr": 3.5,
+            "H": 48
+          }
+        ],
+        "warmup_start": "2020-06-01",
+        "hourly_end": "2025-03-31T23:00:00Z",
+        "weight_per_event": 0.1,
+        "gross_cap": 1.0,
+        "feature_window": 2160,
+        "feature_min_periods": 1440
+      }
+    },
+    "events": [
+      {
+        "symbol": "LUNAUSDT",
+        "closure_utc": "2022-05-12T15:30:00Z",
+        "new_position_restriction_utc": null,
+        "official_article_code": "ef3ce76d5c2d45ee9b6dc3f281cde744"
+      },
+      {
+        "symbol": "TOMOUSDT",
+        "closure_utc": "2023-11-14T09:00:00Z",
+        "new_position_restriction_utc": "2023-11-14T08:30:00Z",
+        "official_article_code": "034eee2293964e26b915b1ec5c42972a"
+      },
+      {
+        "symbol": "RNDRUSDT",
+        "closure_utc": "2024-07-16T09:00:00Z",
+        "new_position_restriction_utc": "2024-07-16T08:30:00Z",
+        "official_article_code": "d1f2ae8d99b24439a7a900caa9bb6b3b"
+      },
+      {
+        "symbol": "MATICUSDT",
+        "closure_utc": "2024-09-04T09:00:00Z",
+        "new_position_restriction_utc": "2024-09-04T08:30:00Z",
+        "official_article_code": "6a6de383727f4659a3050f7982e1620f"
+      },
+      {
+        "symbol": "BNXUSDT",
+        "closure_utc": "2025-03-17T09:00:00Z",
+        "new_position_restriction_utc": "2025-03-17T08:30:00Z",
+        "official_article_code": "2f963977c7274e0583f16f2e26987b61"
+      }
+    ],
+    "clock_contract": "Open-labelled1h bars. W[t] uses features throughbar t-1 and fills at prior close available at t. It is held through valuation at t+1h. An event exactly at t cannot be avoided by assuming the prior close stamped t-1ms was executable before its availability.",
+    "checks": [
+      "Report incoming prior-row allocation at each event boundary and requested allocation during any event-straddling or post-closure bar.",
+      "A nonzero desired allocation on [t,t+1h) containing termination is unresolved; a carried nonzero prior allocation at exact closure t is also unresolved even when current target is zero.",
+      "Report new targets and target-weight increases at decision times on/after announced new-position restriction. Target weights cannot establish every quantity increase caused by NAV/price drift; those require executable accounting and remain unknown.",
+      "Retain all6cells and all5events. Source missing bars affect the original signal construction and are disclosed; an observed original-book lifecycle assumption qualifies that original measurement, while absence of a flag does not prove readiness."
+    ],
+    "prohibited": [
+      "PnL",
+      "Sharpe",
+      "DSR",
+      "P0/P1/P2 statistics",
+      "new or recovered price snapshots",
+      "synthetic settlement",
+      "changed signal or universe",
+      "holdout",
+      "strategy selection"
+    ],
+    "outputs": "data/recovery/2026-09-10/exposure-audit/",
+    "stop_rule": "One immutable completed artifact for all6cells; archive input/source/gate hashes and exclusive start marker. New results or changed input require another registration.",
+    "ledger_policy": "Six exposure-forensic rows only; no additional financial candidate evaluated and no DSR trial-denominator change."
   }
 }
