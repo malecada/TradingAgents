@@ -1,0 +1,280 @@
+FFFFFFFFFFFF........FFF                                                  [100%]
+=================================== FAILURES ===================================
+______________ test_valid_checksum_and_strict_observed_bar_schema ______________
+
+    def test_valid_checksum_and_strict_observed_bar_schema():
+>       mod = module()
+              ^^^^^^^^
+
+tests/predlab/test_recover_binance_hourly.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+>       assert SCRIPT.exists(), "bounded hourly recovery transform is missing"
+E       AssertionError: bounded hourly recovery transform is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/recover_binance_hourly_2026_09_10.py').exists
+
+tests/predlab/test_recover_binance_hourly.py:18: AssertionError
+_____________ test_malformed_bar_or_duplicate_rejected[duplicate] ______________
+
+change = 'duplicate'
+
+    @pytest.mark.parametrize("change", ["duplicate", "nan", "ohlc", "negative_volume", "close_clock", "microseconds", "unsorted"])
+    def test_malformed_bar_or_duplicate_rejected(change):
+>       mod = module(); values = rows()
+              ^^^^^^^^
+
+tests/predlab/test_recover_binance_hourly.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+>       assert SCRIPT.exists(), "bounded hourly recovery transform is missing"
+E       AssertionError: bounded hourly recovery transform is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/recover_binance_hourly_2026_09_10.py').exists
+
+tests/predlab/test_recover_binance_hourly.py:18: AssertionError
+________________ test_malformed_bar_or_duplicate_rejected[nan] _________________
+
+change = 'nan'
+
+    @pytest.mark.parametrize("change", ["duplicate", "nan", "ohlc", "negative_volume", "close_clock", "microseconds", "unsorted"])
+    def test_malformed_bar_or_duplicate_rejected(change):
+>       mod = module(); values = rows()
+              ^^^^^^^^
+
+tests/predlab/test_recover_binance_hourly.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+>       assert SCRIPT.exists(), "bounded hourly recovery transform is missing"
+E       AssertionError: bounded hourly recovery transform is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/recover_binance_hourly_2026_09_10.py').exists
+
+tests/predlab/test_recover_binance_hourly.py:18: AssertionError
+________________ test_malformed_bar_or_duplicate_rejected[ohlc] ________________
+
+change = 'ohlc'
+
+    @pytest.mark.parametrize("change", ["duplicate", "nan", "ohlc", "negative_volume", "close_clock", "microseconds", "unsorted"])
+    def test_malformed_bar_or_duplicate_rejected(change):
+>       mod = module(); values = rows()
+              ^^^^^^^^
+
+tests/predlab/test_recover_binance_hourly.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+>       assert SCRIPT.exists(), "bounded hourly recovery transform is missing"
+E       AssertionError: bounded hourly recovery transform is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/recover_binance_hourly_2026_09_10.py').exists
+
+tests/predlab/test_recover_binance_hourly.py:18: AssertionError
+__________ test_malformed_bar_or_duplicate_rejected[negative_volume] ___________
+
+change = 'negative_volume'
+
+    @pytest.mark.parametrize("change", ["duplicate", "nan", "ohlc", "negative_volume", "close_clock", "microseconds", "unsorted"])
+    def test_malformed_bar_or_duplicate_rejected(change):
+>       mod = module(); values = rows()
+              ^^^^^^^^
+
+tests/predlab/test_recover_binance_hourly.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+>       assert SCRIPT.exists(), "bounded hourly recovery transform is missing"
+E       AssertionError: bounded hourly recovery transform is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/recover_binance_hourly_2026_09_10.py').exists
+
+tests/predlab/test_recover_binance_hourly.py:18: AssertionError
+____________ test_malformed_bar_or_duplicate_rejected[close_clock] _____________
+
+change = 'close_clock'
+
+    @pytest.mark.parametrize("change", ["duplicate", "nan", "ohlc", "negative_volume", "close_clock", "microseconds", "unsorted"])
+    def test_malformed_bar_or_duplicate_rejected(change):
+>       mod = module(); values = rows()
+              ^^^^^^^^
+
+tests/predlab/test_recover_binance_hourly.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+>       assert SCRIPT.exists(), "bounded hourly recovery transform is missing"
+E       AssertionError: bounded hourly recovery transform is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/recover_binance_hourly_2026_09_10.py').exists
+
+tests/predlab/test_recover_binance_hourly.py:18: AssertionError
+____________ test_malformed_bar_or_duplicate_rejected[microseconds] ____________
+
+change = 'microseconds'
+
+    @pytest.mark.parametrize("change", ["duplicate", "nan", "ohlc", "negative_volume", "close_clock", "microseconds", "unsorted"])
+    def test_malformed_bar_or_duplicate_rejected(change):
+>       mod = module(); values = rows()
+              ^^^^^^^^
+
+tests/predlab/test_recover_binance_hourly.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+>       assert SCRIPT.exists(), "bounded hourly recovery transform is missing"
+E       AssertionError: bounded hourly recovery transform is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/recover_binance_hourly_2026_09_10.py').exists
+
+tests/predlab/test_recover_binance_hourly.py:18: AssertionError
+______________ test_malformed_bar_or_duplicate_rejected[unsorted] ______________
+
+change = 'unsorted'
+
+    @pytest.mark.parametrize("change", ["duplicate", "nan", "ohlc", "negative_volume", "close_clock", "microseconds", "unsorted"])
+    def test_malformed_bar_or_duplicate_rejected(change):
+>       mod = module(); values = rows()
+              ^^^^^^^^
+
+tests/predlab/test_recover_binance_hourly.py:54: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+>       assert SCRIPT.exists(), "bounded hourly recovery transform is missing"
+E       AssertionError: bounded hourly recovery transform is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/recover_binance_hourly_2026_09_10.py').exists
+
+tests/predlab/test_recover_binance_hourly.py:18: AssertionError
+___ test_immutable_insertion_preserves_every_old_value_and_rejects_conflicts ___
+
+    def test_immutable_insertion_preserves_every_old_value_and_rejects_conflicts():
+>       mod = module(); genuine = mod.parse_rows(rows(n=5))
+              ^^^^^^^^
+
+tests/predlab/test_recover_binance_hourly.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+>       assert SCRIPT.exists(), "bounded hourly recovery transform is missing"
+E       AssertionError: bounded hourly recovery transform is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/recover_binance_hourly_2026_09_10.py').exists
+
+tests/predlab/test_recover_binance_hourly.py:18: AssertionError
+_____ test_existing_target_or_unregistered_extra_bar_cannot_be_overwritten _____
+
+    def test_existing_target_or_unregistered_extra_bar_cannot_be_overwritten():
+>       mod=module(); bars=mod.parse_rows(rows(n=5)); target=bars.index[1:4]
+            ^^^^^^^^
+
+tests/predlab/test_recover_binance_hourly.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+>       assert SCRIPT.exists(), "bounded hourly recovery transform is missing"
+E       AssertionError: bounded hourly recovery transform is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/recover_binance_hourly_2026_09_10.py').exists
+
+tests/predlab/test_recover_binance_hourly.py:18: AssertionError
+________ test_plan_is_bounded_and_all_target_and_overlap_sources_fixed _________
+
+    def test_plan_is_bounded_and_all_target_and_overlap_sources_fixed():
+>       mod=module(); plan=mod.request_plan()
+            ^^^^^^^^
+
+tests/predlab/test_recover_binance_hourly.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+>       assert SCRIPT.exists(), "bounded hourly recovery transform is missing"
+E       AssertionError: bounded hourly recovery transform is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/recover_binance_hourly_2026_09_10.py').exists
+
+tests/predlab/test_recover_binance_hourly.py:18: AssertionError
+______ test_receipt_store_refuses_overwrite_and_enforces_download_budget _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-98/test_receipt_store_refuses_ove0')
+
+    def test_receipt_store_refuses_overwrite_and_enforces_download_budget(tmp_path):
+>       mod=module(); store=mod.ReceiptStore(tmp_path/"raw", budget=3)
+            ^^^^^^^^
+
+tests/predlab/test_recover_binance_hourly.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+>       assert SCRIPT.exists(), "bounded hourly recovery transform is missing"
+E       AssertionError: bounded hourly recovery transform is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/recover_binance_hourly_2026_09_10.py').exists
+
+tests/predlab/test_recover_binance_hourly.py:18: AssertionError
+____________ test_partial_month_and_internal_holes_are_not_complete ____________
+
+    def test_partial_month_and_internal_holes_are_not_complete():
+        month = pd.Period("2022-02", freq="M")
+        index = pd.date_range("2022-02-01", "2022-03-01", freq="1h", inclusive="left", tz="UTC")
+        existing = pd.DataFrame({"close": 1.0}, index=index)
+        assert not fetch1h.month_needs_fetch(month, existing, set())
+>       assert fetch1h.month_needs_fetch(month, existing.iloc[:-72], set())
+E       AssertionError: assert False
+E        +  where False = <function month_needs_fetch at 0x75c4b42959e0>(Period('2022-02', 'M'),                            close\n2022-02-01 00:00:00+00:00    1.0\n2022-02-01 01:00:00+00:00    1.0\n2022-02-01 02:00:00...2-02-25 21:00:00+00:00    1.0\n2022-02-25 22:00:00+00:00    1.0\n2022-02-25 23:00:00+00:00    1.0\n\n[600 rows x 1 columns], set())
+E        +    where <function month_needs_fetch at 0x75c4b42959e0> = fetch1h.month_needs_fetch
+E        +    and   set() = set()
+
+tests/xsect/test_klines_1h_merge.py:94: AssertionError
+______ test_observed_partial_month_overrides_stale_absent_archive_marker _______
+
+    def test_observed_partial_month_overrides_stale_absent_archive_marker():
+        month = pd.Period("2024-01", freq="M")
+>       assert fetch1h.month_needs_fetch(month, _df(24, 1), {month})
+E       AssertionError: assert False
+E        +  where False = <function month_needs_fetch at 0x75c4b42959e0>(Period('2024-01', 'M'),                            open  high  ...  quote_volume  taker_buy_quote_volume\nts                                   ...            1.0\n2024-01-01 23:00:00+00:00   1.0   1.0  ...           1.0                     1.0\n\n[24 rows x 7 columns], {Period('2024-01', 'M')})
+E        +    where <function month_needs_fetch at 0x75c4b42959e0> = fetch1h.month_needs_fetch
+E        +    and                              open  high  ...  quote_volume  taker_buy_quote_volume\nts                                   ...            1.0\n2024-01-01 23:00:00+00:00   1.0   1.0  ...           1.0                     1.0\n\n[24 rows x 7 columns] = _df(24, 1)
+
+tests/xsect/test_klines_1h_merge.py:101: AssertionError
+______________ test_gap_inventory_preserves_exact_internal_ranges ______________
+
+    def test_gap_inventory_preserves_exact_internal_ranges():
+        frame = _df(48, 1).drop(pd.date_range("2024-01-01 05:00", periods=3, freq="1h", tz="UTC"))
+>       report = fetch1h.internal_coverage(frame)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'fetch1h' has no attribute 'internal_coverage'
+
+tests/xsect/test_klines_1h_merge.py:106: AttributeError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_recover_binance_hourly.py::test_valid_checksum_and_strict_observed_bar_schema
+FAILED tests/predlab/test_recover_binance_hourly.py::test_malformed_bar_or_duplicate_rejected[duplicate]
+FAILED tests/predlab/test_recover_binance_hourly.py::test_malformed_bar_or_duplicate_rejected[nan]
+FAILED tests/predlab/test_recover_binance_hourly.py::test_malformed_bar_or_duplicate_rejected[ohlc]
+FAILED tests/predlab/test_recover_binance_hourly.py::test_malformed_bar_or_duplicate_rejected[negative_volume]
+FAILED tests/predlab/test_recover_binance_hourly.py::test_malformed_bar_or_duplicate_rejected[close_clock]
+FAILED tests/predlab/test_recover_binance_hourly.py::test_malformed_bar_or_duplicate_rejected[microseconds]
+FAILED tests/predlab/test_recover_binance_hourly.py::test_malformed_bar_or_duplicate_rejected[unsorted]
+FAILED tests/predlab/test_recover_binance_hourly.py::test_immutable_insertion_preserves_every_old_value_and_rejects_conflicts
+FAILED tests/predlab/test_recover_binance_hourly.py::test_existing_target_or_unregistered_extra_bar_cannot_be_overwritten
+FAILED tests/predlab/test_recover_binance_hourly.py::test_plan_is_bounded_and_all_target_and_overlap_sources_fixed
+FAILED tests/predlab/test_recover_binance_hourly.py::test_receipt_store_refuses_overwrite_and_enforces_download_budget
+FAILED tests/xsect/test_klines_1h_merge.py::test_partial_month_and_internal_holes_are_not_complete
+FAILED tests/xsect/test_klines_1h_merge.py::test_observed_partial_month_overrides_stale_absent_archive_marker
+FAILED tests/xsect/test_klines_1h_merge.py::test_gap_inventory_preserves_exact_internal_ranges
+15 failed, 8 passed in 0.52s

@@ -1,0 +1,23 @@
+....................F.                                                   [100%]
+=================================== FAILURES ===================================
+______________ test_snapshot_read_retains_registered_2020_warmup _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-111/test_snapshot_read_retains_reg0')
+
+    def test_snapshot_read_retains_registered_2020_warmup(tmp_path):
+        mod=module(); path=tmp_path/'old.parquet'
+        warmup=mod.parse_rows(rows('2020-06-01',n=1))[mod.OLD_COLUMNS]
+        warmup.to_parquet(path)
+>       assert mod.read_original(path,mod.sha256(path)).equals(warmup)
+E       AssertionError: assert False
+E        +  where False = equals(                           open  high  ...  quote_volume  taker_buy_quote_volume\nts                                   ...                \n2020-06-01 00:00:00+00:00  10.0  12.0  ...        1100.0                   550.0\n\n[1 rows x 7 columns])
+E        +    where equals = Empty DataFrame\nColumns: [open, high, low, close, volume, quote_volume, taker_buy_quote_volume]\nIndex: [].equals
+E        +      where Empty DataFrame\nColumns: [open, high, low, close, volume, quote_volume, taker_buy_quote_volume]\nIndex: [] = <function read_original at 0x7cdf36dfc5e0>(PosixPath('/tmp/pytest-of-malecada/pytest-111/test_snapshot_read_retains_reg0/old.parquet'), '18197fd0485ae2fbdb246b5e84270e047812c014167f6e4fba21c4d6695df0e1')
+E        +        where <function read_original at 0x7cdf36dfc5e0> = <module 'hourly_recovery' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/recover_binance_hourly_2026_09_10.py'>.read_original
+E        +        and   '18197fd0485ae2fbdb246b5e84270e047812c014167f6e4fba21c4d6695df0e1' = <function sha256 at 0x7cdf36eb3740>(PosixPath('/tmp/pytest-of-malecada/pytest-111/test_snapshot_read_retains_reg0/old.parquet'))
+E        +          where <function sha256 at 0x7cdf36eb3740> = <module 'hourly_recovery' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/recover_binance_hourly_2026_09_10.py'>.sha256
+
+tests/predlab/test_recover_binance_hourly.py:200: AssertionError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_recover_binance_hourly.py::test_snapshot_read_retains_registered_2020_warmup
+1 failed, 21 passed in 0.74s

@@ -75,8 +75,8 @@ def test_month_needs_fetch_skips_confirmed_missing_month():
 
 
 def test_month_needs_fetch_skips_month_already_covered_by_data():
-    existing = _df(24, 1.0)
-    existing.index = pd.date_range("2021-04-01", periods=24, freq="1h", tz="UTC", name="ts")
+    existing = _df(30 * 24, 1.0)
+    existing.index = pd.date_range("2021-04-01", periods=30 * 24, freq="1h", tz="UTC", name="ts")
     covered_month = pd.Period("2021-04", freq="M")
     assert fetch1h.month_needs_fetch(covered_month, existing, confirmed_missing=set()) is False
 
@@ -84,3 +84,32 @@ def test_month_needs_fetch_skips_month_already_covered_by_data():
 def test_month_needs_fetch_true_when_no_existing_data():
     month = pd.Period("2021-04", freq="M")
     assert fetch1h.month_needs_fetch(month, None, confirmed_missing=set()) is True
+
+
+def test_partial_month_and_internal_holes_are_not_complete():
+    month = pd.Period("2022-02", freq="M")
+    index = pd.date_range("2022-02-01", "2022-03-01", freq="1h", inclusive="left", tz="UTC")
+    existing = pd.DataFrame({"close": 1.0}, index=index)
+    assert not fetch1h.month_needs_fetch(month, existing, set())
+    assert fetch1h.month_needs_fetch(month, existing.iloc[:-72], set())
+    assert fetch1h.month_needs_fetch(month, existing.drop(index[100:105]), set())
+    assert fetch1h.month_needs_fetch(month, existing.iloc[:1], set())
+
+
+def test_observed_partial_month_overrides_stale_absent_archive_marker():
+    month = pd.Period("2024-01", freq="M")
+    assert fetch1h.month_needs_fetch(month, _df(24, 1), {month})
+
+
+def test_gap_inventory_preserves_exact_internal_ranges():
+    frame = _df(48, 1).drop(pd.date_range("2024-01-01 05:00", periods=3, freq="1h", tz="UTC"))
+    report = fetch1h.internal_coverage(frame)
+    assert report == {"missing_internal_hours": 3, "missing_internal_ranges": [["2024-01-01T05:00:00+00:00", "2024-01-01T08:00:00+00:00"]]}
+
+
+def test_complete_month_with_duplicate_off_grid_or_unsorted_rows_requires_repair():
+    month=pd.Period('2024-01',freq='M'); complete=_df(31*24,1)
+    duplicate=pd.concat([complete,complete.iloc[:1]])
+    offgrid=pd.concat([complete,complete.iloc[:1].shift(freq='30min')]).sort_index()
+    for malformed in [duplicate,offgrid,complete.iloc[::-1]]:
+        assert fetch1h.month_needs_fetch(month,malformed,set())

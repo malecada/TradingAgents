@@ -1,9 +1,9 @@
 """1-minute klines from Binance Vision monthly zips (exec_pf, charter 2026-09-03).
 
 Idempotent, manifest-tracked, parallel. For each symbol the month range is
-clipped to the symbol's 1h-store coverage (no request for months the symbol
-did not trade). 404 = not listed that month, recorded in the confirmed-missing
-file and never re-requested; any other failure is retried on the next run.
+clipped to the symbol's 1h-store coverage. HTTP 404 records an absent archive,
+not proof that the contract did not trade. A partial observed month remains
+incomplete and retryable even when a legacy absent-archive marker exists.
 
 Output: data/xsect/klines_1m/{SYM}.parquet  (UTC open-time index `ts`,
 columns open/high/low/close/volume/quote_volume/n_trades, float64 except
@@ -100,17 +100,36 @@ def months_for(sym: str, start: pd.Period, end: pd.Period, kl1h: dict) -> list[p
 
 
 def month_covered(existing: pd.DataFrame | None, month: pd.Period) -> bool:
+    """Only a complete, unique UTC minute clock establishes month coverage.
+
+    Listing and termination months can legitimately be partial, but their
+    lifecycle cannot be inferred from price timestamps alone.
+    """
     if existing is None or existing.empty:
         return False
     a = month.to_timestamp(how="start").tz_localize("UTC")
-    b = month.to_timestamp(how="end").tz_localize("UTC")
-    return bool(((existing.index >= a) & (existing.index <= b)).any())
+    b = (month+1).to_timestamp(how="start").tz_localize("UTC")
+    index = pd.DatetimeIndex(existing.index)
+    if index.tz is None:
+        return False
+    observed = index[(index >= a) & (index < b)].tz_convert('UTC')
+    expected = pd.date_range(a, b, freq='min', inclusive='left')
+    return observed.is_unique and observed.is_monotonic_increasing and observed.equals(expected)
+
+
+def month_has_rows(existing: pd.DataFrame | None, month: pd.Period) -> bool:
+    if existing is None or existing.empty:
+        return False
+    a = month.to_timestamp(how='start').tz_localize('UTC')
+    b = (month+1).to_timestamp(how='start').tz_localize('UTC')
+    return bool(((existing.index >= a) & (existing.index < b)).any())
 
 
 def fetch_symbol(sym: str, months: list[pd.Period], missing: set[str], workers: int) -> tuple[pd.DataFrame | None, list[str]]:
     path = OUT_DIR / f"{sym}.parquet"
     existing = pd.read_parquet(path) if path.exists() else None
-    todo = [m for m in months if str(m) not in missing and not month_covered(existing, m)]
+    todo = [m for m in months if not month_covered(existing, m)
+            and (str(m) not in missing or month_has_rows(existing, m))]
     if not todo:
         return existing, []
     parts, newly_missing = [], []
@@ -159,7 +178,9 @@ def main() -> None:
         covered = sum(month_covered(df, m) for m in months)
         manifest[sym] = {"first": str(df.index.min()), "last": str(df.index.max()), "rows": int(len(df)),
                          "months_requested": len(months), "months_covered": int(covered),
-                         "months_not_listed": len(missing.get(sym, []))}
+                         "months_not_listed": len(missing.get(sym, [])),
+                         "missing_marker_interpretation": "legacy key means archive HTTP404, not verified non-listing",
+                         "months_incomplete": [str(m) for m in months if not month_covered(df, m)]}
         MANIFEST.write_text(json.dumps(manifest, indent=1, sort_keys=True))
         print(f"[{i+1}/{len(syms)}] {sym}: {len(df)} rows, {covered}/{len(months)} months "
               f"({df.index.min().date()} -> {df.index.max().date()}) t={time.time()-t0:.0f}s", flush=True)

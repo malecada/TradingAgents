@@ -91,21 +91,35 @@ def month_needs_fetch(month: pd.Period, existing: pd.DataFrame | None,
                        confirmed_missing: set[pd.Period]) -> bool:
     """Pure decision: does this Vision month still need to be (re-)fetched?
 
-    False only if (a) the month was previously confirmed HTTP 404 (symbol genuinely not
-    listed that month -- permanently absent, safe to skip), or (b) `existing` already has
-    real bars falling inside that month. Coverage is checked per-month against the actual
-    data, never inferred from a single max-timestamp watermark -- a month that failed for
-    an unknown reason (503, timeout, ...) has no bars and isn't in `confirmed_missing`, so
-    this returns True and the caller retries it, even if later months already succeeded.
+    Full hourly coverage is required. An archive-absence marker is considered only
+    when no observations exist in that month; observed partial coverage overrides it.
+    Listing/delisting edge months remain partial unless separately established.
     """
-    if month in confirmed_missing:
-        return False
+    expected = pd.date_range(month.to_timestamp().tz_localize("UTC"),
+                             (month + 1).to_timestamp().tz_localize("UTC"),
+                             freq="1h", inclusive="left")
     if existing is not None and not existing.empty:
-        month_start = month.to_timestamp(how="start").tz_localize("UTC")
-        month_end = month.to_timestamp(how="end").tz_localize("UTC")
-        if ((existing.index >= month_start) & (existing.index <= month_end)).any():
-            return False
-    return True
+        observed = existing.index[(existing.index >= expected[0]) &
+                                  (existing.index < expected[-1]+pd.Timedelta(hours=1))]
+        if len(observed):
+            return not (observed.is_unique and observed.is_monotonic_increasing and
+                        observed.equals(expected))
+    return month not in confirmed_missing
+
+
+def internal_coverage(frame: pd.DataFrame) -> dict:
+    """Explicit missing intervals inside the observed first/last timestamps."""
+    if frame.empty:
+        return {"missing_internal_hours": 0, "missing_internal_ranges": []}
+    expected = pd.date_range(frame.index.min(), frame.index.max(), freq="1h")
+    missing = expected.difference(frame.index)
+    ranges = []
+    for stamp in missing:
+        if ranges and pd.Timestamp(ranges[-1][1]) == stamp:
+            ranges[-1][1] = (stamp + pd.Timedelta(hours=1)).isoformat()
+        else:
+            ranges.append([stamp.isoformat(), (stamp + pd.Timedelta(hours=1)).isoformat()])
+    return {"missing_internal_hours": len(missing), "missing_internal_ranges": ranges}
 
 
 def _rows_to_df(rows: list) -> pd.DataFrame:
@@ -127,8 +141,8 @@ def fetch_vision_month(sym: str, ym: pd.Period) -> tuple[pd.DataFrame, str]:
 
     Returns (df, status):
       "ok"         - fetched and parsed successfully (df has the month's bars)
-      "not_listed" - confirmed HTTP 404: symbol wasn't listed that month, permanently
-                     absent, safe for the caller to remember and never retry
+      "not_listed" - legacy label for a missing archive (HTTP 404), not evidence
+                     of listing status or permanent market-data absence
       "failed"     - request never got a clean 200 (network failure or non-200/404 after
                      retries): unknown cause, caller must NOT treat this month as covered
     """
@@ -182,7 +196,7 @@ def fetch_symbol(sym: str, start: str, existing: pd.DataFrame | None,
     """Fetch missing 1h history for sym from `start` to now, tail-appending onto `existing`.
 
     `confirmed_missing` is mutated in place with any newly-confirmed-404 months so the
-    caller can persist it (avoids re-requesting genuinely not-listed months every run).
+    caller can persist archive availability (this is not listing-status evidence).
     """
     now = pd.Timestamp.now(tz="UTC")
     start_ts = pd.Timestamp(start, tz="UTC")
@@ -251,7 +265,7 @@ def main() -> None:
             continue
         df.to_parquet(path)
         manifest[sym] = {"first": str(df.index.min()), "last": str(df.index.max()),
-                          "rows": int(len(df))}
+                          "rows": int(len(df)), **internal_coverage(df)}
         MANIFEST.write_text(json.dumps(manifest, indent=1, sort_keys=True))
         print(f"  [{i + 1}/{len(symbols)}] {sym}: {len(df)} rows "
               f"({manifest[sym]['first']} -> {manifest[sym]['last']})")

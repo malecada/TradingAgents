@@ -1,0 +1,145 @@
+............FFF.FFFF...........                                          [100%]
+=================================== FAILURES ===================================
+_______ test_all_bnx_requests_excluded_until_contract_alias_registration _______
+
+    def test_all_bnx_requests_excluded_until_contract_alias_registration():
+        mod=module()
+>       assert mod.request_plan([{"symbol":"BNXUSDT","ranges":[{"start":"2022-04-17","end_exclusive":"2022-04-18"}]}]) == []
+E       AssertionError: assert [{'id': '5c37...M', ...}, ...] == []
+E         
+E         Left contains 9 more items, first extra item: {'id': '5c37bc11de3a38d69277', 'symbol': 'BNXUSDT', 'kind': 'monthly_zip', 'url': 'https://data.binance.vision/data/futures/um/monthly/klines/BNXUSDT/1h/BNXUSDT-1h-2022-04.zip', ...}
+E         Use -v to get more diff
+
+tests/predlab/test_recover_binance_hourly.py:111: AssertionError
+_______ test_empty_or_non_csv_archive_is_explicitly_invalid[empty.csv-] ________
+
+name = 'empty.csv', body = b''
+
+    @pytest.mark.parametrize("name,body", [("empty.csv", b""), ("bad.json", b"{}")])
+    def test_empty_or_non_csv_archive_is_explicitly_invalid(name, body):
+        mod=module(); buf=io.BytesIO()
+        with zipfile.ZipFile(buf,"w") as archive: archive.writestr(name,body)
+        with pytest.raises(mod.RecoveryError,match="archive/CSV"):
+>           mod.parse_zip(buf.getvalue())
+
+tests/predlab/test_recover_binance_hourly.py:119: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/recover_binance_hourly_2026_09_10.py:152: in parse_zip
+    table = pd.read_csv(io.BytesIO(text), header=None, dtype=str, keep_default_na=False)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/io/parsers/readers.py:1026: in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/io/parsers/readers.py:620: in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/io/parsers/readers.py:1620: in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/io/parsers/readers.py:1898: in _make_engine
+    return mapping[engine](f, **self.options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/io/parsers/c_parser_wrapper.py:93: in __init__
+    self._reader = parsers.TextReader(src, **kwds)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   pandas.errors.EmptyDataError: No columns to parse from file
+
+pandas/_libs/parsers.pyx:581: EmptyDataError
+_______ test_empty_or_non_csv_archive_is_explicitly_invalid[bad.json-{}] _______
+
+name = 'bad.json', body = b'{}'
+
+    @pytest.mark.parametrize("name,body", [("empty.csv", b""), ("bad.json", b"{}")])
+    def test_empty_or_non_csv_archive_is_explicitly_invalid(name, body):
+        mod=module(); buf=io.BytesIO()
+        with zipfile.ZipFile(buf,"w") as archive: archive.writestr(name,body)
+>       with pytest.raises(mod.RecoveryError,match="archive/CSV"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'archive/CSV'
+E         Actual message: 'empty or invalid 12-field kline schema'
+
+tests/predlab/test_recover_binance_hourly.py:118: AssertionError
+_________ test_bnx_2022_and_2023_quarantine_even_if_price_frames_exist _________
+
+    def test_bnx_2022_and_2023_quarantine_even_if_price_frames_exist():
+        mod=module(); item,old,plan,frames=fixture_recovery(mod); item['symbol']='BNXUSDT'
+        _,outcomes,_,added=mod.recover_symbol(item,old,plan,frames,{})
+        assert added is None
+>       assert all('identity_quarantine' in r['reason'] for r in outcomes)
+E       assert False
+E        +  where False = all(<generator object test_bnx_2022_and_2023_quarantine_even_if_price_frames_exist.<locals>.<genexpr> at 0x76eee06e4860>)
+
+tests/predlab/test_recover_binance_hourly.py:155: AssertionError
+___________ test_truncated_response_retains_partial_bytes_and_budget ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-103/test_truncated_response_retain0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76eee0684c30>
+
+    def test_truncated_response_retains_partial_bytes_and_budget(tmp_path,monkeypatch):
+        mod=module(); store=mod.ReceiptStore(tmp_path/'raw',budget=100)
+        class Response(io.BytesIO):
+            status=200
+            headers={'Content-Length':'10'}
+        monkeypatch.setattr(mod.urllib.request,'urlopen',lambda *a,**k:Response(b'abc'))
+        receipt=mod.fetch_receipt({'id':'r','url':'https://example.test'},store,
+            {'max_attempts_per_request':1,'timeout_seconds':45})
+        assert receipt['error'] and 'truncated' in receipt['error']
+>       assert receipt['bytes']==3 and store.used==3
+E       assert (0 == 3)
+
+tests/predlab/test_recover_binance_hourly.py:167: AssertionError
+_____________ test_retry_after_case_insensitive_and_no_early_retry _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-103/test_retry_after_case_insensit0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76eee0685e00>
+
+    def test_retry_after_case_insensitive_and_no_early_retry(tmp_path,monkeypatch):
+        mod=module(); calls=[]; store=mod.ReceiptStore(tmp_path/'raw')
+        class Response(io.BytesIO):
+            status=429
+            headers={'Content-Length':'0','retry-after':'120'}
+        def request(*a,**k): calls.append(1); return Response()
+        monkeypatch.setattr(mod.urllib.request,'urlopen',request)
+        monkeypatch.setattr(mod.time,'sleep',lambda n:pytest.fail('premature retry'))
+>       receipt=mod.fetch_receipt({'id':'r','url':'https://example.test'},store,
+            {'max_attempts_per_request':3,'timeout_seconds':45})
+
+tests/predlab/test_recover_binance_hourly.py:179: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/recover_binance_hourly_2026_09_10.py:258: in fetch_receipt
+    time.sleep(max(0, delay))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+n = 2.0
+
+>   monkeypatch.setattr(mod.time,'sleep',lambda n:pytest.fail('premature retry'))
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: premature retry
+
+tests/predlab/test_recover_binance_hourly.py:178: Failed
+_______ test_development_only_read_and_source_hash_required_before_write _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-103/test_development_only_read_and0')
+
+    def test_development_only_read_and_source_hash_required_before_write(tmp_path):
+        mod=module(); path=tmp_path/'old.parquet'
+        old=mod.parse_rows(rows('2025-03-31',n=25))[mod.OLD_COLUMNS]
+        old.to_parquet(path); digest=mod.sha256(path)
+>       bounded=mod.read_original(path,digest)
+                ^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'hourly_recovery' has no attribute 'read_original'
+
+tests/predlab/test_recover_binance_hourly.py:188: AttributeError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_recover_binance_hourly.py::test_all_bnx_requests_excluded_until_contract_alias_registration
+FAILED tests/predlab/test_recover_binance_hourly.py::test_empty_or_non_csv_archive_is_explicitly_invalid[empty.csv-]
+FAILED tests/predlab/test_recover_binance_hourly.py::test_empty_or_non_csv_archive_is_explicitly_invalid[bad.json-{}]
+FAILED tests/predlab/test_recover_binance_hourly.py::test_bnx_2022_and_2023_quarantine_even_if_price_frames_exist
+FAILED tests/predlab/test_recover_binance_hourly.py::test_truncated_response_retains_partial_bytes_and_budget
+FAILED tests/predlab/test_recover_binance_hourly.py::test_retry_after_case_insensitive_and_no_early_retry
+FAILED tests/predlab/test_recover_binance_hourly.py::test_development_only_read_and_source_hash_required_before_write
+7 failed, 24 passed in 0.73s
