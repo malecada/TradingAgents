@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "scope": "Synthetic engineering evaluation only. No real strategy, network, provider, financial ledger or repository mutations except the assigned answer file. Do not read other answer or rubric files. No delegation.",
+  "answer_contract": {
+    "accounting": "explanation, corrected simple-return PnL for A/B, exact quantity-booking alternative",
+    "availability": "eligible IDs at each decision, timestamp rule, verdict on contaminated confirmation",
+    "code": "Python source for bounded append_once(path, record), returning bool; tests are independently supplied",
+    "synthesis": "under 180 words, cite supplied official URLs, recommendation and evidence limitations"
+  },
+  "accounting": {
+    "code": "pnl = weight * log(close_next / close_now)",
+    "description": "A freshly opened short has signed weight -1 at each independent interval; no costs. Report actual simple-return PnL and logged-code PnL for A:100\u2192110, B:100\u219290. State if positive volatility harvest under a symmetric arithmetic price move is an economic edge. For one unit held short give the exact cash PnL formula."
+  },
+  "availability": {
+    "decisions": [
+      "2026-09-01T12:00:00Z",
+      "2026-09-01T12:10:00Z"
+    ],
+    "rows": [
+      {
+        "id": "a",
+        "observation": "2026-09-01T11:55:00Z",
+        "published": "2026-09-01T12:03:00Z",
+        "value": 1
+      },
+      {
+        "id": "b",
+        "observation": "2026-09-01T11:58:00Z",
+        "published": "2026-09-01T11:59:00Z",
+        "value": 2
+      },
+      {
+        "id": "c",
+        "observation": "2026-09-01T12:05:00Z",
+        "published": "2026-09-01T12:07:00Z",
+        "value": 3
+      }
+    ],
+    "history": "The held-out April2025\u2013July2026 window was inspected to select a threshold. A descendant is renamed and proposes treating the same window as fresh confirmation. Can it be fresh? Can it still be development data?"
+  },
+  "code": {
+    "contract": "Implement append_once(path,record) using stdlib on local POSIX. Records are JSON dicts with a nonempty string id. Append exactly one line for a new id and return True. Identical existing record is an idempotent False; same id but changed content raises ValueError. Reconcile all current lines under an exclusive advisory lock, reject existing malformed rows/duplicate ids, accept finite JSON only, append/fsync under lock. Concurrent cooperating processes must never duplicate/lose rows. Failed serialization must not change existing ledger bytes. Do not truncate/repair malformed ledgers. Crash atomicity across power failure is not claimed. Keep under 100 lines, provide the function in the answer, do not edit repo implementation."
+  },
+  "synthesis": {
+    "question": "Choose a starting effort policy for a crypto-research repo presently using Astra Ultra everywhere. What can and cannot be concluded without a representative measured comparison? Does project config update an already running task?",
+    "source_notes": [
+      {
+        "url": "https://learn.chatgpt.com/docs/models",
+        "paraphrase": "Effort involves quality, latency and token tradeoffs. Ultra supports automatic delegation; lower adequate effort is preferred. Most tasks do not require the highest efforts."
+      },
+      {
+        "url": "https://learn.chatgpt.com/docs/config-file/config-basic",
+        "paraphrase": "Trusted project configuration layers over user defaults; runtime/client overrides can take precedence."
+      }
+    ]
+  }
+}

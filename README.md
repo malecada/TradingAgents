@@ -11,7 +11,28 @@ execution. Built as a master's-thesis research codebase.
 > The framework overview below is inherited from upstream and describes the
 > general multi-agent architecture.
 
-## TradingAgents Framework
+## Current research workflow
+
+**Zero strategies are validated.** The active branch is a consolidated audit
+correction and research-preparation checkout. Historical positive claims are
+subject to later accounting, data and execution corrections.
+
+Start at [docs/RESEARCH_START.md](docs/RESEARCH_START.md) for the current phase,
+pinned environment, safe offline verification and evidence routes. Use
+[AGENTS.md](AGENTS.md) for agent instructions. The [evidence index](docs/research/EVIDENCE_INDEX.md)
+identifies superseded claims without deleting original records.
+
+The research objective is positive net returns with little crypto-price exposure
+at approximately $1,000 and potentially $10,000. Preparation does not itself
+start a strategy experiment, account connection, quote refresh or live trade.
+
+## Framework reference
+
+The following describes the inherited LLM framework and its optional interfaces.
+It is retained for attribution and source orientation; it is not the default
+entry point for the current quantitative research process.
+
+### TradingAgents Framework
 
 TradingAgents is a multi-agent trading framework that mirrors the dynamics of real-world trading firms. By deploying specialized LLM-powered agents: from fundamental analysts, sentiment experts, and technical analysts, to trader, risk management team, the platform collaboratively evaluates market conditions and informs trading decisions. Moreover, these agents engage in dynamic discussions to pinpoint the optimal strategy.
 
@@ -21,7 +42,7 @@ TradingAgents is a multi-agent trading framework that mirrors the dynamics of re
 
 > TradingAgents framework is designed for research purposes. Trading performance may vary based on many factors, including the chosen backbone language models, model temperature, trading periods, the quality of data, and other non-deterministic factors. [It is not intended as financial, investment, or trading advice.](https://tauric.ai/disclaimer/)
 
-Our framework decomposes complex trading tasks into specialized roles. This ensures the system achieves a robust, scalable approach to market analysis and decision-making.
+The upstream framework decomposes complex trading tasks into specialized roles. This ensures the system achieves a robust, scalable approach to market analysis and decision-making.
 
 ### Analyst Team
 - Fundamentals Analyst: Evaluates company financials and performance metrics, identifying intrinsic values and potential red flags.
@@ -55,17 +76,17 @@ Our framework decomposes complex trading tasks into specialized roles. This ensu
   <img src="assets/risk.png" width="70%" style="display: inline-block; margin: 0 2%;">
 </p>
 
-## Installation and CLI
+## Optional framework installation and CLI
 
 ### Installation
 
-Clone TradingAgents:
+Clone this crypto research derivative:
 ```bash
-git clone https://github.com/TauricResearch/TradingAgents.git
+git clone https://github.com/malecada/TradingAgents.git
 cd TradingAgents
 ```
 
-Create a virtual environment in any of your favorite environment managers:
+For the current pinned research environment, use [the research starting point](docs/RESEARCH_START.md). The following environment and CLI examples describe the optional original framework interface:
 ```bash
 conda create -n tradingagents python=3.13
 conda activate tradingagents
@@ -124,7 +145,7 @@ An interface will appear showing results as they load, letting you track the age
 
 ### Implementation Details
 
-We built TradingAgents with LangGraph to ensure flexibility and modularity. The framework supports multiple LLM providers: OpenAI, Google, Anthropic, xAI, OpenRouter, and Ollama.
+The upstream TradingAgents design uses LangGraph for flexibility and modularity. The framework supports multiple LLM providers: OpenAI, Google, Anthropic, xAI, OpenRouter, and Ollama.
 
 ### Python Usage
 
@@ -162,11 +183,11 @@ See `tradingagents/default_config.py` for all configuration options.
 
 ## Contributing
 
-We welcome contributions from the community! Whether it's fixing a bug, improving documentation, or suggesting a new feature, your input helps make this project better. If you are interested in this line of research, please consider joining our open-source financial AI research community [Tauric Research](https://tauric.ai/).
+The upstream open-source framework is maintained by [Tauric Research](https://tauric.ai/). This derivative retains that attribution; current research changes should preserve registered evidence and follow the local instructions.
 
 ## Citation
 
-Please reference our work if you find *TradingAgents* provides you with some help :)
+The upstream framework can be cited using the following reference:
 
 ```
 @misc{xiao2025tradingagentsmultiagentsllmfinancial,

@@ -1,7 +1,8 @@
 """Regression test: V2 baseline metrics unchanged after V3 lands.
 
-Run by pytest as part of the standard suite. If the prediction CSVs needed
-by V2 aren't present, the test is SKIPPED with a clear marker.
+Excluded from the offline engineering profile. Requires explicit --run-empirical
+and separate research authorization; old golden values do not validate alpha.
+Inputs are copied before execution so original predictions/reports stay intact.
 
 The golden file (fixtures/v2_88bar_metrics.json) was recorded from main at
 commit d6b7e5f using the full data/multi_2coins_v2 predictions. Regenerate
@@ -13,7 +14,7 @@ from __future__ import annotations
 import json
 import subprocess
 import sys
-import tempfile
+import shutil
 from pathlib import Path
 
 import pytest
@@ -21,17 +22,28 @@ import pytest
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 GOLDEN_PATH = Path(__file__).parent / "fixtures" / "v2_88bar_metrics.json"
 PRED_DIR = REPO_ROOT / "data" / "multi_2coins_v2"
+pytestmark = pytest.mark.empirical
 
 
 def _v2_pred_files_present() -> bool:
     return all((PRED_DIR / f"preds_lgb_h{h}.csv").exists() for h in (7, 14))
 
 
+def _isolated_replay_command(source: Path, temporary: Path):
+    pred_dir = temporary / "predictions"
+    pred_dir.mkdir(parents=True)
+    for horizon in (7, 14):
+        shutil.copy2(source / f"preds_lgb_h{horizon}.csv", pred_dir / f"preds_lgb_h{horizon}.csv")
+    command = [sys.executable, str(REPO_ROOT / "scripts/baseline_strategy_v2.py"),
+               "--pred-dir", str(pred_dir), "--symmetric", "--output-plot", str(temporary / "plot.png")]
+    return command, pred_dir
+
+
 @pytest.mark.skipif(
     not _v2_pred_files_present(),
-    reason="V2 prediction CSVs not present in data/multi_2coins_v2/ — run evaluate_models_multi.py first",
+    reason="historical V2 prediction inputs absent; no automatic regeneration is admitted",
 )
-def test_v2_metrics_match_golden():
+def test_v2_metrics_match_golden(tmp_path):
     """Run V2 and compare metrics to the recorded golden values."""
     # Check golden exists and is not a placeholder
     if not GOLDEN_PATH.exists():
@@ -46,19 +58,7 @@ def test_v2_metrics_match_golden():
     if "_note" in golden and "PLACEHOLDER" in golden.get("_note", ""):
         pytest.skip("V2 golden is placeholder — regenerate when data available")
 
-    # Run V2 backtest via subprocess.
-    # baseline_strategy_v2.py writes report_v2/metrics.json into pred_dir.
-    # We redirect its output-plot to a temp file to avoid polluting the data dir.
-    with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as tmp_png:
-        tmp_plot = tmp_png.name
-
-    cmd = [
-        sys.executable,
-        str(REPO_ROOT / "scripts" / "baseline_strategy_v2.py"),
-        "--pred-dir", str(PRED_DIR),
-        "--symmetric",
-        "--output-plot", tmp_plot,
-    ]
+    cmd, isolated_predictions = _isolated_replay_command(PRED_DIR, tmp_path)
     result = subprocess.run(
         cmd, capture_output=True, text=True, cwd=str(REPO_ROOT)
     )
@@ -70,8 +70,7 @@ def test_v2_metrics_match_golden():
             f"stdout: {result.stdout[-500:]}"
         )
 
-    # V2 writes metrics to report_v2/metrics.json inside pred_dir
-    metrics_path = PRED_DIR / "report_v2" / "metrics.json"
+    metrics_path = isolated_predictions / "report_v2" / "metrics.json"
     if not metrics_path.exists():
         pytest.skip(
             f"V2 didn't write {metrics_path}; stdout snippet: {result.stdout[-500:]}"

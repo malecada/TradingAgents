@@ -1,0 +1,31 @@
+{
+  "accounting": {
+    "explanation": "A signed weight multiplies the simple asset return for arithmetic portfolio PnL. Multiplying the asset log return by a short weight does not produce the short position's actual simple-return PnL.",
+    "A": {
+      "simple_return_pnl": -0.1,
+      "logged_code_pnl": -0.09531017980432493
+    },
+    "B": {
+      "simple_return_pnl": 0.1,
+      "logged_code_pnl": 0.10536051565782628
+    },
+    "symmetric_move_verdict": "For independent intervals with equal initial notional, true PnLs sum to zero; the logged-code sum is about +0.01005033585350135. That positive apparent volatility harvest is an accounting artifact, not an economic edge. Summing these independent normalized outcomes is not a claim about compounding a sequential portfolio.",
+    "exact_quantity_booking": "For signed quantity q, cash PnL = q * (P_next - P_now). One unit held short has q = -1, so PnL = P_now - P_next: A loses 10 cash units and B gains 10. Book +P_now cash at opening and -P_next cash on closing, with any borrowing, funding and execution costs additionally deducted; this packet assumes no costs."
+  },
+  "availability": {
+    "eligible_ids": {
+      "2026-09-01T12:00:00Z": [
+        "b"
+      ],
+      "2026-09-01T12:10:00Z": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    "timestamp_rule": "Require observation <= decision and publication/availability <= decision. Publication is the supplied availability proxy; an old observation does not make a later publication available earlier. Actual ingestion delays or revisions, if present, require their own as-of evidence.",
+    "confirmation_verdict": "April 2025 through July 2026 was spent when inspected for threshold selection. Renaming a descendant cannot make that same window fresh confirmation. It can remain explicitly labeled development data, with lineage and selection history retained. Fresh confirmation requires untouched evidence and criteria frozen before inspection."
+  },
+  "code": "def append_once(path, record):\n    import fcntl\n    import json\n    import math\n    import os\n\n    def validate(value):\n        if value is None or type(value) in (str, bool, int):\n            return\n        if type(value) is float:\n            if not math.isfinite(value):\n                raise ValueError(\"non-finite JSON number\")\n            return\n        if type(value) is list:\n            for item in value:\n                validate(item)\n            return\n        if type(value) is dict:\n            for key, item in value.items():\n                if type(key) is not str:\n                    raise ValueError(\"JSON object keys must be strings\")\n                validate(item)\n            return\n        raise ValueError(\"unsupported JSON value\")\n\n    def encode(row):\n        if type(row) is not dict:\n            raise ValueError(\"record must be a JSON dict\")\n        if not isinstance(row.get(\"id\"), str) or not row[\"id\"]:\n            raise ValueError(\"record id must be a nonempty string\")\n        validate(row)\n        return json.dumps(row, allow_nan=False, sort_keys=True,\n                          ensure_ascii=True, separators=(\",\", \":\"))\n\n    def pairs(items):\n        result = {}\n        for key, value in items:\n            if key in result:\n                raise ValueError(\"duplicate JSON object key\")\n            result[key] = value\n        return result\n\n    def bad_constant(value):\n        raise ValueError(\"non-finite JSON constant: \" + value)\n\n    encoded = encode(record)\n    new_id = record[\"id\"]\n    payload = (encoded + \"\\n\").encode(\"ascii\")\n    fd = os.open(path, os.O_RDWR | os.O_CREAT | os.O_APPEND, 0o600)\n    try:\n        fcntl.flock(fd, fcntl.LOCK_EX)\n        with os.fdopen(os.dup(fd), \"rb\") as stream:\n            raw = stream.read()\n        seen = {}\n        lines = raw.split(b\"\\n\")\n        if lines and lines[-1] == b\"\":\n            lines.pop()\n        for line in lines:\n            row = json.loads(line.decode(\"utf-8\"), object_pairs_hook=pairs,\n                             parse_constant=bad_constant)\n            canonical = encode(row)\n            row_id = row[\"id\"]\n            if row_id in seen:\n                raise ValueError(\"duplicate ledger id\")\n            seen[row_id] = canonical\n        if new_id in seen:\n            if seen[new_id] != encoded:\n                raise ValueError(\"existing id has changed content\")\n            return False\n        if raw and not raw.endswith(b\"\\n\"):\n            payload = b\"\\n\" + payload\n        pending = memoryview(payload)\n        while pending:\n            count = os.write(fd, pending)\n            if count <= 0:\n                raise OSError(\"append made no progress\")\n            pending = pending[count:]\n        os.fsync(fd)\n        return True\n    finally:\n        os.close(fd)\n",
+  "synthesis": "Start with Astra Medium for routine bounded engineering, escalating to High or Ultra for difficult accounting, leakage, or architecture reviews when checks expose unresolved issues. Keep independent correctness gates regardless of effort. This is a provisional policy: the supplied [model guidance](https://learn.chatgpt.com/docs/models) supports choosing lower adequate effort and describes quality, latency, token tradeoffs and Ultra delegation, but establishes no measured winner for this repository. Run a representative controlled comparison before claiming equal quality, savings, latency gains, or that any tier is adequate for consequential research. Include failed attempts and review costs. The supplied [configuration guidance](https://learn.chatgpt.com/docs/config-file/config-basic) says trusted project settings layer over user defaults and runtime/client overrides can prevail. A project-file edit does not by itself establish that an already running task changed effort; these notes do not document live reload. Check effective task settings and use an explicit supported runtime change or a new task to apply the intended setting."
+}

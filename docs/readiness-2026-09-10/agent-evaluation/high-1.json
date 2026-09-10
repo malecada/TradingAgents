@@ -1,0 +1,41 @@
+{
+  "accounting": {
+    "rule": "For each freshly opened interval with signed weight w=-1, simple-return PnL relative to initial notional is w*(P1/P0-1). The logged code computes -ln(P1/P0), which is not arithmetic cash PnL.",
+    "A": {
+      "prices": [
+        100,
+        110
+      ],
+      "actual_simple_return_pnl": -0.1,
+      "logged_code_pnl": -0.09531017980432493,
+      "one_unit_short_cash_pnl": -10
+    },
+    "B": {
+      "prices": [
+        100,
+        90
+      ],
+      "actual_simple_return_pnl": 0.1,
+      "logged_code_pnl": 0.10536051565782628,
+      "one_unit_short_cash_pnl": 10
+    },
+    "verdict": "Equal initial-notional independent intervals have zero summed actual simple-return PnL. The logged-code sum is +0.01005033585350145 (equal-probability mean +0.005025167926750725). This apparent positive volatility harvest is a log-versus-simple accounting artifact, not an economic edge. These sums do not describe sequential portfolio compounding.",
+    "quantity_booking": "For signed quantity q=-1 held unchanged, exact cash PnL is q*(P1-P0)=P0-P1. The opening short sale credits P0 and covering debits P1; for any signed quantity q use opening cashflow -q*P0 and closing cashflow q*P1. Costs are zero here."
+  },
+  "availability": {
+    "eligible_ids": {
+      "2026-09-01T12:00:00Z": [
+        "b"
+      ],
+      "2026-09-01T12:10:00Z": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    "timestamp_rule": "Require observation <= decision and published <= decision, using the version actually available then. With the supplied timestamps, effective availability is max(observation,published); an earlier observation cannot override later publication. Real ingestion delays or revisions would additionally require demonstrated availability by the decision.",
+    "confirmation_verdict": "No. Inspecting April 2025-July 2026 to select a threshold spent its independence, and renaming a descendant does not restore it. Retain that window as disclosed development data and preserve the selection history. Fresh confirmation requires genuinely untouched evidence with the descendant, thresholds, and criteria frozen before inspection."
+  },
+  "code": "def append_once(path, record):\n    \"\"\"Append a finite JSON record once; all writers must use this lock.\"\"\"\n    import fcntl\n    import json\n    import math\n    import os\n\n    def validate(value):\n        if value is None or isinstance(value, (str, bool, int)):\n            return\n        if isinstance(value, float):\n            if not math.isfinite(value):\n                raise ValueError(\"Nonfinite JSON number\")\n            return\n        if isinstance(value, list):\n            for item in value:\n                validate(item)\n            return\n        if isinstance(value, dict):\n            for key, item in value.items():\n                if not isinstance(key, str):\n                    raise ValueError(\"JSON keys must be strings\")\n                validate(item)\n            return\n        raise ValueError(\"Not a JSON value\")\n\n    def validate_record(value):\n        if not isinstance(value, dict):\n            raise ValueError(\"Record must be a JSON dict\")\n        if not isinstance(value.get(\"id\"), str) or not value[\"id\"]:\n            raise ValueError(\"Record needs a nonempty string id\")\n        validate(value)\n\n    def pairs(items):\n        result = {}\n        for key, value in items:\n            if key in result:\n                raise ValueError(\"Duplicate JSON object key\")\n            result[key] = value\n        return result\n\n    def reject_constant(value):\n        raise ValueError(\"Nonfinite JSON number: \" + value)\n\n    def encode(value):\n        return json.dumps(value, allow_nan=False, sort_keys=True,\n                          separators=(\",\", \":\"), ensure_ascii=True).encode(\"ascii\")\n\n    # Finish validation/serialization before even opening the ledger.\n    validate_record(record)\n    encoded = encode(record)\n    record_id = record[\"id\"]\n    fd = os.open(path, os.O_RDWR | os.O_CREAT | os.O_APPEND, 0o600)\n    try:\n        handle = os.fdopen(fd, \"r+b\")\n    except BaseException:\n        os.close(fd)\n        raise\n    with handle:\n        fcntl.flock(handle.fileno(), fcntl.LOCK_EX)\n        seen = set()\n        found = None\n        needs_separator = False\n        handle.seek(0)\n        for line in handle:\n            try:\n                existing = json.loads(line.decode(\"utf-8\"),\n                                      object_pairs_hook=pairs,\n                                      parse_constant=reject_constant)\n                validate_record(existing)\n            except (ValueError, TypeError, RecursionError) as exc:\n                raise ValueError(\"Malformed ledger row\") from exc\n            identifier = existing[\"id\"]\n            if identifier in seen:\n                raise ValueError(\"Duplicate ledger id\")\n            seen.add(identifier)\n            if identifier == record_id:\n                found = encode(existing)\n            needs_separator = not line.endswith(b\"\\n\")\n        if found is not None:\n            if found != encoded:\n                raise ValueError(\"Existing id has changed content\")\n            return False\n        handle.seek(0, os.SEEK_END)\n        handle.write((b\"\\n\" if needs_separator else b\"\") + encoded + b\"\\n\")\n        handle.flush()\n        os.fsync(handle.fileno())\n        return True\n",
+  "synthesis": "Start by retaining Astra while piloting High as the routine default, using lower effort for bounded mechanical work and reserving Ultra for difficult reasoning, ambiguous failures, or research-critical review. This is a provisional allocation, not a measured winner. The supplied [official model notes](https://learn.chatgpt.com/docs/models) describe quality, latency, and token tradeoffs, prefer lower adequate effort, and associate Ultra with automatic delegation; they do not establish this repository\u2019s accuracy, cost savings, or optimal effort. Compare representative tasks with fixed inputs, repeated runs, independent correctness checks, and measured tokens, latency, failures, and review burden before expanding the policy. The supplied [configuration notes](https://learn.chatgpt.com/docs/config-file/config-basic) say trusted project settings layer over defaults and runtime/client overrides can prevail. A project config edit is not evidence that an already running task changed effort: do not assume retroactive application. Verify the effective runtime settings or start a task with the intended override. The supplied notes do not establish exact reload behavior."
+}

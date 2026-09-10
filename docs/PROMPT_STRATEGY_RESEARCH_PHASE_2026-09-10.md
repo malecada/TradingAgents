@@ -10,14 +10,16 @@ This prompt explicitly authorizes the new research phase and supersedes the prev
 
 ## 1. Recover the actual state
 
-Start in `/home/malecada/master_thesis`. Read:
+Start in the consolidated checkout `/home/malecada/master_thesis/TradingAgents-audit-fixes` (or its checked-out successor on another computer). Read:
 
-- `AGENTS.md`, `RESEARCH_LOOP_GUIDE.md`, and the applicable research-governance and market-data-provenance skills.
-- `TradingAgents-audit-fixes/docs/SESSION_HANDOFF_2026-09-10.md`.
+- `AGENTS.md`, `docs/RESEARCH_START.md`, `docs/research/STATE.md`, and the applicable tracked governance, provenance and research-cycle skills.
+- The preparation receipt linked from the current state, then the historical `docs/SESSION_HANDOFF_2026-09-10.md` and methodology linked by the evidence index.
 - The canonical audits, current `THESIS_FINDINGS.md`, registration files, financial/correction ledgers, and closed-program/open-lead records referenced there.
-- The latest dated-carry decision in `TradingAgents-audit-fixes/docs/carry-feasibility-2026-09-10/INTERPRETATION.md` and the saved factor/risk-policy findings.
+- The latest dated-carry decision in `docs/carry-feasibility-2026-09-10/INTERPRETATION.md` and the saved factor/risk-policy findings.
 
 Inspect the current branch and working tree before editing. Use the consolidated correction checkout and an appropriate research branch/worktree; preserve existing changes and original source/data worktrees. Verify current counts instead of blindly carrying forward memory. At the last checkpoint there were zero validated strategies, 820 financial-ledger rows, 22 explicitly deferred settlement-blocked cases, and a separate dated-carry measurement with 432 negative conditional scenarios. No strategy evaluation or paper start was pending.
+
+Use the checkout-local Python 3.13.13 environment with `uv sync --locked --all-extras --python 3.13.13`, then the runtime and named offline checks in `docs/TESTING.md`. Use `docs/research/README.md` for the additive admission/lifecycle API. Preparation fixtures are synthetic examples, not a registered financial program. Establish the new program's actual gates, dataset identities, exposure history, ancestry and cumulative budgets before empirical execution. A spent history may be registered for development but never renamed as fresh confirmation.
 
 ## 2. Keep the objective and practical constraints explicit
 
@@ -51,6 +53,8 @@ For every research question:
 A single failed configuration is not automatically a failed family. A negative quote snapshot does not show that an opportunity never exists. Conversely, a near-pass is not permission to keep changing parameters. A follow-up must address an evidenced failure mechanism or a distinct prediction and explain why it is more informative than switching directions. If that case cannot be made, close the question and move on. Do not force a minimum number of attempts on a demonstrably untenable premise.
 
 Apply family-level attempt budgets cumulatively across renamed variants and child experiments. An extension needs a documented information-value justification before its new outcomes; creating another registration does not reset the family's search history or budget.
+
+For new programs use the additive registered-run lifecycle after admission, retaining its claim, declared outputs, complete denominator and terminal receipt. Its sharded completion ledger is distinct from historical financial ledgers; a completed receipt is not a passing strategy verdict. Run the independent receipt verifier and the experiment-specific accounting/statistical reviewer. The helper validates declared identities and hashes; the runner and reviewer must still prove data chronology, schema, economic meaning and genuine sample freshness. Prospective design and later input binding must follow the documented freeze protocol.
 
 ## 5. Make adaptation honest
 

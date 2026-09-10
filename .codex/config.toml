@@ -1,0 +1,26 @@
+# Managed by scripts/configure_research_codex.py; regenerate after plugin updates.
+# Project defaults; an existing task can retain its client/runtime overrides.
+model = "gpt-6-astra"
+model_reasoning_effort = "high"
+
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 3
+default_subagent_model = "gpt-6-astra"
+default_subagent_reasoning_effort = "medium"
+
+[[skills.config]]
+path = "/home/malecada/.codex/plugins/cache/claude-plugins-official/superpowers/6.3.0/skills/using-superpowers/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/malecada/.codex/plugins/cache/claude-plugins-official/superpowers/6.3.0/skills/brainstorming/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/malecada/.codex/plugins/cache/caveman/caveman/local/skills/caveman/SKILL.md"
+enabled = false
+
+[[skills.config]]
+path = "/home/malecada/.codex/plugins/cache/claude-mem-local/claude-mem/13.24.5/skills/learn-codebase/SKILL.md"
+enabled = false

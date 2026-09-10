@@ -77,7 +77,8 @@ include = ["tradingagents*", "cli*"]
 cli = ["static/*"]
 
 [tool.pytest.ini_options]
-addopts = "-m 'not slow'"
+addopts = "-m 'not slow' --import-mode=importlib -p no:cacheprovider"
+testpaths = ["tests", "docs/diagnostics-2026-09-10/verification", "docs/risk-policy-2026-09-10/verification", "docs/carry-feasibility-2026-09-10/verification"]
 markers = [
     "online: requires external API access; opt-in via RUN_ONLINE_TESTS=1",
     "slow: marks tests that take >5s (deselect with -m \"not slow\")",
