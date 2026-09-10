@@ -1,0 +1,33 @@
+# Factor risk and stop lifecycle — registered diagnostic, September 10, 2026
+
+Key: `audit_factor_risk_2026_09_10`. The user authorized analysis of the corrected factor benchmarks' risk and stop behavior. This is an observational accounting diagnostic on saved primary traces, not a rerun or revised strategy. No entry signal, target, fee, funding, leverage, stop, restart rule or Sharpe is recomputed under an alternative policy. No new adoption gate, ranking, winner selection, raw-market acquisition or holdout access is authorized by this charter.
+
+## Frozen inputs and clocks
+
+Inputs are all 36 primary traces and 36 target files from the completed eighteen-configuration factor correction, its immutable result, and the committed source/policy references. The result SHA-256 is a6886a55966f78d8e9bb36f694212fa626484a3088104bd53c48589a27b4309d; original execution source is 27640882822d812c6d0478340495e033a11d3915. Exact input hashes and the original eighteen-cell order are frozen in the new gate. Each BTC/ETH sleeve retains all 1,241 target dates, November 7, 2021–March 31, 2025, and 1,240 trace dates beginning November 8. No alternative-variant traces or raw-market files enter. Missing or inconsistent input leaves an explicit unavailable sleeve within the 36-record denominator.
+
+## Exposure and sizing diagnostics
+
+Derive only the original diagnostic volatility from the saved Close sequence: duplicate the first close and lag remaining closes once; use the original twenty-log-return sample standard deviation ×sqrt252, development reset/warmup and strictly prior-history 95th-percentile entry gate (at least twenty prior finite volatility values before threshold gating). Log returns here measure volatility only; PnL remains the existing simple-return trace. No signal, target-builder or backtest function is called.
+
+For each trace date retain saved latent target, incoming drifted holding weight (previous closing_notional/nav_before, initially zero), applied opening weight (exposure), and closing weight (closing_notional/nav_after). Align targets and volatility to the exact original decision/trace convention, verified by synthetic examples. Record the last observed raw-target entry/flip, its sizing volatility and bars elapsed; same-sign raw-target changes are unsupported for this fixed no-trend-filter factor scope and must fail the relevant reconciliation. Other classic routes can apply a subsequent trend filter and are outside this claim.
+
+For each weight report abs(weight)×current sigma252 as a nominal risk proxy, explicitly not realized account volatility. At sizing events the algebraic entry proxy is min(0.15,3×sigma252), since the original 0.10 target is multiplied by Kelly0.5 and confidence-one leverage3. Record defined risk/reference-entry-risk ratios and counts above the reference, above0.15, and above target/drifted leverage3. A drifted crossing is not automatically a rule violation. Report count, median, 90th/99th percentile and maximum with finite/active/unavailable denominators. Preserve halted cash dates and latent targets suppressed by the halt.
+
+## Turnover, stops and component attribution
+
+Let H be previous closing notional, N=nav_before, w=applied opening weight, and w_ref=previous applied weight if H is nonzero, otherwise zero. Signed target-change A=N×(w-w_ref), signed maintenance B=N×w_ref-H, and their sum N×w-H equals the actual opening trade. Retain absolute A, absolute B, actual abs(A+B), and netting abs(A)+abs(B)-abs(A+B). Component absolute values are not additive actual turnover and cannot establish causal fee savings.
+
+Classify opening rows exclusively as no_trade, opening_from_flat, closing_to_flat, sign_flip, same_sign_target_change or unchanged_target_maintenance. Aggregate saved entry charges by those disjoint classes; keep recorded stop exit charges separately. A constant raw target can require daily maintenance trades against drifted holdings.
+
+Retain every recorded price-stop event, including simultaneous portfolio-stop and fill-envelope flags. Classify the immediately following date as same-sign re-entry, opposite-sign entry, flat, permanently halted or end-of-window censored. Record whether the raw target changed, whether sizing volatility was reused, next entry charges and repeated-stop chains. Count each actual next entry once. These are observed transitions, not alternative fills or restart simulations.
+
+Reconcile complete clocks, initial NAV10000, target/applied exposure, cash tails, and NAV change=gross+signed funding-fees-impact. Reconstruct running peaks in engine order using initial, pre-exit and post-exit NAV. Report first halt, pre/post-exit drawdown and whether the threshold was first crossed before or after exit charges. A post-exit crossing can occur with portfolio_stop_hit false. Peak-to-halt component attribution uses cumulative recorded dollars at the exact corresponding stages; it is an accounting identity, not proof that removing one cost would prevent the halt. Keep BTC/ETH sleeve dollars separate: the original 50/50 return index is not a pooled executable account.
+
+Use absolute reconciliation tolerance1e-9 dollars and1e-12 weights, with documented relative tolerance1e-10 for accumulated floating-point arithmetic. Classification uses preserved flags and these numerical tolerances, not tuned economic thresholds. Record reconciliation failures rather than deleting observations or repairing traces.
+
+## Execution and evidence
+
+Commit charter, exact gate and input hashes before implementation/results. Synthetic tests first cover causal volatility alignment, changing volatility with unchanged targets, drift/target netting and long/short symmetry, leverage clipping, every stop successor class, unique re-entry charges, pre/post-exit halt crossings, staged peaks, accounting identities, malformed clocks and immutable inputs/outputs. Commit reviewed executable source before one empirical execution with registry preflight. Exclusively create `data/diagnostics/2026-09-10/risk/`; retain start markers, input/source/runtime hashes, dated derived diagnostics and all36 forensic ledger records. Recheck hashes at completion.
+
+The original 748-row financial ledger stays byte-identical, as do prior source, gates, results and evidence manifests. Completion may append findings and the correction register. The saved price-proxy, assumed daily funding, threshold stop-fill and separately simulated sleeve-index qualifications remain. Any causal comparison or changed risk/restart policy requires a separate pre-result registration and fresh validation plan; these diagnostics cannot authorize it by producing an attractive summary.

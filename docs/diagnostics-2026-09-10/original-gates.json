@@ -1,0 +1,754 @@
+{
+  "predlab_p1_classical": {
+    "registered_utc": "2026-07-30",
+    "spec": "docs/superpowers/specs/2026-07-30-prediction-lab-charter-design.md",
+    "plan": "docs/superpowers/plans/2026-07-30-prediction-lab-phase1.md",
+    "dev_window": [
+      "2021-01-01",
+      "2025-03-31"
+    ],
+    "holdout_window": [
+      "2025-04-01",
+      "2026-07-01"
+    ],
+    "holdout_status": "sealed",
+    "cells": [
+      {
+        "cell": "BTCUSDT|1h|T1_ret",
+        "symbol": "BTCUSDT",
+        "horizon": "1h",
+        "target": "T1_ret",
+        "strong_baseline": "rw_zero"
+      },
+      {
+        "cell": "BTCUSDT|1h|T2_dir",
+        "symbol": "BTCUSDT",
+        "horizon": "1h",
+        "target": "T2_dir",
+        "strong_baseline": "base_rate"
+      },
+      {
+        "cell": "BTCUSDT|1h|T3_rv",
+        "symbol": "BTCUSDT",
+        "horizon": "1h",
+        "target": "T3_rv",
+        "strong_baseline": "har_levels"
+      },
+      {
+        "cell": "BTCUSDT|1h|T4_vol",
+        "symbol": "BTCUSDT",
+        "horizon": "1h",
+        "target": "T4_vol",
+        "strong_baseline": "seasonal_naive"
+      },
+      {
+        "cell": "BTCUSDT|24h|T1_ret",
+        "symbol": "BTCUSDT",
+        "horizon": "24h",
+        "target": "T1_ret",
+        "strong_baseline": "rw_zero"
+      },
+      {
+        "cell": "BTCUSDT|24h|T2_dir",
+        "symbol": "BTCUSDT",
+        "horizon": "24h",
+        "target": "T2_dir",
+        "strong_baseline": "base_rate"
+      },
+      {
+        "cell": "BTCUSDT|24h|T3_rv",
+        "symbol": "BTCUSDT",
+        "horizon": "24h",
+        "target": "T3_rv",
+        "strong_baseline": "har_levels"
+      },
+      {
+        "cell": "BTCUSDT|24h|T4_vol",
+        "symbol": "BTCUSDT",
+        "horizon": "24h",
+        "target": "T4_vol",
+        "strong_baseline": "seasonal_naive"
+      },
+      {
+        "cell": "BTCUSDT|7d|T1_ret",
+        "symbol": "BTCUSDT",
+        "horizon": "7d",
+        "target": "T1_ret",
+        "strong_baseline": "rw_zero"
+      },
+      {
+        "cell": "BTCUSDT|7d|T2_dir",
+        "symbol": "BTCUSDT",
+        "horizon": "7d",
+        "target": "T2_dir",
+        "strong_baseline": "base_rate"
+      },
+      {
+        "cell": "BTCUSDT|7d|T3_rv",
+        "symbol": "BTCUSDT",
+        "horizon": "7d",
+        "target": "T3_rv",
+        "strong_baseline": "har_levels"
+      },
+      {
+        "cell": "BTCUSDT|7d|T4_vol",
+        "symbol": "BTCUSDT",
+        "horizon": "7d",
+        "target": "T4_vol",
+        "strong_baseline": "seasonal_naive"
+      },
+      {
+        "cell": "BTCUSDT|8h|T6_funding",
+        "symbol": "BTCUSDT",
+        "horizon": "8h",
+        "target": "T6_funding",
+        "strong_baseline": "ar1"
+      },
+      {
+        "cell": "BTCUSDT|24h|T6_funding",
+        "symbol": "BTCUSDT",
+        "horizon": "24h",
+        "target": "T6_funding",
+        "strong_baseline": "ar1"
+      },
+      {
+        "cell": "ETHUSDT|1h|T1_ret",
+        "symbol": "ETHUSDT",
+        "horizon": "1h",
+        "target": "T1_ret",
+        "strong_baseline": "rw_zero"
+      },
+      {
+        "cell": "ETHUSDT|1h|T2_dir",
+        "symbol": "ETHUSDT",
+        "horizon": "1h",
+        "target": "T2_dir",
+        "strong_baseline": "base_rate"
+      },
+      {
+        "cell": "ETHUSDT|1h|T3_rv",
+        "symbol": "ETHUSDT",
+        "horizon": "1h",
+        "target": "T3_rv",
+        "strong_baseline": "har_levels"
+      },
+      {
+        "cell": "ETHUSDT|1h|T4_vol",
+        "symbol": "ETHUSDT",
+        "horizon": "1h",
+        "target": "T4_vol",
+        "strong_baseline": "seasonal_naive"
+      },
+      {
+        "cell": "ETHUSDT|24h|T1_ret",
+        "symbol": "ETHUSDT",
+        "horizon": "24h",
+        "target": "T1_ret",
+        "strong_baseline": "rw_zero"
+      },
+      {
+        "cell": "ETHUSDT|24h|T2_dir",
+        "symbol": "ETHUSDT",
+        "horizon": "24h",
+        "target": "T2_dir",
+        "strong_baseline": "base_rate"
+      },
+      {
+        "cell": "ETHUSDT|24h|T3_rv",
+        "symbol": "ETHUSDT",
+        "horizon": "24h",
+        "target": "T3_rv",
+        "strong_baseline": "har_levels"
+      },
+      {
+        "cell": "ETHUSDT|24h|T4_vol",
+        "symbol": "ETHUSDT",
+        "horizon": "24h",
+        "target": "T4_vol",
+        "strong_baseline": "seasonal_naive"
+      },
+      {
+        "cell": "ETHUSDT|7d|T1_ret",
+        "symbol": "ETHUSDT",
+        "horizon": "7d",
+        "target": "T1_ret",
+        "strong_baseline": "rw_zero"
+      },
+      {
+        "cell": "ETHUSDT|7d|T2_dir",
+        "symbol": "ETHUSDT",
+        "horizon": "7d",
+        "target": "T2_dir",
+        "strong_baseline": "base_rate"
+      },
+      {
+        "cell": "ETHUSDT|7d|T3_rv",
+        "symbol": "ETHUSDT",
+        "horizon": "7d",
+        "target": "T3_rv",
+        "strong_baseline": "har_levels"
+      },
+      {
+        "cell": "ETHUSDT|7d|T4_vol",
+        "symbol": "ETHUSDT",
+        "horizon": "7d",
+        "target": "T4_vol",
+        "strong_baseline": "seasonal_naive"
+      },
+      {
+        "cell": "ETHUSDT|8h|T6_funding",
+        "symbol": "ETHUSDT",
+        "horizon": "8h",
+        "target": "T6_funding",
+        "strong_baseline": "ar1"
+      },
+      {
+        "cell": "ETHUSDT|24h|T6_funding",
+        "symbol": "ETHUSDT",
+        "horizon": "24h",
+        "target": "T6_funding",
+        "strong_baseline": "ar1"
+      }
+    ],
+    "effect_floors": {
+      "T1_oos_r2": {
+        "1h": 0.002,
+        "24h": 0.005,
+        "7d": 0.01
+      },
+      "T2_edge_pp": 2.0,
+      "T2_auc_ci_excludes": 0.5,
+      "T3_dqlike": 0.02,
+      "T4_dmase": 0.05,
+      "T6_dmse": 0.05,
+      "T7_ic": 0.02,
+      "T7_nw_t": 3.0
+    },
+    "tests": {
+      "primary": "dm_hln_p<0.05",
+      "nested": "clark_west",
+      "direction": "pesaran_timmermann",
+      "multiplicity_within_cell": "spa_mcs_phase5",
+      "across_cells": "bh_fdr_q0.10"
+    },
+    "protocol": {
+      "scheme": "rolling_origin_expanding",
+      "step": {
+        "1h": 1,
+        "24h": 1,
+        "7d": 1
+      },
+      "embargo": 0,
+      "purge": "= horizon (built into splitter)",
+      "refit_every": {
+        "cheap": 1,
+        "arima_ets_garch": {
+          "24h": 5,
+          "1h": 24,
+          "7d": 5
+        }
+      },
+      "min_train": {
+        "24h": 365,
+        "1h": 2160,
+        "7d": 365
+      },
+      "loss": {
+        "T1": "se",
+        "T2": "brier",
+        "T3": "qlike",
+        "T4": "mase",
+        "T6": "se"
+      }
+    },
+    "model_grids": {
+      "arima_orders": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          2,
+          0,
+          2
+        ]
+      ],
+      "arima_selection": "in-train AIC",
+      "ets": [
+        "ANN",
+        "AAN"
+      ],
+      "garch": [
+        "garch11",
+        "egarch11",
+        "gjr11"
+      ],
+      "garch_dist": "normal, zero-mean on returns",
+      "har": [
+        "har_levels",
+        "log_har",
+        "harq"
+      ],
+      "ewma_lambda": 0.94,
+      "seasonal_ar": {
+        "volume_m_1h": 24,
+        "volume_m_24h": 7
+      },
+      "funding": [
+        "ar1",
+        "dar1"
+      ],
+      "t2": [
+        "logit_lags5"
+      ]
+    },
+    "stop_rule": "no post-hoc grid additions; amendments only before the affected cell's first result and declared in this file; NEGATIVE cells close without retry; holdout untouched until Phase-5 champions",
+    "amendments": [
+      {
+        "date": "2026-07-30",
+        "scope": "1h cells, arima/ets/garch models only",
+        "change": "conditioning window capped at the last 4320 bars (180 days) at both fit and filter time; HAR/OLS/baseline models remain fully expanding",
+        "reason": "SARIMAX/MLE estimation on expanding ~37k-observation hourly windows is computationally infeasible; cap declared before any 1h Tier-1 result exists",
+        "declared_before_first_result": true
+      }
+    ]
+  },
+  "predlab_p2_ml": {
+    "registered_utc": "2026-07-31",
+    "spec": "docs/superpowers/specs/2026-07-30-prediction-lab-charter-design.md",
+    "dev_window": [
+      "2021-01-01",
+      "2025-03-31"
+    ],
+    "holdout_window": [
+      "2025-04-01",
+      "2026-07-01"
+    ],
+    "holdout_status": "sealed",
+    "cells": [
+      {
+        "cell": "BTCUSDT|1h|T1_ret",
+        "symbol": "BTCUSDT",
+        "horizon": "1h",
+        "target": "T1_ret",
+        "strong_baseline": "rw_zero",
+        "eval_start": "2021-01-01"
+      },
+      {
+        "cell": "BTCUSDT|1h|T2_dir",
+        "symbol": "BTCUSDT",
+        "horizon": "1h",
+        "target": "T2_dir",
+        "strong_baseline": "base_rate",
+        "eval_start": "2021-01-01"
+      },
+      {
+        "cell": "BTCUSDT|1h|T3_rv",
+        "symbol": "BTCUSDT",
+        "horizon": "1h",
+        "target": "T3_rv",
+        "strong_baseline": "har_levels",
+        "eval_start": "2021-01-01"
+      },
+      {
+        "cell": "BTCUSDT|1h|T4_vol",
+        "symbol": "BTCUSDT",
+        "horizon": "1h",
+        "target": "T4_vol",
+        "strong_baseline": "seasonal_naive_m24",
+        "eval_start": "2021-01-01"
+      },
+      {
+        "cell": "BTCUSDT|24h|T1_ret",
+        "symbol": "BTCUSDT",
+        "horizon": "24h",
+        "target": "T1_ret",
+        "strong_baseline": "rw_zero",
+        "eval_start": "2021-01-01"
+      },
+      {
+        "cell": "BTCUSDT|24h|T2_dir",
+        "symbol": "BTCUSDT",
+        "horizon": "24h",
+        "target": "T2_dir",
+        "strong_baseline": "base_rate",
+        "eval_start": "2021-01-01"
+      },
+      {
+        "cell": "BTCUSDT|24h|T3_rv",
+        "symbol": "BTCUSDT",
+        "horizon": "24h",
+        "target": "T3_rv",
+        "strong_baseline": "har_levels",
+        "eval_start": "2021-01-01"
+      },
+      {
+        "cell": "BTCUSDT|24h|T4_vol",
+        "symbol": "BTCUSDT",
+        "horizon": "24h",
+        "target": "T4_vol",
+        "strong_baseline": "seasonal_naive_m7",
+        "eval_start": "2021-01-01"
+      },
+      {
+        "cell": "ETHUSDT|1h|T1_ret",
+        "symbol": "ETHUSDT",
+        "horizon": "1h",
+        "target": "T1_ret",
+        "strong_baseline": "rw_zero",
+        "eval_start": "2021-12-01"
+      },
+      {
+        "cell": "ETHUSDT|1h|T2_dir",
+        "symbol": "ETHUSDT",
+        "horizon": "1h",
+        "target": "T2_dir",
+        "strong_baseline": "base_rate",
+        "eval_start": "2021-12-01"
+      },
+      {
+        "cell": "ETHUSDT|1h|T3_rv",
+        "symbol": "ETHUSDT",
+        "horizon": "1h",
+        "target": "T3_rv",
+        "strong_baseline": "har_levels",
+        "eval_start": "2021-12-01"
+      },
+      {
+        "cell": "ETHUSDT|1h|T4_vol",
+        "symbol": "ETHUSDT",
+        "horizon": "1h",
+        "target": "T4_vol",
+        "strong_baseline": "seasonal_naive_m24",
+        "eval_start": "2021-12-01"
+      },
+      {
+        "cell": "ETHUSDT|24h|T1_ret",
+        "symbol": "ETHUSDT",
+        "horizon": "24h",
+        "target": "T1_ret",
+        "strong_baseline": "rw_zero",
+        "eval_start": "2021-12-01"
+      },
+      {
+        "cell": "ETHUSDT|24h|T2_dir",
+        "symbol": "ETHUSDT",
+        "horizon": "24h",
+        "target": "T2_dir",
+        "strong_baseline": "base_rate",
+        "eval_start": "2021-12-01"
+      },
+      {
+        "cell": "ETHUSDT|24h|T3_rv",
+        "symbol": "ETHUSDT",
+        "horizon": "24h",
+        "target": "T3_rv",
+        "strong_baseline": "har_levels",
+        "eval_start": "2021-12-01"
+      },
+      {
+        "cell": "ETHUSDT|24h|T4_vol",
+        "symbol": "ETHUSDT",
+        "horizon": "24h",
+        "target": "T4_vol",
+        "strong_baseline": "seasonal_naive_m7",
+        "eval_start": "2021-12-01"
+      }
+    ],
+    "oi_coverage_at_registration": {
+      "BTCUSDT_1h": 0.9908,
+      "BTCUSDT_24h": 1.0,
+      "ETHUSDT_1h": 0.9886,
+      "ETHUSDT_24h": 1.0
+    },
+    "feature_sets": {
+      "T3_rv": [
+        "rv_lag1",
+        "rv_mean24",
+        "rv_mean168",
+        "rv_ratio_1_24",
+        "bv_share_lag1",
+        "rq_lag1",
+        "absret_lag1",
+        "ret_lag1",
+        "logqv_lag1",
+        "ti_lag1",
+        "ti_mean24",
+        "hod_sin",
+        "hod_cos",
+        "dow_sin",
+        "dow_cos",
+        "oi_dlog1",
+        "oi_dlog24",
+        "oi_z168",
+        "top_ls_lag1",
+        "taker_ls_lag1",
+        "fund_last",
+        "fund_cum24h"
+      ],
+      "T4_vol": [
+        "logqv_lag1",
+        "logqv_mean24",
+        "rv_lag1",
+        "rv_mean24",
+        "ti_lag1",
+        "ti_mean24",
+        "hod_sin",
+        "hod_cos",
+        "dow_sin",
+        "dow_cos",
+        "oi_dlog1",
+        "oi_dlog24",
+        "fund_last"
+      ],
+      "T1T2": [
+        "ret_lag1",
+        "ret_lag2",
+        "ret_lag3",
+        "ret_mean24",
+        "absret_lag1",
+        "rv_lag1",
+        "rv_ratio_1_24",
+        "ti_lag1",
+        "ti_mean24",
+        "oi_dlog1",
+        "oi_z168",
+        "top_ls_lag1",
+        "taker_ls_lag1",
+        "fund_last",
+        "fund_cum24h",
+        "hod_sin",
+        "hod_cos",
+        "dow_sin",
+        "dow_cos"
+      ]
+    },
+    "models": {
+      "enet": {
+        "alphas": [
+          1e-05,
+          0.0001,
+          0.001,
+          0.01
+        ],
+        "l1_ratio": 0.5,
+        "selection": "train-tail SSE"
+      },
+      "lgb": {
+        "n_estimators": 300,
+        "learning_rate": 0.05,
+        "num_leaves": 31,
+        "min_child_samples": 50,
+        "subsample": 0.9,
+        "colsample_bytree": 0.9,
+        "random_state": 0
+      }
+    },
+    "protocol": {
+      "scheme": "rolling_origin_expanding",
+      "embargo": 0,
+      "refit_every": {
+        "1h": 168,
+        "24h": 21
+      },
+      "min_train": {
+        "1h": 2160,
+        "24h": 365
+      },
+      "loss": {
+        "T1": "se",
+        "T2": "brier",
+        "T3": "qlike",
+        "T4": "mase"
+      },
+      "note_t2": "enet/lgb T2 cells fit on sign target via probability clip of regression output to [0.02, 0.98]"
+    },
+    "effect_floors": "inherit predlab_p1_classical anchors (charter \u00a75)",
+    "comparisons": {
+      "primary": "vs registered strong baseline (DM-HLN)",
+      "secondary": "vs Phase-1 champion of the same cell (DM-HLN) \u2014 the question Tier 2 actually answers"
+    },
+    "stop_rule": "no post-hoc feature additions or grid growth; amendments only before the affected cell's first result and declared here; NEGATIVE cells close; holdout untouched until Phase-5",
+    "t7_note": "T7 cross-sectional battery registered separately (P2-04)."
+  },
+  "audit_factor_floor_2026_09_10": {
+    "registered_utc": "2026-09-10T12:21:50.598096+00:00",
+    "charter": "docs/factor-correction/charter.md",
+    "development_window": [
+      "2021-11-07",
+      "2025-03-31"
+    ],
+    "first_return": "2021-11-08",
+    "calendar_returns": 1240,
+    "allow_holdout": false,
+    "cells": [
+      {
+        "name": "tsmom_k7_ls",
+        "family": "tsmom",
+        "k": 7,
+        "side": "ls"
+      },
+      {
+        "name": "tsmom_k14_ls",
+        "family": "tsmom",
+        "k": 14,
+        "side": "ls"
+      },
+      {
+        "name": "tsmom_k30_ls",
+        "family": "tsmom",
+        "k": 30,
+        "side": "ls"
+      },
+      {
+        "name": "tsmom_k90_ls",
+        "family": "tsmom",
+        "k": 90,
+        "side": "ls"
+      },
+      {
+        "name": "tsmom_k7_lo",
+        "family": "tsmom",
+        "k": 7,
+        "side": "lo"
+      },
+      {
+        "name": "tsmom_k14_lo",
+        "family": "tsmom",
+        "k": 14,
+        "side": "lo"
+      },
+      {
+        "name": "tsmom_k30_lo",
+        "family": "tsmom",
+        "k": 30,
+        "side": "lo"
+      },
+      {
+        "name": "tsmom_k90_lo",
+        "family": "tsmom",
+        "k": 90,
+        "side": "lo"
+      },
+      {
+        "name": "tsmom_k180_ls",
+        "family": "tsmom",
+        "k": 180,
+        "side": "ls"
+      },
+      {
+        "name": "macross_10_50_ls",
+        "family": "ma_cross",
+        "fast": 10,
+        "slow": 50,
+        "side": "ls"
+      },
+      {
+        "name": "macross_20_100_ls",
+        "family": "ma_cross",
+        "fast": 20,
+        "slow": 100,
+        "side": "ls"
+      },
+      {
+        "name": "macross_50_200_ls",
+        "family": "ma_cross",
+        "fast": 50,
+        "slow": 200,
+        "side": "ls"
+      },
+      {
+        "name": "macross_10_50_lo",
+        "family": "ma_cross",
+        "fast": 10,
+        "slow": 50,
+        "side": "lo"
+      },
+      {
+        "name": "macross_20_100_lo",
+        "family": "ma_cross",
+        "fast": 20,
+        "slow": 100,
+        "side": "lo"
+      },
+      {
+        "name": "macross_50_200_lo",
+        "family": "ma_cross",
+        "fast": 50,
+        "slow": 200,
+        "side": "lo"
+      },
+      {
+        "name": "donchian_n20_ls",
+        "family": "donchian",
+        "n": 20,
+        "side": "ls"
+      },
+      {
+        "name": "donchian_n55_ls",
+        "family": "donchian",
+        "n": 55,
+        "side": "ls"
+      },
+      {
+        "name": "xsmom_btc_eth_30d",
+        "family": "xs_mom",
+        "k": 30,
+        "side": "ls",
+        "xs": true
+      }
+    ],
+    "variants": [
+      "primary",
+      "zero_execution",
+      "double_execution",
+      "zero_funding",
+      "legacy"
+    ],
+    "configuration_count": 18,
+    "book_variant_count": 90,
+    "invalid_log_shadows": 18,
+    "ledger_policy": "18 records, all5 book variants and frozen-log diagnostics nested; no independent90-hypothesis claim",
+    "gate_policy": "Historical benchmark correction only; no standalone factor adoption threshold, no selection or validation",
+    "pinned_files": {
+      "docs/factor-correction/original/BEST_daily_returns.csv": "704fc2f4b2cf375feb14f8aafab88093e44fc0611611c7d474b11f1185e52764",
+      "docs/factor-correction/original/baseline_strategy_v2_f359050.py": "d278c2084a39385d8985728b2c98915503995810a01344fb013fe139c0793d5a",
+      "docs/factor-correction/original/baseline_v5_mix_f359050.py": "6c0db31674041eb8cdebd164c89a0da6472fddee6f25c54dcae1ee2825a90a48",
+      "docs/factor-correction/original/charter_4ba5dd7.md": "2040e018eda53b96774efb41188fbd9ff18c9fb704b59279e30553d55226e891",
+      "docs/factor-correction/original/comparison.json": "9712d0b4b322007d0e3bc354175332be3904d30c9a709e5e078c6225da8b88d0",
+      "docs/factor-correction/original/factor_baselines_f359050.py": "32ad2180512198d45e5fb76855abd84c8565d29e63019496fce0f5bb35706a69",
+      "docs/factor-correction/original/factor_floor_37rows.jsonl": "fa29f9ac65db6559a6d8427fc523a257569c5e0d5e2eaaef50ac94cde5ced704",
+      "docs/factor-correction/original/floor_table_f359050.md": "3b7e5d242fe1df0e50189c13bce839fda7adb3aa6891fc76a3c38676c42994c9",
+      "docs/factor-correction/original/gates_7c65b32.json": "332eddcd541e96c88f03e523e684058cdd06a96b3271ec3f4557acf0757531cf",
+      "docs/factor-correction/original/manifest.json": "22378abdf38294f554f0785e7d4ce45d4b1e889e120d47accc5a1de51ee4d4b1",
+      "docs/factor-correction/original/provenance.md": "6f3320e1a45457b63fdb2207ac04f14d777e7c831c711e112fdc0a5700df3225",
+      "docs/factor-correction/original/v2_sizing_f359050.py": "19c7492c36a68a45a69451cb03ca0b846649692dbbe4e389f9abe77939170e9d",
+      "data/factor-correction/2026-09-10/inputs/bitcoin.csv": "f4be3daa4d19440046843a8ba2efe01bcedd13e3f4e0a2a7b9df980f8c0c4b2e",
+      "data/factor-correction/2026-09-10/inputs/ethereum.csv": "f1f209b90ec74d8a0591a40168cf955457eae793698faf2896b0d5690d427415",
+      "docs/factor-correction/data-provenance.json": "048911f7c61bd2c576236c1dcc924349cc00ad8bccb3700a0e5d4938c081f784",
+      "docs/factor-correction/charter.md": "6de3590e721552d8fb5a9cb7fd7a7a8f1d89f832b667306d00170d914488eac7"
+    },
+    "source_cache_hashes": {
+      "/home/malecada/master_thesis/TradingAgents/tradingagents/dataflows/data_cache/bitcoin-crypto-ohlcv.csv": "95b99d9be1631138cb2b1546cdf64d77baa5a140c6b8b7879319babc30c88401",
+      "/home/malecada/master_thesis/TradingAgents/tradingagents/dataflows/data_cache/ethereum-crypto-ohlcv.csv": "5e1320598cd4fcc2ce2ef3c3b18c4f1f1e324000aa9fea412a940952cebfc5b9"
+    },
+    "prior_ledger": {
+      "rows": 730,
+      "bytes": 428150,
+      "sha256": "710a4f087325bfb408ed8d051963a473e8d8a47b445ffae0238c565aff6dc791"
+    },
+    "output": "data/factor-correction/2026-09-10/results",
+    "stop_rule": "One immutable all18 run; no tuning, no holdout, no network, retain all unavailable cases; amendments before affected outcomes only"
+  }
+}
