@@ -1,0 +1,280 @@
+FFFFFFFFFFF                                                              [100%]
+=================================== FAILURES ===================================
+_________________ test_initial_loss_and_cash_tail_are_counted __________________
+
+    def test_initial_loss_and_cash_tail_are_counted():
+>       m = module().metrics(np.array([-.1, .0, .0, .0]))
+            ^^^^^^^^
+
+tests/test_factor_correction.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = Path(__file__).resolve().parents[1] / 'scripts/audit_factor_floor_2026_09_10.py'
+>       assert path.exists(), 'isolated fixed-grid correction runner is missing'
+E       AssertionError: isolated fixed-grid correction runner is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/audit_factor_floor_2026_09_10.py').exists
+
+tests/test_factor_correction.py:11: AssertionError
+____________ test_bad_market_data_cannot_be_dropped_or_filled[gap] _____________
+
+defect = 'gap'
+
+    @pytest.mark.parametrize('defect', ['gap', 'duplicate', 'nan', 'envelope', 'nonmidnight', 'holdout'])
+    def test_bad_market_data_cannot_be_dropped_or_filled(defect):
+        frame = fixture()
+        if defect == 'gap': frame = frame.drop(2)
+        if defect == 'duplicate': frame.loc[2, 'Date'] = frame.loc[1, 'Date']
+        if defect == 'nan': frame.loc[2, 'Low'] = np.nan
+        if defect == 'envelope': frame.loc[2, 'Close'] = 120
+        if defect == 'nonmidnight': frame.loc[2, 'Date'] += pd.Timedelta(hours=1)
+        if defect == 'holdout': frame.loc[4, 'Date'] = pd.Timestamp('2025-04-01')
+>       with pytest.raises(ValueError): module().validate_market(frame)
+                                        ^^^^^^^^
+
+tests/test_factor_correction.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = Path(__file__).resolve().parents[1] / 'scripts/audit_factor_floor_2026_09_10.py'
+>       assert path.exists(), 'isolated fixed-grid correction runner is missing'
+E       AssertionError: isolated fixed-grid correction runner is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/audit_factor_floor_2026_09_10.py').exists
+
+tests/test_factor_correction.py:11: AssertionError
+_________ test_bad_market_data_cannot_be_dropped_or_filled[duplicate] __________
+
+defect = 'duplicate'
+
+    @pytest.mark.parametrize('defect', ['gap', 'duplicate', 'nan', 'envelope', 'nonmidnight', 'holdout'])
+    def test_bad_market_data_cannot_be_dropped_or_filled(defect):
+        frame = fixture()
+        if defect == 'gap': frame = frame.drop(2)
+        if defect == 'duplicate': frame.loc[2, 'Date'] = frame.loc[1, 'Date']
+        if defect == 'nan': frame.loc[2, 'Low'] = np.nan
+        if defect == 'envelope': frame.loc[2, 'Close'] = 120
+        if defect == 'nonmidnight': frame.loc[2, 'Date'] += pd.Timedelta(hours=1)
+        if defect == 'holdout': frame.loc[4, 'Date'] = pd.Timestamp('2025-04-01')
+>       with pytest.raises(ValueError): module().validate_market(frame)
+                                        ^^^^^^^^
+
+tests/test_factor_correction.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = Path(__file__).resolve().parents[1] / 'scripts/audit_factor_floor_2026_09_10.py'
+>       assert path.exists(), 'isolated fixed-grid correction runner is missing'
+E       AssertionError: isolated fixed-grid correction runner is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/audit_factor_floor_2026_09_10.py').exists
+
+tests/test_factor_correction.py:11: AssertionError
+____________ test_bad_market_data_cannot_be_dropped_or_filled[nan] _____________
+
+defect = 'nan'
+
+    @pytest.mark.parametrize('defect', ['gap', 'duplicate', 'nan', 'envelope', 'nonmidnight', 'holdout'])
+    def test_bad_market_data_cannot_be_dropped_or_filled(defect):
+        frame = fixture()
+        if defect == 'gap': frame = frame.drop(2)
+        if defect == 'duplicate': frame.loc[2, 'Date'] = frame.loc[1, 'Date']
+        if defect == 'nan': frame.loc[2, 'Low'] = np.nan
+        if defect == 'envelope': frame.loc[2, 'Close'] = 120
+        if defect == 'nonmidnight': frame.loc[2, 'Date'] += pd.Timedelta(hours=1)
+        if defect == 'holdout': frame.loc[4, 'Date'] = pd.Timestamp('2025-04-01')
+>       with pytest.raises(ValueError): module().validate_market(frame)
+                                        ^^^^^^^^
+
+tests/test_factor_correction.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = Path(__file__).resolve().parents[1] / 'scripts/audit_factor_floor_2026_09_10.py'
+>       assert path.exists(), 'isolated fixed-grid correction runner is missing'
+E       AssertionError: isolated fixed-grid correction runner is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/audit_factor_floor_2026_09_10.py').exists
+
+tests/test_factor_correction.py:11: AssertionError
+__________ test_bad_market_data_cannot_be_dropped_or_filled[envelope] __________
+
+defect = 'envelope'
+
+    @pytest.mark.parametrize('defect', ['gap', 'duplicate', 'nan', 'envelope', 'nonmidnight', 'holdout'])
+    def test_bad_market_data_cannot_be_dropped_or_filled(defect):
+        frame = fixture()
+        if defect == 'gap': frame = frame.drop(2)
+        if defect == 'duplicate': frame.loc[2, 'Date'] = frame.loc[1, 'Date']
+        if defect == 'nan': frame.loc[2, 'Low'] = np.nan
+        if defect == 'envelope': frame.loc[2, 'Close'] = 120
+        if defect == 'nonmidnight': frame.loc[2, 'Date'] += pd.Timedelta(hours=1)
+        if defect == 'holdout': frame.loc[4, 'Date'] = pd.Timestamp('2025-04-01')
+>       with pytest.raises(ValueError): module().validate_market(frame)
+                                        ^^^^^^^^
+
+tests/test_factor_correction.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = Path(__file__).resolve().parents[1] / 'scripts/audit_factor_floor_2026_09_10.py'
+>       assert path.exists(), 'isolated fixed-grid correction runner is missing'
+E       AssertionError: isolated fixed-grid correction runner is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/audit_factor_floor_2026_09_10.py').exists
+
+tests/test_factor_correction.py:11: AssertionError
+________ test_bad_market_data_cannot_be_dropped_or_filled[nonmidnight] _________
+
+defect = 'nonmidnight'
+
+    @pytest.mark.parametrize('defect', ['gap', 'duplicate', 'nan', 'envelope', 'nonmidnight', 'holdout'])
+    def test_bad_market_data_cannot_be_dropped_or_filled(defect):
+        frame = fixture()
+        if defect == 'gap': frame = frame.drop(2)
+        if defect == 'duplicate': frame.loc[2, 'Date'] = frame.loc[1, 'Date']
+        if defect == 'nan': frame.loc[2, 'Low'] = np.nan
+        if defect == 'envelope': frame.loc[2, 'Close'] = 120
+        if defect == 'nonmidnight': frame.loc[2, 'Date'] += pd.Timedelta(hours=1)
+        if defect == 'holdout': frame.loc[4, 'Date'] = pd.Timestamp('2025-04-01')
+>       with pytest.raises(ValueError): module().validate_market(frame)
+                                        ^^^^^^^^
+
+tests/test_factor_correction.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = Path(__file__).resolve().parents[1] / 'scripts/audit_factor_floor_2026_09_10.py'
+>       assert path.exists(), 'isolated fixed-grid correction runner is missing'
+E       AssertionError: isolated fixed-grid correction runner is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/audit_factor_floor_2026_09_10.py').exists
+
+tests/test_factor_correction.py:11: AssertionError
+__________ test_bad_market_data_cannot_be_dropped_or_filled[holdout] ___________
+
+defect = 'holdout'
+
+    @pytest.mark.parametrize('defect', ['gap', 'duplicate', 'nan', 'envelope', 'nonmidnight', 'holdout'])
+    def test_bad_market_data_cannot_be_dropped_or_filled(defect):
+        frame = fixture()
+        if defect == 'gap': frame = frame.drop(2)
+        if defect == 'duplicate': frame.loc[2, 'Date'] = frame.loc[1, 'Date']
+        if defect == 'nan': frame.loc[2, 'Low'] = np.nan
+        if defect == 'envelope': frame.loc[2, 'Close'] = 120
+        if defect == 'nonmidnight': frame.loc[2, 'Date'] += pd.Timedelta(hours=1)
+        if defect == 'holdout': frame.loc[4, 'Date'] = pd.Timestamp('2025-04-01')
+>       with pytest.raises(ValueError): module().validate_market(frame)
+                                        ^^^^^^^^
+
+tests/test_factor_correction.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = Path(__file__).resolve().parents[1] / 'scripts/audit_factor_floor_2026_09_10.py'
+>       assert path.exists(), 'isolated fixed-grid correction runner is missing'
+E       AssertionError: isolated fixed-grid correction runner is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/audit_factor_floor_2026_09_10.py').exists
+
+tests/test_factor_correction.py:11: AssertionError
+___________ test_log_shadow_is_disclosed_frozen_exposure_distortion ____________
+
+    def test_log_shadow_is_disclosed_frozen_exposure_distortion():
+        trace = pd.DataFrame({'exposure': [-1., 1.], 'mark_return': [.1, -.1],
+                              'pre_nav': [100., 90.], 'post_nav': [90., 81.]})
+>       out = module().log_shadow(trace)
+              ^^^^^^^^
+
+tests/test_factor_correction.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = Path(__file__).resolve().parents[1] / 'scripts/audit_factor_floor_2026_09_10.py'
+>       assert path.exists(), 'isolated fixed-grid correction runner is missing'
+E       AssertionError: isolated fixed-grid correction runner is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/audit_factor_floor_2026_09_10.py').exists
+
+tests/test_factor_correction.py:11: AssertionError
+____________________ test_invalid_log_shadow_is_unavailable ____________________
+
+    def test_invalid_log_shadow_is_unavailable():
+        trace = pd.DataFrame({'exposure': [1.], 'mark_return': [-1.],
+                              'pre_nav': [100.], 'post_nav': [10.]})
+>       with pytest.raises(ValueError): module().log_shadow(trace)
+                                        ^^^^^^^^
+
+tests/test_factor_correction.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = Path(__file__).resolve().parents[1] / 'scripts/audit_factor_floor_2026_09_10.py'
+>       assert path.exists(), 'isolated fixed-grid correction runner is missing'
+E       AssertionError: isolated fixed-grid correction runner is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/audit_factor_floor_2026_09_10.py').exists
+
+tests/test_factor_correction.py:11: AssertionError
+__________ test_aggregation_rejects_missing_sleeve_instead_of_skipna ___________
+
+    def test_aggregation_rejects_missing_sleeve_instead_of_skipna():
+>       with pytest.raises(ValueError): module().index_returns([np.array([.1, np.nan]), np.array([.1, .2])])
+                                        ^^^^^^^^
+
+tests/test_factor_correction.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = Path(__file__).resolve().parents[1] / 'scripts/audit_factor_floor_2026_09_10.py'
+>       assert path.exists(), 'isolated fixed-grid correction runner is missing'
+E       AssertionError: isolated fixed-grid correction runner is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/audit_factor_floor_2026_09_10.py').exists
+
+tests/test_factor_correction.py:11: AssertionError
+_______________________ test_output_refuses_previous_run _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-179/test_output_refuses_previous_r0')
+
+    def test_output_refuses_previous_run(tmp_path):
+        output = tmp_path / 'run'
+>       module().reserve_output(output, {'test': True})
+        ^^^^^^^^
+
+tests/test_factor_correction.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = Path(__file__).resolve().parents[1] / 'scripts/audit_factor_floor_2026_09_10.py'
+>       assert path.exists(), 'isolated fixed-grid correction runner is missing'
+E       AssertionError: isolated fixed-grid correction runner is missing
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/audit_factor_floor_2026_09_10.py').exists
+
+tests/test_factor_correction.py:11: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_factor_correction.py::test_initial_loss_and_cash_tail_are_counted
+FAILED tests/test_factor_correction.py::test_bad_market_data_cannot_be_dropped_or_filled[gap]
+FAILED tests/test_factor_correction.py::test_bad_market_data_cannot_be_dropped_or_filled[duplicate]
+FAILED tests/test_factor_correction.py::test_bad_market_data_cannot_be_dropped_or_filled[nan]
+FAILED tests/test_factor_correction.py::test_bad_market_data_cannot_be_dropped_or_filled[envelope]
+FAILED tests/test_factor_correction.py::test_bad_market_data_cannot_be_dropped_or_filled[nonmidnight]
+FAILED tests/test_factor_correction.py::test_bad_market_data_cannot_be_dropped_or_filled[holdout]
+FAILED tests/test_factor_correction.py::test_log_shadow_is_disclosed_frozen_exposure_distortion
+FAILED tests/test_factor_correction.py::test_invalid_log_shadow_is_unavailable
+FAILED tests/test_factor_correction.py::test_aggregation_rejects_missing_sleeve_instead_of_skipna
+FAILED tests/test_factor_correction.py::test_output_refuses_previous_run - As...
+11 failed in 0.39s

@@ -1,0 +1,168 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+_ test_trace_reconciles_opening_fees_signed_funding_and_impact[1.0-prices0-106.7--0.3-110.0] _
+
+direction = 1.0, prices = [100.0, 110.0], nav = 106.7, carry = -0.3
+notional = 110.0
+
+    @pytest.mark.parametrize('direction,prices,nav,carry,notional', [
+        (1., [100., 110.], 106.7, -.3, 110.),
+        (-1., [100., 90.], 107.3, .3, -90.),
+    ])
+    def test_trace_reconciles_opening_fees_signed_funding_and_impact(direction, prices, nav, carry, notional):
+        trace = []
+>       equity, _ = run(prices, [0., direction], trace=trace)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_v2_trace.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+prices = [100.0, 110.0], positions = [0.0, 1.0], overrides = {'trace': []}
+
+    def run(prices, positions, **overrides):
+        kwargs = dict(dates=pd.date_range('2024-01-01', periods=len(prices), tz='UTC'),
+                      prices=np.array(prices, dtype=float), positions=np.array(positions, dtype=float),
+                      initial_capital=100., fee_rate=.01, slippage=0., spread=0.,
+                      price_impact=.02, funding_rate=.003, stop_loss=1., max_portfolio_dd=1.)
+        kwargs.update(overrides)
+>       return run_coin_backtest(**kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: run_coin_backtest() got an unexpected keyword argument 'trace'
+
+tests/test_factor_v2_trace.py:17: TypeError
+_ test_trace_reconciles_opening_fees_signed_funding_and_impact[-1.0-prices1-107.3-0.3--90.0] _
+
+direction = -1.0, prices = [100.0, 90.0], nav = 107.3, carry = 0.3
+notional = -90.0
+
+    @pytest.mark.parametrize('direction,prices,nav,carry,notional', [
+        (1., [100., 110.], 106.7, -.3, 110.),
+        (-1., [100., 90.], 107.3, .3, -90.),
+    ])
+    def test_trace_reconciles_opening_fees_signed_funding_and_impact(direction, prices, nav, carry, notional):
+        trace = []
+>       equity, _ = run(prices, [0., direction], trace=trace)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_v2_trace.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+prices = [100.0, 90.0], positions = [0.0, -1.0], overrides = {'trace': []}
+
+    def run(prices, positions, **overrides):
+        kwargs = dict(dates=pd.date_range('2024-01-01', periods=len(prices), tz='UTC'),
+                      prices=np.array(prices, dtype=float), positions=np.array(positions, dtype=float),
+                      initial_capital=100., fee_rate=.01, slippage=0., spread=0.,
+                      price_impact=.02, funding_rate=.003, stop_loss=1., max_portfolio_dd=1.)
+        kwargs.update(overrides)
+>       return run_coin_backtest(**kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: run_coin_backtest() got an unexpected keyword argument 'trace'
+
+tests/test_factor_v2_trace.py:17: TypeError
+_ test_intrabar_stop_trace_includes_marked_exit_cost_and_full_assumed_funding __
+
+    def test_intrabar_stop_trace_includes_marked_exit_cost_and_full_assumed_funding():
+        trace = []
+>       equity, _ = run([100., 90.], [0., 1.], trace=trace,
+                       highs=np.array([100., 101.]), lows=np.array([100., 85.]), price_stop_pct=.03)
+
+tests/test_factor_v2_trace.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+prices = [100.0, 90.0], positions = [0.0, 1.0]
+overrides = {'trace': [], 'highs': array([100., 101.]), 'lows': array([100.,  85.]), 'price_stop_pct': 0.03}
+
+    def run(prices, positions, **overrides):
+        kwargs = dict(dates=pd.date_range('2024-01-01', periods=len(prices), tz='UTC'),
+                      prices=np.array(prices, dtype=float), positions=np.array(positions, dtype=float),
+                      initial_capital=100., fee_rate=.01, slippage=0., spread=0.,
+                      price_impact=.02, funding_rate=.003, stop_loss=1., max_portfolio_dd=1.)
+        kwargs.update(overrides)
+>       return run_coin_backtest(**kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: run_coin_backtest() got an unexpected keyword argument 'trace'
+
+tests/test_factor_v2_trace.py:17: TypeError
+_______ test_permanent_halt_trace_preserves_zero_tail_and_exact_halt_bar _______
+
+    def test_permanent_halt_trace_preserves_zero_tail_and_exact_halt_bar():
+        trace = []
+>       equity, metrics = run([100., 80., 120.], [0., 1., 1.], trace=trace,
+                              price_impact=0., funding_rate=0., max_portfolio_dd=.15)
+
+tests/test_factor_v2_trace.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+prices = [100.0, 80.0, 120.0], positions = [0.0, 1.0, 1.0]
+overrides = {'trace': [], 'price_impact': 0.0, 'funding_rate': 0.0, 'max_portfolio_dd': 0.15}
+
+    def run(prices, positions, **overrides):
+        kwargs = dict(dates=pd.date_range('2024-01-01', periods=len(prices), tz='UTC'),
+                      prices=np.array(prices, dtype=float), positions=np.array(positions, dtype=float),
+                      initial_capital=100., fee_rate=.01, slippage=0., spread=0.,
+                      price_impact=.02, funding_rate=.003, stop_loss=1., max_portfolio_dd=1.)
+        kwargs.update(overrides)
+>       return run_coin_backtest(**kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: run_coin_backtest() got an unexpected keyword argument 'trace'
+
+tests/test_factor_v2_trace.py:17: TypeError
+_______ test_trace_retained_contracts_and_default_results_are_identical ________
+
+    def test_trace_retained_contracts_and_default_results_are_identical():
+        args = dict(fee_rate=0., price_impact=0., funding_rate=0.)
+        plain = run([100., 110., 121.], [0., 1., np.nan], **args)
+        trace = []
+>       traced = run([100., 110., 121.], [0., 1., np.nan], trace=trace, **args)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_v2_trace.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+prices = [100.0, 110.0, 121.0], positions = [0.0, 1.0, nan]
+overrides = {'trace': [], 'fee_rate': 0.0, 'price_impact': 0.0, 'funding_rate': 0.0}
+
+    def run(prices, positions, **overrides):
+        kwargs = dict(dates=pd.date_range('2024-01-01', periods=len(prices), tz='UTC'),
+                      prices=np.array(prices, dtype=float), positions=np.array(positions, dtype=float),
+                      initial_capital=100., fee_rate=.01, slippage=0., spread=0.,
+                      price_impact=.02, funding_rate=.003, stop_loss=1., max_portfolio_dd=1.)
+        kwargs.update(overrides)
+>       return run_coin_backtest(**kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: run_coin_backtest() got an unexpected keyword argument 'trace'
+
+tests/test_factor_v2_trace.py:17: TypeError
+_ test_flat_unavailable_mark_is_null_in_trace_and_initial_nav_is_not_a_return __
+
+    def test_flat_unavailable_mark_is_null_in_trace_and_initial_nav_is_not_a_return():
+        trace = []
+>       equity, _ = run([100., np.nan], [0., 0.], trace=trace,
+                        fee_rate=0., price_impact=0., funding_rate=0.)
+
+tests/test_factor_v2_trace.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+prices = [100.0, nan], positions = [0.0, 0.0]
+overrides = {'trace': [], 'fee_rate': 0.0, 'price_impact': 0.0, 'funding_rate': 0.0}
+
+    def run(prices, positions, **overrides):
+        kwargs = dict(dates=pd.date_range('2024-01-01', periods=len(prices), tz='UTC'),
+                      prices=np.array(prices, dtype=float), positions=np.array(positions, dtype=float),
+                      initial_capital=100., fee_rate=.01, slippage=0., spread=0.,
+                      price_impact=.02, funding_rate=.003, stop_loss=1., max_portfolio_dd=1.)
+        kwargs.update(overrides)
+>       return run_coin_backtest(**kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: run_coin_backtest() got an unexpected keyword argument 'trace'
+
+tests/test_factor_v2_trace.py:17: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_factor_v2_trace.py::test_trace_reconciles_opening_fees_signed_funding_and_impact[1.0-prices0-106.7--0.3-110.0]
+FAILED tests/test_factor_v2_trace.py::test_trace_reconciles_opening_fees_signed_funding_and_impact[-1.0-prices1-107.3-0.3--90.0]
+FAILED tests/test_factor_v2_trace.py::test_intrabar_stop_trace_includes_marked_exit_cost_and_full_assumed_funding
+FAILED tests/test_factor_v2_trace.py::test_permanent_halt_trace_preserves_zero_tail_and_exact_halt_bar
+FAILED tests/test_factor_v2_trace.py::test_trace_retained_contracts_and_default_results_are_identical
+FAILED tests/test_factor_v2_trace.py::test_flat_unavailable_mark_is_null_in_trace_and_initial_nav_is_not_a_return
+6 failed in 1.25s

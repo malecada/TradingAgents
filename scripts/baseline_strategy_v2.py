@@ -93,12 +93,21 @@ def run_coin_backtest(
     highs: np.ndarray | None = None,
     lows: np.ndarray | None = None,
     price_stop_pct: float = 0.0,
+    *,
+    trace: list[dict] | None = None,
 ) -> tuple[list, dict]:
     """Executable contracts with signed funding and explicit risk-stop exits.
 
     Positions are same-row pretrade NAV targets. Fee, slippage and spread
     inputs are one-way rates; impact remains the declared quadratic turnover
     model. Historical results from the former doubled-fee model are unchanged.
+
+    ``trace`` optionally receives one record per return bar (no initial NAV
+    anchor). It observes the existing book without changing targets or risk
+    decisions. Dollar charges include both the opening trade and any stop
+    exit, each using that leg's NAV. Funding remains the declared daily
+    opening-exposure assumption, including on price-stop days. The effective
+    mark return includes an assumed stop fill; it is not the raw close return.
     """
     from tradingagents.accounting import accounting_step
     from tradingagents.backtesting.engine import compute_metrics
@@ -135,6 +144,26 @@ def run_coin_backtest(
         row = accounting_step(nav,notionals,pd.Series({'asset':ret}),target_weights=target,
             funding=pd.Series({'asset':funding_rate}),fee_rate=fee,date=dates[i],
             capital_charge=price_impact*trade_fraction**2)
+        if trace is not None:
+            audit_row = {
+                'date': pd.Timestamp(dates[i]).isoformat(),
+                'nav_before': float(nav), 'pre_nav': float(nav),
+                'target_position': float(target_pos) if target is not None else None,
+                'exposure': float(row['weights'].get('asset', 0.)),
+                'mark_return': float(ret) if np.isfinite(ret) else None,
+                'mark_price': float(mark) if np.isfinite(mark) else None,
+                'entry_price': float(entry_price) if np.isfinite(entry_price) and entry_price > 0 else None,
+                'gross_dollars': float(row['gross'] * nav),
+                'funding_dollars': float(row['carry'] * nav),
+                'entry_fee_dollars': float(row['cost'] * nav),
+                'entry_impact_dollars': float(nav * (price_impact * trade_fraction**2)),
+                'entry_turnover_dollars': float(row['turnover'] * nav),
+                'exit_fee_dollars': 0., 'exit_impact_dollars': 0.,
+                'exit_turnover_dollars': 0., 'exit_notional': 0.,
+                'exit_executed': False, 'halted_before': bool(halted),
+                'price_stop_hit': bool(price_stop_hit),
+                'stop_outside_envelope': bool(price_stop_hit and not lows[i] <= mark <= highs[i]),
+            }
         new_equity, notionals = row['nav'],row['notionals']
         actual_positions.append(float(row['weights'].get('asset',0.)))
         trades += int(row['turnover'] > 1e-9)
@@ -149,6 +178,14 @@ def run_coin_backtest(
             closed = accounting_step(new_equity,notionals,pd.Series({'asset':0.}),
                 target_weights=pd.Series(dtype=float),fee_rate=fee,date=dates[i],
                 capital_charge=price_impact*exit_fraction**2)
+            if trace is not None:
+                audit_row.update(
+                    exit_fee_dollars=float(closed['cost'] * new_equity),
+                    exit_impact_dollars=float(new_equity * (price_impact * exit_fraction**2)),
+                    exit_turnover_dollars=float(closed['turnover'] * new_equity),
+                    exit_notional=float(notionals.get('asset', 0.)),
+                    exit_executed=True,
+                )
             new_equity, notionals = closed['nav'],closed['notionals']
             trades += int(closed['turnover'] > 1e-9)
             previous_target, entry_price = 0.,0.
@@ -158,6 +195,17 @@ def run_coin_backtest(
         halted = halted or (peak_equity-new_equity)/peak_equity >= max_portfolio_dd
         daily_returns.append((new_equity-nav)/nav)
         equity.append(new_equity)
+        if trace is not None:
+            audit_row.update(
+                nav_after=float(new_equity), post_nav=float(new_equity),
+                net_return=float(daily_returns[-1]),
+                fee_dollars=audit_row['entry_fee_dollars'] + audit_row['exit_fee_dollars'],
+                impact_dollars=audit_row['entry_impact_dollars'] + audit_row['exit_impact_dollars'],
+                turnover_dollars=audit_row['entry_turnover_dollars'] + audit_row['exit_turnover_dollars'],
+                closing_notional=float(notionals.get('asset', 0.)),
+                portfolio_stop_hit=bool(portfolio_stop), halted_after=bool(halted),
+            )
+            trace.append(audit_row)
     metrics = compute_metrics(daily_returns,actual_positions,initial_capital,equity,
                               risk_free_rate=.045,periods_per_year=365.)
     metrics.update(n_trades=trades,halted=halted)

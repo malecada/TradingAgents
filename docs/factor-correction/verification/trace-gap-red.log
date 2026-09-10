@@ -1,0 +1,42 @@
+..FF...                                                                  [100%]
+=================================== FAILURES ===================================
+_ test_intrabar_stop_trace_includes_marked_exit_cost_and_full_assumed_funding __
+
+    def test_intrabar_stop_trace_includes_marked_exit_cost_and_full_assumed_funding():
+        trace = []
+        equity, _ = run([100., 90.], [0., 1.], trace=trace,
+                       highs=np.array([100., 101.]), lows=np.array([100., 85.]), price_stop_pct=.03)
+        # Entry: 100 - 3 price loss - .3 funding - 1 fee - 2 impact = 93.7.
+        # The exit sells the marked 97 notional, charging .97 plus quadratic impact.
+        exit_impact = .02 * 97.**2 / 93.7
+        final = 93.7 - .97 - exit_impact
+        assert equity == pytest.approx([100., final])
+        row = trace[0]
+        assert row['mark_return'] == pytest.approx(-.03)
+        assert row['mark_price'] == 97. and row['entry_price'] == 100.
+        assert row['price_stop_hit'] and row['exit_executed']
+>       assert row['stop_outside_envelope'] is False
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'stop_outside_envelope'
+
+tests/test_factor_v2_trace.py:58: KeyError
+_ test_gap_stop_flags_assumed_fill_outside_observed_envelope_without_changing_fill _
+
+    def test_gap_stop_flags_assumed_fill_outside_observed_envelope_without_changing_fill():
+        args = dict(highs=np.array([100., 85.]), lows=np.array([100., 75.]), price_stop_pct=.03)
+        plain = run([100., 80.], [0., 1.], **args)
+        trace = []
+        traced = run([100., 80.], [0., 1.], trace=trace, **args)
+        assert traced == plain
+        assert trace[0]['mark_price'] == 97.
+        assert trace[0]['mark_return'] == pytest.approx(-.03)
+        assert trace[0]['price_stop_hit'] is True
+>       assert trace[0]['stop_outside_envelope'] is True
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'stop_outside_envelope'
+
+tests/test_factor_v2_trace.py:76: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_factor_v2_trace.py::test_intrabar_stop_trace_includes_marked_exit_cost_and_full_assumed_funding
+FAILED tests/test_factor_v2_trace.py::test_gap_stop_flags_assumed_fill_outside_observed_envelope_without_changing_fill
+2 failed, 5 passed in 1.29s

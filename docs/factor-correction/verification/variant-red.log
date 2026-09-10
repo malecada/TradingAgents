@@ -1,0 +1,18 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+________________ test_one_variant_failure_does_not_hide_others _________________
+
+    def test_one_variant_failure_does_not_hide_others():
+        attempted = []
+        def run(name):
+            attempted.append(name)
+            if name == 'zero_execution': raise ValueError('synthetic insolvency')
+            return {'value': name}
+>       result = module().guarded_variants(run)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'factor_correction' has no attribute 'guarded_variants'
+
+tests/test_factor_correction.py:74: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_factor_correction.py::test_one_variant_failure_does_not_hide_others
+1 failed in 0.75s
