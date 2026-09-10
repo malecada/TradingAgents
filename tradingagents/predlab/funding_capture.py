@@ -25,7 +25,8 @@ BASE_URL = 'https://fapi.binance.com'
 DAY_MS = 86_400_000
 ENDPOINTS = {'/fapi/v1/time', '/fapi/v1/exchangeInfo', '/fapi/v1/fundingInfo',
              '/fapi/v1/premiumIndex', '/fapi/v1/fundingRate'}
-SYMBOL = re.compile(r'^[A-Z0-9_]{1,40}USDT$')
+# Preserve provider Unicode identities; reject separators/control characters.
+SYMBOL = re.compile(r'^\w{1,40}USDT$', flags=re.UNICODE)
 DOC_URL = 'https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data'
 
 
@@ -54,6 +55,34 @@ def utc_now():
 
 def sha256(raw):
     return hashlib.sha256(raw).hexdigest()
+
+
+def source_identity():
+    """Identify this module's checkout, or its immutable release marker.
+
+    An enclosing repository is never the collector's source. An owned checkout
+    takes precedence; SOURCE_COMMIT is the fallback for archives without Git.
+    The marker declares provenance, while collector_sha256 identifies the bytes.
+    """
+    root = Path(__file__).resolve().parents[2]
+    if (root/'.git').exists():
+        try:
+            top = subprocess.check_output(['git', 'rev-parse', '--show-toplevel'],
+                cwd=root, stderr=subprocess.DEVNULL).decode().strip()
+            if Path(top).resolve() == root:
+                commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'],
+                    cwd=root, stderr=subprocess.DEVNULL).decode().strip()
+                if re.fullmatch(r'[0-9a-fA-F]{40}', commit):
+                    return dict(git_commit=commit.lower(), source_identity_method='git_checkout')
+        except (OSError, subprocess.CalledProcessError, UnicodeError):
+            pass
+    try:
+        marker = (root/'SOURCE_COMMIT').read_bytes()
+    except OSError as exc:
+        raise CaptureError('source identity unavailable: no owned Git checkout or readable SOURCE_COMMIT') from exc
+    if not re.fullmatch(rb'[0-9a-fA-F]{40}\n', marker):
+        raise CaptureError('invalid SOURCE_COMMIT: expected exactly 40 hexadecimal characters and LF')
+    return dict(git_commit=marker[:-1].decode().lower(), source_identity_method='release_marker')
 
 
 def save_json(path, value):
@@ -242,16 +271,13 @@ def capture_run(directory, *, symbols=None, transport=public_get, pace_seconds=1
                   rate_units='signed fraction per published funding event; positive paid by longs',
                   mark_units='USDT per base unit; associated event mark',
                   time_policy='raw UTC millisecond event labels; no timestamp rounding')
-    try:
-        source['git_commit'] = subprocess.check_output(['git','rev-parse','HEAD'],cwd=Path(__file__).resolve().parents[2],stderr=subprocess.DEVNULL).decode().strip()
-    except (OSError,subprocess.CalledProcessError):
-        source['git_commit'] = None
     source['collector_sha256'] = sha256(Path(__file__).read_bytes())
     result = dict(schema_version=1,kind='binance-usdm-funding-capture',status='failed',
                   started_utc=utc_now(),completed_utc=None,source=source,window=None,
                   requested_symbols=sorted(set(symbols or [])),instruments={},requests=receipts.rows,
                   qualification='Query exhaustion is not historical schedule completeness or exact account cashflow. Current schedules are observed now, never backdated.')
     try:
+        source.update(source_identity())
         clock,clock_received = receipts.get('/fapi/v1/time',{})
         end = clock.get('serverTime') if isinstance(clock,dict) else None
         if type(end) is not int or end <= 0:

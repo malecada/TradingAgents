@@ -1,0 +1,5 @@
+# Current-universe identifier correction
+
+Inspection of the immutable pilot's exchange metadata found 528 instruments meeting the declared current TRADING / PERPETUAL / USDT quote-and-margin conditions. The initial collector selected 523 because an ASCII-only identifier check silently excluded `币安人生USDT`, `我踏马来了USDT`, `龙虾USDT`, `牛来USDT` and `哈基米USDT`. Those are separate provider identities, not aliases or successor mappings. No strategy evaluation or paper journal used the restricted capture.
+
+The corrected collector preserves Unicode word characters and the exact `USDT` suffix, without case folding, transliteration or Unicode normalization. Slashes, whitespace, control characters and path traversal remain rejected. Eligibility otherwise retains the original declared conditions. A fresh capture must include the full eligible denominator; the earlier 523-name run remains immutable evidence of the restricted query and must not be represented as the full current universe. This correction does not change any historical universe, gate, research result or ledger row.

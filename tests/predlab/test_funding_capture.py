@@ -1,7 +1,11 @@
 """Public capture evidence and pagination; no exchange or account calls."""
 import hashlib
 import http.client
+import importlib.util
 import json
+import os
+from pathlib import Path
+import subprocess
 import urllib.error
 
 import pandas as pd
@@ -126,6 +130,23 @@ def test_unknown_requested_symbol_is_not_dropped_or_relabelled(tmp_path):
     assert result['instruments']['GONEUSDT']['status']=='unavailable'
 
 
+@pytest.mark.parametrize('symbol',['币安人生USDT','我踏马来了USDT','龙虾USDT','牛来USDT','哈基米USDT'])
+def test_provider_unicode_identity_is_preserved_in_current_universe(tmp_path,symbol):
+    fixture=PublicFixture(rows=[event(NOW,symbol=symbol)],contracts=[contract(symbol)])
+    result=capture.capture_run(tmp_path/'run',transport=fixture,pace_seconds=0)
+    assert result['requested_symbols']==[symbol]
+    assert result['instruments'][symbol]['status']=='captured'
+    assert (tmp_path/'run'/f'events/{symbol}.parquet').is_file()
+    assert [p['symbol'] for e,p in fixture.calls if e.endswith('/fundingRate')]==[symbol]
+
+
+@pytest.mark.parametrize('symbol',['../BTCUSDT','BTC/USDT','BTC USDT','BTCUSDT\n'])
+def test_unsafe_symbol_is_rejected_before_capture(tmp_path,symbol):
+    with pytest.raises(ValueError):
+        capture.capture_run(tmp_path/'run',symbols=[symbol],transport=PublicFixture(),pace_seconds=0)
+    assert not (tmp_path/'run').exists()
+
+
 def test_full_nonadvancing_page_cannot_claim_exhaustion(tmp_path):
     fixture=PublicFixture(); base=fixture.__call__
     def transport(e,p):
@@ -195,3 +216,81 @@ def test_invalid_schedule_or_stale_current_clock_cannot_claim_capture(tmp_path,e
     def transport(e,p): return (200,{},json.dumps(bad).encode()) if e==endpoint else fixture(e,p)
     result=capture.capture_run(tmp_path/'run',transport=transport,pace_seconds=0)
     assert result['status']=='failed' and result.get('error')
+
+
+def isolated_collector(root, monkeypatch):
+    """Load the actual collector from a synthetic source tree without .git."""
+    module_path = root/'tradingagents'/'predlab'/'funding_capture.py'
+    module_path.parent.mkdir(parents=True)
+    module_path.write_bytes(Path(capture.__file__).read_bytes())
+    spec = importlib.util.spec_from_file_location('isolated_funding_capture', module_path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    monkeypatch.setattr(module, 'utc_now', lambda: pd.Timestamp(NOW, unit='ms', tz='UTC').isoformat())
+    return module
+
+
+def initialize_local_git(root):
+    root.mkdir(parents=True, exist_ok=True)
+    env = dict(os.environ, GIT_CONFIG_GLOBAL='/dev/null', GIT_CONFIG_NOSYSTEM='1')
+    def git(*args):
+        return subprocess.check_output(['git', '-C', str(root), *args], env=env, stderr=subprocess.DEVNULL)
+    git('init')
+    (root/'seed.txt').write_text('synthetic source identity fixture\n')
+    git('add', '.')
+    git('-c', 'user.name=Test', '-c', 'user.email=test@example.invalid',
+        '-c', 'commit.gpgsign=false', 'commit', '-m', 'synthetic source')
+    return git('rev-parse', 'HEAD').decode().strip()
+
+
+@pytest.mark.parametrize('enclosing_git', [False, True])
+def test_release_source_commit_is_used_without_own_git_checkout(tmp_path, monkeypatch, enclosing_git):
+    outer = tmp_path/'outer'
+    if enclosing_git:
+        initialize_local_git(outer)
+    root = outer/'release'
+    module = isolated_collector(root, monkeypatch)
+    commit = '1234567890abcdef1234567890abcdef12345678'
+    (root/'SOURCE_COMMIT').write_text(commit+'\n')
+    result = module.capture_run(tmp_path/'run', transport=PublicFixture(), pace_seconds=0)
+    assert result['status'] == 'captured'
+    assert result['source']['git_commit'] == commit
+    assert result['source']['source_identity_method'] == 'release_marker'
+    assert result['source']['collector_sha256'] == hashlib.sha256(Path(module.__file__).read_bytes()).hexdigest()
+
+
+@pytest.mark.parametrize('enclosing_git', [False, True])
+def test_missing_module_source_identity_stops_before_requests(tmp_path, monkeypatch, enclosing_git):
+    outer = tmp_path/'outer'
+    if enclosing_git:
+        initialize_local_git(outer)
+    module = isolated_collector(outer/'release', monkeypatch)
+    fixture = PublicFixture()
+    result = module.capture_run(tmp_path/'run', symbols=['BTCUSDT'], transport=fixture, pace_seconds=0)
+    assert result['status'] == 'failed' and 'source identity' in result['error']
+    assert result['requests'] == [] and fixture.calls == []
+    assert result['requested_symbols'] == ['BTCUSDT']
+    assert json.loads((tmp_path/'run'/'manifest.json').read_text()) == result
+
+
+@pytest.mark.parametrize('marker', [b'', b'g'*40+b'\n', b'a'*39+b'\n', b'a'*40, b'a'*40+b'\nextra\n'])
+def test_invalid_release_marker_fails_before_any_request(tmp_path, monkeypatch, marker):
+    root = tmp_path/'release'
+    module = isolated_collector(root, monkeypatch)
+    (root/'SOURCE_COMMIT').write_bytes(marker)
+    fixture = PublicFixture()
+    result = module.capture_run(tmp_path/'run', transport=fixture, pace_seconds=0)
+    assert result['status'] == 'failed' and 'SOURCE_COMMIT' in result['error']
+    assert not fixture.calls and result['requests'] == []
+    assert (root/'SOURCE_COMMIT').read_bytes() == marker
+    assert json.loads((tmp_path/'run'/'manifest.json').read_text()) == result
+
+
+def test_own_module_checkout_identifies_its_git_commit(tmp_path, monkeypatch):
+    root = tmp_path/'checkout'
+    module = isolated_collector(root, monkeypatch)
+    commit = initialize_local_git(root)
+    result = module.capture_run(tmp_path/'run', transport=PublicFixture(), pace_seconds=0)
+    assert result['status'] == 'captured'
+    assert result['source']['git_commit'] == commit
+    assert result['source']['source_identity_method'] == 'git_checkout'
