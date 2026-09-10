@@ -32,3 +32,15 @@ describe("sliceFromDays", () => {
     expect(sliceFromDays(withBad, 9999)).toEqual(pts);
   });
 });
+import type { Point as NullablePoint } from '../types';
+
+it('retains unknown dates without converting an unavailable measurement to zero', () => {
+  const points = [{ ts: '2026-09-01', value: 100 }, { ts: '2026-09-02', value: null },
+    { ts: '2026-09-03', value: null }] as NullablePoint[];
+  expect(rebaseTo100(points)).toEqual(points);
+});
+
+it('does not restart a sliced unknown NAV at a later observed value', () => {
+  const points = [{ ts: '2026-09-02', value: null }, { ts: '2026-09-03', value: 110 }] as NullablePoint[];
+  expect(rebaseTo100(points)).toEqual(points.map(p => ({ ...p, value: null })));
+});

@@ -341,7 +341,11 @@ def create_app(
             return {"books": {b: None for b in BOOKS},
                     "nav": {b: None for b in BOOKS},
                     "account": {"testnet": None, "live": None},
-                    "reference": None, "backtest_yearly": None}
+                    "reference": None, "backtest_yearly": None,
+                    "measurement": {"status": "missing",
+                                    "note": "No paper data source configured; corrected performance unavailable.",
+                                    "books": {b: {"status": "missing", "reason": "No paper data source configured",
+                                                  "journal": None} for b in BOOKS}}}
         return _sanitize_floats(p["performance"])
 
     @app.get("/api/predlab/book")

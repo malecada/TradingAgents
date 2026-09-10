@@ -9,15 +9,19 @@ export interface EquityChartProps {
   quantEquity: Point[]; hybridEquity: Point[];     // already sliced+rebased
   quantDd: Point[]; hybridDd: Point[];             // already sliced (fractions)
   quantRs: Point[]; hybridRs: Point[];             // rolling sharpe (may be [])
-  anchors: { quant: number; hybrid: number | null };
+  anchors: { quant: number | null; hybrid: number | null };
   labels?: { a: string; b: string };
   /** Extra base-100 equity lines on the same pane (already sliced+rebased),
    *  e.g. NAV overlays or live-account curves. Optional, defaults to none. */
   extraEquity?: { label: string; color: string; data: Point[] }[];
 }
 
-const toLw = (pts: Point[]) =>
-  pts.map((p) => ({ time: (new Date(p.ts).getTime() / 1000) as Time, value: p.value }));
+const toLw = (pts: Point[], multiplier = 1) =>
+  pts.map((p) => {
+    const time = (new Date(p.ts).getTime() / 1000) as Time;
+    return p.value === null || !Number.isFinite(p.value)
+      ? { time } : { time, value: p.value * multiplier };
+  });
 
 export function EquityChart(props: EquityChartProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -56,18 +60,18 @@ export function EquityChart(props: EquityChartProps) {
     chart.addSeries(AreaSeries, {
       ...ddOpts, lineColor: "#3fb950", topColor: "rgba(63,185,80,0)",
       bottomColor: "rgba(63,185,80,0.25)", title: `${labels.a} DD`,
-    }, 1).setData(toLw(props.quantDd.map((p) => ({ ...p, value: p.value * 100 }))));
+    }, 1).setData(toLw(props.quantDd, 100));
     if (props.hybridDd.length)
       chart.addSeries(AreaSeries, {
         ...ddOpts, lineColor: "#bc8cff", topColor: "rgba(188,140,255,0)",
         bottomColor: "rgba(188,140,255,0.25)", title: `${labels.b} DD`,
-      }, 1).setData(toLw(props.hybridDd.map((p) => ({ ...p, value: p.value * 100 }))));
+      }, 1).setData(toLw(props.hybridDd, 100));
 
     if (showRs) {
       const rsQuant = chart.addSeries(LineSeries,
         { color: "#3fb950", lineWidth: 1, title: `${labels.a} rSR` }, 2);
       rsQuant.setData(toLw(props.quantRs));
-      rsQuant.createPriceLine({
+      if (props.anchors.quant !== null) rsQuant.createPriceLine({
         price: props.anchors.quant, color: "#8b949e",
         lineStyle: LineStyle.Dashed, title: `backtest ${props.anchors.quant}`,
       });

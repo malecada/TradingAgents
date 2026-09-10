@@ -7,9 +7,9 @@ import { Section } from "../components/Section";
 import { EquityChart } from "../charts/EquityChart";
 import { fmtBps, fmtNum, fmtPct, fmtUsd, fmtWarmup } from "../lib/format";
 import { rebaseTo100, sliceFromDays } from "../lib/rebase";
-import { safeAccount, safeNav } from "../lib/predlabGuard";
+import { correctedPayload, safeAccount, safeNav } from "../lib/predlabGuard";
 import type {
-  PredlabBookPerf, PredlabYearlyRow, PredlabNav, PredlabAccount, Point,
+  PredlabBookPerf, PredlabNav, PredlabAccount, Point,
 } from "../types";
 
 const RANGES = [
@@ -37,47 +37,52 @@ function CardsRow(props: {
 }) {
   const c = props.p.cards;
   const slip = props.p.slippage;
-  const warm = c.warmup.n < c.warmup.required;
+  const eligible = props.p.measurement_status === 'corrected_v2' || props.p.measurement_status === 'warmup';
+  const warm = eligible && c.warmup.n < c.warmup.required;
   const nav = props.nav;
-  const navActive = !!nav && nav.cards.active_days > 0;
+  const navActive = !!nav && nav.cards.nav_cum_return !== null;
+  const navWarming = nav?.measurement_status === 'warmup';
   return (
     <div style={{ marginTop: 10 }}>
       <Badge kind={props.kind}>{props.name.toUpperCase()}</Badge>{" "}
-      <span className="muted">as of {c.last_asof} · {c.n_days} rows</span>
+      <span className="muted">as of {c.last_asof} · {c.n_days} dates</span>
+      <p>Base measurement: {props.p.measurement_status ?? 'unavailable'}
+        {props.p.measurement_reason && <> · {props.p.measurement_reason}</>}</p>
+      <p>Overlay measurement: {nav?.measurement_status ?? 'unavailable'}
+        {nav?.measurement_reason && <> · {nav.measurement_reason}</>}</p>
       <div className="cards" style={{ marginTop: 6 }}>
-        <Card label="Book return (gross 2x, unscaled)" value={fmtPct(c.cum_return)}
-          tone={c.cum_return >= 0 ? "pos" : "neg"} />
-        <Card label="Account NAV (scaled)"
+        <Card label="Base book return (net)" value={fmtPct(c.cum_return)}
+          tone={c.cum_return === null ? "" : c.cum_return >= 0 ? "pos" : "neg"} />
+        <Card label="Paper overlay return (net)"
           value={navActive ? fmtPct(nav!.cards.nav_cum_return)
-            : fmtWarmup(nav?.cards.warmup.n ?? 0, nav?.cards.warmup.required ?? 21)}
+            : navWarming ? fmtWarmup(nav?.cards.warmup.n ?? 0, nav?.cards.warmup.required ?? 20) : "Unavailable"}
           tone={navActive && nav!.cards.nav_cum_return !== null
             ? (nav!.cards.nav_cum_return >= 0 ? "pos" : "neg") : ""} />
-        <Card label="Sharpe (paper)" value={fmtNum(c.sharpe)}
-          tone={c.sharpe >= 0 ? "pos" : "neg"} />
+        <Card label="Sharpe (base net)" value={fmtNum(c.sharpe)}
+          tone={c.sharpe === null ? "" : c.sharpe >= 0 ? "pos" : "neg"} />
         <Card label="Max drawdown" value={fmtPct(c.max_drawdown)} tone="neg" />
         <Card label="VT scale"
           value={c.scale !== null ? fmtNum(c.scale)
-            : `warming up (${c.warmup.n}/${c.warmup.required})`} />
+            : warm ? `warming up (${c.warmup.n}/${c.warmup.required})` : 'Unavailable'} />
         <Card label="Avg turnover" value={fmtPct(c.avg_turnover)} />
-        <Card label="Cum est. cost" value={fmtPct(c.cum_cost)} tone="neg" />
-        <Card label="Fill slippage (mark vs close)"
-          value={slip ? `${fmtBps(slip.mean_bps)}/day` : "accruing"}
+        <Card label="Sum of daily cost fractions" value={fmtPct(c.cum_cost)} tone="neg" />
+        <Card label="Mark vs close (gross diagnostic)"
+          value={slip ? `${fmtBps(slip.mean_bps)}/day` : "Unavailable"}
           tone={slip ? (slip.mean_bps >= 0 ? "pos" : "neg") : ""} />
       </div>
       {nav && nav.cards.last_scale !== null && <p className="muted">
-        last overlay scale applied to the account: {fmtNum(nav.cards.last_scale)}</p>}
+        latest paper overlay scale: {fmtNum(nav.cards.last_scale)}</p>}
       {warm && <p className="muted">
-        vol-target scale needs {c.warmup.required} realized returns —
+        vol-target scale needs {c.warmup.required} contiguous base net returns —
         {" "}{c.warmup.required - c.warmup.n} to go</p>}
       {slip
         ? <p className="muted">
-            fill check over {slip.n} paired day{slip.n === 1 ? "" : "s"}:
+            gross mark/close comparison over {slip.n} paired day{slip.n === 1 ? "" : "s"}:
             {" "}{fmtBps(slip.cum_bps)} cumulative · last {slip.last.asof}
             {" "}close {fmtPct(slip.last.close_ret)} vs mark
             {" "}{fmtPct(slip.last.mark_ret)} ({fmtBps(slip.last.bps)})</p>
         : <p className="muted">
-            fill check accruing — rows carry write-time marks from
-            {" "}2026-08-18; the first paired day needs two marked rows</p>}
+            The mark/close comparison is a gross diagnostic, not an observed execution cost.</p>}
     </div>
   );
 }
@@ -86,40 +91,22 @@ function AccountCardsRow(props: { venue: string; a: PredlabAccount }) {
   const c = props.a.cards;
   return (
     <div style={{ marginTop: 10 }}>
-      <Badge kind={c.halted ? "error" : "ok"}>{props.venue.toUpperCase()}</Badge>{" "}
+      <Badge kind={c.halted ? "error" : props.a.reconciliation_status === 'reconciled' ? "ok" : "stale"}>{props.venue.toUpperCase()}</Badge>{" "}
       {c.halted && <Badge kind="error">HALTED</Badge>}{" "}
       <span className="muted">
         as of {c.last_asof}{c.dry_run_last ? " (dry-run)" : ""}
         {" "}· {c.n_cycles} cycles</span>
       <div className="cards" style={{ marginTop: 6 }}>
-        <Card label="Account cumulative return" value={fmtPct(c.cum_return)}
-          tone={c.cum_return >= 0 ? "pos" : "neg"} />
-        <Card label="Equity" value={fmtUsd(c.equity)} />
+        <Card label="Equity change (unadjusted)" value={fmtPct(c.cum_return)}
+          tone={c.cum_return === null ? "" : c.cum_return >= 0 ? "pos" : "neg"} />
+        <Card label="Equity snapshot" value={fmtUsd(c.equity)} />
         <Card label="Cycles" value={fmtNum(c.n_cycles, 0)} />
         <Card label="Orders placed (total)" value={fmtNum(c.orders_total, 0)} />
       </div>
+      <p>Reconciliation: {props.a.reconciliation_status ?? 'unavailable'}
+        {props.a.reconciliation_reason && <> · {props.a.reconciliation_reason}</>}</p>
+      <p className="muted">Equity changes include deposits and withdrawals; they do not measure strategy returns.</p>
     </div>
-  );
-}
-
-function YearlyTable(props: {
-  years: Record<string, PredlabYearlyRow>; title: string;
-}) {
-  const keys = Object.keys(props.years).sort();
-  return (
-    <table>
-      <thead><tr><th>{props.title}</th><th>SR</th><th>Return</th>
-        <th>Max DD</th><th>Days</th></tr></thead>
-      <tbody>
-        {keys.map((y) => (
-          <tr key={y}><td>{y}</td>
-            <td>{fmtNum(props.years[y].sr)}</td>
-            <td>{fmtPct(props.years[y].ret)}</td>
-            <td>{fmtPct(props.years[y].maxdd)}</td>
-            <td>{props.years[y].n_days}</td></tr>
-        ))}
-      </tbody>
-    </table>
   );
 }
 
@@ -128,7 +115,7 @@ export function PredlabPerformanceTab() {
     queryKey: ["predlab-performance"], queryFn: api.predlabPerformance,
   });
   const [days, setDays] = useState<number | null>(null);
-  const d = q.data;
+  const d = correctedPayload(q.data);
   const champ = useMemo(() => prep(d?.books.champion ?? null, days), [d, days]);
   const vt10 = useMemo(() => prep(d?.books.vt10 ?? null, days), [d, days]);
   const champNav = useMemo(
@@ -140,7 +127,10 @@ export function PredlabPerformanceTab() {
   const liveAcct = useMemo(
     () => prepSeries(safeAccount(d, "live")?.series, days), [d, days]);
   if (q.isLoading) return <div className="muted">loading…</div>;
-  if (q.isError || !d) return <div className="badge error">failed: {String(q.error)}</div>;
+  if (q.isError || !q.data) return <div className="badge error">failed: {String(q.error)}</div>;
+  if (!d) return <Section title="Corrected performance unavailable">
+    <p>The connected monitor serves legacy measurements. Update the monitor before viewing corrected net performance.</p>
+  </Section>;
 
   const navChampion = safeNav(d, "champion");
   const navVt10 = safeNav(d, "vt10");
@@ -156,19 +146,23 @@ export function PredlabPerformanceTab() {
 
   return (
     <>
+      <Section title="Measurement status">
+        <p>{d.measurement!.note}</p>
+        <p className="muted">Unknown intervals remain unavailable. No strategy is currently validated.</p>
+      </Section>
       {d.books.champion
         ? <CardsRow name="champion" kind="quant" p={d.books.champion}
             nav={navChampion} />
-        : <p className="muted">champion journal unavailable</p>}
+        : <p>Champion: Unavailable · {d.measurement!.books.champion.reason ?? d.measurement!.books.champion.status}</p>}
       {d.books.vt10
         ? <CardsRow name="vt10 (old book)" kind="hybrid" p={d.books.vt10}
             nav={navVt10} />
-        : <p className="muted">vt10 journal unavailable</p>}
+        : <p>VT10: Unavailable · {d.measurement!.books.vt10.reason ?? d.measurement!.books.vt10.status}</p>}
 
       {acctTestnet && <AccountCardsRow venue="testnet" a={acctTestnet} />}
       {acctLive && <AccountCardsRow venue="live" a={acctLive} />}
 
-      <Section title="Paper equity + NAV/account (indexed to 100) · drawdown · rolling Sharpe"
+      <Section title="Net paper performance and account equity (indexed to 100)"
         right={
           <div className="pills">
             {RANGES.map((r) => (
@@ -181,34 +175,14 @@ export function PredlabPerformanceTab() {
           quantEquity={champ.eq} hybridEquity={vt10.eq}
           quantDd={champ.dd} hybridDd={vt10.dd}
           quantRs={champ.rs} hybridRs={vt10.rs}
-          anchors={{ quant: d.reference?.ovl_sr_full ?? 0, hybrid: null }}
-          labels={{ a: "champion", b: "vt10" }}
+          anchors={{ quant: null, hybrid: null }}
+          labels={{ a: "champion base net", b: "vt10 base net" }}
           extraEquity={extraEquity}
         />
         {(d.books.champion?.rolling_sharpe.length ?? 0) === 0 &&
-          <p className="muted">rolling Sharpe appears after 30 realized days</p>}
+          <p className="muted">rolling Sharpe requires 30 complete net intervals</p>}
       </Section>
 
-      {d.reference && (
-        <Section title="Frozen dev reference (2021-01 → 2026-07, backtest)">
-          <div className="cards">
-            <Card label="Overlaid SR" value={fmtNum(d.reference.ovl_sr_full)} />
-            <Card label="Overlaid MaxDD" value={fmtPct(d.reference.ovl_maxdd)} tone="neg" />
-            <Card label="Raw SR" value={fmtNum(d.reference.raw_sr_full)} />
-            <Card label="DSR (selection pool)" value={fmtNum(d.reference.dsr_selection_pool)} />
-          </div>
-        </Section>
-      )}
-
-      {d.backtest_yearly?.champion && (
-        <Section title="Backtest (dev) yearly — overlaid, net">
-          <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
-            <YearlyTable years={d.backtest_yearly.champion} title="champion" />
-            {d.backtest_yearly.vt10 &&
-              <YearlyTable years={d.backtest_yearly.vt10} title="vt10" />}
-          </div>
-        </Section>
-      )}
     </>
   );
 }

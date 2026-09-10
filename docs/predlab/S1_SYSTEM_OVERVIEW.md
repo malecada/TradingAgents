@@ -1,3 +1,5 @@
+> Historical August 23 system description. Positive performance references, gate claims, legacy journal semantics and deployment assumptions below are superseded by the accounting audits and September 10 operational report in `docs/operations/OPERATIONAL_INTEGRATION_2026-09-10.md`. Use `s1_live_runbook.md` and `docs/operations/MANUAL_ROLLOUT.md` for current contracts; no strategy is validated.
+
 ---
 title: "S1 Champion System — Overview, Terminology, UI Guide, and Performance Record"
 date: 2026-08-23

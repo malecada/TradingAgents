@@ -1,4 +1,4 @@
-export interface Point { ts: string; value: number }
+export interface Point { ts: string; value: number | null }
 
 export interface Cards {
   equity: number; sharpe: number; max_drawdown: number;
@@ -94,11 +94,12 @@ export type Strategy = "quant" | "hybrid";
 export type PredlabBookName = "champion" | "vt10";
 
 export interface PredlabCards {
-  cum_return: number; sharpe: number; max_drawdown: number;
+  cum_return: number | null; sharpe: number | null; max_drawdown: number | null;
   scale: number | null;
   warmup: { n: number; required: number };
   avg_turnover: number | null; cum_cost: number | null;
   last_asof: string; n_days: number;
+  measurement_status?: string; measurement_reason?: string | null;
 }
 
 /** (mark leg - close leg) per day: what the close fill assumption costs. */
@@ -111,19 +112,22 @@ export interface PredlabBookPerf {
   equity: Point[]; drawdown: Point[]; rolling_sharpe: Point[];
   cards: PredlabCards;
   slippage: PredlabSlippage | null;
+  measurement_status?: string; measurement_reason?: string | null;
 }
 
 export interface PredlabYearlyRow {
   sr: number; ret: number; maxdd: number; n_days: number;
 }
 
-/** Account-percent NAV = 100 x prod(1 + scale_prev_t x ret_t). */
+/** Corrected overlay NAV compounds already-net returns without another scaling. */
 export interface PredlabNav {
   series: Point[];
+  measurement_status?: string; measurement_reason?: string | null;
   cards: {
     nav_cum_return: number | null; active_days: number;
     warmup: { n: number; required: number };
     last_scale: number | null;
+    measurement_status?: string; measurement_reason?: string | null;
   };
 }
 
@@ -132,15 +136,21 @@ export type PredlabVenue = "testnet" | "live";
 /** Live-executor (Binance) account equity block from journal_live rows. */
 export interface PredlabAccount {
   series: Point[];
+  reconciliation_status?: string; reconciliation_reason?: string | null;
   cards: {
-    cum_return: number; equity: number; n_cycles: number;
-    orders_total: number; last_asof: string;
-    dry_run_last: boolean; halted: boolean;
+    cum_return: number | null; equity: number | null; n_cycles: number;
+    orders_total: number | null; last_asof: string | null;
+    dry_run_last: boolean | null; halted: boolean;
+    reconciliation_status?: string; reconciliation_reason?: string | null;
   };
 }
 
 export interface PredlabPerformanceResp {
   books: Record<PredlabBookName, PredlabBookPerf | null>;
+  measurement?: {
+    status: string; note: string;
+    books: Record<PredlabBookName, { status: string; reason: string | null; journal: string | null }>;
+  };
   // Optional: a backend deployed without this feature (or serving an
   // older/degraded payload shape) may omit these keys entirely — every
   // consumer must tolerate that, not just a null value.
@@ -171,15 +181,18 @@ export interface PredlabBookResp {
 export interface PredlabGateResp {
   window_start: string; earliest_eval: string;
   days_elapsed: number; days_remaining: number;
-  threshold_sr: number; criteria: string[];
+  threshold_sr: number | null; criteria: string[];
+  status?: string; reason?: string;
   running: { sr: number | null; n_returns: number; note: string };
   informational: true;
 }
 
 export interface PredlabBookHealth {
-  last_asof: string; written_utc: string | null; stale: boolean;
+  last_asof: string | null; written_utc: string | null; stale: boolean;
   rows: number; malformed: number;
   gaps: { date: string; known: boolean }[];
+  journal_version?: number | null;
+  measurement_status?: string; measurement_reason?: string | null; legacy_rows?: number;
 }
 
 export interface PredlabHealthResp {

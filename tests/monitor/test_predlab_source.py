@@ -68,19 +68,19 @@ def test_full_payload(tmp_path):
                                    "equity_before": 1000.0}],
                     testnet_halted=True)
     p = PredlabSource(str(root)).payload()
-    assert p["performance"]["books"]["champion"]["cards"]["n_days"] == 2
-    assert p["performance"]["books"]["vt10"]["cards"]["n_days"] == 1
-    assert p["performance"]["reference"]["ovl_sr_full"] == 1.892
-    assert "2025" in p["performance"]["backtest_yearly"]["champion"]
+    assert p["performance"]["books"] == {"champion": None, "vt10": None}
+    assert p["performance"]["reference"] is None
+    assert p["performance"]["backtest_yearly"] is None
+    assert p["performance"]["measurement"]["status"] == "legacy_only"
     assert p["books"]["champion"]["asof"] == "2026-08-04"
-    assert p["gate"]["threshold_sr"] == 0.946
+    assert p["gate"]["threshold_sr"] is None
     assert p["health"]["books"]["champion"]["rows"] == 2
     assert "predlab-journal-backup" in p["health"]["heartbeat_note"]
     # nav mirrors books, keyed the same way
-    assert p["performance"]["nav"]["champion"]["cards"]["active_days"] == 0
-    assert p["performance"]["nav"]["vt10"] is not None
+    assert p["performance"]["nav"] == {"champion": None, "vt10": None}
     # account: testnet present + halted, live journal absent -> None
-    assert p["performance"]["account"]["testnet"]["cards"]["equity"] == 1000.0
+    assert p["performance"]["account"]["testnet"]["cards"]["equity"] is None
+    assert p["performance"]["account"]["testnet"]["reconciliation_status"] == "legacy_only"
     assert p["performance"]["account"]["testnet"]["cards"]["halted"] is True
     assert p["performance"]["account"]["live"] is None
 
@@ -94,7 +94,8 @@ def test_missing_everything_degrades_to_nulls(tmp_path):
     assert p["performance"]["account"] == {"testnet": None, "live": None}
     assert p["books"] == {"champion": None, "vt10": None}
     assert p["health"]["books"] == {"champion": None, "vt10": None}
-    assert p["gate"]["threshold_sr"] == 0.946  # fallback
+    assert p["gate"]["threshold_sr"] is None
+    assert p["performance"]["measurement"]["status"] == "missing"
 
 
 def test_payload_is_ttl_cached(tmp_path):

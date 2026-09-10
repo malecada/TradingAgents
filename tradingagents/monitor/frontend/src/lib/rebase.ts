@@ -1,11 +1,15 @@
-export interface Point { ts: string; value: number }
+import type { Point } from '../types';
 
 /** Rebase a series so its first point equals 100. */
 export function rebaseTo100(points: Point[]): Point[] {
   if (points.length === 0) return [];
   const base = points[0].value;
-  if (base === 0) return points.map((p) => ({ ...p, value: 0 }));
-  return points.map((p) => ({ ts: p.ts, value: (p.value / base) * 100 }));
+  if (base === null || !Number.isFinite(base))
+    return points.map((p) => ({ ...p, value: null }));
+  return points.map((p) => ({ ts: p.ts,
+    value: p.value === null || !Number.isFinite(p.value) ? null
+      : base === 0 ? 0 : (p.value / base) * 100,
+  }));
 }
 
 /** Keep points within `days` of the LAST point's timestamp (null = all).

@@ -1,12 +1,4 @@
-"""Predlab paper-book journal parsing and derived metrics.
-
-The S1 paper trader writes JSONL weights-and-returns journals (no equity
-or position fields). This module is pure: functions take parsed rows and
-return plain dicts for the API layer. Filesystem access is limited to
-``parse_journal`` / ``_load_json``; both degrade to empty results on
-missing files. See docs/superpowers/specs/2026-08-06-monitor-predlab-
-overhaul-design.md.
-"""
+"""Read-only v2 measurements; legacy journals remain composition diagnostics."""
 from __future__ import annotations
 
 import json
@@ -14,7 +6,9 @@ import os
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-from tradingagents.monitor import metrics
+from tradingagents.monitor.journal_measurements import (
+    derive_account, derive_book, derive_nav, number, quantities, record_error,
+)
 from tradingagents.monitor.sources import ttl_cached
 
 # book key -> (journal filename, scale key). Champion is the frozen
@@ -23,7 +17,7 @@ BOOKS: dict[str, tuple[str, str]] = {
     "champion": ("journal_champion.jsonl", "vt15_b100_scale"),
     "vt10": ("journal.jsonl", "vt10_scale"),
 }
-WARMUP_RETURNS = 21          # paper trader needs >= 21 realized returns
+WARMUP_RETURNS = 20          # v2 paper trader uses 20 contiguous base net returns
 STALE_AFTER_HOURS = 36.0
 _ROLLING_WINDOW = 30
 # VPS scheduler was off on these dates — documented, not an incident.
@@ -32,7 +26,7 @@ KNOWN_GAPS = {"2026-07-31", "2026-08-01", "2026-08-02"}
 # display is informational only; the evaluation itself stays sealed.
 FORWARD_START = date(2026, 7, 2)
 EARLIEST_EVAL = date(2027, 1, 2)
-FALLBACK_THRESHOLD_SR = 0.946   # 0.5 x dev ovl SR 1.892
+V2_JOURNALS = {'champion': 'journal_champion_v2.jsonl', 'vt10': 'journal_v2.jsonl'}
 
 
 def parse_journal(path: Path) -> tuple[list[dict], int]:
@@ -41,7 +35,11 @@ def parse_journal(path: Path) -> tuple[list[dict], int]:
         return [], 0
     rows: list[dict] = []
     malformed = 0
-    for line in path.read_text().splitlines():
+    try:
+        lines = path.read_text().splitlines()
+    except (OSError, UnicodeError):
+        return [], 1
+    for line in lines:
         if not line.strip():
             continue
         try:
@@ -52,7 +50,8 @@ def parse_journal(path: Path) -> tuple[list[dict], int]:
         asof = row.get("asof") if isinstance(row, dict) else None
         if isinstance(asof, str):
             try:
-                date.fromisoformat(asof)
+                if date.fromisoformat(asof).isoformat() != asof:
+                    raise ValueError('noncanonical daily date')
             except ValueError:
                 asof = None
         else:
@@ -80,8 +79,8 @@ def derive_slippage(rows: list[dict]) -> dict | None:
     carries both legs (rows written before 2026-08-18 carry no marks).
     """
     pairs = [r for r in rows
-             if r.get("realized_book_ret") is not None
-             and r.get("realized_mark_ret") is not None]
+             if number(r.get("realized_book_ret"))
+             and number(r.get("realized_mark_ret"))]
     if not pairs:
         return None
     bps = [(r["realized_mark_ret"] - r["realized_book_ret"]) * 1e4
@@ -98,114 +97,12 @@ def derive_slippage(rows: list[dict]) -> dict | None:
     }
 
 
-def derive_book(rows: list[dict], scale_key: str) -> dict | None:
-    """Performance block for one book, or None when the journal is empty."""
-    if not rows:
-        return None
-    equity = [{"ts": rows[0]["asof"], "value": 100.0}]
-    for r in rows[1:]:
-        ret = r.get("realized_book_ret")
-        if ret is None:
-            continue
-        equity.append({"ts": r["asof"],
-                       "value": equity[-1]["value"] * (1.0 + ret)})
-    values = [p["value"] for p in equity]
-    scales = [r.get(scale_key) for r in rows if r.get(scale_key) is not None]
-    turnovers = [r["est_turnover"] for r in rows
-                 if r.get("est_turnover") is not None]
-    costs = [r["est_cost"] for r in rows if r.get("est_cost") is not None]
-    return {
-        "equity": equity,
-        "drawdown": metrics.drawdown_series(equity),
-        "rolling_sharpe": metrics.rolling_sharpe(equity, _ROLLING_WINDOW),
-        "slippage": derive_slippage(rows),
-        "cards": {
-            "cum_return": values[-1] / 100.0 - 1.0,
-            "sharpe": round(metrics.sharpe(values), 2),
-            "max_drawdown": round(metrics.max_drawdown(values), 4),
-            "scale": scales[-1] if scales else None,
-            "warmup": {"n": len(_realized(rows)), "required": WARMUP_RETURNS},
-            "avg_turnover": (sum(turnovers) / len(turnovers)
-                             if turnovers else None),
-            "cum_cost": sum(costs) if costs else None,
-            "last_asof": rows[-1]["asof"],
-            "n_days": len(rows),
-        },
-    }
-
-
-def derive_nav(rows: list[dict], scale_key: str) -> dict | None:
-    """Account-percent NAV: 100 x prod(1 + scale_prev_t x ret_t).
-
-    ``scale_prev`` is the PREVIOUS row's ``scale_key`` value — the scale
-    that was actually known when the position for day t was put on. A row
-    only compounds when both its own ``realized_book_ret`` is not None
-    AND the previous row's scale is not None; otherwise the day is flat
-    (no position / no return data) and NAV carries forward unchanged.
-    Series starts at the first row, base 100.0; None if rows is empty.
-    """
-    if not rows:
-        return None
-    series = [{"ts": rows[0]["asof"], "value": 100.0}]
-    nav = 100.0
-    active_days = 0
-    prev_scale = rows[0].get(scale_key)
-    for row in rows[1:]:
-        ret = row.get("realized_book_ret")
-        if ret is not None:
-            if prev_scale is not None:
-                nav *= 1.0 + prev_scale * ret
-                active_days += 1
-            series.append({"ts": row["asof"], "value": nav})
-        prev_scale = row.get(scale_key)
-    scales = [r.get(scale_key) for r in rows if r.get(scale_key) is not None]
-    return {
-        "series": series,
-        "cards": {
-            "nav_cum_return": (nav / 100.0 - 1.0) if active_days else None,
-            "active_days": active_days,
-            "warmup": {"n": len(scales), "required": WARMUP_RETURNS},
-            "last_scale": scales[-1] if scales else None,
-        },
-    }
-
-
-def derive_account(rows: list[dict], halted: bool) -> dict | None:
-    """Live-account equity block from ``journal_live`` rows, or None when
-    no row carries a positive numeric ``equity_before`` (unfunded/zero
-    first reading can't anchor an index-to-100 series — avoid a
-    division-by-zero that would otherwise poison the ttl-cached payload
-    for every /api/predlab endpoint)."""
-    valid = [r for r in rows if isinstance(r.get("equity_before"), (int, float))
-             and not isinstance(r.get("equity_before"), bool)
-             and r["equity_before"] > 0]
-    if not valid:
-        return None
-    first = valid[0]["equity_before"]
-    series = [{"ts": r["asof"], "value": 100.0 * r["equity_before"] / first}
-              for r in valid]
-    last_eq = valid[-1]["equity_before"]
-    last_row = rows[-1]
-    return {
-        "series": series,
-        "cards": {
-            "cum_return": last_eq / first - 1.0,
-            "equity": last_eq,
-            "n_cycles": len(rows),
-            "orders_total": sum((r.get("orders_placed") or 0) for r in rows),
-            "last_asof": last_row["asof"],
-            "dry_run_last": bool(last_row.get("dry_run")),
-            "halted": halted,
-        },
-    }
-
-
 def book_detail(rows: list[dict], scale_key: str) -> dict | None:
     """Latest-row book composition, or None when the journal is empty."""
     if not rows:
         return None
     cur = rows[-1]
-    weights: dict = cur.get("weights") or {}
+    weights: dict = cur.get("weights") if quantities(cur.get("weights")) else {}
     longs = sorted(
         ({"symbol": s, "weight": w} for s, w in weights.items() if w > 0),
         key=lambda x: x["symbol"])
@@ -214,17 +111,18 @@ def book_detail(rows: list[dict], scale_key: str) -> dict | None:
         key=lambda x: x["symbol"])
     delta = None
     if len(rows) >= 2:
-        prev = set((rows[-2].get("weights") or {}))
+        prior_weights = rows[-2].get("weights")
+        prev = set(prior_weights) if quantities(prior_weights) else set()
         now = set(weights)
         delta = {"entered": len(now - prev), "exited": len(prev - now)}
     return {
         "asof": cur["asof"],
-        "n_universe": cur.get("n_universe"),
-        "breadth": cur.get("breadth"),
-        "membership_hash": cur.get("membership_hash"),
-        "scale": cur.get(scale_key),
-        "est_turnover": cur.get("est_turnover"),
-        "est_cost": cur.get("est_cost"),
+        "n_universe": cur.get("n_universe") if number(cur.get("n_universe")) else None,
+        "breadth": cur.get("breadth") if number(cur.get("breadth")) else None,
+        "membership_hash": cur.get("membership_hash") if isinstance(cur.get("membership_hash"), str) else None,
+        "scale": cur.get(scale_key) if number(cur.get(scale_key)) else None,
+        "est_turnover": cur.get("est_turnover") if number(cur.get("est_turnover")) else None,
+        "est_cost": cur.get("est_cost") if number(cur.get("est_cost")) else None,
         "longs": longs, "shorts": shorts, "delta": delta,
     }
 
@@ -236,13 +134,13 @@ def book_health(rows: list[dict], malformed: int,
         return None
     last = rows[-1]
     stale = True
-    written = last.get("written_utc")
-    if written:
+    written = last.get("written_utc") if isinstance(last.get("written_utc"), str) else None
+    if isinstance(written, str):
         try:
             # fromisoformat rejects a trailing "Z" before Python 3.11
             ts = datetime.fromisoformat(written.replace("Z", "+00:00"))
             age_h = (now_utc - ts).total_seconds() / 3600.0
-            stale = age_h > STALE_AFTER_HOURS
+            stale = age_h < 0 or age_h > STALE_AFTER_HOURS
         except (ValueError, TypeError):
             pass
     have = {r["asof"] for r in rows}
@@ -264,36 +162,18 @@ def book_health(rows: list[dict], malformed: int,
 
 def gate_status(champion_rows: list[dict], reference: dict | None,
                 today_utc: date) -> dict:
-    """Sealed one-shot tracker payload. Informational only — the forward
-    evaluation is one-shot (earliest 2027-01-02) and stays sealed."""
-    threshold = FALLBACK_THRESHOLD_SR
-    if reference:
-        sr_full = (reference.get("dev_metrics") or {}).get("ovl_sr_full")
-        if sr_full is not None:
-            threshold = round(0.5 * sr_full, 3)
-    perf = derive_book(champion_rows, BOOKS["champion"][1])
-    running_sr = None
-    n_ret = len(_realized(champion_rows))
-    if perf and n_ret >= 2:
-        running_sr = perf["cards"]["sharpe"]
+    """Operational suspension; saved historical criteria are never rewritten."""
     return {
-        "window_start": FORWARD_START.isoformat(),
-        "earliest_eval": EARLIEST_EVAL.isoformat(),
-        "days_elapsed": (today_utc - FORWARD_START).days,
-        "days_remaining": max(0, (EARLIEST_EVAL - today_utc).days),
-        "threshold_sr": threshold,
-        "criteria": [
-            "net overlaid SR_F >= 0.946 (0.5 x dev 1.892)",
-            "same sign as dev",
-            "time-shift placebo p < 0.10 on forward window",
-            "ONE evaluation, earliest 2027-01-02",
-        ],
-        "running": {
-            "sr": running_sr, "n_returns": n_ret,
-            "note": "paper-journal proxy; official evaluation uses the "
-                    "backtest harness on the sealed window",
-        },
-        "informational": True,
+        'status': 'suspended_after_audit',
+        'reason': 'Historical development and legacy paper measurements were invalidated; no active validation gate is served.',
+        'window_start': FORWARD_START.isoformat(),
+        'earliest_eval': EARLIEST_EVAL.isoformat(),
+        'days_elapsed': (today_utc - FORWARD_START).days,
+        'days_remaining': max(0, (EARLIEST_EVAL - today_utc).days),
+        'threshold_sr': None, 'criteria': [],
+        'running': {'sr': None, 'n_returns': 0,
+                    'note': 'Suspended after audit; operational measurements do not validate a strategy.'},
+        'informational': True,
     }
 
 
@@ -327,46 +207,67 @@ class PredlabSource:
 
     def _build(self) -> dict:
         root = Path(self.data_dir) / "predlab"
-        parsed = {}
-        for book, (fname, scale_key) in BOOKS.items():
-            rows, malformed = parse_journal(root / "s1_paper" / fname)
-            parsed[book] = (rows, malformed, scale_key)
-        gates = _load_json(root / "gates.json") or {}
-        reference = (gates.get("predlab_opt") or {}).get("final_champion")
-        backtest = _load_json(root / "champion_backtest.json")
-        backtest_yearly = None
-        if backtest:
-            systems = backtest.get("systems") or {}
-            backtest_yearly = {
-                "champion": (systems.get("new") or {}).get("yearly_ovl"),
-                "vt10": (systems.get("old") or {}).get("yearly_ovl"),
-            }
         now = datetime.now(timezone.utc)
+        books, nav, details, health, descriptors = {}, {}, {}, {}, {}
+        for book, (legacy_name, scale_key) in BOOKS.items():
+            directory = root / 's1_paper'
+            legacy, legacy_bad = parse_journal(directory / legacy_name)
+            v2_path = directory / V2_JOURNALS[book]
+            is_v2 = v2_path.exists()
+            selected = v2_path if is_v2 else directory / legacy_name
+            rows, malformed = parse_journal(selected) if is_v2 else (legacy, legacy_bad)
+            issue = ('malformed or unreadable journal records' if malformed else
+                     record_error(rows, paper=True) if is_v2 and rows else None)
+            books[book] = derive_book(rows, scale_key, invalid_reason=issue) if is_v2 else None
+            nav[book] = derive_nav(rows, scale_key, invalid_reason=issue) if is_v2 else None
+            if is_v2:
+                statuses = [block['measurement_status'] for block in (books[book], nav[book]) if block]
+                status = ('invalid' if issue or 'invalid' in statuses else 'incomplete' if not rows or 'incomplete' in statuses else
+                          'warmup' if 'warmup' in statuses else 'corrected_v2')
+                reason = issue or next((block['measurement_reason'] for block in (books[book], nav[book])
+                                       if block and block['measurement_reason']), None)
+                if not rows and not issue:
+                    reason = 'v2 journal exists but has no measurement records'
+            else:
+                status = 'legacy_only' if selected.exists() else 'missing'
+                reason = ('legacy gross journals are not corrected net measurements' if status == 'legacy_only'
+                          else 'no journal available')
+            descriptors[book] = dict(status=status, reason=reason,
+                                     journal=selected.name if selected.exists() else None)
+            details[book] = book_detail(rows, scale_key)
+            h = book_health(rows, malformed, now)
+            if h is None and selected.exists():
+                h = dict(last_asof=None, written_utc=None, stale=True, rows=0, malformed=malformed, gaps=[])
+            if h is not None:
+                h.update(journal_version=2 if is_v2 else None, measurement_status=status,
+                         measurement_reason=reason, legacy_rows=len(legacy), journal=selected.name)
+            health[book] = h
         account = {}
-        for venue in ("testnet", "live"):
-            venue_root = root / f"s1_{venue}"
-            venue_rows, _m = parse_journal(venue_root / "journal_live.jsonl")
-            halted = (venue_root / "halt.flag").is_file()
-            account[venue] = derive_account(venue_rows, halted)
+        for venue in ('testnet', 'live'):
+            directory = root / f's1_{venue}'
+            v2_path = directory / 'journal_live_v2.jsonl'
+            legacy_path = directory / 'journal_live.jsonl'
+            selected = v2_path if v2_path.exists() else legacy_path
+            rows, malformed = parse_journal(selected)
+            issue = 'malformed or unreadable account journal' if malformed else None
+            if v2_path.exists() and rows:
+                issue = issue or record_error(rows, duplicates=False)
+            account[venue] = derive_account(rows, (directory/'halt.flag').is_file(),
+                invalid_reason=issue, empty_status='incomplete' if v2_path.exists() else None)
+            if account[venue]:
+                account[venue]['journal'] = selected.name
+        statuses = [d['status'] for d in descriptors.values()]
+        overall = (statuses[0] if len(set(statuses)) == 1 else 'invalid' if 'invalid' in statuses else
+                   'incomplete' if any(s in {'corrected_v2', 'incomplete', 'warmup'} for s in statuses) else
+                   'legacy_only' if 'legacy_only' in statuses else 'missing')
         return {
-            "performance": {
-                "books": {b: derive_book(rows, sk)
-                          for b, (rows, _m, sk) in parsed.items()},
-                "nav": {b: derive_nav(rows, sk)
-                        for b, (rows, _m, sk) in parsed.items()},
-                "account": account,
-                "reference": (reference or {}).get("dev_metrics")
-                             if reference else None,
-                "backtest_yearly": backtest_yearly,
-            },
-            "books": {b: book_detail(rows, sk)
-                      for b, (rows, _m, sk) in parsed.items()},
-            "gate": gate_status(parsed["champion"][0], reference, now.date()),
-            "health": {
-                "books": {b: book_health(rows, m, now)
-                          for b, (rows, m, _sk) in parsed.items()},
-                "heartbeat_note": HEARTBEAT_NOTE,
-            },
+            'performance': {'books': books, 'nav': nav, 'account': account,
+                'reference': None, 'backtest_yearly': None,
+                'measurement': {'status': overall,
+                    'note': 'Version-2 net measurements require complete contiguous journals; legacy gross observations do not validate a strategy.',
+                    'books': descriptors}},
+            'books': details, 'gate': gate_status([], None, now.date()),
+            'health': {'books': health, 'heartbeat_note': HEARTBEAT_NOTE},
         }
 
 

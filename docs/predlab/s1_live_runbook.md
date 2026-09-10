@@ -1,6 +1,6 @@
 # S1 execution and paper measurement — version 2
 
-The September 9 correction is local source work. Production state and deployment have not been checked or changed. Historical instructions and journal definitions remain available in Git; the current execution contract is documented in `docs/audit/execution-repair.md`.
+The September 9 correction remains local source work. A September 10 read-only VPS audit verified legacy paper/execution code, absent v2 journals and an absent funding store; no deployment occurred. The current integration and manual rollout are documented in `docs/operations/OPERATIONAL_INTEGRATION_2026-09-10.md` and `docs/operations/MANUAL_ROLLOUT.md`. Historical instructions and journal definitions remain available in Git; the current execution contract is documented in `docs/audit/execution-repair.md`.
 
 ## Journal boundary
 
@@ -24,4 +24,4 @@ Order intents are durably recorded before POST and assigned stable client IDs. G
 
 Ordinary wakes remain halted while the flag exists. Repeat `close-all` to retry a definite rejected close; the flag remains set. Unknown submissions, unavailable position snapshots, hedge mode, untradeable instruments or residual quantity below lot precision require account evidence and operator action. Inspect and resolve the cause before explicitly resuming. Never interpret a halt flag as evidence that the account is flat.
 
-Any production deployment and system service edits require separate operator execution. This repair performed no VPS or live/testnet account operations and makes no deployment-health or strategy-validation claim.
+Any production deployment and system service edits require separate operator execution. The implementation performed no VPS mutations or live/testnet account operations and makes no deployment-health or strategy-validation claim.

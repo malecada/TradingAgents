@@ -12,12 +12,16 @@ function BookHealth(props: { name: PredlabBookName; h: PredlabBookHealth | null 
         <>
           <p>
             <Badge kind={h.stale ? "stale" : "ok"}>
-              {h.stale ? "STALE" : "OK"}</Badge>{" "}
+              {h.stale ? "STALE" : "FRESH"}</Badge>{" "}
             last row {h.last_asof} · written {h.written_utc ?? "—"} ·
             {" "}{h.rows} rows
             {h.malformed > 0 && <> · <Badge kind="error">
               {h.malformed} malformed lines</Badge></>}
           </p>
+          <p>Journal version: {h.journal_version ?? 'unavailable'} · Measurement: {h.measurement_status ?? 'unavailable'}
+            {h.measurement_reason && <> · {h.measurement_reason}</>}
+            {h.legacy_rows !== undefined && <> · {h.legacy_rows} legacy rows retained</>}</p>
+          <p className="muted">Freshness describes the file timestamp; it does not establish complete net accounting.</p>
           {h.gaps.length > 0 && (
             <table>
               <thead><tr><th>Missing date</th><th>Status</th></tr></thead>

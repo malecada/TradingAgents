@@ -8,23 +8,23 @@ import { LegacyTab } from "./tabs/LegacyTab";
 const TABS = [
   {
     id: "performance", label: "Performance", el: <PredlabPerformanceTab />,
-    desc: "Predlab champion (ewma_20 low-vol LS + vt15_b100) and old vt10 paper books — equity compounded from realized returns, Sharpe, drawdown, cost drag, plus the frozen dev backtest reference.",
+    desc: "Corrected net paper measurements for champion and VT10, with explicit gaps, warmup and account reconciliation status.",
   },
   {
     id: "book", label: "Book", el: <PredlabBookTab />,
-    desc: "Today's cross-sectional book: 40 longs / 40 shorts at ±2.5%, universe membership, breadth and vol-target scale.",
+    desc: "Saved target weights, universe membership and volatility scale. Composition is an operational diagnostic; it does not establish complete net measurement.",
   },
   {
     id: "gate", label: "Gate", el: <PredlabGateTab />,
-    desc: "Sealed one-shot forward tracker — informational only; the evaluation happens once, earliest 2027-01-02.",
+    desc: "The historical validation gate is suspended after the accounting audit.",
   },
   {
     id: "ops", label: "Ops", el: <PredlabOpsTab />,
-    desc: "Journal freshness, gaps and malformed-line counts for both paper books, plus the backup-branch heartbeat.",
+    desc: "Journal versions, freshness, measurement completeness and missing dates for both paper books.",
   },
   {
     id: "legacy", label: "Legacy", el: <LegacyTab />,
-    desc: "Read-only archive of the decommissioned V5 8-coin quant/hybrid books (journals frozen 2026-08-06).",
+    desc: "Historical quant/hybrid diagnostics. Their superseded performance references do not validate a strategy.",
   },
 ] as const;
 
@@ -58,6 +58,7 @@ export default function App() {
       </div>
       <div className="container">
         <p className="tab-desc">{active.desc}</p>
+        <p className="muted">Research status: no validated strategies. Historical reference results remain withdrawn.</p>
         {active.el}
       </div>
     </>

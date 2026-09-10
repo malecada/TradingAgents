@@ -1,0 +1,170 @@
+{
+  "captured_utc": "2026-09-10T10:23:56.445904+00:00",
+  "checkouts": {
+    "/opt/tradingagents/predlab": {
+      "git": {
+        "exit_code": 0,
+        "output": "/opt/tradingagents/predlab\n558ffe7456dbfa95e89f960df713a4e3d8125ea0"
+      },
+      "source": {
+        "scripts/predlab_s1_paper.py": {
+          "exists": true,
+          "bytes": 12481,
+          "modified_utc": "2026-08-18T11:53:10.726149+00:00",
+          "sha256": "ebb4c6997bcc97da137864340a166256e67b79f141a676fe5af00212f9fc1a47"
+        },
+        "scripts/predlab_s1_live.py": {
+          "exists": true,
+          "bytes": 16223,
+          "modified_utc": "2026-08-21T20:05:04.245156+00:00",
+          "sha256": "970f35c30d9267ddd03813939ac3e1286ef5f2f996febf749d3d80109c6e742f"
+        },
+        "scripts/predlab_journal_backup.sh": {
+          "exists": true,
+          "bytes": 1914,
+          "modified_utc": "2026-08-06T09:05:36.512486+00:00",
+          "sha256": "fc8b0b77f527e11af8268dabc681a317681b3aca793262e815e8239f90368c4e"
+        },
+        "tradingagents/accounting.py": {
+          "exists": false
+        },
+        "tradingagents/event_accounting.py": {
+          "exists": false
+        },
+        "tradingagents/predlab/live_exec.py": {
+          "exists": true,
+          "bytes": 7353,
+          "modified_utc": "2026-08-21T20:05:04.246156+00:00",
+          "sha256": "08e5fdb2b9822868ed282b71f08e15efaace006b60e40e048164c9669bf500a5"
+        },
+        "tradingagents/monitor/predlab.py": {
+          "exists": false
+        }
+      }
+    },
+    "/opt/tradingagents/repo": {
+      "git": {
+        "exit_code": 0,
+        "output": "/opt/tradingagents/repo\ned5e22f63d9e2d8ab4bf163103f40b0029eb0e7b"
+      },
+      "source": {
+        "scripts/predlab_s1_paper.py": {
+          "exists": false
+        },
+        "scripts/predlab_s1_live.py": {
+          "exists": false
+        },
+        "scripts/predlab_journal_backup.sh": {
+          "exists": false
+        },
+        "tradingagents/accounting.py": {
+          "exists": false
+        },
+        "tradingagents/event_accounting.py": {
+          "exists": false
+        },
+        "tradingagents/predlab/live_exec.py": {
+          "exists": false
+        },
+        "tradingagents/monitor/predlab.py": {
+          "exists": true,
+          "bytes": 14611,
+          "modified_utc": "2026-08-23T08:17:10.522224+00:00",
+          "sha256": "c837d635621170d0d77bd95f97920962b433826c9b359de1dded456721bb9cbc"
+        }
+      }
+    },
+    "/opt/tradingagents": {
+      "git_checkout": false
+    }
+  },
+  "services": {
+    "exit_code": 0,
+    "output": "Result=success\nExecMainStatus=0\nWorkingDirectory=/opt/tradingagents/repo\nUser=tabot\nId=ta-monitor.service\nActiveState=active\nSubState=running\n\nResult=success\nExecMainStatus=0\nWorkingDirectory=\nUser=caddy\nId=caddy.service\nActiveState=active\nSubState=running\n\nResult=success\nExecMainStatus=0\nWorkingDirectory=\nUser=\nId=cron.service\nActiveState=active\nSubState=running\n\nResult=success\nId=ta-cycle.timer\nActiveState=inactive\nSubState=dead\n\nResult=success\nId=ta-hybrid-cycle.timer\nActiveState=inactive\nSubState=dead"
+  },
+  "journals": {
+    "s1_paper/journal.jsonl": {
+      "exists": true,
+      "bytes": 110558,
+      "modified_utc": "2026-09-10T00:17:32.016670+00:00",
+      "rows": 39,
+      "malformed": 0,
+      "versions": {
+        "legacy": 39
+      },
+      "measurement_states": {
+        "unspecified": 39
+      },
+      "last": {
+        "asof": "2026-09-09",
+        "written_utc": "2026-09-10T00:17:32.016954+00:00"
+      }
+    },
+    "s1_paper/journal_champion.jsonl": {
+      "exists": true,
+      "bytes": 108558,
+      "modified_utc": "2026-09-10T00:17:32.036670+00:00",
+      "rows": 38,
+      "malformed": 0,
+      "versions": {
+        "legacy": 38
+      },
+      "measurement_states": {
+        "unspecified": 38
+      },
+      "last": {
+        "asof": "2026-09-09",
+        "written_utc": "2026-09-10T00:17:32.036554+00:00"
+      }
+    },
+    "s1_paper/journal_v2.jsonl": {
+      "exists": false
+    },
+    "s1_paper/journal_champion_v2.jsonl": {
+      "exists": false
+    },
+    "s1_testnet/journal_live.jsonl": {
+      "exists": true,
+      "bytes": 41800,
+      "modified_utc": "2026-09-10T03:15:25.499034+00:00",
+      "rows": 17,
+      "malformed": 0,
+      "versions": {
+        "legacy": 17
+      },
+      "measurement_states": {
+        "unspecified": 17
+      },
+      "last": {
+        "asof": "2026-09-09"
+      }
+    },
+    "s1_testnet/journal_live_v2.jsonl": {
+      "exists": false
+    },
+    "s1_testnet/journal_dry_v2.jsonl": {
+      "exists": false
+    },
+    "s1_testnet/halt.flag": {
+      "exists": false
+    },
+    "s1_live/journal_live.jsonl": {
+      "exists": false
+    },
+    "s1_live/journal_live_v2.jsonl": {
+      "exists": false
+    },
+    "s1_live/journal_dry_v2.jsonl": {
+      "exists": false
+    },
+    "s1_live/halt.flag": {
+      "exists": false
+    }
+  },
+  "funding_store": {
+    "directory_exists": false,
+    "parquet_files": 0
+  },
+  "exchange_api_calls": 0,
+  "remote_mutations": 0
+}
