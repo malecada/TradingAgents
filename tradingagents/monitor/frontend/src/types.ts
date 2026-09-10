@@ -89,43 +89,100 @@ export interface HealthResp {
 
 export type Strategy = "quant" | "hybrid";
 
-export type AdhocStrategy = "quant" | "hybrid";
+// ── predlab paper-book (JSONL journals) ─────────────────────────────────
 
-export interface AdhocMeta {
-  coins: string[];
-  default_analysts: string[];
-  default_model: string;
-  job_running: boolean;
+export type PredlabBookName = "champion" | "vt10";
+
+export interface PredlabCards {
+  cum_return: number; sharpe: number; max_drawdown: number;
+  scale: number | null;
+  warmup: { n: number; required: number };
+  avg_turnover: number | null; cum_cost: number | null;
+  last_asof: string; n_days: number;
 }
 
-export interface AdhocRunBody {
-  coin: string;
-  date: string;
-  strategy: AdhocStrategy;
-  analysts?: string[];
-  model?: string;
+/** (mark leg - close leg) per day: what the close fill assumption costs. */
+export interface PredlabSlippage {
+  n: number; mean_bps: number; cum_bps: number;
+  last: { asof: string; close_ret: number; mark_ret: number; bps: number };
 }
 
-export interface AdhocOutputMeta {
-  key: string; label: string; kind: "text" | "json" | "table"; ordinal: number;
+export interface PredlabBookPerf {
+  equity: Point[]; drawdown: Point[]; rolling_sharpe: Point[];
+  cards: PredlabCards;
+  slippage: PredlabSlippage | null;
 }
 
-export interface AdhocStatus {
-  status: "queued" | "running" | "done" | "error";
-  stage: string | null; progress: number | null; est_cost: number | null;
-  error_msg: string | null; outputs: AdhocOutputMeta[];
+export interface PredlabYearlyRow {
+  sr: number; ret: number; maxdd: number; n_days: number;
 }
 
-export interface AdhocOutput {
-  key: string; label: string; kind: "text" | "json" | "table";
-  content: unknown; ordinal: number; ts: number;
+/** Account-percent NAV = 100 x prod(1 + scale_prev_t x ret_t). */
+export interface PredlabNav {
+  series: Point[];
+  cards: {
+    nav_cum_return: number | null; active_days: number;
+    warmup: { n: number; required: number };
+    last_scale: number | null;
+  };
 }
 
-export interface AdhocRunRow {
-  run_id: string; created_ts: number; coin: string; date: string;
-  strategy: AdhocStrategy; analysts: string[]; model: string; status: string;
-  stage: string | null; progress: number | null; error_msg: string | null;
-  started_ts: number | null; finished_ts: number | null; est_cost: number | null;
+export type PredlabVenue = "testnet" | "live";
+
+/** Live-executor (Binance) account equity block from journal_live rows. */
+export interface PredlabAccount {
+  series: Point[];
+  cards: {
+    cum_return: number; equity: number; n_cycles: number;
+    orders_total: number; last_asof: string;
+    dry_run_last: boolean; halted: boolean;
+  };
 }
 
-export interface AdhocResult { run: AdhocRunRow; outputs: AdhocOutput[]; }
+export interface PredlabPerformanceResp {
+  books: Record<PredlabBookName, PredlabBookPerf | null>;
+  // Optional: a backend deployed without this feature (or serving an
+  // older/degraded payload shape) may omit these keys entirely — every
+  // consumer must tolerate that, not just a null value.
+  nav?: Record<PredlabBookName, PredlabNav | null>;
+  account?: Record<PredlabVenue, PredlabAccount | null>;
+  reference: {
+    ovl_sr_full: number; ovl_maxdd: number;
+    raw_sr_full?: number; dsr_selection_pool?: number;
+  } | null;
+  backtest_yearly:
+    Record<PredlabBookName, Record<string, PredlabYearlyRow> | null> | null;
+}
+
+export interface PredlabWeight { symbol: string; weight: number }
+
+export interface PredlabBookDetail {
+  asof: string; n_universe: number | null; breadth: number | null;
+  membership_hash: string | null; scale: number | null;
+  est_turnover: number | null; est_cost: number | null;
+  longs: PredlabWeight[]; shorts: PredlabWeight[];
+  delta: { entered: number; exited: number } | null;
+}
+
+export interface PredlabBookResp {
+  book: PredlabBookName; detail: PredlabBookDetail | null;
+}
+
+export interface PredlabGateResp {
+  window_start: string; earliest_eval: string;
+  days_elapsed: number; days_remaining: number;
+  threshold_sr: number; criteria: string[];
+  running: { sr: number | null; n_returns: number; note: string };
+  informational: true;
+}
+
+export interface PredlabBookHealth {
+  last_asof: string; written_utc: string | null; stale: boolean;
+  rows: number; malformed: number;
+  gaps: { date: string; known: boolean }[];
+}
+
+export interface PredlabHealthResp {
+  books: Record<PredlabBookName, PredlabBookHealth | null>;
+  heartbeat_note: string;
+}

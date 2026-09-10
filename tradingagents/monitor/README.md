@@ -1,19 +1,24 @@
 # Live Bot Monitoring UI
 
-Read-only FastAPI dashboard for the dual-strategy (quant + hybrid) V5 MIX live
-bot. Reads the bots' `trade_journal.db` (SQLite, `mode=ro`) and structured
-cycle logs. Never writes to the bots' data.
+Read-only FastAPI dashboard for forecast-quality research and live strategy
+monitoring. Reads structured research journals (weights-and-returns), live bot
+trade journals, and cycle logs. Never writes to any data source.
 
-## Run locally
+## Quick Start
+
+### Run locally (predlab mode)
 
 ```bash
-TA_MONITOR_PASSWORD=somepw python -m tradingagents.monitor
+PREDLAB_DATA_DIR=data/predlab \
+TA_MONITOR_PASSWORD=somepw \
+  python -m tradingagents.monitor
 # open http://127.0.0.1:8800  (user: admin)
 ```
 
-To run with both strategies visible, also set `HYBRID_DATA_DIR`:
+### Include legacy V5 archives (optional)
 
 ```bash
+PREDLAB_DATA_DIR=data/predlab \
 QUANT_DATA_DIR=data/quant \
 HYBRID_DATA_DIR=data/hybrid \
 HYBRID_BINANCE_API_KEY=xxx \
@@ -22,52 +27,174 @@ TA_MONITOR_PASSWORD=somepw \
   python -m tradingagents.monitor
 ```
 
+## Tabs
+
+### Predlab-first tab set
+
+- **Performance** — per-book cards (cumulative return, Sharpe, max drawdown,
+  VT scale with a warming-up state, avg turnover, cum est. cost, fill
+  slippage) for the champion and vt10 books, a dual-book
+  equity/drawdown/rolling-Sharpe chart
+  with range pills (7d/30d/90d/all), frozen dev reference cards (overlaid SR,
+  overlaid max DD, raw SR, DSR), and backtest yearly tables.
+
+- **Book** — asof/universe/breadth/scale/turnover/cost cards for the selected
+  book, membership hash plus an entered/exited delta vs the previous row, and
+  Long/Short weight tables (symbol, weight).
+
+- **Gate** — sealed one-shot evaluation tracker (informational only). Displays
+  window start date (2026-07-02), earliest evaluation date (2027-01-02), days
+  elapsed/remaining, Sharpe threshold (0.946 or 0.5x dev ovl SR), pass/fail
+  criteria, and running proxy (paper journal SR and realized-return count).
+  The official evaluation stays sealed and uses the backtest harness on the
+  forward window.
+
+- **Ops** — per-journal freshness: an OK/STALE badge (36-hour threshold on
+  `written_utc`), the last row's `written_utc`, row and malformed-line counts,
+  a gaps table (known scheduler-off dates vs unexplained), and a
+  backup-branch heartbeat note. (Cycle timeline, pipeline-step timings, and
+  recent errors are the legacy Health sub-tab, not this Ops tab.)
+
+- **Legacy** — read-only archive of decommissioned V5 live-bot journals (quant +
+  hybrid). Includes Performance (equity, Sharpe, drawdown), Positions (open
+  holdings with entry/mark/leverage/uPnL), Executions (order logs), Decisions
+  (per-cycle predictions and sizing), and Health tabs. Legacy data is never
+  recomputed; updates stopped when the dual-strategy bot was decommissioned.
+
+## Predlab Research Books
+
+Research books are organized under `PREDLAB_DATA_DIR/predlab/` as:
+
+```
+predlab-data/
+├── predlab/
+│   ├── champion_backtest.json       # backtest yearly return streams (tables)
+│   ├── gates.json                   # gate thresholds and sealed one-shot status
+│   └── s1_paper/
+│       ├── journal_champion.jsonl   # champion (Phase-O frozen) weights-and-returns
+│       └── journal.jsonl            # vt10 (legacy S1 book) weights-and-returns
+└── ...
+```
+
+### Journal semantics
+
+Each `.jsonl` file in `s1_paper/` contains one JSON object per line (one per day):
+
+- `asof` (string, ISO date YYYY-MM-DD) — the bar date
+- `written_utc` (string, ISO timestamp) — when the row was written; used to
+  detect staleness (threshold 36 hours)
+- `weights` (dict, symbol → float ±0.025) — allocation at close
+- `realized_book_ret` (float | null) — realized P&L since last close; used to
+  compound equity curve; rows with null return are excluded from warmup count
+- `n_universe` (int) — size of eligible universe on this date
+- `membership_hash` (string) — hash of current membership set
+- `est_turnover` (float | null) — estimated portfolio turnover
+- `est_cost` (float | null) — estimated transaction cost
+- `vt15_b100_scale` or `vt10_scale` (float | null) — volatility target scaling
+  factor; used to compute position sizes
+- `breadth` (int | null, optional) — champion rows only; number of unique
+  securities held
+- `mark_px` (dict | null) / `mark_ts` (string | null) — per-name price observed
+  when the row was written, and that timestamp; null before 2026-08-18
+- `realized_mark_ret` (float | null) — the same book return as
+  `realized_book_ret` but measured between those write-time marks
+
+**Fill slippage**: `realized_book_ret` prices the book at the UTC close, which
+  is what the paper fill assumes; the cron writes the row minutes later.
+  `derive_slippage` pairs the two legs on days carrying both and reports
+  `(mark - close)` in basis points — mean, cumulative, and the latest pair.
+  Negative means the assumed close fill flattered the book. Null until a day
+  carries both legs.
+
+**Equity reconstruction**: equity = starting_capital × product(1 + realized_book_ret),
+  compounded from all realized returns immediately — the 21-return warm-up
+  gates only the vol-target scale display card, not the equity computation.
+
+### Reference files
+
+- `champion_backtest.json`: supplies only the yearly return tables (SR, return,
+  max DD, days per year) shown on the Performance tab.
+- `gates.json`: sealed one-shot configuration; `predlab_opt.forward_one_shot`
+  holds gate thresholds (Gate tab) and `predlab_opt.final_champion` holds the
+  dev reference metrics (overlaid SR, overlaid max DD, raw SR, DSR) that feed
+  both the Performance tab's frozen dev reference cards and the Gate tab's
+  Sharpe threshold derivation.
+
+## API Endpoints
+
+### Predlab endpoints
+
+- `GET /api/predlab/performance` — equity curve, Sharpe, drawdown, rolling
+  Sharpe for champion and vt10 books; reference metrics and backtest yearly
+  returns
+- `GET /api/predlab/book?book=champion|vt10` — latest row's book composition
+  (longs/shorts/weights, scale, entered/exited delta)
+- `GET /api/predlab/gate` — sealed one-shot tracker (window dates, days elapsed,
+  threshold, pass/fail criteria, running proxy)
+- `GET /api/predlab/health` — data freshness, malformed-row counts, known data
+  gaps, heartbeat note (journal backup timing)
+
+### Degradation contract
+
+All predlab endpoints return HTTP 200 with null/empty blocks when data is missing
+or PREDLAB_DATA_DIR is unset:
+
+- `GET /api/predlab/performance` returns `{"books": {"champion": null, "vt10": null}, "reference": null, "backtest_yearly": null}`
+- `GET /api/predlab/book?book=<name>` returns `{"book": "<name>", "detail": null}` (or HTTP 400 if book name is unknown)
+- `GET /api/predlab/gate` returns a normal gate_status object with empty champion
+  rows (informational: true, running SR null)
+- `GET /api/predlab/health` returns `{"books": {"champion": null, "vt10": null}, "heartbeat_note": "..."}`
+
+Per-book isolation applies: a missing or unreadable journal for one book yields
+`null` for that book only; the other book continues serving normally.
+
+### Known data gaps
+
+The VPS scheduler was offline 2026-07-31 through 2026-08-02 (documented, not an
+incident). These dates appear in the health payload with `known: true`.
+
+### Legacy pane
+
+The Legacy tab is always shown; it is not gated on `QUANT_DATA_DIR` or
+`HYBRID_DATA_DIR` being set. `QUANT_DATA_DIR` defaults to `$DATA_DIR` →
+`data` when unset, so a quant source is always constructed. The legacy
+`/api/performance`, `/api/positions`, and `/api/health` endpoints degrade
+per-strategy; a missing or unreadable journal for one strategy yields `null`
+for that strategy only. `/api/compare` (and the `compare` block nested in
+`/api/performance`) is different: it returns `{"error": "..."}` — not a
+per-strategy `null` — when the hybrid strategy isn't configured or the
+comparison itself fails.
+
 ## Environment
 
 | Variable | Default | Purpose |
 |----------|---------|---------|
+| `PREDLAB_DATA_DIR` | — (optional) | Root directory holding `predlab/` (books, gates, champion metadata); required for predlab tabs |
 | `TA_MONITOR_PASSWORD` | — (required) | Basic-auth password; app refuses to start if unset |
-| `QUANT_DATA_DIR` | `$DATA_DIR` → `data` | Directory holding the quant bot's `trade_journal.db` |
-| `HYBRID_DATA_DIR` | — (optional) | Directory holding the hybrid bot's `trade_journal.db`; hybrid pane is disabled when unset or equal to `QUANT_DATA_DIR` |
+| `QUANT_DATA_DIR` | `$DATA_DIR` → `data` | Directory holding the quant bot's `trade_journal.db` (legacy V5 archive) |
+| `HYBRID_DATA_DIR` | — (optional) | Directory holding the hybrid bot's `trade_journal.db` (legacy V5 archive) |
 | `DATA_DIR` | `data` | Fallback data directory when `QUANT_DATA_DIR` is not set |
 | `LOG_DIR` | `logs` | Directory holding `cycle_*.jsonl` (quant runner only) |
 | `BINANCE_API_KEY` / `BINANCE_API_SECRET` | — | Quant bot live-account credentials (follow quant runner's `LIVE_MODE` config) |
 | `HYBRID_BINANCE_API_KEY` / `HYBRID_BINANCE_API_SECRET` | — | Hybrid bot testnet credentials (always queries testnet, regardless of quant `LIVE_MODE`) |
-| `TA_MONITOR_ANCHOR_SR_QUANT` | `3.18` | Backtest Sharpe anchor for the quant strategy (shown on Performance tab) |
-| `TA_MONITOR_ANCHOR_SR_HYBRID` | — (optional) | Backtest Sharpe anchor for the hybrid strategy |
+| `TA_MONITOR_ANCHOR_SR_QUANT` | `3.18` | Backtest Sharpe anchor for the legacy quant strategy (shown on Legacy Performance tab) |
+| `TA_MONITOR_ANCHOR_SR_HYBRID` | — (optional) | Backtest Sharpe anchor for the legacy hybrid strategy (shown on Legacy Performance tab) |
 | `TA_MONITOR_HOST` | `127.0.0.1` | Bind host (keep loopback; proxy terminates TLS) |
 | `TA_MONITOR_PORT` | `8800` | Bind port |
 | `TA_MONITOR_START_CAPITAL` | `10000` | Starting capital for equity reconstruction when no snapshots exist |
 
-## Tabs
+## Authentication
 
-- **Performance** — equity curve vs backtest anchors (quant SR 3.18 default,
-  hybrid optional), Sharpe, drawdown, rolling Sharpe, uPnL cards. The compare
-  panel (quant vs hybrid delta) is shown only when hybrid is configured.
-- **Positions** — open positions per strategy with entry/mark/leverage/uPnL,
-  plus an allocation donut. Falls back to the journal snapshot (STALE badge)
-  when the live Binance query fails.
-- **Executions** — order execution log (entry price, slippage, status). V5 is a
-  rebalancing strategy — the journal records executions only, never round-trip
-  trades, so per-trade exit price / PnL / fees do not exist; realized PnL is the
-  equity curve on the Performance tab.
-- **Decisions** — per-cycle LGB predictions, sizing, risk checks, shadow
-  decisions. The hybrid modulator panel (multiplier, reasoning) appears only
-  when the hybrid strategy is configured.
-- **Health** — cycle timeline, pipeline-step timings, recent errors, retrain
-  history.
+Basic HTTP authentication (user `admin`, password from `TA_MONITOR_PASSWORD`) is
+required on all endpoints. Credentials are checked by middleware on every
+request (including static SPA assets); requests without valid credentials
+receive a 401 Unauthorized response.
 
-## Degradation contract
+## UI Removal Notes
 
-- **Hybrid pane** renders `null` (grayed out) when `HYBRID_DATA_DIR` is unset
-  or matches `QUANT_DATA_DIR`.
-- **STALE badge** appears on Position cards whenever the live Binance query
-  fails (network error, IP ban, missing credentials); data falls back to the
-  last journal snapshot.
-- **Per-strategy isolation**: a missing or unreadable journal for one strategy
-  yields `null` for that strategy only. The other strategy continues serving
-  normally. This applies to `/api/performance`, `/api/positions`, and
-  `/api/health`.
+- **Run Prediction tab** was removed (V5 checkpoint evaluation retired). The backend
+  `/api/adhoc/*` routes remain mounted for backward compatibility but have no UI
+  integration.
 
 ## React build workflow
 
@@ -90,5 +217,21 @@ npm run build        # writes to dist/; commit the result
 Secrets are loaded from `EnvironmentFile=/opt/tradingagents/secrets/.env.trading`
 (quant Binance keys) and optionally
 `EnvironmentFile=-/opt/tradingagents/secrets/.env.monitor` (monitor-specific
-vars including `TA_MONITOR_PASSWORD`, `HYBRID_DATA_DIR`,
-`HYBRID_BINANCE_API_KEY`, etc.).
+vars including `TA_MONITOR_PASSWORD`, `PREDLAB_DATA_DIR`, `QUANT_DATA_DIR`,
+`HYBRID_DATA_DIR`, and hybrid credentials).
+
+On the VPS, `PREDLAB_DATA_DIR` should be set to `/opt/tradingagents/predlab-data`.
+Reference files and journals must be in place before the service starts:
+
+```
+/opt/tradingagents/predlab-data/predlab/
+├── champion_backtest.json
+├── gates.json
+└── s1_paper/
+    ├── journal_champion.jsonl
+    └── journal.jsonl
+```
+
+The journals are populated by the S1 paper-trader process running independently.
+The `predlab-journal-backup` branch on origin pushes daily journal snapshots
+(approximately 00:45 UTC).
