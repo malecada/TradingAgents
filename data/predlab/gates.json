@@ -2870,6 +2870,13 @@
     ],
     "bar_acceptance": "Only authentic observed bars with valid provider checksum where supplied, exact interval/schema/units, unique monotone UTC timestamps, finite positive OHLC and nonnegative volumes/trade counts, OHLC consistency, complete target coverage, and explicit overlap comparison. Duplicate conflicts, source failures and unexplained revisions block admission. Preserve all existing rows byte-for-byte at row-value level; insert only proven missing timestamps. Do not invent zero-volume or interpolated bars.",
     "provenance": "Exclusive versioned raw receipts and derived outputs; URL/parameters/status/retrieval UTC/raw SHA256/provider checksum/transform commit/schema/units/old-source hashes/range coverage/overlap conflicts. Original stores and September9 results remain immutable.",
-    "stop_rule": "Finish a recovery/readiness report even if evidence is unavailable. No strategy metric or verdict may be calculated under this key. Once data and accounting semantics are verified, register a separate fixed-cell replay before any results; retain every original affected cell and original gates. No new signal, tuning, forecasting refit, holdout, authenticated API, secret read, live order, or VPS operation."
+    "stop_rule": "Finish a recovery/readiness report even if evidence is unavailable. No strategy metric or verdict may be calculated under this key. Once data and accounting semantics are verified, register a separate fixed-cell replay before any results; retain every original affected cell and original gates. No new signal, tuning, forecasting refit, holdout, authenticated API, secret read, live order, or VPS operation.",
+    "timestamp_inventory_scope_addendum": {
+      "path": "docs/data-recovery/2026-09-10-scope-addendum.json",
+      "sha256": "0629c3de9b7973a7e27b1a5e281dda8c75e9e08c18555e108e23dfa346e36c7d",
+      "registered_before_extra_price_consumption": true,
+      "n_symbols": 49,
+      "target_symbol_hours": 6832
+    }
   }
 }
