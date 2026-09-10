@@ -2996,6 +2996,7 @@
     ],
     "outputs": "data/recovery/2026-09-10/exposure-audit/",
     "stop_rule": "One immutable completed artifact for all6cells; archive input/source/gate hashes and exclusive start marker. New results or changed input require another registration.",
-    "ledger_policy": "Six exposure-forensic rows only; no additional financial candidate evaluated and no DSR trial-denominator change."
+    "ledger_policy": "Six exposure-forensic records in the dedicated append-only output forensic-ledger.jsonl; central predlab trial_ledger.jsonl remains byte-for-byte unchanged. No additional financial candidate is evaluated and no trial or DSR denominator changes.",
+    "pre_execution_ledger_clarification": "Independent source review found that using the central trial writer would count nonfinancial exposure inspections as tested hypotheses. Before outcomes, a dedicated forensic ledger is specified within the already registered output namespace; all six cells remain archived."
   }
 }
