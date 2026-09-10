@@ -1,0 +1,28 @@
+...............................F........                                 [100%]
+=================================== FAILURES ===================================
+_ test_composed_interface_matches_separate_steps_and_ignores_global_precision __
+
+api = <module 'scripts.carry_feasibility_math_2026_09_10' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/carry_feasibility_math_2026_09_10.py'>
+
+    def test_composed_interface_matches_separate_steps_and_ignores_global_precision(api):
+        args=inputs(capital='220', reserve_fraction='1/3')
+        terminal=dict(terminal_index_ratio='1',adverse_exit_bps='10',seconds_to_expiry='31536000')
+        e=api.size_hedge(**args); expected=api.terminal_case(e,**terminal)
+        with localcontext() as ctx:
+            ctx.prec=8
+            ctx.rounding=ROUND_DOWN
+            actual=api.evaluate_case(**args,**terminal)
+>       assert actual==expected
+E       AssertionError: assert {'status': 'c...': '1/3', ...} == {'status': 'c...': '1/3', ...}
+E         
+E         Omitting 51 identical items, use -vv to show
+E         Differing items:
+E         {'benchmarks': {'0': {'cash_profit': '0', 'excess_cash_profit': '15.3518804398', 'excess_return_on_capital': '0.069781...', 'excess_return_on_capital': '0.019781274726363636363636363636363636363636363636363636363636363636363636363636363'}}} != {'benchmarks': {'0': {'cash_profit': '0', 'excess_cash_profit': '15.3518804398', 'excess_return_on_capital': '0.069781...', 'excess_return_on_capital': '0.019781274726363636363636363636363636363636363636363636363636363636363636363636364'}}}
+E         {'net_return_on_capital': '0.069...
+E         
+E         ...Full output truncated (7 lines hidden), use '-vv' to show
+
+tests/test_carry_feasibility_math_2026_09_10.py:180: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_carry_feasibility_math_2026_09_10.py::test_composed_interface_matches_separate_steps_and_ignores_global_precision
+1 failed, 39 passed in 0.10s

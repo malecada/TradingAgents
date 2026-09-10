@@ -1,0 +1,382 @@
+{
+  "entry": {
+    "binding_constraints": [
+      "future_max_qty"
+    ],
+    "budget_limited": false,
+    "capital": "1000",
+    "decimal_precision": 80,
+    "depth_limited": false,
+    "entry_cash_required": "210.255",
+    "exact_matched_base_units": false,
+    "executable_admission": false,
+    "fee_multiplier": "1",
+    "fee_rounding": "unrounded_scenario_no_exchange_rounding_claim",
+    "fee_status": "registered_assumptions_not_verified_account_rates",
+    "future_base_quantity": "1",
+    "future_bid_levels_used": 1,
+    "future_contracts": "1",
+    "future_entry_cash_fee": "0.055",
+    "future_entry_fee_rate": "0.0005",
+    "future_entry_notional": "110",
+    "future_entry_principal_cashflow": "0",
+    "future_entry_vwap": "110",
+    "future_expiry_fee_rate": "0.0005",
+    "future_lots": 10,
+    "future_multiplier": "1",
+    "initial_top_spot_ask": "100",
+    "model": "conditional_linear_USDT_cash_settled_dated_carry_v1",
+    "reason": null,
+    "reserve_cash_numerator": "110",
+    "reserve_committed": "110",
+    "reserve_denominator": 1,
+    "reserve_fraction": "1",
+    "reserve_numerator": 1,
+    "residual_base_quantity": "0.000998",
+    "spot_ask_levels_used": 1,
+    "spot_entry_base_fee": "0.001002",
+    "spot_entry_base_fee_quote_equivalent": "0.1002",
+    "spot_entry_cost": "100.2",
+    "spot_entry_fee_rate": "0.001",
+    "spot_entry_vwap": "100",
+    "spot_exit_fee_rate": "0.001",
+    "spot_gross_quantity": "1.002",
+    "spot_net_quantity": "1.000998",
+    "status": "complete",
+    "uncommitted_cash": "789.745"
+  },
+  "inputs": {
+    "capital": "1000",
+    "fee_multiplier": "1",
+    "future_book": {
+      "asks": [
+        [
+          "111",
+          "100"
+        ]
+      ],
+      "bids": [
+        [
+          "110",
+          "100"
+        ]
+      ]
+    },
+    "future_rules": {
+      "max_qty": "1",
+      "min_notional": "1",
+      "min_qty": ".1",
+      "step_size": ".1"
+    },
+    "reserve_fraction": "1",
+    "spot_book": {
+      "asks": [
+        [
+          "100",
+          "100"
+        ]
+      ],
+      "bids": [
+        [
+          "99",
+          "100"
+        ]
+      ]
+    },
+    "spot_rules": {
+      "max_qty": "100",
+      "min_notional": "1",
+      "min_qty": ".001",
+      "step_size": ".001"
+    }
+  },
+  "kind": "synthetic_accounting_example_only",
+  "market_quotes_loaded": false,
+  "prices": "deliberately invented; not BTC/ETH quotes",
+  "source_sha256": "3e15bf12c3edfc765e4a6c52f2d4b8c0e7d1fe337c16dded893b7c9483e9928b",
+  "strategy_or_measurement_ledger_written": false,
+  "terminal_cases": [
+    {
+      "adverse_exit_bps": "0",
+      "annualized_simple_return": "0.039419392072222222222222222222222222222222222222222222222222222222222222222222223",
+      "benchmarks": {
+        "0": {
+          "cash_profit": "0",
+          "excess_cash_profit": "9.7198501",
+          "excess_return_on_capital": "0.0097198501"
+        },
+        "0.03": {
+          "cash_profit": "7.3972602739726027397260273972602739726027397260273972602739726027397260273972603",
+          "excess_cash_profit": "2.3225898260273972602739726027397260273972602739726027397260273972602739726027397",
+          "excess_return_on_capital": "0.0023225898260273972602739726027397260273972602739726027397260273972602739726027397"
+        },
+        "0.05": {
+          "cash_profit": "12.328767123287671232876712328767123287671232876712328767123287671232876712328767",
+          "excess_cash_profit": "-2.608917023287671232876712328767123287671232876712328767123287671232876712328767",
+          "excess_return_on_capital": "-0.002608917023287671232876712328767123287671232876712328767123287671232876712328767"
+        }
+      },
+      "binding_constraints": [
+        "future_max_qty"
+      ],
+      "budget_limited": false,
+      "capital": "1000",
+      "cash_components": {
+        "credited_interest": "0",
+        "future_entry_cash_fee": "0.055",
+        "future_entry_principal": "0",
+        "future_expiry_fee": "0.025",
+        "future_settlement_pnl": "60",
+        "paid_financing": "0",
+        "reserve_released": "110",
+        "spot_entry_principal": "-100.2",
+        "spot_exit_fee": "0.0500499",
+        "spot_sale_gross": "50.0499",
+        "spot_sale_net": "49.9998501",
+        "uncommitted_cash": "789.745"
+      },
+      "cashflow_qualification": "conditional_survival_unrounded_assumed_fees_no_fiat_transfer_costs",
+      "decimal_precision": 80,
+      "depth_limited": false,
+      "entry_cash_required": "210.255",
+      "exact_matched_base_units": false,
+      "executable_admission": false,
+      "fee_multiplier": "1",
+      "fee_rounding": "unrounded_scenario_no_exchange_rounding_claim",
+      "fee_status": "registered_assumptions_not_verified_account_rates",
+      "future_base_quantity": "1",
+      "future_bid_levels_used": 1,
+      "future_contracts": "1",
+      "future_entry_cash_fee": "0.055",
+      "future_entry_fee_rate": "0.0005",
+      "future_entry_notional": "110",
+      "future_entry_principal_cashflow": "0",
+      "future_entry_vwap": "110",
+      "future_expiry_fee_rate": "0.0005",
+      "future_lots": 10,
+      "future_multiplier": "1",
+      "independent_hand_nav": "1009.7198501000",
+      "independent_hand_profit": "9.7198501000",
+      "initial_top_spot_ask": "100",
+      "invalid_log_cash_profit_diagnostic": "17.116165595455305157127215009744399803527656614144260977221935127916607102171638",
+      "model": "conditional_linear_USDT_cash_settled_dated_carry_v1",
+      "net_cash_profit": "9.7198501",
+      "net_return_on_capital": "0.0097198501",
+      "pathwise_margin_survival_verified": false,
+      "reason": null,
+      "reserve_cash_numerator": "110",
+      "reserve_committed": "110",
+      "reserve_denominator": 1,
+      "reserve_fraction": "1",
+      "reserve_numerator": 1,
+      "residual_base_quantity": "0.000998",
+      "seconds_to_expiry": "7776000",
+      "spot_ask_levels_used": 1,
+      "spot_entry_base_fee": "0.001002",
+      "spot_entry_base_fee_quote_equivalent": "0.1002",
+      "spot_entry_cost": "100.2",
+      "spot_entry_fee_rate": "0.001",
+      "spot_entry_vwap": "100",
+      "spot_exit_fee_rate": "0.001",
+      "spot_gross_quantity": "1.002",
+      "spot_net_quantity": "1.000998",
+      "status": "complete",
+      "terminal_futures_reserve": "169.975",
+      "terminal_index": "50",
+      "terminal_index_ratio": "0.5",
+      "terminal_nav": "1009.7198501",
+      "terminal_reserve_insufficient": false,
+      "terminal_residual_spot_value": "0.0499",
+      "terminal_spot_sale_price": "50",
+      "uncommitted_cash": "789.745"
+    },
+    {
+      "adverse_exit_bps": "0",
+      "annualized_simple_return": "0.039317395255555555555555555555555555555555555555555555555555555555555555555555556",
+      "benchmarks": {
+        "0": {
+          "cash_profit": "0",
+          "excess_cash_profit": "9.6947002",
+          "excess_return_on_capital": "0.0096947002"
+        },
+        "0.03": {
+          "cash_profit": "7.3972602739726027397260273972602739726027397260273972602739726027397260273972603",
+          "excess_cash_profit": "2.2974399260273972602739726027397260273972602739726027397260273972602739726027397",
+          "excess_return_on_capital": "0.0022974399260273972602739726027397260273972602739726027397260273972602739726027397"
+        },
+        "0.05": {
+          "cash_profit": "12.328767123287671232876712328767123287671232876712328767123287671232876712328767",
+          "excess_cash_profit": "-2.634066923287671232876712328767123287671232876712328767123287671232876712328767",
+          "excess_return_on_capital": "-0.002634066923287671232876712328767123287671232876712328767123287671232876712328767"
+        }
+      },
+      "binding_constraints": [
+        "future_max_qty"
+      ],
+      "budget_limited": false,
+      "capital": "1000",
+      "cash_components": {
+        "credited_interest": "0",
+        "future_entry_cash_fee": "0.055",
+        "future_entry_principal": "0",
+        "future_expiry_fee": "0.05",
+        "future_settlement_pnl": "10",
+        "paid_financing": "0",
+        "reserve_released": "110",
+        "spot_entry_principal": "-100.2",
+        "spot_exit_fee": "0.1000998",
+        "spot_sale_gross": "100.0998",
+        "spot_sale_net": "99.9997002",
+        "uncommitted_cash": "789.745"
+      },
+      "cashflow_qualification": "conditional_survival_unrounded_assumed_fees_no_fiat_transfer_costs",
+      "decimal_precision": 80,
+      "depth_limited": false,
+      "entry_cash_required": "210.255",
+      "exact_matched_base_units": false,
+      "executable_admission": false,
+      "fee_multiplier": "1",
+      "fee_rounding": "unrounded_scenario_no_exchange_rounding_claim",
+      "fee_status": "registered_assumptions_not_verified_account_rates",
+      "future_base_quantity": "1",
+      "future_bid_levels_used": 1,
+      "future_contracts": "1",
+      "future_entry_cash_fee": "0.055",
+      "future_entry_fee_rate": "0.0005",
+      "future_entry_notional": "110",
+      "future_entry_principal_cashflow": "0",
+      "future_entry_vwap": "110",
+      "future_expiry_fee_rate": "0.0005",
+      "future_lots": 10,
+      "future_multiplier": "1",
+      "independent_hand_nav": "1009.694700200",
+      "independent_hand_profit": "9.694700200",
+      "initial_top_spot_ask": "100",
+      "invalid_log_cash_profit_diagnostic": "10.178819978475734604834733560884160144266590183950861910376378897930111565947266",
+      "model": "conditional_linear_USDT_cash_settled_dated_carry_v1",
+      "net_cash_profit": "9.6947002",
+      "net_return_on_capital": "0.0096947002",
+      "pathwise_margin_survival_verified": false,
+      "reason": null,
+      "reserve_cash_numerator": "110",
+      "reserve_committed": "110",
+      "reserve_denominator": 1,
+      "reserve_fraction": "1",
+      "reserve_numerator": 1,
+      "residual_base_quantity": "0.000998",
+      "seconds_to_expiry": "7776000",
+      "spot_ask_levels_used": 1,
+      "spot_entry_base_fee": "0.001002",
+      "spot_entry_base_fee_quote_equivalent": "0.1002",
+      "spot_entry_cost": "100.2",
+      "spot_entry_fee_rate": "0.001",
+      "spot_entry_vwap": "100",
+      "spot_exit_fee_rate": "0.001",
+      "spot_gross_quantity": "1.002",
+      "spot_net_quantity": "1.000998",
+      "status": "complete",
+      "terminal_futures_reserve": "119.95",
+      "terminal_index": "100",
+      "terminal_index_ratio": "1",
+      "terminal_nav": "1009.6947002",
+      "terminal_reserve_insufficient": false,
+      "terminal_residual_spot_value": "0.0998",
+      "terminal_spot_sale_price": "100",
+      "uncommitted_cash": "789.745"
+    },
+    {
+      "adverse_exit_bps": "0",
+      "annualized_simple_return": "0.039113401622222222222222222222222222222222222222222222222222222222222222222222223",
+      "benchmarks": {
+        "0": {
+          "cash_profit": "0",
+          "excess_cash_profit": "9.6444004",
+          "excess_return_on_capital": "0.0096444004"
+        },
+        "0.03": {
+          "cash_profit": "7.3972602739726027397260273972602739726027397260273972602739726027397260273972603",
+          "excess_cash_profit": "2.2471401260273972602739726027397260273972602739726027397260273972602739726027397",
+          "excess_return_on_capital": "0.0022471401260273972602739726027397260273972602739726027397260273972602739726027397"
+        },
+        "0.05": {
+          "cash_profit": "12.328767123287671232876712328767123287671232876712328767123287671232876712328767",
+          "excess_cash_profit": "-2.684366723287671232876712328767123287671232876712328767123287671232876712328767",
+          "excess_return_on_capital": "-0.002684366723287671232876712328767123287671232876712328767123287671232876712328767"
+        }
+      },
+      "binding_constraints": [
+        "future_max_qty"
+      ],
+      "budget_limited": false,
+      "capital": "1000",
+      "cash_components": {
+        "credited_interest": "0",
+        "future_entry_cash_fee": "0.055",
+        "future_entry_principal": "0",
+        "future_expiry_fee": "0.1",
+        "future_settlement_pnl": "-90",
+        "paid_financing": "0",
+        "reserve_released": "110",
+        "spot_entry_principal": "-100.2",
+        "spot_exit_fee": "0.2001996",
+        "spot_sale_gross": "200.1996",
+        "spot_sale_net": "199.9994004",
+        "uncommitted_cash": "789.745"
+      },
+      "cashflow_qualification": "conditional_survival_unrounded_assumed_fees_no_fiat_transfer_costs",
+      "decimal_precision": 80,
+      "depth_limited": false,
+      "entry_cash_required": "210.255",
+      "exact_matched_base_units": false,
+      "executable_admission": false,
+      "fee_multiplier": "1",
+      "fee_rounding": "unrounded_scenario_no_exchange_rounding_claim",
+      "fee_status": "registered_assumptions_not_verified_account_rates",
+      "future_base_quantity": "1",
+      "future_bid_levels_used": 1,
+      "future_contracts": "1",
+      "future_entry_cash_fee": "0.055",
+      "future_entry_fee_rate": "0.0005",
+      "future_entry_notional": "110",
+      "future_entry_principal_cashflow": "0",
+      "future_entry_vwap": "110",
+      "future_expiry_fee_rate": "0.0005",
+      "future_lots": 10,
+      "future_multiplier": "1",
+      "independent_hand_nav": "1009.644400400",
+      "independent_hand_profit": "9.644400400",
+      "initial_top_spot_ask": "100",
+      "invalid_log_cash_profit_diagnostic": "3.166424461496164052542252112023920485005523753757462843530822667943616029722896",
+      "model": "conditional_linear_USDT_cash_settled_dated_carry_v1",
+      "net_cash_profit": "9.6444004",
+      "net_return_on_capital": "0.0096444004",
+      "pathwise_margin_survival_verified": false,
+      "reason": null,
+      "reserve_cash_numerator": "110",
+      "reserve_committed": "110",
+      "reserve_denominator": 1,
+      "reserve_fraction": "1",
+      "reserve_numerator": 1,
+      "residual_base_quantity": "0.000998",
+      "seconds_to_expiry": "7776000",
+      "spot_ask_levels_used": 1,
+      "spot_entry_base_fee": "0.001002",
+      "spot_entry_base_fee_quote_equivalent": "0.1002",
+      "spot_entry_cost": "100.2",
+      "spot_entry_fee_rate": "0.001",
+      "spot_entry_vwap": "100",
+      "spot_exit_fee_rate": "0.001",
+      "spot_gross_quantity": "1.002",
+      "spot_net_quantity": "1.000998",
+      "status": "complete",
+      "terminal_futures_reserve": "19.9",
+      "terminal_index": "200",
+      "terminal_index_ratio": "2",
+      "terminal_nav": "1009.6444004",
+      "terminal_reserve_insufficient": false,
+      "terminal_residual_spot_value": "0.1996",
+      "terminal_spot_sale_price": "200",
+      "uncommitted_cash": "789.745"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+....................................................FF                   [100%]
+=================================== FAILURES ===================================
+___ test_malformed_future_metadata_retains_all_unavailable_identities[None] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-213/test_malformed_future_metadata0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d4e4dfefa80>
+malformed_symbol = None
+
+    @pytest.mark.parametrize('malformed_symbol', [None, 'BTCUSDT'])
+    def test_malformed_future_metadata_retains_all_unavailable_identities(tmp_path, monkeypatch, malformed_symbol):
+        monkeypatch.setattr(collector, 'OUTPUT', tmp_path / 'capture')
+        monkeypatch.setattr(collector, 'preflight', lambda source: {'gate': gate(), 'source_commit': source})
+        clock_state = [1000.0]
+        monkeypatch.setattr(collector.time, 'monotonic', lambda: clock_state[0])
+        monkeypatch.setattr(collector.time, 'sleep', lambda delay: clock_state.__setitem__(0, clock_state[0] + delay))
+        def transport(request, timeout):
+            if request.full_url.endswith('/time'):
+                payload = {'serverTime': NOW}
+            elif '/fapi/v1/exchangeInfo' in request.full_url:
+                payload = {'symbols': [malformed_symbol]}
+            elif '/api/v3/exchangeInfo' in request.full_url:
+                payload = {'symbols': [spot(), spot('ETH')]}
+            else:
+                raise AssertionError('Bad inventory must not cause depth capture')
+            return Response(json.dumps(payload).encode())
+        monkeypatch.setattr(collector.urllib.request, 'urlopen', transport)
+>       collector.execute('synthetic')
+
+tests/test_capture_dated_carry_2026_09_10.py:459: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/capture_dated_carry_2026_09_10.py:295: in execute
+    initial = inventory(metadata_results['future'][1], metadata_results['spot'][1], clocks['future']['server_ms'])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+futures = {'symbols': [None]}
+spots = {'symbols': [{'symbol': 'BTCUSDT', 'baseAsset': 'BTC', 'quoteAsset': 'USDT', 'status': 'TRADING', ...}, {'symbol': 'ETHUSDT', 'baseAsset': 'ETH', 'quoteAsset': 'USDT', 'status': 'TRADING', ...}]}
+server_ms = 1800000000000
+
+    def inventory(futures, spots, server_ms):
+        if not isinstance(futures, dict) or not isinstance(futures.get('symbols'), list):
+            raise ValueError('future inventory unavailable')
+        if not isinstance(spots, dict) or not isinstance(spots.get('symbols'), list):
+            raise ValueError('spot inventory unavailable')
+        spot_map = {s['symbol']: s for s in spots['symbols']}
+        if len(spot_map) != len(spots['symbols']):
+            raise ValueError('duplicate spot identity')
+        seen, all_rows, selected = set(), [], {}
+        for symbol in futures['symbols']:
+>           if symbol.get('baseAsset') not in ASSETS:
+               ^^^^^^^^^^
+E           AttributeError: 'NoneType' object has no attribute 'get'
+
+scripts/capture_dated_carry_2026_09_10.py:160: AttributeError
+__ test_malformed_future_metadata_retains_all_unavailable_identities[BTCUSDT] __
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-213/test_malformed_future_metadata1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d4e4dcec1a0>
+malformed_symbol = 'BTCUSDT'
+
+    @pytest.mark.parametrize('malformed_symbol', [None, 'BTCUSDT'])
+    def test_malformed_future_metadata_retains_all_unavailable_identities(tmp_path, monkeypatch, malformed_symbol):
+        monkeypatch.setattr(collector, 'OUTPUT', tmp_path / 'capture')
+        monkeypatch.setattr(collector, 'preflight', lambda source: {'gate': gate(), 'source_commit': source})
+        clock_state = [1000.0]
+        monkeypatch.setattr(collector.time, 'monotonic', lambda: clock_state[0])
+        monkeypatch.setattr(collector.time, 'sleep', lambda delay: clock_state.__setitem__(0, clock_state[0] + delay))
+        def transport(request, timeout):
+            if request.full_url.endswith('/time'):
+                payload = {'serverTime': NOW}
+            elif '/fapi/v1/exchangeInfo' in request.full_url:
+                payload = {'symbols': [malformed_symbol]}
+            elif '/api/v3/exchangeInfo' in request.full_url:
+                payload = {'symbols': [spot(), spot('ETH')]}
+            else:
+                raise AssertionError('Bad inventory must not cause depth capture')
+            return Response(json.dumps(payload).encode())
+        monkeypatch.setattr(collector.urllib.request, 'urlopen', transport)
+>       collector.execute('synthetic')
+
+tests/test_capture_dated_carry_2026_09_10.py:459: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/capture_dated_carry_2026_09_10.py:295: in execute
+    initial = inventory(metadata_results['future'][1], metadata_results['spot'][1], clocks['future']['server_ms'])
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+futures = {'symbols': ['BTCUSDT']}
+spots = {'symbols': [{'symbol': 'BTCUSDT', 'baseAsset': 'BTC', 'quoteAsset': 'USDT', 'status': 'TRADING', ...}, {'symbol': 'ETHUSDT', 'baseAsset': 'ETH', 'quoteAsset': 'USDT', 'status': 'TRADING', ...}]}
+server_ms = 1800000000000
+
+    def inventory(futures, spots, server_ms):
+        if not isinstance(futures, dict) or not isinstance(futures.get('symbols'), list):
+            raise ValueError('future inventory unavailable')
+        if not isinstance(spots, dict) or not isinstance(spots.get('symbols'), list):
+            raise ValueError('spot inventory unavailable')
+        spot_map = {s['symbol']: s for s in spots['symbols']}
+        if len(spot_map) != len(spots['symbols']):
+            raise ValueError('duplicate spot identity')
+        seen, all_rows, selected = set(), [], {}
+        for symbol in futures['symbols']:
+>           if symbol.get('baseAsset') not in ASSETS:
+               ^^^^^^^^^^
+E           AttributeError: 'str' object has no attribute 'get'
+
+scripts/capture_dated_carry_2026_09_10.py:160: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_capture_dated_carry_2026_09_10.py::test_malformed_future_metadata_retains_all_unavailable_identities[None]
+FAILED tests/test_capture_dated_carry_2026_09_10.py::test_malformed_future_metadata_retains_all_unavailable_identities[BTCUSDT]
+2 failed, 52 passed in 0.19s

@@ -1,0 +1,104 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+____ test_denial_stops_later_requests_and_keeps_not_attempted_receipt[403] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-209/test_denial_stops_later_reques0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7729c89c4770>
+status = 403
+
+    @pytest.mark.parametrize('status', [403, 418, 429, 451])
+    def test_denial_stops_later_requests_and_keeps_not_attempted_receipt(tmp_path, monkeypatch, status):
+        calls = []
+        def transport(request, timeout):
+            calls.append(request.full_url)
+            if len(calls) == 1:
+                raise urllib.error.HTTPError(request.full_url, status, 'denied', Message(), io.BytesIO(b'denied'))
+            return Response(b'{"serverTime":1800000000000}')
+        monkeypatch.setattr(collector.urllib.request, 'urlopen', transport)
+        capture = collector.Capture(tmp_path / 'capture')
+        first, _ = capture.get('future', 'time')
+        later, parsed = capture.get('spot', 'time')
+>       assert len(calls) == 1, 'A later planned request must not continue after a provider denial'
+E       AssertionError: A later planned request must not continue after a provider denial
+E       assert 2 == 1
+E        +  where 2 = len(['https://fapi.binance.com/fapi/v1/time', 'https://api.binance.com/api/v3/time'])
+
+tests/test_capture_dated_carry_2026_09_10.py:306: AssertionError
+____ test_denial_stops_later_requests_and_keeps_not_attempted_receipt[418] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-209/test_denial_stops_later_reques1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7729c8ab6fd0>
+status = 418
+
+    @pytest.mark.parametrize('status', [403, 418, 429, 451])
+    def test_denial_stops_later_requests_and_keeps_not_attempted_receipt(tmp_path, monkeypatch, status):
+        calls = []
+        def transport(request, timeout):
+            calls.append(request.full_url)
+            if len(calls) == 1:
+                raise urllib.error.HTTPError(request.full_url, status, 'denied', Message(), io.BytesIO(b'denied'))
+            return Response(b'{"serverTime":1800000000000}')
+        monkeypatch.setattr(collector.urllib.request, 'urlopen', transport)
+        capture = collector.Capture(tmp_path / 'capture')
+        first, _ = capture.get('future', 'time')
+        later, parsed = capture.get('spot', 'time')
+>       assert len(calls) == 1, 'A later planned request must not continue after a provider denial'
+E       AssertionError: A later planned request must not continue after a provider denial
+E       assert 2 == 1
+E        +  where 2 = len(['https://fapi.binance.com/fapi/v1/time', 'https://api.binance.com/api/v3/time'])
+
+tests/test_capture_dated_carry_2026_09_10.py:306: AssertionError
+____ test_denial_stops_later_requests_and_keeps_not_attempted_receipt[429] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-209/test_denial_stops_later_reques2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7729c8af1eb0>
+status = 429
+
+    @pytest.mark.parametrize('status', [403, 418, 429, 451])
+    def test_denial_stops_later_requests_and_keeps_not_attempted_receipt(tmp_path, monkeypatch, status):
+        calls = []
+        def transport(request, timeout):
+            calls.append(request.full_url)
+            if len(calls) == 1:
+                raise urllib.error.HTTPError(request.full_url, status, 'denied', Message(), io.BytesIO(b'denied'))
+            return Response(b'{"serverTime":1800000000000}')
+        monkeypatch.setattr(collector.urllib.request, 'urlopen', transport)
+        capture = collector.Capture(tmp_path / 'capture')
+        first, _ = capture.get('future', 'time')
+        later, parsed = capture.get('spot', 'time')
+>       assert len(calls) == 1, 'A later planned request must not continue after a provider denial'
+E       AssertionError: A later planned request must not continue after a provider denial
+E       assert 2 == 1
+E        +  where 2 = len(['https://fapi.binance.com/fapi/v1/time', 'https://api.binance.com/api/v3/time'])
+
+tests/test_capture_dated_carry_2026_09_10.py:306: AssertionError
+____ test_denial_stops_later_requests_and_keeps_not_attempted_receipt[451] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-209/test_denial_stops_later_reques3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7729c87e49e0>
+status = 451
+
+    @pytest.mark.parametrize('status', [403, 418, 429, 451])
+    def test_denial_stops_later_requests_and_keeps_not_attempted_receipt(tmp_path, monkeypatch, status):
+        calls = []
+        def transport(request, timeout):
+            calls.append(request.full_url)
+            if len(calls) == 1:
+                raise urllib.error.HTTPError(request.full_url, status, 'denied', Message(), io.BytesIO(b'denied'))
+            return Response(b'{"serverTime":1800000000000}')
+        monkeypatch.setattr(collector.urllib.request, 'urlopen', transport)
+        capture = collector.Capture(tmp_path / 'capture')
+        first, _ = capture.get('future', 'time')
+        later, parsed = capture.get('spot', 'time')
+>       assert len(calls) == 1, 'A later planned request must not continue after a provider denial'
+E       AssertionError: A later planned request must not continue after a provider denial
+E       assert 2 == 1
+E        +  where 2 = len(['https://fapi.binance.com/fapi/v1/time', 'https://api.binance.com/api/v3/time'])
+
+tests/test_capture_dated_carry_2026_09_10.py:306: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_capture_dated_carry_2026_09_10.py::test_denial_stops_later_requests_and_keeps_not_attempted_receipt[403]
+FAILED tests/test_capture_dated_carry_2026_09_10.py::test_denial_stops_later_requests_and_keeps_not_attempted_receipt[418]
+FAILED tests/test_capture_dated_carry_2026_09_10.py::test_denial_stops_later_requests_and_keeps_not_attempted_receipt[429]
+FAILED tests/test_capture_dated_carry_2026_09_10.py::test_denial_stops_later_requests_and_keeps_not_attempted_receipt[451]
+4 failed, 43 deselected in 0.12s

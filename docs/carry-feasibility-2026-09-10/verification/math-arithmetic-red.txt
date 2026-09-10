@@ -1,0 +1,44 @@
+..F...........................F......                                    [100%]
+=================================== FAILURES ===================================
+_ test_hand_derived_down_flat_up_terminal_cash_reconciles[1-9.6947002-119.95] __
+
+api = <module 'scripts.carry_feasibility_math_2026_09_10' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/carry_feasibility_math_2026_09_10.py'>
+ratio = '1', profit = '9.6947002', terminal_reserve = '119.95'
+
+    @pytest.mark.parametrize('ratio,profit,terminal_reserve', [
+        ('.5', '9.7198501', '169.975'), ('1', '9.6947002', '119.95'),
+        ('2', '9.6444004', '19.9')])
+    def test_hand_derived_down_flat_up_terminal_cash_reconciles(api, ratio, profit, terminal_reserve):
+        e = api.size_hedge(**inputs())
+        r = api.terminal_case(e, terminal_index_ratio=ratio, adverse_exit_bps='0', seconds_to_expiry='31536000')
+        assert r['status'] == 'complete'
+        assert D(r['net_cash_profit']) == D(profit)
+        assert D(r['terminal_nav']) == D('210.255') + D(profit)
+        assert D(r['terminal_futures_reserve']) == D(terminal_reserve)
+        c = r['cash_components']
+        assert D(r['terminal_nav']) == D(c['uncommitted_cash']) + D(c['spot_sale_net']) + D(r['terminal_futures_reserve'])
+>       assert D(r['annualized_simple_return']) == D(r['net_return_on_capital'])
+E       AssertionError: assert Decimal('0.046109249244964447932272716463342132172837744643409193598249744358041425887612662') == Decimal('0.046109249244964447932272716463342132172837744643409193598249744358041425887612661')
+E        +  where Decimal('0.046109249244964447932272716463342132172837744643409193598249744358041425887612662') = D('0.046109249244964447932272716463342132172837744643409193598249744358041425887612662')
+E        +  and   Decimal('0.046109249244964447932272716463342132172837744643409193598249744358041425887612661') = D('0.046109249244964447932272716463342132172837744643409193598249744358041425887612661')
+
+tests/test_carry_feasibility_math_2026_09_10.py:60: AssertionError
+___________ test_doubled_fees_affect_quantity_and_all_four_fee_legs ____________
+
+api = <module 'scripts.carry_feasibility_math_2026_09_10' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/carry_feasibility_math_2026_09_10.py'>
+
+    def test_doubled_fees_affect_quantity_and_all_four_fee_legs(api):
+        e=api.size_hedge(**inputs(capital='1000',fee_multiplier='2'))
+        assert e['spot_entry_fee_rate']=='0.002' and e['spot_exit_fee_rate']=='0.002'
+>       assert e['future_entry_fee_rate']=='0.001' and e['future_expiry_fee_rate']=='0.001'
+E       AssertionError: assert ('0.0010' == '0.001'
+E         
+E         - 0.001
+E         + 0.0010
+E         ?      +)
+
+tests/test_carry_feasibility_math_2026_09_10.py:165: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_carry_feasibility_math_2026_09_10.py::test_hand_derived_down_flat_up_terminal_cash_reconciles[1-9.6947002-119.95]
+FAILED tests/test_carry_feasibility_math_2026_09_10.py::test_doubled_fees_affect_quantity_and_all_four_fee_legs
+2 failed, 35 passed in 0.10s

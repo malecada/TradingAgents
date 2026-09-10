@@ -1,0 +1,106 @@
+..............FF.......................F..F                              [100%]
+=================================== FAILURES ===================================
+______ test_contradictory_spot_asset_metadata_never_admits_pair[changes0] ______
+
+changes = {'baseAsset': 'ETH'}
+
+    @pytest.mark.parametrize('changes', [{'baseAsset': 'ETH'}, {'quoteAsset': 'USDC'}])
+    def test_contradictory_spot_asset_metadata_never_admits_pair(changes):
+        result = inventory([future()], [spot(**changes)])
+>       assert result['selected'] == {}, 'A symbol name cannot override contradictory base/quote metadata'
+E       AssertionError: A symbol name cannot override contradictory base/quote metadata
+E       assert {'BTC': {'ass...2000000, ...}} == {}
+E         
+E         Left contains 1 more item:
+E         {'BTC': {'asset': 'BTC',
+E                  'contract_type': 'CURRENT_QUARTER',
+E                  'expiry_ms': 1802592000000,
+E                  'future_id': 'BTCUSDT_270115',
+E                  'future_multiplier': '1',...
+E         
+E         ...Full output truncated (14 lines hidden), use '-vv' to show
+
+tests/test_capture_dated_carry_2026_09_10.py:124: AssertionError
+______ test_contradictory_spot_asset_metadata_never_admits_pair[changes1] ______
+
+changes = {'quoteAsset': 'USDC'}
+
+    @pytest.mark.parametrize('changes', [{'baseAsset': 'ETH'}, {'quoteAsset': 'USDC'}])
+    def test_contradictory_spot_asset_metadata_never_admits_pair(changes):
+        result = inventory([future()], [spot(**changes)])
+>       assert result['selected'] == {}, 'A symbol name cannot override contradictory base/quote metadata'
+E       AssertionError: A symbol name cannot override contradictory base/quote metadata
+E       assert {'BTC': {'ass...2000000, ...}} == {}
+E         
+E         Left contains 1 more item:
+E         {'BTC': {'asset': 'BTC',
+E                  'contract_type': 'CURRENT_QUARTER',
+E                  'expiry_ms': 1802592000000,
+E                  'future_id': 'BTCUSDT_270115',
+E                  'future_multiplier': '1',...
+E         
+E         ...Full output truncated (14 lines hidden), use '-vv' to show
+
+tests/test_capture_dated_carry_2026_09_10.py:124: AssertionError
+_________ test_http_denial_retains_body_and_retry_after_without_retry __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-208/test_http_denial_retains_body_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71c1db5e32a0>
+
+    def test_http_denial_retains_body_and_retry_after_without_retry(tmp_path, monkeypatch):
+        body = b'{"code": -1003, "msg": "Rate limit"}'
+        headers = Message()
+        headers['Retry-After'] = '60'
+        headers['X-MBX-USED-WEIGHT-1M'] = '2400'
+        attempts = []
+        def transport(request, timeout):
+            attempts.append(request.full_url)
+            raise urllib.error.HTTPError(request.full_url, 429, 'limit', headers, io.BytesIO(body))
+        monkeypatch.setattr(collector.urllib.request, 'urlopen', transport)
+        rec, parsed = collector.Capture(tmp_path / 'capture').get('spot', 'depth', {'symbol': 'BTCUSDT', 'limit': 100})
+        assert len(attempts) == 1 and parsed is None and rec['http_status'] == 429
+        assert Path(rec['raw_path']).read_bytes() == body
+>       assert rec['headers'].get('Retry-After') == '60', 'Denial headers are part of the immutable source evidence'
+E       AssertionError: Denial headers are part of the immutable source evidence
+E       assert None == '60'
+E        +  where None = <built-in method get of dict object at 0x71c1db5a3880>('Retry-After')
+E        +    where <built-in method get of dict object at 0x71c1db5a3880> = {}.get
+
+tests/test_capture_dated_carry_2026_09_10.py:256: AssertionError
+____ test_existing_measurement_ledger_refuses_before_network_or_new_capture ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-208/test_existing_measurement_ledg0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71c1db5e1da0>
+
+    def test_existing_measurement_ledger_refuses_before_network_or_new_capture(tmp_path, monkeypatch):
+        ledger = tmp_path / 'measurement_ledger.jsonl'
+        ledger.write_bytes(b'{"preserved":true}\n')
+        monkeypatch.setattr(collector, 'OUTPUT', tmp_path / 'capture')
+        monkeypatch.setattr(collector, 'preflight', lambda source: {'gate': gate(), 'source_commit': source})
+        with pytest.raises((FileExistsError, ValueError)):
+>           collector.execute('synthetic')
+
+tests/test_capture_dated_carry_2026_09_10.py:289: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/capture_dated_carry_2026_09_10.py:272: in execute
+    result = capture.get(market, 'time')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/capture_dated_carry_2026_09_10.py:81: in get
+    with urllib.request.urlopen(request, timeout=15) as response:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (<urllib.request.Request object at 0x71c1db6109d0>,)
+kwargs = {'timeout': 15}
+
+    def forbidden(*args, **kwargs):
+>       raise AssertionError('Unexpected live network request in offline test')
+E       AssertionError: Unexpected live network request in offline test
+
+tests/test_capture_dated_carry_2026_09_10.py:25: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_capture_dated_carry_2026_09_10.py::test_contradictory_spot_asset_metadata_never_admits_pair[changes0]
+FAILED tests/test_capture_dated_carry_2026_09_10.py::test_contradictory_spot_asset_metadata_never_admits_pair[changes1]
+FAILED tests/test_capture_dated_carry_2026_09_10.py::test_http_denial_retains_body_and_retry_after_without_retry
+FAILED tests/test_capture_dated_carry_2026_09_10.py::test_existing_measurement_ledger_refuses_before_network_or_new_capture
+4 failed, 39 passed in 0.16s
