@@ -6,7 +6,7 @@ Recovery of hourly rows alone does not establish liquidation-fade replay readine
 
 The event schedules and remaining settlement evidence are documented in [PRX identities](prx-identities.md) and [settlements](settlements.md). Nonmissing frozen bars, continuing public funding records and successor tokens do not establish executable old-contract prices or a final settlement cashflow. The PRX six-outcome problem is structural under the original 25-observation and fixed-beta rules; no successor splice can complete those measurements.
 
-The registered exposure audit is an independent diagnostic of historical allocation assumptions, not a performance replay. At this review stage, **only synthetic tests have run**. No original signal panel, allocation book, PnL, SR, P0/P1/P2 statistic or revised strategy outcome has been computed by the new audit.
+The registered exposure audit is an independent diagnostic of historical allocation assumptions, not a performance replay. Its single authorized original-input reconstruction completed on September 10 at 07:26:13–07:26:21 UTC under source commit `1375e8a6528ec9e3f07c51ac4415880c056e867b`. No PnL, SR, P0/P1/P2 statistic or revised strategy outcome was computed.
 
 ## Required lifecycle semantics
 
@@ -45,4 +45,45 @@ The initial 13 tests failed because the audit was absent. An additional restrict
 
 The tests cover exact-boundary incoming exposure, intrabar closure, pre-event flattening, post-closure requests, restriction reporting, nonfinite allocations, incomplete clocks, frozen event timing, original-input hash/path controls, registration refusals, dry-run behavior, filtered development reads and immutable forensic writing. No empirical result is claimed from them.
 
-The audit is bounded to five registered events. Earlier same-ticker incarnations, other terminations, unknown funding/settlement cashflows, original internal gaps and price/NAV-driven order-quantity changes remain limitations. An absent flag is never a readiness certificate. Source freeze and the explicit execution instruction remain required before the single original-input reconstruction.
+The audit is bounded to five registered events. Earlier same-ticker incarnations, other terminations, unknown funding/settlement cashflows, original internal gaps and price/NAV-driven order-quantity changes remain limitations. An absent flag is never a readiness certificate.
+
+## Completed original-input exposure findings
+
+All six cells retain all five events. Each table entry reports **incoming previous allocation / requested boundary-bar allocation; straddling bars / post-closure allocated bars**. These are requested fractions and hourly counts, not account positions or cashflows.
+
+| Original cell | LUNA | TOMO | RNDR | MATIC | BNX |
+|---|---|---|---|---|---|
+| `thr2.5_H6` | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 |
+| `thr2.5_H24` | 0.1 / 0.1; 1 / 12 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 |
+| `thr2.5_H48` | 0.1 / 0.1; 1 / 36 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 |
+| `thr3.5_H6` | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 |
+| `thr3.5_H24` | 0.1 / 0.1; 1 / 0 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 |
+| `thr3.5_H48` | 0.1 / 0.1; 1 / 24 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 | 0 / 0; 0 / 0 |
+
+Four of the thirty checks identify original LUNA exposure through the May 12, 2022 15:30 termination. The last later allocated open labels are May 13 03:00 for `thr2.5_H24`, May 14 03:00 for `thr2.5_H48` and May 13 15:00 for `thr3.5_H48`. `thr3.5_H24` instead reaches a flat target at 16:00, after holding during the straddling bar. Its original September 9 measurement was marked complete; it now has a demonstrated unresolved lifecycle assumption. The other three flagged cells were already unavailable in that saved result. This diagnosis does not supply corrected financial values or change them by assumption.
+
+All four contracts with separate entry restrictions have zero new/increased target requests in all six cells. Actual order-quantity changes remain unmeasured. All six LUNA lookbacks contain 120 missing close and 120 missing quote-volume observations. The local lookbacks for the other events contain no such missing observations, which does not certify the complete portfolio history or future recovered-input allocations.
+
+Saved allocation rows independently reproduce the reported straddling/post-closure counts. All 229 input hashes, output hashes, six dedicated forensic ledger rows and thirty event records were verified after completion, without reconstructing allocations again. The central financial ledger's before/after/current hash is unchanged. The execution log is [exposure-run.log](verification/exposure-run.log).
+
+| Artifact | SHA256 |
+|---|---|
+| [Exposure result](../../data/recovery/2026-09-10/exposure-audit/result.json) | `9657ac0113c024b682a08c6b6c2a7c2e7a4ec83481ad78cd5a94a4e1a10ddd46` |
+| [Dedicated six-row forensic ledger](../../data/recovery/2026-09-10/exposure-audit/forensic-ledger.jsonl) | `cb9fff2c5d6e196030460582d54efe182dbd64ab43face38511b6ef32e40415b` |
+| Unchanged central financial trial ledger | `0b9ab125e64e9c808ccd398d703092e344b6f8772de9e6ec6e223a1e2b9f9a09` |
+
+## Conditional six-cell replay design and implementation — not executed
+
+A separately registered replay can determine whether verified recovery permits a measurement. It cannot promise that any cell becomes complete. The recovery manifest must pin all 47 admitted development overlays and preserve the other original inputs, universe, six-cell order, costs, clocks and original thresholds. Unresolved BNX/ICP intervals remain missing; no contract rename, retrospective universe exclusion or changed trigger is admitted.
+
+The minimal lifecycle extension checks each full requested schedule before the existing hourly accounting call. It detects straddling exposure, incoming exposure at an exact event boundary even when the next target is zero, and every later request. For the four 08:30 restrictions followed by 09:00 closure there is no intervening hourly decision, so closure checks also cover every restricted decision. Different timings would require an explicitly registered quantity-aware extension or an unavailable status. The guard must inspect newly constructed schedules; the four original conflicting cell IDs are not hard-coded as exclusions.
+
+P2 needs its own hypothetical-window check: each selected event retains its denominator, but a holding/exit window touching termination or an entry after the known restriction is unavailable. Endpoint censoring remains separate. The existing any-cell P2 rule may pass when at least one fully scoreable cell exceeds 25 bp; if none does and any cell is unavailable, all six stop unavailable. Missing windows cannot be dropped to obtain a conditional passing mean.
+
+The same schedule guard must precede primary, zero-fee, double-fee and invalid-log diagnostic books and every materialized placebo book. Invalid placebo draws remain in the fixed draw denominator and make the affected 500-draw family unavailable; no redraw, date masking or survivor-only p-value is allowed. The original shared RNG and skipped-draw advancement remain unchanged. A complete primary book can coexist with incomplete remaining gates; neither is promoted to validation. Funding remains excluded only as the original registered qualification, not as a claim of all-in executable profitability.
+
+These optional hooks are implemented in the accounting wrapper and the new pure [lifecycle helper](../../tradingagents/xsect/lifecycle.py). The recovered replay registration at `4df421b` preserves all six cells, pins all 47 overlays and declares original/current DSR denominators of 100/156. No cell is excluded by its earlier outcome.
+
+P2's cumulative return is an entry-to-exit fixed-quantity price diagnostic. An intermediate entry restriction does not create an intermediate maintenance order. Its guard therefore checks the initial entry restriction and terminal event through final valuation availability. The actual hourly target-weight books separately reject an unresolved nonzero decision during a restriction period. This distinction is tested explicitly.
+
+The 19 initial guard regressions failed before implementation. The final focused suite passes **44 tests in 1.13 seconds**, including 23 existing accounting-wrapper tests. A prepared-placebo integration regression confirms lifecycle rejection on the first invalid synthetic placement and unchanged advancement through the remaining shift/random draws. P2 tests verify disjoint censoring/missing/lifecycle counts and prohibit a passing gate value calculated from only the available subset. Logs are [replay-lifecycle-red.log](verification/replay-lifecycle-red.log) and [replay-lifecycle-green.log](verification/replay-lifecycle-green.log). No financial replay has been run at this documentation stage.

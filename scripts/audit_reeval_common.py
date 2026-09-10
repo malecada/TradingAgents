@@ -49,13 +49,14 @@ def plain(value):
 
 
 class RunContext:
-    def __init__(self, family: str, *, root: Path | None = None):
+    def __init__(self, family: str, *, root: Path | None = None, experiment: str = KEY):
         self.root = Path(root) if root is not None else ROOT
         self.family = family
-        self.gate = registry.get_experiment(KEY)
+        self.key = experiment
+        self.gate = registry.get_experiment(self.key)
         self.family_gate = self.gate["families"][family]
-        self.provenance = registry.preflight(KEY, DEV)
-        self.output_dir = self.root / "data/predlab" / KEY / family
+        self.provenance = registry.preflight(self.key, DEV)
+        self.output_dir = self.root / "data/predlab" / self.key / family
         # Refuse both completed output and an unfinished prior invocation.
         self.output_dir.mkdir(parents=True, exist_ok=False)
         self.hashes: dict[str, str] = {}
@@ -68,7 +69,7 @@ class RunContext:
                         ("OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS")},
         }
         (self.output_dir / "started.json").write_text(json.dumps({
-            "experiment": KEY, "family": family, "started_utc": self.started,
+            "experiment": self.key, "family": family, "started_utc": self.started,
             **self.provenance, "runtime": self.runtime,
         }, indent=2) + "\n")
 
@@ -145,11 +146,11 @@ class RunContext:
         for source, expected_hash in self.hashes.items():
             if sha256(Path(source)) != expected_hash:
                 raise RuntimeError(f"input changed during run: {source}")
-        end_provenance = registry.preflight(KEY, DEV)
+        end_provenance = registry.preflight(self.key, DEV)
         if end_provenance != self.provenance:
             raise RuntimeError("executed source/gate/policy changed during run")
         outputs = {p.name: sha256(p) for p in sorted(self.output_dir.iterdir()) if p.is_file()}
-        result = plain({**payload, "experiment": KEY, "family": self.family,
+        result = plain({**payload, "experiment": self.key, "family": self.family,
                         "window": DEV, "cells": cells, "registered_gate": self.family_gate,
                         "started_utc": self.started,
                         "completed_utc": datetime.now(timezone.utc).isoformat(),
@@ -163,7 +164,7 @@ class RunContext:
         with lock.open("a") as handle:
             fcntl.flock(handle, fcntl.LOCK_EX)
             for cell in result["cells"]:
-                registry.log_trial(experiment=KEY, cell=f"{self.family}:{cell['id']}",
+                registry.log_trial(experiment=self.key, cell=f"{self.family}:{cell['id']}",
                                    model="fixed_lead_correction", config=cell["config"],
                                    window=DEV, metrics=cell["metrics"])
             with final.open("x") as handle_out:

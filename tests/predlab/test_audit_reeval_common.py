@@ -31,6 +31,20 @@ def test_refuses_existing_run_before_repeating_work(setup_run):
         common.RunContext("momentum", root=root)
 
 
+def test_explicit_new_cycle_is_used_for_outputs_provenance_and_ledger(setup_run, monkeypatch):
+    root, rows = setup_run
+    calls = []
+    monkeypatch.setattr(common.registry, 'preflight', lambda key, window: calls.append(key) or {'git_commit':'test'})
+    ctx = common.RunContext('momentum', root=root, experiment='new_registered_cycle')
+    ctx.finish({}, [{'id':x,'config':{},'metrics':{}} for x in ('a','b')])
+    result = json.loads((ctx.output_dir/'result.json').read_text())
+    assert ctx.output_dir == root/'data/predlab/new_registered_cycle/momentum'
+    assert result['experiment'] == 'new_registered_cycle'
+    assert calls == ['new_registered_cycle','new_registered_cycle']
+    assert all(row['experiment']=='new_registered_cycle' for row in rows)
+    assert not (root/'data/predlab'/common.KEY).exists()
+
+
 def test_committed_preflight_precedes_output_creation(setup_run, monkeypatch):
     root, _ = setup_run
     def fail(*args):

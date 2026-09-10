@@ -1,0 +1,67 @@
+{
+  "type": "saved_artifact_data_verification_only",
+  "source_commit": "1375e8a6528ec9e3f07c51ac4415880c056e867b",
+  "status": "PASS",
+  "batches": [
+    {
+      "batch": "primary",
+      "result_sha256": "77174de1dd4afff71b45018b306e50b2295ee84b51563eb51db43fb7898139f2",
+      "symbols": 3,
+      "requested_hours": 360,
+      "inserted_hours": 360,
+      "requests": 72,
+      "bytes": 301238,
+      "started_utc": "2026-09-10T07:25:59.295083+00:00",
+      "completed_utc": "2026-09-10T07:26:14.731032+00:00"
+    },
+    {
+      "batch": "extended",
+      "result_sha256": "48673ab5b47836153b7e85809e5766ccc9891773aaf62cce28bc3fc84ab13217",
+      "symbols": 46,
+      "requested_hours": 6472,
+      "inserted_hours": 5208,
+      "requests": 1043,
+      "bytes": 4219819,
+      "started_utc": "2026-09-10T07:26:24.985896+00:00",
+      "completed_utc": "2026-09-10T07:30:55.760965+00:00"
+    }
+  ],
+  "file_counts": {
+    "original": 49,
+    "output": 94,
+    "raw_receipt": 2230
+  },
+  "total_requests": 1115,
+  "download_bytes": 4521057,
+  "verified_overlap_comparisons": 558,
+  "compared_rows_including_repeated_pairs": 81700,
+  "requested_symbol_hours": 6832,
+  "inserted_symbol_hours": 5568,
+  "identity_quarantined_symbol_hours": 1264,
+  "checks": [
+    {
+      "batch": "primary",
+      "status": "PASS",
+      "input_output_raw_hashes": "PASS",
+      "provider_checksums": "PASS",
+      "original_window_rows_exact": "PASS",
+      "insertions_exact_registered_clock": "PASS",
+      "snapshot_has_no_internal_holes_for_recovered_symbols": "PASS",
+      "warmup_and_holdout_bounds": "PASS",
+      "no_quarantined_symbol_requests": "PASS",
+      "all_admitted_monthly_target_hours_absent": "PASS"
+    },
+    {
+      "batch": "extended",
+      "status": "PASS",
+      "input_output_raw_hashes": "PASS",
+      "provider_checksums": "PASS",
+      "original_window_rows_exact": "PASS",
+      "insertions_exact_registered_clock": "PASS",
+      "snapshot_has_no_internal_holes_for_recovered_symbols": "PASS",
+      "warmup_and_holdout_bounds": "PASS",
+      "no_quarantined_symbol_requests": "PASS",
+      "all_admitted_monthly_target_hours_absent": "PASS"
+    }
+  ]
+}

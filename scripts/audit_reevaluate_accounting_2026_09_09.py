@@ -67,7 +67,10 @@ def carry_book(weights, returns, funding, cost_bps=10., rf_daily=carry_xs.RF_DAI
     return carry_xs.run_ls_portfolio(weights, returns, funding, cost_bps, rf_daily)
 
 
-def hourly_book(weights, returns, cost_bps=10., rf_annual=.045):
+def hourly_book(weights, returns, cost_bps=10., rf_annual=.045, *, lifecycle_events=None):
+    if lifecycle_events:
+        from tradingagents.xsect.lifecycle import guard_target_schedule
+        guard_target_schedule(weights, lifecycle_events)
     return liq_fade.run_hourly_portfolio(weights, returns, cost_bps, rf_annual)
 
 
@@ -330,21 +333,34 @@ def membership_mask(universe_by_month, columns, index):
     return mask
 
 
-def forward_probe(returns, triggers, horizon):
+def forward_probe(returns, triggers, horizon, *, lifecycle_events=None):
     original = returns.rolling(horizon, min_periods=horizon).sum().shift(-horizon)
     compound = np.expm1(np.log1p(returns).rolling(horizon, min_periods=horizon).sum().shift(-horizon))
     selected = triggers.to_numpy()
     positions = np.arange(len(returns))[:, None]
     censored = selected & (positions+horizon >= len(returns))
     missing = selected & ~censored & ~np.isfinite(compound.to_numpy())
-    scoreable = selected & ~censored & ~missing
-    return {'status': 'unavailable' if missing.any() else 'computed',
+    lifecycle = np.zeros_like(selected, dtype=bool)
+    lifecycle_fields = {}
+    if lifecycle_events:
+        from tradingagents.xsect.lifecycle import unavailable_forward_windows
+        lifecycle = selected & ~censored & unavailable_forward_windows(
+            returns.index, returns.columns, horizon, lifecycle_events).to_numpy()
+        lifecycle_fields = {'n_lifecycle_unavailable_window': int(lifecycle.sum()),
+                            'n_missing_return_and_lifecycle': int((missing & lifecycle).sum()),
+                            'lifecycle_window': 'entry t+1; fixed-quantity horizon; exit availability t+H+1; terminal touch unavailable'}
+        missing &= ~lifecycle  # disjoint reason counts; overlap is reported above
+    scoreable = selected & ~censored & ~missing & ~lifecycle
+    unavailable = missing.any() or lifecycle.any()
+    return {'status': 'unavailable' if unavailable else 'computed',
             'n_events': int(selected.sum()), 'n_scoreable': int(scoreable.sum()),
             'n_endpoint_censored': int(censored.sum()), 'n_missing_internal_window': int(missing.sum()),
             'mean_original_sum': float(original.to_numpy()[scoreable].mean()) if scoreable.any() else None,
             'mean_compounded_return': float(compound.to_numpy()[scoreable].mean()) if scoreable.any() else None,
-            'gate_value': float(compound.to_numpy()[scoreable].mean()) if scoreable.any() else None,
-            'gate_measure': 'compounded simple forward return; original sum retained as historical diagnostic'}
+            'gate_value': (float(compound.to_numpy()[scoreable].mean())
+                           if scoreable.any() and not (lifecycle_events and unavailable) else None),
+            'gate_measure': 'compounded simple forward return; original sum retained as historical diagnostic',
+            **lifecycle_fields}
 
 
 def p1_probe(close, qvol, benchmark_dates=BENCHMARK_DATES, required=4):
@@ -415,6 +431,7 @@ def draw_liq_placebo(triggers, mask, rng, family, materialize=True):
 
 
 def prepare_liq_fade(ctx):
+    lifecycle_events = ctx.gate.get('lifecycle_events', [])
     source = _source(ctx)/'xsect'
     symbols = [s.strip() for s in ctx.track(source/'liq_fade_symbols.txt').read_text().splitlines() if s.strip()]
     if not symbols or len(set(symbols)) != len(symbols):
@@ -448,11 +465,16 @@ def prepare_liq_fade(ctx):
     mask = membership_mask(monthly, cols, hourly_clock)
     triggers = {thr: (liq_fade.cascade_triggers(close, qvol, thr) & mask).loc[dev_clock]
                 for thr in sorted({c['thr'] for c in ctx.family_gate['cells']})}
-    p2_cells = {c['id']: forward_probe(ret, triggers[c['thr']], c['H']) for c in ctx.family_gate['cells']}
+    p2_cells = {c['id']: forward_probe(ret, triggers[c['thr']], c['H'], lifecycle_events=lifecycle_events)
+                for c in ctx.family_gate['cells']}
     p2 = p2_gate(p2_cells)
     metadata = {'probes': {'P0': p0, 'P1': p1, 'P2': p2}, 'n_original_symbols': len(symbols),
                 'funding': 'excluded as originally registered; not executable all-in net',
                 'placebo_seed_policy': 'shared default_rng(48), original grid order, skipped books advance identical draws'}
+    if lifecycle_events:
+        metadata['lifecycle'] = {'events': lifecycle_events, 'synthetic_settlement': False,
+            'scope': 'declared contract terminations only; no flag certifies complete lifecycle history',
+            'guard': 'P2 hypothetical windows and every primary/cost/convention/placebo target schedule'}
     if any(p['pass'] is not True for p in (p0, p1, p2)):
         raise PreparationBlocked('original corrected probe requirements not all satisfied', metadata)
     rng = np.random.default_rng(48)
@@ -466,7 +488,7 @@ def prepare_liq_fade(ctx):
     def replay(config, cost, convention):
         w = weights[config['id']]
         returns = ret[w.columns] if convention == 'simple' else lr.loc[dev_clock, w.columns]
-        return hourly_book(w, returns, cost, ctx.family_gate['rf_annual'])
+        return hourly_book(w, returns, cost, ctx.family_gate['rf_annual'], lifecycle_events=lifecycle_events)
     def placebo(config, run):
         trig, member = active[config['id']]
         real_sr = liq_fade.sharpe_daily(replay(config, ctx.family_gate['cost_bps'], 'simple')) if run else None
@@ -480,7 +502,7 @@ def prepare_liq_fade(ctx):
                     try:
                         w = liq_fade.event_weights_hourly(draw, config['H'], .1, 1.)
                         srs.append(liq_fade.sharpe_daily(hourly_book(w, ret[w.columns],
-                            ctx.family_gate['cost_bps'], ctx.family_gate['rf_annual'])))
+                            ctx.family_gate['cost_bps'], ctx.family_gate['rf_annual'], lifecycle_events=lifecycle_events)))
                     except Exception as exc:
                         # Remaining RNG draws still advance; no dropping failed placebos.
                         failure = exc

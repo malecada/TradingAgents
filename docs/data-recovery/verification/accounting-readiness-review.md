@@ -56,3 +56,30 @@ Final SHA-256 values at focused verification:
 | `scripts/inventory_recovery_clocks_2026_09_10.py` | `8255f255f364233afc47ec1ae4ba0a9e9607351b6df1056e03564969c752b9d8` |
 | `scripts/audit_lifecycle_exposure_2026_09_10.py` | `a1dee1dbb2c9aa77ffb1d20add466d43dff55e948f19f2e6f9e8b6b7b0393edc` |
 | `tests/predlab/test_lifecycle_exposure_audit.py` | `a719b55ab6181db109ae06c2eee7e68b95aa536a4581bb25ec424e7c05178ee7` |
+
+## Completed exposure artifact verification
+
+The registered diagnostic completed once on frozen source `1375e8a6528ec9e3f07c51ac4415880c056e867b`, from `2026-09-10T07:26:13.335452Z` to `2026-09-10T07:26:21.430891Z`. This follow-up inspected the completed JSON and hashed its referenced files; it did not reconstruct allocations, read original price values, rerun a strategy, calculate performance, or change any source, gate, input or result.
+
+**Verification passed:** all 229 recorded input hashes; both recorded output hashes; the committed gate and correction-policy hashes; all six original cells in registered order; all five events per cell in registered order; and all six dedicated ledger records, whose identities, configurations and metrics exactly match the result. The central trial ledger's current bytes match both the artifact and committed `HEAD`. It contains no new exposure records, so financial trial counts remain unchanged.
+
+| Preserved object | SHA-256 |
+|---|---|
+| Exposure `result.json` | `9657ac0113c024b682a08c6b6c2a7c2e7a4ec83481ad78cd5a94a4e1a10ddd46` |
+| Dedicated `forensic-ledger.jsonl` | `cb9fff2c5d6e196030460582d54efe182dbd64ab43face38511b6ef32e40415b` |
+| Central `data/predlab/trial_ledger.jsonl` | `0b9ab125e64e9c808ccd398d703092e344b6f8772de9e6ec6e223a1e2b9f9a09` |
+
+Saved allocation rows independently reproduce the boundary incoming/requested allocations, event-straddling counts, post-closure counts and last-request timestamps, restriction request counts, per-event flags and per-cell conflict totals. Row timestamps are unique and ordered. The four observed conflicts are all LUNA at its May 12, 2022 15:30 UTC closure. Each requests weight 0.1 during the `15:00–16:00` bar that contains closure:
+
+| Cell | Straddling allocated bars | Post-closure allocated bars | Last post-closure requested bar open (UTC) |
+|---|---:|---:|---|
+| `thr2.5_H24` | 1 | 12 | 2022-05-13 03:00 |
+| `thr2.5_H48` | 1 | 36 | 2022-05-14 03:00 |
+| `thr3.5_H24` | 1 | 0 | None |
+| `thr3.5_H48` | 1 | 24 | 2022-05-13 15:00 |
+
+The zero post-closure count for `thr3.5_H24` does not remove its intrabar closure conflict. Its September 9 measured FAIL therefore acquires an additional execution/lifecycle qualification; the preserved numerical artifact is not rewritten, and this audit does not calculate a revised return or gate verdict. The other three affected cells were already unavailable in the September 9 accounting run.
+
+Both H6 LUNA checks and the other 24 symbol/cell checks report `no_observed_conflict_qualified`, giving 4 observed conflicts and 26 qualified absences across all 30 records. No record certifies readiness. The saved LUNA local lookbacks contain 120 missing close/volume hours in every flagged cell. Original missing-signal behavior and missing competing-slot history limit these diagnostic conclusions; recovered inputs could change allocations. Earlier BNX incarnations and all other unregistered lifecycle events remain outside this five-event audit. Exact settlement prices, fees and terminal cashflows remain unproven.
+
+No artifact integrity or denominator defect was found. The observed lifecycle conflicts remain a substantive barrier to executable financial replay for those cells, rather than a reason to invent settlement or alter the original signal.
