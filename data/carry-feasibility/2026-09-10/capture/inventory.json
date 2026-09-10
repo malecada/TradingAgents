@@ -1,0 +1,416 @@
+{
+  "clocks": {
+    "spot": {
+      "offset_ms": "42.871884",
+      "uncertainty_ms": "167.1149135",
+      "server_ms": 1789056674296
+    },
+    "future": {
+      "offset_ms": "38.9545605",
+      "uncertainty_ms": "160.3000585",
+      "server_ms": 1789056674620
+    }
+  },
+  "errors": [],
+  "inventory": {
+    "inventory": [
+      {
+        "asset": "BTC",
+        "future_id": "BTCUSDT",
+        "spot_id": "BTCUSDT",
+        "expiry_ms": 4133404800000,
+        "contract_type": "PERPETUAL",
+        "reasons": [
+          "not_supported_conventional_dated_future",
+          "expiry_outside_fixed_window_or_unknown"
+        ],
+        "future_rules": {
+          "step_size": "0.001",
+          "min_qty": "0.001",
+          "max_qty": "1000",
+          "min_notional": "50",
+          "max_notional": null
+        },
+        "spot_rules": {
+          "step_size": "0.00001000",
+          "min_qty": "0.00001000",
+          "max_qty": "9000.00000000",
+          "min_notional": "5.00000000",
+          "max_notional": "9000000.00000000"
+        },
+        "future_multiplier": "1",
+        "selected": false
+      },
+      {
+        "asset": "ETH",
+        "future_id": "ETHUSDT",
+        "spot_id": "ETHUSDT",
+        "expiry_ms": 4133404800000,
+        "contract_type": "PERPETUAL",
+        "reasons": [
+          "not_supported_conventional_dated_future",
+          "expiry_outside_fixed_window_or_unknown"
+        ],
+        "future_rules": {
+          "step_size": "0.001",
+          "min_qty": "0.001",
+          "max_qty": "10000",
+          "min_notional": "20",
+          "max_notional": null
+        },
+        "spot_rules": {
+          "step_size": "0.00010000",
+          "min_qty": "0.00010000",
+          "max_qty": "9000.00000000",
+          "min_notional": "5.00000000",
+          "max_notional": "9000000.00000000"
+        },
+        "future_multiplier": "1",
+        "selected": false
+      },
+      {
+        "asset": "ETH",
+        "future_id": "ETHBTC",
+        "spot_id": "ETHUSDT",
+        "expiry_ms": 4133404800000,
+        "contract_type": "PERPETUAL",
+        "reasons": [
+          "unsupported_quote_or_collateral",
+          "not_supported_conventional_dated_future",
+          "expiry_outside_fixed_window_or_unknown"
+        ],
+        "future_rules": {
+          "step_size": "0.01",
+          "min_qty": "0.01",
+          "max_qty": "10000",
+          "min_notional": "0.001",
+          "max_notional": null
+        },
+        "spot_rules": {
+          "step_size": "0.00010000",
+          "min_qty": "0.00010000",
+          "max_qty": "9000.00000000",
+          "min_notional": "5.00000000",
+          "max_notional": "9000000.00000000"
+        },
+        "future_multiplier": "1",
+        "selected": false
+      },
+      {
+        "asset": "BTC",
+        "future_id": "BTCUSDC",
+        "spot_id": "BTCUSDT",
+        "expiry_ms": 4133404800000,
+        "contract_type": "PERPETUAL",
+        "reasons": [
+          "unsupported_quote_or_collateral",
+          "not_supported_conventional_dated_future",
+          "expiry_outside_fixed_window_or_unknown"
+        ],
+        "future_rules": {
+          "step_size": "0.001",
+          "min_qty": "0.001",
+          "max_qty": "800",
+          "min_notional": "50",
+          "max_notional": null
+        },
+        "spot_rules": {
+          "step_size": "0.00001000",
+          "min_qty": "0.00001000",
+          "max_qty": "9000.00000000",
+          "min_notional": "5.00000000",
+          "max_notional": "9000000.00000000"
+        },
+        "future_multiplier": "1",
+        "selected": false
+      },
+      {
+        "asset": "ETH",
+        "future_id": "ETHUSDC",
+        "spot_id": "ETHUSDT",
+        "expiry_ms": 4133404800000,
+        "contract_type": "PERPETUAL",
+        "reasons": [
+          "unsupported_quote_or_collateral",
+          "not_supported_conventional_dated_future",
+          "expiry_outside_fixed_window_or_unknown"
+        ],
+        "future_rules": {
+          "step_size": "0.001",
+          "min_qty": "0.001",
+          "max_qty": "8000",
+          "min_notional": "20",
+          "max_notional": null
+        },
+        "spot_rules": {
+          "step_size": "0.00010000",
+          "min_qty": "0.00010000",
+          "max_qty": "9000.00000000",
+          "min_notional": "5.00000000",
+          "max_notional": "9000000.00000000"
+        },
+        "future_multiplier": "1",
+        "selected": false
+      },
+      {
+        "asset": "BTC",
+        "future_id": "BTCUSDT_260925",
+        "spot_id": "BTCUSDT",
+        "expiry_ms": 1790323200000,
+        "contract_type": "CURRENT_QUARTER",
+        "reasons": [],
+        "future_rules": {
+          "step_size": "0.001",
+          "min_qty": "0.001",
+          "max_qty": "500",
+          "min_notional": "5",
+          "max_notional": null
+        },
+        "spot_rules": {
+          "step_size": "0.00001000",
+          "min_qty": "0.00001000",
+          "max_qty": "9000.00000000",
+          "min_notional": "5.00000000",
+          "max_notional": "9000000.00000000"
+        },
+        "future_multiplier": "1",
+        "selected": true
+      },
+      {
+        "asset": "ETH",
+        "future_id": "ETHUSDT_260925",
+        "spot_id": "ETHUSDT",
+        "expiry_ms": 1790323200000,
+        "contract_type": "CURRENT_QUARTER",
+        "reasons": [],
+        "future_rules": {
+          "step_size": "0.001",
+          "min_qty": "0.001",
+          "max_qty": "10000",
+          "min_notional": "5",
+          "max_notional": null
+        },
+        "spot_rules": {
+          "step_size": "0.00010000",
+          "min_qty": "0.00010000",
+          "max_qty": "9000.00000000",
+          "min_notional": "5.00000000",
+          "max_notional": "9000000.00000000"
+        },
+        "future_multiplier": "1",
+        "selected": true
+      },
+      {
+        "asset": "BTC",
+        "future_id": "BTCUSD1",
+        "spot_id": "BTCUSDT",
+        "expiry_ms": 4133404800000,
+        "contract_type": "PERPETUAL",
+        "reasons": [
+          "unsupported_quote_or_collateral",
+          "not_supported_conventional_dated_future",
+          "expiry_outside_fixed_window_or_unknown"
+        ],
+        "future_rules": {
+          "step_size": "0.0001",
+          "min_qty": "0.0001",
+          "max_qty": "800",
+          "min_notional": "50",
+          "max_notional": null
+        },
+        "spot_rules": {
+          "step_size": "0.00001000",
+          "min_qty": "0.00001000",
+          "max_qty": "9000.00000000",
+          "min_notional": "5.00000000",
+          "max_notional": "9000000.00000000"
+        },
+        "future_multiplier": "1",
+        "selected": false
+      },
+      {
+        "asset": "BTC",
+        "future_id": "BTCUSDT_261225",
+        "spot_id": "BTCUSDT",
+        "expiry_ms": 1798185600000,
+        "contract_type": "NEXT_QUARTER",
+        "reasons": [],
+        "future_rules": {
+          "step_size": "0.001",
+          "min_qty": "0.001",
+          "max_qty": "500",
+          "min_notional": "5",
+          "max_notional": null
+        },
+        "spot_rules": {
+          "step_size": "0.00001000",
+          "min_qty": "0.00001000",
+          "max_qty": "9000.00000000",
+          "min_notional": "5.00000000",
+          "max_notional": "9000000.00000000"
+        },
+        "future_multiplier": "1",
+        "selected": false
+      },
+      {
+        "asset": "ETH",
+        "future_id": "ETHUSDT_261225",
+        "spot_id": "ETHUSDT",
+        "expiry_ms": 1798185600000,
+        "contract_type": "NEXT_QUARTER",
+        "reasons": [],
+        "future_rules": {
+          "step_size": "0.001",
+          "min_qty": "0.001",
+          "max_qty": "10000",
+          "min_notional": "5",
+          "max_notional": null
+        },
+        "spot_rules": {
+          "step_size": "0.00010000",
+          "min_qty": "0.00010000",
+          "max_qty": "9000.00000000",
+          "min_notional": "5.00000000",
+          "max_notional": "9000000.00000000"
+        },
+        "future_multiplier": "1",
+        "selected": false
+      },
+      {
+        "asset": "BTC",
+        "future_id": "BTCU",
+        "spot_id": "BTCUSDT",
+        "expiry_ms": 4133404800000,
+        "contract_type": "PERPETUAL",
+        "reasons": [
+          "unsupported_quote_or_collateral",
+          "not_supported_conventional_dated_future",
+          "expiry_outside_fixed_window_or_unknown"
+        ],
+        "future_rules": {
+          "step_size": "0.0001",
+          "min_qty": "0.0001",
+          "max_qty": "800",
+          "min_notional": "5",
+          "max_notional": null
+        },
+        "spot_rules": {
+          "step_size": "0.00001000",
+          "min_qty": "0.00001000",
+          "max_qty": "9000.00000000",
+          "min_notional": "5.00000000",
+          "max_notional": "9000000.00000000"
+        },
+        "future_multiplier": "1",
+        "selected": false
+      },
+      {
+        "asset": "ETH",
+        "future_id": "ETHU",
+        "spot_id": "ETHUSDT",
+        "expiry_ms": 4133404800000,
+        "contract_type": "PERPETUAL",
+        "reasons": [
+          "unsupported_quote_or_collateral",
+          "not_supported_conventional_dated_future",
+          "expiry_outside_fixed_window_or_unknown"
+        ],
+        "future_rules": {
+          "step_size": "0.001",
+          "min_qty": "0.001",
+          "max_qty": "10000",
+          "min_notional": "5",
+          "max_notional": null
+        },
+        "spot_rules": {
+          "step_size": "0.00010000",
+          "min_qty": "0.00010000",
+          "max_qty": "9000.00000000",
+          "min_notional": "5.00000000",
+          "max_notional": "9000000.00000000"
+        },
+        "future_multiplier": "1",
+        "selected": false
+      },
+      {
+        "asset": "ETH",
+        "future_id": "ETHUSD1",
+        "spot_id": "ETHUSDT",
+        "expiry_ms": 4133404800000,
+        "contract_type": "PERPETUAL",
+        "reasons": [
+          "unsupported_quote_or_collateral",
+          "not_supported_conventional_dated_future",
+          "expiry_outside_fixed_window_or_unknown"
+        ],
+        "future_rules": {
+          "step_size": "0.001",
+          "min_qty": "0.001",
+          "max_qty": "10000",
+          "min_notional": "5",
+          "max_notional": null
+        },
+        "spot_rules": {
+          "step_size": "0.00010000",
+          "min_qty": "0.00010000",
+          "max_qty": "9000.00000000",
+          "min_notional": "5.00000000",
+          "max_notional": "9000000.00000000"
+        },
+        "future_multiplier": "1",
+        "selected": false
+      }
+    ],
+    "selected": {
+      "BTC": {
+        "asset": "BTC",
+        "future_id": "BTCUSDT_260925",
+        "spot_id": "BTCUSDT",
+        "expiry_ms": 1790323200000,
+        "contract_type": "CURRENT_QUARTER",
+        "reasons": [],
+        "future_rules": {
+          "step_size": "0.001",
+          "min_qty": "0.001",
+          "max_qty": "500",
+          "min_notional": "5",
+          "max_notional": null
+        },
+        "spot_rules": {
+          "step_size": "0.00001000",
+          "min_qty": "0.00001000",
+          "max_qty": "9000.00000000",
+          "min_notional": "5.00000000",
+          "max_notional": "9000000.00000000"
+        },
+        "future_multiplier": "1",
+        "selected": true
+      },
+      "ETH": {
+        "asset": "ETH",
+        "future_id": "ETHUSDT_260925",
+        "spot_id": "ETHUSDT",
+        "expiry_ms": 1790323200000,
+        "contract_type": "CURRENT_QUARTER",
+        "reasons": [],
+        "future_rules": {
+          "step_size": "0.001",
+          "min_qty": "0.001",
+          "max_qty": "10000",
+          "min_notional": "5",
+          "max_notional": null
+        },
+        "spot_rules": {
+          "step_size": "0.00010000",
+          "min_qty": "0.00010000",
+          "max_qty": "9000.00000000",
+          "min_notional": "5.00000000",
+          "max_notional": "9000000.00000000"
+        },
+        "future_multiplier": "1",
+        "selected": true
+      }
+    },
+    "selection_server_ms": 1789056674620
+  }
+}

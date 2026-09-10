@@ -1,0 +1,126 @@
+{
+  "source_commit": "62bcf8bf4bdb2c57e8b78d4443427863e287d692",
+  "gate": {
+    "registered_utc": "2026-09-10T15:54:59.923797+00:00",
+    "type": "current_public_depth_conditional_carry_measurement",
+    "authorization": "User approved feasibility/accounting/conditional later validation sequence; capital 1000 initially and 10000 potentially, Binance and possibly Bitrue.",
+    "charter": "docs/carry-feasibility-2026-09-10/charter.md",
+    "charter_sha256": "bb2e4c06e7d101226ba1b33c60e62b268dabc746ccb1373cb96e7809efb5d096",
+    "baseline": "48428eb5d443396b8bb6e57bf9ad4cc97fcd2767",
+    "assets": [
+      "BTC",
+      "ETH"
+    ],
+    "quote_currency": "USDT",
+    "capital": [
+      "1000",
+      "10000"
+    ],
+    "reserve_fractions": [
+      "1",
+      "1/3"
+    ],
+    "fee_multipliers": [
+      "1",
+      "2"
+    ],
+    "spot_fee": "0.001",
+    "future_entry_fee": "0.0005",
+    "future_expiry_fee": "0.0005",
+    "fee_status": "registered_assumptions_not_verified_account_rates",
+    "terminal_index_ratios": [
+      "0.5",
+      "1",
+      "2"
+    ],
+    "adverse_exit_bps": [
+      "0",
+      "10",
+      "50"
+    ],
+    "cash_benchmark_annual": [
+      "0",
+      "0.03",
+      "0.05"
+    ],
+    "snapshots": 3,
+    "snapshot_offsets_seconds": [
+      0,
+      30,
+      60
+    ],
+    "max_quote_pair_seconds": 5,
+    "max_event_age_seconds": 5,
+    "depth_levels": 100,
+    "expiry_days": [
+      7,
+      180
+    ],
+    "expiry_selection": "earliest_active_USDT_linear_nonperpetual_per_asset_then_ID",
+    "data_sources": [
+      "https://fapi.binance.com/fapi/v1/time",
+      "https://fapi.binance.com/fapi/v1/exchangeInfo",
+      "https://fapi.binance.com/fapi/v1/depth",
+      "https://api.binance.com/api/v3/time",
+      "https://api.binance.com/api/v3/exchangeInfo",
+      "https://api.binance.com/api/v3/depth"
+    ],
+    "bitrue_scope": "official_documentation_availability_only",
+    "output": "data/carry-feasibility/2026-09-10",
+    "measurement_ledger": "data/carry-feasibility/2026-09-10/measurement_ledger.jsonl",
+    "financial_ledger_append": false,
+    "allow_holdout": false,
+    "allow_orders": false,
+    "allow_paper_start": false,
+    "original_ledger_sha256": "4459ddc70d41d9a99db06ab53d9ad4c8f42b6f4d282abd93b4857b4474041927",
+    "promotion": "none; screen is necessary not sufficient; exact economics and account admission required before separate strategy registration"
+  },
+  "baseline": {
+    "commit": "48428eb5d443396b8bb6e57bf9ad4cc97fcd2767",
+    "financial_ledger_sha256": "4459ddc70d41d9a99db06ab53d9ad4c8f42b6f4d282abd93b4857b4474041927",
+    "financial_ledger_rows": 820,
+    "gates_sha256": "b9a3409fabbe72451a9b2323023794b75ba6403296698960118518ba40b83ebf",
+    "old_gate_objects": {
+      "predlab_p1_classical": "3636a1ed4bfad7eddfd194f17a471c929de80c225674838841f3baf6929c0934",
+      "predlab_p2_ml": "db642223b67de62752b8a721dc2c63356998615028ed5e1ef05ed66093d90d82",
+      "predlab_p2_t7": "fe8fe36fe76f611c6d981a45a75c651d5bb22cfd1b173ae6d35cf9f1915d8ed7",
+      "predlab_p4_fm": "f768e4e6df54079be01295de02b9b6cd37454342d99cba23788db70aa309493f",
+      "predlab_p5": "4dc1798189b5df72f9e10c218aad39b057be238a0a3ac95ac69fcc4a04ef2268",
+      "predlab_pp": "ebc5fe8531ec4da91276215d67acbfad496034b4c9216a5d1a2ad105eee98cbc",
+      "predlab_p6": "79870a1d670acd9dc6038dd914352ad833ca5eec60467a39f634af24db0d27ff",
+      "predlab_pp2": "bc26bd4c06ef981fc92171b010d87652d7b9f145cd615ee25754b2d7f9638ae1",
+      "predlab_opt": "de519cb2998552406aca3bc91806ee2ce40125eb8a1c013506a5c411df4e3ca1",
+      "predlab_bybit_r1": "afd1eb80a21c67db86b60315363bd2a8f3190f408f4cf6f0a90451c00917a205",
+      "llm_c2_veto_ovl": "11755aa638f887d015b92a18895845d85a80746f58c6266e337b0c4ecdf770de",
+      "xasset_equity_r1": "5d8b93b6499ceed8da66f046aebfacb2930c2b95acd776d38487d0639ca9fcf5",
+      "xasset_equity_bab": "37b84292c78da6be6a2332a53fd5644ce0a724d669f9b5ea372b637cdd8774b4",
+      "xasset_equity_bab2": "370791dfb7034832b117359a87d5a686372c1b726cddc646b1dadc9ca0669fc3",
+      "xasset_equity_bab3": "cb895ec40a4b02ff35bf839b88310a556355da48629a5e26ca2a8efc314e3125",
+      "xasset_futfx_r1": "7c1fd7cec7f31bdfebafdc2c772c8e444ae57a41bcd5111947e58105d7c3cf9f",
+      "predlab_s1_live": "76f76b7f909ed4138466e60a3c066bce88037f9a490059698bb9befdf3aac27d",
+      "engine_correction_2026-08-24": "d465effe35a24b778b4decd3f40147d10437d40847ae0fc3008af57d9f7a7c17",
+      "predlab_opt2": "135d10130a397d4925086f371c2d41e23669869ffed997d792c95d4214ef86fb",
+      "predlab_rviv_p0": "442316e9a15e36839a11a7136bdf4f1af82ec9e92422994bde3250fe8f1fc55c",
+      "predlab_xfam": "effecc0bd59753c23e54cb77cc9174c5a894a6e9887cea6a6ef53207826eccef",
+      "predlab_nlst": "d2be696af902ad35b230dd150dc313ee8453b70988d5c4965565543e59b886b0",
+      "predlab_nlst2": "7a48fe84be35140e3765dc3ec30d6139cdfd9faf77f130077d626a4ccd555c88",
+      "predlab_nlst3": "ab9a138f3c4619461b0f13bf75c3b0caf7b4b7631f27d021850d71747abc5b72",
+      "predlab_nlst4": "146c6057ade10d76980c39bdff7d90a68332e875d12fd64827f9d870de5e1475",
+      "predlab_oflow": "81801410d1a65425ea5f5bca7c9fdc6ade69b450dfd5d75c4e06f16b6681fe90",
+      "predlab_cal2": "b93df48aee5193a201ae4e94f0f975fd7c005943b5368f4283ba545cef8bc29d",
+      "predlab_exec_fcst": "bf4fd023b7fdaafa0f12933c8dca7d0d7383c069b1250cc892ebac2f1c6bd3d6",
+      "predlab_liq_fade_v1": "cdeb4cd047b04526c7a11d4d1d2af32b53c04bddb2f2c351322e0e10a62beb4f",
+      "predlab_smw_xs": "52bd3b04b28be84ad9ddae6af263c9501e91eecf6190fe25cb52c130392ab7b7",
+      "audit_correction_2026_09_09": "611d12466b06865e38cb6fce51f9ce30713d7ac472a0effe02686c26b9b82bd5",
+      "audit_reevaluation_2026_09_09": "b74efa4273a38339cab652cb140b0aa64df1778a1f7f8bcb015e49c3f357e894",
+      "audit_data_recovery_2026_09_10": "5026b385d3587fee3697629db484e0ea6633e136ef0619c56d7685a702868595",
+      "audit_lifecycle_exposure_2026_09_10": "9dab8150130ded7b2016bc396ae03afe1489d77a363f26db9c4cc82403d57d18",
+      "audit_recovered_liq_2026_09_10": "987ecb256dcd430f7c5fce0d101cf1f5f020d1c671e8465eddcf86ce9bc9ddbf",
+      "audit_settlement_evidence_2026_09_10": "140e97dd96782bc59bfe38deffaa8b64f8e67f834820ce59bc5e7f1a3c378000",
+      "audit_factor_floor_2026_09_10": "f371fdc5d6f66580147a0bbcbf311f67d0db86e8b9403a1f2e77641c913b1a1c",
+      "audit_saved_forecast_inference_2026_09_10": "8da8d52262c3bbb9ea7a90cedb699bb17030855906ec29b1941b2245f943328f",
+      "audit_factor_risk_2026_09_10": "2e7afc45b8a5e6e597ca251b18a772b0699255eaa0f1e7711b52fb40d321b6e0",
+      "risk_policy_2026_09_10": "0d0aff566b8eb3fa25f4d5be582782e788e4a6568c2cf58769c3041c6e746ff6"
+    }
+  }
+}

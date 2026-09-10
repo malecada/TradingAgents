@@ -1,0 +1,623 @@
+{
+  "all_rows_net_cash_signs": {
+    "negative": 432,
+    "positive": 0,
+    "zero": 0
+  },
+  "benchmark_excess_sign_counts": {
+    "0": {
+      "negative": 432,
+      "positive": 0,
+      "zero": 0
+    },
+    "0.03": {
+      "negative": 432,
+      "positive": 0,
+      "zero": 0
+    },
+    "0.05": {
+      "negative": 432,
+      "positive": 0,
+      "zero": 0
+    }
+  },
+  "by_dimension": {
+    "adverse_exit_bps": {
+      "0": {
+        "net_cash_signs": {
+          "negative": 144,
+          "positive": 0,
+          "zero": 0
+        },
+        "rows": 144,
+        "terminal_reserve_insufficient": 24
+      },
+      "10": {
+        "net_cash_signs": {
+          "negative": 144,
+          "positive": 0,
+          "zero": 0
+        },
+        "rows": 144,
+        "terminal_reserve_insufficient": 24
+      },
+      "50": {
+        "net_cash_signs": {
+          "negative": 144,
+          "positive": 0,
+          "zero": 0
+        },
+        "rows": 144,
+        "terminal_reserve_insufficient": 24
+      }
+    },
+    "asset": {
+      "BTC": {
+        "net_cash_signs": {
+          "negative": 216,
+          "positive": 0,
+          "zero": 0
+        },
+        "rows": 216,
+        "terminal_reserve_insufficient": 36
+      },
+      "ETH": {
+        "net_cash_signs": {
+          "negative": 216,
+          "positive": 0,
+          "zero": 0
+        },
+        "rows": 216,
+        "terminal_reserve_insufficient": 36
+      }
+    },
+    "capital": {
+      "1000": {
+        "net_cash_signs": {
+          "negative": 216,
+          "positive": 0,
+          "zero": 0
+        },
+        "rows": 216,
+        "terminal_reserve_insufficient": 36
+      },
+      "10000": {
+        "net_cash_signs": {
+          "negative": 216,
+          "positive": 0,
+          "zero": 0
+        },
+        "rows": 216,
+        "terminal_reserve_insufficient": 36
+      }
+    },
+    "fee_multiplier": {
+      "1": {
+        "net_cash_signs": {
+          "negative": 216,
+          "positive": 0,
+          "zero": 0
+        },
+        "rows": 216,
+        "terminal_reserve_insufficient": 36
+      },
+      "2": {
+        "net_cash_signs": {
+          "negative": 216,
+          "positive": 0,
+          "zero": 0
+        },
+        "rows": 216,
+        "terminal_reserve_insufficient": 36
+      }
+    },
+    "reserve": {
+      "1": {
+        "net_cash_signs": {
+          "negative": 216,
+          "positive": 0,
+          "zero": 0
+        },
+        "rows": 216,
+        "terminal_reserve_insufficient": 0
+      },
+      "1/3": {
+        "net_cash_signs": {
+          "negative": 216,
+          "positive": 0,
+          "zero": 0
+        },
+        "rows": 216,
+        "terminal_reserve_insufficient": 72
+      }
+    },
+    "terminal_index_ratio": {
+      "0.5": {
+        "net_cash_signs": {
+          "negative": 144,
+          "positive": 0,
+          "zero": 0
+        },
+        "rows": 144,
+        "terminal_reserve_insufficient": 0
+      },
+      "1": {
+        "net_cash_signs": {
+          "negative": 144,
+          "positive": 0,
+          "zero": 0
+        },
+        "rows": 144,
+        "terminal_reserve_insufficient": 0
+      },
+      "2": {
+        "net_cash_signs": {
+          "negative": 144,
+          "positive": 0,
+          "zero": 0
+        },
+        "rows": 144,
+        "terminal_reserve_insufficient": 72
+      }
+    }
+  },
+  "decomposition_definition": {
+    "fee_drag_bps": "10000*fee_drag_cash/matched_spot_notional",
+    "fee_drag_cash": "spot_entry_base_fee_quote_equivalent + future_entry_cash_fee + saved future_expiry_fee + saved spot_exit_fee",
+    "flat_no_mismatch_identity": "saved_net_cash_profit = matched_gross_basis_cash - fee_drag_cash + residual_price_pnl",
+    "matched_gross_basis_bps": "10000*(future_entry_vwap/spot_entry_vwap-1)",
+    "matched_gross_basis_cash": "q*(future_entry_vwap-spot_entry_vwap)",
+    "matched_spot_notional": "q*spot_entry_vwap",
+    "residual_price_pnl": "residual_base_quantity*(saved_terminal_spot_sale_price-spot_entry_vwap)"
+  },
+  "entry_budget_limited": 48,
+  "entry_cases": 48,
+  "entry_depth_limited": 0,
+  "executable_admission_true": 0,
+  "reference_ranges": [
+    {
+      "annualized_simple_return": {
+        "maximum": "-0.013615849096870769401288401200856352814713056502713980739589267867915777400805808",
+        "minimum": "-0.01439162768712189838487946549435493832262441582945391326766525621915301105088915"
+      },
+      "asset": "BTC",
+      "capital": "1000",
+      "fee_drag_bps": {
+        "maximum": "30.032410504756318627534440025399149136301994271631483767709124376160584244547520",
+        "minimum": "30.032074039680859731170283639090979613428153872481889799385405105979221656069329"
+      },
+      "fee_drag_cash": {
+        "maximum": "1.3867251925599",
+        "minimum": "1.3858629210399"
+      },
+      "future_base_quantity": {
+        "maximum": "0.006",
+        "minimum": "0.006"
+      },
+      "matched_gross_basis_bps": {
+        "maximum": "18.187676179303921735546717464964939270655209929634202084915418987835155761707000",
+        "minimum": "17.514746028386129007233944848625893522974411630446265437476878625109978805325000"
+      },
+      "matched_gross_basis_cash": {
+        "maximum": "0.83964",
+        "minimum": "0.80874"
+      },
+      "net_cash_profit": {
+        "maximum": "-0.5468160215179",
+        "minimum": "-0.5779851925599"
+      },
+      "net_return_on_capital": {
+        "maximum": "-0.0005468160215179",
+        "minimum": "-0.0005779851925599"
+      },
+      "observations": 3,
+      "uncommitted_cash": {
+        "maximum": "75.2661031",
+        "minimum": "74.6942815"
+      }
+    },
+    {
+      "annualized_simple_return": {
+        "maximum": "-0.015063531772029663298605508015841079558891528724463948384294297727161399973317235",
+        "minimum": "-0.01616970927465726743328327745137613822737880375950529572487172514318406714835386"
+      },
+      "asset": "BTC",
+      "capital": "10000",
+      "fee_drag_bps": {
+        "maximum": "30.020731878683080782317014289035888103552003510166916182937817876559563339810489",
+        "minimum": "30.020277974583745665876262400694005890780666911888322469337866423369337749403491"
+      },
+      "fee_drag_cash": {
+        "maximum": "14.7859709716993",
+        "minimum": "14.7767032270593"
+      },
+      "future_base_quantity": {
+        "maximum": "0.064",
+        "minimum": "0.064"
+      },
+      "matched_gross_basis_bps": {
+        "maximum": "17.735632366161564634028578071776207104007020333832365875635753119126679620978000",
+        "minimum": "16.827824167491331752524801388011781561333823776644938675732846738675498806982000"
+      },
+      "matched_gross_basis_cash": {
+        "maximum": "8.733560000",
+        "minimum": "8.2830600000"
+      },
+      "net_cash_profit": {
+        "maximum": "-6.0495533220053",
+        "minimum": "-6.4936432270593"
+      },
+      "net_return_on_capital": {
+        "maximum": "-0.00060495533220053",
+        "minimum": "-0.00064936432270593"
+      },
+      "observations": 3,
+      "uncommitted_cash": {
+        "maximum": "139.38669745",
+        "minimum": "133.14155335"
+      }
+    },
+    {
+      "annualized_simple_return": {
+        "maximum": "-0.019942589159020134459232772581065088784210534214434526108251151887966221118123226",
+        "minimum": "-0.022479583378366263125089656251135680263718917846530352862385064379782448338503462"
+      },
+      "asset": "ETH",
+      "capital": "1000",
+      "fee_drag_bps": {
+        "maximum": "30.026353616251039620871845075063946491362546126574821921545290049696593664861237",
+        "minimum": "30.025329664662585444208501369352241715352556002149638010968496570564587344895322"
+      },
+      "fee_drag_cash": {
+        "maximum": "1.492635882373",
+        "minimum": "1.491772226737"
+      },
+      "future_base_quantity": {
+        "maximum": "0.204",
+        "minimum": "0.204"
+      },
+      "matched_gross_basis_bps": {
+        "maximum": "13.913114855020418214278385422010629783915782561408548972933040569657917957768000",
+        "minimum": "11.865211678112064887590973998601077763935533711040727819346082305645278025938000"
+      },
+      "matched_gross_basis_cash": {
+        "maximum": "0.69156",
+        "minimum": "0.5898499999999999999999999999999999999999999999999999999999999999999999999999908"
+      },
+      "net_cash_profit": {
+        "maximum": "-0.800918522835",
+        "minimum": "-0.902785882373"
+      },
+      "net_return_on_capital": {
+        "maximum": "-0.000800918522835",
+        "minimum": "-0.000902785882373"
+      },
+      "observations": 3,
+      "uncommitted_cash": {
+        "maximum": "4.698117565",
+        "minimum": "4.179105295"
+      }
+    },
+    {
+      "annualized_simple_return": {
+        "maximum": "-0.020558764941025522022300976554298297798506506735470309511797235067574853053624243",
+        "minimum": "-0.024640317730658856798169326392826287544479149757456828317689227024679233098131971"
+      },
+      "asset": "ETH",
+      "capital": "10000",
+      "fee_drag_bps": {
+        "maximum": "30.017217659127060390793116319073234626392851566736747185654421286905064615253344",
+        "minimum": "30.015586231739848445229960025475589930817760720991615213913422331831829567485448"
+      },
+      "fee_drag_cash": {
+        "maximum": "14.987345327921",
+        "minimum": "14.985609122295"
+      },
+      "future_base_quantity": {
+        "maximum": "2.05",
+        "minimum": "2.049"
+      },
+      "matched_gross_basis_bps": {
+        "maximum": "13.480196302901269391110686926957057663751913961299249357623061615007279287175000",
+        "minimum": "10.197353670033640093887840116626420932739597180887821677503521643161331164162000"
+      },
+      "matched_gross_basis_cash": {
+        "maximum": "6.73010999999999999999999999999999999999999999999999999999999999999999999999990",
+        "minimum": "5.0917299999999999999999999999999999999999999999999999999999999999999999999999066"
+      },
+      "net_cash_profit": {
+        "maximum": "-8.256257572139",
+        "minimum": "-9.895615327921"
+      },
+      "net_return_on_capital": {
+        "maximum": "-0.0008256257572139",
+        "minimum": "-0.0009895615327921"
+      },
+      "observations": 3,
+      "uncommitted_cash": {
+        "maximum": "1.601459155",
+        "minimum": "0.474868695"
+      }
+    }
+  ],
+  "reference_rows": [
+    {
+      "annualized_simple_return": "-0.01439162768712189838487946549435493832262441582945391326766525621915301105088915",
+      "asset": "BTC",
+      "capital": "1000",
+      "decomposition_error": "0.0000000000000",
+      "fee_drag_bps": "30.032074039680859731170283639090979613428153872481889799385405105979221656069329",
+      "fee_drag_cash": "1.3867251925599",
+      "future_base_quantity": "0.006",
+      "future_entry_vwap": "77092.8",
+      "future_levels_used": 2,
+      "matched_gross_basis_bps": "17.514746028386129007233944848625893522974411630446265437476878625109978805325000",
+      "matched_gross_basis_cash": "0.80874",
+      "matched_spot_notional": "461.74806",
+      "measurement_id": "0|BTC|1000|1|1|1|0",
+      "net_cash_profit": "-0.5779851925599",
+      "net_return_on_capital": "-0.0005779851925599",
+      "residual_price_pnl": "0.0000000000",
+      "snapshot": 0,
+      "spot_entry_vwap": "76958.01",
+      "spot_levels_used": 1,
+      "uncommitted_cash": "74.6942815"
+    },
+    {
+      "annualized_simple_return": "-0.013615849096870769401288401200856352814713056502713980739589267867915777400805808",
+      "asset": "BTC",
+      "capital": "1000",
+      "decomposition_error": "0.0000000000000",
+      "fee_drag_bps": "30.032410504756318627534440025399149136301994271631483767709124376160584244547520",
+      "fee_drag_cash": "1.3864560215179",
+      "future_base_quantity": "0.006",
+      "future_entry_vwap": "77082.15",
+      "future_levels_used": 4,
+      "matched_gross_basis_bps": "18.187676179303921735546717464964939270655209929634202084915418987835155761707000",
+      "matched_gross_basis_cash": "0.83964",
+      "matched_spot_notional": "461.65326",
+      "measurement_id": "1|BTC|1000|1|1|1|0",
+      "net_cash_profit": "-0.5468160215179",
+      "net_return_on_capital": "-0.0005468160215179",
+      "residual_price_pnl": "0.0000000000",
+      "snapshot": 1,
+      "spot_entry_vwap": "76942.21",
+      "spot_levels_used": 1,
+      "uncommitted_cash": "74.85317145"
+    },
+    {
+      "annualized_simple_return": "-0.014251314586971378857141734783191499139376388573652330483954844881576950476449873",
+      "asset": "BTC",
+      "capital": "1000",
+      "decomposition_error": "0.0000000000000",
+      "fee_drag_bps": "30.032131514044790788611261394973164091384203434637441862249140261456213566998626",
+      "fee_drag_cash": "1.3858629210399",
+      "future_base_quantity": "0.006",
+      "future_entry_vwap": "77045.6",
+      "future_levels_used": 5,
+      "matched_gross_basis_bps": "17.629694756248243889189456612994849435073535941550391164947189579093800663919000",
+      "matched_gross_basis_cash": "0.81354",
+      "matched_spot_notional": "461.46006",
+      "measurement_id": "2|BTC|1000|1|1|1|0",
+      "net_cash_profit": "-0.5723229210399",
+      "net_return_on_capital": "-0.0005723229210399",
+      "residual_price_pnl": "0.0000000000",
+      "snapshot": 2,
+      "spot_entry_vwap": "76910.01",
+      "spot_levels_used": 1,
+      "uncommitted_cash": "75.2661031"
+    },
+    {
+      "annualized_simple_return": "-0.015952484629463885226663471726410103936299187892810332076556994011398354377156789",
+      "asset": "BTC",
+      "capital": "10000",
+      "decomposition_error": "0.0000000000000",
+      "fee_drag_bps": "30.020370385461053696684724566032827512041956386346268569054735173115832906802034",
+      "fee_drag_cash": "14.7859709716993",
+      "future_base_quantity": "0.064",
+      "future_entry_vwap": "77088.9359375",
+      "future_levels_used": 8,
+      "matched_gross_basis_bps": "17.012645922107393369449132065655024083912772692537138109470346231665813604068000",
+      "matched_gross_basis_cash": "8.3792600000",
+      "matched_spot_notional": "4925.31264",
+      "measurement_id": "0|BTC|10000|1|1|1|0",
+      "net_cash_profit": "-6.4067109716993",
+      "net_return_on_capital": "-0.00064067109716993",
+      "residual_price_pnl": "0.0000000000",
+      "snapshot": 0,
+      "spot_entry_vwap": "76958.01",
+      "spot_levels_used": 1,
+      "uncommitted_cash": "133.14155335"
+    },
+    {
+      "annualized_simple_return": "-0.015063531772029663298605508015841079558891528724463948384294297727161399973317235",
+      "asset": "BTC",
+      "capital": "10000",
+      "decomposition_error": "0.0000000000000",
+      "fee_drag_bps": "30.020731878683080782317014289035888103552003510166916182937817876559563339810489",
+      "fee_drag_cash": "14.7831133220053",
+      "future_base_quantity": "0.064",
+      "future_entry_vwap": "77078.671875",
+      "future_levels_used": 9,
+      "matched_gross_basis_bps": "17.735632366161564634028578071776207104007020333832365875635753119126679620978000",
+      "matched_gross_basis_cash": "8.733560000",
+      "matched_spot_notional": "4924.30144",
+      "measurement_id": "1|BTC|10000|1|1|1|0",
+      "net_cash_profit": "-6.0495533220053",
+      "net_return_on_capital": "-0.00060495533220053",
+      "residual_price_pnl": "0.0000000000",
+      "snapshot": 1,
+      "spot_entry_vwap": "76942.21",
+      "spot_levels_used": 1,
+      "uncommitted_cash": "134.8110878"
+    },
+    {
+      "annualized_simple_return": "-0.01616970927465726743328327745137613822737880375950529572487172514318406714835386",
+      "asset": "BTC",
+      "capital": "10000",
+      "decomposition_error": "0.0000000000000",
+      "fee_drag_bps": "30.020277974583745665876262400694005890780666911888322469337866423369337749403491",
+      "fee_drag_cash": "14.7767032270593",
+      "future_base_quantity": "0.064",
+      "future_entry_vwap": "77039.4328125",
+      "future_levels_used": 8,
+      "matched_gross_basis_bps": "16.827824167491331752524801388011781561333823776644938675732846738675498806982000",
+      "matched_gross_basis_cash": "8.2830600000",
+      "matched_spot_notional": "4922.24064",
+      "measurement_id": "2|BTC|10000|1|1|1|0",
+      "net_cash_profit": "-6.4936432270593",
+      "net_return_on_capital": "-0.00064936432270593",
+      "residual_price_pnl": "0.0000000000",
+      "snapshot": 2,
+      "spot_entry_vwap": "76910.01",
+      "spot_levels_used": 1,
+      "uncommitted_cash": "139.38669745"
+    },
+    {
+      "annualized_simple_return": "-0.019942589159020134459232772581065088784210534214434526108251151887966221118123226",
+      "asset": "ETH",
+      "capital": "1000",
+      "decomposition_error": "0.000000000000",
+      "fee_drag_bps": "30.026353616251039620871845075063946491362546126574821921545290049696593664861237",
+      "fee_drag_cash": "1.492478522835",
+      "future_base_quantity": "0.204",
+      "future_entry_vwap": "2439.94",
+      "future_levels_used": 1,
+      "matched_gross_basis_bps": "13.913114855020418214278385422010629783915782561408548972933040569657917957768000",
+      "matched_gross_basis_cash": "0.69156",
+      "matched_spot_notional": "497.05620",
+      "measurement_id": "0|ETH|1000|1|1|1|0",
+      "net_cash_profit": "-0.800918522835",
+      "net_return_on_capital": "-0.000800918522835",
+      "residual_price_pnl": "0.000000000",
+      "snapshot": 0,
+      "spot_entry_vwap": "2436.55",
+      "spot_levels_used": 1,
+      "uncommitted_cash": "4.21620112"
+    },
+    {
+      "annualized_simple_return": "-0.022479583378366263125089656251135680263718917846530352862385064379782448338503462",
+      "asset": "ETH",
+      "capital": "1000",
+      "decomposition_error": "0.0000000000000000000000000000000000000000000000000000000000000000000000000000092",
+      "fee_drag_bps": "30.025329664662585444208501369352241715352556002149638010968496570564587344895322",
+      "fee_drag_cash": "1.492635882373",
+      "future_base_quantity": "0.204",
+      "future_entry_vwap": "2439.7814215686274509803921568627450980392156862745098039215686274509803921568627",
+      "future_levels_used": 7,
+      "matched_gross_basis_bps": "11.865211678112064887590973998601077763935533711040727819346082305645278025938000",
+      "matched_gross_basis_cash": "0.5898499999999999999999999999999999999999999999999999999999999999999999999999908",
+      "matched_spot_notional": "497.12556",
+      "measurement_id": "1|ETH|1000|1|1|1|0",
+      "net_cash_profit": "-0.902785882373",
+      "net_return_on_capital": "-0.000902785882373",
+      "residual_price_pnl": "0.000000000",
+      "snapshot": 1,
+      "spot_entry_vwap": "2436.89",
+      "spot_levels_used": 1,
+      "uncommitted_cash": "4.179105295"
+    },
+    {
+      "annualized_simple_return": "-0.020332577511336543618469722823903721745066926105473232778217190723686126573974413",
+      "asset": "ETH",
+      "capital": "1000",
+      "decomposition_error": "0.0000000000000000000000000000000000000000000000000000000000000000000000000000032",
+      "fee_drag_bps": "30.026192528539906031846632740744784205518078809615420071395958533696182411931928",
+      "fee_drag_cash": "1.491772226737",
+      "future_base_quantity": "0.204",
+      "future_entry_vwap": "2438.7199509803921568627450980392156862745098039215686274509803921568627450980392",
+      "future_levels_used": 3,
+      "matched_gross_basis_bps": "13.590939432753240163853716783686058094981148642604848674270008568835412099150000",
+      "matched_gross_basis_cash": "0.6752299999999999999999999999999999999999999999999999999999999999999999999999968",
+      "matched_spot_notional": "496.82364",
+      "measurement_id": "2|ETH|1000|1|1|1|0",
+      "net_cash_profit": "-0.816542226737",
+      "net_return_on_capital": "-0.000816542226737",
+      "residual_price_pnl": "0.000000000",
+      "snapshot": 2,
+      "spot_entry_vwap": "2435.41",
+      "spot_levels_used": 1,
+      "uncommitted_cash": "4.698117565"
+    },
+    {
+      "annualized_simple_return": "-0.0228700006508695199257791304988063322741667327248219257543121146036051942614109",
+      "asset": "ETH",
+      "capital": "10000",
+      "decomposition_error": "0.0000000000000000000000000000000000000000000000000000000000000000000000000000669",
+      "fee_drag_bps": "30.016297019617031053406316139641675264328721517261839002432242766509171138307221",
+      "fee_drag_cash": "14.985609122295",
+      "future_base_quantity": "2.049",
+      "future_entry_vwap": "2439.3810102489019033674963396778916544655929721815519765739385065885797950219619",
+      "future_levels_used": 19,
+      "matched_gross_basis_bps": "11.618929424398856446600068448797087954661189721335398715144390997844472807707000",
+      "matched_gross_basis_cash": "5.8007399999999999999999999999999999999999999999999999999999999999999999999999331",
+      "matched_spot_notional": "4992.49095",
+      "measurement_id": "0|ETH|10000|1|1|1|0",
+      "net_cash_profit": "-9.184869122295",
+      "net_return_on_capital": "-0.0009184869122295",
+      "residual_price_pnl": "0.000000000",
+      "snapshot": 0,
+      "spot_entry_vwap": "2436.55",
+      "spot_levels_used": 1,
+      "uncommitted_cash": "1.601459155"
+    },
+    {
+      "annualized_simple_return": "-0.024640317730658856798169326392826287544479149757456828317689227024679233098131971",
+      "asset": "ETH",
+      "capital": "10000",
+      "decomposition_error": "0.0000000000000000000000000000000000000000000000000000000000000000000000000000934",
+      "fee_drag_bps": "30.015586231739848445229960025475589930817760720991615213913422331831829567485448",
+      "fee_drag_cash": "14.987345327921",
+      "future_base_quantity": "2.049",
+      "future_entry_vwap": "2439.3749829184968277208394338701805758906783796974133723767691556857003416300634",
+      "future_levels_used": 13,
+      "matched_gross_basis_bps": "10.197353670033640093887840116626420932739597180887821677503521643161331164162000",
+      "matched_gross_basis_cash": "5.0917299999999999999999999999999999999999999999999999999999999999999999999999066",
+      "matched_spot_notional": "4993.18761",
+      "measurement_id": "1|ETH|10000|1|1|1|0",
+      "net_cash_profit": "-9.895615327921",
+      "net_return_on_capital": "-0.0009895615327921",
+      "residual_price_pnl": "0.000000000",
+      "snapshot": 1,
+      "spot_entry_vwap": "2436.89",
+      "spot_levels_used": 1,
+      "uncommitted_cash": "0.91644133"
+    },
+    {
+      "annualized_simple_return": "-0.020558764941025522022300976554298297798506506735470309511797235067574853053624243",
+      "asset": "ETH",
+      "capital": "10000",
+      "decomposition_error": "0.00000000000000000000000000000000000000000000000000000000000000000000000000010",
+      "fee_drag_bps": "30.017217659127060390793116319073234626392851566736747185654421286905064615253344",
+      "fee_drag_cash": "14.986367572139",
+      "future_base_quantity": "2.05",
+      "future_entry_vwap": "2438.692980487804878048780487804878048780487804878048780487804878048780487804878",
+      "future_levels_used": 3,
+      "matched_gross_basis_bps": "13.480196302901269391110686926957057663751913961299249357623061615007279287175000",
+      "matched_gross_basis_cash": "6.73010999999999999999999999999999999999999999999999999999999999999999999999990",
+      "matched_spot_notional": "4992.5905",
+      "measurement_id": "2|ETH|10000|1|1|1|0",
+      "net_cash_profit": "-8.256257572139",
+      "net_return_on_capital": "-0.0008256257572139",
+      "residual_price_pnl": "0.000000000",
+      "snapshot": 2,
+      "spot_entry_vwap": "2435.41",
+      "spot_levels_used": 1,
+      "uncommitted_cash": "0.474868695"
+    }
+  ],
+  "reference_scenario": {
+    "adverse_exit_bps": "0",
+    "fee_multiplier": "1",
+    "reserve": "1",
+    "terminal_index_ratio": "1"
+  },
+  "rows": 432,
+  "scope": "saved-entry-and-ledger descriptive aggregation only; no quote refresh or scenario regeneration",
+  "source_entries": "data/carry-feasibility/2026-09-10/capture/entries.json",
+  "source_entries_sha256": "cedaf343c7ec0fd529a4afa5e927344f3218f1a29c2240efc3adee016606d89f",
+  "source_measurement_ledger": "data/carry-feasibility/2026-09-10/measurement_ledger.jsonl",
+  "source_measurement_ledger_sha256": "7624f2809c604e51c72726fc375c3d27785675cc2992f031a913c2df813aa985",
+  "terminal_reserve_insufficient_rows": 72,
+  "terminal_reserve_limit": "End-state scenario only, not pathwise liquidation/maintenance/collateral-transfer proof."
+}

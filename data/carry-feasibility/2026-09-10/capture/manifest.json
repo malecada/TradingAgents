@@ -1,0 +1,459 @@
+{
+  "experiment": "dated_carry_feasibility_2026_09_10",
+  "source_commit": "62bcf8bf4bdb2c57e8b78d4443427863e287d692",
+  "measurement_rows": 432,
+  "complete_rows": 432,
+  "financial_ledger_unchanged": true,
+  "requests": [
+    {
+      "id": "000_spot_time",
+      "url": "https://api.binance.com/api/v3/time",
+      "parameters": {},
+      "market": "spot",
+      "endpoint": "time",
+      "start_ns": 1789056674086013308,
+      "end_ns": 1789056674420242924,
+      "elapsed_ns": 334229827,
+      "start_utc": "2026-09-10T16:11:14.086013+00:00",
+      "end_utc": "2026-09-10T16:11:14.420243+00:00",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 16:11:14 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "X-MBX-USED-WEIGHT-1M": "1"
+      },
+      "error": null,
+      "attempted": true,
+      "raw_path": "data/carry-feasibility/2026-09-10/capture/raw/000_spot_time.bin",
+      "bytes": 28,
+      "sha256": "02f2df6691a662cdfc173d9d5b1cd760f8acaec2d048146c73fec30d5fb11396"
+    },
+    {
+      "id": "001_future_time",
+      "url": "https://fapi.binance.com/fapi/v1/time",
+      "parameters": {},
+      "market": "future",
+      "endpoint": "time",
+      "start_ns": 1789056674420746448,
+      "end_ns": 1789056674741344431,
+      "elapsed_ns": 320600117,
+      "start_utc": "2026-09-10T16:11:14.420747+00:00",
+      "end_utc": "2026-09-10T16:11:14.741344+00:00",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 16:11:14 GMT",
+        "Content-Type": "application/json",
+        "X-MBX-USED-WEIGHT-1M": "1"
+      },
+      "error": null,
+      "attempted": true,
+      "raw_path": "data/carry-feasibility/2026-09-10/capture/raw/001_future_time.bin",
+      "bytes": 28,
+      "sha256": "76246f9a1b4d579cf6e04418bccad88fca3275c1f46c4e4f3ae2ccc189547716"
+    },
+    {
+      "id": "002_future_exchangeInfo",
+      "url": "https://fapi.binance.com/fapi/v1/exchangeInfo",
+      "parameters": {},
+      "market": "future",
+      "endpoint": "exchangeInfo",
+      "start_ns": 1789056674741748629,
+      "end_ns": 1789056675351982843,
+      "elapsed_ns": 610234875,
+      "start_utc": "2026-09-10T16:11:14.741749+00:00",
+      "end_utc": "2026-09-10T16:11:15.351983+00:00",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 16:11:14 GMT",
+        "Content-Type": "application/json",
+        "X-MBX-USED-WEIGHT-1M": "2"
+      },
+      "error": null,
+      "attempted": true,
+      "raw_path": "data/carry-feasibility/2026-09-10/capture/raw/002_future_exchangeInfo.bin",
+      "bytes": 1108421,
+      "sha256": "752ee94c0814fd681ad59176901c1cb9891ad975c8627ca3fbb6761f1394be8e"
+    },
+    {
+      "id": "003_spot_exchangeInfo",
+      "url": "https://api.binance.com/api/v3/exchangeInfo?symbols=%5B%22BTCUSDT%22%2C%22ETHUSDT%22%5D",
+      "parameters": {
+        "symbols": "[\"BTCUSDT\",\"ETHUSDT\"]"
+      },
+      "market": "spot",
+      "endpoint": "exchangeInfo",
+      "start_ns": 1789056675369241117,
+      "end_ns": 1789056675712235560,
+      "elapsed_ns": 342994363,
+      "start_utc": "2026-09-10T16:11:15.369241+00:00",
+      "end_utc": "2026-09-10T16:11:15.712235+00:00",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 16:11:15 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "X-MBX-USED-WEIGHT-1M": "21"
+      },
+      "error": null,
+      "attempted": true,
+      "raw_path": "data/carry-feasibility/2026-09-10/capture/raw/003_spot_exchangeInfo.bin",
+      "bytes": 10245,
+      "sha256": "7fe6b0eff530337ce44f4475b82108999d90502278aa3b7cc98b9ef0b8d5e67b"
+    },
+    {
+      "id": "004_spot_depth",
+      "url": "https://api.binance.com/api/v3/depth?symbol=BTCUSDT&limit=100",
+      "parameters": {
+        "symbol": "BTCUSDT",
+        "limit": 100
+      },
+      "market": "spot",
+      "endpoint": "depth",
+      "start_ns": 1789056675713677434,
+      "end_ns": 1789056676012688856,
+      "elapsed_ns": 299011963,
+      "start_utc": "2026-09-10T16:11:15.713677+00:00",
+      "end_utc": "2026-09-10T16:11:16.012689+00:00",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 16:11:15 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "X-MBX-USED-WEIGHT-1M": "26"
+      },
+      "error": null,
+      "attempted": true,
+      "raw_path": "data/carry-feasibility/2026-09-10/capture/raw/004_spot_depth.bin",
+      "bytes": 6446,
+      "sha256": "efb722e706d81dbc9498bafeff6cc8cb946331afc0d945e7c1af2cfceee0164e"
+    },
+    {
+      "id": "005_future_depth",
+      "url": "https://fapi.binance.com/fapi/v1/depth?symbol=BTCUSDT_260925&limit=100",
+      "parameters": {
+        "symbol": "BTCUSDT_260925",
+        "limit": 100
+      },
+      "market": "future",
+      "endpoint": "depth",
+      "start_ns": 1789056675713992134,
+      "end_ns": 1789056676018873184,
+      "elapsed_ns": 304882331,
+      "start_utc": "2026-09-10T16:11:15.713992+00:00",
+      "end_utc": "2026-09-10T16:11:16.018873+00:00",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 16:11:15 GMT",
+        "Content-Type": "application/json",
+        "X-MBX-USED-WEIGHT-1M": "7"
+      },
+      "error": null,
+      "attempted": true,
+      "raw_path": "data/carry-feasibility/2026-09-10/capture/raw/005_future_depth.bin",
+      "bytes": 4085,
+      "sha256": "942a5c83dd99ca1ee72c652cdd3bdacaa8a337164023b23e7b60da360a9304b6"
+    },
+    {
+      "id": "006_spot_depth",
+      "url": "https://api.binance.com/api/v3/depth?symbol=ETHUSDT&limit=100",
+      "parameters": {
+        "symbol": "ETHUSDT",
+        "limit": 100
+      },
+      "market": "spot",
+      "endpoint": "depth",
+      "start_ns": 1789056675714249337,
+      "end_ns": 1789056676024021929,
+      "elapsed_ns": 309772963,
+      "start_utc": "2026-09-10T16:11:15.714249+00:00",
+      "end_utc": "2026-09-10T16:11:16.024022+00:00",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 16:11:15 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "X-MBX-USED-WEIGHT-1M": "31"
+      },
+      "error": null,
+      "attempted": true,
+      "raw_path": "data/carry-feasibility/2026-09-10/capture/raw/006_spot_depth.bin",
+      "bytes": 6265,
+      "sha256": "16094a4b29e07578c7de8d91a53d9050d989f8b4858733a9a977b28bfe2c05e5"
+    },
+    {
+      "id": "007_future_depth",
+      "url": "https://fapi.binance.com/fapi/v1/depth?symbol=ETHUSDT_260925&limit=100",
+      "parameters": {
+        "symbol": "ETHUSDT_260925",
+        "limit": 100
+      },
+      "market": "future",
+      "endpoint": "depth",
+      "start_ns": 1789056675714525013,
+      "end_ns": 1789056676020197747,
+      "elapsed_ns": 305673235,
+      "start_utc": "2026-09-10T16:11:15.714525+00:00",
+      "end_utc": "2026-09-10T16:11:16.020198+00:00",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 16:11:15 GMT",
+        "Content-Type": "application/json",
+        "X-MBX-USED-WEIGHT-1M": "12"
+      },
+      "error": null,
+      "attempted": true,
+      "raw_path": "data/carry-feasibility/2026-09-10/capture/raw/007_future_depth.bin",
+      "bytes": 4114,
+      "sha256": "df255f59d500e13cfae41acdde99776098e97e4afa4c2aa5e27d072b279ef860"
+    },
+    {
+      "id": "008_spot_depth",
+      "url": "https://api.binance.com/api/v3/depth?symbol=BTCUSDT&limit=100",
+      "parameters": {
+        "symbol": "BTCUSDT",
+        "limit": 100
+      },
+      "market": "spot",
+      "endpoint": "depth",
+      "start_ns": 1789056705713925889,
+      "end_ns": 1789056706043424274,
+      "elapsed_ns": 329497333,
+      "start_utc": "2026-09-10T16:11:45.713926+00:00",
+      "end_utc": "2026-09-10T16:11:46.043424+00:00",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 16:11:45 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "X-MBX-USED-WEIGHT-1M": "36"
+      },
+      "error": null,
+      "attempted": true,
+      "raw_path": "data/carry-feasibility/2026-09-10/capture/raw/008_spot_depth.bin",
+      "bytes": 6446,
+      "sha256": "2d4083d3e6023c67877dde1aa57fbe77c9250b886019881e08d5301b89f4bdbe"
+    },
+    {
+      "id": "009_future_depth",
+      "url": "https://fapi.binance.com/fapi/v1/depth?symbol=BTCUSDT_260925&limit=100",
+      "parameters": {
+        "symbol": "BTCUSDT_260925",
+        "limit": 100
+      },
+      "market": "future",
+      "endpoint": "depth",
+      "start_ns": 1789056705714393396,
+      "end_ns": 1789056706044147400,
+      "elapsed_ns": 329754075,
+      "start_utc": "2026-09-10T16:11:45.714393+00:00",
+      "end_utc": "2026-09-10T16:11:46.044147+00:00",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 16:11:45 GMT",
+        "Content-Type": "application/json",
+        "X-MBX-USED-WEIGHT-1M": "17"
+      },
+      "error": null,
+      "attempted": true,
+      "raw_path": "data/carry-feasibility/2026-09-10/capture/raw/009_future_depth.bin",
+      "bytes": 4085,
+      "sha256": "7a06ebc16816942164c869f1c7ccc95211fefd14cf343e03c019c30ccee33fc4"
+    },
+    {
+      "id": "010_spot_depth",
+      "url": "https://api.binance.com/api/v3/depth?symbol=ETHUSDT&limit=100",
+      "parameters": {
+        "symbol": "ETHUSDT",
+        "limit": 100
+      },
+      "market": "spot",
+      "endpoint": "depth",
+      "start_ns": 1789056705714676296,
+      "end_ns": 1789056706044885324,
+      "elapsed_ns": 330208988,
+      "start_utc": "2026-09-10T16:11:45.714676+00:00",
+      "end_utc": "2026-09-10T16:11:46.044885+00:00",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 16:11:45 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "X-MBX-USED-WEIGHT-1M": "41"
+      },
+      "error": null,
+      "attempted": true,
+      "raw_path": "data/carry-feasibility/2026-09-10/capture/raw/010_spot_depth.bin",
+      "bytes": 6267,
+      "sha256": "cf1ba4ee13b09028a1582e66e9966225720fb3245b0a994085aafdca5db27777"
+    },
+    {
+      "id": "011_future_depth",
+      "url": "https://fapi.binance.com/fapi/v1/depth?symbol=ETHUSDT_260925&limit=100",
+      "parameters": {
+        "symbol": "ETHUSDT_260925",
+        "limit": 100
+      },
+      "market": "future",
+      "endpoint": "depth",
+      "start_ns": 1789056705714860081,
+      "end_ns": 1789056706044056490,
+      "elapsed_ns": 329196609,
+      "start_utc": "2026-09-10T16:11:45.714860+00:00",
+      "end_utc": "2026-09-10T16:11:46.044057+00:00",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 16:11:45 GMT",
+        "Content-Type": "application/json",
+        "X-MBX-USED-WEIGHT-1M": "22"
+      },
+      "error": null,
+      "attempted": true,
+      "raw_path": "data/carry-feasibility/2026-09-10/capture/raw/011_future_depth.bin",
+      "bytes": 4112,
+      "sha256": "9b2e1bae3180e2198a0cf659a4b6883c3c9cb33574c9277734784f2a9eb8ead4"
+    },
+    {
+      "id": "012_spot_depth",
+      "url": "https://api.binance.com/api/v3/depth?symbol=BTCUSDT&limit=100",
+      "parameters": {
+        "symbol": "BTCUSDT",
+        "limit": 100
+      },
+      "market": "spot",
+      "endpoint": "depth",
+      "start_ns": 1789056735713817009,
+      "end_ns": 1789056736047477881,
+      "elapsed_ns": 333659970,
+      "start_utc": "2026-09-10T16:12:15.713817+00:00",
+      "end_utc": "2026-09-10T16:12:16.047478+00:00",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 16:12:15 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "X-MBX-USED-WEIGHT-1M": "10"
+      },
+      "error": null,
+      "attempted": true,
+      "raw_path": "data/carry-feasibility/2026-09-10/capture/raw/012_spot_depth.bin",
+      "bytes": 6446,
+      "sha256": "b97545790ddade75dad697b0d7e9774e6b622c3ceb7ef60339cd16e8b16c0858"
+    },
+    {
+      "id": "013_future_depth",
+      "url": "https://fapi.binance.com/fapi/v1/depth?symbol=BTCUSDT_260925&limit=100",
+      "parameters": {
+        "symbol": "BTCUSDT_260925",
+        "limit": 100
+      },
+      "market": "future",
+      "endpoint": "depth",
+      "start_ns": 1789056735714065886,
+      "end_ns": 1789056736047996003,
+      "elapsed_ns": 333930117,
+      "start_utc": "2026-09-10T16:12:15.714066+00:00",
+      "end_utc": "2026-09-10T16:12:16.047996+00:00",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 16:12:15 GMT",
+        "Content-Type": "application/json",
+        "X-MBX-USED-WEIGHT-1M": "5"
+      },
+      "error": null,
+      "attempted": true,
+      "raw_path": "data/carry-feasibility/2026-09-10/capture/raw/013_future_depth.bin",
+      "bytes": 4085,
+      "sha256": "d4fab6b49ea163fb7d50e4e3abe05873b983a7f930b919c3b7944df4e7982194"
+    },
+    {
+      "id": "014_spot_depth",
+      "url": "https://api.binance.com/api/v3/depth?symbol=ETHUSDT&limit=100",
+      "parameters": {
+        "symbol": "ETHUSDT",
+        "limit": 100
+      },
+      "market": "spot",
+      "endpoint": "depth",
+      "start_ns": 1789056735714229533,
+      "end_ns": 1789056736047096035,
+      "elapsed_ns": 332867605,
+      "start_utc": "2026-09-10T16:12:15.714230+00:00",
+      "end_utc": "2026-09-10T16:12:16.047096+00:00",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 16:12:15 GMT",
+        "Content-Type": "application/json;charset=UTF-8",
+        "X-MBX-USED-WEIGHT-1M": "5"
+      },
+      "error": null,
+      "attempted": true,
+      "raw_path": "data/carry-feasibility/2026-09-10/capture/raw/014_spot_depth.bin",
+      "bytes": 6268,
+      "sha256": "3185d921339c481cb148795d1e87777a6f3ba0d6ebf360aa68372bb1de77684a"
+    },
+    {
+      "id": "015_future_depth",
+      "url": "https://fapi.binance.com/fapi/v1/depth?symbol=ETHUSDT_260925&limit=100",
+      "parameters": {
+        "symbol": "ETHUSDT_260925",
+        "limit": 100
+      },
+      "market": "future",
+      "endpoint": "depth",
+      "start_ns": 1789056735714410943,
+      "end_ns": 1789056736048734238,
+      "elapsed_ns": 334323174,
+      "start_utc": "2026-09-10T16:12:15.714411+00:00",
+      "end_utc": "2026-09-10T16:12:16.048734+00:00",
+      "http_status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 16:12:15 GMT",
+        "Content-Type": "application/json",
+        "X-MBX-USED-WEIGHT-1M": "10"
+      },
+      "error": null,
+      "attempted": true,
+      "raw_path": "data/carry-feasibility/2026-09-10/capture/raw/015_future_depth.bin",
+      "bytes": 4112,
+      "sha256": "363b65d4bc74b4b58d9a572e6dec0c5d57df820bf3f812686e6fa667677777c0"
+    }
+  ],
+  "ledger_path": "data/carry-feasibility/2026-09-10/measurement_ledger.jsonl",
+  "ledger_sha256": "7624f2809c604e51c72726fc375c3d27785675cc2992f031a913c2df813aa985",
+  "files": {
+    "data/carry-feasibility/2026-09-10/capture/entries.json": "cedaf343c7ec0fd529a4afa5e927344f3218f1a29c2240efc3adee016606d89f",
+    "data/carry-feasibility/2026-09-10/capture/inventory.json": "cd6f872946ebd779d8a9da424e32f143d1b9cb1bb87cd84c3947434a6e892e8d",
+    "data/carry-feasibility/2026-09-10/capture/raw/000_spot_time.bin": "02f2df6691a662cdfc173d9d5b1cd760f8acaec2d048146c73fec30d5fb11396",
+    "data/carry-feasibility/2026-09-10/capture/raw/000_spot_time.json": "c6110a3a6bb073d849f7529763f19b1c9cdf073b91d9d4d0b9e482e88d9f7056",
+    "data/carry-feasibility/2026-09-10/capture/raw/001_future_time.bin": "76246f9a1b4d579cf6e04418bccad88fca3275c1f46c4e4f3ae2ccc189547716",
+    "data/carry-feasibility/2026-09-10/capture/raw/001_future_time.json": "7e3bb9cd3c6179a815c9c59bb29df4dc2d38bbdffc2dd22da89e884a62259abd",
+    "data/carry-feasibility/2026-09-10/capture/raw/002_future_exchangeInfo.bin": "752ee94c0814fd681ad59176901c1cb9891ad975c8627ca3fbb6761f1394be8e",
+    "data/carry-feasibility/2026-09-10/capture/raw/002_future_exchangeInfo.json": "83624574f98e3548da17ef926454f5bd6eec428f844c1d76cf71b40f398cb900",
+    "data/carry-feasibility/2026-09-10/capture/raw/003_spot_exchangeInfo.bin": "7fe6b0eff530337ce44f4475b82108999d90502278aa3b7cc98b9ef0b8d5e67b",
+    "data/carry-feasibility/2026-09-10/capture/raw/003_spot_exchangeInfo.json": "996e5f25dc7415a481993f02a76cee16ba8309547e92231e08ebbdcc6c106f85",
+    "data/carry-feasibility/2026-09-10/capture/raw/004_spot_depth.bin": "efb722e706d81dbc9498bafeff6cc8cb946331afc0d945e7c1af2cfceee0164e",
+    "data/carry-feasibility/2026-09-10/capture/raw/004_spot_depth.json": "d10f2d2e2385e1b1683fe02c962f0b2e0c6fb0cd607b409849a1e702d266133b",
+    "data/carry-feasibility/2026-09-10/capture/raw/005_future_depth.bin": "942a5c83dd99ca1ee72c652cdd3bdacaa8a337164023b23e7b60da360a9304b6",
+    "data/carry-feasibility/2026-09-10/capture/raw/005_future_depth.json": "b91aa0c0215a2c9275e174d6ebe4d2b6087d42380b7c77233b4fe4040b0ff71c",
+    "data/carry-feasibility/2026-09-10/capture/raw/006_spot_depth.bin": "16094a4b29e07578c7de8d91a53d9050d989f8b4858733a9a977b28bfe2c05e5",
+    "data/carry-feasibility/2026-09-10/capture/raw/006_spot_depth.json": "98b947b072089d4396604c46506d6f99a1f7a52b4437e6dae2082b55677cf28b",
+    "data/carry-feasibility/2026-09-10/capture/raw/007_future_depth.bin": "df255f59d500e13cfae41acdde99776098e97e4afa4c2aa5e27d072b279ef860",
+    "data/carry-feasibility/2026-09-10/capture/raw/007_future_depth.json": "45750763c43f693d347cc2c9588d00878bbbe8952d731b749e4fb6c2e4f457b7",
+    "data/carry-feasibility/2026-09-10/capture/raw/008_spot_depth.bin": "2d4083d3e6023c67877dde1aa57fbe77c9250b886019881e08d5301b89f4bdbe",
+    "data/carry-feasibility/2026-09-10/capture/raw/008_spot_depth.json": "3702a733dedc980b02c062809119a7825b311fd56d686ecc9f81eccde10e9982",
+    "data/carry-feasibility/2026-09-10/capture/raw/009_future_depth.bin": "7a06ebc16816942164c869f1c7ccc95211fefd14cf343e03c019c30ccee33fc4",
+    "data/carry-feasibility/2026-09-10/capture/raw/009_future_depth.json": "ffb5148a638fe8f71d7b6432d71e2bd4ab472166d64ff9a48322f7bb5f6fdd2d",
+    "data/carry-feasibility/2026-09-10/capture/raw/010_spot_depth.bin": "cf1ba4ee13b09028a1582e66e9966225720fb3245b0a994085aafdca5db27777",
+    "data/carry-feasibility/2026-09-10/capture/raw/010_spot_depth.json": "c85413cf0426883ab0af65258c209c018d8da2c2a9a0f418b20f09adab7f95f4",
+    "data/carry-feasibility/2026-09-10/capture/raw/011_future_depth.bin": "9b2e1bae3180e2198a0cf659a4b6883c3c9cb33574c9277734784f2a9eb8ead4",
+    "data/carry-feasibility/2026-09-10/capture/raw/011_future_depth.json": "7c0f61ff8cfce8b0e5077749e765d381c1828f0f90e60a9436afd826b224c2d3",
+    "data/carry-feasibility/2026-09-10/capture/raw/012_spot_depth.bin": "b97545790ddade75dad697b0d7e9774e6b622c3ceb7ef60339cd16e8b16c0858",
+    "data/carry-feasibility/2026-09-10/capture/raw/012_spot_depth.json": "f9913cd40a3e7def1f4f5ea2d60f2e01111da0413e24caf0105be8740d03150c",
+    "data/carry-feasibility/2026-09-10/capture/raw/013_future_depth.bin": "d4fab6b49ea163fb7d50e4e3abe05873b983a7f930b919c3b7944df4e7982194",
+    "data/carry-feasibility/2026-09-10/capture/raw/013_future_depth.json": "b0add1d45265c55286f9d616c280f5eccd20eec0278b6c709b2d8a83c49c6d3d",
+    "data/carry-feasibility/2026-09-10/capture/raw/014_spot_depth.bin": "3185d921339c481cb148795d1e87777a6f3ba0d6ebf360aa68372bb1de77684a",
+    "data/carry-feasibility/2026-09-10/capture/raw/014_spot_depth.json": "284907d1f2977f361a24306bcb026c51291e27a520c49beacd37941d4357e87d",
+    "data/carry-feasibility/2026-09-10/capture/raw/015_future_depth.bin": "363b65d4bc74b4b58d9a572e6dec0c5d57df820bf3f812686e6fa667677777c0",
+    "data/carry-feasibility/2026-09-10/capture/raw/015_future_depth.json": "c71a661699ef463097fde0aad35fa8de7378f128e11d952834e39450a9d54e25",
+    "data/carry-feasibility/2026-09-10/capture/snapshot_0.json": "789a42b4720fb88b781aae7f4e15750ea5caecbcb665cffe781a7292ff951aec",
+    "data/carry-feasibility/2026-09-10/capture/snapshot_1.json": "a1f7065b79de8015e23a1dd470c61447a34fcf7a024f37f8c533f1a30906cc0c",
+    "data/carry-feasibility/2026-09-10/capture/snapshot_2.json": "b0cce190ca86018aa893b5068bebbe7b1a73c1ba5480dd740ae7676eaf33239c",
+    "data/carry-feasibility/2026-09-10/capture/start.json": "48b6cbcad07357927d35f613e98e9ba1714d391ee7b9e48f53dc79b795c2ec35"
+  },
+  "finished_utc": "2026-09-10T16:12:16.116554+00:00",
+  "validated_strategies": 0
+}
