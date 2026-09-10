@@ -1,0 +1,117 @@
+{
+  "gate": "audit_settlement_evidence_2026_09_10",
+  "case": "BZRXUSDT",
+  "type": "documentary_evidence_readiness_only",
+  "completed_utc": "2026-09-10T08:16:35.657230+00:00",
+  "manifest": "manifest.json",
+  "manifest_sha256": "0ea0b06880e01a5564dfb0855de06138e8185eb4be714455fd5641ac4efd10a7",
+  "requests": 18,
+  "downloaded_bytes": 864145,
+  "http_status_counts": {
+    "200": 17,
+    "None": 1
+  },
+  "market_price_payloads_downloaded": 0,
+  "financial_evaluation_performed": false,
+  "holdout_consumed": false,
+  "exact_settlement_established": false,
+  "price_bound_computed": false,
+  "provider_message_sent": false,
+  "field_matrix": [
+    {
+      "field": "original_contract",
+      "status": "supported_identity_qualified",
+      "evidence": "BZRX/USDT Futures termination is distinct from1:10 spot-token conversion to OOKI; exact exchange instrument metadata absent from current retained exchangeInfo"
+    },
+    {
+      "field": "scheduled_settlement_utc",
+      "status": "supported_schedule",
+      "value": "2021-12-19T02:00:00Z"
+    },
+    {
+      "field": "actual_settlement_completion_utc",
+      "status": "unresolved",
+      "value": null
+    },
+    {
+      "field": "actual_terminal_price_USDT",
+      "status": "unresolved",
+      "value": null
+    },
+    {
+      "field": "historical_default_price_rule",
+      "status": "supported_default_not_verified_application",
+      "value": "Last-hour arithmetic average of3600 second-level index observations; exact inclusion/rounding unestablished"
+    },
+    {
+      "field": "event_specific_index_samples_and_weights",
+      "status": "unresolved",
+      "evidence": "Listed BZRX index archives have1m minimum; complete required second samples not recovered"
+    },
+    {
+      "field": "last_price_protected_or_index_override_applied",
+      "status": "unresolved",
+      "evidence": "Near-event notice reserves overrides and Oct2021 FAQ describes default protections; no activation/event log"
+    },
+    {
+      "field": "price_precision_rounding_contract_multiplier",
+      "status": "unresolved",
+      "value": null
+    },
+    {
+      "field": "default_reduce_only_start_utc",
+      "status": "default_only",
+      "value": "2021-12-19T01:50:00Z",
+      "evidence": "Derived from historical10-minute rule; event-specific application unverified"
+    },
+    {
+      "field": "settlement_fee_charged",
+      "status": "supported_generic_charge",
+      "value": "Historical delisting FAQ states trading fees charged"
+    },
+    {
+      "field": "perpetual_settlement_fee_rate_basis_tier_discount",
+      "status": "unresolved",
+      "evidence": "Oct2021 ordinary USD-M example maker0.02%/taker0.040%, quantity\u00d7price; BNB10%conditional; auto-settlement classification missing"
+    },
+    {
+      "field": "quarterly_0.015_percent_settlement_fee",
+      "status": "inapplicable_substitute",
+      "evidence": "Oct2021 feeFAQ explicitly confines flat0.015% to quarterly delivery contracts"
+    },
+    {
+      "field": "last_preclosure_public_funding_record",
+      "status": "observed_rate_not_actual_charge",
+      "time_utc": "2021-12-19T00:00:00.031Z",
+      "rate": "0.00010000",
+      "markPrice": ""
+    },
+    {
+      "field": "historical_default_funding_rule",
+      "status": "supported_default",
+      "value": "mark price\u00d7quantity\u00d7rate; scheduled00/08/16UTC; actual transaction may deviate15seconds; no Binance funding-transfer fee; position required at funding event"
+    },
+    {
+      "field": "final_funding_valuation_actual_charge_or_special_adjustment",
+      "status": "unresolved",
+      "evidence": "Public funding record mark price empty; closure-specific prorating/waiver/accrual and actual transaction unidentified"
+    },
+    {
+      "field": "admissible_actual_settlement_bounds",
+      "status": "not_established",
+      "evidence": "No bounds calculated: required second samples and event-specific rule/override applicability unproved"
+    },
+    {
+      "field": "financial_replay_readiness",
+      "status": "not_ready",
+      "value": false
+    }
+  ],
+  "source_limitations": [
+    "May2021/Dec24 FAQ captures bracket the event but do not prove all intervening rule states or event-specific application.",
+    "Dec20 archived notice is one day after event; identical current body does not supply an executed settlement record.",
+    "Minute index OHLC/mark closes, live estimates and quarterly settlement data are not perpetual settlement prints.",
+    "Post-closure funding publication does not authorize exposure or a funding charge.",
+    "Authenticated export availability was not tested and no account access was performed."
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "kind": "price_data_integrity_only",
+  "source_sha256": {
+    "vision-bnx-index-20250317-zip.bin": "bdc76991e3b47c4c368682962330ad81ee53d7623d22d0056304b726a348c1ac",
+    "vision-bnx-index-20250317-checksum.bin": "9ef1f3145dc95aeb7a1a2e1942f7bc1e3b8474a460ea1800aac6cd4835ba3906",
+    "index-final-window-api.bin": "ffb4963417dd2bb2401933cb103738c2b89d006e69e6a19e9faccc43e9dc7d3f"
+  },
+  "zip_checksum_matches": true,
+  "zip_member_sha256": "b6518e596b392c18433f3bdd52da423be25dd8b7ae1e807c5b631e747412c8e4",
+  "zip_csv_header": [
+    "open_time",
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "close_time",
+    "quote_volume",
+    "count",
+    "taker_buy_volume",
+    "taker_buy_quote_volume",
+    "ignore"
+  ],
+  "archive_rows": 1440,
+  "archive_min_open_utc": "2025-03-17T00:00:00+00:00",
+  "archive_max_open_utc": "2025-03-17T23:59:00+00:00",
+  "api_archive_all_12_fields_equal_for_31_rows": true,
+  "window_start_inclusive_utc": "2025-03-17T08:30:00+00:00",
+  "window_end_exclusive_utc": "2025-03-17T09:00:00+00:00",
+  "minute_rows_expected": 30,
+  "minute_rows_observed": 30,
+  "index_basic_data_count": 1798,
+  "generic_rule_one_second_count": 1800,
+  "non60_rows": [
+    {
+      "open_utc": "2025-03-17T08:40:00+00:00",
+      "count": 59
+    },
+    {
+      "open_utc": "2025-03-17T08:46:00+00:00",
+      "count": 59
+    }
+  ],
+  "count_semantics": "Vision header=count; archived official API labels field[8] Number of bisic data (sic). Exact timestamp, missing-update and fill semantics are not supplied.",
+  "observed_sample_mean_interval_conditional": {
+    "low": "1.785660039382647385984427141",
+    "high": "1.857535568676307007786429366",
+    "formula": "sum(count_i * low_i)/sum(count_i) <= observed-sample mean <= sum(count_i * high_i)/sum(count_i)",
+    "assumptions": "Each count_i is the number of relevant observations represented by its reported OHLC extrema; reported decimal extrema enclose those observations. This bounds the represented 1798-sample mean only, not the 1800-sample contractual settlement mean."
+  },
+  "equal_60_samples_per_minute_interval_conditional": {
+    "low": "1.785661651666666666666666667",
+    "high": "1.857475424",
+    "formula": "mean(minute lows) <= mean(1800 equally sampled index values) <= mean(minute highs)",
+    "assumptions": "Requires all60 relevant one-second values in every minute to be within reported extrema, same settlement index, [08:30,09:00) endpoint convention, and no unaccounted rounding. Two counts59 leave this completeness assumption unestablished."
+  },
+  "exact_settlement_price_identified": false,
+  "unconditional_actual_settlement_bound_identified": false,
+  "financial_metrics_computed": false
+}

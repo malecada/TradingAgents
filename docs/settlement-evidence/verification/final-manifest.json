@@ -1,0 +1,603 @@
+{
+  "status": "PASS",
+  "verified_utc": "2026-09-10T09:02:52.342295+00:00",
+  "verification": "Parent independent offline artifact, clock and preservation checks",
+  "registration_commit": "506373efe210ed06bb6a1c1a48a8ba26ff382bb1",
+  "gate_key": "audit_settlement_evidence_2026_09_10",
+  "gate_sha256": "140e97dd96782bc59bfe38deffaa8b64f8e67f834820ce59bc5e7f1a3c378000",
+  "case_receipts": [
+    {
+      "case": "bzrx",
+      "manifest": "data/settlement-evidence/2026-09-10/bzrx/manifest.json",
+      "manifest_sha256": "0ea0b06880e01a5564dfb0855de06138e8185eb4be714455fd5641ac4efd10a7",
+      "requests": 18,
+      "body_bytes": 864145,
+      "statuses": {
+        "200": 17,
+        "timeout": 1
+      }
+    },
+    {
+      "case": "luna",
+      "manifest": "data/settlement-evidence/2026-09-10/luna/manifest.json",
+      "manifest_sha256": "b164e0f4921445fbea13f48a82dab6cedfe1744f044d160f241b3c57925f5ea8",
+      "requests": 11,
+      "body_bytes": 802048,
+      "statuses": {
+        "202": 2,
+        "200": 9
+      }
+    },
+    {
+      "case": "bnx",
+      "manifest": "data/settlement-evidence/2026-09-10/bnx/manifest.json",
+      "manifest_sha256": "73d4611401b51e0143e687ac01a7925f46f4a90707ace671c57d661ad58630c4",
+      "requests": 23,
+      "body_bytes": 1219027,
+      "statuses": {
+        "timeout": 3,
+        "200": 20
+      }
+    }
+  ],
+  "direct_requests": 52,
+  "response_body_bytes": 2885220,
+  "max_overlapping_recorded_direct_requests": 2,
+  "price_integrity_checks": [
+    {
+      "case": "luna",
+      "archive_rows": 1440,
+      "api_rows": 60,
+      "all_twelve_fields_agree": true,
+      "provider_checksum_valid": true,
+      "complete_event_day_minute_clock": true,
+      "actual_settlement_value_inferred": false
+    },
+    {
+      "case": "bnx",
+      "archive_rows": 1440,
+      "api_rows": 31,
+      "all_twelve_fields_agree": true,
+      "provider_checksum_valid": true,
+      "complete_event_day_minute_clock": true,
+      "actual_settlement_value_inferred": false
+    }
+  ],
+  "prior_recovery_and_replay_artifacts_unchanged": 2377,
+  "external_original_file_hashes_unchanged": 222,
+  "prior_gate_files": [
+    {
+      "path": "data/llm_event_xs/gates.json",
+      "prior_entries_unchanged": 1
+    },
+    {
+      "path": "data/llm_pair_xs/gates.json",
+      "prior_entries_unchanged": 2
+    },
+    {
+      "path": "data/llm_rank_xs/gates.json",
+      "prior_entries_unchanged": 1
+    },
+    {
+      "path": "data/predlab/gates.json",
+      "prior_entries_unchanged": 35
+    },
+    {
+      "path": "data/rebuild/gates.json",
+      "prior_entries_unchanged": 21
+    }
+  ],
+  "unchanged_source_files": 6,
+  "financial_ledger": {
+    "bytes": 428150,
+    "sha256": "710a4f087325bfb408ed8d051963a473e8d8a47b445ffae0238c565aff6dc791",
+    "new_rows": 0
+  },
+  "prior_correction_prefix_unchanged": true,
+  "prior_correction_prefix_sha256": "bb90882d6de264ce19d69155717b21a4c57297a57c7cced16326076530f1fcdc",
+  "financial_runs": 0,
+  "financial_statistics_computed": false,
+  "exact_settlement_values_admitted": 0,
+  "tests_rerun": false,
+  "accounting_source_changed": false,
+  "artifact_file_count": 99,
+  "artifact_bytes": 3523503,
+  "files": [
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/derive-index-coverage.py",
+      "bytes": 3573,
+      "sha256": "b8440bb72cf18b7f637ae5d95fecbb6d60b54c90f774a3a49c34dd64ea12c783"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/faq-20240306085115.bin",
+      "bytes": 408846,
+      "sha256": "ad5f247409d203088969b605a491612a9d9a6d5a4895c77481a727c2bd7d275e"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/faq-20240306085115.extracted.json",
+      "bytes": 5062,
+      "sha256": "35eaf029b17572e6cb6a230507625011f4a16d30e54d1a233bcf806cdd5270f8"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/faq-available-20250317.bin",
+      "bytes": 341,
+      "sha256": "3eb46eba184426f950350f95fa8c19f3a194d869296852e157f194180b76896c"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/faq-cdx-2025.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/faq-cdx-to-event.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/faq-detail-available-20250317.bin",
+      "bytes": 146,
+      "sha256": "bb75374b88cafaca6c533a4ca7aa428e7e62caf0c7ae6e8c248eeb354b8c4c74"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/faq-slug-available-20250317.bin",
+      "bytes": 403,
+      "sha256": "101b419acd8585f2e6cfeeeb1a08b402462474b5934192917cc3a1fe48fa5215"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/fee-20241205112302.bin",
+      "bytes": 408329,
+      "sha256": "24d181ab9f4c142d57ab9607057b9c2b9e9d539f2c6453ca43b574aa4c1cbe3f"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/fee-20241205112302.extracted.json",
+      "bytes": 11191,
+      "sha256": "80440adcf7a3d328216a84cb6c95007aba4bd206231e70cbd24c3e42597275e4"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/fee-current-cms.bin",
+      "bytes": 21711,
+      "sha256": "1a0827b1df952da2df81ead7f234ec232dbf32857034aed260e81dc925225f03"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/fee-current-cms.extracted.json",
+      "bytes": 23346,
+      "sha256": "af8385904454192beab09d3b47cb97ec6ea3d5243bcb044bd9636f038c880df1"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/fee-faq-available-20250317.bin",
+      "bytes": 301,
+      "sha256": "22c9a8ab71a96a41648c114f9b5e9d173feee5e3e7a69aa0a6b021324637cdb0"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/fee-faq-cdx-pre-event.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/fee-slug-available-20250317.bin",
+      "bytes": 395,
+      "sha256": "6937ee7b567bc55afcfef0defa8e6c50a03247c18a9a1dbace0233309094bf18"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/fee-table-available-20250317.bin",
+      "bytes": 108,
+      "sha256": "a9e0c408e8be50248a88e9e77310cbacc86e66ba54471970f7cd06e136b04eec"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/funding-20241221102959.bin",
+      "bytes": 303683,
+      "sha256": "023403b2aeff46623958d95a1380d62589eac4605677757928d0e581427ca3a3"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/funding-20241221102959.extracted.json",
+      "bytes": 94048,
+      "sha256": "de3cf12bbd01bd31eb1c364ba416ae93260f79f8d0c58720f6d5b50dbb3aba80"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/funding-faq-available-20250101.bin",
+      "bytes": 393,
+      "sha256": "7280cf60789d548d11e59ab1067955066fc4c6ecf7f502edc08a4f038d331b59"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/funding-faq-available-20250317.bin",
+      "bytes": 393,
+      "sha256": "c76c4c931771fd4c3f5a821fe07f0f25e39a7408b9a2122645ad34b273cf4446"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/index-coverage.json",
+      "bytes": 2705,
+      "sha256": "361dbdc9e45e814f87bcb89a6e05cb2e61b80c11a7e9fbc95b4a15bcd6d6ef95"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/index-final-window-api.bin",
+      "bytes": 3256,
+      "sha256": "ffb4963417dd2bb2401933cb103738c2b89d006e69e6a19e9faccc43e9dc7d3f"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/manifest.json",
+      "bytes": 87623,
+      "sha256": "73d4611401b51e0143e687ac01a7925f46f4a90707ace671c57d661ad58630c4"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/requests.jsonl",
+      "bytes": 75257,
+      "sha256": "4e737aa13d7627c6ed32e3e14cc831b38f87209e0414342d8e8a6e2a00e89b36"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/rule-change-available-20250317.bin",
+      "bytes": 155,
+      "sha256": "024fb3643bb4bef7f936d4c3bb39f5e5842067afd9c8ed48fe585ac5e47ee471"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/settlement-rule-20241111.bin",
+      "bytes": 31753,
+      "sha256": "119d9b3339a9fd85bf0007638f88e69582882741bae4b017c51b951ebe2cbac5"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/settlement-rule-20241111.extracted.json",
+      "bytes": 9675,
+      "sha256": "c8b1f45f70a868ebb311d8025d496024163974068b85a574463a5e21b3cecf36"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/vision-bnx-index-20250317-checksum.bin",
+      "bytes": 92,
+      "sha256": "9ef1f3145dc95aeb7a1a2e1942f7bc1e3b8474a460ea1800aac6cd4835ba3906"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/vision-bnx-index-20250317-zip.bin",
+      "bytes": 34820,
+      "sha256": "bdc76991e3b47c4c368682962330ad81ee53d7623d22d0056304b726a348c1ac"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/vision-bnx-index-event-keys.bin",
+      "bytes": 1040,
+      "sha256": "18aaba7b2d5099bcaaf380b99c90a3b5911d3f7c8d584c298093b04fc6080019"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/vision-bnx-index-intervals.bin",
+      "bytes": 1819,
+      "sha256": "a141c8661674fa7c70964baa4631683694334a0870e3cc68eb3dfeb4a4d4b492"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bnx/vision-daily-types.bin",
+      "bytes": 1043,
+      "sha256": "d39272a9a19221c086c45a49930d5f021b345cf7005a1113901d6c302e770185"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/acquire.py",
+      "bytes": 2913,
+      "sha256": "21d96e09195167dc076353858a91f1ad8469fdb8b7d92549c060c7b0d25e31be"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/api-pre-event-availability.bin",
+      "bytes": 293,
+      "sha256": "41e22528f5e4528b89f0596b6538a6b622779c77feafced115a0398e42306bf6"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/api-pre-event-availability.receipt.json",
+      "bytes": 3691,
+      "sha256": "07ba1819e50d1224924e7cf63da45c981a25fbd932745dec29499b07e56139ca"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/archive-browser.bin",
+      "bytes": 2712,
+      "sha256": "23f61ef363d5b3c13933dab23d776d5f176c873b0504440de5e424c23bcc6413"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/archive-browser.receipt.json",
+      "bytes": 1308,
+      "sha256": "90648e020eff6aa54a98f799632b70e657287c760527794968ef9db37c7add17"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/archive-bzrx-event-index-key.bin",
+      "bytes": 870,
+      "sha256": "84f4a450c0371079a551570d82c9061422608e35b270dfded30731ed4e945bf2"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/archive-bzrx-event-index-key.receipt.json",
+      "bytes": 1407,
+      "sha256": "a72a888e4710e85d7ba1b67bde57e1c0ade413e118d6f3afabc04971ea01cb85"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/archive-bzrx-index-intervals.bin",
+      "bytes": 1835,
+      "sha256": "d796f2b14c078d2f0c4d392a9e24b6fe78264b28afa151b61e3d9aca3b1e578a"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/archive-bzrx-index-intervals.receipt.json",
+      "bytes": 1392,
+      "sha256": "260b59d72c0ee4bdf4a586eec8cc0775751d98e2cd7f9bbc25cb2671fe0b3efd"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/archive-daily-products.bin",
+      "bytes": 1043,
+      "sha256": "d39272a9a19221c086c45a49930d5f021b345cf7005a1113901d6c302e770185"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/archive-daily-products.receipt.json",
+      "bytes": 1272,
+      "sha256": "54f6e1ab4beec57220c42e90bf077a903066ce7dab01a30f05f1901e3f20d8a4"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/archive-monthly-products.bin",
+      "bytes": 983,
+      "sha256": "72d71cd1cc24cf53a31c92818cb001a28a52352a446af21695e0a8ab94365ad4"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/archive-monthly-products.receipt.json",
+      "bytes": 1328,
+      "sha256": "51989f9c56c975b6ec7e76f251290d68eb5d8304b7bc712b8b078127f807f7a1"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/bzrx-notice-20211220-body.extraction.json",
+      "bytes": 644,
+      "sha256": "f179ccaf9d07ccfd1e32ec3dfcc85b446653c5d3c992a9763174ab979409c059"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/bzrx-notice-20211220-body.json",
+      "bytes": 14171,
+      "sha256": "d3e18f7f6035f4f652d83bf1121d9841ed9fbac27cabb05608095469de910fa7"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/bzrx-notice-20211220.bin",
+      "bytes": 236540,
+      "sha256": "14c4a858811d4f2676846d08f65483f88b1c86288d9d431a2491fcb003ee9462"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/bzrx-notice-20211220.receipt.json",
+      "bytes": 8379,
+      "sha256": "9888ef72d8c4e63cd348039faf163df69024a742e70a6a519b8a6b91bb5ea507"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/bzrx-notice-availability.bin",
+      "bytes": 353,
+      "sha256": "4f736816681c2e40df2e7fd5a38df4279078ec5d73bd12006d8afefd607df7fb"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/bzrx-notice-availability.receipt.json",
+      "bytes": 3842,
+      "sha256": "63bc939dd42fde6d5a0211bdd94e538411d3a3787e112a6d3f271396e94dd08c"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/bzrx-notice-cdx.bin",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/bzrx-notice-cdx.receipt.json",
+      "bytes": 1379,
+      "sha256": "75de2b956c689287cc8953933c9ff78f8a76fe1abf5385e9dbd9d28c9452bc33"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/evidence.json",
+      "bytes": 4651,
+      "sha256": "a6a4f6e97ebdc5165f1743171cfcd663d66e38e33ef0b9b9b809a5bdc678260f"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/faq-20210507051628-body.extraction.json",
+      "bytes": 567,
+      "sha256": "370febb0528301bdfc0a8f7b5c51b15f87a9f91c1c18890e1fe3c371541b1414"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/faq-20210507051628-body.json",
+      "bytes": 2294,
+      "sha256": "1317898a791d6c38c2a565d770b8313046bd24d9eec813a001b97e56622dc0a8"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/faq-20210507051628.bin",
+      "bytes": 132441,
+      "sha256": "c2b15fd3bb519e4d6e8173a86cc156ed9b8abafee8a5f974c88692d425bcb035"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/faq-20210507051628.receipt.json",
+      "bytes": 7897,
+      "sha256": "6e211e9632fdbd4644c4e26172a16922f9ce1aa63a2178f2a09d162c5bd7110d"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/faq-cdx-2021.bin",
+      "bytes": 354,
+      "sha256": "1dfbdc66dde3fd79f17d18edc1d55f20927d85c1b1b1fd5f9d916c90aeb9b5b3"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/faq-cdx-2021.receipt.json",
+      "bytes": 2204,
+      "sha256": "b4299733bb9e76028c3f7baa6e9ce321755b35bd47536b7710494492e7f6b263"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/fee-faq-20211024-body.extraction.json",
+      "bytes": 536,
+      "sha256": "4e9eaf2504b3522e0b890c88fed68757c5c1e8b823933f050b21f64eb26c1dd8"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/fee-faq-20211024-body.json",
+      "bytes": 6574,
+      "sha256": "207e542eefa193da73c26727ef45b0bdf1fd5865508dd346c00f217b5ea257b1"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/fee-faq-20211024.bin",
+      "bytes": 133464,
+      "sha256": "1f5128b19710e00a5c7965a8e1a4cb8ce172f7e0688c7c240b62316a12e8476a"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/fee-faq-20211024.receipt.json",
+      "bytes": 7776,
+      "sha256": "c698df0ac9357eb51d75dcd716893ce3021d9d1186627e4464f67b7656d2ed04"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/fee-faq-pre-event-cdx.bin",
+      "bytes": 969,
+      "sha256": "8ac96dd686cb84d3adb507131ea7e0d2f7cb18ac670a2e844cff15c8d6256b8e"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/fee-faq-pre-event-cdx.receipt.json",
+      "bytes": 2177,
+      "sha256": "50e9775ba529cef47d5fbb4c2754839ca538391d9352c1a39e015fdf87b5ff79"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/fee-pre-event-availability.bin",
+      "bytes": 102,
+      "sha256": "707fc7730095519da67e14c31960116ccdccdacce4c3520701eb1bb0bf770c13"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/fee-pre-event-availability.receipt.json",
+      "bytes": 3517,
+      "sha256": "bcc2ca9ea08d5f4fc97ff3a63a2c6f4375326e1fe0349a30860ccfadfd3a48de"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/funding-faq-20211010-body.extraction.json",
+      "bytes": 541,
+      "sha256": "db41dd87af142073bd777f512f0fa1e100efd54e8385654a882aa6438e53ca57"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/funding-faq-20211010-body.json",
+      "bytes": 56763,
+      "sha256": "3adf91e57898361cbad3ec4bb4e55755825ef148ffe0d189d775f5ab13d39bd4"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/funding-faq-20211010.bin",
+      "bytes": 213821,
+      "sha256": "42f4c243cb466e7b2338856205e7a9922314644fbacab3843f62580895e84298"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/funding-faq-20211010.receipt.json",
+      "bytes": 7759,
+      "sha256": "33e410f31b2ae6acc7cb068b1ccd951c73260e9fd4c5c2bd54300fc6d6b031db"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/last-price-protection-20211010-body.extraction.json",
+      "bytes": 556,
+      "sha256": "844335e945554a242f8f524bf32a6c4c67eb8418c0885e337422014ba4a1da00"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/last-price-protection-20211010-body.json",
+      "bytes": 6354,
+      "sha256": "f1a53d612b8f352e86a25736923b5d110c769512c7f533e5c061684a590f2b63"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/last-price-protection-20211010.bin",
+      "bytes": 132481,
+      "sha256": "0fbc2647ba6cba9d7ce6be7ebca50aa900e145229bea563654106818178724b6"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/last-price-protection-20211010.receipt.json",
+      "bytes": 7741,
+      "sha256": "32c46c77ea899aef5539020460896df5be196d48ba442e0bc254c038406d04bd"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/last-price-protection-cdx.bin",
+      "bytes": 740,
+      "sha256": "941ae95d52deb0e98f23e12d6efc2b6cf79891fdb80fd3ff3da0c1806ea410b0"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/last-price-protection-cdx.receipt.json",
+      "bytes": 2171,
+      "sha256": "6be895beb07911d80caaab62a6c2280517294ca20e7501e471c7339af5f0cda2"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/manifest.json",
+      "bytes": 77911,
+      "sha256": "0ea0b06880e01a5564dfb0855de06138e8185eb4be714455fd5641ac4efd10a7"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/public-data-readme.bin",
+      "bytes": 5144,
+      "sha256": "085ab91377aa9325d44f4c7ad27cce4ab381e158403e1d7df2bad39d1a66f7c6"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/bzrx/public-data-readme.receipt.json",
+      "bytes": 1821,
+      "sha256": "be5b7e89dd36c36226863487fe6720bce90e40344ded291aa092c80aeee4fe1a"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/api-doc-20220502.html",
+      "bytes": 397941,
+      "sha256": "ab499e80d1614ed94b03427a5cf8c18d5e3a0590b7def7c8188f1d3725d10375"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/archive-index-20220512.CHECKSUM",
+      "bytes": 93,
+      "sha256": "6e1a6300a297ce7793a9ef224221dfe09f9ce5ff58a6ed73e368be2f9b1f2369"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/archive-index-20220512.zip",
+      "bytes": 31539,
+      "sha256": "7a35c6400d2b000a5916d025800789640c413233470a068d61088cb3017d2286"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/archive-index-intervals.xml",
+      "bytes": 1835,
+      "sha256": "c9bb0870dfe47e53a885beb535e7f1c6f70953f21fcd89b239241a0e62edf0d5"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/binance-public-data-README.md",
+      "bytes": 5144,
+      "sha256": "085ab91377aa9325d44f4c7ad27cce4ab381e158403e1d7df2bad39d1a66f7c6"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/current-export-web-observation.json",
+      "bytes": 2372,
+      "sha256": "78eb49d7731217d137514d13437996b0818eeb0786206b875ef5995d25727a30"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/current-usdm-market-doc.html",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/current-usdm-openapi.yaml",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/derive_evidence.py",
+      "bytes": 4370,
+      "sha256": "ef110fe83fdadc07bc32071da2e88ee81e7c068a28151d5a0cb87b4d27b977cd"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/fetch_receipt.py",
+      "bytes": 2296,
+      "sha256": "cf3a000f2a27283fc10dfc922a1d720d4e912818b26a5c61fcb654dc9b82ea71"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/funding-faq-20220402-body.json",
+      "bytes": 58245,
+      "sha256": "bae67975dd54766d5c74519004d417a740eb2039f0f7a84d5b856d7154f53476"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/funding-faq-20220402.html",
+      "bytes": 357835,
+      "sha256": "74a910f0bc18d3d90b7fb9e3e44caf72c118984f8234018606528e6def368648"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/funding-faq-cdx.json",
+      "bytes": 855,
+      "sha256": "ab80db002674a5b300eb460aaddf88744e71e24098d65065c079c01308642ba4"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/index-price-preclose-60m.json",
+      "bytes": 6301,
+      "sha256": "9f3d42618a365ebc5be6cd9ed78f8415c0bb908c44c98e51168b49446a3a8db2"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/manifest.json",
+      "bytes": 11332,
+      "sha256": "b164e0f4921445fbea13f48a82dab6cedfe1744f044d160f241b3c57925f5ea8"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/old-api-doc-cdx.json",
+      "bytes": 505,
+      "sha256": "18ba132886d3f64d9b2c2589838ab56142ed7a88ecb3c8ae8e9df98b5a5358ab"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/luna/validation.json",
+      "bytes": 2237,
+      "sha256": "e3b0450e829dc67fe6d2e17306e5d3c6e11d3c75ff4a4f14b105285abbd1a844"
+    },
+    {
+      "path": "data/settlement-evidence/2026-09-10/result.json",
+      "bytes": 3415,
+      "sha256": "f6e5c95cf219840d791ea241624067e717f23917ed30685532bcf679f012ee03"
+    }
+  ],
+  "verification_script_sha256": "9abffa219968c4213dabdf44cda5ed45c35aaea4d90c07de7335109905847c89"
+}

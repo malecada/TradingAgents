@@ -1,0 +1,261 @@
+{
+  "experiment": "audit_settlement_evidence_2026_09_10",
+  "instrument": "LUNAUSDT",
+  "transform_commit": "506373e",
+  "request_policy": "one request at a time; timeout30s; one attempt; no authenticated endpoints",
+  "budget_bytes": 25000000,
+  "responses": [
+    {
+      "name": "current-usdm-market-doc.html",
+      "requested_url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "params": {},
+      "request_started_utc": "2026-09-10T08:01:19.270333+00:00",
+      "attempt": 1,
+      "final_url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+      "status": 202,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 08:01:19 GMT",
+        "Content-Length": "0",
+        "Cache-Control": "no-store, max-age=0",
+        "Content-Type": "text/html; charset=UTF-8"
+      },
+      "redirects": [],
+      "body_bytes": 0,
+      "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "body_file": "current-usdm-market-doc.html",
+      "retrieved_utc": "2026-09-10T08:01:19.358666+00:00"
+    },
+    {
+      "name": "old-api-doc-cdx.json",
+      "requested_url": "https://web.archive.org/cdx/search/cdx",
+      "params": {
+        "url": "binance-docs.github.io/apidocs/futures/en/",
+        "from": "20220101",
+        "to": "20220512",
+        "output": "json",
+        "filter": "statuscode:200",
+        "fl": "timestamp,original,statuscode,digest",
+        "limit": 5,
+        "collapse": "timestamp:6"
+      },
+      "request_started_utc": "2026-09-10T08:01:59.435455+00:00",
+      "attempt": 1,
+      "final_url": "https://web.archive.org/cdx/search/cdx?url=binance-docs.github.io%2Fapidocs%2Ffutures%2Fen%2F&from=20220101&to=20220512&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest&limit=5&collapse=timestamp%3A6",
+      "status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 08:02:15 GMT",
+        "Content-Type": "application/json",
+        "Content-Encoding": "gzip"
+      },
+      "redirects": [],
+      "body_bytes": 505,
+      "body_sha256": "18ba132886d3f64d9b2c2589838ab56142ed7a88ecb3c8ae8e9df98b5a5358ab",
+      "body_file": "old-api-doc-cdx.json",
+      "retrieved_utc": "2026-09-10T08:02:15.486160+00:00"
+    },
+    {
+      "name": "api-doc-20220502.html",
+      "requested_url": "https://web.archive.org/web/20220502133908id_/https://binance-docs.github.io/apidocs/futures/en/",
+      "params": {},
+      "request_started_utc": "2026-09-10T08:02:47.708181+00:00",
+      "attempt": 1,
+      "final_url": "https://web.archive.org/web/20220502133908id_/https://binance-docs.github.io/apidocs/futures/en/",
+      "status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 08:02:48 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "cache-control": "max-age=1800, private",
+        "memento-datetime": "Mon, 02 May 2022 13:39:08 GMT",
+        "Content-Encoding": "gzip"
+      },
+      "redirects": [],
+      "body_bytes": 397941,
+      "body_sha256": "ab499e80d1614ed94b03427a5cf8c18d5e3a0590b7def7c8188f1d3725d10375",
+      "body_file": "api-doc-20220502.html",
+      "retrieved_utc": "2026-09-10T08:02:49.018230+00:00"
+    },
+    {
+      "name": "binance-public-data-README.md",
+      "requested_url": "https://raw.githubusercontent.com/binance/binance-public-data/master/README.md",
+      "params": {},
+      "request_started_utc": "2026-09-10T08:04:59.531991+00:00",
+      "attempt": 1,
+      "final_url": "https://raw.githubusercontent.com/binance/binance-public-data/master/README.md",
+      "status": 200,
+      "headers": {
+        "Content-Length": "1997",
+        "Cache-Control": "max-age=300",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "W/\"b0b9d0d74340a159b8861f71db7caabffe158252ab021ca0257c25e2f00f0c46\"",
+        "Content-Encoding": "gzip",
+        "Date": "Thu, 10 Sep 2026 08:04:59 GMT"
+      },
+      "redirects": [],
+      "body_bytes": 5144,
+      "body_sha256": "085ab91377aa9325d44f4c7ad27cce4ab381e158403e1d7df2bad39d1a66f7c6",
+      "body_file": "binance-public-data-README.md",
+      "retrieved_utc": "2026-09-10T08:04:59.773413+00:00"
+    },
+    {
+      "name": "index-price-preclose-60m.json",
+      "requested_url": "https://fapi.binance.com/fapi/v1/indexPriceKlines",
+      "params": {
+        "pair": "LUNAUSDT",
+        "interval": "1m",
+        "startTime": 1652365800000,
+        "endTime": 1652369399999,
+        "limit": 60
+      },
+      "request_started_utc": "2026-09-10T08:06:03.440704+00:00",
+      "attempt": 1,
+      "final_url": "https://fapi.binance.com/fapi/v1/indexPriceKlines?pair=LUNAUSDT&interval=1m&startTime=1652365800000&endTime=1652369399999&limit=60",
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json",
+        "Date": "Thu, 10 Sep 2026 08:06:03 GMT",
+        "Content-Encoding": "gzip",
+        "x-mbx-used-weight-1m": "1",
+        "cache-control": "no-cache, no-store, must-revalidate"
+      },
+      "redirects": [],
+      "body_bytes": 6301,
+      "body_sha256": "9f3d42618a365ebc5be6cd9ed78f8415c0bb908c44c98e51168b49446a3a8db2",
+      "body_file": "index-price-preclose-60m.json",
+      "retrieved_utc": "2026-09-10T08:06:03.787199+00:00"
+    },
+    {
+      "name": "archive-index-intervals.xml",
+      "requested_url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision",
+      "params": {
+        "prefix": "data/futures/um/daily/indexPriceKlines/LUNAUSDT/",
+        "delimiter": "/",
+        "max-keys": 100
+      },
+      "request_started_utc": "2026-09-10T08:06:16.703785+00:00",
+      "attempt": 1,
+      "final_url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fum%2Fdaily%2FindexPriceKlines%2FLUNAUSDT%2F&delimiter=%2F&max-keys=100",
+      "status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 08:06:18 GMT",
+        "Content-Type": "application/xml"
+      },
+      "redirects": [],
+      "body_bytes": 1835,
+      "body_sha256": "c9bb0870dfe47e53a885beb535e7f1c6f70953f21fcd89b239241a0e62edf0d5",
+      "body_file": "archive-index-intervals.xml",
+      "retrieved_utc": "2026-09-10T08:06:17.535115+00:00"
+    },
+    {
+      "name": "archive-index-20220512.zip",
+      "requested_url": "https://data.binance.vision/data/futures/um/daily/indexPriceKlines/LUNAUSDT/1m/LUNAUSDT-1m-2022-05-12.zip",
+      "params": {},
+      "request_started_utc": "2026-09-10T08:10:56.571232+00:00",
+      "attempt": 1,
+      "final_url": "https://data.binance.vision/data/futures/um/daily/indexPriceKlines/LUNAUSDT/1m/LUNAUSDT-1m-2022-05-12.zip",
+      "status": 200,
+      "headers": {
+        "Content-Type": "binary/octet-stream",
+        "Content-Length": "31539",
+        "Date": "Thu, 10 Sep 2026 08:10:58 GMT",
+        "Last-Modified": "Mon, 16 May 2022 18:32:09 GMT",
+        "ETag": "\"887a7275f0a2c3f18ae3ead0f1568109\""
+      },
+      "redirects": [],
+      "body_bytes": 31539,
+      "body_sha256": "7a35c6400d2b000a5916d025800789640c413233470a068d61088cb3017d2286",
+      "body_file": "archive-index-20220512.zip",
+      "retrieved_utc": "2026-09-10T08:10:57.610872+00:00"
+    },
+    {
+      "name": "archive-index-20220512.CHECKSUM",
+      "requested_url": "https://data.binance.vision/data/futures/um/daily/indexPriceKlines/LUNAUSDT/1m/LUNAUSDT-1m-2022-05-12.zip.CHECKSUM",
+      "params": {},
+      "request_started_utc": "2026-09-10T08:11:04.524494+00:00",
+      "attempt": 1,
+      "final_url": "https://data.binance.vision/data/futures/um/daily/indexPriceKlines/LUNAUSDT/1m/LUNAUSDT-1m-2022-05-12.zip.CHECKSUM",
+      "status": 200,
+      "headers": {
+        "Content-Type": "binary/octet-stream",
+        "Content-Length": "93",
+        "Date": "Thu, 10 Sep 2026 08:11:06 GMT",
+        "Last-Modified": "Mon, 16 May 2022 18:32:09 GMT",
+        "ETag": "\"148fe2e8ae3c5e4ea556043c8d4de303\""
+      },
+      "redirects": [],
+      "body_bytes": 93,
+      "body_sha256": "6e1a6300a297ce7793a9ef224221dfe09f9ce5ff58a6ed73e368be2f9b1f2369",
+      "body_file": "archive-index-20220512.CHECKSUM",
+      "retrieved_utc": "2026-09-10T08:11:05.318689+00:00"
+    },
+    {
+      "name": "current-usdm-openapi.yaml",
+      "requested_url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/1.0.0/schema.yaml",
+      "params": {},
+      "request_started_utc": "2026-09-10T08:11:16.487293+00:00",
+      "attempt": 1,
+      "final_url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/1.0.0/schema.yaml",
+      "status": 202,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 08:11:16 GMT",
+        "Content-Length": "0",
+        "Cache-Control": "no-store, max-age=0",
+        "Content-Type": "text/html; charset=UTF-8"
+      },
+      "redirects": [],
+      "body_bytes": 0,
+      "body_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "body_file": "current-usdm-openapi.yaml",
+      "retrieved_utc": "2026-09-10T08:11:16.572869+00:00"
+    },
+    {
+      "name": "funding-faq-cdx.json",
+      "requested_url": "https://web.archive.org/cdx/search/cdx",
+      "params": {
+        "url": "www.binance.com/en/support/faq/360033525031",
+        "from": "20210101",
+        "to": "20220512",
+        "output": "json",
+        "filter": "statuscode:200",
+        "fl": "timestamp,original,statuscode,digest",
+        "collapse": "timestamp:6",
+        "limit": 8
+      },
+      "request_started_utc": "2026-09-10T08:11:45.616131+00:00",
+      "attempt": 1,
+      "final_url": "https://web.archive.org/cdx/search/cdx?url=www.binance.com%2Fen%2Fsupport%2Ffaq%2F360033525031&from=20210101&to=20220512&output=json&filter=statuscode%3A200&fl=timestamp%2Coriginal%2Cstatuscode%2Cdigest&collapse=timestamp%3A6&limit=8",
+      "status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 08:11:57 GMT",
+        "Content-Type": "application/json",
+        "Content-Encoding": "gzip"
+      },
+      "redirects": [],
+      "body_bytes": 855,
+      "body_sha256": "ab80db002674a5b300eb460aaddf88744e71e24098d65065c079c01308642ba4",
+      "body_file": "funding-faq-cdx.json",
+      "retrieved_utc": "2026-09-10T08:11:57.504985+00:00"
+    },
+    {
+      "name": "funding-faq-20220402.html",
+      "requested_url": "https://web.archive.org/web/20220402121500id_/https://www.binance.com/en/support/faq/360033525031/",
+      "params": {},
+      "request_started_utc": "2026-09-10T08:12:25.050621+00:00",
+      "attempt": 1,
+      "final_url": "https://web.archive.org/web/20220402121500id_/https://www.binance.com/en/support/faq/360033525031/",
+      "status": 200,
+      "headers": {
+        "Date": "Thu, 10 Sep 2026 08:12:26 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "cache-control": "max-age=1800, private",
+        "memento-datetime": "Sat, 02 Apr 2022 12:15:00 GMT",
+        "Content-Encoding": "gzip"
+      },
+      "redirects": [],
+      "body_bytes": 357835,
+      "body_sha256": "74a910f0bc18d3d90b7fb9e3e44caf72c118984f8234018606528e6def368648",
+      "body_file": "funding-faq-20220402.html",
+      "retrieved_utc": "2026-09-10T08:12:26.495825+00:00"
+    }
+  ],
+  "total_body_bytes": 802048
+}

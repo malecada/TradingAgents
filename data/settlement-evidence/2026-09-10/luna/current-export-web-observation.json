@@ -1,0 +1,28 @@
+{
+  "evidence_kind": "web research service rendered-text observation; not an HTTP raw-body receipt",
+  "recorded_utc": "2026-09-10T08:17:31Z",
+  "observation_date_utc": "2026-09-10",
+  "observation_time_qualification": "Observed during this session before the archive request at2026-09-10T08:10:56.571232Z. The web service returned no exact retrieval UTC, response headers, HTTP status or raw-body hash; those fields are unavailable rather than inferred from local recording time.",
+  "requested_url": "https://developers.binance.com/docs/derivatives/usds-margined-futures/account/rest-api/Get-Download-Id-For-Futures-Transaction-History",
+  "resolved_url": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/account",
+  "retrieval_method": "web.run open followed by find for income/asyn,2019,month; no additional external request to create this note",
+  "service_metadata": {"content_type": "text/html", "crawled": "today", "total_rendered_lines": 3144},
+  "sections": [
+    {
+      "name": "Get Download Id For Futures Transaction History (USER_DATA)",
+      "endpoint_documented_not_called": "GET /fapi/v1/income/asyn",
+      "rendered_lines": "2010-2071",
+      "exact_excerpt": "The time between startTime and endTime can not be longer than 1 year",
+      "formatting_qualification": "Inline code formatting around parameter names omitted; words unchanged.",
+      "paraphrase": "Signed access is required. Five export requests per month are shared with the frontend. One year limits the requested span; this section states no earliest retained date. Older-export availability is unknown."
+    },
+    {
+      "name": "Get Futures Transaction History Download Link by Id (USER_DATA)",
+      "endpoint_documented_not_called": "GET /fapi/v1/income/asyn/id",
+      "rendered_lines": "2354-2407",
+      "exact_excerpt": "Download link expiration: 7 days"
+    }
+  ],
+  "direct_download_limitation": "The linked current schema direct fetch is separately preserved as current-usdm-openapi.yaml, HTTP202,zero bytes. Its empty body does not verify any documentation content. The earlier market-doc HTML fetch also returned202empty.",
+  "admission": "Supplementary current interface documentation only; not historical rule applicability, settlement data, demonstrated export availability or authenticated execution."
+}
