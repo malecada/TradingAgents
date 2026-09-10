@@ -3643,5 +3643,43 @@
       ]
     },
     "forecast_fit_policy": "No model fits. Unchanged registered cascade signals and deterministic targets only."
+  },
+  "audit_settlement_evidence_2026_09_10": {
+    "registered_date": "2026-09-10",
+    "type": "settlement_evidence_only",
+    "charter": "docs/settlement-evidence/2026-09-10-charter.md",
+    "status": "registered_before_evidence_recovery",
+    "strategy_evaluation_permitted": false,
+    "allow_holdout": false,
+    "development_window": [
+      "2021-01-01",
+      "2025-03-31"
+    ],
+    "venue": "Binance",
+    "market_type": "USD-M linear perpetual futures",
+    "output_root": "data/settlement-evidence/2026-09-10",
+    "events": {
+      "LUNAUSDT": "2022-05-12T15:30:00Z",
+      "BZRXUSDT": "2021-12-19T02:00:00Z",
+      "BNXUSDT": "2025-03-17T09:00:00Z"
+    },
+    "source_policy": "Official Binance public APIs/archives/notices and owned documentation repositories, with Internet Archive copies of official pages; discovery sources are not automatically admitted evidence. No credentials, account endpoints or sent messages.",
+    "price_window_policy": "Each event day and preceding day only; historical documentary metadata may lie outside those dates.",
+    "download_limits": {
+      "aggregate_bytes": 100000000,
+      "per_investigator_bytes": 25000000,
+      "max_parallel_requests": 3,
+      "max_attempts_per_request": 2,
+      "timeout_seconds": 30,
+      "honor_retry_after": true
+    },
+    "readiness_fields": [
+      "actual terminal settlement price and time",
+      "historical applicable averaging/rounding/protection rule",
+      "settlement fee basis/rate",
+      "final funding cutoff and valuation",
+      "contract identity and provenance"
+    ],
+    "stop_rule": "Investigate each official announcement/rule archive/documented endpoint/data archive route once or until quota; retain unknown fields and prepare unsent provider request if needed. No financial metric or gate verdict; any exact or bounded replay requires a new committed gate."
   }
 }
