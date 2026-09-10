@@ -90,7 +90,7 @@ def fetch_marks() -> dict[str, float] | None:
     return marks or None
 
 
-def load_panels_online() -> "dict[str, pd.DataFrame]":
+def load_panels_online(*, funding_snapshot=None, measurement_time=None) -> "dict[str, pd.DataFrame]":
     syms = _perp_symbols()
     highs, lows, closes, qvs = {}, {}, {}, {}
     for i, sym in enumerate(syms):
@@ -105,10 +105,10 @@ def load_panels_online() -> "dict[str, pd.DataFrame]":
             time.sleep(0.5)  # stay far under fapi weight limits
     park = {s: (np.log(highs[s] / lows[s]) ** 2) / (4 * np.log(2)) for s in highs}
     return _attach_funding({"close": pd.DataFrame(closes), "qv": pd.DataFrame(qvs),
-                            "park": pd.DataFrame(park)})
+                            "park": pd.DataFrame(park)}, funding_snapshot=funding_snapshot, measurement_time=measurement_time)
 
 
-def load_panels_offline() -> "dict[str, pd.DataFrame]":
+def load_panels_offline(*, funding_snapshot=None, measurement_time=None) -> "dict[str, pd.DataFrame]":
     closes, qvs, parks = {}, {}, {}
     for p in sorted((DATA_ROOT / "xsect" / "klines").glob("*.parquet")):
         df = pd.read_parquet(p).tail(LOOKBACK_D)
@@ -116,7 +116,7 @@ def load_panels_offline() -> "dict[str, pd.DataFrame]":
         qvs[p.stem] = df["quote_volume"]
         parks[p.stem] = (np.log(df["high"] / df["low"]) ** 2) / (4 * np.log(2))
     return _attach_funding({"close": pd.DataFrame(closes), "qv": pd.DataFrame(qvs),
-                            "park": pd.DataFrame(parks)})
+                            "park": pd.DataFrame(parks)}, funding_snapshot=funding_snapshot, measurement_time=measurement_time)
 
 
 def load_observed_funding(symbols, index, store_dir=None):
@@ -165,9 +165,14 @@ def load_observed_funding(symbols, index, store_dir=None):
     return daily, coverage
 
 
-def _attach_funding(panels):
-    panels['funding'], panels['funding_coverage'] = load_observed_funding(
-        panels['close'].columns, panels['close'].index)
+def _attach_funding(panels, *, funding_snapshot=None, measurement_time=None):
+    if funding_snapshot is None:
+        daily, coverage = load_observed_funding(panels['close'].columns, panels['close'].index)
+    else:
+        from tradingagents.predlab.funding_snapshot import load_funding_snapshot
+        daily, coverage = load_funding_snapshot(funding_snapshot, panels['close'].columns,
+                                                panels['close'].index, measurement_time=measurement_time)
+    panels['funding'], panels['funding_coverage'] = daily, coverage
     return panels
 
 
@@ -288,7 +293,8 @@ def _settle(panels, prev, asof, account, targets):
 
 def journal_one(journal: Path, panels: dict, signal: str, scale_key: str,
                 vt_target: float, breadth_floor: int | None = None,
-                marks: dict[str, float] | None = None, trade_day=None) -> str:
+                marks: dict[str, float] | None = None, trade_day=None, *,
+                prepare_only=False, require_complete=False, measurement_time=None) -> str | dict:
     rows = ([json.loads(line) for line in journal.read_text().splitlines()]
             if journal.exists() else [])
     if any(r.get('journal_version') != JOURNAL_VERSION for r in rows):
@@ -297,6 +303,11 @@ def journal_one(journal: Path, panels: dict, signal: str, scale_key: str,
         asof, w, breadth = todays_book(panels, signal, trade_day=trade_day)
     except ValueError as exc:
         return f'WAIT: {exc}'
+    if require_complete:
+        try:
+            _admission_history(rows, asof)
+        except ValueError as exc:
+            return f'WAIT: {exc}'
     if w.empty:
         return 'WAIT: insufficient current signals; no new target instruction'
     if any(r['asof'] == str(asof.date()) for r in rows):
@@ -317,14 +328,21 @@ def journal_one(journal: Path, panels: dict, signal: str, scale_key: str,
     if breadth_floor is not None and scale is not None and breadth < breadth_floor:
         scale = 0.
     valid_marks = {s: marks[s] for s in w.index if marks and s in marks
+                   and (not require_complete or (isinstance(marks[s], (int, float)) and not isinstance(marks[s], bool)))
                    and math.isfinite(marks[s]) and marks[s] > 0}
     missing_marks = set(w.index) - valid_marks.keys()
+    if require_complete and prev:
+        prior_held = {s for s, weight in prev['weights'].items() if weight != 0}
+        missing_marks |= {s for s in prior_held if not marks or s not in marks or
+                         not isinstance(marks[s], (int, float)) or isinstance(marks[s], bool) or
+                         not math.isfinite(marks[s]) or marks[s] <= 0}
     gross = realized_prev_return(panels, prev, asof) if prev else None
     mark_ret = realized_prev_mark_return(prev, marks) if prev and marks else None
     # Row t stores the account before trading the newly decided next-day book.
     # Its realized fields settle row t-1, including that interval's entry fee.
     row = dict(candidate, trade_day=str((asof + pd.Timedelta(days=1)).date()),
-        accounting_version=ACCOUNTING_VERSION, written_utc=datetime.now(timezone.utc).isoformat(),
+        accounting_version=ACCOUNTING_VERSION, written_utc=(pd.Timestamp(measurement_time).isoformat()
+            if measurement_time is not None else datetime.now(timezone.utc).isoformat()),
         n_universe=int(panels['park'].shape[1]), breadth=breadth,
         membership_hash=hashlib.sha256(','.join(sorted(w.index)).encode()).hexdigest()[:12],
         weights={k: float(v) for k,v in w.items()},
@@ -335,7 +353,7 @@ def journal_one(journal: Path, panels: dict, signal: str, scale_key: str,
         base_measurement=base, overlay_measurement=overlay,
         measurement_scale=prev.get('executed_scale') if prev else None,
         executed_scale=scale, scale_definition='target weights times scale at pretrade NAV',
-        funding_coverage=panels.get('funding_coverage', {'method': 'caller_supplied_daily_panel'}),
+        funding_coverage=_compact_snapshot_coverage(panels.get('funding_coverage', {'method': 'caller_supplied_daily_panel'}), asof),
         fee_rate=pp.TAKER_BP/1e4, funding_definition='observed daily signed rate; positive paid by longs',
         measurement_status='complete' if base is not None and overlay is not None and not missing_marks else 'incomplete',
         measurement_reason='; '.join(r for r in [reason, overlay_reason,
@@ -345,12 +363,130 @@ def journal_one(journal: Path, panels: dict, signal: str, scale_key: str,
         mark_coverage='complete' if not missing_marks else 'incomplete',
         est_turnover=None, est_cost=None)
     row[scale_key] = scale
+    if require_complete:
+        if missing_marks:
+            return 'WAIT: current quotes incomplete'
+        if prev and (base is None or (prev.get('executed_scale') is not None and overlay is None)):
+            return f"WAIT: {row['measurement_reason']}"
+    if prepare_only:
+        return row
+    return _append_prepared(journal, row, scale_key)
+
+
+def _compact_snapshot_coverage(coverage, day):
+    """Persist one measurement day's details plus immutable full-input provenance."""
+    if coverage.get('method') != 'snapshot_observed_cadence_inference':
+        return coverage
+    key = day.isoformat()
+    result = dict(coverage, settlement_day=str(day.date()), symbols={})
+    for symbol, info in coverage['symbols'].items():
+        detail = info['days'].get(key, {'status': 'unavailable', 'reason': info.get('reason') or 'day not covered'})
+        result['symbols'][symbol] = dict(info, requested_days=1,
+            covered_days=int(detail['status'] == 'admitted_inferred'),
+            reason=detail['reason'], days={key: dict(detail)})
+    return result
+
+
+def _append_prepared(journal, row, scale_key):
     journal.parent.mkdir(parents=True, exist_ok=True)
     with journal.open('a') as fh:
         fh.write(json.dumps(row, sort_keys=True, allow_nan=False) + '\n')
         fh.flush()
         os.fsync(fh.fileno())
-    return f"{journal.name} {asof.date()}: {len(w)} legs, {row['measurement_status']}, {scale_key} {scale}"
+    return f"{journal.name} {row['asof']}: {len(row['weights'])} legs, {row['measurement_status']}, {scale_key} {row[scale_key]}"
+
+
+def _admission_history(rows, asof):
+    """An opted-in run cannot advance an ambiguous or already broken account."""
+    def numeric(value):
+        return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
+
+    def state_ok(value):
+        return (isinstance(value, dict) and numeric(value.get('nav')) and value['nav'] > 0
+                and isinstance(value.get('notionals'), dict)
+                and all(isinstance(k, str) and numeric(v) for k, v in value['notionals'].items()))
+
+    def finite_tree(value):
+        if isinstance(value, dict):
+            return all(finite_tree(v) for v in value.values())
+        if isinstance(value, list):
+            return all(finite_tree(v) for v in value)
+        return not isinstance(value, float) or math.isfinite(value)
+
+    previous = None
+    for row in rows:
+        if (not finite_tree(row) or row.get('measurement_status') not in ('complete', 'incomplete')
+                or 'executed_scale' not in row
+                or (row['executed_scale'] is not None and
+                    (not numeric(row['executed_scale']) or row['executed_scale'] < 0))
+                or row.get('journal_version') != JOURNAL_VERSION or row.get('accounting_version') != ACCOUNTING_VERSION
+                or not isinstance(row.get('weights'), dict)
+                or not all(numeric(v) for v in row['weights'].values())):
+            raise ValueError('unsupported or malformed existing v2 journal')
+        day = pd.Timestamp(row['asof'], tz='UTC')
+        if day != day.floor('D') or str(day.date()) != row['asof'] or day > asof:
+            raise ValueError('invalid or future existing journal date')
+        if previous is not None and day - previous[0] != pd.Timedelta(days=1):
+            raise ValueError('existing journal dates are duplicate or gapped')
+        if row.get('mark_coverage') != 'complete':
+            raise ValueError('existing journal has incomplete quote observations')
+        for account, ret_key in [('base', 'realized_base_net_ret'), ('overlay', 'realized_net_ret')]:
+            state = row.get(account + '_state')
+            if not state_ok(state):
+                raise ValueError(f'existing {account} state is broken or invalid')
+            if ret_key not in row or account + '_measurement' not in row:
+                raise ValueError(f'existing {account} measurement fields unavailable')
+            ret, measure = row.get(ret_key), row.get(account + '_measurement')
+            if previous is None:
+                if ret is not None or measure is not None or any(state['notionals'].values()):
+                    raise ValueError('existing journal lacks an observed flat initial state')
+            elif account == 'overlay' and previous[1].get('executed_scale') is None:
+                if (ret is not None or measure is not None or any(state['notionals'].values()) or
+                        not math.isclose(state['nav'], previous[1]['overlay_state']['nav'], rel_tol=1e-9, abs_tol=1e-12)):
+                    raise ValueError('existing overlay warmup is not observed flat')
+            elif (not numeric(ret) or ret <= -1 or not isinstance(measure, dict)
+                  or not all(numeric(measure.get(k)) for k in ('net', 'gross', 'carry', 'cost', 'turnover'))
+                  or not math.isclose(ret, measure['net'], rel_tol=1e-9, abs_tol=1e-12)
+                  or not math.isclose(ret, measure['gross']+measure['carry']-measure['cost'], rel_tol=1e-9, abs_tol=1e-12)
+                  or not math.isclose(ret, state['nav']/previous[1][account+'_state']['nav']-1, rel_tol=1e-9, abs_tol=1e-12)):
+                raise ValueError(f'existing {account} net measurement is incomplete or inconsistent')
+        previous = (day, row)
+    if previous is not None and asof - previous[0] not in (pd.Timedelta(0), pd.Timedelta(days=1)):
+        raise ValueError('journal gap: daily settlement unavailable')
+
+
+def journal_pair(panels, *, marks, funding_snapshot, trade_day=None, measurement_time=None, journals=None):
+    """Prepare both unchanged paper algorithms before either financial append.
+
+    This is logical admission of a pair, not a two-file filesystem transaction.
+    Failures are returned as WAIT; already-written rows are never rewritten.
+    """
+    if funding_snapshot is None:
+        return ['WAIT: explicit funding snapshot required']
+    journals = (JOURNAL, CH_JOURNAL) if journals is None else tuple(journals)
+    if len(journals) != 2 or journals[0] == journals[1]:
+        raise ValueError('two distinct paper journals required')
+    measurement_time = pd.Timestamp.now(tz='UTC') if measurement_time is None else pd.Timestamp(measurement_time)
+    configurations = [('park_5', 'vt10_scale', VT_TARGET, None),
+                      ('ewma_20', 'vt15_b100_scale', CH_VT_TARGET, CH_BREADTH_FLOOR)]
+    try:
+        loaded = _attach_funding(dict(panels), funding_snapshot=funding_snapshot, measurement_time=measurement_time)
+        prepared = []
+        for journal, (signal, key, target, breadth) in zip(journals, configurations):
+            row = journal_one(Path(journal), loaded, signal, key, target, breadth, marks=marks,
+                              trade_day=trade_day, prepare_only=True, require_complete=True,
+                              measurement_time=measurement_time)
+            if isinstance(row, str) and row.startswith('WAIT:'):
+                return [row]
+            prepared.append(row)
+        # Serialization is part of admission, before opening either journal.
+        for row in prepared:
+            if isinstance(row, dict):
+                json.dumps(row, sort_keys=True, allow_nan=False)
+    except (ValueError, KeyError, TypeError, OSError, AttributeError) as exc:
+        return [f'WAIT: {exc}']
+    return [_append_prepared(Path(journal), row, configuration[1]) if isinstance(row, dict) else row
+            for journal, row, configuration in zip(journals, prepared, configurations)]
 
 
 def _already_done(date_str: str) -> bool:
@@ -368,15 +504,29 @@ def _already_done(date_str: str) -> bool:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--offline", action="store_true")
+    ap.add_argument("--funding-snapshot", default=os.environ.get("S1_FUNDING_SNAPSHOT"),
+                    help="Immutable operational funding snapshot; no legacy fallback when configured")
     args = ap.parse_args()
     JDIR.mkdir(parents=True, exist_ok=True)
     expected = str((datetime.now(timezone.utc) - timedelta(days=1)).date())
     if not args.offline and _already_done(expected):
         print(f"both journals have {expected} — pre-fetch skip")
         return
-    panels = load_panels_offline() if args.offline else load_panels_online()
+    try:
+        loader = load_panels_offline if args.offline else load_panels_online
+        panels = loader(funding_snapshot=args.funding_snapshot) if args.funding_snapshot is not None else loader()
+    except ValueError as exc:
+        if args.funding_snapshot is None:
+            raise
+        print(f'WAIT: {exc}')
+        return
     # prices as of write time — both journals share one snapshot
     marks = None if args.offline else fetch_marks()
+    if args.funding_snapshot is not None:
+        for message in journal_pair(panels, marks=marks, funding_snapshot=args.funding_snapshot,
+                                    trade_day=pd.Timestamp.now(tz='UTC').floor('D')):
+            print(message)
+        return
     # original Phase-P book — config frozen for the pp2 vt10 confirmation
     print(journal_one(JOURNAL, panels, "park_5", "vt10_scale", VT_TARGET,
                       marks=marks, trade_day=pd.Timestamp.now(tz="UTC").floor("D")))
