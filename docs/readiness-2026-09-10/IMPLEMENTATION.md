@@ -68,8 +68,10 @@ still establish those properties. Heavyweight dependency separation, broad
 engine consolidation, historical runner migration and universal data relocation
 were deliberately unnecessary for this bounded preparation.
 
-Hosted CI status and the final pushed revision are recorded in the delivery
-receipt; local passing tests alone do not establish a hosted result. The next
+Hosted CI passed for implementation commit `a24670c4f8718304e8ec37b1b3866d4563aa5fae`:
+[GitHub Actions run](https://github.com/malecada/TradingAgents/actions/runs/34511369570).
+The [delivery receipt](delivery.json) records the checked revision and branch;
+the subsequent documentation checkpoint does not change executable source. The next
 research phase must create its actual program/charter/gates before outcomes,
 retain adaptive ancestry, and continue through evidence-backed decisions. The
 22 settlement-blocked cases remain deferred. No provider contact, paid purchase,
