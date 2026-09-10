@@ -1,0 +1,218 @@
+FFFFFFFFFF                                                               [100%]
+=================================== FAILURES ===================================
+______ test_release_source_commit_is_used_without_own_git_checkout[False] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-170/test_release_source_commit_is_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x743e684b6fd0>
+enclosing_git = False
+
+    @pytest.mark.parametrize('enclosing_git', [False, True])
+    def test_release_source_commit_is_used_without_own_git_checkout(tmp_path, monkeypatch, enclosing_git):
+        outer = tmp_path/'outer'
+        if enclosing_git:
+            initialize_local_git(outer)
+        root = outer/'release'
+        module = isolated_collector(root, monkeypatch)
+        commit = '1234567890abcdef1234567890abcdef12345678'
+        (root/'SOURCE_COMMIT').write_text(commit+'\n')
+        result = module.capture_run(tmp_path/'run', transport=PublicFixture(), pace_seconds=0)
+        assert result['status'] == 'captured'
+>       assert result['source']['git_commit'] == commit
+E       AssertionError: assert None == '1234567890abcdef1234567890abcdef12345678'
+
+tests/predlab/test_funding_capture.py:240: AssertionError
+______ test_release_source_commit_is_used_without_own_git_checkout[True] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-170/test_release_source_commit_is_1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x743e3b596b10>
+enclosing_git = True
+
+    @pytest.mark.parametrize('enclosing_git', [False, True])
+    def test_release_source_commit_is_used_without_own_git_checkout(tmp_path, monkeypatch, enclosing_git):
+        outer = tmp_path/'outer'
+        if enclosing_git:
+            initialize_local_git(outer)
+        root = outer/'release'
+        module = isolated_collector(root, monkeypatch)
+        commit = '1234567890abcdef1234567890abcdef12345678'
+        (root/'SOURCE_COMMIT').write_text(commit+'\n')
+        result = module.capture_run(tmp_path/'run', transport=PublicFixture(), pace_seconds=0)
+        assert result['status'] == 'captured'
+>       assert result['source']['git_commit'] == commit
+E       AssertionError: assert 'ef8665ac7a49...195df833e0c26' == '1234567890ab...bcdef12345678'
+E         
+E         - 1234567890abcdef1234567890abcdef12345678
+E         + ef8665ac7a49b866bfc8961a225195df833e0c26
+
+tests/predlab/test_funding_capture.py:240: AssertionError
+_______ test_missing_module_source_identity_stops_before_requests[False] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-170/test_missing_module_source_ide0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x743e3b4a27b0>
+enclosing_git = False
+
+    @pytest.mark.parametrize('enclosing_git', [False, True])
+    def test_missing_module_source_identity_stops_before_requests(tmp_path, monkeypatch, enclosing_git):
+        outer = tmp_path/'outer'
+        if enclosing_git:
+            initialize_local_git(outer)
+        module = isolated_collector(outer/'release', monkeypatch)
+        fixture = PublicFixture()
+        result = module.capture_run(tmp_path/'run', symbols=['BTCUSDT'], transport=fixture, pace_seconds=0)
+>       assert result['status'] == 'failed' and 'source identity' in result['error']
+E       AssertionError: assert ('captured' == 'failed'
+E         
+E         - failed
+E         + captured)
+
+tests/predlab/test_funding_capture.py:253: AssertionError
+_______ test_missing_module_source_identity_stops_before_requests[True] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-170/test_missing_module_source_ide1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x743e3b550270>
+enclosing_git = True
+
+    @pytest.mark.parametrize('enclosing_git', [False, True])
+    def test_missing_module_source_identity_stops_before_requests(tmp_path, monkeypatch, enclosing_git):
+        outer = tmp_path/'outer'
+        if enclosing_git:
+            initialize_local_git(outer)
+        module = isolated_collector(outer/'release', monkeypatch)
+        fixture = PublicFixture()
+        result = module.capture_run(tmp_path/'run', symbols=['BTCUSDT'], transport=fixture, pace_seconds=0)
+>       assert result['status'] == 'failed' and 'source identity' in result['error']
+E       AssertionError: assert ('captured' == 'failed'
+E         
+E         - failed
+E         + captured)
+
+tests/predlab/test_funding_capture.py:253: AssertionError
+____________ test_invalid_release_marker_fails_before_any_request[] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-170/test_invalid_release_marker_fa0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x743e3b550c00>
+marker = b''
+
+    @pytest.mark.parametrize('marker', [b'', b'g'*40+b'\n', b'a'*39+b'\n', b'a'*40, b'a'*40+b'\nextra\n'])
+    def test_invalid_release_marker_fails_before_any_request(tmp_path, monkeypatch, marker):
+        root = tmp_path/'release'
+        module = isolated_collector(root, monkeypatch)
+        (root/'SOURCE_COMMIT').write_bytes(marker)
+        fixture = PublicFixture()
+        result = module.capture_run(tmp_path/'run', transport=fixture, pace_seconds=0)
+>       assert result['status'] == 'failed' and 'SOURCE_COMMIT' in result['error']
+E       AssertionError: assert ('captured' == 'failed'
+E         
+E         - failed
+E         + captured)
+
+tests/predlab/test_funding_capture.py:266: AssertionError
+_ test_invalid_release_marker_fails_before_any_request[gggggggggggggggggggggggggggggggggggggggg\n] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-170/test_invalid_release_marker_fa1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x743e3b49bc50>
+marker = b'gggggggggggggggggggggggggggggggggggggggg\n'
+
+    @pytest.mark.parametrize('marker', [b'', b'g'*40+b'\n', b'a'*39+b'\n', b'a'*40, b'a'*40+b'\nextra\n'])
+    def test_invalid_release_marker_fails_before_any_request(tmp_path, monkeypatch, marker):
+        root = tmp_path/'release'
+        module = isolated_collector(root, monkeypatch)
+        (root/'SOURCE_COMMIT').write_bytes(marker)
+        fixture = PublicFixture()
+        result = module.capture_run(tmp_path/'run', transport=fixture, pace_seconds=0)
+>       assert result['status'] == 'failed' and 'SOURCE_COMMIT' in result['error']
+E       AssertionError: assert ('captured' == 'failed'
+E         
+E         - failed
+E         + captured)
+
+tests/predlab/test_funding_capture.py:266: AssertionError
+_ test_invalid_release_marker_fails_before_any_request[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-170/test_invalid_release_marker_fa2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x743dfb288550>
+marker = b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n'
+
+    @pytest.mark.parametrize('marker', [b'', b'g'*40+b'\n', b'a'*39+b'\n', b'a'*40, b'a'*40+b'\nextra\n'])
+    def test_invalid_release_marker_fails_before_any_request(tmp_path, monkeypatch, marker):
+        root = tmp_path/'release'
+        module = isolated_collector(root, monkeypatch)
+        (root/'SOURCE_COMMIT').write_bytes(marker)
+        fixture = PublicFixture()
+        result = module.capture_run(tmp_path/'run', transport=fixture, pace_seconds=0)
+>       assert result['status'] == 'failed' and 'SOURCE_COMMIT' in result['error']
+E       AssertionError: assert ('captured' == 'failed'
+E         
+E         - failed
+E         + captured)
+
+tests/predlab/test_funding_capture.py:266: AssertionError
+_ test_invalid_release_marker_fails_before_any_request[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-170/test_invalid_release_marker_fa3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x743dfb29caa0>
+marker = b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
+    @pytest.mark.parametrize('marker', [b'', b'g'*40+b'\n', b'a'*39+b'\n', b'a'*40, b'a'*40+b'\nextra\n'])
+    def test_invalid_release_marker_fails_before_any_request(tmp_path, monkeypatch, marker):
+        root = tmp_path/'release'
+        module = isolated_collector(root, monkeypatch)
+        (root/'SOURCE_COMMIT').write_bytes(marker)
+        fixture = PublicFixture()
+        result = module.capture_run(tmp_path/'run', transport=fixture, pace_seconds=0)
+>       assert result['status'] == 'failed' and 'SOURCE_COMMIT' in result['error']
+E       AssertionError: assert ('captured' == 'failed'
+E         
+E         - failed
+E         + captured)
+
+tests/predlab/test_funding_capture.py:266: AssertionError
+_ test_invalid_release_marker_fails_before_any_request[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nextra\n] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-170/test_invalid_release_marker_fa4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x743dfb29d040>
+marker = b'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nextra\n'
+
+    @pytest.mark.parametrize('marker', [b'', b'g'*40+b'\n', b'a'*39+b'\n', b'a'*40, b'a'*40+b'\nextra\n'])
+    def test_invalid_release_marker_fails_before_any_request(tmp_path, monkeypatch, marker):
+        root = tmp_path/'release'
+        module = isolated_collector(root, monkeypatch)
+        (root/'SOURCE_COMMIT').write_bytes(marker)
+        fixture = PublicFixture()
+        result = module.capture_run(tmp_path/'run', transport=fixture, pace_seconds=0)
+>       assert result['status'] == 'failed' and 'SOURCE_COMMIT' in result['error']
+E       AssertionError: assert ('captured' == 'failed'
+E         
+E         - failed
+E         + captured)
+
+tests/predlab/test_funding_capture.py:266: AssertionError
+______________ test_own_module_checkout_identifies_its_git_commit ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-170/test_own_module_checkout_ident0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x743e3b52fa10>
+
+    def test_own_module_checkout_identifies_its_git_commit(tmp_path, monkeypatch):
+        root = tmp_path/'checkout'
+        module = isolated_collector(root, monkeypatch)
+        commit = initialize_local_git(root)
+        result = module.capture_run(tmp_path/'run', transport=PublicFixture(), pace_seconds=0)
+        assert result['status'] == 'captured'
+        assert result['source']['git_commit'] == commit
+>       assert result['source']['source_identity_method'] == 'git_checkout'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'source_identity_method'
+
+tests/predlab/test_funding_capture.py:279: KeyError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_funding_capture.py::test_release_source_commit_is_used_without_own_git_checkout[False]
+FAILED tests/predlab/test_funding_capture.py::test_release_source_commit_is_used_without_own_git_checkout[True]
+FAILED tests/predlab/test_funding_capture.py::test_missing_module_source_identity_stops_before_requests[False]
+FAILED tests/predlab/test_funding_capture.py::test_missing_module_source_identity_stops_before_requests[True]
+FAILED tests/predlab/test_funding_capture.py::test_invalid_release_marker_fails_before_any_request[]
+FAILED tests/predlab/test_funding_capture.py::test_invalid_release_marker_fails_before_any_request[gggggggggggggggggggggggggggggggggggggggg\n]
+FAILED tests/predlab/test_funding_capture.py::test_invalid_release_marker_fails_before_any_request[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n]
+FAILED tests/predlab/test_funding_capture.py::test_invalid_release_marker_fails_before_any_request[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]
+FAILED tests/predlab/test_funding_capture.py::test_invalid_release_marker_fails_before_any_request[aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\nextra\n]
+FAILED tests/predlab/test_funding_capture.py::test_own_module_checkout_identifies_its_git_commit
+10 failed, 20 deselected in 1.47s

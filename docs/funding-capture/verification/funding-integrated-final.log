@@ -1,0 +1,34 @@
+........................................................................ [ 12%]
+........................................................................ [ 24%]
+........................................................................ [ 36%]
+........................................................................ [ 49%]
+........................................................................ [ 61%]
+........................................................................ [ 73%]
+........................................................................ [ 86%]
+........................................................................ [ 98%]
+........                                                                 [100%]
+=============================== warnings summary ===============================
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/binance/ws/websocket_api.py:4
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/binance/ws/websocket_api.py:4
+  /home/malecada/master_thesis/TradingAgents-predlab/.venv/lib/python3.13/site-packages/binance/ws/websocket_api.py:4: DeprecationWarning: websockets.WebSocketClientProtocol is deprecated
+    from websockets import WebSocketClientProtocol  # type: ignore
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/websockets/legacy/__init__.py:6
+  /home/malecada/master_thesis/TradingAgents-predlab/.venv/lib/python3.13/site-packages/websockets/legacy/__init__.py:6: DeprecationWarning: websockets.legacy is deprecated; see https://websockets.readthedocs.io/en/stable/howto/upgrade.html for upgrade instructions
+    warnings.warn(  # deprecated in 14.0 - 2024-11-09
+
+tests/monitor/adhoc/test_service_hybrid.py::test_run_hybrid_emits_all_partials
+  /home/malecada/master_thesis/TradingAgents-predlab/.venv/lib/python3.13/site-packages/langgraph/checkpoint/base/__init__.py:21: LangChainPendingDeprecationWarning: The default value of `allowed_objects` will change in a future version. Pass an explicit value (e.g., allowed_objects='messages' or allowed_objects='core') to suppress this warning.
+    from langgraph.checkpoint.serde.jsonplus import JsonPlusSerializer
+
+tests/monitor/adhoc/test_service_hybrid.py::test_run_hybrid_emits_all_partials
+  /home/malecada/master_thesis/TradingAgents-predlab/.venv/lib/python3.13/site-packages/pydantic/_internal/_config.py:323: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+    warnings.warn(DEPRECATION_MESSAGE, DeprecationWarning)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+584 passed, 5 warnings in 50.96s
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+OK

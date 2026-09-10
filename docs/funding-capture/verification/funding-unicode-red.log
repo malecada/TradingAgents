@@ -1,0 +1,89 @@
+FFFFF....                                                                [100%]
+=================================== FAILURES ===================================
+_ test_provider_unicode_identity_is_preserved_in_current_universe[\u5e01\u5b89\u4eba\u751fUSDT] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-175/test_provider_unicode_identity0')
+symbol = '币安人生USDT'
+
+    @pytest.mark.parametrize('symbol',['币安人生USDT','我踏马来了USDT','龙虾USDT','牛来USDT','哈基米USDT'])
+    def test_provider_unicode_identity_is_preserved_in_current_universe(tmp_path,symbol):
+        fixture=PublicFixture(rows=[event(NOW,symbol=symbol)],contracts=[contract(symbol)])
+        result=capture.capture_run(tmp_path/'run',transport=fixture,pace_seconds=0)
+>       assert result['requested_symbols']==[symbol]
+E       AssertionError: assert [] == ['币安人生USDT']
+E         
+E         Right contains one more item: '币安人生USDT'
+E         Use -v to get more diff
+
+tests/predlab/test_funding_capture.py:137: AssertionError
+_ test_provider_unicode_identity_is_preserved_in_current_universe[\u6211\u8e0f\u9a6c\u6765\u4e86USDT] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-175/test_provider_unicode_identity1')
+symbol = '我踏马来了USDT'
+
+    @pytest.mark.parametrize('symbol',['币安人生USDT','我踏马来了USDT','龙虾USDT','牛来USDT','哈基米USDT'])
+    def test_provider_unicode_identity_is_preserved_in_current_universe(tmp_path,symbol):
+        fixture=PublicFixture(rows=[event(NOW,symbol=symbol)],contracts=[contract(symbol)])
+        result=capture.capture_run(tmp_path/'run',transport=fixture,pace_seconds=0)
+>       assert result['requested_symbols']==[symbol]
+E       AssertionError: assert [] == ['我踏马来了USDT']
+E         
+E         Right contains one more item: '我踏马来了USDT'
+E         Use -v to get more diff
+
+tests/predlab/test_funding_capture.py:137: AssertionError
+_ test_provider_unicode_identity_is_preserved_in_current_universe[\u9f99\u867eUSDT] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-175/test_provider_unicode_identity2')
+symbol = '龙虾USDT'
+
+    @pytest.mark.parametrize('symbol',['币安人生USDT','我踏马来了USDT','龙虾USDT','牛来USDT','哈基米USDT'])
+    def test_provider_unicode_identity_is_preserved_in_current_universe(tmp_path,symbol):
+        fixture=PublicFixture(rows=[event(NOW,symbol=symbol)],contracts=[contract(symbol)])
+        result=capture.capture_run(tmp_path/'run',transport=fixture,pace_seconds=0)
+>       assert result['requested_symbols']==[symbol]
+E       AssertionError: assert [] == ['龙虾USDT']
+E         
+E         Right contains one more item: '龙虾USDT'
+E         Use -v to get more diff
+
+tests/predlab/test_funding_capture.py:137: AssertionError
+_ test_provider_unicode_identity_is_preserved_in_current_universe[\u725b\u6765USDT] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-175/test_provider_unicode_identity3')
+symbol = '牛来USDT'
+
+    @pytest.mark.parametrize('symbol',['币安人生USDT','我踏马来了USDT','龙虾USDT','牛来USDT','哈基米USDT'])
+    def test_provider_unicode_identity_is_preserved_in_current_universe(tmp_path,symbol):
+        fixture=PublicFixture(rows=[event(NOW,symbol=symbol)],contracts=[contract(symbol)])
+        result=capture.capture_run(tmp_path/'run',transport=fixture,pace_seconds=0)
+>       assert result['requested_symbols']==[symbol]
+E       AssertionError: assert [] == ['牛来USDT']
+E         
+E         Right contains one more item: '牛来USDT'
+E         Use -v to get more diff
+
+tests/predlab/test_funding_capture.py:137: AssertionError
+_ test_provider_unicode_identity_is_preserved_in_current_universe[\u54c8\u57fa\u7c73USDT] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-175/test_provider_unicode_identity4')
+symbol = '哈基米USDT'
+
+    @pytest.mark.parametrize('symbol',['币安人生USDT','我踏马来了USDT','龙虾USDT','牛来USDT','哈基米USDT'])
+    def test_provider_unicode_identity_is_preserved_in_current_universe(tmp_path,symbol):
+        fixture=PublicFixture(rows=[event(NOW,symbol=symbol)],contracts=[contract(symbol)])
+        result=capture.capture_run(tmp_path/'run',transport=fixture,pace_seconds=0)
+>       assert result['requested_symbols']==[symbol]
+E       AssertionError: assert [] == ['哈基米USDT']
+E         
+E         Right contains one more item: '哈基米USDT'
+E         Use -v to get more diff
+
+tests/predlab/test_funding_capture.py:137: AssertionError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_funding_capture.py::test_provider_unicode_identity_is_preserved_in_current_universe[\u5e01\u5b89\u4eba\u751fUSDT]
+FAILED tests/predlab/test_funding_capture.py::test_provider_unicode_identity_is_preserved_in_current_universe[\u6211\u8e0f\u9a6c\u6765\u4e86USDT]
+FAILED tests/predlab/test_funding_capture.py::test_provider_unicode_identity_is_preserved_in_current_universe[\u9f99\u867eUSDT]
+FAILED tests/predlab/test_funding_capture.py::test_provider_unicode_identity_is_preserved_in_current_universe[\u725b\u6765USDT]
+FAILED tests/predlab/test_funding_capture.py::test_provider_unicode_identity_is_preserved_in_current_universe[\u54c8\u57fa\u7c73USDT]
+5 failed, 4 passed, 30 deselected in 0.47s

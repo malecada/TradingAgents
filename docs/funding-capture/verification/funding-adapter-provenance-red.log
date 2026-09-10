@@ -1,0 +1,252 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+_ test_declared_source_clock_schedule_and_contract_identity_are_verified[missing_code_identity] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-163/test_declared_source_clock_sch0')
+problem = 'missing_code_identity'
+
+    @pytest.mark.parametrize('problem', ['missing_code_identity', 'invalid_code_hash', 'wrong_server_cutoff',
+                                        'missing_schedule_receipt', 'stale_schedule', 'schedule_history_claim',
+                                        'not_trading', 'onboard_after_query_start'])
+    def test_declared_source_clock_schedule_and_contract_identity_are_verified(tmp_path, problem):
+        path = tmp_path / 'capture'; manifest = snapshot(path)
+        if problem == 'missing_code_identity': manifest['source'].pop('git_commit')
+        elif problem == 'invalid_code_hash': manifest['source']['collector_sha256'] = 'invalid'
+        elif problem == 'missing_schedule_receipt': manifest['requests'][2]['status'] = 503
+        elif problem == 'schedule_history_claim': manifest['schedule_observations'][0]['historical_schedule'] = True
+        else:
+            receipt_index = 0 if problem == 'wrong_server_cutoff' else 3 if problem == 'stale_schedule' else 1
+            receipt = manifest['requests'][receipt_index]; file = path / receipt['body_file']; body = json.loads(file.read_text())
+            if problem == 'wrong_server_cutoff': body['serverTime'] += 1
+            elif problem == 'stale_schedule': body[0]['time'] -= 3_600_000
+            else:
+                key, value = ('status', 'BREAK') if problem == 'not_trading' else ('onboardDate', manifest['window']['start_ms'] + 8*3_600_000)
+                body['symbols'][0][key] = value
+                manifest['instruments']['AAA']['contract'][key] = value
+            file.write_text(json.dumps(body)); receipt['body_sha256'] = hashlib.sha256(file.read_bytes()).hexdigest()
+        rewrite_manifest(path, manifest)
+>       with pytest.raises(ValueError): read_day(path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/predlab/test_funding_snapshot.py:189: Failed
+_ test_declared_source_clock_schedule_and_contract_identity_are_verified[invalid_code_hash] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-163/test_declared_source_clock_sch1')
+problem = 'invalid_code_hash'
+
+    @pytest.mark.parametrize('problem', ['missing_code_identity', 'invalid_code_hash', 'wrong_server_cutoff',
+                                        'missing_schedule_receipt', 'stale_schedule', 'schedule_history_claim',
+                                        'not_trading', 'onboard_after_query_start'])
+    def test_declared_source_clock_schedule_and_contract_identity_are_verified(tmp_path, problem):
+        path = tmp_path / 'capture'; manifest = snapshot(path)
+        if problem == 'missing_code_identity': manifest['source'].pop('git_commit')
+        elif problem == 'invalid_code_hash': manifest['source']['collector_sha256'] = 'invalid'
+        elif problem == 'missing_schedule_receipt': manifest['requests'][2]['status'] = 503
+        elif problem == 'schedule_history_claim': manifest['schedule_observations'][0]['historical_schedule'] = True
+        else:
+            receipt_index = 0 if problem == 'wrong_server_cutoff' else 3 if problem == 'stale_schedule' else 1
+            receipt = manifest['requests'][receipt_index]; file = path / receipt['body_file']; body = json.loads(file.read_text())
+            if problem == 'wrong_server_cutoff': body['serverTime'] += 1
+            elif problem == 'stale_schedule': body[0]['time'] -= 3_600_000
+            else:
+                key, value = ('status', 'BREAK') if problem == 'not_trading' else ('onboardDate', manifest['window']['start_ms'] + 8*3_600_000)
+                body['symbols'][0][key] = value
+                manifest['instruments']['AAA']['contract'][key] = value
+            file.write_text(json.dumps(body)); receipt['body_sha256'] = hashlib.sha256(file.read_bytes()).hexdigest()
+        rewrite_manifest(path, manifest)
+>       with pytest.raises(ValueError): read_day(path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/predlab/test_funding_snapshot.py:189: Failed
+_ test_declared_source_clock_schedule_and_contract_identity_are_verified[wrong_server_cutoff] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-163/test_declared_source_clock_sch2')
+problem = 'wrong_server_cutoff'
+
+    @pytest.mark.parametrize('problem', ['missing_code_identity', 'invalid_code_hash', 'wrong_server_cutoff',
+                                        'missing_schedule_receipt', 'stale_schedule', 'schedule_history_claim',
+                                        'not_trading', 'onboard_after_query_start'])
+    def test_declared_source_clock_schedule_and_contract_identity_are_verified(tmp_path, problem):
+        path = tmp_path / 'capture'; manifest = snapshot(path)
+        if problem == 'missing_code_identity': manifest['source'].pop('git_commit')
+        elif problem == 'invalid_code_hash': manifest['source']['collector_sha256'] = 'invalid'
+        elif problem == 'missing_schedule_receipt': manifest['requests'][2]['status'] = 503
+        elif problem == 'schedule_history_claim': manifest['schedule_observations'][0]['historical_schedule'] = True
+        else:
+            receipt_index = 0 if problem == 'wrong_server_cutoff' else 3 if problem == 'stale_schedule' else 1
+            receipt = manifest['requests'][receipt_index]; file = path / receipt['body_file']; body = json.loads(file.read_text())
+            if problem == 'wrong_server_cutoff': body['serverTime'] += 1
+            elif problem == 'stale_schedule': body[0]['time'] -= 3_600_000
+            else:
+                key, value = ('status', 'BREAK') if problem == 'not_trading' else ('onboardDate', manifest['window']['start_ms'] + 8*3_600_000)
+                body['symbols'][0][key] = value
+                manifest['instruments']['AAA']['contract'][key] = value
+            file.write_text(json.dumps(body)); receipt['body_sha256'] = hashlib.sha256(file.read_bytes()).hexdigest()
+        rewrite_manifest(path, manifest)
+>       with pytest.raises(ValueError): read_day(path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/predlab/test_funding_snapshot.py:189: Failed
+_ test_declared_source_clock_schedule_and_contract_identity_are_verified[missing_schedule_receipt] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-163/test_declared_source_clock_sch3')
+problem = 'missing_schedule_receipt'
+
+    @pytest.mark.parametrize('problem', ['missing_code_identity', 'invalid_code_hash', 'wrong_server_cutoff',
+                                        'missing_schedule_receipt', 'stale_schedule', 'schedule_history_claim',
+                                        'not_trading', 'onboard_after_query_start'])
+    def test_declared_source_clock_schedule_and_contract_identity_are_verified(tmp_path, problem):
+        path = tmp_path / 'capture'; manifest = snapshot(path)
+        if problem == 'missing_code_identity': manifest['source'].pop('git_commit')
+        elif problem == 'invalid_code_hash': manifest['source']['collector_sha256'] = 'invalid'
+        elif problem == 'missing_schedule_receipt': manifest['requests'][2]['status'] = 503
+        elif problem == 'schedule_history_claim': manifest['schedule_observations'][0]['historical_schedule'] = True
+        else:
+            receipt_index = 0 if problem == 'wrong_server_cutoff' else 3 if problem == 'stale_schedule' else 1
+            receipt = manifest['requests'][receipt_index]; file = path / receipt['body_file']; body = json.loads(file.read_text())
+            if problem == 'wrong_server_cutoff': body['serverTime'] += 1
+            elif problem == 'stale_schedule': body[0]['time'] -= 3_600_000
+            else:
+                key, value = ('status', 'BREAK') if problem == 'not_trading' else ('onboardDate', manifest['window']['start_ms'] + 8*3_600_000)
+                body['symbols'][0][key] = value
+                manifest['instruments']['AAA']['contract'][key] = value
+            file.write_text(json.dumps(body)); receipt['body_sha256'] = hashlib.sha256(file.read_bytes()).hexdigest()
+        rewrite_manifest(path, manifest)
+>       with pytest.raises(ValueError): read_day(path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/predlab/test_funding_snapshot.py:189: Failed
+_ test_declared_source_clock_schedule_and_contract_identity_are_verified[stale_schedule] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-163/test_declared_source_clock_sch4')
+problem = 'stale_schedule'
+
+    @pytest.mark.parametrize('problem', ['missing_code_identity', 'invalid_code_hash', 'wrong_server_cutoff',
+                                        'missing_schedule_receipt', 'stale_schedule', 'schedule_history_claim',
+                                        'not_trading', 'onboard_after_query_start'])
+    def test_declared_source_clock_schedule_and_contract_identity_are_verified(tmp_path, problem):
+        path = tmp_path / 'capture'; manifest = snapshot(path)
+        if problem == 'missing_code_identity': manifest['source'].pop('git_commit')
+        elif problem == 'invalid_code_hash': manifest['source']['collector_sha256'] = 'invalid'
+        elif problem == 'missing_schedule_receipt': manifest['requests'][2]['status'] = 503
+        elif problem == 'schedule_history_claim': manifest['schedule_observations'][0]['historical_schedule'] = True
+        else:
+            receipt_index = 0 if problem == 'wrong_server_cutoff' else 3 if problem == 'stale_schedule' else 1
+            receipt = manifest['requests'][receipt_index]; file = path / receipt['body_file']; body = json.loads(file.read_text())
+            if problem == 'wrong_server_cutoff': body['serverTime'] += 1
+            elif problem == 'stale_schedule': body[0]['time'] -= 3_600_000
+            else:
+                key, value = ('status', 'BREAK') if problem == 'not_trading' else ('onboardDate', manifest['window']['start_ms'] + 8*3_600_000)
+                body['symbols'][0][key] = value
+                manifest['instruments']['AAA']['contract'][key] = value
+            file.write_text(json.dumps(body)); receipt['body_sha256'] = hashlib.sha256(file.read_bytes()).hexdigest()
+        rewrite_manifest(path, manifest)
+>       with pytest.raises(ValueError): read_day(path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/predlab/test_funding_snapshot.py:189: Failed
+_ test_declared_source_clock_schedule_and_contract_identity_are_verified[schedule_history_claim] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-163/test_declared_source_clock_sch5')
+problem = 'schedule_history_claim'
+
+    @pytest.mark.parametrize('problem', ['missing_code_identity', 'invalid_code_hash', 'wrong_server_cutoff',
+                                        'missing_schedule_receipt', 'stale_schedule', 'schedule_history_claim',
+                                        'not_trading', 'onboard_after_query_start'])
+    def test_declared_source_clock_schedule_and_contract_identity_are_verified(tmp_path, problem):
+        path = tmp_path / 'capture'; manifest = snapshot(path)
+        if problem == 'missing_code_identity': manifest['source'].pop('git_commit')
+        elif problem == 'invalid_code_hash': manifest['source']['collector_sha256'] = 'invalid'
+        elif problem == 'missing_schedule_receipt': manifest['requests'][2]['status'] = 503
+        elif problem == 'schedule_history_claim': manifest['schedule_observations'][0]['historical_schedule'] = True
+        else:
+            receipt_index = 0 if problem == 'wrong_server_cutoff' else 3 if problem == 'stale_schedule' else 1
+            receipt = manifest['requests'][receipt_index]; file = path / receipt['body_file']; body = json.loads(file.read_text())
+            if problem == 'wrong_server_cutoff': body['serverTime'] += 1
+            elif problem == 'stale_schedule': body[0]['time'] -= 3_600_000
+            else:
+                key, value = ('status', 'BREAK') if problem == 'not_trading' else ('onboardDate', manifest['window']['start_ms'] + 8*3_600_000)
+                body['symbols'][0][key] = value
+                manifest['instruments']['AAA']['contract'][key] = value
+            file.write_text(json.dumps(body)); receipt['body_sha256'] = hashlib.sha256(file.read_bytes()).hexdigest()
+        rewrite_manifest(path, manifest)
+>       with pytest.raises(ValueError): read_day(path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/predlab/test_funding_snapshot.py:189: Failed
+_ test_declared_source_clock_schedule_and_contract_identity_are_verified[not_trading] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-163/test_declared_source_clock_sch6')
+problem = 'not_trading'
+
+    @pytest.mark.parametrize('problem', ['missing_code_identity', 'invalid_code_hash', 'wrong_server_cutoff',
+                                        'missing_schedule_receipt', 'stale_schedule', 'schedule_history_claim',
+                                        'not_trading', 'onboard_after_query_start'])
+    def test_declared_source_clock_schedule_and_contract_identity_are_verified(tmp_path, problem):
+        path = tmp_path / 'capture'; manifest = snapshot(path)
+        if problem == 'missing_code_identity': manifest['source'].pop('git_commit')
+        elif problem == 'invalid_code_hash': manifest['source']['collector_sha256'] = 'invalid'
+        elif problem == 'missing_schedule_receipt': manifest['requests'][2]['status'] = 503
+        elif problem == 'schedule_history_claim': manifest['schedule_observations'][0]['historical_schedule'] = True
+        else:
+            receipt_index = 0 if problem == 'wrong_server_cutoff' else 3 if problem == 'stale_schedule' else 1
+            receipt = manifest['requests'][receipt_index]; file = path / receipt['body_file']; body = json.loads(file.read_text())
+            if problem == 'wrong_server_cutoff': body['serverTime'] += 1
+            elif problem == 'stale_schedule': body[0]['time'] -= 3_600_000
+            else:
+                key, value = ('status', 'BREAK') if problem == 'not_trading' else ('onboardDate', manifest['window']['start_ms'] + 8*3_600_000)
+                body['symbols'][0][key] = value
+                manifest['instruments']['AAA']['contract'][key] = value
+            file.write_text(json.dumps(body)); receipt['body_sha256'] = hashlib.sha256(file.read_bytes()).hexdigest()
+        rewrite_manifest(path, manifest)
+>       with pytest.raises(ValueError): read_day(path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/predlab/test_funding_snapshot.py:189: Failed
+_ test_declared_source_clock_schedule_and_contract_identity_are_verified[onboard_after_query_start] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-163/test_declared_source_clock_sch7')
+problem = 'onboard_after_query_start'
+
+    @pytest.mark.parametrize('problem', ['missing_code_identity', 'invalid_code_hash', 'wrong_server_cutoff',
+                                        'missing_schedule_receipt', 'stale_schedule', 'schedule_history_claim',
+                                        'not_trading', 'onboard_after_query_start'])
+    def test_declared_source_clock_schedule_and_contract_identity_are_verified(tmp_path, problem):
+        path = tmp_path / 'capture'; manifest = snapshot(path)
+        if problem == 'missing_code_identity': manifest['source'].pop('git_commit')
+        elif problem == 'invalid_code_hash': manifest['source']['collector_sha256'] = 'invalid'
+        elif problem == 'missing_schedule_receipt': manifest['requests'][2]['status'] = 503
+        elif problem == 'schedule_history_claim': manifest['schedule_observations'][0]['historical_schedule'] = True
+        else:
+            receipt_index = 0 if problem == 'wrong_server_cutoff' else 3 if problem == 'stale_schedule' else 1
+            receipt = manifest['requests'][receipt_index]; file = path / receipt['body_file']; body = json.loads(file.read_text())
+            if problem == 'wrong_server_cutoff': body['serverTime'] += 1
+            elif problem == 'stale_schedule': body[0]['time'] -= 3_600_000
+            else:
+                key, value = ('status', 'BREAK') if problem == 'not_trading' else ('onboardDate', manifest['window']['start_ms'] + 8*3_600_000)
+                body['symbols'][0][key] = value
+                manifest['instruments']['AAA']['contract'][key] = value
+            file.write_text(json.dumps(body)); receipt['body_sha256'] = hashlib.sha256(file.read_bytes()).hexdigest()
+        rewrite_manifest(path, manifest)
+>       with pytest.raises(ValueError): read_day(path)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/predlab/test_funding_snapshot.py:189: Failed
+=========================== short test summary info ============================
+FAILED tests/predlab/test_funding_snapshot.py::test_declared_source_clock_schedule_and_contract_identity_are_verified[missing_code_identity]
+FAILED tests/predlab/test_funding_snapshot.py::test_declared_source_clock_schedule_and_contract_identity_are_verified[invalid_code_hash]
+FAILED tests/predlab/test_funding_snapshot.py::test_declared_source_clock_schedule_and_contract_identity_are_verified[wrong_server_cutoff]
+FAILED tests/predlab/test_funding_snapshot.py::test_declared_source_clock_schedule_and_contract_identity_are_verified[missing_schedule_receipt]
+FAILED tests/predlab/test_funding_snapshot.py::test_declared_source_clock_schedule_and_contract_identity_are_verified[stale_schedule]
+FAILED tests/predlab/test_funding_snapshot.py::test_declared_source_clock_schedule_and_contract_identity_are_verified[schedule_history_claim]
+FAILED tests/predlab/test_funding_snapshot.py::test_declared_source_clock_schedule_and_contract_identity_are_verified[not_trading]
+FAILED tests/predlab/test_funding_snapshot.py::test_declared_source_clock_schedule_and_contract_identity_are_verified[onboard_after_query_start]
+8 failed, 23 deselected in 0.61s

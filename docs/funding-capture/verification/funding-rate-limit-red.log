@@ -1,0 +1,31 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_________ test_interrupted_rate_limit_body_preserves_status_and_stops __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-162/test_interrupted_rate_limit_bo0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75e3cefaefd0>
+
+    def test_interrupted_rate_limit_body_preserves_status_and_stops(tmp_path,monkeypatch):
+        class BrokenBody:
+            def read(self): raise http.client.IncompleteRead(b'{"code":',10)
+            def close(self): pass
+        class Opener:
+            def open(self,request,timeout):
+                raise urllib.error.HTTPError(request.full_url,429,'rate limited',{'Retry-After':'60'},BrokenBody())
+        monkeypatch.setattr(capture.urllib.request,'build_opener',lambda *args:Opener())
+        fixture=PublicFixture(contracts=[contract(),contract('ETHUSDT'),contract('SOLUSDT')])
+        calls=[]
+        def transport(e,p):
+            if e.endswith('/fundingRate'):
+                calls.append(p)
+                return capture.public_get(e,p)
+            return fixture(e,p)
+        result=capture.capture_run(tmp_path/'run',transport=transport,pace_seconds=0)
+>       assert len(calls)==1
+E       AssertionError: assert 3 == 1
+E        +  where 3 = len([{'symbol': 'BTCUSDT', 'startTime': 1727308800000, 'endTime': 1728043200000, 'limit': 1000}, {'symbol': 'ETHUSDT', 'st...8043200000, 'limit': 1000}, {'symbol': 'SOLUSDT', 'startTime': 1727308800000, 'endTime': 1728043200000, 'limit': 1000}])
+
+tests/predlab/test_funding_capture.py:175: AssertionError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_funding_capture.py::test_interrupted_rate_limit_body_preserves_status_and_stops
+1 failed, 19 deselected in 0.38s

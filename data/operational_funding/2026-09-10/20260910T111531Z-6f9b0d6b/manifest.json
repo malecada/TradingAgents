@@ -1,0 +1,479 @@
+{
+  "completed_utc": "2026-09-10T11:15:38.727539+00:00",
+  "instruments": {
+    "BTCUSDT": {
+      "contract": {
+        "baseAsset": "BTC",
+        "baseAssetPrecision": 8,
+        "contractType": "PERPETUAL",
+        "deliveryDate": 4133404800000,
+        "filters": [
+          {
+            "filterType": "PRICE_FILTER",
+            "maxPrice": "4529764",
+            "minPrice": "556.80",
+            "tickSize": "0.10"
+          },
+          {
+            "filterType": "LOT_SIZE",
+            "maxQty": "1000",
+            "minQty": "0.001",
+            "stepSize": "0.001"
+          },
+          {
+            "filterType": "MARKET_LOT_SIZE",
+            "maxQty": "120",
+            "minQty": "0.001",
+            "stepSize": "0.001"
+          },
+          {
+            "filterType": "MAX_NUM_ORDERS",
+            "limit": 200
+          },
+          {
+            "filterType": "MIN_NOTIONAL",
+            "notional": "50"
+          },
+          {
+            "filterType": "PERCENT_PRICE",
+            "multiplierDecimal": "4",
+            "multiplierDown": "0.9500",
+            "multiplierUp": "1.0500"
+          },
+          {
+            "filterType": "POSITION_RISK_CONTROL",
+            "positionControlSide": "NONE"
+          }
+        ],
+        "liquidationFee": "0.012500",
+        "maintMarginPercent": "2.5000",
+        "marginAsset": "USDT",
+        "marketTakeBound": "0.05",
+        "maxMoveOrderLimit": 10000,
+        "onboardDate": 1567965300000,
+        "orderTypes": [
+          "LIMIT",
+          "MARKET",
+          "STOP",
+          "STOP_MARKET",
+          "TAKE_PROFIT",
+          "TAKE_PROFIT_MARKET",
+          "TRAILING_STOP_MARKET"
+        ],
+        "pair": "BTCUSDT",
+        "permissionSets": [
+          "GRID",
+          "COPY",
+          "DCA",
+          "PSB"
+        ],
+        "pricePrecision": 2,
+        "quantityPrecision": 3,
+        "quoteAsset": "USDT",
+        "quotePrecision": 8,
+        "requiredMarginPercent": "5.0000",
+        "status": "TRADING",
+        "symbol": "BTCUSDT",
+        "timeInForce": [
+          "GTC",
+          "IOC",
+          "FOK",
+          "GTX",
+          "GTD"
+        ],
+        "triggerProtect": "0.0500",
+        "underlyingSubType": [
+          "PoW"
+        ],
+        "underlyingType": "COIN"
+      },
+      "exact_duplicates": 0,
+      "file": "events/BTCUSDT.parquet",
+      "first_event_ms": 1788307200000,
+      "last_event_ms": 1789027200007,
+      "query_complete": true,
+      "query_end_ms": 1789038931893,
+      "query_start_ms": 1788307200000,
+      "reason": null,
+      "row_count": 26,
+      "sha256": "388a1f50bffc4a37a670b9a2f276aeedf8baa877c66306ecc503188705b7c4fd",
+      "status": "captured"
+    },
+    "ETHUSDT": {
+      "contract": {
+        "baseAsset": "ETH",
+        "baseAssetPrecision": 8,
+        "contractType": "PERPETUAL",
+        "deliveryDate": 4133404800000,
+        "filters": [
+          {
+            "filterType": "PRICE_FILTER",
+            "maxPrice": "306177",
+            "minPrice": "39.86",
+            "tickSize": "0.01"
+          },
+          {
+            "filterType": "LOT_SIZE",
+            "maxQty": "10000",
+            "minQty": "0.001",
+            "stepSize": "0.001"
+          },
+          {
+            "filterType": "MARKET_LOT_SIZE",
+            "maxQty": "2000",
+            "minQty": "0.001",
+            "stepSize": "0.001"
+          },
+          {
+            "filterType": "MAX_NUM_ORDERS",
+            "limit": 200
+          },
+          {
+            "filterType": "MIN_NOTIONAL",
+            "notional": "20"
+          },
+          {
+            "filterType": "PERCENT_PRICE",
+            "multiplierDecimal": "4",
+            "multiplierDown": "0.9500",
+            "multiplierUp": "1.0500"
+          },
+          {
+            "filterType": "POSITION_RISK_CONTROL",
+            "positionControlSide": "NONE"
+          }
+        ],
+        "liquidationFee": "0.012500",
+        "maintMarginPercent": "2.5000",
+        "marginAsset": "USDT",
+        "marketTakeBound": "0.05",
+        "maxMoveOrderLimit": 10000,
+        "onboardDate": 1574840700000,
+        "orderTypes": [
+          "LIMIT",
+          "MARKET",
+          "STOP",
+          "STOP_MARKET",
+          "TAKE_PROFIT",
+          "TAKE_PROFIT_MARKET",
+          "TRAILING_STOP_MARKET"
+        ],
+        "pair": "ETHUSDT",
+        "permissionSets": [
+          "GRID",
+          "COPY",
+          "DCA",
+          "PSB"
+        ],
+        "pricePrecision": 2,
+        "quantityPrecision": 3,
+        "quoteAsset": "USDT",
+        "quotePrecision": 8,
+        "requiredMarginPercent": "5.0000",
+        "status": "TRADING",
+        "symbol": "ETHUSDT",
+        "timeInForce": [
+          "GTC",
+          "IOC",
+          "FOK",
+          "GTX",
+          "GTD"
+        ],
+        "triggerProtect": "0.0500",
+        "underlyingSubType": [
+          "Layer-1"
+        ],
+        "underlyingType": "COIN"
+      },
+      "exact_duplicates": 0,
+      "file": "events/ETHUSDT.parquet",
+      "first_event_ms": 1788307200000,
+      "last_event_ms": 1789027200007,
+      "query_complete": true,
+      "query_end_ms": 1789038931893,
+      "query_start_ms": 1788307200000,
+      "reason": null,
+      "row_count": 26,
+      "sha256": "fc31465dec741bb00126a2c42d83d23c57d4b78f5b46e5aa39411c3a4069a553",
+      "status": "captured"
+    },
+    "SOLUSDT": {
+      "contract": {
+        "baseAsset": "SOL",
+        "baseAssetPrecision": 8,
+        "contractType": "PERPETUAL",
+        "deliveryDate": 4133404800000,
+        "filters": [
+          {
+            "filterType": "PRICE_FILTER",
+            "maxPrice": "6857",
+            "minPrice": "0.4200",
+            "tickSize": "0.0100"
+          },
+          {
+            "filterType": "LOT_SIZE",
+            "maxQty": "1000000",
+            "minQty": "0.01",
+            "stepSize": "0.01"
+          },
+          {
+            "filterType": "MARKET_LOT_SIZE",
+            "maxQty": "80000",
+            "minQty": "0.01",
+            "stepSize": "0.01"
+          },
+          {
+            "filterType": "MAX_NUM_ORDERS",
+            "limit": 200
+          },
+          {
+            "filterType": "MIN_NOTIONAL",
+            "notional": "5"
+          },
+          {
+            "filterType": "PERCENT_PRICE",
+            "multiplierDecimal": "4",
+            "multiplierDown": "0.9500",
+            "multiplierUp": "1.0500"
+          },
+          {
+            "filterType": "POSITION_RISK_CONTROL",
+            "positionControlSide": "NONE"
+          }
+        ],
+        "liquidationFee": "0.015000",
+        "maintMarginPercent": "2.5000",
+        "marginAsset": "USDT",
+        "marketTakeBound": "0.05",
+        "maxMoveOrderLimit": 10000,
+        "onboardDate": 1600066800000,
+        "orderTypes": [
+          "LIMIT",
+          "MARKET",
+          "STOP",
+          "STOP_MARKET",
+          "TAKE_PROFIT",
+          "TAKE_PROFIT_MARKET",
+          "TRAILING_STOP_MARKET"
+        ],
+        "pair": "SOLUSDT",
+        "permissionSets": [
+          "GRID",
+          "COPY",
+          "DCA",
+          "PSB"
+        ],
+        "pricePrecision": 4,
+        "quantityPrecision": 2,
+        "quoteAsset": "USDT",
+        "quotePrecision": 8,
+        "requiredMarginPercent": "5.0000",
+        "status": "TRADING",
+        "symbol": "SOLUSDT",
+        "timeInForce": [
+          "GTC",
+          "IOC",
+          "FOK",
+          "GTX",
+          "GTD"
+        ],
+        "triggerProtect": "0.0500",
+        "underlyingSubType": [
+          "Layer-1"
+        ],
+        "underlyingType": "COIN"
+      },
+      "exact_duplicates": 0,
+      "file": "events/SOLUSDT.parquet",
+      "first_event_ms": 1788307200000,
+      "last_event_ms": 1789027200007,
+      "query_complete": true,
+      "query_end_ms": 1789038931893,
+      "query_start_ms": 1788307200000,
+      "reason": null,
+      "row_count": 26,
+      "sha256": "d1f87915858d3f54815a578d87233d5ae6aeb4bcd7d57220a6b372492ae72eb6",
+      "status": "captured"
+    }
+  },
+  "kind": "binance-usdm-funding-capture",
+  "qualification": "Query exhaustion is not historical schedule completeness or exact account cashflow. Current schedules are observed now, never backdated.",
+  "requested_symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+  ],
+  "requests": [
+    {
+      "body_bytes": 28,
+      "body_file": "raw/000000.body",
+      "body_sha256": "50c76981f2bbf6f1899d4c04d7aa6f77d87ac4213641b146d1a009f2725bb02c",
+      "endpoint": "/fapi/v1/time",
+      "error": null,
+      "headers": {
+        "content-type": "application/json",
+        "date": "Thu, 10 Sep 2026 11:15:31 GMT",
+        "x-mbx-used-weight-1m": "1"
+      },
+      "params": {},
+      "purpose": "metadata",
+      "received_utc": "2026-09-10T11:15:32.010852+00:00",
+      "started_utc": "2026-09-10T11:15:31.698290+00:00",
+      "status": 200,
+      "url": "https://fapi.binance.com/fapi/v1/time"
+    },
+    {
+      "body_bytes": 1108421,
+      "body_file": "raw/000001.body",
+      "body_sha256": "2d376e294d931dcba9a4cd17b3642c0a188b84c4f1bbd1f29fcb06cff05e890d",
+      "endpoint": "/fapi/v1/exchangeInfo",
+      "error": null,
+      "headers": {
+        "content-type": "application/json",
+        "date": "Thu, 10 Sep 2026 11:15:32 GMT",
+        "x-mbx-used-weight-1m": "2"
+      },
+      "params": {},
+      "purpose": "metadata",
+      "received_utc": "2026-09-10T11:15:34.400519+00:00",
+      "started_utc": "2026-09-10T11:15:32.698387+00:00",
+      "status": 200,
+      "url": "https://fapi.binance.com/fapi/v1/exchangeInfo"
+    },
+    {
+      "body_bytes": 133691,
+      "body_file": "raw/000002.body",
+      "body_sha256": "dab1bdd9e66c992c9710b5f05d217953e129c876c4c007f0cff187c8ea030067",
+      "endpoint": "/fapi/v1/fundingInfo",
+      "error": null,
+      "headers": {
+        "content-type": "application/json;charset=UTF-8",
+        "date": "Thu, 10 Sep 2026 11:15:34 GMT"
+      },
+      "params": {},
+      "purpose": "metadata",
+      "received_utc": "2026-09-10T11:15:34.746435+00:00",
+      "started_utc": "2026-09-10T11:15:34.423862+00:00",
+      "status": 200,
+      "url": "https://fapi.binance.com/fapi/v1/fundingInfo"
+    },
+    {
+      "body_bytes": 199770,
+      "body_file": "raw/000003.body",
+      "body_sha256": "bec9fe6104f83195de77085d6386244e85a877ccc63e4cad218330069bd9da2d",
+      "endpoint": "/fapi/v1/premiumIndex",
+      "error": null,
+      "headers": {
+        "content-type": "application/json",
+        "date": "Thu, 10 Sep 2026 11:15:35 GMT",
+        "x-mbx-used-weight-1m": "12"
+      },
+      "params": {},
+      "purpose": "metadata",
+      "received_utc": "2026-09-10T11:15:35.749269+00:00",
+      "started_utc": "2026-09-10T11:15:35.423937+00:00",
+      "status": 200,
+      "url": "https://fapi.binance.com/fapi/v1/premiumIndex"
+    },
+    {
+      "body_bytes": 3278,
+      "body_file": "raw/000004.body",
+      "body_sha256": "a682a39272ebee38e08123a2d15d64e56068ba0af04d756d3e856b2e9b364fa5",
+      "endpoint": "/fapi/v1/fundingRate",
+      "error": null,
+      "headers": {
+        "content-type": "application/json;charset=UTF-8",
+        "date": "Thu, 10 Sep 2026 11:15:36 GMT"
+      },
+      "params": {
+        "endTime": 1789038931893,
+        "limit": 1000,
+        "startTime": 1788307200000,
+        "symbol": "BTCUSDT"
+      },
+      "purpose": "history",
+      "received_utc": "2026-09-10T11:15:36.714999+00:00",
+      "started_utc": "2026-09-10T11:15:36.424002+00:00",
+      "status": 200,
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate"
+    },
+    {
+      "body_bytes": 3253,
+      "body_file": "raw/000005.body",
+      "body_sha256": "80bc4535fc39aafc27b0a12ba21a4ad2bf306e8472d6ec0d6943de6878f729a5",
+      "endpoint": "/fapi/v1/fundingRate",
+      "error": null,
+      "headers": {
+        "content-type": "application/json;charset=UTF-8",
+        "date": "Thu, 10 Sep 2026 11:15:37 GMT"
+      },
+      "params": {
+        "endTime": 1789038931893,
+        "limit": 1000,
+        "startTime": 1788307200000,
+        "symbol": "ETHUSDT"
+      },
+      "purpose": "history",
+      "received_utc": "2026-09-10T11:15:37.705900+00:00",
+      "started_utc": "2026-09-10T11:15:37.424075+00:00",
+      "status": 200,
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate"
+    },
+    {
+      "body_bytes": 3234,
+      "body_file": "raw/000006.body",
+      "body_sha256": "064eb2d913be8a5592346a967d368f9e5fafc86a6ecb7838b1d5206da40eaed1",
+      "endpoint": "/fapi/v1/fundingRate",
+      "error": null,
+      "headers": {
+        "content-type": "application/json;charset=UTF-8",
+        "date": "Thu, 10 Sep 2026 11:15:38 GMT"
+      },
+      "params": {
+        "endTime": 1789038931893,
+        "limit": 1000,
+        "startTime": 1788307200000,
+        "symbol": "SOLUSDT"
+      },
+      "purpose": "history",
+      "received_utc": "2026-09-10T11:15:38.718157+00:00",
+      "started_utc": "2026-09-10T11:15:38.424143+00:00",
+      "status": 200,
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate"
+    }
+  ],
+  "schedule_observations": [
+    {
+      "endpoint": "/fapi/v1/fundingInfo",
+      "historical_schedule": false,
+      "observed_at": "2026-09-10T11:15:34.746435+00:00",
+      "receipt_index": 2,
+      "rows": 782
+    },
+    {
+      "endpoint": "/fapi/v1/premiumIndex",
+      "historical_schedule": false,
+      "observed_at": "2026-09-10T11:15:35.749269+00:00",
+      "receipt_index": 3,
+      "rows": 900
+    }
+  ],
+  "schema_version": 1,
+  "source": {
+    "base_url": "https://fapi.binance.com",
+    "collector_sha256": "9bb2e86e6153e9483514c36dc417c97b94af9aaa610b4f7cc6b966836897e18a",
+    "documentation": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+    "git_commit": "84f63f697d6231ccecad8d3706f362b1863078e2",
+    "mark_units": "USDT per base unit; associated event mark",
+    "market_type": "USDT-margined USDT-quoted PERPETUAL",
+    "rate_units": "signed fraction per published funding event; positive paid by longs",
+    "time_policy": "raw UTC millisecond event labels; no timestamp rounding",
+    "venue": "Binance USD-M"
+  },
+  "started_utc": "2026-09-10T11:15:31.698271+00:00",
+  "status": "captured",
+  "window": {
+    "end_ms": 1789038931893,
+    "start_ms": 1788307200000
+  }
+}

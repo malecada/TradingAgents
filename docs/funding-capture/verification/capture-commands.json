@@ -1,0 +1,69 @@
+{
+  "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+  "purpose": "current public funding operational input capture; no financial run",
+  "python": "../TradingAgents-predlab/.venv/bin/python",
+  "source_release": "7d2a0ae9ef4ad707774360d2f67af40258a7d2e3",
+  "captures": [
+    {
+      "command": "python scripts/predlab_capture_funding.py --output-root data/operational_funding/2026-09-10 --symbols BTCUSDT ETHUSDT SOLUSDT",
+      "snapshot": "data/operational_funding/2026-09-10/20260910T111531Z-6f9b0d6b",
+      "manifest_sha256": "c40456e99e8b1c3fad97af08ad10bb7950d69f09cf82315c8c8dd51f5a73c920",
+      "started_utc": "2026-09-10T11:15:31.698271+00:00",
+      "completed_utc": "2026-09-10T11:15:38.727539+00:00",
+      "source": {
+        "base_url": "https://fapi.binance.com",
+        "collector_sha256": "9bb2e86e6153e9483514c36dc417c97b94af9aaa610b4f7cc6b966836897e18a",
+        "documentation": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+        "git_commit": "84f63f697d6231ccecad8d3706f362b1863078e2",
+        "mark_units": "USDT per base unit; associated event mark",
+        "market_type": "USDT-margined USDT-quoted PERPETUAL",
+        "rate_units": "signed fraction per published funding event; positive paid by longs",
+        "time_policy": "raw UTC millisecond event labels; no timestamp rounding",
+        "venue": "Binance USD-M"
+      },
+      "requested": 3,
+      "requests": 7
+    },
+    {
+      "command": "python scripts/predlab_capture_funding.py --output-root data/operational_funding/2026-09-10",
+      "snapshot": "data/operational_funding/2026-09-10/20260910T111703Z-4d9f2495",
+      "manifest_sha256": "8400762c62895fdb1705dd239b8de270820961bf1402c8ca9725c6994fc81a23",
+      "started_utc": "2026-09-10T11:17:03.592123+00:00",
+      "completed_utc": "2026-09-10T11:25:51.859520+00:00",
+      "source": {
+        "base_url": "https://fapi.binance.com",
+        "collector_sha256": "9bb2e86e6153e9483514c36dc417c97b94af9aaa610b4f7cc6b966836897e18a",
+        "documentation": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+        "git_commit": "76548892f9716637faa581bd8b81e3d17c2106b9",
+        "mark_units": "USDT per base unit; associated event mark",
+        "market_type": "USDT-margined USDT-quoted PERPETUAL",
+        "rate_units": "signed fraction per published funding event; positive paid by longs",
+        "time_policy": "raw UTC millisecond event labels; no timestamp rounding",
+        "venue": "Binance USD-M"
+      },
+      "requested": 523,
+      "requests": 527
+    },
+    {
+      "command": "python scripts/predlab_capture_funding.py --output-root data/operational_funding/2026-09-10",
+      "snapshot": "data/operational_funding/2026-09-10/20260910T112655Z-856c79c5",
+      "manifest_sha256": "60b48a1377b77b5bb7a35b76f591728f56989c427c5bf87e287351b50fcb856e",
+      "started_utc": "2026-09-10T11:26:55.597690+00:00",
+      "completed_utc": "2026-09-10T11:36:07.072031+00:00",
+      "source": {
+        "base_url": "https://fapi.binance.com",
+        "collector_sha256": "4013bc0de3be5cfe3dfa7efd2196539afe3e7eb48bb537fe83b52de170e2f553",
+        "documentation": "https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-usd-s-m-futures/api/rest-api/market-data",
+        "git_commit": "17c3649d6b2a8b7c7ad46dc70b30a5bb694ae4e5",
+        "mark_units": "USDT per base unit; associated event mark",
+        "market_type": "USDT-margined USDT-quoted PERPETUAL",
+        "rate_units": "signed fraction per published funding event; positive paid by longs",
+        "source_identity_method": "git_checkout",
+        "time_policy": "raw UTC millisecond event labels; no timestamp rounding",
+        "venue": "Binance USD-M"
+      },
+      "requested": 528,
+      "requests": 532
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+..............FFFFF                                                      [100%]
+=================================== FAILURES ===================================
+________ test_partial_http_body_and_request_survive_transport_exception ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-154/test_partial_http_body_and_req0')
+
+    def test_partial_http_body_and_request_survive_transport_exception(tmp_path):
+        def transport(e,p): raise http.client.IncompleteRead(b'{"serverTime":',3)
+>       result=capture.capture_run(tmp_path/'run',transport=transport,pace_seconds=0)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/predlab/test_funding_capture.py:152: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/predlab/funding_capture.py:221: in capture_run
+    clock,_ = receipts.get('/fapi/v1/time',{})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/predlab/funding_capture.py:91: in get
+    status, headers, body = self.transport(endpoint, params)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+e = '/fapi/v1/time', p = {}
+
+>   def transport(e,p): raise http.client.IncompleteRead(b'{"serverTime":',3)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   http.client.IncompleteRead: IncompleteRead(14 bytes read, 3 more expected)
+
+tests/predlab/test_funding_capture.py:151: IncompleteRead
+_________ test_conflict_split_across_full_page_boundary_is_quarantined _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-154/test_conflict_split_across_ful0')
+
+    def test_conflict_split_across_full_page_boundary_is_quarantined(tmp_path):
+        rows=[event(NOW-DAY),dict(event(NOW-DAY),fundingRate='.002'),event(NOW)]
+        result=capture.capture_run(tmp_path/'run',transport=PublicFixture(rows),pace_seconds=0,page_limit=1)
+>       assert result['instruments']['BTCUSDT']['status']=='quarantined'
+E       AssertionError: assert 'captured' == 'quarantined'
+E         
+E         - quarantined
+E         + captured
+
+tests/predlab/test_funding_capture.py:161: AssertionError
+_ test_invalid_schedule_or_stale_current_clock_cannot_claim_capture[/fapi/v1/premiumIndex-bad0] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-154/test_invalid_schedule_or_stale0')
+endpoint = '/fapi/v1/premiumIndex', bad = [{'bogus': True}]
+
+    @pytest.mark.parametrize('endpoint,bad', [('/fapi/v1/premiumIndex',[{'bogus':True}]),
+        ('/fapi/v1/fundingInfo',[{'symbol':'BTCUSDT','fundingIntervalHours':'hourly'}]),
+        ('/fapi/v1/time',{'serverTime':NOW-DAY})])
+    def test_invalid_schedule_or_stale_current_clock_cannot_claim_capture(tmp_path,endpoint,bad):
+        fixture=PublicFixture()
+        def transport(e,p): return (200,{},json.dumps(bad).encode()) if e==endpoint else fixture(e,p)
+        result=capture.capture_run(tmp_path/'run',transport=transport,pace_seconds=0)
+>       assert result['status']=='failed' and result.get('error')
+E       AssertionError: assert ('captured' == 'failed'
+E         
+E         - failed
+E         + captured)
+
+tests/predlab/test_funding_capture.py:172: AssertionError
+_ test_invalid_schedule_or_stale_current_clock_cannot_claim_capture[/fapi/v1/fundingInfo-bad1] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-154/test_invalid_schedule_or_stale1')
+endpoint = '/fapi/v1/fundingInfo'
+bad = [{'symbol': 'BTCUSDT', 'fundingIntervalHours': 'hourly'}]
+
+    @pytest.mark.parametrize('endpoint,bad', [('/fapi/v1/premiumIndex',[{'bogus':True}]),
+        ('/fapi/v1/fundingInfo',[{'symbol':'BTCUSDT','fundingIntervalHours':'hourly'}]),
+        ('/fapi/v1/time',{'serverTime':NOW-DAY})])
+    def test_invalid_schedule_or_stale_current_clock_cannot_claim_capture(tmp_path,endpoint,bad):
+        fixture=PublicFixture()
+        def transport(e,p): return (200,{},json.dumps(bad).encode()) if e==endpoint else fixture(e,p)
+        result=capture.capture_run(tmp_path/'run',transport=transport,pace_seconds=0)
+>       assert result['status']=='failed' and result.get('error')
+E       AssertionError: assert ('captured' == 'failed'
+E         
+E         - failed
+E         + captured)
+
+tests/predlab/test_funding_capture.py:172: AssertionError
+_ test_invalid_schedule_or_stale_current_clock_cannot_claim_capture[/fapi/v1/time-bad2] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-154/test_invalid_schedule_or_stale2')
+endpoint = '/fapi/v1/time', bad = {'serverTime': 1727956800000}
+
+    @pytest.mark.parametrize('endpoint,bad', [('/fapi/v1/premiumIndex',[{'bogus':True}]),
+        ('/fapi/v1/fundingInfo',[{'symbol':'BTCUSDT','fundingIntervalHours':'hourly'}]),
+        ('/fapi/v1/time',{'serverTime':NOW-DAY})])
+    def test_invalid_schedule_or_stale_current_clock_cannot_claim_capture(tmp_path,endpoint,bad):
+        fixture=PublicFixture()
+        def transport(e,p): return (200,{},json.dumps(bad).encode()) if e==endpoint else fixture(e,p)
+        result=capture.capture_run(tmp_path/'run',transport=transport,pace_seconds=0)
+>       assert result['status']=='failed' and result.get('error')
+E       AssertionError: assert ('captured' == 'failed'
+E         
+E         - failed
+E         + captured)
+
+tests/predlab/test_funding_capture.py:172: AssertionError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_funding_capture.py::test_partial_http_body_and_request_survive_transport_exception
+FAILED tests/predlab/test_funding_capture.py::test_conflict_split_across_full_page_boundary_is_quarantined
+FAILED tests/predlab/test_funding_capture.py::test_invalid_schedule_or_stale_current_clock_cannot_claim_capture[/fapi/v1/premiumIndex-bad0]
+FAILED tests/predlab/test_funding_capture.py::test_invalid_schedule_or_stale_current_clock_cannot_claim_capture[/fapi/v1/fundingInfo-bad1]
+FAILED tests/predlab/test_funding_capture.py::test_invalid_schedule_or_stale_current_clock_cannot_claim_capture[/fapi/v1/time-bad2]
+5 failed, 14 passed in 0.67s

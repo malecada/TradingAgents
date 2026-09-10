@@ -1,0 +1,58 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+______ test_persisted_snapshot_coverage_contains_only_the_settlement_day _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-172/test_persisted_snapshot_covera0')
+
+    def test_persisted_snapshot_coverage_contains_only_the_settlement_day(tmp_path):
+        panels, marks, journals, path = prepare_inputs(tmp_path)
+        assert all(not value.startswith('WAIT:') for value in run_pair(panels, marks, journals, path))
+        row = json.loads(journals[0].read_text().splitlines()[-1]); coverage = row['funding_coverage']
+        assert coverage['snapshot']['sha256'] and coverage['snapshot']['source']['collector_sha256']
+        assert len(coverage['capture_statuses']) == len(coverage['requested_symbols']) == 205
+>       assert coverage['settlement_day'] == '2026-09-02'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'settlement_day'
+
+tests/predlab/test_funding_paper_admission.py:117: KeyError
+______ test_boolean_quote_is_not_a_price_during_opted_in_preflight[False] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-172/test_boolean_quote_is_not_a_pr0')
+prior_only = False
+
+    @pytest.mark.parametrize('prior_only', [False, True])
+    def test_boolean_quote_is_not_a_price_during_opted_in_preflight(tmp_path, prior_only):
+        panels, marks, journals, path = prepare_inputs(tmp_path)
+        symbol = next(iter(json.loads(journals[1].read_text())['weights']))
+        if prior_only: panels['park'].loc['2026-09-02', symbol] = float('nan')
+        marks[symbol] = True
+        before = [j.read_bytes() for j in journals]
+>       assert run_pair(panels, marks, journals, path)[0].startswith('WAIT:')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x766ad1c4f440>('WAIT:')
+E        +    where <built-in method startswith of str object at 0x766ad1c4f440> = 'journal_v2.jsonl 2026-09-02: 80 legs, incomplete, vt10_scale None'.startswith
+
+tests/predlab/test_funding_paper_admission.py:130: AssertionError
+______ test_boolean_quote_is_not_a_price_during_opted_in_preflight[True] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-172/test_boolean_quote_is_not_a_pr1')
+prior_only = True
+
+    @pytest.mark.parametrize('prior_only', [False, True])
+    def test_boolean_quote_is_not_a_price_during_opted_in_preflight(tmp_path, prior_only):
+        panels, marks, journals, path = prepare_inputs(tmp_path)
+        symbol = next(iter(json.loads(journals[1].read_text())['weights']))
+        if prior_only: panels['park'].loc['2026-09-02', symbol] = float('nan')
+        marks[symbol] = True
+        before = [j.read_bytes() for j in journals]
+>       assert run_pair(panels, marks, journals, path)[0].startswith('WAIT:')
+E       AssertionError: assert False
+E        +  where False = <built-in method startswith of str object at 0x766afaa92480>('WAIT:')
+E        +    where <built-in method startswith of str object at 0x766afaa92480> = 'journal_v2.jsonl 2026-09-02: 78 legs, incomplete, vt10_scale None'.startswith
+
+tests/predlab/test_funding_paper_admission.py:130: AssertionError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_funding_paper_admission.py::test_persisted_snapshot_coverage_contains_only_the_settlement_day
+FAILED tests/predlab/test_funding_paper_admission.py::test_boolean_quote_is_not_a_price_during_opted_in_preflight[False]
+FAILED tests/predlab/test_funding_paper_admission.py::test_boolean_quote_is_not_a_price_during_opted_in_preflight[True]
+3 failed, 15 deselected in 7.83s
