@@ -2792,5 +2792,84 @@
     "stop_rule": "One completed artifact per family. Missing provenance or held prices/funding is an explicit blocked/incomplete cell, never zero-filled. Infrastructure failure without completed outcome may resume only documented identical code/input specification; outcome-informed amendments or parameter changes prohibited. Any additional family, forecast-model fit, data source, changed acceptance threshold or holdout requires a new committed registration.",
     "pre_result_clarification": "Before source implementation or empirical outcomes: metadata-only inventory pinned DEX settlement quote bound and creation interpolation; no original cell, threshold or membership changed. Further source inspection before outcomes pins original shared liq-fade RNG48 and corrects the P2 cumulative-return arithmetic without changing25bp threshold or signals.",
     "forecast_fit_policy": "No forecast-model retraining. PRX necessarily recomputes its original rolling formation regressions as part of the frozen cointegration selector; this is disclosed separately from a forecast-model fit."
+  },
+  "audit_data_recovery_2026_09_10": {
+    "registered_date": "2026-09-10",
+    "type": "data_recovery_only",
+    "charter": "docs/data-recovery/2026-09-10-charter.md",
+    "status": "registered_before_recovery",
+    "strategy_evaluation_permitted": false,
+    "allow_holdout": false,
+    "development_window": [
+      "2021-01-01",
+      "2025-03-31"
+    ],
+    "price_inventory_window": [
+      "2020-06-01T00:00:00Z",
+      "2025-04-01T00:00:00Z"
+    ],
+    "venue": "Binance",
+    "market_type": "USD-M linear perpetual futures",
+    "interval": "1h",
+    "timestamp_convention": "UTC open-time labels; prices available after bar close",
+    "source_roots": [
+      "/home/malecada/master_thesis/TradingAgents/data",
+      "/home/malecada/master_thesis/TradingAgents-predlab/data"
+    ],
+    "output_root": "data/recovery/2026-09-10",
+    "hourly_primary_symbols": [
+      "TRXUSDT",
+      "FILUSDT",
+      "LTCUSDT"
+    ],
+    "hourly_primary_gaps": [
+      [
+        "2022-02-26T00:00:00Z",
+        "2022-03-01T00:00:00Z"
+      ],
+      [
+        "2022-04-01T00:00:00Z",
+        "2022-04-03T00:00:00Z"
+      ]
+    ],
+    "expected_primary_missing_symbol_hours": 360,
+    "extended_inventory": "All frozen liquidation-fade symbols and eight original majors, plus required daily books; inspect timestamp coverage without computing signals, PnL, or gates. Additional recovery ranges require a documented data-scope addendum before consuming them.",
+    "permitted_public_sources": [
+      "data.binance.vision Binance USD-M futures klines/markPriceKlines/indexPriceKlines and CHECKSUM files",
+      "Official Binance public archive listing metadata",
+      "Official Binance unauthenticated USD-M historical price endpoints",
+      "Official Binance announcements and exchange documentation; historical applicability must be proved for settlement rules"
+    ],
+    "fetch_limits": {
+      "max_parallel_requests": 3,
+      "timeout_seconds": 45,
+      "max_attempts_per_request": 3,
+      "honor_retry_after": true,
+      "max_download_bytes": 250000000
+    },
+    "contract_investigations": {
+      "accounting": [
+        "BZRXUSDT",
+        "BNXUSDT",
+        "LUNAUSDT"
+      ],
+      "pair_coverage": [
+        "TOMOUSDT",
+        "RNDRUSDT",
+        "MATICUSDT"
+      ]
+    },
+    "identity_policy": "Old and successor tickers are separate instruments unless explicit exchange evidence establishes contract continuity. Spot conversion ratios do not establish futures position transfer.",
+    "settlement_required_fields": [
+      "instrument and contract identity",
+      "official event source and publication time",
+      "last-trading and settlement timestamp with timezone",
+      "settlement price or exact reconstructable price rule and genuine required observations",
+      "fee and realized funding cutoff treatment",
+      "explicit successor treatment or separate-contract classification"
+    ],
+    "bar_acceptance": "Only authentic observed bars with valid provider checksum where supplied, exact interval/schema/units, unique monotone UTC timestamps, finite positive OHLC and nonnegative volumes/trade counts, OHLC consistency, complete target coverage, and explicit overlap comparison. Duplicate conflicts, source failures and unexplained revisions block admission. Preserve all existing rows byte-for-byte at row-value level; insert only proven missing timestamps. Do not invent zero-volume or interpolated bars.",
+    "provenance": "Exclusive versioned raw receipts and derived outputs; URL/parameters/status/retrieval UTC/raw SHA256/provider checksum/transform commit/schema/units/old-source hashes/range coverage/overlap conflicts. Original stores and September9 results remain immutable.",
+    "stop_rule": "Finish a recovery/readiness report even if evidence is unavailable. No strategy metric or verdict may be calculated under this key. Once data and accounting semantics are verified, register a separate fixed-cell replay before any results; retain every original affected cell and original gates. No new signal, tuning, forecasting refit, holdout, authenticated API, secret read, live order, or VPS operation."
   }
 }
