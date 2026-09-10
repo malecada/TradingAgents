@@ -1,0 +1,16 @@
+
+==================================== ERRORS ====================================
+_______ ERROR collecting tests/predlab/test_saved_forecast_inference.py ________
+ImportError while importing test module '/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/predlab/test_saved_forecast_inference.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/predlab/test_saved_forecast_inference.py:10: in <module>
+    from tradingagents.predlab import saved_forecast_inference as inference
+E   ImportError: cannot import name 'saved_forecast_inference' from 'tradingagents.predlab' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/predlab/__init__.py)
+=========================== short test summary info ============================
+ERROR tests/predlab/test_saved_forecast_inference.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.41s

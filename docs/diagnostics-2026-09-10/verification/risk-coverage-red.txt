@@ -1,0 +1,179 @@
+.............FFF.......                                                  [100%]
+=================================== FAILURES ===================================
+_ test_low_volatility_entry_is_clipped_and_all_exposure_ratios_have_denominators _
+
+    def test_low_volatility_entry_is_clipped_and_all_exposure_ratios_have_denominators():
+        targets,trace=synthetic_book(variation=.01)
+        out=module().analyze_sleeve(targets,trace)
+        assert out['summary']['status']=='complete_qualified'
+        entry=out['daily'].iloc[19]
+        assert entry.applied_weight==3
+        assert entry.applied_risk_proxy==pytest.approx(3*entry.sigma_252)
+        assert entry.applied_risk_proxy < .15
+        for label in ('latent','incoming','applied','closing'):
+>           assert label+'_reference_risk_ratio' in out['daily']
+E           AssertionError: assert ('latent' + '_reference_risk_ratio') in          date    nav_before  ...  above_reference_risk  above_nominal_entry_budget\n0  2023-01-02  10000.000000  ...   ...       False\n43 2023-02-14   9757.005672  ...                  True                       False\n\n[44 rows x 62 columns]
+
+tests/test_factor_risk_diagnostics.py:153: AssertionError
+________ test_warmup_unavailable_thresholds_are_null_not_claimed_false _________
+
+self = Index(['date', 'nav_before', 'pre_nav', 'target_position', 'exposure',
+       'mark_return', 'mark_price', 'entry_pric...y', 'applied_reference_risk_ratio',
+       'above_reference_risk', 'above_nominal_entry_budget'],
+      dtype='object')
+key = 'incoming_above_reference_risk'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list('abc'))
+        >>> unique_index.get_loc('b')
+        1
+    
+        >>> monotonic_index = pd.Index(list('abbc'))
+        >>> monotonic_index.get_loc('b')
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list('abcb'))
+        >>> non_monotonic_index.get_loc('b')
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+>           return self._engine.get_loc(casted_key)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexes/base.py:3812: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+pandas/_libs/index.pyx:167: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/index.pyx:196: in pandas._libs.index.IndexEngine.get_loc
+    ???
+pandas/_libs/hashtable_class_helper.pxi:7088: in pandas._libs.hashtable.PyObjectHashTable.get_item
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   KeyError: 'incoming_above_reference_risk'
+
+pandas/_libs/hashtable_class_helper.pxi:7096: KeyError
+
+The above exception was the direct cause of the following exception:
+
+    def test_warmup_unavailable_thresholds_are_null_not_claimed_false():
+        targets,trace=synthetic_book()
+        daily=module().analyze_sleeve(targets,trace)['daily']
+>       assert pd.isna(daily.loc[0,'incoming_above_reference_risk'])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:163: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexing.py:1184: in __getitem__
+    return self.obj._get_value(*key, takeable=self._takeable)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/frame.py:4225: in _get_value
+    series = self._get_item_cache(col)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/frame.py:4649: in _get_item_cache
+    loc = self.columns.get_loc(item)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Index(['date', 'nav_before', 'pre_nav', 'target_position', 'exposure',
+       'mark_return', 'mark_price', 'entry_pric...y', 'applied_reference_risk_ratio',
+       'above_reference_risk', 'above_nominal_entry_budget'],
+      dtype='object')
+key = 'incoming_above_reference_risk'
+
+    def get_loc(self, key):
+        """
+        Get integer location, slice or boolean mask for requested label.
+    
+        Parameters
+        ----------
+        key : label
+    
+        Returns
+        -------
+        int if unique index, slice if monotonic index, else mask
+    
+        Examples
+        --------
+        >>> unique_index = pd.Index(list('abc'))
+        >>> unique_index.get_loc('b')
+        1
+    
+        >>> monotonic_index = pd.Index(list('abbc'))
+        >>> monotonic_index.get_loc('b')
+        slice(1, 3, None)
+    
+        >>> non_monotonic_index = pd.Index(list('abcb'))
+        >>> non_monotonic_index.get_loc('b')
+        array([False,  True, False,  True])
+        """
+        casted_key = self._maybe_cast_indexer(key)
+        try:
+            return self._engine.get_loc(casted_key)
+        except KeyError as err:
+            if isinstance(casted_key, slice) or (
+                isinstance(casted_key, abc.Iterable)
+                and any(isinstance(x, slice) for x in casted_key)
+            ):
+                raise InvalidIndexError(key)
+>           raise KeyError(key) from err
+E           KeyError: 'incoming_above_reference_risk'
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/indexes/base.py:3819: KeyError
+_______ test_stop_records_both_stop_and_reentry_sizing_age_without_reset _______
+
+    def test_stop_records_both_stop_and_reentry_sizing_age_without_reset():
+        events=module().stop_events(stop_fixture())
+>       assert events.iloc[0].bars_since_sizing==12
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:182: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = date                         2023-01-01 00:00:00
+successor                      same_sign_reentry
+next_date           ...ortfolio_stop_hit                         False
+stop_outside_envelope                      False
+Name: 0, dtype: object
+name = 'bars_since_sizing'
+
+    @final
+    def __getattr__(self, name: str):
+        """
+        After regular attribute access, try looking up the name
+        This allows simpler access to columns for interactive use.
+        """
+        # Note: obj.x will always call obj.__getattribute__('x') prior to
+        # calling obj.__getattr__('x').
+        if (
+            name not in self._internal_names_set
+            and name not in self._metadata
+            and name not in self._accessors
+            and self._info_axis._can_hold_identifiers_and_holds_name(name)
+        ):
+            return self[name]
+>       return object.__getattribute__(self, name)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'Series' object has no attribute 'bars_since_sizing'
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/generic.py:6321: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_factor_risk_diagnostics.py::test_low_volatility_entry_is_clipped_and_all_exposure_ratios_have_denominators
+FAILED tests/test_factor_risk_diagnostics.py::test_warmup_unavailable_thresholds_are_null_not_claimed_false
+FAILED tests/test_factor_risk_diagnostics.py::test_stop_records_both_stop_and_reentry_sizing_age_without_reset
+3 failed, 20 passed in 1.03s

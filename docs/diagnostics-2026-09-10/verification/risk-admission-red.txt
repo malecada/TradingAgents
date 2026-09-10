@@ -1,0 +1,57 @@
+.........FFF                                                             [100%]
+=================================== FAILURES ===================================
+_ test_hashing_failure_preserves_started_failed_and_all_unavailable_identities _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-198/test_hashing_failure_preserves0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b40332eb950>
+
+    def test_hashing_failure_preserves_started_failed_and_all_unavailable_identities(tmp_path,monkeypatch):
+        m,g,ledger=fixture(tmp_path); original=m.fingerprint
+        def failure(path):
+            if Path(path)==tmp_path/g['cells'][0]['trace_path']: raise OSError('synthetic inaccessible input')
+            return original(path)
+        monkeypatch.setattr(m,'fingerprint',failure)
+        with pytest.raises(OSError,match='inaccessible'):
+            m.run_registered(g,{},root=tmp_path,financial_ledgers=[ledger])
+        output=tmp_path/g['output_dir']
+>       assert (output/'started.json').exists() and (output/'failed.json').exists()
+E       AssertionError: assert (False)
+E        +  where False = exists()
+E        +    where exists = (PosixPath('/tmp/pytest-of-malecada/pytest-198/test_hashing_failure_preserves0/data/diagnostics/test/risk') / 'started.json').exists
+
+tests/test_factor_risk_runner.py:163: AssertionError
+_ test_full_admission_identity_is_checked_before_parse_and_again_before_completion _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-198/test_full_admission_identity_i0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7b40330e49b0>
+
+    def test_full_admission_identity_is_checked_before_parse_and_again_before_completion(tmp_path,monkeypatch):
+        m,g,ledger=fixture(tmp_path)
+        seen=[]
+        def check():
+            seen.append('check')
+            return {'gate':'same','policy':'first' if len(seen)==1 else 'changed'}
+        read=m.pd.read_parquet
+        def guarded_read(*a,**kw):
+            assert seen==['check']
+            return read(*a,**kw)
+        monkeypatch.setattr(m.pd,'read_parquet',guarded_read)
+        with pytest.raises(RuntimeError,match='admission provenance'):
+>           m.run_registered(g,{},root=tmp_path,financial_ledgers=[ledger],admission_check=check)
+E           TypeError: run_registered() got an unexpected keyword argument 'admission_check'
+
+tests/test_factor_risk_runner.py:182: TypeError
+_____ test_baseline_ledger_must_match_exact_bytes_and_registered_748_rows ______
+
+    def test_baseline_ledger_must_match_exact_bytes_and_registered_748_rows():
+        m=module(); original=b'{}\n'*748
+>       assert m.verify_baseline_ledger(original,original)==hashlib.sha256(original).hexdigest()
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'factor_risk_runner_test' has no attribute 'verify_baseline_ledger'
+
+tests/test_factor_risk_runner.py:189: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_factor_risk_runner.py::test_hashing_failure_preserves_started_failed_and_all_unavailable_identities
+FAILED tests/test_factor_risk_runner.py::test_full_admission_identity_is_checked_before_parse_and_again_before_completion
+FAILED tests/test_factor_risk_runner.py::test_baseline_ledger_must_match_exact_bytes_and_registered_748_rows
+3 failed, 9 passed in 1.66s

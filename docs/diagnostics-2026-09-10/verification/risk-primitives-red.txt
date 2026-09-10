@@ -1,0 +1,441 @@
+FFFFFFFFFFFFFFFFFFFF                                                     [100%]
+=================================== FAILURES ===================================
+__________ test_causal_volatility_exact_original_lag_reset_and_warmup __________
+
+    def test_causal_volatility_exact_original_lag_reset_and_warmup():
+>       m = module()
+            ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+_____________ test_gate_uses_only_twenty_prior_finite_volatilities _____________
+
+    def test_gate_uses_only_twenty_prior_finite_volatilities():
+>       out = module().volatility_features(np.exp(np.arange(70)**2/10000))
+              ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+________ test_drift_maintenance_is_actual_turnover_not_a_new_target[1] _________
+
+side = 1
+
+    @pytest.mark.parametrize('side', [1, -1])
+    def test_drift_maintenance_is_actual_turnover_not_a_new_target(side):
+>       out = module().turnover_components(100., 60.*side, .5*side, .5*side)
+              ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+________ test_drift_maintenance_is_actual_turnover_not_a_new_target[-1] ________
+
+side = -1
+
+    @pytest.mark.parametrize('side', [1, -1])
+    def test_drift_maintenance_is_actual_turnover_not_a_new_target(side):
+>       out = module().turnover_components(100., 60.*side, .5*side, .5*side)
+              ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+_______________ test_opposing_trade_components_preserve_netting ________________
+
+    def test_opposing_trade_components_preserve_netting():
+>       out = module().turnover_components(100., 60., .7, .5)
+              ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+_____________ test_turnover_classes_are_exclusive[0-0-0-no_trade] ______________
+
+held = 0, w = 0, old = 0, kind = 'no_trade'
+
+    @pytest.mark.parametrize('held,w,old,kind', [
+        (0, 0, 0, 'no_trade'), (0, .5, .5, 'opening_from_flat'),
+        (50, 0, .5, 'closing_to_flat'), (50, -.5, .5, 'sign_flip')])
+    def test_turnover_classes_are_exclusive(held, w, old, kind):
+>       assert module().turnover_components(100., held, w, old)['row_class'] == kind
+               ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+_______ test_turnover_classes_are_exclusive[0-0.5-0.5-opening_from_flat] _______
+
+held = 0, w = 0.5, old = 0.5, kind = 'opening_from_flat'
+
+    @pytest.mark.parametrize('held,w,old,kind', [
+        (0, 0, 0, 'no_trade'), (0, .5, .5, 'opening_from_flat'),
+        (50, 0, .5, 'closing_to_flat'), (50, -.5, .5, 'sign_flip')])
+    def test_turnover_classes_are_exclusive(held, w, old, kind):
+>       assert module().turnover_components(100., held, w, old)['row_class'] == kind
+               ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+________ test_turnover_classes_are_exclusive[50-0-0.5-closing_to_flat] _________
+
+held = 50, w = 0, old = 0.5, kind = 'closing_to_flat'
+
+    @pytest.mark.parametrize('held,w,old,kind', [
+        (0, 0, 0, 'no_trade'), (0, .5, .5, 'opening_from_flat'),
+        (50, 0, .5, 'closing_to_flat'), (50, -.5, .5, 'sign_flip')])
+    def test_turnover_classes_are_exclusive(held, w, old, kind):
+>       assert module().turnover_components(100., held, w, old)['row_class'] == kind
+               ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+__________ test_turnover_classes_are_exclusive[50--0.5-0.5-sign_flip] __________
+
+held = 50, w = -0.5, old = 0.5, kind = 'sign_flip'
+
+    @pytest.mark.parametrize('held,w,old,kind', [
+        (0, 0, 0, 'no_trade'), (0, .5, .5, 'opening_from_flat'),
+        (50, 0, .5, 'closing_to_flat'), (50, -.5, .5, 'sign_flip')])
+    def test_turnover_classes_are_exclusive(held, w, old, kind):
+>       assert module().turnover_components(100., held, w, old)['row_class'] == kind
+               ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+_________ test_analyzer_separates_targets_holdings_and_nominal_risk[1] _________
+
+side = 1
+
+    @pytest.mark.parametrize('side', [1, -1])
+    def test_analyzer_separates_targets_holdings_and_nominal_risk(side):
+        targets, trace = synthetic_book(side=side)
+        before = targets.copy(deep=True), trace.copy(deep=True)
+>       out = module().analyze_sleeve(targets, trace)
+              ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+________ test_analyzer_separates_targets_holdings_and_nominal_risk[-1] _________
+
+side = -1
+
+    @pytest.mark.parametrize('side', [1, -1])
+    def test_analyzer_separates_targets_holdings_and_nominal_risk(side):
+        targets, trace = synthetic_book(side=side)
+        before = targets.copy(deep=True), trace.copy(deep=True)
+>       out = module().analyze_sleeve(targets, trace)
+              ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+__________ test_input_defects_preserve_unavailable_status_and_reason ___________
+
+    def test_input_defects_preserve_unavailable_status_and_reason():
+>       m = module()
+            ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:126: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+_____ test_same_sign_raw_target_change_is_unsupported_not_a_resizing_event _____
+
+    def test_same_sign_raw_target_change_is_unsupported_not_a_resizing_event():
+        t, r = synthetic_book(); t.loc[30:, 'target'] *= .9
+>       out = module().analyze_sleeve(t, r)
+              ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:139: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+_ test_price_stop_successor_classes_and_unique_next_entry_charges[0.5-False-same_sign_reentry] _
+
+weight = 0.5, halted = False, kind = 'same_sign_reentry'
+
+    @pytest.mark.parametrize('weight,halted,kind', [(.5, False, 'same_sign_reentry'),
+        (-.5, False, 'opposite_sign_entry'), (0, False, 'flat'), (0, True, 'permanently_halted')])
+    def test_price_stop_successor_classes_and_unique_next_entry_charges(weight, halted, kind):
+>       out = module().stop_events(stop_fixture(weight, halted))
+              ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+_ test_price_stop_successor_classes_and_unique_next_entry_charges[-0.5-False-opposite_sign_entry] _
+
+weight = -0.5, halted = False, kind = 'opposite_sign_entry'
+
+    @pytest.mark.parametrize('weight,halted,kind', [(.5, False, 'same_sign_reentry'),
+        (-.5, False, 'opposite_sign_entry'), (0, False, 'flat'), (0, True, 'permanently_halted')])
+    def test_price_stop_successor_classes_and_unique_next_entry_charges(weight, halted, kind):
+>       out = module().stop_events(stop_fixture(weight, halted))
+              ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+_ test_price_stop_successor_classes_and_unique_next_entry_charges[0-False-flat] _
+
+weight = 0, halted = False, kind = 'flat'
+
+    @pytest.mark.parametrize('weight,halted,kind', [(.5, False, 'same_sign_reentry'),
+        (-.5, False, 'opposite_sign_entry'), (0, False, 'flat'), (0, True, 'permanently_halted')])
+    def test_price_stop_successor_classes_and_unique_next_entry_charges(weight, halted, kind):
+>       out = module().stop_events(stop_fixture(weight, halted))
+              ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+_ test_price_stop_successor_classes_and_unique_next_entry_charges[0-True-permanently_halted] _
+
+weight = 0, halted = True, kind = 'permanently_halted'
+
+    @pytest.mark.parametrize('weight,halted,kind', [(.5, False, 'same_sign_reentry'),
+        (-.5, False, 'opposite_sign_entry'), (0, False, 'flat'), (0, True, 'permanently_halted')])
+    def test_price_stop_successor_classes_and_unique_next_entry_charges(weight, halted, kind):
+>       out = module().stop_events(stop_fixture(weight, halted))
+              ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+____ test_staged_peak_includes_pre_exit_peak_and_attributes_from_that_stage ____
+
+    def test_staged_peak_includes_pre_exit_peak_and_attributes_from_that_stage():
+        trace=stage_fixture([10., -14.], [0., 0.], [1., 2.], [True, True], [False, False], [False, True])
+>       out=module().staged_accounting(trace, initial_nav=100.)
+            ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+_______ test_pre_exit_halt_is_distinct_from_post_exit_threshold_crossing _______
+
+    def test_pre_exit_halt_is_distinct_from_post_exit_threshold_crossing():
+        trace=stage_fixture([-16.], [0.], [1.], [False], [True], [True])
+>       out=module().staged_accounting(trace, initial_nav=100.)
+            ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:198: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+_____________ test_recorded_halt_flags_must_match_staged_threshold _____________
+
+    def test_recorded_halt_flags_must_match_staged_threshold():
+        trace=stage_fixture([-1.], [0.], [0.], [False], [False], [True])
+        with pytest.raises(ValueError, match='halt'):
+>           module().staged_accounting(trace, initial_nav=100.)
+            ^^^^^^^^
+
+tests/test_factor_risk_diagnostics.py:207: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def module():
+        path = ROOT / 'tradingagents/strategies/factor_risk_diagnostics.py'
+>       assert path.exists(), 'pure factor risk diagnostics have not been implemented'
+E       AssertionError: pure factor risk diagnostics have not been implemented
+E       assert False
+E        +  where False = exists()
+E        +    where exists = PosixPath('/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/strategies/factor_risk_diagnostics.py').exists
+
+tests/test_factor_risk_diagnostics.py:15: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_factor_risk_diagnostics.py::test_causal_volatility_exact_original_lag_reset_and_warmup
+FAILED tests/test_factor_risk_diagnostics.py::test_gate_uses_only_twenty_prior_finite_volatilities
+FAILED tests/test_factor_risk_diagnostics.py::test_drift_maintenance_is_actual_turnover_not_a_new_target[1]
+FAILED tests/test_factor_risk_diagnostics.py::test_drift_maintenance_is_actual_turnover_not_a_new_target[-1]
+FAILED tests/test_factor_risk_diagnostics.py::test_opposing_trade_components_preserve_netting
+FAILED tests/test_factor_risk_diagnostics.py::test_turnover_classes_are_exclusive[0-0-0-no_trade]
+FAILED tests/test_factor_risk_diagnostics.py::test_turnover_classes_are_exclusive[0-0.5-0.5-opening_from_flat]
+FAILED tests/test_factor_risk_diagnostics.py::test_turnover_classes_are_exclusive[50-0-0.5-closing_to_flat]
+FAILED tests/test_factor_risk_diagnostics.py::test_turnover_classes_are_exclusive[50--0.5-0.5-sign_flip]
+FAILED tests/test_factor_risk_diagnostics.py::test_analyzer_separates_targets_holdings_and_nominal_risk[1]
+FAILED tests/test_factor_risk_diagnostics.py::test_analyzer_separates_targets_holdings_and_nominal_risk[-1]
+FAILED tests/test_factor_risk_diagnostics.py::test_input_defects_preserve_unavailable_status_and_reason
+FAILED tests/test_factor_risk_diagnostics.py::test_same_sign_raw_target_change_is_unsupported_not_a_resizing_event
+FAILED tests/test_factor_risk_diagnostics.py::test_price_stop_successor_classes_and_unique_next_entry_charges[0.5-False-same_sign_reentry]
+FAILED tests/test_factor_risk_diagnostics.py::test_price_stop_successor_classes_and_unique_next_entry_charges[-0.5-False-opposite_sign_entry]
+FAILED tests/test_factor_risk_diagnostics.py::test_price_stop_successor_classes_and_unique_next_entry_charges[0-False-flat]
+FAILED tests/test_factor_risk_diagnostics.py::test_price_stop_successor_classes_and_unique_next_entry_charges[0-True-permanently_halted]
+FAILED tests/test_factor_risk_diagnostics.py::test_staged_peak_includes_pre_exit_peak_and_attributes_from_that_stage
+FAILED tests/test_factor_risk_diagnostics.py::test_pre_exit_halt_is_distinct_from_post_exit_threshold_crossing
+FAILED tests/test_factor_risk_diagnostics.py::test_recorded_halt_flags_must_match_staged_threshold
+20 failed in 0.51s
