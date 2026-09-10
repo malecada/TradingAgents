@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/audit_factor_floor_2026_09_10.py", line 277, in <module>
+    main()
+    ~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/audit_factor_floor_2026_09_10.py", line 173, in main
+    provenance = registry.preflight(KEY, WINDOW)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/predlab/registry.py", line 92, in preflight
+    raise RuntimeError("uncommitted executable/configuration inputs: " + ", ".join(dirty[:12]))
+RuntimeError: uncommitted executable/configuration inputs: docs/factor-correction/verification/verify_preservation.py
