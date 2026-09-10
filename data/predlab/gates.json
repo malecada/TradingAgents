@@ -3681,5 +3681,174 @@
       "contract identity and provenance"
     ],
     "stop_rule": "Investigate each official announcement/rule archive/documented endpoint/data archive route once or until quota; retain unknown fields and prepare unsent provider request if needed. No financial metric or gate verdict; any exact or bounded replay requires a new committed gate."
+  },
+  "audit_factor_floor_2026_09_10": {
+    "registered_utc": "2026-09-10T12:21:50.598096+00:00",
+    "charter": "docs/factor-correction/charter.md",
+    "development_window": [
+      "2021-11-07",
+      "2025-03-31"
+    ],
+    "first_return": "2021-11-08",
+    "calendar_returns": 1240,
+    "allow_holdout": false,
+    "cells": [
+      {
+        "name": "tsmom_k7_ls",
+        "family": "tsmom",
+        "k": 7,
+        "side": "ls"
+      },
+      {
+        "name": "tsmom_k14_ls",
+        "family": "tsmom",
+        "k": 14,
+        "side": "ls"
+      },
+      {
+        "name": "tsmom_k30_ls",
+        "family": "tsmom",
+        "k": 30,
+        "side": "ls"
+      },
+      {
+        "name": "tsmom_k90_ls",
+        "family": "tsmom",
+        "k": 90,
+        "side": "ls"
+      },
+      {
+        "name": "tsmom_k7_lo",
+        "family": "tsmom",
+        "k": 7,
+        "side": "lo"
+      },
+      {
+        "name": "tsmom_k14_lo",
+        "family": "tsmom",
+        "k": 14,
+        "side": "lo"
+      },
+      {
+        "name": "tsmom_k30_lo",
+        "family": "tsmom",
+        "k": 30,
+        "side": "lo"
+      },
+      {
+        "name": "tsmom_k90_lo",
+        "family": "tsmom",
+        "k": 90,
+        "side": "lo"
+      },
+      {
+        "name": "tsmom_k180_ls",
+        "family": "tsmom",
+        "k": 180,
+        "side": "ls"
+      },
+      {
+        "name": "macross_10_50_ls",
+        "family": "ma_cross",
+        "fast": 10,
+        "slow": 50,
+        "side": "ls"
+      },
+      {
+        "name": "macross_20_100_ls",
+        "family": "ma_cross",
+        "fast": 20,
+        "slow": 100,
+        "side": "ls"
+      },
+      {
+        "name": "macross_50_200_ls",
+        "family": "ma_cross",
+        "fast": 50,
+        "slow": 200,
+        "side": "ls"
+      },
+      {
+        "name": "macross_10_50_lo",
+        "family": "ma_cross",
+        "fast": 10,
+        "slow": 50,
+        "side": "lo"
+      },
+      {
+        "name": "macross_20_100_lo",
+        "family": "ma_cross",
+        "fast": 20,
+        "slow": 100,
+        "side": "lo"
+      },
+      {
+        "name": "macross_50_200_lo",
+        "family": "ma_cross",
+        "fast": 50,
+        "slow": 200,
+        "side": "lo"
+      },
+      {
+        "name": "donchian_n20_ls",
+        "family": "donchian",
+        "n": 20,
+        "side": "ls"
+      },
+      {
+        "name": "donchian_n55_ls",
+        "family": "donchian",
+        "n": 55,
+        "side": "ls"
+      },
+      {
+        "name": "xsmom_btc_eth_30d",
+        "family": "xs_mom",
+        "k": 30,
+        "side": "ls",
+        "xs": true
+      }
+    ],
+    "variants": [
+      "primary",
+      "zero_execution",
+      "double_execution",
+      "zero_funding",
+      "legacy"
+    ],
+    "configuration_count": 18,
+    "book_variant_count": 90,
+    "invalid_log_shadows": 18,
+    "ledger_policy": "18 records, all5 book variants and frozen-log diagnostics nested; no independent90-hypothesis claim",
+    "gate_policy": "Historical benchmark correction only; no standalone factor adoption threshold, no selection or validation",
+    "pinned_files": {
+      "docs/factor-correction/original/BEST_daily_returns.csv": "704fc2f4b2cf375feb14f8aafab88093e44fc0611611c7d474b11f1185e52764",
+      "docs/factor-correction/original/baseline_strategy_v2_f359050.py": "d278c2084a39385d8985728b2c98915503995810a01344fb013fe139c0793d5a",
+      "docs/factor-correction/original/baseline_v5_mix_f359050.py": "6c0db31674041eb8cdebd164c89a0da6472fddee6f25c54dcae1ee2825a90a48",
+      "docs/factor-correction/original/charter_4ba5dd7.md": "2040e018eda53b96774efb41188fbd9ff18c9fb704b59279e30553d55226e891",
+      "docs/factor-correction/original/comparison.json": "9712d0b4b322007d0e3bc354175332be3904d30c9a709e5e078c6225da8b88d0",
+      "docs/factor-correction/original/factor_baselines_f359050.py": "32ad2180512198d45e5fb76855abd84c8565d29e63019496fce0f5bb35706a69",
+      "docs/factor-correction/original/factor_floor_37rows.jsonl": "fa29f9ac65db6559a6d8427fc523a257569c5e0d5e2eaaef50ac94cde5ced704",
+      "docs/factor-correction/original/floor_table_f359050.md": "3b7e5d242fe1df0e50189c13bce839fda7adb3aa6891fc76a3c38676c42994c9",
+      "docs/factor-correction/original/gates_7c65b32.json": "332eddcd541e96c88f03e523e684058cdd06a96b3271ec3f4557acf0757531cf",
+      "docs/factor-correction/original/manifest.json": "22378abdf38294f554f0785e7d4ce45d4b1e889e120d47accc5a1de51ee4d4b1",
+      "docs/factor-correction/original/provenance.md": "6f3320e1a45457b63fdb2207ac04f14d777e7c831c711e112fdc0a5700df3225",
+      "docs/factor-correction/original/v2_sizing_f359050.py": "19c7492c36a68a45a69451cb03ca0b846649692dbbe4e389f9abe77939170e9d",
+      "data/factor-correction/2026-09-10/inputs/bitcoin.csv": "f4be3daa4d19440046843a8ba2efe01bcedd13e3f4e0a2a7b9df980f8c0c4b2e",
+      "data/factor-correction/2026-09-10/inputs/ethereum.csv": "f1f209b90ec74d8a0591a40168cf955457eae793698faf2896b0d5690d427415",
+      "docs/factor-correction/data-provenance.json": "048911f7c61bd2c576236c1dcc924349cc00ad8bccb3700a0e5d4938c081f784",
+      "docs/factor-correction/charter.md": "6de3590e721552d8fb5a9cb7fd7a7a8f1d89f832b667306d00170d914488eac7"
+    },
+    "source_cache_hashes": {
+      "/home/malecada/master_thesis/TradingAgents/tradingagents/dataflows/data_cache/bitcoin-crypto-ohlcv.csv": "95b99d9be1631138cb2b1546cdf64d77baa5a140c6b8b7879319babc30c88401",
+      "/home/malecada/master_thesis/TradingAgents/tradingagents/dataflows/data_cache/ethereum-crypto-ohlcv.csv": "5e1320598cd4fcc2ce2ef3c3b18c4f1f1e324000aa9fea412a940952cebfc5b9"
+    },
+    "prior_ledger": {
+      "rows": 730,
+      "bytes": 428150,
+      "sha256": "710a4f087325bfb408ed8d051963a473e8d8a47b445ffae0238c565aff6dc791"
+    },
+    "output": "data/factor-correction/2026-09-10/results",
+    "stop_rule": "One immutable all18 run; no tuning, no holdout, no network, retain all unavailable cases; amendments before affected outcomes only"
   }
 }
