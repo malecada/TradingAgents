@@ -1,0 +1,107 @@
+
+> frontend@0.0.0 test
+> vitest run --run src/lib/rebase.test.ts src/lib/measurement.test.ts
+
+
+ RUN  v4.1.8 /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/monitor/frontend
+
+ ❯ src/lib/measurement.test.ts (2 tests | 2 failed) 9ms
+     × withholds old API gross returns from corrected performance 6ms
+     × retains an explicitly incomplete corrected payload for honest unavailable display 1ms
+ ❯ src/lib/rebase.test.ts (7 tests | 2 failed) 21ms
+   × retains unknown dates without converting an unavailable measurement to zero 11ms
+   × does not restart a sliced unknown NAV at a later observed value 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/measurement.test.ts > corrected measurement admission > withholds old API gross returns from corrected performance
+TypeError: correctedPayload is not a function
+ ❯ src/lib/measurement.test.ts:9:18
+      7|     const old = { books: { champion: { cards: { cum_return: 3. } }, vt…
+      8|       reference: { ovl_sr_full: 1.892 } } as unknown as PredlabPerform…
+      9|     expect(guard.correctedPayload(old)).toBeNull();
+       |                  ^
+     10|   });
+     11|   it('retains an explicitly incomplete corrected payload for honest un…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/lib/measurement.test.ts > corrected measurement admission > retains an explicitly incomplete corrected payload for honest unavailable display
+TypeError: correctedPayload is not a function
+ ❯ src/lib/measurement.test.ts:16:18
+     14|         champion: { status: 'incomplete', reason: 'Funding missing', j…
+     15|         vt10: { status: 'missing', reason: null, journal: null } } } }…
+     16|     expect(guard.correctedPayload(next)).toBe(next);
+       |                  ^
+     17|   });
+     18| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/lib/rebase.test.ts > retains unknown dates without converting an unavailable measurement to zero
+AssertionError: expected [ …(3) ] to deeply equal [ …(3) ]
+
+- Expected
++ Received
+
+@@ -3,12 +3,12 @@
+      "ts": "2026-09-01",
+      "value": 100,
+    },
+    {
+      "ts": "2026-09-02",
+-     "value": null,
++     "value": 0,
+    },
+    {
+      "ts": "2026-09-03",
+-     "value": null,
++     "value": 0,
+    },
+  ]
+
+ ❯ src/lib/rebase.test.ts:40:31
+     38|   const points = [{ ts: '2026-09-01', value: 100 }, { ts: '2026-09-02'…
+     39|     { ts: '2026-09-03', value: null }] as NullablePoint[];
+     40|   expect(rebaseTo100(points)).toEqual(points);
+       |                               ^
+     41| });
+     42|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/lib/rebase.test.ts > does not restart a sliced unknown NAV at a later observed value
+AssertionError: expected [ …(2) ] to deeply equal [ …(2) ]
+
+- Expected
++ Received
+
+  [
+    {
+      "ts": "2026-09-02",
+-     "value": null,
++     "value": NaN,
+    },
+    {
+      "ts": "2026-09-03",
+-     "value": null,
++     "value": Infinity,
+    },
+  ]
+
+ ❯ src/lib/rebase.test.ts:45:31
+     43| it('does not restart a sliced unknown NAV at a later observed value', …
+     44|   const points = [{ ts: '2026-09-02', value: null }, { ts: '2026-09-03…
+     45|   expect(rebaseTo100(points)).toEqual(points.map(p => ({ ...p, value: …
+       |                               ^
+     46| });
+     47|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  4 failed | 5 passed (9)
+   Start at  12:30:02
+   Duration  394ms (transform 94ms, setup 0ms, import 141ms, tests 30ms, environment 0ms)
+

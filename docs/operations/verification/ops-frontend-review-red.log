@@ -1,0 +1,64 @@
+
+> frontend@0.0.0 test
+> vitest run
+
+
+ RUN  v4.1.8 /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/monitor/frontend
+
+ ❯ src/lib/measurement.test.ts (3 tests | 1 failed) 17ms
+     × rejects an incomplete compatibility contract 13ms
+ ❯ src/tabs/PredlabMeasurement.test.tsx (5 tests | 1 failed) 59ms
+     × does not describe a broken non-null measurement as VT warmup 32ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/measurement.test.ts > corrected measurement admission > rejects an incomplete compatibility contract
+AssertionError: expected { …(2) } to be null
+
+- Expected:
+null
+
++ Received:
+{
+  "books": {
+    "champion": null,
+    "vt10": null,
+  },
+  "measurement": {
+    "books": {},
+    "status": "missing",
+  },
+}
+
+ ❯ src/lib/measurement.test.ts:10:79
+      8|       { books: { champion: null, vt10: null }, measurement: { status: …
+      9|       { measurement: { status: 'missing', books: { champion: {}, vt10:…
+     10|     ]) expect(guard.correctedPayload(d as unknown as PredlabPerformanc…
+       |                                                                               ^
+     11|   });
+     12|   it('withholds old API gross returns from corrected performance', () …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/tabs/PredlabMeasurement.test.tsx > predlab audit status in rendered tabs > does not describe a broken non-null measurement as VT warmup
+AssertionError: expected '<div class="panel"><div style="displa…' not to contain 'warming up'
+
+Expected: "warming up"
+Received: "<div class="panel"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">Measurement status</h2></div><p>Funding missing</p><p class="muted">Unknown intervals remain unavailable. No strategy is currently validated.</p></div><div style="margin-top:10px"><span class="badge quant">CHAMPION</span> <span class="muted">as of 2026-09-09 · 21 intervals</span><p>Base measurement: incomplete · Funding missing</p><p>Overlay measurement: unavailable</p><div class="cards" style="margin-top:6px"><div class="card"><div class="label">Base book return (net)</div><div class="value ">—</div></div><div class="card"><div class="label">Paper overlay return (net)</div><div class="value ">Unavailable</div></div><div class="card"><div class="label">Sharpe (base net)</div><div class="value ">—</div></div><div class="card"><div class="label">Max drawdown</div><div class="value neg">—</div></div><div class="card"><div class="label">VT scale</div><div class="value ">warming up (20/20)</div></div><div class="card"><div class="label">Avg turnover</div><div class="value ">—</div></div><div class="card"><div class="label">Cumulative trading cost</div><div class="value neg">—</div></div><div class="card"><div class="label">Mark vs close (gross diagnostic)</div><div class="value ">Unavailable</div></div></div><p class="muted">The mark/close comparison is a gross diagnostic, not an observed execution cost.</p></div><p>VT10: Unavailable · missing</p><div style="margin-top:10px"><span class="badge stale">TESTNET</span>  <span class="muted">as of 2026-09-09 · 1 cycles</span><div class="cards" style="margin-top:6px"><div class="card"><div class="label">Equity change (unadjusted)</div><div class="value ">—</div></div><div class="card"><div class="label">Equity snapshot</div><div class="value ">$100.00</div></div><div class="card"><div class="label">Cycles</div><div class="value ">1</div></div><div class="card"><div class="label">Orders placed (total)</div><div class="value ">0</div></div></div><p>Reconciliation: reconciled</p><p class="muted">Equity changes include deposits and withdrawals; they do not measure strategy returns.</p></div><div class="panel"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">Net paper performance and account equity (indexed to 100)</h2><div class="pills"><button class="pill ">7d</button><button class="pill ">30d</button><button class="pill ">90d</button><button class="pill active">all</button></div></div><div></div><p class="muted">rolling Sharpe requires 30 complete net intervals</p></div>"
+
+ ❯ src/tabs/PredlabMeasurement.test.tsx:66:22
+     64|         last_asof: '2026-09-09', dry_run_last: false, halted: false } …
+     65|     }, <PredlabPerformanceTab />);
+     66|     expect(html).not.toContain('warming up');
+       |                      ^
+     67|     expect(html).toContain('Unavailable');
+     68|     expect(html).toContain('badge ok');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 3 passed (5)
+      Tests  2 failed | 23 passed (25)
+   Start at  12:36:29
+   Duration  712ms (transform 381ms, setup 0ms, import 653ms, tests 126ms, environment 1ms)
+

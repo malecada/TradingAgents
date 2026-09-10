@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_______ test_malformed_v2_history_is_preserved_but_never_reported_fresh ________
+
+backup = <predlab.test_journal_backup.LocalBackup object at 0x7491a12327b0>
+
+    def test_malformed_v2_history_is_preserved_but_never_reported_fresh(backup):
+        backup.write(V2, '0000-invalid')
+        backup.write(V2, append=True)
+        result = backup.run()
+        assert result.returncode == 0, result.stderr
+        assert backup.saved(V2[0]) == (backup.data/V2[0]).read_text()
+>       assert 'V2_INCOMPLETE' in result.stdout
+E       assert 'V2_INCOMPLETE' in 'BACKUP_SYNCED V2_FRESH {"commit": "dd4d17425485134a6bcb012d9e9ffe334142396a", "commit_created": true, "expected_asof"...journal_v2.jsonl": {"fresh": true, "last_asof": "2026-09-09", "measurement_status": "incomplete", "present": true}}}\n'
+E        +  where 'BACKUP_SYNCED V2_FRESH {"commit": "dd4d17425485134a6bcb012d9e9ffe334142396a", "commit_created": true, "expected_asof"...journal_v2.jsonl": {"fresh": true, "last_asof": "2026-09-09", "measurement_status": "incomplete", "present": true}}}\n' = CompletedProcess(args=['bash', '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_journal_backup....sonl": {"fresh": true, "last_asof": "2026-09-09", "measurement_status": "incomplete", "present": true}}}\n', stderr='').stdout
+
+tests/predlab/test_journal_backup.py:225: AssertionError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_journal_backup.py::test_malformed_v2_history_is_preserved_but_never_reported_fresh
+1 failed in 0.41s

@@ -1,0 +1,264 @@
+............................FFFFFFFFFFFF                                 [100%]
+=================================== FAILURES ===================================
+_________ test_paper_accounting_convention_is_required_and_fixed[None] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-139/test_paper_accounting_conventi0')
+bad_version = None
+
+    @pytest.mark.parametrize('bad_version', [None, 'log-return-v1', 'pretrade-nav-v2'])
+    def test_paper_accounting_convention_is_required_and_fixed(tmp_path, bad_version):
+        rows = v2_rows()
+        rows[1]['accounting_version'] = bad_version
+        write_rows(paper_path(tmp_path), rows)
+        payload = PredlabSource(str(tmp_path)).payload()
+>       assert payload['performance']['measurement']['books']['champion']['status'] == 'invalid'
+E       AssertionError: assert 'corrected_v2' == 'invalid'
+E         
+E         - invalid
+E         + corrected_v2
+
+tests/monitor/test_predlab_v2.py:208: AssertionError
+____ test_paper_accounting_convention_is_required_and_fixed[log-return-v1] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-139/test_paper_accounting_conventi1')
+bad_version = 'log-return-v1'
+
+    @pytest.mark.parametrize('bad_version', [None, 'log-return-v1', 'pretrade-nav-v2'])
+    def test_paper_accounting_convention_is_required_and_fixed(tmp_path, bad_version):
+        rows = v2_rows()
+        rows[1]['accounting_version'] = bad_version
+        write_rows(paper_path(tmp_path), rows)
+        payload = PredlabSource(str(tmp_path)).payload()
+>       assert payload['performance']['measurement']['books']['champion']['status'] == 'invalid'
+E       AssertionError: assert 'corrected_v2' == 'invalid'
+E         
+E         - invalid
+E         + corrected_v2
+
+tests/monitor/test_predlab_v2.py:208: AssertionError
+___ test_paper_accounting_convention_is_required_and_fixed[pretrade-nav-v2] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-139/test_paper_accounting_conventi2')
+bad_version = 'pretrade-nav-v2'
+
+    @pytest.mark.parametrize('bad_version', [None, 'log-return-v1', 'pretrade-nav-v2'])
+    def test_paper_accounting_convention_is_required_and_fixed(tmp_path, bad_version):
+        rows = v2_rows()
+        rows[1]['accounting_version'] = bad_version
+        write_rows(paper_path(tmp_path), rows)
+        payload = PredlabSource(str(tmp_path)).payload()
+>       assert payload['performance']['measurement']['books']['champion']['status'] == 'invalid'
+E       AssertionError: assert 'corrected_v2' == 'invalid'
+E         
+E         - invalid
+E         + corrected_v2
+
+tests/monitor/test_predlab_v2.py:208: AssertionError
+__________ test_known_overlay_warmup_is_flat_and_counts_base_returns ___________
+
+    def test_known_overlay_warmup_is_flat_and_counts_base_returns():
+        rows = v2_rows()
+        for row in rows:
+            row.update(executed_scale=None, measurement_scale=None, realized_net_ret=None,
+                       overlay_measurement=None, overlay_state={'nav': 1., 'notionals': {}},
+                       measurement_status='incomplete', measurement_reason='scale warmup')
+        block = derive_nav(rows, 'vt15_b100_scale')
+>       assert [p['value'] for p in block['series']] == [100., 100., 100.]
+E       assert [100.0, None, None] == [100.0, 100.0, 100.0]
+E         
+E         At index 1 diff: None != 100.0
+E         Use -v to get more diff
+
+tests/monitor/test_predlab_v2.py:219: AssertionError
+_ test_absent_baseline_field_is_not_an_initial_null_measurement[realized_base_net_ret] _
+
+key = 'realized_base_net_ret'
+
+    @pytest.mark.parametrize('key', ['realized_base_net_ret', 'base_measurement'])
+    def test_absent_baseline_field_is_not_an_initial_null_measurement(key):
+        rows = v2_rows()
+        rows[0].pop(key)
+        block = derive_book(rows, 'vt15_b100_scale')
+>       assert block['measurement_status'] == 'incomplete'
+E       AssertionError: assert 'corrected_v2' == 'incomplete'
+E         
+E         - incomplete
+E         + corrected_v2
+
+tests/monitor/test_predlab_v2.py:229: AssertionError
+_ test_absent_baseline_field_is_not_an_initial_null_measurement[base_measurement] _
+
+key = 'base_measurement'
+
+    @pytest.mark.parametrize('key', ['realized_base_net_ret', 'base_measurement'])
+    def test_absent_baseline_field_is_not_an_initial_null_measurement(key):
+        rows = v2_rows()
+        rows[0].pop(key)
+        block = derive_book(rows, 'vt15_b100_scale')
+>       assert block['measurement_status'] == 'incomplete'
+E       AssertionError: assert 'corrected_v2' == 'incomplete'
+E         
+E         - incomplete
+E         + corrected_v2
+
+tests/monitor/test_predlab_v2.py:229: AssertionError
+_ test_account_requires_real_timezone_aware_observation_timestamp[not-a-timestamp] _
+
+value = 'not-a-timestamp'
+
+    @pytest.mark.parametrize('value', ['not-a-timestamp', '2026-09-02T00:20:00', [], {}])
+    def test_account_requires_real_timezone_aware_observation_timestamp(value):
+        rows = [account_row('2026-09-01'), account_row('2026-09-02', executed_utc=value)]
+        block = derive_account(rows, False)
+>       assert block['measurement_status'] in {'invalid', 'incomplete'}
+E       AssertionError: assert 'reconciled' in {'incomplete', 'invalid'}
+
+tests/monitor/test_predlab_v2.py:237: AssertionError
+_ test_account_requires_real_timezone_aware_observation_timestamp[2026-09-02T00:20:00] _
+
+value = '2026-09-02T00:20:00'
+
+    @pytest.mark.parametrize('value', ['not-a-timestamp', '2026-09-02T00:20:00', [], {}])
+    def test_account_requires_real_timezone_aware_observation_timestamp(value):
+        rows = [account_row('2026-09-01'), account_row('2026-09-02', executed_utc=value)]
+        block = derive_account(rows, False)
+>       assert block['measurement_status'] in {'invalid', 'incomplete'}
+E       AssertionError: assert 'reconciled' in {'incomplete', 'invalid'}
+
+tests/monitor/test_predlab_v2.py:237: AssertionError
+___ test_account_requires_real_timezone_aware_observation_timestamp[value2] ____
+
+value = []
+
+    @pytest.mark.parametrize('value', ['not-a-timestamp', '2026-09-02T00:20:00', [], {}])
+    def test_account_requires_real_timezone_aware_observation_timestamp(value):
+        rows = [account_row('2026-09-01'), account_row('2026-09-02', executed_utc=value)]
+>       block = derive_account(rows, False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/monitor/test_predlab_v2.py:236: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/monitor/journal_measurements.py:230: in derive_account
+    stream = account_stream(rows, invalid_reason=invalid_reason)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+rows = [{'asof': '2026-09-01', 'executed_utc': '2026-09-01T00:20:00+00:00', 'journal_version': 2, 'equity_before': 1000.0, ...}, {'asof': '2026-09-02', 'executed_utc': [], 'journal_version': 2, 'equity_before': 1000.0, ...}]
+invalid_reason = None
+
+    def account_stream(rows, *, invalid_reason=None):
+        """Reconciliation updates share a cycle timestamp; dates alone prove nothing."""
+        fatal = invalid_reason or record_error(rows, duplicates=False)
+        latest = {}
+        seen = set()
+        for row in rows:
+            key = (row['asof'], row.get('executed_utc'), row.get('status'))
+>           if key in seen:
+               ^^^^^^^^^^^
+E           TypeError: unhashable type: 'list'
+
+tradingagents/monitor/journal_measurements.py:137: TypeError
+___ test_account_requires_real_timezone_aware_observation_timestamp[value3] ____
+
+value = {}
+
+    @pytest.mark.parametrize('value', ['not-a-timestamp', '2026-09-02T00:20:00', [], {}])
+    def test_account_requires_real_timezone_aware_observation_timestamp(value):
+        rows = [account_row('2026-09-01'), account_row('2026-09-02', executed_utc=value)]
+>       block = derive_account(rows, False)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/monitor/test_predlab_v2.py:236: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/monitor/journal_measurements.py:230: in derive_account
+    stream = account_stream(rows, invalid_reason=invalid_reason)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+rows = [{'asof': '2026-09-01', 'executed_utc': '2026-09-01T00:20:00+00:00', 'journal_version': 2, 'equity_before': 1000.0, ...}, {'asof': '2026-09-02', 'executed_utc': {}, 'journal_version': 2, 'equity_before': 1000.0, ...}]
+invalid_reason = None
+
+    def account_stream(rows, *, invalid_reason=None):
+        """Reconciliation updates share a cycle timestamp; dates alone prove nothing."""
+        fatal = invalid_reason or record_error(rows, duplicates=False)
+        latest = {}
+        seen = set()
+        for row in rows:
+            key = (row['asof'], row.get('executed_utc'), row.get('status'))
+>           if key in seen:
+               ^^^^^^^^^^^
+E           TypeError: unhashable type: 'dict'
+
+tradingagents/monitor/journal_measurements.py:137: TypeError
+_______ test_invalid_composition_and_health_metadata_never_crash_payload _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-139/test_invalid_composition_and_h0')
+
+    def test_invalid_composition_and_health_metadata_never_crash_payload(tmp_path):
+        rows = v2_rows()
+        rows[-2]['weights'] = 123
+        rows[-1].update(written_utc={}, membership_hash=[])
+        write_rows(paper_path(tmp_path), rows)
+>       payload = PredlabSource(str(tmp_path)).payload()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/monitor/test_predlab_v2.py:246: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/monitor/predlab.py:205: in payload
+    return self._cached()
+           ^^^^^^^^^^^^^^
+tradingagents/monitor/sources.py:55: in wrapped
+    data = fn()
+           ^^^^
+tradingagents/monitor/predlab.py:236: in _build
+    details[book] = book_detail(rows, scale_key)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+rows = [{'asof': '2026-09-01', 'written_utc': '2026-09-01T00:20:00+00:00', 'journal_version': 2, 'accounting_version': 'synth...thetic', ...}, {'asof': '2026-09-03', 'written_utc': {}, 'journal_version': 2, 'accounting_version': 'synthetic', ...}]
+scale_key = 'vt15_b100_scale'
+
+    def book_detail(rows: list[dict], scale_key: str) -> dict | None:
+        """Latest-row book composition, or None when the journal is empty."""
+        if not rows:
+            return None
+        cur = rows[-1]
+        weights: dict = cur.get("weights") if quantities(cur.get("weights")) else {}
+        longs = sorted(
+            ({"symbol": s, "weight": w} for s, w in weights.items() if w > 0),
+            key=lambda x: x["symbol"])
+        shorts = sorted(
+            ({"symbol": s, "weight": w} for s, w in weights.items() if w < 0),
+            key=lambda x: x["symbol"])
+        delta = None
+        if len(rows) >= 2:
+>           prev = set((rows[-2].get("weights") or {}))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           TypeError: 'int' object is not iterable
+
+tradingagents/monitor/predlab.py:114: TypeError
+_______________ test_future_written_timestamp_cannot_claim_fresh _______________
+
+    def test_future_written_timestamp_cannot_claim_fresh():
+        from datetime import datetime, timezone
+        from tradingagents.monitor.predlab import book_health
+        row = v2_rows()[0]
+        row['written_utc'] = '2026-09-02T00:20:00+00:00'
+>       assert book_health([row], 0, datetime(2026, 9, 1, tzinfo=timezone.utc))['stale'] is True
+E       assert False is True
+
+tests/monitor/test_predlab_v2.py:257: AssertionError
+=========================== short test summary info ============================
+FAILED tests/monitor/test_predlab_v2.py::test_paper_accounting_convention_is_required_and_fixed[None]
+FAILED tests/monitor/test_predlab_v2.py::test_paper_accounting_convention_is_required_and_fixed[log-return-v1]
+FAILED tests/monitor/test_predlab_v2.py::test_paper_accounting_convention_is_required_and_fixed[pretrade-nav-v2]
+FAILED tests/monitor/test_predlab_v2.py::test_known_overlay_warmup_is_flat_and_counts_base_returns
+FAILED tests/monitor/test_predlab_v2.py::test_absent_baseline_field_is_not_an_initial_null_measurement[realized_base_net_ret]
+FAILED tests/monitor/test_predlab_v2.py::test_absent_baseline_field_is_not_an_initial_null_measurement[base_measurement]
+FAILED tests/monitor/test_predlab_v2.py::test_account_requires_real_timezone_aware_observation_timestamp[not-a-timestamp]
+FAILED tests/monitor/test_predlab_v2.py::test_account_requires_real_timezone_aware_observation_timestamp[2026-09-02T00:20:00]
+FAILED tests/monitor/test_predlab_v2.py::test_account_requires_real_timezone_aware_observation_timestamp[value2]
+FAILED tests/monitor/test_predlab_v2.py::test_account_requires_real_timezone_aware_observation_timestamp[value3]
+FAILED tests/monitor/test_predlab_v2.py::test_invalid_composition_and_health_metadata_never_crash_payload
+FAILED tests/monitor/test_predlab_v2.py::test_future_written_timestamp_cannot_claim_fresh
+12 failed, 28 passed in 0.36s

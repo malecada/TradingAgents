@@ -1,0 +1,350 @@
+...FFFFFFF........FFF.F.FFFFFFFFF...F....                                [100%]
+=================================== FAILURES ===================================
+__________ TestDeriveBook.test_equity_compounds_skipping_null_returns __________
+
+self = <monitor.test_predlab.TestDeriveBook object at 0x752cad081450>
+
+    def test_equity_compounds_skipping_null_returns(self):
+        rows = [_row("2026-08-03", None), _row("2026-08-04", 0.10),
+                _row("2026-08-05", None), _row("2026-08-06", -0.05)]
+        d = predlab.derive_book(rows, "vt15_b100_scale")
+        # anchor at first row, then one point per non-null return
+>       assert [p["ts"] for p in d["equity"]] == [
+                                 ^^^^^^^^^^^
+            "2026-08-03", "2026-08-04", "2026-08-06"]
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests/monitor/test_predlab.py:57: TypeError
+___________________ TestDeriveBook.test_scale_and_cost_cards ___________________
+
+self = <monitor.test_predlab.TestDeriveBook object at 0x752cacda0640>
+
+    def test_scale_and_cost_cards(self):
+        rows = [_row("2026-08-03", None, scale=None),
+                _row("2026-08-04", 0.01, scale=0.5)]
+        d = predlab.derive_book(rows, "vt15_b100_scale")
+>       assert d["cards"]["scale"] == 0.5
+               ^^^^^^^^^^
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests/monitor/test_predlab.py:71: TypeError
+____________ TestDeriveBook.test_drawdown_and_rolling_sharpe_shapes ____________
+
+self = <monitor.test_predlab.TestDeriveBook object at 0x752cacda0770>
+
+    def test_drawdown_and_rolling_sharpe_shapes(self):
+        rows = [_row("2026-08-03", None)] + [
+            _row(f"2026-09-{i:02d}", 0.001 * (1 if i % 2 else -1))
+            for i in range(1, 29)]
+        d = predlab.derive_book(rows, "vt15_b100_scale")
+>       assert len(d["drawdown"]) == len(d["equity"])
+                   ^^^^^^^^^^^^^
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests/monitor/test_predlab.py:80: TypeError
+___________ TestSlippage.test_none_when_no_row_carries_a_mark_return ___________
+
+self = <monitor.test_predlab.TestSlippage object at 0x752cad081810>
+
+    def test_none_when_no_row_carries_a_mark_return(self):
+        rows = [_row("2026-08-03", None), _row("2026-08-04", 0.01)]
+>       assert predlab.derive_book(rows, "vt15_b100_scale")["slippage"] is None
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests/monitor/test_predlab.py:89: TypeError
+________ TestSlippage.test_mean_and_cumulative_reported_in_basis_points ________
+
+self = <monitor.test_predlab.TestSlippage object at 0x752cad081950>
+
+    def test_mean_and_cumulative_reported_in_basis_points(self):
+        rows = [_row("2026-08-03", None, realized_mark_ret=None),
+                _row("2026-08-04", 0.0100, realized_mark_ret=0.0105),
+                _row("2026-08-05", 0.0200, realized_mark_ret=0.0190)]
+>       s = predlab.derive_book(rows, "vt15_b100_scale")["slippage"]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests/monitor/test_predlab.py:95: TypeError
+________________ TestSlippage.test_last_pair_carries_both_legs _________________
+
+self = <monitor.test_predlab.TestSlippage object at 0x752cacda0c30>
+
+    def test_last_pair_carries_both_legs(self):
+        rows = [_row("2026-08-04", 0.0100, realized_mark_ret=0.0105)]
+>       s = predlab.derive_book(rows, "vt15_b100_scale")["slippage"]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests/monitor/test_predlab.py:102: TypeError
+___________ TestSlippage.test_days_missing_either_leg_are_not_paired ___________
+
+self = <monitor.test_predlab.TestSlippage object at 0x752cacda0d60>
+
+    def test_days_missing_either_leg_are_not_paired(self):
+        rows = [_row("2026-08-04", None, realized_mark_ret=0.01),
+                _row("2026-08-05", 0.01, realized_mark_ret=None),
+                _row("2026-08-06", 0.0100, realized_mark_ret=0.0102)]
+>       s = predlab.derive_book(rows, "vt15_b100_scale")["slippage"]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests/monitor/test_predlab.py:110: TypeError
+________________ TestDeriveNav.test_all_null_scales_stays_flat _________________
+
+self = <monitor.test_predlab.TestDeriveNav object at 0x752cad0820d0>
+
+    def test_all_null_scales_stays_flat(self):
+        rows = [_row("2026-08-03", None), _row("2026-08-04", 0.01),
+                _row("2026-08-05", -0.02)]
+        d = predlab.derive_nav(rows, "vt15_b100_scale")
+>       assert [p["value"] for p in d["series"]] == [100.0, 100.0, 100.0]
+                                    ^^^^^^^^^^^
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests/monitor/test_predlab.py:172: TypeError
+_______ TestDeriveNav.test_scale_set_on_row_n_first_affects_row_n_plus_1 _______
+
+self = <monitor.test_predlab.TestDeriveNav object at 0x752cacda1220>
+
+    def test_scale_set_on_row_n_first_affects_row_n_plus_1(self):
+        # R0 anchor; R1 ret uses R0's scale (None) -> flat; R2 sets scale=0.5
+        # but R2's OWN ret still uses R1's scale (None) -> flat; R3's ret
+        # uses R2's scale (0.5) -> active, first affected row.
+        rows = [_row("2026-08-03", None),
+                _row("2026-08-04", 0.01, scale=None),
+                _row("2026-08-05", 0.02, scale=0.5),
+                _row("2026-08-06", 0.10, scale=0.5)]
+        d = predlab.derive_nav(rows, "vt15_b100_scale")
+>       vals = [p["value"] for p in d["series"]]
+                                    ^^^^^^^^^^^
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests/monitor/test_predlab.py:187: TypeError
+___________ TestDeriveNav.test_mixed_null_gap_mid_stream_is_flat_day ___________
+
+self = <monitor.test_predlab.TestDeriveNav object at 0x752cacda1350>
+
+    def test_mixed_null_gap_mid_stream_is_flat_day(self):
+        # R2 is a null-return gap whose own scale reverts to None; R3's
+        # return must see prev_scale=None (from R2), not R1's 0.5.
+        rows = [_row("2026-08-03", None),
+                _row("2026-08-04", 0.05, scale=0.5),
+                _row("2026-08-05", None, scale=None),
+                _row("2026-08-06", 0.10, scale=0.4)]
+        d = predlab.derive_nav(rows, "vt15_b100_scale")
+        # gap row (2026-08-05) contributes no point (null return)
+>       assert [p["ts"] for p in d["series"]] == [
+                                 ^^^^^^^^^^^
+            "2026-08-03", "2026-08-04", "2026-08-06"]
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests/monitor/test_predlab.py:203: TypeError
+_________________ TestDeriveAccount.test_two_rows_correct_pct __________________
+
+self = <monitor.test_predlab.TestDeriveAccount object at 0x752cad082350>
+
+    def test_two_rows_correct_pct(self):
+        rows = [{"asof": "2026-08-20", "equity_before": 1000.0,
+                 "orders_placed": 2, "dry_run": False},
+                {"asof": "2026-08-21", "equity_before": 1050.0,
+                 "orders_placed": 3, "dry_run": True}]
+        d = predlab.derive_account(rows, False)
+>       assert [p["value"] for p in d["series"]] == [100.0, pytest.approx(105.0)]
+E       assert [] == [100.0, 105.0 ± 1.0e-04]
+E         
+E         Right contains 2 more items, first extra item: 100.0
+E         Use -v to get more diff
+
+tests/monitor/test_predlab.py:222: AssertionError
+__________ TestDeriveAccount.test_rows_missing_equity_before_skipped ___________
+
+self = <monitor.test_predlab.TestDeriveAccount object at 0x752cacda1480>
+
+    def test_rows_missing_equity_before_skipped(self):
+        rows = [{"asof": "2026-08-20", "equity_before": 1000.0},
+                {"asof": "2026-08-21"},
+                {"asof": "2026-08-22", "equity_before": 1100.0}]
+        d = predlab.derive_account(rows, False)
+>       assert len(d["series"]) == 2
+E       assert 0 == 2
+E        +  where 0 = len([])
+
+tests/monitor/test_predlab.py:241: AssertionError
+__________ TestDeriveAccount.test_all_rows_missing_equity_before_none __________
+
+self = <monitor.test_predlab.TestDeriveAccount object at 0x752cad0c2d50>
+
+    def test_all_rows_missing_equity_before_none(self):
+        rows = [{"asof": "2026-08-20"}, {"asof": "2026-08-21"}]
+>       assert predlab.derive_account(rows, False) is None
+E       AssertionError: assert {'series': [], 'measurement_status': 'legacy_only', 'measurement_reason': 'legacy account dates do not establish reconciled execution', 'reconciliation_status': 'legacy_only', ...} is None
+E        +  where {'series': [], 'measurement_status': 'legacy_only', 'measurement_reason': 'legacy account dates do not establish reconciled execution', 'reconciliation_status': 'legacy_only', ...} = <function derive_account at 0x752cad0dc040>([{'asof': '2026-08-20'}, {'asof': '2026-08-21'}], False)
+E        +    where <function derive_account at 0x752cad0dc040> = predlab.derive_account
+
+tests/monitor/test_predlab.py:247: AssertionError
+________ TestDeriveAccount.test_zero_equity_first_row_skipped_as_anchor ________
+
+self = <monitor.test_predlab.TestDeriveAccount object at 0x752cad120050>
+
+    def test_zero_equity_first_row_skipped_as_anchor(self):
+        # fresh unfunded account: first row equity_before=0 must not become
+        # the division anchor (would ZeroDivisionError and, since _build is
+        # ttl_cached, poison every /api/predlab endpoint permanently).
+        rows = [{"asof": "2026-08-20", "equity_before": 0.0},
+                {"asof": "2026-08-21", "equity_before": 1000.0},
+                {"asof": "2026-08-22", "equity_before": 1100.0}]
+        d = predlab.derive_account(rows, False)
+>       assert [p["value"] for p in d["series"]] == [100.0, pytest.approx(110.0)]
+E       assert [] == [100.0, 110.0 ± 1.1e-04]
+E         
+E         Right contains 2 more items, first extra item: 100.0
+E         Use -v to get more diff
+
+tests/monitor/test_predlab.py:257: AssertionError
+_________________ TestDeriveAccount.test_all_zero_equity_none __________________
+
+self = <monitor.test_predlab.TestDeriveAccount object at 0x752cad120160>
+
+    def test_all_zero_equity_none(self):
+        rows = [{"asof": "2026-08-20", "equity_before": 0.0},
+                {"asof": "2026-08-21", "equity_before": 0.0}]
+>       assert predlab.derive_account(rows, False) is None
+E       AssertionError: assert {'series': [], 'measurement_status': 'legacy_only', 'measurement_reason': 'legacy account dates do not establish reconciled execution', 'reconciliation_status': 'legacy_only', ...} is None
+E        +  where {'series': [], 'measurement_status': 'legacy_only', 'measurement_reason': 'legacy account dates do not establish reconciled execution', 'reconciliation_status': 'legacy_only', ...} = <function derive_account at 0x752cad0dc040>([{'asof': '2026-08-20', 'equity_before': 0.0}, {'asof': '2026-08-21', 'equity_before': 0.0}], False)
+E        +    where <function derive_account at 0x752cad0dc040> = predlab.derive_account
+
+tests/monitor/test_predlab.py:264: AssertionError
+______________ TestDeriveAccount.test_negative_equity_row_skipped ______________
+
+self = <monitor.test_predlab.TestDeriveAccount object at 0x752cad0e0950>
+
+    def test_negative_equity_row_skipped(self):
+        rows = [{"asof": "2026-08-20", "equity_before": -50.0},
+                {"asof": "2026-08-21", "equity_before": 1000.0}]
+        d = predlab.derive_account(rows, False)
+>       assert len(d["series"]) == 1
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+tests/monitor/test_predlab.py:270: AssertionError
+______________________ TestGateStatus.test_with_reference ______________________
+
+self = <monitor.test_predlab.TestGateStatus object at 0x752cad082490>
+
+    def test_with_reference(self):
+        rows = [_row("2026-08-03", None), _row("2026-08-04", 0.01)]
+        ref = {"dev_metrics": {"ovl_sr_full": 1.892}}
+        g = predlab.gate_status(rows, ref, date(2026, 8, 6))
+        assert g["window_start"] == "2026-07-02"
+        assert g["earliest_eval"] == "2027-01-02"
+        assert g["days_elapsed"] == 35
+        assert g["days_remaining"] == 149
+>       assert g["threshold_sr"] == pytest.approx(0.946)
+E       assert None == 0.946 ± 9.5e-07
+E         
+E         comparison failed
+E         Obtained: None
+E         Expected: 0.946 ± 9.5e-07
+
+tests/monitor/test_predlab.py:283: AssertionError
+________ TestGateStatus.test_without_reference_uses_fallback_threshold _________
+
+self = <monitor.test_predlab.TestGateStatus object at 0x752cad0825d0>
+
+    def test_without_reference_uses_fallback_threshold(self):
+        g = predlab.gate_status([], None, date(2026, 8, 6))
+>       assert g["threshold_sr"] == pytest.approx(0.946)
+E       assert None == 0.946 ± 9.5e-07
+E         
+E         comparison failed
+E         Obtained: None
+E         Expected: 0.946 ± 9.5e-07
+
+tests/monitor/test_predlab.py:289: AssertionError
+______________________________ test_full_payload _______________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-138/test_full_payload0')
+
+    def test_full_payload(tmp_path):
+        root = _mk_data(tmp_path,
+                        champion_rows=[_row("2026-08-03", None),
+                                       _row("2026-08-04", 0.01)],
+                        vt10_rows=[_row("2026-08-04", 0.02)],
+                        gates=GATES, backtest=BACKTEST,
+                        testnet_rows=[{"asof": "2026-08-04",
+                                       "equity_before": 1000.0}],
+                        testnet_halted=True)
+        p = PredlabSource(str(root)).payload()
+>       assert p["performance"]["books"]["champion"]["cards"]["n_days"] == 2
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests/monitor/test_predlab_source.py:71: TypeError
+__________________ test_missing_everything_degrades_to_nulls ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-138/test_missing_everything_degrad0')
+
+    def test_missing_everything_degrades_to_nulls(tmp_path):
+        p = PredlabSource(str(tmp_path)).payload()
+        assert p["performance"]["books"] == {"champion": None, "vt10": None}
+        assert p["performance"]["reference"] is None
+        assert p["performance"]["backtest_yearly"] is None
+        assert p["performance"]["nav"] == {"champion": None, "vt10": None}
+        assert p["performance"]["account"] == {"testnet": None, "live": None}
+        assert p["books"] == {"champion": None, "vt10": None}
+        assert p["health"]["books"] == {"champion": None, "vt10": None}
+>       assert p["gate"]["threshold_sr"] == 0.946  # fallback
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert None == 0.946
+
+tests/monitor/test_predlab_source.py:97: AssertionError
+____________________________ test_performance_shape ____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-138/test_performance_shape0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x752cad227e30>
+
+    def test_performance_shape(tmp_path, monkeypatch):
+        c = _client(tmp_path, monkeypatch, _mk_predlab(tmp_path))
+        r = c.get("/api/predlab/performance", auth=AUTH)
+        assert r.status_code == 200
+        body = r.json()
+>       assert body["books"]["champion"]["cards"]["n_days"] == 1
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: 'NoneType' object is not subscriptable
+
+tests/monitor/test_predlab_api.py:54: TypeError
+=============================== warnings summary ===============================
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/binance/ws/websocket_api.py:4
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/binance/ws/websocket_api.py:4
+  /home/malecada/master_thesis/TradingAgents-predlab/.venv/lib/python3.13/site-packages/binance/ws/websocket_api.py:4: DeprecationWarning: websockets.WebSocketClientProtocol is deprecated
+    from websockets import WebSocketClientProtocol  # type: ignore
+
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/websockets/legacy/__init__.py:6
+  /home/malecada/master_thesis/TradingAgents-predlab/.venv/lib/python3.13/site-packages/websockets/legacy/__init__.py:6: DeprecationWarning: websockets.legacy is deprecated; see https://websockets.readthedocs.io/en/stable/howto/upgrade.html for upgrade instructions
+    warnings.warn(  # deprecated in 14.0 - 2024-11-09
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/monitor/test_predlab.py::TestDeriveBook::test_equity_compounds_skipping_null_returns
+FAILED tests/monitor/test_predlab.py::TestDeriveBook::test_scale_and_cost_cards
+FAILED tests/monitor/test_predlab.py::TestDeriveBook::test_drawdown_and_rolling_sharpe_shapes
+FAILED tests/monitor/test_predlab.py::TestSlippage::test_none_when_no_row_carries_a_mark_return
+FAILED tests/monitor/test_predlab.py::TestSlippage::test_mean_and_cumulative_reported_in_basis_points
+FAILED tests/monitor/test_predlab.py::TestSlippage::test_last_pair_carries_both_legs
+FAILED tests/monitor/test_predlab.py::TestSlippage::test_days_missing_either_leg_are_not_paired
+FAILED tests/monitor/test_predlab.py::TestDeriveNav::test_all_null_scales_stays_flat
+FAILED tests/monitor/test_predlab.py::TestDeriveNav::test_scale_set_on_row_n_first_affects_row_n_plus_1
+FAILED tests/monitor/test_predlab.py::TestDeriveNav::test_mixed_null_gap_mid_stream_is_flat_day
+FAILED tests/monitor/test_predlab.py::TestDeriveAccount::test_two_rows_correct_pct
+FAILED tests/monitor/test_predlab.py::TestDeriveAccount::test_rows_missing_equity_before_skipped
+FAILED tests/monitor/test_predlab.py::TestDeriveAccount::test_all_rows_missing_equity_before_none
+FAILED tests/monitor/test_predlab.py::TestDeriveAccount::test_zero_equity_first_row_skipped_as_anchor
+FAILED tests/monitor/test_predlab.py::TestDeriveAccount::test_all_zero_equity_none
+FAILED tests/monitor/test_predlab.py::TestDeriveAccount::test_negative_equity_row_skipped
+FAILED tests/monitor/test_predlab.py::TestGateStatus::test_with_reference - a...
+FAILED tests/monitor/test_predlab.py::TestGateStatus::test_without_reference_uses_fallback_threshold
+FAILED tests/monitor/test_predlab_source.py::test_full_payload - TypeError: '...
+FAILED tests/monitor/test_predlab_source.py::test_missing_everything_degrades_to_nulls
+FAILED tests/monitor/test_predlab_api.py::test_performance_shape - TypeError:...
+21 failed, 20 passed, 3 warnings in 1.57s

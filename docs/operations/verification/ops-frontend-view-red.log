@@ -1,0 +1,85 @@
+
+> frontend@0.0.0 test
+> vitest run --run src/tabs/PredlabMeasurement.test.tsx
+
+
+ RUN  v4.1.8 /home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/monitor/frontend
+
+ ❯ src/tabs/PredlabMeasurement.test.tsx (4 tests | 4 failed) 49ms
+     × withholds legacy gross measurements from the performance view 34ms
+     × shows an incomplete funding measurement instead of a return or warmup claim 5ms
+     × suspends the withdrawn gate even when connected to the older API 5ms
+     × distinguishes a fresh legacy file from a corrected measurement 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/tabs/PredlabMeasurement.test.tsx > predlab audit status in rendered tabs > withholds legacy gross measurements from the performance view
+AssertionError: expected '<p class="muted">champion journal una…' to contain 'Corrected performance unavailable'
+
+Expected: "Corrected performance unavailable"
+Received: "<p class="muted">champion journal unavailable</p><p class="muted">vt10 journal unavailable</p><div class="panel"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">Paper equity + NAV/account (indexed to 100) · drawdown · rolling Sharpe</h2><div class="pills"><button class="pill ">7d</button><button class="pill ">30d</button><button class="pill ">90d</button><button class="pill active">all</button></div></div><div></div><p class="muted">rolling Sharpe appears after 30 realized days</p></div><div class="panel"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">Frozen dev reference (2021-01 → 2026-07, backtest)</h2></div><div class="cards"><div class="card"><div class="label">Overlaid SR</div><div class="value ">1.89</div></div><div class="card"><div class="label">Overlaid MaxDD</div><div class="value neg">-10.00%</div></div><div class="card"><div class="label">Raw SR</div><div class="value ">—</div></div><div class="card"><div class="label">DSR (selection pool)</div><div class="value ">—</div></div></div></div>"
+
+ ❯ src/tabs/PredlabMeasurement.test.tsx:22:18
+     20|       books: { champion: null, vt10: null }, reference: { ovl_sr_full:…
+     21|     }, <PredlabPerformanceTab />);
+     22|     expect(html).toContain('Corrected performance unavailable');
+       |                  ^
+     23|     expect(html).not.toContain('1.89');
+     24|     expect(html).not.toContain('Frozen dev reference');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  src/tabs/PredlabMeasurement.test.tsx > predlab audit status in rendered tabs > shows an incomplete funding measurement instead of a return or warmup claim
+AssertionError: expected '<p class="muted">champion journal una…' to contain 'Funding missing'
+
+Expected: "Funding missing"
+Received: "<p class="muted">champion journal unavailable</p><p class="muted">vt10 journal unavailable</p><div class="panel"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">Paper equity + NAV/account (indexed to 100) · drawdown · rolling Sharpe</h2><div class="pills"><button class="pill ">7d</button><button class="pill ">30d</button><button class="pill ">90d</button><button class="pill active">all</button></div></div><div></div><p class="muted">rolling Sharpe appears after 30 realized days</p></div>"
+
+ ❯ src/tabs/PredlabMeasurement.test.tsx:36:18
+     34|       },
+     35|     }, <PredlabPerformanceTab />);
+     36|     expect(html).toContain('Funding missing');
+       |                  ^
+     37|     expect(html).toContain('Unavailable');
+     38|     expect(html).not.toContain('0.00%');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  src/tabs/PredlabMeasurement.test.tsx > predlab audit status in rendered tabs > suspends the withdrawn gate even when connected to the older API
+AssertionError: expected '<p class="muted" style="margin-top:10…' to contain 'Suspended after accounting audit'
+
+Expected: "Suspended after accounting audit"
+Received: "<p class="muted" style="margin-top:10px">Informational tracker only — the forward evaluation is ONE-SHOT, earliest 2027-01-02. Nothing shown here constitutes an evaluation of the sealed window.</p><div class="cards"><div class="card"><div class="label">Forward window start</div><div class="value ">2026-08-05</div></div><div class="card"><div class="label">Earliest evaluation</div><div class="value ">2027-01-02</div></div><div class="card"><div class="label">Days elapsed</div><div class="value ">30</div></div><div class="card"><div class="label">Days remaining</div><div class="value ">120</div></div><div class="card"><div class="label">Threshold SR</div><div class="value ">0.946</div></div><div class="card"><div class="label">Running SR (paper proxy)</div><div class="value pos">2.00</div></div></div><div class="panel"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">Progress to earliest evaluation (20%)</h2></div><div style="background:#21262d;border-radius:4px;height:14px"><div style="width:20%;height:100%;border-radius:4px;background:#3fb950"></div></div></div><div class="panel"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">Pass criteria (sealed one-shot)</h2></div><ul></ul><p class="muted"></p></div>"
+
+ ❯ src/tabs/PredlabMeasurement.test.tsx:47:18
+     45|       running: { sr: 2, n_returns: 30, note: '' }, informational: true,
+     46|     }, <PredlabGateTab />);
+     47|     expect(html).toContain('Suspended after accounting audit');
+       |                  ^
+     48|     expect(html).not.toContain('0.946');
+     49|     expect(html).not.toContain('Days remaining');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  src/tabs/PredlabMeasurement.test.tsx > predlab audit status in rendered tabs > distinguishes a fresh legacy file from a corrected measurement
+AssertionError: expected '<div class="panel"><div style="displa…' to contain 'FRESH'
+
+Expected: "FRESH"
+Received: "<div class="panel"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">champion journal</h2></div><p><span class="badge ok">OK</span> last row 2026-09-09 · written 2026-09-10 · 38 rows</p></div><div class="panel"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">vt10 journal</h2></div><p class="muted">no journal</p></div><p class="muted"></p>"
+
+ ❯ src/tabs/PredlabMeasurement.test.tsx:59:18
+     57|       heartbeat_note: '',
+     58|     }, <PredlabOpsTab />);
+     59|     expect(html).toContain('FRESH');
+       |                  ^
+     60|     expect(html).toContain('net performance unavailable');
+     61|     expect(html).not.toContain('>OK<');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  12:30:42
+   Duration  678ms (transform 161ms, setup 0ms, import 303ms, tests 49ms, environment 0ms)
+

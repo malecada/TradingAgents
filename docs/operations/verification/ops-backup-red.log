@@ -1,0 +1,318 @@
+.FFFFFFFFFFFF                                                            [100%]
+=================================== FAILURES ===================================
+_ test_partial_rollout_preserves_every_present_journal_without_requiring_legacy[names0] _
+
+backup = <predlab.test_journal_backup.LocalBackup object at 0x79531e054e10>
+names = ('journal_v2.jsonl', 'journal_champion_v2.jsonl')
+
+    @pytest.mark.parametrize('names', [V2, LEGACY + V2, (V2[1],)])
+    def test_partial_rollout_preserves_every_present_journal_without_requiring_legacy(backup, names):
+        backup.write(names)
+        result = backup.run()
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: cp: cannot stat '/tmp/pytest-of-malecada/pytest-133/test_partial_rollout_preserves0/journals/journal.jsonl': No such file or directory
+E         cp: cannot stat '/tmp/pytest-of-malecada/pytest-133/test_partial_rollout_preserves0/journals/journal_champion.jsonl': No such file or directory
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['bash', '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_journal_backup....-of-malecada/pytest-133/test_partial_rollout_preserves0/journals/journal_champion.jsonl': No such file or directory\n").returncode
+
+tests/predlab/test_journal_backup.py:94: AssertionError
+_ test_partial_rollout_preserves_every_present_journal_without_requiring_legacy[names1] _
+
+backup = <predlab.test_journal_backup.LocalBackup object at 0x79531e054f50>
+names = ('journal.jsonl', 'journal_champion.jsonl', 'journal_v2.jsonl', 'journal_champion_v2.jsonl')
+
+    @pytest.mark.parametrize('names', [V2, LEGACY + V2, (V2[1],)])
+    def test_partial_rollout_preserves_every_present_journal_without_requiring_legacy(backup, names):
+        backup.write(names)
+        result = backup.run()
+        assert result.returncode == 0, result.stderr
+        for name in names:
+>           assert backup.saved(name) == (backup.data/name).read_text()
+                   ^^^^^^^^^^^^^^^^^^
+
+tests/predlab/test_journal_backup.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/predlab/test_journal_backup.py:67: in saved
+    return self.git(self.remote, 'show', f'{BRANCH}:{PREFIX}{name}')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <predlab.test_journal_backup.LocalBackup object at 0x79531e054f50>
+cwd = PosixPath('/tmp/pytest-of-malecada/pytest-133/test_partial_rollout_preserves1/remote.git')
+check = True
+args = ('show', 'predlab-journal-backup:data/predlab/s1_paper/journal_v2.jsonl')
+
+    def git(self, cwd, *args, check=True):
+        r = subprocess.run(['git', *args], cwd=cwd, env=self.env, text=True,
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if check:
+>           assert r.returncode == 0, r.stderr
+E           AssertionError: fatal: path 'data/predlab/s1_paper/journal_v2.jsonl' does not exist in 'predlab-journal-backup'
+E             
+E           assert 128 == 0
+E            +  where 128 = CompletedProcess(args=['git', 'show', 'predlab-journal-backup:data/predlab/s1_paper/journal_v2.jsonl'], returncode=128, stdout='', stderr="fatal: path 'data/predlab/s1_paper/journal_v2.jsonl' does not exist in 'predlab-journal-backup'\n").returncode
+
+tests/predlab/test_journal_backup.py:44: AssertionError
+_ test_partial_rollout_preserves_every_present_journal_without_requiring_legacy[names2] _
+
+backup = <predlab.test_journal_backup.LocalBackup object at 0x79531e110510>
+names = ('journal_champion_v2.jsonl',)
+
+    @pytest.mark.parametrize('names', [V2, LEGACY + V2, (V2[1],)])
+    def test_partial_rollout_preserves_every_present_journal_without_requiring_legacy(backup, names):
+        backup.write(names)
+        result = backup.run()
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: cp: cannot stat '/tmp/pytest-of-malecada/pytest-133/test_partial_rollout_preserves2/journals/journal.jsonl': No such file or directory
+E         cp: cannot stat '/tmp/pytest-of-malecada/pytest-133/test_partial_rollout_preserves2/journals/journal_champion.jsonl': No such file or directory
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['bash', '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_journal_backup....-of-malecada/pytest-133/test_partial_rollout_preserves2/journals/journal_champion.jsonl': No such file or directory\n").returncode
+
+tests/predlab/test_journal_backup.py:94: AssertionError
+______________ test_fresh_legacy_cannot_hide_missing_or_stale_v2 _______________
+
+backup = <predlab.test_journal_backup.LocalBackup object at 0x79531e110b00>
+
+    def test_fresh_legacy_cannot_hide_missing_or_stale_v2(backup):
+        backup.write(LEGACY)
+        result = backup.run()
+        assert result.returncode == 0, result.stderr
+>       assert 'V2_INCOMPLETE' in result.stdout
+E       assert 'V2_INCOMPLETE' in "Preparing worktree (new branch 'predlab-journal-backup')\nHEAD is now at 011fdba fixture\n2026-09-10T10:27:38Z pushed backup through 2026-09-09 \n"
+E        +  where "Preparing worktree (new branch 'predlab-journal-backup')\nHEAD is now at 011fdba fixture\n2026-09-10T10:27:38Z pushed backup through 2026-09-09 \n" = CompletedProcess(args=['bash', '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_journal_backup....journal-backup')\nHEAD is now at 011fdba fixture\n2026-09-10T10:27:38Z pushed backup through 2026-09-09 \n", stderr='').stdout
+
+tests/predlab/test_journal_backup.py:107: AssertionError
+__________ test_backup_excludes_operational_logs_and_unrelated_files ___________
+
+backup = <predlab.test_journal_backup.LocalBackup object at 0x79531e09e7b0>
+
+    def test_backup_excludes_operational_logs_and_unrelated_files(backup):
+        backup.write(LEGACY + V2)
+        (backup.data/'cron.log').write_text('synthetic-sensitive-operation\n')
+        (backup.data/'unrelated.txt').write_text('not a journal\n')
+        result = backup.run()
+        assert result.returncode == 0, result.stderr
+        files = backup.git(backup.remote, 'ls-tree', '-r', '--name-only', BRANCH).splitlines()
+>       assert PREFIX+'cron.log' not in files
+E       AssertionError: assert ('data/predlab/s1_paper/' + 'cron.log') not in ['.gitignore', 'README', 'data/predlab/s1_paper/cron.log', 'data/predlab/s1_paper/journal.jsonl', 'data/predlab/s1_paper/journal_champion.jsonl']
+
+tests/predlab/test_journal_backup.py:122: AssertionError
+________ test_append_and_repeat_preserve_history_without_extra_commits _________
+
+backup = <predlab.test_journal_backup.LocalBackup object at 0x79531e18f9b0>
+
+    def test_append_and_repeat_preserve_history_without_extra_commits(backup):
+        backup.write(LEGACY + V2, OLD)
+        assert backup.run().returncode == 0
+        first = backup.remote_head()
+        backup.write(LEGACY + V2, append=True)
+        assert backup.run().returncode == 0
+        second = backup.remote_head()
+        assert first != second
+        assert backup.run().returncode == 0
+        assert backup.remote_head() == second
+        for name in LEGACY + V2:
+>           assert backup.saved(name) == (backup.data/name).read_text()
+                   ^^^^^^^^^^^^^^^^^^
+
+tests/predlab/test_journal_backup.py:137: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/predlab/test_journal_backup.py:67: in saved
+    return self.git(self.remote, 'show', f'{BRANCH}:{PREFIX}{name}')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <predlab.test_journal_backup.LocalBackup object at 0x79531e18f9b0>
+cwd = PosixPath('/tmp/pytest-of-malecada/pytest-133/test_append_and_repeat_preserv0/remote.git')
+check = True
+args = ('show', 'predlab-journal-backup:data/predlab/s1_paper/journal_v2.jsonl')
+
+    def git(self, cwd, *args, check=True):
+        r = subprocess.run(['git', *args], cwd=cwd, env=self.env, text=True,
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if check:
+>           assert r.returncode == 0, r.stderr
+E           AssertionError: fatal: path 'data/predlab/s1_paper/journal_v2.jsonl' does not exist in 'predlab-journal-backup'
+E             
+E           assert 128 == 0
+E            +  where 128 = CompletedProcess(args=['git', 'show', 'predlab-journal-backup:data/predlab/s1_paper/journal_v2.jsonl'], returncode=128, stdout='', stderr="fatal: path 'data/predlab/s1_paper/journal_v2.jsonl' does not exist in 'predlab-journal-backup'\n").returncode
+
+tests/predlab/test_journal_backup.py:44: AssertionError
+______ test_disappearing_source_journal_does_not_delete_archived_evidence ______
+
+backup = <predlab.test_journal_backup.LocalBackup object at 0x79531e1045a0>
+
+    def test_disappearing_source_journal_does_not_delete_archived_evidence(backup):
+        backup.write(LEGACY + V2)
+        assert backup.run().returncode == 0
+>       original = backup.saved(V2[0])
+                   ^^^^^^^^^^^^^^^^^^^
+
+tests/predlab/test_journal_backup.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/predlab/test_journal_backup.py:67: in saved
+    return self.git(self.remote, 'show', f'{BRANCH}:{PREFIX}{name}')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <predlab.test_journal_backup.LocalBackup object at 0x79531e1045a0>
+cwd = PosixPath('/tmp/pytest-of-malecada/pytest-133/test_disappearing_source_journ0/remote.git')
+check = True
+args = ('show', 'predlab-journal-backup:data/predlab/s1_paper/journal_v2.jsonl')
+
+    def git(self, cwd, *args, check=True):
+        r = subprocess.run(['git', *args], cwd=cwd, env=self.env, text=True,
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if check:
+>           assert r.returncode == 0, r.stderr
+E           AssertionError: fatal: path 'data/predlab/s1_paper/journal_v2.jsonl' does not exist in 'predlab-journal-backup'
+E             
+E           assert 128 == 0
+E            +  where 128 = CompletedProcess(args=['git', 'show', 'predlab-journal-backup:data/predlab/s1_paper/journal_v2.jsonl'], returncode=128, stdout='', stderr="fatal: path 'data/predlab/s1_paper/journal_v2.jsonl' does not exist in 'predlab-journal-backup'\n").returncode
+
+tests/predlab/test_journal_backup.py:44: AssertionError
+__ test_source_truncation_or_rewrite_cannot_replace_archived_bytes[truncated] __
+
+backup = <predlab.test_journal_backup.LocalBackup object at 0x79531e0cdd50>
+replacement = 'truncated'
+
+    @pytest.mark.parametrize('replacement', ['truncated', 'rewritten'])
+    def test_source_truncation_or_rewrite_cannot_replace_archived_bytes(backup, replacement):
+        backup.write(LEGACY + V2, OLD)
+        backup.write(LEGACY + V2, append=True)
+        assert backup.run().returncode == 0
+        before = backup.remote_head()
+        saved = backup.saved(LEGACY[0])
+        (backup.data/LEGACY[0]).write_text('' if replacement == 'truncated' else '{"asof":"2000-01-01"}\n')
+        result = backup.run()
+>       assert result.returncode != 0
+E       AssertionError: assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['bash', '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_journal_backup.sh'], returncode=0, stdout='2026-09-10T10:27:39Z pushed backup through 2026-09-09 \n', stderr='').returncode
+
+tests/predlab/test_journal_backup.py:160: AssertionError
+__ test_source_truncation_or_rewrite_cannot_replace_archived_bytes[rewritten] __
+
+backup = <predlab.test_journal_backup.LocalBackup object at 0x79531e0ce150>
+replacement = 'rewritten'
+
+    @pytest.mark.parametrize('replacement', ['truncated', 'rewritten'])
+    def test_source_truncation_or_rewrite_cannot_replace_archived_bytes(backup, replacement):
+        backup.write(LEGACY + V2, OLD)
+        backup.write(LEGACY + V2, append=True)
+        assert backup.run().returncode == 0
+        before = backup.remote_head()
+        saved = backup.saved(LEGACY[0])
+        (backup.data/LEGACY[0]).write_text('' if replacement == 'truncated' else '{"asof":"2000-01-01"}\n')
+        result = backup.run()
+>       assert result.returncode != 0
+E       AssertionError: assert 0 != 0
+E        +  where 0 = CompletedProcess(args=['bash', '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_journal_backup.sh'], returncode=0, stdout='2026-09-10T10:27:39Z pushed backup through 2026-09-09 \n', stderr='').returncode
+
+tests/predlab/test_journal_backup.py:160: AssertionError
+______ test_failed_push_is_retried_even_when_no_new_journal_bytes_arrive _______
+
+backup = <predlab.test_journal_backup.LocalBackup object at 0x79531e119e50>
+
+    def test_failed_push_is_retried_even_when_no_new_journal_bytes_arrive(backup):
+        backup.write(LEGACY + V2)
+        hook = backup.remote/'hooks/pre-receive'
+        hook.write_text('#!/bin/sh\nexit 1\n')
+        hook.chmod(0o755)
+        failed = backup.run()
+        assert failed.returncode != 0
+        pending = backup.git(backup.wt, 'rev-parse', 'HEAD').strip()
+        hook.unlink()
+        retry = backup.run()
+        assert retry.returncode == 0, retry.stderr
+>       assert backup.remote_head() == pending
+               ^^^^^^^^^^^^^^^^^^^^
+
+tests/predlab/test_journal_backup.py:177: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/predlab/test_journal_backup.py:64: in remote_head
+    return self.git(self.remote, 'rev-parse', BRANCH).strip()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <predlab.test_journal_backup.LocalBackup object at 0x79531e119e50>
+cwd = PosixPath('/tmp/pytest-of-malecada/pytest-133/test_failed_push_is_retried_ev0/remote.git')
+check = True, args = ('rev-parse', 'predlab-journal-backup')
+
+    def git(self, cwd, *args, check=True):
+        r = subprocess.run(['git', *args], cwd=cwd, env=self.env, text=True,
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if check:
+>           assert r.returncode == 0, r.stderr
+E           AssertionError: fatal: ambiguous argument 'predlab-journal-backup': unknown revision or path not in the working tree.
+E             Use '--' to separate paths from revisions, like this:
+E             'git <command> [<revision>...] -- [<file>...]'
+E             
+E           assert 128 == 0
+E            +  where 128 = CompletedProcess(args=['git', 'rev-parse', 'predlab-journal-backup'], returncode=128, stdout='predlab-journal-backup\n...orking tree.\nUse '--' to separate paths from revisions, like this:\n'git <command> [<revision>...] -- [<file>...]'\n").returncode
+
+tests/predlab/test_journal_backup.py:44: AssertionError
+___________ test_remote_failure_stops_before_local_snapshot_mutation ___________
+
+backup = <predlab.test_journal_backup.LocalBackup object at 0x79531e11a3f0>
+
+    def test_remote_failure_stops_before_local_snapshot_mutation(backup):
+        backup.write(LEGACY + V2, OLD)
+        assert backup.run().returncode == 0
+        before = backup.git(backup.wt, 'rev-parse', 'HEAD').strip()
+        archived = (backup.wt/PREFIX/LEGACY[0]).read_bytes()
+        backup.write(LEGACY + V2, append=True)
+        hidden = backup.remote.with_name('remote-offline.git')
+        backup.remote.rename(hidden)
+        try:
+            failed = backup.run()
+            assert failed.returncode != 0
+>           assert backup.git(backup.wt, 'rev-parse', 'HEAD').strip() == before
+E           AssertionError: assert '4908d0ace11a...c0a7665d794f2' == '513b4a88a707...06a7cd6928195'
+E             
+E             - 513b4a88a707b96470856ff807506a7cd6928195
+E             + 4908d0ace11a76199de3d0bb53ac0a7665d794f2
+
+tests/predlab/test_journal_backup.py:192: AssertionError
+____ test_divergent_pull_fails_before_copying_or_committing_source_updates _____
+
+backup = <predlab.test_journal_backup.LocalBackup object at 0x79531dff90f0>
+
+    def test_divergent_pull_fails_before_copying_or_committing_source_updates(backup):
+        backup.write(LEGACY + V2, OLD)
+        assert backup.run().returncode == 0
+        other = backup.other_clone()
+        (other/'remote-note').write_text('remote history\n')
+        backup.git(other, 'add', 'remote-note')
+        backup.git(other, 'commit', '-m', 'remote advance')
+        backup.git(other, 'push', 'origin', BRANCH)
+        (backup.wt/'local-note').write_text('local history\n')
+        backup.git(backup.wt, 'add', 'local-note')
+        backup.git(backup.wt, 'commit', '-m', 'local advance')
+        before = backup.git(backup.wt, 'rev-parse', 'HEAD').strip()
+        archived = (backup.wt/PREFIX/LEGACY[0]).read_bytes()
+        backup.write(LEGACY + V2, append=True)
+        result = backup.run()
+        assert result.returncode != 0
+>       assert backup.git(backup.wt, 'rev-parse', 'HEAD').strip() == before
+E       AssertionError: assert '5e52d4badd54...a17dce1b7b635' == '2b77aabbeab2...071dddceae651'
+E         
+E         - 2b77aabbeab24d9933026dda160071dddceae651
+E         + 5e52d4badd541219c6fa83adc69a17dce1b7b635
+
+tests/predlab/test_journal_backup.py:215: AssertionError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_journal_backup.py::test_partial_rollout_preserves_every_present_journal_without_requiring_legacy[names0]
+FAILED tests/predlab/test_journal_backup.py::test_partial_rollout_preserves_every_present_journal_without_requiring_legacy[names1]
+FAILED tests/predlab/test_journal_backup.py::test_partial_rollout_preserves_every_present_journal_without_requiring_legacy[names2]
+FAILED tests/predlab/test_journal_backup.py::test_fresh_legacy_cannot_hide_missing_or_stale_v2
+FAILED tests/predlab/test_journal_backup.py::test_backup_excludes_operational_logs_and_unrelated_files
+FAILED tests/predlab/test_journal_backup.py::test_append_and_repeat_preserve_history_without_extra_commits
+FAILED tests/predlab/test_journal_backup.py::test_disappearing_source_journal_does_not_delete_archived_evidence
+FAILED tests/predlab/test_journal_backup.py::test_source_truncation_or_rewrite_cannot_replace_archived_bytes[truncated]
+FAILED tests/predlab/test_journal_backup.py::test_source_truncation_or_rewrite_cannot_replace_archived_bytes[rewritten]
+FAILED tests/predlab/test_journal_backup.py::test_failed_push_is_retried_even_when_no_new_journal_bytes_arrive
+FAILED tests/predlab/test_journal_backup.py::test_remote_failure_stops_before_local_snapshot_mutation
+FAILED tests/predlab/test_journal_backup.py::test_divergent_pull_fails_before_copying_or_committing_source_updates
+12 failed, 1 passed in 2.23s

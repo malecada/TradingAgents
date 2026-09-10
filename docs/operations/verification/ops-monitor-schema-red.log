@@ -1,0 +1,121 @@
+........................................FFFF..                           [100%]
+=================================== FAILURES ===================================
+_____ test_malformed_required_paper_metadata_fails_closed[missing_weights] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-142/test_malformed_required_paper_0')
+problem = 'missing_weights'
+
+    @pytest.mark.parametrize('problem', ['missing_weights', 'bad_status', 'bad_reason'])
+    def test_malformed_required_paper_metadata_fails_closed(tmp_path, problem):
+        rows = v2_rows()
+        if problem == 'missing_weights': rows[1].pop('weights')
+        elif problem == 'bad_status': rows[1]['measurement_status'] = []
+        else: rows[1]['measurement_reason'] = {'unexpected': 'object'}
+        write_rows(paper_path(tmp_path), rows)
+        payload = PredlabSource(str(tmp_path)).payload()
+>       assert payload['performance']['measurement']['books']['champion']['status'] == 'invalid'
+E       AssertionError: assert 'corrected_v2' == 'invalid'
+E         
+E         - invalid
+E         + corrected_v2
+
+tests/monitor/test_predlab_v2.py:267: AssertionError
+_______ test_malformed_required_paper_metadata_fails_closed[bad_status] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-142/test_malformed_required_paper_1')
+problem = 'bad_status'
+
+    @pytest.mark.parametrize('problem', ['missing_weights', 'bad_status', 'bad_reason'])
+    def test_malformed_required_paper_metadata_fails_closed(tmp_path, problem):
+        rows = v2_rows()
+        if problem == 'missing_weights': rows[1].pop('weights')
+        elif problem == 'bad_status': rows[1]['measurement_status'] = []
+        else: rows[1]['measurement_reason'] = {'unexpected': 'object'}
+        write_rows(paper_path(tmp_path), rows)
+>       payload = PredlabSource(str(tmp_path)).payload()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/monitor/test_predlab_v2.py:266: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/monitor/predlab.py:206: in payload
+    return self._cached()
+           ^^^^^^^^^^^^^^
+tradingagents/monitor/sources.py:55: in wrapped
+    data = fn()
+           ^^^^
+tradingagents/monitor/predlab.py:221: in _build
+    books[book] = derive_book(rows, scale_key, invalid_reason=issue) if is_v2 else None
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/monitor/journal_measurements.py:207: in derive_book
+    stream = paper_stream(rows, invalid_reason=invalid_reason)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+rows = [{'asof': '2026-09-01', 'written_utc': '2026-09-01T00:20:00+00:00', 'journal_version': 2, 'accounting_version': 'pretr...9-03', 'written_utc': '2026-09-03T00:20:00+00:00', 'journal_version': 2, 'accounting_version': 'pretrade-nav-v1', ...}]
+overlay = False, invalid_reason = None
+
+    def paper_stream(rows, *, overlay=False, invalid_reason=None):
+        """Observe contiguous net/state pairs; unknown intervals never reconnect."""
+        fatal = invalid_reason or record_error(rows, paper=True)
+        status, reason = ('invalid', fatal) if fatal else ('warmup', 'initial measurement')
+        ret_key = 'realized_net_ret' if overlay else 'realized_base_net_ret'
+        prefix = 'overlay' if overlay else 'base'
+        points, observed = [], []
+        anchor = previous_nav = previous = None
+        started = False
+        broken = bool(fatal)
+        for i, (day, row) in enumerate(calendar(rows)):
+            value = None
+            if not broken:
+                issue = None
+                current = row.get(prefix + '_state') if row else None
+                if row is None:
+                    issue = 'missing daily journal record'
+                elif not state(current):
+                    issue = f'{prefix} state unavailable or invalid'
+>               elif row.get('measurement_status') not in {'complete', 'incomplete'}:
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               TypeError: unhashable type: 'list'
+
+tradingagents/monitor/journal_measurements.py:89: TypeError
+_______ test_malformed_required_paper_metadata_fails_closed[bad_reason] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-142/test_malformed_required_paper_2')
+problem = 'bad_reason'
+
+    @pytest.mark.parametrize('problem', ['missing_weights', 'bad_status', 'bad_reason'])
+    def test_malformed_required_paper_metadata_fails_closed(tmp_path, problem):
+        rows = v2_rows()
+        if problem == 'missing_weights': rows[1].pop('weights')
+        elif problem == 'bad_status': rows[1]['measurement_status'] = []
+        else: rows[1]['measurement_reason'] = {'unexpected': 'object'}
+        write_rows(paper_path(tmp_path), rows)
+        payload = PredlabSource(str(tmp_path)).payload()
+>       assert payload['performance']['measurement']['books']['champion']['status'] == 'invalid'
+E       AssertionError: assert 'corrected_v2' == 'invalid'
+E         
+E         - invalid
+E         + corrected_v2
+
+tests/monitor/test_predlab_v2.py:267: AssertionError
+_____________ test_legacy_schema_inside_v2_account_file_is_invalid _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-142/test_legacy_schema_inside_v2_a0')
+
+    def test_legacy_schema_inside_v2_account_file_is_invalid(tmp_path):
+        path = tmp_path / 'predlab' / 's1_live' / 'journal_live_v2.jsonl'
+        write_rows(path, [{'asof': '2026-09-01', 'equity_before': 1000.}])
+        block = PredlabSource(str(tmp_path)).payload()['performance']['account']['live']
+>       assert block['reconciliation_status'] == 'invalid'
+E       AssertionError: assert 'legacy_only' == 'invalid'
+E         
+E         - invalid
+E         + legacy_only
+
+tests/monitor/test_predlab_v2.py:275: AssertionError
+=========================== short test summary info ============================
+FAILED tests/monitor/test_predlab_v2.py::test_malformed_required_paper_metadata_fails_closed[missing_weights]
+FAILED tests/monitor/test_predlab_v2.py::test_malformed_required_paper_metadata_fails_closed[bad_status]
+FAILED tests/monitor/test_predlab_v2.py::test_malformed_required_paper_metadata_fails_closed[bad_reason]
+FAILED tests/monitor/test_predlab_v2.py::test_legacy_schema_inside_v2_account_file_is_invalid
+4 failed, 42 passed in 0.83s

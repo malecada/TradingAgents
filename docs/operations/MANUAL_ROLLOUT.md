@@ -2,6 +2,10 @@
 
 **Prepared for operator execution; no command in this document was executed on the VPS.** The current stage permits read-only inspection and local preparation. Root workspace instructions require production systemd changes to be surfaced for manual execution. The source candidate does not establish funded v2 paper or execution readiness.
 
+## Prepared local package
+
+The source package is already built and checked locally: source commit `4ce0101f7bfdcc3eb8a141334c9786bafe9e0aa6`, 284 files, 1,111,122 compressed bytes. It has not been uploaded or deployed. Use [the source archive](/home/malecada/master_thesis/operations-release-2026-09-10/ta-source-4ce0101f7bfdcc3eb8a141334c9786bafe9e0aa6.tar.gz) with [SHA256SUMS](/home/malecada/master_thesis/operations-release-2026-09-10/SHA256SUMS). SHA-256: `5bad00e47559408fe424a9d19e3fd094b9d0da898cd403817222137f516ad593`. The following local commands document reproduction; the staging steps can use this prepared archive directly.
+
 ## 1. Prepare the reviewed source locally
 
 Use the final reviewed commit with a clean worktree. The package includes source and the committed built frontend, but excludes data, secrets, Git history and research reports. No package installation, deployment helper or trading script is run.

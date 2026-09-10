@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_path_overrides_backup_legacy_without_touching_source_checkout ______
+
+backup = <predlab.test_journal_backup.LocalBackup object at 0x71155d31e7b0>
+
+    def test_path_overrides_backup_legacy_without_touching_source_checkout(backup):
+        backup.write(LEGACY)
+        result = backup.run()
+>       assert result.returncode == 0, result.stderr
+E       AssertionError: fatal: cannot change to '/opt/tradingagents/predlab': No such file or directory
+E         fatal: cannot change to '/opt/tradingagents/predlab': No such file or directory
+E         
+E       assert 128 == 0
+E        +  where 128 = CompletedProcess(args=['bash', '/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/predlab_journal_backup....redlab': No such file or directory\nfatal: cannot change to '/opt/tradingagents/predlab': No such file or directory\n").returncode
+
+tests/predlab/test_journal_backup.py:84: AssertionError
+=========================== short test summary info ============================
+FAILED tests/predlab/test_journal_backup.py::test_path_overrides_backup_legacy_without_touching_source_checkout
+1 failed in 0.17s

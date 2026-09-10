@@ -1,0 +1,52 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+_____ test_nonflat_initial_state_cannot_disappear_without_settlement[base] _____
+
+prefix = 'base'
+
+    @pytest.mark.parametrize('prefix', ['base', 'overlay'])
+    def test_nonflat_initial_state_cannot_disappear_without_settlement(prefix):
+        rows = v2_rows()
+        if prefix == 'overlay':
+            for row in rows:
+                row.update(executed_scale=None, measurement_scale=None, realized_net_ret=None,
+                           overlay_measurement=None, overlay_state={'nav': 1., 'notionals': {}},
+                           measurement_status='incomplete', measurement_reason='scale warmup')
+        rows[0][prefix + '_state']['notionals'] = {'A': .5}
+        block = derive_book(rows, 'vt15_b100_scale') if prefix == 'base' else derive_nav(rows, 'vt15_b100_scale')
+        points = block['equity'] if prefix == 'base' else block['series']
+        assert [point['ts'] for point in points] == [row['asof'] for row in rows]
+>       assert [point['value'] for point in points] == [None, None, None]
+E       assert [100.0, 110.0...0000001, 99.0] == [None, None, None]
+E         
+E         At index 0 diff: 100.0 != None
+E         Use -v to get more diff
+
+tests/monitor/test_predlab_v2.py:322: AssertionError
+___ test_nonflat_initial_state_cannot_disappear_without_settlement[overlay] ____
+
+prefix = 'overlay'
+
+    @pytest.mark.parametrize('prefix', ['base', 'overlay'])
+    def test_nonflat_initial_state_cannot_disappear_without_settlement(prefix):
+        rows = v2_rows()
+        if prefix == 'overlay':
+            for row in rows:
+                row.update(executed_scale=None, measurement_scale=None, realized_net_ret=None,
+                           overlay_measurement=None, overlay_state={'nav': 1., 'notionals': {}},
+                           measurement_status='incomplete', measurement_reason='scale warmup')
+        rows[0][prefix + '_state']['notionals'] = {'A': .5}
+        block = derive_book(rows, 'vt15_b100_scale') if prefix == 'base' else derive_nav(rows, 'vt15_b100_scale')
+        points = block['equity'] if prefix == 'base' else block['series']
+        assert [point['ts'] for point in points] == [row['asof'] for row in rows]
+>       assert [point['value'] for point in points] == [None, None, None]
+E       assert [100.0, 100.0, 100.0] == [None, None, None]
+E         
+E         At index 0 diff: 100.0 != None
+E         Use -v to get more diff
+
+tests/monitor/test_predlab_v2.py:322: AssertionError
+=========================== short test summary info ============================
+FAILED tests/monitor/test_predlab_v2.py::test_nonflat_initial_state_cannot_disappear_without_settlement[base]
+FAILED tests/monitor/test_predlab_v2.py::test_nonflat_initial_state_cannot_disappear_without_settlement[overlay]
+2 failed, 2 passed, 46 deselected in 0.09s
