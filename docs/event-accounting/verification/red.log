@@ -1,0 +1,604 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF                                 [100%]
+=================================== FAILURES ===================================
+_ test_terminal_pnl_is_signed_fixed_quantity_and_fee_is_once[0.5-898.7--100.0] _
+tests/test_event_accounting.py:52: in test_terminal_pnl_is_signed_fixed_quantity_and_fee_is_once
+    args, _, _ = setup(api, weight=weight)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ test_terminal_pnl_is_signed_fixed_quantity_and_fee_is_once[-0.5-1098.7-100.0] _
+tests/test_event_accounting.py:52: in test_terminal_pnl_is_signed_fixed_quantity_and_fee_is_once
+    args, _, _ = setup(api, weight=weight)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ test_multiplier_and_funding_mark_do_not_change_held_quantity_or_previous_mark _
+tests/test_event_accounting.py:64: in test_multiplier_and_funding_mark_do_not_change_held_quantity_or_previous_mark
+    args, evidence, rounding = setup(api, multiplier=10.)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ test_explicit_same_time_order_decides_funding_on_terminal_quantity[0-892.7] __
+tests/test_event_accounting.py:75: in test_explicit_same_time_order_decides_funding_on_terminal_quantity
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ test_explicit_same_time_order_decides_funding_on_terminal_quantity[2-898.7] __
+tests/test_event_accounting.py:75: in test_explicit_same_time_order_decides_funding_on_terminal_quantity
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ test_boundary_flat_target_cannot_skip_forced_settlement_or_charge_an_exit_trade _
+tests/test_event_accounting.py:81: in test_boundary_flat_target_cannot_skip_forced_settlement_or_charge_an_exit_trade
+    args, _, _ = setup(api, termination=1.)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_______ test_zero_terminal_price_preserves_real_long_loss_and_short_gain _______
+tests/test_event_accounting.py:91: in test_zero_terminal_price_preserves_real_long_loss_and_short_gain
+    args, _, _ = setup(api, weight=-.5)
+                 ^^^^^^^^^^^^^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_______ test_cash_rounding_is_explicit_for_settlement_and_signed_funding _______
+tests/test_event_accounting.py:97: in test_cash_rounding_is_explicit_for_settlement_and_signed_funding
+    args, evidence, _ = setup(api, weight=1.)
+                        ^^^^^^^^^^^^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ test_unknown_terminal_inputs_fail_only_when_terminal_quantity_is_held[price] _
+tests/test_event_accounting.py:111: in test_unknown_terminal_inputs_fail_only_when_terminal_quantity_is_held
+    args, _, _ = setup(api)
+                 ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+__ test_unknown_terminal_inputs_fail_only_when_terminal_quantity_is_held[fee] __
+tests/test_event_accounting.py:111: in test_unknown_terminal_inputs_fail_only_when_terminal_quantity_is_held
+    args, _, _ = setup(api)
+                 ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ test_unknown_terminal_inputs_fail_only_when_terminal_quantity_is_held[evidence] _
+tests/test_event_accounting.py:111: in test_unknown_terminal_inputs_fail_only_when_terminal_quantity_is_held
+    args, _, _ = setup(api)
+                 ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ test_unknown_terminal_inputs_fail_only_when_terminal_quantity_is_held[record] _
+tests/test_event_accounting.py:111: in test_unknown_terminal_inputs_fail_only_when_terminal_quantity_is_held
+    args, _, _ = setup(api)
+                 ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+________ test_unknown_expected_funding_is_unavailable_while_held[rate] _________
+tests/test_event_accounting.py:121: in test_unknown_expected_funding_is_unavailable_while_held
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+________ test_unknown_expected_funding_is_unavailable_while_held[mark] _________
+tests/test_event_accounting.py:121: in test_unknown_expected_funding_is_unavailable_while_held
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+______ test_unknown_expected_funding_is_unavailable_while_held[rounding] _______
+tests/test_event_accounting.py:121: in test_unknown_expected_funding_is_unavailable_while_held
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+______ test_unknown_expected_funding_is_unavailable_while_held[evidence] _______
+tests/test_event_accounting.py:121: in test_unknown_expected_funding_is_unavailable_while_held
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_______ test_unknown_expected_funding_is_unavailable_while_held[record] ________
+tests/test_event_accounting.py:121: in test_unknown_expected_funding_is_unavailable_while_held
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_______________ test_missing_postclosure_funding_is_not_charged ________________
+tests/test_event_accounting.py:132: in test_missing_postclosure_funding_is_not_charged
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+__ test_funding_calendar_is_independent_complete_coverage_contract[coverage] ___
+tests/test_event_accounting.py:139: in test_funding_calendar_is_independent_complete_coverage_contract
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+__ test_funding_calendar_is_independent_complete_coverage_contract[contract] ___
+tests/test_event_accounting.py:139: in test_funding_calendar_is_independent_complete_coverage_contract
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ test_funding_calendar_is_independent_complete_coverage_contract[unexpected] __
+tests/test_event_accounting.py:139: in test_funding_calendar_is_independent_complete_coverage_contract
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ test_ambiguous_or_mismatched_event_records_cannot_silently_run[duplicate_id] _
+tests/test_event_accounting.py:154: in test_ambiguous_or_mismatched_event_records_cannot_silently_run
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ test_ambiguous_or_mismatched_event_records_cannot_silently_run[duplicate_sequence] _
+tests/test_event_accounting.py:154: in test_ambiguous_or_mismatched_event_records_cannot_silently_run
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ test_ambiguous_or_mismatched_event_records_cannot_silently_run[missing_sequence] _
+tests/test_event_accounting.py:154: in test_ambiguous_or_mismatched_event_records_cannot_silently_run
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+___ test_ambiguous_or_mismatched_event_records_cannot_silently_run[outside] ____
+tests/test_event_accounting.py:154: in test_ambiguous_or_mismatched_event_records_cannot_silently_run
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_ test_ambiguous_or_mismatched_event_records_cannot_silently_run[wrong_identity] _
+tests/test_event_accounting.py:154: in test_ambiguous_or_mismatched_event_records_cannot_silently_run
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+__ test_ambiguous_or_mismatched_event_records_cannot_silently_run[wrong_time] __
+tests/test_event_accounting.py:154: in test_ambiguous_or_mismatched_event_records_cannot_silently_run
+    args, evidence, rounding = setup(api)
+                               ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_______ test_missing_held_boundary_mark_cannot_be_hidden_by_flat_target ________
+tests/test_event_accounting.py:169: in test_missing_held_boundary_mark_cannot_be_hidden_by_flat_target
+    args, _, _ = setup(api)
+                 ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_______ test_complete_clock_and_boundary_policy_are_enforced[clock_gap] ________
+tests/test_event_accounting.py:178: in test_complete_clock_and_boundary_policy_are_enforced
+    args, _, _ = setup(api)
+                 ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+______ test_complete_clock_and_boundary_policy_are_enforced[naive_clock] _______
+tests/test_event_accounting.py:178: in test_complete_clock_and_boundary_policy_are_enforced
+    args, _, _ = setup(api)
+                 ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+______ test_complete_clock_and_boundary_policy_are_enforced[final_target] ______
+tests/test_event_accounting.py:178: in test_complete_clock_and_boundary_policy_are_enforced
+    args, _, _ = setup(api)
+                 ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+____ test_complete_clock_and_boundary_policy_are_enforced[off_clock_target] ____
+tests/test_event_accounting.py:178: in test_complete_clock_and_boundary_policy_are_enforced
+    args, _, _ = setup(api)
+                 ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+________ test_complete_clock_and_boundary_policy_are_enforced[ordering] ________
+tests/test_event_accounting.py:178: in test_complete_clock_and_boundary_policy_are_enforced
+    args, _, _ = setup(api)
+                 ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_______ test_funding_and_settlement_at_final_boundary_are_in_last_period _______
+tests/test_event_accounting.py:192: in test_funding_and_settlement_at_final_boundary_are_in_last_period
+    args, evidence, rounding = setup(api, termination=3.)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_____ test_reduce_only_uses_drifted_quantity_not_equal_weights[0.5-False] ______
+tests/test_event_accounting.py:203: in test_reduce_only_uses_drifted_quantity_not_equal_weights
+    args, evidence, _ = setup(api, termination=None)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_____ test_reduce_only_uses_drifted_quantity_not_equal_weights[0.25-True] ______
+tests/test_event_accounting.py:203: in test_reduce_only_uses_drifted_quantity_not_equal_weights
+    args, evidence, _ = setup(api, termination=None)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+____ test_reduce_only_uses_drifted_quantity_not_equal_weights[-0.25-False] _____
+tests/test_event_accounting.py:203: in test_reduce_only_uses_drifted_quantity_not_equal_weights
+    args, evidence, _ = setup(api, termination=None)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+______ test_reduce_only_uses_drifted_quantity_not_equal_weights[0.0-True] ______
+tests/test_event_accounting.py:203: in test_reduce_only_uses_drifted_quantity_not_equal_weights
+    args, evidence, _ = setup(api, termination=None)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_______ test_successor_has_separate_quantity_and_cannot_reopen_original ________
+tests/test_event_accounting.py:221: in test_successor_has_separate_quantity_and_cannot_reopen_original
+    args, _, _ = setup(api, termination=1.)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+_____ test_quantity_step_is_explicit_and_small_targets_do_not_invent_units _____
+tests/test_event_accounting.py:238: in test_quantity_step_is_explicit_and_small_targets_do_not_invent_units
+    args, _, _ = setup(api)
+                 ^^^^^^^^^^
+tests/test_event_accounting.py:25: in setup
+    evidence = api.Evidence('synthetic:hand-derived', '0'*64, 'synthetic')
+               ^^^^^^^^^^^^
+tests/test_event_accounting.py:15: in __getattr__
+    assert importlib.util.find_spec('tradingagents.event_accounting'), 'event accounting API is missing'
+E   AssertionError: event accounting API is missing
+E   assert None
+E    +  where None = <function find_spec at 0x7455894a2fc0>('tradingagents.event_accounting')
+E    +    where <function find_spec at 0x7455894a2fc0> = <module 'importlib.util' (frozen)>.find_spec
+E    +      where <module 'importlib.util' (frozen)> = importlib.util
+=========================== short test summary info ============================
+FAILED tests/test_event_accounting.py::test_terminal_pnl_is_signed_fixed_quantity_and_fee_is_once[0.5-898.7--100.0]
+FAILED tests/test_event_accounting.py::test_terminal_pnl_is_signed_fixed_quantity_and_fee_is_once[-0.5-1098.7-100.0]
+FAILED tests/test_event_accounting.py::test_multiplier_and_funding_mark_do_not_change_held_quantity_or_previous_mark
+FAILED tests/test_event_accounting.py::test_explicit_same_time_order_decides_funding_on_terminal_quantity[0-892.7]
+FAILED tests/test_event_accounting.py::test_explicit_same_time_order_decides_funding_on_terminal_quantity[2-898.7]
+FAILED tests/test_event_accounting.py::test_boundary_flat_target_cannot_skip_forced_settlement_or_charge_an_exit_trade
+FAILED tests/test_event_accounting.py::test_zero_terminal_price_preserves_real_long_loss_and_short_gain
+FAILED tests/test_event_accounting.py::test_cash_rounding_is_explicit_for_settlement_and_signed_funding
+FAILED tests/test_event_accounting.py::test_unknown_terminal_inputs_fail_only_when_terminal_quantity_is_held[price]
+FAILED tests/test_event_accounting.py::test_unknown_terminal_inputs_fail_only_when_terminal_quantity_is_held[fee]
+FAILED tests/test_event_accounting.py::test_unknown_terminal_inputs_fail_only_when_terminal_quantity_is_held[evidence]
+FAILED tests/test_event_accounting.py::test_unknown_terminal_inputs_fail_only_when_terminal_quantity_is_held[record]
+FAILED tests/test_event_accounting.py::test_unknown_expected_funding_is_unavailable_while_held[rate]
+FAILED tests/test_event_accounting.py::test_unknown_expected_funding_is_unavailable_while_held[mark]
+FAILED tests/test_event_accounting.py::test_unknown_expected_funding_is_unavailable_while_held[rounding]
+FAILED tests/test_event_accounting.py::test_unknown_expected_funding_is_unavailable_while_held[evidence]
+FAILED tests/test_event_accounting.py::test_unknown_expected_funding_is_unavailable_while_held[record]
+FAILED tests/test_event_accounting.py::test_missing_postclosure_funding_is_not_charged
+FAILED tests/test_event_accounting.py::test_funding_calendar_is_independent_complete_coverage_contract[coverage]
+FAILED tests/test_event_accounting.py::test_funding_calendar_is_independent_complete_coverage_contract[contract]
+FAILED tests/test_event_accounting.py::test_funding_calendar_is_independent_complete_coverage_contract[unexpected]
+FAILED tests/test_event_accounting.py::test_ambiguous_or_mismatched_event_records_cannot_silently_run[duplicate_id]
+FAILED tests/test_event_accounting.py::test_ambiguous_or_mismatched_event_records_cannot_silently_run[duplicate_sequence]
+FAILED tests/test_event_accounting.py::test_ambiguous_or_mismatched_event_records_cannot_silently_run[missing_sequence]
+FAILED tests/test_event_accounting.py::test_ambiguous_or_mismatched_event_records_cannot_silently_run[outside]
+FAILED tests/test_event_accounting.py::test_ambiguous_or_mismatched_event_records_cannot_silently_run[wrong_identity]
+FAILED tests/test_event_accounting.py::test_ambiguous_or_mismatched_event_records_cannot_silently_run[wrong_time]
+FAILED tests/test_event_accounting.py::test_missing_held_boundary_mark_cannot_be_hidden_by_flat_target
+FAILED tests/test_event_accounting.py::test_complete_clock_and_boundary_policy_are_enforced[clock_gap]
+FAILED tests/test_event_accounting.py::test_complete_clock_and_boundary_policy_are_enforced[naive_clock]
+FAILED tests/test_event_accounting.py::test_complete_clock_and_boundary_policy_are_enforced[final_target]
+FAILED tests/test_event_accounting.py::test_complete_clock_and_boundary_policy_are_enforced[off_clock_target]
+FAILED tests/test_event_accounting.py::test_complete_clock_and_boundary_policy_are_enforced[ordering]
+FAILED tests/test_event_accounting.py::test_funding_and_settlement_at_final_boundary_are_in_last_period
+FAILED tests/test_event_accounting.py::test_reduce_only_uses_drifted_quantity_not_equal_weights[0.5-False]
+FAILED tests/test_event_accounting.py::test_reduce_only_uses_drifted_quantity_not_equal_weights[0.25-True]
+FAILED tests/test_event_accounting.py::test_reduce_only_uses_drifted_quantity_not_equal_weights[-0.25-False]
+FAILED tests/test_event_accounting.py::test_reduce_only_uses_drifted_quantity_not_equal_weights[0.0-True]
+FAILED tests/test_event_accounting.py::test_successor_has_separate_quantity_and_cannot_reopen_original
+FAILED tests/test_event_accounting.py::test_quantity_step_is_explicit_and_small_targets_do_not_invent_units
+40 failed in 0.71s

@@ -1,0 +1,12 @@
+.........................................................F.              [100%]
+=================================== FAILURES ===================================
+_______ test_continuous_reduce_only_maintenance_ignores_machine_roundoff _______
+tests/test_event_accounting.py:340: in test_continuous_reduce_only_maintenance_ignores_machine_roundoff
+    result = api.run_event_book(**args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/event_accounting.py:365: in run_event_book
+    raise ValueError(f'reduce-only quantity increase: {identity} at {t}')
+E   ValueError: reduce-only quantity increase: venue:A:original at 2024-01-01 01:00:00+00:00
+=========================== short test summary info ============================
+FAILED tests/test_event_accounting.py::test_continuous_reduce_only_maintenance_ignores_machine_roundoff
+1 failed, 58 passed in 0.55s

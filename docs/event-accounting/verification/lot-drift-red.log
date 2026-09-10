@@ -1,0 +1,12 @@
+...........................................................F.            [100%]
+=================================== FAILURES ===================================
+_________ test_lot_sizing_does_not_sell_a_contract_due_to_nav_roundoff _________
+tests/test_event_accounting.py:367: in test_lot_sizing_does_not_sell_a_contract_due_to_nav_roundoff
+    assert result.quantities.iloc[:, 0].tolist() == [3.]*4
+E   assert [3.0, 2.0, 2.0, 2.0] == [3.0, 3.0, 3.0, 3.0]
+E     
+E     At index 1 diff: 2.0 != 3.0
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_event_accounting.py::test_lot_sizing_does_not_sell_a_contract_due_to_nav_roundoff
+1 failed, 60 passed in 0.56s

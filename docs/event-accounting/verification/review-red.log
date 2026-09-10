@@ -1,0 +1,23 @@
+.........................................FFF.............                [100%]
+=================================== FAILURES ===================================
+_______ test_rounding_quantity_at_exact_lot_boundary_does_not_drop_a_lot _______
+tests/test_event_accounting.py:260: in test_rounding_quantity_at_exact_lot_boundary_does_not_drop_a_lot
+    assert result.quantities.iloc[0, 0] == 2.9
+E   assert np.float64(2.8) == 2.9
+______ test_event_ledger_exposes_incoming_settlement_units_and_cash_basis ______
+tests/test_event_accounting.py:267: in test_event_ledger_exposes_incoming_settlement_units_and_cash_basis
+    assert settlement.quantity_before == 5.
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+../TradingAgents-predlab/.venv/lib/python3.13/site-packages/pandas/core/generic.py:6321: in __getattr__
+    return object.__getattribute__(self, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'Series' object has no attribute 'quantity_before'
+___________ test_boundary_price_provenance_is_required_and_retained ____________
+tests/test_event_accounting.py:276: in test_boundary_price_provenance_is_required_and_retained
+    api.run_event_book(**args, price_evidence=None)
+E   TypeError: run_event_book() got an unexpected keyword argument 'price_evidence'
+=========================== short test summary info ============================
+FAILED tests/test_event_accounting.py::test_rounding_quantity_at_exact_lot_boundary_does_not_drop_a_lot
+FAILED tests/test_event_accounting.py::test_event_ledger_exposes_incoming_settlement_units_and_cash_basis
+FAILED tests/test_event_accounting.py::test_boundary_price_provenance_is_required_and_retained
+3 failed, 54 passed in 0.61s

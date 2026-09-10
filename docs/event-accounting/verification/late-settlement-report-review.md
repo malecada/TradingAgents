@@ -1,0 +1,15 @@
+# Independent settlement-report review
+
+**Disposition: no actionable reporting defect found.** Review covers the consolidated September 10 settlement report, SHA256 `fd4725e115b42a44f054daf39ae7a540eed57f9a9d422787e7fd151e812c59cf`, including its final verification section; all three case reports; the admission note; and the unsent request draft. No evidence, source, gate or existing result was edited.
+
+The November 2024 rule-change body was read directly from its saved extraction. It explicitly includes delistings and supplies a dated thirty-minute default for BNX. The report correctly distinguishes that default from the unrecovered actual price and does not turn a general mark-protection provision into an assumed settlement-index override. The older one-hour rule and current CMS versus historical archive provenance remain qualified.
+
+October 2021 and December 2024 ordinary maker/taker examples remain fee context rather than an automatic-settlement rate. The quarterly delivery fee is expressly excluded as a substitute. Historical funding valuation is distinguished from an observed position cashflow and from later published rates.
+
+The current export observation and historical API excerpt support separate treatment of ordinary three-month income history and asynchronous export. One year is a maximum requested interval, not an established earliest retained date; export availability remains unknown. Empty HTTP 202 responses are not counted as readable schema evidence. Estimates, minute candles and ambiguous basic-data counts are not admitted as exact settlements or unconditional bounds. No account receipt is required where an applicable rule and sufficiently complete authentic inputs could instead establish the value.
+
+Existing saved result JSON was read only for cell status and first-error fields: momentum has nine BZRX and three BNX blocked cells; carry has six LUNA blocked cells; the recovered liquidation-fade artifact has four LUNA-blocked cells and two complete cells with false original-gate verdicts. Thus the consolidated **2 conditional measured failures / 22 unavailable** statement is correct. No return stream, signal or financial statistic was recalculated.
+
+Reported acquisition totals reconcile with the final verification manifest: 18 + 11 + 23 = 52 requests; 864,145 + 802,048 + 1,219,027 = 2,885,220 response bytes; 46 HTTP 200, two empty HTTP 202 and four timeouts. The report accurately attributes full raw-response, archive and preservation verification to the parent check. This review inspected those manifest conclusions and case evidence; it did not duplicate the parent's 2,377-artifact preservation hash pass. The LUNA receipts and archive comparisons had already received a separate independent local integrity check.
+
+This is an evidence-reporting review, not approval to replay a strategy or admission of a historical terminal price. No network requests, authenticated access, market reconstruction, registry writes or financial calculations occurred during this review.
