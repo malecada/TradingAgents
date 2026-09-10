@@ -1,0 +1,2489 @@
+{
+  "experiment": "audit_lifecycle_exposure_2026_09_10",
+  "type": "exposure_only_forensic_audit",
+  "git_commit": "1375e8a6528ec9e3f07c51ac4415880c056e867b",
+  "correction_policy_sha256": "6bae0081d6d114686d3ac807bb7172dbbbc63f13ac1bb07b0917bf20533cd312",
+  "gate_sha256": "9dab8150130ded7b2016bc396ae03afe1489d77a363f26db9c4cc82403d57d18",
+  "evidence_policy": "audit-v2",
+  "registered_experiment": "audit_lifecycle_exposure_2026_09_10",
+  "started_utc": "2026-09-10T07:26:13.335452+00:00",
+  "completed_utc": "2026-09-10T07:26:21.430891+00:00",
+  "original_cycle": "audit_reevaluation_2026_09_09",
+  "original_source_commit": "49fb9e47c4d9e40b9c3f1b7de475041ec63aac76",
+  "original_result_sha256": "30a8629fa9214ac031d8a642f719bccdff60c6f1a0b473b365e699dd79f6837a",
+  "registered_gate": {
+    "registered_date": "2026-09-10",
+    "type": "exposure_only_forensic_audit",
+    "charter": "docs/data-recovery/2026-09-10-exposure-charter.md",
+    "purpose": "Determine whether the preserved original September9 liquidation-fade books requested or carried exposure across now-confirmed original-contract terminations. No performance replay or outcome selection.",
+    "strategy_evaluation_permitted": false,
+    "signal_weight_reconstruction_permitted": true,
+    "allow_holdout": false,
+    "development_window": [
+      "2021-01-01",
+      "2025-03-31"
+    ],
+    "source_roots": [
+      "/home/malecada/master_thesis/TradingAgents/data",
+      "/home/malecada/master_thesis/TradingAgents-predlab/data"
+    ],
+    "original_cycle": "audit_reevaluation_2026_09_09",
+    "original_inputs_only": true,
+    "inventory": {
+      "path": "data/recovery/2026-09-10/clock-inventory.json",
+      "sha256": "2a71e5bcbe63e0b6820e2a08111763f8e1f1fff3895d03411262b396d1c4bc0d"
+    },
+    "universe_sha256": "0b9e931f7eae01d6d5f85aa6ef48fc63b2fd7453b5a7990e460b8eb0874d4e96",
+    "families": {
+      "liq_fade": {
+        "cells": [
+          {
+            "id": "thr2.5_H6",
+            "thr": 2.5,
+            "H": 6
+          },
+          {
+            "id": "thr2.5_H24",
+            "thr": 2.5,
+            "H": 24
+          },
+          {
+            "id": "thr2.5_H48",
+            "thr": 2.5,
+            "H": 48
+          },
+          {
+            "id": "thr3.5_H6",
+            "thr": 3.5,
+            "H": 6
+          },
+          {
+            "id": "thr3.5_H24",
+            "thr": 3.5,
+            "H": 24
+          },
+          {
+            "id": "thr3.5_H48",
+            "thr": 3.5,
+            "H": 48
+          }
+        ],
+        "warmup_start": "2020-06-01",
+        "hourly_end": "2025-03-31T23:00:00Z",
+        "weight_per_event": 0.1,
+        "gross_cap": 1.0,
+        "feature_window": 2160,
+        "feature_min_periods": 1440
+      }
+    },
+    "events": [
+      {
+        "symbol": "LUNAUSDT",
+        "closure_utc": "2022-05-12T15:30:00Z",
+        "new_position_restriction_utc": null,
+        "official_article_code": "ef3ce76d5c2d45ee9b6dc3f281cde744"
+      },
+      {
+        "symbol": "TOMOUSDT",
+        "closure_utc": "2023-11-14T09:00:00Z",
+        "new_position_restriction_utc": "2023-11-14T08:30:00Z",
+        "official_article_code": "034eee2293964e26b915b1ec5c42972a"
+      },
+      {
+        "symbol": "RNDRUSDT",
+        "closure_utc": "2024-07-16T09:00:00Z",
+        "new_position_restriction_utc": "2024-07-16T08:30:00Z",
+        "official_article_code": "d1f2ae8d99b24439a7a900caa9bb6b3b"
+      },
+      {
+        "symbol": "MATICUSDT",
+        "closure_utc": "2024-09-04T09:00:00Z",
+        "new_position_restriction_utc": "2024-09-04T08:30:00Z",
+        "official_article_code": "6a6de383727f4659a3050f7982e1620f"
+      },
+      {
+        "symbol": "BNXUSDT",
+        "closure_utc": "2025-03-17T09:00:00Z",
+        "new_position_restriction_utc": "2025-03-17T08:30:00Z",
+        "official_article_code": "2f963977c7274e0583f16f2e26987b61"
+      }
+    ],
+    "clock_contract": "Open-labelled1h bars. W[t] uses features throughbar t-1 and fills at prior close available at t. It is held through valuation at t+1h. An event exactly at t cannot be avoided by assuming the prior close stamped t-1ms was executable before its availability.",
+    "checks": [
+      "Report incoming prior-row allocation at each event boundary and requested allocation during any event-straddling or post-closure bar.",
+      "A nonzero desired allocation on [t,t+1h) containing termination is unresolved; a carried nonzero prior allocation at exact closure t is also unresolved even when current target is zero.",
+      "Report new targets and target-weight increases at decision times on/after announced new-position restriction. Target weights cannot establish every quantity increase caused by NAV/price drift; those require executable accounting and remain unknown.",
+      "Retain all6cells and all5events. Source missing bars affect the original signal construction and are disclosed; an observed original-book lifecycle assumption qualifies that original measurement, while absence of a flag does not prove readiness."
+    ],
+    "prohibited": [
+      "PnL",
+      "Sharpe",
+      "DSR",
+      "P0/P1/P2 statistics",
+      "new or recovered price snapshots",
+      "synthetic settlement",
+      "changed signal or universe",
+      "holdout",
+      "strategy selection"
+    ],
+    "outputs": "data/recovery/2026-09-10/exposure-audit/",
+    "stop_rule": "One immutable completed artifact for all6cells; archive input/source/gate hashes and exclusive start marker. New results or changed input require another registration.",
+    "ledger_policy": "Six exposure-forensic records in the dedicated append-only output forensic-ledger.jsonl; central predlab trial_ledger.jsonl remains byte-for-byte unchanged. No additional financial candidate is evaluated and no trial or DSR denominator changes.",
+    "pre_execution_ledger_clarification": "Independent source review found that using the central trial writer would count nonfinancial exposure inspections as tested hypotheses. Before outcomes, a dedicated forensic ledger is specified within the already registered output namespace; all six cells remain archived."
+  },
+  "n_registered_cells": 6,
+  "n_registered_events_per_cell": 5,
+  "cells": [
+    {
+      "id": "thr2.5_H6",
+      "config": {
+        "id": "thr2.5_H6",
+        "thr": 2.5,
+        "H": 6
+      },
+      "metrics": {
+        "status": "exposure_forensics_complete",
+        "financial_candidate_evaluated": false,
+        "n_registered_events": 5,
+        "events": [
+          {
+            "symbol": "LUNAUSDT",
+            "closure_utc": "2022-05-12T15:30:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2022-05-12T15:00:00+00:00",
+              "decision_available_utc": "2022-05-12T15:00:00+00:00",
+              "valuation_available_utc": "2022-05-12T16:00:00+00:00",
+              "event_at_exact_boundary": false,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": null,
+              "order_quantity_increases": null,
+              "status": "no_separate_restriction_established"
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2022-05-12T14:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2022-05-12T15:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2022-05-12T16:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2022-02-11 08:00:00+00:00",
+              "lookback_end": "2022-05-12 14:00:00+00:00",
+              "missing_or_invalid_close": 120,
+              "missing_volume": 120,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "TOMOUSDT",
+            "closure_utc": "2023-11-14T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2023-11-14T09:00:00+00:00",
+              "decision_available_utc": "2023-11-14T09:00:00+00:00",
+              "valuation_available_utc": "2023-11-14T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2023-11-14T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2023-11-14T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2023-11-14T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2023-11-14T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2023-08-16 02:00:00+00:00",
+              "lookback_end": "2023-11-14 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "RNDRUSDT",
+            "closure_utc": "2024-07-16T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2024-07-16T09:00:00+00:00",
+              "decision_available_utc": "2024-07-16T09:00:00+00:00",
+              "valuation_available_utc": "2024-07-16T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2024-07-16T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2024-07-16T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-07-16T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-07-16T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-04-17 02:00:00+00:00",
+              "lookback_end": "2024-07-16 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "MATICUSDT",
+            "closure_utc": "2024-09-04T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2024-09-04T09:00:00+00:00",
+              "decision_available_utc": "2024-09-04T09:00:00+00:00",
+              "valuation_available_utc": "2024-09-04T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2024-09-04T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2024-09-04T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-09-04T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-09-04T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-06-06 02:00:00+00:00",
+              "lookback_end": "2024-09-04 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "BNXUSDT",
+            "closure_utc": "2025-03-17T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2025-03-17T09:00:00+00:00",
+              "decision_available_utc": "2025-03-17T09:00:00+00:00",
+              "valuation_available_utc": "2025-03-17T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2025-03-17T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2025-03-17T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2025-03-17T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2025-03-17T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-12-17 02:00:00+00:00",
+              "lookback_end": "2025-03-17 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          }
+        ],
+        "n_events_with_observed_conflict": 0,
+        "readiness_certified": false
+      }
+    },
+    {
+      "id": "thr2.5_H24",
+      "config": {
+        "id": "thr2.5_H24",
+        "thr": 2.5,
+        "H": 24
+      },
+      "metrics": {
+        "status": "exposure_forensics_complete",
+        "financial_candidate_evaluated": false,
+        "n_registered_events": 5,
+        "events": [
+          {
+            "symbol": "LUNAUSDT",
+            "closure_utc": "2022-05-12T15:30:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2022-05-12T15:00:00+00:00",
+              "decision_available_utc": "2022-05-12T15:00:00+00:00",
+              "valuation_available_utc": "2022-05-12T16:00:00+00:00",
+              "event_at_exact_boundary": false,
+              "incoming_previous_allocation": 0.1,
+              "requested_allocation": 0.1
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 1,
+            "post_closure_allocated_bars": 12,
+            "post_closure_last_requested_utc": "2022-05-13T03:00:00+00:00",
+            "restriction": {
+              "restriction_utc": null,
+              "order_quantity_increases": null,
+              "status": "no_separate_restriction_established"
+            },
+            "observed_conflict": true,
+            "allocation_uncertainty": false,
+            "status": "observed_lifecycle_conflict",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2022-05-12T14:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T15:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T16:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T17:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T18:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T19:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T20:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T21:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T22:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T23:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T00:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T01:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T02:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T03:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2022-02-10 14:00:00+00:00",
+              "lookback_end": "2022-05-12 14:00:00+00:00",
+              "missing_or_invalid_close": 120,
+              "missing_volume": 120,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "TOMOUSDT",
+            "closure_utc": "2023-11-14T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2023-11-14T09:00:00+00:00",
+              "decision_available_utc": "2023-11-14T09:00:00+00:00",
+              "valuation_available_utc": "2023-11-14T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2023-11-14T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2023-11-14T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2023-11-14T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2023-11-14T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2023-08-15 08:00:00+00:00",
+              "lookback_end": "2023-11-14 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "RNDRUSDT",
+            "closure_utc": "2024-07-16T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2024-07-16T09:00:00+00:00",
+              "decision_available_utc": "2024-07-16T09:00:00+00:00",
+              "valuation_available_utc": "2024-07-16T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2024-07-16T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2024-07-16T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-07-16T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-07-16T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-04-16 08:00:00+00:00",
+              "lookback_end": "2024-07-16 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "MATICUSDT",
+            "closure_utc": "2024-09-04T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2024-09-04T09:00:00+00:00",
+              "decision_available_utc": "2024-09-04T09:00:00+00:00",
+              "valuation_available_utc": "2024-09-04T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2024-09-04T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2024-09-04T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-09-04T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-09-04T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-06-05 08:00:00+00:00",
+              "lookback_end": "2024-09-04 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "BNXUSDT",
+            "closure_utc": "2025-03-17T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2025-03-17T09:00:00+00:00",
+              "decision_available_utc": "2025-03-17T09:00:00+00:00",
+              "valuation_available_utc": "2025-03-17T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2025-03-17T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2025-03-17T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2025-03-17T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2025-03-17T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-12-16 08:00:00+00:00",
+              "lookback_end": "2025-03-17 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          }
+        ],
+        "n_events_with_observed_conflict": 1,
+        "readiness_certified": false
+      }
+    },
+    {
+      "id": "thr2.5_H48",
+      "config": {
+        "id": "thr2.5_H48",
+        "thr": 2.5,
+        "H": 48
+      },
+      "metrics": {
+        "status": "exposure_forensics_complete",
+        "financial_candidate_evaluated": false,
+        "n_registered_events": 5,
+        "events": [
+          {
+            "symbol": "LUNAUSDT",
+            "closure_utc": "2022-05-12T15:30:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2022-05-12T15:00:00+00:00",
+              "decision_available_utc": "2022-05-12T15:00:00+00:00",
+              "valuation_available_utc": "2022-05-12T16:00:00+00:00",
+              "event_at_exact_boundary": false,
+              "incoming_previous_allocation": 0.1,
+              "requested_allocation": 0.1
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 1,
+            "post_closure_allocated_bars": 36,
+            "post_closure_last_requested_utc": "2022-05-14T03:00:00+00:00",
+            "restriction": {
+              "restriction_utc": null,
+              "order_quantity_increases": null,
+              "status": "no_separate_restriction_established"
+            },
+            "observed_conflict": true,
+            "allocation_uncertainty": false,
+            "status": "observed_lifecycle_conflict",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2022-05-12T14:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T15:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T16:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T17:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T18:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T19:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T20:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T21:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T22:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T23:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T00:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T01:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T02:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T03:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T04:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T05:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T06:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T07:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T08:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T09:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T10:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T11:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T12:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T13:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T14:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T15:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T16:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T17:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T18:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T19:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T20:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T21:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T22:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T23:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-14T00:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-14T01:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-14T02:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-14T03:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2022-02-09 14:00:00+00:00",
+              "lookback_end": "2022-05-12 14:00:00+00:00",
+              "missing_or_invalid_close": 120,
+              "missing_volume": 120,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "TOMOUSDT",
+            "closure_utc": "2023-11-14T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2023-11-14T09:00:00+00:00",
+              "decision_available_utc": "2023-11-14T09:00:00+00:00",
+              "valuation_available_utc": "2023-11-14T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2023-11-14T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2023-11-14T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2023-11-14T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2023-11-14T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2023-08-14 08:00:00+00:00",
+              "lookback_end": "2023-11-14 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "RNDRUSDT",
+            "closure_utc": "2024-07-16T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2024-07-16T09:00:00+00:00",
+              "decision_available_utc": "2024-07-16T09:00:00+00:00",
+              "valuation_available_utc": "2024-07-16T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2024-07-16T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2024-07-16T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-07-16T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-07-16T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-04-15 08:00:00+00:00",
+              "lookback_end": "2024-07-16 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "MATICUSDT",
+            "closure_utc": "2024-09-04T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2024-09-04T09:00:00+00:00",
+              "decision_available_utc": "2024-09-04T09:00:00+00:00",
+              "valuation_available_utc": "2024-09-04T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2024-09-04T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2024-09-04T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-09-04T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-09-04T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-06-04 08:00:00+00:00",
+              "lookback_end": "2024-09-04 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "BNXUSDT",
+            "closure_utc": "2025-03-17T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2025-03-17T09:00:00+00:00",
+              "decision_available_utc": "2025-03-17T09:00:00+00:00",
+              "valuation_available_utc": "2025-03-17T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2025-03-17T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2025-03-17T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2025-03-17T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2025-03-17T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-12-15 08:00:00+00:00",
+              "lookback_end": "2025-03-17 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          }
+        ],
+        "n_events_with_observed_conflict": 1,
+        "readiness_certified": false
+      }
+    },
+    {
+      "id": "thr3.5_H6",
+      "config": {
+        "id": "thr3.5_H6",
+        "thr": 3.5,
+        "H": 6
+      },
+      "metrics": {
+        "status": "exposure_forensics_complete",
+        "financial_candidate_evaluated": false,
+        "n_registered_events": 5,
+        "events": [
+          {
+            "symbol": "LUNAUSDT",
+            "closure_utc": "2022-05-12T15:30:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2022-05-12T15:00:00+00:00",
+              "decision_available_utc": "2022-05-12T15:00:00+00:00",
+              "valuation_available_utc": "2022-05-12T16:00:00+00:00",
+              "event_at_exact_boundary": false,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": null,
+              "order_quantity_increases": null,
+              "status": "no_separate_restriction_established"
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2022-05-12T14:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2022-05-12T15:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2022-05-12T16:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2022-02-11 08:00:00+00:00",
+              "lookback_end": "2022-05-12 14:00:00+00:00",
+              "missing_or_invalid_close": 120,
+              "missing_volume": 120,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "TOMOUSDT",
+            "closure_utc": "2023-11-14T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2023-11-14T09:00:00+00:00",
+              "decision_available_utc": "2023-11-14T09:00:00+00:00",
+              "valuation_available_utc": "2023-11-14T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2023-11-14T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2023-11-14T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2023-11-14T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2023-11-14T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2023-08-16 02:00:00+00:00",
+              "lookback_end": "2023-11-14 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "RNDRUSDT",
+            "closure_utc": "2024-07-16T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2024-07-16T09:00:00+00:00",
+              "decision_available_utc": "2024-07-16T09:00:00+00:00",
+              "valuation_available_utc": "2024-07-16T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2024-07-16T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2024-07-16T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-07-16T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-07-16T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-04-17 02:00:00+00:00",
+              "lookback_end": "2024-07-16 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "MATICUSDT",
+            "closure_utc": "2024-09-04T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2024-09-04T09:00:00+00:00",
+              "decision_available_utc": "2024-09-04T09:00:00+00:00",
+              "valuation_available_utc": "2024-09-04T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2024-09-04T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2024-09-04T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-09-04T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-09-04T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-06-06 02:00:00+00:00",
+              "lookback_end": "2024-09-04 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "BNXUSDT",
+            "closure_utc": "2025-03-17T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2025-03-17T09:00:00+00:00",
+              "decision_available_utc": "2025-03-17T09:00:00+00:00",
+              "valuation_available_utc": "2025-03-17T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2025-03-17T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2025-03-17T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2025-03-17T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2025-03-17T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-12-17 02:00:00+00:00",
+              "lookback_end": "2025-03-17 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          }
+        ],
+        "n_events_with_observed_conflict": 0,
+        "readiness_certified": false
+      }
+    },
+    {
+      "id": "thr3.5_H24",
+      "config": {
+        "id": "thr3.5_H24",
+        "thr": 3.5,
+        "H": 24
+      },
+      "metrics": {
+        "status": "exposure_forensics_complete",
+        "financial_candidate_evaluated": false,
+        "n_registered_events": 5,
+        "events": [
+          {
+            "symbol": "LUNAUSDT",
+            "closure_utc": "2022-05-12T15:30:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2022-05-12T15:00:00+00:00",
+              "decision_available_utc": "2022-05-12T15:00:00+00:00",
+              "valuation_available_utc": "2022-05-12T16:00:00+00:00",
+              "event_at_exact_boundary": false,
+              "incoming_previous_allocation": 0.1,
+              "requested_allocation": 0.1
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 1,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": null,
+              "order_quantity_increases": null,
+              "status": "no_separate_restriction_established"
+            },
+            "observed_conflict": true,
+            "allocation_uncertainty": false,
+            "status": "observed_lifecycle_conflict",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2022-05-12T14:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T15:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T16:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2022-02-10 14:00:00+00:00",
+              "lookback_end": "2022-05-12 14:00:00+00:00",
+              "missing_or_invalid_close": 120,
+              "missing_volume": 120,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "TOMOUSDT",
+            "closure_utc": "2023-11-14T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2023-11-14T09:00:00+00:00",
+              "decision_available_utc": "2023-11-14T09:00:00+00:00",
+              "valuation_available_utc": "2023-11-14T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2023-11-14T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2023-11-14T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2023-11-14T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2023-11-14T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2023-08-15 08:00:00+00:00",
+              "lookback_end": "2023-11-14 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "RNDRUSDT",
+            "closure_utc": "2024-07-16T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2024-07-16T09:00:00+00:00",
+              "decision_available_utc": "2024-07-16T09:00:00+00:00",
+              "valuation_available_utc": "2024-07-16T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2024-07-16T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2024-07-16T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-07-16T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-07-16T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-04-16 08:00:00+00:00",
+              "lookback_end": "2024-07-16 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "MATICUSDT",
+            "closure_utc": "2024-09-04T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2024-09-04T09:00:00+00:00",
+              "decision_available_utc": "2024-09-04T09:00:00+00:00",
+              "valuation_available_utc": "2024-09-04T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2024-09-04T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2024-09-04T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-09-04T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-09-04T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-06-05 08:00:00+00:00",
+              "lookback_end": "2024-09-04 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "BNXUSDT",
+            "closure_utc": "2025-03-17T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2025-03-17T09:00:00+00:00",
+              "decision_available_utc": "2025-03-17T09:00:00+00:00",
+              "valuation_available_utc": "2025-03-17T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2025-03-17T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2025-03-17T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2025-03-17T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2025-03-17T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-12-16 08:00:00+00:00",
+              "lookback_end": "2025-03-17 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          }
+        ],
+        "n_events_with_observed_conflict": 1,
+        "readiness_certified": false
+      }
+    },
+    {
+      "id": "thr3.5_H48",
+      "config": {
+        "id": "thr3.5_H48",
+        "thr": 3.5,
+        "H": 48
+      },
+      "metrics": {
+        "status": "exposure_forensics_complete",
+        "financial_candidate_evaluated": false,
+        "n_registered_events": 5,
+        "events": [
+          {
+            "symbol": "LUNAUSDT",
+            "closure_utc": "2022-05-12T15:30:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2022-05-12T15:00:00+00:00",
+              "decision_available_utc": "2022-05-12T15:00:00+00:00",
+              "valuation_available_utc": "2022-05-12T16:00:00+00:00",
+              "event_at_exact_boundary": false,
+              "incoming_previous_allocation": 0.1,
+              "requested_allocation": 0.1
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 1,
+            "post_closure_allocated_bars": 24,
+            "post_closure_last_requested_utc": "2022-05-13T15:00:00+00:00",
+            "restriction": {
+              "restriction_utc": null,
+              "order_quantity_increases": null,
+              "status": "no_separate_restriction_established"
+            },
+            "observed_conflict": true,
+            "allocation_uncertainty": false,
+            "status": "observed_lifecycle_conflict",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2022-05-12T14:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T15:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T16:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T17:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T18:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T19:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T20:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T21:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T22:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-12T23:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T00:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T01:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T02:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T03:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T04:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T05:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T06:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T07:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T08:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T09:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T10:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T11:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T12:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T13:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T14:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              },
+              {
+                "bar_open_utc": "2022-05-13T15:00:00+00:00",
+                "previous_requested_allocation": 0.1,
+                "requested_allocation": 0.1
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2022-02-09 14:00:00+00:00",
+              "lookback_end": "2022-05-12 14:00:00+00:00",
+              "missing_or_invalid_close": 120,
+              "missing_volume": 120,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "TOMOUSDT",
+            "closure_utc": "2023-11-14T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2023-11-14T09:00:00+00:00",
+              "decision_available_utc": "2023-11-14T09:00:00+00:00",
+              "valuation_available_utc": "2023-11-14T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2023-11-14T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2023-11-14T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2023-11-14T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2023-11-14T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2023-08-14 08:00:00+00:00",
+              "lookback_end": "2023-11-14 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "RNDRUSDT",
+            "closure_utc": "2024-07-16T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2024-07-16T09:00:00+00:00",
+              "decision_available_utc": "2024-07-16T09:00:00+00:00",
+              "valuation_available_utc": "2024-07-16T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2024-07-16T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2024-07-16T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-07-16T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-07-16T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-04-15 08:00:00+00:00",
+              "lookback_end": "2024-07-16 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "MATICUSDT",
+            "closure_utc": "2024-09-04T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2024-09-04T09:00:00+00:00",
+              "decision_available_utc": "2024-09-04T09:00:00+00:00",
+              "valuation_available_utc": "2024-09-04T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2024-09-04T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2024-09-04T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-09-04T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2024-09-04T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-06-04 08:00:00+00:00",
+              "lookback_end": "2024-09-04 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          },
+          {
+            "symbol": "BNXUSDT",
+            "closure_utc": "2025-03-17T09:00:00+00:00",
+            "readiness_certified": false,
+            "order_quantity_changes_measured": false,
+            "boundary": {
+              "bar_open_utc": "2025-03-17T09:00:00+00:00",
+              "decision_available_utc": "2025-03-17T09:00:00+00:00",
+              "valuation_available_utc": "2025-03-17T10:00:00+00:00",
+              "event_at_exact_boundary": true,
+              "incoming_previous_allocation": 0.0,
+              "requested_allocation": 0.0
+            },
+            "unreconciled_incoming_at_closure": false,
+            "straddling_allocated_bars": 0,
+            "post_closure_allocated_bars": 0,
+            "post_closure_last_requested_utc": null,
+            "restriction": {
+              "restriction_utc": "2025-03-17T08:30:00Z",
+              "order_quantity_increases": null,
+              "new_target_requests": 0,
+              "increased_nonzero_target_requests": 0,
+              "new_target_requests_before_closure": 0,
+              "increased_nonzero_target_requests_before_closure": 0,
+              "nonzero_unchanged_target_bars": 0,
+              "unavailable_target_transition_bars": 0
+            },
+            "observed_conflict": false,
+            "allocation_uncertainty": false,
+            "status": "no_observed_conflict_qualified",
+            "allocation_rows": [
+              {
+                "bar_open_utc": "2025-03-17T08:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2025-03-17T09:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              },
+              {
+                "bar_open_utc": "2025-03-17T10:00:00+00:00",
+                "previous_requested_allocation": 0.0,
+                "requested_allocation": 0.0
+              }
+            ],
+            "original_local_input_coverage": {
+              "lookback_start": "2024-12-15 08:00:00+00:00",
+              "lookback_end": "2025-03-17 08:00:00+00:00",
+              "missing_or_invalid_close": 0,
+              "missing_volume": 0,
+              "qualification": "Local lookback does not certify full slot-competition history or executable quantities; original missing-signal behavior is reproduced."
+            }
+          }
+        ],
+        "n_events_with_observed_conflict": 1,
+        "readiness_certified": false
+      }
+    }
+  ],
+  "input_sha256": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/xsect/liq_fade.py": "98d1a5e869c386a69f1754c4166f03f19bdb8462bf3ee58c90291c7dd50b1507",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/scripts/audit_reevaluate_accounting_2026_09_09.py": "ad9acc3b0c81f5b485e636069ed2f89d13ae9243dd8a93ff0f262f9b6ed628c2",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/data/predlab/audit_reevaluation_2026_09_09/liq_fade/result.json": "30a8629fa9214ac031d8a642f719bccdff60c6f1a0b473b365e699dd79f6837a",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/data/recovery/2026-09-10/clock-inventory.json": "2a71e5bcbe63e0b6820e2a08111763f8e1f1fff3895d03411262b396d1c4bc0d",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/1000BONKUSDT.parquet": "8fc8607daa76a583a1de49d3f497d6ec0ad17b091a4abc3f6a35a70719119c78",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/1000FLOKIUSDT.parquet": "263498e2a014700e78d15e81c29a796dc8be0eedc83f925f0ae444b88350c47d",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/1000LUNCUSDT.parquet": "3b7539525e83e36116dad37df5521a0b652099aaddcbfb793487cab431d2529d",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/1000PEPEUSDT.parquet": "ab2daabbb6b5083d10ea86e16ce3bda723a20dce78768dad8d6c62907c0bb988",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/1000RATSUSDT.parquet": "dcae97a677830b3b838c931789291a7ccaecfe19b58d888e9dea1e86b9109abe",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/1000SATSUSDT.parquet": "d20de1774d119a4748ce45b5eb8527dc73bd09ca3b47a3d47574231516d07cab",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/1000SHIBUSDT.parquet": "d54125fd32dabf425e3bc52df11ba82f64464d687312b8129c57ef53b28ae65b",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/1000XECUSDT.parquet": "4e24dabbabbcd241b9f8029212373429b5961bb87a7e14b4819c7a714a673da3",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/1INCHUSDT.parquet": "3741f33b115400711cc52ec8d1bd01a9500f483332cf5ace0fe2ca1a7ee48eba",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/1MBABYDOGEUSDT.parquet": "240875f151fa79c99b59ec1f1c9f833a837043a7cd08d9d1a19cacead48597cd",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/AAVEUSDT.parquet": "e47f0bdaeeafd4945ca58815438c37808498f9c4c3bbb7c12ae19e5741a38bf6",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ACHUSDT.parquet": "11688ecc507a7afafa7fe0979d5aa61c00ca7ce5fc70482bbcc45978845a2352",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ACTUSDT.parquet": "8bafa0ebec59be8b1729a2979763dac649272ca137db3f37efbea2d16b8e7a9b",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ADAUSDT.parquet": "fa1a1114cc7ca6c2fd5d1e0c2d893d1011dd53a337f8657af87d38b43cde96a7",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/AEVOUSDT.parquet": "bb849c3d7073a241b81e52ed821f96dabce01951db0dbd880643604c1a4e44fd",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/AGIXUSDT.parquet": "3b32714167f4ce8869d89385f9a1288bdf38b88450d860fc3efcba6f573e0291",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/AGLDUSDT.parquet": "de10c64eaee2491f7973b94e1a8fffbdb73e127589997928bdb42b17e9aed9fe",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/AIXBTUSDT.parquet": "9fe26dc90c4fb71f465bc9c5e9a332acb0897db538b6fe2e04ad11f74c40c25a",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ALGOUSDT.parquet": "ad38700ff1e3e7b6e7c653fda056d88767a630bac1996bd9449f230c35744edf",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ALICEUSDT.parquet": "8b48097a5fe1bf2f1c38512fae880e28717da9245482804dec952b357ee1a697",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ALPHAUSDT.parquet": "1cab2c7653b21bc6b4827e3c6bfd677f4aab69666ed70a32f8b7492344c4ad44",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ANKRUSDT.parquet": "ac3c6609ba6816348db6a81192f2c11df484b2ec2f718c260e79191268c1a285",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/APEUSDT.parquet": "f323cd878767834b86533147fc6a9f58b4aa54d4cd6de65d0b0f0d4c35ed24e8",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/API3USDT.parquet": "ac443c0d76d49c2328d6566a23cff718c76bc9c64aab3c7563f2047a17fca496",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/APTUSDT.parquet": "acca7f5f109fd9e8c24c459124613be24be98308b2ca7cb956dfa46ebb00f8fa",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ARBUSDT.parquet": "f886b3f30bd26355ae46f36919ce0c7b33b636fef58efceaeaee884acf9cf7a4",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ARKMUSDT.parquet": "dfe7fa438dd50d70a00097da9db537ae7d98dbca2947b399e3791c1d70ca4357",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ARKUSDT.parquet": "c5a366881af16c635af0729569b92f03f89049326e0a69ada87eedc24a7334a8",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ARPAUSDT.parquet": "f1d4608e8f04b54724d361891a06979d21db83181c2ada66d79b5b28f7049888",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ARUSDT.parquet": "fb0e6a0bd2d0c7c251da3d3799c5bc3b59b44a6a4101a2d00ebf2022671fbedf",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ASTRUSDT.parquet": "6e706576333e4ecc623ee1f7a2f1fc15118af0699411622017f790f92cdce4c3",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ATOMUSDT.parquet": "5151a02809139b611f2cdc1c63c9abcb5ae8caf1e70d59eb29359888d72917a1",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/AUDIOUSDT.parquet": "f20198212174efa04b373dd0dd91f1e3dd0cddb00e9e883beb5c26c7946b80e3",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/AVAXUSDT.parquet": "0c28610e272e7c16abbaff369473875913d2907f4f14754d9d625c47eadf907c",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/AXSUSDT.parquet": "28e378dc32706150ebab9426d68c78baafb19c2f7b95f6882eed56f304d78859",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BAKEUSDT.parquet": "9b9d802e6b0778b561dd50ac377c154041061073fbf17d4d91cdf097928b8132",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BALUSDT.parquet": "68e0403c754d40b8fe4be21b82278e33a1bbe35c630f3ce10c48d356c78dcbfb",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BANDUSDT.parquet": "09fb9098adeff2dfac655a0a2334e82fb4cdfc35789039109437d26fc6b704ff",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BATUSDT.parquet": "96c003fec4aeb4df8c863d1460a82cefa5824fc3a748b2a356f3081bfbb566c1",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BBUSDT.parquet": "15255eebab1b6b9b4dc76db799d475f2e7e7010329b27ebb47806cbd6a4486a9",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BCHUSDT.parquet": "50aeb95b8a2b715ca419d3841bec61aab1ef20db7630ef81ce059d4660eb0515",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BELUSDT.parquet": "0fd598c1226d0c279387f2aa20b8027f481967a1c5e4283b44491fe5650f42bf",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BIGTIMEUSDT.parquet": "b63175f5b9215f8b971bacd0124f8d3796873e00a8b5e347b89805095b43afd9",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BLURUSDT.parquet": "ddcf916b4af66efec61cb69b5b6f175e775510e3e174f8dfdfbc3c02972b73cc",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BLZUSDT.parquet": "9f550e743185079c3e4b98676e39b7a1d11548f17dd36156b19145ce59c16d4e",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BNBUSDT.parquet": "5bffa52095a5520e52e73c9e616cb486bafe2977ffacdf14cdb6d87848f83a46",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BNTUSDT.parquet": "21287d4f54a2d2d58a7e2c88717cf50d242201638b3837bc2a7fb959b7d3f1ac",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BNXUSDT.parquet": "9ef621fedd75d82b05289513216f64f99aabb734afefde92a4c16f56a729202a",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BOMEUSDT.parquet": "96290e14acec5494985b4cc0f9f529cc93111834fa10c718e47a73bc79210186",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BONDUSDT.parquet": "fbb8b3b55b9667a9db8604ae05fef1c3d870c22802b295210d96983f274052de",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BTCUSDT.parquet": "55150b31e5c00b6bb4aeb5ae95b19e0b45fc8ebac0f09cf9b35902c5013a273d",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BTTUSDT.parquet": "49bb913b46e604263c2f85e53ba92c74604637000d23e1b9457777849e2027e2",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BZRXUSDT.parquet": "dbf2aec16d9558bd71d2cbb3c180a4da8c8bd22b65c81adc7d9da518f466895f",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/C98USDT.parquet": "b544db60d6adda8630a6d473025280f21a507d7f8b5dc71480e81c690a72bbd7",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/CAKEUSDT.parquet": "70d30ad2d04b23b207ec95c01a9b31dac8595b039c541a8364d374cad3494a92",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/CELOUSDT.parquet": "206c024a4fd8341f85daf1c33a708ac8169a253c897505a966b4c0602b19a414",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/CELRUSDT.parquet": "6d94e469922f88e6726f541cb6c65073628e9dbdf6c48f4303bf64c24b1b99d1",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/CFXUSDT.parquet": "8bd08cf82ac85228004b8422428c3c363fa2ae53694c876b7d29771280a7cf3d",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/CHRUSDT.parquet": "066f1b4c7cedc9b2d3e0482dcc9a49d20434469fbaccf86914c3de5ad7a6bb96",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/CHZUSDT.parquet": "76043f601d4a807c34c763b58e1a7e82d985f2958e227d0cebe174f3fa6f117b",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/CKBUSDT.parquet": "23209f6e09df753424b02506041463bd5e190b73b780740eb8cd69049d04b3d8",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/COCOSUSDT.parquet": "e7d69b325c61ff5ead6801a23aef3042c87ee6f21de778c77d8c4976170ed86a",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/COMPUSDT.parquet": "2b726bd0af1ba3683fa2a4f54cc41426538bed2e4e4d364651c8f6b6f125e142",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/COTIUSDT.parquet": "8c0c604ad3a762ef8ede2446a49b30ab000a5c9a3033968317fd511a4df7ea1b",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/CRVUSDT.parquet": "e517d9f5e0b93029daece5a816f3961244b68f146c592e477c12194803b955e0",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/CTSIUSDT.parquet": "731a11d5853a5ac5565609a7647eddf9932384ac19706bdd9da4f20e010b682f",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/DASHUSDT.parquet": "5a9eaf652bd3215e9c93676c06b50ac68607e1ef1dded06ebc568b5dc191ee2a",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/DEFIUSDT.parquet": "706a317788d0da0de658d47dc42f44625aaa2a473258ac53d4fa5f355159d52a",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/DENTUSDT.parquet": "6fe93201a892a0c23937ada7ee50df72461938e6ae0e539029cd02ee071e2b81",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/DODOUSDT.parquet": "f642eb26bf2d6373471e78c63201d47684d53ce0415300068d264578fedf7564",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/DOGEUSDT.parquet": "610ea54df9c99dde7bb1d29196583e4ad4e72d186904ba7dae4893e28b1806af",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/DOGSUSDT.parquet": "65556af61f40d7b7dda946653d30c7a85f25f63e1526b5ac817b367883db9302",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/DOTUSDT.parquet": "3fb4cf1e1d395a42abc4f811a2d254f7340510d360f3b8af5e311d66e939ab5c",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/DUSKUSDT.parquet": "deaf13871cd27183a8bbe9c2af40d468e3279fe3771d9ad8b0b83eaa336dc606",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/DYDXUSDT.parquet": "b2956c3a31ed1e93e89674336e77e8cf7a1160bc93c4653edc8949e65c1a7df0",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/EDUUSDT.parquet": "edc0bcf4138d49ce47274f260cf82a846bd67676af75539caf6158c04000be19",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/EGLDUSDT.parquet": "633ce00b613f046b68f9c8c5d357d9b19153661cc3bc84d233528db736dcbf49",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/EIGENUSDT.parquet": "228705ba7103a01734cd9c11670123798b11c36f02df468856fe323531e437bc",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ENAUSDT.parquet": "15db475650e73f70ad6cdaf57bed491be4816d1dfec79ad854aabdf583c0de52",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ENJUSDT.parquet": "5141858991ae8ccee0d2aef314ff62d8312f054adc1c30ac8e1ea5138be7a12e",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ENSUSDT.parquet": "d27c9cef8f4bd27ddbf8c235c729c5ea4ac0b2b137675a58af4b24d4b2ffb69c",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/EOSUSDT.parquet": "ecd8780d37add19d0288fe704360dd17f395c7d5965c35a88fa6c248998c7e5a",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ETCUSDT.parquet": "73574453f8db3d7b279069a8af6ddc97776f220f4f399c01776866553731bf1c",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ETHFIUSDT.parquet": "f005e2024f38119b6914f91f39bf03dc993cbec33ed0cb79f532358ed6f505ef",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ETHUSDT.parquet": "d178f72396566330317074be1e7e39087d610207f1e2ceec5b59253488e694e6",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/FARTCOINUSDT.parquet": "79200b992dda7a100c830ea52fe772cabe6ff2ef05fa6b0ddbf33d2c07e67f3e",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/FETUSDT.parquet": "3fe01cf1d2514d73177c6b0a19370ccc217b22f1b5800967424ae9b0b7caf0d6",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/FILUSDT.parquet": "7fc65dd3bbd823084d8789c083f8f39536a7f53ab8dca211e991adb9f04996c6",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/FLMUSDT.parquet": "0701318f5515f3b0a20294528b208486cce275f252e7e0b717f82ccb3b86750e",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/FLOWUSDT.parquet": "3c76197dbdb968eda236516bf2ee2a9c8574acd4742732898d98e4a31b7e2bcb",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/FOOTBALLUSDT.parquet": "3f6562e9d04b765fe63bd67c51c49a2f5e5f6466455fc86f4748372862d16845",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/FRONTUSDT.parquet": "718256c308aa4234fcc4489ecc5fc98ea4db095eb97057bfd73fc323997379ca",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/FTMUSDT.parquet": "b24893fc213d93f4762c9b0d289072d059a1dd350997e204849c7a29ddfbe0d5",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/GALAUSDT.parquet": "bd356b737520e9f88797f2f3f5a05862e21a8ead389355b2e4c4c8a3191c9e62",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/GMTUSDT.parquet": "8a9368dbd1b40123d61a3832fbe9f3bbc6459fcc03279ca19ca2bedf1dc98e75",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/GOATUSDT.parquet": "4b6cb3ba06f937eb52b3a9d69025703728e4fc58ae899017540f8076dd15ab6e",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/GRTUSDT.parquet": "74872f6dcccc5744863302d1fbf1c060b4bf474abef9916f2e5790ad6f33015a",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/GTCUSDT.parquet": "c44e2feb77ae32324101080f5b1bfce44d0ac2d148df4f27f30133805efc40b7",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/HBARUSDT.parquet": "02239bb14e8bf10ecfc6173d60ca39779c8bc3e9fab59aef21ec239a56f34e86",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/HIGHUSDT.parquet": "663001667506c0f91bbfa9268031bfb5f2c659e786bbac07604e05c65789d370",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/HNTUSDT.parquet": "368395c162b48d2504a61177a4e8a0cab898fc77198ad141c33795e866c38f55",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/HOOKUSDT.parquet": "624c7340565896c3129fa417abbf0e046aab8be482870924ad0a865aaca53bde",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/HOTUSDT.parquet": "a9bd70e95e2e65adaf1289dc6052361afb53154e5380af51d967bcbba0318aeb",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ICPUSDT.parquet": "5a57da13639e91fa444a2b730b7005572ae975001b2cc5eb085c409761b1d386",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ICXUSDT.parquet": "fa248a93ed42e3c6ce1c0970b4b96406e85bc19bbf7e18eeef44e8ed617c6421",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/IDUSDT.parquet": "b66f32b946800c691dc3a7e1845e005360f13754faf073a33f0e18bdb8c25baf",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/IMXUSDT.parquet": "58fccd33022b9c5fe5ea7c5d659d73e58b51ed96a8bd342de31819318b2440f5",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/INJUSDT.parquet": "4567ef66ef11ea39b3008c1b3f3d308edc007f1606486397631e62bc0a4e1826",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/IOSTUSDT.parquet": "40214e74854fb44460dc9fedc8d71a4b73cad3a1dafa7a4d92decb8d9e2b05ff",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/IOTAUSDT.parquet": "742f765abd968e56fc0049ab5b6ac3fee2773751e7c8a17c7bec9349dc3912c6",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/IOTXUSDT.parquet": "714fd6d25584b4f936090f2501d3de3168852cebddc02037d48eb5f948e61a6c",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/IOUSDT.parquet": "821bf02096f5c7fcf8a4126f880040225721be1220c1a1a04adad8c9b6161813",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/JASMYUSDT.parquet": "7d1e6525b9142083077d4dda95c57caeb860beb6bf90daf6afc8e0dc3760d3a4",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/JTOUSDT.parquet": "83d8fa7da3cb6f3330354a784766e81e1615fd84411a788c7a68a14895466aac",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/JUPUSDT.parquet": "ea93bb2e381c17577b3b4bc6994fa24b4235d58f87213a55b1743f19354f50f1",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/KAVAUSDT.parquet": "c73ab39347f9b574ec39b3a334fc726a45e2f798da587aedb374c8e7e57179f6",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/KNCUSDT.parquet": "701a69d2d962e397b372f23fa66d9df6b3143175336e83de74c2c9aa53b61518",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/KSMUSDT.parquet": "8f91148e12cfc81e9e9a684ea30e6b8dcc27ab5d49b3e94de38b4a483a50bdfd",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/LDOUSDT.parquet": "91c2a15204dd873ac631886738f352754cc835d1adaf66a8170fafcd9dc898bc",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/LEVERUSDT.parquet": "5ec085d497b7babe63e2fb04607833dfb89de8e4c9d15bd81b6cd9963745fe3c",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/LINAUSDT.parquet": "eedaa3f7f70c0fdb29b720b50c9052d89ec46b8d71a820e9a1f1145354cea927",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/LINKUSDT.parquet": "f7032b71da99f4729bde609fc6144ab1baf5fa4462273b08d624e07eb558b974",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/LPTUSDT.parquet": "828a0289102428e708c7630ff64082f25df42590e95bee5e5d6cc8b93e79cf49",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/LQTYUSDT.parquet": "90f826368fa2dec2ca985d9cac95d95054a85c90e843c999a1048131c43c022c",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/LRCUSDT.parquet": "0471ce956dc60e6b747e592651b9626aa4717cc45567ef50f949930d45c6de4a",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/LTCUSDT.parquet": "b1ea97a3ecf6d9d4504568c5a2c8ebdade6ac120b7e42ff672ad1c900459c02a",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/LUNA2USDT.parquet": "3251854e54ae773283ab159abfcca3f36b05443b0ffc8ef2f6b7f3b8d885283e",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/LUNAUSDT.parquet": "df086e7dc0e6153f39b90aba24766643c35698d7f930b7d577142a4421fe31ac",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/MAGICUSDT.parquet": "fb3a3983185af8010544aa26b882fac795773904f46c9211ef8f4e33ca8662b6",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/MANAUSDT.parquet": "ce7daa29abe8fc2930fd3fd5497da529df076fa96e7fca61dabdf2490b355e12",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/MASKUSDT.parquet": "7cc865bed0d4d7726d64e5e3318e24c044f1cb9f13bccb05e501b944286df359",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/MATICUSDT.parquet": "6daac78fc0d21ca48cdc548ece2f0e9b60f51eac38c9289e7ecf74cd6cff0805",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/MEMEUSDT.parquet": "374a619238b5e987ad9fbd2680b4730cb8849588357cf59e8fbe8815dab07051",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/MEWUSDT.parquet": "ba6fa67769c23b0a29bb11dc240925d3865c29d7148acd2d851365ecb1b1664c",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/MINAUSDT.parquet": "b0e9ab2f757140a4aade2c5786fa7ca5e2502224d38c24d57e9e5892c7606f4c",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/MKRUSDT.parquet": "7a586973a71dcbecd3bd619c01ff26a37a8902f9200bd4cb46cdd8b12a624b8a",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/MOODENGUSDT.parquet": "4d9fa7fa2ef9303bc794f03c1ba9927ca30ad923a00798ed9a23a3ca3ef786ef",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/MTLUSDT.parquet": "f1d38b6c456cc2e4e93d7e8b10c2032ae21b6a6957c002fcce310745d27caa6f",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/NEARUSDT.parquet": "4f60790beba6f070ad5a4d4c8cfa81dbf461206675903c3a8ac474a74f973fa8",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/NEIROETHUSDT.parquet": "faf2756cd8bf41b0ce2bb1807cdff761d5440a7e5ddce5fb8db45c8ded45b8b3",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/NEIROUSDT.parquet": "d97c3d5d0628d4b9825792e2d0e97107ae7ec3649828f4d85ad8c27112d5244f",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/NEOUSDT.parquet": "e73073827a35e3c9b6500e2cdab2e664a2e0dec4292ce3cb7a59015dabf87afd",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/NOTUSDT.parquet": "fac1c933a47e760f1f820a0cf56cfbb8f2b9dcf7502c02488fae262ad1066bd4",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/OCEANUSDT.parquet": "e36e29e72a26eabc70115d15d752c212307d8b44761083692af9568f865bbed9",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/OGNUSDT.parquet": "92604321cd7cd20e48f2d7c745434a8fbce0c8cc905d449a09fe53c094fb5db3",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/OMGUSDT.parquet": "86effcaaeae73f04def81d052cc425407880d786811977938ddac80b58ee8ded",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/OMUSDT.parquet": "d1731bb332d59375ec267c68b428c0ca695950b6529be0f4d76e9c1903035a5d",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ONDOUSDT.parquet": "1462ce3e3964144c3f95c8dedec052da38b333366680c4334dc1423643b27fec",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ONEUSDT.parquet": "506992d968d38dfba892b6ef1fb5a3b7a888ab034a0a78ad0cf32a4b89c3b94d",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ONGUSDT.parquet": "8c215790d831062f7dbd12e80af16177ce1d646b5464a88347f6914986257d94",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ONTUSDT.parquet": "11329683784cf7e164c79f76ac6f8d8d0f7a3aac75da232e7463dc525def9de4",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/OPUSDT.parquet": "9b687fd9e96b78b91f995420d61aaf93ac22f9cb5051d4dfbcc7e5b04a772c2f",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ORDIUSDT.parquet": "9190b454d1e384d4b7bef3c16cd06adf5fb728af6d2d6fcae84b479b6f273cd2",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/PENDLEUSDT.parquet": "11911fc98de92a0927bb7db1f6c87dee38f3726fd440f92ab83fb748f590d318",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/PENGUUSDT.parquet": "d96654a7cef69dca1e3af798b80b016790eea5626e51d512c59c6e841012eaa9",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/PEOPLEUSDT.parquet": "af64ef0e525e973c3008ea2afeff3b629bfb77d9971ba9cb8ee58a7230651fbe",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/PERPUSDT.parquet": "e17edc48d8ccfd782a7ecc2610fffe95e5b5e7098b9b581c9852c2140ea10c8c",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/PNUTUSDT.parquet": "6bfc38e3e90c3d575db161f07d4a05a9681f1b7f4226b0b0f203bbace43aa6e2",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/POLYXUSDT.parquet": "23243b14dff6971a9074db4362cd1c97ea18ad28deba0b52c93e28e450bdab82",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/POPCATUSDT.parquet": "3fecde547c46e710521a5bcdbdaeab726ccc05fcc6fcec2fb73027996216fd8e",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/PYTHUSDT.parquet": "00273580d803136e9a0fed9c194aa1a7aa85669bd5be02e78eda151d8665a279",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/QTUMUSDT.parquet": "ef58f2bcdaf8bac173fb91880384077e1c8c222fd5933f8de6e231eedbe7691d",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/REEFUSDT.parquet": "768652dc71f729ab1199560de4a59e35ca0b6bc7ec1d39c3a18edf2bf0528ee0",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/RENUSDT.parquet": "a552169f8a726f88da93d071fb9f8cb4916a5c2bb6fcb08be59a2973b8e5edf8",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/RLCUSDT.parquet": "9282a3da3ee4747360b4419f977453aa60f7ae3a071c318cf0df6582b6304435",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/RNDRUSDT.parquet": "57c867d858d81cd664a62c92ae4b36a195046ff5ed8941d94c080c33998fd2d9",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ROSEUSDT.parquet": "f634ba6f60816cb7b8f8d9b3fc46807a7f63323f0be1ec85b4bf65c69be516da",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/RSRUSDT.parquet": "6004c4fc5f77dd2110cf546a8ceab46ac02a25b4491aa14fb3339c2c34e1df49",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/RUNEUSDT.parquet": "2fb175da8d0e76d54c9c23a39b3f38a01c9d756932cf54989d74c7ee7418eabf",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/RVNUSDT.parquet": "2687930288b23ef82de1ba886bf340649982a25ffdf4bf64753b4a273db4c88a",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/SAGAUSDT.parquet": "676cc016f60020609da8b0cac4740f7ade6d472be7c4c33647910fcfad93e498",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/SANDUSDT.parquet": "7f224d0f68062ea05a79833d50147a99d93d9b5dc5d2357489114dfada780ba7",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/SEIUSDT.parquet": "d4169ea484541edeab9c6ccdb0fdedcde2185aec0cf08a68199e5bf8cd98f01a",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/SFPUSDT.parquet": "a1c9bac50b4ad440c1dcce9c93f2f0967047670d8fa662216684e6b80fd95440",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/SKLUSDT.parquet": "c5a6d57191da378f48a47acc06c8184d59bc1000a7e7ca91f41ee1ebdd2b561b",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/SNXUSDT.parquet": "c27cb6323ac626611866e93b2bcdbfc444caf8af8e7881d795a5f15d81acf112",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/SOLUSDT.parquet": "9e4ab4eab8f632ebbb2c057615fd6acbd0886101adca86c81d76c95acf58ddf1",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/SRMUSDT.parquet": "25e7ec47431b8c041145c5bcb53a431a3028995387b97d7fb484575b0d75d544",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/SSVUSDT.parquet": "f8755e867193fd5dc7bbe859da37d2d02c3797147085c1d76740805ade49ca1f",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/STGUSDT.parquet": "6f5fb509a4ab9c5de5de2f28ca4783fb9ed912de9a871c0dbe2692da76b615a3",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/STMXUSDT.parquet": "1e1227328c21ad9ced229c266ab651d8923e7b44cb79b04685f98c61a41c2088",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/STORJUSDT.parquet": "93e6392a08d7dc9999f0df3988db04dc61c4206aacb7962f891e7b520f2bdab3",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/STRKUSDT.parquet": "9d125caf2d151159d417c44a53104b1d95aa89b1f4d72b9c7123ffb8554d7b25",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/STXUSDT.parquet": "e020c5c54a879aa727f431b0c08f41f371636409f47b4fbcc02fe27a53282978",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/SUIUSDT.parquet": "41bb4cd7eb7533d6b365c8bf5cce07a34d14c5db3206c7a641849611e5648362",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/SUSHIUSDT.parquet": "a9dc024157a42b19cdb8f5a7fc1c746b70405f9165694966d7aced4f7001a3b5",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/SXPUSDT.parquet": "0f5c6131cc7ac4610338150c6cb24536d8e441d1b5872e382cd757495b4c27c0",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/TAOUSDT.parquet": "efcaaf6b2256ab285bb881fef24a36fa109eca81285ed23d93f67ba238947f4f",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/THETAUSDT.parquet": "92ec384a91e07e93e984fae953fb36e7bd5157f9dcdde7c3d55310355333511a",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/TIAUSDT.parquet": "193c544baf3176210993fd9bb072b3c9486be443d0c2df8dcd1976f45c03971e",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/TOMOUSDT.parquet": "29fc6e8c62ebb687241d07bff087011bc567a20143dc9b8ed9bec7606b113ae6",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/TONUSDT.parquet": "2c8e6750935c70b95eea96afde3954347fe2b8c1aed07ef2e79b1a8de789f992",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/TRBUSDT.parquet": "3b5c6123c8365ff7fc2147447881e76e3e1ef52ee77d771c3ff19c7d690e2efe",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/TRXUSDT.parquet": "9da4151b16d7d3da455f42ce7cad64160bda835573fc66502365e9f8cfb84710",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/TURBOUSDT.parquet": "00426ebba49708f618fe690b25e3e2694d72089a861c5da895298443f714be64",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/UNFIUSDT.parquet": "51e00ac1519447c0989b9ce64a64bddbea93449d09f87377d07c215ae64b970d",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/UNIUSDT.parquet": "df8780a7be167a4984e3d27cf15517b773df6911f2c51ad59406f9d6b7f86974",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/UXLINKUSDT.parquet": "a98c4be7e13c239f1ddc0bba6712b8ab6f424e570f6df9cae200ae91f7dd8f2c",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/VETUSDT.parquet": "a45ecdc27a9c09229a405a57ca0f0e892c6f2feb20e3224cf4f6a955795ed47f",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/VIRTUALUSDT.parquet": "25a4148c2c93b03e56984b0a2fb10dfcc5e8c6ba2a2fafce4abb69227fa8989b",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/WAVESUSDT.parquet": "c70398e7b795a3211f1d73f0249c033cff058ccf3ed357076e01d168989e30c2",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/WIFUSDT.parquet": "f4f110e201df78e5111832a15e0f786862aae98e0f6416e1c4dd308028597c66",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/WLDUSDT.parquet": "04d305c0331afd640ba24324e4a2fb361fccc2d32a49224b491b53ebf08ff7d0",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/WOOUSDT.parquet": "99e6e42599bb675ea7894f65e6758821cd5ff0ebfaabce26f7133a266faa4350",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/WUSDT.parquet": "0d04ba9fd344ab5dbd46d177458e067fc611bafaf1a39e21d98c527db07fb7e5",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/XLMUSDT.parquet": "0d3c64b3bcb0add44ead37370ca2295883ed7d55055aac5e63ac8769e20faf49",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/XMRUSDT.parquet": "3bbeddaf94ded179a1d980bac915f397ee2cbb5056ceefe7d1dfd88a591095b1",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/XRPUSDT.parquet": "658e3caef9684bd7be28aabc4736c04ca320161efe33dcc09b35b595b3a375fd",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/XTZUSDT.parquet": "966139acca92d139677b79591abc47f0db18218d9309c3578aaebc0f25c11aaf",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/YFIIUSDT.parquet": "f6c69d00b700fe9723c598a9b9af9c1060bc68962390ac1ff70cd15d75ccc344",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/YFIUSDT.parquet": "c0d723ba30fd6be27fe6c22d333527771bd7ddd5ddad0c61011bdbdcfb99562a",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/YGGUSDT.parquet": "d4cf003ebf75aef346a91e6621bab00e01316d80a6d91486791eb4f11f39e303",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ZECUSDT.parquet": "1d3b53193927b94969b035d027b7482b86a84f0fef1458f3a2e2241ef163e933",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ZENUSDT.parquet": "73c59118603fdf5556f405440838e106421e0076ec29b5edf355cf1068910f63",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ZILUSDT.parquet": "634f517868f8c8e5e4664de38eeea3a41a83df5a2c188f2504d2887e8fa3df3c",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ZROUSDT.parquet": "557482e1950424cdcd759a2e52a60bfaaf4d158ac0188cc98d9734c36587409b",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ZRXUSDT.parquet": "403dd7b580ec54bc9cae2821436a45b06a29af82791bc0898454bbc7bca8bfcb",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/liq_fade_symbols.txt": "5969721d93023f577a19a65a209e3ef32609f9fa57d26a8697a45ecdeeeea631",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_manifest.json": "65a2517db5e02862c8b7a5cb365ef3327c102c674030ba0e8476ad14d3588dba",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/liq_fade_universe.json": "0b9e931f7eae01d6d5f85aa6ef48fc63b2fd7453b5a7990e460b8eb0874d4e96",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/data/recovery/2026-09-10/settlements/cms-ef3ce76d5c2d45ee9b6dc3f281cde744.json": "c722dda76625782fe98ccf5d607eba900adb2a560f08f1cdf28f491f3e49a628",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/data/recovery/2026-09-10/prx-identities/034eee2293964e26b915b1ec5c42972a.json": "65cc9cfc645d56ca3e1e5e1150000cd044a693dce427521abbdbff29dd9d3e59",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/data/recovery/2026-09-10/prx-identities/d1f2ae8d99b24439a7a900caa9bb6b3b.json": "bd7352f9b8fb2a2ed5eff584db1e1b704e0226e038bca24926495154b4644968",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/data/recovery/2026-09-10/prx-identities/6a6de383727f4659a3050f7982e1620f.json": "66649f9211fe79e11d16ec297942d12d36561be728c3a920aed3cbbe88d6cbed",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/data/recovery/2026-09-10/settlements/cms-2f963977c7274e0583f16f2e26987b61.json": "09cf66500bbf54b6e7f630a8abb262460e1b304b2594a64742224471da413c5a"
+  },
+  "inputs_unchanged_after_run": true,
+  "event_receipts": {
+    "LUNAUSDT": {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/data/recovery/2026-09-10/settlements/cms-ef3ce76d5c2d45ee9b6dc3f281cde744.json",
+      "sha256": "c722dda76625782fe98ccf5d607eba900adb2a560f08f1cdf28f491f3e49a628"
+    },
+    "TOMOUSDT": {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/data/recovery/2026-09-10/prx-identities/034eee2293964e26b915b1ec5c42972a.json",
+      "sha256": "65cc9cfc645d56ca3e1e5e1150000cd044a693dce427521abbdbff29dd9d3e59"
+    },
+    "RNDRUSDT": {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/data/recovery/2026-09-10/prx-identities/d1f2ae8d99b24439a7a900caa9bb6b3b.json",
+      "sha256": "bd7352f9b8fb2a2ed5eff584db1e1b704e0226e038bca24926495154b4644968"
+    },
+    "MATICUSDT": {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/data/recovery/2026-09-10/prx-identities/6a6de383727f4659a3050f7982e1620f.json",
+      "sha256": "66649f9211fe79e11d16ec297942d12d36561be728c3a920aed3cbbe88d6cbed"
+    },
+    "BNXUSDT": {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/data/recovery/2026-09-10/settlements/cms-2f963977c7274e0583f16f2e26987b61.json",
+      "sha256": "09cf66500bbf54b6e7f630a8abb262460e1b304b2594a64742224471da413c5a"
+    }
+  },
+  "original_input_coverage": {
+    "rectangular_panel_observations": 9192120,
+    "missing_close_observations": 3438042,
+    "missing_volume_observations": 3438042,
+    "qualification": "Rectangular counts include prelisting and terminal periods; missing source inputs are retained exactly as in the original signal construction."
+  },
+  "original_inventory_internal_missing_hours": 6832,
+  "no_pnl_or_performance_statistics": true,
+  "financial_candidates_evaluated": 0,
+  "central_trial_ledger_sha256": "0b9ab125e64e9c808ccd398d703092e344b6f8772de9e6ec6e223a1e2b9f9a09",
+  "central_trial_ledger_unchanged": true,
+  "holdout_read": false,
+  "readiness_certified": false,
+  "runtime": {
+    "python": "3.13.13",
+    "pandas": "2.3.3",
+    "numpy": "2.3.0"
+  },
+  "limitations": [
+    "Requested allocations are not account fills or actual quantities.",
+    "Original gaps and post-termination bars are preserved only to reconstruct historical assumptions.",
+    "An absent flag does not certify full input coverage or lifecycle/settlement execution readiness.",
+    "Only five registered events are audited; earlier same-ticker incarnations and all other lifecycle events remain outside this audit."
+  ],
+  "output_sha256": {
+    "started.json": "de701378653e8e82caa89cf4453baed73450ddf04b159b6d7e4f21d93efbbd9a",
+    "forensic-ledger.jsonl": "cb9fff2c5d6e196030460582d54efe182dbd64ab43face38511b6ef32e40415b"
+  },
+  "forensic_ledger": "forensic-ledger.jsonl",
+  "central_trial_ledger_written": false
+}

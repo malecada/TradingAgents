@@ -72,7 +72,7 @@ Saved allocation rows independently reproduce the reported straddling/post-closu
 | [Dedicated six-row forensic ledger](../../data/recovery/2026-09-10/exposure-audit/forensic-ledger.jsonl) | `cb9fff2c5d6e196030460582d54efe182dbd64ab43face38511b6ef32e40415b` |
 | Unchanged central financial trial ledger | `0b9ab125e64e9c808ccd398d703092e344b6f8772de9e6ec6e223a1e2b9f9a09` |
 
-## Conditional six-cell replay design and implementation — not executed
+## Conditional six-cell replay design and implementation
 
 A separately registered replay can determine whether verified recovery permits a measurement. It cannot promise that any cell becomes complete. The recovery manifest must pin all 47 admitted development overlays and preserve the other original inputs, universe, six-cell order, costs, clocks and original thresholds. Unresolved BNX/ICP intervals remain missing; no contract rename, retrospective universe exclusion or changed trigger is admitted.
 
@@ -86,4 +86,42 @@ These optional hooks are implemented in the accounting wrapper and the new pure 
 
 P2's cumulative return is an entry-to-exit fixed-quantity price diagnostic. An intermediate entry restriction does not create an intermediate maintenance order. Its guard therefore checks the initial entry restriction and terminal event through final valuation availability. The actual hourly target-weight books separately reject an unresolved nonzero decision during a restriction period. This distinction is tested explicitly.
 
-The 19 initial guard regressions failed before implementation. The final focused suite passes **44 tests in 1.13 seconds**, including 23 existing accounting-wrapper tests. A prepared-placebo integration regression confirms lifecycle rejection on the first invalid synthetic placement and unchanged advancement through the remaining shift/random draws. P2 tests verify disjoint censoring/missing/lifecycle counts and prohibit a passing gate value calculated from only the available subset. Logs are [replay-lifecycle-red.log](verification/replay-lifecycle-red.log) and [replay-lifecycle-green.log](verification/replay-lifecycle-green.log). No financial replay has been run at this documentation stage.
+The 19 initial guard regressions failed before implementation. The final focused suite passes **44 tests in 1.13 seconds**, including 23 existing accounting-wrapper tests. A prepared-placebo integration regression confirms lifecycle rejection on the first invalid synthetic placement and unchanged advancement through the remaining shift/random draws. P2 tests verify disjoint censoring/missing/lifecycle counts and prohibit a passing gate value calculated from only the available subset. Logs are [replay-lifecycle-red.log](verification/replay-lifecycle-red.log) and [replay-lifecycle-green.log](verification/replay-lifecycle-green.log). These checks preceded the single registered financial replay reviewed below.
+
+## Completed recovered-input replay: independent artifact review
+
+The registered replay completed on September 10 at 07:40:04–07:41:15 UTC under source commit `a87b67b97cd88ed3bbe83e2dd03eca99a5082d33`. The [saved result](../../data/predlab/audit_recovered_liq_2026_09_10/liq_fade/result.json) SHA256 is `2a210cb47723857e2b6b8e318f174e3becd010a91bbcf9405b47fec26d7ebd66`. This review read the saved JSON and earlier exposure/result artifacts; no signals, books or performance statistics were reconstructed.
+
+P0 passed on 1,550 paired daily returns. P1 identified all five declared benchmark days, with no unavailable benchmark observations among the 960 required symbol-hours. P2 preserved all six cell-specific trigger denominators:
+
+| Cell | Registered trigger windows | Scoreable | Lifecycle unavailable | Missing-return overlap within lifecycle count | P2 status |
+|---|---:|---:|---:|---:|---|
+| `thr2.5_H6` | 5,069 | 5,069 | 0 | 0 | Complete; 64.84 bp mean |
+| `thr2.5_H24` | 5,069 | 5,065 | 4 | 0 | Unavailable |
+| `thr2.5_H48` | 5,069 | 5,050 | 19 | 9 | Unavailable |
+| `thr3.5_H6` | 709 | 709 | 0 | 0 | Complete; 107.90 bp mean |
+| `thr3.5_H24` | 709 | 708 | 1 | 0 | Unavailable |
+| `thr3.5_H48` | 709 | 698 | 11 | 6 | Unavailable |
+
+Endpoint censoring and the disjoint ordinary-missing category are zero in all six cells. Each total equals scoreable plus lifecycle-unavailable windows. The overlap column is already contained in the lifecycle category and must not be added again. The repeated threshold counts across horizons are not distinct independent events. Both complete H6 cells exceed the unchanged 25 bp P2 threshold, so the original existential family gate passes. Every unavailable P2 cell has `gate_value=null`; its saved available-subset mean is descriptive and cannot pass the gate.
+
+The portfolio outcomes preserve all six cells:
+
+| Cell | Primary 10 bp SR | Zero-fee SR | Double-fee SR | Status |
+|---|---:|---:|---:|---|
+| `thr2.5_H6` | 0.159713 | 0.612935 | −0.295272 | Complete; original primary gates FAIL |
+| `thr2.5_H24` | Unavailable | Unavailable | Unavailable | LUNA terminal exposure |
+| `thr2.5_H48` | Unavailable | Unavailable | Unavailable | LUNA terminal exposure |
+| `thr3.5_H6` | 0.815672 | 1.017149 | 0.609170 | Complete; original primary gates FAIL |
+| `thr3.5_H24` | Unavailable | Unavailable | Unavailable | LUNA terminal exposure |
+| `thr3.5_H48` | Unavailable | Unavailable | Unavailable | LUNA terminal exposure |
+
+The two measured primary books each contain 1,551 daily observations and fail both SR≥1 and original DSR≥0.9. Original/current DSR values are 0.013861/0.009289 for `thr2.5_H6` and 0.306207/0.254849 for `thr3.5_H6`, using the registered 100/156 denominators. The zero-fee `thr3.5_H6` diagnostic is ineligible despite SR slightly above one; its original DSR is only 0.546471. Funding remains excluded as registered, so these are not all-in executable measurements.
+
+All four blocked primary books identify the same first unsafe interval: **LUNAUSDT at open label May 12, 2022 15:00 UTC, containing the 15:30 closure**. The zero-fee, double-fee and invalid-log variants retain the identical lifecycle error before portfolio accounting. These cell IDs agree with the four earlier original-input exposure conflicts, but the new guard reached them from the reconstructed recovered-input schedules. It does not establish that all later requested rows remained identical.
+
+The invalid-log diagnostic for `thr2.5_H6` is separately unavailable because the arithmetic-accounting guard rejects an invalid simple return at May 12 09:00; no diagnostic SR is invented. The invalid-log `thr3.5_H6` diagnostic completed at SR −0.129306 and remains explicitly ineligible. Thus an unavailable diagnostic is not mislabeled as a complete convention comparison.
+
+Both H6 cells report `not_run_primary_gate_failed` for remaining gates; the four terminal-exposure cells report `not_run_primary_data_unavailable`. No current placebo p-value is present and no RNG-advancement error is recorded. The frozen source's skipped branch advances the original shared RNG, and this behavior has synthetic regression coverage. The artifact does not store RNG-state snapshots, so this review does not claim an independent reconstruction of every skipped draw. Historical placebo values under each cell's `original` object remain void provenance, not newly evaluated placebos.
+
+The saved new result's `original`/`differences_from_original` fields refer to the historical rebuild measurements, not the September 9 corrected artifact. Direct comparison with the latter shows H6 SR 0.165715→0.159713 and 0.815429→0.815672. The more consequential change is `thr3.5_H24`: previously complete, now unavailable because of its demonstrated LUNA closure assumption. The other three lifecycle-blocked cells were already unavailable on September 9. No positive validation, completed settlement valuation, holdout result or exhaustive strategy-class claim follows from this bounded replay.

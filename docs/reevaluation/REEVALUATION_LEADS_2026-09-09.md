@@ -1,5 +1,7 @@
 # Lead reevaluation after the September 9 repairs
 
+**September 10 qualification:** Later recovered-data and lifecycle evidence changes the accounting interpretation to **two conditional measured failures and 22 unavailable cases**. Threshold 3.5 / 24h held LUNA through its closure and is no longer a complete executable negative. The historical results below are preserved; the [September 10 recovery report](../data-recovery/DATA_RECOVERY_2026-09-10.md) takes precedence for current accounting counts and qualifications.
+
 The preregistered reevaluation completed all 26 cases. No strategy was validated or promoted. The most consequential finding is that 21 accounting cases remain unjudgeable with the registered data; they must not be counted as confirmed kills.
 
 The registered correction covers 26 fixed cases across five materially affected families. The accounting runs reveal a material distinction: 21 cases are unavailable because a held position cannot be marked from the registered data; three liquidation-fade cases are measurable and fail their original gates. The corrected pair selector still fails its historical conditional comparison, with complete-panel inference unavailable. The DEX composite passes its descriptive ranking test but fails the economic gate. These findings do not establish an absence of weaker effects or of possible strategies outside the tested constructions.

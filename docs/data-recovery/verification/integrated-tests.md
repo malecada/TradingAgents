@@ -9,3 +9,7 @@ PYTHONDONTWRITEBYTECODE=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREA
 ```
 
 The tests cover coverage gaps, corrupt/checksum-conflicting source rejection, immutable insertions, original/snapshot/documentary hashes, date filtering, distinct result/ledger namespaces, exact and intrabar termination boundaries, restriction semantics, P2 denominators, primary/cost/convention guards, and placebo rejection without RNG redrawing. Existing accounting and wrapper regressions remain green. Independent review also reproduced the original auxiliary-path startup failure with a synthetic fixture and confirmed the narrow fix; documentary pins do not grant market-read access outside the registered source roots.
+
+After execution, independent read-only reviews reconciled saved financial arithmetic, lifecycle/P2 denominators, original-result comparisons and final report counts. The completion-policy check verifies the unchanged 19,146-byte correction-register prefix, exactly six appended corrections, and rejection of completed experiment keys before any financial runner is invoked; see `completion-policy.json`.
+
+Final authored-source/document whitespace checks pass. The unmodified archived official FAQ HTML contains trailing whitespace on lines 68 and 76; that raw receipt is excluded from the formatting check so its original bytes and hash remain preserved. No executable source changed after the reviewed financial source commit.

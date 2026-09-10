@@ -1,0 +1,878 @@
+{
+  "registered_gate": {
+    "registered_date": "2026-09-10",
+    "type": "data_recovery_only",
+    "charter": "docs/data-recovery/2026-09-10-charter.md",
+    "status": "registered_before_recovery",
+    "strategy_evaluation_permitted": false,
+    "allow_holdout": false,
+    "development_window": [
+      "2021-01-01",
+      "2025-03-31"
+    ],
+    "price_inventory_window": [
+      "2020-06-01T00:00:00Z",
+      "2025-04-01T00:00:00Z"
+    ],
+    "venue": "Binance",
+    "market_type": "USD-M linear perpetual futures",
+    "interval": "1h",
+    "timestamp_convention": "UTC open-time labels; prices available after bar close",
+    "source_roots": [
+      "/home/malecada/master_thesis/TradingAgents/data",
+      "/home/malecada/master_thesis/TradingAgents-predlab/data"
+    ],
+    "output_root": "data/recovery/2026-09-10",
+    "hourly_primary_symbols": [
+      "TRXUSDT",
+      "FILUSDT",
+      "LTCUSDT"
+    ],
+    "hourly_primary_gaps": [
+      [
+        "2022-02-26T00:00:00Z",
+        "2022-03-01T00:00:00Z"
+      ],
+      [
+        "2022-04-01T00:00:00Z",
+        "2022-04-03T00:00:00Z"
+      ]
+    ],
+    "expected_primary_missing_symbol_hours": 360,
+    "extended_inventory": "All frozen liquidation-fade symbols and eight original majors, plus required daily books; inspect timestamp coverage without computing signals, PnL, or gates. Additional recovery ranges require a documented data-scope addendum before consuming them.",
+    "permitted_public_sources": [
+      "data.binance.vision Binance USD-M futures klines/markPriceKlines/indexPriceKlines and CHECKSUM files",
+      "Official Binance public archive listing metadata",
+      "Official Binance unauthenticated USD-M historical price endpoints",
+      "Official Binance announcements and exchange documentation; historical applicability must be proved for settlement rules"
+    ],
+    "fetch_limits": {
+      "max_parallel_requests": 3,
+      "timeout_seconds": 45,
+      "max_attempts_per_request": 3,
+      "honor_retry_after": true,
+      "max_download_bytes": 250000000
+    },
+    "contract_investigations": {
+      "accounting": [
+        "BZRXUSDT",
+        "BNXUSDT",
+        "LUNAUSDT"
+      ],
+      "pair_coverage": [
+        "TOMOUSDT",
+        "RNDRUSDT",
+        "MATICUSDT"
+      ]
+    },
+    "identity_policy": "Old and successor tickers are separate instruments unless explicit exchange evidence establishes contract continuity. Spot conversion ratios do not establish futures position transfer.",
+    "settlement_required_fields": [
+      "instrument and contract identity",
+      "official event source and publication time",
+      "last-trading and settlement timestamp with timezone",
+      "settlement price or exact reconstructable price rule and genuine required observations",
+      "fee and realized funding cutoff treatment",
+      "explicit successor treatment or separate-contract classification"
+    ],
+    "bar_acceptance": "Only authentic observed bars with valid provider checksum where supplied, exact interval/schema/units, unique monotone UTC timestamps, finite positive OHLC and nonnegative volumes/trade counts, OHLC consistency, complete target coverage, and explicit overlap comparison. Duplicate conflicts, source failures and unexplained revisions block admission. Preserve all existing rows byte-for-byte at row-value level; insert only proven missing timestamps. Do not invent zero-volume or interpolated bars.",
+    "provenance": "Exclusive versioned raw receipts and derived outputs; URL/parameters/status/retrieval UTC/raw SHA256/provider checksum/transform commit/schema/units/old-source hashes/range coverage/overlap conflicts. Original stores and September9 results remain immutable.",
+    "stop_rule": "Finish a recovery/readiness report even if evidence is unavailable. No strategy metric or verdict may be calculated under this key. Once data and accounting semantics are verified, register a separate fixed-cell replay before any results; retain every original affected cell and original gates. No new signal, tuning, forecasting refit, holdout, authenticated API, secret read, live order, or VPS operation.",
+    "timestamp_inventory_scope_addendum": {
+      "path": "docs/data-recovery/2026-09-10-scope-addendum.json",
+      "sha256": "0629c3de9b7973a7e27b1a5e281dda8c75e9e08c18555e108e23dfa346e36c7d",
+      "registered_before_extra_price_consumption": true,
+      "n_symbols": 49,
+      "target_symbol_hours": 6832
+    }
+  },
+  "scope": [
+    {
+      "symbol": "BNXUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/BNXUSDT.parquet",
+      "source_sha256": "9ef621fedd75d82b05289513216f64f99aabb734afefde92a4c16f56a729202a",
+      "ranges": [
+        {
+          "start": "2022-04-17 00:00:00+00:00",
+          "end_exclusive": "2022-04-18 00:00:00+00:00",
+          "periods": 24
+        },
+        {
+          "start": "2022-06-09 00:00:00+00:00",
+          "end_exclusive": "2022-06-10 00:00:00+00:00",
+          "periods": 24
+        },
+        {
+          "start": "2022-08-10 00:00:00+00:00",
+          "end_exclusive": "2022-08-13 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2023-02-01 00:00:00+00:00",
+          "end_exclusive": "2023-02-22 14:00:00+00:00",
+          "periods": 518
+        }
+      ]
+    },
+    {
+      "symbol": "FLMUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/FLMUSDT.parquet",
+      "source_sha256": "0701318f5515f3b0a20294528b208486cce275f252e7e0b717f82ccb3b86750e",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "FLOWUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/FLOWUSDT.parquet",
+      "source_sha256": "3c76197dbdb968eda236516bf2ee2a9c8574acd4742732898d98e4a31b7e2bcb",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "FTMUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/FTMUSDT.parquet",
+      "source_sha256": "b24893fc213d93f4762c9b0d289072d059a1dd350997e204849c7a29ddfbe0d5",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "GMTUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/GMTUSDT.parquet",
+      "source_sha256": "8a9368dbd1b40123d61a3832fbe9f3bbc6459fcc03279ca19ca2bedf1dc98e75",
+      "ranges": [
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "GRTUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/GRTUSDT.parquet",
+      "source_sha256": "74872f6dcccc5744863302d1fbf1c060b4bf474abef9916f2e5790ad6f33015a",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "GTCUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/GTCUSDT.parquet",
+      "source_sha256": "c44e2feb77ae32324101080f5b1bfce44d0ac2d148df4f27f30133805efc40b7",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "HBARUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/HBARUSDT.parquet",
+      "source_sha256": "02239bb14e8bf10ecfc6173d60ca39779c8bc3e9fab59aef21ec239a56f34e86",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "HOTUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/HOTUSDT.parquet",
+      "source_sha256": "a9bd70e95e2e65adaf1289dc6052361afb53154e5380af51d967bcbba0318aeb",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "ICPUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ICPUSDT.parquet",
+      "source_sha256": "5a57da13639e91fa444a2b730b7005572ae975001b2cc5eb085c409761b1d386",
+      "ranges": [
+        {
+          "start": "2022-09-01 00:00:00+00:00",
+          "end_exclusive": "2022-09-27 02:00:00+00:00",
+          "periods": 626
+        }
+      ]
+    },
+    {
+      "symbol": "IMXUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/IMXUSDT.parquet",
+      "source_sha256": "58fccd33022b9c5fe5ea7c5d659d73e58b51ed96a8bd342de31819318b2440f5",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "IOTAUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/IOTAUSDT.parquet",
+      "source_sha256": "742f765abd968e56fc0049ab5b6ac3fee2773751e7c8a17c7bec9349dc3912c6",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "KNCUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/KNCUSDT.parquet",
+      "source_sha256": "701a69d2d962e397b372f23fa66d9df6b3143175336e83de74c2c9aa53b61518",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "KSMUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/KSMUSDT.parquet",
+      "source_sha256": "8f91148e12cfc81e9e9a684ea30e6b8dcc27ab5d49b3e94de38b4a483a50bdfd",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "LINAUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/LINAUSDT.parquet",
+      "source_sha256": "eedaa3f7f70c0fdb29b720b50c9052d89ec46b8d71a820e9a1f1145354cea927",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "LRCUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/LRCUSDT.parquet",
+      "source_sha256": "0471ce956dc60e6b747e592651b9626aa4717cc45567ef50f949930d45c6de4a",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "LUNAUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/LUNAUSDT.parquet",
+      "source_sha256": "df086e7dc0e6153f39b90aba24766643c35698d7f930b7d577142a4421fe31ac",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "MANAUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/MANAUSDT.parquet",
+      "source_sha256": "ce7daa29abe8fc2930fd3fd5497da529df076fa96e7fca61dabdf2490b355e12",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "MASKUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/MASKUSDT.parquet",
+      "source_sha256": "7cc865bed0d4d7726d64e5e3318e24c044f1cb9f13bccb05e501b944286df359",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "MKRUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/MKRUSDT.parquet",
+      "source_sha256": "7a586973a71dcbecd3bd619c01ff26a37a8902f9200bd4cb46cdd8b12a624b8a",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "NEARUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/NEARUSDT.parquet",
+      "source_sha256": "4f60790beba6f070ad5a4d4c8cfa81dbf461206675903c3a8ac474a74f973fa8",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "OCEANUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/OCEANUSDT.parquet",
+      "source_sha256": "e36e29e72a26eabc70115d15d752c212307d8b44761083692af9568f865bbed9",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "OGNUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/OGNUSDT.parquet",
+      "source_sha256": "92604321cd7cd20e48f2d7c745434a8fbce0c8cc905d449a09fe53c094fb5db3",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "OMGUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/OMGUSDT.parquet",
+      "source_sha256": "86effcaaeae73f04def81d052cc425407880d786811977938ddac80b58ee8ded",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "ONEUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ONEUSDT.parquet",
+      "source_sha256": "506992d968d38dfba892b6ef1fb5a3b7a888ab034a0a78ad0cf32a4b89c3b94d",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "PEOPLEUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/PEOPLEUSDT.parquet",
+      "source_sha256": "af64ef0e525e973c3008ea2afeff3b629bfb77d9971ba9cb8ee58a7230651fbe",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "RLCUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/RLCUSDT.parquet",
+      "source_sha256": "9282a3da3ee4747360b4419f977453aa60f7ae3a071c318cf0df6582b6304435",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "ROSEUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ROSEUSDT.parquet",
+      "source_sha256": "f634ba6f60816cb7b8f8d9b3fc46807a7f63323f0be1ec85b4bf65c69be516da",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "RSRUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/RSRUSDT.parquet",
+      "source_sha256": "6004c4fc5f77dd2110cf546a8ceab46ac02a25b4491aa14fb3339c2c34e1df49",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "RVNUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/RVNUSDT.parquet",
+      "source_sha256": "2687930288b23ef82de1ba886bf340649982a25ffdf4bf64753b4a273db4c88a",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "SANDUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/SANDUSDT.parquet",
+      "source_sha256": "7f224d0f68062ea05a79833d50147a99d93d9b5dc5d2357489114dfada780ba7",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "SKLUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/SKLUSDT.parquet",
+      "source_sha256": "c5a6d57191da378f48a47acc06c8184d59bc1000a7e7ca91f41ee1ebdd2b561b",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "SOLUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/SOLUSDT.parquet",
+      "source_sha256": "9e4ab4eab8f632ebbb2c057615fd6acbd0886101adca86c81d76c95acf58ddf1",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "STORJUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/STORJUSDT.parquet",
+      "source_sha256": "93e6392a08d7dc9999f0df3988db04dc61c4206aacb7962f891e7b520f2bdab3",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "SUSHIUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/SUSHIUSDT.parquet",
+      "source_sha256": "a9dc024157a42b19cdb8f5a7fc1c746b70405f9165694966d7aced4f7001a3b5",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "TRBUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/TRBUSDT.parquet",
+      "source_sha256": "3b5c6123c8365ff7fc2147447881e76e3e1ef52ee77d771c3ff19c7d690e2efe",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "UNFIUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/UNFIUSDT.parquet",
+      "source_sha256": "51e00ac1519447c0989b9ce64a64bddbea93449d09f87377d07c215ae64b970d",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "VETUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/VETUSDT.parquet",
+      "source_sha256": "a45ecdc27a9c09229a405a57ca0f0e892c6f2feb20e3224cf4f6a955795ed47f",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "WAVESUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/WAVESUSDT.parquet",
+      "source_sha256": "c70398e7b795a3211f1d73f0249c033cff058ccf3ed357076e01d168989e30c2",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "XLMUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/XLMUSDT.parquet",
+      "source_sha256": "0d3c64b3bcb0add44ead37370ca2295883ed7d55055aac5e63ac8769e20faf49",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "XRPUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/XRPUSDT.parquet",
+      "source_sha256": "658e3caef9684bd7be28aabc4736c04ca320161efe33dcc09b35b595b3a375fd",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "YFIIUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/YFIIUSDT.parquet",
+      "source_sha256": "f6c69d00b700fe9723c598a9b9af9c1060bc68962390ac1ff70cd15d75ccc344",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "YFIUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/YFIUSDT.parquet",
+      "source_sha256": "c0d723ba30fd6be27fe6c22d333527771bd7ddd5ddad0c61011bdbdcfb99562a",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "ZECUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ZECUSDT.parquet",
+      "source_sha256": "1d3b53193927b94969b035d027b7482b86a84f0fef1458f3a2e2241ef163e933",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "ZENUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ZENUSDT.parquet",
+      "source_sha256": "73c59118603fdf5556f405440838e106421e0076ec29b5edf355cf1068910f63",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    },
+    {
+      "symbol": "ZILUSDT",
+      "source_path": "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/ZILUSDT.parquet",
+      "source_sha256": "634f517868f8c8e5e4664de38eeea3a41a83df5a2c188f2504d2887e8fa3df3c",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48
+        }
+      ]
+    }
+  ],
+  "git_commit": "1375e8a6528ec9e3f07c51ac4415880c056e867b",
+  "correction_policy_sha256": "6bae0081d6d114686d3ac807bb7172dbbbc63f13ac1bb07b0917bf20533cd312",
+  "gate_sha256": "5026b385d3587fee3697629db484e0ea6633e136ef0619c56d7685a702868595",
+  "evidence_policy": "audit-v2",
+  "registered_experiment": "audit_data_recovery_2026_09_10",
+  "started_utc": "2026-09-10T07:26:24.985896+00:00"
+}

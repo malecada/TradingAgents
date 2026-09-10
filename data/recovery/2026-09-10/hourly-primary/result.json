@@ -1,0 +1,916 @@
+{
+  "git_commit": "1375e8a6528ec9e3f07c51ac4415880c056e867b",
+  "correction_policy_sha256": "6bae0081d6d114686d3ac807bb7172dbbbc63f13ac1bb07b0917bf20533cd312",
+  "gate_sha256": "5026b385d3587fee3697629db484e0ea6633e136ef0619c56d7685a702868595",
+  "evidence_policy": "audit-v2",
+  "registered_experiment": "audit_data_recovery_2026_09_10",
+  "type": "data_recovery_only",
+  "batch": "primary",
+  "strategy_metrics_computed": false,
+  "strategy_replay_permitted": false,
+  "source_hierarchy": "verified daily primary; symbol-klines API corroboration; all original/monthly/daily/API overlaps exact",
+  "overlap_policy": "exact equality; conflicts quarantined without tolerance or overwriting",
+  "snapshot_window": [
+    "2020-06-01T00:00:00Z",
+    "2025-04-01T00:00:00Z"
+  ],
+  "original_preservation": "original files unchanged; all original rows within snapshot window preserved exactly; outside-window prices not materialized",
+  "original_sha256": {
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/FILUSDT.parquet": "7fc65dd3bbd823084d8789c083f8f39536a7f53ab8dca211e991adb9f04996c6",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/LTCUSDT.parquet": "b1ea97a3ecf6d9d4504568c5a2c8ebdade6ac120b7e42ff672ad1c900459c02a",
+    "/home/malecada/master_thesis/TradingAgents/data/xsect/klines_1h/TRXUSDT.parquet": "9da4151b16d7d3da455f42ce7cad64160bda835573fc66502365e9f8cfb84710"
+  },
+  "scope_sha256": "0629c3de9b7973a7e27b1a5e281dda8c75e9e08c18555e108e23dfa346e36c7d",
+  "output_sha256": {
+    "FILUSDT.parquet": "907790fd6bc01bb04316252bd74ece4a708af1e84c4083da5495c88de98d1688",
+    "FILUSDT-insertions.parquet": "0d0f4a6215b8a3160050ef85d1756056454daacd2685af4b4819ddebddc3b1af",
+    "LTCUSDT.parquet": "a31c603346b01b75989857eecc57367c67c23049f3994cad30eeaf698dbdc217",
+    "LTCUSDT-insertions.parquet": "2fee5ce2292e41e8d3c0b42e25d9589114c802a2552829a96dbc1433d6796297",
+    "TRXUSDT.parquet": "92f8cfe7b878ee9a46e52067cf3680ddc403201e2d07d99b2e1b379b737fc003",
+    "TRXUSDT-insertions.parquet": "41ce92ce5f06923d76f72024400981c339736d741ae30a8825d8306daaca61f3"
+  },
+  "download_bytes": 301238,
+  "prior_batch_download_bytes": 0,
+  "documentary_bytes_at_start": 3201084,
+  "documentary_budget_reserved": 5000000,
+  "raw_receipt_sha256": {
+    "03c96c4ded3d94fba638-attempt1.bin": "7eaa24c6f2541cd4f200f22adc4d08160a549a95519021e1da95b8fb4d01b252",
+    "03c96c4ded3d94fba638-attempt1.json": "4271dafd304b6e19881bc5ea552bac0a6fc15ab3ad5519523ecee74ff7c0984a",
+    "096b5ba0e80084ca5d34-attempt1.bin": "6d68eb2311cd98d0f94279f670f6e443d00da8362b4ab4ebcf97b180567d1b00",
+    "096b5ba0e80084ca5d34-attempt1.json": "4daf2c050dc90eb63c3b2baad14bf34d7f0ca3624a885c5b890dad67739f949c",
+    "0a740d991176929055cf-attempt1.bin": "8f7caba655e1376591b7f6267c11c0c3f84c5cac2d8c368b2d2655b73c82b6c5",
+    "0a740d991176929055cf-attempt1.json": "6d2175245c1807b20637aa705d921303fc6aec08eca3b4d1df49673601f32143",
+    "0a7f26712a6b0b66397b-attempt1.bin": "ef02f51e11cadbcc052085f203a460c1a162e16dbfbb4745ec13d4245a8cdac5",
+    "0a7f26712a6b0b66397b-attempt1.json": "5dd6274ecb698e052920c75c2110236dfcc732a334b42027c1a559ba459b3de9",
+    "11efa9d0d2a5a23b6695-attempt1.bin": "85fa3f5e3e95b478928da74b59d70ea4ed0448c9bfbfa1e46e6769f23cce5df2",
+    "11efa9d0d2a5a23b6695-attempt1.json": "0b8b4fdf8bf2456d8568ac03b4cb3bb1d7a426a4c167599af53453a8645bf645",
+    "145be4987f97adf94559-attempt1.bin": "7d69363c4d9930c9429c58714395764099117379f90843d57f2820cf961a818d",
+    "145be4987f97adf94559-attempt1.json": "36af792511df7339f5254aca83d011da2ddb37aa00533fd126286f22f8b12854",
+    "14aeefb4095e84044f9e-attempt1.bin": "7e084ba5d5618223e6a1d5459539428888faff9f47a6e7cf293a810800c5c9c7",
+    "14aeefb4095e84044f9e-attempt1.json": "22f8707ae968185903dc2d3617e3b50e50b44751a623e3b154ce3b251e8dc6d7",
+    "16afa82bb42d3dd4c07b-attempt1.bin": "1a945fb49dacc403f08aa7d5221d70333be0901135dcf13c430c73083f5eed72",
+    "16afa82bb42d3dd4c07b-attempt1.json": "b19b0d2fef596e3324884eb1bd5d8129fc1e2a3a7d73d33de45df8312af17f8a",
+    "18758393445aa48edd63-attempt1.bin": "aa116c6382e27bd0257fae341172df5b496e7da3158e1f9ce2b1feb4accdc6b9",
+    "18758393445aa48edd63-attempt1.json": "eef4cb646a5dfffd1ee05c27fd42cbe374f70ca4806c65a71afb8cad4da1a35f",
+    "20ae45910f3fc5c471a5-attempt1.bin": "52d528b96e4f74a5f6417ee82e33109b9c7f8704f41eec8557e295a5d029f308",
+    "20ae45910f3fc5c471a5-attempt1.json": "275376a9b7ba05e52f9732de7ae742a4aa12471a6241a634942da3fc2842a7e8",
+    "24808e6270ab14d08a53-attempt1.bin": "184435f695d58ce5325a0eb7c2ffd6f8d7160a8a0c48a46acee10c053a5ea511",
+    "24808e6270ab14d08a53-attempt1.json": "e7ba945d024ab0bfae93602e6d87756fb9b577b90339740b95103b4f0e586271",
+    "2abeb4a85e6f48589ec6-attempt1.bin": "1421a586738f7d15673c2ee83797f834ca795200a45328ef937d797bfaabe580",
+    "2abeb4a85e6f48589ec6-attempt1.json": "3fe61402eaf28e79ce11926cd5755380085fd6d409bf1fc301a4a84e20fe47a4",
+    "2ba657994dc08f527752-attempt1.bin": "331973a7a1bcc78630de03a08cc11181b75f26f977d49d607f37b1ee978e9874",
+    "2ba657994dc08f527752-attempt1.json": "96ad388326d61dd9a3626b9abea09ad73a148799cc1d31d7bf171d201b029d18",
+    "2f67fc2888090f8ba069-attempt1.bin": "b17338e294bd2e9fa2f3b92deaebe32864b52b1b253e243044ee84ecc0e7a8a1",
+    "2f67fc2888090f8ba069-attempt1.json": "4c3182b01ae7407bb844bd00bd86a45d61c4afc0a47e8de0c3cad0ab59ff5562",
+    "32d8ad017d3ddd6aac79-attempt1.bin": "447a8f32b468895c4bdcbc40d4baf0e383129cd4e783565e2cf41b46bfa6aa94",
+    "32d8ad017d3ddd6aac79-attempt1.json": "6b8dddf149a2981a7d67e4c5eae4fe44b7c5b5930f57f96a029e1d36b2304138",
+    "352166864df5698cc83e-attempt1.bin": "56ea7fca7e0ae13e0bded1013877b9fd00da9bff4107d4a3f9b94806f26a1c66",
+    "352166864df5698cc83e-attempt1.json": "e7b442a1f7d89053d50e49d33338dbeb7488e2830374b135b58a166b67b1078e",
+    "368d4daa6f9f29b4ebf2-attempt1.bin": "2516ad0fd306c2754ca3b341508b9a5df3beb607d8d25114359ba80a4d3beca1",
+    "368d4daa6f9f29b4ebf2-attempt1.json": "079283209493a7cac255fe6a1654d4aecf036460028d2f850c04607baa1e3d63",
+    "3a3d6c37279436523096-attempt1.bin": "0beed8d1500a40f4373b42c570d8f2288d557250babf43c1146f1c94f8847edf",
+    "3a3d6c37279436523096-attempt1.json": "da4a41a2d283963805f10799346317d8e97695241876197f233a893f5abc5f79",
+    "3d96e433ee5899f9a5fa-attempt1.bin": "5febb713808bca3f504d479715ccb364c014784561f4235aa28a38ec4816797b",
+    "3d96e433ee5899f9a5fa-attempt1.json": "7f893f545bac5ca12e4a24d88dd7c484a1444c2826f66c59fb893f50aefb1747",
+    "3e05490f7aa3a39c71b1-attempt1.bin": "783ac2ccb4609fc86765deef2a763628f0d73c8cfc306d2490b5d5f2b3546a84",
+    "3e05490f7aa3a39c71b1-attempt1.json": "03b6cc46cff38c51e02ea1607a93fa74c684081993057b8d73dd0af2c4f478ee",
+    "3fe1d18ab9fd4e1a173e-attempt1.bin": "b1dd41d59f59a6ebe3d625de71db3bb2f88717f526ba5d2e0fb04ba7aa8da9fa",
+    "3fe1d18ab9fd4e1a173e-attempt1.json": "c3fb07a27df022370902b43fd28935942e294aa53ba9b9a7d7fad05d5e8185bb",
+    "44a158adbf4a9634812c-attempt1.bin": "3692841f0104082a7350cd2612641496eefbe48221564dde31575cd0d1dd9fec",
+    "44a158adbf4a9634812c-attempt1.json": "daed1e283f06aa95ecb31e056d9975d67ca6ea8fd87b86dbd8879ad6371fb0e8",
+    "46ae4ca7aa9be38a35bb-attempt1.bin": "426ccd90cb2b9c17da9fc1ad4e7eb07067764a332066a8e7ec75c88e6ffcce18",
+    "46ae4ca7aa9be38a35bb-attempt1.json": "76ce563100923c4a0de2de387d6f5d17f3d6df80213be92682c7157dea5087ea",
+    "46c4403baeb93e7d40c4-attempt1.bin": "4993e737cb2edbc28f3b165dcf981c7b970cb0836dd6e05edbdf5884d2a05f13",
+    "46c4403baeb93e7d40c4-attempt1.json": "7a814163742c84067475bc2c90505226bbbf49adbef5355c4d110412c4bb0564",
+    "475527af48d5eb5e9478-attempt1.bin": "4753e9334df54055c076ba18335d94c3010e3f9b389a0e5b1090fe2a6120e2c0",
+    "475527af48d5eb5e9478-attempt1.json": "d726fa68416c276a4a35d7b0c2b66533510487f18c1bea77d6f8d5a59464398f",
+    "51e5d658d6a4a1dd419c-attempt1.bin": "3c9631ea621728f3ae38885dec7ac8276956fd8a4f45e8b71de0c6016e84559b",
+    "51e5d658d6a4a1dd419c-attempt1.json": "14fce33e4dbb18068d357fd45bc247864894ca3595b770d94633b3ee515e5327",
+    "57825d2070c89d1edab3-attempt1.bin": "3e43d58c37c957027cf27094c34a8ebe78afe92ea6463edcb4cb70f65a108844",
+    "57825d2070c89d1edab3-attempt1.json": "1018fa31535c6fb22b8edefc88edd9f5c626f77f8df6c7c301a9f58a42ce606e",
+    "5a4b2620869730ecfcd5-attempt1.bin": "c32488df64f6e305ffb01bb36f84566fa7026090c8fca27a37812497b5e7f324",
+    "5a4b2620869730ecfcd5-attempt1.json": "72171e4b57ac4ffaecb782777f5e75540ae639a0ad384dbb8892f8c366c24f3c",
+    "61c36fe856dceaf44469-attempt1.bin": "0ea27951ab101212db996191fe220830651659bb373192346c7985137261a60b",
+    "61c36fe856dceaf44469-attempt1.json": "87223157ef118d317b5bf51454e585f40bfc435862fd627e2fcfa1540b755489",
+    "6326d44a146123265d82-attempt1.bin": "cff602492027b2d5d21d916016e2bbfecfa39213e04916190b97d9f45cdeb5e8",
+    "6326d44a146123265d82-attempt1.json": "9cfd802545cb7521cfd24ae26fd667dea3f3e5b1827332089feac0e7ce5b502a",
+    "63d315d8de65e70a9844-attempt1.bin": "e960c9147b5c0ca10439ce2c9572015ba408d7f2c0ce6b4854878eee49c708cc",
+    "63d315d8de65e70a9844-attempt1.json": "43116fc3b8809af79865ebd8f1d54f3cb38f6c4e95141be212ed1fb20eb62dc9",
+    "6693490ab50072d2ec6f-attempt1.bin": "08347966fd3f5f6359f93a85bfffa6ef93fb0f6fef00819a833d7c3f79f5f56e",
+    "6693490ab50072d2ec6f-attempt1.json": "c57b1ae7fe5c0f18c55ffa0222b22f9d39230c5414b2bddac7ab8ab42cbea267",
+    "708167d45ff3b1e948a7-attempt1.bin": "5071ba41b092fa51a35f459edcca233c11cbe73f5556919e938fb0981b50c2ec",
+    "708167d45ff3b1e948a7-attempt1.json": "5dab29448224112e441beb491e5e53cc3d673b106a477fc4465117d1a9d73985",
+    "76067d600fb5d53f0249-attempt1.bin": "5234c4c09c5347651c50813a2070111e920b261807ad6d3554946b9ae4a7f367",
+    "76067d600fb5d53f0249-attempt1.json": "83c5a140b9e94271c9b41c2738f34076e9c43ba0fdc7151a782d926492bebd89",
+    "7723c61a124169d72e0e-attempt1.bin": "341d524fbf30d927c34e4e333f207f2f50a78ae17f3de93db8dafd429fc457d7",
+    "7723c61a124169d72e0e-attempt1.json": "2b9eb82b75ad419cb514ff86fc0cd0bb4359538fbf52632bf0f0cd62ce108790",
+    "78e0db5b312a667c855a-attempt1.bin": "bdc5369cebe7a63a432a9a16e4a8a43300eed198dd343f1121ba6793c18572ed",
+    "78e0db5b312a667c855a-attempt1.json": "0f508933d2c59d1c68bcd4e5c9809b2ae6cd318eb12c665c7dab07b1552a62ff",
+    "7a18d4277de14677b85e-attempt1.bin": "9323661445bc1fab5c0fc52eff5207a0fbe46e4beae1f51540c15fafb4844433",
+    "7a18d4277de14677b85e-attempt1.json": "1462e4944f6e044dd19b7566f3f30b5b6c292c0637b756cec0e14cae88d1d244",
+    "7d55d52406b9985f4c15-attempt1.bin": "21a6911620f4addb046e144ff623f6245a568ad1637e506322b4b90254126bfe",
+    "7d55d52406b9985f4c15-attempt1.json": "7846c9f5bd1767cbe1376e03588c37407b2ebf60d7efbe6168abaf1accb9aa65",
+    "7e55366724e141117329-attempt1.bin": "530edd9825fbaa53389576163d0e8954738def451398b5f5bba4f98182c50699",
+    "7e55366724e141117329-attempt1.json": "cf2edf85e3687c24b8b79938c70f91a49b7f9c8e2730ad2862e7c065e57847f1",
+    "7ffd67370ce821d8c7b5-attempt1.bin": "1cb837dba48fbad0c2994d0f0c3b7d107a6cdc87b427bb813791af7e52530e2f",
+    "7ffd67370ce821d8c7b5-attempt1.json": "4b1e7189b133eef0b823622605195746da78a437232bd22bea0512c86bdf5366",
+    "846a840f8b0f5561654a-attempt1.bin": "302bcbab22fdecafe1b354769aa95ee9d13e87d9a2dd92f4a3fef0d01fc87518",
+    "846a840f8b0f5561654a-attempt1.json": "95f5372171ddc666743c01b00195ee076e13d041168a0543ea4323d38e5421c8",
+    "8730e48a9aee070ebc7b-attempt1.bin": "17fb73eb9011fed7318e68aadd111fdb0af8bc92e8197484bc0eba1ef68e57ad",
+    "8730e48a9aee070ebc7b-attempt1.json": "047ebb74fffe27a91dba1d7171508459f90f07df32aeca40044e9686e3e4943a",
+    "875865eedccb08bed38e-attempt1.bin": "794f0df119dcd850a5cad4110408efc957e6355fee9e8f83eb32b4aca48d5e31",
+    "875865eedccb08bed38e-attempt1.json": "2e2938b0a4e9e43d7e0594fdbf0b9213d21ce27f4b40f5844ac6fb06bead4811",
+    "8b841998d71a2eeea5da-attempt1.bin": "9f7e28d9aceb0cfb017c75c40432a47d8f0224e06f4727f64f63c50420b074c6",
+    "8b841998d71a2eeea5da-attempt1.json": "f24bd2d0b1574d96a4379f1ebbf6d98fd939d07b0899c3387a28cf9055c4b487",
+    "9448216cf29461fdd4d0-attempt1.bin": "6e9cc68ecf997f1398ec876abdb5bbde8c56d80c9734dd696dd681395358ccfc",
+    "9448216cf29461fdd4d0-attempt1.json": "72462ee46a3bb9557ba1e6ad90f65c11f20236ab97c6caacae2ba6d22f5789dd",
+    "9b811b297f980d7df55d-attempt1.bin": "77061f7945bdca46b9dc9d7056dce021bafdfac7e2667b8a399862bca62b90df",
+    "9b811b297f980d7df55d-attempt1.json": "91c6663699e5f970b3792c0f536bd155748a0347abf9fd0fef9203e4a6fa2ea2",
+    "9d86a4cad78c46ef3588-attempt1.bin": "271c127323a8db463bdba82a35169339d392940b12f0a2f9033e0439175ce600",
+    "9d86a4cad78c46ef3588-attempt1.json": "eebe6561e506328a6584d03149c7689ec719920c06cfbe248ba9e065429058c9",
+    "9fba8ef2c545eea1e67e-attempt1.bin": "4386331ce821e354b537ceb76f705a5ac8bba7b135d379a9fa2f982cea440898",
+    "9fba8ef2c545eea1e67e-attempt1.json": "f9858458530a8f3358324314c1a61e77065dc4a34ae46ac65a43de85cd78d52a",
+    "a4e14490a84b4f2c8098-attempt1.bin": "f6938c8fd14f5a77acfbe3daf8b8630265ddcaba004d1802c23704d21b60c274",
+    "a4e14490a84b4f2c8098-attempt1.json": "934f5f52eb4e95aba1272561082d71b55401362a35308b908c82d31c5ff10729",
+    "a4e8c8742874dae6ba2b-attempt1.bin": "dbc539a44860ffb774fc35b67bace729bd72877aad763d774489a8d8e4509180",
+    "a4e8c8742874dae6ba2b-attempt1.json": "8bf76fbe8da4102604e772bbfa142d050c88bf1f8fe1d1a634d794a52a810a77",
+    "a6eac0550816422f440c-attempt1.bin": "5db0142ce1e80a9dee7f0cfb134800ccc5bb8c30c825ad9e8df4e1bce9d69209",
+    "a6eac0550816422f440c-attempt1.json": "13fa872f8c02c827e9ecef219f3f8c0d002435ddfa6b1ee68f7967edb304fd5b",
+    "a8db196beb1165f1ca92-attempt1.bin": "792da99b3df023a89db68fa9a6293cd5aa9de9a9c4a1914c3b827a413cbef9d4",
+    "a8db196beb1165f1ca92-attempt1.json": "1c870d44ae9fc78ad5b5f9569a1ab2be2f73266387d1bedbb6f44778e28656ee",
+    "a9a0dd5bc3705c812293-attempt1.bin": "9325696f6fb4265d6e3ed18152d12c0ba6bdd2810834325ec09ef298064c2328",
+    "a9a0dd5bc3705c812293-attempt1.json": "39adb9bcdc0580fc7237a9dc4d7503d8b192d58d4b26084ddfc58e0f72e49018",
+    "a9d7ec403a5eda083d28-attempt1.bin": "5199e4d198a426d77bf7e829a21cf6ac08edd7c145dcec716472d6f4ec417a27",
+    "a9d7ec403a5eda083d28-attempt1.json": "5f5b44fdf6f9418996baf77dbd734e2e580b4637e44b5058406046e931a6297c",
+    "aee54449275648285e42-attempt1.bin": "9ca29f200fcbbf89f4375ba028ce4485de1b56a20f430c582ab4f9ca9a854696",
+    "aee54449275648285e42-attempt1.json": "dc46755e105b21fbefe6faa20ae287a12b93842a131445dd65013cab800c798f",
+    "b495299427446bcc62ed-attempt1.bin": "b16af6b5f7fc6f2bd8817b97cd961aeb822ee0b8952a438dd48855c28363849e",
+    "b495299427446bcc62ed-attempt1.json": "0e88db333cfa16783b868753b7710be96257c11bc7ac8485bcf0df7389fd1df1",
+    "c1a5bae3bdc210baced8-attempt1.bin": "aaf3a8526940c23d47c6ff58b4a69aac4661ce174a96418923ba67570704540d",
+    "c1a5bae3bdc210baced8-attempt1.json": "f7e92ed27786c015b37f5678ccadabb30dd6858592cab16b10db19b787c58926",
+    "cadbef53b10a597dcf0a-attempt1.bin": "afac15f3981ab49a4a1fdf0e9b7c540feb45e83b6f1967cd11402e7443d70f13",
+    "cadbef53b10a597dcf0a-attempt1.json": "0168e623a0c5b31a1b4e4336926b8212a6cabf0b7c21e816ed5e815bf26c8b05",
+    "d2f3e95940e761387757-attempt1.bin": "374b1f0d9fdacd1964ccc174ac5e17d685613ec964a0822ce164b59db9855ec1",
+    "d2f3e95940e761387757-attempt1.json": "43a7e820096a95ca89b011a0dfe3d5d80cc5d2670b469d5801d2e9aeb7e7c657",
+    "d3026cc6c0a4c1dea812-attempt1.bin": "9687fe5b7452b822e6547953c85305eb52a929c1d77e75dc0c768aa19544dfed",
+    "d3026cc6c0a4c1dea812-attempt1.json": "08f520d38194a0774a1bea48d6aa8dd424baa0c00d999b4222b4c34f6bcadfa7",
+    "d5df41639ffe2d691eee-attempt1.bin": "6cf6786ef7a4a8ba45a6320339a2fd2663e63623d01d10764fc06e6da1e1ba72",
+    "d5df41639ffe2d691eee-attempt1.json": "4d29a991378f6a873f8ca03f75cfbdf2eaab932adae5570e04235befe2a8ecea",
+    "da76e4f6ef7ed51c1f3c-attempt1.bin": "c4687e5079493323757930738f1b36f959610174d20f4a18b9db3997bf2f483d",
+    "da76e4f6ef7ed51c1f3c-attempt1.json": "240fb77f63df8cd5fc8e140b26fdf992e9ac243d5d7e7e0f416c70bd9184e887",
+    "db6e401dff936e1b0827-attempt1.bin": "6c556dcf847b48ca020b56ab6c3e375a8e940b9c916d9f55c5b213488e5c9df8",
+    "db6e401dff936e1b0827-attempt1.json": "09ebe73c6397ddd1bfa50e0f7435eaef603ba77c07c105e517ccc26b3b800708",
+    "dd27dee289459cab0f50-attempt1.bin": "922c4f25b9986ddda80c6c9f69a8c6a8f7a8e4fecdf91fd472f7d58ebdb99773",
+    "dd27dee289459cab0f50-attempt1.json": "9b322018be6a517568759797e7482fccbd820049f39122940df93b71221cab0b",
+    "deafabd4fd0beb14ff1b-attempt1.bin": "adb28022f570014c3ee712f32668e7bcf821eaddf40e641ae23a0b5aaceaaa2a",
+    "deafabd4fd0beb14ff1b-attempt1.json": "0ff51af6293aa8fcdcfb383baf521ea8a308c1107324fa035b2e642eae91c596",
+    "efe7ef44f42869a12bfb-attempt1.bin": "b97668d692e49f9bb7dcf0b4562768006c69a3ec25b025651a6b19e9422f8b0f",
+    "efe7ef44f42869a12bfb-attempt1.json": "0733edd2a870eae902e78216813fdf84d0b45860bd8be304a982a1b746e828cb",
+    "f18b26318b7cef11954b-attempt1.bin": "c30b2d070a1997f08a0ebd6fb524c916727dc4185870079a8a58bf13470cdcc8",
+    "f18b26318b7cef11954b-attempt1.json": "71d231b06ca77f14ac855da98b37cc5b8ec565db5f02e156062600639d3d76f5",
+    "f63298b28e571b1b8f53-attempt1.bin": "759a23741ae937d6f7918ee7372173cb97f2e16a397f0a1e1477d44eab1fa876",
+    "f63298b28e571b1b8f53-attempt1.json": "7ea858b5cd893d9dddb46df3897d9092e884a94d94fe4c943706e953576cd417",
+    "f7472fb3a17386f5c636-attempt1.bin": "02cb3ba06f858823da7007a01aa6353ab1a457acdb2de395ef2bfe7f34712fd3",
+    "f7472fb3a17386f5c636-attempt1.json": "d8a421092c3adbe58f09db5119b040db50f26580210c3be93ea0f3a87f8b6615",
+    "f8d1d68298c65c725e90-attempt1.bin": "76b80479642d2e3749fb612b76a6773a02238ae0d66a86c4e8f467b011613f8f",
+    "f8d1d68298c65c725e90-attempt1.json": "c568fa40e9765d80b6b208db1bffeb5af5a4005b30c14a4a416ae34bf951aae5",
+    "ff0ce488c6c234590c7a-attempt1.bin": "1fdd01e7cf980666677ab5fd2adfcdeac3ca03612851713125badd90a9a2e8e1",
+    "ff0ce488c6c234590c7a-attempt1.json": "3e19f0e6dbd472b12e92de7c44586bf129830a5acbddb6ca4ab157d967879e97",
+    "ffaed102d4352d1c92fd-attempt1.bin": "e85e6bd5536eb265c155b875088cc84f5d393cb6c631d1a1653cd4db2c94c75c",
+    "ffaed102d4352d1c92fd-attempt1.json": "44ba8988514eeceeb0816f109362eaae142c543a254297bbee52ff052cebdfdb"
+  },
+  "request_count": 72,
+  "request_errors": {},
+  "symbols": [
+    {
+      "symbol": "FILUSDT",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72,
+          "expected_hours": 72,
+          "inserted_hours": 72,
+          "status": "verified",
+          "monthly_target_hours": 0,
+          "comparisons": [
+            {
+              "left": "original",
+              "right": "daily_zip",
+              "rows": 48,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "original",
+              "right": "monthly_zip",
+              "rows": 600,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "original",
+              "right": "api",
+              "rows": 48,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "daily_zip",
+              "right": "monthly_zip",
+              "rows": 24,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "daily_zip",
+              "right": "api",
+              "rows": 120,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "monthly_zip",
+              "right": "api",
+              "rows": 24,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            }
+          ]
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48,
+          "expected_hours": 48,
+          "inserted_hours": 48,
+          "status": "verified",
+          "monthly_target_hours": 0,
+          "comparisons": [
+            {
+              "left": "original",
+              "right": "daily_zip",
+              "rows": 48,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "original",
+              "right": "monthly_zip",
+              "rows": 672,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "original",
+              "right": "api",
+              "rows": 48,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "daily_zip",
+              "right": "monthly_zip",
+              "rows": 24,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "daily_zip",
+              "right": "api",
+              "rows": 96,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "monthly_zip",
+              "right": "api",
+              "rows": 24,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            }
+          ]
+        }
+      ],
+      "original_development_rows": 38946,
+      "inserted_hours": 120,
+      "all_ranges_verified": true,
+      "snapshot_rows": 39066,
+      "original_development_rows_unchanged": true
+    },
+    {
+      "symbol": "LTCUSDT",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72,
+          "expected_hours": 72,
+          "inserted_hours": 72,
+          "status": "verified",
+          "monthly_target_hours": 0,
+          "comparisons": [
+            {
+              "left": "original",
+              "right": "daily_zip",
+              "rows": 48,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "original",
+              "right": "monthly_zip",
+              "rows": 600,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "original",
+              "right": "api",
+              "rows": 48,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "daily_zip",
+              "right": "monthly_zip",
+              "rows": 24,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "daily_zip",
+              "right": "api",
+              "rows": 120,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "monthly_zip",
+              "right": "api",
+              "rows": 24,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            }
+          ]
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48,
+          "expected_hours": 48,
+          "inserted_hours": 48,
+          "status": "verified",
+          "monthly_target_hours": 0,
+          "comparisons": [
+            {
+              "left": "original",
+              "right": "daily_zip",
+              "rows": 48,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "original",
+              "right": "monthly_zip",
+              "rows": 672,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "original",
+              "right": "api",
+              "rows": 48,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "daily_zip",
+              "right": "monthly_zip",
+              "rows": 24,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "daily_zip",
+              "right": "api",
+              "rows": 96,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "monthly_zip",
+              "right": "api",
+              "rows": 24,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            }
+          ]
+        }
+      ],
+      "original_development_rows": 42240,
+      "inserted_hours": 120,
+      "all_ranges_verified": true,
+      "snapshot_rows": 42360,
+      "original_development_rows_unchanged": true
+    },
+    {
+      "symbol": "TRXUSDT",
+      "ranges": [
+        {
+          "start": "2022-02-26 00:00:00+00:00",
+          "end_exclusive": "2022-03-01 00:00:00+00:00",
+          "periods": 72,
+          "expected_hours": 72,
+          "inserted_hours": 72,
+          "status": "verified",
+          "monthly_target_hours": 0,
+          "comparisons": [
+            {
+              "left": "original",
+              "right": "daily_zip",
+              "rows": 48,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "original",
+              "right": "monthly_zip",
+              "rows": 600,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "original",
+              "right": "api",
+              "rows": 48,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "daily_zip",
+              "right": "monthly_zip",
+              "rows": 24,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "daily_zip",
+              "right": "api",
+              "rows": 120,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "monthly_zip",
+              "right": "api",
+              "rows": 24,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            }
+          ]
+        },
+        {
+          "start": "2022-04-01 00:00:00+00:00",
+          "end_exclusive": "2022-04-03 00:00:00+00:00",
+          "periods": 48,
+          "expected_hours": 48,
+          "inserted_hours": 48,
+          "status": "verified",
+          "monthly_target_hours": 0,
+          "comparisons": [
+            {
+              "left": "original",
+              "right": "daily_zip",
+              "rows": 48,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "original",
+              "right": "monthly_zip",
+              "rows": 672,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "original",
+              "right": "api",
+              "rows": 48,
+              "fields": [
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "quote_volume",
+                "taker_buy_quote_volume"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "daily_zip",
+              "right": "monthly_zip",
+              "rows": 24,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "daily_zip",
+              "right": "api",
+              "rows": 96,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            },
+            {
+              "left": "monthly_zip",
+              "right": "api",
+              "rows": 24,
+              "fields": [
+                "open_time",
+                "open",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "close_time",
+                "quote_volume",
+                "n_trades",
+                "taker_buy_base",
+                "taker_buy_quote_volume",
+                "ignore"
+              ],
+              "conflicts": 0
+            }
+          ]
+        }
+      ],
+      "original_development_rows": 42240,
+      "inserted_hours": 120,
+      "all_ranges_verified": true,
+      "snapshot_rows": 42360,
+      "original_development_rows_unchanged": true
+    }
+  ],
+  "requested_hours": 360,
+  "inserted_hours": 360,
+  "all_ranges_verified": true,
+  "completed_utc": "2026-09-10T07:26:14.731032+00:00"
+}
