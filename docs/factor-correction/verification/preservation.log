@@ -1,0 +1,139 @@
+{
+  "status": "PASS",
+  "baseline_commit": "0b7292148b9229eb58cf528b20948395819f9200",
+  "registration_commit": "9cedcc42aafa2e555828306bdf32f5fd2a4908a2",
+  "reviewed_source_commit": "27640882822d812c6d0478340495e033a11d3915",
+  "baseline_tracked_files": 6882,
+  "baseline_byte_identical_files": 6876,
+  "permitted_paths": [
+    {
+      "path": "CLAUDE.md",
+      "baseline": {
+        "git_blob": "9d51d39077115a4ab26e952d60955e2d5a074f77",
+        "bytes": 6163
+      },
+      "current": {
+        "bytes": 6709,
+        "sha256": "e737a916b8182df795b98bca27f9330a7f2248ec3f9247bedddaa1fdcdaa5c2e",
+        "git_blob": "19c2abdecedd12277ac62a5a7e0c2c58517e44cd"
+      },
+      "changed": true
+    },
+    {
+      "path": "THESIS_FINDINGS.md",
+      "baseline": {
+        "git_blob": "e3cca5ac93b1f3f83a7f526c8b01e287ec332e11",
+        "bytes": 506680
+      },
+      "current": {
+        "bytes": 509417,
+        "sha256": "32fde31287daa196fc9d194556cf7360caed83cb25c7190c43f3b40ce9aa6955",
+        "git_blob": "c0b703575d07fc97cbb41e698270dce6343ceef3"
+      },
+      "changed": true
+    },
+    {
+      "path": "data/predlab/gates.json",
+      "baseline": {
+        "git_blob": "bd4eec112b825173d8a4e478b5b3f1fe19524a4d",
+        "bytes": 202330
+      },
+      "current": {
+        "bytes": 208268,
+        "sha256": "d92c2a910aa28170e15b73ccb445244ca32c51d71626706de88314e1eb49173f",
+        "git_blob": "59675125e235304b0e134838e0925bef469ccf47"
+      },
+      "changed": true
+    },
+    {
+      "path": "data/predlab/trial_ledger.jsonl",
+      "baseline": {
+        "git_blob": "afd20398d1c71267812b9d06e1aec9ca525bf4f0",
+        "bytes": 428150
+      },
+      "current": {
+        "bytes": 569325,
+        "sha256": "4d176acf273cacc5ada30abd02a0e7317c579968f29b2918196d88ebe3140601",
+        "git_blob": "30d01f5253110c5aae3a4f334d5aacbf1cb7e050"
+      },
+      "changed": true
+    },
+    {
+      "path": "docs/audit/corrections.jsonl",
+      "baseline": {
+        "git_blob": "39c61d6d2c17e6f7dcb91f7ac3c810c5243ad55f",
+        "bytes": 27044
+      },
+      "current": {
+        "bytes": 29686,
+        "sha256": "50bb9a89a29329120e6d9ae46815f5e9bc3b03284c8244d0dd13707c03729992",
+        "git_blob": "8151a6786d4ea345faf7c3d7892aa0b924d2b54e"
+      },
+      "changed": true
+    },
+    {
+      "path": "scripts/baseline_strategy_v2.py",
+      "baseline": {
+        "git_blob": "f9992a19b8dd4dce713f3f03deb384d7feca11a9",
+        "bytes": 19107
+      },
+      "current": {
+        "bytes": 22049,
+        "sha256": "8de678e024c7ad7dcd63c2d5e4bbca90c2b466ec665309fee87ddf32b29e6572",
+        "git_blob": "cd4e204aebba908de0c9208386fc058a681f6ff5"
+      },
+      "changed": true
+    }
+  ],
+  "prior_local_artifacts_verified": 6876,
+  "manifest_checks": [
+    {
+      "path": "docs/funding-capture/verification/preservation-final.json",
+      "sha256": "a19df9abbaef2e8808b347fdad20467df98a51792b4320c0e58e63251ab90f22",
+      "file_references_verified": 3805
+    },
+    {
+      "path": "docs/funding-capture/verification/final-manifest.json",
+      "sha256": "76d143c1eed638f148354890e64eb2e8b2f6e472ee41b57a27c9267d47be0724",
+      "file_references_verified": 2169
+    }
+  ],
+  "manifest_file_references_verified": 5974,
+  "operational_locks_excluded": [],
+  "append_only_checks": [
+    {
+      "path": "docs/audit/corrections.jsonl",
+      "original_bytes": 27044,
+      "original_sha256": "2641121134711a5d7e2eb5b15f81b1860a6f1c497069e2942479c383198199c7",
+      "appended_bytes": 2642
+    },
+    {
+      "path": "THESIS_FINDINGS.md",
+      "original_bytes": 506680,
+      "original_sha256": "ee06217e9e5eb49521a4b6f567caf558bdd4796084f0a8f15a08961e28f1cd6c",
+      "appended_bytes": 2737
+    }
+  ],
+  "prior_predlab_gate_entries_unchanged": 36,
+  "new_gate_keys": [
+    "audit_factor_floor_2026_09_10"
+  ],
+  "registered_gate_sha256": "fb5e76ffe3a42823339c401f434c79a7fc6689cc0644d5fd018fa5b43b52a306",
+  "financial_ledger": {
+    "original_bytes": 428150,
+    "original_rows": 730,
+    "original_sha256": "710a4f087325bfb408ed8d051963a473e8d8a47b445ffae0238c565aff6dc791",
+    "new_rows": 18,
+    "rows": 748,
+    "sha256": "4d176acf273cacc5ada30abd02a0e7317c579968f29b2918196d88ebe3140601"
+  },
+  "external_original_inputs_verified": 222,
+  "factor_caches_verified": 2,
+  "financial_statistics_computed": false,
+  "network_requests": 0,
+  "old_evidence_write_operations": 0,
+  "qualification": "Local byte preservation only; no financial recalculation, semantic result review or Git retention certification.",
+  "started_utc": "2026-09-10T12:35:36.763643+00:00",
+  "verified_utc": "2026-09-10T12:35:40.518696+00:00",
+  "script_sha256": "fa942a0c2ee88e82ad62b3ca85c7d7501eae3270265252782a896459aea49953"
+}

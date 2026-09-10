@@ -1,0 +1,1499 @@
+{
+  "reviewed_utc": "2026-09-10T12:35:57.413757+00:00",
+  "source": "27640882822d812c6d0478340495e033a11d3915",
+  "result_sha256": "a6886a55966f78d8e9bb36f694212fa626484a3088104bd53c48589a27b4309d",
+  "status": "all_saved_output_checks_passed",
+  "strategy_rerun": false,
+  "configuration_count": 18,
+  "variant_count": 90,
+  "trace_count": 144,
+  "trace_rows": 178560,
+  "return_clock_rows_each": 1240,
+  "target_clock_rows_each": 1241,
+  "shadow_count": 18,
+  "verified_output_payload_count": 289,
+  "verified_pinned_input_count": 16,
+  "maximum_absolute_residuals": {
+    "aggregate_equals_sleeve_mean": 0.0,
+    "metric_sharpe": 0.0,
+    "metric_sharpe_252": 0.0,
+    "metric_total_return": 0.0,
+    "metric_max_drawdown": 0.0,
+    "metric_n_bars": 0.0,
+    "metric_n_trailing_zero_bars": 0.0,
+    "metric_active_sharpe_diagnostic": 0.0,
+    "nav_alias_before": 0.0,
+    "nav_alias_after": 0.0,
+    "nav_continuity": 0.0,
+    "cashflow_reconciliation": 5.8548721426632255e-12,
+    "gross_price_component": 2.2737367544323206e-13,
+    "signed_assumed_funding": 4.440892098500626e-16,
+    "drifted_entry_turnover": 3.637978807091713e-12,
+    "entry_fee": 7.105427357601002e-15,
+    "exit_fee": 1.7763568394002505e-15,
+    "entry_impact": 1.1102230246251565e-15,
+    "exit_impact": 8.881784197001252e-16,
+    "fee_subdivisions": 0.0,
+    "impact_subdivisions": 0.0,
+    "turnover_subdivisions": 0.0,
+    "ret_matches_trace": 0.0,
+    "trace_net_return": 0.0,
+    "same_registered_target_schedule": 0.0,
+    "final_marked_notional": 0.0,
+    "exit_notional": 0.0,
+    "reported_gross_dollars": 0.0,
+    "reported_funding_dollars": 0.0,
+    "reported_fee_dollars": 0.0,
+    "reported_impact_dollars": 0.0,
+    "reported_turnover_dollars": 0.0,
+    "legacy_sharpe": 1.1102230246251565e-16,
+    "saved_parity_delta_sharpe": 0.0,
+    "legacy_total_return": 0.0,
+    "saved_parity_delta_total_return": 0.0,
+    "legacy_max_drawdown": 0.0,
+    "saved_parity_delta_max_drawdown": 0.0,
+    "legacy_n_bars": 0.0,
+    "saved_parity_delta_n_bars": 0.0,
+    "shadow_only_replaces_gross": 1.3877787807814457e-17,
+    "legacy_BEST_sleeves": 9.974659986866641e-17
+  },
+  "legacy_scalar_max_absolute_difference": 1.1102230246251565e-16,
+  "prior_ledger": {
+    "rows": 730,
+    "bytes": 428150,
+    "sha256": "710a4f087325bfb408ed8d051963a473e8d8a47b445ffae0238c565aff6dc791"
+  },
+  "final_ledger_rows": 748,
+  "new_unique_ledger_rows": 18,
+  "final_ledger_sha256": "4d176acf273cacc5ada30abd02a0e7317c579968f29b2918196d88ebe3140601",
+  "cells": [
+    {
+      "cell": "tsmom_k7_ls",
+      "legacy_sr365": 0.03462121868404483,
+      "primary_sr365": 0.15129516035080315,
+      "zero_execution_sr365": 0.2435340990265918,
+      "double_execution_sr365": 0.0707220626891346,
+      "zero_funding_sr365": 0.1230864501616135,
+      "invalid_frozen_log_sr365": 0.2499393679619432,
+      "primary_total_return": 0.032972002109990406,
+      "primary_max_drawdown": -0.1498388003830592,
+      "primary_trailing_zero_rows": 889,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "tsmom_k14_ls",
+      "legacy_sr365": 0.27106008625948064,
+      "primary_sr365": 0.336139966276848,
+      "zero_execution_sr365": 0.42191139798949784,
+      "double_execution_sr365": 0.29356664354659456,
+      "zero_funding_sr365": 0.3513271207878616,
+      "invalid_frozen_log_sr365": 0.40018336953422906,
+      "primary_total_return": 0.11565681950950868,
+      "primary_max_drawdown": -0.14700008724832136,
+      "primary_trailing_zero_rows": 650,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "tsmom_k30_ls",
+      "legacy_sr365": 0.2797084403972982,
+      "primary_sr365": 0.9850980340125022,
+      "zero_execution_sr365": 1.0702066675034672,
+      "double_execution_sr365": 0.9069356793645628,
+      "zero_funding_sr365": 1.0100399435023664,
+      "invalid_frozen_log_sr365": 0.9750642062350875,
+      "primary_total_return": 0.6532500780288617,
+      "primary_max_drawdown": -0.12132878995020169,
+      "primary_trailing_zero_rows": 238,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "tsmom_k90_ls",
+      "legacy_sr365": -0.5448695954686821,
+      "primary_sr365": -0.5228762925360578,
+      "zero_execution_sr365": -0.5180680934161531,
+      "double_execution_sr365": -0.5430500854213547,
+      "zero_funding_sr365": -0.5225468736748884,
+      "invalid_frozen_log_sr365": -0.4463388988837263,
+      "primary_total_return": -0.12010244230359757,
+      "primary_max_drawdown": -0.14987981542278783,
+      "primary_trailing_zero_rows": 1065,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "tsmom_k7_lo",
+      "legacy_sr365": -0.9688328453956635,
+      "primary_sr365": -0.8622313662563128,
+      "zero_execution_sr365": -0.8417766830468002,
+      "double_execution_sr365": -1.0866796681654256,
+      "zero_funding_sr365": -0.8296903955737106,
+      "invalid_frozen_log_sr365": -0.9851463075006711,
+      "primary_total_return": -0.14576865713517206,
+      "primary_max_drawdown": -0.14857492098221659,
+      "primary_trailing_zero_rows": 1055,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "tsmom_k14_lo",
+      "legacy_sr365": -0.9271619534626961,
+      "primary_sr365": -0.9438186861636412,
+      "zero_execution_sr365": -0.9229042336831222,
+      "double_execution_sr365": -0.9596254969018531,
+      "zero_funding_sr365": -0.9291673958470735,
+      "invalid_frozen_log_sr365": -1.0565144218058993,
+      "primary_total_return": -0.1533764669498331,
+      "primary_max_drawdown": -0.1533764669498331,
+      "primary_trailing_zero_rows": 1019,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "tsmom_k30_lo",
+      "legacy_sr365": -1.4609122266241976,
+      "primary_sr365": -1.2757861297594508,
+      "zero_execution_sr365": -0.9291141425181517,
+      "double_execution_sr365": -1.4691238264449842,
+      "zero_funding_sr365": -1.1137736567946237,
+      "invalid_frozen_log_sr365": -1.408628254943231,
+      "primary_total_return": -0.13486357406870386,
+      "primary_max_drawdown": -0.1464854774536256,
+      "primary_trailing_zero_rows": 1019,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "tsmom_k90_lo",
+      "legacy_sr365": -1.0866082692341545,
+      "primary_sr365": -0.9345536975830868,
+      "zero_execution_sr365": -0.7594957046507513,
+      "double_execution_sr365": -1.0888630148907361,
+      "zero_funding_sr365": -0.8705114997161655,
+      "invalid_frozen_log_sr365": -1.0508017811572228,
+      "primary_total_return": -0.13171067555086335,
+      "primary_max_drawdown": -0.14964990776812748,
+      "primary_trailing_zero_rows": 1060,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "tsmom_k180_ls",
+      "legacy_sr365": -1.44026943830236,
+      "primary_sr365": -1.4500716691976736,
+      "zero_execution_sr365": -1.4365194790947529,
+      "double_execution_sr365": -1.4712450629715381,
+      "zero_funding_sr365": -1.4414911797547787,
+      "invalid_frozen_log_sr365": -1.4952461975257165,
+      "primary_total_return": -0.1321520318549756,
+      "primary_max_drawdown": -0.15008214546049703,
+      "primary_trailing_zero_rows": 1157,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "macross_10_50_ls",
+      "legacy_sr365": 0.7608746892846813,
+      "primary_sr365": 0.8585071974190749,
+      "zero_execution_sr365": 0.8959143738414123,
+      "double_execution_sr365": 0.8210871758744213,
+      "zero_funding_sr365": 0.8514734072632095,
+      "invalid_frozen_log_sr365": 0.9313520081429261,
+      "primary_total_return": 0.42905834035526724,
+      "primary_max_drawdown": -0.11793973483536424,
+      "primary_trailing_zero_rows": 759,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "macross_20_100_ls",
+      "legacy_sr365": -0.6786511926748133,
+      "primary_sr365": -0.02063454211099576,
+      "zero_execution_sr365": 0.0028597942064108725,
+      "double_execution_sr365": -0.14950874845452497,
+      "zero_funding_sr365": -0.04834625194061985,
+      "invalid_frozen_log_sr365": 0.06950525173454981,
+      "primary_total_return": -0.01992310321316615,
+      "primary_max_drawdown": -0.14615529086189372,
+      "primary_trailing_zero_rows": 591,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "macross_50_200_ls",
+      "legacy_sr365": -0.987570407069604,
+      "primary_sr365": -0.9668552341632785,
+      "zero_execution_sr365": -0.10693190403798744,
+      "double_execution_sr365": -0.9866206287996931,
+      "zero_funding_sr365": -0.9905144032166913,
+      "invalid_frozen_log_sr365": -0.9476202012973158,
+      "primary_total_return": -0.12972142139429932,
+      "primary_max_drawdown": -0.1477017524610471,
+      "primary_trailing_zero_rows": 1100,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "macross_10_50_lo",
+      "legacy_sr365": -1.1782872187678768,
+      "primary_sr365": -1.028438096322684,
+      "zero_execution_sr365": -0.7586357131489708,
+      "double_execution_sr365": -1.2155747688722587,
+      "zero_funding_sr365": -0.8775427400191985,
+      "invalid_frozen_log_sr365": -1.1532565608534855,
+      "primary_total_return": -0.12802914740908333,
+      "primary_max_drawdown": -0.1397428618008575,
+      "primary_trailing_zero_rows": 1039,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "macross_20_100_lo",
+      "legacy_sr365": -1.0866082692341545,
+      "primary_sr365": -0.9345536975830868,
+      "zero_execution_sr365": -0.7594957046507513,
+      "double_execution_sr365": -1.0888630148907361,
+      "zero_funding_sr365": -0.8705114997161655,
+      "invalid_frozen_log_sr365": -1.0508017811572228,
+      "primary_total_return": -0.13171067555086335,
+      "primary_max_drawdown": -0.14964990776812748,
+      "primary_trailing_zero_rows": 1060,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "macross_50_200_lo",
+      "legacy_sr365": -1.0866082692341545,
+      "primary_sr365": -0.9345536975830868,
+      "zero_execution_sr365": -0.7594957046507513,
+      "double_execution_sr365": -1.0888630148907361,
+      "zero_funding_sr365": -0.8705114997161655,
+      "invalid_frozen_log_sr365": -1.0508017811572228,
+      "primary_total_return": -0.13171067555086335,
+      "primary_max_drawdown": -0.14964990776812748,
+      "primary_trailing_zero_rows": 1060,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "donchian_n20_ls",
+      "legacy_sr365": -0.07026156443000027,
+      "primary_sr365": 0.2884070271324576,
+      "zero_execution_sr365": 0.3207120560252873,
+      "double_execution_sr365": -0.010139140573275028,
+      "zero_funding_sr365": 0.0043683204348434965,
+      "invalid_frozen_log_sr365": 0.403590707424689,
+      "primary_total_return": 0.07635067545565044,
+      "primary_max_drawdown": -0.15033669978276187,
+      "primary_trailing_zero_rows": 886,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "donchian_n55_ls",
+      "legacy_sr365": 0.2730729571609085,
+      "primary_sr365": 0.36076524078566036,
+      "zero_execution_sr365": 0.38603065423491634,
+      "double_execution_sr365": 0.33160116412902985,
+      "zero_funding_sr365": 0.3533016683752386,
+      "invalid_frozen_log_sr365": 0.4253455810265703,
+      "primary_total_return": 0.10718383741328008,
+      "primary_max_drawdown": -0.14382698931643967,
+      "primary_trailing_zero_rows": 649,
+      "legacy_scalar_parity": true
+    },
+    {
+      "cell": "xsmom_btc_eth_30d",
+      "legacy_sr365": 0.34878717473974324,
+      "primary_sr365": 0.44621404690534167,
+      "zero_execution_sr365": 0.5213060690186906,
+      "double_execution_sr365": 0.3891633690323792,
+      "zero_funding_sr365": 0.42228452783240505,
+      "invalid_frozen_log_sr365": 0.4655752352178847,
+      "primary_total_return": 0.11323681142466624,
+      "primary_max_drawdown": -0.07464540361489236,
+      "primary_trailing_zero_rows": 770,
+      "legacy_scalar_parity": true
+    }
+  ],
+  "traces": [
+    {
+      "cell": "tsmom_k7_ls",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2022-10-21T00:00:00",
+      "exact_zero_post_halt_rows": 892,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k7_ls",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2022-10-24T00:00:00",
+      "exact_zero_post_halt_rows": 889,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k7_ls",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-10-24T00:00:00",
+      "exact_zero_post_halt_rows": 889,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k7_ls",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2023-08-16T00:00:00",
+      "exact_zero_post_halt_rows": 593,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k7_ls",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-08-09T00:00:00",
+      "exact_zero_post_halt_rows": 965,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k7_ls",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-10-22T00:00:00",
+      "exact_zero_post_halt_rows": 891,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k7_ls",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2022-10-21T00:00:00",
+      "exact_zero_post_halt_rows": 892,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k7_ls",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2022-10-24T00:00:00",
+      "exact_zero_post_halt_rows": 889,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k14_ls",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2022-11-08T00:00:00",
+      "exact_zero_post_halt_rows": 874,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k14_ls",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2023-06-20T00:00:00",
+      "exact_zero_post_halt_rows": 650,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k14_ls",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-11-08T00:00:00",
+      "exact_zero_post_halt_rows": 874,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k14_ls",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2023-06-28T00:00:00",
+      "exact_zero_post_halt_rows": 642,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k14_ls",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-10-24T00:00:00",
+      "exact_zero_post_halt_rows": 889,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k14_ls",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2023-06-06T00:00:00",
+      "exact_zero_post_halt_rows": 664,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k14_ls",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2022-10-24T00:00:00",
+      "exact_zero_post_halt_rows": 889,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k14_ls",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2023-06-20T00:00:00",
+      "exact_zero_post_halt_rows": 650,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k30_ls",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2024-08-05T00:00:00",
+      "exact_zero_post_halt_rows": 238,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k30_ls",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2023-06-30T00:00:00",
+      "exact_zero_post_halt_rows": 640,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k30_ls",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2024-08-05T00:00:00",
+      "exact_zero_post_halt_rows": 238,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k30_ls",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2023-07-07T00:00:00",
+      "exact_zero_post_halt_rows": 633,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k30_ls",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2024-08-04T00:00:00",
+      "exact_zero_post_halt_rows": 239,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k30_ls",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2023-06-28T00:00:00",
+      "exact_zero_post_halt_rows": 642,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k30_ls",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2024-08-04T00:00:00",
+      "exact_zero_post_halt_rows": 239,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k30_ls",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2023-07-05T00:00:00",
+      "exact_zero_post_halt_rows": 635,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k90_ls",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-01T00:00:00",
+      "exact_zero_post_halt_rows": 1065,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k90_ls",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2022-04-23T00:00:00",
+      "exact_zero_post_halt_rows": 1073,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k90_ls",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-04T00:00:00",
+      "exact_zero_post_halt_rows": 1062,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k90_ls",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-04-26T00:00:00",
+      "exact_zero_post_halt_rows": 1070,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k90_ls",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-04-26T00:00:00",
+      "exact_zero_post_halt_rows": 1070,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k90_ls",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-04-22T00:00:00",
+      "exact_zero_post_halt_rows": 1074,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k90_ls",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2022-04-30T00:00:00",
+      "exact_zero_post_halt_rows": 1066,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k90_ls",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2022-04-21T00:00:00",
+      "exact_zero_post_halt_rows": 1075,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k7_lo",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-11T00:00:00",
+      "exact_zero_post_halt_rows": 1055,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k7_lo",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2022-05-09T00:00:00",
+      "exact_zero_post_halt_rows": 1057,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k7_lo",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-12T00:00:00",
+      "exact_zero_post_halt_rows": 1054,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k7_lo",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-05-12T00:00:00",
+      "exact_zero_post_halt_rows": 1054,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k7_lo",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-09T00:00:00",
+      "exact_zero_post_halt_rows": 1057,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k7_lo",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-02-24T00:00:00",
+      "exact_zero_post_halt_rows": 1131,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k7_lo",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-12T00:00:00",
+      "exact_zero_post_halt_rows": 1054,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k7_lo",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2022-05-11T00:00:00",
+      "exact_zero_post_halt_rows": 1055,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k14_lo",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2022-06-16T00:00:00",
+      "exact_zero_post_halt_rows": 1019,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k14_lo",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2022-06-15T00:00:00",
+      "exact_zero_post_halt_rows": 1020,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k14_lo",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-06-18T00:00:00",
+      "exact_zero_post_halt_rows": 1017,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k14_lo",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-06-16T00:00:00",
+      "exact_zero_post_halt_rows": 1019,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k14_lo",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-06-15T00:00:00",
+      "exact_zero_post_halt_rows": 1020,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k14_lo",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-06-14T00:00:00",
+      "exact_zero_post_halt_rows": 1021,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k14_lo",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2022-06-18T00:00:00",
+      "exact_zero_post_halt_rows": 1017,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k14_lo",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2022-06-16T00:00:00",
+      "exact_zero_post_halt_rows": 1019,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k30_lo",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2022-06-16T00:00:00",
+      "exact_zero_post_halt_rows": 1019,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k30_lo",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2022-02-24T00:00:00",
+      "exact_zero_post_halt_rows": 1131,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k30_lo",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-06-18T00:00:00",
+      "exact_zero_post_halt_rows": 1017,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k30_lo",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-05-09T00:00:00",
+      "exact_zero_post_halt_rows": 1057,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k30_lo",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-06-15T00:00:00",
+      "exact_zero_post_halt_rows": 1020,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k30_lo",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-01-27T00:00:00",
+      "exact_zero_post_halt_rows": 1159,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k30_lo",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2022-06-18T00:00:00",
+      "exact_zero_post_halt_rows": 1017,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k30_lo",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2022-03-07T00:00:00",
+      "exact_zero_post_halt_rows": 1120,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k90_lo",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-06T00:00:00",
+      "exact_zero_post_halt_rows": 1060,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k90_lo",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2022-02-24T00:00:00",
+      "exact_zero_post_halt_rows": 1131,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k90_lo",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-07T00:00:00",
+      "exact_zero_post_halt_rows": 1059,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k90_lo",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-05-09T00:00:00",
+      "exact_zero_post_halt_rows": 1057,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k90_lo",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-05T00:00:00",
+      "exact_zero_post_halt_rows": 1061,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k90_lo",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-01-27T00:00:00",
+      "exact_zero_post_halt_rows": 1159,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k90_lo",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-08T00:00:00",
+      "exact_zero_post_halt_rows": 1058,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k90_lo",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2022-03-07T00:00:00",
+      "exact_zero_post_halt_rows": 1120,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k180_ls",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2022-01-29T00:00:00",
+      "exact_zero_post_halt_rows": 1157,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k180_ls",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2022-01-28T00:00:00",
+      "exact_zero_post_halt_rows": 1158,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k180_ls",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-02-04T00:00:00",
+      "exact_zero_post_halt_rows": 1151,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k180_ls",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-01-29T00:00:00",
+      "exact_zero_post_halt_rows": 1157,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k180_ls",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-01-28T00:00:00",
+      "exact_zero_post_halt_rows": 1158,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k180_ls",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-01-27T00:00:00",
+      "exact_zero_post_halt_rows": 1159,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k180_ls",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2022-02-01T00:00:00",
+      "exact_zero_post_halt_rows": 1154,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "tsmom_k180_ls",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2022-01-28T00:00:00",
+      "exact_zero_post_halt_rows": 1158,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_10_50_ls",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2023-03-03T00:00:00",
+      "exact_zero_post_halt_rows": 759,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_10_50_ls",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2022-07-18T00:00:00",
+      "exact_zero_post_halt_rows": 987,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_10_50_ls",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2023-03-03T00:00:00",
+      "exact_zero_post_halt_rows": 759,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_10_50_ls",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-07-18T00:00:00",
+      "exact_zero_post_halt_rows": 987,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_10_50_ls",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2023-03-03T00:00:00",
+      "exact_zero_post_halt_rows": 759,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_10_50_ls",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-07-18T00:00:00",
+      "exact_zero_post_halt_rows": 987,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_10_50_ls",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2023-03-03T00:00:00",
+      "exact_zero_post_halt_rows": 759,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_10_50_ls",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2022-07-18T00:00:00",
+      "exact_zero_post_halt_rows": 987,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_20_100_ls",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2023-08-18T00:00:00",
+      "exact_zero_post_halt_rows": 591,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_20_100_ls",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2022-04-24T00:00:00",
+      "exact_zero_post_halt_rows": 1072,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_20_100_ls",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2023-08-23T00:00:00",
+      "exact_zero_post_halt_rows": 586,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_20_100_ls",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-04-26T00:00:00",
+      "exact_zero_post_halt_rows": 1070,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_20_100_ls",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2023-03-10T00:00:00",
+      "exact_zero_post_halt_rows": 752,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_20_100_ls",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-04-23T00:00:00",
+      "exact_zero_post_halt_rows": 1073,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_20_100_ls",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2023-08-23T00:00:00",
+      "exact_zero_post_halt_rows": 586,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_20_100_ls",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2022-04-23T00:00:00",
+      "exact_zero_post_halt_rows": 1073,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_50_200_ls",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2022-03-27T00:00:00",
+      "exact_zero_post_halt_rows": 1100,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_50_200_ls",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2022-01-31T00:00:00",
+      "exact_zero_post_halt_rows": 1155,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_50_200_ls",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2023-03-09T00:00:00",
+      "exact_zero_post_halt_rows": 753,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_50_200_ls",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-02-04T00:00:00",
+      "exact_zero_post_halt_rows": 1151,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_50_200_ls",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-03-26T00:00:00",
+      "exact_zero_post_halt_rows": 1101,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_50_200_ls",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-01-27T00:00:00",
+      "exact_zero_post_halt_rows": 1159,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_50_200_ls",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2022-03-27T00:00:00",
+      "exact_zero_post_halt_rows": 1100,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_50_200_ls",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2022-02-01T00:00:00",
+      "exact_zero_post_halt_rows": 1154,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_10_50_lo",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-27T00:00:00",
+      "exact_zero_post_halt_rows": 1039,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_10_50_lo",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2022-02-24T00:00:00",
+      "exact_zero_post_halt_rows": 1131,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_10_50_lo",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-06-12T00:00:00",
+      "exact_zero_post_halt_rows": 1023,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_10_50_lo",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-05-09T00:00:00",
+      "exact_zero_post_halt_rows": 1057,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_10_50_lo",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-27T00:00:00",
+      "exact_zero_post_halt_rows": 1039,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_10_50_lo",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-01-27T00:00:00",
+      "exact_zero_post_halt_rows": 1159,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_10_50_lo",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2022-06-12T00:00:00",
+      "exact_zero_post_halt_rows": 1023,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_10_50_lo",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2022-03-07T00:00:00",
+      "exact_zero_post_halt_rows": 1120,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_20_100_lo",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-06T00:00:00",
+      "exact_zero_post_halt_rows": 1060,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_20_100_lo",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2022-02-24T00:00:00",
+      "exact_zero_post_halt_rows": 1131,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_20_100_lo",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-07T00:00:00",
+      "exact_zero_post_halt_rows": 1059,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_20_100_lo",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-05-09T00:00:00",
+      "exact_zero_post_halt_rows": 1057,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_20_100_lo",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-05T00:00:00",
+      "exact_zero_post_halt_rows": 1061,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_20_100_lo",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-01-27T00:00:00",
+      "exact_zero_post_halt_rows": 1159,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_20_100_lo",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-08T00:00:00",
+      "exact_zero_post_halt_rows": 1058,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_20_100_lo",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2022-03-07T00:00:00",
+      "exact_zero_post_halt_rows": 1120,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_50_200_lo",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-06T00:00:00",
+      "exact_zero_post_halt_rows": 1060,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_50_200_lo",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2022-02-24T00:00:00",
+      "exact_zero_post_halt_rows": 1131,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_50_200_lo",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-07T00:00:00",
+      "exact_zero_post_halt_rows": 1059,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_50_200_lo",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-05-09T00:00:00",
+      "exact_zero_post_halt_rows": 1057,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_50_200_lo",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-05T00:00:00",
+      "exact_zero_post_halt_rows": 1061,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_50_200_lo",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-01-27T00:00:00",
+      "exact_zero_post_halt_rows": 1159,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_50_200_lo",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2022-05-08T00:00:00",
+      "exact_zero_post_halt_rows": 1058,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "macross_50_200_lo",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2022-03-07T00:00:00",
+      "exact_zero_post_halt_rows": 1120,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "donchian_n20_ls",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2022-10-27T00:00:00",
+      "exact_zero_post_halt_rows": 886,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "donchian_n20_ls",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2022-09-19T00:00:00",
+      "exact_zero_post_halt_rows": 924,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "donchian_n20_ls",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-10-28T00:00:00",
+      "exact_zero_post_halt_rows": 885,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "donchian_n20_ls",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-10-25T00:00:00",
+      "exact_zero_post_halt_rows": 888,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "donchian_n20_ls",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-10-27T00:00:00",
+      "exact_zero_post_halt_rows": 886,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "donchian_n20_ls",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-05-04T00:00:00",
+      "exact_zero_post_halt_rows": 1062,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "donchian_n20_ls",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2022-10-27T00:00:00",
+      "exact_zero_post_halt_rows": 886,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "donchian_n20_ls",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2022-05-04T00:00:00",
+      "exact_zero_post_halt_rows": 1062,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "donchian_n55_ls",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2023-06-21T00:00:00",
+      "exact_zero_post_halt_rows": 649,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "donchian_n55_ls",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2022-04-21T00:00:00",
+      "exact_zero_post_halt_rows": 1075,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "donchian_n55_ls",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2023-06-21T00:00:00",
+      "exact_zero_post_halt_rows": 649,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "donchian_n55_ls",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-04-22T00:00:00",
+      "exact_zero_post_halt_rows": 1074,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "donchian_n55_ls",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2023-06-21T00:00:00",
+      "exact_zero_post_halt_rows": 649,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "donchian_n55_ls",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2022-04-21T00:00:00",
+      "exact_zero_post_halt_rows": 1075,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "donchian_n55_ls",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2023-06-21T00:00:00",
+      "exact_zero_post_halt_rows": 649,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "donchian_n55_ls",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2022-04-21T00:00:00",
+      "exact_zero_post_halt_rows": 1075,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "xsmom_btc_eth_30d",
+      "variant": "primary",
+      "coin": "bitcoin",
+      "halt_date": "2022-07-28T00:00:00",
+      "exact_zero_post_halt_rows": 977,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "xsmom_btc_eth_30d",
+      "variant": "primary",
+      "coin": "ethereum",
+      "halt_date": "2023-02-20T00:00:00",
+      "exact_zero_post_halt_rows": 770,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "xsmom_btc_eth_30d",
+      "variant": "zero_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-07-30T00:00:00",
+      "exact_zero_post_halt_rows": 975,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "xsmom_btc_eth_30d",
+      "variant": "zero_execution",
+      "coin": "ethereum",
+      "halt_date": "2023-03-04T00:00:00",
+      "exact_zero_post_halt_rows": 758,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "xsmom_btc_eth_30d",
+      "variant": "double_execution",
+      "coin": "bitcoin",
+      "halt_date": "2022-07-19T00:00:00",
+      "exact_zero_post_halt_rows": 986,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "xsmom_btc_eth_30d",
+      "variant": "double_execution",
+      "coin": "ethereum",
+      "halt_date": "2023-02-16T00:00:00",
+      "exact_zero_post_halt_rows": 774,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "xsmom_btc_eth_30d",
+      "variant": "zero_funding",
+      "coin": "bitcoin",
+      "halt_date": "2022-07-28T00:00:00",
+      "exact_zero_post_halt_rows": 977,
+      "outside_envelope_stops": 0
+    },
+    {
+      "cell": "xsmom_btc_eth_30d",
+      "variant": "zero_funding",
+      "coin": "ethereum",
+      "halt_date": "2023-02-25T00:00:00",
+      "exact_zero_post_halt_rows": 765,
+      "outside_envelope_stops": 0
+    }
+  ],
+  "k30_saved_output_decomposition": [
+    {
+      "coin": "bitcoin",
+      "legacy_last_nonzero_date": "2023-01-06 00:00:00",
+      "legacy_first_zero_tail_date": "2023-01-07 00:00:00",
+      "primary_halt_date": "2024-08-05T00:00:00",
+      "legacy_final_equity": 9735.909767161731,
+      "primary_equity_at_legacy_last_nonzero": 10391.786047533025,
+      "primary_final_equity": 20818.033333502037,
+      "primary_minus_legacy_final_equity": 11082.123566340306,
+      "difference_accumulated_by_legacy_last_nonzero": 655.8762803712943,
+      "primary_NAV_change_after_legacy_last_nonzero": 10426.247285969012,
+      "primary_after_legacy_stop_component_sums": {
+        "gross_dollars": 11614.39244428801,
+        "funding_dollars": -506.3679186465666,
+        "fee_dollars": 661.0758365097131,
+        "impact_dollars": 20.701403162701215
+      },
+      "extra_nonzero_primary_days": 577
+    },
+    {
+      "coin": "ethereum",
+      "legacy_last_nonzero_date": "2023-06-26 00:00:00",
+      "legacy_first_zero_tail_date": "2023-06-27 00:00:00",
+      "primary_halt_date": "2023-06-30T00:00:00",
+      "legacy_final_equity": 12037.679836456917,
+      "primary_equity_at_legacy_last_nonzero": 12845.414033865462,
+      "primary_final_equity": 12631.125016651276,
+      "primary_minus_legacy_final_equity": 593.4451801943596,
+      "difference_accumulated_by_legacy_last_nonzero": 807.7341974085448,
+      "primary_NAV_change_after_legacy_last_nonzero": -214.28901721418515,
+      "primary_after_legacy_stop_component_sums": {
+        "gross_dollars": -200.37828033648753,
+        "funding_dollars": 0.2354368096259174,
+        "fee_dollars": 13.899339883656037,
+        "impact_dollars": 0.24683380366965357
+      },
+      "extra_nonzero_primary_days": 4
+    }
+  ]
+}
