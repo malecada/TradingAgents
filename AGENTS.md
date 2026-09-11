@@ -7,8 +7,9 @@ not in this bootstrap. User instructions determine the active scope.
 ## Research boundaries
 
 - Zero strategies are validated. Historical failed, conditional and unavailable
-  outcomes remain distinct. The current phase is preparation; neither a new
-  empirical program nor a paper or production start follows from setup work.
+  outcomes remain distinct. The user launched the new research phase on
+  September 11, 2026; follow current state and its committed program gates.
+  Research authorization does not itself admit paper or production operation.
 - The objective is positive net returns with little overall crypto-price
   exposure, initially approximately $1,000 and potentially $10,000. Binance is
   available according to the user; Bitrue product/account applicability is

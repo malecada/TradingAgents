@@ -2,7 +2,8 @@
 
 **Start with [current state](research/STATE.md). Zero strategies are validated.**
 The completed preparation improves reproducibility and research admission.
-The new strategy-search phase remains pending its launch instruction.
+The user launched the strategy-search phase on September 11, 2026; the active
+program is linked from current state.
 
 ## Working sequence
 
