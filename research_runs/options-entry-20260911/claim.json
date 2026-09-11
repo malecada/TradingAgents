@@ -1,0 +1,245 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "b46f06a095ab7c8bbf712372780c884abec2663c",
+  "experiment": {
+    "cells": [
+      "options-time",
+      "btc-index",
+      "eth-index",
+      "btc-depth",
+      "eth-depth",
+      "btc-mark",
+      "eth-mark",
+      "btc-1000-0.00024",
+      "btc-1000-0.00030",
+      "btc-10000-0.00024",
+      "btc-10000-0.00030",
+      "eth-1000-0.00024",
+      "eth-1000-0.00030",
+      "eth-10000-0.00024",
+      "eth-10000-0.00030"
+    ],
+    "charter": {
+      "path": "research/strategy-search-2026-09-11/options-entry-charter.md",
+      "sha256": "3bbccbe373c1da5c8be426e98075c39a06d116349df8774ad1f21b2250953e7b"
+    },
+    "family": "options-volatility",
+    "inputs": {
+      "metadata_admission": {
+        "dataset": "options-saved-metadata",
+        "path": "research_runs/options-metadata-20260911/outputs/metadata-admission.json",
+        "sha256": "a8aee197b4e831cde6698edb6c694ba01a258939aefb83211acca0c81b83c9aa"
+      },
+      "metadata_capture": {
+        "dataset": "options-saved-metadata",
+        "path": "research_runs/options-metadata-20260911/outputs/metadata-capture.json",
+        "sha256": "dabd54bb13df7dfeed7140ccaca8ba36b9a4cc4ea327446cab73dd4851375f39"
+      },
+      "metadata_receipt": {
+        "dataset": "options-saved-metadata",
+        "path": "research_runs/options-metadata-20260911/outputs/options-exchange-info-receipt.json",
+        "sha256": "a7b0c52246f7a0720b725487a6f428f90ccb5d861b75ca430db496a5cda4024f"
+      },
+      "request_spec": {
+        "dataset": "options-entry-definition",
+        "path": "research/strategy-search-2026-09-11/options-entry-spec.json",
+        "sha256": "325fb4800241dcd5f3c74cc36fef4fe42d0f02ed68e19093032735321167243b"
+      }
+    },
+    "outputs": [
+      "options-time-receipt.json",
+      "btc-index-receipt.json",
+      "eth-index-receipt.json",
+      "btc-depth-receipt.json",
+      "eth-depth-receipt.json",
+      "btc-mark-receipt.json",
+      "eth-mark-receipt.json",
+      "capture.json",
+      "entry.json",
+      "summary.json"
+    ],
+    "parent": "options-eoh-schema-20260911",
+    "question": "Do fixed representative BTC/ETH current minimum-lot buyer entry components and visible ask quantities satisfy necessary component-only capital conditions at1000/10000 under both fee assumptions? No volatility return or full-account affordability claim.",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+      "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+    },
+    "selection": null,
+    "source_files": {
+      "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+      "research/strategy-search-2026-09-11/options-entry-definition-observation.json": "039fdd36d04a5390da7eefe1d2591093d9a1c64033e4b6136a03a04bf0695c55",
+      "research/strategy-search-2026-09-11/options_entry.py": "89b361580dead7236b1744af05a2729deda5111343e25d9da7974b775fa15487",
+      "research/strategy-search-2026-09-11/options_entry_guard.py": "43f2e9ef3f47d73e3770ccd5eea50e54c1b9c1969c8ce1c258d2ee663b57d347",
+      "research/strategy-search-2026-09-11/options_entry_transport.py": "a157814cd1131ca89a1533cd002905664aff7e7ccc9fda0e10e5489cdfbad427",
+      "research/strategy-search-2026-09-11/options_metadata.py": "d95c6a68edf987db3112d01e6aa74883488f02077970681fa2c7a1154e02c48f",
+      "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+      "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+    },
+    "stage": "development",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "options-saved-metadata",
+        "end": "2026-09-11T08:40:16.763026+00:00",
+        "start": "2026-09-11T08:40:11.517399+00:00"
+      },
+      {
+        "availability": "existing",
+        "dataset": "options-entry-definition",
+        "end": "2026-09-11T10:44:51.919593+00:00",
+        "start": "2026-09-11T10:44:51.919367+00:00"
+      }
+    ]
+  },
+  "experiment_id": "options-entry-20260911",
+  "family": {
+    "attempt_budget": 4,
+    "history_reference": "research/strategy-search-2026-09-11/options-metadata-charter.md; one known predlab_rviv_p0 administrative gate bundle,12 exact ledger rows; failed HAR30/DVOL claim preserved; counts are not independent trials or complete search multiplicity. Three new investigations allowed.",
+    "mechanism_id": "binance-option-delta-hedged-volatility-premium",
+    "prior_attempts": 1
+  },
+  "inputs": {
+    "metadata_admission": {
+      "dataset": "options-saved-metadata",
+      "path": "research_runs/options-metadata-20260911/outputs/metadata-admission.json",
+      "sha256": "a8aee197b4e831cde6698edb6c694ba01a258939aefb83211acca0c81b83c9aa"
+    },
+    "metadata_capture": {
+      "dataset": "options-saved-metadata",
+      "path": "research_runs/options-metadata-20260911/outputs/metadata-capture.json",
+      "sha256": "dabd54bb13df7dfeed7140ccaca8ba36b9a4cc4ea327446cab73dd4851375f39"
+    },
+    "metadata_receipt": {
+      "dataset": "options-saved-metadata",
+      "path": "research_runs/options-metadata-20260911/outputs/options-exchange-info-receipt.json",
+      "sha256": "a7b0c52246f7a0720b725487a6f428f90ccb5d861b75ca430db496a5cda4024f"
+    },
+    "request_spec": {
+      "dataset": "options-entry-definition",
+      "path": "research/strategy-search-2026-09-11/options-entry-spec.json",
+      "sha256": "325fb4800241dcd5f3c74cc36fef4fe42d0f02ed68e19093032735321167243b"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2025-03-31T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2021-11-08T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2025-04-01T00:00:00Z",
+      "state": "spent"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-usdt-260626-contract-history",
+      "start": "2025-12-26T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:38:02.442471+00:00",
+      "identity": "binance-options-request-definition-20260911",
+      "start": "2026-09-11T08:38:02.442372+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:59:38.161767+00:00",
+      "identity": "binance-eoh-request-definition-20260911",
+      "start": "2026-09-11T08:59:38.161697+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2025-04-01T00:00:00Z",
+      "identity": "binance-btc-eoh-option-summary-history",
+      "start": "2022-06-01T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:59:38.166591+00:00",
+      "identity": "binance-triangle-request-definition-20260911",
+      "start": "2026-09-11T08:59:38.166552+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T09:10:29.052054+00:00",
+      "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+      "start": "2026-09-11T09:10:25.404644+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T09:12:21.519683+00:00",
+      "identity": "bitrue-contract-request-definition-20260911",
+      "start": "2026-09-11T09:12:21.519513+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T09:30:47.099983+00:00",
+      "identity": "binance-wbeth-source-definition-20260911",
+      "start": "2026-09-11T09:30:47.099732+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-wbeth-usdt-spot-market-history",
+      "start": "2026-04-01T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T10:03:47.610019+00:00",
+      "identity": "saved-news-seven-path-provenance-definition-20260911",
+      "start": "2026-09-11T10:03:47.591240+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T10:30:02.537002+00:00",
+      "identity": "triangle-fixed-local-stream-source-definition-20260911",
+      "start": "2026-09-11T10:30:02.485798+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T10:44:51.919593+00:00",
+      "identity": "fixed-current-options-entry-component-definition-20260911",
+      "start": "2026-09-11T10:44:51.919367+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:40:16.763026+00:00",
+      "identity": "options-metadata-20260911-original-capture-admission-and-exchange-info-receipt",
+      "start": "2026-09-11T08:40:11.517399+00:00",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "strategy-search-2026-09-11",
+  "registration": "research/strategy-search-2026-09-11/gates-options-entry.json",
+  "registration_sha256": "54d47d9c295a9b91a65b60af8ec16df07ef53554daa277f1f55066c15d5db3ad",
+  "schema_version": 1,
+  "source": "b46f06a095ab7c8bbf712372780c884abec2663c",
+  "started_at": "2026-09-11T10:52:02.844088+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "options-saved-metadata",
+      "end": "2026-09-11T08:40:16.763026+00:00",
+      "identity": "options-metadata-20260911-original-capture-admission-and-exchange-info-receipt",
+      "start": "2026-09-11T08:40:11.517399+00:00",
+      "state": "exposed"
+    },
+    {
+      "availability": "existing",
+      "dataset": "options-entry-definition",
+      "end": "2026-09-11T10:44:51.919593+00:00",
+      "identity": "fixed-current-options-entry-component-definition-20260911",
+      "start": "2026-09-11T10:44:51.919367+00:00",
+      "state": "exposed"
+    }
+  ]
+}

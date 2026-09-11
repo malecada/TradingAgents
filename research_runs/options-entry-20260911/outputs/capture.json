@@ -1,0 +1,2106 @@
+{
+  "capture_closed_utc": "2026-09-11T10:52:12.751877+00:00",
+  "metadata": {
+    "body_sha256": "2643f6b431add96b65e8ab213a4346056d5f5086feaf42c03b695a980a43c1cf",
+    "enum_classification": "Original ambiguous numeric enum interpretation preserved; literal parent/leaf mapping only.",
+    "request_utc": "2026-09-11T08:40:11.517399+00:00",
+    "retrieval_utc": "2026-09-11T08:40:13.794315+00:00",
+    "status": "complete"
+  },
+  "phase_scope": "Only time/index/metadata selection parsed before capture closed; economics interpreted afterward.",
+  "receipts": [
+    {
+      "attempted": true,
+      "body_bytes": 28,
+      "body_sha256": "dd7650bc2ebddf0b20cec8ee9766817fde6778ded9cf1cf815ea8d347b23a3e3",
+      "id": "options-time",
+      "path": "options-time-receipt.json",
+      "receipt_sha256": "2a3854331e55c9169b52a322b8d5a127cb22527cda24c097977b81b6fe488b87",
+      "request_url": "https://eapi.binance.com/eapi/v1/time",
+      "request_utc": "2026-09-11T10:52:05.702666+00:00",
+      "retrieval_utc": "2026-09-11T10:52:06.064504+00:00"
+    },
+    {
+      "attempted": true,
+      "body_bytes": 52,
+      "body_sha256": "54c5c47520a65826a34429be811b35d8cff7217a41ea778a8cc0e6268230a1a1",
+      "id": "btc-index",
+      "path": "btc-index-receipt.json",
+      "receipt_sha256": "ff7c6857d67984f5486bfc415670453f53e18f9819df3b0b5294ca0cc7f3b9c7",
+      "request_url": "https://eapi.binance.com/eapi/v1/index?underlying=BTCUSDT",
+      "request_utc": "2026-09-11T10:52:06.781347+00:00",
+      "retrieval_utc": "2026-09-11T10:52:07.087421+00:00"
+    },
+    {
+      "attempted": true,
+      "body_bytes": 51,
+      "body_sha256": "4383c07e5a99f8c9cc3e7cd64afed8ba56059ae392ce9184858da1d00c991ed5",
+      "id": "eth-index",
+      "path": "eth-index-receipt.json",
+      "receipt_sha256": "4e7203c29c4e1a091d6ba166de47be354c3b5708819e6614bf56f6433b5e3dd2",
+      "request_url": "https://eapi.binance.com/eapi/v1/index?underlying=ETHUSDT",
+      "request_utc": "2026-09-11T10:52:07.771074+00:00",
+      "retrieval_utc": "2026-09-11T10:52:08.071027+00:00"
+    },
+    {
+      "attempted": true,
+      "body_bytes": 363,
+      "body_sha256": "a24babbcfc74c9940ecf8983e33141aee27e95ecf93b440e18e1cf8c119c251c",
+      "id": "btc-depth",
+      "path": "btc-depth-receipt.json",
+      "receipt_sha256": "2778f8d191a9898811612a2dbc5e441305a2c679efa0bac132437cb1c70717b3",
+      "request_url": "https://eapi.binance.com/eapi/v1/depth?symbol=BTC-261002-77000-C&limit=10",
+      "request_utc": "2026-09-11T10:52:08.764868+00:00",
+      "retrieval_utc": "2026-09-11T10:52:09.063887+00:00"
+    },
+    {
+      "attempted": true,
+      "body_bytes": 293,
+      "body_sha256": "9fa96b1456fbf68f0f8395007cdf52299e7cfa36723d03f738e6f1fe44554bc4",
+      "id": "eth-depth",
+      "path": "eth-depth-receipt.json",
+      "receipt_sha256": "883ed5b27f20ac21cfefa7b744197768d52ddd47e5590ac10bf3d23bddcaef30",
+      "request_url": "https://eapi.binance.com/eapi/v1/depth?symbol=ETH-261002-2450-C&limit=10",
+      "request_utc": "2026-09-11T10:52:09.765082+00:00",
+      "retrieval_utc": "2026-09-11T10:52:10.067609+00:00"
+    },
+    {
+      "attempted": true,
+      "body_bytes": 275,
+      "body_sha256": "88151fc600552f7898ee789d34b3a24461f1c890267fc0b5dce15a31b4fd0ab1",
+      "id": "btc-mark",
+      "path": "btc-mark-receipt.json",
+      "receipt_sha256": "1343edc75b07278d39c4a0446de730c106ef9164715a9c38c9136a924772ee31",
+      "request_url": "https://eapi.binance.com/eapi/v1/mark?symbol=BTC-261002-77000-C",
+      "request_utc": "2026-09-11T10:52:10.736590+00:00",
+      "retrieval_utc": "2026-09-11T10:52:11.050576+00:00"
+    },
+    {
+      "attempted": true,
+      "body_bytes": 275,
+      "body_sha256": "c21b023a42cbf5b4f8dd4aca8fde3a0f589dc0cc7a547615954a2f325041cc90",
+      "id": "eth-mark",
+      "path": "eth-mark-receipt.json",
+      "receipt_sha256": "728723999c8916b897c2fd1c01ff0676053b1f554abcdc537fb1437f79cfa013",
+      "request_url": "https://eapi.binance.com/eapi/v1/mark?symbol=ETH-261002-2450-C",
+      "request_utc": "2026-09-11T10:52:11.787592+00:00",
+      "retrieval_utc": "2026-09-11T10:52:12.088181+00:00"
+    }
+  ],
+  "request_spec": {
+    "capital_usdt": [
+      1000,
+      10000
+    ],
+    "capture_seconds": 180,
+    "clock_policy": "positive int64 clocks; nonnegative int64 update IDs",
+    "experiment": "options-entry-20260911",
+    "fee_rates": [
+      "0.00024",
+      "0.00030"
+    ],
+    "max_output_bytes": 12582912,
+    "max_projection_bytes": 524288,
+    "max_requests": 7,
+    "max_response_bytes": 262144,
+    "missing_status": "unverified_public_representative_only",
+    "numeric_adjusted_exponent": [
+      -32,
+      32
+    ],
+    "numeric_characters": 64,
+    "requests": [
+      {
+        "endpoint": "https://eapi.binance.com/eapi/v1/time",
+        "id": "options-time",
+        "kind": "time",
+        "parameters": {}
+      },
+      {
+        "asset": "BTC",
+        "endpoint": "https://eapi.binance.com/eapi/v1/index",
+        "id": "btc-index",
+        "kind": "index",
+        "parameters": {
+          "underlying": "BTCUSDT"
+        }
+      },
+      {
+        "asset": "ETH",
+        "endpoint": "https://eapi.binance.com/eapi/v1/index",
+        "id": "eth-index",
+        "kind": "index",
+        "parameters": {
+          "underlying": "ETHUSDT"
+        }
+      },
+      {
+        "asset": "BTC",
+        "endpoint": "https://eapi.binance.com/eapi/v1/depth",
+        "id": "btc-depth",
+        "kind": "depth",
+        "parameters": {
+          "limit": 10,
+          "symbol": "SELECTED_BTC"
+        }
+      },
+      {
+        "asset": "ETH",
+        "endpoint": "https://eapi.binance.com/eapi/v1/depth",
+        "id": "eth-depth",
+        "kind": "depth",
+        "parameters": {
+          "limit": 10,
+          "symbol": "SELECTED_ETH"
+        }
+      },
+      {
+        "asset": "BTC",
+        "endpoint": "https://eapi.binance.com/eapi/v1/mark",
+        "id": "btc-mark",
+        "kind": "mark",
+        "parameters": {
+          "symbol": "SELECTED_BTC"
+        }
+      },
+      {
+        "asset": "ETH",
+        "endpoint": "https://eapi.binance.com/eapi/v1/mark",
+        "id": "eth-mark",
+        "kind": "mark",
+        "parameters": {
+          "symbol": "SELECTED_ETH"
+        }
+      }
+    ],
+    "schema_version": 1,
+    "selection_days": [
+      7,
+      30,
+      45
+    ],
+    "selection_ties": [
+      "earlier_expiry",
+      "lower_strike",
+      "lexical_symbol"
+    ],
+    "server_clock_tolerance_ms": 5000,
+    "timeout_seconds": 20
+  },
+  "selections": {
+    "BTC": {
+      "asset": "BTC",
+      "eligible": [
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "145000.000",
+          "symbol": "BTC-260925-145000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "120000.000",
+          "symbol": "BTC-260925-120000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "130000.000",
+          "symbol": "BTC-260925-130000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "125000.000",
+          "symbol": "BTC-260925-125000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "100000.000",
+          "symbol": "BTC-260925-100000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "160000.000",
+          "symbol": "BTC-260925-160000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "95000.000",
+          "symbol": "BTC-260925-95000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "115000.000",
+          "symbol": "BTC-260925-115000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "80000.000",
+          "symbol": "BTC-260925-80000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "110000.000",
+          "symbol": "BTC-260925-110000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "135000.000",
+          "symbol": "BTC-260925-135000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "105000.000",
+          "symbol": "BTC-260925-105000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "155000.000",
+          "symbol": "BTC-260925-155000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "150000.000",
+          "symbol": "BTC-260925-150000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "140000.000",
+          "symbol": "BTC-260925-140000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "60000.000",
+          "symbol": "BTC-260925-60000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "90000.000",
+          "symbol": "BTC-260925-90000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "85000.000",
+          "symbol": "BTC-260925-85000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "70000.000",
+          "symbol": "BTC-260925-70000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "50000.000",
+          "symbol": "BTC-260925-50000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "75000.000",
+          "symbol": "BTC-260925-75000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "40000.000",
+          "symbol": "BTC-260925-40000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "65000.000",
+          "symbol": "BTC-260925-65000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "55000.000",
+          "symbol": "BTC-260925-55000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "45000.000",
+          "symbol": "BTC-260925-45000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "58000.000",
+          "symbol": "BTC-260925-58000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "78000.000",
+          "symbol": "BTC-260925-78000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "68000.000",
+          "symbol": "BTC-260925-68000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "66000.000",
+          "symbol": "BTC-260925-66000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "62000.000",
+          "symbol": "BTC-260925-62000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "72000.000",
+          "symbol": "BTC-260925-72000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "82000.000",
+          "symbol": "BTC-260925-82000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "92000.000",
+          "symbol": "BTC-260925-92000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "86000.000",
+          "symbol": "BTC-260925-86000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "74000.000",
+          "symbol": "BTC-260925-74000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "88000.000",
+          "symbol": "BTC-260925-88000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "76000.000",
+          "symbol": "BTC-260925-76000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "84000.000",
+          "symbol": "BTC-260925-84000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "64000.000",
+          "symbol": "BTC-260925-64000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "56000.000",
+          "symbol": "BTC-260925-56000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "52000.000",
+          "symbol": "BTC-260925-52000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "77000.000",
+          "symbol": "BTC-260925-77000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "73000.000",
+          "symbol": "BTC-260925-73000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "83000.000",
+          "symbol": "BTC-260925-83000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "81000.000",
+          "symbol": "BTC-260925-81000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "79000.000",
+          "symbol": "BTC-260925-79000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "98000.000",
+          "symbol": "BTC-260925-98000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "94000.000",
+          "symbol": "BTC-260925-94000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "96000.000",
+          "symbol": "BTC-260925-96000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "77000.000",
+          "symbol": "BTC-261002-77000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "72000.000",
+          "symbol": "BTC-261002-72000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "76000.000",
+          "symbol": "BTC-261002-76000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "78000.000",
+          "symbol": "BTC-261002-78000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "74000.000",
+          "symbol": "BTC-261002-74000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "86000.000",
+          "symbol": "BTC-261002-86000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "65000.000",
+          "symbol": "BTC-261002-65000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "90000.000",
+          "symbol": "BTC-261002-90000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "70000.000",
+          "symbol": "BTC-261002-70000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "79000.000",
+          "symbol": "BTC-261002-79000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "82000.000",
+          "symbol": "BTC-261002-82000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "200",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "84000.000",
+          "symbol": "BTC-261002-84000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        }
+      ],
+      "eligible_count": 61,
+      "excluded_counts": {
+        "structurally_or_temporally_ineligible": 266
+      },
+      "index": "77026.69804348",
+      "reference_ms": 1789123925939,
+      "selected": {
+        "contractType": "CRYPTO_OPTIONS",
+        "expiry_ms": 1790928000000,
+        "maxQty": "200",
+        "metadata_status": "TRADING",
+        "minQty": "0.01",
+        "stepSize": "0.01",
+        "strike": "77000.000",
+        "symbol": "BTC-261002-77000-C",
+        "underlyingType": "CRYPTO",
+        "unit": "1"
+      },
+      "status": "complete",
+      "tradability": "unavailable; saved metadata and public representative only"
+    },
+    "ETH": {
+      "asset": "ETH",
+      "eligible": [
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "6500.0000",
+          "symbol": "ETH-260925-6500-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "9000.0000",
+          "symbol": "ETH-260925-9000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "4000.0000",
+          "symbol": "ETH-260925-4000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2000.0000",
+          "symbol": "ETH-260925-2000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "3000.0000",
+          "symbol": "ETH-260925-3000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "7500.0000",
+          "symbol": "ETH-260925-7500-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "3600.0000",
+          "symbol": "ETH-260925-3600-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "5000.0000",
+          "symbol": "ETH-260925-5000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "4600.0000",
+          "symbol": "ETH-260925-4600-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "5600.0000",
+          "symbol": "ETH-260925-5600-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "3400.0000",
+          "symbol": "ETH-260925-3400-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "3800.0000",
+          "symbol": "ETH-260925-3800-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "3200.0000",
+          "symbol": "ETH-260925-3200-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "4200.0000",
+          "symbol": "ETH-260925-4200-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2500.0000",
+          "symbol": "ETH-260925-2500-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2800.0000",
+          "symbol": "ETH-260925-2800-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "5400.0000",
+          "symbol": "ETH-260925-5400-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "5800.0000",
+          "symbol": "ETH-260925-5800-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "6000.0000",
+          "symbol": "ETH-260925-6000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "6200.0000",
+          "symbol": "ETH-260925-6200-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "4400.0000",
+          "symbol": "ETH-260925-4400-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "5200.0000",
+          "symbol": "ETH-260925-5200-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "4800.0000",
+          "symbol": "ETH-260925-4800-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "6400.0000",
+          "symbol": "ETH-260925-6400-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "6600.0000",
+          "symbol": "ETH-260925-6600-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "6800.0000",
+          "symbol": "ETH-260925-6800-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "8500.0000",
+          "symbol": "ETH-260925-8500-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "7400.0000",
+          "symbol": "ETH-260925-7400-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "7000.0000",
+          "symbol": "ETH-260925-7000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "7200.0000",
+          "symbol": "ETH-260925-7200-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "8000.0000",
+          "symbol": "ETH-260925-8000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "1500.0000",
+          "symbol": "ETH-260925-1500-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2200.0000",
+          "symbol": "ETH-260925-2200-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2600.0000",
+          "symbol": "ETH-260925-2600-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2400.0000",
+          "symbol": "ETH-260925-2400-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "1800.0000",
+          "symbol": "ETH-260925-1800-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "1000.0000",
+          "symbol": "ETH-260925-1000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "1600.0000",
+          "symbol": "ETH-260925-1600-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "1200.0000",
+          "symbol": "ETH-260925-1200-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "1700.0000",
+          "symbol": "ETH-260925-1700-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "1400.0000",
+          "symbol": "ETH-260925-1400-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2100.0000",
+          "symbol": "ETH-260925-2100-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "1900.0000",
+          "symbol": "ETH-260925-1900-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2300.0000",
+          "symbol": "ETH-260925-2300-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "4500.0000",
+          "symbol": "ETH-260925-4500-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "3500.0000",
+          "symbol": "ETH-260925-3500-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "3300.0000",
+          "symbol": "ETH-260925-3300-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2700.0000",
+          "symbol": "ETH-260925-2700-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2900.0000",
+          "symbol": "ETH-260925-2900-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "3100.0000",
+          "symbol": "ETH-260925-3100-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "1300.0000",
+          "symbol": "ETH-260925-1300-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "1850.0000",
+          "symbol": "ETH-260925-1850-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "1950.0000",
+          "symbol": "ETH-260925-1950-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2050.0000",
+          "symbol": "ETH-260925-2050-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2150.0000",
+          "symbol": "ETH-260925-2150-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2250.0000",
+          "symbol": "ETH-260925-2250-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2350.0000",
+          "symbol": "ETH-260925-2350-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2650.0000",
+          "symbol": "ETH-260925-2650-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2450.0000",
+          "symbol": "ETH-260925-2450-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2550.0000",
+          "symbol": "ETH-260925-2550-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2850.0000",
+          "symbol": "ETH-260925-2850-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790323200000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2750.0000",
+          "symbol": "ETH-260925-2750-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2350.0000",
+          "symbol": "ETH-261002-2350-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2200.0000",
+          "symbol": "ETH-261002-2200-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2450.0000",
+          "symbol": "ETH-261002-2450-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2800.0000",
+          "symbol": "ETH-261002-2800-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2000.0000",
+          "symbol": "ETH-261002-2000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2400.0000",
+          "symbol": "ETH-261002-2400-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2550.0000",
+          "symbol": "ETH-261002-2550-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2300.0000",
+          "symbol": "ETH-261002-2300-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2500.0000",
+          "symbol": "ETH-261002-2500-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2700.0000",
+          "symbol": "ETH-261002-2700-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "3000.0000",
+          "symbol": "ETH-261002-3000-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        },
+        {
+          "contractType": "CRYPTO_OPTIONS",
+          "expiry_ms": 1790928000000,
+          "maxQty": "2500",
+          "metadata_status": "TRADING",
+          "minQty": "0.01",
+          "stepSize": "0.01",
+          "strike": "2600.0000",
+          "symbol": "ETH-261002-2600-C",
+          "underlyingType": "CRYPTO",
+          "unit": "1"
+        }
+      ],
+      "eligible_count": 74,
+      "excluded_counts": {
+        "structurally_or_temporally_ineligible": 214
+      },
+      "index": "2464.86162791",
+      "reference_ms": 1789123925939,
+      "selected": {
+        "contractType": "CRYPTO_OPTIONS",
+        "expiry_ms": 1790928000000,
+        "maxQty": "2500",
+        "metadata_status": "TRADING",
+        "minQty": "0.01",
+        "stepSize": "0.01",
+        "strike": "2450.0000",
+        "symbol": "ETH-261002-2450-C",
+        "underlyingType": "CRYPTO",
+        "unit": "1"
+      },
+      "status": "complete",
+      "tradability": "unavailable; saved metadata and public representative only"
+    }
+  },
+  "source_admission": {
+    "btc-depth": {
+      "T": 1789123928488,
+      "asks": [
+        [
+          "2810.000",
+          "4.00"
+        ],
+        [
+          "2815.000",
+          "2.00"
+        ],
+        [
+          "2835.000",
+          "15.80"
+        ],
+        [
+          "2875.000",
+          "3.74"
+        ],
+        [
+          "2880.000",
+          "8.00"
+        ],
+        [
+          "5590.000",
+          "2.00"
+        ]
+      ],
+      "bids": [
+        [
+          "2795.000",
+          "1.97"
+        ],
+        [
+          "2790.000",
+          "1.97"
+        ],
+        [
+          "2785.000",
+          "2.00"
+        ],
+        [
+          "2780.000",
+          "11.84"
+        ],
+        [
+          "2750.000",
+          "3.96"
+        ],
+        [
+          "2740.000",
+          "8.00"
+        ],
+        [
+          "2730.000",
+          "2.00"
+        ],
+        [
+          "2700.000",
+          "3.74"
+        ],
+        [
+          "5.000",
+          "0.20"
+        ]
+      ],
+      "identity_scope": "Exact selected-symbol request URL; response symbol not documented.",
+      "lastUpdateId": 38042899196,
+      "status": "complete"
+    },
+    "btc-index": {
+      "identity_scope": "Exact requested underlying URL; response identity field not documented.",
+      "indexPrice": "77026.69804348",
+      "status": "complete",
+      "time": 1789123926000
+    },
+    "btc-mark": {
+      "event_time": "unavailable; not documented",
+      "markPrice": "2792.277",
+      "model_fields": {
+        "askIV": {
+          "status": "complete",
+          "value": "0.36641836"
+        },
+        "bidIV": {
+          "status": "complete",
+          "value": "0.36437154"
+        },
+        "delta": {
+          "status": "complete",
+          "value": "0.53162681"
+        },
+        "gamma": {
+          "status": "complete",
+          "value": "0.00005907"
+        },
+        "highPriceLimit": {
+          "status": "complete",
+          "value": "5025"
+        },
+        "lowPriceLimit": {
+          "status": "complete",
+          "value": "560"
+        },
+        "markIV": {
+          "status": "complete",
+          "value": "0.364"
+        },
+        "riskFreeInterest": {
+          "status": "complete",
+          "value": "0.0466"
+        },
+        "theta": {
+          "status": "complete",
+          "value": "-64.11303355"
+        },
+        "vega": {
+          "status": "complete",
+          "value": "73.27463499"
+        }
+      },
+      "scope": "Model mark/sensitivities, not executable quotes or true delta.",
+      "status": "complete",
+      "symbol": "BTC-261002-77000-C"
+    },
+    "eth-depth": {
+      "T": 1789123929663,
+      "asks": [
+        [
+          "126.6000",
+          "57.27"
+        ],
+        [
+          "127.2000",
+          "52.19"
+        ],
+        [
+          "127.6000",
+          "62.00"
+        ],
+        [
+          "128.6000",
+          "10.00"
+        ],
+        [
+          "129.2000",
+          "62.00"
+        ]
+      ],
+      "bids": [
+        [
+          "125.2000",
+          "57.27"
+        ],
+        [
+          "125.0000",
+          "117.27"
+        ],
+        [
+          "124.4000",
+          "62.00"
+        ],
+        [
+          "122.6000",
+          "10.00"
+        ],
+        [
+          "122.4000",
+          "62.00"
+        ],
+        [
+          "0.2000",
+          "5.00"
+        ]
+      ],
+      "identity_scope": "Exact selected-symbol request URL; response symbol not documented.",
+      "lastUpdateId": 38042900568,
+      "status": "complete"
+    },
+    "eth-index": {
+      "identity_scope": "Exact requested underlying URL; response identity field not documented.",
+      "indexPrice": "2464.86162791",
+      "status": "complete",
+      "time": 1789123926999
+    },
+    "eth-mark": {
+      "event_time": "unavailable; not documented",
+      "markPrice": "126.0262",
+      "model_fields": {
+        "askIV": {
+          "status": "complete",
+          "value": "0.49440265"
+        },
+        "bidIV": {
+          "status": "complete",
+          "value": "0.48925757"
+        },
+        "delta": {
+          "status": "complete",
+          "value": "0.55197482"
+        },
+        "gamma": {
+          "status": "complete",
+          "value": "0.00136411"
+        },
+        "highPriceLimit": {
+          "status": "complete",
+          "value": "226.8"
+        },
+        "lowPriceLimit": {
+          "status": "complete",
+          "value": "25.4"
+        },
+        "markIV": {
+          "status": "complete",
+          "value": "0.4928"
+        },
+        "riskFreeInterest": {
+          "status": "complete",
+          "value": "0.0411"
+        },
+        "theta": {
+          "status": "complete",
+          "value": "-2.74655486"
+        },
+        "vega": {
+          "status": "complete",
+          "value": "2.33207798"
+        }
+      },
+      "scope": "Model mark/sensitivities, not executable quotes or true delta.",
+      "status": "complete",
+      "symbol": "ETH-261002-2450-C"
+    },
+    "options-time": {
+      "clock_bounds_ms": [
+        1789123920702,
+        1789123931064
+      ],
+      "serverTime": 1789123925939,
+      "status": "complete"
+    }
+  }
+}

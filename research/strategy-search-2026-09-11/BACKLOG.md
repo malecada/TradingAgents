@@ -16,7 +16,8 @@
 - [x] Complete WBETH eight-case run/review: positivecash but all3%relevancefail, no trueETHdelta or graduation.
 - [x] Complete saved-news inventory/review:7source/13schema unavailable; versioned source identity remains dependency.
 - [x] Complete third triangle actual review (299,403 checks) and retain result for backup: bounded capture closed, zero fee-qualified supported states; preserve four unsupported boundary bins per series and all outputs.
-- [ ] Freeze and execute final options entry-component prerequisite after independent source/gate review; both fee assumptions and all15cells retained.
+- [x] Complete options entry-component prerequisite and independent raw/Fraction review:15completecells; minimum buyer tickets fit bothfee/capital/size conditions.
+- [ ] Assess useful options follow-ups against seller/access/history/future-observation dependencies; no automatic paper or budget reset.
 - [ ] Resolve coverage audit candidate: dated-future/perpetual collateral/funding mechanism and source feasibility before any extension or economic replay.
 - [ ] Existing value_rev remains deferred until a second vintage September 18 or later; no early replay or renamed gate.
 - [ ] Re-rank relative-value, liquidity, factor and information questions against

@@ -1,0 +1,204 @@
+{
+  "disposition": "PASS within buyer-entry-component scope; no strategy validation",
+  "source": "b46f06a095ab7c8bbf712372780c884abec2663c",
+  "gate_sha256": "54d47d9c295a9b91a65b60af8ec16df07ef53554daa277f1f55066c15d5db3ad",
+  "outputs": {
+    "btc-depth-receipt.json": "2778f8d191a9898811612a2dbc5e441305a2c679efa0bac132437cb1c70717b3",
+    "btc-index-receipt.json": "ff7c6857d67984f5486bfc415670453f53e18f9819df3b0b5294ca0cc7f3b9c7",
+    "btc-mark-receipt.json": "1343edc75b07278d39c4a0446de730c106ef9164715a9c38c9136a924772ee31",
+    "capture.json": "917127111227057e8017bfb2c695096dba08d2d37efa783dd82901b255e8f555",
+    "entry.json": "9310c030616e04f367a3c48fae2ae569e506db495fb7a0eafd1121f2cf13b067",
+    "eth-depth-receipt.json": "883ed5b27f20ac21cfefa7b744197768d52ddd47e5590ac10bf3d23bddcaef30",
+    "eth-index-receipt.json": "4e7203c29c4e1a091d6ba166de47be354c3b5708819e6614bf56f6433b5e3dd2",
+    "eth-mark-receipt.json": "728723999c8916b897c2fd1c01ff0676053b1f554abcdc537fb1437f79cfa013",
+    "options-time-receipt.json": "2a3854331e55c9169b52a322b8d5a127cb22527cda24c097977b81b6fe488b87",
+    "summary.json": "fd32d97133c33511e4e60d518ff8e96189d1a706943dca22126bc17d9822822c"
+  },
+  "output_bytes": 74601,
+  "source_cells": 7,
+  "component_cells": 8,
+  "unavailable": 0,
+  "source_receipts": 7,
+  "prior_metadata_rows": 1678,
+  "exact_cash_assertions": 80,
+  "selection": {
+    "BTC": {
+      "symbol": "BTC-261002-77000-C",
+      "eligible_count": 61,
+      "excluded_matching_calls": 266,
+      "matching_call_rows": 327,
+      "expiry_choices_utc": [
+        "2026-09-25T08:00:00+00:00",
+        "2026-10-02T08:00:00+00:00"
+      ],
+      "selected_expiry_utc": "2026-10-02T08:00:00+00:00",
+      "days_after_reference": 20.88048681712963,
+      "index": "77026.69804348",
+      "minQty": "0.01",
+      "unit": "1"
+    },
+    "ETH": {
+      "symbol": "ETH-261002-2450-C",
+      "eligible_count": 74,
+      "excluded_matching_calls": 214,
+      "matching_call_rows": 288,
+      "expiry_choices_utc": [
+        "2026-09-25T08:00:00+00:00",
+        "2026-10-02T08:00:00+00:00"
+      ],
+      "selected_expiry_utc": "2026-10-02T08:00:00+00:00",
+      "days_after_reference": 20.88048681712963,
+      "index": "2464.86162791",
+      "minQty": "0.01",
+      "unit": "1"
+    }
+  },
+  "cases": {
+    "btc-1000-0.00024": {
+      "premium_usdt": "28.10000",
+      "fee_usdt": "0.184864075304352",
+      "entry_component_usdt": "28.284864075304352",
+      "capital": 1000,
+      "fits": true,
+      "visible_size_sufficient": true,
+      "fee_cap_binds": false
+    },
+    "btc-1000-0.00030": {
+      "premium_usdt": "28.10000",
+      "fee_usdt": "0.231080094130440",
+      "entry_component_usdt": "28.331080094130440",
+      "capital": 1000,
+      "fits": true,
+      "visible_size_sufficient": true,
+      "fee_cap_binds": false
+    },
+    "btc-10000-0.00024": {
+      "premium_usdt": "28.10000",
+      "fee_usdt": "0.184864075304352",
+      "entry_component_usdt": "28.284864075304352",
+      "capital": 10000,
+      "fits": true,
+      "visible_size_sufficient": true,
+      "fee_cap_binds": false
+    },
+    "btc-10000-0.00030": {
+      "premium_usdt": "28.10000",
+      "fee_usdt": "0.231080094130440",
+      "entry_component_usdt": "28.331080094130440",
+      "capital": 10000,
+      "fits": true,
+      "visible_size_sufficient": true,
+      "fee_cap_binds": false
+    },
+    "eth-1000-0.00024": {
+      "premium_usdt": "1.266000",
+      "fee_usdt": "0.005915667906984",
+      "entry_component_usdt": "1.271915667906984",
+      "capital": 1000,
+      "fits": true,
+      "visible_size_sufficient": true,
+      "fee_cap_binds": false
+    },
+    "eth-1000-0.00030": {
+      "premium_usdt": "1.266000",
+      "fee_usdt": "0.007394584883730",
+      "entry_component_usdt": "1.273394584883730",
+      "capital": 1000,
+      "fits": true,
+      "visible_size_sufficient": true,
+      "fee_cap_binds": false
+    },
+    "eth-10000-0.00024": {
+      "premium_usdt": "1.266000",
+      "fee_usdt": "0.005915667906984",
+      "entry_component_usdt": "1.271915667906984",
+      "capital": 10000,
+      "fits": true,
+      "visible_size_sufficient": true,
+      "fee_cap_binds": false
+    },
+    "eth-10000-0.00030": {
+      "premium_usdt": "1.266000",
+      "fee_usdt": "0.007394584883730",
+      "entry_component_usdt": "1.273394584883730",
+      "capital": 10000,
+      "fits": true,
+      "visible_size_sufficient": true,
+      "fee_cap_binds": false
+    }
+  },
+  "clock_evidence": {
+    "options-time": {
+      "request_utc": "2026-09-11T10:52:05.702666+00:00",
+      "retrieval_utc": "2026-09-11T10:52:06.064504+00:00",
+      "elapsed_seconds": 0.3618487890053075
+    },
+    "btc-index": {
+      "request_utc": "2026-09-11T10:52:06.781347+00:00",
+      "retrieval_utc": "2026-09-11T10:52:07.087421+00:00",
+      "elapsed_seconds": 0.3060755959886592,
+      "source_time_ms": 1789123926000
+    },
+    "eth-index": {
+      "request_utc": "2026-09-11T10:52:07.771074+00:00",
+      "retrieval_utc": "2026-09-11T10:52:08.071027+00:00",
+      "elapsed_seconds": 0.29996466598822735,
+      "source_time_ms": 1789123926999
+    },
+    "btc-depth": {
+      "request_utc": "2026-09-11T10:52:08.764868+00:00",
+      "retrieval_utc": "2026-09-11T10:52:09.063887+00:00",
+      "elapsed_seconds": 0.2990212759759743,
+      "source_time_ms": 1789123928488
+    },
+    "eth-depth": {
+      "request_utc": "2026-09-11T10:52:09.765082+00:00",
+      "retrieval_utc": "2026-09-11T10:52:10.067609+00:00",
+      "elapsed_seconds": 0.3025324709888082,
+      "source_time_ms": 1789123929663
+    },
+    "btc-mark": {
+      "request_utc": "2026-09-11T10:52:10.736590+00:00",
+      "retrieval_utc": "2026-09-11T10:52:11.050576+00:00",
+      "elapsed_seconds": 0.313993557007052
+    },
+    "eth-mark": {
+      "request_utc": "2026-09-11T10:52:11.787592+00:00",
+      "retrieval_utc": "2026-09-11T10:52:12.088181+00:00",
+      "elapsed_seconds": 0.3005910410138313
+    }
+  },
+  "capture_closed_utc": "2026-09-11T10:52:12.751877+00:00",
+  "structural_verification": {
+    "experiment": "options-entry-20260911",
+    "status": "complete",
+    "cell_count": 15,
+    "unavailable_count": 0,
+    "output_count": 10,
+    "verification": "structural hashes and denominators only; no scientific validation"
+  },
+  "resource": {
+    "child_exit_code": 0,
+    "limit_reason": null,
+    "elapsed_seconds": 14.116145773004973,
+    "peak_sampled_tree_rss_bytes": 128741376,
+    "linux_children_ru_maxrss_kib": 66304,
+    "rss_limit_bytes": 536870912,
+    "wall_limit_seconds": 240,
+    "sample_interval_seconds": 0.02,
+    "virtual_address_space_limit": "unlimited",
+    "qualification": "Nominal 20 ms sampled aggregate RSS with one 20 ms process-exit retry; brief overshoot can occur. No detached/background or secondary-thread subprocesses admitted. Shared pages may be counted twice. ru_maxrss is the largest individual child peak, not aggregate."
+  },
+  "limitations": [
+    "full hedged-account affordability",
+    "seller entry margin",
+    "actual fees/account access",
+    "expected profit",
+    "confidence intervals",
+    "power",
+    "beta",
+    "annual relevance",
+    "true delta",
+    "liquidation risk"
+  ]
+}

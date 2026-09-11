@@ -24,6 +24,7 @@ resumption; never rerun a completed or failed identity.
 | wbeth-book-20260911 | 8 / 0 | Four primary books cash-positive but all below3% relevance; independent reconstruction passed. |
 | news-provenance-20260911 | 0 / 7 | Six literal source roots missing; externalCSV header not admitted. Independent bounded reconstruction passed. |
 | triangle-stream-20260911 | 8 / 1 | No fee-qualified supported states; early storage cap and four unsupported boundary bins require forensic qualification. |
+| options-entry-20260911 | 15 / 0 | Minimum buyer components fit both capitals/fees; independent reconstruction passes, full hedged-account economics untested. |
 
 Two further dated-book attempts FAILED without economic outputs: original
 MemoryError under the virtual-address cap, then resource-correction monitor
@@ -35,7 +36,7 @@ Funding's three new questions are spent; eight known direct historical records
 and unknown broader multiplicity remain. Dated original cap4/prior1 is unchanged:
 the exactly reviewed separate +1 certificate was consumed by dated-book-amended,
 effective total5 spent. No further correction or budget extension is implied.
-Options has used two of three new questions (plus prior RVIV gate/twelve rows).
+Options has used all three new questions (plus prior RVIV gate/twelve rows).
 Triangle has now used three of three, also MAProw5. WBETH used two, charged to
 MAProws3/8; news consumed third MAProw8 question, not a fresh three-trial family.
 Bitrue used one of three; settled funding/mark/fee/access sources remain blockers.
@@ -74,7 +75,15 @@ claim. 31focused synthetic tests,28independent Fraction cases/140exact assertion
 7selection checks and two exactguarded lifecycle preflights pass. Gate
 54d47d9c295a9b91a65b60af8ec16df07ef53554daa277f1f55066c15d5db3ad pins
 source89b361580dead7236b1744af05a2729deda5111343e25d9da7974b775fa15487.
-Commit/push/remote-equality freeze before the sole empirical run.
+Sourceb46f06a095ab7c8bbf712372780c884abec2663c was committed/pushed and
+remoteequalityverified. The sole options-entry-20260911 COMPLETED; rootexec72642terminatedexit0,
+14.116seconds128,741,376sampledRSS. All15cellscomplete/0unavailable,10outputs;
+structuralverifierPASS. BothchosenOct2minimumcallsq.01unit1 have sufficient
+displayedasksize and componentfit atbothcapitallevels underbothfees. BTC
+28.28486408/28.33108009USDT, ETH1.27191567/1.27339458. These are buyerentry
+components only, not hedgedaccount requirements orperformance. IndependentactualreviewPASS: all1,678metadata rows/10parents,7sources,
+80exactFractionassertions and completehashes/denominators. Outputs74,601bytes,
+raw1,337bytes. Decision17/Finding114 finalized; readyverifiedresultbackup.
 
 The independent coverage audit identifies an eligible dated/perpetual spread
 question after options. Draft dated-mark-charter.md proposes two fixed daily-mark

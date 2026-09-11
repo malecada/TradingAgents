@@ -7115,3 +7115,17 @@ are unchanged. Decision16 preserves the defect and early32chunk storage stop;
 no rerun or stronger frequency/profit claim follows. Zero validated strategies.
 Research continues with the distinct current option-entry component prerequisite
 and an independent coverage audit of remaining informative gaps.
+
+## 114. Current option buyer-ticket components fit small capital (2026-09-11)
+
+A registered seven-source/eight-component investigation selected fixed October2
+BTC and ETH calls without using premiums in selection. Minimum buyer entry
+components including both assumed fee scenarios are28.2849–28.3311USDT forBTC
+and1.27192–1.27339 forETH; displayed ask size suffices. All component-only checks
+fit1,000 and10,000USDT. Independent reconstruction of1,678saved metadata rows,
+seven current sources and80exact cash/quantity assertions passes. Decision17
+retains the positive capital prerequisite without inferring seller margin,
+complete hedged-account affordability, access, true delta or expected returns.
+Historical EOH semantics and strategy performance remain untested. Zero validated
+strategies. The next concrete gap is dated-mark source admission for a distinct
+long-dated/short-perpetual book, requiring an explicit cumulative extension.
