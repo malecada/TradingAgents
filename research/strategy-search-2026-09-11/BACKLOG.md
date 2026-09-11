@@ -1,5 +1,9 @@
 # Prioritized backlog
 
+Latest user instruction: finish only the current options/VPS work, then pause.
+The later independent-family entries are deferred during that pause. No automatic
+wakeup or implicit collection launch follows from this backlog.
+
 - [x] Complete registered carry-definition diagnostic and independent review; retained with this results checkpoint.
 - [x] Admit actual public event marks and matched bars once; independent review passed.
 - [x] Complete fixed conditional cash book and independent review; all eight primary cases fail economic screens. Switch family.
@@ -23,6 +27,9 @@
 - [x] Execute the separately granted fixed derivative book once: failed120s after3outputs; failure-only closure and9,344independent cash/source/HAC checks retain8negative cases. No fee-only relevance rescue or eighth grant.
 - [x] Diagnose unrepresentative history-cost preflight; preserve allfour runtime packages and failedresource status.
 - [x] Independently adjudicate options policy and complete finite ledger/batch preparation:68focused tests,35,952full-path independent comparisons; all8ordinary1057slot cases pass after two retained arithmetic failures.
+- [x] Implement and review standalone journal/selection components; preserve full-construction failure and scoped near-complete resource proof.
+- [x] Verify current VPS access read-only: confirmed host, root login, Python3.12.3, tmux/screen,2CPUs and39,759,348KiB free. No remote mutation or collection.
+- [x] Verify actual nineteen-history hashes with the candidate controller inventory:16complete/3failed,7.977seconds and51,208,192sampled aggregate RSS bytes. This is engineering proof, not a twentieth claim.
 - [ ] Prepare/review target-specific prospective source lifecycle, explicit options extension, frozen financial policy and bounded manual VPS rollout. Userconfirmsalways-onVPS; no capture/grant/deployment yet.
 - [ ] Existing value_rev remains deferred until a second vintage September 18 or later; no early replay or renamed gate.
 - [ ] Re-rank relative-value, liquidity, factor and information questions against

@@ -1,10 +1,13 @@
 # Active program state
 
-The September 11 user launch remains authorized. Research is active and
+Latest user instruction: finish the current options/VPS work, then pause for a
+while. Only that bounded setup remains active; do not start another family,
+additional experiment or automatic wakeup. The research program remains
 incomplete; zero strategies are validated. Branch `research/strategy-search-2026-09-11`.
 All19 attempted identities are terminal:16 completed investigations and three
-failed harness/resource attempts. No capture, paper session, order, scheduler or background
-job is running. Inspect actual claims and Git status before resumption; never
+failed harness/resource attempts. No capture, paper session, order, scheduler or
+background job has been started by the current options setup. Inspect actual
+claims and Git status before resumption; never
 repeat a completed or failed identity.
 
 ## Retained results
@@ -113,20 +116,49 @@ Next action, without another routine permission question:
 
 1. Implement and independently review the narrow prospective source lifecycle
    described in reviews/options-prospective-lifecycle-design.md, reconciling its
-   exact capture/evaluation split and cumulative grants before implementation.
-   Preserve all19terminal claims and allfour frozen runtime packages. A new
-   source claim needs an explicit options effective5 extension; none exists yet.
+   exact single-episode design in reviews/options-capture-admission-decision.md.
+   Capture, source seal/admission and one later financial evaluation are phases
+   of one proposed book claim; original budget4/prior1 remains, with an explicit
+   effective5 book extension required. None exists yet. Preserve all19terminal
+   claims and allfour frozen runtime packages.
 2. Prepare the fixed selection/calendar, immutable per-slot intent/raw journal,
    source clocks, bounded transport and deterministic missing/restart behavior.
    Freeze the later financial policy before observations. Benchmark complete
    history admission and actual retention; the Decision19 overhead warning stands.
 3. Prepare the separately hashed manual VPS research package. The user confirms
-   the existing VPS is always on and can host research. Current login, compatible
-   runtime and persistent manual launch method remain unverified. No systemd
-   edits over SSH, production reuse or implicit scheduler. No capture has started.
-4. Continue independent eligible work; do not declare exhaustion or blocked status
-   merely because this path needs6–44future days. Coverage review retains the
-   whole prospective episode as meaningful, with no useful extra current snapshot.
+   pck-preds-1 /46.225.169.184. Read-only SSH confirmed root login, Python3.12.3,
+   tmux/screen,2CPUs and39,759,348KiB free. Python3.13 was not on PATH; an isolated
+   pinned runtime remains a prerequisite. No systemd edits, remote mutations,
+   production reuse or implicit scheduler. No capture has started.
+4. After the current options/VPS setup, record its exact verified status and pause
+   as requested by the user. Do not continue independent families or schedule a
+   wakeup. This is a user-directed pause, not research exhaustion. Coverage review
+   retains the prospective episode as meaningful; no current snapshot is justified.
+
+Current [setup checkpoint](options-capture-engineering-checkpoint.md): standalone journal, deterministic selection, bounded
+public transport and local episode-controller prototypes now exist. They do not
+constitute a deployable collector. Actual nineteen-history structural verification
+passed in7.977seconds at51,208,192sampled aggregate RSS bytes, retaining16complete
+and3failed receipts. Synthetic transport groups passed with16×8192-byte routine
+bodies and3×5MiB initialization bodies; measured aggregate RSS305,315,840bytes.
+Those resource reports precede the final active-journal precondition patch and
+do not cover the complete calendar, accumulated prefix duplication, full history
+plus capture or actual network latency. Final deployment admission is outstanding.
+
+Remaining setup work: exact outer assignment/calendar and deterministic initial
+selection integration; daily rule/funding coverage and returned-member admission;
+independent full-protocol verification, output/whole-episode resource bounds;
+frozen absolute future window, charter and explicit effective5 book grant;
+isolated runtime, externally anchored package, manual launch/stop and demonstrated
+raw return. No such grant, actual claim or remote assignment exists. The local
+controller's stop/seal declarations require independently established worker
+quiescence; its verify_episode is a self-check, not the scientific reviewer.
+
+The user was asked whether future hourly collection should continue during the
+requested pause or all research processes should remain stopped. The answer is
+pending. Do not infer unattended collection authority from elapsed time or start
+collection while this newer pause-scope preference is unresolved. Independent
+preparation may continue only within the bounded setup; do not report it finished.
 
 Existing value_rev needs its second vintage September18 or later, not an early
 substitute. News needs versioned source identity and observation clocks; Bitrue
@@ -137,17 +169,24 @@ all negative, positive-but-small, unavailable and spent-sample qualifications.
 
 ## Backup and preservation
 
-Latest verified result backup:139b50ad3708874fe43f6a144b0fba9346d26d15,
-including failed spread outputs, independent forensics and Decision19/Finding116.
+Latest verified preparation backup:63b6f7d3183a954d1ddc05d788925288196c7337,
+including the accepted options engine/batch, independent reviews and Finding117.
+Earlier result backup139b50ad3708874fe43f6a144b0fba9346d26d15 includes the failed
+spread outputs, independent forensics and Decision19/Finding116.
 It was pushed and independently compared equal to the remote branch. Source
 freeze6d6d65f9712dd41e135672a2f0fb8a7d8389507b and prior dated-mark results
 0e55be23d78cd3a897241fd054839d9fad6343e2 are also recoverable.
 The named offline profile passed1,175tests+20subtests before the latest helpers.
+The options-capture checkpoint now includes a later named-profile pass:
+1,426tests+20subtests in624.14seconds, plus thirteen focused final-controller-patch
+checks. The full suite began before that last patch; the verification record
+preserves this scope and binds final source/test hashes. See
+reviews/options-capture-checkpoint-verification.json and the saved offline log.
 Latest focused proof:26successor tests,23financial/adapter tests including three
 exactCLIguards,7,432independent syntheticcash checks,14adapterscenarios/directHAC,
 actual historical snapshot proof, then9,344actual failed-run forensic checks.
 
 Preserve raw stores, original worktrees, all gates/ledgers and22deferred settlement
 cases. No credentials, provider contact, paid sources, orders or production changes.
-The user authorized sustained research; continue justified work without another
-routine permission question. Context checkpoints mean incomplete and resumable.
+The latest pause-after-setup instruction supersedes open-ended continuation.
+Preserve a precise handoff and wait for the user to resume after that boundary.

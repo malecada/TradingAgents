@@ -1,0 +1,26 @@
+{
+  "source_sha256": "d5be31f0051b23be9a6569f6563b8e885740016bc2b3cfac996f2d24b85df71d",
+  "cases": {
+    "partial_prefix": {
+      "unsafe_or_invalid_state_accepted": false,
+      "reason": "JournalError: receipt contradicts retained partial prefix"
+    },
+    "intent_clock": {
+      "unsafe_or_invalid_state_accepted": false,
+      "reason": "JournalError: intent clock outside frozen window"
+    },
+    "seal_status": {
+      "unsafe_or_invalid_state_accepted": true,
+      "reason": null
+    },
+    "foreign_recovery": {
+      "unsafe_or_invalid_state_accepted": true,
+      "reason": null
+    },
+    "member_reserve": {
+      "unsafe_or_invalid_state_accepted": true,
+      "reason": "journal member count exceeded"
+    }
+  },
+  "scope": "Disposable invented file-state attacks only; no actual research journal."
+}

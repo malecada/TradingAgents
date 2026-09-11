@@ -1,0 +1,54 @@
+{
+  "actual_history": {
+    "claims": 19,
+    "complete": 16,
+    "failed": 3,
+    "guard_file": "options-actual-history-preflight-guard.json",
+    "scope": "structural hashes and denominators, not financial recomputation or new grant"
+  },
+  "date": "2026-09-11",
+  "deployment": {
+    "collector_running": false,
+    "new_empirical_claim": false,
+    "new_grant": false,
+    "remote_mutation": false,
+    "status": "incomplete; exact integration/runtime/window/grant/rollout prerequisites in checkpoint"
+  },
+  "final_controller_patch_checks": {
+    "normal_completion_and_observation_boundary_cases_passed": 3,
+    "seconds": 29.46,
+    "seconds_final_three": 14.65,
+    "unsafe_output_cases_passed": 10
+  },
+  "kind": "engineering-checkpoint-not-empirical-admission",
+  "named_offline": {
+    "command": ".venv/bin/python -B scripts/verify_offline.py",
+    "exit_code": 0,
+    "log_sha256": "abe2ad33a3fe45239cb285d0c3bf906e29d852d91cd1f88e00fd81d35137eb78",
+    "passed": 1426,
+    "qualification": "Suite started before the final controller output-member guard patch; supplemented by final-source targeted checks. Not an exact-single-source full-suite claim.",
+    "seconds": 624.14,
+    "subtests_passed": 20
+  },
+  "other_component_checks": {
+    "controller_before_final_output_patch_passed": 15,
+    "independent_selection_cases": 2592,
+    "journal_passed": 18,
+    "selection_passed": 11,
+    "transport_passed": 30
+  },
+  "python": "3.13.13",
+  "runtime_check": "PASS; locked environment check exit0",
+  "schema_version": 1,
+  "source_sha256": {
+    "research/strategy-search-2026-09-11/options_policy_selection.py": "54f09c9c9ed28955bca5a9b74b49c08ee2a83fd6c880e3fdbfb6b5cd2ff6208e",
+    "tests/research/test_options_capture_control.py": "77b98c4b4039691a3b1b909b1ac12d2a6b9235ac103b10884211760b1a9e53a1",
+    "tests/research/test_options_capture_journal.py": "256fdd50efe0a2bbea6a8ad74614beed48861227ede5a9dfe9473ffd684a10be",
+    "tests/research/test_options_capture_transport.py": "a6417c4a19a8696236b8acd4fdd8b42f5405607144e09062de48c4155b50dbad",
+    "tests/research/test_options_policy_selection.py": "3e05973a2ec4e1c68a62ec0ca5e39990b7cdc88cce5a43a01b4370bc5f459333",
+    "tradingagents/research_options_capture/control.py": "82ee636cb51c243157b3661d62e0d799dc3adbe164d6d46c239d638185de43b4",
+    "tradingagents/research_options_capture/journal.py": "0ceebb774e33a1f9faffaaf0c58769dc30bfc65acbb0b12dc82e596b22b02bdd",
+    "tradingagents/research_options_capture/transport.py": "a0dc80963ede00d17e748dabdc36ed0f112cbc53188ef79119e7de550d95d79d"
+  },
+  "user_boundary": "Finish current options/VPS work, then pause; no other family or wakeup. Pending preference: collection during pause or all stopped."
+}

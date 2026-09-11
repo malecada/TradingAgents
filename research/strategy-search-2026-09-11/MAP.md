@@ -4,6 +4,11 @@ Initial ranking, September 11, 2026. All rows unvalidated. Ranked by information
 value, plausible economic relevance, data quality and effort; not near-pass
 selection. Sources and limitations are in SOURCES.md and HISTORY.md.
 
+Latest user boundary: finish the current options/VPS setup, then pause. The map
+remains an evidence record, not an instruction to start another family during
+that pause. The deployable options collector remains incomplete; reviewed
+components and outstanding work are in `options-capture-engineering-checkpoint.md`.
+
 | Rank / family | Mechanism and plausible payer | Earlier evidence and open question | Cheapest informative test / deeper-work trigger | Capital/exposure/cost limits | Current disposition |
 |---|---|---|---|---|---|
 | 1 Funding carry | Leveraged long demand pays spot/perpetual hedge holders | BTC/ETH carry holdout failed an opportunity-cost-inclusive gate; raw quantity book absent. XS carry settlement cases remain separate/deferred. | Separate saved opportunity charge, then admit event marks and fixed full-capital cash book. Proceed only if inputs and relevance support it. | Spot principal + separate futures reserve; fees, basis and margin path; nominal delta hedge insufficient | Three investigations complete; all eight fixed cash books fail economics; incremental allowance used; no timeless rejection |

@@ -1,6 +1,10 @@
 # Current research state — September 11, 2026
 
-**New strategy phase active, incomplete. Zero validated strategies.**
+**Current scope: finish options/VPS work, then pause. Zero validated strategies.**
+The latest user instruction supersedes open-ended continuation: after the current
+options/VPS work, stop research for a while. Do not start another family or
+install a wakeup. Setup remains incomplete and no options collector is running;
+the program checkpoint distinguishes reviewed components from missing rollout.
 The user explicitly launched the saved research prompt and superseded the
 preparation pause. Read the [active program state](../../research/strategy-search-2026-09-11/STATE.md),
 [charter](../../research/strategy-search-2026-09-11/CHARTER.md),
@@ -25,8 +29,9 @@ source follow-up admits all112daily mark slots. Its separately granted financial
 book hit the120second wall limit after publishing all outputs; failure-only
 closure preserves them. Independent9,344checks find8retained books cashnegative,
 with positive frictionless cash still below relevance. No rerun or eighth grant.
-Concrete prospective options-policy/risk preparation is under independent
-information-value review. No candidate has reached confirmation.
+Options accounting and source-control components have offline proofs; the complete
+prospective collector and rollout remain unadmitted. No candidate has reached
+confirmation.
 Read active state for exact sources, receipts, reviews, budgets and next actions.
 New runs use the additive lifecycle and complete sharded receipts.
 

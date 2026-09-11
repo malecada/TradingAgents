@@ -1,0 +1,26 @@
+{
+  "source_sha256": "0ceebb774e33a1f9faffaaf0c58769dc30bfc65acbb0b12dc82e596b22b02bdd",
+  "cases": {
+    "partial_prefix": {
+      "unsafe_or_invalid_state_accepted": false,
+      "reason": "JournalError: receipt contradicts retained partial prefix"
+    },
+    "intent_clock": {
+      "unsafe_or_invalid_state_accepted": false,
+      "reason": "JournalError: intent clock outside frozen window"
+    },
+    "seal_status": {
+      "unsafe_or_invalid_state_accepted": false,
+      "reason": "JournalError: source seal schema/accounting"
+    },
+    "foreign_recovery": {
+      "unsafe_or_invalid_state_accepted": false,
+      "reason": "JournalError: recovery event schema"
+    },
+    "member_reserve": {
+      "unsafe_or_invalid_state_accepted": false,
+      "reason": null
+    }
+  },
+  "scope": "Disposable invented file-state attacks only; no actual research journal."
+}

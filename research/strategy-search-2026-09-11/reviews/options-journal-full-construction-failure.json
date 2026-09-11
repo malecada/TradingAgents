@@ -1,0 +1,25 @@
+{
+  "status": "failed_compressed_full_construction",
+  "source_sha256": "0ceebb774e33a1f9faffaaf0c58769dc30bfc65acbb0b12dc82e596b22b02bdd",
+  "guard": {
+    "child_exit_code": -15,
+    "limit_reason": "wall-clock limit exceeded",
+    "elapsed_seconds": 120.02610007100157,
+    "peak_sampled_tree_rss_bytes": 71057408,
+    "linux_children_ru_maxrss_kib": 69196,
+    "rss_limit_bytes": 536870912,
+    "wall_limit_seconds": 120,
+    "sample_interval_seconds": 0.02,
+    "virtual_address_space_limit": "unlimited",
+    "qualification": "Nominal 20 ms sampled aggregate RSS with one 20 ms process-exit retry; brief overshoot can occur. No detached/background or secondary-thread subprocesses admitted. Shared pages may be counted twice. ru_maxrss is the largest individual child peak, not aggregate."
+  },
+  "observed_after_kill": {
+    "intents": 8816,
+    "receipts": 8814,
+    "members": 17632,
+    "pending": 0,
+    "bytes": 105916234
+  },
+  "scope": "Attempted all17000slots with8192bytes each through durable fsync appends in one120s process. Failed before complete history; not a late-invocation resource pass. No empirical inputs or journal claim admission. Synthetic fixture remains temporary; this small report preserves failure.",
+  "next_proof": "Separately bounded direct invented near-complete setup, then real journal entry/late16+8appends/seal/readonly validation under unchanged120s guard; not a full-history durability pass."
+}

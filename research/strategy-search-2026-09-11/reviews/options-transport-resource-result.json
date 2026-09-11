@@ -1,0 +1,32 @@
+{
+  "fixture_sha256": "8138d2bea1468d7f164b41065c64c12f423d8793c4686de35bec83a2933f27b0",
+  "groups": [
+    {
+      "acquisition_seconds": 0.7554870549938641,
+      "all_available": true,
+      "body_cap": 8192,
+      "group": "routine",
+      "invocation_seconds": 0.7799759930057917,
+      "journal_bytes": 330982,
+      "journal_files": 51,
+      "seal_sha256": "c3b81798d194a8c5c9152c0774a82f968916d662406f73a045e0c050b0197e8c",
+      "source_count": 16,
+      "synthetic_fixture_path": "/tmp/options-transport-routine-znqnf1i0/journal"
+    },
+    {
+      "acquisition_seconds": 1.4390678410127293,
+      "all_available": true,
+      "body_cap": 5242880,
+      "group": "maximum-initial-metadata",
+      "invocation_seconds": 1.7657513960148208,
+      "journal_bytes": 36705306,
+      "journal_files": 198,
+      "seal_sha256": "9e52de039673ba13d6d37dc39b1ccb4227bde2ff0c422bcbda0ecdef28add010",
+      "source_count": 3,
+      "synthetic_fixture_path": "/tmp/options-transport-maximum-initial-metadata-r4sbz07r/journal"
+    }
+  ],
+  "pass": true,
+  "scope": "Exact transport/journal groups using invented child frames, no network.\n\nThe standard outer guard measures aggregate descendant RSS. Fake children also\nhave PDEATHSIG, matching the production child's parent-death contract. This is\nnot a complete calendar, history-plus-capture, deployment or real latency proof.\n",
+  "transport_sha256": "fbf69e91bf83bba721650704b81994c8e4383a04d15e1d99afe4f7e346daf970"
+}

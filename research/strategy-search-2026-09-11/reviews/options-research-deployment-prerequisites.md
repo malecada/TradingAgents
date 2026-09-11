@@ -89,3 +89,21 @@ The parent is already resolving these nonsensitive facts with the user. Their
 arrival should resume the concrete next step, not leave a stale blocked status.
 No routine collection approval is missing, and the current research phase is
 not closed by this prerequisite note.
+
+## Subsequent read-only verification and pause request
+
+The user confirmed pck-preds-1 /46.225.169.184. A bounded read-only SSH connection
+as root succeeded with existing authentication and strict host-key checking.
+It reported Python3.12.3 at/usr/bin/python3, no python3.13 on PATH, installed
+tmux/screen,2CPUs and39,759,348KiB available on the root filesystem. No credentials
+were inspected, no package was installed and no remote file or process was created.
+This supersedes the unresolved host/login statements above, not the deployment
+requirements. Availability of tmux is not proof of a running collector or reboot
+persistence.
+
+The user requests finishing the current options/VPS work and then pausing research.
+The collector remains incomplete and unlaunched; no final source package, effective5
+grant, absolute future sample window or assignment has been frozen. The choice of
+whether hourly collection may continue during the pause is pending. No systemd
+change is needed or authorized through this note, and the historical monitor or
+funding rollout commands must not be substituted for an options launch command.
