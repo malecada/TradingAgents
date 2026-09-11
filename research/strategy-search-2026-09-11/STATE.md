@@ -169,8 +169,13 @@ all negative, positive-but-small, unavailable and spent-sample qualifications.
 
 ## Backup and preservation
 
-Latest verified preparation backup:63b6f7d3183a954d1ddc05d788925288196c7337,
-including the accepted options engine/batch, independent reviews and Finding117.
+Latest verified component/checkpoint backup:ba9ba625e45719878ccf12f0557d46114ae25160,
+pushed successfully and independently queried equal on the remote branch. It
+contains the journal, selection, transport/controller prototypes and independent
+reviews, explicit unfinished-rollout requirements and the user's pause boundary.
+It creates no grant, claim, VPS deployment or collector. The preceding backup
+63b6f7d3183a954d1ddc05d788925288196c7337 contains the accepted options engine/batch,
+independent reviews and Finding117.
 Earlier result backup139b50ad3708874fe43f6a144b0fba9346d26d15 includes the failed
 spread outputs, independent forensics and Decision19/Finding116.
 It was pushed and independently compared equal to the remote branch. Source
