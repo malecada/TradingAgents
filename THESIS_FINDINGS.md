@@ -7101,3 +7101,17 @@ unavailability, not a failed alpha test or absence from every possible location.
 Versioned metadata identifying the actual sources and original observation
 clocks is the reopening dependency. The third MAProw8 initial question is spent.
 Research continues with the distinct final triangle persistence prerequisite.
+
+## 113. Triangle stream fees and a preserved cutoff defect (2026-09-11)
+
+One registered stream retained35outputs and43,200planned quote-state subslots.
+No supported state cleared the fixed10bp-per-leg fee assumption; fee-free gross
+states occurred in both directions. Independent raw Fraction reconstruction
+completed299,403numeric checks and found a material cutoff defect: four published
+valid boundary bins per series follow an unretained frame. Original2,357valid/
+3,043unavailable counts remain immutable; conservative source support is2,353/
+3,047. The32affected subslots were unqualified, so positive counts and streaks
+are unchanged. Decision16 preserves the defect and early32chunk storage stop;
+no rerun or stronger frequency/profit claim follows. Zero validated strategies.
+Research continues with the distinct current option-entry component prerequisite
+and an independent coverage audit of remaining informative gaps.

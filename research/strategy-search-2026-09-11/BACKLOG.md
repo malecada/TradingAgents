@@ -15,7 +15,9 @@
 - [x] Investigate WBETH–ETH source link; true historical contractual delta remains unavailable.
 - [x] Complete WBETH eight-case run/review: positivecash but all3%relevancefail, no trueETHdelta or graduation.
 - [x] Complete saved-news inventory/review:7source/13schema unavailable; versioned source identity remains dependency.
-- [ ] Prepare third/final triangle investigation: one bounded stream plus frozen postcapture persistence screen; no live probe or fills.
+- [x] Complete third triangle actual review (299,403 checks) and retain result for backup: bounded capture closed, zero fee-qualified supported states; preserve four unsupported boundary bins per series and all outputs.
+- [ ] Freeze and execute final options entry-component prerequisite after independent source/gate review; both fee assumptions and all15cells retained.
+- [ ] Resolve coverage audit candidate: dated-future/perpetual collateral/funding mechanism and source feasibility before any extension or economic replay.
 - [ ] Existing value_rev remains deferred until a second vintage September 18 or later; no early replay or renamed gate.
 - [ ] Re-rank relative-value, liquidity, factor and information questions against
   the resulting evidence; register only a distinct justified prediction.

@@ -13,13 +13,14 @@ The new program preserves historical gates, raw stores, results and ledgers.
 Verified counts: predlab 820, rebuild 146, LLM event 2/pair 5/rank 1;
 48 correction records. These are record counts, not independent hypotheses.
 
-The first three funding-carry investigations are complete: a definition diagnostic,
-public input admission and explicit cash book. All eight primary cash books fail
-the fixed economic screen; the incremental allowance is used. Dated-contract
-archive admission then passed for four fixed ZIP/checksum pairs. Two dated-book attempts then failed in the harness with no economic verdicts.
-The dated allowance is exhausted pending an explicit reviewed amendment route.
-The next eligible question is options metadata admission; spot triangles follow.
-Read active state for exact source freezes, receipts, reviews and remaining work.
+Funding and dated fixed cash books fail their economic screens; the two dated
+harness failures and the sole consumed explicit amendment remain preserved.
+WBETH earns small conditional cash profits but fails full-capital relevance.
+News sources are unavailable at the exact registered paths. The third triangle
+capture has closed, with independent review documenting a boundary-cutoff defect;
+no fee-qualified supported quote state has been found. Current options entry
+components are under synthetic preparation. No candidate has reached confirmation.
+Read active state for exact sources, receipts, reviews, budgets and next actions.
 New runs use the additive lifecycle and complete sharded receipts.
 
 Unchanged history: two conditional H6 measured failures, 22 deferred settlement

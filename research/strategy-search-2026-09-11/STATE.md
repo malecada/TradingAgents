@@ -2,9 +2,11 @@
 
 The September 11 user launch remains authorized. Program active/incomplete;
 zero validated strategies. Branch `research/strategy-search-2026-09-11`.
-The coordinator owns shared gates, state and commits.
+Coordinator owns shared gates, state and commits. No live/background capture,
+order, paper session or scheduler is running. Inspect actual claims before
+resumption; never rerun a completed or failed identity.
 
-Completed once, with independent substantive and receipt reviews:
+## Retained investigations
 
 | Run | Complete / unavailable cells | Finding |
 |---|---:|---|
@@ -21,138 +23,72 @@ Completed once, with independent substantive and receipt reviews:
 | dated-book-amended-20260911 | 8 / 0 | All fixed dated cash books negative; small basis convergence cannot cover costs. Independent numerical reconstruction passed. |
 | wbeth-book-20260911 | 8 / 0 | Four primary books cash-positive but all below3% relevance; independent reconstruction passed. |
 | news-provenance-20260911 | 0 / 7 | Six literal source roots missing; externalCSV header not admitted. Independent bounded reconstruction passed. |
+| triangle-stream-20260911 | 8 / 1 | No fee-qualified supported states; early storage cap and four unsupported boundary bins require forensic qualification. |
 
-Execution sources respectively: `d3ba86924bd8711704fc80fd771a0e717cc9bb51`,
-`8cac1b361ecc96e5bd6f2ab0fa43bf51b1524ec4`,
-`7d704ca97606eea4ab953c29d7587e7e8af517f1`; each pushed and remotely verified
-before execution. Archive execution source `69c844c30e57d4d3ba6aa065eeff54cabf65652e`
-was likewise pushed and remotely verified. Decisions 01–04 and reviews retain
-the exact qualifications.
+Two further dated-book attempts FAILED without economic outputs: original
+MemoryError under the virtual-address cap, then resource-correction monitor
+process-exit defect. Each retains eight intended cells, claim and failed receipt.
+All prior results and independent reviews are in Decisions01–15 and reviews/.
+The table reports structural completion, never strategy validation.
 
-Funding-carry incremental allowance: 3 used of 3; known eight direct historical
-records plus incomplete older search remain. This is not complete statistical
-multiplicity. Do not rerun the completed books or reset the budget by renaming.
+Funding's three new questions are spent; eight known direct historical records
+and unknown broader multiplicity remain. Dated original cap4/prior1 is unchanged:
+the exactly reviewed separate +1 certificate was consumed by dated-book-amended,
+effective total5 spent. No further correction or budget extension is implied.
+Options has used two of three new questions (plus prior RVIV gate/twelve rows).
+Triangle has now used three of three, also MAProw5. WBETH used two, charged to
+MAProws3/8; news consumed third MAProw8 question, not a fresh three-trial family.
+Bitrue used one of three; settled funding/mark/fee/access sources remain blockers.
+These administrative counts are not complete statistical multiplicity.
 
-Two dated-book attempts failed without economic outputs: the original under a
-virtual-memory cap, and `dated-book-resource-correction-20260911` under a monitor
-process-exit error during source verification. The latter execution source was
-`6ee6317f8cc04f94fa48932dccbe01572a05fd8c`, pushed and remotely verified.
-Each retains eight intended cells, zero completed economic verdicts, claim and
-failed receipt. Decisions 05–06 and independent reviews preserve the causes.
-Dated allowance is exhausted (historical one + three new = cap four). Do not
-rerun either identity or increase the gate budget: admission rejects implicit
-amendments. A future extra attempt requires a reviewed explicit amendment route.
+## Current result and next action
 
-Options metadata completed once from source
-`828884688b944b5cd2c33537fe4fcabc28325e66`, pushed and remotely verified. Raw and
-structural reviews pass; Decision07 retains actual timestamps and source-only
-limits. First of three new options investigations used. The v2 monitor is
-reviewed and the exact options worst-payload/lifecycle preflight passed.
+triangle-stream-20260911 COMPLETED once from
+71234f87d4221e8849f130dfb3e62824d700f0df, committed/pushed and remote-equality
+verified before execution. Rootexec94780 has TERMINATED exit0. Guard416.339sec,
+115,523,584 sampled aggregate RSS, no guard limit. Capture started
+2026-09-11T10:33:26.847060+00:00 and stopped on its frozen32rawchunk capacity;
+35 outputs total30,528,519bytes,41,536 receipts,6,037,633 rawpayloadbytes.
+Structural verifier passes9cells (8complete/1transportunavailable),43,200 planned
+subslots. Published series contain2,357valid/3,043unavailable of5,400bins each,
+with zero10bp-per-leg qualified bins. These are overlapping local quote states,
+not fills, trade counts, expected returns or evidence of all-time absence.
 
-EOH schema completed once from c6f23fc7657390e6131539e0ac2eff23a9cd3598,
-pushed and remotely verified before execution. Decision 08 and independent
-reconstruction retain lexical-only scope. Options now used two of three new
-investigations; no financial options result exists.
+Independent substantive review completed299,403 numeric checks (max4.77e-12).
+It found four boundary bins per
+series after the first unretained frame at407.778372831seconds but before the
+exception-handler cutoff408.441994777seconds. Preserve all original outputs.
+Those32subslots lack complete source evidence; conservative audit counts are
+2,353supportable/3,047unavailable per series. Do not silently replace the
+registered denominator or repair/rerun the frozen engine. All qualified counts and streaks are unchanged; Decision16 and Finding113 retain
+the measurement defect. Results are ready for verified backup. The expected next
+investigation remains options.
 
-Triangle capture completed from 270d724eaf6b9781bf099c816b7d475df50412a9,
-pushed and remotely verified before execution. Decision 09 and independent review
-retain asynchronous clocks and source-only scope. One of three triangle new
-investigations used, also charged to MAP row 5.
+options-entry-20260911 is under synthetic implementation and independent design
+review; no actual new options quote, index, mark or selection has run. Root owns
+options-entry-charter.md, options_entry_guard.py, specification/observation/gate;
+carry_diagnostic owns options_entry.py, options_entry_transport.py and focused
+tests. Proposed seven source slots and eight component cases, ten outputs,
+256KiB/request,180second capture/240second hardwall,512MiB2CPU. This is the final
+new options allowance, not a volatility-return or full-account-affordability
+claim. Complete synthetic exact-lifecycle preflight and independent source/gate
+review; commit/push/remote-equality freeze before the sole empirical run.
 
-Triangle proxy completed from b4fc9466196108f83a593396970df65651889914,
-pushed and remotely verified before execution. Decision 10 retains eight static
-cases, no fills and unavailable expected-return inference. Two of three triangle
-investigations used; do not change fees or refresh quotes to rescue this result.
+A separate independent all-eight-family coverage audit is in progress. Initial
+caps alone do not establish exhaustion. Existing value_rev needs its second
+vintage on September18 or later; no early replay or renamed sample. News needs
+actual versioned source identity/observation clocks. Historical EOH fields and
+Bitrue settled-event/mark economics remain unadmitted. Account country/product
+and fee applicability were requested without credentials and remain unknown.
 
-Bitrue metadata completed from 328b23f88357656a23ce5ba2874cf514f6fce547,
-pushed and remotely verified before execution. Decision 11 and independent raw
-review retain literal-only target matching and unavailable time semantics.
-One of three new venue questions used. Historical venue economics is deferred
-for settled funding events/marks, current fees and account applicability; a
-current-index poll would not resolve that dependency.
+## Preservation and backup
 
-WBETH sources completed from ea63d7b1aa9176faeddd7640eef09af1a2bdecc5,
-pushed/remotely verified before acquisition; independent raw/schema review and
-receipt verification pass. Decision 12 retains market-value hedge limits. One
-of three WBETH investigations used; no financial WBETH book has run.
-
-The exactly amended dated run COMPLETED from
-d75b6d15b3e08c10616fe25fbca4c01cf46b29ba, pushed/remotely verified before execution.
-Eight complete/zero unavailable cells, three outputs, all economic screens fail.
-Successor structural verifier passes; independent raw cashflow/HAC reconstruction
-passed 9,352 comparisons across eight books, 448 daily NAV rows and 16 stresses,
-maximum absolute error 7.28e-12. Decision 13 closes this fixed economic claim.
-Results and state are ready for the verified backup checkpoint. Do not rerun.
-Original cap4/prior1 and old claims remain; the separate +1 certificate is now
-spent. Effective total5 is exhausted; no next dated attempt is implied.
-
-Dated results were committed and pushed as99445a558dde0607e4563aed0759954693bd475c;
-remote equality was independently queried. WBETH source/charter/engine/runner/gate
-review now passes (reviews/wbeth-book-implementation-review.md): 3,708 independent
-synthetic comparisons and39 focused tests, including exact guarded lifecycle.
-Gate9e92592a79b88716a15e7d5bba2a1b0e3c3b0891fdc415ee245c3136142c2afa pins
-all dependencies, four parent inputs, eight cells and two outputs. It is ready
-for committed source and verified remote freeze, then one guarded execution.
-The exact WBETH run has now COMPLETED from04e1fa48336bdb10e6a9795a91e24a72526c9ef7,
-pushed/remotely verified before execution: eight complete/zero unavailable,
-two outputs931,662bytes,9.339sec436,752,384sampledRSS. Structural verifier passes.
-Four primary cash profits positive but all fail3% relevance (base/stress2.0203/
-0.86675at1,000;23.0100/9.80236at10,000). Independent raw cashflow/manual HAC review passed19,428comparisons, including
-728NAV rows and32stresses. Decision14 is finalized. Do not rerun or tune.
-WBETH results were committed/pushed as001565a83fde4837a4ab75aa66c2d70046b8baec;
-remote equality was verified.
-True ETH delta and the net-base-delta gate remain unavailable.
-
-The parallel next source question is a bounded seven-path news metadata inventory.
-Final news implementation/gate review passes at gatee85a08c4ee2878c38aa111506f5d179d83161a430e7aa925b242177bb41f5bee,
-inspectora4264c026aa9c1f7962a7835a6aa23b27db02e74ae260baf525a11a8480d74fd.
-20focused synthetic tests, eight independent hostile fixtures and exact guarded
-lifecycle pass. Ctime change detection was added before outcomes, with explicit
-best-effort/subtick limitation. The news run has now COMPLETED once from7e5e8b1affb1feb4e729290b943c313a56493a46,
-pushed/remotely verified before execution. Seven unavailable sourcecells,
-13unavailable schema slots,9outputs19,350bytes; structural verifier passes.
-Six literal roots missing; external576,048-byteCSV first13-bytephysicalheader
-not admitted, no following article records read. Guard7.846sec46,518,272RSS.
-Independent source/privacy reconstruction passed; Decision15 finalized. First
-13-byteCSVline has one unrecognized field, no admitted ID/timefield; no following
-bytes read or text published.
-Do not rerun, widen paths or read content. Commit/push/remotely verify result
-backup. News results were subsequently committed/pushed as
-44a4b9c8051074cadd76efe16c8e3607275ae61d and remote equality verified.
-This spends the thirdinitialMAProw8
-question after twoWBETH questions, not a fresh alpha budget.
-A distinct third/final triangle streaming-observation question has a primary
-documentary design and is in synthetic implementation/review. No live stream
-opened. Before freeze, exact rational factor/size qualification fixes a float
-parity counterexample; helper float values remain diagnostic, original unchanged.
-32rawchunks/35outputs/9topcells/43,200subslots,540capture+60finalize seconds,
-512MiB2CPU undernewtriangle_stream_guard.py reusing unchangedv2guard.
-Final stream independent review PASS: gatece6e02d9f789fac3cb289fa6371327c6d7403975ec1b32001ec27bd60be652cd,
-source6670aa4962d781c93b8cb674655e33d1172dd07faaed17120363da69fb89383b.
-23focused synthetic checks,40independent Fraction cases/chronology andthree
-exact full/rawcap/chunkcap lifecycle preflights pass (max155,254,784RSS,
-3.5385secfinalization). All35outputs/9topcells/43,200subslots reconciled.
-Commit/push/remotely verify source, then execute this identity exactlyonce.
-Do not inspect conversion outcomes until capture closes. Ifactiveclaim exists,
-inspectprocess/receipt first; no restart/retry. Afterfinish independentsubstantive
-review+receiptverify, decision/findings/state andverifiedbranchbackup.
-
-A further specific affordable options gap was identified: current minimum-lot
-option-entry component/visible-size requirements, separate from oldEOHsemantics.
-reviews/options-prospective-{gap,design}.md and draftoptions-entry-charter.md
-propose7requests plus8componentcases; no actualquotes/selection performed.
-Third/finaloptionsallowance only; fullhedgedaccountaffordability remainsunknown.
-Finalize schema/resource/selection design and implement/test/review/register
-before currentquotes, after or alongside triangle preparation.
-The existing value_rev second vintage cannot mature before September18. Preserve
-original data and all prior claims. Continue useful eligible questions.
-Options historical economics remains deferred for field/clock/contract semantics,
-with one new options investigation remaining. Meaningful affordable gaps remain.
-Commit/push and verify remote equality at each freeze and results checkpoint.
-Interim coverage retains meaningful affordable gaps; no exhaustion.
-
-No background job, scheduler, paper session or order is running. Account
-country/product details were requested without credentials and remain pending;
-this does not block public research. Preserve old ledgers/raw stores and the
-22 deferred settlement cases. Read REENTRY.md and actual Git/run status before
-resumption. Context/runtime checkpoints mean incomplete, never exhaustion.
+Prior independently reviewed results backed up and remotely verified:
+dated99445a558dde0607e4563aed0759954693bd475c;
+WBETH001565a83fde4837a4ab75aa66c2d70046b8baec;
+news44a4b9c8051074cadd76efe16c8e3607275ae61d.
+Current HEAD is the verified triangle source freeze71234f87d4221e8849f130dfb3e62824d700f0df;
+triangle results await completed independent review and backup.
+Preserve raw stores, original worktrees, old gates/ledgers and22deferred settlement
+cases. Never read credentials, trade, contact providers or mutate production.
+Continue each justified eligible action; context checkpoints mean incomplete.
