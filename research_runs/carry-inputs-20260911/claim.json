@@ -1,0 +1,116 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "8cac1b361ecc96e5bd6f2ab0fa43bf51b1524ec4",
+  "experiment": {
+    "cells": [
+      "btc-funding",
+      "eth-funding",
+      "btc-spot",
+      "eth-spot",
+      "btc-perp",
+      "eth-perp",
+      "btc-mark",
+      "eth-mark",
+      "exchange-info",
+      "server-time"
+    ],
+    "charter": {
+      "path": "research/strategy-search-2026-09-11/carry-inputs-charter.md",
+      "sha256": "3300905e8466a0752552007210c1b05019dd1de84868ffe44231f06369760615"
+    },
+    "family": "funding-carry",
+    "inputs": {
+      "request_spec": {
+        "dataset": "legacy",
+        "path": "research/strategy-search-2026-09-11/request-spec.json",
+        "sha256": "59a9859d2652d52c3f4fa654f3dedd2a8b4e57326bb4de6733c5ddb419893963"
+      }
+    },
+    "outputs": [
+      "btc-funding-receipt.json",
+      "eth-funding-receipt.json",
+      "btc-spot-receipt.json",
+      "eth-spot-receipt.json",
+      "btc-perp-receipt.json",
+      "eth-perp-receipt.json",
+      "btc-mark-receipt.json",
+      "eth-mark-receipt.json",
+      "exchange-info-receipt.json",
+      "server-time-receipt.json",
+      "capture.json",
+      "admission.json"
+    ],
+    "parent": "carry-definition-20260911",
+    "question": "Can authentic public event funding marks and matched spot/perpetual/mark bars for fixed spent 2026Q2 pass conditional schema/coverage admission?",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+      "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+    },
+    "selection": null,
+    "source_files": {
+      "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+      "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+    },
+    "stage": "development",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "legacy",
+        "end": "2026-07-01T00:00:00Z",
+        "start": "2026-04-01T00:00:00Z"
+      }
+    ]
+  },
+  "experiment_id": "carry-inputs-20260911",
+  "family": {
+    "attempt_budget": 11,
+    "history_reference": "research/strategy-search-2026-09-11/HISTORY.md; known 8 direct audit/holdout records only; earlier P0-P5/P1.5 and blend searches incompletely enumerated; cap adds exactly 3 new investigations, NOT complete historical trial count. No confirmatory inference.",
+    "legacy_total_attempts": "unknown",
+    "mechanism_id": "btc-eth-spot-perpetual-funding-carry",
+    "new_program_incremental_cap": 3,
+    "prior_attempts": 8
+  },
+  "inputs": {
+    "request_spec": {
+      "dataset": "legacy",
+      "path": "research/strategy-search-2026-09-11/request-spec.json",
+      "sha256": "59a9859d2652d52c3f4fa654f3dedd2a8b4e57326bb4de6733c5ddb419893963"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2025-03-31T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2021-11-08T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2025-04-01T00:00:00Z",
+      "state": "spent"
+    }
+  ],
+  "program_id": "strategy-search-2026-09-11",
+  "registration": "research/strategy-search-2026-09-11/gates-capture.json",
+  "registration_sha256": "0d1823da3cede971f5ab3eba774eb53a1b0d4e5368fd297a26179aca584b7031",
+  "schema_version": 1,
+  "source": "8cac1b361ecc96e5bd6f2ab0fa43bf51b1524ec4",
+  "started_at": "2026-09-11T07:37:42.522060+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "legacy",
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2026-04-01T00:00:00Z",
+      "state": "exposed"
+    }
+  ]
+}

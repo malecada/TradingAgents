@@ -1,8 +1,8 @@
 # Prioritized backlog
 
 - [x] Complete registered carry-definition diagnostic and independent review; retained with this results checkpoint.
-- [ ] Follow definition/data evidence into one fixed event-cashflow admission or
-  explicit unavailable disposition. Do not turn rate-only caches into cashflows.
+- [x] Admit actual public event marks and matched bars once; independent review passed.
+- [ ] Execute the reviewed fixed conditional cash book, diagnose and re-rank.
 - [ ] Execute the ranked dated/calendar source and data feasibility investigation.
 - [ ] Resolve affordable options and venue-product feasibility questions for breadth.
 - [ ] Re-rank relative-value, liquidity, factor and information questions against

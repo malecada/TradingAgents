@@ -1,0 +1,204 @@
+{
+  "status": "pass_conditional_source_admission",
+  "reviewer": "independent_review",
+  "source": "8cac1b361ecc96e5bd6f2ab0fa43bf51b1524ec4",
+  "checker_sha256": "99c1495cb93730936ef0fed5c9ae372c25f49a82ff51b4b20963871c00bd0904",
+  "claim_sha256": "388c4a594773418082d8b66ef68641a5f51b8e81f883c45466181e40fc284e40",
+  "receipt_sha256": "0145b9859f8034eebb01760b3bce90ab41c397073786add55ebb591a60a50f90",
+  "output_sha256": {
+    "admission.json": "2723c2ccc885a79056fa5e04eaa07e56546498df5bf4dade9b4bcb70cefd986e",
+    "btc-funding-receipt.json": "e4730524574c097c512b66b9737d3e9e2e1c4123657294c6ebb8d55989d1c383",
+    "btc-mark-receipt.json": "db8bbfa770dc21d2beaff103d09ca73dae891afa17efdf9070f0641e7becd29d",
+    "btc-perp-receipt.json": "eae68a6d6bea35729ab82ee7879f856cd1271ce27e66cb759561d4b31a6849d8",
+    "btc-spot-receipt.json": "22d373757c514a8ebedd4e75a7470a1117d38397eab7318af5f6c38aef70e349",
+    "capture.json": "2076fb01a8b7a11aa76b9ff14f91a2ec9a8d5d6188e53eb32b50b8fccdd544bd",
+    "eth-funding-receipt.json": "e4d7079f67b4b77603aac7623730205ee29ece5dd503623dc62bd9b5acbd9311",
+    "eth-mark-receipt.json": "3ed7f04fe8a24b19bc033fa4eda4cfb4bb0eff5162cf4dadaeb787281310889c",
+    "eth-perp-receipt.json": "6280d86e02d05e783e50e41e71127c20d2dc0e9f351c22203d8e25ba8896ff6f",
+    "eth-spot-receipt.json": "e4031e92c24fce71676278a57dda9d0f7760978185924654cf381051dd4bd6e5",
+    "exchange-info-receipt.json": "1b8b18bd8f90630e59efcd19e556d43a97080af94494b7e1a25789675f6f8e45",
+    "server-time-receipt.json": "a1c763ed7ca89fde187dbd61548dcadf6f6a7eb65d6f25f86591deb3183d24a1"
+  },
+  "method": "Decode and hash every individual raw receipt; reconcile aggregate copies and all registered outputs; reconstruct dates, finite Decimal values, coverage, OHLC and clocks without importing collector. No network or PnL computation.",
+  "complete_cells": 10,
+  "unavailable_cells": 0,
+  "outputs_verified": 12,
+  "raw_bytes": 1265237,
+  "funding_events_verified": 546,
+  "bar_rows_verified": 546,
+  "cells": {
+    "btc-funding": {
+      "status": "complete",
+      "raw_body_sha256": "aaa259633ca4bcafb1c482e878c0861f3fab9a307b97c339a11b3e051190baee",
+      "raw_bytes": 34505,
+      "request_utc": "2026-09-11T07:37:42.630287+00:00",
+      "retrieval_utc": "2026-09-11T07:37:42.967210+00:00",
+      "observations": 273,
+      "conditional_days": 91,
+      "missing": 0,
+      "duplicates": 0,
+      "unexpected": 0,
+      "maximum_schedule_offset_ms": 16,
+      "first_event_ms": 1775001600000,
+      "last_event_ms": 1782835200005,
+      "finite_funding_rates": 273,
+      "positive_event_marks": 273
+    },
+    "eth-funding": {
+      "status": "complete",
+      "raw_body_sha256": "caab59f6eecfc7ba38d6de11840bc2b12b6b18fe2980ce3711561fb781de986b",
+      "raw_bytes": 34237,
+      "request_utc": "2026-09-11T07:37:43.086435+00:00",
+      "retrieval_utc": "2026-09-11T07:37:43.396251+00:00",
+      "observations": 273,
+      "conditional_days": 91,
+      "missing": 0,
+      "duplicates": 0,
+      "unexpected": 0,
+      "maximum_schedule_offset_ms": 16,
+      "first_event_ms": 1775001600000,
+      "last_event_ms": 1782835200005,
+      "finite_funding_rates": 273,
+      "positive_event_marks": 273
+    },
+    "btc-spot": {
+      "status": "complete",
+      "raw_body_sha256": "5e42571cb5e1214926c15cc4cbaadeefbb50fb4d647a54dca48c0fabdbfc85de",
+      "raw_bytes": 16901,
+      "request_utc": "2026-09-11T07:37:43.515750+00:00",
+      "retrieval_utc": "2026-09-11T07:37:43.843223+00:00",
+      "observations": 91,
+      "missing": 0,
+      "duplicates": 0,
+      "valid_ohlc_rows": 91,
+      "first_open_ms": 1775001600000,
+      "last_close_ms": 1782863999999
+    },
+    "eth-spot": {
+      "status": "complete",
+      "raw_body_sha256": "de2812434abef2f9d14c271d30d7ebc79f97ed49f25beacb6bb7b0bb058d14b1",
+      "raw_bytes": 16718,
+      "request_utc": "2026-09-11T07:37:43.963453+00:00",
+      "retrieval_utc": "2026-09-11T07:37:44.261183+00:00",
+      "observations": 91,
+      "missing": 0,
+      "duplicates": 0,
+      "valid_ohlc_rows": 91,
+      "first_open_ms": 1775001600000,
+      "last_close_ms": 1782863999999
+    },
+    "btc-perp": {
+      "status": "complete",
+      "raw_body_sha256": "a020352750bd0520d990ae22b223cb613d99ec7b636b8bf6a434d4ade93ffe93",
+      "raw_bytes": 13613,
+      "request_utc": "2026-09-11T07:37:44.383751+00:00",
+      "retrieval_utc": "2026-09-11T07:37:44.676605+00:00",
+      "observations": 91,
+      "missing": 0,
+      "duplicates": 0,
+      "valid_ohlc_rows": 91,
+      "first_open_ms": 1775001600000,
+      "last_close_ms": 1782863999999
+    },
+    "eth-perp": {
+      "status": "complete",
+      "raw_body_sha256": "b631dc6ce32a816acb5fe1c8456a5ea267e340d5219c0e463db056c21ed189a9",
+      "raw_bytes": 13497,
+      "request_utc": "2026-09-11T07:37:44.792266+00:00",
+      "retrieval_utc": "2026-09-11T07:37:45.083828+00:00",
+      "observations": 91,
+      "missing": 0,
+      "duplicates": 0,
+      "valid_ohlc_rows": 91,
+      "first_open_ms": 1775001600000,
+      "last_close_ms": 1782863999999
+    },
+    "btc-mark": {
+      "status": "complete",
+      "raw_body_sha256": "cce5432363db97f8e88ab63b4c37dbcacdf43e36f29d301d8fedde8c77d27e2d",
+      "raw_bytes": 11285,
+      "request_utc": "2026-09-11T07:37:45.200353+00:00",
+      "retrieval_utc": "2026-09-11T07:37:45.496548+00:00",
+      "observations": 91,
+      "missing": 0,
+      "duplicates": 0,
+      "valid_ohlc_rows": 91,
+      "first_open_ms": 1775001600000,
+      "last_close_ms": 1782863999999
+    },
+    "eth-mark": {
+      "status": "complete",
+      "raw_body_sha256": "cf44296198e91a1b773b8fb2e5498ec1afb5ffcab397a560cc349fae429baa75",
+      "raw_bytes": 10921,
+      "request_utc": "2026-09-11T07:37:45.614018+00:00",
+      "retrieval_utc": "2026-09-11T07:37:45.915346+00:00",
+      "observations": 91,
+      "missing": 0,
+      "duplicates": 0,
+      "valid_ohlc_rows": 91,
+      "first_open_ms": 1775001600000,
+      "last_close_ms": 1782863999999
+    },
+    "exchange-info": {
+      "status": "complete",
+      "raw_body_sha256": "7ac19730e817bac3d2a9788b762b4105e16aa1a578c92490279dc8b3f0a9f2b9",
+      "raw_bytes": 1113532,
+      "request_utc": "2026-09-11T07:37:46.027042+00:00",
+      "retrieval_utc": "2026-09-11T07:37:47.075280+00:00",
+      "symbols": [
+        "BTCUSDT",
+        "ETHUSDT"
+      ],
+      "current_identity_only": true
+    },
+    "server-time": {
+      "status": "complete",
+      "raw_body_sha256": "91c11c831324c85dbd41702405d3478227ba4a45f3709f87329b80183dd73572",
+      "raw_bytes": 28,
+      "request_utc": "2026-09-11T07:37:47.213088+00:00",
+      "retrieval_utc": "2026-09-11T07:37:47.493811+00:00",
+      "clock_check": {
+        "earliest_allowed_ms": 1789112262213,
+        "latest_allowed_ms": 1789112272493,
+        "server_minus_request_ms": 161,
+        "server_minus_retrieval_ms": -119,
+        "agrees": true
+      }
+    }
+  },
+  "funding_event_mark_vs_daily_mark_bar": {
+    "btc": {
+      "events_checked": 273,
+      "outside_same_utc_day_mark_range": 0,
+      "absolute_price_tolerance_usdt": "1E-8"
+    },
+    "eth": {
+      "events_checked": 273,
+      "outside_same_utc_day_mark_range": 0,
+      "absolute_price_tolerance_usdt": "1E-8"
+    }
+  },
+  "material_capture_findings": [],
+  "conditional_quantity_book_sufficiency": "Sufficient for a separately registered conditional fixed-base-quantity book using historical daily prices as proxies and recorded funding-event marks. Not sufficient for executable economics or margin-path validation.",
+  "required_financial_registration_caveats": [
+    "The conditional 00/08/16 UTC funding calendar is not independently established historical schedule evidence.",
+    "Freeze entry/exit event ownership. Do not capture opening-boundary funding merely because its recorded event timestamp trails midnight by milliseconds.",
+    "Match spot and perpetual base quantities; reserve full spot principal, futures collateral, costs and cash buffers at each capital size.",
+    "Record funding as signed quantity times the associated event mark times rate; never substitute daily-average rates or different price marks.",
+    "Daily OHLC prices are execution and valuation proxies. No simultaneous fills, bid/ask, intraday margin sufficiency or liquidation protection is established.",
+    "Historical/account-specific fees, fee assets, borrow/conversion costs, spot/perpetual lot filters and maintenance margin remain unverified.",
+    "Current exchange metadata is not historical product state or account eligibility evidence.",
+    "The quarter is already exposed. New fields and capture time do not establish fresh confirmation or historical publication timing."
+  ],
+  "not_tested": [
+    "Independent upstream authenticity or historical data revisions",
+    "Historical funding-calendar changes",
+    "Historical account, fee and lot applicability",
+    "Funding cash amounts for real positions",
+    "Executable fills or intraday margin paths",
+    "Any financial statistic, exposure or return",
+    "External backup/pre-result push timing",
+    "OS crash, maximum-resource or concurrency fault injection"
+  ],
+  "next_action": "Freeze exactly one conditional fixed-quantity-book development investigation with full-capital cash accounting and independent synthetic/financial review; retain all unverified execution, calendar and margin claims as unavailable."
+}

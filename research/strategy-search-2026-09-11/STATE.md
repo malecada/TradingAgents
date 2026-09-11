@@ -6,14 +6,18 @@ First completed run: `carry-definition-20260911`, source
 `d3ba86924bd8711704fc80fd771a0e717cc9bb51`,6complete/0unavailable; independent
 receipt and Decimal reconstruction pass. Decision01 preserves results/limits.
 
-Current question: can one public acquisition supply event marks and matching
-spot/perp/mark bars for the fixed spent2026Q2 quarter? `carry-inputs-20260911`
-source and registration are in preparation; NO capture has started.
-Next: freeze/review gates-capture.json, commit/push, execute exactly once,
-independently inspect raw coverage, then follow the registered decision.
+Second run `carry-inputs-20260911` complete: 10/10 cells, 12 outputs,
+1,265,237 raw bytes; independent raw/schema and receipt reviews pass. Source
+`8cac1b361ecc96e5bd6f2ab0fa43bf51b1524ec4` pushed before capture. Decision02.
+
+Current question: conditional full-capital cash profit from fixed matched
+quantities and actual recorded funding-event marks in spent 2026Q2.
+Next: finish review/freeze gates-book.json and source; commit/push before one
+`carry-book-20260911` run. Eight primary/eight zero-funding forensic cases,
+no tuning. NO economic book has been evaluated; only synthetic tests.
 
 Budget: known8 direct historical carry records plus incomplete older searches;
-new incremental cap3, used1. This is not full statistical multiplicity.
+new incremental cap3, used2. This is not full statistical multiplicity.
 Legacy source/ledger bytes remain. Named launch offline742+20passed; first
 runner15synthetic tests passed; worker broader754+20passed before final guards.
 No background job, scheduler, paper simulation or real order is running.

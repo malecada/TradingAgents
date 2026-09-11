@@ -1,0 +1,124 @@
+{
+  "cells": [
+    {
+      "coverage": {
+        "duplicate_canonical_slots_ms": [],
+        "duplicate_timestamps_ms": [],
+        "expected_events": 273,
+        "invalid_timestamp_row_indices": [],
+        "limitation": "Conditional 00/08/16 UTC +/-5s schedule; not historical calendar proof.",
+        "matched_unique_slots": 273,
+        "maximum_schedule_offset_ms": 16,
+        "missing_canonical_slots_ms": [],
+        "missing_slot_count": 0,
+        "observed_events": 273,
+        "status": "complete",
+        "unexpected_count": 0,
+        "unexpected_timestamps_ms": []
+      },
+      "expected_events": 273,
+      "id": "btc-funding",
+      "maximum_schedule_offset_ms": 16,
+      "observations": 273,
+      "schedule": "conditional 3/day 00/08/16 UTC +/-5 seconds; not historical calendar proof",
+      "status": "complete",
+      "units": "signed funding rate and USDT mark price; event identity retained in raw body"
+    },
+    {
+      "coverage": {
+        "duplicate_canonical_slots_ms": [],
+        "duplicate_timestamps_ms": [],
+        "expected_events": 273,
+        "invalid_timestamp_row_indices": [],
+        "limitation": "Conditional 00/08/16 UTC +/-5s schedule; not historical calendar proof.",
+        "matched_unique_slots": 273,
+        "maximum_schedule_offset_ms": 16,
+        "missing_canonical_slots_ms": [],
+        "missing_slot_count": 0,
+        "observed_events": 273,
+        "status": "complete",
+        "unexpected_count": 0,
+        "unexpected_timestamps_ms": []
+      },
+      "expected_events": 273,
+      "id": "eth-funding",
+      "maximum_schedule_offset_ms": 16,
+      "observations": 273,
+      "schedule": "conditional 3/day 00/08/16 UTC +/-5 seconds; not historical calendar proof",
+      "status": "complete",
+      "units": "signed funding rate and USDT mark price; event identity retained in raw body"
+    },
+    {
+      "clock": "UTC daily open inclusive, close next midnight minus 1ms",
+      "expected_days": 91,
+      "id": "btc-spot",
+      "observations": 91,
+      "status": "complete",
+      "units": "USDT price; public historical bars are not execution fills"
+    },
+    {
+      "clock": "UTC daily open inclusive, close next midnight minus 1ms",
+      "expected_days": 91,
+      "id": "eth-spot",
+      "observations": 91,
+      "status": "complete",
+      "units": "USDT price; public historical bars are not execution fills"
+    },
+    {
+      "clock": "UTC daily open inclusive, close next midnight minus 1ms",
+      "expected_days": 91,
+      "id": "btc-perp",
+      "observations": 91,
+      "status": "complete",
+      "units": "USDT price; public historical bars are not execution fills"
+    },
+    {
+      "clock": "UTC daily open inclusive, close next midnight minus 1ms",
+      "expected_days": 91,
+      "id": "eth-perp",
+      "observations": 91,
+      "status": "complete",
+      "units": "USDT price; public historical bars are not execution fills"
+    },
+    {
+      "clock": "UTC daily open inclusive, close next midnight minus 1ms",
+      "expected_days": 91,
+      "id": "btc-mark",
+      "observations": 91,
+      "status": "complete",
+      "units": "USDT price; public historical bars are not execution fills"
+    },
+    {
+      "clock": "UTC daily open inclusive, close next midnight minus 1ms",
+      "expected_days": 91,
+      "id": "eth-mark",
+      "observations": 91,
+      "status": "complete",
+      "units": "USDT price; public historical bars are not execution fills"
+    },
+    {
+      "id": "exchange-info",
+      "limitation": "Current public metadata; not historical product state or account eligibility.",
+      "status": "complete",
+      "symbols": [
+        "BTCUSDT",
+        "ETHUSDT"
+      ]
+    },
+    {
+      "clock_check": {
+        "agrees": true,
+        "earliest_allowed_ms": 1789112262213,
+        "latest_allowed_ms": 1789112272493,
+        "server_minus_request_ms": 161,
+        "server_minus_retrieval_ms": -119
+      },
+      "id": "server-time",
+      "limitation": "Current server clock; not proof of historical publication/availability.",
+      "server_time_ms": 1789112267374,
+      "status": "complete"
+    }
+  ],
+  "interpretation": "Data availability only; no PnL, fresh confirmation, historical calendar or account eligibility claim.",
+  "schema_version": 1
+}
