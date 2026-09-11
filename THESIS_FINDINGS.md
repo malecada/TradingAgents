@@ -7037,3 +7037,15 @@ not fills or independent trials. Signed wallets and fee decomposition reconcile;
 expected return, power, beta and annual relevance remain unavailable. Decision
 10 switches to venue prerequisites without treating one snapshot as permanent
 family rejection. Zero strategies validated.
+
+## 108. Bitrue contract metadata and funding-source deferral (2026-09-11)
+
+The registered unfiltered contracts/time probe retained 755 unique contract
+rows and matched the fixed BTC/ETH conditional metadata rules. Two source cells
+and four outputs passed independent reconstruction and receipt verification.
+The request worked despite a documentation parameter conflict; this observation
+does not resolve all versions or historical continuity. Final settled funding
+events/marks, current fees, time semantics and account applicability remain
+unavailable. Decision 11 defers the historical cross-venue book and advances
+the narrow dated-amendment engineering and WBETH contractual-source questions.
+No rate differential or profit was calculated.
