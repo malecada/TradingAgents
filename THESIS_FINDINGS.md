@@ -7166,3 +7166,22 @@ that distinction and closes fee-only rescue of this fixed relevance claim.
 Repeated historical validation is the probable time cost; any future lifecycle
 needs representative-history full-retention preflight. Research proceeds to
 concrete prospective option-policy/coverage adjudication. Zero validated strategies.
+
+## 117. Prospective options accounting preparation (2026-09-11)
+
+A pure hourly short-straddle/perpetual ledger and sixteen-source offline batch
+contract now pass68focused synthetic tests. Independent incremental-PnL checks
+reconcile35,952cash comparisons across eight1,057-slot invented paths. Two
+preserved full-length failures exposed rational growth in average-basis money
+and then in a noncash return diagnostic. Direct signed execution accounting
+and declared60-digit diagnostic precision resolve those distinct causes;
+monetary accounting remains exact, and futures notional is never cash proceeds.
+
+The complete routine fixture uses206,969,986serialized bytes and46,088,192sampled
+RSS bytes under a1.0265second guard. This excludes transport, metadata/funding
+retention and full lifecycle overhead. Synthetic correctness establishes no
+option profit, true exposure, margin feasibility or account access. One entire
+6–44day prospective path remains informative. The user has an always-on VPS;
+source lifecycle, cumulative registration and manual rollout preparation are
+next. No twentieth empirical attempt, capture, paper or deployment has started.
+Zero strategies are validated; the phase remains active and incomplete.

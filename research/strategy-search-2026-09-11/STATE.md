@@ -101,21 +101,32 @@ The resource diagnosis finds repeated nested history validation probable, not
 an observed interruption stack. Any future use requires representative actual-
 history full-retention/terminal preflight; no optimization or eighth grant exists.
 
+The finite options-policy engineering stage is complete; see
+engineering-options-policy.md and the superseding independent practical review.
+68 focused tests and35,952 independent cash comparisons pass. All eight invented
+1,057-slot paths complete after direct signed-execution accounting and bounded
+noncash diagnostics corrected two retained arithmetic failures. The measured
+routine footprint is206,969,986bytes, not a full collector/lifecycle guarantee.
+No new market input or empirical identity was created.
+
 Next action, without another routine permission question:
 
-1. Finish independent information-value/coverage adjudication of
-   reviews/options-selling-prospective-adjudication.md, including whether
-   narrow synthetic minimum-inventory jump/margin screening or collector
-   preparation can still change a decision before allocating future observations.
-2. The fixed proposal is a minimum short straddle with hourly perpetual hedge,
-   separate40/50/10wallets and pre-expiry exit. It needs one entire6–44day
-   selected interval; another8minutequote does not test the path null. Public
-   research is feasible in principle; unknown account access is not a reason
-   to claim it impossible. No background job/capture/grant/paper start exists.
-3. Execute any justified bounded preparation identified by the independent
-   review. Only then adjudicate exact future/source/access blockers across the
-   map. Neither failed resources, spent initial caps nor a long session is a
-   stopping criterion. No final exhaustion or blocked verdict has been adopted.
+1. Implement and independently review the narrow prospective source lifecycle
+   described in reviews/options-prospective-lifecycle-design.md, reconciling its
+   exact capture/evaluation split and cumulative grants before implementation.
+   Preserve all19terminal claims and allfour frozen runtime packages. A new
+   source claim needs an explicit options effective5 extension; none exists yet.
+2. Prepare the fixed selection/calendar, immutable per-slot intent/raw journal,
+   source clocks, bounded transport and deterministic missing/restart behavior.
+   Freeze the later financial policy before observations. Benchmark complete
+   history admission and actual retention; the Decision19 overhead warning stands.
+3. Prepare the separately hashed manual VPS research package. The user confirms
+   the existing VPS is always on and can host research. Current login, compatible
+   runtime and persistent manual launch method remain unverified. No systemd
+   edits over SSH, production reuse or implicit scheduler. No capture has started.
+4. Continue independent eligible work; do not declare exhaustion or blocked status
+   merely because this path needs6–44future days. Coverage review retains the
+   whole prospective episode as meaningful, with no useful extra current snapshot.
 
 Existing value_rev needs its second vintage September18 or later, not an early
 substitute. News needs versioned source identity and observation clocks; Bitrue
@@ -126,10 +137,11 @@ all negative, positive-but-small, unavailable and spent-sample qualifications.
 
 ## Backup and preservation
 
-Latest verified source freeze:6d6d65f9712dd41e135672a2f0fb8a7d8389507b,
-pushed and independently compared equal to the remote. Prior dated-mark results
-backup0e55be23d78cd3a897241fd054839d9fad6343e2 is also recoverable. This latest
-failed-run result/forensic checkpoint awaits its results commit/push/equality.
+Latest verified result backup:139b50ad3708874fe43f6a144b0fba9346d26d15,
+including failed spread outputs, independent forensics and Decision19/Finding116.
+It was pushed and independently compared equal to the remote branch. Source
+freeze6d6d65f9712dd41e135672a2f0fb8a7d8389507b and prior dated-mark results
+0e55be23d78cd3a897241fd054839d9fad6343e2 are also recoverable.
 The named offline profile passed1,175tests+20subtests before the latest helpers.
 Latest focused proof:26successor tests,23financial/adapter tests including three
 exactCLIguards,7,432independent syntheticcash checks,14adapterscenarios/directHAC,

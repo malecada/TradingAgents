@@ -1,0 +1,94 @@
+{
+  "kind": "synthetic_engineering_only",
+  "sources": {
+    "options_policy_batch.py": "6daad0e65e1806b9389ee5ed871997c0f80dd4d4b4879c1cbf50696e5fb29e23",
+    "options_policy_engine.py": "255892184fa302687f43ac22195840dc050491f7d520b063e851dc1941826168"
+  },
+  "max_body_fixture": {
+    "source_slots": 16,
+    "bytes_each": 8192,
+    "raw_batch_bytes": 131072,
+    "receipt_json_bytes": 180233,
+    "assembly_json_bytes": 9100
+  },
+  "episode_cases": [
+    {
+      "asset_label": "BTC",
+      "capital_label": "1000",
+      "stress": false,
+      "status": "conditional_cash_complete",
+      "nominal_slots": 1057,
+      "trades": 1057,
+      "json_bytes": 856565
+    },
+    {
+      "asset_label": "BTC",
+      "capital_label": "1000",
+      "stress": true,
+      "status": "conditional_cash_complete",
+      "nominal_slots": 1057,
+      "trades": 1057,
+      "json_bytes": 848326
+    },
+    {
+      "asset_label": "BTC",
+      "capital_label": "10000",
+      "stress": false,
+      "status": "conditional_cash_complete",
+      "nominal_slots": 1057,
+      "trades": 1057,
+      "json_bytes": 862924
+    },
+    {
+      "asset_label": "BTC",
+      "capital_label": "10000",
+      "stress": true,
+      "status": "conditional_cash_complete",
+      "nominal_slots": 1057,
+      "trades": 1057,
+      "json_bytes": 854683
+    },
+    {
+      "asset_label": "ETH",
+      "capital_label": "1000",
+      "stress": false,
+      "status": "conditional_cash_complete",
+      "nominal_slots": 1057,
+      "trades": 1057,
+      "json_bytes": 856565
+    },
+    {
+      "asset_label": "ETH",
+      "capital_label": "1000",
+      "stress": true,
+      "status": "conditional_cash_complete",
+      "nominal_slots": 1057,
+      "trades": 1057,
+      "json_bytes": 848326
+    },
+    {
+      "asset_label": "ETH",
+      "capital_label": "10000",
+      "stress": false,
+      "status": "conditional_cash_complete",
+      "nominal_slots": 1057,
+      "trades": 1057,
+      "json_bytes": 862924
+    },
+    {
+      "asset_label": "ETH",
+      "capital_label": "10000",
+      "stress": true,
+      "status": "conditional_cash_complete",
+      "nominal_slots": 1057,
+      "trades": 1057,
+      "json_bytes": 854683
+    }
+  ],
+  "all_books_json_bytes": 6845005,
+  "routine_receipts_and_assemblies_and_books_bytes": 206969986,
+  "measured_routine_bytes_below_512MiB": true,
+  "all_eight_cases_cash_complete": true,
+  "practical_fixture_pass": true,
+  "limits": "1057hourly slots,8case labels, exact4096bit rational rejection. This measures one full-length invented fixture, not all accepted numbers, actual payloads, history-validation cost, transport, durable storage, metadata/funding retention or full lifecycle. No unattended process or observations."
+}

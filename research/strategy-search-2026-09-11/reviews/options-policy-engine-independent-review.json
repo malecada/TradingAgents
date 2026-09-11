@@ -1,0 +1,66 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "capital": 1000,
+      "q": "1",
+      "stress": false,
+      "checks_passed": true
+    },
+    {
+      "capital": 1000,
+      "q": "1",
+      "stress": true,
+      "checks_passed": true
+    },
+    {
+      "capital": 1000,
+      "q": "2",
+      "stress": false,
+      "checks_passed": true
+    },
+    {
+      "capital": 1000,
+      "q": "2",
+      "stress": true,
+      "checks_passed": true
+    },
+    {
+      "capital": 10000,
+      "q": "1",
+      "stress": false,
+      "checks_passed": true
+    },
+    {
+      "capital": 10000,
+      "q": "1",
+      "stress": true,
+      "checks_passed": true
+    },
+    {
+      "capital": 10000,
+      "q": "2",
+      "stress": false,
+      "checks_passed": true
+    },
+    {
+      "capital": 10000,
+      "q": "2",
+      "stress": true,
+      "checks_passed": true
+    }
+  ],
+  "exact_cash_checks": 296,
+  "unknown_mark_risk": {
+    "minimum_option_cash": "403",
+    "minimum_known_perp_cash_component": "478",
+    "minimum_option_wallet_equity": null,
+    "minimum_perp_wallet_equity": "478",
+    "max_drawdown": null,
+    "option_wallet_deficit": null,
+    "perp_wallet_deficit": false,
+    "actual_margin_and_access": "unavailable",
+    "intrahour_risk": "unavailable"
+  },
+  "scope": "Invented direct signed cash-flow reconstruction only. No implementation basis or expected output reused; no actual market inputs or empirical run."
+}
