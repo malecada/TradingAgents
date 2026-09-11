@@ -13,10 +13,12 @@ The new program preserves historical gates, raw stores, results and ledgers.
 Verified counts: predlab 820, rebuild 146, LLM event 2/pair 5/rank 1;
 48 correction records. These are record counts, not independent hypotheses.
 
-The first question separates the saved BTC/ETH funding-carry opportunity-cost
-charge from its legacy trading-cost index. This is a development diagnostic on
-exposed/spent history; it cannot establish actual cash profit or capital/risk
-feasibility. A new cash/quantity-book question needs separately admitted inputs.
+The first three funding-carry investigations are complete: a definition diagnostic,
+public input admission and explicit cash book. All eight primary cash books fail
+the fixed economic screen; the incremental allowance is used. Dated-contract
+archive admission then passed for four fixed ZIP/checksum pairs. The next question
+is a registered 56-day dated cash episode, conditional on public trade prices.
+Read active state for exact source freezes, receipts, reviews and remaining work.
 New runs use the additive lifecycle and complete sharded receipts.
 
 Unchanged history: two conditional H6 measured failures, 22 deferred settlement

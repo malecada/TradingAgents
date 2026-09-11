@@ -6954,3 +6954,17 @@ zero; no general no-effect conclusion or fresh confirmation follows. Exact
 evidence and next action are in program `decision-03.md`, its independent review
 and `research_runs/carry-book-20260911`. Dated-contract archive admission is next.
 Zero validated strategies; the sustained program remains active and incomplete.
+
+## 101. Fixed dated-contract archive admission (2026-09-11)
+
+Eight registered public requests returned the four fixed May/June 2026 hourly
+ZIP archives for BTCUSDT_260626 and ETHUSDT_260626 and their checksum companions.
+Independent raw reconstruction and receipt verification passed. Both May files
+contain 744 hours; both June files contain 609 hours ending June 26 at 08:00 UTC,
+with that final hour reporting zero volume/trades. All 111 missing subsequent
+calendar hours per asset remain unavailable, without inferred legal expiry or
+settlement prices. Ten immutable outputs preserve the full response denominator.
+The fully observed May 1–June 25 interval permits a separately registered
+conditional trade-price cash-book question. Actual margin marks, fills, historical
+rules and account applicability remain unverified. Decision 04 and the archive
+review preserve the evidence and next action. Zero strategies validated.

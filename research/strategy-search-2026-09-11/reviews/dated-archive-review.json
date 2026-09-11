@@ -1,0 +1,62 @@
+{
+  "status": "PASS",
+  "reviewed_utc": "2026-09-11T08:03:41.350981+00:00",
+  "independent_collector_imports": false,
+  "network_requests": 0,
+  "financial_computations": 0,
+  "receipts": 8,
+  "admission_cells": 8,
+  "findings": [
+    {
+      "id": "btc-2026-05",
+      "archive_sha256": "60f31622e21044807e181d5748069f14492c83fb9cfa1337bbaa90f035eade50",
+      "member_sha256": "55053f7309209cd52121e34f79205f5b3be726bd0abc09ed1d5999f40aa9b562",
+      "observed_hours": 744,
+      "missing_tail_hours": 0,
+      "zero_volume_hours": 0,
+      "zero_trade_hours": 0,
+      "proposed_window_complete_hours": 744
+    },
+    {
+      "id": "btc-2026-06",
+      "archive_sha256": "feebf183ba473d8bed90f3477a61c2f6f88b50a5c7de36df7a35d8e5933502c7",
+      "member_sha256": "a2c543425d413596f4790edebeba43bf8ebf758b73e02b3a8a9003e4ba0dde63",
+      "observed_hours": 609,
+      "missing_tail_hours": 111,
+      "zero_volume_hours": 1,
+      "zero_trade_hours": 1,
+      "proposed_window_complete_hours": 600
+    },
+    {
+      "id": "eth-2026-05",
+      "archive_sha256": "e7ad59a776b9a7ef8fc30461fb5a160bfdd132ed8164ed5f27e1b85732c3f05a",
+      "member_sha256": "a36d49ac253b26538eb02b154b2e7ae070daa7e8d8c7f130a4b4d6274cfdc354",
+      "observed_hours": 744,
+      "missing_tail_hours": 0,
+      "zero_volume_hours": 0,
+      "zero_trade_hours": 0,
+      "proposed_window_complete_hours": 744
+    },
+    {
+      "id": "eth-2026-06",
+      "archive_sha256": "ec032989476d88c6a9d5a10573a58813623d164bed32e38ee5f5ad5397b908c1",
+      "member_sha256": "e8b0c044d277e0e5035180b979ab7fa359d66df8a483ed8483748b838e06c43d",
+      "observed_hours": 609,
+      "missing_tail_hours": 111,
+      "zero_volume_hours": 1,
+      "zero_trade_hours": 1,
+      "proposed_window_complete_hours": 600
+    }
+  ],
+  "window": "2026-05-01T00:00:00Z through 2026-06-25T23:59:59.999Z",
+  "window_observation_admission": "Complete 1344 hourly trade bars per asset; conditional historical price-proxy inputs only.",
+  "not_established": [
+    "executable fills/spreads",
+    "margin mark prices/path survival",
+    "exact expiry/settlement",
+    "historical lot limits/fees",
+    "account eligibility",
+    "matched spot inputs",
+    "fresh confirmation"
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "69c844c30e57d4d3ba6aa065eeff54cabf65652e",
+  "experiment": {
+    "cells": [
+      "btc-2026-05-zip",
+      "btc-2026-05-checksum",
+      "btc-2026-06-zip",
+      "btc-2026-06-checksum",
+      "eth-2026-05-zip",
+      "eth-2026-05-checksum",
+      "eth-2026-06-zip",
+      "eth-2026-06-checksum"
+    ],
+    "charter": {
+      "path": "research/strategy-search-2026-09-11/dated-archive-charter.md",
+      "sha256": "b1c67f90d308d2faa27ac9cebc6039d7194999c90fa29e37a73466438dfe64f3"
+    },
+    "family": "dated-basis",
+    "inputs": {
+      "request_spec": {
+        "dataset": "dated-quarter",
+        "path": "research/strategy-search-2026-09-11/dated-request-spec.json",
+        "sha256": "2ecf78f968f7c7b0feb6fd27116587bf6e08809f6c33cd2970b1ea939d74b7f4"
+      }
+    },
+    "outputs": [
+      "btc-2026-05-zip-receipt.json",
+      "btc-2026-05-checksum-receipt.json",
+      "btc-2026-06-zip-receipt.json",
+      "btc-2026-06-checksum-receipt.json",
+      "eth-2026-05-zip-receipt.json",
+      "eth-2026-05-checksum-receipt.json",
+      "eth-2026-06-zip-receipt.json",
+      "eth-2026-06-checksum-receipt.json",
+      "archive-capture.json",
+      "archive-admission.json"
+    ],
+    "parent": null,
+    "question": "Do four fixed official dated-contract archives provide checksum-verified hourly coverage, without inferring expiry settlement or price economics?",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+      "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+    },
+    "selection": null,
+    "source_files": {
+      "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+      "research/strategy-search-2026-09-11/dated_archive.py": "631412c60dd411466db185b3ae2cfb0cc62d5423153c98432e9aa93db86efb3d",
+      "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+    },
+    "stage": "development",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "dated-quarter",
+        "end": "2026-07-01T00:00:00Z",
+        "start": "2026-05-01T00:00:00Z"
+      }
+    ]
+  },
+  "experiment_id": "dated-archive-20260911",
+  "family": {
+    "attempt_budget": 4,
+    "history_reference": "docs/carry-feasibility-2026-09-10/INTERPRETATION.md; one dated capture with432correlated scenarios, not432independent attempts. New incremental cap3; funding-carry and old spending remain separately recorded.",
+    "mechanism_id": "binance-btc-eth-dated-basis-convergence",
+    "prior_attempts": 1
+  },
+  "inputs": {
+    "request_spec": {
+      "dataset": "dated-quarter",
+      "path": "research/strategy-search-2026-09-11/dated-request-spec.json",
+      "sha256": "2ecf78f968f7c7b0feb6fd27116587bf6e08809f6c33cd2970b1ea939d74b7f4"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2025-03-31T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2021-11-08T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2025-04-01T00:00:00Z",
+      "state": "spent"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-usdt-260626-contract-history",
+      "start": "2025-12-26T00:00:00Z",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "strategy-search-2026-09-11",
+  "registration": "research/strategy-search-2026-09-11/gates-dated-archive.json",
+  "registration_sha256": "8fcec4c91b48428d37401f776a115ac41a353a1bb54e1ba48367769de31a5a85",
+  "schema_version": 1,
+  "source": "69c844c30e57d4d3ba6aa065eeff54cabf65652e",
+  "started_at": "2026-09-11T07:59:20.863089+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "dated-quarter",
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-usdt-260626-contract-history",
+      "start": "2026-05-01T00:00:00Z",
+      "state": "exposed"
+    }
+  ]
+}
