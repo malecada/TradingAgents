@@ -6968,3 +6968,14 @@ The fully observed May 1–June 25 interval permits a separately registered
 conditional trade-price cash-book question. Actual margin marks, fills, historical
 rules and account applicability remain unverified. Decision 04 and the archive
 review preserve the evidence and next action. Zero strategies validated.
+
+## 102. Preserved dated-book measurement failure (2026-09-11)
+
+The registered dated cash episode failed during statistical-library import under
+an ambiguous 512 MiB memory contract implemented as a virtual-address-space cap.
+The failed receipt preserves eight intended cases and zero completed financial
+outputs. This is not evidence of strategy profit or loss. Independent recovery
+review supports a separately registered correction of resource enforcement with
+identical economic inputs and code. It consumes the final incremental dated-family
+attempt. Decision 05 retains the cause, synthetic resident-memory preflight and
+exact next action. Original source and failed identity remain immutable.

@@ -1,0 +1,157 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "d287a1420d70e298bae9b0f7e69fdc79c665720e",
+  "experiment": {
+    "cells": [
+      "btc-1000-base",
+      "btc-1000-stress",
+      "btc-10000-base",
+      "btc-10000-stress",
+      "eth-1000-base",
+      "eth-1000-stress",
+      "eth-10000-base",
+      "eth-10000-stress"
+    ],
+    "charter": {
+      "path": "research/strategy-search-2026-09-11/dated-book-charter.md",
+      "sha256": "c0fcee6424c8bc42e9f577f3013f21abde028ea4d85eb9f2239f86a4f46d4c01"
+    },
+    "family": "dated-basis",
+    "inputs": {
+      "admission": {
+        "dataset": "dated-quarter",
+        "path": "research_runs/dated-archive-20260911/outputs/archive-admission.json",
+        "sha256": "9f76f48f36f29db2c1e9f7575eccd77b80365e1b5823b90f15823012efebc319"
+      },
+      "capture": {
+        "dataset": "dated-quarter",
+        "path": "research_runs/dated-archive-20260911/outputs/archive-capture.json",
+        "sha256": "42691356256ba6da94cf4a7796fbf56842a5d43314279b3679dea9713838f4b7"
+      },
+      "spot_admission": {
+        "dataset": "legacy",
+        "path": "research_runs/carry-inputs-20260911/outputs/admission.json",
+        "sha256": "2723c2ccc885a79056fa5e04eaa07e56546498df5bf4dade9b4bcb70cefd986e"
+      },
+      "spot_capture": {
+        "dataset": "legacy",
+        "path": "research_runs/carry-inputs-20260911/outputs/capture.json",
+        "sha256": "2076fb01a8b7a11aa76b9ff14f91a2ec9a8d5d6188e53eb32b50b8fccdd544bd"
+      }
+    },
+    "outputs": [
+      "books.json",
+      "summary.json"
+    ],
+    "parent": "dated-archive-20260911",
+    "question": "Does one fixed 56-day pre-terminal dated cash episode cover base and stressed costs at provisional full-capital relevance? Expected profit, actual margin and execution remain unavailable.",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+      "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+    },
+    "selection": null,
+    "source_files": {
+      "research/strategy-search-2026-09-11/carry_book.py": "8ad2a08b14653800d7c34a6a391a36fcb43717c7083ec7398f6bdbf8f5a72d55",
+      "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+      "research/strategy-search-2026-09-11/dated_archive.py": "631412c60dd411466db185b3ae2cfb0cc62d5423153c98432e9aa93db86efb3d",
+      "research/strategy-search-2026-09-11/dated_book.py": "3977b87b507088238c346dd4dfa7ae3b7934bfd2900a313298df200f0bfcb6ab",
+      "research/strategy-search-2026-09-11/dated_book_run.py": "87623dff2eb691cc2e6abdd35ca0bfc7289496a41e9b50a3e28981171b53699b",
+      "research/strategy-search-2026-09-11/dated_statistics.py": "28c5d01aeb5644b8edf65833fb95c291f8d5eb66dac53147269ea889ff77f61c",
+      "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+    },
+    "stage": "development",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "dated-quarter",
+        "end": "2026-06-26T00:00:00Z",
+        "start": "2026-05-01T00:00:00Z"
+      },
+      {
+        "availability": "existing",
+        "dataset": "legacy",
+        "end": "2026-06-26T00:00:00Z",
+        "start": "2026-05-01T00:00:00Z"
+      }
+    ]
+  },
+  "experiment_id": "dated-book-20260911",
+  "family": {
+    "attempt_budget": 4,
+    "history_reference": "docs/carry-feasibility-2026-09-10/INTERPRETATION.md; one dated capture with432correlated scenarios, not432independent attempts. New incremental cap3; funding-carry and old spending remain separately recorded.",
+    "mechanism_id": "binance-btc-eth-dated-basis-convergence",
+    "prior_attempts": 1
+  },
+  "inputs": {
+    "admission": {
+      "dataset": "dated-quarter",
+      "path": "research_runs/dated-archive-20260911/outputs/archive-admission.json",
+      "sha256": "9f76f48f36f29db2c1e9f7575eccd77b80365e1b5823b90f15823012efebc319"
+    },
+    "capture": {
+      "dataset": "dated-quarter",
+      "path": "research_runs/dated-archive-20260911/outputs/archive-capture.json",
+      "sha256": "42691356256ba6da94cf4a7796fbf56842a5d43314279b3679dea9713838f4b7"
+    },
+    "spot_admission": {
+      "dataset": "legacy",
+      "path": "research_runs/carry-inputs-20260911/outputs/admission.json",
+      "sha256": "2723c2ccc885a79056fa5e04eaa07e56546498df5bf4dade9b4bcb70cefd986e"
+    },
+    "spot_capture": {
+      "dataset": "legacy",
+      "path": "research_runs/carry-inputs-20260911/outputs/capture.json",
+      "sha256": "2076fb01a8b7a11aa76b9ff14f91a2ec9a8d5d6188e53eb32b50b8fccdd544bd"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2025-03-31T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2021-11-08T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2025-04-01T00:00:00Z",
+      "state": "spent"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-usdt-260626-contract-history",
+      "start": "2025-12-26T00:00:00Z",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "strategy-search-2026-09-11",
+  "registration": "research/strategy-search-2026-09-11/gates-dated-book.json",
+  "registration_sha256": "ef446526b30409cfd32a5c0175a3b58ed3953248fac71ca2a9465cf8f5085ee6",
+  "schema_version": 1,
+  "source": "d287a1420d70e298bae9b0f7e69fdc79c665720e",
+  "started_at": "2026-09-11T08:20:48.176650+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "dated-quarter",
+      "end": "2026-06-26T00:00:00Z",
+      "identity": "binance-btc-eth-usdt-260626-contract-history",
+      "start": "2026-05-01T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "availability": "existing",
+      "dataset": "legacy",
+      "end": "2026-06-26T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2026-05-01T00:00:00Z",
+      "state": "exposed"
+    }
+  ]
+}

@@ -24,16 +24,20 @@ Funding-carry incremental allowance: 3 used of 3; known eight direct historical
 records plus incomplete older search remain. This is not complete statistical
 multiplicity. Do not rerun the completed books or reset the budget by renaming.
 
-Next question: fixed dated cash-and-carry episode, `dated-book-20260911`.
-Book, runner, exposure statistics, charter and gate are in synthetic implementation
-and independent pre-review. No new financial book has run. Finish review and
-source freeze, commit/push and verify remote equality, execute exactly once,
-then review all eight cases, diagnose and follow the result. Source inputs are
-the immutable dated archives plus the already captured daily spot prices.
-Expected-profit confidence/power are unavailable for one convergence episode;
-actual mark/margin safety remains unavailable despite the trade-price proxy.
-Dated allowance: one of three new investigations used; the book is second.
-Options specification/source feasibility is being independently investigated.
+The fixed dated book was attempted once from source
+`d287a1420d70e298bae9b0f7e69fdc79c665720e`, pushed and remotely verified. It failed
+at the statistics import under a 512 MiB virtual-memory cap: eight intended cases,
+zero completed economic verdicts and zero outputs. Preserve claim/failed receipt.
+Decision 05 and the recovery review describe the measurement defect.
+
+Next: finish independent review of `dated-book-resource-correction-20260911`,
+commit/push the failed parent and unchanged-economics correction, verify remote
+equality, execute exactly once under resource_guard.py, then independently review
+all output cash/statistics. The resource preflight passed on invented data only.
+Dated allowance: archive and failed book used two of three new investigations;
+the correction consumes the final one. Never rerun the failed identity.
+Expected-profit confidence/power and actual margin/execution remain unavailable.
+Options metadata source/spec and implementation are being prepared separately.
 
 No background job, scheduler, paper session or order is running. Account
 country/product details were requested without credentials and remain pending;
