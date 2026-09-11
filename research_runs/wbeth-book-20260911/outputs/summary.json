@@ -1,0 +1,744 @@
+{
+  "case_count": 8,
+  "cases": [
+    {
+      "capital": 1000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 7.47945205479452,
+        "0.05": 12.465753424657533
+      },
+      "cost_scenario": "base",
+      "execution": {
+        "reason": "Historical/current fills, lots, fees and personal access unverified.",
+        "status": "unavailable"
+      },
+      "future_tail_risk": {
+        "reason": "Invented scenarios are not future loss bounds or liquidation guarantees.",
+        "status": "unavailable"
+      },
+      "graduation": false,
+      "id": "wbeth-1000-base",
+      "metrics": {
+        "annualized_simple_return_365": 0.008103219335634234,
+        "applied_funding_events": 272,
+        "cash_profit": 2.0202546836786723,
+        "full_capital_return": 0.0020202546836786722,
+        "funding_cash": 0.7897068871665807,
+        "margin_buffer_breach": false,
+        "max_drawdown": 0.002106506494017698,
+        "minimum_margin_buffer_lower_bound": 427.5350875209683,
+        "nonpositive_nav": false
+      },
+      "necessary_historical_screens": {
+        "beta": {
+          "passes": true,
+          "status": "complete"
+        },
+        "observed_drawdown_at_most_10pct": true,
+        "primary_positive_cash_and_3pct_annual_base_and_stress": false,
+        "scope": "Conditional descriptive historical screens only; annual frequency and future performance are unestablished."
+      },
+      "realized_net_base_delta_at_most_1pct_nav": {
+        "reason": "True WBETH-to-ETH delta is unverified; market-value mismatch cannot substitute for base delta.",
+        "status": "unavailable"
+      },
+      "role": "primary observed-funding book",
+      "statistics": {
+        "expected_return_confidence": {
+          "reason": "One 91-day episode; no independent repeated-trade expected-profit sample.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.002055139186277727,
+          "btc_interval": [
+            -0.009890196767528229,
+            0.005779918394972775
+          ],
+          "eth_beta": 3.241166504045574e-05,
+          "eth_interval": [
+            -0.006168838521341053,
+            0.006233661851421964
+          ],
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": 1.9267312910064332e-05,
+          "observations": 91,
+          "scope": "Descriptive spent development; within-book simultaneous95%, not across all searched books.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No expected-profit test or repeated-episode sample.",
+          "status": "unavailable"
+        }
+      },
+      "status": "conditional",
+      "true_eth_delta": {
+        "reason": "Market-value matching does not establish contractual WBETH redemption delta or stable ETH sensitivity.",
+        "status": "unavailable"
+      },
+      "zero_funding": false
+    },
+    {
+      "capital": 1000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 7.47945205479452,
+        "0.05": 12.465753424657533
+      },
+      "cost_scenario": "stress",
+      "execution": {
+        "reason": "Historical/current fills, lots, fees and personal access unverified.",
+        "status": "unavailable"
+      },
+      "future_tail_risk": {
+        "reason": "Invented scenarios are not future loss bounds or liquidation guarantees.",
+        "status": "unavailable"
+      },
+      "graduation": false,
+      "id": "wbeth-1000-stress",
+      "metrics": {
+        "annualized_simple_return_365": 0.0034765200695758614,
+        "applied_funding_events": 272,
+        "cash_profit": 0.8667488392641189,
+        "full_capital_return": 0.0008667488392641189,
+        "funding_cash": 0.7897068871665807,
+        "margin_buffer_breach": false,
+        "max_drawdown": 0.002517993030898992,
+        "minimum_margin_buffer_lower_bound": 427.4555381769684,
+        "nonpositive_nav": false
+      },
+      "necessary_historical_screens": {
+        "beta": {
+          "passes": true,
+          "status": "complete"
+        },
+        "observed_drawdown_at_most_10pct": true,
+        "primary_positive_cash_and_3pct_annual_base_and_stress": false,
+        "scope": "Conditional descriptive historical screens only; annual frequency and future performance are unestablished."
+      },
+      "realized_net_base_delta_at_most_1pct_nav": {
+        "reason": "True WBETH-to-ETH delta is unverified; market-value mismatch cannot substitute for base delta.",
+        "status": "unavailable"
+      },
+      "role": "primary observed-funding book",
+      "statistics": {
+        "expected_return_confidence": {
+          "reason": "One 91-day episode; no independent repeated-trade expected-profit sample.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": 0.00045548522074163997,
+          "btc_interval": [
+            -0.008839456219108702,
+            0.009750426660591983
+          ],
+          "eth_beta": -0.0022696641707464246,
+          "eth_interval": [
+            -0.009880700935414717,
+            0.005341372593921867
+          ],
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": 3.791097153488302e-06,
+          "observations": 91,
+          "scope": "Descriptive spent development; within-book simultaneous95%, not across all searched books.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No expected-profit test or repeated-episode sample.",
+          "status": "unavailable"
+        }
+      },
+      "status": "conditional",
+      "true_eth_delta": {
+        "reason": "Market-value matching does not establish contractual WBETH redemption delta or stable ETH sensitivity.",
+        "status": "unavailable"
+      },
+      "zero_funding": false
+    },
+    {
+      "capital": 10000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 74.79452054794521,
+        "0.05": 124.65753424657534
+      },
+      "cost_scenario": "base",
+      "execution": {
+        "reason": "Historical/current fills, lots, fees and personal access unverified.",
+        "status": "unavailable"
+      },
+      "future_tail_risk": {
+        "reason": "Invented scenarios are not future loss bounds or liquidation guarantees.",
+        "status": "unavailable"
+      },
+      "graduation": false,
+      "id": "wbeth-10000-base",
+      "metrics": {
+        "annualized_simple_return_365": 0.009229299247820793,
+        "applied_funding_events": 272,
+        "cash_profit": 23.01003374114225,
+        "full_capital_return": 0.002301003374114225,
+        "funding_cash": 7.92213893157586,
+        "margin_buffer_breach": false,
+        "max_drawdown": 0.0021021661472258165,
+        "minimum_margin_buffer_lower_bound": 4273.050401797651,
+        "nonpositive_nav": false
+      },
+      "necessary_historical_screens": {
+        "beta": {
+          "passes": true,
+          "status": "complete"
+        },
+        "observed_drawdown_at_most_10pct": true,
+        "primary_positive_cash_and_3pct_annual_base_and_stress": false,
+        "scope": "Conditional descriptive historical screens only; annual frequency and future performance are unestablished."
+      },
+      "realized_net_base_delta_at_most_1pct_nav": {
+        "reason": "True WBETH-to-ETH delta is unverified; market-value mismatch cannot substitute for base delta.",
+        "status": "unavailable"
+      },
+      "role": "primary observed-funding book",
+      "statistics": {
+        "expected_return_confidence": {
+          "reason": "One 91-day episode; no independent repeated-trade expected-profit sample.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.002129976080895003,
+          "btc_interval": [
+            -0.010004684402560513,
+            0.005744732240770507
+          ],
+          "eth_beta": -0.0009493102650786957,
+          "eth_interval": [
+            -0.007270857605610893,
+            0.005372237075453501
+          ],
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": 1.943511853900899e-05,
+          "observations": 91,
+          "scope": "Descriptive spent development; within-book simultaneous95%, not across all searched books.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No expected-profit test or repeated-episode sample.",
+          "status": "unavailable"
+        }
+      },
+      "status": "conditional",
+      "true_eth_delta": {
+        "reason": "Market-value matching does not establish contractual WBETH redemption delta or stable ETH sensitivity.",
+        "status": "unavailable"
+      },
+      "zero_funding": false
+    },
+    {
+      "capital": 10000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 74.79452054794521,
+        "0.05": 124.65753424657534
+      },
+      "cost_scenario": "stress",
+      "execution": {
+        "reason": "Historical/current fills, lots, fees and personal access unverified.",
+        "status": "unavailable"
+      },
+      "future_tail_risk": {
+        "reason": "Invented scenarios are not future loss bounds or liquidation guarantees.",
+        "status": "unavailable"
+      },
+      "graduation": false,
+      "id": "wbeth-10000-stress",
+      "metrics": {
+        "annualized_simple_return_365": 0.0039317149343029625,
+        "applied_funding_events": 272,
+        "cash_profit": 9.802357781412866,
+        "full_capital_return": 0.0009802357781412865,
+        "funding_cash": 7.9096039016208355,
+        "margin_buffer_breach": false,
+        "max_drawdown": 0.0025635362709766924,
+        "minimum_margin_buffer_lower_bound": 4273.403882375668,
+        "nonpositive_nav": false
+      },
+      "necessary_historical_screens": {
+        "beta": {
+          "passes": true,
+          "status": "complete"
+        },
+        "observed_drawdown_at_most_10pct": true,
+        "primary_positive_cash_and_3pct_annual_base_and_stress": false,
+        "scope": "Conditional descriptive historical screens only; annual frequency and future performance are unestablished."
+      },
+      "realized_net_base_delta_at_most_1pct_nav": {
+        "reason": "True WBETH-to-ETH delta is unverified; market-value mismatch cannot substitute for base delta.",
+        "status": "unavailable"
+      },
+      "role": "primary observed-funding book",
+      "statistics": {
+        "expected_return_confidence": {
+          "reason": "One 91-day episode; no independent repeated-trade expected-profit sample.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": 0.0004265533381715762,
+          "btc_interval": [
+            -0.008894842100697211,
+            0.009747948777040362
+          ],
+          "eth_beta": -0.002670148267427272,
+          "eth_interval": [
+            -0.010335207684891067,
+            0.0049949111500365235
+          ],
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": 3.852203324440395e-06,
+          "observations": 91,
+          "scope": "Descriptive spent development; within-book simultaneous95%, not across all searched books.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No expected-profit test or repeated-episode sample.",
+          "status": "unavailable"
+        }
+      },
+      "status": "conditional",
+      "true_eth_delta": {
+        "reason": "Market-value matching does not establish contractual WBETH redemption delta or stable ETH sensitivity.",
+        "status": "unavailable"
+      },
+      "zero_funding": false
+    },
+    {
+      "capital": 1000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 7.47945205479452,
+        "0.05": 12.465753424657533
+      },
+      "cost_scenario": "base",
+      "execution": {
+        "reason": "Historical/current fills, lots, fees and personal access unverified.",
+        "status": "unavailable"
+      },
+      "future_tail_risk": {
+        "reason": "Invented scenarios are not future loss bounds or liquidation guarantees.",
+        "status": "unavailable"
+      },
+      "graduation": false,
+      "id": "wbeth-1000-base-zero-funding",
+      "metrics": {
+        "annualized_simple_return_365": 0.0049357136893069965,
+        "applied_funding_events": 272,
+        "cash_profit": 1.2305477965121554,
+        "full_capital_return": 0.0012305477965121553,
+        "funding_cash": 0.0,
+        "margin_buffer_breach": false,
+        "max_drawdown": 0.001384110906974456,
+        "minimum_margin_buffer_lower_bound": 427.45644513722027,
+        "nonpositive_nav": false
+      },
+      "necessary_historical_screens": {
+        "beta": {
+          "passes": true,
+          "status": "complete"
+        },
+        "observed_drawdown_at_most_10pct": true,
+        "primary_positive_cash_and_3pct_annual_base_and_stress": false,
+        "scope": "Conditional descriptive historical screens only; annual frequency and future performance are unestablished."
+      },
+      "realized_net_base_delta_at_most_1pct_nav": {
+        "reason": "True WBETH-to-ETH delta is unverified; market-value mismatch cannot substitute for base delta.",
+        "status": "unavailable"
+      },
+      "role": "same-quantity zero-funding counterfactual; not pure staking",
+      "statistics": {
+        "expected_return_confidence": {
+          "reason": "One 91-day episode; no independent repeated-trade expected-profit sample.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.0015680188936661942,
+          "btc_interval": [
+            -0.009186871850341786,
+            0.006050834063009398
+          ],
+          "eth_beta": -0.0003234693249351795,
+          "eth_interval": [
+            -0.006538893772022822,
+            0.005891955122152463
+          ],
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": 1.0309243241996309e-05,
+          "observations": 91,
+          "scope": "Descriptive spent development; within-book simultaneous95%, not across all searched books.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No expected-profit test or repeated-episode sample.",
+          "status": "unavailable"
+        }
+      },
+      "status": "conditional",
+      "true_eth_delta": {
+        "reason": "Market-value matching does not establish contractual WBETH redemption delta or stable ETH sensitivity.",
+        "status": "unavailable"
+      },
+      "zero_funding": true
+    },
+    {
+      "capital": 1000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 7.47945205479452,
+        "0.05": 12.465753424657533
+      },
+      "cost_scenario": "stress",
+      "execution": {
+        "reason": "Historical/current fills, lots, fees and personal access unverified.",
+        "status": "unavailable"
+      },
+      "future_tail_risk": {
+        "reason": "Invented scenarios are not future loss bounds or liquidation guarantees.",
+        "status": "unavailable"
+      },
+      "graduation": false,
+      "id": "wbeth-1000-stress-zero-funding",
+      "metrics": {
+        "annualized_simple_return_365": 0.0003090144232486234,
+        "applied_funding_events": 272,
+        "cash_profit": 0.077041952097602,
+        "full_capital_return": 7.704195209760201e-05,
+        "funding_cash": 0.0,
+        "margin_buffer_breach": false,
+        "max_drawdown": 0.0021831093297552113,
+        "minimum_margin_buffer_lower_bound": 427.37689579322034,
+        "nonpositive_nav": false
+      },
+      "necessary_historical_screens": {
+        "beta": {
+          "passes": true,
+          "status": "complete"
+        },
+        "observed_drawdown_at_most_10pct": true,
+        "primary_positive_cash_and_3pct_annual_base_and_stress": false,
+        "scope": "Conditional descriptive historical screens only; annual frequency and future performance are unestablished."
+      },
+      "realized_net_base_delta_at_most_1pct_nav": {
+        "reason": "True WBETH-to-ETH delta is unverified; market-value mismatch cannot substitute for base delta.",
+        "status": "unavailable"
+      },
+      "role": "same-quantity zero-funding counterfactual; not pure staking",
+      "statistics": {
+        "expected_return_confidence": {
+          "reason": "One 91-day episode; no independent repeated-trade expected-profit sample.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": 0.0009436990991591277,
+          "btc_interval": [
+            -0.008058370782721348,
+            0.009945768981039604
+          ],
+          "eth_beta": -0.002626353808024922,
+          "eth_interval": [
+            -0.010319143347265324,
+            0.005066435731215479
+          ],
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -5.177086135350732e-06,
+          "observations": 91,
+          "scope": "Descriptive spent development; within-book simultaneous95%, not across all searched books.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No expected-profit test or repeated-episode sample.",
+          "status": "unavailable"
+        }
+      },
+      "status": "conditional",
+      "true_eth_delta": {
+        "reason": "Market-value matching does not establish contractual WBETH redemption delta or stable ETH sensitivity.",
+        "status": "unavailable"
+      },
+      "zero_funding": true
+    },
+    {
+      "capital": 10000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 74.79452054794521,
+        "0.05": 124.65753424657534
+      },
+      "cost_scenario": "base",
+      "execution": {
+        "reason": "Historical/current fills, lots, fees and personal access unverified.",
+        "status": "unavailable"
+      },
+      "future_tail_risk": {
+        "reason": "Invented scenarios are not future loss bounds or liquidation guarantees.",
+        "status": "unavailable"
+      },
+      "graduation": false,
+      "id": "wbeth-10000-base-zero-funding",
+      "metrics": {
+        "annualized_simple_return_365": 0.00605173802801311,
+        "applied_funding_events": 272,
+        "cash_profit": 15.087894809566933,
+        "full_capital_return": 0.0015087894809566933,
+        "funding_cash": 0.0,
+        "margin_buffer_breach": false,
+        "max_drawdown": 0.001456188501316683,
+        "minimum_margin_buffer_lower_bound": 4272.2614813765595,
+        "nonpositive_nav": false
+      },
+      "necessary_historical_screens": {
+        "beta": {
+          "passes": true,
+          "status": "complete"
+        },
+        "observed_drawdown_at_most_10pct": true,
+        "primary_positive_cash_and_3pct_annual_base_and_stress": false,
+        "scope": "Conditional descriptive historical screens only; annual frequency and future performance are unestablished."
+      },
+      "realized_net_base_delta_at_most_1pct_nav": {
+        "reason": "True WBETH-to-ETH delta is unverified; market-value mismatch cannot substitute for base delta.",
+        "status": "unavailable"
+      },
+      "role": "same-quantity zero-funding counterfactual; not pure staking",
+      "statistics": {
+        "expected_return_confidence": {
+          "reason": "One 91-day episode; no independent repeated-trade expected-profit sample.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.0016412214476396053,
+          "btc_interval": [
+            -0.009298544274225143,
+            0.006016101378945933
+          ],
+          "eth_beta": -0.0013067448310407122,
+          "eth_interval": [
+            -0.007639242399241622,
+            0.005025752737160197
+          ],
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": 1.0449987101386164e-05,
+          "observations": 91,
+          "scope": "Descriptive spent development; within-book simultaneous95%, not across all searched books.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No expected-profit test or repeated-episode sample.",
+          "status": "unavailable"
+        }
+      },
+      "status": "conditional",
+      "true_eth_delta": {
+        "reason": "Market-value matching does not establish contractual WBETH redemption delta or stable ETH sensitivity.",
+        "status": "unavailable"
+      },
+      "zero_funding": true
+    },
+    {
+      "capital": 10000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 74.79452054794521,
+        "0.05": 124.65753424657534
+      },
+      "cost_scenario": "stress",
+      "execution": {
+        "reason": "Historical/current fills, lots, fees and personal access unverified.",
+        "status": "unavailable"
+      },
+      "future_tail_risk": {
+        "reason": "Invented scenarios are not future loss bounds or liquidation guarantees.",
+        "status": "unavailable"
+      },
+      "graduation": false,
+      "id": "wbeth-10000-stress-zero-funding",
+      "metrics": {
+        "annualized_simple_return_365": 0.000759181501234727,
+        "applied_funding_events": 272,
+        "cash_profit": 1.892753879790689,
+        "full_capital_return": 0.0001892753879790689,
+        "funding_cash": 0.0,
+        "margin_buffer_breach": false,
+        "max_drawdown": 0.002213463786180182,
+        "minimum_margin_buffer_lower_bound": 4272.616210246382,
+        "nonpositive_nav": false
+      },
+      "necessary_historical_screens": {
+        "beta": {
+          "passes": true,
+          "status": "complete"
+        },
+        "observed_drawdown_at_most_10pct": true,
+        "primary_positive_cash_and_3pct_annual_base_and_stress": false,
+        "scope": "Conditional descriptive historical screens only; annual frequency and future performance are unestablished."
+      },
+      "realized_net_base_delta_at_most_1pct_nav": {
+        "reason": "True WBETH-to-ETH delta is unverified; market-value mismatch cannot substitute for base delta.",
+        "status": "unavailable"
+      },
+      "role": "same-quantity zero-funding counterfactual; not pure staking",
+      "statistics": {
+        "expected_return_confidence": {
+          "reason": "One 91-day episode; no independent repeated-trade expected-profit sample.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": 0.0009155777890872645,
+          "btc_interval": [
+            -0.00811262832677461,
+            0.00994378390494914
+          ],
+          "eth_beta": -0.0030275760558180075,
+          "eth_interval": [
+            -0.010772984184958704,
+            0.004717832073322688
+          ],
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -5.1296617109555e-06,
+          "observations": 91,
+          "scope": "Descriptive spent development; within-book simultaneous95%, not across all searched books.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No expected-profit test or repeated-episode sample.",
+          "status": "unavailable"
+        }
+      },
+      "status": "conditional",
+      "true_eth_delta": {
+        "reason": "Market-value matching does not establish contractual WBETH redemption delta or stable ETH sensitivity.",
+        "status": "unavailable"
+      },
+      "zero_funding": true
+    }
+  ],
+  "counterfactual_count": 4,
+  "graduation": false,
+  "interpretation": "WBETH market-value hedge approximation; no pure staking attribution, contractual delta or return inference from one episode.",
+  "primary_count": 4,
+  "source_availability": {
+    "btc-funding": {
+      "id": "btc-funding",
+      "parent_status": "complete",
+      "request_utc": "2026-09-11T07:37:42.630287+00:00",
+      "required_for_cash_book": false,
+      "required_for_joint_exposure": false,
+      "retrieval_utc": "2026-09-11T07:37:42.967210+00:00",
+      "status": "complete"
+    },
+    "btc-mark": {
+      "id": "btc-mark",
+      "parent_status": "complete",
+      "request_utc": "2026-09-11T07:37:45.200353+00:00",
+      "required_for_cash_book": false,
+      "required_for_joint_exposure": false,
+      "retrieval_utc": "2026-09-11T07:37:45.496548+00:00",
+      "status": "complete"
+    },
+    "btc-perp": {
+      "id": "btc-perp",
+      "parent_status": "complete",
+      "request_utc": "2026-09-11T07:37:44.383751+00:00",
+      "required_for_cash_book": false,
+      "required_for_joint_exposure": false,
+      "retrieval_utc": "2026-09-11T07:37:44.676605+00:00",
+      "status": "complete"
+    },
+    "btc-spot": {
+      "id": "btc-spot",
+      "parent_status": "complete",
+      "request_utc": "2026-09-11T07:37:43.515750+00:00",
+      "required_for_cash_book": false,
+      "required_for_joint_exposure": true,
+      "retrieval_utc": "2026-09-11T07:37:43.843223+00:00",
+      "status": "complete"
+    },
+    "eth-funding": {
+      "id": "eth-funding",
+      "parent_status": "complete",
+      "request_utc": "2026-09-11T07:37:43.086435+00:00",
+      "required_for_cash_book": true,
+      "required_for_joint_exposure": false,
+      "retrieval_utc": "2026-09-11T07:37:43.396251+00:00",
+      "status": "complete"
+    },
+    "eth-mark": {
+      "id": "eth-mark",
+      "parent_status": "complete",
+      "request_utc": "2026-09-11T07:37:45.614018+00:00",
+      "required_for_cash_book": true,
+      "required_for_joint_exposure": false,
+      "retrieval_utc": "2026-09-11T07:37:45.915346+00:00",
+      "status": "complete"
+    },
+    "eth-perp": {
+      "id": "eth-perp",
+      "parent_status": "complete",
+      "request_utc": "2026-09-11T07:37:44.792266+00:00",
+      "required_for_cash_book": true,
+      "required_for_joint_exposure": false,
+      "retrieval_utc": "2026-09-11T07:37:45.083828+00:00",
+      "status": "complete"
+    },
+    "eth-spot": {
+      "id": "eth-spot",
+      "parent_status": "complete",
+      "request_utc": "2026-09-11T07:37:43.963453+00:00",
+      "required_for_cash_book": true,
+      "required_for_joint_exposure": true,
+      "retrieval_utc": "2026-09-11T07:37:44.261183+00:00",
+      "status": "complete"
+    },
+    "exchange-info": {
+      "id": "exchange-info",
+      "parent_status": "complete",
+      "request_utc": "2026-09-11T07:37:46.027042+00:00",
+      "required_for_cash_book": false,
+      "required_for_joint_exposure": false,
+      "retrieval_utc": "2026-09-11T07:37:47.075280+00:00",
+      "status": "complete"
+    },
+    "server-time": {
+      "id": "server-time",
+      "parent_status": "complete",
+      "request_utc": "2026-09-11T07:37:47.213088+00:00",
+      "required_for_cash_book": false,
+      "required_for_joint_exposure": false,
+      "retrieval_utc": "2026-09-11T07:37:47.493811+00:00",
+      "status": "complete"
+    },
+    "wbeth-exchange-info": {
+      "id": "wbeth-exchange-info",
+      "parent_status": "complete",
+      "request_utc": "2026-09-11T09:39:02.312942+00:00",
+      "required_for_cash_book": true,
+      "required_for_joint_exposure": false,
+      "retrieval_utc": "2026-09-11T09:39:02.651106+00:00",
+      "status": "complete"
+    },
+    "wbeth-spot": {
+      "id": "wbeth-spot",
+      "parent_status": "complete",
+      "request_utc": "2026-09-11T09:39:03.131759+00:00",
+      "required_for_cash_book": true,
+      "required_for_joint_exposure": false,
+      "retrieval_utc": "2026-09-11T09:39:03.433509+00:00",
+      "status": "complete"
+    }
+  },
+  "validated_strategies": 0
+}

@@ -19,6 +19,7 @@ Completed once, with independent substantive and receipt reviews:
 | bitrue-metadata-20260911 | 2 / 0 | All 755 contract rows retained; fixed BTC/ETH targets match conditional metadata rules. |
 | wbeth-inputs-20260911 | 2 / 0 | Current metadata and 91 exact Q2 daily bars admitted, no zero-activity day. |
 | dated-book-amended-20260911 | 8 / 0 | All fixed dated cash books negative; small basis convergence cannot cover costs. Independent numerical reconstruction passed. |
+| wbeth-book-20260911 | 8 / 0 | Four primary books cash-positive but all below3% relevance; independent reconstruction passed. |
 
 Execution sources respectively: `d3ba86924bd8711704fc80fd771a0e717cc9bb51`,
 `8cac1b361ecc96e5bd6f2ab0fa43bf51b1524ec4`,
@@ -91,14 +92,22 @@ synthetic comparisons and39 focused tests, including exact guarded lifecycle.
 Gate9e92592a79b88716a15e7d5bba2a1b0e3c3b0891fdc415ee245c3136142c2afa pins
 all dependencies, four parent inputs, eight cells and two outputs. It is ready
 for committed source and verified remote freeze, then one guarded execution.
-No actual WBETH financial calculation has occurred. Immediately afterward run
-independent cashflow/HAC review and receipt verification, diagnose and back up.
+The exact WBETH run has now COMPLETED from04e1fa48336bdb10e6a9795a91e24a72526c9ef7,
+pushed/remotely verified before execution: eight complete/zero unavailable,
+two outputs931,662bytes,9.339sec436,752,384sampledRSS. Structural verifier passes.
+Four primary cash profits positive but all fail3% relevance (base/stress2.0203/
+0.86675at1,000;23.0100/9.80236at10,000). Independent raw cashflow/manual HAC review passed19,428comparisons, including
+728NAV rows and32stresses. Decision14 is finalized. Do not rerun or tune.
+Finalize review/decision/findings and commit/push/remotely verify result backup.
 True ETH delta and the net-base-delta gate remain unavailable.
 
 The parallel next source question is a bounded seven-path news metadata inventory.
-Design/charter are drafted; runner and synthetic checks are under implementation.
+Design/charter/runner/gate are drafted;19synthetics and exact guarded lifecycle
+pass. Independent implementation/gate review is in progress.
 No real corpus schema/article records have been opened. It uses the remaining
 MAProw8 initial question after two WBETH investigations, not a fresh alpha budget.
+A distinct third/final triangle streaming-observation question has a primary
+documentary design and is in synthetic implementation. No live stream opened.
 The existing value_rev second vintage cannot mature before September18. Preserve
 original data and all prior claims. Continue useful eligible questions.
 Options historical economics remains deferred for field/clock/contract semantics,

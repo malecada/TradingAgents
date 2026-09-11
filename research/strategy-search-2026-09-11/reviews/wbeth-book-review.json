@@ -1,0 +1,259 @@
+{
+  "status": "PASS",
+  "source": "04e1fa48336bdb10e6a9795a91e24a72526c9ef7",
+  "registration_sha256": "9e92592a79b88716a15e7d5bba2a1b0e3c3b0891fdc415ee245c3136142c2afa",
+  "comparisons": 19428,
+  "maximum_absolute_error": 5.051958851254312e-12,
+  "cells": 8,
+  "primary_cases": 4,
+  "paired_zero_funding_cases": 4,
+  "daily_nav_rows": 728,
+  "stress_scenarios_reconstructed": 32,
+  "raw_receipts_verified": 12,
+  "raw_body_bytes": 1286031,
+  "output_bytes": 931662,
+  "output_sha256": {
+    "books.json": "00085b1ce4303b4db7114ffc926c98f4735b053b624851365ef0414ac6e4d4a9",
+    "summary.json": "04c0b485fa67038b3d845fa7d23332fcacac75399c494d6b7b3ffcb2a60b88ad"
+  },
+  "findings": [
+    {
+      "id": "wbeth-1000-base",
+      "capital": 1000.0,
+      "wbeth_quantity": 0.1732,
+      "eth_short_quantity": 0.189,
+      "gross_price_pnl": 2.557006,
+      "slippage": 0.278970986,
+      "commissions": 1.0474872174878,
+      "funding_cash": 0.789706887166581,
+      "cash_profit": 2.020254683678781,
+      "full_capital_return": 0.002020254683678781,
+      "descriptive_annualized_return": 0.008103219335634671,
+      "max_drawdown": 0.002106506494017775,
+      "btc_beta": -0.002055139186278475,
+      "eth_beta": 3.24116650408698e-05,
+      "btc_interval": [
+        -0.009890196767528229,
+        0.005779918394972775
+      ],
+      "eth_interval": [
+        -0.006168838521341053,
+        0.006233661851421964
+      ],
+      "depeg_10pct_cash": -41.38100837178263,
+      "depeg_50pct_cash": -200.84590535971324
+    },
+    {
+      "id": "wbeth-1000-stress",
+      "capital": 1000.0,
+      "wbeth_quantity": 0.1729,
+      "eth_short_quantity": 0.189,
+      "gross_price_pnl": 2.727067,
+      "slippage": 0.557456914,
+      "commissions": 2.0925681339024,
+      "funding_cash": 0.789706887166581,
+      "cash_profit": 0.8667488392641809,
+      "full_capital_return": 0.0008667488392641809,
+      "descriptive_annualized_return": 0.0034765200695761104,
+      "max_drawdown": 0.002517993030899015,
+      "btc_beta": 0.0004554852207403501,
+      "eth_beta": -0.002269664170745949,
+      "btc_interval": [
+        -0.008839456219108702,
+        0.009750426660591983
+      ],
+      "eth_interval": [
+        -0.009880700935414717,
+        0.005341372593921867
+      ],
+      "depeg_10pct_cash": -42.77563158422231,
+      "depeg_50pct_cash": -201.7731589003115
+    },
+    {
+      "id": "wbeth-10000-base",
+      "capital": 10000.0,
+      "wbeth_quantity": 1.7327,
+      "eth_short_quantity": 1.896,
+      "gross_price_pnl": 28.371311,
+      "slippage": 2.794686901,
+      "commissions": 10.4887292894338,
+      "funding_cash": 7.9221389315758595,
+      "cash_profit": 23.01003374114206,
+      "full_capital_return": 0.002301003374114206,
+      "descriptive_annualized_return": 0.009229299247820717,
+      "max_drawdown": 0.002102166147225879,
+      "btc_beta": -0.0021299760808950663,
+      "eth_beta": -0.0009493102650788723,
+      "btc_interval": [
+        -0.010004684402560513,
+        0.005744732240770507
+      ],
+      "eth_interval": [
+        -0.007270857605610893,
+        0.005372237075453501
+      ],
+      "depeg_10pct_cash": -413.9927550800494,
+      "depeg_50pct_cash": -2009.2862135730475
+    },
+    {
+      "id": "wbeth-10000-stress",
+      "capital": 10000.0,
+      "wbeth_quantity": 1.7298,
+      "eth_short_quantity": 1.893,
+      "gross_price_pnl": 28.416204,
+      "slippage": 5.580273768,
+      "commissions": 20.9431763522088,
+      "funding_cash": 7.909603901620835,
+      "cash_profit": 9.802357781412034,
+      "full_capital_return": 0.0009802357781412035,
+      "descriptive_annualized_return": 0.003931714934302629,
+      "max_drawdown": 0.0025635362709766647,
+      "btc_beta": 0.0004265533381705765,
+      "eth_beta": -0.0026701482674266605,
+      "btc_interval": [
+        -0.008894842100697211,
+        0.009747948777040362
+      ],
+      "eth_interval": [
+        -0.010335207684891067,
+        0.0049949111500365235
+      ],
+      "depeg_10pct_cash": -427.9667612741905,
+      "depeg_50pct_cash": -2018.6777083613579
+    },
+    {
+      "id": "wbeth-1000-base-zero-funding",
+      "capital": 1000.0,
+      "wbeth_quantity": 0.1732,
+      "eth_short_quantity": 0.189,
+      "gross_price_pnl": 2.557006,
+      "slippage": 0.278970986,
+      "commissions": 1.0474872174878,
+      "funding_cash": 0.0,
+      "cash_profit": 1.2305477965122,
+      "full_capital_return": 0.0012305477965122,
+      "descriptive_annualized_return": 0.004935713689307176,
+      "max_drawdown": 0.0013841109069744,
+      "btc_beta": -0.001568018893666711,
+      "eth_beta": -0.00032346932493511316,
+      "btc_interval": [
+        -0.009186871850341786,
+        0.006050834063009398
+      ],
+      "eth_interval": [
+        -0.006538893772022822,
+        0.005891955122152463
+      ],
+      "depeg_10pct_cash": -41.38100837178263,
+      "depeg_50pct_cash": -200.84590535971324
+    },
+    {
+      "id": "wbeth-1000-stress-zero-funding",
+      "capital": 1000.0,
+      "wbeth_quantity": 0.1729,
+      "eth_short_quantity": 0.189,
+      "gross_price_pnl": 2.727067,
+      "slippage": 0.557456914,
+      "commissions": 2.0925681339024,
+      "funding_cash": 0.0,
+      "cash_profit": 0.0770419520976,
+      "full_capital_return": 7.70419520976e-05,
+      "descriptive_annualized_return": 0.0003090144232486154,
+      "max_drawdown": 0.0021831093297552,
+      "btc_beta": 0.0009436990991612006,
+      "eth_beta": -0.002626353808025718,
+      "btc_interval": [
+        -0.008058370782721348,
+        0.009945768981039604
+      ],
+      "eth_interval": [
+        -0.010319143347265324,
+        0.005066435731215479
+      ],
+      "depeg_10pct_cash": -42.77563158422231,
+      "depeg_50pct_cash": -201.7731589003115
+    },
+    {
+      "id": "wbeth-10000-base-zero-funding",
+      "capital": 10000.0,
+      "wbeth_quantity": 1.7327,
+      "eth_short_quantity": 1.896,
+      "gross_price_pnl": 28.371311,
+      "slippage": 2.794686901,
+      "commissions": 10.4887292894338,
+      "funding_cash": 0.0,
+      "cash_profit": 15.0878948095662,
+      "full_capital_return": 0.00150878948095662,
+      "descriptive_annualized_return": 0.006051738028012816,
+      "max_drawdown": 0.00145618850131674,
+      "btc_beta": -0.0016412214476386505,
+      "eth_beta": -0.0013067448310406604,
+      "btc_interval": [
+        -0.009298544274225143,
+        0.006016101378945933
+      ],
+      "eth_interval": [
+        -0.007639242399241622,
+        0.005025752737160197
+      ],
+      "depeg_10pct_cash": -413.9927550800494,
+      "depeg_50pct_cash": -2009.2862135730475
+    },
+    {
+      "id": "wbeth-10000-stress-zero-funding",
+      "capital": 10000.0,
+      "wbeth_quantity": 1.7298,
+      "eth_short_quantity": 1.893,
+      "gross_price_pnl": 28.416204,
+      "slippage": 5.580273768,
+      "commissions": 20.9431763522088,
+      "funding_cash": 0.0,
+      "cash_profit": 1.8927538797912,
+      "full_capital_return": 0.00018927538797912,
+      "descriptive_annualized_return": 0.0007591815012349319,
+      "max_drawdown": 0.00221346378618024,
+      "btc_beta": 0.0009155777890860488,
+      "eth_beta": -0.003027576055817348,
+      "btc_interval": [
+        -0.00811262832677461,
+        0.00994378390494914
+      ],
+      "eth_interval": [
+        -0.010772984184958704,
+        0.004717832073322688
+      ],
+      "depeg_10pct_cash": -427.9667612741905,
+      "depeg_50pct_cash": -2018.6777083613579
+    }
+  ],
+  "resource": {
+    "child_exit_code": 0,
+    "limit_reason": null,
+    "elapsed_seconds": 9.33856734301662,
+    "peak_sampled_tree_rss_bytes": 436752384,
+    "linux_children_ru_maxrss_kib": 214648,
+    "rss_limit_bytes": 536870912,
+    "wall_limit_seconds": 120,
+    "sample_interval_seconds": 0.02,
+    "virtual_address_space_limit": "unlimited",
+    "qualification": "Nominal 20 ms sampled aggregate RSS with one 20 ms process-exit retry; brief overshoot can occur. No detached/background or secondary-thread subprocesses admitted. Shared pages may be counted twice. ru_maxrss is the largest individual child peak, not aggregate."
+  },
+  "structural_verification": {
+    "experiment": "wbeth-book-20260911",
+    "status": "complete",
+    "cell_count": 8,
+    "unavailable_count": 0,
+    "output_count": 2,
+    "verification": "structural hashes and denominators only; no scientific validation"
+  },
+  "method": "60-digit Decimal signed two-quantity cash/wallet reconstruction; raw hashes/schema/clocks; independent OLS and Bartlett HAC7 sandwich with t88 intervals. No financial implementation/statistics-module import or new experiment/network.",
+  "limitations": [
+    "Market-value hedge is not contractual ETH delta",
+    "One spent episode, no expected-profit confidence/power",
+    "No staking attribution from zero funding",
+    "Assumed fee assets/lots/fills",
+    "Actual margin/liquidation and redemption unavailable",
+    "Scenarios are not universal tail bounds",
+    "External backup or pre-result push timing not established by receipt verification"
+  ]
+}

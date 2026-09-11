@@ -7074,3 +7074,17 @@ unavailable. Decision 13 closes this fixed 56-day pre-terminal claim; the two
 failed parents and sole consumed +1 certificate remain preserved. The next
 financial question is the distinct WBETH market-value hedge book. Zero validated
 strategies; the authorized research program remains active and incomplete.
+
+## 111. WBETH hedge positive but below relevance (2026-09-11)
+
+The fixed91-day WBETH spot/ETH perpetual market-value hedge earns conditional
+positive cash:2.0203/0.86675 USDT at1,000 and23.0100/9.80236 at10,000 (base/stress).
+All four primary cases fall below the frozen3% annualized full-capital relevance
+screen, even though descriptive betas are small. Independent raw cashflow and
+manual HAC reconstruction passed19,428 comparisons across all eight primary/
+zero-funding cases. True ETH delta, expected-profit inference and execution
+remain unavailable. The chosen50% WBETH markdown loses about20% of all capital;
+a small beta does not remove linked-asset tail risk. Decision14 preserves the
+positive cash finding and failed relevance claim, and switches to the bounded
+saved-news provenance question without tuning this episode. Zero validated
+strategies; the authorized program remains active and incomplete.
