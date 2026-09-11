@@ -16,8 +16,9 @@ Verified counts: predlab 820, rebuild 146, LLM event 2/pair 5/rank 1;
 The first three funding-carry investigations are complete: a definition diagnostic,
 public input admission and explicit cash book. All eight primary cash books fail
 the fixed economic screen; the incremental allowance is used. Dated-contract
-archive admission then passed for four fixed ZIP/checksum pairs. The next question
-is a registered 56-day dated cash episode, conditional on public trade prices.
+archive admission then passed for four fixed ZIP/checksum pairs. Two dated-book attempts then failed in the harness with no economic verdicts.
+The dated allowance is exhausted pending an explicit reviewed amendment route.
+The next eligible question is options metadata admission; spot triangles follow.
 Read active state for exact source freezes, receipts, reviews and remaining work.
 New runs use the additive lifecycle and complete sharded receipts.
 

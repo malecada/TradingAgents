@@ -6979,3 +6979,15 @@ review supports a separately registered correction of resource enforcement with
 identical economic inputs and code. It consumes the final incremental dated-family
 attempt. Decision 05 retains the cause, synthetic resident-memory preflight and
 exact next action. Original source and failed identity remain immutable.
+
+## 103. Dated resource-monitor failure and deferral (2026-09-11)
+
+The separately registered correction failed during a lifecycle Git source check,
+when the memory monitor could not read a transient subprocess field. It did not
+reach financial evaluation. The measured memory sample was below the bound;
+claim and failed receipt preserve eight intended cases and zero economic outputs.
+Both failed attempts count. The dated administrative allowance is exhausted,
+and further execution requires an explicit reviewed amendment route. The source
+archive remains admitted, but this episode has no completed profit/loss verdict.
+Decision 06 records the narrow engineering diagnosis and switch to options
+metadata and spot-triangle prerequisites. Interim coverage is incomplete.

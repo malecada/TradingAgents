@@ -24,20 +24,23 @@ Funding-carry incremental allowance: 3 used of 3; known eight direct historical
 records plus incomplete older search remain. This is not complete statistical
 multiplicity. Do not rerun the completed books or reset the budget by renaming.
 
-The fixed dated book was attempted once from source
-`d287a1420d70e298bae9b0f7e69fdc79c665720e`, pushed and remotely verified. It failed
-at the statistics import under a 512 MiB virtual-memory cap: eight intended cases,
-zero completed economic verdicts and zero outputs. Preserve claim/failed receipt.
-Decision 05 and the recovery review describe the measurement defect.
+Two dated-book attempts failed without economic outputs: the original under a
+virtual-memory cap, and `dated-book-resource-correction-20260911` under a monitor
+process-exit error during source verification. The latter execution source was
+`6ee6317f8cc04f94fa48932dccbe01572a05fd8c`, pushed and remotely verified.
+Each retains eight intended cells, zero completed economic verdicts, claim and
+failed receipt. Decisions 05–06 and independent reviews preserve the causes.
+Dated allowance is exhausted (historical one + three new = cap four). Do not
+rerun either identity or increase the gate budget: admission rejects implicit
+amendments. A future extra attempt requires a reviewed explicit amendment route.
 
-Next: finish independent review of `dated-book-resource-correction-20260911`,
-commit/push the failed parent and unchanged-economics correction, verify remote
-equality, execute exactly once under resource_guard.py, then independently review
-all output cash/statistics. The resource preflight passed on invented data only.
-Dated allowance: archive and failed book used two of three new investigations;
-the correction consumes the final one. Never rerun the failed identity.
-Expected-profit confidence/power and actual margin/execution remain unavailable.
-Options metadata source/spec and implementation are being prepared separately.
+Next: finish review of the v2 resource guard and options metadata collector;
+verify exact resource/output bounds through the complete synthetic lifecycle;
+freeze options-metadata-20260911 and its four requests, commit/push/verify,
+execute once, review raw metadata and follow its result. No real options
+metadata was captured. Financial rules/fees/access and historical chains are
+not admitted by documentary examples. Fixed spot-triangle feasibility follows.
+The interim coverage review finds meaningful affordable gaps; no exhaustion.
 
 No background job, scheduler, paper session or order is running. Account
 country/product details were requested without credentials and remain pending;

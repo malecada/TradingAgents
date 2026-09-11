@@ -4,8 +4,10 @@
 - [x] Admit actual public event marks and matched bars once; independent review passed.
 - [x] Complete fixed conditional cash book and independent review; all eight primary cases fail economic screens. Switch family.
 - [x] Admit the fixed dated-contract archives and independently verify coverage.
-- [ ] Complete the registered pre-terminal dated cash episode and diagnose basis versus costs.
-- [ ] Resolve affordable options and venue-product feasibility questions for breadth.
+- [ ] Dated economic result deferred after two preserved harness failures; no extra attempt without reviewed amendment route.
+- [ ] Complete options metadata registration/capture/review after concrete output/resource preflight.
+- [ ] Register fixed same-venue spot-triangle necessary-feasibility capture.
+- [ ] Resolve Binance–Bitrue contract/funding/collateral comparability from public sources.
 - [ ] Re-rank relative-value, liquidity, factor and information questions against
   the resulting evidence; register only a distinct justified prediction.
 
