@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "invented_data_only": true,
+  "financial_engine_used_only_on_invented_data": true,
+  "empirical_inputs_opened": 0,
+  "comparisons": 3708,
+  "maximum_absolute_error": 1.8189894035458565e-12,
+  "paired_cases": [
+    {
+      "capital": 1000,
+      "scenario": "base",
+      "quantity_wbeth": 1.5972,
+      "quantity_eth": 3.993,
+      "status": "PASS"
+    },
+    {
+      "capital": 1000,
+      "scenario": "stress",
+      "quantity_wbeth": 1.5945,
+      "quantity_eth": 3.986,
+      "status": "PASS"
+    },
+    {
+      "capital": 10000,
+      "scenario": "base",
+      "quantity_wbeth": 15.9728,
+      "quantity_eth": 39.932,
+      "status": "PASS"
+    },
+    {
+      "capital": 10000,
+      "scenario": "stress",
+      "quantity_wbeth": 15.9457,
+      "quantity_eth": 39.864,
+      "status": "PASS"
+    }
+  ],
+  "method": "Independent 60-digit Decimal two-quantity sizing, wallet/cash and actual-event funding oracle; no production observations or registered runner execution."
+}

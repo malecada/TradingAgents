@@ -84,18 +84,23 @@ Results and state are ready for the verified backup checkpoint. Do not rerun.
 Original cap4/prior1 and old claims remain; the separate +1 certificate is now
 spent. Effective total5 is exhausted; no next dated attempt is implied.
 
-Next: back up the independently reviewed dated results, then freeze and run the
-separate WBETH book only after independent implementation/charter/gate and exact
-full-lifecycle synthetic review. Root wbeth-book-charter.md defines the fixed
-conservative quantities, 40/50/10 capital, fourprimary+fourzero-funding cases,
-HAC exposure only, no expected-profit interval, true net-base-delta gate
-unavailable. wbeth_book.py has synthetic tests; worker is implementing
-wbeth_book_run.py/source reconciliation and tests (18 runner +21 engine synthetic
-tests pass, including exact guarded lifecycle with real HAC). Independent
-engineering review is in progress. No executed financial WBETH gate or
-actual book exists yet. A bounded factor/information source-priority review is
-complete; it selects a bounded saved-news metadata provenance question. The
-existing value_rev second vintage cannot mature before September 18. Preserve original data and all prior failed/completed claims.
+Dated results were committed and pushed as99445a558dde0607e4563aed0759954693bd475c;
+remote equality was independently queried. WBETH source/charter/engine/runner/gate
+review now passes (reviews/wbeth-book-implementation-review.md): 3,708 independent
+synthetic comparisons and39 focused tests, including exact guarded lifecycle.
+Gate9e92592a79b88716a15e7d5bba2a1b0e3c3b0891fdc415ee245c3136142c2afa pins
+all dependencies, four parent inputs, eight cells and two outputs. It is ready
+for committed source and verified remote freeze, then one guarded execution.
+No actual WBETH financial calculation has occurred. Immediately afterward run
+independent cashflow/HAC review and receipt verification, diagnose and back up.
+True ETH delta and the net-base-delta gate remain unavailable.
+
+The parallel next source question is a bounded seven-path news metadata inventory.
+Design/charter are drafted; runner and synthetic checks are under implementation.
+No real corpus schema/article records have been opened. It uses the remaining
+MAProw8 initial question after two WBETH investigations, not a fresh alpha budget.
+The existing value_rev second vintage cannot mature before September18. Preserve
+original data and all prior claims. Continue useful eligible questions.
 Options historical economics remains deferred for field/clock/contract semantics,
 with one new options investigation remaining. Meaningful affordable gaps remain.
 Commit/push and verify remote equality at each freeze and results checkpoint.
