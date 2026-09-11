@@ -1,0 +1,552 @@
+{
+  "schema_version": 1,
+  "program_id": "strategy-search-2026-09-11",
+  "families": {
+    "funding-carry": {
+      "mechanism_id": "btc-eth-spot-perpetual-funding-carry",
+      "attempt_budget": 11,
+      "prior_attempts": 8,
+      "history_reference": "research/strategy-search-2026-09-11/HISTORY.md; known 8 direct audit/holdout records only; earlier P0-P5/P1.5 and blend searches incompletely enumerated; cap adds exactly 3 new investigations, NOT complete historical trial count. No confirmatory inference.",
+      "legacy_total_attempts": "unknown",
+      "new_program_incremental_cap": 3
+    },
+    "dated-basis": {
+      "mechanism_id": "binance-btc-eth-dated-basis-convergence",
+      "attempt_budget": 4,
+      "prior_attempts": 1,
+      "history_reference": "docs/carry-feasibility-2026-09-10/INTERPRETATION.md; one dated capture with432correlated scenarios, not432independent attempts. New incremental cap3; funding-carry and old spending remain separately recorded."
+    },
+    "options-volatility": {
+      "mechanism_id": "binance-option-delta-hedged-volatility-premium",
+      "attempt_budget": 4,
+      "prior_attempts": 1,
+      "history_reference": "research/strategy-search-2026-09-11/options-metadata-charter.md; one known predlab_rviv_p0 administrative gate bundle,12 exact ledger rows; failed HAR30/DVOL claim preserved; counts are not independent trials or complete search multiplicity. Three new investigations allowed."
+    }
+  },
+  "datasets": {
+    "legacy": {
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "history_reference": "research/strategy-search-2026-09-11/HISTORY.md",
+      "exposures": [
+        {
+          "start": "2021-11-08T00:00:00Z",
+          "end": "2025-03-31T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "start": "2025-04-01T00:00:00Z",
+          "end": "2026-07-01T00:00:00Z",
+          "state": "spent"
+        }
+      ]
+    },
+    "dated-quarter": {
+      "identity": "binance-btc-eth-usdt-260626-contract-history",
+      "history_reference": "research/strategy-search-2026-09-11/SOURCES.md; observed official cataloguemetadata2026-09-11; sameunderlying2026Q2spot/perp history spent; all treatedexploratory exposed.",
+      "exposures": [
+        {
+          "start": "2025-12-26T00:00:00Z",
+          "end": "2026-07-01T00:00:00Z",
+          "state": "exposed"
+        }
+      ]
+    },
+    "options-source-definition": {
+      "identity": "binance-options-request-definition-20260911",
+      "history_reference": "research/strategy-search-2026-09-11/options-source-definition-observation.json; input document only, not an observation window for live outputs",
+      "exposures": [
+        {
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "state": "exposed"
+        }
+      ]
+    }
+  },
+  "experiments": {
+    "carry-definition-20260911": {
+      "family": "funding-carry",
+      "parent": null,
+      "question": "Does the historical opportunity charge alter the sign of the saved modeled cost index? Not actual cash PnL.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/carry-definition-charter.md",
+        "sha256": "b94116805330813c05a9cb30994f877f5a964dd005f3a53ca7c552cf40f2603d"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/carry_definition.py": "3c7d235172d86cfa3ee619529f91621b9200e38fcd3d571a33b063f1f22dd1bd",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "legacy",
+          "start": "2021-11-08T00:00:00Z",
+          "end": "2025-03-31T00:00:00Z",
+          "availability": "existing"
+        },
+        {
+          "dataset": "legacy",
+          "start": "2025-04-01T00:00:00Z",
+          "end": "2026-07-01T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "dev_costs": {
+          "path": "data/rebuild/carry_audit/costs.json",
+          "sha256": "b250377e869e0f38cfbcdb449b80f67a387386b7c96adaab880e507c37677ff8",
+          "dataset": "legacy"
+        },
+        "dev_series": {
+          "path": "data/rebuild/carry_audit/sleeve_stressed_daily.csv",
+          "sha256": "f6de070ff8e4f7e3a001b0ccd1162e5792b4397c4dd0737569aaaa232ae89f67",
+          "dataset": "legacy"
+        },
+        "holdout_costs": {
+          "path": "data/rebuild/holdout/carry_audit/costs.json",
+          "sha256": "8774b14283313fe6797459963f2465baef3d8056c1a32a855a726563960aeea1",
+          "dataset": "legacy"
+        },
+        "holdout_series": {
+          "path": "data/rebuild/holdout/carry_audit/sleeve_stressed_daily.csv",
+          "sha256": "7c8d75478448316113990e092c0fc463cf445d358e534e25d59e91a45ce7dd60",
+          "dataset": "legacy"
+        }
+      },
+      "cells": [
+        "dev-btc",
+        "dev-eth",
+        "dev-sleeve",
+        "holdout-btc",
+        "holdout-eth",
+        "holdout-sleeve"
+      ],
+      "outputs": [
+        "diagnostic.json"
+      ]
+    },
+    "carry-inputs-20260911": {
+      "family": "funding-carry",
+      "parent": "carry-definition-20260911",
+      "question": "Can authentic public event funding marks and matched spot/perpetual/mark bars for fixed spent 2026Q2 pass conditional schema/coverage admission?",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/carry-inputs-charter.md",
+        "sha256": "3300905e8466a0752552007210c1b05019dd1de84868ffe44231f06369760615"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "legacy",
+          "start": "2026-04-01T00:00:00Z",
+          "end": "2026-07-01T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "request_spec": {
+          "path": "research/strategy-search-2026-09-11/request-spec.json",
+          "sha256": "59a9859d2652d52c3f4fa654f3dedd2a8b4e57326bb4de6733c5ddb419893963",
+          "dataset": "legacy"
+        }
+      },
+      "cells": [
+        "btc-funding",
+        "eth-funding",
+        "btc-spot",
+        "eth-spot",
+        "btc-perp",
+        "eth-perp",
+        "btc-mark",
+        "eth-mark",
+        "exchange-info",
+        "server-time"
+      ],
+      "outputs": [
+        "btc-funding-receipt.json",
+        "eth-funding-receipt.json",
+        "btc-spot-receipt.json",
+        "eth-spot-receipt.json",
+        "btc-perp-receipt.json",
+        "eth-perp-receipt.json",
+        "btc-mark-receipt.json",
+        "eth-mark-receipt.json",
+        "exchange-info-receipt.json",
+        "server-time-receipt.json",
+        "capture.json",
+        "admission.json"
+      ]
+    },
+    "carry-book-20260911": {
+      "family": "funding-carry",
+      "parent": "carry-inputs-20260911",
+      "question": "Does the frozen matched-quantity USDT carry book cover costs on full capital with acceptable conditional exposure and reserve metrics in spent 2026Q2?",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/carry-book-charter.md",
+        "sha256": "5ce44f44663b1da2be785e0d15fbd37c153e02bd165381353778d7618e4cd3b5"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/carry_book.py": "8ad2a08b14653800d7c34a6a391a36fcb43717c7083ec7398f6bdbf8f5a72d55",
+        "research/strategy-search-2026-09-11/carry_statistics.py": "bb38bad2185c058233625050234364c8c111caf035e7c7666748893f374b0c82",
+        "research/strategy-search-2026-09-11/carry_book_run.py": "e96684b6cc433e62c2d2d0975b646284ff59dc2428b3e2ecec6ebb639c6fd74c",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "legacy",
+          "start": "2026-04-01T00:00:00Z",
+          "end": "2026-07-01T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "capture": {
+          "path": "research_runs/carry-inputs-20260911/outputs/capture.json",
+          "sha256": "2076fb01a8b7a11aa76b9ff14f91a2ec9a8d5d6188e53eb32b50b8fccdd544bd",
+          "dataset": "legacy"
+        },
+        "admission": {
+          "path": "research_runs/carry-inputs-20260911/outputs/admission.json",
+          "sha256": "2723c2ccc885a79056fa5e04eaa07e56546498df5bf4dade9b4bcb70cefd986e",
+          "dataset": "legacy"
+        }
+      },
+      "cells": [
+        "btc-1000-base",
+        "btc-1000-base-zero-funding",
+        "btc-1000-stress",
+        "btc-1000-stress-zero-funding",
+        "btc-10000-base",
+        "btc-10000-base-zero-funding",
+        "btc-10000-stress",
+        "btc-10000-stress-zero-funding",
+        "eth-1000-base",
+        "eth-1000-base-zero-funding",
+        "eth-1000-stress",
+        "eth-1000-stress-zero-funding",
+        "eth-10000-base",
+        "eth-10000-base-zero-funding",
+        "eth-10000-stress",
+        "eth-10000-stress-zero-funding"
+      ],
+      "outputs": [
+        "books.json",
+        "summary.json"
+      ]
+    },
+    "dated-archive-20260911": {
+      "family": "dated-basis",
+      "parent": null,
+      "question": "Do four fixed official dated-contract archives provide checksum-verified hourly coverage, without inferring expiry settlement or price economics?",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/dated-archive-charter.md",
+        "sha256": "b1c67f90d308d2faa27ac9cebc6039d7194999c90fa29e37a73466438dfe64f3"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/dated_archive.py": "631412c60dd411466db185b3ae2cfb0cc62d5423153c98432e9aa93db86efb3d",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "dated-quarter",
+          "start": "2026-05-01T00:00:00Z",
+          "end": "2026-07-01T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "request_spec": {
+          "path": "research/strategy-search-2026-09-11/dated-request-spec.json",
+          "sha256": "2ecf78f968f7c7b0feb6fd27116587bf6e08809f6c33cd2970b1ea939d74b7f4",
+          "dataset": "dated-quarter"
+        }
+      },
+      "cells": [
+        "btc-2026-05-zip",
+        "btc-2026-05-checksum",
+        "btc-2026-06-zip",
+        "btc-2026-06-checksum",
+        "eth-2026-05-zip",
+        "eth-2026-05-checksum",
+        "eth-2026-06-zip",
+        "eth-2026-06-checksum"
+      ],
+      "outputs": [
+        "btc-2026-05-zip-receipt.json",
+        "btc-2026-05-checksum-receipt.json",
+        "btc-2026-06-zip-receipt.json",
+        "btc-2026-06-checksum-receipt.json",
+        "eth-2026-05-zip-receipt.json",
+        "eth-2026-05-checksum-receipt.json",
+        "eth-2026-06-zip-receipt.json",
+        "eth-2026-06-checksum-receipt.json",
+        "archive-capture.json",
+        "archive-admission.json"
+      ]
+    },
+    "dated-book-20260911": {
+      "family": "dated-basis",
+      "parent": "dated-archive-20260911",
+      "question": "Does one fixed 56-day pre-terminal dated cash episode cover base and stressed costs at provisional full-capital relevance? Expected profit, actual margin and execution remain unavailable.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/dated-book-charter.md",
+        "sha256": "c0fcee6424c8bc42e9f577f3013f21abde028ea4d85eb9f2239f86a4f46d4c01"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/dated_book.py": "3977b87b507088238c346dd4dfa7ae3b7934bfd2900a313298df200f0bfcb6ab",
+        "research/strategy-search-2026-09-11/dated_book_run.py": "87623dff2eb691cc2e6abdd35ca0bfc7289496a41e9b50a3e28981171b53699b",
+        "research/strategy-search-2026-09-11/dated_statistics.py": "28c5d01aeb5644b8edf65833fb95c291f8d5eb66dac53147269ea889ff77f61c",
+        "research/strategy-search-2026-09-11/dated_archive.py": "631412c60dd411466db185b3ae2cfb0cc62d5423153c98432e9aa93db86efb3d",
+        "research/strategy-search-2026-09-11/carry_book.py": "8ad2a08b14653800d7c34a6a391a36fcb43717c7083ec7398f6bdbf8f5a72d55",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "dated-quarter",
+          "start": "2026-05-01T00:00:00Z",
+          "end": "2026-06-26T00:00:00Z",
+          "availability": "existing"
+        },
+        {
+          "dataset": "legacy",
+          "start": "2026-05-01T00:00:00Z",
+          "end": "2026-06-26T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "capture": {
+          "path": "research_runs/dated-archive-20260911/outputs/archive-capture.json",
+          "sha256": "42691356256ba6da94cf4a7796fbf56842a5d43314279b3679dea9713838f4b7",
+          "dataset": "dated-quarter"
+        },
+        "admission": {
+          "path": "research_runs/dated-archive-20260911/outputs/archive-admission.json",
+          "sha256": "9f76f48f36f29db2c1e9f7575eccd77b80365e1b5823b90f15823012efebc319",
+          "dataset": "dated-quarter"
+        },
+        "spot_capture": {
+          "path": "research_runs/carry-inputs-20260911/outputs/capture.json",
+          "sha256": "2076fb01a8b7a11aa76b9ff14f91a2ec9a8d5d6188e53eb32b50b8fccdd544bd",
+          "dataset": "legacy"
+        },
+        "spot_admission": {
+          "path": "research_runs/carry-inputs-20260911/outputs/admission.json",
+          "sha256": "2723c2ccc885a79056fa5e04eaa07e56546498df5bf4dade9b4bcb70cefd986e",
+          "dataset": "legacy"
+        }
+      },
+      "cells": [
+        "btc-1000-base",
+        "btc-1000-stress",
+        "btc-10000-base",
+        "btc-10000-stress",
+        "eth-1000-base",
+        "eth-1000-stress",
+        "eth-10000-base",
+        "eth-10000-stress"
+      ],
+      "outputs": [
+        "books.json",
+        "summary.json"
+      ]
+    },
+    "dated-book-resource-correction-20260911": {
+      "family": "dated-basis",
+      "parent": "dated-book-20260911",
+      "question": "Resource-only correction of preserved failed dated episode: identical economic rules and data under explicit resident-memory enforcement.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/dated-resource-correction-charter.md",
+        "sha256": "f3fa6813e3a14d6202fda59f5e31473286b025d31e397aed4535d1efb4cd718f"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/dated_book.py": "3977b87b507088238c346dd4dfa7ae3b7934bfd2900a313298df200f0bfcb6ab",
+        "research/strategy-search-2026-09-11/dated_book_run.py": "87623dff2eb691cc2e6abdd35ca0bfc7289496a41e9b50a3e28981171b53699b",
+        "research/strategy-search-2026-09-11/dated_statistics.py": "28c5d01aeb5644b8edf65833fb95c291f8d5eb66dac53147269ea889ff77f61c",
+        "research/strategy-search-2026-09-11/dated_archive.py": "631412c60dd411466db185b3ae2cfb0cc62d5423153c98432e9aa93db86efb3d",
+        "research/strategy-search-2026-09-11/carry_book.py": "8ad2a08b14653800d7c34a6a391a36fcb43717c7083ec7398f6bdbf8f5a72d55",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164",
+        "research/strategy-search-2026-09-11/resource_guard.py": "4a4d6d17d144fa769bccd4f799828cc6c63dc55d89a521a24716c0fd17f5cbf1",
+        "research/strategy-search-2026-09-11/dated_book_correction.py": "1359933f91a9f5b68e21c22351a9ee42f1fc2eda5cdf0b73a102f245d236decc"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "dated-quarter",
+          "start": "2026-05-01T00:00:00Z",
+          "end": "2026-06-26T00:00:00Z",
+          "availability": "existing"
+        },
+        {
+          "dataset": "legacy",
+          "start": "2026-05-01T00:00:00Z",
+          "end": "2026-06-26T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "capture": {
+          "path": "research_runs/dated-archive-20260911/outputs/archive-capture.json",
+          "sha256": "42691356256ba6da94cf4a7796fbf56842a5d43314279b3679dea9713838f4b7",
+          "dataset": "dated-quarter"
+        },
+        "admission": {
+          "path": "research_runs/dated-archive-20260911/outputs/archive-admission.json",
+          "sha256": "9f76f48f36f29db2c1e9f7575eccd77b80365e1b5823b90f15823012efebc319",
+          "dataset": "dated-quarter"
+        },
+        "spot_capture": {
+          "path": "research_runs/carry-inputs-20260911/outputs/capture.json",
+          "sha256": "2076fb01a8b7a11aa76b9ff14f91a2ec9a8d5d6188e53eb32b50b8fccdd544bd",
+          "dataset": "legacy"
+        },
+        "spot_admission": {
+          "path": "research_runs/carry-inputs-20260911/outputs/admission.json",
+          "sha256": "2723c2ccc885a79056fa5e04eaa07e56546498df5bf4dade9b4bcb70cefd986e",
+          "dataset": "legacy"
+        }
+      },
+      "cells": [
+        "btc-1000-base",
+        "btc-1000-stress",
+        "btc-10000-base",
+        "btc-10000-stress",
+        "eth-1000-base",
+        "eth-1000-stress",
+        "eth-10000-base",
+        "eth-10000-stress"
+      ],
+      "outputs": [
+        "books.json",
+        "summary.json",
+        "resource.json"
+      ]
+    },
+    "options-metadata-20260911": {
+      "family": "options-volatility",
+      "parent": null,
+      "question": "Do four fixed public metadata responses resolve actual option quantity rules and archive types? Source admission only; input window is document bookkeeping and outputs have actual new retrieval clocks.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/options-metadata-charter.md",
+        "sha256": "d53ae61bc086c0c386b47657d099943f0facecc408216fecf01c2a89177a3f05"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/options_metadata.py": "d95c6a68edf987db3112d01e6aa74883488f02077970681fa2c7a1154e02c48f",
+        "research/strategy-search-2026-09-11/options_resource_launcher.py": "5d876d486b6e8e5e3abec853c498fd7e579ed842b32faca65600fb1bf9f1eb4e",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "research/strategy-search-2026-09-11/options-source-definition-observation.json": "cf9cd03172b0b559d4e0d0f28b3c4414ca673c1a6842b3cc2cc9ed3e7c476afe",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "options-source-definition",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "request_spec": {
+          "path": "research/strategy-search-2026-09-11/options-request-spec.json",
+          "sha256": "3119cc6b9f976b09c3db2f31d48b37a4fa5443a43a9b2598b6474e03835e5005",
+          "dataset": "options-source-definition"
+        }
+      },
+      "cells": [
+        "options-exchange-info",
+        "options-server-time",
+        "options-daily-prefixes",
+        "options-daily-initial-objects"
+      ],
+      "outputs": [
+        "options-exchange-info-receipt.json",
+        "options-server-time-receipt.json",
+        "options-daily-prefixes-receipt.json",
+        "options-daily-initial-objects-receipt.json",
+        "metadata-capture.json",
+        "metadata-admission.json"
+      ]
+    }
+  }
+}

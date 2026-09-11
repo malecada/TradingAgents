@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "experiment": "options-metadata-20260911",
+  "scope": "current source metadata only; no financial quotes or body downloads",
+  "planned_capture_date_utc": "2026-09-11",
+  "max_requests": 4,
+  "timeout_seconds_per_request": 20,
+  "max_response_bytes": 5242880,
+  "max_total_response_bytes": 20971520,
+  "max_output_bytes": 83886080,
+  "max_wall_seconds": 120,
+  "max_memory_mib": 256,
+  "max_cpus": 1,
+  "retries": 0,
+  "follow_redirects": false,
+  "follow_pagination": false,
+  "denial_statuses_suppress_same_host": [403, 418, 429, 451],
+  "transport": "research/strategy-search-2026-09-11/carry_capture.py:public_get; exact file hash to be pinned by execution gate",
+  "source_review": "reviews/options-feasibility-20260911.md",
+  "api_base_documentary_verification": "resolved by coordinator 2026-09-11 using official market-data and options general-info pages; three document URL fetches plus one empty search recorded separately in charter; no metadata API capture",
+  "budget": {
+    "prior_attempts": 1,
+    "prior_attempt_unit": "known predlab_rviv_p0 administrative gate bundle, not independent statistical trial",
+    "historical_rviv_ledger_rows": 12,
+    "new_investigation_allowance": 3,
+    "max_attempts": 4
+  },
+  "requests": [
+    {
+      "id": "options-exchange-info",
+      "kind": "exchange-info",
+      "url": "https://eapi.binance.com/eapi/v1/exchangeInfo"
+    },
+    {
+      "id": "options-server-time",
+      "kind": "server-time",
+      "url": "https://eapi.binance.com/eapi/v1/time"
+    },
+    {
+      "id": "options-daily-prefixes",
+      "kind": "s3-prefix-listing",
+      "prefix": "data/option/daily/",
+      "delimiter": "/",
+      "max_keys": 1000,
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Foption%2Fdaily%2F&delimiter=%2F&max-keys=1000"
+    },
+    {
+      "id": "options-daily-initial-objects",
+      "kind": "s3-object-listing",
+      "prefix": "data/option/daily/",
+      "max_keys": 20,
+      "url": "https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Foption%2Fdaily%2F&max-keys=20"
+    }
+  ]
+}
