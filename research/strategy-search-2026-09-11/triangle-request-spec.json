@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "experiment": "triangle-inputs-20260911",
+  "scope": "Public input admission only; no conversion profit calculation",
+  "timeout_seconds": 20,
+  "max_response_bytes": 5242880,
+  "cooperative_seconds": 90,
+  "max_wall_seconds": 120,
+  "max_memory_mib": 512,
+  "max_cpus": 2,
+  "max_output_bytes": 104857600,
+  "max_admission_bytes": 12582912,
+  "requests": [
+    {
+      "id": "triangle-exchange-info",
+      "kind": "exchange-info",
+      "url": "https://api.binance.com/api/v3/exchangeInfo?symbols=%5B%22BTCUSDT%22%2C%22ETHUSDT%22%2C%22ETHBTC%22%5D"
+    },
+    {
+      "id": "triangle-server-time",
+      "kind": "server-time",
+      "url": "https://api.binance.com/api/v3/time"
+    },
+    {
+      "id": "triangle-book-ticker",
+      "kind": "book-ticker",
+      "url": "https://api.binance.com/api/v3/ticker/bookTicker?symbols=%5B%22BTCUSDT%22%2C%22ETHUSDT%22%2C%22ETHBTC%22%5D"
+    },
+    {
+      "id": "triangle-btcusdt-depth",
+      "kind": "depth",
+      "symbol": "BTCUSDT",
+      "url": "https://api.binance.com/api/v3/depth?symbol=BTCUSDT&limit=20"
+    },
+    {
+      "id": "triangle-ethusdt-depth",
+      "kind": "depth",
+      "symbol": "ETHUSDT",
+      "url": "https://api.binance.com/api/v3/depth?symbol=ETHUSDT&limit=20"
+    },
+    {
+      "id": "triangle-ethbtc-depth",
+      "kind": "depth",
+      "symbol": "ETHBTC",
+      "url": "https://api.binance.com/api/v3/depth?symbol=ETHBTC&limit=20"
+    }
+  ]
+}

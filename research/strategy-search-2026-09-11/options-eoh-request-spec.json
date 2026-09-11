@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "experiment": "options-eoh-schema-20260911",
+  "parent": "options-metadata-20260911",
+  "scope": "single-object lexical CSV schema discovery only; no option-price interpretation or financial calculations",
+  "source_review": "reviews/options-eoh-schema-source.md",
+  "selection": "lexically earliest ZIP in the saved nontruncated BTCUSDT EOHSummary catalogue; no economic selection",
+  "filename_date": "2023-05-18",
+  "listed_zip_last_modified_utc": "2023-06-06T13:24:13.000Z",
+  "max_requests": 2,
+  "timeout_seconds_per_request": 20,
+  "max_response_bytes": 5242880,
+  "max_total_response_bytes": 10485760,
+  "max_uncompressed_bytes": 16777216,
+  "max_compression_ratio": 100,
+  "max_csv_field_characters": 1048576,
+  "max_schema_output_bytes": 2097152,
+  "max_output_bytes": 67108864,
+  "max_memory_mib": 512,
+  "max_cpus": 2,
+  "max_wall_seconds": 120,
+  "retries": 0,
+  "follow_redirects": false,
+  "follow_pagination": false,
+  "denial_statuses_suppress_same_host": [403, 418, 429, 451],
+  "expected_member": "BTCUSDT-EOHSummary-2023-05-18.csv",
+  "csv": {
+    "encoding": "utf-8-strict",
+    "delimiter": ",",
+    "quotechar": "\"",
+    "strict": true,
+    "dialect_sniffing": false,
+    "first_record": "literal candidate header; semantic status unverified",
+    "empty_token": "",
+    "field_semantics": "unavailable; no substring mapping or value-based time/price interpretation"
+  },
+  "outputs": [
+    "btc-eoh-2023-05-18-zip-receipt.json",
+    "btc-eoh-2023-05-18-checksum-receipt.json",
+    "eoh-capture.json",
+    "eoh-schema.json"
+  ],
+  "requests": [
+    {
+      "id": "btc-eoh-2023-05-18-zip",
+      "kind": "zip",
+      "filename": "BTCUSDT-EOHSummary-2023-05-18.zip",
+      "listed_bytes": 402333,
+      "url": "https://data.binance.vision/data/option/daily/EOHSummary/BTCUSDT/BTCUSDT-EOHSummary-2023-05-18.zip"
+    },
+    {
+      "id": "btc-eoh-2023-05-18-checksum",
+      "kind": "checksum",
+      "filename": "BTCUSDT-EOHSummary-2023-05-18.zip",
+      "listed_bytes": 100,
+      "url": "https://data.binance.vision/data/option/daily/EOHSummary/BTCUSDT/BTCUSDT-EOHSummary-2023-05-18.zip.CHECKSUM"
+    }
+  ]
+}
