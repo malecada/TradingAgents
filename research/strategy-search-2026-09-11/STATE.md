@@ -98,12 +98,17 @@ two outputs931,662bytes,9.339sec436,752,384sampledRSS. Structural verifier passe
 Four primary cash profits positive but all fail3% relevance (base/stress2.0203/
 0.86675at1,000;23.0100/9.80236at10,000). Independent raw cashflow/manual HAC review passed19,428comparisons, including
 728NAV rows and32stresses. Decision14 is finalized. Do not rerun or tune.
-Finalize review/decision/findings and commit/push/remotely verify result backup.
+WBETH results were committed/pushed as001565a83fde4837a4ab75aa66c2d70046b8baec;
+remote equality was verified.
 True ETH delta and the net-base-delta gate remain unavailable.
 
 The parallel next source question is a bounded seven-path news metadata inventory.
-Design/charter/runner/gate are drafted;19synthetics and exact guarded lifecycle
-pass. Independent implementation/gate review is in progress.
+Final news implementation/gate review passes at gatee85a08c4ee2878c38aa111506f5d179d83161a430e7aa925b242177bb41f5bee,
+inspectora4264c026aa9c1f7962a7835a6aa23b27db02e74ae260baf525a11a8480d74fd.
+20focused synthetic tests, eight independent hostile fixtures and exact guarded
+lifecycle pass. Ctime change detection was added before outcomes, with explicit
+best-effort/subtick limitation. Freeze/push/remotely verify, execute exactlyonce,
+independently reconstruct sanitized observations and back up results.
 No real corpus schema/article records have been opened. It uses the remaining
 MAProw8 initial question after two WBETH investigations, not a fresh alpha budget.
 A distinct third/final triangle streaming-observation question has a primary

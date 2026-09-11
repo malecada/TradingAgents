@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "experiment": "news-provenance-20260911",
+  "targets": [
+    {
+      "id": "audit-alpaca",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/data/sentiment/alpaca",
+      "format": "monthly-parquet"
+    },
+    {
+      "id": "audit-gdelt",
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes/data/sentiment/gdelt",
+      "format": "monthly-parquet"
+    },
+    {
+      "id": "original-alpaca",
+      "path": "/home/malecada/master_thesis/TradingAgents/data/sentiment/alpaca",
+      "format": "monthly-parquet"
+    },
+    {
+      "id": "original-gdelt",
+      "path": "/home/malecada/master_thesis/TradingAgents/data/sentiment/gdelt",
+      "format": "monthly-parquet"
+    },
+    {
+      "id": "predlab-alpaca",
+      "path": "/home/malecada/master_thesis/TradingAgents-predlab/data/sentiment/alpaca",
+      "format": "monthly-parquet"
+    },
+    {
+      "id": "predlab-gdelt",
+      "path": "/home/malecada/master_thesis/TradingAgents-predlab/data/sentiment/gdelt",
+      "format": "monthly-parquet"
+    },
+    {
+      "id": "external-csv",
+      "path": "/home/malecada/master_thesis/News_fulltext/News_fulltext/full_articles.csv",
+      "format": "csv-header"
+    }
+  ],
+  "field_whitelist": [
+    "event_ts",
+    "as_of_ts",
+    "retrieved_at",
+    "source_updated_at",
+    "availability_basis",
+    "id",
+    "url",
+    "symbols",
+    "source",
+    "published_at",
+    "created_at",
+    "updated_at",
+    "date",
+    "seendate",
+    "content",
+    "headline",
+    "summary",
+    "author"
+  ],
+  "plausible_header_fields": [
+    "event_ts",
+    "as_of_ts",
+    "retrieved_at",
+    "source_updated_at",
+    "id",
+    "published_at",
+    "created_at",
+    "updated_at",
+    "date",
+    "seendate"
+  ],
+  "normalization": "strip surrounding whitespace, Unicode casefold; UTF8 BOM allowed",
+  "csv_max_bytes": 65536,
+  "footer_max_bytes": 1048576,
+  "entry_limit": 1000,
+  "overflow_iterator_probe": 1,
+  "footers_per_directory": 2,
+  "schema_column_limit": 4096,
+  "max_sanitized_receipt_bytes": 131072,
+  "max_output_bytes": 4194304,
+  "max_memory_mib": 512,
+  "max_cpus": 2,
+  "max_wall_seconds": 120,
+  "parquet_parser": "pyarrow23.0.1 read_schema on isolated PAR1+boundedfooter+length+PAR1; safe primitive type categories only"
+}

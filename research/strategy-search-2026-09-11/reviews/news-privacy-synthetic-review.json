@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "inspector_sha256": "a4264c026aa9c1f7962a7835a6aa23b27db02e74ae260baf525a11a8480d74fd",
+  "real_corpus_paths_opened": 0,
+  "network_requests": 0,
+  "cases": [
+    {
+      "id": "nonempty-parquet-statistics-kv-privacy",
+      "status": "PASS",
+      "read_regions": [
+        [
+          0,
+          4
+        ],
+        [
+          1628,
+          8
+        ],
+        [
+          431,
+          1197
+        ]
+      ]
+    },
+    {
+      "id": "CRLF-first-physical-line-no-read-ahead",
+      "status": "PASS",
+      "read_bytes": 43
+    },
+    {
+      "id": "multiline",
+      "status": "PASS"
+    },
+    {
+      "id": "invalid-UTF8",
+      "status": "PASS"
+    },
+    {
+      "id": "headerless",
+      "status": "PASS"
+    },
+    {
+      "id": "in-place-rewrite-preserved-size-mtime",
+      "status": "PASS"
+    },
+    {
+      "id": "same-length-path-replacement",
+      "status": "PASS"
+    },
+    {
+      "id": "intermediate-symlink-no-data-read",
+      "status": "PASS"
+    }
+  ],
+  "scope": "Independent invented nonempty Parquet/header/path-change tests; no production inspection or financial calculation."
+}
