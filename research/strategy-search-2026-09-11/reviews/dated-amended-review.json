@@ -1,0 +1,232 @@
+{
+  "status": "PASS",
+  "method": "60-digit Decimal raw-source signed cash/wallet reconstruction; independent least-squares and Bartlett HAC7 sandwich with t53 quantile. No economic engine/runner/statistics import, new experiment or network.",
+  "source": "d75b6d15b3e08c10616fe25fbca4c01cf46b29ba",
+  "registration_sha256": "cc5e0458ccf4c51a545e9f9c1ac59f94e2241134bd77573129c4917dce1b66ae",
+  "output_sha256": {
+    "books.json": "e09df7d84529a020a361dc28c476154eb5a46a2d94ddbf90958ea2c0b5150730",
+    "resource.json": "42d64bbbb818a01756620c1b50ba3e74fc4d1e18a0a5608adcd050126843cac0",
+    "summary.json": "9617dd6ecbfb0a55458904e46230d5ab53e0391591281870b89fa2d7a76e16be"
+  },
+  "comparisons": 9352,
+  "maximum_absolute_comparison_error": 7.275957614183426e-12,
+  "cells": 8,
+  "unavailable_cells": 0,
+  "daily_nav_rows": 448,
+  "stress_scenarios_reconstructed": 16,
+  "findings": [
+    {
+      "id": "btc-1000-base",
+      "quantity": 0.005,
+      "capital": 1000.0,
+      "raw_basis_convergence": 0.4906,
+      "slippage_cost": 0.27240128,
+      "commissions": 1.02136287723,
+      "cash_profit": -0.80316415723,
+      "full_capital_return": -0.00080316415723,
+      "descriptive_annualized_return": -0.005234909239088393,
+      "max_drawdown": 0.00112456254873,
+      "minimum_trade_high_reserve_buffer_proxy": 463.4338243,
+      "btc_beta": -0.0008963146665508941,
+      "btc_interval": [
+        -0.00803286912485224,
+        0.006240239791752809
+      ],
+      "eth_beta": 0.0011698628765413168,
+      "eth_interval": [
+        -0.0025911255688195584,
+        0.004930851321899183
+      ]
+    },
+    {
+      "id": "btc-1000-stress",
+      "quantity": 0.005,
+      "capital": 1000.0,
+      "raw_basis_convergence": 0.4906,
+      "slippage_cost": 0.54480256,
+      "commissions": 2.04274220892,
+      "cash_profit": -2.09694476892,
+      "full_capital_return": -0.00209694476892,
+      "descriptive_annualized_return": -0.013667586440282143,
+      "max_drawdown": 0.00209694476892,
+      "minimum_trade_high_reserve_buffer_proxy": 463.3573686,
+      "btc_beta": -0.003095219341736799,
+      "btc_interval": [
+        -0.014022504619163677,
+        0.007832065935686378
+      ],
+      "eth_beta": 0.0025427479801222244,
+      "eth_interval": [
+        -0.0034465992672824152,
+        0.008532095227529207
+      ]
+    },
+    {
+      "id": "btc-10000-base",
+      "quantity": 0.052,
+      "capital": 10000.0,
+      "raw_basis_convergence": 5.10224,
+      "slippage_cost": 2.832973312,
+      "commissions": 10.622173923192,
+      "cash_profit": -8.352907235192,
+      "full_capital_return": -0.0008352907235192,
+      "descriptive_annualized_return": -0.005444305608651928,
+      "max_drawdown": 0.0011695450506792,
+      "minimum_trade_high_reserve_buffer_proxy": 4619.71177272,
+      "btc_beta": -0.0009321257651318625,
+      "btc_interval": [
+        -0.0083542929478136,
+        0.006490041417552094
+      ],
+      "eth_beta": 0.0012166510395955257,
+      "eth_interval": [
+        -0.002694847211784255,
+        0.0051281492909717626
+      ]
+    },
+    {
+      "id": "btc-10000-stress",
+      "quantity": 0.052,
+      "capital": 10000.0,
+      "raw_basis_convergence": 5.10224,
+      "slippage_cost": 5.665946624,
+      "commissions": 21.244518972768,
+      "cash_profit": -21.808225596768,
+      "full_capital_return": -0.0021808225596768,
+      "descriptive_annualized_return": -0.014214289897893428,
+      "max_drawdown": 0.0021808225596768,
+      "minimum_trade_high_reserve_buffer_proxy": 4618.91663344,
+      "btc_beta": -0.0032189562209711253,
+      "btc_interval": [
+        -0.014583522262146327,
+        0.008145609820208607
+      ],
+      "eth_beta": 0.0026444776984137245,
+      "eth_interval": [
+        -0.0035845747820411854,
+        0.008873530178865783
+      ]
+    },
+    {
+      "id": "eth-1000-base",
+      "quantity": 0.17,
+      "capital": 1000.0,
+      "raw_basis_convergence": 0.3366,
+      "slippage_cost": 0.2602224,
+      "commissions": 0.97572244073,
+      "cash_profit": -0.89934484073,
+      "full_capital_return": -0.00089934484073,
+      "descriptive_annualized_return": -0.00586180119404375,
+      "max_drawdown": 0.00110860442619,
+      "minimum_trade_high_reserve_buffer_proxy": 467.5206687,
+      "btc_beta": 0.0011585912079728762,
+      "btc_interval": [
+        -0.00437064759008919,
+        0.006687830006031942
+      ],
+      "eth_beta": -0.00034106485956100134,
+      "eth_interval": [
+        -0.004108670667341909,
+        0.00342654094822319
+      ]
+    },
+    {
+      "id": "eth-1000-stress",
+      "quantity": 0.17,
+      "capital": 1000.0,
+      "raw_basis_convergence": 0.3366,
+      "slippage_cost": 0.5204448,
+      "commissions": 1.95146826292,
+      "cash_profit": -2.13531306292,
+      "full_capital_return": -0.00213531306292,
+      "descriptive_annualized_return": -0.013917665499389286,
+      "max_drawdown": 0.00213531306292,
+      "minimum_trade_high_reserve_buffer_proxy": 467.4438304,
+      "btc_beta": -0.0010427036263915702,
+      "btc_interval": [
+        -0.011011354262171234,
+        0.00892594700938714
+      ],
+      "eth_beta": 0.0009871303108447485,
+      "eth_interval": [
+        -0.005018112892721893,
+        0.006992373514411853
+      ]
+    },
+    {
+      "id": "eth-10000-base",
+      "quantity": 1.76,
+      "capital": 10000.0,
+      "raw_basis_convergence": 3.4848,
+      "slippage_cost": 2.6940672,
+      "commissions": 10.10159703344,
+      "cash_profit": -9.31086423344,
+      "full_capital_return": -0.000931086423344,
+      "descriptive_annualized_return": -0.00606868829501,
+      "max_drawdown": 0.001147731641232,
+      "minimum_trade_high_reserve_buffer_proxy": 4663.7433936,
+      "btc_beta": 0.0011995944880320998,
+      "btc_interval": [
+        -0.004524877038437343,
+        0.006924066014501048
+      ],
+      "eth_beta": -0.0003531569692271215,
+      "eth_interval": [
+        -0.004253808955269112,
+        0.0035474950168163607
+      ]
+    },
+    {
+      "id": "eth-10000-stress",
+      "quantity": 1.76,
+      "capital": 10000.0,
+      "raw_basis_convergence": 3.4848,
+      "slippage_cost": 5.3881344,
+      "commissions": 20.20343613376,
+      "cash_profit": -22.10677053376,
+      "full_capital_return": -0.002210677053376,
+      "descriptive_annualized_return": -0.014408877222897142,
+      "max_drawdown": 0.002210677053376,
+      "minimum_trade_high_reserve_buffer_proxy": 4662.9478912,
+      "btc_beta": -0.001079322971352104,
+      "btc_interval": [
+        -0.011399930516182192,
+        0.009241284573472364
+      ],
+      "eth_beta": 0.001021906916135955,
+      "eth_interval": [
+        -0.005195437270716249,
+        0.007239251102991581
+      ]
+    }
+  ],
+  "resource": {
+    "child_exit_code": 0,
+    "limit_reason": null,
+    "elapsed_seconds": 15.288565333990846,
+    "peak_sampled_tree_rss_bytes": 425881600,
+    "linux_children_ru_maxrss_kib": 207560,
+    "rss_limit_bytes": 536870912,
+    "wall_limit_seconds": 120,
+    "sample_interval_seconds": 0.02,
+    "virtual_address_space_limit": "unlimited",
+    "qualification": "Nominal 20 ms sampled aggregate RSS with one 20 ms process-exit retry; brief overshoot can occur. No detached/background or secondary-thread subprocesses admitted. Shared pages may be counted twice. ru_maxrss is the largest individual child peak, not aggregate."
+  },
+  "structural_verification": {
+    "experiment": "dated-book-amended-20260911",
+    "status": "complete",
+    "cell_count": 8,
+    "unavailable_count": 0,
+    "output_count": 3,
+    "verification": "structural hashes and denominators only; no scientific validation"
+  },
+  "scope": "One spent 56-day pre-terminal episode per asset, eight correlated accounting cases. Cash values conditional on fee/lot/fill assumptions; no expected-return or power inference. Trade-high reserve is a nonconservative proxy.",
+  "not_verified": [
+    "Actual fees/lots/eligibility/fills",
+    "Actual mark/maintenance/liquidation path",
+    "Expiry settlement",
+    "Fresh confirmation or expected profitability",
+    "External backup timing or remote equality",
+    "Economic outcomes before failed receipts beyond preserved records"
+  ]
+}

@@ -7061,3 +7061,16 @@ separate dated amendment has passed final independent review for exactly one
 unchanged economic attempt: original cap, all three prior claims and source
 bytes remain preserved, with an explicit +1 certificate and guarded synthetic
 full-run proof. Neither preparation establishes a strategy result.
+
+## 110. Fixed dated basis cashflow failure (2026-09-11)
+
+The single explicitly amended attempt completed eight conditional books. All
+lose cash after costs: about 0.80–2.14 USDT at 1,000 initial USDT and 8.35–22.11
+at 10,000. Positive raw basis convergence was smaller than commissions alone
+and below the separate relevance benchmark even before costs. Independent raw
+Decimal and manual HAC reconstruction passed 9,352 comparisons, including 448
+daily NAV rows. Actual fills, margin and expected-return inference remain
+unavailable. Decision 13 closes this fixed 56-day pre-terminal claim; the two
+failed parents and sole consumed +1 certificate remain preserved. The next
+financial question is the distinct WBETH market-value hedge book. Zero validated
+strategies; the authorized research program remains active and incomplete.

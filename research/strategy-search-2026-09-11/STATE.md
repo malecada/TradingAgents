@@ -18,6 +18,7 @@ Completed once, with independent substantive and receipt reviews:
 | triangle-proxy-20260911 | 8 / 0 | Tiny positive gross discrepancy in one direction; assumed fees make both directions negative. |
 | bitrue-metadata-20260911 | 2 / 0 | All 755 contract rows retained; fixed BTC/ETH targets match conditional metadata rules. |
 | wbeth-inputs-20260911 | 2 / 0 | Current metadata and 91 exact Q2 daily bars admitted, no zero-activity day. |
+| dated-book-amended-20260911 | 8 / 0 | All fixed dated cash books negative; small basis convergence cannot cover costs. Independent numerical reconstruction passed. |
 
 Execution sources respectively: `d3ba86924bd8711704fc80fd771a0e717cc9bb51`,
 `8cac1b361ecc96e5bd6f2ab0fa43bf51b1524ec4`,
@@ -73,19 +74,28 @@ pushed/remotely verified before acquisition; independent raw/schema review and
 receipt verification pass. Decision 12 retains market-value hedge limits. One
 of three WBETH investigations used; no financial WBETH book has run.
 
-Next: execute dated-book-amended-20260911 ONCE through research_amended after
-current source commit/push/remote equality and metadata admission. Final
-certificate 2bea921038cc032e3b76838cc7223a443f6c97aaa0e1bf840afbc0c381d8fa19,
-gate cc5e0458ccf4c51a545e9f9c1ac59f94e2241134bd77573129c4917dce1b66ae,
-approval and independent final review pass. Original runtime, family cap4,
-three prior dated claims and all economic code/inputs are unchanged. The separate
-one-target +1 certificate preserves total maximum5 and consumes even a failure.
-Target is dated-book-amended-20260911, parent dated-book-resource-correction-20260911.
-Use new runner dated_book_amended.py under v2 guard; exact full synthetic CLI/HAC
-preflight passed. No actual amended run exists yet. Independently reconstruct
-actual eight-case cashflow/statistics after completion, then decision and backup.
-In parallel a WBETH pure market-value book is in synthetic implementation; its
-separate financial charter/gate and source review must precede actual arithmetic.
+The exactly amended dated run COMPLETED from
+d75b6d15b3e08c10616fe25fbca4c01cf46b29ba, pushed/remotely verified before execution.
+Eight complete/zero unavailable cells, three outputs, all economic screens fail.
+Successor structural verifier passes; independent raw cashflow/HAC reconstruction
+passed 9,352 comparisons across eight books, 448 daily NAV rows and 16 stresses,
+maximum absolute error 7.28e-12. Decision 13 closes this fixed economic claim.
+Results and state are ready for the verified backup checkpoint. Do not rerun.
+Original cap4/prior1 and old claims remain; the separate +1 certificate is now
+spent. Effective total5 is exhausted; no next dated attempt is implied.
+
+Next: back up the independently reviewed dated results, then freeze and run the
+separate WBETH book only after independent implementation/charter/gate and exact
+full-lifecycle synthetic review. Root wbeth-book-charter.md defines the fixed
+conservative quantities, 40/50/10 capital, fourprimary+fourzero-funding cases,
+HAC exposure only, no expected-profit interval, true net-base-delta gate
+unavailable. wbeth_book.py has synthetic tests; worker is implementing
+wbeth_book_run.py/source reconciliation and tests (18 runner +21 engine synthetic
+tests pass, including exact guarded lifecycle with real HAC). Independent
+engineering review is in progress. No executed financial WBETH gate or
+actual book exists yet. A bounded factor/information source-priority review is
+complete; it selects a bounded saved-news metadata provenance question. The
+existing value_rev second vintage cannot mature before September 18. Preserve original data and all prior failed/completed claims.
 Options historical economics remains deferred for field/clock/contract semantics,
 with one new options investigation remaining. Meaningful affordable gaps remain.
 Commit/push and verify remote equality at each freeze and results checkpoint.

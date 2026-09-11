@@ -1,0 +1,617 @@
+{
+  "additional_portfolio_counterfactual_count": 0,
+  "cases": [
+    {
+      "accounting_reconciles": true,
+      "actual_margin_risk": {
+        "reason": "Actual mark/maintenance/liquidation path unavailable.",
+        "status": "unavailable"
+      },
+      "adoption_or_execution_validated": false,
+      "asset": "BTC",
+      "capital": 1000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 4.602739726027397,
+        "0.05": 7.671232876712328
+      },
+      "commissions": 1.02136287723,
+      "cost_scenario": "base",
+      "execution": {
+        "reason": "Historical/current lots, fees, eligibility and realized simultaneous fills unverified.",
+        "status": "unavailable"
+      },
+      "graduation": false,
+      "held_activity": {
+        "all_hour_count": 1344,
+        "zero_trade_hour_count": 0,
+        "zero_trade_hour_ids_ms": [],
+        "zero_volume_hour_count": 0,
+        "zero_volume_hour_ids_ms": []
+      },
+      "id": "btc-1000-base",
+      "metrics": {
+        "annualized_simple_return_365": -0.005234909239087377,
+        "cash_profit": -0.803164157229844,
+        "full_capital_return": -0.000803164157229844,
+        "max_drawdown": 0.0011245625487299549,
+        "minimum_trade_high_reserve_buffer_proxy": 463.43382429999997,
+        "trade_high_proxy_breach": false
+      },
+      "necessary_historical_cash_screen": {
+        "case_positive_and_annualized_at_least_3pct": false,
+        "same_capital_base_and_stress_pass": false,
+        "scope": "Provisional deterministic episode relevance only; annualization is descriptive."
+      },
+      "raw_basis_convergence": 0.4905999999999767,
+      "same_quantity_frictionless_profit": 0.4905999999999767,
+      "slippage_cost": 0.2724012800000014,
+      "statistics": {
+        "expected_return_confidence": {
+          "reason": "One historical convergence episode per asset; daily observations are not repeated trades.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.0008963146665497152,
+          "btc_interval": [
+            -0.00803286912485224,
+            0.006240239791752809
+          ],
+          "eth_beta": 0.001169862876539812,
+          "eth_interval": [
+            -0.0025911255688195584,
+            0.004930851321899183
+          ],
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -1.0884313021839073e-05,
+          "observations": 56,
+          "scope": "Trade-close proxy exposure on spent development; within-book 95% Bonferroni intervals only, not all-search coverage or confirmation.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No independent repeated-episode sample or expected-profit test in this design.",
+          "status": "unavailable"
+        },
+        "status": "complete"
+      },
+      "status": "conditional"
+    },
+    {
+      "accounting_reconciles": true,
+      "actual_margin_risk": {
+        "reason": "Actual mark/maintenance/liquidation path unavailable.",
+        "status": "unavailable"
+      },
+      "adoption_or_execution_validated": false,
+      "asset": "BTC",
+      "capital": 1000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 4.602739726027397,
+        "0.05": 7.671232876712328
+      },
+      "commissions": 2.04274220892,
+      "cost_scenario": "stress",
+      "execution": {
+        "reason": "Historical/current lots, fees, eligibility and realized simultaneous fills unverified.",
+        "status": "unavailable"
+      },
+      "graduation": false,
+      "held_activity": {
+        "all_hour_count": 1344,
+        "zero_trade_hour_count": 0,
+        "zero_trade_hour_ids_ms": [],
+        "zero_volume_hour_count": 0,
+        "zero_volume_hour_ids_ms": []
+      },
+      "id": "btc-1000-stress",
+      "metrics": {
+        "annualized_simple_return_365": -0.013667586440281567,
+        "cash_profit": -2.0969447689199114,
+        "full_capital_return": -0.0020969447689199116,
+        "max_drawdown": 0.0020969447689199116,
+        "minimum_trade_high_reserve_buffer_proxy": 463.3573686,
+        "trade_high_proxy_breach": false
+      },
+      "necessary_historical_cash_screen": {
+        "case_positive_and_annualized_at_least_3pct": false,
+        "same_capital_base_and_stress_pass": false,
+        "scope": "Provisional deterministic episode relevance only; annualization is descriptive."
+      },
+      "raw_basis_convergence": 0.4905999999999767,
+      "same_quantity_frictionless_profit": 0.4905999999999767,
+      "slippage_cost": 0.5448025599999841,
+      "statistics": {
+        "expected_return_confidence": {
+          "reason": "One historical convergence episode per asset; daily observations are not repeated trades.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.0030952193417386484,
+          "btc_interval": [
+            -0.014022504619163677,
+            0.007832065935686378
+          ],
+          "eth_beta": 0.002542747980123396,
+          "eth_interval": [
+            -0.0034465992672824152,
+            0.008532095227529207
+          ],
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -3.473870224639804e-05,
+          "observations": 56,
+          "scope": "Trade-close proxy exposure on spent development; within-book 95% Bonferroni intervals only, not all-search coverage or confirmation.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No independent repeated-episode sample or expected-profit test in this design.",
+          "status": "unavailable"
+        },
+        "status": "complete"
+      },
+      "status": "conditional"
+    },
+    {
+      "accounting_reconciles": true,
+      "actual_margin_risk": {
+        "reason": "Actual mark/maintenance/liquidation path unavailable.",
+        "status": "unavailable"
+      },
+      "adoption_or_execution_validated": false,
+      "asset": "BTC",
+      "capital": 10000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 46.02739726027397,
+        "0.05": 76.71232876712328
+      },
+      "commissions": 10.622173923192,
+      "cost_scenario": "base",
+      "execution": {
+        "reason": "Historical/current lots, fees, eligibility and realized simultaneous fills unverified.",
+        "status": "unavailable"
+      },
+      "graduation": false,
+      "held_activity": {
+        "all_hour_count": 1344,
+        "zero_trade_hour_count": 0,
+        "zero_trade_hour_ids_ms": [],
+        "zero_volume_hour_count": 0,
+        "zero_volume_hour_ids_ms": []
+      },
+      "id": "btc-10000-base",
+      "metrics": {
+        "annualized_simple_return_365": -0.005444305608651998,
+        "cash_profit": -8.352907235192106,
+        "full_capital_return": -0.0008352907235192106,
+        "max_drawdown": 0.001169545050679335,
+        "minimum_trade_high_reserve_buffer_proxy": 4619.71177272,
+        "trade_high_proxy_breach": false
+      },
+      "necessary_historical_cash_screen": {
+        "case_positive_and_annualized_at_least_3pct": false,
+        "same_capital_base_and_stress_pass": false,
+        "scope": "Provisional deterministic episode relevance only; annualization is descriptive."
+      },
+      "raw_basis_convergence": 5.102239999999758,
+      "same_quantity_frictionless_profit": 5.102239999999758,
+      "slippage_cost": 2.8329733120001963,
+      "statistics": {
+        "expected_return_confidence": {
+          "reason": "One historical convergence episode per asset; daily observations are not repeated trades.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.0009321257651307528,
+          "btc_interval": [
+            -0.0083542929478136,
+            0.006490041417552094
+          ],
+          "eth_beta": 0.001216651039593754,
+          "eth_interval": [
+            -0.002694847211784255,
+            0.0051281492909717626
+          ],
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -1.1319003490382853e-05,
+          "observations": 56,
+          "scope": "Trade-close proxy exposure on spent development; within-book 95% Bonferroni intervals only, not all-search coverage or confirmation.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No independent repeated-episode sample or expected-profit test in this design.",
+          "status": "unavailable"
+        },
+        "status": "complete"
+      },
+      "status": "conditional"
+    },
+    {
+      "accounting_reconciles": true,
+      "actual_margin_risk": {
+        "reason": "Actual mark/maintenance/liquidation path unavailable.",
+        "status": "unavailable"
+      },
+      "adoption_or_execution_validated": false,
+      "asset": "BTC",
+      "capital": 10000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 46.02739726027397,
+        "0.05": 76.71232876712328
+      },
+      "commissions": 21.244518972768,
+      "cost_scenario": "stress",
+      "execution": {
+        "reason": "Historical/current lots, fees, eligibility and realized simultaneous fills unverified.",
+        "status": "unavailable"
+      },
+      "graduation": false,
+      "held_activity": {
+        "all_hour_count": 1344,
+        "zero_trade_hour_count": 0,
+        "zero_trade_hour_ids_ms": [],
+        "zero_volume_hour_count": 0,
+        "zero_volume_hour_ids_ms": []
+      },
+      "id": "btc-10000-stress",
+      "metrics": {
+        "annualized_simple_return_365": -0.014214289897893067,
+        "cash_profit": -21.808225596767443,
+        "full_capital_return": -0.0021808225596767444,
+        "max_drawdown": 0.0021808225596767444,
+        "minimum_trade_high_reserve_buffer_proxy": 4618.91663344,
+        "trade_high_proxy_breach": false
+      },
+      "necessary_historical_cash_screen": {
+        "case_positive_and_annualized_at_least_3pct": false,
+        "same_capital_base_and_stress_pass": false,
+        "scope": "Provisional deterministic episode relevance only; annualization is descriptive."
+      },
+      "raw_basis_convergence": 5.102239999999758,
+      "same_quantity_frictionless_profit": 5.102239999999758,
+      "slippage_cost": 5.665946623999891,
+      "statistics": {
+        "expected_return_confidence": {
+          "reason": "One historical convergence episode per asset; daily observations are not repeated trades.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.0032189562209688598,
+          "btc_interval": [
+            -0.014583522262146327,
+            0.008145609820208607
+          ],
+          "eth_beta": 0.0026444776984122986,
+          "eth_interval": [
+            -0.0035845747820411854,
+            0.008873530178865783
+          ],
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -3.612772815087095e-05,
+          "observations": 56,
+          "scope": "Trade-close proxy exposure on spent development; within-book 95% Bonferroni intervals only, not all-search coverage or confirmation.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No independent repeated-episode sample or expected-profit test in this design.",
+          "status": "unavailable"
+        },
+        "status": "complete"
+      },
+      "status": "conditional"
+    },
+    {
+      "accounting_reconciles": true,
+      "actual_margin_risk": {
+        "reason": "Actual mark/maintenance/liquidation path unavailable.",
+        "status": "unavailable"
+      },
+      "adoption_or_execution_validated": false,
+      "asset": "ETH",
+      "capital": 1000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 4.602739726027397,
+        "0.05": 7.671232876712328
+      },
+      "commissions": 0.97572244073,
+      "cost_scenario": "base",
+      "execution": {
+        "reason": "Historical/current lots, fees, eligibility and realized simultaneous fills unverified.",
+        "status": "unavailable"
+      },
+      "graduation": false,
+      "held_activity": {
+        "all_hour_count": 1344,
+        "zero_trade_hour_count": 0,
+        "zero_trade_hour_ids_ms": [],
+        "zero_volume_hour_count": 0,
+        "zero_volume_hour_ids_ms": []
+      },
+      "id": "eth-1000-base",
+      "metrics": {
+        "annualized_simple_return_365": -0.005861801194044551,
+        "cash_profit": -0.899344840730123,
+        "full_capital_return": -0.0008993448407301229,
+        "max_drawdown": 0.0011086044261901407,
+        "minimum_trade_high_reserve_buffer_proxy": 467.5206687,
+        "trade_high_proxy_breach": false
+      },
+      "necessary_historical_cash_screen": {
+        "case_positive_and_annualized_at_least_3pct": false,
+        "same_capital_base_and_stress_pass": false,
+        "scope": "Provisional deterministic episode relevance only; annualization is descriptive."
+      },
+      "raw_basis_convergence": 0.3365999999999258,
+      "same_quantity_frictionless_profit": 0.3365999999999258,
+      "slippage_cost": 0.26022239999999613,
+      "statistics": {
+        "expected_return_confidence": {
+          "reason": "One historical convergence episode per asset; daily observations are not repeated trades.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": 0.0011585912079713758,
+          "btc_interval": [
+            -0.00437064759008919,
+            0.006687830006031942
+          ],
+          "eth_beta": -0.00034106485955935937,
+          "eth_interval": [
+            -0.004108670667341909,
+            0.00342654094822319
+          ],
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -1.3316205370218277e-05,
+          "observations": 56,
+          "scope": "Trade-close proxy exposure on spent development; within-book 95% Bonferroni intervals only, not all-search coverage or confirmation.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No independent repeated-episode sample or expected-profit test in this design.",
+          "status": "unavailable"
+        },
+        "status": "complete"
+      },
+      "status": "conditional"
+    },
+    {
+      "accounting_reconciles": true,
+      "actual_margin_risk": {
+        "reason": "Actual mark/maintenance/liquidation path unavailable.",
+        "status": "unavailable"
+      },
+      "adoption_or_execution_validated": false,
+      "asset": "ETH",
+      "capital": 1000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 4.602739726027397,
+        "0.05": 7.671232876712328
+      },
+      "commissions": 1.9514682629200002,
+      "cost_scenario": "stress",
+      "execution": {
+        "reason": "Historical/current lots, fees, eligibility and realized simultaneous fills unverified.",
+        "status": "unavailable"
+      },
+      "graduation": false,
+      "held_activity": {
+        "all_hour_count": 1344,
+        "zero_trade_hour_count": 0,
+        "zero_trade_hour_ids_ms": [],
+        "zero_volume_hour_count": 0,
+        "zero_volume_hour_ids_ms": []
+      },
+      "id": "eth-1000-stress",
+      "metrics": {
+        "annualized_simple_return_365": -0.013917665499389135,
+        "cash_profit": -2.135313062919977,
+        "full_capital_return": -0.0021353130629199767,
+        "max_drawdown": 0.0021353130629199767,
+        "minimum_trade_high_reserve_buffer_proxy": 467.44383039999997,
+        "trade_high_proxy_breach": false
+      },
+      "necessary_historical_cash_screen": {
+        "case_positive_and_annualized_at_least_3pct": false,
+        "same_capital_base_and_stress_pass": false,
+        "scope": "Provisional deterministic episode relevance only; annualization is descriptive."
+      },
+      "raw_basis_convergence": 0.3365999999999258,
+      "same_quantity_frictionless_profit": 0.3365999999999258,
+      "slippage_cost": 0.5204447999999144,
+      "statistics": {
+        "expected_return_confidence": {
+          "reason": "One historical convergence episode per asset; daily observations are not repeated trades.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.0010427036263920462,
+          "btc_interval": [
+            -0.011011354262171234,
+            0.00892594700938714
+          ],
+          "eth_beta": 0.0009871303108449797,
+          "eth_interval": [
+            -0.005018112892721893,
+            0.006992373514411853
+          ],
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -3.642806135718435e-05,
+          "observations": 56,
+          "scope": "Trade-close proxy exposure on spent development; within-book 95% Bonferroni intervals only, not all-search coverage or confirmation.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No independent repeated-episode sample or expected-profit test in this design.",
+          "status": "unavailable"
+        },
+        "status": "complete"
+      },
+      "status": "conditional"
+    },
+    {
+      "accounting_reconciles": true,
+      "actual_margin_risk": {
+        "reason": "Actual mark/maintenance/liquidation path unavailable.",
+        "status": "unavailable"
+      },
+      "adoption_or_execution_validated": false,
+      "asset": "ETH",
+      "capital": 10000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 46.02739726027397,
+        "0.05": 76.71232876712328
+      },
+      "commissions": 10.101597033440001,
+      "cost_scenario": "base",
+      "execution": {
+        "reason": "Historical/current lots, fees, eligibility and realized simultaneous fills unverified.",
+        "status": "unavailable"
+      },
+      "graduation": false,
+      "held_activity": {
+        "all_hour_count": 1344,
+        "zero_trade_hour_count": 0,
+        "zero_trade_hour_ids_ms": [],
+        "zero_volume_hour_count": 0,
+        "zero_volume_hour_ids_ms": []
+      },
+      "id": "eth-10000-base",
+      "metrics": {
+        "annualized_simple_return_365": -0.006068688295010621,
+        "cash_profit": -9.310864233440952,
+        "full_capital_return": -0.0009310864233440953,
+        "max_drawdown": 0.0011477316412321671,
+        "minimum_trade_high_reserve_buffer_proxy": 4663.7433936,
+        "trade_high_proxy_breach": false
+      },
+      "necessary_historical_cash_screen": {
+        "case_positive_and_annualized_at_least_3pct": false,
+        "same_capital_base_and_stress_pass": false,
+        "scope": "Provisional deterministic episode relevance only; annualization is descriptive."
+      },
+      "raw_basis_convergence": 3.4847999999992316,
+      "same_quantity_frictionless_profit": 3.4847999999992316,
+      "slippage_cost": 2.6940672000000268,
+      "statistics": {
+        "expected_return_confidence": {
+          "reason": "One historical convergence episode per asset; daily observations are not repeated trades.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": 0.001199594488031853,
+          "btc_interval": [
+            -0.004524877038437343,
+            0.006924066014501048
+          ],
+          "eth_beta": -0.00035315696922637557,
+          "eth_interval": [
+            -0.004253808955269112,
+            0.0035474950168163607
+          ],
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -1.378582617411529e-05,
+          "observations": 56,
+          "scope": "Trade-close proxy exposure on spent development; within-book 95% Bonferroni intervals only, not all-search coverage or confirmation.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No independent repeated-episode sample or expected-profit test in this design.",
+          "status": "unavailable"
+        },
+        "status": "complete"
+      },
+      "status": "conditional"
+    },
+    {
+      "accounting_reconciles": true,
+      "actual_margin_risk": {
+        "reason": "Actual mark/maintenance/liquidation path unavailable.",
+        "status": "unavailable"
+      },
+      "adoption_or_execution_validated": false,
+      "asset": "ETH",
+      "capital": 10000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 46.02739726027397,
+        "0.05": 76.71232876712328
+      },
+      "commissions": 20.20343613376,
+      "cost_scenario": "stress",
+      "execution": {
+        "reason": "Historical/current lots, fees, eligibility and realized simultaneous fills unverified.",
+        "status": "unavailable"
+      },
+      "graduation": false,
+      "held_activity": {
+        "all_hour_count": 1344,
+        "zero_trade_hour_count": 0,
+        "zero_trade_hour_ids_ms": [],
+        "zero_volume_hour_count": 0,
+        "zero_volume_hour_ids_ms": []
+      },
+      "id": "eth-10000-stress",
+      "metrics": {
+        "annualized_simple_return_365": -0.014408877222897755,
+        "cash_profit": -22.106770533760937,
+        "full_capital_return": -0.0022106770533760938,
+        "max_drawdown": 0.0022106770533760938,
+        "minimum_trade_high_reserve_buffer_proxy": 4662.9478911999995,
+        "trade_high_proxy_breach": false
+      },
+      "necessary_historical_cash_screen": {
+        "case_positive_and_annualized_at_least_3pct": false,
+        "same_capital_base_and_stress_pass": false,
+        "scope": "Provisional deterministic episode relevance only; annualization is descriptive."
+      },
+      "raw_basis_convergence": 3.4847999999992316,
+      "same_quantity_frictionless_profit": 3.4847999999992316,
+      "slippage_cost": 5.38813439999918,
+      "statistics": {
+        "expected_return_confidence": {
+          "reason": "One historical convergence episode per asset; daily observations are not repeated trades.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.001079322971354914,
+          "btc_interval": [
+            -0.011399930516182192,
+            0.009241284573472364
+          ],
+          "eth_beta": 0.0010219069161376657,
+          "eth_interval": [
+            -0.005195437270716249,
+            0.007239251102991581
+          ],
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -3.77137504025395e-05,
+          "observations": 56,
+          "scope": "Trade-close proxy exposure on spent development; within-book 95% Bonferroni intervals only, not all-search coverage or confirmation.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No independent repeated-episode sample or expected-profit test in this design.",
+          "status": "unavailable"
+        },
+        "status": "complete"
+      },
+      "status": "conditional"
+    }
+  ],
+  "graduation": false,
+  "interpretation": "One spent historical convergence episode per asset. Frictionless values use the same primary quantity; no fresh confirmation or expected-profit inference.",
+  "primary_count": 8,
+  "validated_strategies": 0
+}

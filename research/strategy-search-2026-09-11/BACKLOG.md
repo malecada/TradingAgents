@@ -4,15 +4,18 @@
 - [x] Admit actual public event marks and matched bars once; independent review passed.
 - [x] Complete fixed conditional cash book and independent review; all eight primary cases fail economic screens. Switch family.
 - [x] Admit the fixed dated-contract archives and independently verify coverage.
-- [ ] Dated economic result deferred after two preserved harness failures; no extra attempt without reviewed amendment route.
+- [x] Dated economic result completed under the single reviewed +1 amendment; all eight cases fail costs/relevance. Both failures and exhausted effective cap5 remain.
 - [x] Complete options metadata capture and independent reconstruction.
 - [x] Admit one fixed EOHSummary archive body/schema; semantic and financial admission remain unavailable.
 - [x] Register fixed same-venue spot-triangle necessary-feasibility capture.
 - [x] Execute triangle capture and separate eight-case static proxy; assumed fees erase the small gross discrepancy, execution unverified.
 - [x] Resolve Bitrue request scope and complete bounded metadata probe; historical funding economics deferred for settled event/mark sources.
-- [ ] Complete independently approved bounded amendment engineering, adversarial review and exact preflight before one proposed identical dated book; no financial extension admitted yet.
+- [x] Complete exact amendment engineering, adversarial review, synthetic preflight and independent actual cashflow/HAC reconstruction.
 - [x] Bound Binance–Bitrue documentation/metadata comparability; current fees, settled funding and account applicability remain dependencies.
-- [ ] Investigate WBETH–ETH contractual link and public ratio-history source without financial interpretation.
+- [x] Investigate WBETH–ETH source link; true historical contractual delta remains unavailable.
+- [ ] Freeze independently reviewed WBETH market-value book and complete eight-case run/review.
+- [ ] Register bounded metadata-only saved-news provenance inventory; preserve article text and prior exposure.
+- [ ] Existing value_rev remains deferred until a second vintage September 18 or later; no early replay or renamed gate.
 - [ ] Re-rank relative-value, liquidity, factor and information questions against
   the resulting evidence; register only a distinct justified prediction.
 
