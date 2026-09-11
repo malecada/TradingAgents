@@ -74,8 +74,11 @@ failed claims, economic code and inputs remain immutable. Exactly one named
 child dated-book-amended-20260911 is proposed, parent
  dated-book-resource-correction-20260911; no new dated run or certificate is
 admitted yet. Root owns the future certificate/gate/charter and amended runner;
-worker owns tradingagents/research_amended and synthetic tests. A separate
-WBETH linked-value source investigation is underway with no rate/price outcomes.
+worker owns tradingagents/research_amended and synthetic tests. The WBETH source gate is frozen at gates-wbeth-inputs.json with independent
+22-test maximum-payload/lifecycle review; it has not run. Execute once after
+current HEAD commit/push/remote equality while the dated final certificate is
+reviewed. It measures metadata and 91-day bar validity only. A pure WBETH
+market-value book is in synthetic implementation, no financial gate or outcomes.
 Options historical economics remains deferred for field/clock/contract semantics,
 with one new options investigation remaining. Meaningful affordable gaps remain.
 Commit/push and verify remote equality at each freeze and results checkpoint.

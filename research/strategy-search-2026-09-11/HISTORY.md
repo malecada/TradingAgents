@@ -63,3 +63,16 @@ history. These are preserved; zero known exact new-mechanism gates does not mean
 zero broader search or statistical multiplicity. The new administrative allowance
 is three investigations under one stable mechanism identity, also MAP row 7.
 No old funding-carry or settlement-blocked case moves into this allowance.
+
+## WBETH linked-value ancestry before source acquisition
+
+A September 11 scoped literal search for WBETH, staking, wstETH, rETH and liquid
+staking in the five preserved financial gatefiles (predlab, rebuild, LLM
+rank/pair/event) found no matches. This establishes zero known exact WBETH gates
+within that scope, not zero broad prior experimentation. Earlier PRX selection,
+post-hoc DEX-ratio and ETH funding-carry evidence remain inherited. The new
+mechanism's long asset is a documented staking claim; its fixed market-value
+hedge/spot exit differs from a statistical pair selector and from ETH spot
+carry, without identifying pure validator yield. Its three-question
+administrative cap is also charged to MAP rows 3/8; 2026 Q2 ETH history remains
+spent and WBETH source discovery is exploratory, never fresh confirmation.
