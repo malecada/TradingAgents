@@ -1,154 +1,129 @@
 # Active program state
 
-The September 11 user launch remains authorized. Program active/incomplete;
-zero validated strategies. Branch `research/strategy-search-2026-09-11`.
-Coordinator owns shared gates, state and commits. No live/background capture,
-order, paper session or scheduler is running. Inspect actual claims before
-resumption; never rerun a completed or failed identity.
+The September 11 user launch remains authorized. Research is active and
+incomplete; zero strategies are validated. Branch `research/strategy-search-2026-09-11`.
+All 18 attempted identities are terminal: 16 completed investigations and two
+failed harness attempts. No capture, paper session, order, scheduler or background
+job is running. Inspect actual claims and Git status before resumption; never
+repeat a completed or failed identity.
 
-## Retained investigations
+## Retained results
 
-| Run | Complete / unavailable cells | Finding |
+Decisions01–18 and their independent reviews contain sources, hashes, qualifications
+and next actions. A completed receipt is not a strategy passing verdict.
+
+| Investigation | Complete / unavailable cells | Narrow result |
 |---|---:|---|
-| carry-definition-20260911 | 6 / 0 | Removing modeled opportunity cost changes the old index sign, but does not reconstruct cash profit. |
-| carry-inputs-20260911 | 10 / 0 | Authentic event marks and matched bars captured; 12 outputs, 1,265,237 raw bytes. |
-| carry-book-20260911 | 16 / 0 | All eight primary cash books negative; eight zero-funding counterfactuals retained. |
-| dated-archive-20260911 | 8 / 0 | Four ZIP/checksum pairs verified; fixed pre-terminal 56-day interval admitted conditionally. |
-| options-metadata-20260911 | 4 / 0 | Current 1,230 BTC/ETH quantity rules and two archive prefixes admitted; no option economics. |
-| options-eoh-schema-20260911 | 2 / 0 | One checksum-verified CSV: 5,734 records after its candidate header, 26 fields; semantics unverified. |
-| triangle-inputs-20260911 | 6 / 0 | Fixed contract/time/ticker/depth source schemas pass; no conversion calculation. |
-| triangle-proxy-20260911 | 8 / 0 | Tiny positive gross discrepancy in one direction; assumed fees make both directions negative. |
-| bitrue-metadata-20260911 | 2 / 0 | All 755 contract rows retained; fixed BTC/ETH targets match conditional metadata rules. |
-| wbeth-inputs-20260911 | 2 / 0 | Current metadata and 91 exact Q2 daily bars admitted, no zero-activity day. |
-| dated-book-amended-20260911 | 8 / 0 | All fixed dated cash books negative; small basis convergence cannot cover costs. Independent numerical reconstruction passed. |
-| wbeth-book-20260911 | 8 / 0 | Four primary books cash-positive but all below3% relevance; independent reconstruction passed. |
-| news-provenance-20260911 | 0 / 7 | Six literal source roots missing; externalCSV header not admitted. Independent bounded reconstruction passed. |
-| triangle-stream-20260911 | 8 / 1 | No fee-qualified supported states; early storage cap and four unsupported boundary bins require forensic qualification. |
-| options-entry-20260911 | 15 / 0 | Minimum buyer components fit both capitals/fees; independent reconstruction passes, full hedged-account economics untested. |
+| carry-definition | 6 / 0 | Removing opportunity cost changes an old index sign, not cash profit. |
+| carry-inputs | 10 / 0 | Matched Q2 bars and authentic funding events admitted. |
+| carry-book | 16 / 0 | Eight primary cash books negative; eight zero-funding controls retained. |
+| dated-archive | 8 / 0 | Fixed pre-terminal 56-day trade-bar interval admitted. |
+| options-metadata | 4 / 0 | Current quantities and two archive prefixes admitted; no economics. |
+| options-eoh-schema | 2 / 0 | One literal CSV schema; historical semantic admission unavailable. |
+| triangle-inputs | 6 / 0 | Asynchronous source schemas admitted. |
+| triangle-proxy | 8 / 0 | Small gross discrepancy erased by assumed fees. |
+| bitrue-metadata | 2 / 0 | Conditional current contract metadata; settled funding economics unavailable. |
+| wbeth-inputs | 2 / 0 | Current metadata and complete Q2 daily trade bars. |
+| dated-book-amended | 8 / 0 | All fixed spot/dated books negative after costs. |
+| wbeth-book | 8 / 0 | Primary books cash-positive but below frozen relevance. |
+| news-provenance | 0 / 7 | Fixed source paths/header not admitted; 13 unavailable schema slots. |
+| triangle-stream | 8 / 1 | No fee-qualified supported state; source-cutoff defect retained. |
+| options-entry | 15 / 0 | Minimum buyer components fit both capital/fee scenarios; full account untested. |
+| dated-mark | 2 / 0 | All 112 fixed daily mark slots admitted and independently verified. |
 
-Two further dated-book attempts FAILED without economic outputs: original
-MemoryError under the virtual-address cap, then resource-correction monitor
-process-exit defect. Each retains eight intended cells, claim and failed receipt.
-All prior results and independent reviews are in Decisions01–15 and reviews/.
-The table reports structural completion, never strategy validation.
+All IDs above have suffix `-20260911`. The separate `dated-book-20260911` failed
+under the initial virtual-memory cap; `dated-book-resource-correction-20260911`
+failed under the process-exit monitor defect. Each retains its eight intended
+cells and failed receipt, with no economic output. Do not merge failures with
+unavailable source cells or discard their consumed attempts.
 
-Funding's three new questions are spent; eight known direct historical records
-and unknown broader multiplicity remain. Dated original cap4/prior1 is unchanged:
-the exactly reviewed separate +1 certificate was consumed by dated-book-amended,
-effective total5 spent. No further correction or budget extension is implied.
-Options has used all three new questions (plus prior RVIV gate/twelve rows).
-Triangle has now used three of three, also MAProw5. WBETH used two, charged to
-MAProws3/8; news consumed third MAProw8 question, not a fresh three-trial family.
-Bitrue used one of three; settled funding/mark/fee/access sources remain blockers.
-These administrative counts are not complete statistical multiplicity.
+## Important qualifications and budgets
 
-## Current result and next action
+Funding used all three new questions; eight known direct historical records and
+unknown broader multiplicity remain. Dated original cap4/prior1 is unchanged.
+The one repair increment and one distinct source increment are now consumed:
+five program claims plus one known prior = effective six. Neither certificate
+grants a financial spread book or any further attempt.
 
-triangle-stream-20260911 COMPLETED once from
-71234f87d4221e8849f130dfb3e62824d700f0df, committed/pushed and remote-equality
-verified before execution. Rootexec94780 has TERMINATED exit0. Guard416.339sec,
-115,523,584 sampled aggregate RSS, no guard limit. Capture started
-2026-09-11T10:33:26.847060+00:00 and stopped on its frozen32rawchunk capacity;
-35 outputs total30,528,519bytes,41,536 receipts,6,037,633 rawpayloadbytes.
-Structural verifier passes9cells (8complete/1transportunavailable),43,200 planned
-subslots. Published series contain2,357valid/3,043unavailable of5,400bins each,
-with zero10bp-per-leg qualified bins. These are overlapping local quote states,
-not fills, trade counts, expected returns or evidence of all-time absence.
+Options used all three new questions plus the prior RVIV gate/twelve rows;
+triangle used three, also MAP row5. WBETH used two, charged to rows3/8; news
+spent row8's third question. Bitrue used one of three. These administrative
+counts are not complete statistical multiplicity. No family rename resets them.
 
-Independent substantive review completed299,403 numeric checks (max4.77e-12).
-It found four boundary bins per
-series after the first unretained frame at407.778372831seconds but before the
-exception-handler cutoff408.441994777seconds. Preserve all original outputs.
-Those32subslots lack complete source evidence; conservative audit counts are
-2,353supportable/3,047unavailable per series. Do not silently replace the
-registered denominator or repair/rerun the frozen engine. All qualified counts and streaks are unchanged; Decision16 and Finding113 retain
-the measurement defect. Results are ready for verified backup. The expected next
-investigation remains options.
+The triangle stream published 2,357 valid/3,043 unavailable bins per case, but
+four boundary bins per series follow an unretained update. The conservative
+source-support audit is 2,353/3,047; all original outputs remain unchanged.
+Independent 299,403-check reconstruction confirms zero fee-qualified supported
+states and unchanged gross counts/streaks. Do not use the frozen engine again
+without correcting and testing its cutoff under a new justified registration.
 
-options-entry-20260911 final source/gate review PASS; no actual new options quote, index, mark or selection has run. Root owns
-options-entry-charter.md, options_entry_guard.py, specification/observation/gate;
-carry_diagnostic owns options_entry.py, options_entry_transport.py and focused
-tests. Proposed seven source slots and eight component cases, ten outputs,
-256KiB/request,180second capture/240second hardwall,512MiB2CPU. This is the final
-new options allowance, not a volatility-return or full-account-affordability
-claim. 31focused synthetic tests,28independent Fraction cases/140exact assertions,
-7selection checks and two exactguarded lifecycle preflights pass. Gate
-54d47d9c295a9b91a65b60af8ec16df07ef53554daa277f1f55066c15d5db3ad pins
-source89b361580dead7236b1744af05a2729deda5111343e25d9da7974b775fa15487.
-Sourceb46f06a095ab7c8bbf712372780c884abec2663c was committed/pushed and
-remoteequalityverified. The sole options-entry-20260911 COMPLETED; rootexec72642terminatedexit0,
-14.116seconds128,741,376sampledRSS. All15cellscomplete/0unavailable,10outputs;
-structuralverifierPASS. BothchosenOct2minimumcallsq.01unit1 have sufficient
-displayedasksize and componentfit atbothcapitallevels underbothfees. BTC
-28.28486408/28.33108009USDT, ETH1.27191567/1.27339458. These are buyerentry
-components only, not hedgedaccount requirements orperformance. IndependentactualreviewPASS: all1,678metadata rows/10parents,7sources,
-80exactFractionassertions and completehashes/denominators. Outputs74,601bytes,
-raw1,337bytes. Decision17/Finding114 finalized; resultscommitted/pushed
-ac10147edbe4b90786cf9194351740d6aa6aedc2, remoteequalityverified.
+WBETH cash profit is small: base/stress 2.0203/0.86675 USDT at1,000 and
+23.0100/9.80236 at10,000 over91days. It fails the provisional3% relevance screen;
+true ETH delta and expected-profit inference remain unknown. The selected
+options buyer components are about28.28–28.33 USDT forBTC and1.272–1.273 forETH,
+with displayed size sufficient. They do not establish seller margin, hedged
+account feasibility or performance. Public seller opening formulas exist;
+another buyer-only capital calculation lacks a justified long-volatility premise.
 
-The independent coverage audit identifies an eligible dated/perpetual spread
-question after options. Draft dated-mark-charter.md proposes two fixed daily-mark
-source requests; existing trade/funding sources also permit a narrower cash
-diagnostic with margin unverified. Independent information-value review supports exactlyone named sixthdated
-attempt for sourceadmission, noautomaticbook. Rootdated_mark.py/transport and
-test_dated_mark.py have26focusedtests and22independentscenarios passing.
-Three exactguardactualmain fixtures prepared, pending stableextendedruntime.
-Workerowns tradingagents/research_extended and test_extended_lifecycle.py;
-initial16tests pass, expandedadversarial/guard tests underway. Independent
-runtime review underway. Gate/spec/definitionobsdraft exists WITHOUTcertificate;
-NOTadmitted/committedforempiricalexecution. Rootmustfinalize sourcepins,
-exactclosed-v1snapshot/currentinventory proof,change manifest,review/preflight,
-certificate/fullgate andverifyremotefreeze beforeany datedmarkrequest.
-Original/amendedpackages/gates/claims immutable; frozenv1live-ledgerverifier
-limitation afterdescendant mustbedisclosed, notsilentlyfiltered. No new dated
-claim exists andno mark endpoint hasbeencalled.
-Initial
-caps alone do not establish exhaustion. Existing value_rev needs its second
-vintage on September18 or later; no early replay or renamed sample. News needs
-actual versioned source identity/observation clocks. Historical EOH fields and
-Bitrue settled-event/mark economics remain unadmitted. Account country/product
-and fee applicability were requested without credentials and remain unknown.
+## Latest closure and exact next action
 
-## Preservation and backup
+`dated-mark-20260911` completed once from
+5cf5dd843131da489a4695623b81009a244ab49f after committed, pushed and remotely
+verified freeze. Rootexec6096 is terminated, exit0. Guard:32.695seconds,
+67,661,824bytes sampled aggregate RSS. Two complete source cells/112complete
+slots, four outputs57,348bytes and raw13,666bytes. Source/schema/certificate
+reviews and the new independent receipt verifier pass. Decision18/Finding115
+are finalized; this results checkpoint is ready for verified backup.
 
-Prior independently reviewed results backed up and remotely verified:
-dated99445a558dde0607e4563aed0759954693bd475c;
-WBETH001565a83fde4837a4ab75aa66c2d70046b8baec;
-news44a4b9c8051074cadd76efe16c8e3607275ae61d.
-Triangle source freeze was71234f87d4221e8849f130dfb3e62824d700f0df.
-Triangle results were committed/pushed as1f2866598ab15970365b985fb706c43c5c20d56a;
-remote equality was independently queried. Named offline verification now passes
-1,175 tests and20subtests across the reviewed66module profile;75legacy/unreviewed
-encountered files remain withheld. This is engineering validation only.
-Preserve raw stores, original worktrees, old gates/ledgers and22deferred settlement
-cases. Never read credentials, trade, contact providers or mutate production.
-Continue each justified eligible action; context checkpoints mean incomplete.
+The newest runtime is `tradingagents.research_extended`; use its `verify.verify_run`
+for the new source receipt and explicit closed-history verification. The frozen
+`research_amended` v1 live-ledger verifier now refuses because a descendant
+exists. That expected refusal is preserved and disclosed. The successor independently
+reconstructs v1 at its certificate-bound three-predecessor inventory, and the
+source grant against the complete current inventory. No ledger was filtered,
+removed or rewritten. Original, amended and extended runtime bytes are now frozen.
 
-Current coordinator next: wait for worker source/test stability; run the three
-actualmain guarded datedmark syntheticfixtures; integrate independent runtime
-and source reviews; materialize exact reviewed sixth-attempt certificate/gate;
-commit/push/remotelyverify; execute once, review,diagnose,backup then adjudicate
-distinct conditional spreadcashbook. Options documentaryfollowup rejects another
-buyer-capital experiment absentlongvolprediction; publicsellerIMformulas exist,
-substantivepremiumtest stillneedsfrozenpolicy andadmitted option/hedgetimepath.
-No final stoppingcriterion; allcurrentactualruns terminal andimmutable.
+The next candidate is one fixed long-dated/short-perpetual cash book on the same
+May1–June25 development interval, with matched quantities and conservative
+unchanged capital ceilings. Symmetric daily mark inputs are now available.
+This is distinct from spot financing, but algebraically related to prior books;
+no fresh confirmation or independent discovery is implied. Before arithmetic:
 
-Final dated-source gate/certificate review is now at reference-only comparison.
-The implementation and exact target/change/inventory review PASS: 31 lifecycle
-checks, 29 collector checks including three actual-main guarded fixtures, 22
-independent source scenarios, adversarial preservation regressions and guarded
-read-only reconstruction of the actual consumed v1 history. Maximum collector
-fixture RSS81,440,768bytes and7.418seconds; actual v1 snapshot30,990,336bytes,
-0.858seconds. Initial synthetic preservation defects remain in the initial
-review report; resolved without empirical attempts.
-Target contract957265a1a5ed3848a3e0532282174e8e2bb9adbc17a0b6db82d488076ec8ce45;
-change manifest3d679e8fecffb6b5bb7c2be22e6ea38ccfd7143bbe753925fc9d4f8ef241e36f;
-final reviewed assessmente80611235b55a6fd7335b42325d716534bd3bf5a3209572ae40ddde4df9f04ab.
-Gate0abec8fd1204cf28baa9e3637c855f1c43010a5376e75fb46c08f8509ea897fb;
-certificate242f31d42386e23906138c703ca6b440153cdaefd61c035db83062938afc4b0a.
-After reference comparison, commit/push/verify remote equality and execute exactly
-once through unchanged resource_guard_v2.py (512MiB,120seconds,2CPU) and
- dated_mark.py --source FULL_COMMITTED_HEAD. Do not rerun or change HEAD while
-active. The new source allowance is the sixth total dated attempt only; no book
-or further increment is granted. All actual runs through Decision17 are terminal;
-no dated-mark claim or new request exists at this pre-execution checkpoint.
+1. Finish the scientific information-value/design review in
+   reviews/dated-spread-information-design.md (history_audit owns it).
+2. Review the narrow seventh-attempt admission proposal (carry_diagnostic is
+   currently read-only). Preserve both consumed certificates, all five prior
+   program claims, old gate objects and all three frozen runtimes. No book
+   allowance exists yet. An independent closed v2 snapshot plus complete current
+   inventory will be needed; do not reuse the source-only certificate.
+3. If justified, root owns the new book engine, charter and gates; assign bounded
+   extension implementation with clear ownership, synthetic tests and independent
+   review. Freeze every input, rule, cost, null, stress and uncertainty claim;
+   commit/push/verify remote equality before one guarded execution.
+4. Independently review actual cashflows/risk, diagnose, record and back up; then
+   reassess all mapped affordable gaps. A plan or exhausted initial cap is not
+   a stopping criterion.
+
+The source step did not calculate spreads, funding sums, quantities or returns.
+No new financial book has run. Existing value_rev needs its second vintage on
+September18 or later. News needs versioned source identity and observation clocks;
+Bitrue needs settled event/mark/fee applicability. A meaningful options premium
+test needs a fixed selling/hedging/tail policy and admitted executable time paths.
+Prospective evidence remains a real future dependency, not manufactured confirmation.
+Account country/product and fee facts were requested without credentials and
+remain unknown. No final coverage/stopping criterion is established.
+
+## Backup and preservation
+
+Last result backup: ac10147edbe4b90786cf9194351740d6aa6aedc2 (options results),
+pushed with independently queried remote equality. Current committed source
+freeze:5cf5dd843131da489a4695623b81009a244ab49f, also remotely verified. Dated-mark
+results await their reviewed results commit/push/equality checkpoint.
+The named offline profile passed1,175tests+20subtests before the latest extension.
+Latest focused proof:31 extension tests,29 collector tests including three exact
+CLI guards, independent adversarial/source checks and guarded actual-history proof.
+
+Preserve raw stores, original worktrees, all gates/ledgers and22deferred settlement
+cases. No credentials, provider contact, paid sources, orders or production changes.
+The user authorized sustained research; continue justified work without another
+routine permission question. Context checkpoints mean incomplete and resumable.

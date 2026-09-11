@@ -1,0 +1,230 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "budget_extension": {
+    "certificate": {
+      "path": "research/strategy-search-2026-09-11/dated-extension-certificate.json",
+      "sha256": "242f31d42386e23906138c703ca6b440153cdaefd61c035db83062938afc4b0a"
+    },
+    "consumed_amendment": {
+      "certificate": {
+        "path": "research/strategy-search-2026-09-11/dated-amendment-certificate.json",
+        "sha256": "2bea921038cc032e3b76838cc7223a443f6c97aaa0e1bf840afbc0c381d8fa19"
+      },
+      "experiment_id": "dated-book-amended-20260911"
+    },
+    "effective_budget": 6,
+    "extension_id": "dated-mark-single-source-extension-20260911",
+    "original_budget": 4,
+    "prior_attempts": 1,
+    "prior_claim_count": 4,
+    "prior_effective_budget": 5,
+    "scope": "One named source investigation only; no financial book or further extension authorization.",
+    "target_experiment": "dated-mark-20260911"
+  },
+  "design_source": "5cf5dd843131da489a4695623b81009a244ab49f",
+  "experiment": {
+    "budget_extension": {
+      "path": "research/strategy-search-2026-09-11/dated-extension-certificate.json",
+      "sha256": "242f31d42386e23906138c703ca6b440153cdaefd61c035db83062938afc4b0a"
+    },
+    "cells": [
+      "btc-dated-mark",
+      "eth-dated-mark"
+    ],
+    "charter": {
+      "path": "research/strategy-search-2026-09-11/dated-mark-charter.md",
+      "sha256": "43e353de9b0189bec7424a2adcf1378854a39b1d9b652bcb8972a633a27de743"
+    },
+    "family": "dated-basis",
+    "inputs": {
+      "request_spec": {
+        "dataset": "dated-mark-definition",
+        "path": "research/strategy-search-2026-09-11/dated-mark-spec.json",
+        "sha256": "ebc2735ec91d1d7964a41c00dd265ebc731d821b7b49a89889f1ddde02405be7"
+      }
+    },
+    "outputs": [
+      "btc-dated-mark-receipt.json",
+      "eth-dated-mark-receipt.json",
+      "capture.json",
+      "admission.json"
+    ],
+    "parent": "dated-book-amended-20260911",
+    "question": "Do exactly two expired-contract daily mark responses supply all56 fixed preterminal days per asset for symmetric derivative valuation? Source-only prerequisite, no spread return or automatic book.",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "admission.py": "20bab02c8da3e8319753f2c16e9f34e0ba845ebd712317f6caf0c3ca1bd23627",
+      "amended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "amended/admission.py": "dbb4ec5e0b81948a4d7e007306ffb72277e0a448ae2c5d65c82cd4ddf5ba1b78",
+      "amended/amendment.py": "516b82264fb9152f2135a036eb030feefb7f507221aa213b9509e6f424fe1bfd",
+      "amended/lifecycle.py": "a4681c16e441e41496c1de88017dbcc27b3ce4e30309023ac3ffe83d5f7a1b52",
+      "amended/verify.py": "ccc85b7b98c97e048a3c17a8335b4e735e220398604e05eb19dea96616b84666",
+      "amended/verify_amendment.py": "5b056e3c8f002f1e5391e851840a1d7aa90c0939a9b21a73726137380a2c8e13",
+      "extension.py": "2b836081a85d0d18d4cc24690e700fb2f9e886b2cc105167e3bce5c40709395e",
+      "lifecycle.py": "d84db3de685545dd4780c70cec96b750f38b117f0e2e84ba3b038fea0d97e38d",
+      "original/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "original/__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "original/admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+      "original/examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "original/lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+      "original/verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313",
+      "verify.py": "8dee128df96acd1f49007c29ed29db250cce13d7c37a697da653d722eaa8c38b",
+      "verify_extension.py": "8a775c0e59b9876ce90343c307017260681841065e1c9de67002257f4c110a6a",
+      "verify_v1_snapshot.py": "53bd6dfb6ebe3215337a90ba0327952e35bc68b9541816549f96f427bb62bc38"
+    },
+    "selection": null,
+    "source_files": {
+      "research/strategy-search-2026-09-11/dated-mark-definition-observation.json": "a90c28121e0d508db1a079bb666efd6c663482c9d1cf06f3b7395433b85f2589",
+      "research/strategy-search-2026-09-11/dated_mark.py": "2853d70b6f28fd653c96b4c1cd07eb5484e437f6ea61c2c392f966e65f3c1bf9",
+      "research/strategy-search-2026-09-11/dated_mark_transport.py": "3639602d77274ec829360acd06561c4cadca28d0a07ea693f4e2d55c9fe7569a",
+      "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+      "tradingagents/research_extended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "tradingagents/research_extended/admission.py": "20bab02c8da3e8319753f2c16e9f34e0ba845ebd712317f6caf0c3ca1bd23627",
+      "tradingagents/research_extended/extension.py": "2b836081a85d0d18d4cc24690e700fb2f9e886b2cc105167e3bce5c40709395e",
+      "tradingagents/research_extended/lifecycle.py": "d84db3de685545dd4780c70cec96b750f38b117f0e2e84ba3b038fea0d97e38d",
+      "tradingagents/research_extended/verify.py": "8dee128df96acd1f49007c29ed29db250cce13d7c37a697da653d722eaa8c38b",
+      "tradingagents/research_extended/verify_extension.py": "8a775c0e59b9876ce90343c307017260681841065e1c9de67002257f4c110a6a",
+      "tradingagents/research_extended/verify_v1_snapshot.py": "53bd6dfb6ebe3215337a90ba0327952e35bc68b9541816549f96f427bb62bc38",
+      "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+    },
+    "stage": "development",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "dated-mark-definition",
+        "end": "2026-09-11T11:03:40.951452+00:00",
+        "start": "2026-09-11T11:03:40.950496+00:00"
+      }
+    ]
+  },
+  "experiment_id": "dated-mark-20260911",
+  "family": {
+    "attempt_budget": 4,
+    "history_reference": "docs/carry-feasibility-2026-09-10/INTERPRETATION.md; one dated capture with432correlated scenarios, not432independent attempts. New incremental cap3; funding-carry and old spending remain separately recorded.",
+    "mechanism_id": "binance-btc-eth-dated-basis-convergence",
+    "prior_attempts": 1
+  },
+  "inputs": {
+    "request_spec": {
+      "dataset": "dated-mark-definition",
+      "path": "research/strategy-search-2026-09-11/dated-mark-spec.json",
+      "sha256": "ebc2735ec91d1d7964a41c00dd265ebc731d821b7b49a89889f1ddde02405be7"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2025-03-31T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2021-11-08T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2025-04-01T00:00:00Z",
+      "state": "spent"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-usdt-260626-contract-history",
+      "start": "2025-12-26T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:38:02.442471+00:00",
+      "identity": "binance-options-request-definition-20260911",
+      "start": "2026-09-11T08:38:02.442372+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:59:38.161767+00:00",
+      "identity": "binance-eoh-request-definition-20260911",
+      "start": "2026-09-11T08:59:38.161697+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2025-04-01T00:00:00Z",
+      "identity": "binance-btc-eoh-option-summary-history",
+      "start": "2022-06-01T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:59:38.166591+00:00",
+      "identity": "binance-triangle-request-definition-20260911",
+      "start": "2026-09-11T08:59:38.166552+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T09:10:29.052054+00:00",
+      "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+      "start": "2026-09-11T09:10:25.404644+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T09:12:21.519683+00:00",
+      "identity": "bitrue-contract-request-definition-20260911",
+      "start": "2026-09-11T09:12:21.519513+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T09:30:47.099983+00:00",
+      "identity": "binance-wbeth-source-definition-20260911",
+      "start": "2026-09-11T09:30:47.099732+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-wbeth-usdt-spot-market-history",
+      "start": "2026-04-01T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T10:03:47.610019+00:00",
+      "identity": "saved-news-seven-path-provenance-definition-20260911",
+      "start": "2026-09-11T10:03:47.591240+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T10:30:02.537002+00:00",
+      "identity": "triangle-fixed-local-stream-source-definition-20260911",
+      "start": "2026-09-11T10:30:02.485798+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T10:44:51.919593+00:00",
+      "identity": "fixed-current-options-entry-component-definition-20260911",
+      "start": "2026-09-11T10:44:51.919367+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:40:16.763026+00:00",
+      "identity": "options-metadata-20260911-original-capture-admission-and-exchange-info-receipt",
+      "start": "2026-09-11T08:40:11.517399+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T11:03:40.951452+00:00",
+      "identity": "fixed-expired-dated-daily-mark-source-definition-20260911",
+      "start": "2026-09-11T11:03:40.950496+00:00",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "strategy-search-2026-09-11",
+  "registration": "research/strategy-search-2026-09-11/gates-dated-mark.json",
+  "registration_sha256": "0abec8fd1204cf28baa9e3637c855f1c43010a5376e75fb46c08f8509ea897fb",
+  "schema_version": 1,
+  "source": "5cf5dd843131da489a4695623b81009a244ab49f",
+  "started_at": "2026-09-11T11:15:48.882475+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "dated-mark-definition",
+      "end": "2026-09-11T11:03:40.951452+00:00",
+      "identity": "fixed-expired-dated-daily-mark-source-definition-20260911",
+      "start": "2026-09-11T11:03:40.950496+00:00",
+      "state": "exposed"
+    }
+  ]
+}

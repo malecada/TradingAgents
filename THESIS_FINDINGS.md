@@ -7129,3 +7129,16 @@ complete hedged-account affordability, access, true delta or expected returns.
 Historical EOH semantics and strategy performance remain untested. Zero validated
 strategies. The next concrete gap is dated-mark source admission for a distinct
 long-dated/short-perpetual book, requiring an explicit cumulative extension.
+
+## 115. Daily dated marks resolve the spread valuation prerequisite (2026-09-11)
+
+Two registered public requests returned all 56 daily mark bars for each fixed
+BTC/ETH June26 dated contract over May1–June25. Independent raw reconstruction
+passes all 112 timestamp/schema slots and the four-output denominator. These
+marks enable symmetric daily valuation of the proposed long-dated/short-perpetual
+book; intraday margin, execution and expected profit remain unverified. Decision18
+preserves both failed attempts, original cap4/prior1 and two consumed increments,
+for effective six total attempts. Independent historical snapshot verification
+passes; the frozen earlier verifier's expected live-ledger refusal is explicit.
+The next financial question needs a separate reviewed contract and allowance.
+Zero validated strategies; the authorized program remains active/incomplete.

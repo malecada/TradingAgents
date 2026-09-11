@@ -1,0 +1,131 @@
+{
+  "passed": true,
+  "scope": "Independent saved raw-source schema/chronology/hash reconstruction and receipt verification; no collector imports, financial calculations, network or ledger mutations.",
+  "source": "5cf5dd843131da489a4695623b81009a244ab49f",
+  "sources": [
+    {
+      "id": "btc-dated-mark",
+      "raw_bytes": 6945,
+      "body_sha256": "c4a69b60ed295673f431f47bbb0ce9bcc343d2e8160c464dab40265fb0dc95d4",
+      "rows": 56,
+      "missing": 0,
+      "duplicate": 0,
+      "unexpected": 0,
+      "OHLC_valid": 56,
+      "first_open_utc": "2026-05-01T00:00:00+00:00",
+      "last_close_utc": "2026-06-25T23:59:59.999000+00:00",
+      "request_utc": "2026-09-11T11:15:53.439386+00:00",
+      "retrieval_utc": "2026-09-11T11:15:53.762306+00:00",
+      "ignored_fields": {
+        "5": {
+          "literal_zero_string_count": 56,
+          "literal_integer_count": 0
+        },
+        "7": {
+          "literal_zero_string_count": 56,
+          "literal_integer_count": 0
+        },
+        "8": {
+          "literal_zero_string_count": 0,
+          "literal_integer_count": 56
+        },
+        "9": {
+          "literal_zero_string_count": 56,
+          "literal_integer_count": 0
+        },
+        "10": {
+          "literal_zero_string_count": 56,
+          "literal_integer_count": 0
+        },
+        "11": {
+          "literal_zero_string_count": 56,
+          "literal_integer_count": 0
+        }
+      }
+    },
+    {
+      "id": "eth-dated-mark",
+      "raw_bytes": 6721,
+      "body_sha256": "a43fd0b6206f1ce47780c44256eb89507f5a28c772d2aad29bf6f97c30ef1409",
+      "rows": 56,
+      "missing": 0,
+      "duplicate": 0,
+      "unexpected": 0,
+      "OHLC_valid": 56,
+      "first_open_utc": "2026-05-01T00:00:00+00:00",
+      "last_close_utc": "2026-06-25T23:59:59.999000+00:00",
+      "request_utc": "2026-09-11T11:15:58.256047+00:00",
+      "retrieval_utc": "2026-09-11T11:15:58.556060+00:00",
+      "ignored_fields": {
+        "5": {
+          "literal_zero_string_count": 56,
+          "literal_integer_count": 0
+        },
+        "7": {
+          "literal_zero_string_count": 56,
+          "literal_integer_count": 0
+        },
+        "8": {
+          "literal_zero_string_count": 0,
+          "literal_integer_count": 56
+        },
+        "9": {
+          "literal_zero_string_count": 56,
+          "literal_integer_count": 0
+        },
+        "10": {
+          "literal_zero_string_count": 56,
+          "literal_integer_count": 0
+        },
+        "11": {
+          "literal_zero_string_count": 56,
+          "literal_integer_count": 0
+        }
+      }
+    }
+  ],
+  "cells": 2,
+  "complete_subslots": 112,
+  "unavailable_subslots": 0,
+  "output_count": 4,
+  "output_bytes": 57348,
+  "raw_bytes": 13666,
+  "capture_closed_utc": "2026-09-11T11:16:02.984653+00:00",
+  "structural_verification": {
+    "experiment": "dated-mark-20260911",
+    "status": "complete",
+    "cell_count": 2,
+    "unavailable_count": 0,
+    "output_count": 4,
+    "verification": "structural hashes and denominators; v1 amendments at closed inventory, current extensions against complete live inventory; no scientific validation"
+  },
+  "closed_v1_verification": {
+    "experiment": "dated-book-amended-20260911",
+    "status": "complete",
+    "cell_count": 8,
+    "unavailable_count": 0,
+    "output_count": 3,
+    "verification": "structural hashes and denominators; v1 amendments at closed inventory, current extensions against complete live inventory; no scientific validation"
+  },
+  "frozen_v1_live_ledger_refusal": "amendment inventory or original budget differs",
+  "accounting": {
+    "historical_units": 1,
+    "visible_program_claims": 5,
+    "consumed_effective_budget": 6,
+    "original_family_cap": 4,
+    "new_budget_remaining": 0
+  },
+  "guard": {
+    "child_exit_code": 0,
+    "limit_reason": null,
+    "elapsed_seconds": 32.694867331010755,
+    "peak_sampled_tree_rss_bytes": 67661824,
+    "linux_children_ru_maxrss_kib": 33968,
+    "rss_limit_bytes": 536870912,
+    "wall_limit_seconds": 120,
+    "sample_interval_seconds": 0.02,
+    "virtual_address_space_limit": "unlimited",
+    "qualification": "Nominal 20 ms sampled aggregate RSS with one 20 ms process-exit retry; brief overshoot can occur. No detached/background or secondary-thread subprocesses admitted. Shared pages may be counted twice. ru_maxrss is the largest individual child peak, not aggregate."
+  },
+  "limits": "HTTP receipts substantiate retained public responses, not historical account eligibility, execution, intraday liquidation or positive returns. Historical fields8 are ignored fields, not admitted trade activity."
+}
