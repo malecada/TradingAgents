@@ -55,3 +55,31 @@ describe European USDT settlement and BTC/ETH unit 1, conditional short-selling
 eligibility and margin. Exact legal/entity and clearing applicability remain
 unverified. Public contract metadata and minimum-lot capital calculations are an
 affordable distinct investigation; no option payoff has yet been evaluated.
+
+## Dated archive directory discovery
+
+Read-only official catalogue inspection on September 11, 2026, with daily XML
+listings observed at 07:46:07–10 UTC. No ZIP/price bodies were opened in this
+source-discovery step. XML was inspected through source tools; its raw body was
+not retained as a local immutable snapshot. Registered acquisition will retain
+actual ZIP/checksum bytes independently; this note is a catalogue observation.
+
+The [official landing page](https://data.binance.vision/?prefix=data/futures/um/monthly/klines/)
+identifies the S3 bucket. [BTC monthly XML](https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fum%2Fmonthly%2Fklines%2FBTCUSDT_260626%2F1h%2F&max-keys=100)
+and [ETH monthly XML](https://s3-ap-northeast-1.amazonaws.com/data.binance.vision?prefix=data%2Ffutures%2Fum%2Fmonthly%2Fklines%2FETHUSDT_260626%2F1h%2F&max-keys=100)
+returned HTTP 200 with IsTruncated=false. Listed ZIPs:
+
+| Contract / month | Bytes | Current object LastModified UTC |
+|---|---:|---|
+| BTCUSDT_260626 / May 2026 | 31,906 | 2026-06-02 10:57:54 |
+| BTCUSDT_260626 / June 2026 | 26,843 | 2026-07-02 12:04:38 |
+| ETHUSDT_260626 / May 2026 | 32,688 | 2026-06-02 10:58:12 |
+| ETHUSDT_260626 / June 2026 | 27,378 | 2026-07-02 12:04:58 |
+
+Each has a listed 96-byte .CHECKSUM companion. Daily listings contain 183 ZIP
+filenames from December 26, 2025 through June 26, 2026. File dates and current
+object timestamps do not establish exact contract launch/expiry time, original
+publication, execution liquidity or settlement cashflows. Third-party snippets
+returned incidentally by search were not used to infer prices/economics or choose
+these contracts. The existing mechanism and last completed quarterly contract
+identity determine the bounded admission question.
