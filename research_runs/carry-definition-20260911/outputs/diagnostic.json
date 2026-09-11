@@ -1,0 +1,352 @@
+{
+  "dev": {
+    "cashflow_profit": {
+      "reason": "Legacy notional accounting lacks signed cash/base wallets, capital/reserves and market benchmark reconstruction.",
+      "status": "unavailable"
+    },
+    "daily_opportunity_cost_addback": 5.8228478649816985e-05,
+    "full_capital_returns": {
+      "reason": "Legacy notional accounting lacks signed cash/base wallets, capital/reserves and market benchmark reconstruction.",
+      "status": "unavailable"
+    },
+    "inherited_defects": [
+      "Historical missing price differences were zero-filled.",
+      "Funding expected-event completeness remains unverified.",
+      "Short-equity drift proxy is not an explicit quantity book."
+    ],
+    "interpretation": "Exploratory saved-series definition diagnostic only; no significance, selection or adoption claim.",
+    "market_beta": {
+      "reason": "Legacy notional accounting lacks signed cash/base wallets, capital/reserves and market benchmark reconstruction.",
+      "status": "unavailable"
+    },
+    "saved_blended_sr_check": {
+      "absolute_tolerance": 1e-09,
+      "agrees": true,
+      "difference": -8.881784197001252e-16,
+      "recomputed": 3.7503661753112425,
+      "saved": 3.7503661753112434
+    },
+    "series": {
+      "btc": {
+        "additive_sum_sign": {
+          "addback": "positive",
+          "changed": false,
+          "stressed": "positive"
+        },
+        "opportunity_cost_addback": {
+          "compounded_index_starting_at_one": 1.2495266173155646,
+          "convention_diagnostic": {
+            "all_days": 1239,
+            "invalid_simple_index_days": 0,
+            "label": "invalid log-return arithmetic booking diagnostic; not cash PnL",
+            "log1p_sum": 0.2227647734393787,
+            "log_sum_minus_additive_sum": -0.00013967248128765597,
+            "status": "complete",
+            "valid_simple_index_days": 1239
+          },
+          "index_unavailable_reason": null,
+          "mean": 0.00017990673601345146,
+          "n": 1239,
+          "sample_std_ddof1": 0.0004396302423369617,
+          "sr_sqrt252": 6.496211181651757,
+          "sr_unavailable_reason": null,
+          "sum": 0.22290444592066636
+        },
+        "stressed": {
+          "compounded_index_starting_at_one": 1.1625670703475028,
+          "convention_diagnostic": {
+            "all_days": 1239,
+            "invalid_simple_index_days": 0,
+            "label": "invalid log-return arithmetic booking diagnostic; not cash PnL",
+            "log1p_sum": 0.15063055173766937,
+            "log_sum_minus_additive_sum": -0.00012880913587373644,
+            "status": "complete",
+            "valid_simple_index_days": 1239
+          },
+          "index_unavailable_reason": null,
+          "mean": 0.00012167825736363447,
+          "n": 1239,
+          "sample_std_ddof1": 0.0004396302423369617,
+          "sr_sqrt252": 4.393652364358617,
+          "sr_unavailable_reason": null,
+          "sum": 0.1507593608735431
+        }
+      },
+      "eth": {
+        "additive_sum_sign": {
+          "addback": "positive",
+          "changed": false,
+          "stressed": "positive"
+        },
+        "opportunity_cost_addback": {
+          "compounded_index_starting_at_one": 1.193285210001961,
+          "convention_diagnostic": {
+            "all_days": 1239,
+            "invalid_simple_index_days": 0,
+            "label": "invalid log-return arithmetic booking diagnostic; not cash PnL",
+            "log1p_sum": 0.1767101841173523,
+            "log_sum_minus_additive_sum": -0.0001915436506188528,
+            "status": "complete",
+            "valid_simple_index_days": 1239
+          },
+          "index_unavailable_reason": null,
+          "mean": 0.0001427778270927935,
+          "n": 1239,
+          "sample_std_ddof1": 0.0005374758723468612,
+          "sr_sqrt252": 4.21698508890007,
+          "sr_unavailable_reason": null,
+          "sum": 0.17690172776797114
+        },
+        "stressed": {
+          "compounded_index_starting_at_one": 1.1102367463069385,
+          "convention_diagnostic": {
+            "all_days": 1239,
+            "invalid_simple_index_days": 0,
+            "label": "invalid log-return arithmetic booking diagnostic; not cash PnL",
+            "log1p_sum": 0.10457327754344498,
+            "log_sum_minus_additive_sum": -0.00018336517740293046,
+            "status": "complete",
+            "valid_simple_index_days": 1239
+          },
+          "index_unavailable_reason": null,
+          "mean": 8.454934844297652e-05,
+          "n": 1239,
+          "sample_std_ddof1": 0.0005374758723468612,
+          "sr_sqrt252": 2.497189857277526,
+          "sr_unavailable_reason": null,
+          "sum": 0.1047566427208479
+        }
+      },
+      "sleeve": {
+        "additive_sum_sign": {
+          "addback": "positive",
+          "changed": false,
+          "stressed": "positive"
+        },
+        "opportunity_cost_addback": {
+          "compounded_index_starting_at_one": 1.2211207066929615,
+          "convention_diagnostic": {
+            "all_days": 1239,
+            "invalid_simple_index_days": 0,
+            "label": "invalid log-return arithmetic booking diagnostic; not cash PnL",
+            "log1p_sum": 0.1997690491227449,
+            "log_sum_minus_additive_sum": -0.00013403772157385974,
+            "status": "complete",
+            "valid_simple_index_days": 1239
+          },
+          "index_unavailable_reason": null,
+          "mean": 0.00016134228155312248,
+          "n": 1239,
+          "sample_std_ddof1": 0.0004364589479548122,
+          "sr_sqrt252": 5.868202106286358,
+          "sr_unavailable_reason": null,
+          "sum": 0.19990308684431876
+        },
+        "stressed": {
+          "compounded_index_starting_at_one": 1.1361365194658675,
+          "convention_diagnostic": {
+            "all_days": 1239,
+            "invalid_simple_index_days": 0,
+            "label": "invalid log-return arithmetic booking diagnostic; not cash PnL",
+            "log1p_sum": 0.1276334886646033,
+            "log_sum_minus_additive_sum": -0.00012451313259220775,
+            "status": "complete",
+            "valid_simple_index_days": 1239
+          },
+          "index_unavailable_reason": null,
+          "mean": 0.00010311380290330549,
+          "n": 1239,
+          "sample_std_ddof1": 0.0004364589479548122,
+          "sr_sqrt252": 3.7503661753112425,
+          "sr_unavailable_reason": null,
+          "sum": 0.12775800179719551
+        }
+      }
+    },
+    "series_denominator": [
+      "btc",
+      "eth",
+      "sleeve"
+    ],
+    "units": "legacy PnL per unit target notional; compounded index is not cash wealth",
+    "window": [
+      "2021-11-08",
+      "2025-03-31"
+    ]
+  },
+  "holdout": {
+    "cashflow_profit": {
+      "reason": "Legacy notional accounting lacks signed cash/base wallets, capital/reserves and market benchmark reconstruction.",
+      "status": "unavailable"
+    },
+    "daily_opportunity_cost_addback": 5.8228478649816985e-05,
+    "full_capital_returns": {
+      "reason": "Legacy notional accounting lacks signed cash/base wallets, capital/reserves and market benchmark reconstruction.",
+      "status": "unavailable"
+    },
+    "inherited_defects": [
+      "Historical missing price differences were zero-filled.",
+      "Funding expected-event completeness remains unverified.",
+      "Short-equity drift proxy is not an explicit quantity book."
+    ],
+    "interpretation": "Exploratory saved-series definition diagnostic only; no significance, selection or adoption claim.",
+    "market_beta": {
+      "reason": "Legacy notional accounting lacks signed cash/base wallets, capital/reserves and market benchmark reconstruction.",
+      "status": "unavailable"
+    },
+    "saved_blended_sr_check": {
+      "absolute_tolerance": 1e-09,
+      "agrees": true,
+      "difference": 0.0,
+      "recomputed": -1.476787251083999,
+      "saved": -1.476787251083999
+    },
+    "series": {
+      "btc": {
+        "additive_sum_sign": {
+          "addback": "positive",
+          "changed": false,
+          "stressed": "positive"
+        },
+        "opportunity_cost_addback": {
+          "compounded_index_starting_at_one": 1.0294388862075492,
+          "convention_diagnostic": {
+            "all_days": 456,
+            "invalid_simple_index_days": 0,
+            "label": "invalid log-return arithmetic booking diagnostic; not cash PnL",
+            "log1p_sum": 0.02901388312780582,
+            "log_sum_minus_additive_sum": -1.6178955462877592e-05,
+            "status": "complete",
+            "valid_simple_index_days": 456
+          },
+          "index_unavailable_reason": null,
+          "mean": 6.366241684927346e-05,
+          "n": 456,
+          "sample_std_ddof1": 0.00025892733805911493,
+          "sr_sqrt252": 3.9030623210450845,
+          "sr_unavailable_reason": null,
+          "sum": 0.029030062083268696
+        },
+        "stressed": {
+          "compounded_index_starting_at_one": 1.0024656470975555,
+          "convention_diagnostic": {
+            "all_days": 456,
+            "invalid_simple_index_days": 0,
+            "label": "invalid log-return arithmetic booking diagnostic; not cash PnL",
+            "log1p_sum": 0.0024626123770935685,
+            "log_sum_minus_additive_sum": -1.526344185858331e-05,
+            "status": "complete",
+            "valid_simple_index_days": 456
+          },
+          "index_unavailable_reason": null,
+          "mean": 5.433938199456473e-06,
+          "n": 456,
+          "sample_std_ddof1": 0.00025892733805911493,
+          "sr_sqrt252": 0.33314788364696174,
+          "sr_unavailable_reason": null,
+          "sum": 0.002477875818952152
+        }
+      },
+      "eth": {
+        "additive_sum_sign": {
+          "addback": "positive",
+          "changed": true,
+          "stressed": "negative"
+        },
+        "opportunity_cost_addback": {
+          "compounded_index_starting_at_one": 1.0010471877699973,
+          "convention_diagnostic": {
+            "all_days": 456,
+            "invalid_simple_index_days": 0,
+            "label": "invalid log-return arithmetic booking diagnostic; not cash PnL",
+            "log1p_sum": 0.0010466398513668592,
+            "log_sum_minus_additive_sum": -3.42591514883269e-05,
+            "status": "complete",
+            "valid_simple_index_days": 456
+          },
+          "index_unavailable_reason": null,
+          "mean": 2.370392550121022e-06,
+          "n": 456,
+          "sample_std_ddof1": 0.00038795919532262326,
+          "sr_sqrt252": 0.09699168272588776,
+          "sr_unavailable_reason": null,
+          "sum": 0.001080899002855186
+        },
+        "stressed": {
+          "compounded_index_starting_at_one": 0.9748162760723832,
+          "convention_diagnostic": {
+            "all_days": 456,
+            "invalid_simple_index_days": 0,
+            "label": "invalid log-return arithmetic booking diagnostic; not cash PnL",
+            "log1p_sum": -0.025506260537912682,
+            "log_sum_minus_additive_sum": -3.497327645132428e-05,
+            "status": "complete",
+            "valid_simple_index_days": 456
+          },
+          "index_unavailable_reason": null,
+          "mean": -5.585808609969596e-05,
+          "n": 456,
+          "sample_std_ddof1": 0.00038795919532262326,
+          "sr_sqrt252": -2.285600232915187,
+          "sr_unavailable_reason": null,
+          "sum": -0.025471287261461358
+        }
+      },
+      "sleeve": {
+        "additive_sum_sign": {
+          "addback": "positive",
+          "changed": true,
+          "stressed": "negative"
+        },
+        "opportunity_cost_addback": {
+          "compounded_index_starting_at_one": 1.0151521658450515,
+          "convention_diagnostic": {
+            "all_days": 456,
+            "invalid_simple_index_days": 0,
+            "label": "invalid log-return arithmetic booking diagnostic; not cash PnL",
+            "log1p_sum": 0.01503851834602763,
+            "log_sum_minus_additive_sum": -1.696219703431305e-05,
+            "status": "complete",
+            "valid_simple_index_days": 456
+          },
+          "index_unavailable_reason": null,
+          "mean": 3.301640469969724e-05,
+          "n": 456,
+          "sample_std_ddof1": 0.00027101348955669956,
+          "sr_sqrt252": 1.933922835289444,
+          "sr_unavailable_reason": null,
+          "sum": 0.015055480543061942
+        },
+        "stressed": {
+          "compounded_index_starting_at_one": 0.9885524611952458,
+          "convention_diagnostic": {
+            "all_days": 456,
+            "invalid_simple_index_days": 0,
+            "label": "invalid log-return arithmetic booking diagnostic; not cash PnL",
+            "log1p_sum": -0.011513566262009268,
+            "log_sum_minus_additive_sum": -1.686054075466549e-05,
+            "status": "complete",
+            "valid_simple_index_days": 456
+          },
+          "index_unavailable_reason": null,
+          "mean": -2.5212073950119745e-05,
+          "n": 456,
+          "sample_std_ddof1": 0.00027101348955669956,
+          "sr_sqrt252": -1.476787251083999,
+          "sr_unavailable_reason": null,
+          "sum": -0.011496705721254602
+        }
+      }
+    },
+    "series_denominator": [
+      "btc",
+      "eth",
+      "sleeve"
+    ],
+    "units": "legacy PnL per unit target notional; compounded index is not cash wealth",
+    "window": [
+      "2025-04-01",
+      "2026-07-01"
+    ]
+  }
+}

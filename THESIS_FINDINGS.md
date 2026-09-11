@@ -6904,3 +6904,26 @@ Spot principal, base-denominated purchase commission, quantity rounding/residual
 Verification passed 127 tests before results. Independent exact-fraction reconstruction without calculator imports reconciles all 48 entries and 432 cashflows, raw source bytes, identities, benchmarks and preserved prior gates/ledger. Saved accounting and source/report reviews found no blocker within the conditional scope. Capture manifest SHA-256: `67d85e098dc181b09d0f42cf95c03aceced79cd63dd1f8237959641f592c77ff`; measurement ledger: `7624f2809c604e51c72726fc375c3d27785675cc2992f031a913c2df813aa985`. Full decision and evidence: `docs/carry-feasibility-2026-09-10/INTERPRETATION.md`.
 
 Economic feasibility and the accounting example are complete. A strategy evaluation or paper execution is not justified by the measured setups. Any future empirical cycle requires a new question and registration, documented account fees/fee assets, applicable settlement treatment, product access, margin/liquidity behavior and an explicit adoption hurdle. Actual fees, legal expiry-fee basis, fiat/transfer costs, stablecoin/counterparty exposure and execution remain unverified; the scenario expiry charge is not promoted to a verified Binance cashflow. No private account request, order, paid purchase, provider contact, old holdout read, manuscript change or VPS action occurred. The earlier spot/perpetual carry verdict and 22 deferred settlement-blocked configurations remain unchanged. **Zero validated strategies.**
+
+
+## Section 99: New strategy phase and carry-definition diagnostic (2026-09-11)
+
+The user launched the new phase under `research/strategy-search-2026-09-11`.
+The eight-mechanism map, ancestry and provisional full-capital/exposure screens
+are registered in that program. Original gates/ledgers and spent samples remain.
+Zero validated strategies;22settlement cases remain deferred.
+
+The six-case saved carry-definition diagnostic completed once under committed
+and pushed source`d3ba86924bd8711704fc80fd771a0e717cc9bb51`. Removing the exact
+modeled opportunity-cost charge changes the456-day spent-holdout blended legacy
+index from0.98855246to1.01515217 and its historical sqrt252 Sharpe from−1.476787
+to1.933923, recovering the already saved pre-charge layer. Independent direct
+Decimal reconstruction agrees. This is result-informed index algebra, not cash
+PnL, full-capital economics or a new profitable strategy. Historical zero-fill,
+funding completeness and equity-drift defects remain unresolved. The original
+NO-GO is unchanged. Exact outputs, review and next action are in
+`research_runs/carry-definition-20260911` and program`decision-01.md`.
+
+Next: separately registered public input admission for actual funding-event
+marks and matched prices; follow availability into a quantity-book question
+or a named deferral and the next eligible family. Program active/incomplete.

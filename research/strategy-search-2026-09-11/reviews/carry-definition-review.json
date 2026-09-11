@@ -1,0 +1,154 @@
+{
+  "status": "pass_narrow_definition_diagnostic",
+  "reviewer": "independent_review",
+  "source": "d3ba86924bd8711704fc80fd771a0e717cc9bb51",
+  "claim_sha256": "4e720cd7f77fa75894d8810cadc25006326b70bb1b5b08d1990104f4a05c92ca",
+  "receipt_sha256": "20570e2797d6388a7fcc11f53033defafb93216f474425f86ec1f9c45ab03771",
+  "output_sha256": "206f5cbc453367bf96dde463066ea8efc8f9bb6cba9b6ed8e8f9c73f695991ff",
+  "checker_sha256": "3127a23ecfca551c9251208203f1162732a28e91a67eef4e2f2f638bb344ee84",
+  "method": "60-digit Decimal reconstruction from four committed raw saved inputs; direct products, central-moment sample variance, logarithm of product; no runner import or experiment rerun",
+  "cells_verified": [
+    "dev-btc",
+    "dev-eth",
+    "dev-sleeve",
+    "holdout-btc",
+    "holdout-eth",
+    "holdout-sleeve"
+  ],
+  "complete": 6,
+  "unavailable": 0,
+  "input_hashes": {
+    "dev_costs": "b250377e869e0f38cfbcdb449b80f67a387386b7c96adaab880e507c37677ff8",
+    "dev_series": "f6de070ff8e4f7e3a001b0ccd1162e5792b4397c4dd0737569aaaa232ae89f67",
+    "holdout_costs": "8774b14283313fe6797459963f2465baef3d8056c1a32a855a726563960aeea1",
+    "holdout_series": "7c8d75478448316113990e092c0fc463cf445d358e534e25d59e91a45ce7dd60"
+  },
+  "numeric_comparisons": 1795,
+  "maximum_absolute_difference": 8.881784197001252e-16,
+  "reconstructed": {
+    "dev": {
+      "btc": {
+        "stressed": {
+          "sum": 0.1507593608735431,
+          "mean": 0.00012167825736363447,
+          "sample_std_ddof1": 0.0004396302423369617,
+          "sr_sqrt252": 4.3936523643586165,
+          "compounded_index_starting_at_one": 1.1625670703475028
+        },
+        "opportunity_cost_addback": {
+          "sum": 0.22290444592066636,
+          "mean": 0.00017990673601345143,
+          "sample_std_ddof1": 0.0004396302423369617,
+          "sr_sqrt252": 6.4962111816517565,
+          "compounded_index_starting_at_one": 1.2495266173155646
+        }
+      },
+      "eth": {
+        "stressed": {
+          "sum": 0.1047566427208479,
+          "mean": 8.454934844297652e-05,
+          "sample_std_ddof1": 0.0005374758723468612,
+          "sr_sqrt252": 2.497189857277526,
+          "compounded_index_starting_at_one": 1.1102367463069385
+        },
+        "opportunity_cost_addback": {
+          "sum": 0.17690172776797114,
+          "mean": 0.0001427778270927935,
+          "sample_std_ddof1": 0.0005374758723468612,
+          "sr_sqrt252": 4.21698508890007,
+          "compounded_index_starting_at_one": 1.193285210001961
+        }
+      },
+      "sleeve": {
+        "stressed": {
+          "sum": 0.12775800179719551,
+          "mean": 0.00010311380290330549,
+          "sample_std_ddof1": 0.0004364589479548122,
+          "sr_sqrt252": 3.7503661753112425,
+          "compounded_index_starting_at_one": 1.1361365194658675
+        },
+        "opportunity_cost_addback": {
+          "sum": 0.19990308684431873,
+          "mean": 0.00016134228155312248,
+          "sample_std_ddof1": 0.0004364589479548122,
+          "sr_sqrt252": 5.868202106286357,
+          "compounded_index_starting_at_one": 1.2211207066929615
+        }
+      }
+    },
+    "holdout": {
+      "btc": {
+        "stressed": {
+          "sum": 0.002477875818952152,
+          "mean": 5.433938199456474e-06,
+          "sample_std_ddof1": 0.00025892733805911493,
+          "sr_sqrt252": 0.3331478836469617,
+          "compounded_index_starting_at_one": 1.0024656470975555
+        },
+        "opportunity_cost_addback": {
+          "sum": 0.029030062083268696,
+          "mean": 6.366241684927346e-05,
+          "sample_std_ddof1": 0.00025892733805911493,
+          "sr_sqrt252": 3.903062321045084,
+          "compounded_index_starting_at_one": 1.0294388862075492
+        }
+      },
+      "eth": {
+        "stressed": {
+          "sum": -0.025471287261461358,
+          "mean": -5.585808609969596e-05,
+          "sample_std_ddof1": 0.00038795919532262326,
+          "sr_sqrt252": -2.285600232915187,
+          "compounded_index_starting_at_one": 0.9748162760723832
+        },
+        "opportunity_cost_addback": {
+          "sum": 0.0010808990028551842,
+          "mean": 2.3703925501210182e-06,
+          "sample_std_ddof1": 0.00038795919532262326,
+          "sr_sqrt252": 0.0969916827258876,
+          "compounded_index_starting_at_one": 1.0010471877699973
+        }
+      },
+      "sleeve": {
+        "stressed": {
+          "sum": -0.011496705721254602,
+          "mean": -2.5212073950119742e-05,
+          "sample_std_ddof1": 0.00027101348955669956,
+          "sr_sqrt252": -1.4767872510839988,
+          "compounded_index_starting_at_one": 0.9885524611952458
+        },
+        "opportunity_cost_addback": {
+          "sum": 0.01505548054306194,
+          "mean": 3.301640469969724e-05,
+          "sample_std_ddof1": 0.00027101348955669956,
+          "sr_sqrt252": 1.933922835289444,
+          "compounded_index_starting_at_one": 1.0151521658450515
+        }
+      }
+    }
+  },
+  "material_new_diagnostic_findings": [],
+  "inherited_findings": [
+    {
+      "location": "tradingagents/strategies/carry_sleeve.py:190",
+      "issue": "Missing price-return differences zero-filled; event funding completeness unproven",
+      "impact": "Index identity cannot establish actual cashflow validity"
+    },
+    {
+      "location": "scripts/carry_audit_costs.py:124",
+      "issue": "Short equity compounded as a drift proxy; identical100\u2192105\u2192100 path invents0.004762 final drift",
+      "impact": "Restored index is not a signed-quantity cash book"
+    }
+  ],
+  "not_tested": [
+    "Actual funding-event completeness and event-mark prices",
+    "Execution timing and achievable fills",
+    "Full-capital cash profit at1,000/10,000",
+    "Margin/liquidation path",
+    "BTC/ETH beta or prospective sample freshness",
+    "Account/product eligibility",
+    "Concurrency fault injection",
+    "Independent external proof of push before run"
+  ],
+  "next_action": "One separately registered bounded input-admission investigation for a signed-quantity cash book; require complete event marks, spot prices, funding, principal/collateral and quantity rules before new economics. If unavailable, retain denominator and switch family."
+}

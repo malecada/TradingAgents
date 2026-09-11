@@ -1,20 +1,25 @@
 # Active program state
 
-Authorized September 11, 2026. Incomplete; zero validated strategies.
-Branch `research/strategy-search-2026-09-11`; coordinator owns shared state/gates.
-Initial mechanism map and history recovered. Python 3.13.13 runtime passed;
-named offline verification: 742 tests and 20 subtests passed in 62.89 seconds.
+Authorized September11,2026. Active/incomplete; zero validated strategies.
+Branch `research/strategy-search-2026-09-11`; coordinator owns gates/state.
+First completed run: `carry-definition-20260911`, source
+`d3ba86924bd8711704fc80fd771a0e717cc9bb51`,6complete/0unavailable; independent
+receipt and Decimal reconstruction pass. Decision01 preserves results/limits.
 
-Current question: distinguish the historical carry opportunity-cost charge from
-its modeled trading-cost series, without calling either actual full-capital
-cash PnL. First registration/source and pre-result review are being prepared.
-No empirical run or collector has started in this program.
+Current question: can one public acquisition supply event marks and matching
+spot/perp/mark bars for the fixed spent2026Q2 quarter? `carry-inputs-20260911`
+source and registration are in preparation; NO capture has started.
+Next: freeze/review gates-capture.json, commit/push, execute exactly once,
+independently inspect raw coverage, then follow the registered decision.
 
-Next action: complete/freeze/review first gate; commit and push before one run;
-verify receipt and independent algebra; decide and immediately follow evidence.
-No background process, scheduler, paper job or real order is running.
-Actual account country/product applicability was requested without credentials;
-it is not needed for the current diagnostic.
+Budget: known8 direct historical carry records plus incomplete older searches;
+new incremental cap3, used1. This is not full statistical multiplicity.
+Legacy source/ledger bytes remain. Named launch offline742+20passed; first
+runner15synthetic tests passed; worker broader754+20passed before final guards.
+No background job, scheduler, paper simulation or real order is running.
+Account country/product information was requested and remains pending; no
+credentials are needed. Public access cannot establish account eligibility.
 
-Resume via REENTRY.md. Never repeat a claimed identity; inspect research_runs
-receipts and Git status first. Runtime/context checkpoint is not exhaustion.
+Read REENTRY.md. Never repeat claimed identities. Pending claims require review;
+completed outputs are immutable. A runtime/context checkpoint means incomplete,
+not research exhaustion. Branch backup status is recorded by commit/remote checks.

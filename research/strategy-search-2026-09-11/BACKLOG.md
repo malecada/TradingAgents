@@ -1,6 +1,6 @@
 # Prioritized backlog
 
-- [ ] Complete registered carry-definition diagnostic, independent review and backup.
+- [x] Complete registered carry-definition diagnostic and independent review; retained with this results checkpoint.
 - [ ] Follow definition/data evidence into one fixed event-cashflow admission or
   explicit unavailable disposition. Do not turn rate-only caches into cashflows.
 - [ ] Execute the ranked dated/calendar source and data feasibility investigation.
