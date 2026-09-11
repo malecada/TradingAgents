@@ -6991,3 +6991,16 @@ and further execution requires an explicit reviewed amendment route. The source
 archive remains admitted, but this episode has no completed profit/loss verdict.
 Decision 06 records the narrow engineering diagnosis and switch to options
 metadata and spot-triangle prerequisites. Interim coverage is incomplete.
+
+## 104. Current options metadata and archive namespace (2026-09-11)
+
+The registered four-request options metadata probe completed with six immutable
+outputs and independent raw/schema reconstruction. Among1,678 returned symbols,
+1,230 explicit BTC/ETH targets have current unit1/minimum0.01/step0.01 quantity
+rules. These are current observations, not historical-rule or account-permission
+proof. The exact daily archive prefix contains BVOLIndex and EOHSummary; the
+20-object initial lexical listing is partial. Option affordability, executable
+historical chains, applicable fees and actual margin remain unavailable. No
+financial result was computed. Decision07 selects a deterministic one-object
+schema probe and independent spot-triangle source admission. Zero strategies
+validated; research remains active and incomplete.

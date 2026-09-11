@@ -1,0 +1,118 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "828884688b944b5cd2c33537fe4fcabc28325e66",
+  "experiment": {
+    "cells": [
+      "options-exchange-info",
+      "options-server-time",
+      "options-daily-prefixes",
+      "options-daily-initial-objects"
+    ],
+    "charter": {
+      "path": "research/strategy-search-2026-09-11/options-metadata-charter.md",
+      "sha256": "d53ae61bc086c0c386b47657d099943f0facecc408216fecf01c2a89177a3f05"
+    },
+    "family": "options-volatility",
+    "inputs": {
+      "request_spec": {
+        "dataset": "options-source-definition",
+        "path": "research/strategy-search-2026-09-11/options-request-spec.json",
+        "sha256": "3119cc6b9f976b09c3db2f31d48b37a4fa5443a43a9b2598b6474e03835e5005"
+      }
+    },
+    "outputs": [
+      "options-exchange-info-receipt.json",
+      "options-server-time-receipt.json",
+      "options-daily-prefixes-receipt.json",
+      "options-daily-initial-objects-receipt.json",
+      "metadata-capture.json",
+      "metadata-admission.json"
+    ],
+    "parent": null,
+    "question": "Do four fixed public metadata responses resolve actual option quantity rules and archive types? Source admission only; input window is document bookkeeping and outputs have actual new retrieval clocks.",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+      "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+    },
+    "selection": null,
+    "source_files": {
+      "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+      "research/strategy-search-2026-09-11/options-source-definition-observation.json": "cf9cd03172b0b559d4e0d0f28b3c4414ca673c1a6842b3cc2cc9ed3e7c476afe",
+      "research/strategy-search-2026-09-11/options_metadata.py": "d95c6a68edf987db3112d01e6aa74883488f02077970681fa2c7a1154e02c48f",
+      "research/strategy-search-2026-09-11/options_resource_launcher.py": "5d876d486b6e8e5e3abec853c498fd7e579ed842b32faca65600fb1bf9f1eb4e",
+      "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+      "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+    },
+    "stage": "development",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "options-source-definition",
+        "end": "2026-09-11T08:38:02.442471+00:00",
+        "start": "2026-09-11T08:38:02.442372+00:00"
+      }
+    ]
+  },
+  "experiment_id": "options-metadata-20260911",
+  "family": {
+    "attempt_budget": 4,
+    "history_reference": "research/strategy-search-2026-09-11/options-metadata-charter.md; one known predlab_rviv_p0 administrative gate bundle,12 exact ledger rows; failed HAR30/DVOL claim preserved; counts are not independent trials or complete search multiplicity. Three new investigations allowed.",
+    "mechanism_id": "binance-option-delta-hedged-volatility-premium",
+    "prior_attempts": 1
+  },
+  "inputs": {
+    "request_spec": {
+      "dataset": "options-source-definition",
+      "path": "research/strategy-search-2026-09-11/options-request-spec.json",
+      "sha256": "3119cc6b9f976b09c3db2f31d48b37a4fa5443a43a9b2598b6474e03835e5005"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2025-03-31T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2021-11-08T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2025-04-01T00:00:00Z",
+      "state": "spent"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-usdt-260626-contract-history",
+      "start": "2025-12-26T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:38:02.442471+00:00",
+      "identity": "binance-options-request-definition-20260911",
+      "start": "2026-09-11T08:38:02.442372+00:00",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "strategy-search-2026-09-11",
+  "registration": "research/strategy-search-2026-09-11/gates-options-metadata.json",
+  "registration_sha256": "328358c2d5f5a12d4118d0f8526e26d41a811d8eaf47677bad8b9b3e2f1eb406",
+  "schema_version": 1,
+  "source": "828884688b944b5cd2c33537fe4fcabc28325e66",
+  "started_at": "2026-09-11T08:40:11.210838+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "options-source-definition",
+      "end": "2026-09-11T08:38:02.442471+00:00",
+      "identity": "binance-options-request-definition-20260911",
+      "start": "2026-09-11T08:38:02.442372+00:00",
+      "state": "exposed"
+    }
+  ]
+}

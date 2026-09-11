@@ -5,7 +5,8 @@
 - [x] Complete fixed conditional cash book and independent review; all eight primary cases fail economic screens. Switch family.
 - [x] Admit the fixed dated-contract archives and independently verify coverage.
 - [ ] Dated economic result deferred after two preserved harness failures; no extra attempt without reviewed amendment route.
-- [ ] Complete options metadata registration/capture/review after concrete output/resource preflight.
+- [x] Complete options metadata capture and independent reconstruction.
+- [ ] Admit one fixed EOHSummary archive body/schema before considering historical option economics.
 - [ ] Register fixed same-venue spot-triangle necessary-feasibility capture.
 - [ ] Resolve Binance–Bitrue contract/funding/collateral comparability from public sources.
 - [ ] Re-rank relative-value, liquidity, factor and information questions against

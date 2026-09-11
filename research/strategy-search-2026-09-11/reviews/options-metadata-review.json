@@ -1,0 +1,106 @@
+{
+  "catalogues": [
+    {
+      "first_key": null,
+      "id": "options-daily-prefixes",
+      "last_key": null,
+      "object_count": 0,
+      "partial": false,
+      "prefixes": [
+        "data/option/daily/BVOLIndex/",
+        "data/option/daily/EOHSummary/"
+      ]
+    },
+    {
+      "first_key": "data/option/daily/BVOLIndex/BTCBVOLUSDT/BTCBVOLUSDT-BVOLIndex-2023-06-20.zip",
+      "id": "options-daily-initial-objects",
+      "last_key": "data/option/daily/BVOLIndex/BTCBVOLUSDT/BTCBVOLUSDT-BVOLIndex-2023-06-29.zip.CHECKSUM",
+      "object_count": 20,
+      "partial": true,
+      "prefixes": []
+    }
+  ],
+  "limitations": [
+    "Structural source admission only",
+    "Frozen crypto classification remains ambiguous",
+    "No account seller access, affordability or historical executable chain admitted",
+    "No new fetches or financial calculations"
+  ],
+  "mtime_qualification": "Local filesystem corroboration only, not independent publication attestation; immediate write-before-next-request also reviewed in frozen source.",
+  "output_bytes": 9018605,
+  "output_count": 6,
+  "output_sha256": {
+    "metadata-admission.json": "a8aee197b4e831cde6698edb6c694ba01a258939aefb83211acca0c81b83c9aa",
+    "metadata-capture.json": "dabd54bb13df7dfeed7140ccaca8ba36b9a4cc4ea327446cab73dd4851375f39",
+    "options-daily-initial-objects-receipt.json": "75b351680f731f829f521ae29ecefa4faf9523eed0f652e5df803d7588c7e9df",
+    "options-daily-prefixes-receipt.json": "782cb5626b565881d5d7cd42f3961ab86f6d18943f35e1f34bec0e2e5c655f32",
+    "options-exchange-info-receipt.json": "a7b0c52246f7a0720b725487a6f428f90ccb5d861b75ca430db496a5cda4024f",
+    "options-server-time-receipt.json": "3506a5938ec4cbe7285198c415e58e127100ab64bc8cbe1ca40f245f0e40fefb"
+  },
+  "per_symbol_nakedSell_present_count": 0,
+  "raw_body_bytes": 1069263,
+  "receipt_local_mtime_evidence": [
+    {
+      "id": "options-exchange-info",
+      "mtime_between_retrieval_and_next_request": true
+    },
+    {
+      "id": "options-server-time",
+      "mtime_between_retrieval_and_next_request": true
+    },
+    {
+      "id": "options-daily-prefixes",
+      "mtime_between_retrieval_and_next_request": true
+    },
+    {
+      "id": "options-daily-initial-objects",
+      "mtime_between_retrieval_and_next_request": true
+    }
+  ],
+  "request_clocks": [
+    {
+      "begin": "2026-09-11T08:40:11.517399+00:00",
+      "end": "2026-09-11T08:40:13.794315+00:00",
+      "id": "options-exchange-info"
+    },
+    {
+      "begin": "2026-09-11T08:40:14.233228+00:00",
+      "end": "2026-09-11T08:40:14.535023+00:00",
+      "id": "options-server-time"
+    },
+    {
+      "begin": "2026-09-11T08:40:14.821898+00:00",
+      "end": "2026-09-11T08:40:15.641909+00:00",
+      "id": "options-daily-prefixes"
+    },
+    {
+      "begin": "2026-09-11T08:40:15.929984+00:00",
+      "end": "2026-09-11T08:40:16.763026+00:00",
+      "id": "options-daily-initial-objects"
+    }
+  ],
+  "request_count": 4,
+  "resource_report_sha256": "39d95533dc10bdb54b31c231434f6ba0335581545be7718663161d3ddc4908fb",
+  "reviewed_utc": "2026-09-11T08:43:48.856664+00:00",
+  "source": "828884688b944b5cd2c33537fe4fcabc28325e66",
+  "source_gate_sha256": "328358c2d5f5a12d4118d0f8526e26d41a811d8eaf47677bad8b9b3e2f1eb406",
+  "status": "PASS",
+  "symbol_rows": 1678,
+  "target_asset_counts": {
+    "BTCUSDT": 654,
+    "ETHUSDT": 576
+  },
+  "target_contract_nakedSell": {
+    "BTCUSDT": true,
+    "ETHUSDT": true
+  },
+  "target_quantity_rules": [
+    {
+      "count": 1230,
+      "minQty": "0.01",
+      "stepSize": "0.01",
+      "unit": "1"
+    }
+  ],
+  "target_rows": 1230
+}

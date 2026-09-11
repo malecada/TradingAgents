@@ -12,6 +12,7 @@ Completed once, with independent substantive and receipt reviews:
 | carry-inputs-20260911 | 10 / 0 | Authentic event marks and matched bars captured; 12 outputs, 1,265,237 raw bytes. |
 | carry-book-20260911 | 16 / 0 | All eight primary cash books negative; eight zero-funding counterfactuals retained. |
 | dated-archive-20260911 | 8 / 0 | Four ZIP/checksum pairs verified; fixed pre-terminal 56-day interval admitted conditionally. |
+| options-metadata-20260911 | 4 / 0 | Current1230BTC/ETH quantity rules and2archive prefixes admitted; no option economics. |
 
 Execution sources respectively: `d3ba86924bd8711704fc80fd771a0e717cc9bb51`,
 `8cac1b361ecc96e5bd6f2ab0fa43bf51b1524ec4`,
@@ -34,13 +35,20 @@ Dated allowance is exhausted (historical one + three new = cap four). Do not
 rerun either identity or increase the gate budget: admission rejects implicit
 amendments. A future extra attempt requires a reviewed explicit amendment route.
 
-Next: finish review of the v2 resource guard and options metadata collector;
-verify exact resource/output bounds through the complete synthetic lifecycle;
-freeze options-metadata-20260911 and its four requests, commit/push/verify,
-execute once, review raw metadata and follow its result. No real options
-metadata was captured. Financial rules/fees/access and historical chains are
-not admitted by documentary examples. Fixed spot-triangle feasibility follows.
-The interim coverage review finds meaningful affordable gaps; no exhaustion.
+Options metadata completed once from source
+`828884688b944b5cd2c33537fe4fcabc28325e66`, pushed and remotely verified. Raw and
+structural reviews pass; Decision07 retains actual timestamps and source-only
+limits. First of three new options investigations used. The v2 monitor is
+reviewed and the exact options worst-payload/lifecycle preflight passed.
+
+Next: freeze and execute the justified two-request earliest-BTC EOHSummary body-
+schema admission after source/gate/synthetic review, then independently inspect
+raw schema and follow the result. No archive body has been opened. In parallel,
+triangle-inputs-20260911 source/spec is drafted and collector is in synthetic
+implementation. No real triangle quotes have been captured and no conversion
+bound evaluated on real inputs. Its later financial gate must precede calculation.
+Commit/push and verify remote equality at each freeze and results checkpoint.
+Interim coverage retains meaningful affordable gaps; no exhaustion.
 
 No background job, scheduler, paper session or order is running. Account
 country/product details were requested without credentials and remain pending;
