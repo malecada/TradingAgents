@@ -1,0 +1,89 @@
+{
+  "status": "PASS source-only negative admission reconstruction",
+  "source": "7e5e8b1affb1feb4e729290b943c313a56493a46",
+  "registration_sha256": "e85a08c4ee2878c38aa111506f5d179d83161a430e7aa925b242177bb41f5bee",
+  "source_cells": 7,
+  "unavailable_source_cells": 7,
+  "schema_slots": 13,
+  "unavailable_schema_slots": 13,
+  "outputs": 9,
+  "output_bytes": 19350,
+  "missing_registered_roots": [
+    "audit-alpaca",
+    "audit-gdelt",
+    "original-alpaca",
+    "original-gdelt",
+    "predlab-alpaca",
+    "predlab-gdelt"
+  ],
+  "csv_first_line_classification": {
+    "first_physical_line_bytes": 13,
+    "first_physical_line_sha256": "4f9151e43bb1edad6ff8a4115df39b31136a347d834be98dbdbf280f80dd2d99",
+    "file_bytes": 576048,
+    "file_identity_unchanged_since_capture": true,
+    "raw_text_emitted": false,
+    "utf8_valid": true,
+    "csv_syntax_valid": true,
+    "candidate_field_count": 1,
+    "recognized_whitelist_fields": [],
+    "plausible_id_or_time_fields": [],
+    "unknown_field_count": 1,
+    "unknown_name_sha256": [
+      "ed6bdfad3c0f3f352cfa86423d8ae2610e46778e0f1b4facdfa21c733d1c2c50"
+    ],
+    "reason": "first_line_lacks_frozen_plausible_id_or_time_field; header semantics remain unavailable",
+    "records_after_first_line_read": 0
+  },
+  "output_sha256": {
+    "admission.json": "29cdf93e0684d2bfa363efa6d968515c98d12515c37f593600e7dfd9737c75aa",
+    "audit-alpaca-receipt.json": "3a222f114d8dd3b0884b5b26e224fa9867aef71b21538cdaee9679b4b2a02f2d",
+    "audit-gdelt-receipt.json": "0eb99378ee2406064bff970d040b28b1ec34fbca623d8263c32de5e08f387993",
+    "external-csv-receipt.json": "37defc040ef3248507faa28bedde4a065784d086a011a105d84670cf137893b4",
+    "inventory.json": "060bd7504dbd8cf52ca594f7c10ab0f3a00d1ad9eda5ccccd1101615f8935043",
+    "original-alpaca-receipt.json": "024d4e1440d72fa99a67459337cded5be461926557cd2eefa52bb9063c78526e",
+    "original-gdelt-receipt.json": "42e0a6db6d479bb0f25e98e281ba4de15a3d99f89f8bd1fb644bccade74bd52f",
+    "predlab-alpaca-receipt.json": "6dc373309c590b984eb38bc895063b066984353f5f27655c2eaae26a6d9c6889",
+    "predlab-gdelt-receipt.json": "fce83c625cc047d2eb1fdfa2e8a13f826ef9f76b3bcedd4ad585c2e0e5f20ca0"
+  },
+  "structural_verification": {
+    "experiment": "news-provenance-20260911",
+    "status": "complete",
+    "cell_count": 7,
+    "unavailable_count": 7,
+    "output_count": 9,
+    "verification": "structural hashes and denominators only; no scientific validation"
+  },
+  "resource": {
+    "child_exit_code": 0,
+    "limit_reason": null,
+    "elapsed_seconds": 7.846155133011052,
+    "peak_sampled_tree_rss_bytes": 46518272,
+    "linux_children_ru_maxrss_kib": 26180,
+    "rss_limit_bytes": 536870912,
+    "wall_limit_seconds": 120,
+    "sample_interval_seconds": 0.02,
+    "virtual_address_space_limit": "unlimited",
+    "qualification": "Nominal 20 ms sampled aggregate RSS with one 20 ms process-exit retry; brief overshoot can occur. No detached/background or secondary-thread subprocesses admitted. Shared pages may be counted twice. ru_maxrss is the largest individual child peak, not aggregate."
+  },
+  "reviewed_utc": "2026-09-11T10:16:53.690715+00:00",
+  "access_scope": {
+    "registered_paths_checked": 7,
+    "directory_entries_enumerated": 0,
+    "parquet_files_opened": 0,
+    "csv_bytes_read": 13,
+    "csv_records_after_first_line_read": 0,
+    "whole_csv_hashed": false,
+    "alternate_paths_checked": 0,
+    "network_requests": 0,
+    "inspector_imported": false
+  },
+  "limitations": [
+    "No authenticated corpus identity",
+    "No historical availability or revision semantics",
+    "No proof stores absent elsewhere or destroyed",
+    "No full corpus backup",
+    "No financial utility or news-family rejection",
+    "File identity checks are best effort, not atomic",
+    "Receipt verification does not establish pre-result remote push timing"
+  ]
+}

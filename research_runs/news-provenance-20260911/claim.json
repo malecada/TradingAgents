@@ -1,0 +1,170 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "7e5e8b1affb1feb4e729290b943c313a56493a46",
+  "experiment": {
+    "cells": [
+      "audit-alpaca",
+      "audit-gdelt",
+      "original-alpaca",
+      "original-gdelt",
+      "predlab-alpaca",
+      "predlab-gdelt",
+      "external-csv"
+    ],
+    "charter": {
+      "path": "research/strategy-search-2026-09-11/news-provenance-charter.md",
+      "sha256": "eeeba0983e64c6728835929625df17cd5537009af065ba8f46a7b81842948c76"
+    },
+    "family": "news-observation-provenance",
+    "inputs": {
+      "request_spec": {
+        "dataset": "news-inventory-definition",
+        "path": "research/strategy-search-2026-09-11/news-provenance-spec.json",
+        "sha256": "ff0a5e08364701b7b2e8dade3bcaae1d63ee927709063f9ae60b7074319037a4"
+      }
+    },
+    "outputs": [
+      "audit-alpaca-receipt.json",
+      "audit-gdelt-receipt.json",
+      "original-alpaca-receipt.json",
+      "original-gdelt-receipt.json",
+      "predlab-alpaca-receipt.json",
+      "predlab-gdelt-receipt.json",
+      "external-csv-receipt.json",
+      "inventory.json",
+      "admission.json"
+    ],
+    "parent": null,
+    "question": "Do seven fixed saved news source paths expose bounded schema-level observation/retrieval/version metadata, with missing/ambiguous records retained and no article records read?",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+      "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+    },
+    "selection": null,
+    "source_files": {
+      "research/strategy-search-2026-09-11/news-provenance-definition-observation.json": "c2b09ea6e8d9fd2392e8ea6cf97ac2adf7d7339618b567b0a732fb37e8e2748e",
+      "research/strategy-search-2026-09-11/news_provenance.py": "a4264c026aa9c1f7962a7835a6aa23b27db02e74ae260baf525a11a8480d74fd",
+      "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+      "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+    },
+    "stage": "development",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "news-inventory-definition",
+        "end": "2026-09-11T10:03:47.610019+00:00",
+        "start": "2026-09-11T10:03:47.591240+00:00"
+      }
+    ]
+  },
+  "experiment_id": "news-provenance-20260911",
+  "family": {
+    "attempt_budget": 1,
+    "history_reference": "research/strategy-search-2026-09-11/news-provenance-charter.md and reviews/news-provenance-design.md; zero known exact sevenpath sourceinventory, NOT zero historical news/LLM search. C1/C3/NLST/SMW/DEX ancestry and spent samples inherited; unknown complete multiplicity. Exactly one claim uses third MAProw8 allowance after2WBETH questions, not another3trialbudget.",
+    "mechanism_id": "saved-news-observation-version-source-admission",
+    "prior_attempts": 0
+  },
+  "inputs": {
+    "request_spec": {
+      "dataset": "news-inventory-definition",
+      "path": "research/strategy-search-2026-09-11/news-provenance-spec.json",
+      "sha256": "ff0a5e08364701b7b2e8dade3bcaae1d63ee927709063f9ae60b7074319037a4"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2025-03-31T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2021-11-08T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2025-04-01T00:00:00Z",
+      "state": "spent"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-usdt-260626-contract-history",
+      "start": "2025-12-26T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:38:02.442471+00:00",
+      "identity": "binance-options-request-definition-20260911",
+      "start": "2026-09-11T08:38:02.442372+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:59:38.161767+00:00",
+      "identity": "binance-eoh-request-definition-20260911",
+      "start": "2026-09-11T08:59:38.161697+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2025-04-01T00:00:00Z",
+      "identity": "binance-btc-eoh-option-summary-history",
+      "start": "2022-06-01T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:59:38.166591+00:00",
+      "identity": "binance-triangle-request-definition-20260911",
+      "start": "2026-09-11T08:59:38.166552+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T09:10:29.052054+00:00",
+      "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+      "start": "2026-09-11T09:10:25.404644+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T09:12:21.519683+00:00",
+      "identity": "bitrue-contract-request-definition-20260911",
+      "start": "2026-09-11T09:12:21.519513+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T09:30:47.099983+00:00",
+      "identity": "binance-wbeth-source-definition-20260911",
+      "start": "2026-09-11T09:30:47.099732+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-wbeth-usdt-spot-market-history",
+      "start": "2026-04-01T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T10:03:47.610019+00:00",
+      "identity": "saved-news-seven-path-provenance-definition-20260911",
+      "start": "2026-09-11T10:03:47.591240+00:00",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "strategy-search-2026-09-11",
+  "registration": "research/strategy-search-2026-09-11/gates-news-provenance.json",
+  "registration_sha256": "e85a08c4ee2878c38aa111506f5d179d83161a430e7aa925b242177bb41f5bee",
+  "schema_version": 1,
+  "source": "7e5e8b1affb1feb4e729290b943c313a56493a46",
+  "started_at": "2026-09-11T10:14:16.670554+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "news-inventory-definition",
+      "end": "2026-09-11T10:03:47.610019+00:00",
+      "identity": "saved-news-seven-path-provenance-definition-20260911",
+      "start": "2026-09-11T10:03:47.591240+00:00",
+      "state": "exposed"
+    }
+  ]
+}

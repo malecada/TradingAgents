@@ -14,7 +14,7 @@
 - [x] Bound Binance–Bitrue documentation/metadata comparability; current fees, settled funding and account applicability remain dependencies.
 - [x] Investigate WBETH–ETH source link; true historical contractual delta remains unavailable.
 - [x] Complete WBETH eight-case run/review: positivecash but all3%relevancefail, no trueETHdelta or graduation.
-- [ ] Freeze independently reviewed saved-news provenance inventory and execute; preserve article text and prior exposure.
+- [x] Complete saved-news inventory/review:7source/13schema unavailable; versioned source identity remains dependency.
 - [ ] Prepare third/final triangle investigation: one bounded stream plus frozen postcapture persistence screen; no live probe or fills.
 - [ ] Existing value_rev remains deferred until a second vintage September 18 or later; no early replay or renamed gate.
 - [ ] Re-rank relative-value, liquidity, factor and information questions against

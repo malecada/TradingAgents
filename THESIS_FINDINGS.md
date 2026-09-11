@@ -7088,3 +7088,16 @@ a small beta does not remove linked-asset tail risk. Decision14 preserves the
 positive cash finding and failed relevance claim, and switches to the bounded
 saved-news provenance question without tuning this episode. Zero validated
 strategies; the authorized program remains active and incomplete.
+
+## 112. Saved news provenance unavailable at fixed paths (2026-09-11)
+
+A registered seven-path source inventory retained seven unavailable source cells
+and thirteen unavailable schema slots. All six literal Alpaca/GDELT monthly
+roots are missing. The separate576,048-byte CSV's first13-byte physical line
+has one unrecognized field and no admitted identifier/time field; no following
+bytes were read and the text was not published. Independent bounded source/
+privacy reconstruction and receipt verification pass. Decision15 records source
+unavailability, not a failed alpha test or absence from every possible location.
+Versioned metadata identifying the actual sources and original observation
+clocks is the reopening dependency. The third MAProw8 initial question is spent.
+Research continues with the distinct final triangle persistence prerequisite.

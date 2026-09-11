@@ -1,0 +1,336 @@
+{
+  "schema_slot_count": 13,
+  "schema_version": 1,
+  "source_count": 7,
+  "sources": [
+    {
+      "format": "monthly-parquet",
+      "historical_availability": "unverified",
+      "id": "audit-alpaca",
+      "inventory": {
+        "overflow_probe": false,
+        "processed_entries": 0,
+        "reason_code": "target_missing_or_forbidden",
+        "status": "missing"
+      },
+      "observation_utc": "2026-09-11T10:14:17.247324+00:00",
+      "reason": "bounded schema source unavailable; see separate inventory/schema dimensions",
+      "schema_slots": [
+        {
+          "historical_availability": "unverified",
+          "id": "audit-alpaca-footer-1",
+          "reason_code": "no_fixed_selection",
+          "status": "unavailable"
+        },
+        {
+          "historical_availability": "unverified",
+          "id": "audit-alpaca-footer-2",
+          "reason_code": "no_fixed_selection",
+          "status": "unavailable"
+        }
+      ],
+      "status": "unavailable"
+    },
+    {
+      "format": "monthly-parquet",
+      "historical_availability": "unverified",
+      "id": "audit-gdelt",
+      "inventory": {
+        "overflow_probe": false,
+        "processed_entries": 0,
+        "reason_code": "target_missing_or_forbidden",
+        "status": "missing"
+      },
+      "observation_utc": "2026-09-11T10:14:17.820760+00:00",
+      "reason": "bounded schema source unavailable; see separate inventory/schema dimensions",
+      "schema_slots": [
+        {
+          "historical_availability": "unverified",
+          "id": "audit-gdelt-footer-1",
+          "reason_code": "no_fixed_selection",
+          "status": "unavailable"
+        },
+        {
+          "historical_availability": "unverified",
+          "id": "audit-gdelt-footer-2",
+          "reason_code": "no_fixed_selection",
+          "status": "unavailable"
+        }
+      ],
+      "status": "unavailable"
+    },
+    {
+      "format": "monthly-parquet",
+      "historical_availability": "unverified",
+      "id": "original-alpaca",
+      "inventory": {
+        "overflow_probe": false,
+        "processed_entries": 0,
+        "reason_code": "target_missing_or_forbidden",
+        "status": "missing"
+      },
+      "observation_utc": "2026-09-11T10:14:18.436629+00:00",
+      "reason": "bounded schema source unavailable; see separate inventory/schema dimensions",
+      "schema_slots": [
+        {
+          "historical_availability": "unverified",
+          "id": "original-alpaca-footer-1",
+          "reason_code": "no_fixed_selection",
+          "status": "unavailable"
+        },
+        {
+          "historical_availability": "unverified",
+          "id": "original-alpaca-footer-2",
+          "reason_code": "no_fixed_selection",
+          "status": "unavailable"
+        }
+      ],
+      "status": "unavailable"
+    },
+    {
+      "format": "monthly-parquet",
+      "historical_availability": "unverified",
+      "id": "original-gdelt",
+      "inventory": {
+        "overflow_probe": false,
+        "processed_entries": 0,
+        "reason_code": "target_missing_or_forbidden",
+        "status": "missing"
+      },
+      "observation_utc": "2026-09-11T10:14:19.036257+00:00",
+      "reason": "bounded schema source unavailable; see separate inventory/schema dimensions",
+      "schema_slots": [
+        {
+          "historical_availability": "unverified",
+          "id": "original-gdelt-footer-1",
+          "reason_code": "no_fixed_selection",
+          "status": "unavailable"
+        },
+        {
+          "historical_availability": "unverified",
+          "id": "original-gdelt-footer-2",
+          "reason_code": "no_fixed_selection",
+          "status": "unavailable"
+        }
+      ],
+      "status": "unavailable"
+    },
+    {
+      "format": "monthly-parquet",
+      "historical_availability": "unverified",
+      "id": "predlab-alpaca",
+      "inventory": {
+        "overflow_probe": false,
+        "processed_entries": 0,
+        "reason_code": "target_missing_or_forbidden",
+        "status": "missing"
+      },
+      "observation_utc": "2026-09-11T10:14:19.657134+00:00",
+      "reason": "bounded schema source unavailable; see separate inventory/schema dimensions",
+      "schema_slots": [
+        {
+          "historical_availability": "unverified",
+          "id": "predlab-alpaca-footer-1",
+          "reason_code": "no_fixed_selection",
+          "status": "unavailable"
+        },
+        {
+          "historical_availability": "unverified",
+          "id": "predlab-alpaca-footer-2",
+          "reason_code": "no_fixed_selection",
+          "status": "unavailable"
+        }
+      ],
+      "status": "unavailable"
+    },
+    {
+      "format": "monthly-parquet",
+      "historical_availability": "unverified",
+      "id": "predlab-gdelt",
+      "inventory": {
+        "overflow_probe": false,
+        "processed_entries": 0,
+        "reason_code": "target_missing_or_forbidden",
+        "status": "missing"
+      },
+      "observation_utc": "2026-09-11T10:14:20.277669+00:00",
+      "reason": "bounded schema source unavailable; see separate inventory/schema dimensions",
+      "schema_slots": [
+        {
+          "historical_availability": "unverified",
+          "id": "predlab-gdelt-footer-1",
+          "reason_code": "no_fixed_selection",
+          "status": "unavailable"
+        },
+        {
+          "historical_availability": "unverified",
+          "id": "predlab-gdelt-footer-2",
+          "reason_code": "no_fixed_selection",
+          "status": "unavailable"
+        }
+      ],
+      "status": "unavailable"
+    },
+    {
+      "format": "csv-header",
+      "historical_availability": "unverified",
+      "id": "external-csv",
+      "inventory": {
+        "status": "complete"
+      },
+      "observation_utc": "2026-09-11T10:14:20.882257+00:00",
+      "reason": "bounded schema source unavailable; see separate inventory/schema dimensions",
+      "schema_slots": [
+        {
+          "historical_availability": "unverified",
+          "id": "external-csv-header",
+          "identity_after": {
+            "bytes": 576048,
+            "ctime_ns": 1783087614944730201,
+            "device": 66310,
+            "inode": 7604069,
+            "mtime_ns": 1763582300000000000,
+            "mtime_scope": "Local filesystem attribute only; not historical availability."
+          },
+          "identity_before": {
+            "bytes": 576048,
+            "ctime_ns": 1783087614944730201,
+            "device": 66310,
+            "inode": 7604069,
+            "mtime_ns": 1763582300000000000,
+            "mtime_scope": "Local filesystem attribute only; not historical availability."
+          },
+          "path_identity_after": {
+            "bytes": 576048,
+            "ctime_ns": 1783087614944730201,
+            "device": 66310,
+            "inode": 7604069,
+            "mtime_ns": 1763582300000000000,
+            "mtime_scope": "Local filesystem attribute only; not historical availability."
+          },
+          "reason_code": "unsupported_or_invalid_metadata",
+          "regions": [
+            {
+              "length": 13,
+              "offset": 0,
+              "sha256": "4f9151e43bb1edad6ff8a4115df39b31136a347d834be98dbdbf280f80dd2d99"
+            }
+          ],
+          "status": "unavailable"
+        }
+      ],
+      "status": "unavailable"
+    }
+  ],
+  "subslots": [
+    {
+      "historical_availability": "unverified",
+      "id": "audit-alpaca-footer-1",
+      "reason_code": "no_fixed_selection",
+      "status": "unavailable"
+    },
+    {
+      "historical_availability": "unverified",
+      "id": "audit-alpaca-footer-2",
+      "reason_code": "no_fixed_selection",
+      "status": "unavailable"
+    },
+    {
+      "historical_availability": "unverified",
+      "id": "audit-gdelt-footer-1",
+      "reason_code": "no_fixed_selection",
+      "status": "unavailable"
+    },
+    {
+      "historical_availability": "unverified",
+      "id": "audit-gdelt-footer-2",
+      "reason_code": "no_fixed_selection",
+      "status": "unavailable"
+    },
+    {
+      "historical_availability": "unverified",
+      "id": "original-alpaca-footer-1",
+      "reason_code": "no_fixed_selection",
+      "status": "unavailable"
+    },
+    {
+      "historical_availability": "unverified",
+      "id": "original-alpaca-footer-2",
+      "reason_code": "no_fixed_selection",
+      "status": "unavailable"
+    },
+    {
+      "historical_availability": "unverified",
+      "id": "original-gdelt-footer-1",
+      "reason_code": "no_fixed_selection",
+      "status": "unavailable"
+    },
+    {
+      "historical_availability": "unverified",
+      "id": "original-gdelt-footer-2",
+      "reason_code": "no_fixed_selection",
+      "status": "unavailable"
+    },
+    {
+      "historical_availability": "unverified",
+      "id": "predlab-alpaca-footer-1",
+      "reason_code": "no_fixed_selection",
+      "status": "unavailable"
+    },
+    {
+      "historical_availability": "unverified",
+      "id": "predlab-alpaca-footer-2",
+      "reason_code": "no_fixed_selection",
+      "status": "unavailable"
+    },
+    {
+      "historical_availability": "unverified",
+      "id": "predlab-gdelt-footer-1",
+      "reason_code": "no_fixed_selection",
+      "status": "unavailable"
+    },
+    {
+      "historical_availability": "unverified",
+      "id": "predlab-gdelt-footer-2",
+      "reason_code": "no_fixed_selection",
+      "status": "unavailable"
+    },
+    {
+      "historical_availability": "unverified",
+      "id": "external-csv-header",
+      "identity_after": {
+        "bytes": 576048,
+        "ctime_ns": 1783087614944730201,
+        "device": 66310,
+        "inode": 7604069,
+        "mtime_ns": 1763582300000000000,
+        "mtime_scope": "Local filesystem attribute only; not historical availability."
+      },
+      "identity_before": {
+        "bytes": 576048,
+        "ctime_ns": 1783087614944730201,
+        "device": 66310,
+        "inode": 7604069,
+        "mtime_ns": 1763582300000000000,
+        "mtime_scope": "Local filesystem attribute only; not historical availability."
+      },
+      "path_identity_after": {
+        "bytes": 576048,
+        "ctime_ns": 1783087614944730201,
+        "device": 66310,
+        "inode": 7604069,
+        "mtime_ns": 1763582300000000000,
+        "mtime_scope": "Local filesystem attribute only; not historical availability."
+      },
+      "reason_code": "unsupported_or_invalid_metadata",
+      "regions": [
+        {
+          "length": 13,
+          "offset": 0,
+          "sha256": "4f9151e43bb1edad6ff8a4115df39b31136a347d834be98dbdbf280f80dd2d99"
+        }
+      ],
+      "status": "unavailable"
+    }
+  ]
+}

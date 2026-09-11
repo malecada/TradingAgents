@@ -20,6 +20,7 @@ Completed once, with independent substantive and receipt reviews:
 | wbeth-inputs-20260911 | 2 / 0 | Current metadata and 91 exact Q2 daily bars admitted, no zero-activity day. |
 | dated-book-amended-20260911 | 8 / 0 | All fixed dated cash books negative; small basis convergence cannot cover costs. Independent numerical reconstruction passed. |
 | wbeth-book-20260911 | 8 / 0 | Four primary books cash-positive but all below3% relevance; independent reconstruction passed. |
+| news-provenance-20260911 | 0 / 7 | Six literal source roots missing; externalCSV header not admitted. Independent bounded reconstruction passed. |
 
 Execution sources respectively: `d3ba86924bd8711704fc80fd771a0e717cc9bb51`,
 `8cac1b361ecc96e5bd6f2ab0fa43bf51b1524ec4`,
@@ -107,10 +108,17 @@ Final news implementation/gate review passes at gatee85a08c4ee2878c38aa111506f5d
 inspectora4264c026aa9c1f7962a7835a6aa23b27db02e74ae260baf525a11a8480d74fd.
 20focused synthetic tests, eight independent hostile fixtures and exact guarded
 lifecycle pass. Ctime change detection was added before outcomes, with explicit
-best-effort/subtick limitation. Freeze/push/remotely verify, execute exactlyonce,
-independently reconstruct sanitized observations and back up results.
-No real corpus schema/article records have been opened. It uses the remaining
-MAProw8 initial question after two WBETH investigations, not a fresh alpha budget.
+best-effort/subtick limitation. The news run has now COMPLETED once from7e5e8b1affb1feb4e729290b943c313a56493a46,
+pushed/remotely verified before execution. Seven unavailable sourcecells,
+13unavailable schema slots,9outputs19,350bytes; structural verifier passes.
+Six literal roots missing; external576,048-byteCSV first13-bytephysicalheader
+not admitted, no following article records read. Guard7.846sec46,518,272RSS.
+Independent source/privacy reconstruction passed; Decision15 finalized. First
+13-byteCSVline has one unrecognized field, no admitted ID/timefield; no following
+bytes read or text published.
+Do not rerun, widen paths or read content. Commit/push/remotely verify result
+backup. This spends the thirdinitialMAProw8
+question after twoWBETH questions, not a fresh alpha budget.
 A distinct third/final triangle streaming-observation question has a primary
 documentary design and is in synthetic implementation. No live stream opened.
 The existing value_rev second vintage cannot mature before September18. Preserve
