@@ -2,14 +2,14 @@
 
 The September 11 user launch remains authorized. Research is active and
 incomplete; zero strategies are validated. Branch `research/strategy-search-2026-09-11`.
-All 18 attempted identities are terminal: 16 completed investigations and two
-failed harness attempts. No capture, paper session, order, scheduler or background
+All19 attempted identities are terminal:16 completed investigations and three
+failed harness/resource attempts. No capture, paper session, order, scheduler or background
 job is running. Inspect actual claims and Git status before resumption; never
 repeat a completed or failed identity.
 
 ## Retained results
 
-Decisions01–18 and their independent reviews contain sources, hashes, qualifications
+Decisions01–19 and their independent reviews contain sources, hashes, qualifications
 and next actions. A completed receipt is not a strategy passing verdict.
 
 | Investigation | Complete / unavailable cells | Narrow result |
@@ -34,7 +34,10 @@ and next actions. A completed receipt is not a strategy passing verdict.
 All IDs above have suffix `-20260911`. The separate `dated-book-20260911` failed
 under the initial virtual-memory cap; `dated-book-resource-correction-20260911`
 failed under the process-exit monitor defect. Each retains its eight intended
-cells and failed receipt, with no economic output. Do not merge failures with
+cells and failed receipt, with no economic output. The third failed attempt, dated-spread-book-20260911,
+retains all three financial/source output files and independently checked
+8cases/448NAVs/16scalars/72stress states. It has0completed lifecycle cells; its
+120second resource gate failed. Do not merge failures with
 unavailable source cells or discard their consumed attempts.
 
 ## Important qualifications and budgets
@@ -42,8 +45,9 @@ unavailable source cells or discard their consumed attempts.
 Funding used all three new questions; eight known direct historical records and
 unknown broader multiplicity remain. Dated original cap4/prior1 is unchanged.
 The one repair increment and one distinct source increment are now consumed:
-five program claims plus one known prior = effective six. Neither certificate
-grants a financial spread book or any further attempt.
+the source stage consumed effective6. The separate seventh-book grant is also
+now consumed: six program claims plus one known prior = effective7. No certificate
+grants an eighth attempt or a replay.
 
 Options used all three new questions plus the prior RVIV gate/twelve rows;
 triangle used three, also MAP row5. WBETH used two, charged to rows3/8; news
@@ -67,63 +71,69 @@ another buyer-only capital calculation lacks a justified long-volatility premise
 
 ## Latest closure and exact next action
 
-`dated-mark-20260911` completed once from
-5cf5dd843131da489a4695623b81009a244ab49f after committed, pushed and remotely
-verified freeze. Rootexec6096 is terminated, exit0. Guard:32.695seconds,
-67,661,824bytes sampled aggregate RSS. Two complete source cells/112complete
-slots, four outputs57,348bytes and raw13,666bytes. Source/schema/certificate
-reviews and the new independent receipt verifier pass. Decision18/Finding115
-are finalized and backed up at0e55be23d78cd3a897241fd054839d9fad6343e2; remote equality was independently queried.
+`dated-spread-book-20260911` ran once from
+6d6d65f9712dd41e135672a2f0fb8a7d8389507b after committed review, successful
+admission, push and independently queried remote equality. Rootexec77961 is
+terminated, guardexit1/child−15,120.051seconds,418,467,840bytes sampled RSS.
+All three outputs existed before termination; terminal completion did not.
+Reviewed failure-only closure (rootexec44397,exit0) used the unchanged lifecycle,
+original claim and identical before/after output hashes. No replay or finish.
 
-The newest runtime is `tradingagents.research_extended`; use its `verify.verify_run`
-for the new source receipt and explicit closed-history verification. The frozen
-`research_amended` v1 live-ledger verifier now refuses because a descendant
-exists. That expected refusal is preserved and disclosed. The successor independently
-reconstructs v1 at its certificate-bound three-predecessor inventory, and the
-source grant against the complete current inventory. No ledger was filtered,
-removed or rewritten. Original, amended and extended runtime bytes are now frozen.
+The failed receipt SHA is4527836bd62688857764f7d68f7c98660522b6e54f5e64b81f5841c959a4b021;
+guard884b9703eed6660f7dd805cb6d06f9b161db716e3826ef5e30714ef840f7c3e3.
+Three files total1,063,909bytes. Independent raw Fraction/HAC review passes9,344
+checks (max3.64e-12),20sources,8retained cases,448NAVs,16scalars,72stresses.
+These are failed-run forensics, not completed lifecycle cells or passed runtime.
 
-The next candidate is one fixed long-dated/short-perpetual cash book on the same
-May1–June25 development interval, with matched quantities and conservative
-unchanged capital ceilings. Symmetric daily mark inputs are now available.
-This is distinct from spot financing, but algebraically related to prior books;
-no fresh confirmation or independent discovery is implied. Before arithmetic:
+Every book is cashnegative. At1,000BTC base/stress−0.237869/−1.191052USDT;
+ETH−0.045520/−0.956075. Frictionless same-q cash remains positive0.715314BTC/
+0.865035ETH but below3%annual56day benchmark4.602740. The10,000cases also fail
+relevance even with zero modeled friction. No fee-only relevance rescue or
+rerun is justified. Conditional exposure/wallet screens pass but actual margin,
+fills and expected-profit confidence/power remain unavailable. Decision19 and
+Finding116 preserve the economic and operational distinctions.
 
-1. Scientific information-value/design and pure cash/source/statistics reviews
-   pass. The fixed proposal retains8primary books,16same-q scalar diagnostics
-   and72stress states. Canonical funding slots90:258 exclude the first slot;
-   this resolves an early-boundary ambiguity before results.
-2. The target-only `research_spread` successor passes26synthetic cases and a
-   guarded actual consumed-history proof. Three old runtimes remain frozen.
-   Its closed v2/v1 inventories and complete current five-prior inventory are
-   separately enforced. No empirical book claim exists yet.
-3. Root owns dated_spread_book/sources/statistics/run.py, charter/gate and
-   certificate integration. Final23focused tests include exact guarded full,
-   partial and unavailable financial CLI fixtures: all pass within120seconds,
-   512MiB/twoCPUs/8MiB. Final target/certificate review and committed remotely
-   verified freeze are next; do not run the draft gate without that grant.
-4. Execute once after freeze, independently review actual cashflows/risk,
-   record Decision19/Finding116 and back up; reassess all mapped affordable
-   gaps afterward. A plan or exhausted initial cap is not a stopping criterion.
+All four runtimes are now frozen: original,research_amended,research_extended,
+research_spread. The newest independent verifier supports the failed book and
+explicit closed-v2/v1 snapshots. Both older live-ledger verifiers refuse the
+new descendant as expected. No ledger filtering or artifact mutation occurred.
+The resource diagnosis finds repeated nested history validation probable, not
+an observed interruption stack. Any future use requires representative actual-
+history full-retention/terminal preflight; no optimization or eighth grant exists.
 
-The source step did not calculate spreads, funding sums, quantities or returns.
-No new financial book has run. Existing value_rev needs its second vintage on
-September18 or later. News needs versioned source identity and observation clocks;
-Bitrue needs settled event/mark/fee applicability. A meaningful options premium
-test needs a fixed selling/hedging/tail policy and admitted executable time paths.
-Prospective evidence remains a real future dependency, not manufactured confirmation.
-Account country/product and fee facts were requested without credentials and
-remain unknown. No final coverage/stopping criterion is established.
+Next action, without another routine permission question:
+
+1. Finish independent information-value/coverage adjudication of
+   reviews/options-selling-prospective-adjudication.md, including whether
+   narrow synthetic minimum-inventory jump/margin screening or collector
+   preparation can still change a decision before allocating future observations.
+2. The fixed proposal is a minimum short straddle with hourly perpetual hedge,
+   separate40/50/10wallets and pre-expiry exit. It needs one entire6–44day
+   selected interval; another8minutequote does not test the path null. Public
+   research is feasible in principle; unknown account access is not a reason
+   to claim it impossible. No background job/capture/grant/paper start exists.
+3. Execute any justified bounded preparation identified by the independent
+   review. Only then adjudicate exact future/source/access blockers across the
+   map. Neither failed resources, spent initial caps nor a long session is a
+   stopping criterion. No final exhaustion or blocked verdict has been adopted.
+
+Existing value_rev needs its second vintage September18 or later, not an early
+substitute. News needs versioned source identity and observation clocks; Bitrue
+needs authoritative settled funding events/marks/fees. Its three-page bounded
+websocket-document follow-up supplied no event route. Account country/product
+and fee facts were requested without credentials and remain unknown. Preserve
+all negative, positive-but-small, unavailable and spent-sample qualifications.
 
 ## Backup and preservation
 
-Last result backup:0e55be23d78cd3a897241fd054839d9fad6343e2 (dated-mark
-results), pushed and independently compared equal to the remote branch. The
-prior source freeze5cf5dd843131da489a4695623b81009a244ab49f is also remotely
-recoverable. The seventh-book preparation is not yet its committed freeze.
-The named offline profile passed1,175tests+20subtests before the latest extension.
-Latest focused proof:31 extension tests,29 collector tests including three exact
-CLI guards, independent adversarial/source checks and guarded actual-history proof.
+Latest verified source freeze:6d6d65f9712dd41e135672a2f0fb8a7d8389507b,
+pushed and independently compared equal to the remote. Prior dated-mark results
+backup0e55be23d78cd3a897241fd054839d9fad6343e2 is also recoverable. This latest
+failed-run result/forensic checkpoint awaits its results commit/push/equality.
+The named offline profile passed1,175tests+20subtests before the latest helpers.
+Latest focused proof:26successor tests,23financial/adapter tests including three
+exactCLIguards,7,432independent syntheticcash checks,14adapterscenarios/directHAC,
+actual historical snapshot proof, then9,344actual failed-run forensic checks.
 
 Preserve raw stores, original worktrees, all gates/ledgers and22deferred settlement
 cases. No credentials, provider contact, paid sources, orders or production changes.

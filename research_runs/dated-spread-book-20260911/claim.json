@@ -1,0 +1,341 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "budget_book_grant": {
+    "certificate": {
+      "path": "research/strategy-search-2026-09-11/dated-spread-certificate.json",
+      "sha256": "7f97bb5a1573973139df95094224ee0c8562f1f52f5074fc6d1a0090d47001b3"
+    },
+    "consumed_grants": {
+      "repair": {
+        "certificate": {
+          "path": "research/strategy-search-2026-09-11/dated-amendment-certificate.json",
+          "sha256": "2bea921038cc032e3b76838cc7223a443f6c97aaa0e1bf840afbc0c381d8fa19"
+        },
+        "experiment_id": "dated-book-amended-20260911"
+      },
+      "source": {
+        "certificate": {
+          "path": "research/strategy-search-2026-09-11/dated-extension-certificate.json",
+          "sha256": "242f31d42386e23906138c703ca6b440153cdaefd61c035db83062938afc4b0a"
+        },
+        "experiment_id": "dated-mark-20260911"
+      }
+    },
+    "effective_budget": 7,
+    "grant_id": "dated-fixed-spread-book-seventh-20260911",
+    "original_budget": 4,
+    "prior_attempts": 1,
+    "prior_claim_count": 5,
+    "prior_effective_budget": 6,
+    "scope": "One named fixed book investigation only; no further investigation or trading-execution authorization.",
+    "target_experiment": "dated-spread-book-20260911"
+  },
+  "design_source": "6d6d65f9712dd41e135672a2f0fb8a7d8389507b",
+  "experiment": {
+    "budget_book_grant": {
+      "path": "research/strategy-search-2026-09-11/dated-spread-certificate.json",
+      "sha256": "7f97bb5a1573973139df95094224ee0c8562f1f52f5074fc6d1a0090d47001b3"
+    },
+    "cells": [
+      "btc-1000-base",
+      "btc-1000-stress",
+      "btc-10000-base",
+      "btc-10000-stress",
+      "eth-1000-base",
+      "eth-1000-stress",
+      "eth-10000-base",
+      "eth-10000-stress"
+    ],
+    "charter": {
+      "path": "research/strategy-search-2026-09-11/dated-spread-charter.md",
+      "sha256": "e08586e73ac66acbf138f7c86b8f6380d1126ac55645973bd1d431bab4b2c2d3"
+    },
+    "family": "dated-basis",
+    "inputs": {
+      "archive_admission": {
+        "dataset": "dated-quarter",
+        "path": "research_runs/dated-archive-20260911/outputs/archive-admission.json",
+        "sha256": "9f76f48f36f29db2c1e9f7575eccd77b80365e1b5823b90f15823012efebc319"
+      },
+      "archive_capture": {
+        "dataset": "dated-quarter",
+        "path": "research_runs/dated-archive-20260911/outputs/archive-capture.json",
+        "sha256": "42691356256ba6da94cf4a7796fbf56842a5d43314279b3679dea9713838f4b7"
+      },
+      "btc_dated_mark_receipt": {
+        "dataset": "dated-quarter",
+        "path": "research_runs/dated-mark-20260911/outputs/btc-dated-mark-receipt.json",
+        "sha256": "10d7c2e47fcefab753fe38c683b78fbf342e64dc5d25df987b115063210a2254"
+      },
+      "carry_admission": {
+        "dataset": "legacy",
+        "path": "research_runs/carry-inputs-20260911/outputs/admission.json",
+        "sha256": "2723c2ccc885a79056fa5e04eaa07e56546498df5bf4dade9b4bcb70cefd986e"
+      },
+      "carry_capture": {
+        "dataset": "legacy",
+        "path": "research_runs/carry-inputs-20260911/outputs/capture.json",
+        "sha256": "2076fb01a8b7a11aa76b9ff14f91a2ec9a8d5d6188e53eb32b50b8fccdd544bd"
+      },
+      "eth_dated_mark_receipt": {
+        "dataset": "dated-quarter",
+        "path": "research_runs/dated-mark-20260911/outputs/eth-dated-mark-receipt.json",
+        "sha256": "7552eced39274b29acf5f21ba85227a8932cba4434a2fb836a1a7b836258aa58"
+      },
+      "mark_admission": {
+        "dataset": "dated-quarter",
+        "path": "research_runs/dated-mark-20260911/outputs/admission.json",
+        "sha256": "1914638e198fdd9885b18f12781cc1168fa78b4ba1f6dfb73d88868e24090b0e"
+      },
+      "mark_capture": {
+        "dataset": "dated-quarter",
+        "path": "research_runs/dated-mark-20260911/outputs/capture.json",
+        "sha256": "0050d4a7a372a33c347068013d1e7b24b9d07a2b456c62fbf08d1169ddc83dd8"
+      }
+    },
+    "outputs": [
+      "books.json",
+      "summary.json",
+      "source-audit.json"
+    ],
+    "parent": "dated-mark-20260911",
+    "question": "Does one fixed long-dated/short-perpetual episode cover both derivatives costs with funding and relative-price cash, while separately funded wallets satisfy conditional diagnostics? Eight alternatives, no independent alpha or confirmation.",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "admission.py": "00da90ce1d257c498ee36dd62645aa88a455d8b96db3f30219db94c07c89a798",
+      "amended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "amended/admission.py": "dbb4ec5e0b81948a4d7e007306ffb72277e0a448ae2c5d65c82cd4ddf5ba1b78",
+      "amended/amendment.py": "516b82264fb9152f2135a036eb030feefb7f507221aa213b9509e6f424fe1bfd",
+      "amended/lifecycle.py": "a4681c16e441e41496c1de88017dbcc27b3ce4e30309023ac3ffe83d5f7a1b52",
+      "amended/verify.py": "ccc85b7b98c97e048a3c17a8335b4e735e220398604e05eb19dea96616b84666",
+      "amended/verify_amendment.py": "5b056e3c8f002f1e5391e851840a1d7aa90c0939a9b21a73726137380a2c8e13",
+      "extended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "extended/admission.py": "20bab02c8da3e8319753f2c16e9f34e0ba845ebd712317f6caf0c3ca1bd23627",
+      "extended/extension.py": "2b836081a85d0d18d4cc24690e700fb2f9e886b2cc105167e3bce5c40709395e",
+      "extended/lifecycle.py": "d84db3de685545dd4780c70cec96b750f38b117f0e2e84ba3b038fea0d97e38d",
+      "extended/verify.py": "8dee128df96acd1f49007c29ed29db250cce13d7c37a697da653d722eaa8c38b",
+      "extended/verify_extension.py": "8a775c0e59b9876ce90343c307017260681841065e1c9de67002257f4c110a6a",
+      "extended/verify_v1_snapshot.py": "53bd6dfb6ebe3215337a90ba0327952e35bc68b9541816549f96f427bb62bc38",
+      "grant.py": "f21dc0611f6bbb00a24e36aca3a6c9d1988eb9dfac0aa1353d5eadd447402d31",
+      "lifecycle.py": "964a28c9d740ff57a596563cba275e84f853e9c7b06d8597acf0e7cb122c7fe2",
+      "original/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "original/__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "original/admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+      "original/examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "original/lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+      "original/verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313",
+      "verify.py": "e3337246fbe0db3d936751f2a204ce82aa7db8663dad78ca289effcbe1c6fef7",
+      "verify_grant.py": "10b6be48e9c2650036b9392604beef845f23a0b2ccbe60d24746d75e88d4c42d",
+      "verify_v2_snapshot.py": "cf1f92ab09a857c8479528523620b0f329cafee980023f53e06a770ebc5fb03b"
+    },
+    "selection": null,
+    "source_files": {
+      "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+      "research/strategy-search-2026-09-11/dated_archive.py": "631412c60dd411466db185b3ae2cfb0cc62d5423153c98432e9aa93db86efb3d",
+      "research/strategy-search-2026-09-11/dated_mark.py": "2853d70b6f28fd653c96b4c1cd07eb5484e437f6ea61c2c392f966e65f3c1bf9",
+      "research/strategy-search-2026-09-11/dated_mark_transport.py": "3639602d77274ec829360acd06561c4cadca28d0a07ea693f4e2d55c9fe7569a",
+      "research/strategy-search-2026-09-11/dated_spread_book.py": "e809bdb0240d3afd907c490e1054216d481181fe83c0d8dab9e992b8711f3b4b",
+      "research/strategy-search-2026-09-11/dated_spread_run.py": "a416ffa611d662f388ec9aa8674f34146a4a9660d6517b8efabcbff75442817e",
+      "research/strategy-search-2026-09-11/dated_spread_sources.py": "c3eb7278f23e0a34c54154bcb9918fb8bd266588f5822e2b18b60260059550e9",
+      "research/strategy-search-2026-09-11/dated_spread_statistics.py": "5fb0b7cf6a584c388706374e05bba79398e29047af8bb5ad05e85bb67d819283",
+      "research/strategy-search-2026-09-11/dated_statistics.py": "28c5d01aeb5644b8edf65833fb95c291f8d5eb66dac53147269ea889ff77f61c",
+      "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+      "tradingagents/research_spread/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "tradingagents/research_spread/admission.py": "00da90ce1d257c498ee36dd62645aa88a455d8b96db3f30219db94c07c89a798",
+      "tradingagents/research_spread/grant.py": "f21dc0611f6bbb00a24e36aca3a6c9d1988eb9dfac0aa1353d5eadd447402d31",
+      "tradingagents/research_spread/lifecycle.py": "964a28c9d740ff57a596563cba275e84f853e9c7b06d8597acf0e7cb122c7fe2",
+      "tradingagents/research_spread/verify.py": "e3337246fbe0db3d936751f2a204ce82aa7db8663dad78ca289effcbe1c6fef7",
+      "tradingagents/research_spread/verify_grant.py": "10b6be48e9c2650036b9392604beef845f23a0b2ccbe60d24746d75e88d4c42d",
+      "tradingagents/research_spread/verify_v2_snapshot.py": "cf1f92ab09a857c8479528523620b0f329cafee980023f53e06a770ebc5fb03b",
+      "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+    },
+    "stage": "development",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "legacy",
+        "end": "2026-06-26T00:00:00Z",
+        "start": "2026-05-01T00:00:00Z"
+      },
+      {
+        "availability": "existing",
+        "dataset": "dated-quarter",
+        "end": "2026-06-26T00:00:00Z",
+        "start": "2026-05-01T00:00:00Z"
+      }
+    ]
+  },
+  "experiment_id": "dated-spread-book-20260911",
+  "family": {
+    "attempt_budget": 4,
+    "history_reference": "docs/carry-feasibility-2026-09-10/INTERPRETATION.md; one dated capture with432correlated scenarios, not432independent attempts. New incremental cap3; funding-carry and old spending remain separately recorded.",
+    "mechanism_id": "binance-btc-eth-dated-basis-convergence",
+    "prior_attempts": 1
+  },
+  "inputs": {
+    "archive_admission": {
+      "dataset": "dated-quarter",
+      "path": "research_runs/dated-archive-20260911/outputs/archive-admission.json",
+      "sha256": "9f76f48f36f29db2c1e9f7575eccd77b80365e1b5823b90f15823012efebc319"
+    },
+    "archive_capture": {
+      "dataset": "dated-quarter",
+      "path": "research_runs/dated-archive-20260911/outputs/archive-capture.json",
+      "sha256": "42691356256ba6da94cf4a7796fbf56842a5d43314279b3679dea9713838f4b7"
+    },
+    "btc_dated_mark_receipt": {
+      "dataset": "dated-quarter",
+      "path": "research_runs/dated-mark-20260911/outputs/btc-dated-mark-receipt.json",
+      "sha256": "10d7c2e47fcefab753fe38c683b78fbf342e64dc5d25df987b115063210a2254"
+    },
+    "carry_admission": {
+      "dataset": "legacy",
+      "path": "research_runs/carry-inputs-20260911/outputs/admission.json",
+      "sha256": "2723c2ccc885a79056fa5e04eaa07e56546498df5bf4dade9b4bcb70cefd986e"
+    },
+    "carry_capture": {
+      "dataset": "legacy",
+      "path": "research_runs/carry-inputs-20260911/outputs/capture.json",
+      "sha256": "2076fb01a8b7a11aa76b9ff14f91a2ec9a8d5d6188e53eb32b50b8fccdd544bd"
+    },
+    "eth_dated_mark_receipt": {
+      "dataset": "dated-quarter",
+      "path": "research_runs/dated-mark-20260911/outputs/eth-dated-mark-receipt.json",
+      "sha256": "7552eced39274b29acf5f21ba85227a8932cba4434a2fb836a1a7b836258aa58"
+    },
+    "mark_admission": {
+      "dataset": "dated-quarter",
+      "path": "research_runs/dated-mark-20260911/outputs/admission.json",
+      "sha256": "1914638e198fdd9885b18f12781cc1168fa78b4ba1f6dfb73d88868e24090b0e"
+    },
+    "mark_capture": {
+      "dataset": "dated-quarter",
+      "path": "research_runs/dated-mark-20260911/outputs/capture.json",
+      "sha256": "0050d4a7a372a33c347068013d1e7b24b9d07a2b456c62fbf08d1169ddc83dd8"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2025-03-31T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2021-11-08T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2025-04-01T00:00:00Z",
+      "state": "spent"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-usdt-260626-contract-history",
+      "start": "2025-12-26T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:38:02.442471+00:00",
+      "identity": "binance-options-request-definition-20260911",
+      "start": "2026-09-11T08:38:02.442372+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:59:38.161767+00:00",
+      "identity": "binance-eoh-request-definition-20260911",
+      "start": "2026-09-11T08:59:38.161697+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2025-04-01T00:00:00Z",
+      "identity": "binance-btc-eoh-option-summary-history",
+      "start": "2022-06-01T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:59:38.166591+00:00",
+      "identity": "binance-triangle-request-definition-20260911",
+      "start": "2026-09-11T08:59:38.166552+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T09:10:29.052054+00:00",
+      "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+      "start": "2026-09-11T09:10:25.404644+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T09:12:21.519683+00:00",
+      "identity": "bitrue-contract-request-definition-20260911",
+      "start": "2026-09-11T09:12:21.519513+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T09:30:47.099983+00:00",
+      "identity": "binance-wbeth-source-definition-20260911",
+      "start": "2026-09-11T09:30:47.099732+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-wbeth-usdt-spot-market-history",
+      "start": "2026-04-01T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T10:03:47.610019+00:00",
+      "identity": "saved-news-seven-path-provenance-definition-20260911",
+      "start": "2026-09-11T10:03:47.591240+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T10:30:02.537002+00:00",
+      "identity": "triangle-fixed-local-stream-source-definition-20260911",
+      "start": "2026-09-11T10:30:02.485798+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T10:44:51.919593+00:00",
+      "identity": "fixed-current-options-entry-component-definition-20260911",
+      "start": "2026-09-11T10:44:51.919367+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:40:16.763026+00:00",
+      "identity": "options-metadata-20260911-original-capture-admission-and-exchange-info-receipt",
+      "start": "2026-09-11T08:40:11.517399+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T11:03:40.951452+00:00",
+      "identity": "fixed-expired-dated-daily-mark-source-definition-20260911",
+      "start": "2026-09-11T11:03:40.950496+00:00",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "strategy-search-2026-09-11",
+  "registration": "research/strategy-search-2026-09-11/gates-dated-spread.json",
+  "registration_sha256": "b725eb118ff54da9a0389dc2571ae623f3d3fd84bb47c42269d937c35de335f0",
+  "schema_version": 1,
+  "source": "6d6d65f9712dd41e135672a2f0fb8a7d8389507b",
+  "started_at": "2026-09-11T11:49:04.276789+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "legacy",
+      "end": "2026-06-26T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2026-05-01T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "availability": "existing",
+      "dataset": "dated-quarter",
+      "end": "2026-06-26T00:00:00Z",
+      "identity": "binance-btc-eth-usdt-260626-contract-history",
+      "start": "2026-05-01T00:00:00Z",
+      "state": "exposed"
+    }
+  ]
+}

@@ -1,0 +1,1049 @@
+{
+  "cases": [
+    {
+      "actual_margin": {
+        "reason": "Daily mark extrema and assumed1%maintenance do not establish tiers, intraday liquidation, ADL or transferable collateral.",
+        "status": "unavailable"
+      },
+      "asset": "BTC",
+      "capital": 1000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 4.602739726027397,
+        "0.05": 7.671232876712328
+      },
+      "conditional_screens": {
+        "beta_point_and_interval": true,
+        "drawdown_at_most_10pct": true,
+        "modeled_net_base_at_most_1pct_nav": true,
+        "no_separate_path_wallet_deficit": true,
+        "no_separate_stress_wallet_deficit": true,
+        "positive_cash_and_3pct_annual_base_and_stress": false
+      },
+      "cost_scenario": "base",
+      "execution": {
+        "reason": "Historical/current lots, fees, personal access and simultaneous fills unverified.",
+        "status": "unavailable"
+      },
+      "final_ledger": {
+        "all_fees": 0.6808450586000001,
+        "cash_profit": -0.2378690739292324,
+        "cash_reconciliation_difference": 3.26405569239796e-14,
+        "dated_exit_fee": 0.14948259750000004,
+        "dated_exit_fill": 59793.039000000004,
+        "dated_price_pnl": -83.38976069999997,
+        "dated_wallet_after_close": 316.26957922465004,
+        "final_cash": 999.7621309260708,
+        "frictionless_same_quantity_profit": 0.715313984670674,
+        "funding_cash": 1.3013139846706958,
+        "idle_cash": 100.0,
+        "perp_exit_fee": 0.14945963595,
+        "perp_exit_fill": 59783.85438,
+        "perp_price_pnl": 82.53142270000001,
+        "perp_wallet_after_close": 583.4925517014207,
+        "raw_two_leg_price_change": -0.5860000000000218,
+        "signed_component_profit": -0.23786907392926504,
+        "slippage_cost": 0.2723379999999389,
+        "terminal_dated_quantity": 0.0,
+        "terminal_perp_quantity": 0.0,
+        "zero_funding_same_quantity_profit": -1.5391830585999282
+      },
+      "graduation": false,
+      "id": "btc-1000-base",
+      "metrics": {
+        "annualized_simple_return_365": -0.0015503966425744612,
+        "applied_funding_events": 167,
+        "cash_profit": -0.2378690739292324,
+        "full_capital_return": -0.0002378690739292324,
+        "funding_cash": 1.3013139846706958,
+        "max_drawdown": 0.0009491550569655374,
+        "minimum_dated_low_buffer": 305.12279134173104,
+        "minimum_perp_high_buffer": 462.90945726287924,
+        "modeled_net_base_fraction_nav": 0.0,
+        "modeled_net_base_quantity": 0.0,
+        "path_wallet_deficit": false,
+        "stress_wallet_deficit": false
+      },
+      "scalar_diagnostics": {
+        "frictionless": {
+          "profit": 0.715313984670674,
+          "status": "complete"
+        },
+        "zero_funding": {
+          "profit": -1.5391830585999282,
+          "status": "complete"
+        }
+      },
+      "statistics": {
+        "expected_profit_confidence": {
+          "reason": "One spent episode per asset; not a repeated independent profit sample.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.0024525136850726435,
+          "btc_interval": [
+            -0.008560073290337401,
+            0.0036550459201921135
+          ],
+          "btc_standard_error": 0.0026475523368318416,
+          "covariance": [
+            [
+              4.616733973419904e-10,
+              3.5738476738210924e-08,
+              -2.0290322873035e-08
+            ],
+            [
+              3.573847673821093e-08,
+              7.009533376263745e-06,
+              -3.233444739332244e-06
+            ],
+            [
+              -2.0290322873035004e-08,
+              -3.233444739332243e-06,
+              1.6894364313200031e-06
+            ]
+          ],
+          "covariance_order": [
+            "intercept",
+            "btc",
+            "eth"
+          ],
+          "eth_beta": 0.0007817249245405704,
+          "eth_interval": [
+            -0.0022167062711701217,
+            0.0037801561202512627
+          ],
+          "eth_standard_error": 0.001299783224741727,
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -9.661518416461067e-06,
+          "observations": 56,
+          "scope": "Daily marked NAV, final cash substituted on exit; exploratory within-book nominal95%Bonferroni intervals, not finite-sample guarantee or all-search confirmation.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No valid expected-profit test or independent episode sample.",
+          "status": "unavailable"
+        }
+      },
+      "status": "conditional",
+      "validated_strategy": false
+    },
+    {
+      "actual_margin": {
+        "reason": "Daily mark extrema and assumed1%maintenance do not establish tiers, intraday liquidation, ADL or transferable collateral.",
+        "status": "unavailable"
+      },
+      "asset": "BTC",
+      "capital": 1000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 4.602739726027397,
+        "0.05": 7.671232876712328
+      },
+      "conditional_screens": {
+        "beta_point_and_interval": true,
+        "drawdown_at_most_10pct": true,
+        "modeled_net_base_at_most_1pct_nav": true,
+        "no_separate_path_wallet_deficit": true,
+        "no_separate_stress_wallet_deficit": true,
+        "positive_cash_and_3pct_annual_base_and_stress": false
+      },
+      "cost_scenario": "stress",
+      "execution": {
+        "reason": "Historical/current lots, fees, personal access and simultaneous fills unverified.",
+        "status": "unavailable"
+      },
+      "final_ledger": {
+        "all_fees": 1.3616902344000001,
+        "cash_profit": -1.191052249729296,
+        "cash_reconciliation_difference": -1.176836406102666e-14,
+        "dated_exit_fee": 0.29890539,
+        "dated_exit_fill": 59781.078,
+        "dated_price_pnl": -83.52602139999999,
+        "dated_wallet_after_close": 315.7926417986,
+        "final_cash": 998.8089477502707,
+        "frictionless_same_quantity_profit": 0.715313984670674,
+        "funding_cash": 1.3013139846706958,
+        "idle_cash": 100.0,
+        "perp_exit_fee": 0.2989790438,
+        "perp_exit_fill": 59795.80876,
+        "perp_price_pnl": 82.39534540000001,
+        "perp_wallet_after_close": 583.0163059516707,
+        "raw_two_leg_price_change": -0.5860000000000218,
+        "signed_component_profit": -1.1910522497292841,
+        "slippage_cost": 0.544675999999958,
+        "terminal_dated_quantity": 0.0,
+        "terminal_perp_quantity": 0.0,
+        "zero_funding_same_quantity_profit": -2.4923662343999915
+      },
+      "graduation": false,
+      "id": "btc-1000-stress",
+      "metrics": {
+        "annualized_simple_return_365": -0.007763108413414162,
+        "applied_funding_events": 167,
+        "cash_profit": -1.191052249729296,
+        "full_capital_return": -0.001191052249729296,
+        "funding_cash": 1.3013139846706958,
+        "max_drawdown": 0.0014838191324154195,
+        "minimum_dated_low_buffer": 304.85508170818105,
+        "minimum_perp_high_buffer": 462.64250282097925,
+        "modeled_net_base_fraction_nav": 0.0,
+        "modeled_net_base_quantity": 0.0,
+        "path_wallet_deficit": false,
+        "stress_wallet_deficit": false
+      },
+      "scalar_diagnostics": {
+        "frictionless": {
+          "profit": 0.715313984670674,
+          "status": "complete"
+        },
+        "zero_funding": {
+          "profit": -2.4923662343999915,
+          "status": "complete"
+        }
+      },
+      "statistics": {
+        "expected_profit_confidence": {
+          "reason": "One spent episode per asset; not a repeated independent profit sample.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.004073269399548972,
+          "btc_interval": [
+            -0.013104616011744858,
+            0.004958077212646915
+          ],
+          "btc_standard_error": 0.003914978219327757,
+          "covariance": [
+            [
+              9.991337753291993e-10,
+              8.840810832693749e-08,
+              -4.889773022316043e-08
+            ],
+            [
+              8.840810832693749e-08,
+              1.5327054457810732e-05,
+              -7.313926487171455e-06
+            ],
+            [
+              -4.889773022316044e-08,
+              -7.313926487171456e-06,
+              4.059295738162664e-06
+            ]
+          ],
+          "covariance_order": [
+            "intercept",
+            "btc",
+            "eth"
+          ],
+          "eth_beta": 0.0017928210720525898,
+          "eth_interval": [
+            -0.002854990430935429,
+            0.006440632575040608
+          ],
+          "eth_standard_error": 0.002014769400741103,
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -2.7232673773333732e-05,
+          "observations": 56,
+          "scope": "Daily marked NAV, final cash substituted on exit; exploratory within-book nominal95%Bonferroni intervals, not finite-sample guarantee or all-search confirmation.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No valid expected-profit test or independent episode sample.",
+          "status": "unavailable"
+        }
+      },
+      "status": "conditional",
+      "validated_strategy": false
+    },
+    {
+      "actual_margin": {
+        "reason": "Daily mark extrema and assumed1%maintenance do not establish tiers, intraday liquidation, ADL or transferable collateral.",
+        "status": "unavailable"
+      },
+      "asset": "BTC",
+      "capital": 10000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 46.02739726027397,
+        "0.05": 76.71232876712328
+      },
+      "conditional_screens": {
+        "beta_point_and_interval": true,
+        "drawdown_at_most_10pct": true,
+        "modeled_net_base_at_most_1pct_nav": true,
+        "no_separate_path_wallet_deficit": true,
+        "no_separate_stress_wallet_deficit": true,
+        "positive_cash_and_3pct_annual_base_and_stress": false
+      },
+      "cost_scenario": "base",
+      "execution": {
+        "reason": "Historical/current lots, fees, personal access and simultaneous fills unverified.",
+        "status": "unavailable"
+      },
+      "final_ledger": {
+        "all_fees": 7.08078860944,
+        "cash_profit": -2.473838368863653,
+        "cash_reconciliation_difference": 7.647216193618078e-13,
+        "dated_exit_fee": 1.5546190140000002,
+        "dated_exit_fill": 59793.039000000004,
+        "dated_price_pnl": -867.2535112799997,
+        "dated_wallet_after_close": 3129.2036239363606,
+        "final_cash": 9997.526161631136,
+        "frictionless_same_quantity_profit": 7.439265440575004,
+        "funding_cash": 13.53366544057523,
+        "idle_cash": 1000.0,
+        "perp_exit_fee": 1.55438021388,
+        "perp_exit_fill": 59783.85438,
+        "perp_price_pnl": 858.32679608,
+        "perp_wallet_after_close": 5868.322537694776,
+        "raw_two_leg_price_change": -6.094400000000227,
+        "signed_component_profit": -2.473838368864418,
+        "slippage_cost": 2.832315199999422,
+        "terminal_dated_quantity": 0.0,
+        "terminal_perp_quantity": 0.0,
+        "zero_funding_same_quantity_profit": -16.007503809438884
+      },
+      "graduation": false,
+      "id": "btc-10000-base",
+      "metrics": {
+        "annualized_simple_return_365": -0.0016124125082772026,
+        "applied_funding_events": 167,
+        "cash_profit": -2.473838368863653,
+        "full_capital_return": -0.00024738383688636533,
+        "funding_cash": 13.53366544057523,
+        "max_drawdown": 0.0009871212592443043,
+        "minimum_dated_low_buffer": 3013.2770299540025,
+        "minimum_perp_high_buffer": 4614.258355533944,
+        "modeled_net_base_fraction_nav": 0.0,
+        "modeled_net_base_quantity": 0.0,
+        "path_wallet_deficit": false,
+        "stress_wallet_deficit": false
+      },
+      "scalar_diagnostics": {
+        "frictionless": {
+          "profit": 7.439265440575004,
+          "status": "complete"
+        },
+        "zero_funding": {
+          "profit": -16.007503809438884,
+          "status": "complete"
+        }
+      },
+      "statistics": {
+        "expected_profit_confidence": {
+          "reason": "One spent episode per asset; not a repeated independent profit sample.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.0025506164642359504,
+          "btc_interval": [
+            -0.008902508503256603,
+            0.0038012755747847014
+          ],
+          "btc_standard_error": 0.00275346745641522,
+          "covariance": [
+            [
+              4.993517377725723e-10,
+              3.865511332897329e-08,
+              -2.194623198404531e-08
+            ],
+            [
+              3.8655113328973294e-08,
+              7.5815830335377034e-06,
+              -3.497314244637973e-06
+            ],
+            [
+              -2.194623198404531e-08,
+              -3.4973142446379716e-06,
+              1.8272988582656367e-06
+            ]
+          ],
+          "covariance_order": [
+            "intercept",
+            "btc",
+            "eth"
+          ],
+          "eth_beta": 0.0008129870081033347,
+          "eth_interval": [
+            -0.00230538520191621,
+            0.00393135921812288
+          ],
+          "eth_standard_error": 0.0013517761864545613,
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -1.0047472678412042e-05,
+          "observations": 56,
+          "scope": "Daily marked NAV, final cash substituted on exit; exploratory within-book nominal95%Bonferroni intervals, not finite-sample guarantee or all-search confirmation.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No valid expected-profit test or independent episode sample.",
+          "status": "unavailable"
+        }
+      },
+      "status": "conditional",
+      "validated_strategy": false
+    },
+    {
+      "actual_margin": {
+        "reason": "Daily mark extrema and assumed1%maintenance do not establish tiers, intraday liquidation, ADL or transferable collateral.",
+        "status": "unavailable"
+      },
+      "asset": "BTC",
+      "capital": 10000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 46.02739726027397,
+        "0.05": 76.71232876712328
+      },
+      "conditional_screens": {
+        "beta_point_and_interval": true,
+        "drawdown_at_most_10pct": true,
+        "modeled_net_base_at_most_1pct_nav": true,
+        "no_separate_path_wallet_deficit": true,
+        "no_separate_stress_wallet_deficit": true,
+        "positive_cash_and_3pct_annual_base_and_stress": false
+      },
+      "cost_scenario": "stress",
+      "execution": {
+        "reason": "Historical/current lots, fees, personal access and simultaneous fills unverified.",
+        "status": "unavailable"
+      },
+      "final_ledger": {
+        "all_fees": 14.16157843776,
+        "cash_profit": -12.38694339718495,
+        "cash_reconciliation_difference": -3.801403636316536e-13,
+        "dated_exit_fee": 3.108616056,
+        "dated_exit_fill": 59781.078,
+        "dated_price_pnl": -868.6706225599999,
+        "dated_wallet_after_close": 3124.2434747054403,
+        "final_cash": 9987.613056602815,
+        "frictionless_same_quantity_profit": 7.439265440575004,
+        "funding_cash": 13.53366544057523,
+        "idle_cash": 1000.0,
+        "perp_exit_fee": 3.1093820555200002,
+        "perp_exit_fill": 59795.80876,
+        "perp_price_pnl": 856.91159216,
+        "perp_wallet_after_close": 5863.369581897376,
+        "raw_two_leg_price_change": -6.094400000000227,
+        "signed_component_profit": -12.38694339718457,
+        "slippage_cost": 5.664630399999575,
+        "terminal_dated_quantity": 0.0,
+        "terminal_perp_quantity": 0.0,
+        "zero_funding_same_quantity_profit": -25.92060883776018
+      },
+      "graduation": false,
+      "id": "btc-10000-stress",
+      "metrics": {
+        "annualized_simple_return_365": -0.008073632749950906,
+        "applied_funding_events": 167,
+        "cash_profit": -12.38694339718495,
+        "full_capital_return": -0.0012386943397184951,
+        "funding_cash": 13.53366544057523,
+        "max_drawdown": 0.001543171897712091,
+        "minimum_dated_low_buffer": 3010.492849765082,
+        "minimum_perp_high_buffer": 4611.4820293381845,
+        "modeled_net_base_fraction_nav": 0.0,
+        "modeled_net_base_quantity": 0.0,
+        "path_wallet_deficit": false,
+        "stress_wallet_deficit": false
+      },
+      "scalar_diagnostics": {
+        "frictionless": {
+          "profit": 7.439265440575004,
+          "status": "complete"
+        },
+        "zero_funding": {
+          "profit": -25.92060883776018,
+          "status": "complete"
+        }
+      },
+      "statistics": {
+        "expected_profit_confidence": {
+          "reason": "One spent episode per asset; not a repeated independent profit sample.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.004236216890177814,
+          "btc_interval": [
+            -0.013628885619094838,
+            0.005156451838739209
+          ],
+          "btc_standard_error": 0.004071606934608646,
+          "covariance": [
+            [
+              1.0806895017682764e-09,
+              9.56234060434763e-08,
+              -5.2888780146460984e-08
+            ],
+            [
+              9.562340604347628e-08,
+              1.6577983029953216e-05,
+              -7.910843954190072e-06
+            ],
+            [
+              -5.2888780146460984e-08,
+              -7.910843954190072e-06,
+              4.390594424505113e-06
+            ]
+          ],
+          "covariance_order": [
+            "intercept",
+            "btc",
+            "eth"
+          ],
+          "eth_beta": 0.0018645321119208236,
+          "eth_interval": [
+            -0.0029692249641681085,
+            0.006698289188009756
+          ],
+          "eth_standard_error": 0.0020953745308429023,
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -2.832147135696982e-05,
+          "observations": 56,
+          "scope": "Daily marked NAV, final cash substituted on exit; exploratory within-book nominal95%Bonferroni intervals, not finite-sample guarantee or all-search confirmation.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No valid expected-profit test or independent episode sample.",
+          "status": "unavailable"
+        }
+      },
+      "status": "conditional",
+      "validated_strategy": false
+    },
+    {
+      "actual_margin": {
+        "reason": "Daily mark extrema and assumed1%maintenance do not establish tiers, intraday liquidation, ADL or transferable collateral.",
+        "status": "unavailable"
+      },
+      "asset": "ETH",
+      "capital": 1000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 4.602739726027397,
+        "0.05": 7.671232876712328
+      },
+      "conditional_screens": {
+        "beta_point_and_interval": true,
+        "drawdown_at_most_10pct": true,
+        "modeled_net_base_at_most_1pct_nav": true,
+        "no_separate_path_wallet_deficit": true,
+        "no_separate_stress_wallet_deficit": true,
+        "positive_cash_and_3pct_annual_base_and_stress": false
+      },
+      "cost_scenario": "base",
+      "execution": {
+        "reason": "Historical/current lots, fees, personal access and simultaneous fills unverified.",
+        "status": "unavailable"
+      },
+      "final_ledger": {
+        "all_fees": 0.6503962360400001,
+        "cash_profit": -0.0455200448850519,
+        "cash_reconciliation_difference": 4.807265696626928e-14,
+        "dated_exit_fee": 0.1332788389,
+        "dated_exit_fill": 1567.98634,
+        "dated_price_pnl": -117.71066049999999,
+        "dated_wallet_after_close": 281.96392649194996,
+        "final_cash": 999.954479955115,
+        "frictionless_same_quantity_profit": 0.8650346711549326,
+        "funding_cash": 1.225434671154914,
+        "idle_cash": 100.0,
+        "perp_exit_fee": 0.13321908849000003,
+        "perp_exit_fill": 1567.283394,
+        "perp_price_pnl": 117.09010201999997,
+        "perp_wallet_after_close": 617.9905534631649,
+        "raw_two_leg_price_change": -0.36039999999998146,
+        "signed_component_profit": -0.045520044885099975,
+        "slippage_cost": 0.26015848000003244,
+        "terminal_dated_quantity": 0.0,
+        "terminal_perp_quantity": 0.0,
+        "zero_funding_same_quantity_profit": -1.270954716039966
+      },
+      "graduation": false,
+      "id": "eth-1000-base",
+      "metrics": {
+        "annualized_simple_return_365": -0.0002966931496972133,
+        "applied_funding_events": 167,
+        "cash_profit": -0.0455200448850519,
+        "full_capital_return": -4.5520044885051904e-05,
+        "funding_cash": 1.225434671154914,
+        "max_drawdown": 0.0009129923725205344,
+        "minimum_dated_low_buffer": 269.26750183855904,
+        "minimum_perp_high_buffer": 467.35033285202076,
+        "modeled_net_base_fraction_nav": 0.0,
+        "modeled_net_base_quantity": 0.0,
+        "path_wallet_deficit": false,
+        "stress_wallet_deficit": false
+      },
+      "scalar_diagnostics": {
+        "frictionless": {
+          "profit": 0.8650346711549326,
+          "status": "complete"
+        },
+        "zero_funding": {
+          "profit": -1.270954716039966,
+          "status": "complete"
+        }
+      },
+      "statistics": {
+        "expected_profit_confidence": {
+          "reason": "One spent episode per asset; not a repeated independent profit sample.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.003894488402946914,
+          "btc_interval": [
+            -0.008648118001254703,
+            0.0008591411953608745
+          ],
+          "btc_standard_error": 0.0020606402499263408,
+          "covariance": [
+            [
+              3.875221929042011e-10,
+              2.3644756933231e-08,
+              -1.749919468667478e-08
+            ],
+            [
+              2.3644756933231003e-08,
+              4.246238239616493e-06,
+              -1.83720093483415e-06
+            ],
+            [
+              -1.7499194686674786e-08,
+              -1.8372009348341506e-06,
+              1.2607153513216734e-06
+            ]
+          ],
+          "covariance_order": [
+            "intercept",
+            "btc",
+            "eth"
+          ],
+          "eth_beta": 0.001757485723568597,
+          "eth_interval": [
+            -0.0008327046239589198,
+            0.004347676071096113
+          ],
+          "eth_standard_error": 0.0011228158136229083,
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -6.2454872546319885e-06,
+          "observations": 56,
+          "scope": "Daily marked NAV, final cash substituted on exit; exploratory within-book nominal95%Bonferroni intervals, not finite-sample guarantee or all-search confirmation.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No valid expected-profit test or independent episode sample.",
+          "status": "unavailable"
+        }
+      },
+      "status": "conditional",
+      "validated_strategy": false
+    },
+    {
+      "actual_margin": {
+        "reason": "Daily mark extrema and assumed1%maintenance do not establish tiers, intraday liquidation, ADL or transferable collateral.",
+        "status": "unavailable"
+      },
+      "asset": "ETH",
+      "capital": 1000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 4.602739726027397,
+        "0.05": 7.671232876712328
+      },
+      "conditional_screens": {
+        "beta_point_and_interval": true,
+        "drawdown_at_most_10pct": true,
+        "modeled_net_base_at_most_1pct_nav": true,
+        "no_separate_path_wallet_deficit": true,
+        "no_separate_stress_wallet_deficit": true,
+        "positive_cash_and_3pct_annual_base_and_stress": false
+      },
+      "cost_scenario": "stress",
+      "execution": {
+        "reason": "Historical/current lots, fees, personal access and simultaneous fills unverified.",
+        "status": "unavailable"
+      },
+      "final_ledger": {
+        "all_fees": 1.3007925441600001,
+        "cash_profit": -0.9560748330050046,
+        "cash_reconciliation_difference": 2.55351295663786e-14,
+        "dated_exit_fee": 0.2665043556000001,
+        "dated_exit_fill": 1567.6726800000001,
+        "dated_price_pnl": -117.84082099999996,
+        "dated_wallet_after_close": 281.5083294678001,
+        "final_cash": 999.043925166995,
+        "frictionless_same_quantity_profit": 0.8650346711549326,
+        "funding_cash": 1.225434671154914,
+        "idle_cash": 100.0,
+        "perp_exit_fee": 0.26649145396,
+        "perp_exit_fill": 1567.596788,
+        "perp_price_pnl": 116.96010404000002,
+        "perp_wallet_after_close": 617.5355956991949,
+        "raw_two_leg_price_change": -0.36039999999998146,
+        "signed_component_profit": -0.9560748330050302,
+        "slippage_cost": 0.5203169599999626,
+        "terminal_dated_quantity": 0.0,
+        "terminal_perp_quantity": 0.0,
+        "zero_funding_same_quantity_profit": -2.1815095041599184
+      },
+      "graduation": false,
+      "id": "eth-1000-stress",
+      "metrics": {
+        "annualized_simple_return_365": -0.006231559179407619,
+        "applied_funding_events": 167,
+        "cash_profit": -0.9560748330050046,
+        "full_capital_return": -0.0009560748330050046,
+        "funding_cash": 1.225434671154914,
+        "max_drawdown": 0.0014504500984705829,
+        "minimum_dated_low_buffer": 268.998452531109,
+        "minimum_perp_high_buffer": 467.08192443352084,
+        "modeled_net_base_fraction_nav": 0.0,
+        "modeled_net_base_quantity": 0.0,
+        "path_wallet_deficit": false,
+        "stress_wallet_deficit": false
+      },
+      "scalar_diagnostics": {
+        "frictionless": {
+          "profit": 0.8650346711549326,
+          "status": "complete"
+        },
+        "zero_funding": {
+          "profit": -2.1815095041599184,
+          "status": "complete"
+        }
+      },
+      "statistics": {
+        "expected_profit_confidence": {
+          "reason": "One spent episode per asset; not a repeated independent profit sample.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.005518568648603501,
+          "btc_interval": [
+            -0.013484282539395358,
+            0.0024471452421883566
+          ],
+          "btc_standard_error": 0.0034530394771621104,
+          "covariance": [
+            [
+              8.597319985730041e-10,
+              7.011174804701393e-08,
+              -4.3328508699848677e-08
+            ],
+            [
+              7.011174804701394e-08,
+              1.192348163083998e-05,
+              -5.4302086099051795e-06
+            ],
+            [
+              -4.332850869984868e-08,
+              -5.430208609905179e-06,
+              3.1894475573317196e-06
+            ]
+          ],
+          "covariance_order": [
+            "intercept",
+            "btc",
+            "eth"
+          ],
+          "eth_beta": 0.00273666212868927,
+          "eth_interval": [
+            -0.0013831830221290847,
+            0.006856507279507625
+          ],
+          "eth_standard_error": 0.0017859024489965064,
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -2.3260715988437363e-05,
+          "observations": 56,
+          "scope": "Daily marked NAV, final cash substituted on exit; exploratory within-book nominal95%Bonferroni intervals, not finite-sample guarantee or all-search confirmation.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No valid expected-profit test or independent episode sample.",
+          "status": "unavailable"
+        }
+      },
+      "status": "conditional",
+      "validated_strategy": false
+    },
+    {
+      "actual_margin": {
+        "reason": "Daily mark extrema and assumed1%maintenance do not establish tiers, intraday liquidation, ADL or transferable collateral.",
+        "status": "unavailable"
+      },
+      "asset": "ETH",
+      "capital": 10000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 46.02739726027397,
+        "0.05": 76.71232876712328
+      },
+      "conditional_screens": {
+        "beta_point_and_interval": true,
+        "drawdown_at_most_10pct": true,
+        "modeled_net_base_at_most_1pct_nav": true,
+        "no_separate_path_wallet_deficit": true,
+        "no_separate_stress_wallet_deficit": true,
+        "positive_cash_and_3pct_annual_base_and_stress": false
+      },
+      "cost_scenario": "base",
+      "execution": {
+        "reason": "Historical/current lots, fees, personal access and simultaneous fills unverified.",
+        "status": "unavailable"
+      },
+      "final_ledger": {
+        "all_fees": 6.733513973119999,
+        "cash_profit": -0.4712663470454572,
+        "cash_reconciliation_difference": 4.2454928461665986e-13,
+        "dated_exit_fee": 1.3798279791999999,
+        "dated_exit_fill": 1567.98634,
+        "dated_price_pnl": -1218.6515439999998,
+        "dated_wallet_after_close": 2777.9794742696004,
+        "final_cash": 9999.528733652955,
+        "frictionless_same_quantity_profit": 8.955653066074587,
+        "funding_cash": 12.686853066074395,
+        "idle_cash": 1000.0,
+        "perp_exit_fee": 1.3792093867200002,
+        "perp_exit_fill": 1567.283394,
+        "perp_price_pnl": 1212.2269385599996,
+        "perp_wallet_after_close": 6221.549259383354,
+        "raw_two_leg_price_change": -3.731199999999808,
+        "signed_component_profit": -0.4712663470458818,
+        "slippage_cost": 2.6934054400004697,
+        "terminal_dated_quantity": 0.0,
+        "terminal_perp_quantity": 0.0,
+        "zero_funding_same_quantity_profit": -13.158119413119852
+      },
+      "graduation": false,
+      "id": "eth-10000-base",
+      "metrics": {
+        "annualized_simple_return_365": -0.00030716467262784265,
+        "applied_funding_events": 167,
+        "cash_profit": -0.4712663470454572,
+        "full_capital_return": -4.7126634704545726e-05,
+        "funding_cash": 12.686853066074395,
+        "max_drawdown": 0.0009452156327271951,
+        "minimum_dated_low_buffer": 2646.5341366815524,
+        "minimum_perp_high_buffer": 4661.979916585627,
+        "modeled_net_base_fraction_nav": 0.0,
+        "modeled_net_base_quantity": 0.0,
+        "path_wallet_deficit": false,
+        "stress_wallet_deficit": false
+      },
+      "scalar_diagnostics": {
+        "frictionless": {
+          "profit": 8.955653066074587,
+          "status": "complete"
+        },
+        "zero_funding": {
+          "profit": -13.158119413119852,
+          "status": "complete"
+        }
+      },
+      "statistics": {
+        "expected_profit_confidence": {
+          "reason": "One spent episode per asset; not a repeated independent profit sample.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.004031888703543284,
+          "btc_interval": [
+            -0.008953294125778248,
+            0.000889516718691679
+          ],
+          "btc_standard_error": 0.0021333690161457293,
+          "covariance": [
+            [
+              4.1535532196245564e-10,
+              2.5343128491011257e-08,
+              -1.875625021904066e-08
+            ],
+            [
+              2.534312849101126e-08,
+              4.551263359050597e-06,
+              -1.9691687078048073e-06
+            ],
+            [
+              -1.8756250219040655e-08,
+              -1.969168707804809e-06,
+              1.3512823091562549e-06
+            ]
+          ],
+          "covariance_order": [
+            "intercept",
+            "btc",
+            "eth"
+          ],
+          "eth_beta": 0.001819460843890031,
+          "eth_interval": [
+            -0.0008621527936467708,
+            0.004501074481426833
+          ],
+          "eth_standard_error": 0.0011624466908879113,
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -6.4654120539485265e-06,
+          "observations": 56,
+          "scope": "Daily marked NAV, final cash substituted on exit; exploratory within-book nominal95%Bonferroni intervals, not finite-sample guarantee or all-search confirmation.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No valid expected-profit test or independent episode sample.",
+          "status": "unavailable"
+        }
+      },
+      "status": "conditional",
+      "validated_strategy": false
+    },
+    {
+      "actual_margin": {
+        "reason": "Daily mark extrema and assumed1%maintenance do not establish tiers, intraday liquidation, ADL or transferable collateral.",
+        "status": "unavailable"
+      },
+      "asset": "ETH",
+      "capital": 10000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 46.02739726027397,
+        "0.05": 76.71232876712328
+      },
+      "conditional_screens": {
+        "beta_point_and_interval": true,
+        "drawdown_at_most_10pct": true,
+        "modeled_net_base_at_most_1pct_nav": true,
+        "no_separate_path_wallet_deficit": true,
+        "no_separate_stress_wallet_deficit": true,
+        "positive_cash_and_3pct_annual_base_and_stress": false
+      },
+      "cost_scenario": "stress",
+      "execution": {
+        "reason": "Historical/current lots, fees, personal access and simultaneous fills unverified.",
+        "status": "unavailable"
+      },
+      "final_ledger": {
+        "all_fees": 13.467028692480001,
+        "cash_profit": -9.898186506405182,
+        "cash_reconciliation_difference": -1.0125233984581428e-13,
+        "dated_exit_fee": 2.7591039168000004,
+        "dated_exit_fill": 1567.6726800000001,
+        "dated_price_pnl": -1219.9990879999996,
+        "dated_wallet_after_close": 2773.2627050784004,
+        "final_cash": 9990.101813493595,
+        "frictionless_same_quantity_profit": 8.955653066074587,
+        "funding_cash": 12.686853066074395,
+        "idle_cash": 1000.0,
+        "perp_exit_fee": 2.7589703468800004,
+        "perp_exit_fill": 1567.596788,
+        "perp_price_pnl": 1210.88107712,
+        "perp_wallet_after_close": 6216.839108415194,
+        "raw_two_leg_price_change": -3.731199999999808,
+        "signed_component_profit": -9.89818650640508,
+        "slippage_cost": 5.386810879999667,
+        "terminal_dated_quantity": 0.0,
+        "terminal_perp_quantity": 0.0,
+        "zero_funding_same_quantity_profit": -22.585039572479577
+      },
+      "graduation": false,
+      "id": "eth-10000-stress",
+      "metrics": {
+        "annualized_simple_return_365": -0.0064514965622105205,
+        "applied_funding_events": 167,
+        "cash_profit": -9.898186506405182,
+        "full_capital_return": -0.0009898186506405182,
+        "funding_cash": 12.686853066074395,
+        "max_drawdown": 0.0015016424548870417,
+        "minimum_dated_low_buffer": 2643.748685027952,
+        "minimum_perp_high_buffer": 4659.201100017627,
+        "modeled_net_base_fraction_nav": 0.0,
+        "modeled_net_base_quantity": 0.0,
+        "path_wallet_deficit": false,
+        "stress_wallet_deficit": false
+      },
+      "scalar_diagnostics": {
+        "frictionless": {
+          "profit": 8.955653066074587,
+          "status": "complete"
+        },
+        "zero_funding": {
+          "profit": -22.585039572479577,
+          "status": "complete"
+        }
+      },
+      "statistics": {
+        "expected_profit_confidence": {
+          "reason": "One spent episode per asset; not a repeated independent profit sample.",
+          "status": "unavailable"
+        },
+        "market_exposure": {
+          "btc_beta": -0.005713327541433695,
+          "btc_interval": [
+            -0.013960190176972042,
+            0.0025335350941046537
+          ],
+          "btc_standard_error": 0.003574914016955266,
+          "covariance": [
+            [
+              9.214964259733314e-10,
+              7.514806093240239e-08,
+              -4.64413620215808e-08
+            ],
+            [
+              7.51480609324024e-08,
+              1.2780010228623236e-05,
+              -5.820276041609158e-06
+            ],
+            [
+              -4.6441362021580806e-08,
+              -5.8202760416091605e-06,
+              3.418576493281823e-06
+            ]
+          ],
+          "covariance_order": [
+            "intercept",
+            "btc",
+            "eth"
+          ],
+          "eth_beta": 0.002833215310493812,
+          "eth_interval": [
+            -0.0014320476477208766,
+            0.007098478268708501
+          ],
+          "eth_standard_error": 0.0018489392886955004,
+          "hac_lags": 7,
+          "individual_confidence": 0.975,
+          "intercept": -2.4081027213126035e-05,
+          "observations": 56,
+          "scope": "Daily marked NAV, final cash substituted on exit; exploratory within-book nominal95%Bonferroni intervals, not finite-sample guarantee or all-search confirmation.",
+          "status": "complete"
+        },
+        "power": {
+          "reason": "No valid expected-profit test or independent episode sample.",
+          "status": "unavailable"
+        }
+      },
+      "status": "conditional",
+      "validated_strategy": false
+    }
+  ],
+  "complete_primary": 8,
+  "complete_scalars": 16,
+  "complete_stresses": 72,
+  "graduation": false,
+  "interpretation": "Eight correlated exploratory alternatives on one56-day spent episode; no pooled portfolio, independent discoveries or confirmation.",
+  "primary_count": 8,
+  "scalar_diagnostic_count": 16,
+  "source_count": 20,
+  "stress_state_count": 72,
+  "unavailable_primary": 0,
+  "unavailable_scalars": 0,
+  "unavailable_stresses": 0,
+  "validated_strategies": 0
+}

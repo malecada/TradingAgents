@@ -7142,3 +7142,27 @@ for effective six total attempts. Independent historical snapshot verification
 passes; the frozen earlier verifier's expected live-ledger refusal is explicit.
 The next financial question needs a separate reviewed contract and allowance.
 Zero validated strategies; the authorized program remains active/incomplete.
+
+## 116. Derivative spread costs and a preserved time-limit failure (2026-09-11)
+
+The fixed long-dated/short-perpetual attempt exceeded its120second wall bound
+after writing all three financial/source outputs but before its terminal receipt.
+Independent review authorized failure-only closure with all bytes unchanged;
+no successful receipt or replay was manufactured. The six program dated claims
+plus one historical prior consume effective7; original cap4/prior1 remains.
+
+Independent raw Fraction/HAC reconstruction passes9,344comparisons across
+8retained cases,448NAVs,16same-q scalars and72stress states. All eight lose cash
+after costs:BTC1,000 base/stress−0.237869/−1.191052USDT;ETH−0.045520/−0.956075.
+Same-q frictionless cash is positive0.715314/0.865035USDT respectively, but still
+below the separate3%annual56day benchmark4.602740USDT. The10,000capital cases
+also fail relevance even without modeled friction. Positive funding partly
+offsets adverse relative-price cash; execution costs erase the remainder.
+
+Conditional beta, drawdown and separate-wallet diagnostics pass, without actual
+margin/fill or expected-profit inference. These are informative retained-output
+forensics from a FAILED run, not a passed resource gate. Decision19 preserves
+that distinction and closes fee-only rescue of this fixed relevance claim.
+Repeated historical validation is the probable time cost; any future lifecycle
+needs representative-history full-retention preflight. Research proceeds to
+concrete prospective option-policy/coverage adjudication. Zero validated strategies.

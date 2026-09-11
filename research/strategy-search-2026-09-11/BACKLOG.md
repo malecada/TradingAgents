@@ -20,7 +20,9 @@
 - [ ] Assess useful options follow-ups against seller/access/history/future-observation dependencies; no automatic paper or budget reset.
 - [x] Resolve coverage ancestry/information value for a distinct long-dated/short-perpetual book; daily dated marks are the next bounded source question.
 - [x] Complete dated-mark source extension and independent review:2completecells/112slots, effective6consumed with allhistory preserved.
-- [ ] Adjudicate and, if justified, register the distinct fixed long-dated/short-perpetual book under a separately reviewed seventh-attempt route.
+- [x] Execute the separately granted fixed derivative book once: failed120s after3outputs; failure-only closure and9,344independent cash/source/HAC checks retain8negative cases. No fee-only relevance rescue or eighth grant.
+- [x] Diagnose unrepresentative history-cost preflight; preserve allfour runtime packages and failedresource status.
+- [ ] Independently adjudicate concrete options-selling policy, narrow useful risk/collector preparation and final coverage after the spread diagnosis.
 - [ ] Existing value_rev remains deferred until a second vintage September 18 or later; no early replay or renamed gate.
 - [ ] Re-rank relative-value, liquidity, factor and information questions against
   the resulting evidence; register only a distinct justified prediction.
