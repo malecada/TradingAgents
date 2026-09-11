@@ -20,8 +20,9 @@ News sources are unavailable at the exact registered paths. The third triangle
 capture has closed, with independent review documenting a boundary-cutoff defect;
 no fee-qualified supported quote state has been found. Current options buyer-entry
 components fit both capital/fee scenarios, independently verified; full hedged
-account requirements and performance remain unknown. A distinct dated/perpetual
-source follow-up is under explicit cumulative-extension preparation. No candidate has reached confirmation.
+account requirements and performance remain unknown. The dated/perpetual
+source follow-up admits all112 daily mark slots; the distinct fixed financial
+book is under seventh-attempt preparation with independent synthetic review. No candidate has reached confirmation.
 Read active state for exact sources, receipts, reviews, budgets and next actions.
 New runs use the additive lifecycle and complete sharded receipts.
 

@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "grant_id": "dated-fixed-spread-book-seventh-20260911",
+  "program_id": "strategy-search-2026-09-11",
+  "family_id": "dated-basis",
+  "mechanism_id": "binance-btc-eth-dated-basis-convergence",
+  "family_sha256": "7eab84e49492ccaf6c83dbb975a417c274d362cdb0183261dc4979fe04c160bf",
+  "increment": 1,
+  "original_budget": 4,
+  "prior_effective_budget": 6,
+  "effective_budget": 7,
+  "target_experiment": "dated-spread-book-20260911",
+  "parent_experiment": "dated-mark-20260911",
+  "target_contract_sha256": "61691a3fc2ede27a1d4f41c23b0436ce43fad918c88a4c076cc9fa4db2d32ec1",
+  "prior_claims": {
+    "dated-archive-20260911": {
+      "claim_sha256": "b7f8595e487efffe5c84a57ce30b83ab5803a4505df8ee10d6c775235ccaedc0",
+      "terminal": "complete.json",
+      "terminal_sha256": "91f03121720c46505452097dafa012e7937c41779f4cf94dba9243aa6c1a65c9"
+    },
+    "dated-book-20260911": {
+      "claim_sha256": "ba160d29788a2eaadfd88a25bd08775a5dcbde133a41bfd897ef92c03615ac8c",
+      "terminal": "failed.json",
+      "terminal_sha256": "559ed7175c55a67e08d3f46b3a5c80ea21013bb783759d2fc2569b6783d84018"
+    },
+    "dated-book-amended-20260911": {
+      "claim_sha256": "df9a32ba15e70f815e9a4e0dc3c412e993add9e2c1c4371941bbee43a54477c4",
+      "terminal": "complete.json",
+      "terminal_sha256": "575c607f4baa677d83b92523eb8c7d18db08fd180148a5f9765ba57394a39daa"
+    },
+    "dated-book-resource-correction-20260911": {
+      "claim_sha256": "b53f7e55fd6312b9c33cf944a701abc2f0722c4353471134578ab2306e0466a7",
+      "terminal": "failed.json",
+      "terminal_sha256": "2733fc66a7a12d00d8dc385894925a5e4948d0fc3a7a764c2c81ec2f2d3cff40"
+    },
+    "dated-mark-20260911": {
+      "claim_sha256": "0b65ed7dbbe221b3e0544f677266ac320eb67e03134f5cfdd39137f0d6eac274",
+      "terminal": "complete.json",
+      "terminal_sha256": "d2d7c1624a7c2ed076467f6f6c71acf31ffaab05706692ddc68b5bd17ffc5c23"
+    }
+  },
+  "consumed_grants": {
+    "repair": {
+      "experiment_id": "dated-book-amended-20260911",
+      "certificate": {
+        "path": "research/strategy-search-2026-09-11/dated-amendment-certificate.json",
+        "sha256": "2bea921038cc032e3b76838cc7223a443f6c97aaa0e1bf840afbc0c381d8fa19"
+      }
+    },
+    "source": {
+      "experiment_id": "dated-mark-20260911",
+      "certificate": {
+        "path": "research/strategy-search-2026-09-11/dated-extension-certificate.json",
+        "sha256": "242f31d42386e23906138c703ca6b440153cdaefd61c035db83062938afc4b0a"
+      }
+    }
+  },
+  "review": {
+    "path": "research/strategy-search-2026-09-11/dated-spread-approval.json",
+    "sha256": "17fa1bb1bb440d7fc55c80c906806507a0a6afe91bfa2f49d7ade68ef389f955"
+  },
+  "preflight": {
+    "path": "research/strategy-search-2026-09-11/dated-spread-preflight.json",
+    "sha256": "40d3d54f499a7997c6d762d86db854d926d951da6c876a7725bbcf3e23d4e5f9"
+  },
+  "change_manifest": {
+    "path": "research/strategy-search-2026-09-11/dated-spread-change-manifest.json",
+    "sha256": "1ba0ef129f49bb7b67538a95300a78ceec9132a1b8cbf3cb8c90253b9d25ba8f"
+  }
+}

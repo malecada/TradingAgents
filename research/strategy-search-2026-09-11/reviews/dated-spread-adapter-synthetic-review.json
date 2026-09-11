@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "direct-Bartlett-HAC7-sandwich-and-t53-interval",
+      "passed": true
+    },
+    {
+      "name": "singular",
+      "passed": true
+    },
+    {
+      "name": "zero-nav",
+      "passed": true
+    },
+    {
+      "name": "missing-day",
+      "passed": true
+    },
+    {
+      "name": "all-source-and-case-denominators",
+      "passed": true
+    },
+    {
+      "name": "lost-carry_capture",
+      "passed": true
+    },
+    {
+      "name": "unknown-relevance-carry_capture",
+      "passed": true
+    },
+    {
+      "name": "lost-archive_capture",
+      "passed": true
+    },
+    {
+      "name": "unknown-relevance-archive_capture",
+      "passed": true
+    },
+    {
+      "name": "lost-mark_capture",
+      "passed": true
+    },
+    {
+      "name": "unknown-relevance-mark_capture",
+      "passed": true
+    },
+    {
+      "name": "BTC-funding-failure-preserves-ETH-exposure",
+      "passed": true
+    },
+    {
+      "name": "missing-spot-blocks-joint-exposure",
+      "passed": true
+    },
+    {
+      "name": "canonical90-258-boundary-independent-of-raw-window",
+      "passed": true
+    }
+  ],
+  "direct_statistic_assertions": 18,
+  "sources": {
+    "dated_spread_sources.py": "c3eb7278f23e0a34c54154bcb9918fb8bd266588f5822e2b18b60260059550e9",
+    "dated_spread_statistics.py": "5fb0b7cf6a584c388706374e05bba79398e29047af8bb5ad05e85bb67d819283",
+    "dated_spread_run.py": "a416ffa611d662f388ec9aa8674f34146a4a9660d6517b8efabcbff75442817e"
+  },
+  "scope": "Invented raw source envelopes and planted NAV/benchmarks only. No actual inputs, financial experiment, network or ledger mutations. Direct OLS/Bartlett-HAC covariance and Student-t interval reconstruction does not use statsmodels expected values."
+}

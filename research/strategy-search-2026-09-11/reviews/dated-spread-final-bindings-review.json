@@ -1,0 +1,79 @@
+{
+  "passed": true,
+  "target_contract_sha256": "61691a3fc2ede27a1d4f41c23b0436ce43fad918c88a4c076cc9fa4db2d32ec1",
+  "change_manifest_sha256": "1ba0ef129f49bb7b67538a95300a78ceec9132a1b8cbf3cb8c90253b9d25ba8f",
+  "prior_claims_sha256": "630810d05ff08f4708dc346ee787ddecd0ea22cb255b5fe868d679f29f5c6c3b",
+  "prior_claims": {
+    "dated-archive-20260911": {
+      "claim_sha256": "b7f8595e487efffe5c84a57ce30b83ab5803a4505df8ee10d6c775235ccaedc0",
+      "terminal": "complete.json",
+      "terminal_sha256": "91f03121720c46505452097dafa012e7937c41779f4cf94dba9243aa6c1a65c9"
+    },
+    "dated-book-20260911": {
+      "claim_sha256": "ba160d29788a2eaadfd88a25bd08775a5dcbde133a41bfd897ef92c03615ac8c",
+      "terminal": "failed.json",
+      "terminal_sha256": "559ed7175c55a67e08d3f46b3a5c80ea21013bb783759d2fc2569b6783d84018"
+    },
+    "dated-book-amended-20260911": {
+      "claim_sha256": "df9a32ba15e70f815e9a4e0dc3c412e993add9e2c1c4371941bbee43a54477c4",
+      "terminal": "complete.json",
+      "terminal_sha256": "575c607f4baa677d83b92523eb8c7d18db08fd180148a5f9765ba57394a39daa"
+    },
+    "dated-book-resource-correction-20260911": {
+      "claim_sha256": "b53f7e55fd6312b9c33cf944a701abc2f0722c4353471134578ab2306e0466a7",
+      "terminal": "failed.json",
+      "terminal_sha256": "2733fc66a7a12d00d8dc385894925a5e4948d0fc3a7a764c2c81ec2f2d3cff40"
+    },
+    "dated-mark-20260911": {
+      "claim_sha256": "0b65ed7dbbe221b3e0544f677266ac320eb67e03134f5cfdd39137f0d6eac274",
+      "terminal": "complete.json",
+      "terminal_sha256": "d2d7c1624a7c2ed076467f6f6c71acf31ffaab05706692ddc68b5bd17ffc5c23"
+    }
+  },
+  "source_pin_count": 18,
+  "runtime_pin_count": 26,
+  "input_byte_total": 1947253,
+  "preflight_reports": [
+    {
+      "path": "research/strategy-search-2026-09-11/reviews/dated-spread-cli-preflight-full-guard.json",
+      "sha256": "69b0c86a9ca32c83a01ffd068fd4a4812969563285ea8df6cc0dea24342b09cd"
+    },
+    {
+      "path": "research/strategy-search-2026-09-11/reviews/dated-spread-cli-preflight-full-result.json",
+      "sha256": "879ae5acdcad3ade7611720c28e5025789931da6659421076df8c44ee9c76789"
+    },
+    {
+      "path": "research/strategy-search-2026-09-11/reviews/dated-spread-cli-preflight-partial-guard.json",
+      "sha256": "993a435adf0ce9f56b7f60383d0484eed9c2d08437b8d74f43f31d903a9bb3fb"
+    },
+    {
+      "path": "research/strategy-search-2026-09-11/reviews/dated-spread-cli-preflight-partial-result.json",
+      "sha256": "8acae3cf001e3bff74840a0b116eaff06d52190b1f496489d2bb49ed82f31c66"
+    },
+    {
+      "path": "research/strategy-search-2026-09-11/reviews/dated-spread-cli-preflight-unavailable-guard.json",
+      "sha256": "3394eb464993d7d1eda29f3b031d4feb68dee1880d798b05154f1e1176c3079c"
+    },
+    {
+      "path": "research/strategy-search-2026-09-11/reviews/dated-spread-cli-preflight-unavailable-result.json",
+      "sha256": "cab5634098a9f94ce98b236f89f5270a40029dc3ac865fbc0e84125144865034"
+    },
+    {
+      "path": "research/strategy-search-2026-09-11/reviews/dated-spread-lifecycle-preflight-guard.json",
+      "sha256": "a697a49700d62baeb37cfd52f218eafbc9a1f4104ed88b63e71f4609fd07c23f"
+    },
+    {
+      "path": "research/strategy-search-2026-09-11/reviews/dated-spread-lifecycle-preflight-result.json",
+      "sha256": "f4340469261f4275aebc7ba90080df213c9018c946b3b6ab099947adfba8a2b6"
+    },
+    {
+      "path": "research/strategy-search-2026-09-11/reviews/dated-v2-actual-snapshot-guard.json",
+      "sha256": "17bacedc261c79ddf7c46b279433c3a05e980e5f768366f5251da375bba5876e"
+    },
+    {
+      "path": "research/strategy-search-2026-09-11/reviews/dated-v2-actual-snapshot-result.json",
+      "sha256": "847c9eceadc7a0fcd16684933e1f21633b0a7dc1523bc3891325616cec2b95f1"
+    }
+  ],
+  "scope": "Read-only final target/source/raw byte hashes and prior claim metadata. Actual input payloads are hashed but not parsed or financially evaluated. No new claim, network or financial calculation. Commit/design equality and exact certificate reference remain final execution prerequisites."
+}

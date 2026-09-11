@@ -73,7 +73,7 @@ verified freeze. Rootexec6096 is terminated, exit0. Guard:32.695seconds,
 67,661,824bytes sampled aggregate RSS. Two complete source cells/112complete
 slots, four outputs57,348bytes and raw13,666bytes. Source/schema/certificate
 reviews and the new independent receipt verifier pass. Decision18/Finding115
-are finalized; this results checkpoint is ready for verified backup.
+are finalized and backed up at0e55be23d78cd3a897241fd054839d9fad6343e2; remote equality was independently queried.
 
 The newest runtime is `tradingagents.research_extended`; use its `verify.verify_run`
 for the new source receipt and explicit closed-history verification. The frozen
@@ -89,20 +89,22 @@ unchanged capital ceilings. Symmetric daily mark inputs are now available.
 This is distinct from spot financing, but algebraically related to prior books;
 no fresh confirmation or independent discovery is implied. Before arithmetic:
 
-1. Finish the scientific information-value/design review in
-   reviews/dated-spread-information-design.md (history_audit owns it).
-2. Review the narrow seventh-attempt admission proposal (carry_diagnostic is
-   currently read-only). Preserve both consumed certificates, all five prior
-   program claims, old gate objects and all three frozen runtimes. No book
-   allowance exists yet. An independent closed v2 snapshot plus complete current
-   inventory will be needed; do not reuse the source-only certificate.
-3. If justified, root owns the new book engine, charter and gates; assign bounded
-   extension implementation with clear ownership, synthetic tests and independent
-   review. Freeze every input, rule, cost, null, stress and uncertainty claim;
-   commit/push/verify remote equality before one guarded execution.
-4. Independently review actual cashflows/risk, diagnose, record and back up; then
-   reassess all mapped affordable gaps. A plan or exhausted initial cap is not
-   a stopping criterion.
+1. Scientific information-value/design and pure cash/source/statistics reviews
+   pass. The fixed proposal retains8primary books,16same-q scalar diagnostics
+   and72stress states. Canonical funding slots90:258 exclude the first slot;
+   this resolves an early-boundary ambiguity before results.
+2. The target-only `research_spread` successor passes26synthetic cases and a
+   guarded actual consumed-history proof. Three old runtimes remain frozen.
+   Its closed v2/v1 inventories and complete current five-prior inventory are
+   separately enforced. No empirical book claim exists yet.
+3. Root owns dated_spread_book/sources/statistics/run.py, charter/gate and
+   certificate integration. Final23focused tests include exact guarded full,
+   partial and unavailable financial CLI fixtures: all pass within120seconds,
+   512MiB/twoCPUs/8MiB. Final target/certificate review and committed remotely
+   verified freeze are next; do not run the draft gate without that grant.
+4. Execute once after freeze, independently review actual cashflows/risk,
+   record Decision19/Finding116 and back up; reassess all mapped affordable
+   gaps afterward. A plan or exhausted initial cap is not a stopping criterion.
 
 The source step did not calculate spreads, funding sums, quantities or returns.
 No new financial book has run. Existing value_rev needs its second vintage on
@@ -115,10 +117,10 @@ remain unknown. No final coverage/stopping criterion is established.
 
 ## Backup and preservation
 
-Last result backup: ac10147edbe4b90786cf9194351740d6aa6aedc2 (options results),
-pushed with independently queried remote equality. Current committed source
-freeze:5cf5dd843131da489a4695623b81009a244ab49f, also remotely verified. Dated-mark
-results await their reviewed results commit/push/equality checkpoint.
+Last result backup:0e55be23d78cd3a897241fd054839d9fad6343e2 (dated-mark
+results), pushed and independently compared equal to the remote branch. The
+prior source freeze5cf5dd843131da489a4695623b81009a244ab49f is also remotely
+recoverable. The seventh-book preparation is not yet its committed freeze.
 The named offline profile passed1,175tests+20subtests before the latest extension.
 Latest focused proof:31 extension tests,29 collector tests including three exact
 CLI guards, independent adversarial/source checks and guarded actual-history proof.

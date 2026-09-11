@@ -1,0 +1,123 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "name": "BTC-1000-base",
+      "passed": true
+    },
+    {
+      "name": "BTC-1000-stress",
+      "passed": true
+    },
+    {
+      "name": "BTC-10000-base",
+      "passed": true
+    },
+    {
+      "name": "BTC-10000-stress",
+      "passed": true
+    },
+    {
+      "name": "ETH-1000-base",
+      "passed": true
+    },
+    {
+      "name": "ETH-1000-stress",
+      "passed": true
+    },
+    {
+      "name": "ETH-10000-base",
+      "passed": true
+    },
+    {
+      "name": "ETH-10000-stress",
+      "passed": true
+    },
+    {
+      "name": "shared-price-cancellation",
+      "passed": true
+    },
+    {
+      "name": "separate-wallet-deficit-with-positive-total",
+      "passed": true
+    },
+    {
+      "name": "negative-intermediate-NAV-retained",
+      "passed": true
+    },
+    {
+      "name": "first-canonical-offset--5000",
+      "passed": true
+    },
+    {
+      "name": "first-canonical-offset--1",
+      "passed": true
+    },
+    {
+      "name": "first-canonical-offset-0",
+      "passed": true
+    },
+    {
+      "name": "first-canonical-offset-1",
+      "passed": true
+    },
+    {
+      "name": "first-canonical-offset-5000",
+      "passed": true
+    },
+    {
+      "name": "first-after-tolerance",
+      "passed": true
+    },
+    {
+      "name": "extra-early-June26",
+      "passed": true
+    },
+    {
+      "name": "missing-event",
+      "passed": true
+    },
+    {
+      "name": "included-before-ownership",
+      "passed": true
+    },
+    {
+      "name": "canonical-midnight-arrives-previous-day",
+      "passed": true
+    },
+    {
+      "name": "exact-lot-boundary-1--1E-20",
+      "passed": true
+    },
+    {
+      "name": "exact-lot-boundary-1-0",
+      "passed": true
+    },
+    {
+      "name": "exact-lot-boundary-1-1E-20",
+      "passed": true
+    },
+    {
+      "name": "exact-lot-boundary-3995--1E-20",
+      "passed": true
+    },
+    {
+      "name": "exact-lot-boundary-3995-0",
+      "passed": true
+    },
+    {
+      "name": "exact-lot-boundary-3995-1E-20",
+      "passed": true
+    },
+    {
+      "name": "tiny-positive-NAV-log-telescoping",
+      "passed": true,
+      "observed_log_sum": 0.0028137116974491505,
+      "expected_endpoint_log": 0.0028137116974486323,
+      "first_NAV": 2.2737367544323206e-13
+    }
+  ],
+  "independent_fraction_assertions": 7432,
+  "source_sha256": "e809bdb0240d3afd907c490e1054216d481181fe83c0d8dab9e992b8711f3b4b",
+  "scope": "Invented raw bars/events only; independent Fraction cash, quantity, daily wallets, fees, funding, final release and all nine stress states. No actual data, financial experiment, network or ledger write."
+}

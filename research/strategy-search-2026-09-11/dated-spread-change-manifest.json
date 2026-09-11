@@ -1,0 +1,284 @@
+{
+  "schema_version": 1,
+  "baseline_experiment": "dated-mark-20260911",
+  "target_experiment": "dated-spread-book-20260911",
+  "baseline_contract_sha256": "e74ddb82b9e1bd377448a5809ad184ea9e6cdfc31585e6cb8435892e6a3c11d7",
+  "target_contract_sha256": "61691a3fc2ede27a1d4f41c23b0436ce43fad918c88a4c076cc9fa4db2d32ec1",
+  "changes": {
+    "budget_extension": {
+      "before": {
+        "present": true,
+        "value": {
+          "path": "research/strategy-search-2026-09-11/dated-extension-certificate.json",
+          "sha256": "242f31d42386e23906138c703ca6b440153cdaefd61c035db83062938afc4b0a"
+        }
+      },
+      "after": {
+        "present": false
+      }
+    },
+    "cells": {
+      "before": {
+        "present": true,
+        "value": [
+          "btc-dated-mark",
+          "eth-dated-mark"
+        ]
+      },
+      "after": {
+        "present": true,
+        "value": [
+          "btc-1000-base",
+          "btc-1000-stress",
+          "btc-10000-base",
+          "btc-10000-stress",
+          "eth-1000-base",
+          "eth-1000-stress",
+          "eth-10000-base",
+          "eth-10000-stress"
+        ]
+      }
+    },
+    "charter": {
+      "before": {
+        "present": true,
+        "value": {
+          "path": "research/strategy-search-2026-09-11/dated-mark-charter.md",
+          "sha256": "43e353de9b0189bec7424a2adcf1378854a39b1d9b652bcb8972a633a27de743"
+        }
+      },
+      "after": {
+        "present": true,
+        "value": {
+          "path": "research/strategy-search-2026-09-11/dated-spread-charter.md",
+          "sha256": "e08586e73ac66acbf138f7c86b8f6380d1126ac55645973bd1d431bab4b2c2d3"
+        }
+      }
+    },
+    "inputs": {
+      "before": {
+        "present": true,
+        "value": {
+          "request_spec": {
+            "path": "research/strategy-search-2026-09-11/dated-mark-spec.json",
+            "sha256": "ebc2735ec91d1d7964a41c00dd265ebc731d821b7b49a89889f1ddde02405be7",
+            "dataset": "dated-mark-definition"
+          }
+        }
+      },
+      "after": {
+        "present": true,
+        "value": {
+          "carry_capture": {
+            "path": "research_runs/carry-inputs-20260911/outputs/capture.json",
+            "sha256": "2076fb01a8b7a11aa76b9ff14f91a2ec9a8d5d6188e53eb32b50b8fccdd544bd",
+            "dataset": "legacy"
+          },
+          "carry_admission": {
+            "path": "research_runs/carry-inputs-20260911/outputs/admission.json",
+            "sha256": "2723c2ccc885a79056fa5e04eaa07e56546498df5bf4dade9b4bcb70cefd986e",
+            "dataset": "legacy"
+          },
+          "archive_capture": {
+            "path": "research_runs/dated-archive-20260911/outputs/archive-capture.json",
+            "sha256": "42691356256ba6da94cf4a7796fbf56842a5d43314279b3679dea9713838f4b7",
+            "dataset": "dated-quarter"
+          },
+          "archive_admission": {
+            "path": "research_runs/dated-archive-20260911/outputs/archive-admission.json",
+            "sha256": "9f76f48f36f29db2c1e9f7575eccd77b80365e1b5823b90f15823012efebc319",
+            "dataset": "dated-quarter"
+          },
+          "mark_capture": {
+            "path": "research_runs/dated-mark-20260911/outputs/capture.json",
+            "sha256": "0050d4a7a372a33c347068013d1e7b24b9d07a2b456c62fbf08d1169ddc83dd8",
+            "dataset": "dated-quarter"
+          },
+          "mark_admission": {
+            "path": "research_runs/dated-mark-20260911/outputs/admission.json",
+            "sha256": "1914638e198fdd9885b18f12781cc1168fa78b4ba1f6dfb73d88868e24090b0e",
+            "dataset": "dated-quarter"
+          },
+          "btc_dated_mark_receipt": {
+            "path": "research_runs/dated-mark-20260911/outputs/btc-dated-mark-receipt.json",
+            "sha256": "10d7c2e47fcefab753fe38c683b78fbf342e64dc5d25df987b115063210a2254",
+            "dataset": "dated-quarter"
+          },
+          "eth_dated_mark_receipt": {
+            "path": "research_runs/dated-mark-20260911/outputs/eth-dated-mark-receipt.json",
+            "sha256": "7552eced39274b29acf5f21ba85227a8932cba4434a2fb836a1a7b836258aa58",
+            "dataset": "dated-quarter"
+          }
+        }
+      }
+    },
+    "outputs": {
+      "before": {
+        "present": true,
+        "value": [
+          "btc-dated-mark-receipt.json",
+          "eth-dated-mark-receipt.json",
+          "capture.json",
+          "admission.json"
+        ]
+      },
+      "after": {
+        "present": true,
+        "value": [
+          "books.json",
+          "summary.json",
+          "source-audit.json"
+        ]
+      }
+    },
+    "parent": {
+      "before": {
+        "present": true,
+        "value": "dated-book-amended-20260911"
+      },
+      "after": {
+        "present": true,
+        "value": "dated-mark-20260911"
+      }
+    },
+    "question": {
+      "before": {
+        "present": true,
+        "value": "Do exactly two expired-contract daily mark responses supply all56 fixed preterminal days per asset for symmetric derivative valuation? Source-only prerequisite, no spread return or automatic book."
+      },
+      "after": {
+        "present": true,
+        "value": "Does one fixed long-dated/short-perpetual episode cover both derivatives costs with funding and relative-price cash, while separately funded wallets satisfy conditional diagnostics? Eight alternatives, no independent alpha or confirmation."
+      }
+    },
+    "runtime_hashes": {
+      "before": {
+        "present": true,
+        "value": {
+          "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+          "admission.py": "20bab02c8da3e8319753f2c16e9f34e0ba845ebd712317f6caf0c3ca1bd23627",
+          "extension.py": "2b836081a85d0d18d4cc24690e700fb2f9e886b2cc105167e3bce5c40709395e",
+          "lifecycle.py": "d84db3de685545dd4780c70cec96b750f38b117f0e2e84ba3b038fea0d97e38d",
+          "verify.py": "8dee128df96acd1f49007c29ed29db250cce13d7c37a697da653d722eaa8c38b",
+          "verify_extension.py": "8a775c0e59b9876ce90343c307017260681841065e1c9de67002257f4c110a6a",
+          "verify_v1_snapshot.py": "53bd6dfb6ebe3215337a90ba0327952e35bc68b9541816549f96f427bb62bc38",
+          "original/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+          "original/__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+          "original/admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+          "original/examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+          "original/lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+          "original/verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313",
+          "amended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+          "amended/admission.py": "dbb4ec5e0b81948a4d7e007306ffb72277e0a448ae2c5d65c82cd4ddf5ba1b78",
+          "amended/amendment.py": "516b82264fb9152f2135a036eb030feefb7f507221aa213b9509e6f424fe1bfd",
+          "amended/lifecycle.py": "a4681c16e441e41496c1de88017dbcc27b3ce4e30309023ac3ffe83d5f7a1b52",
+          "amended/verify.py": "ccc85b7b98c97e048a3c17a8335b4e735e220398604e05eb19dea96616b84666",
+          "amended/verify_amendment.py": "5b056e3c8f002f1e5391e851840a1d7aa90c0939a9b21a73726137380a2c8e13"
+        }
+      },
+      "after": {
+        "present": true,
+        "value": {
+          "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+          "admission.py": "00da90ce1d257c498ee36dd62645aa88a455d8b96db3f30219db94c07c89a798",
+          "grant.py": "f21dc0611f6bbb00a24e36aca3a6c9d1988eb9dfac0aa1353d5eadd447402d31",
+          "lifecycle.py": "964a28c9d740ff57a596563cba275e84f853e9c7b06d8597acf0e7cb122c7fe2",
+          "verify.py": "e3337246fbe0db3d936751f2a204ce82aa7db8663dad78ca289effcbe1c6fef7",
+          "verify_grant.py": "10b6be48e9c2650036b9392604beef845f23a0b2ccbe60d24746d75e88d4c42d",
+          "verify_v2_snapshot.py": "cf1f92ab09a857c8479528523620b0f329cafee980023f53e06a770ebc5fb03b",
+          "original/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+          "original/__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+          "original/admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+          "original/examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+          "original/lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+          "original/verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313",
+          "amended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+          "amended/admission.py": "dbb4ec5e0b81948a4d7e007306ffb72277e0a448ae2c5d65c82cd4ddf5ba1b78",
+          "amended/amendment.py": "516b82264fb9152f2135a036eb030feefb7f507221aa213b9509e6f424fe1bfd",
+          "amended/lifecycle.py": "a4681c16e441e41496c1de88017dbcc27b3ce4e30309023ac3ffe83d5f7a1b52",
+          "amended/verify.py": "ccc85b7b98c97e048a3c17a8335b4e735e220398604e05eb19dea96616b84666",
+          "amended/verify_amendment.py": "5b056e3c8f002f1e5391e851840a1d7aa90c0939a9b21a73726137380a2c8e13",
+          "extended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+          "extended/admission.py": "20bab02c8da3e8319753f2c16e9f34e0ba845ebd712317f6caf0c3ca1bd23627",
+          "extended/extension.py": "2b836081a85d0d18d4cc24690e700fb2f9e886b2cc105167e3bce5c40709395e",
+          "extended/lifecycle.py": "d84db3de685545dd4780c70cec96b750f38b117f0e2e84ba3b038fea0d97e38d",
+          "extended/verify.py": "8dee128df96acd1f49007c29ed29db250cce13d7c37a697da653d722eaa8c38b",
+          "extended/verify_extension.py": "8a775c0e59b9876ce90343c307017260681841065e1c9de67002257f4c110a6a",
+          "extended/verify_v1_snapshot.py": "53bd6dfb6ebe3215337a90ba0327952e35bc68b9541816549f96f427bb62bc38"
+        }
+      }
+    },
+    "source_files": {
+      "before": {
+        "present": true,
+        "value": {
+          "research/strategy-search-2026-09-11/dated_mark.py": "2853d70b6f28fd653c96b4c1cd07eb5484e437f6ea61c2c392f966e65f3c1bf9",
+          "research/strategy-search-2026-09-11/dated_mark_transport.py": "3639602d77274ec829360acd06561c4cadca28d0a07ea693f4e2d55c9fe7569a",
+          "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+          "research/strategy-search-2026-09-11/dated-mark-definition-observation.json": "a90c28121e0d508db1a079bb666efd6c663482c9d1cf06f3b7395433b85f2589",
+          "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164",
+          "tradingagents/research_extended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+          "tradingagents/research_extended/admission.py": "20bab02c8da3e8319753f2c16e9f34e0ba845ebd712317f6caf0c3ca1bd23627",
+          "tradingagents/research_extended/extension.py": "2b836081a85d0d18d4cc24690e700fb2f9e886b2cc105167e3bce5c40709395e",
+          "tradingagents/research_extended/lifecycle.py": "d84db3de685545dd4780c70cec96b750f38b117f0e2e84ba3b038fea0d97e38d",
+          "tradingagents/research_extended/verify.py": "8dee128df96acd1f49007c29ed29db250cce13d7c37a697da653d722eaa8c38b",
+          "tradingagents/research_extended/verify_extension.py": "8a775c0e59b9876ce90343c307017260681841065e1c9de67002257f4c110a6a",
+          "tradingagents/research_extended/verify_v1_snapshot.py": "53bd6dfb6ebe3215337a90ba0327952e35bc68b9541816549f96f427bb62bc38"
+        }
+      },
+      "after": {
+        "present": true,
+        "value": {
+          "research/strategy-search-2026-09-11/dated_spread_book.py": "e809bdb0240d3afd907c490e1054216d481181fe83c0d8dab9e992b8711f3b4b",
+          "research/strategy-search-2026-09-11/dated_spread_sources.py": "c3eb7278f23e0a34c54154bcb9918fb8bd266588f5822e2b18b60260059550e9",
+          "research/strategy-search-2026-09-11/dated_spread_statistics.py": "5fb0b7cf6a584c388706374e05bba79398e29047af8bb5ad05e85bb67d819283",
+          "research/strategy-search-2026-09-11/dated_spread_run.py": "a416ffa611d662f388ec9aa8674f34146a4a9660d6517b8efabcbff75442817e",
+          "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+          "research/strategy-search-2026-09-11/dated_archive.py": "631412c60dd411466db185b3ae2cfb0cc62d5423153c98432e9aa93db86efb3d",
+          "research/strategy-search-2026-09-11/dated_mark.py": "2853d70b6f28fd653c96b4c1cd07eb5484e437f6ea61c2c392f966e65f3c1bf9",
+          "research/strategy-search-2026-09-11/dated_mark_transport.py": "3639602d77274ec829360acd06561c4cadca28d0a07ea693f4e2d55c9fe7569a",
+          "research/strategy-search-2026-09-11/dated_statistics.py": "28c5d01aeb5644b8edf65833fb95c291f8d5eb66dac53147269ea889ff77f61c",
+          "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+          "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164",
+          "tradingagents/research_spread/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+          "tradingagents/research_spread/admission.py": "00da90ce1d257c498ee36dd62645aa88a455d8b96db3f30219db94c07c89a798",
+          "tradingagents/research_spread/grant.py": "f21dc0611f6bbb00a24e36aca3a6c9d1988eb9dfac0aa1353d5eadd447402d31",
+          "tradingagents/research_spread/lifecycle.py": "964a28c9d740ff57a596563cba275e84f853e9c7b06d8597acf0e7cb122c7fe2",
+          "tradingagents/research_spread/verify.py": "e3337246fbe0db3d936751f2a204ce82aa7db8663dad78ca289effcbe1c6fef7",
+          "tradingagents/research_spread/verify_grant.py": "10b6be48e9c2650036b9392604beef845f23a0b2ccbe60d24746d75e88d4c42d",
+          "tradingagents/research_spread/verify_v2_snapshot.py": "cf1f92ab09a857c8479528523620b0f329cafee980023f53e06a770ebc5fb03b"
+        }
+      }
+    },
+    "windows": {
+      "before": {
+        "present": true,
+        "value": [
+          {
+            "dataset": "dated-mark-definition",
+            "start": "2026-09-11T11:03:40.950496+00:00",
+            "end": "2026-09-11T11:03:40.951452+00:00",
+            "availability": "existing"
+          }
+        ]
+      },
+      "after": {
+        "present": true,
+        "value": [
+          {
+            "dataset": "legacy",
+            "start": "2026-05-01T00:00:00Z",
+            "end": "2026-06-26T00:00:00Z",
+            "availability": "existing"
+          },
+          {
+            "dataset": "dated-quarter",
+            "start": "2026-05-01T00:00:00Z",
+            "end": "2026-06-26T00:00:00Z",
+            "availability": "existing"
+          }
+        ]
+      }
+    }
+  }
+}

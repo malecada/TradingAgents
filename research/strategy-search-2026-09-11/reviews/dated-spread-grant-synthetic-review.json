@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "unbound_claim": "prior",
+      "closed_v2_snapshot": {
+        "rejected": true,
+        "reason": "unbound predecessor at closed v2 boundary"
+      },
+      "current_full_inventory_grant": {
+        "rejected": true,
+        "reason": "unbound predecessor at closed v2 boundary"
+      }
+    },
+    {
+      "unbound_claim": "later",
+      "closed_v2_snapshot": {
+        "rejected": false
+      },
+      "current_full_inventory_grant": {
+        "rejected": true,
+        "reason": "current inventory must contain exactly5 prior program claims plus historical1"
+      }
+    }
+  ],
+  "scope": "One disposable invented Git history with an independently constructed structurally valid extra failed claim. No actual claim/source inputs, financial arithmetic or network. Historical later-claim exclusion is accepted only by the historical snapshot; complete current inventory still rejects it.",
+  "source_sha256": {
+    "verify_grant.py": "10b6be48e9c2650036b9392604beef845f23a0b2ccbe60d24746d75e88d4c42d",
+    "grant.py": "f21dc0611f6bbb00a24e36aca3a6c9d1988eb9dfac0aa1353d5eadd447402d31",
+    "lifecycle.py": "964a28c9d740ff57a596563cba275e84f853e9c7b06d8597acf0e7cb122c7fe2",
+    "verify.py": "e3337246fbe0db3d936751f2a204ce82aa7db8663dad78ca289effcbe1c6fef7",
+    "verify_v2_snapshot.py": "cf1f92ab09a857c8479528523620b0f329cafee980023f53e06a770ebc5fb03b",
+    "admission.py": "00da90ce1d257c498ee36dd62645aa88a455d8b96db3f30219db94c07c89a798",
+    "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af"
+  }
+}

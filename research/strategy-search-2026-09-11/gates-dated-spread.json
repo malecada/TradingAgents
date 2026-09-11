@@ -1,0 +1,1646 @@
+{
+  "schema_version": 1,
+  "program_id": "strategy-search-2026-09-11",
+  "families": {
+    "funding-carry": {
+      "mechanism_id": "btc-eth-spot-perpetual-funding-carry",
+      "attempt_budget": 11,
+      "prior_attempts": 8,
+      "history_reference": "research/strategy-search-2026-09-11/HISTORY.md; known 8 direct audit/holdout records only; earlier P0-P5/P1.5 and blend searches incompletely enumerated; cap adds exactly 3 new investigations, NOT complete historical trial count. No confirmatory inference.",
+      "legacy_total_attempts": "unknown",
+      "new_program_incremental_cap": 3
+    },
+    "dated-basis": {
+      "mechanism_id": "binance-btc-eth-dated-basis-convergence",
+      "attempt_budget": 4,
+      "prior_attempts": 1,
+      "history_reference": "docs/carry-feasibility-2026-09-10/INTERPRETATION.md; one dated capture with432correlated scenarios, not432independent attempts. New incremental cap3; funding-carry and old spending remain separately recorded."
+    },
+    "options-volatility": {
+      "mechanism_id": "binance-option-delta-hedged-volatility-premium",
+      "attempt_budget": 4,
+      "prior_attempts": 1,
+      "history_reference": "research/strategy-search-2026-09-11/options-metadata-charter.md; one known predlab_rviv_p0 administrative gate bundle,12 exact ledger rows; failed HAR30/DVOL claim preserved; counts are not independent trials or complete search multiplicity. Three new investigations allowed."
+    },
+    "spot-triangular-conversion": {
+      "mechanism_id": "binance-btc-eth-usdt-static-triangular-conversion",
+      "attempt_budget": 3,
+      "prior_attempts": 0,
+      "history_reference": "triangle-inputs-charter.md and reviews/neutral-alternatives-source-20260911.md; no known exact triangle gate, not zero historical liquidity search. OFLOW/passive failures and unknown broader multiplicity preserved. At most3newquestions alsochargedtoMAProw5 allowance."
+    },
+    "venue-segmentation": {
+      "mechanism_id": "binance-bitrue-matched-usdt-perpetual-funding-differential",
+      "attempt_budget": 3,
+      "prior_attempts": 0,
+      "history_reference": "research/strategy-search-2026-09-11/HISTORY.md venue-segmentation ancestry; zero known exact Binance-Bitrue funding gates in five preserved gatefiles, not zero broad funding/venue search. Sep10 Bitrue documentation-only dated scope and NLST spillover preserved. Unknown complete statistical multiplicity; three new administrative investigations also MAP row7."
+    },
+    "wbeth-linked-value": {
+      "mechanism_id": "binance-wbeth-spot-eth-perpetual-fixed-market-value-hedge",
+      "attempt_budget": 3,
+      "prior_attempts": 0,
+      "history_reference": "research/strategy-search-2026-09-11/HISTORY.md and reviews/wbeth-linked-value-source.md; no known exact WBETH gate in five retained gatefiles, not zero prior staking/relative-value/funding search; PRX/DEX-ratio/carry failures and incomplete multiplicity retained. Three new administrative questions also charged to MAP rows3/8."
+    },
+    "news-observation-provenance": {
+      "mechanism_id": "saved-news-observation-version-source-admission",
+      "attempt_budget": 1,
+      "prior_attempts": 0,
+      "history_reference": "research/strategy-search-2026-09-11/news-provenance-charter.md and reviews/news-provenance-design.md; zero known exact sevenpath sourceinventory, NOT zero historical news/LLM search. C1/C3/NLST/SMW/DEX ancestry and spent samples inherited; unknown complete multiplicity. Exactly one claim uses third MAProw8 allowance after2WBETH questions, not another3trialbudget."
+    }
+  },
+  "datasets": {
+    "legacy": {
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "history_reference": "research/strategy-search-2026-09-11/HISTORY.md",
+      "exposures": [
+        {
+          "start": "2021-11-08T00:00:00Z",
+          "end": "2025-03-31T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "start": "2025-04-01T00:00:00Z",
+          "end": "2026-07-01T00:00:00Z",
+          "state": "spent"
+        }
+      ]
+    },
+    "dated-quarter": {
+      "identity": "binance-btc-eth-usdt-260626-contract-history",
+      "history_reference": "research/strategy-search-2026-09-11/SOURCES.md; observed official cataloguemetadata2026-09-11; sameunderlying2026Q2spot/perp history spent; all treatedexploratory exposed.",
+      "exposures": [
+        {
+          "start": "2025-12-26T00:00:00Z",
+          "end": "2026-07-01T00:00:00Z",
+          "state": "exposed"
+        }
+      ]
+    },
+    "options-source-definition": {
+      "identity": "binance-options-request-definition-20260911",
+      "history_reference": "research/strategy-search-2026-09-11/options-source-definition-observation.json; input document only, not an observation window for live outputs",
+      "exposures": [
+        {
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    "eoh-source-definition": {
+      "identity": "binance-eoh-request-definition-20260911",
+      "history_reference": "research/strategy-search-2026-09-11/options-eoh-source-definition-observation.json; document window only; 2023 content remains exposed and actual acquisition clocks are separate",
+      "exposures": [
+        {
+          "start": "2026-09-11T08:59:38.161697+00:00",
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    "eoh-history": {
+      "identity": "binance-btc-eoh-option-summary-history",
+      "history_reference": "options-eoh-schema-charter.md; conservatively exposed RVIV-era underlying history, not proof this exact archive was previously read",
+      "exposures": [
+        {
+          "start": "2022-06-01T00:00:00Z",
+          "end": "2025-04-01T00:00:00Z",
+          "state": "exposed"
+        }
+      ]
+    },
+    "triangle-source-definition": {
+      "identity": "binance-triangle-request-definition-20260911",
+      "history_reference": "research/strategy-search-2026-09-11/triangle-source-definition-observation.json; existing input-document observation only, live quote outputs use actual retrieval clocks",
+      "exposures": [
+        {
+          "start": "2026-09-11T08:59:38.166552+00:00",
+          "end": "2026-09-11T08:59:38.166591+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    "triangle-observation": {
+      "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+      "history_reference": "research_runs/triangle-inputs-20260911; source-only observed before separate proxy freeze, exposed exploratory snapshot, no simultaneous quote assertion",
+      "exposures": [
+        {
+          "start": "2026-09-11T09:10:25.404644+00:00",
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    "bitrue-source-definition": {
+      "identity": "bitrue-contract-request-definition-20260911",
+      "history_reference": "research/strategy-search-2026-09-11/bitrue-source-definition-observation.json; existing local document only, actual live output clocks separate",
+      "exposures": [
+        {
+          "start": "2026-09-11T09:12:21.519513+00:00",
+          "end": "2026-09-11T09:12:21.519683+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    "wbeth-source-definition": {
+      "identity": "binance-wbeth-source-definition-20260911",
+      "history_reference": "research/strategy-search-2026-09-11/wbeth-source-definition-observation.json; local document window only, captured live metadata/bar receipts retain actual clocks",
+      "exposures": [
+        {
+          "start": "2026-09-11T09:30:47.099732+00:00",
+          "end": "2026-09-11T09:30:47.099983+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    "wbeth-market-history": {
+      "identity": "binance-wbeth-usdt-spot-market-history",
+      "history_reference": "wbeth-inputs-charter.md; conservatively exposed 2026Q2 alongside already spent ETH prices/funding, not a fresh confirmation sample",
+      "exposures": [
+        {
+          "start": "2026-04-01T00:00:00Z",
+          "end": "2026-07-01T00:00:00Z",
+          "state": "exposed"
+        }
+      ]
+    },
+    "news-inventory-definition": {
+      "identity": "saved-news-seven-path-provenance-definition-20260911",
+      "history_reference": "news-provenance-definition-observation.json; local inputdocumentwindow only. Historical corpora not admitted/fresh; sixmissingpaths alreadyobserved bydirectorydiscovery. Real metadataobservations record separate clocks.",
+      "exposures": [
+        {
+          "start": "2026-09-11T10:03:47.591240+00:00",
+          "end": "2026-09-11T10:03:47.610019+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    "triangle-stream-definition": {
+      "identity": "triangle-fixed-local-stream-source-definition-20260911",
+      "history_reference": "triangle-stream-definition-observation.json; localdocument window only, liveoutputs retainactualconnection clocks; earlierstaticquote/historyexposurepreserved. Notconfirmation.",
+      "exposures": [
+        {
+          "start": "2026-09-11T10:30:02.485798+00:00",
+          "end": "2026-09-11T10:30:02.537002+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    "options-entry-definition": {
+      "identity": "fixed-current-options-entry-component-definition-20260911",
+      "history_reference": "options-entry-definition-observation.json; localdocument window only, acquisition outputs retain actual clocks; not confirmation.",
+      "exposures": [
+        {
+          "start": "2026-09-11T10:44:51.919367+00:00",
+          "end": "2026-09-11T10:44:51.919593+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    "options-saved-metadata": {
+      "identity": "options-metadata-20260911-original-capture-admission-and-exchange-info-receipt",
+      "history_reference": "Decision07 and immutable parent outputs; saved source exposed, enums/current-access limitations preserved. No new metadata refresh.",
+      "exposures": [
+        {
+          "start": "2026-09-11T08:40:11.517399+00:00",
+          "end": "2026-09-11T08:40:16.763026+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    "dated-mark-definition": {
+      "identity": "fixed-expired-dated-daily-mark-source-definition-20260911",
+      "history_reference": "dated-mark-definition-observation.json; only document observation. Actual outputs retain request clocks and historical bar endpoints; inherited spent dated/carry windows remain spent.",
+      "exposures": [
+        {
+          "start": "2026-09-11T11:03:40.950496+00:00",
+          "end": "2026-09-11T11:03:40.951452+00:00",
+          "state": "exposed"
+        }
+      ]
+    }
+  },
+  "experiments": {
+    "carry-definition-20260911": {
+      "family": "funding-carry",
+      "parent": null,
+      "question": "Does the historical opportunity charge alter the sign of the saved modeled cost index? Not actual cash PnL.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/carry-definition-charter.md",
+        "sha256": "b94116805330813c05a9cb30994f877f5a964dd005f3a53ca7c552cf40f2603d"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/carry_definition.py": "3c7d235172d86cfa3ee619529f91621b9200e38fcd3d571a33b063f1f22dd1bd",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "legacy",
+          "start": "2021-11-08T00:00:00Z",
+          "end": "2025-03-31T00:00:00Z",
+          "availability": "existing"
+        },
+        {
+          "dataset": "legacy",
+          "start": "2025-04-01T00:00:00Z",
+          "end": "2026-07-01T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "dev_costs": {
+          "path": "data/rebuild/carry_audit/costs.json",
+          "sha256": "b250377e869e0f38cfbcdb449b80f67a387386b7c96adaab880e507c37677ff8",
+          "dataset": "legacy"
+        },
+        "dev_series": {
+          "path": "data/rebuild/carry_audit/sleeve_stressed_daily.csv",
+          "sha256": "f6de070ff8e4f7e3a001b0ccd1162e5792b4397c4dd0737569aaaa232ae89f67",
+          "dataset": "legacy"
+        },
+        "holdout_costs": {
+          "path": "data/rebuild/holdout/carry_audit/costs.json",
+          "sha256": "8774b14283313fe6797459963f2465baef3d8056c1a32a855a726563960aeea1",
+          "dataset": "legacy"
+        },
+        "holdout_series": {
+          "path": "data/rebuild/holdout/carry_audit/sleeve_stressed_daily.csv",
+          "sha256": "7c8d75478448316113990e092c0fc463cf445d358e534e25d59e91a45ce7dd60",
+          "dataset": "legacy"
+        }
+      },
+      "cells": [
+        "dev-btc",
+        "dev-eth",
+        "dev-sleeve",
+        "holdout-btc",
+        "holdout-eth",
+        "holdout-sleeve"
+      ],
+      "outputs": [
+        "diagnostic.json"
+      ]
+    },
+    "carry-inputs-20260911": {
+      "family": "funding-carry",
+      "parent": "carry-definition-20260911",
+      "question": "Can authentic public event funding marks and matched spot/perpetual/mark bars for fixed spent 2026Q2 pass conditional schema/coverage admission?",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/carry-inputs-charter.md",
+        "sha256": "3300905e8466a0752552007210c1b05019dd1de84868ffe44231f06369760615"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "legacy",
+          "start": "2026-04-01T00:00:00Z",
+          "end": "2026-07-01T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "request_spec": {
+          "path": "research/strategy-search-2026-09-11/request-spec.json",
+          "sha256": "59a9859d2652d52c3f4fa654f3dedd2a8b4e57326bb4de6733c5ddb419893963",
+          "dataset": "legacy"
+        }
+      },
+      "cells": [
+        "btc-funding",
+        "eth-funding",
+        "btc-spot",
+        "eth-spot",
+        "btc-perp",
+        "eth-perp",
+        "btc-mark",
+        "eth-mark",
+        "exchange-info",
+        "server-time"
+      ],
+      "outputs": [
+        "btc-funding-receipt.json",
+        "eth-funding-receipt.json",
+        "btc-spot-receipt.json",
+        "eth-spot-receipt.json",
+        "btc-perp-receipt.json",
+        "eth-perp-receipt.json",
+        "btc-mark-receipt.json",
+        "eth-mark-receipt.json",
+        "exchange-info-receipt.json",
+        "server-time-receipt.json",
+        "capture.json",
+        "admission.json"
+      ]
+    },
+    "carry-book-20260911": {
+      "family": "funding-carry",
+      "parent": "carry-inputs-20260911",
+      "question": "Does the frozen matched-quantity USDT carry book cover costs on full capital with acceptable conditional exposure and reserve metrics in spent 2026Q2?",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/carry-book-charter.md",
+        "sha256": "5ce44f44663b1da2be785e0d15fbd37c153e02bd165381353778d7618e4cd3b5"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/carry_book.py": "8ad2a08b14653800d7c34a6a391a36fcb43717c7083ec7398f6bdbf8f5a72d55",
+        "research/strategy-search-2026-09-11/carry_statistics.py": "bb38bad2185c058233625050234364c8c111caf035e7c7666748893f374b0c82",
+        "research/strategy-search-2026-09-11/carry_book_run.py": "e96684b6cc433e62c2d2d0975b646284ff59dc2428b3e2ecec6ebb639c6fd74c",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "legacy",
+          "start": "2026-04-01T00:00:00Z",
+          "end": "2026-07-01T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "capture": {
+          "path": "research_runs/carry-inputs-20260911/outputs/capture.json",
+          "sha256": "2076fb01a8b7a11aa76b9ff14f91a2ec9a8d5d6188e53eb32b50b8fccdd544bd",
+          "dataset": "legacy"
+        },
+        "admission": {
+          "path": "research_runs/carry-inputs-20260911/outputs/admission.json",
+          "sha256": "2723c2ccc885a79056fa5e04eaa07e56546498df5bf4dade9b4bcb70cefd986e",
+          "dataset": "legacy"
+        }
+      },
+      "cells": [
+        "btc-1000-base",
+        "btc-1000-base-zero-funding",
+        "btc-1000-stress",
+        "btc-1000-stress-zero-funding",
+        "btc-10000-base",
+        "btc-10000-base-zero-funding",
+        "btc-10000-stress",
+        "btc-10000-stress-zero-funding",
+        "eth-1000-base",
+        "eth-1000-base-zero-funding",
+        "eth-1000-stress",
+        "eth-1000-stress-zero-funding",
+        "eth-10000-base",
+        "eth-10000-base-zero-funding",
+        "eth-10000-stress",
+        "eth-10000-stress-zero-funding"
+      ],
+      "outputs": [
+        "books.json",
+        "summary.json"
+      ]
+    },
+    "dated-archive-20260911": {
+      "family": "dated-basis",
+      "parent": null,
+      "question": "Do four fixed official dated-contract archives provide checksum-verified hourly coverage, without inferring expiry settlement or price economics?",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/dated-archive-charter.md",
+        "sha256": "b1c67f90d308d2faa27ac9cebc6039d7194999c90fa29e37a73466438dfe64f3"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/dated_archive.py": "631412c60dd411466db185b3ae2cfb0cc62d5423153c98432e9aa93db86efb3d",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "dated-quarter",
+          "start": "2026-05-01T00:00:00Z",
+          "end": "2026-07-01T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "request_spec": {
+          "path": "research/strategy-search-2026-09-11/dated-request-spec.json",
+          "sha256": "2ecf78f968f7c7b0feb6fd27116587bf6e08809f6c33cd2970b1ea939d74b7f4",
+          "dataset": "dated-quarter"
+        }
+      },
+      "cells": [
+        "btc-2026-05-zip",
+        "btc-2026-05-checksum",
+        "btc-2026-06-zip",
+        "btc-2026-06-checksum",
+        "eth-2026-05-zip",
+        "eth-2026-05-checksum",
+        "eth-2026-06-zip",
+        "eth-2026-06-checksum"
+      ],
+      "outputs": [
+        "btc-2026-05-zip-receipt.json",
+        "btc-2026-05-checksum-receipt.json",
+        "btc-2026-06-zip-receipt.json",
+        "btc-2026-06-checksum-receipt.json",
+        "eth-2026-05-zip-receipt.json",
+        "eth-2026-05-checksum-receipt.json",
+        "eth-2026-06-zip-receipt.json",
+        "eth-2026-06-checksum-receipt.json",
+        "archive-capture.json",
+        "archive-admission.json"
+      ]
+    },
+    "dated-book-20260911": {
+      "family": "dated-basis",
+      "parent": "dated-archive-20260911",
+      "question": "Does one fixed 56-day pre-terminal dated cash episode cover base and stressed costs at provisional full-capital relevance? Expected profit, actual margin and execution remain unavailable.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/dated-book-charter.md",
+        "sha256": "c0fcee6424c8bc42e9f577f3013f21abde028ea4d85eb9f2239f86a4f46d4c01"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/dated_book.py": "3977b87b507088238c346dd4dfa7ae3b7934bfd2900a313298df200f0bfcb6ab",
+        "research/strategy-search-2026-09-11/dated_book_run.py": "87623dff2eb691cc2e6abdd35ca0bfc7289496a41e9b50a3e28981171b53699b",
+        "research/strategy-search-2026-09-11/dated_statistics.py": "28c5d01aeb5644b8edf65833fb95c291f8d5eb66dac53147269ea889ff77f61c",
+        "research/strategy-search-2026-09-11/dated_archive.py": "631412c60dd411466db185b3ae2cfb0cc62d5423153c98432e9aa93db86efb3d",
+        "research/strategy-search-2026-09-11/carry_book.py": "8ad2a08b14653800d7c34a6a391a36fcb43717c7083ec7398f6bdbf8f5a72d55",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "dated-quarter",
+          "start": "2026-05-01T00:00:00Z",
+          "end": "2026-06-26T00:00:00Z",
+          "availability": "existing"
+        },
+        {
+          "dataset": "legacy",
+          "start": "2026-05-01T00:00:00Z",
+          "end": "2026-06-26T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "capture": {
+          "path": "research_runs/dated-archive-20260911/outputs/archive-capture.json",
+          "sha256": "42691356256ba6da94cf4a7796fbf56842a5d43314279b3679dea9713838f4b7",
+          "dataset": "dated-quarter"
+        },
+        "admission": {
+          "path": "research_runs/dated-archive-20260911/outputs/archive-admission.json",
+          "sha256": "9f76f48f36f29db2c1e9f7575eccd77b80365e1b5823b90f15823012efebc319",
+          "dataset": "dated-quarter"
+        },
+        "spot_capture": {
+          "path": "research_runs/carry-inputs-20260911/outputs/capture.json",
+          "sha256": "2076fb01a8b7a11aa76b9ff14f91a2ec9a8d5d6188e53eb32b50b8fccdd544bd",
+          "dataset": "legacy"
+        },
+        "spot_admission": {
+          "path": "research_runs/carry-inputs-20260911/outputs/admission.json",
+          "sha256": "2723c2ccc885a79056fa5e04eaa07e56546498df5bf4dade9b4bcb70cefd986e",
+          "dataset": "legacy"
+        }
+      },
+      "cells": [
+        "btc-1000-base",
+        "btc-1000-stress",
+        "btc-10000-base",
+        "btc-10000-stress",
+        "eth-1000-base",
+        "eth-1000-stress",
+        "eth-10000-base",
+        "eth-10000-stress"
+      ],
+      "outputs": [
+        "books.json",
+        "summary.json"
+      ]
+    },
+    "dated-book-resource-correction-20260911": {
+      "family": "dated-basis",
+      "parent": "dated-book-20260911",
+      "question": "Resource-only correction of preserved failed dated episode: identical economic rules and data under explicit resident-memory enforcement.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/dated-resource-correction-charter.md",
+        "sha256": "f3fa6813e3a14d6202fda59f5e31473286b025d31e397aed4535d1efb4cd718f"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/dated_book.py": "3977b87b507088238c346dd4dfa7ae3b7934bfd2900a313298df200f0bfcb6ab",
+        "research/strategy-search-2026-09-11/dated_book_run.py": "87623dff2eb691cc2e6abdd35ca0bfc7289496a41e9b50a3e28981171b53699b",
+        "research/strategy-search-2026-09-11/dated_statistics.py": "28c5d01aeb5644b8edf65833fb95c291f8d5eb66dac53147269ea889ff77f61c",
+        "research/strategy-search-2026-09-11/dated_archive.py": "631412c60dd411466db185b3ae2cfb0cc62d5423153c98432e9aa93db86efb3d",
+        "research/strategy-search-2026-09-11/carry_book.py": "8ad2a08b14653800d7c34a6a391a36fcb43717c7083ec7398f6bdbf8f5a72d55",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164",
+        "research/strategy-search-2026-09-11/resource_guard.py": "4a4d6d17d144fa769bccd4f799828cc6c63dc55d89a521a24716c0fd17f5cbf1",
+        "research/strategy-search-2026-09-11/dated_book_correction.py": "1359933f91a9f5b68e21c22351a9ee42f1fc2eda5cdf0b73a102f245d236decc"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "dated-quarter",
+          "start": "2026-05-01T00:00:00Z",
+          "end": "2026-06-26T00:00:00Z",
+          "availability": "existing"
+        },
+        {
+          "dataset": "legacy",
+          "start": "2026-05-01T00:00:00Z",
+          "end": "2026-06-26T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "capture": {
+          "path": "research_runs/dated-archive-20260911/outputs/archive-capture.json",
+          "sha256": "42691356256ba6da94cf4a7796fbf56842a5d43314279b3679dea9713838f4b7",
+          "dataset": "dated-quarter"
+        },
+        "admission": {
+          "path": "research_runs/dated-archive-20260911/outputs/archive-admission.json",
+          "sha256": "9f76f48f36f29db2c1e9f7575eccd77b80365e1b5823b90f15823012efebc319",
+          "dataset": "dated-quarter"
+        },
+        "spot_capture": {
+          "path": "research_runs/carry-inputs-20260911/outputs/capture.json",
+          "sha256": "2076fb01a8b7a11aa76b9ff14f91a2ec9a8d5d6188e53eb32b50b8fccdd544bd",
+          "dataset": "legacy"
+        },
+        "spot_admission": {
+          "path": "research_runs/carry-inputs-20260911/outputs/admission.json",
+          "sha256": "2723c2ccc885a79056fa5e04eaa07e56546498df5bf4dade9b4bcb70cefd986e",
+          "dataset": "legacy"
+        }
+      },
+      "cells": [
+        "btc-1000-base",
+        "btc-1000-stress",
+        "btc-10000-base",
+        "btc-10000-stress",
+        "eth-1000-base",
+        "eth-1000-stress",
+        "eth-10000-base",
+        "eth-10000-stress"
+      ],
+      "outputs": [
+        "books.json",
+        "summary.json",
+        "resource.json"
+      ]
+    },
+    "options-metadata-20260911": {
+      "family": "options-volatility",
+      "parent": null,
+      "question": "Do four fixed public metadata responses resolve actual option quantity rules and archive types? Source admission only; input window is document bookkeeping and outputs have actual new retrieval clocks.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/options-metadata-charter.md",
+        "sha256": "d53ae61bc086c0c386b47657d099943f0facecc408216fecf01c2a89177a3f05"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/options_metadata.py": "d95c6a68edf987db3112d01e6aa74883488f02077970681fa2c7a1154e02c48f",
+        "research/strategy-search-2026-09-11/options_resource_launcher.py": "5d876d486b6e8e5e3abec853c498fd7e579ed842b32faca65600fb1bf9f1eb4e",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "research/strategy-search-2026-09-11/options-source-definition-observation.json": "cf9cd03172b0b559d4e0d0f28b3c4414ca673c1a6842b3cc2cc9ed3e7c476afe",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "options-source-definition",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "request_spec": {
+          "path": "research/strategy-search-2026-09-11/options-request-spec.json",
+          "sha256": "3119cc6b9f976b09c3db2f31d48b37a4fa5443a43a9b2598b6474e03835e5005",
+          "dataset": "options-source-definition"
+        }
+      },
+      "cells": [
+        "options-exchange-info",
+        "options-server-time",
+        "options-daily-prefixes",
+        "options-daily-initial-objects"
+      ],
+      "outputs": [
+        "options-exchange-info-receipt.json",
+        "options-server-time-receipt.json",
+        "options-daily-prefixes-receipt.json",
+        "options-daily-initial-objects-receipt.json",
+        "metadata-capture.json",
+        "metadata-admission.json"
+      ]
+    },
+    "options-eoh-schema-20260911": {
+      "family": "options-volatility",
+      "parent": "options-metadata-20260911",
+      "question": "What literal CSV structure occurs in one deterministic earliest-listed BTC EOHSummary archive? No financial/clock/quote semantics inferred.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/options-eoh-schema-charter.md",
+        "sha256": "58367077c620dbdf7b62fdea4516dc7d0f9ec4f5fd5c492e84980b67a55c69e7"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/options_eoh_schema.py": "b786a35f5beb05b64c9a6e017f384a323e99d9b4df3b23321e98a684196bd626",
+        "research/strategy-search-2026-09-11/options_metadata.py": "d95c6a68edf987db3112d01e6aa74883488f02077970681fa2c7a1154e02c48f",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "research/strategy-search-2026-09-11/options-eoh-source-definition-observation.json": "1c7a213aaa006190ad72a82b839d4340181228bb04a6987ebb0b53dea938b8f4",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "eoh-source-definition",
+          "start": "2026-09-11T08:59:38.161697+00:00",
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "request_spec": {
+          "path": "research/strategy-search-2026-09-11/options-eoh-request-spec.json",
+          "sha256": "db56b03410be7656092e39cba780d62a53cc754d994db0bf5ae668f49f73039f",
+          "dataset": "eoh-source-definition"
+        }
+      },
+      "cells": [
+        "btc-eoh-2023-05-18-zip",
+        "btc-eoh-2023-05-18-checksum"
+      ],
+      "outputs": [
+        "btc-eoh-2023-05-18-zip-receipt.json",
+        "btc-eoh-2023-05-18-checksum-receipt.json",
+        "eoh-capture.json",
+        "eoh-schema.json"
+      ]
+    },
+    "triangle-inputs-20260911": {
+      "family": "spot-triangular-conversion",
+      "parent": null,
+      "question": "Do six fixed public BTC/ETH/USDT source requests pass schema/identity/receipt admission before any static conversion calculation?",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/triangle-inputs-charter.md",
+        "sha256": "c447bf15f50102bc4617aafc535970e7d7bebed4ab073aecb7cd93ea5b538d29"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/triangle_capture.py": "348a4f0f5515359e2f4359c764bbfa37deb81a03605c03c2c374770992d05c3d",
+        "research/strategy-search-2026-09-11/options_metadata.py": "d95c6a68edf987db3112d01e6aa74883488f02077970681fa2c7a1154e02c48f",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "research/strategy-search-2026-09-11/triangle-source-definition-observation.json": "5cc66e7c97cc4859a14b1c4a03d52613369c6e8c69aff100986a4f4a77b39834",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "triangle-source-definition",
+          "start": "2026-09-11T08:59:38.166552+00:00",
+          "end": "2026-09-11T08:59:38.166591+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "request_spec": {
+          "path": "research/strategy-search-2026-09-11/triangle-request-spec.json",
+          "sha256": "7b2310ee010df7530437fd4354cf6711787c86d820999aa9b71d3f34498a79f3",
+          "dataset": "triangle-source-definition"
+        }
+      },
+      "cells": [
+        "triangle-exchange-info",
+        "triangle-server-time",
+        "triangle-book-ticker",
+        "triangle-btcusdt-depth",
+        "triangle-ethusdt-depth",
+        "triangle-ethbtc-depth"
+      ],
+      "outputs": [
+        "triangle-exchange-info-receipt.json",
+        "triangle-server-time-receipt.json",
+        "triangle-book-ticker-receipt.json",
+        "triangle-btcusdt-depth-receipt.json",
+        "triangle-ethusdt-depth-receipt.json",
+        "triangle-ethbtc-depth-receipt.json",
+        "triangle-capture.json",
+        "triangle-admission.json"
+      ]
+    },
+    "triangle-proxy-20260911": {
+      "family": "spot-triangular-conversion",
+      "parent": "triangle-inputs-20260911",
+      "question": "Do either fixed BTC/ETH/USDT static unit-conversion cycles exceed one before and after assumed fees? Forced continuous full-notional cash proxies only; no fills or expected return.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/triangle-proxy-charter.md",
+        "sha256": "b84f308a8a53325fcbc64d2bd1cb7fc9b80241f0bb0fb563f40899b099cceb39"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/triangle_proxy_run.py": "0205b9ea53fde2125b774137fc20e811ebb276b7b3240d1a2f9016fb8a020fd8",
+        "research/strategy-search-2026-09-11/triangle_bound.py": "ff52dd58d2a60aa939997b64dde3ce77bc57857052257fc52820327501f9415a",
+        "research/strategy-search-2026-09-11/triangle_capture.py": "348a4f0f5515359e2f4359c764bbfa37deb81a03605c03c2c374770992d05c3d",
+        "research/strategy-search-2026-09-11/options_metadata.py": "d95c6a68edf987db3112d01e6aa74883488f02077970681fa2c7a1154e02c48f",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "triangle-observation",
+          "start": "2026-09-11T09:10:25.404644+00:00",
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "capture": {
+          "path": "research_runs/triangle-inputs-20260911/outputs/triangle-capture.json",
+          "sha256": "7e698c4e837d1ae4d79099b891955dafbca4d1d45eb1a2ccd1da05823ebdd241",
+          "dataset": "triangle-observation"
+        },
+        "admission": {
+          "path": "research_runs/triangle-inputs-20260911/outputs/triangle-admission.json",
+          "sha256": "edad752a3949d79d4095e31fea04617a8014c6a98009d203c1d50e0c4fb0c89f",
+          "dataset": "triangle-observation"
+        }
+      },
+      "cells": [
+        "btc-eth-1000-zero-fee",
+        "btc-eth-1000-10bp",
+        "btc-eth-10000-zero-fee",
+        "btc-eth-10000-10bp",
+        "eth-btc-1000-zero-fee",
+        "eth-btc-1000-10bp",
+        "eth-btc-10000-zero-fee",
+        "eth-btc-10000-10bp"
+      ],
+      "outputs": [
+        "proxy.json"
+      ]
+    },
+    "bitrue-metadata-20260911": {
+      "family": "venue-segmentation",
+      "parent": null,
+      "question": "Does the fixed unfiltered Bitrue contracts/time request example provide literal target metadata despite conflicting required-query documentation? Source-only; no funding-profit interpretation or fallback.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/bitrue-metadata-charter.md",
+        "sha256": "c16f74b157344c6458f91332080c7fea278bbb9658c085d7be5dc49c57eec4fe"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/bitrue_metadata.py": "daadd2532952fb06a2789c70423c28835eece7d6622aa4a8a4a2444e5a7efab7",
+        "research/strategy-search-2026-09-11/options_metadata.py": "d95c6a68edf987db3112d01e6aa74883488f02077970681fa2c7a1154e02c48f",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "research/strategy-search-2026-09-11/bitrue-source-definition-observation.json": "e0a4be300c9934ff959d5cb8b13e6b25289f32a1e5057f7130c5b72554cef7a8",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "bitrue-source-definition",
+          "start": "2026-09-11T09:12:21.519513+00:00",
+          "end": "2026-09-11T09:12:21.519683+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "request_spec": {
+          "path": "research/strategy-search-2026-09-11/bitrue-request-spec.json",
+          "sha256": "d04ba9b8dabeafb845707e9f23f829eebd846c7ccc770f145e98271061887810",
+          "dataset": "bitrue-source-definition"
+        }
+      },
+      "cells": [
+        "bitrue-contracts",
+        "bitrue-server-time"
+      ],
+      "outputs": [
+        "bitrue-contracts-receipt.json",
+        "bitrue-server-time-receipt.json",
+        "metadata-capture.json",
+        "metadata-admission.json"
+      ]
+    },
+    "wbeth-inputs-20260911": {
+      "family": "wbeth-linked-value",
+      "parent": null,
+      "question": "Can exact WBETHUSDT current metadata and91fixed2026Q2 dailybars pass source admission for a later market-value hedge diagnostic? No return or staking attribution.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/wbeth-inputs-charter.md",
+        "sha256": "a7b9667f8c5ad99bad06671fc05e4d0c6d60db356d69bcce74f2ea334b306a1a"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/wbeth_inputs.py": "049cad5ef286188f43c8b24f157f9c6f89ae2425a0dc4e2f024a5e643f0cb44a",
+        "research/strategy-search-2026-09-11/options_metadata.py": "d95c6a68edf987db3112d01e6aa74883488f02077970681fa2c7a1154e02c48f",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "research/strategy-search-2026-09-11/wbeth-source-definition-observation.json": "0de5d47b64f1a3307fde7258e627d722e64bb337fea06c03ede458f0d9e5fdbf",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "wbeth-source-definition",
+          "start": "2026-09-11T09:30:47.099732+00:00",
+          "end": "2026-09-11T09:30:47.099983+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "request_spec": {
+          "path": "research/strategy-search-2026-09-11/wbeth-request-spec.json",
+          "sha256": "0e78e138fc1541438b3112b30ac68771fad4960742238edc58934d88fe9dacb8",
+          "dataset": "wbeth-source-definition"
+        }
+      },
+      "cells": [
+        "wbeth-exchange-info",
+        "wbeth-spot"
+      ],
+      "outputs": [
+        "wbeth-exchange-info-receipt.json",
+        "wbeth-spot-receipt.json",
+        "wbeth-capture.json",
+        "wbeth-admission.json"
+      ]
+    },
+    "dated-book-amended-20260911": {
+      "family": "dated-basis",
+      "parent": "dated-book-resource-correction-20260911",
+      "question": "Can one explicitly amended identical dated episode finish under the proven successor lifecycle/resource guard? Economic code/inputs/windows/cells unchanged.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/dated-amended-charter.md",
+        "sha256": "2ec583e789941f2a599781ffa02e65bc8db3b6017ff7003c1e6b9a3f24137460"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/dated_book.py": "3977b87b507088238c346dd4dfa7ae3b7934bfd2900a313298df200f0bfcb6ab",
+        "research/strategy-search-2026-09-11/dated_book_run.py": "87623dff2eb691cc2e6abdd35ca0bfc7289496a41e9b50a3e28981171b53699b",
+        "research/strategy-search-2026-09-11/dated_statistics.py": "28c5d01aeb5644b8edf65833fb95c291f8d5eb66dac53147269ea889ff77f61c",
+        "research/strategy-search-2026-09-11/dated_archive.py": "631412c60dd411466db185b3ae2cfb0cc62d5423153c98432e9aa93db86efb3d",
+        "research/strategy-search-2026-09-11/carry_book.py": "8ad2a08b14653800d7c34a6a391a36fcb43717c7083ec7398f6bdbf8f5a72d55",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164",
+        "research/strategy-search-2026-09-11/dated_book_amended.py": "29a06f065df55cc8fded7b61cf2c831f18af5444f0138cf40b729a5112aa39cb",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "tradingagents/research_amended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "tradingagents/research_amended/admission.py": "dbb4ec5e0b81948a4d7e007306ffb72277e0a448ae2c5d65c82cd4ddf5ba1b78",
+        "tradingagents/research_amended/amendment.py": "516b82264fb9152f2135a036eb030feefb7f507221aa213b9509e6f424fe1bfd",
+        "tradingagents/research_amended/lifecycle.py": "a4681c16e441e41496c1de88017dbcc27b3ce4e30309023ac3ffe83d5f7a1b52",
+        "tradingagents/research_amended/verify.py": "ccc85b7b98c97e048a3c17a8335b4e735e220398604e05eb19dea96616b84666",
+        "tradingagents/research_amended/verify_amendment.py": "5b056e3c8f002f1e5391e851840a1d7aa90c0939a9b21a73726137380a2c8e13"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "admission.py": "dbb4ec5e0b81948a4d7e007306ffb72277e0a448ae2c5d65c82cd4ddf5ba1b78",
+        "amendment.py": "516b82264fb9152f2135a036eb030feefb7f507221aa213b9509e6f424fe1bfd",
+        "lifecycle.py": "a4681c16e441e41496c1de88017dbcc27b3ce4e30309023ac3ffe83d5f7a1b52",
+        "verify.py": "ccc85b7b98c97e048a3c17a8335b4e735e220398604e05eb19dea96616b84666",
+        "verify_amendment.py": "5b056e3c8f002f1e5391e851840a1d7aa90c0939a9b21a73726137380a2c8e13",
+        "original/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "original/__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "original/admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "original/examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "original/lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "original/verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "dated-quarter",
+          "start": "2026-05-01T00:00:00Z",
+          "end": "2026-06-26T00:00:00Z",
+          "availability": "existing"
+        },
+        {
+          "dataset": "legacy",
+          "start": "2026-05-01T00:00:00Z",
+          "end": "2026-06-26T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "capture": {
+          "path": "research_runs/dated-archive-20260911/outputs/archive-capture.json",
+          "sha256": "42691356256ba6da94cf4a7796fbf56842a5d43314279b3679dea9713838f4b7",
+          "dataset": "dated-quarter"
+        },
+        "admission": {
+          "path": "research_runs/dated-archive-20260911/outputs/archive-admission.json",
+          "sha256": "9f76f48f36f29db2c1e9f7575eccd77b80365e1b5823b90f15823012efebc319",
+          "dataset": "dated-quarter"
+        },
+        "spot_capture": {
+          "path": "research_runs/carry-inputs-20260911/outputs/capture.json",
+          "sha256": "2076fb01a8b7a11aa76b9ff14f91a2ec9a8d5d6188e53eb32b50b8fccdd544bd",
+          "dataset": "legacy"
+        },
+        "spot_admission": {
+          "path": "research_runs/carry-inputs-20260911/outputs/admission.json",
+          "sha256": "2723c2ccc885a79056fa5e04eaa07e56546498df5bf4dade9b4bcb70cefd986e",
+          "dataset": "legacy"
+        }
+      },
+      "cells": [
+        "btc-1000-base",
+        "btc-1000-stress",
+        "btc-10000-base",
+        "btc-10000-stress",
+        "eth-1000-base",
+        "eth-1000-stress",
+        "eth-10000-base",
+        "eth-10000-stress"
+      ],
+      "outputs": [
+        "books.json",
+        "summary.json",
+        "resource.json"
+      ],
+      "budget_amendment": {
+        "path": "research/strategy-search-2026-09-11/dated-amendment-certificate.json",
+        "sha256": "2bea921038cc032e3b76838cc7223a443f6c97aaa0e1bf840afbc0c381d8fa19"
+      }
+    },
+    "wbeth-book-20260911": {
+      "family": "wbeth-linked-value",
+      "parent": "wbeth-inputs-20260911",
+      "question": "Does the fixed WBETH spot / ETH perpetual market-value approximation earn relevant positive cash under both costs in exposed2026Q2, with descriptive exposure and unavailable true ETH delta retained?",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/wbeth-book-charter.md",
+        "sha256": "b9fd243aaeaa14d4feb941d4b1b5b424e325afe1ad4a01a34c2246c265f80fc5"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/wbeth_book.py": "b5268397ce1e52b4eb8b92845d95a38cd655b11aaac17eaabf54cbff0a624290",
+        "research/strategy-search-2026-09-11/wbeth_book_run.py": "11ec4c010c9c939840b732d48c3cbd229afe7828900186dfcd05da35373c6a48",
+        "research/strategy-search-2026-09-11/carry_statistics.py": "bb38bad2185c058233625050234364c8c111caf035e7c7666748893f374b0c82",
+        "research/strategy-search-2026-09-11/wbeth_inputs.py": "049cad5ef286188f43c8b24f157f9c6f89ae2425a0dc4e2f024a5e643f0cb44a",
+        "research/strategy-search-2026-09-11/options_metadata.py": "d95c6a68edf987db3112d01e6aa74883488f02077970681fa2c7a1154e02c48f",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164",
+        "research/strategy-search-2026-09-11/carry_book.py": "8ad2a08b14653800d7c34a6a391a36fcb43717c7083ec7398f6bdbf8f5a72d55"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "wbeth-market-history",
+          "start": "2026-04-01T00:00:00Z",
+          "end": "2026-07-01T00:00:00Z",
+          "availability": "existing"
+        },
+        {
+          "dataset": "legacy",
+          "start": "2026-04-01T00:00:00Z",
+          "end": "2026-07-01T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "wbeth_capture": {
+          "path": "research_runs/wbeth-inputs-20260911/outputs/wbeth-capture.json",
+          "sha256": "0a9157bf1c81bb3bec16cd4030dc9aa430b46a9b3f06e6b33281174b7fb3cf4b",
+          "dataset": "wbeth-market-history"
+        },
+        "wbeth_admission": {
+          "path": "research_runs/wbeth-inputs-20260911/outputs/wbeth-admission.json",
+          "sha256": "5bf96c3f41497e6834b4ca1ab8c3e9e25cf4e05103eb9ac74785a5bc994e40d2",
+          "dataset": "wbeth-market-history"
+        },
+        "carry_capture": {
+          "path": "research_runs/carry-inputs-20260911/outputs/capture.json",
+          "sha256": "2076fb01a8b7a11aa76b9ff14f91a2ec9a8d5d6188e53eb32b50b8fccdd544bd",
+          "dataset": "legacy"
+        },
+        "carry_admission": {
+          "path": "research_runs/carry-inputs-20260911/outputs/admission.json",
+          "sha256": "2723c2ccc885a79056fa5e04eaa07e56546498df5bf4dade9b4bcb70cefd986e",
+          "dataset": "legacy"
+        }
+      },
+      "cells": [
+        "wbeth-1000-base",
+        "wbeth-1000-stress",
+        "wbeth-10000-base",
+        "wbeth-10000-stress",
+        "wbeth-1000-base-zero-funding",
+        "wbeth-1000-stress-zero-funding",
+        "wbeth-10000-base-zero-funding",
+        "wbeth-10000-stress-zero-funding"
+      ],
+      "outputs": [
+        "books.json",
+        "summary.json"
+      ]
+    },
+    "news-provenance-20260911": {
+      "family": "news-observation-provenance",
+      "parent": null,
+      "question": "Do seven fixed saved news source paths expose bounded schema-level observation/retrieval/version metadata, with missing/ambiguous records retained and no article records read?",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/news-provenance-charter.md",
+        "sha256": "eeeba0983e64c6728835929625df17cd5537009af065ba8f46a7b81842948c76"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/news_provenance.py": "a4264c026aa9c1f7962a7835a6aa23b27db02e74ae260baf525a11a8480d74fd",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "research/strategy-search-2026-09-11/news-provenance-definition-observation.json": "c2b09ea6e8d9fd2392e8ea6cf97ac2adf7d7339618b567b0a732fb37e8e2748e",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "news-inventory-definition",
+          "start": "2026-09-11T10:03:47.591240+00:00",
+          "end": "2026-09-11T10:03:47.610019+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "request_spec": {
+          "path": "research/strategy-search-2026-09-11/news-provenance-spec.json",
+          "sha256": "ff0a5e08364701b7b2e8dade3bcaae1d63ee927709063f9ae60b7074319037a4",
+          "dataset": "news-inventory-definition"
+        }
+      },
+      "cells": [
+        "audit-alpaca",
+        "audit-gdelt",
+        "original-alpaca",
+        "original-gdelt",
+        "predlab-alpaca",
+        "predlab-gdelt",
+        "external-csv"
+      ],
+      "outputs": [
+        "audit-alpaca-receipt.json",
+        "audit-gdelt-receipt.json",
+        "original-alpaca-receipt.json",
+        "original-gdelt-receipt.json",
+        "predlab-alpaca-receipt.json",
+        "predlab-gdelt-receipt.json",
+        "external-csv-receipt.json",
+        "inventory.json",
+        "admission.json"
+      ]
+    },
+    "triangle-stream-20260911": {
+      "family": "spot-triangular-conversion",
+      "parent": "triangle-proxy-20260911",
+      "question": "Do locally aged bestquote states meet exact cost/visible-size prerequisites across one fixed540second interval? No fills, longrun frequency or expectedprofit.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/triangle-stream-charter.md",
+        "sha256": "de75b45038fc4516ae8f8ca360692bdad3a65a694725dacf776c70cdea40cc5b"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/triangle_stream.py": "6670aa4962d781c93b8cb674655e33d1172dd07faaed17120363da69fb89383b",
+        "research/strategy-search-2026-09-11/triangle_stream_guard.py": "2f6b13d9590296b861e11f8df960ce2f2a47df97fc892c01b3b316998229164a",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "research/strategy-search-2026-09-11/triangle_bound.py": "ff52dd58d2a60aa939997b64dde3ce77bc57857052257fc52820327501f9415a",
+        "research/strategy-search-2026-09-11/triangle_capture.py": "348a4f0f5515359e2f4359c764bbfa37deb81a03605c03c2c374770992d05c3d",
+        "research/strategy-search-2026-09-11/options_metadata.py": "d95c6a68edf987db3112d01e6aa74883488f02077970681fa2c7a1154e02c48f",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "research/strategy-search-2026-09-11/triangle-stream-definition-observation.json": "2c660653eb036406bb81ea17f35b7dd8a4c4f3d83d130d4074cf3c0c996f4bc8",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "triangle-observation",
+          "start": "2026-09-11T09:10:25.404644+00:00",
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "availability": "existing"
+        },
+        {
+          "dataset": "triangle-stream-definition",
+          "start": "2026-09-11T10:30:02.485798+00:00",
+          "end": "2026-09-11T10:30:02.537002+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "request_spec": {
+          "path": "research/strategy-search-2026-09-11/triangle-stream-spec.json",
+          "sha256": "5def4e90e0eaee27c3e2fc49bc93c511aa92a1f2f4398698998d49cc2ccf3a65",
+          "dataset": "triangle-stream-definition"
+        },
+        "metadata_capture": {
+          "path": "research_runs/triangle-inputs-20260911/outputs/triangle-capture.json",
+          "sha256": "7e698c4e837d1ae4d79099b891955dafbca4d1d45eb1a2ccd1da05823ebdd241",
+          "dataset": "triangle-observation"
+        },
+        "metadata_admission": {
+          "path": "research_runs/triangle-inputs-20260911/outputs/triangle-admission.json",
+          "sha256": "edad752a3949d79d4095e31fea04617a8014c6a98009d203c1d50e0c4fb0c89f",
+          "dataset": "triangle-observation"
+        }
+      },
+      "cells": [
+        "transport",
+        "btc-eth-1000-zero-fee",
+        "btc-eth-1000-10bp",
+        "btc-eth-10000-zero-fee",
+        "btc-eth-10000-10bp",
+        "eth-btc-1000-zero-fee",
+        "eth-btc-1000-10bp",
+        "eth-btc-10000-zero-fee",
+        "eth-btc-10000-10bp"
+      ],
+      "outputs": [
+        "raw-00.json",
+        "raw-01.json",
+        "raw-02.json",
+        "raw-03.json",
+        "raw-04.json",
+        "raw-05.json",
+        "raw-06.json",
+        "raw-07.json",
+        "raw-08.json",
+        "raw-09.json",
+        "raw-10.json",
+        "raw-11.json",
+        "raw-12.json",
+        "raw-13.json",
+        "raw-14.json",
+        "raw-15.json",
+        "raw-16.json",
+        "raw-17.json",
+        "raw-18.json",
+        "raw-19.json",
+        "raw-20.json",
+        "raw-21.json",
+        "raw-22.json",
+        "raw-23.json",
+        "raw-24.json",
+        "raw-25.json",
+        "raw-26.json",
+        "raw-27.json",
+        "raw-28.json",
+        "raw-29.json",
+        "raw-30.json",
+        "raw-31.json",
+        "capture.json",
+        "bins.json",
+        "summary.json"
+      ]
+    },
+    "options-entry-20260911": {
+      "family": "options-volatility",
+      "parent": "options-eoh-schema-20260911",
+      "question": "Do fixed representative BTC/ETH current minimum-lot buyer entry components and visible ask quantities satisfy necessary component-only capital conditions at1000/10000 under both fee assumptions? No volatility return or full-account affordability claim.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/options-entry-charter.md",
+        "sha256": "3bbccbe373c1da5c8be426e98075c39a06d116349df8774ad1f21b2250953e7b"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/options_entry.py": "89b361580dead7236b1744af05a2729deda5111343e25d9da7974b775fa15487",
+        "research/strategy-search-2026-09-11/options_entry_transport.py": "a157814cd1131ca89a1533cd002905664aff7e7ccc9fda0e10e5489cdfbad427",
+        "research/strategy-search-2026-09-11/options_entry_guard.py": "43f2e9ef3f47d73e3770ccd5eea50e54c1b9c1969c8ce1c258d2ee663b57d347",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "research/strategy-search-2026-09-11/options_metadata.py": "d95c6a68edf987db3112d01e6aa74883488f02077970681fa2c7a1154e02c48f",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "research/strategy-search-2026-09-11/options-entry-definition-observation.json": "039fdd36d04a5390da7eefe1d2591093d9a1c64033e4b6136a03a04bf0695c55",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "options-saved-metadata",
+          "start": "2026-09-11T08:40:11.517399+00:00",
+          "end": "2026-09-11T08:40:16.763026+00:00",
+          "availability": "existing"
+        },
+        {
+          "dataset": "options-entry-definition",
+          "start": "2026-09-11T10:44:51.919367+00:00",
+          "end": "2026-09-11T10:44:51.919593+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "request_spec": {
+          "path": "research/strategy-search-2026-09-11/options-entry-spec.json",
+          "sha256": "325fb4800241dcd5f3c74cc36fef4fe42d0f02ed68e19093032735321167243b",
+          "dataset": "options-entry-definition"
+        },
+        "metadata_capture": {
+          "path": "research_runs/options-metadata-20260911/outputs/metadata-capture.json",
+          "sha256": "dabd54bb13df7dfeed7140ccaca8ba36b9a4cc4ea327446cab73dd4851375f39",
+          "dataset": "options-saved-metadata"
+        },
+        "metadata_admission": {
+          "path": "research_runs/options-metadata-20260911/outputs/metadata-admission.json",
+          "sha256": "a8aee197b4e831cde6698edb6c694ba01a258939aefb83211acca0c81b83c9aa",
+          "dataset": "options-saved-metadata"
+        },
+        "metadata_receipt": {
+          "path": "research_runs/options-metadata-20260911/outputs/options-exchange-info-receipt.json",
+          "sha256": "a7b0c52246f7a0720b725487a6f428f90ccb5d861b75ca430db496a5cda4024f",
+          "dataset": "options-saved-metadata"
+        }
+      },
+      "cells": [
+        "options-time",
+        "btc-index",
+        "eth-index",
+        "btc-depth",
+        "eth-depth",
+        "btc-mark",
+        "eth-mark",
+        "btc-1000-0.00024",
+        "btc-1000-0.00030",
+        "btc-10000-0.00024",
+        "btc-10000-0.00030",
+        "eth-1000-0.00024",
+        "eth-1000-0.00030",
+        "eth-10000-0.00024",
+        "eth-10000-0.00030"
+      ],
+      "outputs": [
+        "options-time-receipt.json",
+        "btc-index-receipt.json",
+        "eth-index-receipt.json",
+        "btc-depth-receipt.json",
+        "eth-depth-receipt.json",
+        "btc-mark-receipt.json",
+        "eth-mark-receipt.json",
+        "capture.json",
+        "entry.json",
+        "summary.json"
+      ]
+    },
+    "dated-mark-20260911": {
+      "family": "dated-basis",
+      "parent": "dated-book-amended-20260911",
+      "question": "Do exactly two expired-contract daily mark responses supply all56 fixed preterminal days per asset for symmetric derivative valuation? Source-only prerequisite, no spread return or automatic book.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/dated-mark-charter.md",
+        "sha256": "43e353de9b0189bec7424a2adcf1378854a39b1d9b652bcb8972a633a27de743"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/dated_mark.py": "2853d70b6f28fd653c96b4c1cd07eb5484e437f6ea61c2c392f966e65f3c1bf9",
+        "research/strategy-search-2026-09-11/dated_mark_transport.py": "3639602d77274ec829360acd06561c4cadca28d0a07ea693f4e2d55c9fe7569a",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "research/strategy-search-2026-09-11/dated-mark-definition-observation.json": "a90c28121e0d508db1a079bb666efd6c663482c9d1cf06f3b7395433b85f2589",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164",
+        "tradingagents/research_extended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "tradingagents/research_extended/admission.py": "20bab02c8da3e8319753f2c16e9f34e0ba845ebd712317f6caf0c3ca1bd23627",
+        "tradingagents/research_extended/extension.py": "2b836081a85d0d18d4cc24690e700fb2f9e886b2cc105167e3bce5c40709395e",
+        "tradingagents/research_extended/lifecycle.py": "d84db3de685545dd4780c70cec96b750f38b117f0e2e84ba3b038fea0d97e38d",
+        "tradingagents/research_extended/verify.py": "8dee128df96acd1f49007c29ed29db250cce13d7c37a697da653d722eaa8c38b",
+        "tradingagents/research_extended/verify_extension.py": "8a775c0e59b9876ce90343c307017260681841065e1c9de67002257f4c110a6a",
+        "tradingagents/research_extended/verify_v1_snapshot.py": "53bd6dfb6ebe3215337a90ba0327952e35bc68b9541816549f96f427bb62bc38"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "admission.py": "20bab02c8da3e8319753f2c16e9f34e0ba845ebd712317f6caf0c3ca1bd23627",
+        "extension.py": "2b836081a85d0d18d4cc24690e700fb2f9e886b2cc105167e3bce5c40709395e",
+        "lifecycle.py": "d84db3de685545dd4780c70cec96b750f38b117f0e2e84ba3b038fea0d97e38d",
+        "verify.py": "8dee128df96acd1f49007c29ed29db250cce13d7c37a697da653d722eaa8c38b",
+        "verify_extension.py": "8a775c0e59b9876ce90343c307017260681841065e1c9de67002257f4c110a6a",
+        "verify_v1_snapshot.py": "53bd6dfb6ebe3215337a90ba0327952e35bc68b9541816549f96f427bb62bc38",
+        "original/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "original/__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "original/admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "original/examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "original/lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "original/verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313",
+        "amended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "amended/admission.py": "dbb4ec5e0b81948a4d7e007306ffb72277e0a448ae2c5d65c82cd4ddf5ba1b78",
+        "amended/amendment.py": "516b82264fb9152f2135a036eb030feefb7f507221aa213b9509e6f424fe1bfd",
+        "amended/lifecycle.py": "a4681c16e441e41496c1de88017dbcc27b3ce4e30309023ac3ffe83d5f7a1b52",
+        "amended/verify.py": "ccc85b7b98c97e048a3c17a8335b4e735e220398604e05eb19dea96616b84666",
+        "amended/verify_amendment.py": "5b056e3c8f002f1e5391e851840a1d7aa90c0939a9b21a73726137380a2c8e13"
+      },
+      "windows": [
+        {
+          "dataset": "dated-mark-definition",
+          "start": "2026-09-11T11:03:40.950496+00:00",
+          "end": "2026-09-11T11:03:40.951452+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "request_spec": {
+          "path": "research/strategy-search-2026-09-11/dated-mark-spec.json",
+          "sha256": "ebc2735ec91d1d7964a41c00dd265ebc731d821b7b49a89889f1ddde02405be7",
+          "dataset": "dated-mark-definition"
+        }
+      },
+      "cells": [
+        "btc-dated-mark",
+        "eth-dated-mark"
+      ],
+      "outputs": [
+        "btc-dated-mark-receipt.json",
+        "eth-dated-mark-receipt.json",
+        "capture.json",
+        "admission.json"
+      ],
+      "budget_extension": {
+        "path": "research/strategy-search-2026-09-11/dated-extension-certificate.json",
+        "sha256": "242f31d42386e23906138c703ca6b440153cdaefd61c035db83062938afc4b0a"
+      }
+    },
+    "dated-spread-book-20260911": {
+      "family": "dated-basis",
+      "parent": "dated-mark-20260911",
+      "question": "Does one fixed long-dated/short-perpetual episode cover both derivatives costs with funding and relative-price cash, while separately funded wallets satisfy conditional diagnostics? Eight alternatives, no independent alpha or confirmation.",
+      "charter": {
+        "path": "research/strategy-search-2026-09-11/dated-spread-charter.md",
+        "sha256": "e08586e73ac66acbf138f7c86b8f6380d1126ac55645973bd1d431bab4b2c2d3"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/strategy-search-2026-09-11/dated_spread_book.py": "e809bdb0240d3afd907c490e1054216d481181fe83c0d8dab9e992b8711f3b4b",
+        "research/strategy-search-2026-09-11/dated_spread_sources.py": "c3eb7278f23e0a34c54154bcb9918fb8bd266588f5822e2b18b60260059550e9",
+        "research/strategy-search-2026-09-11/dated_spread_statistics.py": "5fb0b7cf6a584c388706374e05bba79398e29047af8bb5ad05e85bb67d819283",
+        "research/strategy-search-2026-09-11/dated_spread_run.py": "a416ffa611d662f388ec9aa8674f34146a4a9660d6517b8efabcbff75442817e",
+        "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+        "research/strategy-search-2026-09-11/dated_archive.py": "631412c60dd411466db185b3ae2cfb0cc62d5423153c98432e9aa93db86efb3d",
+        "research/strategy-search-2026-09-11/dated_mark.py": "2853d70b6f28fd653c96b4c1cd07eb5484e437f6ea61c2c392f966e65f3c1bf9",
+        "research/strategy-search-2026-09-11/dated_mark_transport.py": "3639602d77274ec829360acd06561c4cadca28d0a07ea693f4e2d55c9fe7569a",
+        "research/strategy-search-2026-09-11/dated_statistics.py": "28c5d01aeb5644b8edf65833fb95c291f8d5eb66dac53147269ea889ff77f61c",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164",
+        "tradingagents/research_spread/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "tradingagents/research_spread/admission.py": "00da90ce1d257c498ee36dd62645aa88a455d8b96db3f30219db94c07c89a798",
+        "tradingagents/research_spread/grant.py": "f21dc0611f6bbb00a24e36aca3a6c9d1988eb9dfac0aa1353d5eadd447402d31",
+        "tradingagents/research_spread/lifecycle.py": "964a28c9d740ff57a596563cba275e84f853e9c7b06d8597acf0e7cb122c7fe2",
+        "tradingagents/research_spread/verify.py": "e3337246fbe0db3d936751f2a204ce82aa7db8663dad78ca289effcbe1c6fef7",
+        "tradingagents/research_spread/verify_grant.py": "10b6be48e9c2650036b9392604beef845f23a0b2ccbe60d24746d75e88d4c42d",
+        "tradingagents/research_spread/verify_v2_snapshot.py": "cf1f92ab09a857c8479528523620b0f329cafee980023f53e06a770ebc5fb03b"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "admission.py": "00da90ce1d257c498ee36dd62645aa88a455d8b96db3f30219db94c07c89a798",
+        "grant.py": "f21dc0611f6bbb00a24e36aca3a6c9d1988eb9dfac0aa1353d5eadd447402d31",
+        "lifecycle.py": "964a28c9d740ff57a596563cba275e84f853e9c7b06d8597acf0e7cb122c7fe2",
+        "verify.py": "e3337246fbe0db3d936751f2a204ce82aa7db8663dad78ca289effcbe1c6fef7",
+        "verify_grant.py": "10b6be48e9c2650036b9392604beef845f23a0b2ccbe60d24746d75e88d4c42d",
+        "verify_v2_snapshot.py": "cf1f92ab09a857c8479528523620b0f329cafee980023f53e06a770ebc5fb03b",
+        "original/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "original/__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "original/admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "original/examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "original/lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "original/verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313",
+        "amended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "amended/admission.py": "dbb4ec5e0b81948a4d7e007306ffb72277e0a448ae2c5d65c82cd4ddf5ba1b78",
+        "amended/amendment.py": "516b82264fb9152f2135a036eb030feefb7f507221aa213b9509e6f424fe1bfd",
+        "amended/lifecycle.py": "a4681c16e441e41496c1de88017dbcc27b3ce4e30309023ac3ffe83d5f7a1b52",
+        "amended/verify.py": "ccc85b7b98c97e048a3c17a8335b4e735e220398604e05eb19dea96616b84666",
+        "amended/verify_amendment.py": "5b056e3c8f002f1e5391e851840a1d7aa90c0939a9b21a73726137380a2c8e13",
+        "extended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "extended/admission.py": "20bab02c8da3e8319753f2c16e9f34e0ba845ebd712317f6caf0c3ca1bd23627",
+        "extended/extension.py": "2b836081a85d0d18d4cc24690e700fb2f9e886b2cc105167e3bce5c40709395e",
+        "extended/lifecycle.py": "d84db3de685545dd4780c70cec96b750f38b117f0e2e84ba3b038fea0d97e38d",
+        "extended/verify.py": "8dee128df96acd1f49007c29ed29db250cce13d7c37a697da653d722eaa8c38b",
+        "extended/verify_extension.py": "8a775c0e59b9876ce90343c307017260681841065e1c9de67002257f4c110a6a",
+        "extended/verify_v1_snapshot.py": "53bd6dfb6ebe3215337a90ba0327952e35bc68b9541816549f96f427bb62bc38"
+      },
+      "windows": [
+        {
+          "dataset": "legacy",
+          "start": "2026-05-01T00:00:00Z",
+          "end": "2026-06-26T00:00:00Z",
+          "availability": "existing"
+        },
+        {
+          "dataset": "dated-quarter",
+          "start": "2026-05-01T00:00:00Z",
+          "end": "2026-06-26T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "carry_capture": {
+          "path": "research_runs/carry-inputs-20260911/outputs/capture.json",
+          "sha256": "2076fb01a8b7a11aa76b9ff14f91a2ec9a8d5d6188e53eb32b50b8fccdd544bd",
+          "dataset": "legacy"
+        },
+        "carry_admission": {
+          "path": "research_runs/carry-inputs-20260911/outputs/admission.json",
+          "sha256": "2723c2ccc885a79056fa5e04eaa07e56546498df5bf4dade9b4bcb70cefd986e",
+          "dataset": "legacy"
+        },
+        "archive_capture": {
+          "path": "research_runs/dated-archive-20260911/outputs/archive-capture.json",
+          "sha256": "42691356256ba6da94cf4a7796fbf56842a5d43314279b3679dea9713838f4b7",
+          "dataset": "dated-quarter"
+        },
+        "archive_admission": {
+          "path": "research_runs/dated-archive-20260911/outputs/archive-admission.json",
+          "sha256": "9f76f48f36f29db2c1e9f7575eccd77b80365e1b5823b90f15823012efebc319",
+          "dataset": "dated-quarter"
+        },
+        "mark_capture": {
+          "path": "research_runs/dated-mark-20260911/outputs/capture.json",
+          "sha256": "0050d4a7a372a33c347068013d1e7b24b9d07a2b456c62fbf08d1169ddc83dd8",
+          "dataset": "dated-quarter"
+        },
+        "mark_admission": {
+          "path": "research_runs/dated-mark-20260911/outputs/admission.json",
+          "sha256": "1914638e198fdd9885b18f12781cc1168fa78b4ba1f6dfb73d88868e24090b0e",
+          "dataset": "dated-quarter"
+        },
+        "btc_dated_mark_receipt": {
+          "path": "research_runs/dated-mark-20260911/outputs/btc-dated-mark-receipt.json",
+          "sha256": "10d7c2e47fcefab753fe38c683b78fbf342e64dc5d25df987b115063210a2254",
+          "dataset": "dated-quarter"
+        },
+        "eth_dated_mark_receipt": {
+          "path": "research_runs/dated-mark-20260911/outputs/eth-dated-mark-receipt.json",
+          "sha256": "7552eced39274b29acf5f21ba85227a8932cba4434a2fb836a1a7b836258aa58",
+          "dataset": "dated-quarter"
+        }
+      },
+      "cells": [
+        "btc-1000-base",
+        "btc-1000-stress",
+        "btc-10000-base",
+        "btc-10000-stress",
+        "eth-1000-base",
+        "eth-1000-stress",
+        "eth-10000-base",
+        "eth-10000-stress"
+      ],
+      "outputs": [
+        "books.json",
+        "summary.json",
+        "source-audit.json"
+      ],
+      "budget_book_grant": {
+        "path": "research/strategy-search-2026-09-11/dated-spread-certificate.json",
+        "sha256": "7f97bb5a1573973139df95094224ee0c8562f1f52f5074fc6d1a0090d47001b3"
+      }
+    }
+  }
+}
