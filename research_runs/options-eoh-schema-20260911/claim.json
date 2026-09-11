@@ -1,0 +1,126 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "c6f23fc7657390e6131539e0ac2eff23a9cd3598",
+  "experiment": {
+    "cells": [
+      "btc-eoh-2023-05-18-zip",
+      "btc-eoh-2023-05-18-checksum"
+    ],
+    "charter": {
+      "path": "research/strategy-search-2026-09-11/options-eoh-schema-charter.md",
+      "sha256": "58367077c620dbdf7b62fdea4516dc7d0f9ec4f5fd5c492e84980b67a55c69e7"
+    },
+    "family": "options-volatility",
+    "inputs": {
+      "request_spec": {
+        "dataset": "eoh-source-definition",
+        "path": "research/strategy-search-2026-09-11/options-eoh-request-spec.json",
+        "sha256": "db56b03410be7656092e39cba780d62a53cc754d994db0bf5ae668f49f73039f"
+      }
+    },
+    "outputs": [
+      "btc-eoh-2023-05-18-zip-receipt.json",
+      "btc-eoh-2023-05-18-checksum-receipt.json",
+      "eoh-capture.json",
+      "eoh-schema.json"
+    ],
+    "parent": "options-metadata-20260911",
+    "question": "What literal CSV structure occurs in one deterministic earliest-listed BTC EOHSummary archive? No financial/clock/quote semantics inferred.",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+      "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+    },
+    "selection": null,
+    "source_files": {
+      "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+      "research/strategy-search-2026-09-11/options-eoh-source-definition-observation.json": "1c7a213aaa006190ad72a82b839d4340181228bb04a6987ebb0b53dea938b8f4",
+      "research/strategy-search-2026-09-11/options_eoh_schema.py": "b786a35f5beb05b64c9a6e017f384a323e99d9b4df3b23321e98a684196bd626",
+      "research/strategy-search-2026-09-11/options_metadata.py": "d95c6a68edf987db3112d01e6aa74883488f02077970681fa2c7a1154e02c48f",
+      "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+      "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+    },
+    "stage": "development",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "eoh-source-definition",
+        "end": "2026-09-11T08:59:38.161767+00:00",
+        "start": "2026-09-11T08:59:38.161697+00:00"
+      }
+    ]
+  },
+  "experiment_id": "options-eoh-schema-20260911",
+  "family": {
+    "attempt_budget": 4,
+    "history_reference": "research/strategy-search-2026-09-11/options-metadata-charter.md; one known predlab_rviv_p0 administrative gate bundle,12 exact ledger rows; failed HAR30/DVOL claim preserved; counts are not independent trials or complete search multiplicity. Three new investigations allowed.",
+    "mechanism_id": "binance-option-delta-hedged-volatility-premium",
+    "prior_attempts": 1
+  },
+  "inputs": {
+    "request_spec": {
+      "dataset": "eoh-source-definition",
+      "path": "research/strategy-search-2026-09-11/options-eoh-request-spec.json",
+      "sha256": "db56b03410be7656092e39cba780d62a53cc754d994db0bf5ae668f49f73039f"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2025-03-31T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2021-11-08T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2025-04-01T00:00:00Z",
+      "state": "spent"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-usdt-260626-contract-history",
+      "start": "2025-12-26T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:38:02.442471+00:00",
+      "identity": "binance-options-request-definition-20260911",
+      "start": "2026-09-11T08:38:02.442372+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:59:38.161767+00:00",
+      "identity": "binance-eoh-request-definition-20260911",
+      "start": "2026-09-11T08:59:38.161697+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2025-04-01T00:00:00Z",
+      "identity": "binance-btc-eoh-option-summary-history",
+      "start": "2022-06-01T00:00:00Z",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "strategy-search-2026-09-11",
+  "registration": "research/strategy-search-2026-09-11/gates-options-eoh.json",
+  "registration_sha256": "a1f63a88374a3514728a966c45744691fadfb79e51cf972bc6c4a5beb728fe5b",
+  "schema_version": 1,
+  "source": "c6f23fc7657390e6131539e0ac2eff23a9cd3598",
+  "started_at": "2026-09-11T09:05:38.380719+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "eoh-source-definition",
+      "end": "2026-09-11T08:59:38.161767+00:00",
+      "identity": "binance-eoh-request-definition-20260911",
+      "start": "2026-09-11T08:59:38.161697+00:00",
+      "state": "exposed"
+    }
+  ]
+}

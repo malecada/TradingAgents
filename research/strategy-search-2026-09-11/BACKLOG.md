@@ -6,8 +6,9 @@
 - [x] Admit the fixed dated-contract archives and independently verify coverage.
 - [ ] Dated economic result deferred after two preserved harness failures; no extra attempt without reviewed amendment route.
 - [x] Complete options metadata capture and independent reconstruction.
-- [ ] Admit one fixed EOHSummary archive body/schema before considering historical option economics.
-- [ ] Register fixed same-venue spot-triangle necessary-feasibility capture.
+- [x] Admit one fixed EOHSummary archive body/schema; semantic and financial admission remain unavailable.
+- [x] Register fixed same-venue spot-triangle necessary-feasibility capture.
+- [ ] Execute and independently review triangle capture, then freeze and evaluate its separate eight-case static proxy.
 - [ ] Resolve Binance–Bitrue contract/funding/collateral comparability from public sources.
 - [ ] Re-rank relative-value, liquidity, factor and information questions against
   the resulting evidence; register only a distinct justified prediction.

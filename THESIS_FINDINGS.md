@@ -7004,3 +7004,14 @@ historical chains, applicable fees and actual margin remain unavailable. No
 financial result was computed. Decision07 selects a deterministic one-object
 schema probe and independent spot-triangle source admission. Zero strategies
 validated; research remains active and incomplete.
+
+## 105. Single options archive lexical admission (2026-09-11)
+
+A fixed earliest-listed BTC EOHSummary ZIP/checksum pair passed integrity and
+structural review. Its candidate header and 5,734 following records have 26
+fields throughout. The candidate best_buy_iv column is empty in all following
+records; other columns have no empty or absent fields. Literal bid/ask/size
+labels do not establish units, clocks, quote age or executable chains. No
+numerical or financial interpretation occurred. Decision 08 retains the exposed
+2023 ancestry and two of three new options investigations used. The next
+registered source question is same-venue spot-triangle feasibility.

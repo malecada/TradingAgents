@@ -12,7 +12,8 @@ Completed once, with independent substantive and receipt reviews:
 | carry-inputs-20260911 | 10 / 0 | Authentic event marks and matched bars captured; 12 outputs, 1,265,237 raw bytes. |
 | carry-book-20260911 | 16 / 0 | All eight primary cash books negative; eight zero-funding counterfactuals retained. |
 | dated-archive-20260911 | 8 / 0 | Four ZIP/checksum pairs verified; fixed pre-terminal 56-day interval admitted conditionally. |
-| options-metadata-20260911 | 4 / 0 | Current1230BTC/ETH quantity rules and2archive prefixes admitted; no option economics. |
+| options-metadata-20260911 | 4 / 0 | Current 1,230 BTC/ETH quantity rules and two archive prefixes admitted; no option economics. |
+| options-eoh-schema-20260911 | 2 / 0 | One checksum-verified CSV: 5,734 records after its candidate header, 26 fields; semantics unverified. |
 
 Execution sources respectively: `d3ba86924bd8711704fc80fd771a0e717cc9bb51`,
 `8cac1b361ecc96e5bd6f2ab0fa43bf51b1524ec4`,
@@ -41,12 +42,17 @@ structural reviews pass; Decision07 retains actual timestamps and source-only
 limits. First of three new options investigations used. The v2 monitor is
 reviewed and the exact options worst-payload/lifecycle preflight passed.
 
-Next: freeze and execute the justified two-request earliest-BTC EOHSummary body-
-schema admission after source/gate/synthetic review, then independently inspect
-raw schema and follow the result. No archive body has been opened. In parallel,
-triangle-inputs-20260911 source/spec is drafted and collector is in synthetic
-implementation. No real triangle quotes have been captured and no conversion
-bound evaluated on real inputs. Its later financial gate must precede calculation.
+EOH schema completed once from c6f23fc7657390e6131539e0ac2eff23a9cd3598,
+pushed and remotely verified before execution. Decision 08 and independent
+reconstruction retain lexical-only scope. Options now used two of three new
+investigations; no financial options result exists.
+
+Next: execute frozen triangle-inputs-20260911 from gates-triangle-inputs.json
+using current committed/pushed/verified HEAD, then independently review raw
+admission. No triangle capture has run yet. A separate triangle-proxy charter
+and synthetic-only implementation are in preparation; freeze its exact gate
+and parent hashes after source admission, before real conversion calculation.
+Venue-comparability public documentation is under bounded investigation.
 Commit/push and verify remote equality at each freeze and results checkpoint.
 Interim coverage retains meaningful affordable gaps; no exhaustion.
 
