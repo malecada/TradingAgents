@@ -1,0 +1,1625 @@
+{
+  "all_six_source_cells_available": true,
+  "case_count": 8,
+  "cases": {
+    "btc-eth-1000-10bp": {
+      "after_fee_roundtrip_factor": 0.9971628952476111,
+      "all_displayed_best_sizes_sufficient": true,
+      "cash_profit_usdt": -2.8371047523888526,
+      "convention_diagnostic": {
+        "actual_simple_cash_profit_usdt": -2.8371047523888526,
+        "capital_times_log_factor_usdt": -2.8411369624175293,
+        "label": "Invalid arithmetic-PnL log-factor shadow only",
+        "log_shadow_minus_actual_usdt": -0.004032210028676708
+      },
+      "currency_flow_reconciliation": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 0.0
+      },
+      "currency_path": [
+        "USDT",
+        "BTC",
+        "ETH",
+        "USDT"
+      ],
+      "direction": "btc-eth",
+      "execution": {
+        "reason": "Forced continuous static model only; optional depth admission cannot establish fills, atomicity or simultaneous quotes.",
+        "status": "unavailable"
+      },
+      "fee_decomposition_difference_usdt": -1.616484723854228e-13,
+      "full_notional_scope": "Forced continuous full-capital cycle proxy, not an upper bound on wallet wealth with abstention, partial sizing, rounding or residual cash.",
+      "graduation": false,
+      "gross_cash_profit_usdt": 0.1603768973326396,
+      "gross_roundtrip_factor": 1.0001603768973326,
+      "gross_terminal_usdt": 1000.1603768973326,
+      "inference_limits": {
+        "annual_economic_relevance": {
+          "reason": "The 3% annual relevance threshold cannot be evaluated from one static snapshot.",
+          "status": "unavailable"
+        },
+        "execution_frequency": {
+          "reason": "A static snapshot cannot establish opportunity persistence or executable cycle frequency.",
+          "status": "unavailable"
+        },
+        "expected_return_confidence": {
+          "reason": "One asynchronously observed static snapshot is not a repeated-cycle profit sample.",
+          "status": "unavailable"
+        },
+        "market_beta": {
+          "reason": "No return time series or measured partial-fill inventory exposure.",
+          "status": "unavailable"
+        },
+        "power": {
+          "reason": "No repeated execution sample or expected-profit test is registered.",
+          "status": "unavailable"
+        }
+      },
+      "initial_capital_usdt": 1000,
+      "initial_wallets": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 1000.0
+      },
+      "necessary_after_10bp_screen": {
+        "positive": false,
+        "scope": "A factor greater than one is necessary only for positive cycle profit in the frozen synchronous-price/assumed-fee model; asynchronous execution is unvalidated.",
+        "status": "evaluated"
+      },
+      "received_asset_fee_rate_per_leg": 0.001,
+      "status": "conditional_full_notional_proxy",
+      "temporary_inventory_risk": "Full capital becomes long BTC or ETH between idealized legs; partial/failed execution can strand that exposure.",
+      "terminal_usdt": 997.1628952476111,
+      "terminal_wallets": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 997.1628952476111
+      },
+      "three_fees_terminal_usdt_equivalent": 2.997481649721683,
+      "trace": [
+        {
+          "acquired_asset": "BTC",
+          "acquired_gross_quantity": 0.012940949927841264,
+          "acquired_net_quantity": 0.012928008977913423,
+          "displayed_best_base_quantity": 3.19416,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 0.012940949927841264,
+          "execution_side_price": 77274.08,
+          "fee_asset": "BTC",
+          "fee_quantity": 1.2940949927841265e-05,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 1.0001603768973326,
+          "leg": 1,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "buy",
+          "signed_currency_flows": {
+            "BTC": 0.012928008977913423,
+            "ETH": 0.0,
+            "USDT": -1000.0
+          },
+          "spent_asset": "USDT",
+          "spent_quantity": 1000.0,
+          "symbol": "BTCUSDT",
+          "wallets_after": {
+            "BTC": 0.012928008977913423,
+            "ETH": 0.0,
+            "USDT": 0.0
+          },
+          "wallets_before": {
+            "BTC": 0.0,
+            "ETH": 0.0,
+            "USDT": 1000.0
+          }
+        },
+        {
+          "acquired_asset": "ETH",
+          "acquired_gross_quantity": 0.4038740699129467,
+          "acquired_net_quantity": 0.4034701958430338,
+          "displayed_best_base_quantity": 14.7072,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 0.4038740699129467,
+          "execution_side_price": 0.03201,
+          "fee_asset": "ETH",
+          "fee_quantity": 0.0004038740699129467,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.9991602165204354,
+          "leg": 2,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "buy",
+          "signed_currency_flows": {
+            "BTC": -0.012928008977913423,
+            "ETH": 0.4034701958430338,
+            "USDT": 0.0
+          },
+          "spent_asset": "BTC",
+          "spent_quantity": 0.012928008977913423,
+          "symbol": "ETHBTC",
+          "wallets_after": {
+            "BTC": 0.0,
+            "ETH": 0.4034701958430338,
+            "USDT": 0.0
+          },
+          "wallets_before": {
+            "BTC": 0.012928008977913423,
+            "ETH": 0.0,
+            "USDT": 0.0
+          }
+        },
+        {
+          "acquired_asset": "USDT",
+          "acquired_gross_quantity": 998.1610563039151,
+          "acquired_net_quantity": 997.1628952476111,
+          "displayed_best_base_quantity": 21.3849,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 0.4034701958430338,
+          "execution_side_price": 2473.94,
+          "fee_asset": "USDT",
+          "fee_quantity": 0.998161056303915,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.998161056303915,
+          "leg": 3,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "sell",
+          "signed_currency_flows": {
+            "BTC": 0.0,
+            "ETH": -0.4034701958430338,
+            "USDT": 997.1628952476111
+          },
+          "spent_asset": "ETH",
+          "spent_quantity": 0.4034701958430338,
+          "symbol": "ETHUSDT",
+          "wallets_after": {
+            "BTC": 0.0,
+            "ETH": 0.0,
+            "USDT": 997.1628952476111
+          },
+          "wallets_before": {
+            "BTC": 0.0,
+            "ETH": 0.4034701958430338,
+            "USDT": 0.0
+          }
+        }
+      ],
+      "unit_factor_scope": "Best-quote unit factor is optimistic for the frozen synchronous prices and fee assumptions; a factor at or below one excludes positive cycle profit only within that model.",
+      "unvalidated": [
+        "deeper liquidity and impact",
+        "lots, rounding, dust and minimum notional",
+        "actual fee assets/account rates",
+        "account/product access",
+        "latency and partial fills",
+        "market beta, zero-risk exposure or annual returns"
+      ]
+    },
+    "btc-eth-1000-zero-fee": {
+      "after_fee_roundtrip_factor": 1.0001603768973326,
+      "all_displayed_best_sizes_sufficient": true,
+      "cash_profit_usdt": 0.16037689733261473,
+      "convention_diagnostic": {
+        "actual_simple_cash_profit_usdt": 0.16037689733261473,
+        "capital_times_log_factor_usdt": 0.160364038332855,
+        "label": "Invalid arithmetic-PnL log-factor shadow only",
+        "log_shadow_minus_actual_usdt": -1.2858999759723932e-05
+      },
+      "currency_flow_reconciliation": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 0.0
+      },
+      "currency_path": [
+        "USDT",
+        "BTC",
+        "ETH",
+        "USDT"
+      ],
+      "direction": "btc-eth",
+      "execution": {
+        "reason": "Forced continuous static model only; optional depth admission cannot establish fills, atomicity or simultaneous quotes.",
+        "status": "unavailable"
+      },
+      "fee_decomposition_difference_usdt": 0.0,
+      "full_notional_scope": "Forced continuous full-capital cycle proxy, not an upper bound on wallet wealth with abstention, partial sizing, rounding or residual cash.",
+      "graduation": false,
+      "gross_cash_profit_usdt": 0.1603768973326396,
+      "gross_roundtrip_factor": 1.0001603768973326,
+      "gross_terminal_usdt": 1000.1603768973326,
+      "inference_limits": {
+        "annual_economic_relevance": {
+          "reason": "The 3% annual relevance threshold cannot be evaluated from one static snapshot.",
+          "status": "unavailable"
+        },
+        "execution_frequency": {
+          "reason": "A static snapshot cannot establish opportunity persistence or executable cycle frequency.",
+          "status": "unavailable"
+        },
+        "expected_return_confidence": {
+          "reason": "One asynchronously observed static snapshot is not a repeated-cycle profit sample.",
+          "status": "unavailable"
+        },
+        "market_beta": {
+          "reason": "No return time series or measured partial-fill inventory exposure.",
+          "status": "unavailable"
+        },
+        "power": {
+          "reason": "No repeated execution sample or expected-profit test is registered.",
+          "status": "unavailable"
+        }
+      },
+      "initial_capital_usdt": 1000,
+      "initial_wallets": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 1000.0
+      },
+      "necessary_after_10bp_screen": {
+        "positive": null,
+        "scope": "A factor greater than one is necessary only for positive cycle profit in the frozen synchronous-price/assumed-fee model; asynchronous execution is unvalidated.",
+        "status": "not_applicable"
+      },
+      "received_asset_fee_rate_per_leg": 0.0,
+      "status": "conditional_full_notional_proxy",
+      "temporary_inventory_risk": "Full capital becomes long BTC or ETH between idealized legs; partial/failed execution can strand that exposure.",
+      "terminal_usdt": 1000.1603768973326,
+      "terminal_wallets": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 1000.1603768973326
+      },
+      "three_fees_terminal_usdt_equivalent": 0.0,
+      "trace": [
+        {
+          "acquired_asset": "BTC",
+          "acquired_gross_quantity": 0.012940949927841264,
+          "acquired_net_quantity": 0.012940949927841264,
+          "displayed_best_base_quantity": 3.19416,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 0.012940949927841264,
+          "execution_side_price": 77274.08,
+          "fee_asset": "BTC",
+          "fee_quantity": 0.0,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.0,
+          "leg": 1,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "buy",
+          "signed_currency_flows": {
+            "BTC": 0.012940949927841264,
+            "ETH": 0.0,
+            "USDT": -1000.0
+          },
+          "spent_asset": "USDT",
+          "spent_quantity": 1000.0,
+          "symbol": "BTCUSDT",
+          "wallets_after": {
+            "BTC": 0.012940949927841264,
+            "ETH": 0.0,
+            "USDT": 0.0
+          },
+          "wallets_before": {
+            "BTC": 0.0,
+            "ETH": 0.0,
+            "USDT": 1000.0
+          }
+        },
+        {
+          "acquired_asset": "ETH",
+          "acquired_gross_quantity": 0.4042783482612079,
+          "acquired_net_quantity": 0.4042783482612079,
+          "displayed_best_base_quantity": 14.7072,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 0.4042783482612079,
+          "execution_side_price": 0.03201,
+          "fee_asset": "ETH",
+          "fee_quantity": 0.0,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.0,
+          "leg": 2,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "buy",
+          "signed_currency_flows": {
+            "BTC": -0.012940949927841264,
+            "ETH": 0.4042783482612079,
+            "USDT": 0.0
+          },
+          "spent_asset": "BTC",
+          "spent_quantity": 0.012940949927841264,
+          "symbol": "ETHBTC",
+          "wallets_after": {
+            "BTC": 0.0,
+            "ETH": 0.4042783482612079,
+            "USDT": 0.0
+          },
+          "wallets_before": {
+            "BTC": 0.012940949927841264,
+            "ETH": 0.0,
+            "USDT": 0.0
+          }
+        },
+        {
+          "acquired_asset": "USDT",
+          "acquired_gross_quantity": 1000.1603768973326,
+          "acquired_net_quantity": 1000.1603768973326,
+          "displayed_best_base_quantity": 21.3849,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 0.4042783482612079,
+          "execution_side_price": 2473.94,
+          "fee_asset": "USDT",
+          "fee_quantity": 0.0,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.0,
+          "leg": 3,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "sell",
+          "signed_currency_flows": {
+            "BTC": 0.0,
+            "ETH": -0.4042783482612079,
+            "USDT": 1000.1603768973326
+          },
+          "spent_asset": "ETH",
+          "spent_quantity": 0.4042783482612079,
+          "symbol": "ETHUSDT",
+          "wallets_after": {
+            "BTC": 0.0,
+            "ETH": 0.0,
+            "USDT": 1000.1603768973326
+          },
+          "wallets_before": {
+            "BTC": 0.0,
+            "ETH": 0.4042783482612079,
+            "USDT": 0.0
+          }
+        }
+      ],
+      "unit_factor_scope": "Best-quote unit factor is optimistic for the frozen synchronous prices and fee assumptions; a factor at or below one excludes positive cycle profit only within that model.",
+      "unvalidated": [
+        "deeper liquidity and impact",
+        "lots, rounding, dust and minimum notional",
+        "actual fee assets/account rates",
+        "account/product access",
+        "latency and partial fills",
+        "market beta, zero-risk exposure or annual returns"
+      ]
+    },
+    "btc-eth-10000-10bp": {
+      "after_fee_roundtrip_factor": 0.9971628952476108,
+      "all_displayed_best_sizes_sufficient": true,
+      "cash_profit_usdt": -28.371047523891857,
+      "convention_diagnostic": {
+        "actual_simple_cash_profit_usdt": -28.371047523891857,
+        "capital_times_log_factor_usdt": -28.411369624178636,
+        "label": "Invalid arithmetic-PnL log-factor shadow only",
+        "log_shadow_minus_actual_usdt": -0.040322100286779516
+      },
+      "currency_flow_reconciliation": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 0.0
+      },
+      "currency_path": [
+        "USDT",
+        "BTC",
+        "ETH",
+        "USDT"
+      ],
+      "direction": "btc-eth",
+      "execution": {
+        "reason": "Forced continuous static model only; optional depth admission cannot establish fills, atomicity or simultaneous quotes.",
+        "status": "unavailable"
+      },
+      "fee_decomposition_difference_usdt": 2.0250467969162855e-12,
+      "full_notional_scope": "Forced continuous full-capital cycle proxy, not an upper bound on wallet wealth with abstention, partial sizing, rounding or residual cash.",
+      "graduation": false,
+      "gross_cash_profit_usdt": 1.6037689733275329,
+      "gross_roundtrip_factor": 1.0001603768973328,
+      "gross_terminal_usdt": 10001.603768973328,
+      "inference_limits": {
+        "annual_economic_relevance": {
+          "reason": "The 3% annual relevance threshold cannot be evaluated from one static snapshot.",
+          "status": "unavailable"
+        },
+        "execution_frequency": {
+          "reason": "A static snapshot cannot establish opportunity persistence or executable cycle frequency.",
+          "status": "unavailable"
+        },
+        "expected_return_confidence": {
+          "reason": "One asynchronously observed static snapshot is not a repeated-cycle profit sample.",
+          "status": "unavailable"
+        },
+        "market_beta": {
+          "reason": "No return time series or measured partial-fill inventory exposure.",
+          "status": "unavailable"
+        },
+        "power": {
+          "reason": "No repeated execution sample or expected-profit test is registered.",
+          "status": "unavailable"
+        }
+      },
+      "initial_capital_usdt": 10000,
+      "initial_wallets": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 10000.0
+      },
+      "necessary_after_10bp_screen": {
+        "positive": false,
+        "scope": "A factor greater than one is necessary only for positive cycle profit in the frozen synchronous-price/assumed-fee model; asynchronous execution is unvalidated.",
+        "status": "evaluated"
+      },
+      "received_asset_fee_rate_per_leg": 0.001,
+      "status": "conditional_full_notional_proxy",
+      "temporary_inventory_risk": "Full capital becomes long BTC or ETH between idealized legs; partial/failed execution can strand that exposure.",
+      "terminal_usdt": 9971.628952476109,
+      "terminal_wallets": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 9971.628952476109
+      },
+      "three_fees_terminal_usdt_equivalent": 29.97481649721683,
+      "trace": [
+        {
+          "acquired_asset": "BTC",
+          "acquired_gross_quantity": 0.12940949927841264,
+          "acquired_net_quantity": 0.12928008977913422,
+          "displayed_best_base_quantity": 3.19416,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 0.12940949927841264,
+          "execution_side_price": 77274.08,
+          "fee_asset": "BTC",
+          "fee_quantity": 0.00012940949927841265,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 10.001603768973327,
+          "leg": 1,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "buy",
+          "signed_currency_flows": {
+            "BTC": 0.12928008977913422,
+            "ETH": 0.0,
+            "USDT": -10000.0
+          },
+          "spent_asset": "USDT",
+          "spent_quantity": 10000.0,
+          "symbol": "BTCUSDT",
+          "wallets_after": {
+            "BTC": 0.12928008977913422,
+            "ETH": 0.0,
+            "USDT": 0.0
+          },
+          "wallets_before": {
+            "BTC": 0.0,
+            "ETH": 0.0,
+            "USDT": 10000.0
+          }
+        },
+        {
+          "acquired_asset": "ETH",
+          "acquired_gross_quantity": 4.038740699129466,
+          "acquired_net_quantity": 4.034701958430337,
+          "displayed_best_base_quantity": 14.7072,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 4.038740699129466,
+          "execution_side_price": 0.03201,
+          "fee_asset": "ETH",
+          "fee_quantity": 0.004038740699129466,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 9.991602165204352,
+          "leg": 2,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "buy",
+          "signed_currency_flows": {
+            "BTC": -0.12928008977913422,
+            "ETH": 4.034701958430337,
+            "USDT": 0.0
+          },
+          "spent_asset": "BTC",
+          "spent_quantity": 0.12928008977913422,
+          "symbol": "ETHBTC",
+          "wallets_after": {
+            "BTC": 0.0,
+            "ETH": 4.034701958430337,
+            "USDT": 0.0
+          },
+          "wallets_before": {
+            "BTC": 0.12928008977913422,
+            "ETH": 0.0,
+            "USDT": 0.0
+          }
+        },
+        {
+          "acquired_asset": "USDT",
+          "acquired_gross_quantity": 9981.610563039148,
+          "acquired_net_quantity": 9971.628952476109,
+          "displayed_best_base_quantity": 21.3849,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 4.034701958430337,
+          "execution_side_price": 2473.94,
+          "fee_asset": "USDT",
+          "fee_quantity": 9.98161056303915,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 9.98161056303915,
+          "leg": 3,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "sell",
+          "signed_currency_flows": {
+            "BTC": 0.0,
+            "ETH": -4.034701958430337,
+            "USDT": 9971.628952476109
+          },
+          "spent_asset": "ETH",
+          "spent_quantity": 4.034701958430337,
+          "symbol": "ETHUSDT",
+          "wallets_after": {
+            "BTC": 0.0,
+            "ETH": 0.0,
+            "USDT": 9971.628952476109
+          },
+          "wallets_before": {
+            "BTC": 0.0,
+            "ETH": 4.034701958430337,
+            "USDT": 0.0
+          }
+        }
+      ],
+      "unit_factor_scope": "Best-quote unit factor is optimistic for the frozen synchronous prices and fee assumptions; a factor at or below one excludes positive cycle profit only within that model.",
+      "unvalidated": [
+        "deeper liquidity and impact",
+        "lots, rounding, dust and minimum notional",
+        "actual fee assets/account rates",
+        "account/product access",
+        "latency and partial fills",
+        "market beta, zero-risk exposure or annual returns"
+      ]
+    },
+    "btc-eth-10000-zero-fee": {
+      "after_fee_roundtrip_factor": 1.0001603768973328,
+      "all_displayed_best_sizes_sufficient": true,
+      "cash_profit_usdt": 1.6037689733283678,
+      "convention_diagnostic": {
+        "actual_simple_cash_profit_usdt": 1.6037689733283678,
+        "capital_times_log_factor_usdt": 1.60364038333077,
+        "label": "Invalid arithmetic-PnL log-factor shadow only",
+        "log_shadow_minus_actual_usdt": -0.00012858999759779444
+      },
+      "currency_flow_reconciliation": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 0.0
+      },
+      "currency_path": [
+        "USDT",
+        "BTC",
+        "ETH",
+        "USDT"
+      ],
+      "direction": "btc-eth",
+      "execution": {
+        "reason": "Forced continuous static model only; optional depth admission cannot establish fills, atomicity or simultaneous quotes.",
+        "status": "unavailable"
+      },
+      "fee_decomposition_difference_usdt": 0.0,
+      "full_notional_scope": "Forced continuous full-capital cycle proxy, not an upper bound on wallet wealth with abstention, partial sizing, rounding or residual cash.",
+      "graduation": false,
+      "gross_cash_profit_usdt": 1.6037689733275329,
+      "gross_roundtrip_factor": 1.0001603768973328,
+      "gross_terminal_usdt": 10001.603768973328,
+      "inference_limits": {
+        "annual_economic_relevance": {
+          "reason": "The 3% annual relevance threshold cannot be evaluated from one static snapshot.",
+          "status": "unavailable"
+        },
+        "execution_frequency": {
+          "reason": "A static snapshot cannot establish opportunity persistence or executable cycle frequency.",
+          "status": "unavailable"
+        },
+        "expected_return_confidence": {
+          "reason": "One asynchronously observed static snapshot is not a repeated-cycle profit sample.",
+          "status": "unavailable"
+        },
+        "market_beta": {
+          "reason": "No return time series or measured partial-fill inventory exposure.",
+          "status": "unavailable"
+        },
+        "power": {
+          "reason": "No repeated execution sample or expected-profit test is registered.",
+          "status": "unavailable"
+        }
+      },
+      "initial_capital_usdt": 10000,
+      "initial_wallets": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 10000.0
+      },
+      "necessary_after_10bp_screen": {
+        "positive": null,
+        "scope": "A factor greater than one is necessary only for positive cycle profit in the frozen synchronous-price/assumed-fee model; asynchronous execution is unvalidated.",
+        "status": "not_applicable"
+      },
+      "received_asset_fee_rate_per_leg": 0.0,
+      "status": "conditional_full_notional_proxy",
+      "temporary_inventory_risk": "Full capital becomes long BTC or ETH between idealized legs; partial/failed execution can strand that exposure.",
+      "terminal_usdt": 10001.603768973328,
+      "terminal_wallets": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 10001.603768973328
+      },
+      "three_fees_terminal_usdt_equivalent": 0.0,
+      "trace": [
+        {
+          "acquired_asset": "BTC",
+          "acquired_gross_quantity": 0.12940949927841264,
+          "acquired_net_quantity": 0.12940949927841264,
+          "displayed_best_base_quantity": 3.19416,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 0.12940949927841264,
+          "execution_side_price": 77274.08,
+          "fee_asset": "BTC",
+          "fee_quantity": 0.0,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.0,
+          "leg": 1,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "buy",
+          "signed_currency_flows": {
+            "BTC": 0.12940949927841264,
+            "ETH": 0.0,
+            "USDT": -10000.0
+          },
+          "spent_asset": "USDT",
+          "spent_quantity": 10000.0,
+          "symbol": "BTCUSDT",
+          "wallets_after": {
+            "BTC": 0.12940949927841264,
+            "ETH": 0.0,
+            "USDT": 0.0
+          },
+          "wallets_before": {
+            "BTC": 0.0,
+            "ETH": 0.0,
+            "USDT": 10000.0
+          }
+        },
+        {
+          "acquired_asset": "ETH",
+          "acquired_gross_quantity": 4.042783482612079,
+          "acquired_net_quantity": 4.042783482612079,
+          "displayed_best_base_quantity": 14.7072,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 4.042783482612079,
+          "execution_side_price": 0.03201,
+          "fee_asset": "ETH",
+          "fee_quantity": 0.0,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.0,
+          "leg": 2,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "buy",
+          "signed_currency_flows": {
+            "BTC": -0.12940949927841264,
+            "ETH": 4.042783482612079,
+            "USDT": 0.0
+          },
+          "spent_asset": "BTC",
+          "spent_quantity": 0.12940949927841264,
+          "symbol": "ETHBTC",
+          "wallets_after": {
+            "BTC": 0.0,
+            "ETH": 4.042783482612079,
+            "USDT": 0.0
+          },
+          "wallets_before": {
+            "BTC": 0.12940949927841264,
+            "ETH": 0.0,
+            "USDT": 0.0
+          }
+        },
+        {
+          "acquired_asset": "USDT",
+          "acquired_gross_quantity": 10001.603768973328,
+          "acquired_net_quantity": 10001.603768973328,
+          "displayed_best_base_quantity": 21.3849,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 4.042783482612079,
+          "execution_side_price": 2473.94,
+          "fee_asset": "USDT",
+          "fee_quantity": 0.0,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.0,
+          "leg": 3,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "sell",
+          "signed_currency_flows": {
+            "BTC": 0.0,
+            "ETH": -4.042783482612079,
+            "USDT": 10001.603768973328
+          },
+          "spent_asset": "ETH",
+          "spent_quantity": 4.042783482612079,
+          "symbol": "ETHUSDT",
+          "wallets_after": {
+            "BTC": 0.0,
+            "ETH": 0.0,
+            "USDT": 10001.603768973328
+          },
+          "wallets_before": {
+            "BTC": 0.0,
+            "ETH": 4.042783482612079,
+            "USDT": 0.0
+          }
+        }
+      ],
+      "unit_factor_scope": "Best-quote unit factor is optimistic for the frozen synchronous prices and fee assumptions; a factor at or below one excludes positive cycle profit only within that model.",
+      "unvalidated": [
+        "deeper liquidity and impact",
+        "lots, rounding, dust and minimum notional",
+        "actual fee assets/account rates",
+        "account/product access",
+        "latency and partial fills",
+        "market beta, zero-risk exposure or annual returns"
+      ]
+    },
+    "eth-btc-1000-10bp": {
+      "after_fee_roundtrip_factor": 0.9965275551720731,
+      "all_displayed_best_sizes_sufficient": true,
+      "cash_profit_usdt": -3.472444827926857,
+      "convention_diagnostic": {
+        "actual_simple_cash_profit_usdt": -3.472444827926857,
+        "capital_times_log_factor_usdt": -3.4784877576840385,
+        "label": "Invalid arithmetic-PnL log-factor shadow only",
+        "log_shadow_minus_actual_usdt": -0.006042929757181348
+      },
+      "currency_flow_reconciliation": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 0.0
+      },
+      "currency_path": [
+        "USDT",
+        "ETH",
+        "BTC",
+        "USDT"
+      ],
+      "direction": "eth-btc",
+      "execution": {
+        "reason": "Forced continuous static model only; optional depth admission cannot establish fills, atomicity or simultaneous quotes.",
+        "status": "unavailable"
+      },
+      "fee_decomposition_difference_usdt": -4.973799150320701e-14,
+      "full_notional_scope": "Forced continuous full-capital cycle proxy, not an upper bound on wallet wealth with abstention, partial sizing, rounding or residual cash.",
+      "graduation": false,
+      "gross_cash_profit_usdt": -0.4768730168352704,
+      "gross_roundtrip_factor": 0.9995231269831647,
+      "gross_terminal_usdt": 999.5231269831647,
+      "inference_limits": {
+        "annual_economic_relevance": {
+          "reason": "The 3% annual relevance threshold cannot be evaluated from one static snapshot.",
+          "status": "unavailable"
+        },
+        "execution_frequency": {
+          "reason": "A static snapshot cannot establish opportunity persistence or executable cycle frequency.",
+          "status": "unavailable"
+        },
+        "expected_return_confidence": {
+          "reason": "One asynchronously observed static snapshot is not a repeated-cycle profit sample.",
+          "status": "unavailable"
+        },
+        "market_beta": {
+          "reason": "No return time series or measured partial-fill inventory exposure.",
+          "status": "unavailable"
+        },
+        "power": {
+          "reason": "No repeated execution sample or expected-profit test is registered.",
+          "status": "unavailable"
+        }
+      },
+      "initial_capital_usdt": 1000,
+      "initial_wallets": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 1000.0
+      },
+      "necessary_after_10bp_screen": {
+        "positive": false,
+        "scope": "A factor greater than one is necessary only for positive cycle profit in the frozen synchronous-price/assumed-fee model; asynchronous execution is unvalidated.",
+        "status": "evaluated"
+      },
+      "received_asset_fee_rate_per_leg": 0.001,
+      "status": "conditional_full_notional_proxy",
+      "temporary_inventory_risk": "Full capital becomes long BTC or ETH between idealized legs; partial/failed execution can strand that exposure.",
+      "terminal_usdt": 996.5275551720731,
+      "terminal_wallets": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 996.5275551720731
+      },
+      "three_fees_terminal_usdt_equivalent": 2.995571811091672,
+      "trace": [
+        {
+          "acquired_asset": "ETH",
+          "acquired_gross_quantity": 0.4042118878716223,
+          "acquired_net_quantity": 0.4038076759837507,
+          "displayed_best_base_quantity": 161.4874,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 0.4042118878716223,
+          "execution_side_price": 2473.95,
+          "fee_asset": "ETH",
+          "fee_quantity": 0.00040421188787162233,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.9995231269831647,
+          "leg": 1,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "buy",
+          "signed_currency_flows": {
+            "BTC": 0.0,
+            "ETH": 0.4038076759837507,
+            "USDT": -1000.0
+          },
+          "spent_asset": "USDT",
+          "spent_quantity": 1000.0,
+          "symbol": "ETHUSDT",
+          "wallets_after": {
+            "BTC": 0.0,
+            "ETH": 0.4038076759837507,
+            "USDT": 0.0
+          },
+          "wallets_before": {
+            "BTC": 0.0,
+            "ETH": 0.0,
+            "USDT": 1000.0
+          }
+        },
+        {
+          "acquired_asset": "BTC",
+          "acquired_gross_quantity": 0.012921845631480024,
+          "acquired_net_quantity": 0.012908923785848543,
+          "displayed_best_base_quantity": 55.4176,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 0.4038076759837507,
+          "execution_side_price": 0.032,
+          "fee_asset": "BTC",
+          "fee_quantity": 1.2921845631480025e-05,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.9985236038561818,
+          "leg": 2,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "sell",
+          "signed_currency_flows": {
+            "BTC": 0.012908923785848543,
+            "ETH": -0.4038076759837507,
+            "USDT": 0.0
+          },
+          "spent_asset": "ETH",
+          "spent_quantity": 0.4038076759837507,
+          "symbol": "ETHBTC",
+          "wallets_after": {
+            "BTC": 0.012908923785848543,
+            "ETH": 0.0,
+            "USDT": 0.0
+          },
+          "wallets_before": {
+            "BTC": 0.0,
+            "ETH": 0.4038076759837507,
+            "USDT": 0.0
+          }
+        },
+        {
+          "acquired_asset": "USDT",
+          "acquired_gross_quantity": 997.5250802523254,
+          "acquired_net_quantity": 996.5275551720731,
+          "displayed_best_base_quantity": 1.92136,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 0.012908923785848543,
+          "execution_side_price": 77274.07,
+          "fee_asset": "USDT",
+          "fee_quantity": 0.9975250802523254,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.9975250802523254,
+          "leg": 3,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "sell",
+          "signed_currency_flows": {
+            "BTC": -0.012908923785848543,
+            "ETH": 0.0,
+            "USDT": 996.5275551720731
+          },
+          "spent_asset": "BTC",
+          "spent_quantity": 0.012908923785848543,
+          "symbol": "BTCUSDT",
+          "wallets_after": {
+            "BTC": 0.0,
+            "ETH": 0.0,
+            "USDT": 996.5275551720731
+          },
+          "wallets_before": {
+            "BTC": 0.012908923785848543,
+            "ETH": 0.0,
+            "USDT": 0.0
+          }
+        }
+      ],
+      "unit_factor_scope": "Best-quote unit factor is optimistic for the frozen synchronous prices and fee assumptions; a factor at or below one excludes positive cycle profit only within that model.",
+      "unvalidated": [
+        "deeper liquidity and impact",
+        "lots, rounding, dust and minimum notional",
+        "actual fee assets/account rates",
+        "account/product access",
+        "latency and partial fills",
+        "market beta, zero-risk exposure or annual returns"
+      ]
+    },
+    "eth-btc-1000-zero-fee": {
+      "after_fee_roundtrip_factor": 0.9995231269831647,
+      "all_displayed_best_sizes_sufficient": true,
+      "cash_profit_usdt": -0.4768730168352997,
+      "convention_diagnostic": {
+        "actual_simple_cash_profit_usdt": -0.4768730168352997,
+        "capital_times_log_factor_usdt": -0.47698675693355236,
+        "label": "Invalid arithmetic-PnL log-factor shadow only",
+        "log_shadow_minus_actual_usdt": -0.00011374009825265707
+      },
+      "currency_flow_reconciliation": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 0.0
+      },
+      "currency_path": [
+        "USDT",
+        "ETH",
+        "BTC",
+        "USDT"
+      ],
+      "direction": "eth-btc",
+      "execution": {
+        "reason": "Forced continuous static model only; optional depth admission cannot establish fills, atomicity or simultaneous quotes.",
+        "status": "unavailable"
+      },
+      "fee_decomposition_difference_usdt": 0.0,
+      "full_notional_scope": "Forced continuous full-capital cycle proxy, not an upper bound on wallet wealth with abstention, partial sizing, rounding or residual cash.",
+      "graduation": false,
+      "gross_cash_profit_usdt": -0.4768730168352704,
+      "gross_roundtrip_factor": 0.9995231269831647,
+      "gross_terminal_usdt": 999.5231269831647,
+      "inference_limits": {
+        "annual_economic_relevance": {
+          "reason": "The 3% annual relevance threshold cannot be evaluated from one static snapshot.",
+          "status": "unavailable"
+        },
+        "execution_frequency": {
+          "reason": "A static snapshot cannot establish opportunity persistence or executable cycle frequency.",
+          "status": "unavailable"
+        },
+        "expected_return_confidence": {
+          "reason": "One asynchronously observed static snapshot is not a repeated-cycle profit sample.",
+          "status": "unavailable"
+        },
+        "market_beta": {
+          "reason": "No return time series or measured partial-fill inventory exposure.",
+          "status": "unavailable"
+        },
+        "power": {
+          "reason": "No repeated execution sample or expected-profit test is registered.",
+          "status": "unavailable"
+        }
+      },
+      "initial_capital_usdt": 1000,
+      "initial_wallets": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 1000.0
+      },
+      "necessary_after_10bp_screen": {
+        "positive": null,
+        "scope": "A factor greater than one is necessary only for positive cycle profit in the frozen synchronous-price/assumed-fee model; asynchronous execution is unvalidated.",
+        "status": "not_applicable"
+      },
+      "received_asset_fee_rate_per_leg": 0.0,
+      "status": "conditional_full_notional_proxy",
+      "temporary_inventory_risk": "Full capital becomes long BTC or ETH between idealized legs; partial/failed execution can strand that exposure.",
+      "terminal_usdt": 999.5231269831647,
+      "terminal_wallets": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 999.5231269831647
+      },
+      "three_fees_terminal_usdt_equivalent": 0.0,
+      "trace": [
+        {
+          "acquired_asset": "ETH",
+          "acquired_gross_quantity": 0.4042118878716223,
+          "acquired_net_quantity": 0.4042118878716223,
+          "displayed_best_base_quantity": 161.4874,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 0.4042118878716223,
+          "execution_side_price": 2473.95,
+          "fee_asset": "ETH",
+          "fee_quantity": 0.0,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.0,
+          "leg": 1,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "buy",
+          "signed_currency_flows": {
+            "BTC": 0.0,
+            "ETH": 0.4042118878716223,
+            "USDT": -1000.0
+          },
+          "spent_asset": "USDT",
+          "spent_quantity": 1000.0,
+          "symbol": "ETHUSDT",
+          "wallets_after": {
+            "BTC": 0.0,
+            "ETH": 0.4042118878716223,
+            "USDT": 0.0
+          },
+          "wallets_before": {
+            "BTC": 0.0,
+            "ETH": 0.0,
+            "USDT": 1000.0
+          }
+        },
+        {
+          "acquired_asset": "BTC",
+          "acquired_gross_quantity": 0.012934780411891915,
+          "acquired_net_quantity": 0.012934780411891915,
+          "displayed_best_base_quantity": 55.4176,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 0.4042118878716223,
+          "execution_side_price": 0.032,
+          "fee_asset": "BTC",
+          "fee_quantity": 0.0,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.0,
+          "leg": 2,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "sell",
+          "signed_currency_flows": {
+            "BTC": 0.012934780411891915,
+            "ETH": -0.4042118878716223,
+            "USDT": 0.0
+          },
+          "spent_asset": "ETH",
+          "spent_quantity": 0.4042118878716223,
+          "symbol": "ETHBTC",
+          "wallets_after": {
+            "BTC": 0.012934780411891915,
+            "ETH": 0.0,
+            "USDT": 0.0
+          },
+          "wallets_before": {
+            "BTC": 0.0,
+            "ETH": 0.4042118878716223,
+            "USDT": 0.0
+          }
+        },
+        {
+          "acquired_asset": "USDT",
+          "acquired_gross_quantity": 999.5231269831647,
+          "acquired_net_quantity": 999.5231269831647,
+          "displayed_best_base_quantity": 1.92136,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 0.012934780411891915,
+          "execution_side_price": 77274.07,
+          "fee_asset": "USDT",
+          "fee_quantity": 0.0,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.0,
+          "leg": 3,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "sell",
+          "signed_currency_flows": {
+            "BTC": -0.012934780411891915,
+            "ETH": 0.0,
+            "USDT": 999.5231269831647
+          },
+          "spent_asset": "BTC",
+          "spent_quantity": 0.012934780411891915,
+          "symbol": "BTCUSDT",
+          "wallets_after": {
+            "BTC": 0.0,
+            "ETH": 0.0,
+            "USDT": 999.5231269831647
+          },
+          "wallets_before": {
+            "BTC": 0.012934780411891915,
+            "ETH": 0.0,
+            "USDT": 0.0
+          }
+        }
+      ],
+      "unit_factor_scope": "Best-quote unit factor is optimistic for the frozen synchronous prices and fee assumptions; a factor at or below one excludes positive cycle profit only within that model.",
+      "unvalidated": [
+        "deeper liquidity and impact",
+        "lots, rounding, dust and minimum notional",
+        "actual fee assets/account rates",
+        "account/product access",
+        "latency and partial fills",
+        "market beta, zero-risk exposure or annual returns"
+      ]
+    },
+    "eth-btc-10000-10bp": {
+      "after_fee_roundtrip_factor": 0.9965275551720731,
+      "all_displayed_best_sizes_sufficient": true,
+      "cash_profit_usdt": -34.72444827926857,
+      "convention_diagnostic": {
+        "actual_simple_cash_profit_usdt": -34.72444827926857,
+        "capital_times_log_factor_usdt": -34.78487757684039,
+        "label": "Invalid arithmetic-PnL log-factor shadow only",
+        "log_shadow_minus_actual_usdt": -0.060429297571815255
+      },
+      "currency_flow_reconciliation": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 0.0
+      },
+      "currency_path": [
+        "USDT",
+        "ETH",
+        "BTC",
+        "USDT"
+      ],
+      "direction": "eth-btc",
+      "execution": {
+        "reason": "Forced continuous static model only; optional depth admission cannot establish fills, atomicity or simultaneous quotes.",
+        "status": "unavailable"
+      },
+      "fee_decomposition_difference_usdt": 8.668621376273222e-13,
+      "full_notional_scope": "Forced continuous full-capital cycle proxy, not an upper bound on wallet wealth with abstention, partial sizing, rounding or residual cash.",
+      "graduation": false,
+      "gross_cash_profit_usdt": -4.768730168350885,
+      "gross_roundtrip_factor": 0.9995231269831649,
+      "gross_terminal_usdt": 9995.23126983165,
+      "inference_limits": {
+        "annual_economic_relevance": {
+          "reason": "The 3% annual relevance threshold cannot be evaluated from one static snapshot.",
+          "status": "unavailable"
+        },
+        "execution_frequency": {
+          "reason": "A static snapshot cannot establish opportunity persistence or executable cycle frequency.",
+          "status": "unavailable"
+        },
+        "expected_return_confidence": {
+          "reason": "One asynchronously observed static snapshot is not a repeated-cycle profit sample.",
+          "status": "unavailable"
+        },
+        "market_beta": {
+          "reason": "No return time series or measured partial-fill inventory exposure.",
+          "status": "unavailable"
+        },
+        "power": {
+          "reason": "No repeated execution sample or expected-profit test is registered.",
+          "status": "unavailable"
+        }
+      },
+      "initial_capital_usdt": 10000,
+      "initial_wallets": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 10000.0
+      },
+      "necessary_after_10bp_screen": {
+        "positive": false,
+        "scope": "A factor greater than one is necessary only for positive cycle profit in the frozen synchronous-price/assumed-fee model; asynchronous execution is unvalidated.",
+        "status": "evaluated"
+      },
+      "received_asset_fee_rate_per_leg": 0.001,
+      "status": "conditional_full_notional_proxy",
+      "temporary_inventory_risk": "Full capital becomes long BTC or ETH between idealized legs; partial/failed execution can strand that exposure.",
+      "terminal_usdt": 9965.275551720732,
+      "terminal_wallets": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 9965.275551720732
+      },
+      "three_fees_terminal_usdt_equivalent": 29.95571811091672,
+      "trace": [
+        {
+          "acquired_asset": "ETH",
+          "acquired_gross_quantity": 4.042118878716224,
+          "acquired_net_quantity": 4.038076759837508,
+          "displayed_best_base_quantity": 161.4874,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 4.042118878716224,
+          "execution_side_price": 2473.95,
+          "fee_asset": "ETH",
+          "fee_quantity": 0.004042118878716224,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 9.995231269831649,
+          "leg": 1,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "buy",
+          "signed_currency_flows": {
+            "BTC": 0.0,
+            "ETH": 4.038076759837508,
+            "USDT": -10000.0
+          },
+          "spent_asset": "USDT",
+          "spent_quantity": 10000.0,
+          "symbol": "ETHUSDT",
+          "wallets_after": {
+            "BTC": 0.0,
+            "ETH": 4.038076759837508,
+            "USDT": 0.0
+          },
+          "wallets_before": {
+            "BTC": 0.0,
+            "ETH": 0.0,
+            "USDT": 10000.0
+          }
+        },
+        {
+          "acquired_asset": "BTC",
+          "acquired_gross_quantity": 0.12921845631480025,
+          "acquired_net_quantity": 0.12908923785848544,
+          "displayed_best_base_quantity": 55.4176,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 4.038076759837508,
+          "execution_side_price": 0.032,
+          "fee_asset": "BTC",
+          "fee_quantity": 0.00012921845631480024,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 9.985236038561817,
+          "leg": 2,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "sell",
+          "signed_currency_flows": {
+            "BTC": 0.12908923785848544,
+            "ETH": -4.038076759837508,
+            "USDT": 0.0
+          },
+          "spent_asset": "ETH",
+          "spent_quantity": 4.038076759837508,
+          "symbol": "ETHBTC",
+          "wallets_after": {
+            "BTC": 0.12908923785848544,
+            "ETH": 0.0,
+            "USDT": 0.0
+          },
+          "wallets_before": {
+            "BTC": 0.0,
+            "ETH": 4.038076759837508,
+            "USDT": 0.0
+          }
+        },
+        {
+          "acquired_asset": "USDT",
+          "acquired_gross_quantity": 9975.250802523255,
+          "acquired_net_quantity": 9965.275551720732,
+          "displayed_best_base_quantity": 1.92136,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 0.12908923785848544,
+          "execution_side_price": 77274.07,
+          "fee_asset": "USDT",
+          "fee_quantity": 9.975250802523254,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 9.975250802523254,
+          "leg": 3,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "sell",
+          "signed_currency_flows": {
+            "BTC": -0.12908923785848544,
+            "ETH": 0.0,
+            "USDT": 9965.275551720732
+          },
+          "spent_asset": "BTC",
+          "spent_quantity": 0.12908923785848544,
+          "symbol": "BTCUSDT",
+          "wallets_after": {
+            "BTC": 0.0,
+            "ETH": 0.0,
+            "USDT": 9965.275551720732
+          },
+          "wallets_before": {
+            "BTC": 0.12908923785848544,
+            "ETH": 0.0,
+            "USDT": 0.0
+          }
+        }
+      ],
+      "unit_factor_scope": "Best-quote unit factor is optimistic for the frozen synchronous prices and fee assumptions; a factor at or below one excludes positive cycle profit only within that model.",
+      "unvalidated": [
+        "deeper liquidity and impact",
+        "lots, rounding, dust and minimum notional",
+        "actual fee assets/account rates",
+        "account/product access",
+        "latency and partial fills",
+        "market beta, zero-risk exposure or annual returns"
+      ]
+    },
+    "eth-btc-10000-zero-fee": {
+      "after_fee_roundtrip_factor": 0.9995231269831649,
+      "all_displayed_best_sizes_sufficient": true,
+      "cash_profit_usdt": -4.768730168350777,
+      "convention_diagnostic": {
+        "actual_simple_cash_profit_usdt": -4.768730168350777,
+        "capital_times_log_factor_usdt": -4.769867569333302,
+        "label": "Invalid arithmetic-PnL log-factor shadow only",
+        "log_shadow_minus_actual_usdt": -0.0011374009825253495
+      },
+      "currency_flow_reconciliation": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 0.0
+      },
+      "currency_path": [
+        "USDT",
+        "ETH",
+        "BTC",
+        "USDT"
+      ],
+      "direction": "eth-btc",
+      "execution": {
+        "reason": "Forced continuous static model only; optional depth admission cannot establish fills, atomicity or simultaneous quotes.",
+        "status": "unavailable"
+      },
+      "fee_decomposition_difference_usdt": 0.0,
+      "full_notional_scope": "Forced continuous full-capital cycle proxy, not an upper bound on wallet wealth with abstention, partial sizing, rounding or residual cash.",
+      "graduation": false,
+      "gross_cash_profit_usdt": -4.768730168350885,
+      "gross_roundtrip_factor": 0.9995231269831649,
+      "gross_terminal_usdt": 9995.23126983165,
+      "inference_limits": {
+        "annual_economic_relevance": {
+          "reason": "The 3% annual relevance threshold cannot be evaluated from one static snapshot.",
+          "status": "unavailable"
+        },
+        "execution_frequency": {
+          "reason": "A static snapshot cannot establish opportunity persistence or executable cycle frequency.",
+          "status": "unavailable"
+        },
+        "expected_return_confidence": {
+          "reason": "One asynchronously observed static snapshot is not a repeated-cycle profit sample.",
+          "status": "unavailable"
+        },
+        "market_beta": {
+          "reason": "No return time series or measured partial-fill inventory exposure.",
+          "status": "unavailable"
+        },
+        "power": {
+          "reason": "No repeated execution sample or expected-profit test is registered.",
+          "status": "unavailable"
+        }
+      },
+      "initial_capital_usdt": 10000,
+      "initial_wallets": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 10000.0
+      },
+      "necessary_after_10bp_screen": {
+        "positive": null,
+        "scope": "A factor greater than one is necessary only for positive cycle profit in the frozen synchronous-price/assumed-fee model; asynchronous execution is unvalidated.",
+        "status": "not_applicable"
+      },
+      "received_asset_fee_rate_per_leg": 0.0,
+      "status": "conditional_full_notional_proxy",
+      "temporary_inventory_risk": "Full capital becomes long BTC or ETH between idealized legs; partial/failed execution can strand that exposure.",
+      "terminal_usdt": 9995.23126983165,
+      "terminal_wallets": {
+        "BTC": 0.0,
+        "ETH": 0.0,
+        "USDT": 9995.23126983165
+      },
+      "three_fees_terminal_usdt_equivalent": 0.0,
+      "trace": [
+        {
+          "acquired_asset": "ETH",
+          "acquired_gross_quantity": 4.042118878716224,
+          "acquired_net_quantity": 4.042118878716224,
+          "displayed_best_base_quantity": 161.4874,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 4.042118878716224,
+          "execution_side_price": 2473.95,
+          "fee_asset": "ETH",
+          "fee_quantity": 0.0,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.0,
+          "leg": 1,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "buy",
+          "signed_currency_flows": {
+            "BTC": 0.0,
+            "ETH": 4.042118878716224,
+            "USDT": -10000.0
+          },
+          "spent_asset": "USDT",
+          "spent_quantity": 10000.0,
+          "symbol": "ETHUSDT",
+          "wallets_after": {
+            "BTC": 0.0,
+            "ETH": 4.042118878716224,
+            "USDT": 0.0
+          },
+          "wallets_before": {
+            "BTC": 0.0,
+            "ETH": 0.0,
+            "USDT": 10000.0
+          }
+        },
+        {
+          "acquired_asset": "BTC",
+          "acquired_gross_quantity": 0.12934780411891916,
+          "acquired_net_quantity": 0.12934780411891916,
+          "displayed_best_base_quantity": 55.4176,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 4.042118878716224,
+          "execution_side_price": 0.032,
+          "fee_asset": "BTC",
+          "fee_quantity": 0.0,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.0,
+          "leg": 2,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "sell",
+          "signed_currency_flows": {
+            "BTC": 0.12934780411891916,
+            "ETH": -4.042118878716224,
+            "USDT": 0.0
+          },
+          "spent_asset": "ETH",
+          "spent_quantity": 4.042118878716224,
+          "symbol": "ETHBTC",
+          "wallets_after": {
+            "BTC": 0.12934780411891916,
+            "ETH": 0.0,
+            "USDT": 0.0
+          },
+          "wallets_before": {
+            "BTC": 0.0,
+            "ETH": 4.042118878716224,
+            "USDT": 0.0
+          }
+        },
+        {
+          "acquired_asset": "USDT",
+          "acquired_gross_quantity": 9995.23126983165,
+          "acquired_net_quantity": 9995.23126983165,
+          "displayed_best_base_quantity": 1.92136,
+          "displayed_best_size_sufficient": true,
+          "executed_base_quantity_before_fee": 0.12934780411891916,
+          "execution_side_price": 77274.07,
+          "fee_asset": "USDT",
+          "fee_quantity": 0.0,
+          "fee_usdt_equivalent_at_downstream_gross_quotes": 0.0,
+          "leg": 3,
+          "qualification": "Entire continuous quantity priced at displayed best quote, regardless of size; no depth or fills assumed.",
+          "side": "sell",
+          "signed_currency_flows": {
+            "BTC": -0.12934780411891916,
+            "ETH": 0.0,
+            "USDT": 9995.23126983165
+          },
+          "spent_asset": "BTC",
+          "spent_quantity": 0.12934780411891916,
+          "symbol": "BTCUSDT",
+          "wallets_after": {
+            "BTC": 0.0,
+            "ETH": 0.0,
+            "USDT": 9995.23126983165
+          },
+          "wallets_before": {
+            "BTC": 0.12934780411891916,
+            "ETH": 0.0,
+            "USDT": 0.0
+          }
+        }
+      ],
+      "unit_factor_scope": "Best-quote unit factor is optimistic for the frozen synchronous prices and fee assumptions; a factor at or below one excludes positive cycle profit only within that model.",
+      "unvalidated": [
+        "deeper liquidity and impact",
+        "lots, rounding, dust and minimum notional",
+        "actual fee assets/account rates",
+        "account/product access",
+        "latency and partial fills",
+        "market beta, zero-risk exposure or annual returns"
+      ]
+    }
+  },
+  "cells": [
+    {
+      "id": "btc-eth-1000-zero-fee",
+      "status": "complete"
+    },
+    {
+      "id": "btc-eth-1000-10bp",
+      "status": "complete"
+    },
+    {
+      "id": "btc-eth-10000-zero-fee",
+      "status": "complete"
+    },
+    {
+      "id": "btc-eth-10000-10bp",
+      "status": "complete"
+    },
+    {
+      "id": "eth-btc-1000-zero-fee",
+      "status": "complete"
+    },
+    {
+      "id": "eth-btc-1000-10bp",
+      "status": "complete"
+    },
+    {
+      "id": "eth-btc-10000-zero-fee",
+      "status": "complete"
+    },
+    {
+      "id": "eth-btc-10000-10bp",
+      "status": "complete"
+    }
+  ],
+  "execution_scope": "A forced full-notional model, not filled-order PnL or an upper bound on wallet wealth with abstention, partial sizing or residual cash.",
+  "graduation": false,
+  "inference_limits": {
+    "annual_economic_relevance": {
+      "reason": "The 3% annual relevance threshold cannot be evaluated from one static snapshot.",
+      "status": "unavailable"
+    },
+    "execution_frequency": {
+      "reason": "A static snapshot cannot establish opportunity persistence or executable cycle frequency.",
+      "status": "unavailable"
+    },
+    "expected_return_confidence": {
+      "reason": "One asynchronously observed static snapshot is not a repeated-cycle profit sample.",
+      "status": "unavailable"
+    },
+    "market_beta": {
+      "reason": "No return time series or measured partial-fill inventory exposure.",
+      "status": "unavailable"
+    },
+    "power": {
+      "reason": "No repeated execution sample or expected-profit test is registered.",
+      "status": "unavailable"
+    }
+  },
+  "interpretation": "Eight correlated static conversion proxies, not independent trials. Best-quote unit factors are optimistic within a synchronous-price model; forced full-capital cash values are not universal wallet-wealth upper bounds. Size insufficiency does not establish fills.",
+  "quote_source": "Only the frozen batch book-ticker response drives the proxy; depth and time never substitute prices.",
+  "required_source_ids": [
+    "triangle-exchange-info",
+    "triangle-book-ticker"
+  ],
+  "source_availability": {
+    "triangle-book-ticker": {
+      "id": "triangle-book-ticker",
+      "parent_status": "complete",
+      "raw_integrity_status": "complete",
+      "request_utc": "2026-09-11T09:10:26.744354+00:00",
+      "required_for_static_proxy": true,
+      "retrieval_utc": "2026-09-11T09:10:27.051204+00:00",
+      "schema_status": "complete",
+      "status": "complete"
+    },
+    "triangle-btcusdt-depth": {
+      "id": "triangle-btcusdt-depth",
+      "parent_status": "complete",
+      "raw_integrity_status": "complete",
+      "request_utc": "2026-09-11T09:10:27.409487+00:00",
+      "required_for_static_proxy": false,
+      "retrieval_utc": "2026-09-11T09:10:27.709042+00:00",
+      "schema_status": "complete",
+      "status": "complete"
+    },
+    "triangle-ethbtc-depth": {
+      "id": "triangle-ethbtc-depth",
+      "parent_status": "complete",
+      "raw_integrity_status": "complete",
+      "request_utc": "2026-09-11T09:10:28.732845+00:00",
+      "required_for_static_proxy": false,
+      "retrieval_utc": "2026-09-11T09:10:29.052054+00:00",
+      "schema_status": "complete",
+      "status": "complete"
+    },
+    "triangle-ethusdt-depth": {
+      "id": "triangle-ethusdt-depth",
+      "parent_status": "complete",
+      "raw_integrity_status": "complete",
+      "request_utc": "2026-09-11T09:10:28.062250+00:00",
+      "required_for_static_proxy": false,
+      "retrieval_utc": "2026-09-11T09:10:28.357167+00:00",
+      "schema_status": "complete",
+      "status": "complete"
+    },
+    "triangle-exchange-info": {
+      "id": "triangle-exchange-info",
+      "parent_status": "complete",
+      "raw_integrity_status": "complete",
+      "request_utc": "2026-09-11T09:10:25.404644+00:00",
+      "required_for_static_proxy": true,
+      "retrieval_utc": "2026-09-11T09:10:25.733737+00:00",
+      "schema_status": "complete",
+      "status": "complete"
+    },
+    "triangle-server-time": {
+      "id": "triangle-server-time",
+      "parent_status": "complete",
+      "raw_integrity_status": "complete",
+      "request_utc": "2026-09-11T09:10:26.089202+00:00",
+      "required_for_static_proxy": false,
+      "retrieval_utc": "2026-09-11T09:10:26.383865+00:00",
+      "schema_status": "complete",
+      "status": "complete"
+    }
+  },
+  "ticker_capture_clocks": {
+    "request_utc": "2026-09-11T09:10:26.744354+00:00",
+    "retrieval_utc": "2026-09-11T09:10:27.051204+00:00",
+    "scope": "Literal source clocks retained; no cross-symbol simultaneity or depth/ticker alignment inferred."
+  }
+}

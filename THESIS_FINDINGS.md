@@ -7025,3 +7025,15 @@ for a separately registered static conversion question, not simultaneous quotes
 or fills. No conversion factor or profit was measured. Decision 09 advances the
 fixed eight-case arithmetic proxy and records one of three new triangle
 investigations used, without resetting older liquidity-search history.
+
+## 107. Static triangle fees erase observed discrepancy (2026-09-11)
+
+The registered eight-case static calculation found a gross +0.16037690 USDT
+proxy on 1,000 USDT for USDT→BTC→ETH→USDT, becoming −2.83710475 after three
+assumed 0.1% received-asset fees. The reverse cycle is negative before and after
+fees. Corresponding 10,000-USDT cases scale the same algebra; all displayed
+size flags pass. These are conditional continuous full-notional calculations,
+not fills or independent trials. Signed wallets and fee decomposition reconcile;
+expected return, power, beta and annual relevance remain unavailable. Decision
+10 switches to venue prerequisites without treating one snapshot as permanent
+family rejection. Zero strategies validated.

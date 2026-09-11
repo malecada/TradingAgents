@@ -51,3 +51,15 @@ Other relevant cumulative inventories: factor floor 37 original +18 correction
 replication/probe, combination and passive descendants; calendar 11+12; stress
 9+9; order flow 9; wallet features 10. Probe-stopped questions with zero financial
 rows also remain search history. No family is reset by this new program.
+
+## Venue-segmentation ancestry check before acquisition
+
+September 11, 2026: a scoped literal search for Bitrue/cross-venue/venue-segmentation
+in the five retained gate files (predlab, rebuild, LLM rank/pair/event), current
+handoff/state/evidence index and this history found no known exact Binance–Bitrue
+perpetual funding-differential gate. It did find the September 10 dated-feasibility
+gate's explicit Bitrue documentation-only scope and NLST cross-venue spillover
+history. These are preserved; zero known exact new-mechanism gates does not mean
+zero broader search or statistical multiplicity. The new administrative allowance
+is three investigations under one stable mechanism identity, also MAP row 7.
+No old funding-carry or settlement-blocked case moves into this allowance.

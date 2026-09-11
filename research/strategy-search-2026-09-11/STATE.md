@@ -15,6 +15,7 @@ Completed once, with independent substantive and receipt reviews:
 | options-metadata-20260911 | 4 / 0 | Current 1,230 BTC/ETH quantity rules and two archive prefixes admitted; no option economics. |
 | options-eoh-schema-20260911 | 2 / 0 | One checksum-verified CSV: 5,734 records after its candidate header, 26 fields; semantics unverified. |
 | triangle-inputs-20260911 | 6 / 0 | Fixed contract/time/ticker/depth source schemas pass; no conversion calculation. |
+| triangle-proxy-20260911 | 8 / 0 | Tiny positive gross discrepancy in one direction; assumed fees make both directions negative. |
 
 Execution sources respectively: `d3ba86924bd8711704fc80fd771a0e717cc9bb51`,
 `8cac1b361ecc96e5bd6f2ab0fa43bf51b1524ec4`,
@@ -53,13 +54,22 @@ pushed and remotely verified before execution. Decision 09 and independent revie
 retain asynchronous clocks and source-only scope. One of three triangle new
 investigations used, also charged to MAP row 5.
 
-Next: run triangle-proxy-20260911 once from gates-triangle-proxy.json after its
-independent gate/source review and current HEAD commit/push/remote equality.
-The eight-case static model uses only parent batch quotes; no real conversion
-arithmetic has run. Bitrue two-request metadata spec is drafted and synthetic
-collector implementation is underway, with settled funding-history documentation
-under independent bounded review. Options historical economics is deferred for
-field/clock/contract semantics, with one new options investigation remaining.
+Triangle proxy completed from b4fc9466196108f83a593396970df65651889914,
+pushed and remotely verified before execution. Decision 10 retains eight static
+cases, no fills and unavailable expected-return inference. Two of three triangle
+investigations used; do not change fees or refresh quotes to rescue this result.
+
+Next: execute bitrue-metadata-20260911 from gates-bitrue-metadata.json after
+current HEAD commit/push/remote equality. Independent final pre-review passes.
+The request definition preserves the version conflict: the official unfiltered
+GET example is tested once despite a required contractName table entry; no
+fallback or contract-absence claim follows from unavailability. No actual Bitrue
+API response has been acquired. Settled
+funding history remains an unresolved source dependency after the bounded review. A read-only engineering
+assessment is examining a safe explicit +1 dated-budget amendment route; no
+extension is admitted or implemented, and the dated question remains deferred.
+Options historical economics remains deferred for field/clock/contract semantics,
+with one new options investigation remaining. Meaningful affordable gaps remain.
 Commit/push and verify remote equality at each freeze and results checkpoint.
 Interim coverage retains meaningful affordable gaps; no exhaustion.
 
