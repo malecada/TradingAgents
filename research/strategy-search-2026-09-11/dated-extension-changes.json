@@ -1,0 +1,247 @@
+{
+  "schema_version": 1,
+  "baseline_experiment": "dated-book-amended-20260911",
+  "target_experiment": "dated-mark-20260911",
+  "baseline_contract_sha256": "da5dbb1965502386091bcc1238ead332260b834e6a58696e8eb1d45c1133dfa2",
+  "target_contract_sha256": "957265a1a5ed3848a3e0532282174e8e2bb9adbc17a0b6db82d488076ec8ce45",
+  "changes": {
+    "budget_amendment": {
+      "before": {
+        "present": true,
+        "value": {
+          "path": "research/strategy-search-2026-09-11/dated-amendment-certificate.json",
+          "sha256": "2bea921038cc032e3b76838cc7223a443f6c97aaa0e1bf840afbc0c381d8fa19"
+        }
+      },
+      "after": {
+        "present": false
+      }
+    },
+    "cells": {
+      "before": {
+        "present": true,
+        "value": [
+          "btc-1000-base",
+          "btc-1000-stress",
+          "btc-10000-base",
+          "btc-10000-stress",
+          "eth-1000-base",
+          "eth-1000-stress",
+          "eth-10000-base",
+          "eth-10000-stress"
+        ]
+      },
+      "after": {
+        "present": true,
+        "value": [
+          "btc-dated-mark",
+          "eth-dated-mark"
+        ]
+      }
+    },
+    "charter": {
+      "before": {
+        "present": true,
+        "value": {
+          "path": "research/strategy-search-2026-09-11/dated-amended-charter.md",
+          "sha256": "2ec583e789941f2a599781ffa02e65bc8db3b6017ff7003c1e6b9a3f24137460"
+        }
+      },
+      "after": {
+        "present": true,
+        "value": {
+          "path": "research/strategy-search-2026-09-11/dated-mark-charter.md",
+          "sha256": "43e353de9b0189bec7424a2adcf1378854a39b1d9b652bcb8972a633a27de743"
+        }
+      }
+    },
+    "inputs": {
+      "before": {
+        "present": true,
+        "value": {
+          "capture": {
+            "path": "research_runs/dated-archive-20260911/outputs/archive-capture.json",
+            "sha256": "42691356256ba6da94cf4a7796fbf56842a5d43314279b3679dea9713838f4b7",
+            "dataset": "dated-quarter"
+          },
+          "admission": {
+            "path": "research_runs/dated-archive-20260911/outputs/archive-admission.json",
+            "sha256": "9f76f48f36f29db2c1e9f7575eccd77b80365e1b5823b90f15823012efebc319",
+            "dataset": "dated-quarter"
+          },
+          "spot_capture": {
+            "path": "research_runs/carry-inputs-20260911/outputs/capture.json",
+            "sha256": "2076fb01a8b7a11aa76b9ff14f91a2ec9a8d5d6188e53eb32b50b8fccdd544bd",
+            "dataset": "legacy"
+          },
+          "spot_admission": {
+            "path": "research_runs/carry-inputs-20260911/outputs/admission.json",
+            "sha256": "2723c2ccc885a79056fa5e04eaa07e56546498df5bf4dade9b4bcb70cefd986e",
+            "dataset": "legacy"
+          }
+        }
+      },
+      "after": {
+        "present": true,
+        "value": {
+          "request_spec": {
+            "path": "research/strategy-search-2026-09-11/dated-mark-spec.json",
+            "sha256": "ebc2735ec91d1d7964a41c00dd265ebc731d821b7b49a89889f1ddde02405be7",
+            "dataset": "dated-mark-definition"
+          }
+        }
+      }
+    },
+    "outputs": {
+      "before": {
+        "present": true,
+        "value": [
+          "books.json",
+          "summary.json",
+          "resource.json"
+        ]
+      },
+      "after": {
+        "present": true,
+        "value": [
+          "btc-dated-mark-receipt.json",
+          "eth-dated-mark-receipt.json",
+          "capture.json",
+          "admission.json"
+        ]
+      }
+    },
+    "parent": {
+      "before": {
+        "present": true,
+        "value": "dated-book-resource-correction-20260911"
+      },
+      "after": {
+        "present": true,
+        "value": "dated-book-amended-20260911"
+      }
+    },
+    "question": {
+      "before": {
+        "present": true,
+        "value": "Can one explicitly amended identical dated episode finish under the proven successor lifecycle/resource guard? Economic code/inputs/windows/cells unchanged."
+      },
+      "after": {
+        "present": true,
+        "value": "Do exactly two expired-contract daily mark responses supply all56 fixed preterminal days per asset for symmetric derivative valuation? Source-only prerequisite, no spread return or automatic book."
+      }
+    },
+    "runtime_hashes": {
+      "before": {
+        "present": true,
+        "value": {
+          "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+          "admission.py": "dbb4ec5e0b81948a4d7e007306ffb72277e0a448ae2c5d65c82cd4ddf5ba1b78",
+          "amendment.py": "516b82264fb9152f2135a036eb030feefb7f507221aa213b9509e6f424fe1bfd",
+          "lifecycle.py": "a4681c16e441e41496c1de88017dbcc27b3ce4e30309023ac3ffe83d5f7a1b52",
+          "verify.py": "ccc85b7b98c97e048a3c17a8335b4e735e220398604e05eb19dea96616b84666",
+          "verify_amendment.py": "5b056e3c8f002f1e5391e851840a1d7aa90c0939a9b21a73726137380a2c8e13",
+          "original/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+          "original/__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+          "original/admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+          "original/examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+          "original/lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+          "original/verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+        }
+      },
+      "after": {
+        "present": true,
+        "value": {
+          "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+          "admission.py": "20bab02c8da3e8319753f2c16e9f34e0ba845ebd712317f6caf0c3ca1bd23627",
+          "extension.py": "2b836081a85d0d18d4cc24690e700fb2f9e886b2cc105167e3bce5c40709395e",
+          "lifecycle.py": "d84db3de685545dd4780c70cec96b750f38b117f0e2e84ba3b038fea0d97e38d",
+          "verify.py": "8dee128df96acd1f49007c29ed29db250cce13d7c37a697da653d722eaa8c38b",
+          "verify_extension.py": "8a775c0e59b9876ce90343c307017260681841065e1c9de67002257f4c110a6a",
+          "verify_v1_snapshot.py": "53bd6dfb6ebe3215337a90ba0327952e35bc68b9541816549f96f427bb62bc38",
+          "original/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+          "original/__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+          "original/admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+          "original/examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+          "original/lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+          "original/verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313",
+          "amended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+          "amended/admission.py": "dbb4ec5e0b81948a4d7e007306ffb72277e0a448ae2c5d65c82cd4ddf5ba1b78",
+          "amended/amendment.py": "516b82264fb9152f2135a036eb030feefb7f507221aa213b9509e6f424fe1bfd",
+          "amended/lifecycle.py": "a4681c16e441e41496c1de88017dbcc27b3ce4e30309023ac3ffe83d5f7a1b52",
+          "amended/verify.py": "ccc85b7b98c97e048a3c17a8335b4e735e220398604e05eb19dea96616b84666",
+          "amended/verify_amendment.py": "5b056e3c8f002f1e5391e851840a1d7aa90c0939a9b21a73726137380a2c8e13"
+        }
+      }
+    },
+    "source_files": {
+      "before": {
+        "present": true,
+        "value": {
+          "research/strategy-search-2026-09-11/dated_book.py": "3977b87b507088238c346dd4dfa7ae3b7934bfd2900a313298df200f0bfcb6ab",
+          "research/strategy-search-2026-09-11/dated_book_run.py": "87623dff2eb691cc2e6abdd35ca0bfc7289496a41e9b50a3e28981171b53699b",
+          "research/strategy-search-2026-09-11/dated_statistics.py": "28c5d01aeb5644b8edf65833fb95c291f8d5eb66dac53147269ea889ff77f61c",
+          "research/strategy-search-2026-09-11/dated_archive.py": "631412c60dd411466db185b3ae2cfb0cc62d5423153c98432e9aa93db86efb3d",
+          "research/strategy-search-2026-09-11/carry_book.py": "8ad2a08b14653800d7c34a6a391a36fcb43717c7083ec7398f6bdbf8f5a72d55",
+          "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+          "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164",
+          "research/strategy-search-2026-09-11/dated_book_amended.py": "29a06f065df55cc8fded7b61cf2c831f18af5444f0138cf40b729a5112aa39cb",
+          "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+          "tradingagents/research_amended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+          "tradingagents/research_amended/admission.py": "dbb4ec5e0b81948a4d7e007306ffb72277e0a448ae2c5d65c82cd4ddf5ba1b78",
+          "tradingagents/research_amended/amendment.py": "516b82264fb9152f2135a036eb030feefb7f507221aa213b9509e6f424fe1bfd",
+          "tradingagents/research_amended/lifecycle.py": "a4681c16e441e41496c1de88017dbcc27b3ce4e30309023ac3ffe83d5f7a1b52",
+          "tradingagents/research_amended/verify.py": "ccc85b7b98c97e048a3c17a8335b4e735e220398604e05eb19dea96616b84666",
+          "tradingagents/research_amended/verify_amendment.py": "5b056e3c8f002f1e5391e851840a1d7aa90c0939a9b21a73726137380a2c8e13"
+        }
+      },
+      "after": {
+        "present": true,
+        "value": {
+          "research/strategy-search-2026-09-11/dated_mark.py": "2853d70b6f28fd653c96b4c1cd07eb5484e437f6ea61c2c392f966e65f3c1bf9",
+          "research/strategy-search-2026-09-11/dated_mark_transport.py": "3639602d77274ec829360acd06561c4cadca28d0a07ea693f4e2d55c9fe7569a",
+          "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+          "research/strategy-search-2026-09-11/dated-mark-definition-observation.json": "a90c28121e0d508db1a079bb666efd6c663482c9d1cf06f3b7395433b85f2589",
+          "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164",
+          "tradingagents/research_extended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+          "tradingagents/research_extended/admission.py": "20bab02c8da3e8319753f2c16e9f34e0ba845ebd712317f6caf0c3ca1bd23627",
+          "tradingagents/research_extended/extension.py": "2b836081a85d0d18d4cc24690e700fb2f9e886b2cc105167e3bce5c40709395e",
+          "tradingagents/research_extended/lifecycle.py": "d84db3de685545dd4780c70cec96b750f38b117f0e2e84ba3b038fea0d97e38d",
+          "tradingagents/research_extended/verify.py": "8dee128df96acd1f49007c29ed29db250cce13d7c37a697da653d722eaa8c38b",
+          "tradingagents/research_extended/verify_extension.py": "8a775c0e59b9876ce90343c307017260681841065e1c9de67002257f4c110a6a",
+          "tradingagents/research_extended/verify_v1_snapshot.py": "53bd6dfb6ebe3215337a90ba0327952e35bc68b9541816549f96f427bb62bc38"
+        }
+      }
+    },
+    "windows": {
+      "before": {
+        "present": true,
+        "value": [
+          {
+            "dataset": "dated-quarter",
+            "start": "2026-05-01T00:00:00Z",
+            "end": "2026-06-26T00:00:00Z",
+            "availability": "existing"
+          },
+          {
+            "dataset": "legacy",
+            "start": "2026-05-01T00:00:00Z",
+            "end": "2026-06-26T00:00:00Z",
+            "availability": "existing"
+          }
+        ]
+      },
+      "after": {
+        "present": true,
+        "value": [
+          {
+            "dataset": "dated-mark-definition",
+            "start": "2026-09-11T11:03:40.950496+00:00",
+            "end": "2026-09-11T11:03:40.951452+00:00",
+            "availability": "existing"
+          }
+        ]
+      }
+    }
+  }
+}

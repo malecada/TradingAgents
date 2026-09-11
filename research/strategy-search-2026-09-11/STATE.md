@@ -83,13 +83,25 @@ displayedasksize and componentfit atbothcapitallevels underbothfees. BTC
 28.28486408/28.33108009USDT, ETH1.27191567/1.27339458. These are buyerentry
 components only, not hedgedaccount requirements orperformance. IndependentactualreviewPASS: all1,678metadata rows/10parents,7sources,
 80exactFractionassertions and completehashes/denominators. Outputs74,601bytes,
-raw1,337bytes. Decision17/Finding114 finalized; readyverifiedresultbackup.
+raw1,337bytes. Decision17/Finding114 finalized; resultscommitted/pushed
+ac10147edbe4b90786cf9194351740d6aa6aedc2, remoteequalityverified.
 
 The independent coverage audit identifies an eligible dated/perpetual spread
 question after options. Draft dated-mark-charter.md proposes two fixed daily-mark
 source requests; existing trade/funding sources also permit a narrower cash
-diagnostic with margin unverified. A separate explicit cumulative extension is
-needed; the consumedrepair+1 cannot be reused. No new dated claim is admitted.
+diagnostic with margin unverified. Independent information-value review supports exactlyone named sixthdated
+attempt for sourceadmission, noautomaticbook. Rootdated_mark.py/transport and
+test_dated_mark.py have26focusedtests and22independentscenarios passing.
+Three exactguardactualmain fixtures prepared, pending stableextendedruntime.
+Workerowns tradingagents/research_extended and test_extended_lifecycle.py;
+initial16tests pass, expandedadversarial/guard tests underway. Independent
+runtime review underway. Gate/spec/definitionobsdraft exists WITHOUTcertificate;
+NOTadmitted/committedforempiricalexecution. Rootmustfinalize sourcepins,
+exactclosed-v1snapshot/currentinventory proof,change manifest,review/preflight,
+certificate/fullgate andverifyremotefreeze beforeany datedmarkrequest.
+Original/amendedpackages/gates/claims immutable; frozenv1live-ledgerverifier
+limitation afterdescendant mustbedisclosed, notsilentlyfiltered. No new dated
+claim exists andno mark endpoint hasbeencalled.
 Initial
 caps alone do not establish exhaustion. Existing value_rev needs its second
 vintage on September18 or later; no early replay or renamed sample. News needs
@@ -111,3 +123,32 @@ encountered files remain withheld. This is engineering validation only.
 Preserve raw stores, original worktrees, old gates/ledgers and22deferred settlement
 cases. Never read credentials, trade, contact providers or mutate production.
 Continue each justified eligible action; context checkpoints mean incomplete.
+
+Current coordinator next: wait for worker source/test stability; run the three
+actualmain guarded datedmark syntheticfixtures; integrate independent runtime
+and source reviews; materialize exact reviewed sixth-attempt certificate/gate;
+commit/push/remotelyverify; execute once, review,diagnose,backup then adjudicate
+distinct conditional spreadcashbook. Options documentaryfollowup rejects another
+buyer-capital experiment absentlongvolprediction; publicsellerIMformulas exist,
+substantivepremiumtest stillneedsfrozenpolicy andadmitted option/hedgetimepath.
+No final stoppingcriterion; allcurrentactualruns terminal andimmutable.
+
+Final dated-source gate/certificate review is now at reference-only comparison.
+The implementation and exact target/change/inventory review PASS: 31 lifecycle
+checks, 29 collector checks including three actual-main guarded fixtures, 22
+independent source scenarios, adversarial preservation regressions and guarded
+read-only reconstruction of the actual consumed v1 history. Maximum collector
+fixture RSS81,440,768bytes and7.418seconds; actual v1 snapshot30,990,336bytes,
+0.858seconds. Initial synthetic preservation defects remain in the initial
+review report; resolved without empirical attempts.
+Target contract957265a1a5ed3848a3e0532282174e8e2bb9adbc17a0b6db82d488076ec8ce45;
+change manifest3d679e8fecffb6b5bb7c2be22e6ea38ccfd7143bbe753925fc9d4f8ef241e36f;
+final reviewed assessmente80611235b55a6fd7335b42325d716534bd3bf5a3209572ae40ddde4df9f04ab.
+Gate0abec8fd1204cf28baa9e3637c855f1c43010a5376e75fb46c08f8509ea897fb;
+certificate242f31d42386e23906138c703ca6b440153cdaefd61c035db83062938afc4b0a.
+After reference comparison, commit/push/verify remote equality and execute exactly
+once through unchanged resource_guard_v2.py (512MiB,120seconds,2CPU) and
+ dated_mark.py --source FULL_COMMITTED_HEAD. Do not rerun or change HEAD while
+active. The new source allowance is the sixth total dated attempt only; no book
+or further increment is granted. All actual runs through Decision17 are terminal;
+no dated-mark claim or new request exists at this pre-execution checkpoint.

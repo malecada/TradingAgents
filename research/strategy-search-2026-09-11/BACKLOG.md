@@ -18,7 +18,8 @@
 - [x] Complete third triangle actual review (299,403 checks) and retain result for backup: bounded capture closed, zero fee-qualified supported states; preserve four unsupported boundary bins per series and all outputs.
 - [x] Complete options entry-component prerequisite and independent raw/Fraction review:15completecells; minimum buyer tickets fit bothfee/capital/size conditions.
 - [ ] Assess useful options follow-ups against seller/access/history/future-observation dependencies; no automatic paper or budget reset.
-- [ ] Resolve coverage audit candidate: dated-future/perpetual collateral/funding mechanism and source feasibility before any extension or economic replay.
+- [x] Resolve coverage ancestry/information value for a distinct long-dated/short-perpetual book; daily dated marks are the next bounded source question.
+- [ ] Commit and execute the independently reviewed two-request dated-mark source extension; preserve effective6 accounting and all112slots. Then adjudicate a separate conditional spread book.
 - [ ] Existing value_rev remains deferred until a second vintage September 18 or later; no early replay or renamed gate.
 - [ ] Re-rank relative-value, liquidity, factor and information questions against
   the resulting evidence; register only a distinct justified prediction.

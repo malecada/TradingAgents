@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "extension_id": "dated-mark-single-source-extension-20260911",
+  "program_id": "strategy-search-2026-09-11",
+  "family_id": "dated-basis",
+  "mechanism_id": "binance-btc-eth-dated-basis-convergence",
+  "family_sha256": "7eab84e49492ccaf6c83dbb975a417c274d362cdb0183261dc4979fe04c160bf",
+  "increment": 1,
+  "original_budget": 4,
+  "prior_effective_budget": 5,
+  "effective_budget": 6,
+  "target_experiment": "dated-mark-20260911",
+  "parent_experiment": "dated-book-amended-20260911",
+  "target_contract_sha256": "957265a1a5ed3848a3e0532282174e8e2bb9adbc17a0b6db82d488076ec8ce45",
+  "prior_claims": {
+    "dated-archive-20260911": {
+      "claim_sha256": "b7f8595e487efffe5c84a57ce30b83ab5803a4505df8ee10d6c775235ccaedc0",
+      "terminal": "complete.json",
+      "terminal_sha256": "91f03121720c46505452097dafa012e7937c41779f4cf94dba9243aa6c1a65c9"
+    },
+    "dated-book-20260911": {
+      "claim_sha256": "ba160d29788a2eaadfd88a25bd08775a5dcbde133a41bfd897ef92c03615ac8c",
+      "terminal": "failed.json",
+      "terminal_sha256": "559ed7175c55a67e08d3f46b3a5c80ea21013bb783759d2fc2569b6783d84018"
+    },
+    "dated-book-amended-20260911": {
+      "claim_sha256": "df9a32ba15e70f815e9a4e0dc3c412e993add9e2c1c4371941bbee43a54477c4",
+      "terminal": "complete.json",
+      "terminal_sha256": "575c607f4baa677d83b92523eb8c7d18db08fd180148a5f9765ba57394a39daa"
+    },
+    "dated-book-resource-correction-20260911": {
+      "claim_sha256": "b53f7e55fd6312b9c33cf944a701abc2f0722c4353471134578ab2306e0466a7",
+      "terminal": "failed.json",
+      "terminal_sha256": "2733fc66a7a12d00d8dc385894925a5e4948d0fc3a7a764c2c81ec2f2d3cff40"
+    }
+  },
+  "consumed_amendment": {
+    "experiment_id": "dated-book-amended-20260911",
+    "certificate": {
+      "path": "research/strategy-search-2026-09-11/dated-amendment-certificate.json",
+      "sha256": "2bea921038cc032e3b76838cc7223a443f6c97aaa0e1bf840afbc0c381d8fa19"
+    }
+  },
+  "review": {
+    "path": "research/strategy-search-2026-09-11/dated-extension-approval.json",
+    "sha256": "10f689249cf8a454a9c78d408a7fd1429d0ec40ee14792fd7a94ba75f5daa253"
+  },
+  "preflight": {
+    "path": "research/strategy-search-2026-09-11/dated-extension-preflight.json",
+    "sha256": "3f511a2e2c7aed04345c08c901150b21cbe7bf8412f3f4ce2b21472007a95ac8"
+  },
+  "change_manifest": {
+    "path": "research/strategy-search-2026-09-11/dated-extension-changes.json",
+    "sha256": "3d679e8fecffb6b5bb7c2be22e6ea38ccfd7143bbe753925fc9d4f8ef241e36f"
+  }
+}

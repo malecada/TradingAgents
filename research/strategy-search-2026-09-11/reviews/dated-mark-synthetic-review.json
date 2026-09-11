@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "independent_scenarios": 22,
+  "checks": [
+    "complete_zero_ignored_fields",
+    "ignored_fields_do_not_become_trade_activity",
+    "one_missing_day",
+    "duplicate_first_day",
+    "all_reversed_order_not_global_admission",
+    "unexpected_next_day",
+    "fractional_clock",
+    "string_clock",
+    "boolean_clock",
+    "close_one_ms_late",
+    "zero_price",
+    "exact_high_below_close",
+    "exact_low_above_open",
+    "nonfinite_price",
+    "exponent_outside",
+    "coefficient_outside",
+    "exact256KiB_valid_body",
+    "overflow_bounded_prefix",
+    "denial_suppresses_second_preserves112",
+    "deeply_nested_json",
+    "nonfinite_ignored_json",
+    "large_malformed_projection"
+  ],
+  "source_sha256": "2853d70b6f28fd653c96b4c1cd07eb5484e437f6ea61c2c392f966e65f3c1bf9",
+  "transport_sha256": "3639602d77274ec829360acd06561c4cadca28d0a07ea693f4e2d55c9fe7569a",
+  "scope": "Invented bytes only. Independently specified UTC day grid, OHLC boundary expectations and fixed output/slot/hash conservation; no actual dateset bodies, network or ResearchRun."
+}
