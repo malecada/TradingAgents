@@ -117,10 +117,33 @@ Independent source/privacy reconstruction passed; Decision15 finalized. First
 13-byteCSVline has one unrecognized field, no admitted ID/timefield; no following
 bytes read or text published.
 Do not rerun, widen paths or read content. Commit/push/remotely verify result
-backup. This spends the thirdinitialMAProw8
+backup. News results were subsequently committed/pushed as
+44a4b9c8051074cadd76efe16c8e3607275ae61d and remote equality verified.
+This spends the thirdinitialMAProw8
 question after twoWBETH questions, not a fresh alpha budget.
 A distinct third/final triangle streaming-observation question has a primary
-documentary design and is in synthetic implementation. No live stream opened.
+documentary design and is in synthetic implementation/review. No live stream
+opened. Before freeze, exact rational factor/size qualification fixes a float
+parity counterexample; helper float values remain diagnostic, original unchanged.
+32rawchunks/35outputs/9topcells/43,200subslots,540capture+60finalize seconds,
+512MiB2CPU undernewtriangle_stream_guard.py reusing unchangedv2guard.
+Final stream independent review PASS: gatece6e02d9f789fac3cb289fa6371327c6d7403975ec1b32001ec27bd60be652cd,
+source6670aa4962d781c93b8cb674655e33d1172dd07faaed17120363da69fb89383b.
+23focused synthetic checks,40independent Fraction cases/chronology andthree
+exact full/rawcap/chunkcap lifecycle preflights pass (max155,254,784RSS,
+3.5385secfinalization). All35outputs/9topcells/43,200subslots reconciled.
+Commit/push/remotely verify source, then execute this identity exactlyonce.
+Do not inspect conversion outcomes until capture closes. Ifactiveclaim exists,
+inspectprocess/receipt first; no restart/retry. Afterfinish independentsubstantive
+review+receiptverify, decision/findings/state andverifiedbranchbackup.
+
+A further specific affordable options gap was identified: current minimum-lot
+option-entry component/visible-size requirements, separate from oldEOHsemantics.
+reviews/options-prospective-{gap,design}.md and draftoptions-entry-charter.md
+propose7requests plus8componentcases; no actualquotes/selection performed.
+Third/finaloptionsallowance only; fullhedgedaccountaffordability remainsunknown.
+Finalize schema/resource/selection design and implement/test/review/register
+before currentquotes, after or alongside triangle preparation.
 The existing value_rev second vintage cannot mature before September18. Preserve
 original data and all prior claims. Continue useful eligible questions.
 Options historical economics remains deferred for field/clock/contract semantics,
