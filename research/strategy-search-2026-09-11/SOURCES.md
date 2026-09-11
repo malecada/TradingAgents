@@ -35,3 +35,23 @@ the independent review; present sampling semantics remain unestablished.
 Bitrue dated products and account applicability remain unverified. Retained
 [September 10 source receipts](../../docs/carry-feasibility-2026-09-10/SOURCES.md)
 provide historical documentation evidence, not current private commissions.
+
+## Breadth source review after Decision 01
+
+Independent documentation review, September 11, 2026; no market requests.
+
+| Mechanism | Official source and established field | Missing/admission boundary |
+|---|---|---|
+| Dated/calendar | Public-data README documents UM/CM trades/klines and checksums; futures market API has quarterly continuous series | Exact expiry archive, historical executable spread and settlement still unverified; continuous series cannot represent a held contract |
+| Options | [Market API](https://developers.binance.com/en/docs/catalog/core-trading-derivatives-trading-options/api/rest-api/market-data): exchangeInfo expiry/unit/minQty/filters/margin/nakedSell; exerciseHistory and current books | Examples are not current lot limits; no complete historical bid/ask chain archive established; exercise history insufficient for entry premiums |
+| Options fees | [Fee FAQ](https://www.binance.com/en/support/faq/detail/5326e5de61c34fed98abe28d2f175a23), updated March 6, 2026, displays 0.024%; [introduction](https://www.binance.com/en-AE/support/faq/detail/374321c9317c473480243365298b8706) displays 0.02% | Documentation conflict; applicable entity/fee basis/cap must be settled before a cash book; no account permission inferred |
+| Bitrue delivery | [Delivery API](https://www.bitrue.com/api_docs_includes_file/delivery/index.html): contracts multiplier/minOrderVolume/minOrderMoney; klines maximum 300 | URL label does not establish fixed-expiry products; expiry fields, retention and settlement history missing; example/prose timestamp units conflict |
+| Spot triangles | [Spot filters](https://developers.binance.com/en/docs/products/spot/filters): lot/market-lot/step and notional filters per leg | Three fees, rounding/dust, asynchronous snapshots, partial fills and residual inventory; no atomic fills established |
+| Convert | [Trade API](https://developers.binance.com/en/docs/catalog/core-trading-convert/api/rest-api/trade): getQuote is signed TRADE and sufficient funds required for quoteId | Authenticated empirical route outside no-credentials scope; do not transfer Convert guarantees to public spot books |
+| Staking/WBETH | [ETH staking FAQ](https://www.binance.com/en-GB/earn-faq/light/eth-staking/faq) describes reward conversion ratio, quota and variable redemption; [API](https://developers.binance.com/en/docs/catalog/investment-and-services-staking/api/rest-api/eth-staking) marks rate/quota history USER_DATA | Historical public ratio and redemption waiting-time history not admitted; current APR/example redemption duration cannot be historical observation |
+
+The [January 5, 2026 options specifications](https://bin.bnbstatic.com/static/cms/cg08ou2ak0tn7mcplvfg/file/443bcc67fde7274898ff8e3f7af23c7d89e654c5e609d250772e0ddaa96409be.pdf)
+describe European USDT settlement and BTC/ETH unit 1, conditional short-selling
+eligibility and margin. Exact legal/entity and clearing applicability remain
+unverified. Public contract metadata and minimum-lot capital calculations are an
+affordable distinct investigation; no option payoff has yet been evaluated.

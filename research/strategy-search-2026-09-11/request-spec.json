@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "window": [
+    "2026-04-01T00:00:00Z",
+    "2026-07-01T00:00:00Z"
+  ],
+  "max_requests": 10,
+  "timeout_seconds_per_request": 20,
+  "max_response_bytes": 5242880,
+  "requests": [
+    {
+      "id": "btc-funding",
+      "kind": "funding",
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate",
+      "parameters": {
+        "symbol": "BTCUSDT",
+        "startTime": 1775001600000,
+        "endTime": 1782863999999,
+        "limit": 1000
+      }
+    },
+    {
+      "id": "eth-funding",
+      "kind": "funding",
+      "url": "https://fapi.binance.com/fapi/v1/fundingRate",
+      "parameters": {
+        "symbol": "ETHUSDT",
+        "startTime": 1775001600000,
+        "endTime": 1782863999999,
+        "limit": 1000
+      }
+    },
+    {
+      "id": "btc-spot",
+      "kind": "spot",
+      "url": "https://api.binance.com/api/v3/klines",
+      "parameters": {
+        "symbol": "BTCUSDT",
+        "startTime": 1775001600000,
+        "endTime": 1782863999999,
+        "limit": 1000,
+        "interval": "1d"
+      }
+    },
+    {
+      "id": "eth-spot",
+      "kind": "spot",
+      "url": "https://api.binance.com/api/v3/klines",
+      "parameters": {
+        "symbol": "ETHUSDT",
+        "startTime": 1775001600000,
+        "endTime": 1782863999999,
+        "limit": 1000,
+        "interval": "1d"
+      }
+    },
+    {
+      "id": "btc-perp",
+      "kind": "perp",
+      "url": "https://fapi.binance.com/fapi/v1/klines",
+      "parameters": {
+        "symbol": "BTCUSDT",
+        "startTime": 1775001600000,
+        "endTime": 1782863999999,
+        "limit": 1000,
+        "interval": "1d"
+      }
+    },
+    {
+      "id": "eth-perp",
+      "kind": "perp",
+      "url": "https://fapi.binance.com/fapi/v1/klines",
+      "parameters": {
+        "symbol": "ETHUSDT",
+        "startTime": 1775001600000,
+        "endTime": 1782863999999,
+        "limit": 1000,
+        "interval": "1d"
+      }
+    },
+    {
+      "id": "btc-mark",
+      "kind": "mark",
+      "url": "https://fapi.binance.com/fapi/v1/markPriceKlines",
+      "parameters": {
+        "symbol": "BTCUSDT",
+        "startTime": 1775001600000,
+        "endTime": 1782863999999,
+        "limit": 1000,
+        "interval": "1d"
+      }
+    },
+    {
+      "id": "eth-mark",
+      "kind": "mark",
+      "url": "https://fapi.binance.com/fapi/v1/markPriceKlines",
+      "parameters": {
+        "symbol": "ETHUSDT",
+        "startTime": 1775001600000,
+        "endTime": 1782863999999,
+        "limit": 1000,
+        "interval": "1d"
+      }
+    },
+    {
+      "id": "exchange-info",
+      "kind": "exchange-info",
+      "url": "https://fapi.binance.com/fapi/v1/exchangeInfo",
+      "parameters": {}
+    },
+    {
+      "id": "server-time",
+      "kind": "server-time",
+      "url": "https://fapi.binance.com/fapi/v1/time",
+      "parameters": {}
+    }
+  ]
+}
