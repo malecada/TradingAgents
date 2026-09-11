@@ -64,17 +64,24 @@ registered denominator or repair/rerun the frozen engine. All qualified counts a
 the measurement defect. Results are ready for verified backup. The expected next
 investigation remains options.
 
-options-entry-20260911 is under synthetic implementation and independent design
-review; no actual new options quote, index, mark or selection has run. Root owns
+options-entry-20260911 final source/gate review PASS; no actual new options quote, index, mark or selection has run. Root owns
 options-entry-charter.md, options_entry_guard.py, specification/observation/gate;
 carry_diagnostic owns options_entry.py, options_entry_transport.py and focused
 tests. Proposed seven source slots and eight component cases, ten outputs,
 256KiB/request,180second capture/240second hardwall,512MiB2CPU. This is the final
 new options allowance, not a volatility-return or full-account-affordability
-claim. Complete synthetic exact-lifecycle preflight and independent source/gate
-review; commit/push/remote-equality freeze before the sole empirical run.
+claim. 31focused synthetic tests,28independent Fraction cases/140exact assertions,
+7selection checks and two exactguarded lifecycle preflights pass. Gate
+54d47d9c295a9b91a65b60af8ec16df07ef53554daa277f1f55066c15d5db3ad pins
+source89b361580dead7236b1744af05a2729deda5111343e25d9da7974b775fa15487.
+Commit/push/remote-equality freeze before the sole empirical run.
 
-A separate independent all-eight-family coverage audit is in progress. Initial
+The independent coverage audit identifies an eligible dated/perpetual spread
+question after options. Draft dated-mark-charter.md proposes two fixed daily-mark
+source requests; existing trade/funding sources also permit a narrower cash
+diagnostic with margin unverified. A separate explicit cumulative extension is
+needed; the consumedrepair+1 cannot be reused. No new dated claim is admitted.
+Initial
 caps alone do not establish exhaustion. Existing value_rev needs its second
 vintage on September18 or later; no early replay or renamed sample. News needs
 actual versioned source identity/observation clocks. Historical EOH fields and
@@ -87,8 +94,11 @@ Prior independently reviewed results backed up and remotely verified:
 dated99445a558dde0607e4563aed0759954693bd475c;
 WBETH001565a83fde4837a4ab75aa66c2d70046b8baec;
 news44a4b9c8051074cadd76efe16c8e3607275ae61d.
-Current HEAD is the verified triangle source freeze71234f87d4221e8849f130dfb3e62824d700f0df;
-triangle results await completed independent review and backup.
+Triangle source freeze was71234f87d4221e8849f130dfb3e62824d700f0df.
+Triangle results were committed/pushed as1f2866598ab15970365b985fb706c43c5c20d56a;
+remote equality was independently queried. Named offline verification now passes
+1,175 tests and20subtests across the reviewed66module profile;75legacy/unreviewed
+encountered files remain withheld. This is engineering validation only.
 Preserve raw stores, original worktrees, old gates/ledgers and22deferred settlement
 cases. Never read credentials, trade, contact providers or mutate production.
 Continue each justified eligible action; context checkpoints mean incomplete.

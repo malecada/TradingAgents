@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "experiment": "options-entry-20260911",
+  "requests": [
+    {
+      "id": "options-time",
+      "kind": "time",
+      "endpoint": "https://eapi.binance.com/eapi/v1/time",
+      "parameters": {}
+    },
+    {
+      "id": "btc-index",
+      "kind": "index",
+      "asset": "BTC",
+      "endpoint": "https://eapi.binance.com/eapi/v1/index",
+      "parameters": {
+        "underlying": "BTCUSDT"
+      }
+    },
+    {
+      "id": "eth-index",
+      "kind": "index",
+      "asset": "ETH",
+      "endpoint": "https://eapi.binance.com/eapi/v1/index",
+      "parameters": {
+        "underlying": "ETHUSDT"
+      }
+    },
+    {
+      "id": "btc-depth",
+      "kind": "depth",
+      "asset": "BTC",
+      "endpoint": "https://eapi.binance.com/eapi/v1/depth",
+      "parameters": {
+        "symbol": "SELECTED_BTC",
+        "limit": 10
+      }
+    },
+    {
+      "id": "eth-depth",
+      "kind": "depth",
+      "asset": "ETH",
+      "endpoint": "https://eapi.binance.com/eapi/v1/depth",
+      "parameters": {
+        "symbol": "SELECTED_ETH",
+        "limit": 10
+      }
+    },
+    {
+      "id": "btc-mark",
+      "kind": "mark",
+      "asset": "BTC",
+      "endpoint": "https://eapi.binance.com/eapi/v1/mark",
+      "parameters": {
+        "symbol": "SELECTED_BTC"
+      }
+    },
+    {
+      "id": "eth-mark",
+      "kind": "mark",
+      "asset": "ETH",
+      "endpoint": "https://eapi.binance.com/eapi/v1/mark",
+      "parameters": {
+        "symbol": "SELECTED_ETH"
+      }
+    }
+  ],
+  "max_requests": 7,
+  "timeout_seconds": 20,
+  "capture_seconds": 180,
+  "server_clock_tolerance_ms": 5000,
+  "max_response_bytes": 262144,
+  "max_output_bytes": 12582912,
+  "max_projection_bytes": 524288,
+  "clock_policy": "positive int64 clocks; nonnegative int64 update IDs",
+  "numeric_characters": 64,
+  "numeric_adjusted_exponent": [
+    -32,
+    32
+  ],
+  "selection_days": [
+    7,
+    30,
+    45
+  ],
+  "capital_usdt": [
+    1000,
+    10000
+  ],
+  "fee_rates": [
+    "0.00024",
+    "0.00030"
+  ],
+  "selection_ties": [
+    "earlier_expiry",
+    "lower_strike",
+    "lexical_symbol"
+  ],
+  "missing_status": "unverified_public_representative_only"
+}
