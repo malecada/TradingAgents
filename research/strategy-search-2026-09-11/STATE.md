@@ -17,6 +17,7 @@ Completed once, with independent substantive and receipt reviews:
 | triangle-inputs-20260911 | 6 / 0 | Fixed contract/time/ticker/depth source schemas pass; no conversion calculation. |
 | triangle-proxy-20260911 | 8 / 0 | Tiny positive gross discrepancy in one direction; assumed fees make both directions negative. |
 | bitrue-metadata-20260911 | 2 / 0 | All 755 contract rows retained; fixed BTC/ETH targets match conditional metadata rules. |
+| wbeth-inputs-20260911 | 2 / 0 | Current metadata and 91 exact Q2 daily bars admitted, no zero-activity day. |
 
 Execution sources respectively: `d3ba86924bd8711704fc80fd771a0e717cc9bb51`,
 `8cac1b361ecc96e5bd6f2ab0fa43bf51b1524ec4`,
@@ -67,18 +68,24 @@ One of three new venue questions used. Historical venue economics is deferred
 for settled funding events/marks, current fees and account applicability; a
 current-index poll would not resolve that dependency.
 
-Next: implement and independently review the bounded dated-budget amendment
-successor/certificate route approved for engineering only in
-reviews/dated-amendment-information-value.md. Original runtime, family base cap,
-failed claims, economic code and inputs remain immutable. Exactly one named
-child dated-book-amended-20260911 is proposed, parent
- dated-book-resource-correction-20260911; no new dated run or certificate is
-admitted yet. Root owns the future certificate/gate/charter and amended runner;
-worker owns tradingagents/research_amended and synthetic tests. The WBETH source gate is frozen at gates-wbeth-inputs.json with independent
-22-test maximum-payload/lifecycle review; it has not run. Execute once after
-current HEAD commit/push/remote equality while the dated final certificate is
-reviewed. It measures metadata and 91-day bar validity only. A pure WBETH
-market-value book is in synthetic implementation, no financial gate or outcomes.
+WBETH sources completed from ea63d7b1aa9176faeddd7640eef09af1a2bdecc5,
+pushed/remotely verified before acquisition; independent raw/schema review and
+receipt verification pass. Decision 12 retains market-value hedge limits. One
+of three WBETH investigations used; no financial WBETH book has run.
+
+Next: execute dated-book-amended-20260911 ONCE through research_amended after
+current source commit/push/remote equality and metadata admission. Final
+certificate 2bea921038cc032e3b76838cc7223a443f6c97aaa0e1bf840afbc0c381d8fa19,
+gate cc5e0458ccf4c51a545e9f9c1ac59f94e2241134bd77573129c4917dce1b66ae,
+approval and independent final review pass. Original runtime, family cap4,
+three prior dated claims and all economic code/inputs are unchanged. The separate
+one-target +1 certificate preserves total maximum5 and consumes even a failure.
+Target is dated-book-amended-20260911, parent dated-book-resource-correction-20260911.
+Use new runner dated_book_amended.py under v2 guard; exact full synthetic CLI/HAC
+preflight passed. No actual amended run exists yet. Independently reconstruct
+actual eight-case cashflow/statistics after completion, then decision and backup.
+In parallel a WBETH pure market-value book is in synthetic implementation; its
+separate financial charter/gate and source review must precede actual arithmetic.
 Options historical economics remains deferred for field/clock/contract semantics,
 with one new options investigation remaining. Meaningful affordable gaps remain.
 Commit/push and verify remote equality at each freeze and results checkpoint.

@@ -7049,3 +7049,15 @@ events/marks, current fees, time semantics and account applicability remain
 unavailable. Decision 11 defers the historical cross-venue book and advances
 the narrow dated-amendment engineering and WBETH contractual-source questions.
 No rate differential or profit was calculated.
+
+## 109. WBETH source prerequisite and exact dated amendment (2026-09-11)
+
+Two registered WBETH source requests passed independent verification: current
+metadata and 91 complete Q2 daily bars, with no zero-activity day. This supports
+a separately registered market-value hedge diagnostic, not guaranteed fills,
+contractual delta neutrality or validator-yield attribution. Decision 12 retains
+the spent ETH ancestry and one of three new WBETH investigations used. The
+separate dated amendment has passed final independent review for exactly one
+unchanged economic attempt: original cap, all three prior claims and source
+bytes remain preserved, with an explicit +1 certificate and guarded synthetic
+full-run proof. Neither preparation establishes a strategy result.

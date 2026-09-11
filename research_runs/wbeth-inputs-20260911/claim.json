@@ -1,0 +1,156 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "ea63d7b1aa9176faeddd7640eef09af1a2bdecc5",
+  "experiment": {
+    "cells": [
+      "wbeth-exchange-info",
+      "wbeth-spot"
+    ],
+    "charter": {
+      "path": "research/strategy-search-2026-09-11/wbeth-inputs-charter.md",
+      "sha256": "a7b9667f8c5ad99bad06671fc05e4d0c6d60db356d69bcce74f2ea334b306a1a"
+    },
+    "family": "wbeth-linked-value",
+    "inputs": {
+      "request_spec": {
+        "dataset": "wbeth-source-definition",
+        "path": "research/strategy-search-2026-09-11/wbeth-request-spec.json",
+        "sha256": "0e78e138fc1541438b3112b30ac68771fad4960742238edc58934d88fe9dacb8"
+      }
+    },
+    "outputs": [
+      "wbeth-exchange-info-receipt.json",
+      "wbeth-spot-receipt.json",
+      "wbeth-capture.json",
+      "wbeth-admission.json"
+    ],
+    "parent": null,
+    "question": "Can exact WBETHUSDT current metadata and91fixed2026Q2 dailybars pass source admission for a later market-value hedge diagnostic? No return or staking attribution.",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+      "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+    },
+    "selection": null,
+    "source_files": {
+      "research/strategy-search-2026-09-11/carry_capture.py": "323ea01ac0d8137288e6f72f697101db1884595e876622402c321f38367d6b12",
+      "research/strategy-search-2026-09-11/options_metadata.py": "d95c6a68edf987db3112d01e6aa74883488f02077970681fa2c7a1154e02c48f",
+      "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+      "research/strategy-search-2026-09-11/wbeth-source-definition-observation.json": "0de5d47b64f1a3307fde7258e627d722e64bb337fea06c03ede458f0d9e5fdbf",
+      "research/strategy-search-2026-09-11/wbeth_inputs.py": "049cad5ef286188f43c8b24f157f9c6f89ae2425a0dc4e2f024a5e643f0cb44a",
+      "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+    },
+    "stage": "development",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "wbeth-source-definition",
+        "end": "2026-09-11T09:30:47.099983+00:00",
+        "start": "2026-09-11T09:30:47.099732+00:00"
+      }
+    ]
+  },
+  "experiment_id": "wbeth-inputs-20260911",
+  "family": {
+    "attempt_budget": 3,
+    "history_reference": "research/strategy-search-2026-09-11/HISTORY.md and reviews/wbeth-linked-value-source.md; no known exact WBETH gate in five retained gatefiles, not zero prior staking/relative-value/funding search; PRX/DEX-ratio/carry failures and incomplete multiplicity retained. Three new administrative questions also charged to MAP rows3/8.",
+    "mechanism_id": "binance-wbeth-spot-eth-perpetual-fixed-market-value-hedge",
+    "prior_attempts": 0
+  },
+  "inputs": {
+    "request_spec": {
+      "dataset": "wbeth-source-definition",
+      "path": "research/strategy-search-2026-09-11/wbeth-request-spec.json",
+      "sha256": "0e78e138fc1541438b3112b30ac68771fad4960742238edc58934d88fe9dacb8"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2025-03-31T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2021-11-08T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-spot-perpetual-carry-history",
+      "start": "2025-04-01T00:00:00Z",
+      "state": "spent"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-btc-eth-usdt-260626-contract-history",
+      "start": "2025-12-26T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:38:02.442471+00:00",
+      "identity": "binance-options-request-definition-20260911",
+      "start": "2026-09-11T08:38:02.442372+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:59:38.161767+00:00",
+      "identity": "binance-eoh-request-definition-20260911",
+      "start": "2026-09-11T08:59:38.161697+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2025-04-01T00:00:00Z",
+      "identity": "binance-btc-eoh-option-summary-history",
+      "start": "2022-06-01T00:00:00Z",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T08:59:38.166591+00:00",
+      "identity": "binance-triangle-request-definition-20260911",
+      "start": "2026-09-11T08:59:38.166552+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T09:10:29.052054+00:00",
+      "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+      "start": "2026-09-11T09:10:25.404644+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T09:12:21.519683+00:00",
+      "identity": "bitrue-contract-request-definition-20260911",
+      "start": "2026-09-11T09:12:21.519513+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-11T09:30:47.099983+00:00",
+      "identity": "binance-wbeth-source-definition-20260911",
+      "start": "2026-09-11T09:30:47.099732+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-07-01T00:00:00Z",
+      "identity": "binance-wbeth-usdt-spot-market-history",
+      "start": "2026-04-01T00:00:00Z",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "strategy-search-2026-09-11",
+  "registration": "research/strategy-search-2026-09-11/gates-wbeth-inputs.json",
+  "registration_sha256": "38f0038210d7e368c7bf807473500f1accb723c9741b2ef7e322cb6fa1a0d4ea",
+  "schema_version": 1,
+  "source": "ea63d7b1aa9176faeddd7640eef09af1a2bdecc5",
+  "started_at": "2026-09-11T09:39:01.796185+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "wbeth-source-definition",
+      "end": "2026-09-11T09:30:47.099983+00:00",
+      "identity": "binance-wbeth-source-definition-20260911",
+      "start": "2026-09-11T09:30:47.099732+00:00",
+      "state": "exposed"
+    }
+  ]
+}
