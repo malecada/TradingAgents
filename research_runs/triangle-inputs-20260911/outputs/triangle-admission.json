@@ -1,0 +1,1688 @@
+{
+  "cells": [
+    {
+      "additional_metadata": {
+        "exchangeFilters": [],
+        "rateLimits": [
+          {
+            "interval": "MINUTE",
+            "intervalNum": 1,
+            "limit": 6000,
+            "rateLimitType": "REQUEST_WEIGHT"
+          },
+          {
+            "interval": "SECOND",
+            "intervalNum": 10,
+            "limit": 100,
+            "rateLimitType": "ORDERS"
+          },
+          {
+            "interval": "DAY",
+            "intervalNum": 1,
+            "limit": 200000,
+            "rateLimitType": "ORDERS"
+          },
+          {
+            "interval": "MINUTE",
+            "intervalNum": 5,
+            "limit": 300000,
+            "rateLimitType": "RAW_REQUESTS"
+          }
+        ],
+        "serverTime": 1789117825606,
+        "timezone": "UTC"
+      },
+      "filter_interpretation": {
+        "BTCUSDT": {
+          "missing_relevant_filters": [],
+          "observed_filter_types": [
+            "PRICE_FILTER",
+            "LOT_SIZE",
+            "ICEBERG_PARTS",
+            "MARKET_LOT_SIZE",
+            "TRAILING_DELTA",
+            "PERCENT_PRICE_BY_SIDE",
+            "NOTIONAL",
+            "MAX_NUM_ORDERS",
+            "MAX_NUM_ORDER_LISTS",
+            "MAX_NUM_ALGO_ORDERS",
+            "MAX_NUM_ORDER_AMENDS"
+          ],
+          "reason": "Actual lot/notional/market-order filter interpretation and personal access are not admitted.",
+          "status": "unavailable"
+        },
+        "ETHBTC": {
+          "missing_relevant_filters": [],
+          "observed_filter_types": [
+            "PRICE_FILTER",
+            "LOT_SIZE",
+            "ICEBERG_PARTS",
+            "MARKET_LOT_SIZE",
+            "TRAILING_DELTA",
+            "PERCENT_PRICE_BY_SIDE",
+            "NOTIONAL",
+            "MAX_NUM_ORDERS",
+            "MAX_NUM_ORDER_LISTS",
+            "MAX_NUM_ALGO_ORDERS",
+            "MAX_NUM_ORDER_AMENDS"
+          ],
+          "reason": "Actual lot/notional/market-order filter interpretation and personal access are not admitted.",
+          "status": "unavailable"
+        },
+        "ETHUSDT": {
+          "missing_relevant_filters": [],
+          "observed_filter_types": [
+            "PRICE_FILTER",
+            "LOT_SIZE",
+            "ICEBERG_PARTS",
+            "MARKET_LOT_SIZE",
+            "TRAILING_DELTA",
+            "PERCENT_PRICE_BY_SIDE",
+            "NOTIONAL",
+            "MAX_NUM_ORDERS",
+            "MAX_NUM_ORDER_LISTS",
+            "MAX_NUM_ALGO_ORDERS",
+            "MAX_NUM_ORDER_AMENDS"
+          ],
+          "reason": "Actual lot/notional/market-order filter interpretation and personal access are not admitted.",
+          "status": "unavailable"
+        }
+      },
+      "id": "triangle-exchange-info",
+      "pair_availability": "conditional current metadata only",
+      "scope": "Asynchronously observed public inputs only; no cross-source alignment, fills, fees, cash profit or graduation.",
+      "status": "complete",
+      "symbols": {
+        "BTCUSDT": {
+          "allowTrailingStop": true,
+          "allowedSelfTradePreventionModes": [
+            "EXPIRE_TAKER",
+            "EXPIRE_MAKER",
+            "EXPIRE_BOTH",
+            "DECREMENT",
+            "TRANSFER"
+          ],
+          "amendAllowed": true,
+          "baseAsset": "BTC",
+          "baseAssetPrecision": 8,
+          "baseCommissionPrecision": 8,
+          "cancelReplaceAllowed": true,
+          "defaultSelfTradePreventionMode": "EXPIRE_MAKER",
+          "filters": [
+            {
+              "filterType": "PRICE_FILTER",
+              "maxPrice": "1000000.00000000",
+              "minPrice": "0.01000000",
+              "tickSize": "0.01000000"
+            },
+            {
+              "filterType": "LOT_SIZE",
+              "maxQty": "9000.00000000",
+              "minQty": "0.00001000",
+              "stepSize": "0.00001000"
+            },
+            {
+              "filterType": "ICEBERG_PARTS",
+              "limit": 100
+            },
+            {
+              "filterType": "MARKET_LOT_SIZE",
+              "maxQty": "137.39239104",
+              "minQty": "0.00000000",
+              "stepSize": "0.00000000"
+            },
+            {
+              "filterType": "TRAILING_DELTA",
+              "maxTrailingAboveDelta": 2000,
+              "maxTrailingBelowDelta": 2000,
+              "minTrailingAboveDelta": 10,
+              "minTrailingBelowDelta": 10
+            },
+            {
+              "askMultiplierDown": "0.8",
+              "askMultiplierUp": "2",
+              "avgPriceMins": 5,
+              "bidMultiplierDown": "0.5",
+              "bidMultiplierUp": "1.2",
+              "filterType": "PERCENT_PRICE_BY_SIDE"
+            },
+            {
+              "applyMaxToMarket": false,
+              "applyMinToMarket": true,
+              "avgPriceMins": 5,
+              "filterType": "NOTIONAL",
+              "maxNotional": "9000000.00000000",
+              "minNotional": "5.00000000"
+            },
+            {
+              "filterType": "MAX_NUM_ORDERS",
+              "maxNumOrders": 200
+            },
+            {
+              "filterType": "MAX_NUM_ORDER_LISTS",
+              "maxNumOrderLists": 20
+            },
+            {
+              "filterType": "MAX_NUM_ALGO_ORDERS",
+              "maxNumAlgoOrders": 5
+            },
+            {
+              "filterType": "MAX_NUM_ORDER_AMENDS",
+              "maxNumOrderAmends": 10
+            }
+          ],
+          "icebergAllowed": true,
+          "isMarginTradingAllowed": true,
+          "isSpotTradingAllowed": true,
+          "ocoAllowed": true,
+          "opoAllowed": true,
+          "orderTypes": [
+            "LIMIT",
+            "LIMIT_MAKER",
+            "MARKET",
+            "STOP_LOSS",
+            "STOP_LOSS_LIMIT",
+            "TAKE_PROFIT",
+            "TAKE_PROFIT_LIMIT"
+          ],
+          "otoAllowed": true,
+          "pegInstructionsAllowed": true,
+          "permissionSets": [
+            [
+              "SPOT",
+              "MARGIN",
+              "TRD_GRP_004",
+              "TRD_GRP_005",
+              "TRD_GRP_006",
+              "TRD_GRP_015",
+              "TRD_GRP_016",
+              "TRD_GRP_017",
+              "TRD_GRP_018",
+              "TRD_GRP_019",
+              "TRD_GRP_020",
+              "TRD_GRP_021",
+              "TRD_GRP_022",
+              "TRD_GRP_023",
+              "TRD_GRP_024",
+              "TRD_GRP_025",
+              "TRD_GRP_049",
+              "TRD_GRP_050",
+              "TRD_GRP_051",
+              "TRD_GRP_052",
+              "TRD_GRP_053",
+              "TRD_GRP_054",
+              "TRD_GRP_055",
+              "TRD_GRP_056",
+              "TRD_GRP_057",
+              "TRD_GRP_058",
+              "TRD_GRP_059",
+              "TRD_GRP_060",
+              "TRD_GRP_061",
+              "TRD_GRP_062",
+              "TRD_GRP_063",
+              "TRD_GRP_064",
+              "TRD_GRP_065",
+              "TRD_GRP_066",
+              "TRD_GRP_067",
+              "TRD_GRP_068",
+              "TRD_GRP_069",
+              "TRD_GRP_070",
+              "TRD_GRP_071",
+              "TRD_GRP_072",
+              "TRD_GRP_073",
+              "TRD_GRP_074",
+              "TRD_GRP_075",
+              "TRD_GRP_076",
+              "TRD_GRP_077",
+              "TRD_GRP_078",
+              "TRD_GRP_079",
+              "TRD_GRP_080",
+              "TRD_GRP_081",
+              "TRD_GRP_082",
+              "TRD_GRP_083",
+              "TRD_GRP_084",
+              "TRD_GRP_085",
+              "TRD_GRP_086",
+              "TRD_GRP_087",
+              "TRD_GRP_088",
+              "TRD_GRP_089",
+              "TRD_GRP_090",
+              "TRD_GRP_091",
+              "TRD_GRP_092",
+              "TRD_GRP_093",
+              "TRD_GRP_094",
+              "TRD_GRP_095",
+              "TRD_GRP_096",
+              "TRD_GRP_097",
+              "TRD_GRP_098",
+              "TRD_GRP_099",
+              "TRD_GRP_100",
+              "TRD_GRP_101",
+              "TRD_GRP_102",
+              "TRD_GRP_103",
+              "TRD_GRP_104",
+              "TRD_GRP_105",
+              "TRD_GRP_106",
+              "TRD_GRP_107",
+              "TRD_GRP_108",
+              "TRD_GRP_109",
+              "TRD_GRP_110",
+              "TRD_GRP_111",
+              "TRD_GRP_112",
+              "TRD_GRP_113",
+              "TRD_GRP_114",
+              "TRD_GRP_115",
+              "TRD_GRP_116",
+              "TRD_GRP_117",
+              "TRD_GRP_118",
+              "TRD_GRP_119",
+              "TRD_GRP_120",
+              "TRD_GRP_121",
+              "TRD_GRP_122",
+              "TRD_GRP_123",
+              "TRD_GRP_124",
+              "TRD_GRP_125",
+              "TRD_GRP_126",
+              "TRD_GRP_127",
+              "TRD_GRP_128",
+              "TRD_GRP_129",
+              "TRD_GRP_130",
+              "TRD_GRP_131",
+              "TRD_GRP_132",
+              "TRD_GRP_133",
+              "TRD_GRP_134",
+              "TRD_GRP_135",
+              "TRD_GRP_136",
+              "TRD_GRP_137",
+              "TRD_GRP_138",
+              "TRD_GRP_139",
+              "TRD_GRP_140",
+              "TRD_GRP_141",
+              "TRD_GRP_142",
+              "TRD_GRP_143",
+              "TRD_GRP_144",
+              "TRD_GRP_145",
+              "TRD_GRP_146",
+              "TRD_GRP_147",
+              "TRD_GRP_148",
+              "TRD_GRP_149",
+              "TRD_GRP_150",
+              "TRD_GRP_151",
+              "TRD_GRP_152",
+              "TRD_GRP_153",
+              "TRD_GRP_154",
+              "TRD_GRP_155",
+              "TRD_GRP_156",
+              "TRD_GRP_157",
+              "TRD_GRP_158",
+              "TRD_GRP_159",
+              "TRD_GRP_160",
+              "TRD_GRP_161",
+              "TRD_GRP_162",
+              "TRD_GRP_163",
+              "TRD_GRP_164",
+              "TRD_GRP_165",
+              "TRD_GRP_166",
+              "TRD_GRP_167",
+              "TRD_GRP_168",
+              "TRD_GRP_169",
+              "TRD_GRP_170",
+              "TRD_GRP_171",
+              "TRD_GRP_172",
+              "TRD_GRP_173",
+              "TRD_GRP_174",
+              "TRD_GRP_175",
+              "TRD_GRP_176",
+              "TRD_GRP_177",
+              "TRD_GRP_178",
+              "TRD_GRP_179",
+              "TRD_GRP_180",
+              "TRD_GRP_181",
+              "TRD_GRP_182",
+              "TRD_GRP_183",
+              "TRD_GRP_184",
+              "TRD_GRP_185",
+              "TRD_GRP_186",
+              "TRD_GRP_187",
+              "TRD_GRP_188",
+              "TRD_GRP_189",
+              "TRD_GRP_190",
+              "TRD_GRP_191",
+              "TRD_GRP_192",
+              "TRD_GRP_193",
+              "TRD_GRP_194",
+              "TRD_GRP_195",
+              "TRD_GRP_196",
+              "TRD_GRP_197",
+              "TRD_GRP_198",
+              "TRD_GRP_199",
+              "TRD_GRP_200",
+              "TRD_GRP_201",
+              "TRD_GRP_202",
+              "TRD_GRP_203",
+              "TRD_GRP_204",
+              "TRD_GRP_205",
+              "TRD_GRP_206",
+              "TRD_GRP_207",
+              "TRD_GRP_208",
+              "TRD_GRP_209",
+              "TRD_GRP_210",
+              "TRD_GRP_211",
+              "TRD_GRP_212",
+              "TRD_GRP_213",
+              "TRD_GRP_214",
+              "TRD_GRP_215",
+              "TRD_GRP_216",
+              "TRD_GRP_217",
+              "TRD_GRP_218",
+              "TRD_GRP_219",
+              "TRD_GRP_220",
+              "TRD_GRP_221",
+              "TRD_GRP_222",
+              "TRD_GRP_223",
+              "TRD_GRP_224",
+              "TRD_GRP_225",
+              "TRD_GRP_226",
+              "TRD_GRP_227",
+              "TRD_GRP_228",
+              "TRD_GRP_229",
+              "TRD_GRP_230",
+              "TRD_GRP_231",
+              "TRD_GRP_232",
+              "TRD_GRP_233",
+              "TRD_GRP_234",
+              "TRD_GRP_235",
+              "TRD_GRP_236",
+              "TRD_GRP_237",
+              "TRD_GRP_238",
+              "TRD_GRP_239",
+              "TRD_GRP_240",
+              "TRD_GRP_242",
+              "TRD_GRP_243",
+              "TRD_GRP_244",
+              "TRD_GRP_245",
+              "TRD_GRP_246",
+              "TRD_GRP_247",
+              "TRD_GRP_248",
+              "TRD_GRP_249",
+              "TRD_GRP_250",
+              "TRD_GRP_251",
+              "TRD_GRP_252",
+              "TRD_GRP_253",
+              "TRD_GRP_256",
+              "TRD_GRP_258",
+              "TRD_GRP_259"
+            ]
+          ],
+          "permissions": [],
+          "quoteAsset": "USDT",
+          "quoteAssetPrecision": 8,
+          "quoteCommissionPrecision": 8,
+          "quoteOrderQtyMarketAllowed": true,
+          "quotePrecision": 8,
+          "status": "TRADING",
+          "symbol": "BTCUSDT"
+        },
+        "ETHBTC": {
+          "allowTrailingStop": true,
+          "allowedSelfTradePreventionModes": [
+            "EXPIRE_TAKER",
+            "EXPIRE_MAKER",
+            "EXPIRE_BOTH",
+            "DECREMENT",
+            "TRANSFER"
+          ],
+          "amendAllowed": true,
+          "baseAsset": "ETH",
+          "baseAssetPrecision": 8,
+          "baseCommissionPrecision": 8,
+          "cancelReplaceAllowed": true,
+          "defaultSelfTradePreventionMode": "EXPIRE_MAKER",
+          "filters": [
+            {
+              "filterType": "PRICE_FILTER",
+              "maxPrice": "922327.00000000",
+              "minPrice": "0.00001000",
+              "tickSize": "0.00001000"
+            },
+            {
+              "filterType": "LOT_SIZE",
+              "maxQty": "100000.00000000",
+              "minQty": "0.00010000",
+              "stepSize": "0.00010000"
+            },
+            {
+              "filterType": "ICEBERG_PARTS",
+              "limit": 100
+            },
+            {
+              "filterType": "MARKET_LOT_SIZE",
+              "maxQty": "1384.65497208",
+              "minQty": "0.00000000",
+              "stepSize": "0.00000000"
+            },
+            {
+              "filterType": "TRAILING_DELTA",
+              "maxTrailingAboveDelta": 2000,
+              "maxTrailingBelowDelta": 2000,
+              "minTrailingAboveDelta": 10,
+              "minTrailingBelowDelta": 10
+            },
+            {
+              "askMultiplierDown": "0.8",
+              "askMultiplierUp": "2",
+              "avgPriceMins": 5,
+              "bidMultiplierDown": "0.5",
+              "bidMultiplierUp": "1.2",
+              "filterType": "PERCENT_PRICE_BY_SIDE"
+            },
+            {
+              "applyMaxToMarket": false,
+              "applyMinToMarket": true,
+              "avgPriceMins": 5,
+              "filterType": "NOTIONAL",
+              "maxNotional": "9000000.00000000",
+              "minNotional": "0.00010000"
+            },
+            {
+              "filterType": "MAX_NUM_ORDERS",
+              "maxNumOrders": 200
+            },
+            {
+              "filterType": "MAX_NUM_ORDER_LISTS",
+              "maxNumOrderLists": 20
+            },
+            {
+              "filterType": "MAX_NUM_ALGO_ORDERS",
+              "maxNumAlgoOrders": 5
+            },
+            {
+              "filterType": "MAX_NUM_ORDER_AMENDS",
+              "maxNumOrderAmends": 10
+            }
+          ],
+          "icebergAllowed": true,
+          "isMarginTradingAllowed": true,
+          "isSpotTradingAllowed": true,
+          "ocoAllowed": true,
+          "opoAllowed": true,
+          "orderTypes": [
+            "LIMIT",
+            "LIMIT_MAKER",
+            "MARKET",
+            "STOP_LOSS",
+            "STOP_LOSS_LIMIT",
+            "TAKE_PROFIT",
+            "TAKE_PROFIT_LIMIT"
+          ],
+          "otoAllowed": true,
+          "pegInstructionsAllowed": true,
+          "permissionSets": [
+            [
+              "SPOT",
+              "MARGIN",
+              "TRD_GRP_004",
+              "TRD_GRP_005",
+              "TRD_GRP_006",
+              "TRD_GRP_008",
+              "TRD_GRP_009",
+              "TRD_GRP_010",
+              "TRD_GRP_011",
+              "TRD_GRP_012",
+              "TRD_GRP_013",
+              "TRD_GRP_014",
+              "TRD_GRP_015",
+              "TRD_GRP_016",
+              "TRD_GRP_017",
+              "TRD_GRP_018",
+              "TRD_GRP_019",
+              "TRD_GRP_020",
+              "TRD_GRP_021",
+              "TRD_GRP_022",
+              "TRD_GRP_023",
+              "TRD_GRP_024",
+              "TRD_GRP_025",
+              "TRD_GRP_026",
+              "TRD_GRP_027",
+              "TRD_GRP_028",
+              "TRD_GRP_029",
+              "TRD_GRP_030",
+              "TRD_GRP_031",
+              "TRD_GRP_032",
+              "TRD_GRP_033",
+              "TRD_GRP_034",
+              "TRD_GRP_035",
+              "TRD_GRP_036",
+              "TRD_GRP_037",
+              "TRD_GRP_038",
+              "TRD_GRP_039",
+              "TRD_GRP_040",
+              "TRD_GRP_041",
+              "TRD_GRP_042",
+              "TRD_GRP_043",
+              "TRD_GRP_044",
+              "TRD_GRP_045",
+              "TRD_GRP_046",
+              "TRD_GRP_047",
+              "TRD_GRP_048",
+              "TRD_GRP_049",
+              "TRD_GRP_050",
+              "TRD_GRP_051",
+              "TRD_GRP_052",
+              "TRD_GRP_053",
+              "TRD_GRP_054",
+              "TRD_GRP_055",
+              "TRD_GRP_056",
+              "TRD_GRP_057",
+              "TRD_GRP_058",
+              "TRD_GRP_059",
+              "TRD_GRP_060",
+              "TRD_GRP_061",
+              "TRD_GRP_062",
+              "TRD_GRP_063",
+              "TRD_GRP_064",
+              "TRD_GRP_065",
+              "TRD_GRP_066",
+              "TRD_GRP_067",
+              "TRD_GRP_068",
+              "TRD_GRP_069",
+              "TRD_GRP_070",
+              "TRD_GRP_071",
+              "TRD_GRP_072",
+              "TRD_GRP_073",
+              "TRD_GRP_074",
+              "TRD_GRP_075",
+              "TRD_GRP_076",
+              "TRD_GRP_077",
+              "TRD_GRP_078",
+              "TRD_GRP_079",
+              "TRD_GRP_080",
+              "TRD_GRP_081",
+              "TRD_GRP_082",
+              "TRD_GRP_083",
+              "TRD_GRP_084",
+              "TRD_GRP_085",
+              "TRD_GRP_086",
+              "TRD_GRP_087",
+              "TRD_GRP_088",
+              "TRD_GRP_089",
+              "TRD_GRP_090",
+              "TRD_GRP_091",
+              "TRD_GRP_092",
+              "TRD_GRP_093",
+              "TRD_GRP_094",
+              "TRD_GRP_095",
+              "TRD_GRP_096",
+              "TRD_GRP_097",
+              "TRD_GRP_098",
+              "TRD_GRP_099",
+              "TRD_GRP_100",
+              "TRD_GRP_101",
+              "TRD_GRP_102",
+              "TRD_GRP_103",
+              "TRD_GRP_104",
+              "TRD_GRP_105",
+              "TRD_GRP_106",
+              "TRD_GRP_107",
+              "TRD_GRP_108",
+              "TRD_GRP_109",
+              "TRD_GRP_110",
+              "TRD_GRP_111",
+              "TRD_GRP_112",
+              "TRD_GRP_113",
+              "TRD_GRP_114",
+              "TRD_GRP_115",
+              "TRD_GRP_116",
+              "TRD_GRP_117",
+              "TRD_GRP_118",
+              "TRD_GRP_119",
+              "TRD_GRP_120",
+              "TRD_GRP_121",
+              "TRD_GRP_122",
+              "TRD_GRP_123",
+              "TRD_GRP_124",
+              "TRD_GRP_125",
+              "TRD_GRP_126",
+              "TRD_GRP_127",
+              "TRD_GRP_128",
+              "TRD_GRP_129",
+              "TRD_GRP_130",
+              "TRD_GRP_131",
+              "TRD_GRP_132",
+              "TRD_GRP_133",
+              "TRD_GRP_134",
+              "TRD_GRP_135",
+              "TRD_GRP_136",
+              "TRD_GRP_137",
+              "TRD_GRP_138",
+              "TRD_GRP_139",
+              "TRD_GRP_140",
+              "TRD_GRP_141",
+              "TRD_GRP_142",
+              "TRD_GRP_143",
+              "TRD_GRP_144",
+              "TRD_GRP_145",
+              "TRD_GRP_146",
+              "TRD_GRP_147",
+              "TRD_GRP_148",
+              "TRD_GRP_149",
+              "TRD_GRP_150",
+              "TRD_GRP_151",
+              "TRD_GRP_152",
+              "TRD_GRP_153",
+              "TRD_GRP_154",
+              "TRD_GRP_155",
+              "TRD_GRP_156",
+              "TRD_GRP_157",
+              "TRD_GRP_158",
+              "TRD_GRP_159",
+              "TRD_GRP_160",
+              "TRD_GRP_161",
+              "TRD_GRP_162",
+              "TRD_GRP_163",
+              "TRD_GRP_164",
+              "TRD_GRP_165",
+              "TRD_GRP_166",
+              "TRD_GRP_167",
+              "TRD_GRP_168",
+              "TRD_GRP_169",
+              "TRD_GRP_170",
+              "TRD_GRP_171",
+              "TRD_GRP_172",
+              "TRD_GRP_173",
+              "TRD_GRP_174",
+              "TRD_GRP_175",
+              "TRD_GRP_176",
+              "TRD_GRP_177",
+              "TRD_GRP_178",
+              "TRD_GRP_179",
+              "TRD_GRP_180",
+              "TRD_GRP_181",
+              "TRD_GRP_182",
+              "TRD_GRP_183",
+              "TRD_GRP_184",
+              "TRD_GRP_185",
+              "TRD_GRP_186",
+              "TRD_GRP_187",
+              "TRD_GRP_188",
+              "TRD_GRP_189",
+              "TRD_GRP_190",
+              "TRD_GRP_191",
+              "TRD_GRP_192",
+              "TRD_GRP_193",
+              "TRD_GRP_194",
+              "TRD_GRP_195",
+              "TRD_GRP_196",
+              "TRD_GRP_197",
+              "TRD_GRP_198",
+              "TRD_GRP_199",
+              "TRD_GRP_200",
+              "TRD_GRP_201",
+              "TRD_GRP_202",
+              "TRD_GRP_203",
+              "TRD_GRP_204",
+              "TRD_GRP_205",
+              "TRD_GRP_206",
+              "TRD_GRP_207",
+              "TRD_GRP_208",
+              "TRD_GRP_209",
+              "TRD_GRP_210",
+              "TRD_GRP_211",
+              "TRD_GRP_212",
+              "TRD_GRP_213",
+              "TRD_GRP_214",
+              "TRD_GRP_215",
+              "TRD_GRP_216",
+              "TRD_GRP_217",
+              "TRD_GRP_218",
+              "TRD_GRP_219",
+              "TRD_GRP_220",
+              "TRD_GRP_221",
+              "TRD_GRP_222",
+              "TRD_GRP_223",
+              "TRD_GRP_224",
+              "TRD_GRP_225",
+              "TRD_GRP_226",
+              "TRD_GRP_227",
+              "TRD_GRP_228",
+              "TRD_GRP_229",
+              "TRD_GRP_230",
+              "TRD_GRP_231",
+              "TRD_GRP_232",
+              "TRD_GRP_233",
+              "TRD_GRP_234",
+              "TRD_GRP_235",
+              "TRD_GRP_236",
+              "TRD_GRP_237",
+              "TRD_GRP_238",
+              "TRD_GRP_239",
+              "TRD_GRP_240",
+              "TRD_GRP_242",
+              "TRD_GRP_243",
+              "TRD_GRP_244",
+              "TRD_GRP_245",
+              "TRD_GRP_246",
+              "TRD_GRP_247",
+              "TRD_GRP_248",
+              "TRD_GRP_249",
+              "TRD_GRP_250",
+              "TRD_GRP_251",
+              "TRD_GRP_252",
+              "TRD_GRP_253",
+              "TRD_GRP_255",
+              "TRD_GRP_256",
+              "TRD_GRP_257",
+              "TRD_GRP_258",
+              "TRD_GRP_262",
+              "TRD_GRP_263",
+              "TRD_GRP_264",
+              "TRD_GRP_265",
+              "TRD_GRP_266",
+              "TRD_GRP_267"
+            ]
+          ],
+          "permissions": [],
+          "quoteAsset": "BTC",
+          "quoteAssetPrecision": 8,
+          "quoteCommissionPrecision": 8,
+          "quoteOrderQtyMarketAllowed": true,
+          "quotePrecision": 8,
+          "status": "TRADING",
+          "symbol": "ETHBTC"
+        },
+        "ETHUSDT": {
+          "allowTrailingStop": true,
+          "allowedSelfTradePreventionModes": [
+            "EXPIRE_TAKER",
+            "EXPIRE_MAKER",
+            "EXPIRE_BOTH",
+            "DECREMENT",
+            "TRANSFER"
+          ],
+          "amendAllowed": true,
+          "baseAsset": "ETH",
+          "baseAssetPrecision": 8,
+          "baseCommissionPrecision": 8,
+          "cancelReplaceAllowed": true,
+          "defaultSelfTradePreventionMode": "EXPIRE_MAKER",
+          "filters": [
+            {
+              "filterType": "PRICE_FILTER",
+              "maxPrice": "1000000.00000000",
+              "minPrice": "0.01000000",
+              "tickSize": "0.01000000"
+            },
+            {
+              "filterType": "LOT_SIZE",
+              "maxQty": "9000.00000000",
+              "minQty": "0.00010000",
+              "stepSize": "0.00010000"
+            },
+            {
+              "filterType": "ICEBERG_PARTS",
+              "limit": 100
+            },
+            {
+              "filterType": "MARKET_LOT_SIZE",
+              "maxQty": "2597.85633375",
+              "minQty": "0.00000000",
+              "stepSize": "0.00000000"
+            },
+            {
+              "filterType": "TRAILING_DELTA",
+              "maxTrailingAboveDelta": 2000,
+              "maxTrailingBelowDelta": 2000,
+              "minTrailingAboveDelta": 10,
+              "minTrailingBelowDelta": 10
+            },
+            {
+              "askMultiplierDown": "0.8",
+              "askMultiplierUp": "2",
+              "avgPriceMins": 5,
+              "bidMultiplierDown": "0.5",
+              "bidMultiplierUp": "1.2",
+              "filterType": "PERCENT_PRICE_BY_SIDE"
+            },
+            {
+              "applyMaxToMarket": false,
+              "applyMinToMarket": true,
+              "avgPriceMins": 5,
+              "filterType": "NOTIONAL",
+              "maxNotional": "9000000.00000000",
+              "minNotional": "5.00000000"
+            },
+            {
+              "filterType": "MAX_NUM_ORDERS",
+              "maxNumOrders": 200
+            },
+            {
+              "filterType": "MAX_NUM_ORDER_LISTS",
+              "maxNumOrderLists": 20
+            },
+            {
+              "filterType": "MAX_NUM_ALGO_ORDERS",
+              "maxNumAlgoOrders": 5
+            },
+            {
+              "filterType": "MAX_NUM_ORDER_AMENDS",
+              "maxNumOrderAmends": 10
+            }
+          ],
+          "icebergAllowed": true,
+          "isMarginTradingAllowed": true,
+          "isSpotTradingAllowed": true,
+          "ocoAllowed": true,
+          "opoAllowed": true,
+          "orderTypes": [
+            "LIMIT",
+            "LIMIT_MAKER",
+            "MARKET",
+            "STOP_LOSS",
+            "STOP_LOSS_LIMIT",
+            "TAKE_PROFIT",
+            "TAKE_PROFIT_LIMIT"
+          ],
+          "otoAllowed": true,
+          "pegInstructionsAllowed": true,
+          "permissionSets": [
+            [
+              "SPOT",
+              "MARGIN",
+              "TRD_GRP_004",
+              "TRD_GRP_005",
+              "TRD_GRP_006",
+              "TRD_GRP_015",
+              "TRD_GRP_016",
+              "TRD_GRP_017",
+              "TRD_GRP_018",
+              "TRD_GRP_019",
+              "TRD_GRP_020",
+              "TRD_GRP_021",
+              "TRD_GRP_022",
+              "TRD_GRP_023",
+              "TRD_GRP_024",
+              "TRD_GRP_025",
+              "TRD_GRP_049",
+              "TRD_GRP_050",
+              "TRD_GRP_051",
+              "TRD_GRP_052",
+              "TRD_GRP_053",
+              "TRD_GRP_054",
+              "TRD_GRP_055",
+              "TRD_GRP_056",
+              "TRD_GRP_057",
+              "TRD_GRP_058",
+              "TRD_GRP_059",
+              "TRD_GRP_060",
+              "TRD_GRP_061",
+              "TRD_GRP_062",
+              "TRD_GRP_063",
+              "TRD_GRP_064",
+              "TRD_GRP_065",
+              "TRD_GRP_066",
+              "TRD_GRP_067",
+              "TRD_GRP_068",
+              "TRD_GRP_069",
+              "TRD_GRP_070",
+              "TRD_GRP_071",
+              "TRD_GRP_072",
+              "TRD_GRP_073",
+              "TRD_GRP_074",
+              "TRD_GRP_075",
+              "TRD_GRP_076",
+              "TRD_GRP_077",
+              "TRD_GRP_078",
+              "TRD_GRP_079",
+              "TRD_GRP_080",
+              "TRD_GRP_081",
+              "TRD_GRP_082",
+              "TRD_GRP_083",
+              "TRD_GRP_084",
+              "TRD_GRP_085",
+              "TRD_GRP_086",
+              "TRD_GRP_087",
+              "TRD_GRP_088",
+              "TRD_GRP_089",
+              "TRD_GRP_090",
+              "TRD_GRP_091",
+              "TRD_GRP_092",
+              "TRD_GRP_093",
+              "TRD_GRP_094",
+              "TRD_GRP_095",
+              "TRD_GRP_096",
+              "TRD_GRP_097",
+              "TRD_GRP_098",
+              "TRD_GRP_099",
+              "TRD_GRP_100",
+              "TRD_GRP_101",
+              "TRD_GRP_102",
+              "TRD_GRP_103",
+              "TRD_GRP_104",
+              "TRD_GRP_105",
+              "TRD_GRP_106",
+              "TRD_GRP_107",
+              "TRD_GRP_108",
+              "TRD_GRP_109",
+              "TRD_GRP_110",
+              "TRD_GRP_111",
+              "TRD_GRP_112",
+              "TRD_GRP_113",
+              "TRD_GRP_114",
+              "TRD_GRP_115",
+              "TRD_GRP_116",
+              "TRD_GRP_117",
+              "TRD_GRP_118",
+              "TRD_GRP_119",
+              "TRD_GRP_120",
+              "TRD_GRP_121",
+              "TRD_GRP_122",
+              "TRD_GRP_123",
+              "TRD_GRP_124",
+              "TRD_GRP_125",
+              "TRD_GRP_126",
+              "TRD_GRP_127",
+              "TRD_GRP_128",
+              "TRD_GRP_129",
+              "TRD_GRP_130",
+              "TRD_GRP_131",
+              "TRD_GRP_132",
+              "TRD_GRP_133",
+              "TRD_GRP_134",
+              "TRD_GRP_135",
+              "TRD_GRP_136",
+              "TRD_GRP_137",
+              "TRD_GRP_138",
+              "TRD_GRP_139",
+              "TRD_GRP_140",
+              "TRD_GRP_141",
+              "TRD_GRP_142",
+              "TRD_GRP_143",
+              "TRD_GRP_144",
+              "TRD_GRP_145",
+              "TRD_GRP_146",
+              "TRD_GRP_147",
+              "TRD_GRP_148",
+              "TRD_GRP_149",
+              "TRD_GRP_150",
+              "TRD_GRP_151",
+              "TRD_GRP_152",
+              "TRD_GRP_153",
+              "TRD_GRP_154",
+              "TRD_GRP_155",
+              "TRD_GRP_156",
+              "TRD_GRP_157",
+              "TRD_GRP_158",
+              "TRD_GRP_159",
+              "TRD_GRP_160",
+              "TRD_GRP_161",
+              "TRD_GRP_162",
+              "TRD_GRP_163",
+              "TRD_GRP_164",
+              "TRD_GRP_165",
+              "TRD_GRP_166",
+              "TRD_GRP_167",
+              "TRD_GRP_168",
+              "TRD_GRP_169",
+              "TRD_GRP_170",
+              "TRD_GRP_171",
+              "TRD_GRP_172",
+              "TRD_GRP_173",
+              "TRD_GRP_174",
+              "TRD_GRP_175",
+              "TRD_GRP_176",
+              "TRD_GRP_177",
+              "TRD_GRP_178",
+              "TRD_GRP_179",
+              "TRD_GRP_180",
+              "TRD_GRP_181",
+              "TRD_GRP_182",
+              "TRD_GRP_183",
+              "TRD_GRP_184",
+              "TRD_GRP_185",
+              "TRD_GRP_186",
+              "TRD_GRP_187",
+              "TRD_GRP_188",
+              "TRD_GRP_189",
+              "TRD_GRP_190",
+              "TRD_GRP_191",
+              "TRD_GRP_192",
+              "TRD_GRP_193",
+              "TRD_GRP_194",
+              "TRD_GRP_195",
+              "TRD_GRP_196",
+              "TRD_GRP_197",
+              "TRD_GRP_198",
+              "TRD_GRP_199",
+              "TRD_GRP_200",
+              "TRD_GRP_201",
+              "TRD_GRP_202",
+              "TRD_GRP_203",
+              "TRD_GRP_204",
+              "TRD_GRP_205",
+              "TRD_GRP_206",
+              "TRD_GRP_207",
+              "TRD_GRP_208",
+              "TRD_GRP_209",
+              "TRD_GRP_210",
+              "TRD_GRP_211",
+              "TRD_GRP_212",
+              "TRD_GRP_213",
+              "TRD_GRP_214",
+              "TRD_GRP_215",
+              "TRD_GRP_216",
+              "TRD_GRP_217",
+              "TRD_GRP_218",
+              "TRD_GRP_219",
+              "TRD_GRP_220",
+              "TRD_GRP_221",
+              "TRD_GRP_222",
+              "TRD_GRP_223",
+              "TRD_GRP_224",
+              "TRD_GRP_225",
+              "TRD_GRP_226",
+              "TRD_GRP_227",
+              "TRD_GRP_228",
+              "TRD_GRP_229",
+              "TRD_GRP_230",
+              "TRD_GRP_231",
+              "TRD_GRP_232",
+              "TRD_GRP_233",
+              "TRD_GRP_234",
+              "TRD_GRP_235",
+              "TRD_GRP_236",
+              "TRD_GRP_237",
+              "TRD_GRP_238",
+              "TRD_GRP_239",
+              "TRD_GRP_240",
+              "TRD_GRP_242",
+              "TRD_GRP_243",
+              "TRD_GRP_244",
+              "TRD_GRP_245",
+              "TRD_GRP_246",
+              "TRD_GRP_247",
+              "TRD_GRP_248",
+              "TRD_GRP_249",
+              "TRD_GRP_250",
+              "TRD_GRP_251",
+              "TRD_GRP_252",
+              "TRD_GRP_253",
+              "TRD_GRP_256",
+              "TRD_GRP_258"
+            ]
+          ],
+          "permissions": [],
+          "quoteAsset": "USDT",
+          "quoteAssetPrecision": 8,
+          "quoteCommissionPrecision": 8,
+          "quoteOrderQtyMarketAllowed": true,
+          "quotePrecision": 8,
+          "status": "TRADING",
+          "symbol": "ETHUSDT"
+        }
+      }
+    },
+    {
+      "id": "triangle-server-time",
+      "raw_fields": {
+        "serverTime": 1789117826257
+      },
+      "scope": "Returned server clock only; no synchronization or historical-publication inference.",
+      "status": "complete"
+    },
+    {
+      "id": "triangle-book-ticker",
+      "quotes": {
+        "BTCUSDT": {
+          "askPrice": "77274.08000000",
+          "askQty": "3.19416000",
+          "bidPrice": "77274.07000000",
+          "bidQty": "1.92136000",
+          "symbol": "BTCUSDT"
+        },
+        "ETHBTC": {
+          "askPrice": "0.03201000",
+          "askQty": "14.70720000",
+          "bidPrice": "0.03200000",
+          "bidQty": "55.41760000",
+          "symbol": "ETHBTC"
+        },
+        "ETHUSDT": {
+          "askPrice": "2473.95000000",
+          "askQty": "161.48740000",
+          "bidPrice": "2473.94000000",
+          "bidQty": "21.38490000",
+          "symbol": "ETHUSDT"
+        }
+      },
+      "scope": "Asynchronously observed public inputs only; no cross-source alignment, fills, fees, cash profit or graduation.",
+      "status": "complete"
+    },
+    {
+      "id": "triangle-btcusdt-depth",
+      "observed_ask_levels": 20,
+      "observed_bid_levels": 20,
+      "raw_fields": {
+        "asks": [
+          [
+            "77274.08000000",
+            "3.47900000"
+          ],
+          [
+            "77274.09000000",
+            "0.00118000"
+          ],
+          [
+            "77274.10000000",
+            "0.23060000"
+          ],
+          [
+            "77274.11000000",
+            "0.00014000"
+          ],
+          [
+            "77274.12000000",
+            "0.03256000"
+          ],
+          [
+            "77274.14000000",
+            "0.00014000"
+          ],
+          [
+            "77274.15000000",
+            "0.05028000"
+          ],
+          [
+            "77274.34000000",
+            "0.00200000"
+          ],
+          [
+            "77274.94000000",
+            "0.01331000"
+          ],
+          [
+            "77274.96000000",
+            "0.00014000"
+          ],
+          [
+            "77275.16000000",
+            "0.00014000"
+          ],
+          [
+            "77275.32000000",
+            "0.02043000"
+          ],
+          [
+            "77275.51000000",
+            "0.00014000"
+          ],
+          [
+            "77275.52000000",
+            "0.03458000"
+          ],
+          [
+            "77275.56000000",
+            "0.00215000"
+          ],
+          [
+            "77275.73000000",
+            "0.00014000"
+          ],
+          [
+            "77275.74000000",
+            "0.32386000"
+          ],
+          [
+            "77275.75000000",
+            "0.08993000"
+          ],
+          [
+            "77275.87000000",
+            "0.00007000"
+          ],
+          [
+            "77276.02000000",
+            "0.00400000"
+          ]
+        ],
+        "bids": [
+          [
+            "77274.07000000",
+            "0.98414000"
+          ],
+          [
+            "77274.06000000",
+            "0.00083000"
+          ],
+          [
+            "77274.05000000",
+            "0.00013000"
+          ],
+          [
+            "77273.95000000",
+            "0.00007000"
+          ],
+          [
+            "77273.71000000",
+            "0.00007000"
+          ],
+          [
+            "77273.59000000",
+            "0.00208000"
+          ],
+          [
+            "77273.57000000",
+            "0.00007000"
+          ],
+          [
+            "77273.56000000",
+            "0.00014000"
+          ],
+          [
+            "77273.53000000",
+            "0.00323000"
+          ],
+          [
+            "77273.46000000",
+            "0.00136000"
+          ],
+          [
+            "77273.45000000",
+            "0.00007000"
+          ],
+          [
+            "77273.28000000",
+            "0.00007000"
+          ],
+          [
+            "77273.06000000",
+            "0.00014000"
+          ],
+          [
+            "77273.05000000",
+            "0.15552000"
+          ],
+          [
+            "77272.87000000",
+            "0.00009000"
+          ],
+          [
+            "77272.85000000",
+            "0.00007000"
+          ],
+          [
+            "77272.82000000",
+            "0.00014000"
+          ],
+          [
+            "77272.81000000",
+            "0.02939000"
+          ],
+          [
+            "77272.72000000",
+            "0.00158000"
+          ],
+          [
+            "77272.70000000",
+            "0.00010000"
+          ]
+        ],
+        "lastUpdateId": 99983110534
+      },
+      "scope": "Depth20 bounded asynchronous observation, not a complete book or fill; lastUpdateId is not a timestamp.",
+      "status": "complete",
+      "symbol": "BTCUSDT"
+    },
+    {
+      "id": "triangle-ethusdt-depth",
+      "observed_ask_levels": 20,
+      "observed_bid_levels": 20,
+      "raw_fields": {
+        "asks": [
+          [
+            "2473.95000000",
+            "161.49170000"
+          ],
+          [
+            "2473.96000000",
+            "1.28650000"
+          ],
+          [
+            "2473.97000000",
+            "0.01050000"
+          ],
+          [
+            "2473.98000000",
+            "0.00850000"
+          ],
+          [
+            "2473.99000000",
+            "0.00870000"
+          ],
+          [
+            "2474.00000000",
+            "1.21840000"
+          ],
+          [
+            "2474.01000000",
+            "1.32040000"
+          ],
+          [
+            "2474.02000000",
+            "0.00220000"
+          ],
+          [
+            "2474.03000000",
+            "0.00660000"
+          ],
+          [
+            "2474.04000000",
+            "2.58930000"
+          ],
+          [
+            "2474.05000000",
+            "0.37300000"
+          ],
+          [
+            "2474.06000000",
+            "0.56040000"
+          ],
+          [
+            "2474.08000000",
+            "0.20220000"
+          ],
+          [
+            "2474.09000000",
+            "0.19700000"
+          ],
+          [
+            "2474.10000000",
+            "0.05020000"
+          ],
+          [
+            "2474.11000000",
+            "0.55410000"
+          ],
+          [
+            "2474.13000000",
+            "0.21010000"
+          ],
+          [
+            "2474.14000000",
+            "3.76960000"
+          ],
+          [
+            "2474.15000000",
+            "0.20210000"
+          ],
+          [
+            "2474.16000000",
+            "26.68830000"
+          ]
+        ],
+        "bids": [
+          [
+            "2473.94000000",
+            "30.90980000"
+          ],
+          [
+            "2473.93000000",
+            "0.04950000"
+          ],
+          [
+            "2473.92000000",
+            "0.10240000"
+          ],
+          [
+            "2473.91000000",
+            "0.00220000"
+          ],
+          [
+            "2473.90000000",
+            "0.00440000"
+          ],
+          [
+            "2473.88000000",
+            "0.01960000"
+          ],
+          [
+            "2473.87000000",
+            "0.00220000"
+          ],
+          [
+            "2473.86000000",
+            "0.06870000"
+          ],
+          [
+            "2473.85000000",
+            "0.00220000"
+          ],
+          [
+            "2473.83000000",
+            "0.00270000"
+          ],
+          [
+            "2473.81000000",
+            "0.00440000"
+          ],
+          [
+            "2473.80000000",
+            "0.10950000"
+          ],
+          [
+            "2473.79000000",
+            "0.36340000"
+          ],
+          [
+            "2473.78000000",
+            "0.00670000"
+          ],
+          [
+            "2473.77000000",
+            "2.55080000"
+          ],
+          [
+            "2473.76000000",
+            "8.08820000"
+          ],
+          [
+            "2473.74000000",
+            "0.04260000"
+          ],
+          [
+            "2473.73000000",
+            "0.00220000"
+          ],
+          [
+            "2473.72000000",
+            "0.19520000"
+          ],
+          [
+            "2473.71000000",
+            "0.08660000"
+          ]
+        ],
+        "lastUpdateId": 80867654639
+      },
+      "scope": "Depth20 bounded asynchronous observation, not a complete book or fill; lastUpdateId is not a timestamp.",
+      "status": "complete",
+      "symbol": "ETHUSDT"
+    },
+    {
+      "id": "triangle-ethbtc-depth",
+      "observed_ask_levels": 20,
+      "observed_bid_levels": 20,
+      "raw_fields": {
+        "asks": [
+          [
+            "0.03201000",
+            "14.70720000"
+          ],
+          [
+            "0.03202000",
+            "58.75270000"
+          ],
+          [
+            "0.03203000",
+            "40.18720000"
+          ],
+          [
+            "0.03204000",
+            "42.01410000"
+          ],
+          [
+            "0.03205000",
+            "84.64510000"
+          ],
+          [
+            "0.03206000",
+            "156.20600000"
+          ],
+          [
+            "0.03207000",
+            "120.67040000"
+          ],
+          [
+            "0.03208000",
+            "127.27790000"
+          ],
+          [
+            "0.03209000",
+            "124.92080000"
+          ],
+          [
+            "0.03210000",
+            "139.02480000"
+          ],
+          [
+            "0.03211000",
+            "124.87330000"
+          ],
+          [
+            "0.03212000",
+            "84.12500000"
+          ],
+          [
+            "0.03213000",
+            "119.70030000"
+          ],
+          [
+            "0.03214000",
+            "10.02320000"
+          ],
+          [
+            "0.03215000",
+            "3.36910000"
+          ],
+          [
+            "0.03216000",
+            "0.36840000"
+          ],
+          [
+            "0.03217000",
+            "1.19310000"
+          ],
+          [
+            "0.03218000",
+            "0.94790000"
+          ],
+          [
+            "0.03219000",
+            "1.35280000"
+          ],
+          [
+            "0.03220000",
+            "29.26380000"
+          ]
+        ],
+        "bids": [
+          [
+            "0.03200000",
+            "55.41760000"
+          ],
+          [
+            "0.03199000",
+            "114.56980000"
+          ],
+          [
+            "0.03198000",
+            "51.45040000"
+          ],
+          [
+            "0.03197000",
+            "156.71030000"
+          ],
+          [
+            "0.03196000",
+            "119.85020000"
+          ],
+          [
+            "0.03195000",
+            "116.72670000"
+          ],
+          [
+            "0.03194000",
+            "104.23740000"
+          ],
+          [
+            "0.03193000",
+            "125.39630000"
+          ],
+          [
+            "0.03192000",
+            "136.53210000"
+          ],
+          [
+            "0.03191000",
+            "126.62310000"
+          ],
+          [
+            "0.03190000",
+            "125.81420000"
+          ],
+          [
+            "0.03189000",
+            "125.99840000"
+          ],
+          [
+            "0.03188000",
+            "6.40400000"
+          ],
+          [
+            "0.03187000",
+            "6.90960000"
+          ],
+          [
+            "0.03186000",
+            "6.12220000"
+          ],
+          [
+            "0.03185000",
+            "21.87510000"
+          ],
+          [
+            "0.03184000",
+            "11.80930000"
+          ],
+          [
+            "0.03183000",
+            "5.39560000"
+          ],
+          [
+            "0.03182000",
+            "6.15930000"
+          ],
+          [
+            "0.03181000",
+            "8.22700000"
+          ]
+        ],
+        "lastUpdateId": 9147402071
+      },
+      "scope": "Depth20 bounded asynchronous observation, not a complete book or fill; lastUpdateId is not a timestamp.",
+      "status": "complete",
+      "symbol": "ETHBTC"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Asynchronously observed public inputs only; no cross-source alignment, fills, fees, cash profit or graduation."
+}

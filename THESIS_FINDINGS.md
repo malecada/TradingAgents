@@ -7015,3 +7015,13 @@ labels do not establish units, clocks, quote age or executable chains. No
 numerical or financial interpretation occurred. Decision 08 retains the exposed
 2023 ancestry and two of three new options investigations used. The next
 registered source question is same-venue spot-triangle feasibility.
+
+## 106. Same-venue spot triangle source admission (2026-09-11)
+
+Six fixed public requests for BTCUSDT, ETHUSDT and ETHBTC metadata, batch quotes,
+depth and server time passed structural admission. Eight outputs retain every
+raw response and asynchronous local clocks. This supplies the required source
+for a separately registered static conversion question, not simultaneous quotes
+or fills. No conversion factor or profit was measured. Decision 09 advances the
+fixed eight-case arithmetic proxy and records one of three new triangle
+investigations used, without resetting older liquidity-search history.

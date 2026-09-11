@@ -14,6 +14,7 @@ Completed once, with independent substantive and receipt reviews:
 | dated-archive-20260911 | 8 / 0 | Four ZIP/checksum pairs verified; fixed pre-terminal 56-day interval admitted conditionally. |
 | options-metadata-20260911 | 4 / 0 | Current 1,230 BTC/ETH quantity rules and two archive prefixes admitted; no option economics. |
 | options-eoh-schema-20260911 | 2 / 0 | One checksum-verified CSV: 5,734 records after its candidate header, 26 fields; semantics unverified. |
+| triangle-inputs-20260911 | 6 / 0 | Fixed contract/time/ticker/depth source schemas pass; no conversion calculation. |
 
 Execution sources respectively: `d3ba86924bd8711704fc80fd771a0e717cc9bb51`,
 `8cac1b361ecc96e5bd6f2ab0fa43bf51b1524ec4`,
@@ -47,12 +48,18 @@ pushed and remotely verified before execution. Decision 08 and independent
 reconstruction retain lexical-only scope. Options now used two of three new
 investigations; no financial options result exists.
 
-Next: execute frozen triangle-inputs-20260911 from gates-triangle-inputs.json
-using current committed/pushed/verified HEAD, then independently review raw
-admission. No triangle capture has run yet. A separate triangle-proxy charter
-and synthetic-only implementation are in preparation; freeze its exact gate
-and parent hashes after source admission, before real conversion calculation.
-Venue-comparability public documentation is under bounded investigation.
+Triangle capture completed from 270d724eaf6b9781bf099c816b7d475df50412a9,
+pushed and remotely verified before execution. Decision 09 and independent review
+retain asynchronous clocks and source-only scope. One of three triangle new
+investigations used, also charged to MAP row 5.
+
+Next: run triangle-proxy-20260911 once from gates-triangle-proxy.json after its
+independent gate/source review and current HEAD commit/push/remote equality.
+The eight-case static model uses only parent batch quotes; no real conversion
+arithmetic has run. Bitrue two-request metadata spec is drafted and synthetic
+collector implementation is underway, with settled funding-history documentation
+under independent bounded review. Options historical economics is deferred for
+field/clock/contract semantics, with one new options investigation remaining.
 Commit/push and verify remote equality at each freeze and results checkpoint.
 Interim coverage retains meaningful affordable gaps; no exhaustion.
 

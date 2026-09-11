@@ -1,0 +1,264 @@
+{
+  "actual_output_bytes": 107998,
+  "capture_clocks": [
+    {
+      "elapsed_seconds": 0.3291086579847615,
+      "http_date_minus_local_retrieval_seconds": -0.733737,
+      "id": "triangle-exchange-info",
+      "local_vs_monotonic_difference_seconds": -1.5657984761496824e-05,
+      "request_utc": "2026-09-11T09:10:25.404644+00:00",
+      "retrieval_utc": "2026-09-11T09:10:25.733737+00:00"
+    },
+    {
+      "elapsed_seconds": 0.2946809560235124,
+      "http_date_minus_local_retrieval_seconds": -0.383865,
+      "id": "triangle-server-time",
+      "local_vs_monotonic_difference_seconds": -1.7956023512399888e-05,
+      "request_utc": "2026-09-11T09:10:26.089202+00:00",
+      "retrieval_utc": "2026-09-11T09:10:26.383865+00:00",
+      "server_time_minus_local_request_seconds": 0.167798,
+      "server_time_minus_local_retrieval_seconds": -0.126865,
+      "server_time_utc": "2026-09-11T09:10:26.257000+00:00"
+    },
+    {
+      "elapsed_seconds": 0.3068672650260851,
+      "http_date_minus_local_retrieval_seconds": -1.051204,
+      "id": "triangle-book-ticker",
+      "local_vs_monotonic_difference_seconds": -1.726502608506708e-05,
+      "request_utc": "2026-09-11T09:10:26.744354+00:00",
+      "retrieval_utc": "2026-09-11T09:10:27.051204+00:00"
+    },
+    {
+      "elapsed_seconds": 0.299575362005271,
+      "http_date_minus_local_retrieval_seconds": -0.709042,
+      "id": "triangle-btcusdt-depth",
+      "local_vs_monotonic_difference_seconds": -2.036200527100185e-05,
+      "request_utc": "2026-09-11T09:10:27.409487+00:00",
+      "retrieval_utc": "2026-09-11T09:10:27.709042+00:00"
+    },
+    {
+      "elapsed_seconds": 0.2949350679991767,
+      "http_date_minus_local_retrieval_seconds": -0.357167,
+      "id": "triangle-ethusdt-depth",
+      "local_vs_monotonic_difference_seconds": -1.8067999176696325e-05,
+      "request_utc": "2026-09-11T09:10:28.062250+00:00",
+      "retrieval_utc": "2026-09-11T09:10:28.357167+00:00"
+    },
+    {
+      "elapsed_seconds": 0.3192286699777469,
+      "http_date_minus_local_retrieval_seconds": -1.052054,
+      "id": "triangle-ethbtc-depth",
+      "local_vs_monotonic_difference_seconds": -1.9669977746883394e-05,
+      "request_utc": "2026-09-11T09:10:28.732845+00:00",
+      "retrieval_utc": "2026-09-11T09:10:29.052054+00:00"
+    }
+  ],
+  "cells": 6,
+  "claim_sha256": "d34c7c5e09390632125fe5b429ec7f4830cb8e0e5db8173f75306126ecc71d47",
+  "family": {
+    "attempt_budget": 3,
+    "history_reference": "triangle-inputs-charter.md and reviews/neutral-alternatives-source-20260911.md; no known exact triangle gate, not zero historical liquidity search. OFLOW/passive failures and unknown broader multiplicity preserved. At most3newquestions alsochargedtoMAProw5 allowance.",
+    "mechanism_id": "binance-btc-eth-usdt-static-triangular-conversion",
+    "prior_attempts": 0
+  },
+  "next_input_admission": "Exact retained exchange-info and batch-ticker inputs are structurally available for a separately frozen static conversion proxy only.",
+  "output_sha256": {
+    "triangle-admission.json": "edad752a3949d79d4095e31fea04617a8014c6a98009d203c1d50e0c4fb0c89f",
+    "triangle-book-ticker-receipt.json": "178ffbdf4467cb108d3ede1912d5be816924dedd91d842bbc2361082f2e86967",
+    "triangle-btcusdt-depth-receipt.json": "b13a131cc7d9b8ee8fcd1a343d74220beacbbdfa781f73e044a534024f3925b7",
+    "triangle-capture.json": "7e698c4e837d1ae4d79099b891955dafbca4d1d45eb1a2ccd1da05823ebdd241",
+    "triangle-ethbtc-depth-receipt.json": "6203fc80819f9f63c9138b9da5002787de6ca20218b2c3229002a97da7977788",
+    "triangle-ethusdt-depth-receipt.json": "013dd3c6437094664d5006ebc891b13042999e680570e12145352a05899377a9",
+    "triangle-exchange-info-receipt.json": "3a9d36cb2955bd6849c330db67c422e278db6974837fa074e832ad81b17d7cca",
+    "triangle-server-time-receipt.json": "70b87f771389b3fc6c4204d330cfef3fdc868e2ca8ceb1c51c95152cb9cb73a7"
+  },
+  "outputs": 8,
+  "raw_body_bytes": 19899,
+  "registration_sha256": "fcf50aa82ba0947d4858945edae0d897b3c927faa89b086a43a05c6819e8560a",
+  "resource_report": {
+    "child_exit_code": 0,
+    "elapsed_seconds": 6.290279299981194,
+    "limit_reason": null,
+    "linux_children_ru_maxrss_kib": 32336,
+    "peak_sampled_tree_rss_bytes": 59486208,
+    "qualification": "Nominal 20 ms sampled aggregate RSS with one 20 ms process-exit retry; brief overshoot can occur. No detached/background or secondary-thread subprocesses admitted. Shared pages may be counted twice. ru_maxrss is the largest individual child peak, not aggregate.",
+    "rss_limit_bytes": 536870912,
+    "sample_interval_seconds": 0.02,
+    "virtual_address_space_limit": "unlimited",
+    "wall_limit_seconds": 120
+  },
+  "schemas": [
+    {
+      "current_pair_metadata": {
+        "BTCUSDT": {
+          "filter_economics_and_account_access": "unavailable",
+          "filter_types": [
+            "PRICE_FILTER",
+            "LOT_SIZE",
+            "ICEBERG_PARTS",
+            "MARKET_LOT_SIZE",
+            "TRAILING_DELTA",
+            "PERCENT_PRICE_BY_SIDE",
+            "NOTIONAL",
+            "MAX_NUM_ORDERS",
+            "MAX_NUM_ORDER_LISTS",
+            "MAX_NUM_ALGO_ORDERS",
+            "MAX_NUM_ORDER_AMENDS"
+          ],
+          "isSpotTradingAllowed": true,
+          "missing_relevant_filter_names": [],
+          "status": "TRADING"
+        },
+        "ETHBTC": {
+          "filter_economics_and_account_access": "unavailable",
+          "filter_types": [
+            "PRICE_FILTER",
+            "LOT_SIZE",
+            "ICEBERG_PARTS",
+            "MARKET_LOT_SIZE",
+            "TRAILING_DELTA",
+            "PERCENT_PRICE_BY_SIDE",
+            "NOTIONAL",
+            "MAX_NUM_ORDERS",
+            "MAX_NUM_ORDER_LISTS",
+            "MAX_NUM_ALGO_ORDERS",
+            "MAX_NUM_ORDER_AMENDS"
+          ],
+          "isSpotTradingAllowed": true,
+          "missing_relevant_filter_names": [],
+          "status": "TRADING"
+        },
+        "ETHUSDT": {
+          "filter_economics_and_account_access": "unavailable",
+          "filter_types": [
+            "PRICE_FILTER",
+            "LOT_SIZE",
+            "ICEBERG_PARTS",
+            "MARKET_LOT_SIZE",
+            "TRAILING_DELTA",
+            "PERCENT_PRICE_BY_SIDE",
+            "NOTIONAL",
+            "MAX_NUM_ORDERS",
+            "MAX_NUM_ORDER_LISTS",
+            "MAX_NUM_ALGO_ORDERS",
+            "MAX_NUM_ORDER_AMENDS"
+          ],
+          "isSpotTradingAllowed": true,
+          "missing_relevant_filter_names": [],
+          "status": "TRADING"
+        }
+      },
+      "id": "triangle-exchange-info",
+      "kind": "exchange-info",
+      "raw_body_bytes": 15686,
+      "raw_sha256": "b7dfde2c74f5c9e126dd9cab6f3555279de5bd1473d59948c5e321df4749bcf0",
+      "schema_status": "pass"
+    },
+    {
+      "id": "triangle-server-time",
+      "kind": "server-time",
+      "raw_body_bytes": 28,
+      "raw_sha256": "c546791eda2e1255c73f5510b61f58f76aacea44344cf1bf82d429dd11722531",
+      "schema_status": "pass"
+    },
+    {
+      "event_clock_availability": "No event timestamp supplied in the observed rows; one HTTP batch does not prove atomic cross-symbol state.",
+      "id": "triangle-book-ticker",
+      "kind": "book-ticker",
+      "literal_keys_by_symbol": {
+        "BTCUSDT": [
+          "symbol",
+          "bidPrice",
+          "bidQty",
+          "askPrice",
+          "askQty"
+        ],
+        "ETHBTC": [
+          "symbol",
+          "bidPrice",
+          "bidQty",
+          "askPrice",
+          "askQty"
+        ],
+        "ETHUSDT": [
+          "symbol",
+          "bidPrice",
+          "bidQty",
+          "askPrice",
+          "askQty"
+        ]
+      },
+      "raw_body_bytes": 358,
+      "raw_sha256": "bb8d44262eb154e927a9a4affcc05316c2cac060e5ea03bc94c51bba5dbfed39",
+      "schema_status": "pass",
+      "symbol_count": 3
+    },
+    {
+      "event_clock_availability": "lastUpdateId is not interpreted as a timestamp; no event timestamp is supplied.",
+      "id": "triangle-btcusdt-depth",
+      "kind": "depth",
+      "level_counts": {
+        "asks": 20,
+        "bids": 20
+      },
+      "literal_keys": [
+        "lastUpdateId",
+        "bids",
+        "asks"
+      ],
+      "raw_body_bytes": 1326,
+      "raw_sha256": "218cf41e3cd231012c98e7e07d982e0f49cdc145ac044d196a2dc9166f7db68f",
+      "schema_status": "pass",
+      "symbol": "BTCUSDT"
+    },
+    {
+      "event_clock_availability": "lastUpdateId is not interpreted as a timestamp; no event timestamp is supplied.",
+      "id": "triangle-ethusdt-depth",
+      "kind": "depth",
+      "level_counts": {
+        "asks": 20,
+        "bids": 20
+      },
+      "literal_keys": [
+        "lastUpdateId",
+        "bids",
+        "asks"
+      ],
+      "raw_body_bytes": 1290,
+      "raw_sha256": "c57c92debfd683582ffe49adc48acf7548ab16a9fad0271cbf0f750587c7a640",
+      "schema_status": "pass",
+      "symbol": "ETHUSDT"
+    },
+    {
+      "event_clock_availability": "lastUpdateId is not interpreted as a timestamp; no event timestamp is supplied.",
+      "id": "triangle-ethbtc-depth",
+      "kind": "depth",
+      "level_counts": {
+        "asks": 20,
+        "bids": 20
+      },
+      "literal_keys": [
+        "lastUpdateId",
+        "bids",
+        "asks"
+      ],
+      "raw_body_bytes": 1211,
+      "raw_sha256": "2b4f32ec150dfffceed260f212ff2e6b359c2c6cd5ef56d00523f530e13874d0",
+      "schema_status": "pass",
+      "symbol": "ETHBTC"
+    }
+  ],
+  "scope": "Raw source/schema reconstruction only; no conversion factors, profit, quote alignment or collector imports",
+  "source": "270d724eaf6b9781bf099c816b7d475df50412a9",
+  "status": "pass",
+  "total_local_capture_span_seconds": 3.64741,
+  "unavailable_cells": 0,
+  "untested": [
+    "conversion factors and financial profit",
+    "simultaneous matching-engine observations",
+    "quote freshness/event time",
+    "account access, fee/lot/filter economics, depth fills, atomicity and market exposure",
+    "independent clock attestation",
+    "external backup"
+  ]
+}
