@@ -2,7 +2,7 @@
 
 - [x] Complete registered carry-definition diagnostic and independent review; retained with this results checkpoint.
 - [x] Admit actual public event marks and matched bars once; independent review passed.
-- [ ] Execute the reviewed fixed conditional cash book, diagnose and re-rank.
+- [x] Complete fixed conditional cash book and independent review; all eight primary cases fail economic screens. Switch family.
 - [ ] Execute the ranked dated/calendar source and data feasibility investigation.
 - [ ] Resolve affordable options and venue-product feasibility questions for breadth.
 - [ ] Re-rank relative-value, liquidity, factor and information questions against

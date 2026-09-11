@@ -6927,3 +6927,30 @@ NO-GO is unchanged. Exact outputs, review and next action are in
 Next: separately registered public input admission for actual funding-event
 marks and matched prices; follow availability into a quantity-book question
 or a named deferral and the next eligible family. Program active/incomplete.
+
+
+## Section 100: Explicit quantity funding-carry book on spent 2026Q2 (2026-09-11)
+
+A separately registered public admission captured authentic funding-event marks
+and matched spot/perpetual/mark bars for BTC/ETH. All ten input cells and twelve
+raw outputs passed independent identity/schema/clock checks. The opening funding
+event is excluded from the new book; no unknown event is filled.
+
+The frozen 91-day quantity book uses all capital, spot principal, matched short
+quantity, a 50% futures reserve, idle cash, signed event funding and explicit
+entry/exit fees. It completed sixteen cells: eight primary asset/capital/cost
+cases plus eight zero-funding forensics. Every primary cash profit is negative:
+-0.4754 to -1.8367 USDT at 1,000 capital, and -5.5146 to -19.4976 at 10,000.
+These amounts exclude opportunity cost. Recorded funding does not cover modeled
+fees plus basis/slippage in this fixed quarter; the provisional economic screen
+fails. Conditional exposure/risk checks pass within the stated model only.
+
+Independent Decimal cashflow, direct-bootstrap and HAC reconstruction verifies
+35,072 numeric values and all 1,456 daily snapshots. Execution source
+`7d704ca97606eea4ab953c29d7587e7e8af517f1` was pushed before outcomes. Actual
+fees/lots/fills, historical funding calendar, account eligibility and intraday
+margin remain unverified. The sample is spent development and intervals cross
+zero; no general no-effect conclusion or fresh confirmation follows. Exact
+evidence and next action are in program `decision-03.md`, its independent review
+and `research_runs/carry-book-20260911`. Dated-contract archive admission is next.
+Zero validated strategies; the sustained program remains active and incomplete.

@@ -1,0 +1,592 @@
+{
+  "cases": [
+    {
+      "adoption_or_execution_validated": false,
+      "all_necessary_conditional_screens_pass": false,
+      "asset": "BTC",
+      "capital": 1000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 7.47945205479452,
+        "0.05": 12.465753424657533
+      },
+      "cost_scenario": "base",
+      "id": "btc-1000-base",
+      "market_exposure": {
+        "btc_beta": 0.0015840252386234129,
+        "btc_interval": [
+          -0.004007800741082807,
+          0.007175851218329633
+        ],
+        "eth_beta": -0.001163470069783809,
+        "eth_interval": [
+          -0.004888511901536467,
+          0.0025615717619688495
+        ],
+        "hac_lags": 7,
+        "individual_confidence": 0.975,
+        "intercept": -6.17644688976358e-06,
+        "observations": 91,
+        "scope": "Descriptive spent development; within-book simultaneous95%, not across all searched books.",
+        "status": "complete"
+      },
+      "metrics": {
+        "annualized_simple_return_365": -0.0019068037635507598,
+        "applied_funding_events": 272,
+        "cash_profit": -0.4753949109126552,
+        "full_capital_return": -0.00047539491091265517,
+        "funding_cash": 0.8489289308672147,
+        "margin_buffer_breach": false,
+        "max_drawdown": 0.0016169598809096897,
+        "minimum_margin_buffer_lower_bound": 422.0992709697546
+      },
+      "necessary_conditional_screens": {
+        "annualized_cash_at_least_3pct": false,
+        "base_delta_at_most_1pct_nav": true,
+        "beta_point_and_interval_screen": true,
+        "cash_components_reconcile": true,
+        "conditional_daily_margin_buffer_nonnegative": true,
+        "doubling_stress_wallet_and_buffer_nonnegative": true,
+        "exploratory_simultaneous_cash_lower_positive": false,
+        "max_drawdown_at_most_10pct": true
+      },
+      "status": "conditional",
+      "uncertainty": {
+        "annualized_lower": -0.020149008918021388,
+        "annualized_point": -0.00190680376355076,
+        "annualized_upper": 0.011643499735192055,
+        "approximate_80pct_mde_annualized": 0.020048723242422118,
+        "approximate_blocks": 13,
+        "block_days": 7,
+        "bootstrap_standard_error": 0.005606481877661202,
+        "draws": 2000,
+        "observations": 91,
+        "scope": "Spent development; finite-tail block/normal approximation of empirical daily mean, resampling endpoint fees/basis; not repeated trade paths or future-profit confirmation.",
+        "seed": 20260911
+      },
+      "unresolved": [
+        "spent sample and unknown prior multiplicity",
+        "historical event calendar independent proof",
+        "account/entity/product eligibility",
+        "actual lot/minimum notionals, fee assets and commissions",
+        "simultaneous fills, intraday margin/liquidation, stablecoin/counterparty risk"
+      ],
+      "zero_funding_cash_profit": -1.3243238417799148
+    },
+    {
+      "adoption_or_execution_validated": false,
+      "all_necessary_conditional_screens_pass": false,
+      "asset": "BTC",
+      "capital": 1000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 7.47945205479452,
+        "0.05": 12.465753424657533
+      },
+      "cost_scenario": "stress",
+      "id": "btc-1000-stress",
+      "market_exposure": {
+        "btc_beta": 0.003894116904741205,
+        "btc_interval": [
+          -0.005676447613039643,
+          0.013464681422522053
+        ],
+        "eth_beta": -0.002663350039998557,
+        "eth_interval": [
+          -0.009143592927264662,
+          0.003816892847267548
+        ],
+        "hac_lags": 7,
+        "individual_confidence": 0.975,
+        "intercept": -2.025947663028711e-05,
+        "observations": 91,
+        "scope": "Descriptive spent development; within-book simultaneous95%, not across all searched books.",
+        "status": "complete"
+      },
+      "metrics": {
+        "annualized_simple_return_365": -0.006741784387167807,
+        "applied_funding_events": 272,
+        "cash_profit": -1.6808284362527957,
+        "full_capital_return": -0.0016808284362527957,
+        "funding_cash": 0.8489289308672147,
+        "margin_buffer_breach": false,
+        "max_drawdown": 0.002265614212279843,
+        "minimum_margin_buffer_lower_bound": 422.0310295697546
+      },
+      "necessary_conditional_screens": {
+        "annualized_cash_at_least_3pct": false,
+        "base_delta_at_most_1pct_nav": true,
+        "beta_point_and_interval_screen": true,
+        "cash_components_reconcile": true,
+        "conditional_daily_margin_buffer_nonnegative": true,
+        "doubling_stress_wallet_and_buffer_nonnegative": true,
+        "exploratory_simultaneous_cash_lower_positive": false,
+        "max_drawdown_at_most_10pct": true
+      },
+      "status": "conditional",
+      "uncertainty": {
+        "annualized_lower": -0.04013082367574428,
+        "annualized_point": -0.006741784387167808,
+        "annualized_upper": 0.011643499735193436,
+        "approximate_80pct_mde_annualized": 0.03369177843145601,
+        "approximate_blocks": 13,
+        "block_days": 7,
+        "bootstrap_standard_error": 0.009421664557793271,
+        "draws": 2000,
+        "observations": 91,
+        "scope": "Spent development; finite-tail block/normal approximation of empirical daily mean, resampling endpoint fees/basis; not repeated trade paths or future-profit confirmation.",
+        "seed": 20260911
+      },
+      "unresolved": [
+        "spent sample and unknown prior multiplicity",
+        "historical event calendar independent proof",
+        "account/entity/product eligibility",
+        "actual lot/minimum notionals, fee assets and commissions",
+        "simultaneous fills, intraday margin/liquidation, stablecoin/counterparty risk"
+      ],
+      "zero_funding_cash_profit": -2.5297573671200553
+    },
+    {
+      "adoption_or_execution_validated": false,
+      "all_necessary_conditional_screens_pass": false,
+      "asset": "BTC",
+      "capital": 10000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 74.79452054794521,
+        "0.05": 124.65753424657534
+      },
+      "cost_scenario": "base",
+      "id": "btc-10000-base",
+      "market_exposure": {
+        "btc_beta": 0.001837364626463221,
+        "btc_interval": [
+          -0.004649303971499173,
+          0.008324033224425615
+        ],
+        "eth_beta": -0.0013495693104692637,
+        "eth_interval": [
+          -0.00567070682152266,
+          0.002971568200584132
+        ],
+        "hac_lags": 7,
+        "individual_confidence": 0.975,
+        "intercept": -7.163679912547659e-06,
+        "observations": 91,
+        "scope": "Descriptive spent development; within-book simultaneous95%, not across all searched books.",
+        "status": "complete"
+      },
+      "metrics": {
+        "annualized_simple_return_365": -0.0022118923657194647,
+        "applied_funding_events": 272,
+        "cash_profit": -5.514580966588255,
+        "full_capital_return": -0.0005514580966588255,
+        "funding_cash": 9.84757559805969,
+        "margin_buffer_breach": false,
+        "max_drawdown": 0.001875673461855331,
+        "minimum_margin_buffer_lower_bound": 4096.351543249153
+      },
+      "necessary_conditional_screens": {
+        "annualized_cash_at_least_3pct": false,
+        "base_delta_at_most_1pct_nav": true,
+        "beta_point_and_interval_screen": true,
+        "cash_components_reconcile": true,
+        "conditional_daily_margin_buffer_nonnegative": true,
+        "doubling_stress_wallet_and_buffer_nonnegative": true,
+        "exploratory_simultaneous_cash_lower_positive": false,
+        "max_drawdown_at_most_10pct": true
+      },
+      "status": "conditional",
+      "uncertainty": {
+        "annualized_lower": -0.023372850344907034,
+        "annualized_point": -0.002211892365719465,
+        "annualized_upper": 0.013506459692824796,
+        "approximate_80pct_mde_annualized": 0.023256518961210924,
+        "approximate_blocks": 13,
+        "block_days": 7,
+        "bootstrap_standard_error": 0.006503518978087349,
+        "draws": 2000,
+        "observations": 91,
+        "scope": "Spent development; finite-tail block/normal approximation of empirical daily mean, resampling endpoint fees/basis; not repeated trade paths or future-profit confirmation.",
+        "seed": 20260911
+      },
+      "unresolved": [
+        "spent sample and unknown prior multiplicity",
+        "historical event calendar independent proof",
+        "account/entity/product eligibility",
+        "actual lot/minimum notionals, fee assets and commissions",
+        "simultaneous fills, intraday margin/liquidation, stablecoin/counterparty risk"
+      ],
+      "zero_funding_cash_profit": -15.362156564646284
+    },
+    {
+      "adoption_or_execution_validated": false,
+      "all_necessary_conditional_screens_pass": false,
+      "asset": "BTC",
+      "capital": 10000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 74.79452054794521,
+        "0.05": 124.65753424657534
+      },
+      "cost_scenario": "stress",
+      "id": "btc-10000-stress",
+      "market_exposure": {
+        "btc_beta": 0.004517173435596175,
+        "btc_interval": [
+          -0.0065852193522698815,
+          0.015619566223462231
+        ],
+        "eth_beta": -0.003089466147074289,
+        "eth_interval": [
+          -0.010606777378965482,
+          0.004427845084816903
+        ],
+        "hac_lags": 7,
+        "individual_confidence": 0.975,
+        "intercept": -2.350023182576399e-05,
+        "observations": 91,
+        "scope": "Descriptive spent development; within-book simultaneous95%, not across all searched books.",
+        "status": "complete"
+      },
+      "metrics": {
+        "annualized_simple_return_365": -0.007820469889114876,
+        "applied_funding_events": 272,
+        "cash_profit": -19.497609860532975,
+        "full_capital_return": -0.0019497609860532974,
+        "funding_cash": 9.84757559805969,
+        "margin_buffer_breach": false,
+        "max_drawdown": 0.002628112486244572,
+        "minimum_margin_buffer_lower_bound": 4095.559943009153
+      },
+      "necessary_conditional_screens": {
+        "annualized_cash_at_least_3pct": false,
+        "base_delta_at_most_1pct_nav": true,
+        "beta_point_and_interval_screen": true,
+        "cash_components_reconcile": true,
+        "conditional_daily_margin_buffer_nonnegative": true,
+        "doubling_stress_wallet_and_buffer_nonnegative": true,
+        "exploratory_simultaneous_cash_lower_positive": false,
+        "max_drawdown_at_most_10pct": true
+      },
+      "status": "conditional",
+      "uncertainty": {
+        "annualized_lower": -0.04655175546386549,
+        "annualized_point": -0.007820469889114876,
+        "annualized_upper": 0.013506459692824444,
+        "approximate_80pct_mde_annualized": 0.03908246298048959,
+        "approximate_blocks": 13,
+        "block_days": 7,
+        "bootstrap_standard_error": 0.010929130887040369,
+        "draws": 2000,
+        "observations": 91,
+        "scope": "Spent development; finite-tail block/normal approximation of empirical daily mean, resampling endpoint fees/basis; not repeated trade paths or future-profit confirmation.",
+        "seed": 20260911
+      },
+      "unresolved": [
+        "spent sample and unknown prior multiplicity",
+        "historical event calendar independent proof",
+        "account/entity/product eligibility",
+        "actual lot/minimum notionals, fee assets and commissions",
+        "simultaneous fills, intraday margin/liquidation, stablecoin/counterparty risk"
+      ],
+      "zero_funding_cash_profit": -29.345185458592823
+    },
+    {
+      "adoption_or_execution_validated": false,
+      "all_necessary_conditional_screens_pass": false,
+      "asset": "ETH",
+      "capital": 1000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 7.47945205479452,
+        "0.05": 12.465753424657533
+      },
+      "cost_scenario": "base",
+      "id": "eth-1000-base",
+      "market_exposure": {
+        "btc_beta": 0.0021945416764123384,
+        "btc_interval": [
+          -0.0023698820718520883,
+          0.006758965424676765
+        ],
+        "eth_beta": -0.0015987489806663147,
+        "eth_interval": [
+          -0.004378359086425662,
+          0.0011808611250930324
+        ],
+        "hac_lags": 7,
+        "individual_confidence": 0.975,
+        "intercept": -7.650106167859473e-06,
+        "observations": 91,
+        "scope": "Descriptive spent development; within-book simultaneous95%, not across all searched books.",
+        "status": "complete"
+      },
+      "metrics": {
+        "annualized_simple_return_365": -0.0023231830917361464,
+        "applied_funding_events": 272,
+        "cash_profit": -0.5792045516383268,
+        "full_capital_return": -0.0005792045516383269,
+        "funding_cash": 0.7521017973015056,
+        "margin_buffer_breach": false,
+        "max_drawdown": 0.00147837383880551,
+        "minimum_margin_buffer_lower_bound": 430.9857976390174
+      },
+      "necessary_conditional_screens": {
+        "annualized_cash_at_least_3pct": false,
+        "base_delta_at_most_1pct_nav": true,
+        "beta_point_and_interval_screen": true,
+        "cash_components_reconcile": true,
+        "conditional_daily_margin_buffer_nonnegative": true,
+        "doubling_stress_wallet_and_buffer_nonnegative": true,
+        "exploratory_simultaneous_cash_lower_positive": false,
+        "max_drawdown_at_most_10pct": true
+      },
+      "status": "conditional",
+      "uncertainty": {
+        "annualized_lower": -0.022285467748187376,
+        "annualized_point": -0.0023231830917361477,
+        "annualized_upper": 0.011465478462557292,
+        "approximate_80pct_mde_annualized": 0.02218703293594447,
+        "approximate_blocks": 13,
+        "block_days": 7,
+        "bootstrap_standard_error": 0.006204444870147103,
+        "draws": 2000,
+        "observations": 91,
+        "scope": "Spent development; finite-tail block/normal approximation of empirical daily mean, resampling endpoint fees/basis; not repeated trade paths or future-profit confirmation.",
+        "seed": 20260911
+      },
+      "unresolved": [
+        "spent sample and unknown prior multiplicity",
+        "historical event calendar independent proof",
+        "account/entity/product eligibility",
+        "actual lot/minimum notionals, fee assets and commissions",
+        "simultaneous fills, intraday margin/liquidation, stablecoin/counterparty risk"
+      ],
+      "zero_funding_cash_profit": -1.3313063489398473
+    },
+    {
+      "adoption_or_execution_validated": false,
+      "all_necessary_conditional_screens_pass": false,
+      "asset": "ETH",
+      "capital": 1000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 7.47945205479452,
+        "0.05": 12.465753424657533
+      },
+      "cost_scenario": "stress",
+      "id": "eth-1000-stress",
+      "market_exposure": {
+        "btc_beta": 0.004623027406811385,
+        "btc_interval": [
+          -0.004063913827460906,
+          0.013309968641083676
+        ],
+        "eth_beta": -0.0032041011163546664,
+        "eth_interval": [
+          -0.008858934707415675,
+          0.0024507324747063425
+        ],
+        "hac_lags": 7,
+        "individual_confidence": 0.975,
+        "intercept": -2.2432908295091746e-05,
+        "observations": 91,
+        "scope": "Descriptive spent development; within-book simultaneous95%, not across all searched books.",
+        "status": "complete"
+      },
+      "metrics": {
+        "annualized_simple_return_365": -0.007367104321288637,
+        "applied_funding_events": 272,
+        "cash_profit": -1.836730118458263,
+        "full_capital_return": -0.001836730118458263,
+        "funding_cash": 0.7521017973015056,
+        "margin_buffer_breach": false,
+        "max_drawdown": 0.0021984249433255627,
+        "minimum_margin_buffer_lower_bound": 430.91003635901745
+      },
+      "necessary_conditional_screens": {
+        "annualized_cash_at_least_3pct": false,
+        "base_delta_at_most_1pct_nav": true,
+        "beta_point_and_interval_screen": true,
+        "cash_components_reconcile": true,
+        "conditional_daily_margin_buffer_nonnegative": true,
+        "doubling_stress_wallet_and_buffer_nonnegative": true,
+        "exploratory_simultaneous_cash_lower_positive": false,
+        "max_drawdown_at_most_10pct": true
+      },
+      "status": "conditional",
+      "uncertainty": {
+        "annualized_lower": -0.04408880090653164,
+        "annualized_point": -0.007367104321288638,
+        "annualized_upper": 0.011465478462557865,
+        "approximate_80pct_mde_annualized": 0.03689408405562977,
+        "approximate_blocks": 13,
+        "block_days": 7,
+        "bootstrap_standard_error": 0.010317166392577128,
+        "draws": 2000,
+        "observations": 91,
+        "scope": "Spent development; finite-tail block/normal approximation of empirical daily mean, resampling endpoint fees/basis; not repeated trade paths or future-profit confirmation.",
+        "seed": 20260911
+      },
+      "unresolved": [
+        "spent sample and unknown prior multiplicity",
+        "historical event calendar independent proof",
+        "account/entity/product eligibility",
+        "actual lot/minimum notionals, fee assets and commissions",
+        "simultaneous fills, intraday margin/liquidation, stablecoin/counterparty risk"
+      ],
+      "zero_funding_cash_profit": -2.5888319157597834
+    },
+    {
+      "adoption_or_execution_validated": false,
+      "all_necessary_conditional_screens_pass": false,
+      "asset": "ETH",
+      "capital": 10000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 74.79452054794521,
+        "0.05": 124.65753424657534
+      },
+      "cost_scenario": "base",
+      "id": "eth-10000-base",
+      "market_exposure": {
+        "btc_beta": 0.0023043039575342842,
+        "btc_interval": [
+          -0.0024883801928443604,
+          0.007096988107912929
+        ],
+        "eth_beta": -0.0016787092542486202,
+        "eth_interval": [
+          -0.004597323921951017,
+          0.0012399054134537766
+        ],
+        "hac_lags": 7,
+        "individual_confidence": 0.975,
+        "intercept": -8.03241046726137e-06,
+        "observations": 91,
+        "scope": "Descriptive spent development; within-book simultaneous95%, not across all searched books.",
+        "status": "complete"
+      },
+      "metrics": {
+        "annualized_simple_return_365": -0.0024393422463233868,
+        "applied_funding_events": 272,
+        "cash_profit": -6.081647792203512,
+        "full_capital_return": -0.0006081647792203512,
+        "funding_cash": 7.897068871665806,
+        "margin_buffer_breach": false,
+        "max_drawdown": 0.0015522925307457627,
+        "minimum_margin_buffer_lower_bound": 4275.350875209683
+      },
+      "necessary_conditional_screens": {
+        "annualized_cash_at_least_3pct": false,
+        "base_delta_at_most_1pct_nav": true,
+        "beta_point_and_interval_screen": true,
+        "cash_components_reconcile": true,
+        "conditional_daily_margin_buffer_nonnegative": true,
+        "doubling_stress_wallet_and_buffer_nonnegative": true,
+        "exploratory_simultaneous_cash_lower_positive": false,
+        "max_drawdown_at_most_10pct": true
+      },
+      "status": "conditional",
+      "uncertainty": {
+        "annualized_lower": -0.023399741135597504,
+        "annualized_point": -0.0024393422463233868,
+        "annualized_upper": 0.012038752385685707,
+        "approximate_80pct_mde_annualized": 0.02329638458274336,
+        "approximate_blocks": 13,
+        "block_days": 7,
+        "bootstrap_standard_error": 0.006514667113654923,
+        "draws": 2000,
+        "observations": 91,
+        "scope": "Spent development; finite-tail block/normal approximation of empirical daily mean, resampling endpoint fees/basis; not repeated trade paths or future-profit confirmation.",
+        "seed": 20260911
+      },
+      "unresolved": [
+        "spent sample and unknown prior multiplicity",
+        "historical event calendar independent proof",
+        "account/entity/product eligibility",
+        "actual lot/minimum notionals, fee assets and commissions",
+        "simultaneous fills, intraday margin/liquidation, stablecoin/counterparty risk"
+      ],
+      "zero_funding_cash_profit": -13.978716663868909
+    },
+    {
+      "adoption_or_execution_validated": false,
+      "all_necessary_conditional_screens_pass": false,
+      "asset": "ETH",
+      "capital": 10000,
+      "cash_benchmarks": {
+        "0": 0.0,
+        "0.03": 74.79452054794521,
+        "0.05": 124.65753424657534
+      },
+      "cost_scenario": "stress",
+      "id": "eth-10000-stress",
+      "market_exposure": {
+        "btc_beta": 0.00485428742246897,
+        "btc_interval": [
+          -0.004267157969852572,
+          0.013975732814790512
+        ],
+        "eth_beta": -0.003364368856915063,
+        "eth_interval": [
+          -0.009301996911654101,
+          0.0025732591978239743
+        ],
+        "hac_lags": 7,
+        "individual_confidence": 0.975,
+        "intercept": -2.3554592858518725e-05,
+        "observations": 91,
+        "scope": "Descriptive spent development; within-book simultaneous95%, not across all searched books.",
+        "status": "complete"
+      },
+      "metrics": {
+        "annualized_simple_return_365": -0.007735459537353753,
+        "applied_funding_events": 272,
+        "cash_profit": -19.285666243813466,
+        "full_capital_return": -0.0019285666243813466,
+        "funding_cash": 7.897068871665806,
+        "margin_buffer_breach": false,
+        "max_drawdown": 0.0023083461904916474,
+        "minimum_margin_buffer_lower_bound": 4274.555381769685
+      },
+      "necessary_conditional_screens": {
+        "annualized_cash_at_least_3pct": false,
+        "base_delta_at_most_1pct_nav": true,
+        "beta_point_and_interval_screen": true,
+        "cash_components_reconcile": true,
+        "conditional_daily_margin_buffer_nonnegative": true,
+        "doubling_stress_wallet_and_buffer_nonnegative": true,
+        "exploratory_simultaneous_cash_lower_positive": false,
+        "max_drawdown_at_most_10pct": true
+      },
+      "status": "conditional",
+      "uncertainty": {
+        "annualized_lower": -0.046293240951862366,
+        "annualized_point": -0.007735459537353754,
+        "annualized_upper": 0.012038752385685334,
+        "approximate_80pct_mde_annualized": 0.03873878825841329,
+        "approximate_blocks": 13,
+        "block_days": 7,
+        "bootstrap_standard_error": 0.01083302471220655,
+        "draws": 2000,
+        "observations": 91,
+        "scope": "Spent development; finite-tail block/normal approximation of empirical daily mean, resampling endpoint fees/basis; not repeated trade paths or future-profit confirmation.",
+        "seed": 20260911
+      },
+      "unresolved": [
+        "spent sample and unknown prior multiplicity",
+        "historical event calendar independent proof",
+        "account/entity/product eligibility",
+        "actual lot/minimum notionals, fee assets and commissions",
+        "simultaneous fills, intraday margin/liquidation, stablecoin/counterparty risk"
+      ],
+      "zero_funding_cash_profit": -27.182735115478863
+    }
+  ],
+  "counterfactual_count": 8,
+  "interpretation": "Conditional development on spent 2026Q2; annualization is not a forecast; no candidate selected.",
+  "primary_count": 8,
+  "validated_strategies": 0
+}

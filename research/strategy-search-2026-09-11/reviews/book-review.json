@@ -1,0 +1,202 @@
+{
+  "status": "pass_independent_reconstruction",
+  "source": "7d704ca97606eea4ab953c29d7587e7e8af517f1",
+  "reviewer": "independent_review",
+  "checker_sha256": "41a72670fcbbe1a5160b0e23a58392527461d90decc6990d700568253ba9a74f",
+  "claim_sha256": "eead5141ab52c4a7224cf5962dc15cd5208eabd5c6189cab891fcdcf847e0997",
+  "receipt_sha256": "6ce4533670a6fe712f1b72606f6dac8b6590f78f9b2574f6bf07f2c746190f46",
+  "output_sha256": {
+    "books.json": "fcc9cb7aed1f862558f4b25e0fddabbd86ac5b4c0abbf760eb996bc7d72026c8",
+    "summary.json": "3a8332d7875e94760117e95e568c4c4d43a9db80ec2021ef1b4f8843c3adb38e"
+  },
+  "primary_books": 8,
+  "counterfactual_books": 8,
+  "complete_cells": 16,
+  "unavailable_cells": 0,
+  "daily_nav_snapshots_verified": 1456,
+  "numeric_comparisons": 35072,
+  "maximum_absolute_numeric_difference": 2.9103830456733704e-11,
+  "method": "Independent 50-digit Decimal signed cash/quantity and wallet reconstruction from raw captured bodies. Explicit paired resampling; OLS normal equations and Bartlett HAC sandwich reconstructed without statsmodels or any book/runner/statistics import. No new economic configuration, financial experiment or network.",
+  "cases": {
+    "btc-1000-base": {
+      "quantity": 0.005,
+      "cash_profit_usdt": -0.4753949109127855,
+      "funding_cash_usdt": 0.8489289308672144,
+      "raw_entry_exit_basis_price_pnl_usdt": -0.1189,
+      "slippage_cash_usdt": 0.253756,
+      "commission_cash_usdt": 0.95166784178,
+      "full_capital_return": -0.00047539491091278555,
+      "zero_funding_cash_profit_usdt": -1.32432384178,
+      "annualized_point": -0.0019068037635512158,
+      "annualized_lower": -0.020149008918022068,
+      "annualized_upper": 0.011643499735191836,
+      "approximate_80pct_mde_annualized": 0.020048723242423128,
+      "failed_screens": [
+        "annualized_cash_at_least_3pct",
+        "exploratory_simultaneous_cash_lower_positive"
+      ],
+      "max_drawdown": 0.0016169598809097287,
+      "btc_beta": 0.0015840252386217224,
+      "eth_beta": -0.0011634700697829886
+    },
+    "btc-1000-stress": {
+      "quantity": 0.005,
+      "cash_profit_usdt": -1.6808284362527854,
+      "funding_cash_usdt": 0.8489289308672144,
+      "raw_entry_exit_basis_price_pnl_usdt": -0.1189,
+      "slippage_cash_usdt": 0.507512,
+      "commission_cash_usdt": 1.90334536712,
+      "full_capital_return": -0.0016808284362527855,
+      "zero_funding_cash_profit_usdt": -2.52975736712,
+      "annualized_point": -0.006741784387167806,
+      "annualized_lower": -0.040130823675746226,
+      "annualized_upper": 0.011643499735193205,
+      "approximate_80pct_mde_annualized": 0.03369177843145619,
+      "failed_screens": [
+        "annualized_cash_at_least_3pct",
+        "exploratory_simultaneous_cash_lower_positive"
+      ],
+      "max_drawdown": 0.0022656142122797285,
+      "btc_beta": 0.0038941169047401756,
+      "eth_beta": -0.0026633500399986573
+    },
+    "btc-10000-base": {
+      "quantity": 0.058,
+      "cash_profit_usdt": -5.514580966588312,
+      "funding_cash_usdt": 9.847575598059688,
+      "raw_entry_exit_basis_price_pnl_usdt": -1.37924,
+      "slippage_cash_usdt": 2.9435696,
+      "commission_cash_usdt": 11.039346964648,
+      "full_capital_return": -0.0005514580966588312,
+      "zero_funding_cash_profit_usdt": -15.362156564648,
+      "annualized_point": -0.0022118923657194656,
+      "annualized_lower": -0.023372850344907197,
+      "annualized_upper": 0.013506459692824806,
+      "approximate_80pct_mde_annualized": 0.02325651896121138,
+      "failed_screens": [
+        "annualized_cash_at_least_3pct",
+        "exploratory_simultaneous_cash_lower_positive"
+      ],
+      "max_drawdown": 0.0018756734618552854,
+      "btc_beta": 0.0018373646264631719,
+      "eth_beta": -0.0013495693104702568
+    },
+    "btc-10000-stress": {
+      "quantity": 0.058,
+      "cash_profit_usdt": -19.49760986053231,
+      "funding_cash_usdt": 9.847575598059688,
+      "raw_entry_exit_basis_price_pnl_usdt": -1.37924,
+      "slippage_cash_usdt": 5.8871392,
+      "commission_cash_usdt": 22.078806258592,
+      "full_capital_return": -0.0019497609860532313,
+      "zero_funding_cash_profit_usdt": -29.345185458592,
+      "annualized_point": -0.007820469889114874,
+      "annualized_lower": -0.046551755463866376,
+      "annualized_upper": 0.01350645969282408,
+      "approximate_80pct_mde_annualized": 0.03908246298048977,
+      "failed_screens": [
+        "annualized_cash_at_least_3pct",
+        "exploratory_simultaneous_cash_lower_positive"
+      ],
+      "max_drawdown": 0.0026281124862444854,
+      "btc_beta": 0.004517173435596388,
+      "eth_beta": -0.003089466147074631
+    },
+    "eth-1000-base": {
+      "quantity": 0.18,
+      "cash_profit_usdt": -0.5792045516384944,
+      "funding_cash_usdt": 0.7521017973015056,
+      "raw_entry_exit_basis_price_pnl_usdt": -0.0738,
+      "slippage_cash_usdt": 0.26472204,
+      "commission_cash_usdt": 0.99278430894,
+      "full_capital_return": -0.0005792045516384944,
+      "zero_funding_cash_profit_usdt": -1.33130634894,
+      "annualized_point": -0.002323183091736602,
+      "annualized_lower": -0.022285467748188053,
+      "annualized_upper": 0.011465478462556843,
+      "approximate_80pct_mde_annualized": 0.022187032935946233,
+      "failed_screens": [
+        "annualized_cash_at_least_3pct",
+        "exploratory_simultaneous_cash_lower_positive"
+      ],
+      "max_drawdown": 0.0014783738388055383,
+      "btc_beta": 0.002194541676412201,
+      "eth_beta": -0.0015987489806661296
+    },
+    "eth-1000-stress": {
+      "quantity": 0.18,
+      "cash_profit_usdt": -1.8367301184584943,
+      "funding_cash_usdt": 0.7521017973015056,
+      "raw_entry_exit_basis_price_pnl_usdt": -0.0738,
+      "slippage_cash_usdt": 0.52944408,
+      "commission_cash_usdt": 1.98558783576,
+      "full_capital_return": -0.0018367301184584943,
+      "zero_funding_cash_profit_usdt": -2.58883191576,
+      "annualized_point": -0.00736710432128955,
+      "annualized_lower": -0.04408880090653607,
+      "annualized_upper": 0.011465478462557067,
+      "approximate_80pct_mde_annualized": 0.03689408405563306,
+      "failed_screens": [
+        "annualized_cash_at_least_3pct",
+        "exploratory_simultaneous_cash_lower_positive"
+      ],
+      "max_drawdown": 0.0021984249433255384,
+      "btc_beta": 0.004623027406813608,
+      "eth_beta": -0.003204101116356511
+    },
+    "eth-10000-base": {
+      "quantity": 1.89,
+      "cash_profit_usdt": -6.0816477922041905,
+      "funding_cash_usdt": 7.89706887166581,
+      "raw_entry_exit_basis_price_pnl_usdt": -0.7749,
+      "slippage_cash_usdt": 2.77958142,
+      "commission_cash_usdt": 10.42423524387,
+      "full_capital_return": -0.0006081647792204191,
+      "zero_funding_cash_profit_usdt": -13.97871666387,
+      "annualized_point": -0.0024393422463233868,
+      "annualized_lower": -0.023399741135598236,
+      "annualized_upper": 0.01203875238568497,
+      "approximate_80pct_mde_annualized": 0.023296384582743766,
+      "failed_screens": [
+        "annualized_cash_at_least_3pct",
+        "exploratory_simultaneous_cash_lower_positive"
+      ],
+      "max_drawdown": 0.0015522925307458154,
+      "btc_beta": 0.002304303957536452,
+      "eth_beta": -0.001678709254250481
+    },
+    "eth-10000-stress": {
+      "quantity": 1.89,
+      "cash_profit_usdt": -19.28566624381419,
+      "funding_cash_usdt": 7.89706887166581,
+      "raw_entry_exit_basis_price_pnl_usdt": -0.7749,
+      "slippage_cash_usdt": 5.55916284,
+      "commission_cash_usdt": 20.84867227548,
+      "full_capital_return": -0.001928566624381419,
+      "zero_funding_cash_profit_usdt": -27.18273511548,
+      "annualized_point": -0.007735459537353754,
+      "annualized_lower": -0.04629324095186032,
+      "annualized_upper": 0.01203875238568407,
+      "approximate_80pct_mde_annualized": 0.03873878825841396,
+      "failed_screens": [
+        "annualized_cash_at_least_3pct",
+        "exploratory_simultaneous_cash_lower_positive"
+      ],
+      "max_drawdown": 0.002308346190491815,
+      "btc_beta": 0.004854287422470159,
+      "eth_beta": -0.0033643688569158954
+    }
+  },
+  "material_implementation_findings": [],
+  "interpretation": "All eight frozen conditional cash books lost money after modeled fees/slippage and entry/exit basis effects. Only cash relevance and positive exploratory lower-bound screens fail; other conditional screens pass. Insufficient evidence for useful positive returns, not family-wide rejection.",
+  "not_tested": [
+    "Actual executable prices or account fees/fee assets/lots",
+    "Historical calendar/maintenance/product applicability",
+    "Continuous margin or liquidation path",
+    "Prospective return confidence or nominal bootstrap coverage",
+    "Genuine fresh confirmation or historical search multiplicity",
+    "External backup or pre-result push timing",
+    "Runtime concurrency/crash faults"
+  ],
+  "next_action": "Preserve original holdout NO-GO and close this fixed book/quarter question under its failed cash screens. Three new carry investigations consumed; switch to separately registered dated-archive admission, without new carry parameter search. Future reopening needs documented information value and new evidence."
+}
