@@ -1,0 +1,13 @@
+{
+ "capital_usd":"10000",
+ "recipes":["H2","H3","H4","H5"],
+ "benchmarks":["B0","B1","B2","B3","B4","B5","B6","B7","B8","B9"],
+ "scenarios":["primary","doubled","frictionless"],
+ "cohort_start":"2025-09-01T00:00:00Z",
+ "cohort_end":"2026-09-01T00:00:00Z",
+ "warmup_start":"2025-02-13T00:00:00Z",
+ "cell_partition":{"H2":33,"H3":3,"H4":3,"H5":3},
+ "additional_placebo_books":12,
+ "execution_assumptions":"Exact policy, commission, adverse price, lot, timing, USD proxy, route and stress rules frozen in conditional-charter.md and conditional_book.py. No actual-fee or fill claim.",
+ "primary_decision":"DESIGN conjunctive P/D/risk/robustness; incomplete B1 and actual implementation evidence prevent promotion. No metric substitution."
+}

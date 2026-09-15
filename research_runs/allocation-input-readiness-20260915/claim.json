@@ -1,0 +1,157 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "7efdd8835e363ec7f006001a08c2843b1ca397ce",
+  "experiment": {
+    "cells": [
+      "btc_bars",
+      "eth_bars",
+      "usd_identity",
+      "usd_bars",
+      "joined-panel",
+      "estimator-requirements",
+      "confirmation-power"
+    ],
+    "charter": {
+      "path": "research/broader-allocation-2026-09-15/readiness-charter.md",
+      "sha256": "8ce0a458bc4bbf8abb4b8e38eef4b2d7626fc00015fdcc995a20d496ae280c1e"
+    },
+    "family": "allocation-decision",
+    "inputs": {
+      "ancestry": {
+        "dataset": "authored-input-readiness",
+        "path": "research/broader-allocation-2026-09-15/ancestry-crosswalk.json",
+        "sha256": "5ac19444ff2c016b32334701551d86fd866acb8b837222536669cb4bc774dcb2"
+      },
+      "cash_result": {
+        "dataset": "authored-input-readiness",
+        "path": "research_runs/allocation-cash-terms-20260915/outputs/cash-terms.json",
+        "sha256": "5be1cc7fff5f24dd58625c5bed7478d8aa68162f997b7f4000ab0cae6dd8a142"
+      },
+      "engine_result": {
+        "dataset": "authored-input-readiness",
+        "path": "research_runs/allocation-spot-engine-20260915/outputs/engine-cases.json",
+        "sha256": "9129fff1f063189c3bd8a2b5842c843ce6f7643457ed0d7c0354807840c1df15"
+      },
+      "spec": {
+        "dataset": "authored-input-readiness",
+        "path": "research/broader-allocation-2026-09-15/readiness-spec.json",
+        "sha256": "2bcc70af80babd4008733d65a6f2826969aebd8136863c22a56209fdcd0a254b"
+      }
+    },
+    "outputs": [
+      "btc_bars-receipt.json",
+      "eth_bars-receipt.json",
+      "usd_identity-receipt.json",
+      "usd_bars-receipt.json",
+      "panel.json",
+      "readiness.json"
+    ],
+    "parent": "allocation-spot-engine-20260915",
+    "question": "Can a fixed historical cohort supply complete native-quote and USD-proxy bars, causal clock conventions and defensible estimator/power readiness without financial outcomes?",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+      "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+    },
+    "selection": null,
+    "source_files": {
+      "research/broader-allocation-2026-09-15/dex_source.py": "b5faf5b8fae3ab3cef7d972f9488dbafb68159c5f1dd53cb8423529a16a025d4",
+      "research/broader-allocation-2026-09-15/dex_transport.py": "88f8d7ddee801261db095f670003c676e40d45c552113fb3f9b09b66692ad104",
+      "research/broader-allocation-2026-09-15/input_readiness.py": "828d197434caf40e6d532963bbc22da12846922652479bd503014ce1c48bf3d4",
+      "research/broader-allocation-2026-09-15/readiness_transport.py": "73b130a738bebf4241271b4b89f792dd665d16eca7da7f9ab8b8b86736723f4b",
+      "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+      "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+    },
+    "stage": "discovery",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "authored-input-readiness",
+        "end": "2026-09-15T15:00:14.841784+00:00",
+        "start": "2026-09-15T15:00:13.841784+00:00"
+      }
+    ]
+  },
+  "experiment_id": "allocation-input-readiness-20260915",
+  "family": {
+    "attempt_budget": 189,
+    "history_reference": "research/broader-allocation-2026-09-15/dex-source-charter.md and custody-launch-failure.json:178scoped allocation rows+1charged unclaimed failedlaunch;44additional relatedDeFirows not independent or fresh. Admission2/6;4core development+1confirmation caps remain; original unclaimed gate178preserved.",
+    "mechanism_id": "btc-eth-spot-cash-capital-allocation",
+    "prior_attempts": 179
+  },
+  "inputs": {
+    "ancestry": {
+      "dataset": "authored-input-readiness",
+      "path": "research/broader-allocation-2026-09-15/ancestry-crosswalk.json",
+      "sha256": "5ac19444ff2c016b32334701551d86fd866acb8b837222536669cb4bc774dcb2"
+    },
+    "cash_result": {
+      "dataset": "authored-input-readiness",
+      "path": "research_runs/allocation-cash-terms-20260915/outputs/cash-terms.json",
+      "sha256": "5be1cc7fff5f24dd58625c5bed7478d8aa68162f997b7f4000ab0cae6dd8a142"
+    },
+    "engine_result": {
+      "dataset": "authored-input-readiness",
+      "path": "research_runs/allocation-spot-engine-20260915/outputs/engine-cases.json",
+      "sha256": "9129fff1f063189c3bd8a2b5842c843ce6f7643457ed0d7c0354807840c1df15"
+    },
+    "spec": {
+      "dataset": "authored-input-readiness",
+      "path": "research/broader-allocation-2026-09-15/readiness-spec.json",
+      "sha256": "2bcc70af80babd4008733d65a6f2826969aebd8136863c22a56209fdcd0a254b"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2026-09-15T14:09:54.742416+00:00",
+      "identity": "broader-allocation-authored-dex-spec-20260915",
+      "start": "2026-09-15T14:09:53.742416+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-15T14:16:11.985774+00:00",
+      "identity": "broader-allocation-authored-spot-spec-20260915",
+      "start": "2026-09-15T14:16:10.985774+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-15T14:48:07.735893+00:00",
+      "identity": "retained-evidence-authored-cash-contract-20260915",
+      "start": "2026-09-15T14:48:06.735893+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-15T14:54:13.786874+00:00",
+      "identity": "fixed-invented-funded-spot-examples-20260915",
+      "start": "2026-09-15T14:54:12.786874+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-15T15:00:14.841784+00:00",
+      "identity": "fixed-historical-source-readiness-spec-20260915",
+      "start": "2026-09-15T15:00:13.841784+00:00",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "broader-allocation-2026-09-15",
+  "registration": "research/broader-allocation-2026-09-15/gates-input-readiness.json",
+  "registration_sha256": "56d9b354ac4fe9e8bd9ffe5bd12f27637735d62a8a7617ef79506c6e5e5b199c",
+  "schema_version": 1,
+  "source": "7efdd8835e363ec7f006001a08c2843b1ca397ce",
+  "started_at": "2026-09-15T15:04:10.029445+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "authored-input-readiness",
+      "end": "2026-09-15T15:00:14.841784+00:00",
+      "identity": "fixed-historical-source-readiness-spec-20260915",
+      "start": "2026-09-15T15:00:13.841784+00:00",
+      "state": "exposed"
+    }
+  ]
+}

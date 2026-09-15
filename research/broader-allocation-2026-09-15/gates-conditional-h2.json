@@ -1,0 +1,630 @@
+{
+  "schema_version": 1,
+  "program_id": "broader-allocation-2026-09-15",
+  "families": {
+    "allocation-decision": {
+      "mechanism_id": "btc-eth-spot-cash-capital-allocation",
+      "prior_attempts": 179,
+      "attempt_budget": 189,
+      "history_reference": "research/broader-allocation-2026-09-15/dex-source-charter.md and custody-launch-failure.json:178scoped allocation rows+1charged unclaimed failedlaunch;44additional relatedDeFirows not independent or fresh. Admission2/6;4core development+1confirmation caps remain; original unclaimed gate178preserved."
+    }
+  },
+  "datasets": {
+    "authored-dex-spec": {
+      "identity": "broader-allocation-authored-dex-spec-20260915",
+      "history_reference": "research/broader-allocation-2026-09-15/dex-source-charter.md; authoredspec/metadata alreadyexposed, externalreceipts source-only; futurefinancialuse mustimport actualblock/timeexposures",
+      "exposures": [
+        {
+          "start": "2026-09-15T14:09:53.742416+00:00",
+          "end": "2026-09-15T14:09:54.742416+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    "authored-spot-spec": {
+      "identity": "broader-allocation-authored-spot-spec-20260915",
+      "history_reference": "research/broader-allocation-2026-09-15/spot-source-charter.md; exposed authored specification only, actualcaptureUTCretainedsourceoutputs importedbeforefuturefinancialuse",
+      "exposures": [
+        {
+          "start": "2026-09-15T14:16:10.985774+00:00",
+          "end": "2026-09-15T14:16:11.985774+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    "authored-cash-terms": {
+      "identity": "retained-evidence-authored-cash-contract-20260915",
+      "history_reference": "cash-terms-charter.md; explicit conventions and unknowns, no market arrays",
+      "exposures": [
+        {
+          "start": "2026-09-15T14:48:06.735893+00:00",
+          "end": "2026-09-15T14:48:07.735893+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    "authored-spot-engine": {
+      "identity": "fixed-invented-funded-spot-examples-20260915",
+      "history_reference": "spot-engine-charter.md; invented examples and exposed cash audit",
+      "exposures": [
+        {
+          "start": "2026-09-15T14:54:12.786874+00:00",
+          "end": "2026-09-15T14:54:13.786874+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    "authored-input-readiness": {
+      "identity": "fixed-historical-source-readiness-spec-20260915",
+      "history_reference": "readiness-charter.md; authored query contract and already-exposed admission outputs. Captured market intervals/receipt clocks remain exposed for future use.",
+      "exposures": [
+        {
+          "start": "2026-09-15T15:00:13.841784+00:00",
+          "end": "2026-09-15T15:00:14.841784+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    "allocation-usdc-daily-proxy": {
+      "identity": "binance-btcusdc-ethusdc-kraken-usdcusd-daily-proxy-20250213-20260915",
+      "history_reference": "readiness-charter.md and allocation-input-readiness-20260915; all raw received fields and normalized panel exposed. Prior178core/44DeFi ancestors and spent historical windows remain; no fresh confirmation.",
+      "exposures": [
+        {
+          "start": "2025-02-13T00:00:00Z",
+          "end": "2026-09-16T00:00:00Z",
+          "state": "exposed"
+        }
+      ]
+    }
+  },
+  "experiments": {
+    "allocation-dex-source-20260915": {
+      "family": "allocation-decision",
+      "parent": null,
+      "question": "Can the fixed free RPC source on each named chain provide18predeclared chain/pool/gas/historical-state fields without implying tradability or profit?",
+      "charter": {
+        "path": "research/broader-allocation-2026-09-15/dex-source-charter.md",
+        "sha256": "8cfc4fc5927286ad2e209fec564bdd808a9a7087be7e8090492e06e82af98247"
+      },
+      "stage": "discovery",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/broader-allocation-2026-09-15/dex_source.py": "b5faf5b8fae3ab3cef7d972f9488dbafb68159c5f1dd53cb8423529a16a025d4",
+        "research/broader-allocation-2026-09-15/dex_transport.py": "88f8d7ddee801261db095f670003c676e40d45c552113fb3f9b09b66692ad104",
+        "research/broader-allocation-2026-09-15/dex_launcher.py": "e06dc4fa4e7f6054baafd9e06e5070cd9b1308ca40177f2d21a366e84f079e9d",
+        "research/broader-allocation-2026-09-15/DEFI-HISTORY.md": "73749879a8bf6a1bfbc12cfea4612085583becb51313cc17bb819d09874dabc3",
+        "research/broader-allocation-2026-09-15/custody-launch-failure.json": "240ab044cfb98fd0a2ddf4ec2cc9b7d74978a9a9703c0ae9229835c3bf88189b",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "authored-dex-spec",
+          "start": "2026-09-15T14:09:53.742416+00:00",
+          "end": "2026-09-15T14:09:54.742416+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "spec": {
+          "path": "research/broader-allocation-2026-09-15/dex-source-spec.json",
+          "sha256": "f38735533fa4a7967c093749274c8fa7562f09c2c5f6b29d7dfe27a57f5cef6d",
+          "dataset": "authored-dex-spec"
+        },
+        "ancestry": {
+          "path": "research/broader-allocation-2026-09-15/defi-ancestry-crosswalk.json",
+          "sha256": "1888ea5f36f151a98baeb6acf119125c8395568c0a7ccd003892005d20d9e1ab",
+          "dataset": "authored-dex-spec"
+        },
+        "failed_launch": {
+          "path": "research/broader-allocation-2026-09-15/custody-launch-failure.json",
+          "sha256": "240ab044cfb98fd0a2ddf4ec2cc9b7d74978a9a9703c0ae9229835c3bf88189b",
+          "dataset": "authored-dex-spec"
+        }
+      },
+      "cells": [
+        "ethereum-chain",
+        "ethereum-finalized",
+        "ethereum-pool",
+        "ethereum-gas",
+        "ethereum-history_header",
+        "ethereum-history_code",
+        "base-chain",
+        "base-finalized",
+        "base-pool",
+        "base-gas",
+        "base-history_header",
+        "base-history_code",
+        "arbitrum-chain",
+        "arbitrum-finalized",
+        "arbitrum-pool",
+        "arbitrum-gas",
+        "arbitrum-history_header",
+        "arbitrum-history_code"
+      ],
+      "outputs": [
+        "ethereum-chain-receipt.json",
+        "ethereum-finalized-receipt.json",
+        "ethereum-pool-receipt.json",
+        "ethereum-gas-receipt.json",
+        "ethereum-history_header-receipt.json",
+        "ethereum-history_code-receipt.json",
+        "base-chain-receipt.json",
+        "base-finalized-receipt.json",
+        "base-pool-receipt.json",
+        "base-gas-receipt.json",
+        "base-history_header-receipt.json",
+        "base-history_code-receipt.json",
+        "arbitrum-chain-receipt.json",
+        "arbitrum-finalized-receipt.json",
+        "arbitrum-pool-receipt.json",
+        "arbitrum-gas-receipt.json",
+        "arbitrum-history_header-receipt.json",
+        "arbitrum-history_code-receipt.json",
+        "source-summary.json"
+      ]
+    },
+    "allocation-spot-source-20260915": {
+      "family": "allocation-decision",
+      "parent": "allocation-dex-source-20260915",
+      "question": "Does the fixed Binance public host provide current BTCUSDC/ETHUSDC literal spot rules and two-sided source snapshots?",
+      "charter": {
+        "path": "research/broader-allocation-2026-09-15/spot-source-charter.md",
+        "sha256": "e21d0dcf387bc8964b39926dde96a71423da6c983720a21f2ae7bfa61bb894e6"
+      },
+      "stage": "discovery",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/broader-allocation-2026-09-15/spot_source.py": "5707a30db0599b0452d6e6a85c8a9013aefd62eaf969e875ae1e5edd9eb7cf92",
+        "research/broader-allocation-2026-09-15/spot_transport.py": "d9b91e7b25498a2b2fe08674b30523da4add4fb39fc8d5659b083cde071b73b1",
+        "research/broader-allocation-2026-09-15/dex_source.py": "b5faf5b8fae3ab3cef7d972f9488dbafb68159c5f1dd53cb8423529a16a025d4",
+        "research/broader-allocation-2026-09-15/dex_transport.py": "88f8d7ddee801261db095f670003c676e40d45c552113fb3f9b09b66692ad104",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "authored-spot-spec",
+          "start": "2026-09-15T14:16:10.985774+00:00",
+          "end": "2026-09-15T14:16:11.985774+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "spec": {
+          "path": "research/broader-allocation-2026-09-15/spot-source-spec.json",
+          "sha256": "0470987e1b88d7529ff792ad5b0ad1b25518ea2f65c55d2f6e7cdf69c1fbf35a",
+          "dataset": "authored-spot-spec"
+        },
+        "ancestry": {
+          "path": "research/broader-allocation-2026-09-15/ancestry-crosswalk.json",
+          "sha256": "5ac19444ff2c016b32334701551d86fd866acb8b837222536669cb4bc774dcb2",
+          "dataset": "authored-spot-spec"
+        }
+      },
+      "cells": [
+        "clock",
+        "symbols",
+        "btc_depth",
+        "eth_depth"
+      ],
+      "outputs": [
+        "clock-receipt.json",
+        "symbols-receipt.json",
+        "btc_depth-receipt.json",
+        "eth_depth-receipt.json",
+        "source-summary.json"
+      ]
+    },
+    "allocation-cash-terms-20260915": {
+      "family": "allocation-decision",
+      "parent": "allocation-spot-source-20260915",
+      "question": "Does retained evidence establish the required USD cash, fee, funding and exit contract, or only explicit conditional conventions?",
+      "charter": {
+        "path": "research/broader-allocation-2026-09-15/cash-terms-charter.md",
+        "sha256": "4f2f2ec853bd4d7fe6d98d1a57b8cb8d950b1d2a52761004ef0a20530e9a07c5"
+      },
+      "stage": "discovery",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/broader-allocation-2026-09-15/cash_terms.py": "8743e15b92b1a9b09bb3e84509461ccbd143192a72fb0185b59ae200b6de5ed4",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "authored-cash-terms",
+          "start": "2026-09-15T14:48:06.735893+00:00",
+          "end": "2026-09-15T14:48:07.735893+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "spec": {
+          "path": "research/broader-allocation-2026-09-15/cash-terms-spec.json",
+          "sha256": "23e926baafde29ca17db35b7cd5e7b874986ff85ac18c894129657899d29850e",
+          "dataset": "authored-cash-terms"
+        },
+        "ancestry": {
+          "path": "research/broader-allocation-2026-09-15/ancestry-crosswalk.json",
+          "sha256": "5ac19444ff2c016b32334701551d86fd866acb8b837222536669cb4bc774dcb2",
+          "dataset": "authored-cash-terms"
+        },
+        "spot_result": {
+          "path": "research/broader-allocation-2026-09-15/SPOT-SOURCE-RESULT.md",
+          "sha256": "f9ec99479e1304243bb7054f79ff925c6306973ed0c2efba9c860081ad8a7e2e",
+          "dataset": "authored-cash-terms"
+        },
+        "dex_result": {
+          "path": "research/broader-allocation-2026-09-15/DEX-SOURCE-RESULT.md",
+          "sha256": "0c89496c7185e74fe5c6ce91e6c12414f4484ecccf873218baaa090cfa48066f",
+          "dataset": "authored-cash-terms"
+        }
+      },
+      "cells": [
+        "capital-boundary",
+        "cash-control",
+        "risk-tax-horizon",
+        "confirmed-funding-basis",
+        "account-fees",
+        "usdc-usd-valuation",
+        "implemented-cash-vehicle",
+        "entry-conversion-transfer",
+        "terminal-exit",
+        "cex-account-eligibility",
+        "dex-fees-and-transfer",
+        "historical-applicability"
+      ],
+      "outputs": [
+        "cash-terms.json"
+      ]
+    },
+    "allocation-spot-engine-20260915": {
+      "family": "allocation-decision",
+      "parent": "allocation-cash-terms-20260915",
+      "question": "Does the funded ledger conserve all cash and inventories with explicit fees, unavailable values and causal supplied clocks?",
+      "charter": {
+        "path": "research/broader-allocation-2026-09-15/spot-engine-charter.md",
+        "sha256": "5b4fe91f31d6c3190e748615012ff3c920820df84f6fc56566320a77faa34aec"
+      },
+      "stage": "discovery",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/broader-allocation-2026-09-15/spot_book.py": "28877e2c61962f1c8afd5c56610a393b5745f8e4beec9e3e00159c9134c97709",
+        "research/broader-allocation-2026-09-15/engine_admission.py": "c5392f409d991d816dd25bfc9047e9cc9fb088ac6f143290026f5951e313526b",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "authored-spot-engine",
+          "start": "2026-09-15T14:54:12.786874+00:00",
+          "end": "2026-09-15T14:54:13.786874+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "spec": {
+          "path": "research/broader-allocation-2026-09-15/spot-engine-spec.json",
+          "sha256": "855584e605ca2316e4f55ae1af202557c8cd001559d8fd6df5ef08dff5b7f380",
+          "dataset": "authored-spot-engine"
+        },
+        "cash_result": {
+          "path": "research_runs/allocation-cash-terms-20260915/outputs/cash-terms.json",
+          "sha256": "5be1cc7fff5f24dd58625c5bed7478d8aa68162f997b7f4000ab0cae6dd8a142",
+          "dataset": "authored-spot-engine"
+        },
+        "ancestry": {
+          "path": "research/broader-allocation-2026-09-15/ancestry-crosswalk.json",
+          "sha256": "5ac19444ff2c016b32334701551d86fd866acb8b837222536669cb4bc774dcb2",
+          "dataset": "authored-spot-engine"
+        }
+      },
+      "cells": [
+        "round-trip",
+        "full-capital-profit",
+        "base-fee",
+        "third-asset-fee",
+        "insufficient-cash",
+        "phased-entry-idle-cash",
+        "lot-dust-nav",
+        "unvalued-transfer",
+        "pending-transfer-nav",
+        "pending-not-spendable",
+        "settlement-no-double-count",
+        "missing-held",
+        "depeg-token-total-loss",
+        "unknown-exit-fee",
+        "causal-next-bar",
+        "future-information-rejected",
+        "pre-decision-fill-rejected",
+        "late-fill-rejected",
+        "simple-versus-log-convention"
+      ],
+      "outputs": [
+        "engine-cases.json"
+      ]
+    },
+    "allocation-input-readiness-20260915": {
+      "family": "allocation-decision",
+      "parent": "allocation-spot-engine-20260915",
+      "question": "Can a fixed historical cohort supply complete native-quote and USD-proxy bars, causal clock conventions and defensible estimator/power readiness without financial outcomes?",
+      "charter": {
+        "path": "research/broader-allocation-2026-09-15/readiness-charter.md",
+        "sha256": "8ce0a458bc4bbf8abb4b8e38eef4b2d7626fc00015fdcc995a20d496ae280c1e"
+      },
+      "stage": "discovery",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/broader-allocation-2026-09-15/input_readiness.py": "828d197434caf40e6d532963bbc22da12846922652479bd503014ce1c48bf3d4",
+        "research/broader-allocation-2026-09-15/readiness_transport.py": "73b130a738bebf4241271b4b89f792dd665d16eca7da7f9ab8b8b86736723f4b",
+        "research/broader-allocation-2026-09-15/dex_source.py": "b5faf5b8fae3ab3cef7d972f9488dbafb68159c5f1dd53cb8423529a16a025d4",
+        "research/broader-allocation-2026-09-15/dex_transport.py": "88f8d7ddee801261db095f670003c676e40d45c552113fb3f9b09b66692ad104",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "authored-input-readiness",
+          "start": "2026-09-15T15:00:13.841784+00:00",
+          "end": "2026-09-15T15:00:14.841784+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "spec": {
+          "path": "research/broader-allocation-2026-09-15/readiness-spec.json",
+          "sha256": "2bcc70af80babd4008733d65a6f2826969aebd8136863c22a56209fdcd0a254b",
+          "dataset": "authored-input-readiness"
+        },
+        "ancestry": {
+          "path": "research/broader-allocation-2026-09-15/ancestry-crosswalk.json",
+          "sha256": "5ac19444ff2c016b32334701551d86fd866acb8b837222536669cb4bc774dcb2",
+          "dataset": "authored-input-readiness"
+        },
+        "cash_result": {
+          "path": "research_runs/allocation-cash-terms-20260915/outputs/cash-terms.json",
+          "sha256": "5be1cc7fff5f24dd58625c5bed7478d8aa68162f997b7f4000ab0cae6dd8a142",
+          "dataset": "authored-input-readiness"
+        },
+        "engine_result": {
+          "path": "research_runs/allocation-spot-engine-20260915/outputs/engine-cases.json",
+          "sha256": "9129fff1f063189c3bd8a2b5842c843ce6f7643457ed0d7c0354807840c1df15",
+          "dataset": "authored-input-readiness"
+        }
+      },
+      "cells": [
+        "btc_bars",
+        "eth_bars",
+        "usd_identity",
+        "usd_bars",
+        "joined-panel",
+        "estimator-requirements",
+        "confirmation-power"
+      ],
+      "outputs": [
+        "btc_bars-receipt.json",
+        "eth_bars-receipt.json",
+        "usd_identity-receipt.json",
+        "usd_bars-receipt.json",
+        "panel.json",
+        "readiness.json"
+      ]
+    },
+    "allocation-conditional-h2-20260915": {
+      "family": "allocation-decision",
+      "parent": "allocation-input-readiness-20260915",
+      "question": "What are the fixed H2 conditional full-capital cash, benchmark, stress and diagnostic outcomes without a real-account promotion claim?",
+      "charter": {
+        "path": "research/broader-allocation-2026-09-15/conditional-charter.md",
+        "sha256": "1a3d780b7b61811cfea70dcc55fda3cc9c43e7d35cef3b43d8ecbd163293bc95"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/broader-allocation-2026-09-15/conditional_book.py": "dc4a6d49d5f0c66ae11491e5059f74b3a2527cea0535dd7259b60acebd437beb",
+        "research/broader-allocation-2026-09-15/conditional_run.py": "ac856a90e4a236c16804e7ca8f2a37cd6634db650657fd1a1655c3875286a3d2",
+        "research/broader-allocation-2026-09-15/conditional_launcher.py": "3f594623597df65c5298b03691d08b1cc6acbe3f7d9558b5f7a067a39f719a96",
+        "research/broader-allocation-2026-09-15/register_conditional.py": "bccede21e0b0feaaa6de1242611166c86ea3afeb77b1c334dfd850f5f0051064",
+        "research/broader-allocation-2026-09-15/spot_book.py": "28877e2c61962f1c8afd5c56610a393b5745f8e4beec9e3e00159c9134c97709",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "allocation-usdc-daily-proxy",
+          "start": "2025-02-13T00:00:00Z",
+          "end": "2026-09-02T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "spec": {
+          "path": "research/broader-allocation-2026-09-15/conditional-spec.json",
+          "sha256": "b9db53367e4b4a3e8d59e444b0019e32bb65dc9093a398c8c92c76a1c427b908",
+          "dataset": "allocation-usdc-daily-proxy"
+        },
+        "ancestry": {
+          "path": "research/broader-allocation-2026-09-15/ancestry-crosswalk.json",
+          "sha256": "5ac19444ff2c016b32334701551d86fd866acb8b837222536669cb4bc774dcb2",
+          "dataset": "allocation-usdc-daily-proxy"
+        },
+        "cash_terms": {
+          "path": "research_runs/allocation-cash-terms-20260915/outputs/cash-terms.json",
+          "sha256": "5be1cc7fff5f24dd58625c5bed7478d8aa68162f997b7f4000ab0cae6dd8a142",
+          "dataset": "allocation-usdc-daily-proxy"
+        },
+        "panel": {
+          "path": "research_runs/allocation-input-readiness-20260915/outputs/panel.json",
+          "sha256": "9b96ad55128b6e8771311c4aa90841b5f45d59365ed9124934b0f43e6f0244b3",
+          "dataset": "allocation-usdc-daily-proxy"
+        }
+      },
+      "cells": [
+        "h2-primary",
+        "h2-doubled",
+        "h2-frictionless",
+        "b0-primary",
+        "b0-doubled",
+        "b0-frictionless",
+        "b1-primary",
+        "b1-doubled",
+        "b1-frictionless",
+        "b2-primary",
+        "b2-doubled",
+        "b2-frictionless",
+        "b3-primary",
+        "b3-doubled",
+        "b3-frictionless",
+        "b4-primary",
+        "b4-doubled",
+        "b4-frictionless",
+        "b5-primary",
+        "b5-doubled",
+        "b5-frictionless",
+        "b6-primary",
+        "b6-doubled",
+        "b6-frictionless",
+        "b7-primary",
+        "b7-doubled",
+        "b7-frictionless",
+        "b8-primary",
+        "b8-doubled",
+        "b8-frictionless",
+        "b9-primary",
+        "b9-doubled",
+        "b9-frictionless"
+      ],
+      "outputs": [
+        "h2-primary-attempt.json",
+        "h2-primary.json",
+        "h2-doubled-attempt.json",
+        "h2-doubled.json",
+        "h2-frictionless-attempt.json",
+        "h2-frictionless.json",
+        "b0-primary-attempt.json",
+        "b0-primary.json",
+        "b0-doubled-attempt.json",
+        "b0-doubled.json",
+        "b0-frictionless-attempt.json",
+        "b0-frictionless.json",
+        "b1-primary-attempt.json",
+        "b1-primary.json",
+        "b1-doubled-attempt.json",
+        "b1-doubled.json",
+        "b1-frictionless-attempt.json",
+        "b1-frictionless.json",
+        "b2-primary-attempt.json",
+        "b2-primary.json",
+        "b2-doubled-attempt.json",
+        "b2-doubled.json",
+        "b2-frictionless-attempt.json",
+        "b2-frictionless.json",
+        "b3-primary-attempt.json",
+        "b3-primary.json",
+        "b3-doubled-attempt.json",
+        "b3-doubled.json",
+        "b3-frictionless-attempt.json",
+        "b3-frictionless.json",
+        "b4-primary-attempt.json",
+        "b4-primary.json",
+        "b4-doubled-attempt.json",
+        "b4-doubled.json",
+        "b4-frictionless-attempt.json",
+        "b4-frictionless.json",
+        "b5-primary-attempt.json",
+        "b5-primary.json",
+        "b5-doubled-attempt.json",
+        "b5-doubled.json",
+        "b5-frictionless-attempt.json",
+        "b5-frictionless.json",
+        "b6-primary-attempt.json",
+        "b6-primary.json",
+        "b6-doubled-attempt.json",
+        "b6-doubled.json",
+        "b6-frictionless-attempt.json",
+        "b6-frictionless.json",
+        "b7-primary-attempt.json",
+        "b7-primary.json",
+        "b7-doubled-attempt.json",
+        "b7-doubled.json",
+        "b7-frictionless-attempt.json",
+        "b7-frictionless.json",
+        "b8-primary-attempt.json",
+        "b8-primary.json",
+        "b8-doubled-attempt.json",
+        "b8-doubled.json",
+        "b8-frictionless-attempt.json",
+        "b8-frictionless.json",
+        "b9-primary-attempt.json",
+        "b9-primary.json",
+        "b9-doubled-attempt.json",
+        "b9-doubled.json",
+        "b9-frictionless-attempt.json",
+        "b9-frictionless.json",
+        "h2-primary-placebo-attempt.json",
+        "h2-primary-placebo.json",
+        "h2-doubled-placebo-attempt.json",
+        "h2-doubled-placebo.json",
+        "h2-frictionless-placebo-attempt.json",
+        "h2-frictionless-placebo.json",
+        "summary.json",
+        "benchmarks.json"
+      ]
+    }
+  }
+}

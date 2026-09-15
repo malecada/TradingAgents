@@ -1,0 +1,30 @@
+{
+  "synthetic_only": true,
+  "external_requests": 0,
+  "tested_source_hashes": {
+    "conditional_book.py": "dc4a6d49d5f0c66ae11491e5059f74b3a2527cea0535dd7259b60acebd437beb",
+    "conditional_run.py": "ac856a90e4a236c16804e7ca8f2a37cd6634db650657fd1a1655c3875286a3d2",
+    "spot_book.py": "28877e2c61962f1c8afd5c56610a393b5745f8e4beec9e3e00159c9134c97709"
+  },
+  "resource": {
+    "child_exit_code": 0,
+    "limit_reason": null,
+    "elapsed_seconds": 6.703898935000325,
+    "peak_sampled_tree_rss_bytes": 58167296,
+    "linux_children_ru_maxrss_kib": 28648,
+    "rss_limit_bytes": 536870912,
+    "wall_limit_seconds": 600,
+    "sample_interval_seconds": 0.02,
+    "virtual_address_space_limit": "unlimited",
+    "qualification": "Nominal 20 ms sampled aggregate RSS with one 20 ms process-exit retry; brief overshoot can occur. No detached/background or secondary-thread subprocesses admitted. Shared pages may be counted twice. ru_maxrss is the largest individual child peak, not aggregate."
+  },
+  "verification": {
+    "experiment": "toy-financial",
+    "status": "complete",
+    "cell_count": 33,
+    "unavailable_count": 3,
+    "output_count": 74,
+    "verification": "structural hashes and denominators only; no scientific validation"
+  },
+  "disposable_repository_removed_after_return": true
+}
