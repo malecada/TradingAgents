@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "program_id": "broader-allocation-2026-09-15",
+  "families": {
+    "allocation-decision": {
+      "mechanism_id": "btc-eth-spot-cash-capital-allocation",
+      "prior_attempts": 179,
+      "attempt_budget": 189,
+      "history_reference": "research/broader-allocation-2026-09-15/dex-source-charter.md and custody-launch-failure.json:178scoped allocation rows+1charged unclaimed failedlaunch;44additional relatedDeFirows not independent or fresh. Admission2/6;4core development+1confirmation caps remain; original unclaimed gate178preserved."
+    }
+  },
+  "datasets": {
+    "authored-dex-spec": {
+      "identity": "broader-allocation-authored-dex-spec-20260915",
+      "history_reference": "research/broader-allocation-2026-09-15/dex-source-charter.md; authoredspec/metadata alreadyexposed, externalreceipts source-only; futurefinancialuse mustimport actualblock/timeexposures",
+      "exposures": [
+        {
+          "start": "2026-09-15T14:09:53.742416+00:00",
+          "end": "2026-09-15T14:09:54.742416+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    "authored-spot-spec": {
+      "identity": "broader-allocation-authored-spot-spec-20260915",
+      "history_reference": "research/broader-allocation-2026-09-15/spot-source-charter.md; exposed authored specification only, actualcaptureUTCretainedsourceoutputs importedbeforefuturefinancialuse",
+      "exposures": [
+        {
+          "start": "2026-09-15T14:16:10.985774+00:00",
+          "end": "2026-09-15T14:16:11.985774+00:00",
+          "state": "exposed"
+        }
+      ]
+    }
+  },
+  "experiments": {
+    "allocation-dex-source-20260915": {
+      "family": "allocation-decision",
+      "parent": null,
+      "question": "Can the fixed free RPC source on each named chain provide18predeclared chain/pool/gas/historical-state fields without implying tradability or profit?",
+      "charter": {
+        "path": "research/broader-allocation-2026-09-15/dex-source-charter.md",
+        "sha256": "8cfc4fc5927286ad2e209fec564bdd808a9a7087be7e8090492e06e82af98247"
+      },
+      "stage": "discovery",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/broader-allocation-2026-09-15/dex_source.py": "b5faf5b8fae3ab3cef7d972f9488dbafb68159c5f1dd53cb8423529a16a025d4",
+        "research/broader-allocation-2026-09-15/dex_transport.py": "88f8d7ddee801261db095f670003c676e40d45c552113fb3f9b09b66692ad104",
+        "research/broader-allocation-2026-09-15/dex_launcher.py": "e06dc4fa4e7f6054baafd9e06e5070cd9b1308ca40177f2d21a366e84f079e9d",
+        "research/broader-allocation-2026-09-15/DEFI-HISTORY.md": "73749879a8bf6a1bfbc12cfea4612085583becb51313cc17bb819d09874dabc3",
+        "research/broader-allocation-2026-09-15/custody-launch-failure.json": "240ab044cfb98fd0a2ddf4ec2cc9b7d74978a9a9703c0ae9229835c3bf88189b",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "authored-dex-spec",
+          "start": "2026-09-15T14:09:53.742416+00:00",
+          "end": "2026-09-15T14:09:54.742416+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "spec": {
+          "path": "research/broader-allocation-2026-09-15/dex-source-spec.json",
+          "sha256": "f38735533fa4a7967c093749274c8fa7562f09c2c5f6b29d7dfe27a57f5cef6d",
+          "dataset": "authored-dex-spec"
+        },
+        "ancestry": {
+          "path": "research/broader-allocation-2026-09-15/defi-ancestry-crosswalk.json",
+          "sha256": "1888ea5f36f151a98baeb6acf119125c8395568c0a7ccd003892005d20d9e1ab",
+          "dataset": "authored-dex-spec"
+        },
+        "failed_launch": {
+          "path": "research/broader-allocation-2026-09-15/custody-launch-failure.json",
+          "sha256": "240ab044cfb98fd0a2ddf4ec2cc9b7d74978a9a9703c0ae9229835c3bf88189b",
+          "dataset": "authored-dex-spec"
+        }
+      },
+      "cells": [
+        "ethereum-chain",
+        "ethereum-finalized",
+        "ethereum-pool",
+        "ethereum-gas",
+        "ethereum-history_header",
+        "ethereum-history_code",
+        "base-chain",
+        "base-finalized",
+        "base-pool",
+        "base-gas",
+        "base-history_header",
+        "base-history_code",
+        "arbitrum-chain",
+        "arbitrum-finalized",
+        "arbitrum-pool",
+        "arbitrum-gas",
+        "arbitrum-history_header",
+        "arbitrum-history_code"
+      ],
+      "outputs": [
+        "ethereum-chain-receipt.json",
+        "ethereum-finalized-receipt.json",
+        "ethereum-pool-receipt.json",
+        "ethereum-gas-receipt.json",
+        "ethereum-history_header-receipt.json",
+        "ethereum-history_code-receipt.json",
+        "base-chain-receipt.json",
+        "base-finalized-receipt.json",
+        "base-pool-receipt.json",
+        "base-gas-receipt.json",
+        "base-history_header-receipt.json",
+        "base-history_code-receipt.json",
+        "arbitrum-chain-receipt.json",
+        "arbitrum-finalized-receipt.json",
+        "arbitrum-pool-receipt.json",
+        "arbitrum-gas-receipt.json",
+        "arbitrum-history_header-receipt.json",
+        "arbitrum-history_code-receipt.json",
+        "source-summary.json"
+      ]
+    },
+    "allocation-spot-source-20260915": {
+      "family": "allocation-decision",
+      "parent": "allocation-dex-source-20260915",
+      "question": "Does the fixed Binance public host provide current BTCUSDC/ETHUSDC literal spot rules and two-sided source snapshots?",
+      "charter": {
+        "path": "research/broader-allocation-2026-09-15/spot-source-charter.md",
+        "sha256": "e21d0dcf387bc8964b39926dde96a71423da6c983720a21f2ae7bfa61bb894e6"
+      },
+      "stage": "discovery",
+      "reuse": "exploratory",
+      "selection": null,
+      "source_files": {
+        "research/broader-allocation-2026-09-15/spot_source.py": "5707a30db0599b0452d6e6a85c8a9013aefd62eaf969e875ae1e5edd9eb7cf92",
+        "research/broader-allocation-2026-09-15/spot_transport.py": "d9b91e7b25498a2b2fe08674b30523da4add4fb39fc8d5659b083cde071b73b1",
+        "research/broader-allocation-2026-09-15/dex_source.py": "b5faf5b8fae3ab3cef7d972f9488dbafb68159c5f1dd53cb8423529a16a025d4",
+        "research/broader-allocation-2026-09-15/dex_transport.py": "88f8d7ddee801261db095f670003c676e40d45c552113fb3f9b09b66692ad104",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "windows": [
+        {
+          "dataset": "authored-spot-spec",
+          "start": "2026-09-15T14:16:10.985774+00:00",
+          "end": "2026-09-15T14:16:11.985774+00:00",
+          "availability": "existing"
+        }
+      ],
+      "inputs": {
+        "spec": {
+          "path": "research/broader-allocation-2026-09-15/spot-source-spec.json",
+          "sha256": "0470987e1b88d7529ff792ad5b0ad1b25518ea2f65c55d2f6e7cdf69c1fbf35a",
+          "dataset": "authored-spot-spec"
+        },
+        "ancestry": {
+          "path": "research/broader-allocation-2026-09-15/ancestry-crosswalk.json",
+          "sha256": "5ac19444ff2c016b32334701551d86fd866acb8b837222536669cb4bc774dcb2",
+          "dataset": "authored-spot-spec"
+        }
+      },
+      "cells": [
+        "clock",
+        "symbols",
+        "btc_depth",
+        "eth_depth"
+      ],
+      "outputs": [
+        "clock-receipt.json",
+        "symbols-receipt.json",
+        "btc_depth-receipt.json",
+        "eth_depth-receipt.json",
+        "source-summary.json"
+      ]
+    }
+  }
+}
