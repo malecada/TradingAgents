@@ -75,3 +75,8 @@ revisable; finishing this initial list does not establish research exhaustion.
   causal transfer, hedge confounding and incomplete comparison/source contracts.
   No new allowance, collector or financial test. Reopen only with a concrete
   supported mechanism and full reviewed protocol; no sign/horizon sweep.
+
+Current task routing: user requested focus on the existing options study and
+will pursue broader ideas in other sessions. Non-options items remain preserved
+for handoff, not active tasks here. Latest options operational check at12:32UTC
+shows continuing record accumulation and no recorded supervisor exit.

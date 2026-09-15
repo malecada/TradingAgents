@@ -4,6 +4,13 @@ Research remains authorized by “lets keep going then”, superseding the earli
 pause-after-options/VPS boundary. Zero strategies are validated. Branch
 `research/strategy-search-2026-09-11`; inspect actual claims and Git status first.
 
+
+Current task scope, user instruction September15: continue the existing options
+study; broader strategy exploration will be handled in other sessions. Preserve
+the non-options discovery/design results for those sessions, but do not start
+new branches from this task. This routes work between sessions; it does not
+change shared family budgets or authorize another options episode.
+
 ## Current status: timing successor collecting after successful initial selection
 
 There are21identities:16complete,4failed,1active. The active target is
@@ -14,13 +21,16 @@ AssignmentSHA375d70df4656f8ad851b038ffaabb0cf61bb71115aadd750ac2d8dc9a933d4a3.
 The original options budget4/prior1 is preserved; effective6 is now consumed.
 There is no seventh allowance. Never call start again or change its source/gate.
 
-Latest authenticated operational observation: September15 11:00:32.157477UTC.
+Latest authenticated operational observation: September15 12:32:30.410017UTC.
 The Python worker is alive in the original pane709702; BTC and ETH initial
 selection statuses are both complete. There are3bootstrap,8known and8selected
-receipts, with no source seal or supervisor exit. This establishes operational
+receipts at initial entry. The latest check has3bootstrap,16known,16selected and
+5daily receipts (40total), with no source seal or supervisor exit. These are
+retained-record counts, not financial/source admissibility verdicts. This establishes operational
 progress past the earlier initial-selection failure; it is not full source
 admission, selected-quote economic interpretation or a profitability result.
-See reviews/options-timing-operational-entry-check-20260915.json. Continue the
+See reviews/options-timing-operational-check-20260915-123230.json and the
+preserved initial-entry check. Continue the
 frozen collection; no restart, replacement selection or interim financial look.
 
 

@@ -1,6 +1,6 @@
 # Current research state — September 15, 2026
 
-**Current scope: research resumed September 15; complete options/VPS integration first. Zero validated strategies.**
+**Current task scope: continue the existing options study; broader exploration belongs to the user’s other sessions. Zero validated strategies.**
 The user subsequently said “lets keep going then”, lifting the earlier
 pause-after-setup instruction. The first prospective options episode failed initial source freshness and is
 closed. All20predecessors are terminal(16complete/4failed). The separately reviewed
@@ -63,3 +63,10 @@ Preparation receipt: [September 10 implementation](../readiness-2026-09-10/IMPLE
 Historical detail: [handoff](../SESSION_HANDOFF_2026-09-10.md),
 [evidence/supersession index](EVIDENCE_INDEX.md), and Findings Sections 88–98.
 Use the active program state for exact next action, review and backup status.
+
+
+Latest task checkpoint: September15 12:32:30.410017UTC, the same options worker
+is alive;40records exist across bootstrap/hourly/daily journals, no source seal
+or supervisor exit. See the active program state and dated operational receipt.
+These are operability facts only. No new experiment, strategy branch or automatic
+Codex wakeup was started under the latest scope instruction.

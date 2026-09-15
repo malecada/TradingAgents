@@ -1,5 +1,12 @@
 # Re-entry — September15,2026
 
+Current task scope, user instruction September15: continue the existing options
+study; broader strategy exploration will be handled in other sessions. Preserve
+the non-options discovery/design results for those sessions, but do not start
+new branches from this task. This routes work between sessions; it does not
+change shared family budgets or authorize another options episode.
+
+
 Read AGENTS.md, docs/RESEARCH_START.md, current STATE.md, CHARTER.md, MAP.md,
 BACKLOG.md, decision-20.md and linked independent reviews. Research remains
 resumed under “lets keep going then”. Inspect Git and actual claims first.
@@ -50,3 +57,9 @@ receipt-time draft was deferred before capture for causal/hedge/comparison/sourc
 problems. No event-response implementation or new allowance exists. Do not treat
 the earlier conditional design-stage support as capture approval or automatically
 change the draft's sign/horizon/pair. The active options collection is unchanged.
+
+Latest operational check12:32:30.410017UTC: original pane709702 Python worker
+alive, initial BTC/ETH selections complete,3bootstrap/16known/16selected/5daily
+receipts, no source seal or supervisor exit. Forty records are retained; their
+count does not establish source or economic admission. No financial look or
+restart. Keep following the frozen options runbook. No automatic Codex wakeup.
