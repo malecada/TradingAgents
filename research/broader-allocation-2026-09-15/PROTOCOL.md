@@ -13,7 +13,9 @@ The proposed source-admission queue is finite:
 2. Reconcile exact H2–H5 ancestor/config/sample IDs and required allowance amendments.
 3. Audit named existing spot sources and historical filters against the needed
    daily signals and action prices; classify proxy-only/unavailable fields.
-4. Check custody, transfer/prefund timing, lots and cash costs for both capitals.
+4. Check custody, transfer/prefund timing, lots and cash costs at $10,000.
+   If capital is the blocker, derive and freeze one justified C_plus using
+   DESIGN before outcomes; report the minimum required amount and uncertainty.
 5. Verify a pooled signed-quantity cash engine with independent synthetic books.
 6. Freeze the development panel, precision/power design and confirmation route.
 
@@ -32,9 +34,12 @@ Follow [the repository lifecycle](../../docs/research/README.md), pinned Python
   effective limits, counts consumed, unknown multiplicity and exposed samples.
 - Exact recipe/action clock; half-open UTC windows and hashes; point-in-time
   source identity, venue/symbol/base/quote units, asset lifetime and missing rules.
-- Complete grid: four recipes, ten benchmarks, both capitals, three execution
-  scenarios and at most three fixed development windows. Preserve all 84 cells
-  per window even if cash scenarios coincide or an instrument is unavailable.
+- Complete grid: four recipes, ten benchmarks, $10,000 baseline and optionally
+  one predeclared larger capital amount, three execution scenarios and at most
+  three fixed development windows. Preserve 42 baseline cells, or all 84 cells
+  per window with C_plus, even if scenarios coincide or a cell is unavailable.
+  The capital constraint, amount derivation and eligibility decision are frozen
+  before financial outcomes; no outcome-driven capital search is admitted.
 - Source/dependency/runtime hashes, full charter hash, input hashes, cell IDs,
   output manifest, financial ledger contract, cost/convention/stress diagnostics,
   decision, multiplicity/power method, resource limits and stop rules.
@@ -135,18 +140,19 @@ unless the original sequential procedure explicitly allowed it. No optional
 stopping for profit, early promotion, automatic restart or extension after a
 near miss. A defective run preserves every artifact and consumes its budget.
 
-Proposed inference family covers four original recipes x two capitals x six
-contrasts (absolute P plus five primary benchmark differences): **48 tests**.
-Use one-sided Bonferroni alpha 0.05/48 or an independently reviewed simultaneous
-method frozen before data; this is not 48 independent hypotheses. Retain the
-full allocation even if only one/two recipes reach confirmation. Historical
+Proposed inference family reserves four original recipes x two possible capital
+scenarios x six contrasts (absolute P plus five primary benchmark differences):
+**48 tests maximum**. Use one-sided Bonferroni alpha 0.05/48 or an independently
+reviewed simultaneous method frozen before data; these are not independent
+hypotheses. Retain that conservative allocation if only the baseline is used
+or only one recipe/capital combination reaches confirmation. Historical
 unknown search multiplicity prohibits inferential validation on old data;
 future fixed selection and genuine untouched evidence are essential.
 
 Before activation, fix the expected-annual-cash estimator and uncertainty method
 with dependence-preserving simulation on registered development data and
-synthetic nulls. Report statistical rejection power at the proposed $20/$200
-annual incremental effect, with family error controlled at 5%. Do not call this
+synthetic nulls. Report statistical rejection power at the proposed 2%-of-C
+annual incremental effect ($200 at baseline), with family error controlled at 5%. Do not call this
 the probability of passing the entire adoption rule: when a true mean equals
 an observed-effect threshold, that threshold alone passes about half the time
 under a symmetric sampling model, regardless of how precisely it is measured.

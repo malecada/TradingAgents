@@ -1,6 +1,7 @@
 # Proposed investment contract
 
-**Draft numerical assumptions, not accepted user preferences or an executable gate.**
+**Capital baseline confirmed at $10,000; larger capital may be considered if needed.
+Other numerical preferences remain proposals.**
 The September 15 request authorizes design and state recovery. Before financial
 experiments, record the user's investment choices and resolve this contract.
 Changing a draft now is legitimate; changing a frozen gate after outcomes is not.
@@ -9,11 +10,11 @@ Changing a draft now is legitimate; changing a frozen gate after outcomes is not
 
 | Item | Proposed primary assumption | Meaning / unresolved detail |
 | --- | --- | --- |
-| Capital | $1,000; independent $10,000 scenario | All initial capital available on day zero; no later contributions or borrowing. Recompute lots, fixed charges and depth separately. |
+| Capital | $10,000 baseline; larger amount if capital is the demonstrated blocker | Determine and report the required amount under the capital policy below. All capital is committed on day zero; no leverage or later top-up is implied. |
 | Spending currency | USD provisionally | Confirm USD/EUR/CZK; translate cashflows and FX costs into the chosen currency. USDT is not automatically a dollar. |
 | Investment horizon | 365 days | No required interim withdrawal; this is distinct from the length of evidence needed to estimate performance. |
-| Useful absolute net cash profit | $50 at $1,000; $500 at $10,000 per 365 days | 5% of initial capital, measured after modeled implementation costs. Confirm that these are useful cash amounts. |
-| Useful incremental cash benefit | $20 / $200 per 365 days | Proposed 2% benefit over each eligible simple benchmark; a separate preference from absolute profit. |
+| Useful absolute net cash profit | 5% of C per 365 days ($500 at $10,000) | 5% of initial capital, measured after modeled implementation costs. Confirm that these are useful cash amounts. |
+| Useful incremental cash benefit | 2% of C per 365 days ($200 at $10,000) | Proposed 2% benefit over each eligible simple benchmark; a separate preference from absolute profit. |
 | Maximum drawdown | 20% of prior liquidation NAV peak | Include initial NAV, fees, gaps and terminal conversion; not a guaranteed stop-loss fill. |
 | Maximum stress loss | 35% of total capital at each stress origin | Apply the scenarios below throughout the path; separately report drawdown from original capital. |
 | Instruments | Unlevered BTC and ETH spot; accessible cash | No short, perpetual, option, lending or staking book in the initial four tests. Those require a later explicit scope choice and inherited-budget review. |
@@ -27,6 +28,37 @@ prefunded venue wallets, fee assets, transfer balances and unusable dust. A phas
 entry strategy starts with the full capital committed; it cannot divide profit
 by only the money already invested. No annualization of a short favorable episode
 can establish the annual cash target.
+
+## Capital policy: baseline plus justified larger capital
+
+The user clarified that $10,000 should not itself eliminate a useful strategy.
+First distinguish a capital constraint from negative unit economics, missing
+data, lack of access, unacceptable percentage risk or inadequate evidence.
+Minimum quantities, fixed execution/transfer charges, required prefunding or
+collateral, and feasible diversification can justify a larger-capital question.
+More capital does not by itself establish a better percentage return–risk tradeoff.
+
+For a capital-blocked candidate, report the specific constraint, minimum
+implementable capital, reserves and uncertainty, and the least larger amount
+that clears it under frozen conservative assumptions. Derive the amount from
+constraints before inspecting new returns; do not sweep capital until a favorable
+backtest appears. Unknown terms remain unknown rather than guessed break-even
+capital. Retain the $10,000 outcome as capital-constrained when appropriate.
+
+The initial finite design permits one additional capital scenario, C_plus,
+selected before outcomes for the highest-ranked candidate with a demonstrated
+capital blocker. Freeze the numerical amount and justification in registration.
+Apply all benchmarks at the same capital, recomputing costs, rounding, depth,
+reserves, cash opportunity cost and dollar losses. Other required amounts remain
+reported leads; additional financial capital scenarios need a recorded budget
+amendment. Researching a required amount does not commit that investment, and
+no unlimited available balance or personal maximum is assumed.
+
+Proposed percentage profit/risk thresholds remain constant at larger capital:
+5% absolute and 2% incremental annual cash profit, with both dollar amounts shown.
+Thus larger capital cannot pass merely by increasing dollar profit while diluting
+return on total committed capital. Confirmation selects at most one recipe and
+one capital amount, with the capital choice included in the selection history.
 
 ## Stress contract proposed for every candidate and benchmark
 
@@ -96,9 +128,9 @@ The proposed adoption rule is conjunctive:
 1. Accounting, point-in-time data, access, all capital, execution and independent
    review pass; no material unknown held value or cash term remains.
 2. Candidate satisfies the fixed drawdown/stress constraints and operational limits.
-3. Absolute profitability: observed 365-day P >= $50/$500 and the simultaneous
+3. Absolute profitability: observed 365-day P >= 0.05*C ($500 at baseline) and the simultaneous
    one-sided 95% lower bound on expected 365-day net profit is above zero.
-4. Benchmark value: observed D >= $20/$200 against **every feasible member of
+4. Benchmark value: observed D >= 0.02*C ($200 at baseline) against **every feasible member of
    the frozen primary comparator set**, and simultaneous one-sided 95% lower
    bounds on their expected D are above zero. Missing feasibility evidence cannot
    be used to exclude an inconvenient comparator.
@@ -127,9 +159,11 @@ selected candidate enters confirmation.
 
 If several development candidates meet that promotion screen, select the largest
 minimum D across the feasible primary benchmarks, using only predeclared
-development data. Differences below $10/$100 are ties: prefer lower annual
-turnover, then fewer policy rules, then fixed map rank. Select at most one per
-capital; all tested candidates remain in the selection history. Development
+development data. Rank within each capital scenario first; select the baseline
+if any baseline recipe qualifies, otherwise consider the justified C_plus panel.
+Within a capital scenario, differences below 0.01*C ($100 at baseline) are ties: prefer lower annual
+turnover, then fewer policy rules, then fixed map rank. Select at most one recipe
+and one capital amount; all tested candidates remain in the selection history. Development
 selection itself never validates a strategy. If none qualifies, cash/simple
 allocation can remain the practical reference without being advertised as a
 newly validated profitable strategy. H1's simple allocations receive full

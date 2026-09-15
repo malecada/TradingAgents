@@ -1,6 +1,6 @@
 # Broader program checkpoint — September 15, 2026
 
-Status: **independently reviewed design ready pending investment preferences;
+Status: **design amended; $10,000 baseline with justified larger capital, other preferences pending;
 zero new experiments, zero validated strategies**. The program's own [README](README.md)
 is the entry point; old options state remains authoritative for that study.
 
@@ -17,11 +17,33 @@ measurement collection, confirmation look, account action, option-study edit,
 worker restart, SSH command or production change occurred. The existing active
 options collection is described from saved local state only.
 
+## Capital amendment
+
+The user's latest clarification is “10k or more should 10k be the blocker”.
+$10,000 is now the baseline, with one justified larger-capital scenario permitted
+in the initial finite design if a documented capital constraint warrants it.
+This supersedes the interim $10,000-only wording. Determine the required amount
+from implementation constraints before outcomes, and retain the baseline result.
+No unlimited personal budget or investment commitment is inferred.
+
+Proposed cash floors remain 5% absolute and 2% incremental ($500/$200 at the
+baseline), scaled to all committed capital in a larger scenario. Other investment
+preferences remain pending. There are 42 baseline cells per window, at most 84
+with C_plus, at most 252 development cells, and 48 reserved inferential contrasts.
+Confirmation selects at most one recipe and capital amount.
+
+No financial outcomes or claims exist for this program. Original review,
+inventory and verification records retain their bytes and original scope;
+[capital amendment checks](capital-amendment-verification.json) record the
+current document consistency and preservation checks. The original independent
+review covers the prior draft, not an independent sign-off on this amendment.
+The existing options study and historical search budgets remain unchanged.
+
 ## Exact next action
 
 1. Record the user's response to the pending investment-contract question:
    horizon, drawdown/stress losses, useful profit, spending currency and permitted
-   instruments. Also settle the proposed $20/$200 incremental benefit and cash
+   instruments. Also settle the proposed 2%-of-capital incremental benefit and cash
    vehicle/custody/tax basis before financial registration. A missing response
    is not acceptance of the draft numbers.
 2. Read the completed [independent review](reviews/design-review.md): all three

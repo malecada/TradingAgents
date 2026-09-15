@@ -4,7 +4,8 @@ Program ID: `broader-allocation-2026-09-15`. September 15, 2026.
 **Design prepared; investment preferences pending; no financial experiment admitted.**
 
 The objective is an implementable improvement in the return–risk tradeoff of
-deploying approximately $1,000. $10,000 is a separate decision. Directional
+deploying $10,000 as the baseline, with larger capital considered when $10,000
+is a demonstrated constraint. Directional
 crypto exposure, cash and infrequent trading are acceptable. Absolute net cash
 profit and value relative to benchmarks are separate claims. A simple allocation
 or cash can be the useful conclusion; complexity is not an objective.
@@ -26,7 +27,8 @@ does not amend an old gate, grant another options episode, or start a collector.
 
 The design asks for confirmation or edits to these **proposed**, unaccepted
 preferences: 12-month investment horizon; 20% maximum drawdown; 35% stress loss;
-minimum useful annual net cash profit $50/$500; initially unlevered BTC/ETH spot
+minimum useful annual net cash profit 5% of capital ($500 at the baseline);
+initially unlevered BTC/ETH spot
 and cash. Spending currency, accessible cash vehicle and venue/product eligibility
 also require resolution. No historical outcomes were used to infer these preferences.
 

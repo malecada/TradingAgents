@@ -29,14 +29,17 @@ these proposed slots do not themselves override an old exhausted family.
 - Admission: at most six bounded source/accounting/power questions for the whole
   new program, shared across candidates; at most two per candidate. Inventory
   these before each question. A failed acquisition/start consumes its slot.
-- Development: at most four candidate recipes, one evaluation each, both capital
-  amounts. One shared ten-benchmark panel. Three execution scenarios (primary,
-  doubled, frictionless diagnostic) imply **84 capital/recipe/cost cells per
-  registered window**: (4+10)*2*3. Register all window replications explicitly;
-  cap at three predeclared development windows, hence at most 252 cells. These
-  are correlated cells, not 252 independent ideas.
-- Confirmation: at most one selected recipe per capital, at most two unique
-  recipes overall, on one common untouched/prospective episode. No second shot
+- Development: at most four candidate recipes and ten fixed benchmarks, with
+  $10,000 baseline and at most one justified larger-capital scenario C_plus
+  under DESIGN. Three execution scenarios (primary, doubled, frictionless)
+  imply 42 cells per window at baseline, or **84 cells maximum** with C_plus:
+  (4+10)*2*3. Freeze capital eligibility and all window replications before
+  outcomes; retain unused/unavailable cells with reasons. At most three fixed
+  development windows permit at most 252 cells, not 252 independent ideas.
+  The extra capital scenario consumes existing admission/resource allowances;
+  it does not create new recipes or reset inherited mechanism budgets.
+- Confirmation: at most one selected recipe and one capital amount,
+  on one untouched/prospective episode. No second shot
   or parameter revision. Retain all four original candidates in multiplicity
   accounting even when only one reaches confirmation.
 - Resources after admission: no paid service; aggregate at most 8 local CPU
