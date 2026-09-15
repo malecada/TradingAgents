@@ -32,8 +32,18 @@ Next: independently review, commit and admit Q2 before acquisition. Continue Q3â
 financial questions under the finite grant without another permission request.
 Do not restart Q1, edit its frozen sources or touch the separate options effort.
 
-Q2 prepared and independently reviewed: 1,096 fixed daily targets, three365-day
-cohorts, 20,890cells/5,484outputs; at most2,193HTTP/18,689RPCsubcalls and
-574,881,792rawbytes. Eleven focused invented tests and full in-memory inventory
-plus compact disk lifecycle pass. No actual Q2 request has run at this checkpoint.
-Daily coverage does not certify boundary oracle units/code or executable prices.
+Q2 actual acquisition failed from1dce226 after an identified batch compatibility
+error: API accepts at most10calls/batch; registered15/29statebatches were rejected.
+Own process was interrupted for this defect, not elapsed duration. Session10379
+is terminal exit130; no process is running. All46publishedoutputs/failedreceipt
+are retained, independently reviewed and structurally verified.19HTTPintents/
+168RPCsubcalls are charged;18receipts/37,336rawbytes plus one unreceipted intent.
+Eight daily vectors were evaluated; remaining days were not tested. SeeQ2-DEFECT.
+
+Updated successor claims: Q1complete + Q2failed =2; source slots2/6; financial0/4;
+repair0/1 pending admission. Source-family effective count3/3. Original188 unchanged.
+The sharedR1 route can repair exact same source panel using<=10-member chunks,
+existingresearch_amended certificate with unchangedinputs/windows/cells and explicit
++1 effective allowance. No state/financial outcomes obtained from failedQ2.
+Current documentaryoperations41/60. R1isnotyetregistered or executed. Continue
+reviewedrepair and independentQ3â€“Q6preparation without anothergo-ahead.

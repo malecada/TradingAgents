@@ -68,3 +68,12 @@ implementation slot. Sources:
 https://raw.githubusercontent.com/aave/aave-v3-core/master/contracts/misc/AaveOracle.sol
 and https://raw.githubusercontent.com/aave/aave-v3-core/master/contracts/dependencies/openzeppelin/upgradeability/BaseUpgradeabilityProxy.sol .
 These are interface witnesses, not deployed-version proof or executable marks.
+
+Q3 orientation added six documentary operations (41/60): four opens and two
+finds on the official Lido deployed-contracts and wstETH interface pages. Two
+proposed integration/token-guide paths failed; neither is evidence. Mainnet
+Ethereum wstETH exposes stETH conversion methods. Base's listed wstETH is a
+bridged ERC20; the Ethereum methods must not be assumed present on that wrapper.
+A conversion balance is distinct from ETH redemption and two-way market value.
+Primary pages: https://docs.lido.fi/deployed-contracts/ and
+https://docs.lido.fi/contracts/wsteth/ . No staking market/rate query occurred.
