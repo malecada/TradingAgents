@@ -1,0 +1,18 @@
+{
+  "scenario": "conditional already-funded USDC at inception; not a confirmed personal starting balance",
+  "initial_committed_usd": "10000",
+  "terms": [
+    {"id":"capital-boundary","status":"complete","kind":"authored convention","value":"All starting balances and reserves valued in USD; pre-start fees sunk; new entry/exit charges inside the chosen start boundary."},
+    {"id":"cash-control","status":"complete","kind":"authored convention","value":"Zero nominal USDC accrual conditional control; USD value still needs marks. B1 is not established."},
+    {"id":"risk-tax-horizon","status":"complete","kind":"existing disclosed contract","value":"365 days, pre-personal-tax USD; 10% absolute/2% incremental floors; 30% drawdown/50% market-stablecoin stress; separate accepted catastrophic tails."},
+    {"id":"confirmed-funding-basis","status":"unavailable","reason":"User has not specified already-funded USDC versus new-money entry; parameterized conditional basis is not a fact."},
+    {"id":"account-fees","status":"unavailable","reason":"10bp/side is proposed only; actual commissions, fee currency and applicability unverified."},
+    {"id":"usdc-usd-valuation","status":"unavailable","reason":"No admitted executable USD valuation/exit series; USDC symbol and pool identity do not establish one-dollar realizability."},
+    {"id":"implemented-cash-vehicle","status":"unavailable","reason":"Actual B1 yield/product terms, charges, access and liquidation value not established; no invented Earn yield."},
+    {"id":"entry-conversion-transfer","status":"unavailable","reason":"New-money conversion, fixed/percentage charges, route, minimums and delay unestablished; needed for fresh-money case."},
+    {"id":"terminal-exit","status":"unavailable","reason":"Actual USD liquidation/redemption/withdrawal route and charges unestablished; no assumed issuer retail redemption."},
+    {"id":"cex-account-eligibility","status":"unavailable","reason":"Public BTCUSDC/ETHUSDC status and depth do not establish Czech account eligibility."},
+    {"id":"dex-fees-and-transfer","status":"unavailable","reason":"Raw gasPrice and pool mapping omit swap gas units, data fees, bridges, approvals, execution impact and failed transactions."},
+    {"id":"historical-applicability","status":"unavailable","reason":"Current source observations do not establish historical fee, rule, cash or fill applicability for the fixed development windows."}
+  ]
+}
