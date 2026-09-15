@@ -1,0 +1,82 @@
+{
+  "scope": "Clock-boundary control-flow tests with mocked date/sleep/hash/flock and replaced final exec marker; no actual worker, market or SSH operations",
+  "source": "research/strategy-search-2026-09-11/launch-options-timing-20260915-v2.sh",
+  "source_sha256": "abf99bf272063d63c17852c6c2f331032c04f63067b2364dbd2ef3a1cf5fe9b5",
+  "fixture_root": "/tmp/options-timing-launcher-clocks-ywqje92y",
+  "cases": [
+    {
+      "name": "exact-lease",
+      "clocks": [
+        1789469870,
+        1789469880,
+        1789469880
+      ],
+      "returncode": 0,
+      "executed_marker": true,
+      "pass": true
+    },
+    {
+      "name": "after-sleep-backward",
+      "clocks": [
+        1789469870,
+        1789469879
+      ],
+      "returncode": 42,
+      "executed_marker": false,
+      "pass": true
+    },
+    {
+      "name": "after-sleep-too-late",
+      "clocks": [
+        1789469870,
+        1789469940
+      ],
+      "returncode": 42,
+      "executed_marker": false,
+      "pass": true
+    },
+    {
+      "name": "during-hash-backward",
+      "clocks": [
+        1789469870,
+        1789469881,
+        1789469879
+      ],
+      "returncode": 43,
+      "executed_marker": false,
+      "pass": true
+    },
+    {
+      "name": "during-hash-too-late",
+      "clocks": [
+        1789469870,
+        1789469881,
+        1789469940
+      ],
+      "returncode": 43,
+      "executed_marker": false,
+      "pass": true
+    },
+    {
+      "name": "last-allowed-second",
+      "clocks": [
+        1789469870,
+        1789469939,
+        1789469939
+      ],
+      "returncode": 0,
+      "executed_marker": true,
+      "pass": true
+    },
+    {
+      "name": "prewait-over-two-hours",
+      "clocks": [
+        1789462679
+      ],
+      "returncode": 41,
+      "executed_marker": false,
+      "pass": true
+    }
+  ],
+  "pass": true
+}

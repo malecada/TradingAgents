@@ -4,14 +4,43 @@ Research remains authorized by “lets keep going then”, superseding the earli
 pause-after-options/VPS boundary. Zero strategies are validated. Branch
 `research/strategy-search-2026-09-11`; inspect actual claims and Git status first.
 
-## Current status: options source failed and closed; no collector running
+## Current status: timing successor claimed; approved release awaiting VPS launch
 
-All20identities are terminal:16complete and4failed. The sole options episode
+There are21identities:16complete,4failed,1active. The active target is
+options-timing-20260915, claimed at2026-09-15T10:02:56.191462+00:00 from
+remotely verified source22bdf6c17398425e2a22855e88f9a501b4f2f3f4.
+ClaimSHA550c753279b8ae290ca988c9a23d5201b18ef4fd85b3c405a2f6e8a1078e8a73.
+AssignmentSHA375d70df4656f8ad851b038ffaabb0cf61bb71115aadd750ac2d8dc9a933d4a3.
+The original options budget4/prior1 is preserved; effective6 is now consumed.
+There is no seventh allowance. Never call start again or change its source/gate.
+
+Entry is11:00UTC September15; hourly acquisitionN+2000/deadlineN+5000.
+Observation endOctober29 11:00:05UTC; finalhistoryOctober30 11:00UTC;
+worker lease10:58UTC September15 throughOctober30 11:01UTC. The local master
+owns source/analysis/terminal authority; the VPS receives raw-worker authority.
+The exact package and corrected finite v2launcher passed independent review.
+V1 was never run and remains preserved. Remote transfer/hash verification and
+sole finite tmux launch are the immediate next operations. No new collector is
+running at this checkpoint and no future market body has been requested.
+
+Local package: /home/malecada/master_thesis/research-deployment/options-timing-20260915/release-22bdf6c.
+New remote root: /opt/thesis-research/options-timing-20260915.
+V2launcherSHAabf99bf272063d63c17852c6c2f331032c04f63067b2364dbd2ef3a1cf5fe9b5.
+See reviews/options-timing-actual-release-review-20260915.md,
+reviews/options-timing-actual-release-20260915-v2.json and actual-start report.
+Named offline profile passed1709tests+58subtests in941.20seconds with unchanged
+source; actualclaim/independentverification/package preparation passed38.010seconds.
+All six runtime packages are now frozen for the active claim.
+
+## Preserved failed twentieth source episode
+
+All20predecessors are terminal:16complete and4failed. The sole options episode
 `options-episode-20260911` failed initial source freshness for both assets and
 was independently failure-closed. Eight planned cells are unavailable; no positions,
 financial calculation, analysis intent or economic output exists. Do not start,
 resume, relabel or replace this claim. Effective options allowance5 is consumed;
-original budget4/prior1 and all prior evidence remain intact. No sixth grant exists.
+original budget4/prior1 and all prior evidence remain intact. Its failed allowance
+was separately extended by the exact reviewed successor grant above.
 
 The initial worker ran once on confirmed pck-preds-1(46.225.169.184), started08:58UTC,
 attempted entry09:00 and stopped09:00:00.805. Supervisor exit2 was recorded at.916.
@@ -34,19 +63,19 @@ HTTP200 and fastarrival did not establish recent-enough events. OptionalfundingI
 truncation64KiB remains retained and is not the entry-failure cause. This provides
 source-timing evidence, not economic rejection of option selling.
 
-## Current next work
+## Earlier engineering checkpoint and parallel readiness work
 
 Independent information-value review supports one fixed timing correction for
 preparation. Separate research_options_timing source preserves all five old
 packages and all20terminal identities. New hourly acquisition begins N+2000;
-action/freshness/deadline remains N+5000. No new window/grant/claim exists yet.
+action/freshness/deadline remains N+5000. That earlier preparation condition is superseded by the exact active claim above.
 
 Engineering checkpoint: c1c513356d32a9a6b330b34d9d7b9cb33aef8713 was pushed and
 separately queried equal. Optimized history source ad2be0c0f07e03e79af9b9585d5978c1b27b75c9
 is included in evidence checkpoint5d76fffae909d65a1a4c4957549d8841800e4c45,
 which was pushed and separately queried equal. The
-closed-parent-only certificate grants no new allowance. Current named offline
-profile is running with unchanged source; see options-timing-offline-20260915.log.
+closed-parent-only certificate grants no new allowance. The named offline
+profile subsequently passed1709tests+58subtests; see its retained log/report.
 
 The full corrected invented calendar retains17144receipts, all225daily/4final
 requests and every failed compressed-loop segment. Returned normalization plus
@@ -201,3 +230,16 @@ No new market input or empirical identity was created.
 
 Preserve original worktrees/raw stores, all gates and22deferred settlement cases.
 No credentials, purchases, provider contact, orders or production operations.
+
+## Continuation audit, September15
+
+A bounded independent coverage review identified one useful preparation gap:
+value_rev controls have mismatched breadth/universe and further eligibility,
+orientation, lag and funding-contract ambiguities. The source-only audit is in
+reviews/value-rev-engine-parity-audit-20260915.md. An isolated pure declaration/
+cohort/control-alignment helper and invented tests are now being prepared; no
+legacy main, original gate, actual P0/P1/P2 or financial engine is changed or run.
+The helper cannot admit source semantics or fix unreviewed gate interpretations.
+After this finite preparation, actual options observations and separately
+admitted value-source/time conditions are genuine waiting dependencies; see
+reviews/research-continuation-coverage-20260915.md.

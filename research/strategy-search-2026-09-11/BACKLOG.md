@@ -5,8 +5,9 @@ options/VPS integration and frozen single-episode admission first. Then re-rank
 eligible independent questions using the retained evidence and cumulative budgets.
 The sole options episode failed source timing and is closed; effective5 is
 consumed. One isolated timing correction is engineered with independent review,
-representative resource and VPS round-trip proofs. Named offline verification
-and final sixth-grant/target review remain pending; no new collector exists.
+representative resource and VPS round-trip proofs. Named offline1709+58 and exact sixth-grant/claim/release review passed.
+The new21stclaim is active; effective6 consumed. Remote verification and sole
+finite launch remain next; no newcollector exists at this checkpoint.
 
 - [x] Complete registered carry-definition diagnostic and independent review; retained with this results checkpoint.
 - [x] Admit actual public event marks and matched bars once; independent review passed.

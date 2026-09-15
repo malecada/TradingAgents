@@ -2,14 +2,16 @@
 
 **Current scope: research resumed September 15; complete options/VPS integration first. Zero validated strategies.**
 The user subsequently said “lets keep going then”, lifting the earlier
-pause-after-setup instruction. The first prospective options episode was admitted from remotely verified
-commit ebc21e931541e7e03e139e48f7d2069a8426742f and is now failed and closed. All twenty claims are terminal
-(16complete/4failed); all nineteen predecessors remain preserved. The exact VPS release
-ran once and stopped at entry on frozen source-age/chronology rejection for both
-assets. No financial book ran. Raw return, external quiescence and the failure-only terminal are independently
-verified. No collector is running. One isolated fixed timing correction has passed source/policy review,
-representative resource and VPS recovery checks; its named offline suite is
-running. No sixth allowance, absolute window or new claim exists yet. Existing value_rev pure readiness is independently checked; actual
+pause-after-setup instruction. The first prospective options episode failed initial source freshness and is
+closed. All20predecessors are terminal(16complete/4failed). The separately reviewed
+timing successor options-timing-20260915 is the21stclaim and is active from
+source22bdf6c17398425e2a22855e88f9a501b4f2f3f4, verified remotely before claim.
+Effective6 is consumed; no seventh allowance exists. Its exact11:00UTC entry,
+N+2second acquisition/N+5second deadline and source/economic criteria are frozen.
+Named offline1709tests+58subtests, resource and independent release reviews passed.
+The approved finite v2launcher awaits remote verification and launch at this
+checkpoint; inspect active operational state before acting. No newcollector runs yet.
+Existing value_rev pure readiness is independently checked; actual
 source/P0 admission remains pending. Consult active state.
 The user explicitly launched the saved research prompt and superseded the
 preparation pause. Read the [active program state](../../research/strategy-search-2026-09-11/STATE.md),
