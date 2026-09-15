@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "amendment_id": "defi-depth-source-batch-repair-20260915",
+  "program_id": "defi-depth-2026-09-15",
+  "family_id": "protocol-state-source",
+  "mechanism_id": "evm-protocol-accounting-state-observability",
+  "family_sha256": "191102cd745ce310693d52abb0d9c743955ed4f02e295e3dbe3e12f9f6c51d56",
+  "increment": 1,
+  "target_experiment": "defi-depth-r1-20260915",
+  "parent_experiment": "defi-depth-q2-20260915",
+  "target_contract_sha256": "99727c6b98fc8f843bac22366afbe4ce657df8546e651b24b3eb0bc0c85d398f",
+  "prior_claims": {
+    "defi-depth-q1-20260915": {
+      "claim_sha256": "11b025921ae2977fe4dc1e63a10548887f403b0450934d99db25bd79aa7ce05e",
+      "terminal": "complete.json",
+      "terminal_sha256": "e5775a04bb3c83aecb2787b709e431452d91e74618d64258041e73caf41325a6"
+    },
+    "defi-depth-q2-20260915": {
+      "claim_sha256": "dc0bbe66842c84b01c17687c3233eaa10e60bb3802dad0e96bea05982a79b2b8",
+      "terminal": "failed.json",
+      "terminal_sha256": "6fd4e40ceeb4dfa758d6e27aacbaa66749af70c1f0420c6d3472eae95ee7aef2"
+    }
+  },
+  "review": {
+    "path": "research/defi-depth-2026-09-15/reviews/r1-amendment-approval.json",
+    "sha256": "01c5c4be362eba53fd81dd93e19a2f8ba4e188a3bc9509e230965624a646655a"
+  },
+  "repair_preflight": {
+    "path": "research/defi-depth-2026-09-15/reviews/r1-repair-preflight.json",
+    "sha256": "2c37e1cb3b3704e849659b54dc2e5cb70790f460a643a493baf9d000d3e615f8"
+  },
+  "economic_manifest": {
+    "path": "research/defi-depth-2026-09-15/r1-preservation-manifest.json",
+    "sha256": "b652b970ed626b972b77c6bd4abefa9053638f140166860e5b40ab9b063d824c"
+  }
+}

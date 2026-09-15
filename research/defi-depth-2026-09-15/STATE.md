@@ -47,3 +47,10 @@ existingresearch_amended certificate with unchangedinputs/windows/cells and expl
 +1 effective allowance. No state/financial outcomes obtained from failedQ2.
 Current documentaryoperations41/60. R1isnotyetregistered or executed. Continue
 reviewedrepair and independentQ3–Q6preparation without anothergo-ahead.
+
+R1 exact source repair is independently approved and preflight passes. Its sole
+execution root is /home/malecada/master_thesis/TradingAgents-defi-depth at the same
+reviewed commit, using pinned Python/PYTHONPATH as documented in EXECUTION-ROOT.md.
+Do not launch R1 from this original checkout. No actual R1 claim exists yet.
+Original helpers/runtime remain unchanged. Final certificate references must be
+assembled and committed, then metadata admitted in that sole root before capture.
