@@ -1,8 +1,8 @@
 # Broader program checkpoint — September 15, 2026
 
-**Wallet/DeFi design reviewed; existing corrected monitor verified for the next
-source step. The earlier failed launch remains charged1/6 with no economic
-result. Zero validated strategies.**
+**Both registered source captures completed and independently reviewed.
+Absolute net profit and benchmark-relative value remain unmeasured.
+Admission 3/6 consumed; zero validated strategies.**
 The options study remains governed by its own frozen state and source. This
 checkpoint owns only the additive broader-program paths.
 
@@ -43,12 +43,14 @@ panel. All ten benchmarks are primary when risk/access feasible. Current reserve
 across three windows, and one fixed confirmation episode/selected capital.
 This reserve does not cover an added DeFi financial panel.
 
-Six admission slots were frozen; one is now charged for the failed launch,
-leaving five. The original order is: custody; three-chain DEX source audit;
-EEA-compatible spot source; cash/FX/transfer terms; synthetic pooled accounting;
-precision/selection. The former repair reserve was reassigned to DEX source
-admission before the first run. Core administrative limit178+11=189 retains
-category caps. No old NLST/SMW/staking/carry allowance is reset.
+Six admission slots were frozen; three are consumed: the failed custody launch,
+the three-chain DEX source check and the Binance USDC spot-source check. Three
+remain: cash/FX/transfer terms, synthetic pooled accounting, precision/selection.
+Four financial recipes and one confirmation remain unused. The original
+178-record import plus the failed unclaimed launch is 179; two actual new claims
+produce effective consumption **181/189**. Do not increment the import again.
+Acquisition usage is **22/100 requests**, with 78 remaining. No old
+NLST/SMW/staking/carry allowance is reset.
 
 ## Prepared work and review
 
@@ -63,56 +65,71 @@ reviews/offline-admission-20260915.txt. The process exited0; no test job remains
 Independent review passed the DeFi design and44record crosswalk; its scope
 and residual source dependencies are in reviews/defi-design-review.md.
 
-The DeFi design is in [DEFI.md](DEFI.md). Public official documentation was
-reviewed; no market API, token screening, wallet connection, signature, bridge,
-transfer, order, paid source or production action was performed.
+## Completed source checks
 
-## Failed launch and exact next action
+- [DEX source result](DEX-SOURCE-RESULT.md): run
+  `allocation-dex-source-20260915`, execution source `5f0cacf`, 18 actual requests,
+  16 complete and two unavailable cells, 19 retained outputs. All three chain
+  identities and fixed WETH/native-USDC factory mappings qualified. The exact
+  Ethereum and Arbitrum historical-code queries returned explicit state errors;
+  Base returned code. This does not rank liquidity, costs or archive completeness.
+- [Binance spot-source result](SPOT-SOURCE-RESULT.md): run
+  `allocation-spot-source-20260915`, source
+  `ccadd1b8e39c21d971a1e57ad3b78be1c1b1913c`, four actual requests, four complete
+  cells and five outputs. BTCUSDC and ETHUSDC had the requested public identities,
+  trading flags and ordered, uncrossed depth snapshots. Account eligibility,
+  executable capacity and full filter enforcement remain unestablished.
 
-Preparation/source commit: `d8abf7a` (full SHA in custody-launch-failure.json).
-Metadata-only admission passed. The resource guard terminated the child after
-0.0663seconds because a sampled live process had no VmRSS field. No lifecycle
-claim directory or economic output exists. Preserve the original42cell design
-as unevaluated; this is an engineering failure, not an economic or custody result.
-The guard report and [failure record](custody-launch-failure.json) are retained.
+Both runs passed standard receipt verification and independent raw reconstruction.
+All 22 HTTP responses were 200; the two unavailable DEX cells were JSON-RPC state
+errors. Raw bodies total 153,210 bytes. These are exposed source observations,
+not untouched confirmation or historical fill evidence. Exact limits, request
+clocks, hashes and unavailable cases remain in the immutable run directories.
 
-1. Independent failure-accounting review is complete and agrees with the179/189
-   effective count; see reviews/custody-launch-failure-review.md. No repeat of
-   this launch, edited old registration or new-ID retry is permitted. Any pure
-   guard diagnosis must use invented subprocesses and preserve the options/shared
-   runtime. Subsequent recovery found the already reviewed v2 process-exit
-   correction; no new monitor code or original-claim retry is required.
-2. Before the next source registration, reconcile the off-ledger failed launch:
-   core prior178 + one charged launch =179administrative consumption, despite
-   zero new lifecycle claims. Keep the189cap and five remaining admission slots;
-   the next gate must not silently treat this failure as a free attempt. Preserve
-   the original gate/source/ADMISSION bytes and add a reviewed history update.
-3. Prepare the bounded Ethereum/Base/Arbitrum Uniswap source contract under
-   DEFI.md, with exact contracts/requests/cells and source coverage classification.
-   No token return ranking or financial screen is admitted by that preparation.
-   The existing reviewed resource_guard_v2.py now passes focused and isolated
-   synthetic lifecycle checks; see reviews/monitor-recovery.md. Pin its exact
-   version in the next source registration and preflight that source workflow.
-   The old guard/source/failed launch remain unchanged.
-4. Continue cash/source/engine/power admission within the finite remainder.
-   Any DeFi financial replacement/addition requires ancestry, comparator,
-   multiplicity and allowance review before outcomes. Missing evidence is
-   unavailable/inadequate, not economic failure or program exhaustion.
+The current network reached the four selected public source hosts
+across these captures. The user reports NordVPN via Finland; egress was not
+independently measured and no VPN setting was changed. The earlier launch failed
+in local memory sampling before source capture. Its failure does not establish a
+VPN problem, and current reachability does not establish account eligibility.
 
-No experiment or test process from this task remains running. The original
-options worker was not inspected or modified during this task.
+## Verification and preserved failure
 
-Original reviews and preservation receipts retain their original scope and bytes.
-No automatic wakeup, background observer, paper start or deployment is configured.
-No additional permission is needed for the already authorized bounded research;
-financial adoption still depends on evidence and the frozen decision rule.
+The earlier custody launch at source `d8abf7a` failed in the old resource guard
+after 0.0663 seconds, before a lifecycle claim or outputs. Its registration,
+42 unevaluated cells, failure receipt and consumed admission slot remain intact.
+The already reviewed v2 guard was reused for the two distinct source questions;
+no custody retry or options-worker change occurred.
 
-## VPN clarification and recovered execution route
+The named offline check passed 1,754 tests and 81 subtests in 916.75 seconds.
+Collection preceded the final DEX timestamp edit/two added tests and the spot
+module. Final targeted checks passed 26 DEX/guard tests and 11 spot tests; both
+final source workflows passed isolated, no-network lifecycle preflights under
+the actual guard. See source-verification-20260915.json and the retained reviews.
+These checks establish source/accounting infrastructure behavior, not an edge.
 
-The user reports NordVPN via Finland. The failed launch was a local memory
-sampling error before market requests; no evidence implicates VPN routing.
-The preparation had pinned the older guard despite an existing reviewed v2.
-Four focused tests and a complete isolated synthetic preflight now pass under
-v2. This resolves the monitor-selection blocker for preparing the next distinct
-DEX source question. No VPN setting, shared source, options worker, old gate or
-failed-launch charge changed. No test process remains running.
+## Exact next action
+
+Prepare the [cash and pooled-account contract](cash-account-preparation.md):
+initial funding basis, USDC/USD valuation, actual fee currencies, entry/exit
+costs, delays, idle balances and all committed capital. A user clarification is
+pending on whether capital starts as USDC already on Binance or includes new
+money conversion/transfer. Keep both parameterized until resolved; do not turn
+an assumed zero funding cost into an account fact. Independent synthetic
+accounting preparation can continue. B1 remains unavailable as an actual
+implemented cash product until supporting terms exist.
+
+The next admission is cash/FX/transfer terms, slot 4/6, with the terminal spot
+claim as parent and the same 179 import/189 cap. Commit the exact new charter,
+inputs, source and gate before any acquisition or financial outcome. Subsequent
+pooled-account and precision/selection admission must precede the frozen
+financial panel. New DeFi financial additions need explicit ancestry, comparator,
+multiplicity and allowance review; the current source check grants no extra panel.
+
+All original options gates, ledgers, dated results, raw stores and spent samples
+remain preserved. The 81 anchor hashes are checked separately; local retention
+is not proof of an external backup. No experiment or test process from this task
+remains running. The original options worker was not inspected or modified.
+No wallet connection, signature, transfer, order, paid source, paper start,
+production change or automatic wakeup was performed. Authorized bounded research
+continues without another permission request; adoption requires the frozen
+financial evidence. Missing evidence is not economic failure or exhaustion.

@@ -1,8 +1,8 @@
 # Broader capital-allocation research program
 
 Program ID: `broader-allocation-2026-09-15`. September 15, 2026.
-**Capital, return target and risk limits accepted; remaining admission details open.
-No financial experiment admitted.**
+**Two source captures completed and independently reviewed; cash/accounting
+admission remains open. No financial experiment admitted.**
 
 The objective is an implementable improvement in the return–risk tradeoff of
 deploying $10,000 as the baseline, with larger capital considered when $10,000
@@ -26,7 +26,9 @@ does not amend an old gate, grant another options episode, or start a collector.
 4. [Registration and confirmation protocol](PROTOCOL.md).
 5. [Independent review and resolved findings](reviews/design-review.md).
 6. [Wallet/DeFi extension](DEFI.md) and [inherited DEX history](DEFI-HISTORY.md).
-7. [Current checkpoint and next action](STATE.md).
+7. [DEX source result](DEX-SOURCE-RESULT.md) and [Binance spot-source result](SPOT-SOURCE-RESULT.md).
+8. [Cash/accounting preparation](cash-account-preparation.md).
+9. [Current checkpoint and next action](STATE.md).
 
 Accepted choices: $10,000 baseline with justified larger capital, at least10%
 annual net return,30% maximum drawdown and50% market/stablecoin stress loss;

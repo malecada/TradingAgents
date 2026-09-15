@@ -1,0 +1,208 @@
+{
+  "attempted_requests": 4,
+  "cells": [
+    {
+      "fields": {
+        "scope": "Server clock observation, not depth event timestamp",
+        "server_time_ms": 1789482417591
+      },
+      "id": "clock",
+      "status": "complete"
+    },
+    {
+      "fields": {
+        "scope": "Literal public rule fields; neither account access nor full filter engine",
+        "symbols": {
+          "BTCUSDC": {
+            "account_eligibility": "unavailable",
+            "base": "BTC",
+            "filter_implementation_complete": false,
+            "filters": {
+              "ICEBERG_PARTS": {
+                "filterType": "ICEBERG_PARTS",
+                "limit": 100
+              },
+              "LOT_SIZE": {
+                "filterType": "LOT_SIZE",
+                "maxQty": "9000.00000000",
+                "minQty": "0.00001000",
+                "stepSize": "0.00001000"
+              },
+              "MARKET_LOT_SIZE": {
+                "filterType": "MARKET_LOT_SIZE",
+                "maxQty": "38.73833045",
+                "minQty": "0.00000000",
+                "stepSize": "0.00000000"
+              },
+              "MAX_NUM_ALGO_ORDERS": {
+                "filterType": "MAX_NUM_ALGO_ORDERS",
+                "maxNumAlgoOrders": 5
+              },
+              "MAX_NUM_ORDERS": {
+                "filterType": "MAX_NUM_ORDERS",
+                "maxNumOrders": 200
+              },
+              "MAX_NUM_ORDER_AMENDS": {
+                "filterType": "MAX_NUM_ORDER_AMENDS",
+                "maxNumOrderAmends": 10
+              },
+              "MAX_NUM_ORDER_LISTS": {
+                "filterType": "MAX_NUM_ORDER_LISTS",
+                "maxNumOrderLists": 20
+              },
+              "NOTIONAL": {
+                "applyMaxToMarket": false,
+                "applyMinToMarket": true,
+                "avgPriceMins": 5,
+                "filterType": "NOTIONAL",
+                "maxNotional": "9000000.00000000",
+                "minNotional": "5.00000000"
+              },
+              "PERCENT_PRICE_BY_SIDE": {
+                "askMultiplierDown": "0.8",
+                "askMultiplierUp": "2",
+                "avgPriceMins": 5,
+                "bidMultiplierDown": "0.5",
+                "bidMultiplierUp": "1.2",
+                "filterType": "PERCENT_PRICE_BY_SIDE"
+              },
+              "PRICE_FILTER": {
+                "filterType": "PRICE_FILTER",
+                "maxPrice": "1000000.00000000",
+                "minPrice": "0.01000000",
+                "tickSize": "0.01000000"
+              },
+              "TRAILING_DELTA": {
+                "filterType": "TRAILING_DELTA",
+                "maxTrailingAboveDelta": 2000,
+                "maxTrailingBelowDelta": 2000,
+                "minTrailingAboveDelta": 10,
+                "minTrailingBelowDelta": 10
+              }
+            },
+            "quote": "USDC",
+            "spot_trading_allowed": true,
+            "status": "TRADING"
+          },
+          "ETHUSDC": {
+            "account_eligibility": "unavailable",
+            "base": "ETH",
+            "filter_implementation_complete": false,
+            "filters": {
+              "ICEBERG_PARTS": {
+                "filterType": "ICEBERG_PARTS",
+                "limit": 100
+              },
+              "LOT_SIZE": {
+                "filterType": "LOT_SIZE",
+                "maxQty": "9000.00000000",
+                "minQty": "0.00010000",
+                "stepSize": "0.00010000"
+              },
+              "MARKET_LOT_SIZE": {
+                "filterType": "MARKET_LOT_SIZE",
+                "maxQty": "694.36859708",
+                "minQty": "0.00000000",
+                "stepSize": "0.00000000"
+              },
+              "MAX_NUM_ALGO_ORDERS": {
+                "filterType": "MAX_NUM_ALGO_ORDERS",
+                "maxNumAlgoOrders": 5
+              },
+              "MAX_NUM_ORDERS": {
+                "filterType": "MAX_NUM_ORDERS",
+                "maxNumOrders": 200
+              },
+              "MAX_NUM_ORDER_AMENDS": {
+                "filterType": "MAX_NUM_ORDER_AMENDS",
+                "maxNumOrderAmends": 10
+              },
+              "MAX_NUM_ORDER_LISTS": {
+                "filterType": "MAX_NUM_ORDER_LISTS",
+                "maxNumOrderLists": 20
+              },
+              "NOTIONAL": {
+                "applyMaxToMarket": false,
+                "applyMinToMarket": true,
+                "avgPriceMins": 5,
+                "filterType": "NOTIONAL",
+                "maxNotional": "9000000.00000000",
+                "minNotional": "5.00000000"
+              },
+              "PERCENT_PRICE_BY_SIDE": {
+                "askMultiplierDown": "0.8",
+                "askMultiplierUp": "2",
+                "avgPriceMins": 5,
+                "bidMultiplierDown": "0.5",
+                "bidMultiplierUp": "1.2",
+                "filterType": "PERCENT_PRICE_BY_SIDE"
+              },
+              "PRICE_FILTER": {
+                "filterType": "PRICE_FILTER",
+                "maxPrice": "1000000.00000000",
+                "minPrice": "0.01000000",
+                "tickSize": "0.01000000"
+              },
+              "TRAILING_DELTA": {
+                "filterType": "TRAILING_DELTA",
+                "maxTrailingAboveDelta": 2000,
+                "maxTrailingBelowDelta": 2000,
+                "minTrailingAboveDelta": 10,
+                "minTrailingBelowDelta": 10
+              }
+            },
+            "quote": "USDC",
+            "spot_trading_allowed": true,
+            "status": "TRADING"
+          }
+        }
+      },
+      "id": "symbols",
+      "status": "complete"
+    },
+    {
+      "fields": {
+        "event_time": "unavailable",
+        "last_update_id": 16995415915,
+        "levels": {
+          "asks": 100,
+          "bids": 100
+        },
+        "scope": "Receipt-timed snapshot; no promised fill, slippage, exact source age or account access",
+        "symbol": "BTCUSDC",
+        "top_ask": "76383.44000000",
+        "top_bid": "76383.43000000"
+      },
+      "id": "btc_depth",
+      "status": "complete"
+    },
+    {
+      "fields": {
+        "event_time": "unavailable",
+        "last_update_id": 19078662485,
+        "levels": {
+          "asks": 100,
+          "bids": 100
+        },
+        "scope": "Receipt-timed snapshot; no promised fill, slippage, exact source age or account access",
+        "symbol": "ETHUSDC",
+        "top_ask": "2441.06000000",
+        "top_bid": "2441.05000000"
+      },
+      "id": "eth_depth",
+      "status": "complete"
+    }
+  ],
+  "implementation_admitted": false,
+  "registered_requests": 4,
+  "reported_network_route": "NordVPN Finland according to user; not independently observed",
+  "scope": "Public spot source only; no account or economic admission",
+  "unmeasured": [
+    "Czech-account eligibility",
+    "fees/FX/deposit/withdrawal",
+    "stablecoin USD valuation/yield",
+    "historical spot/action coverage",
+    "fill latency and capacity",
+    "net profit and benchmark value"
+  ]
+}

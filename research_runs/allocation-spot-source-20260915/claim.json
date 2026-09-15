@@ -1,0 +1,115 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "ccadd1b8e39c21d971a1e57ad3b78be1c1b1913c",
+  "experiment": {
+    "cells": [
+      "clock",
+      "symbols",
+      "btc_depth",
+      "eth_depth"
+    ],
+    "charter": {
+      "path": "research/broader-allocation-2026-09-15/spot-source-charter.md",
+      "sha256": "e21d0dcf387bc8964b39926dde96a71423da6c983720a21f2ae7bfa61bb894e6"
+    },
+    "family": "allocation-decision",
+    "inputs": {
+      "ancestry": {
+        "dataset": "authored-spot-spec",
+        "path": "research/broader-allocation-2026-09-15/ancestry-crosswalk.json",
+        "sha256": "5ac19444ff2c016b32334701551d86fd866acb8b837222536669cb4bc774dcb2"
+      },
+      "spec": {
+        "dataset": "authored-spot-spec",
+        "path": "research/broader-allocation-2026-09-15/spot-source-spec.json",
+        "sha256": "0470987e1b88d7529ff792ad5b0ad1b25518ea2f65c55d2f6e7cdf69c1fbf35a"
+      }
+    },
+    "outputs": [
+      "clock-receipt.json",
+      "symbols-receipt.json",
+      "btc_depth-receipt.json",
+      "eth_depth-receipt.json",
+      "source-summary.json"
+    ],
+    "parent": "allocation-dex-source-20260915",
+    "question": "Does the fixed Binance public host provide current BTCUSDC/ETHUSDC literal spot rules and two-sided source snapshots?",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+      "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+    },
+    "selection": null,
+    "source_files": {
+      "research/broader-allocation-2026-09-15/dex_source.py": "b5faf5b8fae3ab3cef7d972f9488dbafb68159c5f1dd53cb8423529a16a025d4",
+      "research/broader-allocation-2026-09-15/dex_transport.py": "88f8d7ddee801261db095f670003c676e40d45c552113fb3f9b09b66692ad104",
+      "research/broader-allocation-2026-09-15/spot_source.py": "5707a30db0599b0452d6e6a85c8a9013aefd62eaf969e875ae1e5edd9eb7cf92",
+      "research/broader-allocation-2026-09-15/spot_transport.py": "d9b91e7b25498a2b2fe08674b30523da4add4fb39fc8d5659b083cde071b73b1",
+      "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+      "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+    },
+    "stage": "discovery",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "authored-spot-spec",
+        "end": "2026-09-15T14:16:11.985774+00:00",
+        "start": "2026-09-15T14:16:10.985774+00:00"
+      }
+    ]
+  },
+  "experiment_id": "allocation-spot-source-20260915",
+  "family": {
+    "attempt_budget": 189,
+    "history_reference": "research/broader-allocation-2026-09-15/dex-source-charter.md and custody-launch-failure.json:178scoped allocation rows+1charged unclaimed failedlaunch;44additional relatedDeFirows not independent or fresh. Admission2/6;4core development+1confirmation caps remain; original unclaimed gate178preserved.",
+    "mechanism_id": "btc-eth-spot-cash-capital-allocation",
+    "prior_attempts": 179
+  },
+  "inputs": {
+    "ancestry": {
+      "dataset": "authored-spot-spec",
+      "path": "research/broader-allocation-2026-09-15/ancestry-crosswalk.json",
+      "sha256": "5ac19444ff2c016b32334701551d86fd866acb8b837222536669cb4bc774dcb2"
+    },
+    "spec": {
+      "dataset": "authored-spot-spec",
+      "path": "research/broader-allocation-2026-09-15/spot-source-spec.json",
+      "sha256": "0470987e1b88d7529ff792ad5b0ad1b25518ea2f65c55d2f6e7cdf69c1fbf35a"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2026-09-15T14:09:54.742416+00:00",
+      "identity": "broader-allocation-authored-dex-spec-20260915",
+      "start": "2026-09-15T14:09:53.742416+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-15T14:16:11.985774+00:00",
+      "identity": "broader-allocation-authored-spot-spec-20260915",
+      "start": "2026-09-15T14:16:10.985774+00:00",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "broader-allocation-2026-09-15",
+  "registration": "research/broader-allocation-2026-09-15/gates-spot-source.json",
+  "registration_sha256": "358623db02999fbc62b5a8e7f4eb2adb8d9aee9788c9c3081cd47944e3393b97",
+  "schema_version": 1,
+  "source": "ccadd1b8e39c21d971a1e57ad3b78be1c1b1913c",
+  "started_at": "2026-09-15T14:26:55.154612+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "authored-spot-spec",
+      "end": "2026-09-15T14:16:11.985774+00:00",
+      "identity": "broader-allocation-authored-spot-spec-20260915",
+      "start": "2026-09-15T14:16:10.985774+00:00",
+      "state": "exposed"
+    }
+  ]
+}
