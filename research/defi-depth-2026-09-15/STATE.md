@@ -40,7 +40,7 @@ negative full cash books stay negative. No rerun for a missing complete.json.
 ## Cumulative budget
 
 Six claims of eleven:Q1,Q2,R1,Q3,Q4,Q6. Source5/6,financial0/4,repair1/1spent.
-Documentary54/60. Actual publicRPC1841/25000,23159remaining. Known new raw754936
+Documentary55/60. Actual publicRPC1841/25000,23159remaining. Known new raw754936
 bytes plus262144conservativeQ2unknown. Q4 existing metadata reads are tracked
 separately. UnusedQ3/R1 reservations release resources, not trial allowances.
 Original allocation188/189 and44relatedDeFi records remain unchanged. Original
@@ -69,3 +69,11 @@ protocol_stress.py5tests. No helper has processed new financial observations.
 LP global-growth attribution is a conditional fixed-path source model; it does
 not establish counterfactual realized fees, capacity or executable liquidation.
 The program remains incomplete, not exhausted. Continue without another go-ahead.
+
+F2 exact package now prepared (not admitted): f2-charter.md/f2-design.json,
+f2_source.py/wrapper_book.py and gates-f2.json.1094RPC/286785536rawbytes proposed,
+1532cells/2584outputs/33inputs;12synthetic tests pass. Complete source and financial
+recipe frozen together, price oracle vectors only, no native redemption claims.
+Independent exact review pending. No financial observations calculated and no
+new network capture. First complete source plan belongs toF2;F1/F3preparation
+can proceed independently during its fixedHEAD execution.
