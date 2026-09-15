@@ -22,11 +22,11 @@ dependencies, not a reserve of extra tests when the first results disappoint.
 An inherited recipe needs a reviewed allowance amendment/import before admission;
 these proposed slots do not themselves override an old exhausted family.
 
-## Pending risk and sizing alignment
+## Sizing alignment with accepted risk limits
 
-The user now targets at least 10% annual net return and may accept greater risk.
-The four recipes above retain their existing 25% exposure/entry settings as
-preliminary designs until the numerical drawdown/stress limits are chosen.
+The user has accepted a 10%+ annual net-return target, 30% maximum drawdown
+and 50% stress loss. The four recipes above retain their existing 25% exposure/
+entry settings as preliminary designs pending the pre-registration sizing review.
 Before registration, check those settings and the benchmark comparison set
 against the accepted risk envelope. A single justified pre-outcome sizing
 revision may replace a draft setting, with ancestry and independent review;

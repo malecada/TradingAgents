@@ -1,6 +1,6 @@
 # Broader program checkpoint — September 15, 2026
 
-Status: **design amended; $10,000 baseline, justified larger capital and 10%+ annual target; risk choice pending;
+Status: **design amended; $10,000 baseline, justified larger capital and 10%+ annual target; 30% drawdown / 50% stress loss accepted;
 zero new experiments, zero validated strategies**. The program's own [README](README.md)
 is the entry point; old options state remains authoritative for that study.
 
@@ -44,10 +44,10 @@ The existing options study and historical search budgets remain unchanged.
 
 The user requests 10% or more annually, with possibly greater drawdown/risk.
 The broader program now uses a 10% annual net-return hurdle; this is separate
-from the still-proposed 2% benchmark improvement. A 30% drawdown / 50% stress-loss
-pair is proposed, with 40% / 60% and the earlier 20% / 35% offered as alternative
-preferences. None is accepted by merely expressing openness to greater risk.
-The pending user question must resolve one pair before financial experiments.
+from the still-proposed 2% benchmark improvement. The user then accepted the proposed 30% drawdown / 50% stress-loss pair
+with “lets go with that”. This is the selected pair; the 40% / 60% alternative
+and earlier 20% / 35% proposal are not selected. These research acceptance
+limits do not guarantee actual losses are capped.
 
 The hypothetical absolute-profit alternative for joint-gate power is now 20%,
 above the 10% observed-effect hurdle, and remains a simulation assumption rather
@@ -56,11 +56,24 @@ with accepted risk limits before registration; no exposure sweep has started.
 Earlier independent review and verification receipts remain unchanged. Current
 checks are in [return-risk-amendment-verification.json](return-risk-amendment-verification.json).
 
+## Risk acceptance checkpoint
+
+The accepted mandate is $10,000 baseline (more if a documented capital blocker
+justifies it), 10%+ annual net return, 30% maximum drawdown from prior liquidation
+NAV peak, and 50% loss in the specified stress scenarios. All capital remains
+committed and included in comparisons. Acceptance applies to this broader
+program only; the existing options study retains its frozen contract.
+
+[Risk acceptance checks](risk-acceptance-verification.json) verify the updated
+references and preserved evidence. Earlier reviews and receipts retain their
+original scope. No financial experiment or new risk/exposure sweep was started.
+
 ## Exact next action
 
-1. Record the user's response to the pending investment-contract question:
-   horizon, numerical drawdown/stress losses, spending currency and permitted
-   instruments. Also settle the proposed 2%-of-capital incremental benefit and cash
+1. Use the accepted capital, 10% return target and 30%/50% risk limits without
+   requesting those choices again. Resolve the remaining investment horizon,
+   spending currency and instrument scope. Also settle the proposed
+   2%-of-capital incremental benefit and cash
    vehicle/custody/tax basis before financial registration. A missing response
    is not acceptance of the draft numbers.
 2. Read the completed [independent review](reviews/design-review.md): all three

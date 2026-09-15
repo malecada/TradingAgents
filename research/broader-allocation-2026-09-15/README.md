@@ -1,7 +1,8 @@
 # Broader capital-allocation research program
 
 Program ID: `broader-allocation-2026-09-15`. September 15, 2026.
-**Design prepared; investment preferences pending; no financial experiment admitted.**
+**Capital, return target and risk limits accepted; remaining admission details open.
+No financial experiment admitted.**
 
 The objective is an implementable improvement in the return–risk tradeoff of
 deploying $10,000 as the baseline, with larger capital considered when $10,000
@@ -26,13 +27,13 @@ does not amend an old gate, grant another options episode, or start a collector.
 5. [Independent review and resolved findings](reviews/design-review.md).
 6. [Current checkpoint and next action](STATE.md).
 
-The design asks for confirmation or edits to these **proposed**, unaccepted
-preferences: 12-month investment horizon; proposed 30% maximum drawdown and
-50% stress loss, with the numerical risk choice pending. The user has confirmed
-the 10%+ annual return target, not any particular higher loss tolerance;
-initially unlevered BTC/ETH spot
-and cash. Spending currency, accessible cash vehicle and venue/product eligibility
-also require resolution. No historical outcomes were used to infer these preferences.
+Accepted choices: $10,000 baseline with justified larger capital, at least 10%
+annual net return, 30% maximum drawdown and 50% modeled stress loss. These loss
+limits are research criteria, not guaranteed caps. The 12-month investment
+horizon, initial unlevered BTC/ETH spot/cash scope and 2% benchmark-improvement
+floor remain proposed; spending currency, cash vehicle, tax basis and venue/
+product eligibility still require resolution before financial registration.
+No historical outcomes were used to infer the accepted preferences.
 
 Research budgets and sample exposure remain cumulative across both programs.
 Old closed claims are not reopened by changing the objective. All future runs
