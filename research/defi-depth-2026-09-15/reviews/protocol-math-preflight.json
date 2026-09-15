@@ -1,0 +1,15 @@
+{
+  "scope": "invented-input engineering only; no empirical source/outcome",
+  "observed_utc": "2026-09-15T17:38:50.421878+00:00",
+  "command": ".venv/bin/python -B -m unittest discover -s tests/research -p test_defi_protocol_math.py -v",
+  "tests": 16,
+  "status": "pass",
+  "independent_review": "pass for bounded engineering scope",
+  "files": {
+    "research/defi-depth-2026-09-15/protocol_math.py": "3d7139388e4c394ab90c2455bac42a5dc822bf0f70c17d08e24184315bf9f7e3",
+    "tests/research/test_defi_protocol_math.py": "6a8a0fbf92daa5b34690d3e6e96febfe926f6bb06a3dfdd6996a3c9e8bb8968d",
+    "research/defi-depth-2026-09-15/reviews/protocol-math-review.md": "a4be20cf3929f7fcd9671f69590641a72e307eb970a2fc79328a15f7a71da6e3",
+    "research/broader-allocation-2026-09-15/spot_book.py": "28877e2c61962f1c8afd5c56610a393b5745f8e4beec9e3e00159c9134c97709"
+  },
+  "initial_defect": "Ambient Decimal precision could silently lose a small conversion debit; fixed before financial use; review retains initial failure."
+}

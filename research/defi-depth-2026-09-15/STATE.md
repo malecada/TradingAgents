@@ -1,56 +1,55 @@
-# Successor checkpoint — September 15, 2026
+# Active broader-research checkpoint
 
-Status: Q1 capture completed once from `4c09857`; no process remains running.
-Structural verification passes 141 cells / 44 unavailable / 400 outputs.
-Independent actual-data review passed; the full raw matrix was reconstructed. No financial outcomes were computed.
-See `Q1-RESULT.md` and the immutable `research_runs/defi-depth-q1-20260915/`.
+**The deeper phase continues. R1 is running in its isolated root; do not restart.**
 
-The user authorized deeper continuation without overall experiment time limits.
-Per-request timeouts and finite acquisition/question inventories still apply.
-The initial allocation phase remains closed at 188/189, with six admissions and
-four fixed negative financial recipes. Zero strategies are validated.
+Sole R1 root: /home/malecada/master_thesis/TradingAgents-defi-depth, detached at
+source aa926ef5c3ce3c0125af6bfc43d4b84bec80acfa. Tool session95225, started
+2026-09-15T17:12:03.522107+00:00. Its STATE.md is authoritative for the live capture.
+Use the existing process status only. No launch from this original checkout and
+no change to isolated HEAD/source/gate/inputs. The user's duration instruction
+is implemented: no overall experiment elapsed/CPU-time cutoff; fixed per-request
+network deadlines and finite question/request inventories remain.
 
-Successor usage: source questions 1/6; financial recipes 0/4; repair 0/1;
-new claims 1/11. Q1/Q2 source family effective count 2/3 includes one original
-DEX predecessor already inside old188. Related44 DeFi records and unknown wider
-multiplicity remain overlapping history. No new confirmation slot is granted.
+Q1 completed once and passed independent raw review:141cells,44unavailable,
+400outputs,129RPCcalls,100,951rawbytes. Base old/current qualified; selected old
+Ethereum/Arbitrum states unavailable at those endpoints.
+Q2 failed from1dce226 because provider batches permit10calls while the frozen
+collector sent15/29. All46published outputs and failed receipt are retained;
+19HTTPintents/168RPCsubcalls,18receipts/37,336rawbytes. Final15-callintent lacks a
+receipt and stays charged/unknown. It was stopped for the deterministic collector
+defect, not duration. No financial outcomes were computed.
+R1 is the sole shared repair: unchanged1096day/20,890cell panel, split batches,
+reviewed narrow admission compatibility route,7,684planned outputs. Current
+observations are source-only; daily fields do not prove executable dollar value,
+complete version semantics or profitable strategies.
 
-Q1 retained 129 public requests / 100,951 raw bytes / 541.4126 elapsed seconds.
-The finite phase ceiling is 25,000 acquisition requests / 2GiB raw bytes.
-Documentary operations used: 35/60, including three retained raw official
-address-book snapshots and one failed Aave source-path open. No paid resources,
-account/wallet actions, orders or production changes occurred.
+Successor claims3/11:Q1complete,Q2failed,R1active. Source slots2/6, financial0/4,
+repair1/1. Full R1 reservation plus actual predecessors18,986/25,000RPCsubcalls,
+leaving6,014. Documentary operations46/60. Raw reservation remains below2GiB.
+The q3-design.json draft proposes2221additional subcalls; it is not an admitted
+reservation or experiment. Old allocation188/189, its four negative financial
+recipes, original options work and44related overlapping DeFi history remain.
+Confirmation0/1 stays unused/inadmissible. Zero strategies validated.
 
-Base historical and current accounting states passed source consistency checks.
-Ethereum and Arbitrum current states passed; selected old states were unavailable
-at those endpoints. Missing history is not a strategy failure. Q2 preparation
-will freeze a continuous Base panel and preserve every missing day/cohort before
-capture. Oracle prices are potential valuation proxies, not executable quotes;
-gas, withdrawal, identity/version and finite-liquidity limits remain explicit.
+Prepared while R1 runs: PROTOCOL-ACCOUNTING.md, REMAINING-QUESTIONS.md, q3-design.json
+and additive protocol_math.py.16invented tests pass with independent re-review.
+An ambient Decimal precision defect was fixed before empirical use; initial
+review and regression evidence are retained. Original spot_book.py is unchanged.
+No actual protocol book or financial gate has executed. The Q3 source design received an independent review and was refined for boundary-first
+qualification and reuse; exact runner/registration review and admission await R1 history import.
 
-Next: independently review, commit and admit Q2 before acquisition. Continue Q3–Q6 and any justified
-financial questions under the finite grant without another permission request.
-Do not restart Q1, edit its frozen sources or touch the separate options effort.
+Independent Q5/Q6 review: the old time-killed dated/perpetual book is economically
+evaluated through all retained cases, so repeating it only for completion status
+adds no information. No new carry run is justified by those old results alone.
+News remains a provenance limitation rather than a failed economic mechanism.
+Q4 preparation recovers actual old pipeline fields and short new-pool coverage;
+it does not substitute present winners for a historical mature-token universe.
+See reviews/q5-q6-inherited-review.md and REMAINING-QUESTIONS.md.
 
-Q2 actual acquisition failed from1dce226 after an identified batch compatibility
-error: API accepts at most10calls/batch; registered15/29statebatches were rejected.
-Own process was interrupted for this defect, not elapsed duration. Session10379
-is terminal exit130; no process is running. All46publishedoutputs/failedreceipt
-are retained, independently reviewed and structurally verified.19HTTPintents/
-168RPCsubcalls are charged;18receipts/37,336rawbytes plus one unreceipted intent.
-Eight daily vectors were evaluated; remaining days were not tested. SeeQ2-DEFECT.
-
-Updated successor claims: Q1complete + Q2failed =2; source slots2/6; financial0/4;
-repair0/1 pending admission. Source-family effective count3/3. Original188 unchanged.
-The sharedR1 route can repair exact same source panel using<=10-member chunks,
-existingresearch_amended certificate with unchangedinputs/windows/cells and explicit
-+1 effective allowance. No state/financial outcomes obtained from failedQ2.
-Current documentaryoperations41/60. R1isnotyetregistered or executed. Continue
-reviewedrepair and independentQ3–Q6preparation without anothergo-ahead.
-
-R1 exact source repair is independently approved and preflight passes. Its sole
-execution root is /home/malecada/master_thesis/TradingAgents-defi-depth at the same
-reviewed commit, using pinned Python/PYTHONPATH as documented in EXECUTION-ROOT.md.
-Do not launch R1 from this original checkout. No actual R1 claim exists yet.
-Original helpers/runtime remain unchanged. Final certificate references must be
-assembled and committed, then metadata admitted in that sole root before capture.
+Next: finish and independently review R1; preserve/import exact source history,
+claim, terminal and outputs before later admission elsewhere. Complete Q3/Q4/Q6
+source questions and justified financial contracts under the finite grant.
+No further go-ahead is needed. Do not call elapsed duration or missing data
+strategy failure or phase exhaustion. No orders, paid resources, user account or
+wallet actions, VPN changes, production changes or options-worker inspection.
+No implicit background automation or observer has been created.

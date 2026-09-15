@@ -1,0 +1,345 @@
+{
+  "status": "DRAFT: no gate or empirical execution authorization from this file",
+  "experiment": "defi-depth-q3-20260915",
+  "source_question": "Native staking conversion/redemption interface and Base bridged-wrapper oracle history; no returns or market execution claim",
+  "chains": {
+    "ethereum": {
+      "url": "https://ethereum-rpc.publicnode.com",
+      "chain_id": 1,
+      "epoch": "Exact qualified finalized header retained by Q1; no latest or replacement anchor",
+      "actions": [
+        {
+          "key": "wrapper-decimals",
+          "to": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+          "method": "eth_call",
+          "signature": "decimals()",
+          "data": "0x313ce567",
+          "types": [
+            "uint8"
+          ],
+          "expected": [
+            18
+          ]
+        },
+        {
+          "key": "wrapper-underlying",
+          "to": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+          "method": "eth_call",
+          "signature": "stETH()",
+          "data": "0xc1fe3e48",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0xae7ab96520de3a18e5e111b5eaab095312d7fe84"
+          ]
+        },
+        {
+          "key": "steth-per-wrapper",
+          "to": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+          "method": "eth_call",
+          "signature": "stEthPerToken()",
+          "data": "0x035faf82",
+          "types": [
+            "uint256"
+          ],
+          "positive": true
+        },
+        {
+          "key": "wrapper-per-steth",
+          "to": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+          "method": "eth_call",
+          "signature": "tokensPerStEth()",
+          "data": "0x9576a0c8",
+          "types": [
+            "uint256"
+          ],
+          "positive": true
+        },
+        {
+          "key": "one-wrapper-conversion",
+          "to": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+          "method": "eth_call",
+          "signature": "getStETHByWstETH(uint256)",
+          "data": "0xbb2952fc0000000000000000000000000000000000000000000000000de0b6b3a7640000",
+          "types": [
+            "uint256"
+          ],
+          "positive": true
+        },
+        {
+          "key": "one-steth-conversion",
+          "to": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+          "method": "eth_call",
+          "signature": "getWstETHByStETH(uint256)",
+          "data": "0xb0e389000000000000000000000000000000000000000000000000000de0b6b3a7640000",
+          "types": [
+            "uint256"
+          ],
+          "positive": true
+        },
+        {
+          "key": "wrapper-code",
+          "method": "eth_getCode",
+          "to": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0"
+        },
+        {
+          "key": "queue-code",
+          "method": "eth_getCode",
+          "to": "0x889edc2edab5f40e902b864ad4d7ade8e412f9b1"
+        },
+        {
+          "key": "queue-last-request",
+          "to": "0x889edc2edab5f40e902b864ad4d7ade8e412f9b1",
+          "method": "eth_call",
+          "signature": "getLastRequestId()",
+          "data": "0x19c2b4c3",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "queue-last-finalized",
+          "to": "0x889edc2edab5f40e902b864ad4d7ade8e412f9b1",
+          "method": "eth_call",
+          "signature": "getLastFinalizedRequestId()",
+          "data": "0x4f069a13",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "queue-unfinalized-count",
+          "to": "0x889edc2edab5f40e902b864ad4d7ade8e412f9b1",
+          "method": "eth_call",
+          "signature": "unfinalizedRequestNumber()",
+          "data": "0xc2fc7aff",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "queue-unfinalized-steth",
+          "to": "0x889edc2edab5f40e902b864ad4d7ade8e412f9b1",
+          "method": "eth_call",
+          "signature": "unfinalizedStETH()",
+          "data": "0xd0fb84e8",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "queue-locked-ether",
+          "to": "0x889edc2edab5f40e902b864ad4d7ade8e412f9b1",
+          "method": "eth_call",
+          "signature": "getLockedEtherAmount()",
+          "data": "0xf6fa8a47",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "queue-last-checkpoint",
+          "to": "0x889edc2edab5f40e902b864ad4d7ade8e412f9b1",
+          "method": "eth_call",
+          "signature": "getLastCheckpointIndex()",
+          "data": "0x526eae3e",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "queue-bunker",
+          "to": "0x889edc2edab5f40e902b864ad4d7ade8e412f9b1",
+          "method": "eth_call",
+          "signature": "isBunkerModeActive()",
+          "data": "0x2b95b781",
+          "types": [
+            "bool"
+          ]
+        }
+      ]
+    },
+    "base": {
+      "url": "https://mainnet.base.org",
+      "chain_id": 8453,
+      "epochs": "Exact R1 canonical left-block hashes for all1096 Q2 days; missing bracket stays unavailable",
+      "daily_actions": [
+        {
+          "key": "oracle-wsteth-price",
+          "to": "0x2cc0fc26ed4563a5ce5e8bdcfe1a2878676ae156",
+          "method": "eth_call",
+          "signature": "getAssetPrice(address)",
+          "data": "0xb3596f07000000000000000000000000c1cba3fcea344f92d9239c08c0568f6f2f0ee452",
+          "types": [
+            "uint256"
+          ],
+          "positive": true
+        },
+        {
+          "key": "oracle-wsteth-source",
+          "to": "0x2cc0fc26ed4563a5ce5e8bdcfe1a2878676ae156",
+          "method": "eth_call",
+          "signature": "getSourceOfAsset(address)",
+          "data": "0x92bf2be0000000000000000000000000c1cba3fcea344f92d9239c08c0568f6f2f0ee452",
+          "types": [
+            "address"
+          ],
+          "nonzero_address": true
+        }
+      ],
+      "boundary_dates": [
+        "2023-09-02",
+        "2024-09-01",
+        "2025-09-01",
+        "2026-09-01"
+      ],
+      "boundary_actions": [
+        {
+          "key": "wrapper-decimals",
+          "to": "0xc1cba3fcea344f92d9239c08c0568f6f2f0ee452",
+          "method": "eth_call",
+          "signature": "decimals()",
+          "data": "0x313ce567",
+          "types": [
+            "uint8"
+          ],
+          "expected": [
+            18
+          ]
+        },
+        {
+          "key": "wrapper-code",
+          "to": "0xc1cba3fcea344f92d9239c08c0568f6f2f0ee452",
+          "method": "eth_getCode"
+        }
+      ],
+      "dependent_boundary_action": {
+        "key": "oracle-source-code",
+        "method": "eth_getCode",
+        "to": "exact nonzero oracle-wsteth-source address returned at this same boundary block",
+        "fallback": false
+      },
+      "imported_boundary_actions": [
+        {
+          "key": "oracle-unit",
+          "to": "0x2cc0fc26ed4563a5ce5e8bdcfe1a2878676ae156",
+          "method": "eth_call",
+          "signature": "BASE_CURRENCY_UNIT()",
+          "data": "0x8c89b64f",
+          "types": [
+            "uint256"
+          ],
+          "expected": [
+            100000000
+          ],
+          "origin": "Exact same-block R1 action/result/raw receipt; no reacquisition"
+        },
+        {
+          "key": "oracle-base",
+          "to": "0x2cc0fc26ed4563a5ce5e8bdcfe1a2878676ae156",
+          "method": "eth_call",
+          "signature": "BASE_CURRENCY()",
+          "data": "0xe19f4700",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0x0000000000000000000000000000000000000000"
+          ],
+          "origin": "Exact same-block R1 action/result/raw receipt; no reacquisition"
+        }
+      ]
+    }
+  },
+  "days_reference": "q2-spec.json days, unchanged",
+  "cohorts": {
+    "2024": {
+      "start": "2023-09-02",
+      "end": "2024-09-01",
+      "horizon_days": 365
+    },
+    "2025": {
+      "start": "2024-09-01",
+      "end": "2025-09-01",
+      "horizon_days": 365
+    },
+    "2026": {
+      "start": "2025-09-01",
+      "end": "2026-09-01",
+      "horizon_days": 365
+    }
+  },
+  "max_rpc_subcalls": 2221,
+  "max_batch_members": 10,
+  "max_http_requests": 2221,
+  "max_response_bytes": 262144,
+  "worst_case_raw_bytes": 582221824,
+  "per_request_timeout_seconds": 10,
+  "elapsed_time_kill": false,
+  "retries": 0,
+  "denials_stop_endpoint": [
+    403,
+    418,
+    429,
+    451
+  ],
+  "inherited_denial_rule": "If R1 or Q1 records endpoint access denial, no Q3 request to that endpoint without separately justified source policy. No provider substitution.",
+  "source_qualification": "Same-block chain/header/ABI/positive price plus unit/identity checks; oracle source/code changes retain unavailable semantic qualification until interpreted. Oracle value is not executable.",
+  "ethereum_history": "Q1 old archive failure retained as historical source limitation; no repeat of that unavailable endpoint-height under another method.",
+  "source_only_checks": [
+    "wrapper conversion function consistency for exactly1e18units",
+    "queue finalized ID <= last request ID; unfinalized count equality when all fields available",
+    "per-cohort calendar/identity/source-change coverage; no rate/profit/ranking calculation"
+  ],
+  "unavailable_cases": [
+    "all absent/failed source actions",
+    "native staking historical conversion panel unavailable at qualified Ethereum route",
+    "historical counterfactual queue wait and claimable value unavailable",
+    "two-way wrapper execution/gas/bridge/terminal USD route unavailable"
+  ],
+  "registration_pending": [
+    "independent question/ancestry review",
+    "R1 terminal and exact source/output history imported",
+    "source family and full claim inventory frozen",
+    "complete cells/outputs, semantic-code qualification and byte reservations",
+    "invented source preflight and exact commit/admission"
+  ],
+  "staging": {
+    "order": [
+      "verify imported R1 history, canonical hashes, inherited denials and exact eight currency/unit observations",
+      "Ethereum15calls at Q1fixed finalized hash and chainID independent of Base",
+      "BasechainID then allfourboundary price/source/decimals/wrappercode fields followed by sourcecode at eachreturnednonzeroaddress",
+      "qualify eachfixedcohort usingbothboundaries",
+      "request interior price/sourcefields only for qualifiedcohorts; retain every withhelddate"
+    ],
+    "boundary_pass": [
+      "R1 canonical bracket complete at exact target",
+      "R1 importedoracle USDzeroaddress and unit1e8 complete at samehash",
+      "Basewrapperdecimals18 and nonemptycode",
+      "wstETHoracleprice positive and sourceaddress nonzero",
+      "nonemptysourcecode at sameboundaryhash"
+    ],
+    "forbidden_selection": "No price-level, yield, return, code-winner, horizon or capital selection. Code/address changes retained; boundaryqualification proves source observability only.",
+    "shared_days": "Every original day/field remains exactlyonce. A sharedboundary is acquiredonce. Aninterior shared by eligiblecohorts is acquiredonce. Missing boundaries/interiors retainexplicitunavailablecells.",
+    "batching": "Fixed chronological groups of atmost5daily dates with2calls/date, atmost10RPCmembers. Missing dependencies retain their cells; no repeat or replacement date."
+  },
+  "family_proposal": {
+    "mechanism_id": "staking-conversion-redemption-wrapper-valuation-source",
+    "prior_attempts": 6,
+    "attempt_budget": 7,
+    "new_allowances": 1,
+    "imports": [
+      "original DEX source",
+      "Q1",
+      "failed Q2",
+      "R1",
+      "WBETH inputs",
+      "WBETH fixed hedge book"
+    ],
+    "parent": null,
+    "parent_reason": "Ordinary structural parents require same mechanism; exact cross-family claims/terminals and exposed windows are pinned instead.",
+    "no_reset": "Imports overlap original188 and successorclaims; never addthem again globally. Oldfamilies and44relatedrecords preserved. Noalpha/financialallowance."
+  },
+  "semantic_qualification": "Four sourcecode snapshots cannot prove uninterrupted implementations, including upgrades behind unchanged proxies. Oracleprices are nonexecutablesourceobservations; Ethereumoneanchor cannotprove historicalconversion orqueuewait."
+}

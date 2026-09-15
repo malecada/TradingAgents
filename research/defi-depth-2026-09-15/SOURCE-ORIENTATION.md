@@ -77,3 +77,14 @@ bridged ERC20; the Ethereum methods must not be assumed present on that wrapper.
 A conversion balance is distinct from ETH redemption and two-way market value.
 Primary pages: https://docs.lido.fi/deployed-contracts/ and
 https://docs.lido.fi/contracts/wsteth/ . No staking market/rate query occurred.
+
+Protocol-accounting preparation added four official source opens,45/60total:
+Uniswap v3 Position.sol, SqrtPriceMath.sol, Tick.sol and periphery
+LiquidityAmounts.sol. See PROTOCOL-ACCOUNTING.md for links and bounded mathematical
+scope. No real source values or profitability were calculated by that work.
+
+One additional official Lido WithdrawalQueueERC721 page open brings the total
+to46/60. It documents aggregate queue views, request/finalization/claim ownership
+and the distinction between accrued wrapper value and delayed ETH redemption.
+URL: https://docs.lido.fi/contracts/withdrawal-queue-erc721/ . No queue state,
+account, protocol yield or financial outcome was queried.
