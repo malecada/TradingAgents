@@ -1,0 +1,843 @@
+{
+  "capital_usd": "10000",
+  "cells": [
+    {
+      "id": "h5-primary",
+      "status": "complete"
+    },
+    {
+      "id": "h5-doubled",
+      "status": "complete"
+    },
+    {
+      "id": "h5-frictionless",
+      "status": "complete"
+    }
+  ],
+  "cohort_end": "2026-09-01T00:00:00Z",
+  "cohort_start": "2025-09-01T00:00:00Z",
+  "comparisons": {
+    "doubled": {
+      "benchmark_differences": {
+        "B0": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": true,
+          "difference_usd": "-766.350894349383090659999999",
+          "incremental_floor_pass_conditional": false,
+          "positive_difference_conditional": false,
+          "status": "complete"
+        },
+        "B1": {
+          "reason": "candidate or benchmark book unavailable",
+          "status": "unavailable"
+        },
+        "B2": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": false,
+          "difference_usd": "2099.533082849814646980000000",
+          "incremental_floor_pass_conditional": true,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B3": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": false,
+          "difference_usd": "3563.287927369723509660000000",
+          "incremental_floor_pass_conditional": true,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B4": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": false,
+          "difference_usd": "2831.385415822267106484000000",
+          "incremental_floor_pass_conditional": true,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B5": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": true,
+          "difference_usd": "-146.366835575438678904000000",
+          "incremental_floor_pass_conditional": false,
+          "positive_difference_conditional": false,
+          "status": "complete"
+        },
+        "B6": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": true,
+          "difference_usd": "548.377448190429242880000000",
+          "incremental_floor_pass_conditional": true,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B7": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": true,
+          "difference_usd": "39.927544601271735276000000",
+          "incremental_floor_pass_conditional": false,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B8": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": false,
+          "difference_usd": "925.530415524874374336000000",
+          "incremental_floor_pass_conditional": true,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B9": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": true,
+          "difference_usd": "-48.457878557525279172000000",
+          "incremental_floor_pass_conditional": false,
+          "positive_difference_conditional": false,
+          "status": "complete"
+        }
+      },
+      "candidate": {
+        "absolute_floor_pass_conditional": false,
+        "active_days": 364,
+        "actual_B1_comparison": "unavailable",
+        "actual_continuous_drawdown": "unavailable",
+        "cash_attribution": {
+          "commission_usd": "16.092356390437253076000000",
+          "market_pnl_usd": {
+            "BTC": "-733.617837230769000000",
+            "ETH": "0E-12",
+            "USDC": "1.449321370965508620861458438"
+          },
+          "reconstructed_profit_usd": "-784.3502941693290744551385416",
+          "spread_impact_usd": "16.089421919088330000000",
+          "terminal_dust_markdown_usd": "0E-18",
+          "terminal_route_usd": "20"
+        },
+        "cash_days": 1,
+        "complete_tail_loss_fraction": "1",
+        "conditional_numeric_risk_pass": true,
+        "descriptive_univariate_daily_proxy_beta": {
+          "BTC": 0.22543496670728008,
+          "ETH": 0.1400996836381653
+        },
+        "implementation_admitted": false,
+        "log_convention_diagnostic": {
+          "absolute_floor_classification_changed": false,
+          "difference_usd": "-203.3158715271322781384251368",
+          "erroneous_log_path_profit_usd": "-987.6661656964613525935636758",
+          "never_booked_as_cash": true
+        },
+        "max_crypto_fraction": "0.2989334357579384440169941768",
+        "mean_crypto_fraction": "0.2285523476415965830695097613",
+        "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+        "net_cash_profit_usd": "-784.350294169329074455138539",
+        "observed_discrete_max_drawdown": "0.1724489075351524045754213594",
+        "policy": "H5",
+        "promotion_admitted": false,
+        "scenario": "doubled",
+        "scope": "Conditional authored costs and historical bar/USD proxies only",
+        "simple_net_return": "-0.0784350294169329074455138539",
+        "status": "complete",
+        "stress": {
+          "btc50-eth90": {
+            "lock_days": 0,
+            "loss_fraction": "0.1488694488743248609973511340",
+            "loss_usd": "1380.620991793599463050000000",
+            "maximum_loss_usd": "1380.748574793249480000000000",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "7893.417450836194467626861461",
+            "origin_nav": "9274.038442629793930676861461",
+            "origin_phase": "open",
+            "origin_timestamp": 1787875200
+          },
+          "combined-crypto-depeg-outage": {
+            "lock_days": 30,
+            "loss_fraction": "0.2909463231614139866518320175",
+            "loss_usd": "2698.247385740744511765372292",
+            "maximum_loss_usd": "2874.694202499907229368486145",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "6575.791056889049418911489169",
+            "origin_nav": "9274.038442629793930676861461",
+            "origin_phase": "open",
+            "origin_timestamp": 1787875200
+          },
+          "crypto-minus50": {
+            "lock_days": 0,
+            "loss_fraction": "0.1488694488743248609973511340",
+            "loss_usd": "1380.620991793599463050000000",
+            "maximum_loss_usd": "1380.748574793249480000000000",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "7893.417450836194467626861461",
+            "origin_nav": "9274.038442629793930676861461",
+            "origin_phase": "open",
+            "origin_timestamp": 1787875200
+          },
+          "crypto-minus80": {
+            "lock_days": 0,
+            "loss_fraction": "0.2381911181989197775957618144",
+            "loss_usd": "2208.993586869759140880000000",
+            "maximum_loss_usd": "2209.197719669199168000000000",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "7065.044855760034789796861461",
+            "origin_nav": "9274.038442629793930676861461",
+            "origin_phase": "open",
+            "origin_timestamp": 1787875200
+          },
+          "double-then-minus60": {
+            "intervening_actions": 1,
+            "lock_days": 0,
+            "loss_fraction": "0.1513980384965413464181119953",
+            "loss_usd": "1511.103867667020639999999998",
+            "maximum_loss_usd": "1511.103867667020639999999998",
+            "maximum_stress_peak_drawdown": "0.2753147631763289479953429811",
+            "nav": "8469.896432423006368102430732",
+            "origin_nav": "9981.00030009002700810243073",
+            "origin_phase": "close",
+            "origin_timestamp": 1756771200,
+            "stress_peak_drawdown": "0.1513980384965413464181119953"
+          },
+          "seven-day-outage": {
+            "lock_days": 7,
+            "loss_fraction": "0.1500627911498705512658669748",
+            "loss_usd": "1391.688093932225510850000000",
+            "maximum_loss_usd": "1391.816699641291560000000000",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "7882.350348697568419826861461",
+            "origin_nav": "9274.038442629793930676861461",
+            "origin_phase": "open",
+            "origin_timestamp": 1787875200
+          },
+          "stable-depeg-redemption-lock": {
+            "lock_days": 30,
+            "loss_fraction": "0.2004340442755185486989956676",
+            "loss_usd": "1847.129941166134185108972292",
+            "maximum_loss_usd": "2000.200060018005401620486145",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "7368.519764664536740435889169",
+            "origin_nav": "9215.649705830670925544861461",
+            "origin_phase": "after-terminal-BTC",
+            "origin_timestamp": 1788220800
+          },
+          "total-binance-loss": {
+            "lock_days": null,
+            "loss_fraction": "1",
+            "loss_usd": "9980.00000000000000000000000",
+            "maximum_loss_usd": "10305.14951677818923565443073",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "0",
+            "origin_nav": "9980.00000000000000000000000",
+            "origin_phase": "open",
+            "origin_timestamp": 1756684800,
+            "separate_tail": true
+          }
+        },
+        "terminal_liquidation_usd": "9215.649705830670925544861461",
+        "terminal_loss_fraction": "0.0784350294169329074455138539",
+        "trade_count": 13,
+        "turnover_usd": "8046.178195218626538000000",
+        "worst_rolling_30day_loss": "0.08893495421339564127708526523"
+      },
+      "full_promotion": "unavailable: actual B1 and implementation/confirmation evidence missing",
+      "placebo": {
+        "absolute_floor_pass_conditional": false,
+        "active_days": 334,
+        "actual_B1_comparison": "unavailable",
+        "actual_continuous_drawdown": "unavailable",
+        "cash_attribution": {
+          "commission_usd": "17.973886728702060584000000",
+          "market_pnl_usd": {
+            "BTC": "-762.409129180146000000",
+            "ETH": "0E-12",
+            "USDC": "1.058213890292425372861458438"
+          },
+          "reconstructed_profit_usd": "-817.2956391107409752111385416",
+          "spread_impact_usd": "17.970837092185340000000",
+          "terminal_dust_markdown_usd": "0E-18",
+          "terminal_route_usd": "20"
+        },
+        "cash_days": 31,
+        "complete_tail_loss_fraction": "1",
+        "conditional_numeric_risk_pass": null,
+        "descriptive_univariate_daily_proxy_beta": {
+          "BTC": 0.2215471020152128,
+          "ETH": 0.13734656786447938
+        },
+        "implementation_admitted": false,
+        "log_convention_diagnostic": {
+          "absolute_floor_classification_changed": false,
+          "difference_usd": "-195.7543069334544006369363646",
+          "erroneous_log_path_profit_usd": "-1013.049946044195375848074904",
+          "never_booked_as_cash": true
+        },
+        "max_crypto_fraction": "0.2989375942226994693733886027",
+        "mean_crypto_fraction": "0.2080383060112774605389011168",
+        "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+        "net_cash_profit_usd": "-817.295639110740975211138539",
+        "observed_discrete_max_drawdown": "0.1571546104505483755735973954",
+        "policy": "H5",
+        "promotion_admitted": false,
+        "scenario": "doubled",
+        "scope": "Conditional authored costs and historical bar/USD proxies only",
+        "simple_net_return": "-0.0817295639110740975211138539",
+        "status": "complete",
+        "stress": {},
+        "terminal_liquidation_usd": "9182.704360889259024788861461",
+        "terminal_loss_fraction": "0.0817295639110740975211138539",
+        "trade_count": 12,
+        "turnover_usd": "8986.943364351030292000000",
+        "worst_rolling_30day_loss": "0.08612740726503444135133914621"
+      },
+      "positive_cash_profit_conditional": false
+    },
+    "frictionless": {
+      "benchmark_differences": {
+        "B0": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": true,
+          "difference_usd": "-736.371839211623999999999999",
+          "incremental_floor_pass_conditional": false,
+          "positive_difference_conditional": false,
+          "status": "complete"
+        },
+        "B1": {
+          "reason": "candidate or benchmark book unavailable",
+          "status": "unavailable"
+        },
+        "B2": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": false,
+          "difference_usd": "2069.398779445998000000000000",
+          "incremental_floor_pass_conditional": true,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B3": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": false,
+          "difference_usd": "3543.428694732696000000000000",
+          "incremental_floor_pass_conditional": true,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B4": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": false,
+          "difference_usd": "2806.398399813228000000000000",
+          "incremental_floor_pass_conditional": true,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B5": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": true,
+          "difference_usd": "-143.662288484385000000000000",
+          "incremental_floor_pass_conditional": false,
+          "positive_difference_conditional": false,
+          "status": "complete"
+        },
+        "B6": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": true,
+          "difference_usd": "536.244151671855000000000000",
+          "incremental_floor_pass_conditional": true,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B7": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": true,
+          "difference_usd": "41.627762027478000000000000",
+          "incremental_floor_pass_conditional": false,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B8": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": false,
+          "difference_usd": "914.169947372649000000000000",
+          "incremental_floor_pass_conditional": true,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B9": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": true,
+          "difference_usd": "-34.936853185278000000000000",
+          "incremental_floor_pass_conditional": false,
+          "positive_difference_conditional": false,
+          "status": "complete"
+        }
+      },
+      "candidate": {
+        "absolute_floor_pass_conditional": false,
+        "active_days": 364,
+        "actual_B1_comparison": "unavailable",
+        "actual_continuous_drawdown": "unavailable",
+        "cash_attribution": {
+          "commission_usd": "0E-18",
+          "market_pnl_usd": {
+            "BTC": "-735.819794781636000000",
+            "ETH": "0E-12",
+            "USDC": "1.448555750066016204861458438"
+          },
+          "reconstructed_profit_usd": "-744.3712390315699837951385416",
+          "spread_impact_usd": "0E-18",
+          "terminal_dust_markdown_usd": "0E-18",
+          "terminal_route_usd": "10"
+        },
+        "cash_days": 1,
+        "complete_tail_loss_fraction": "1",
+        "conditional_numeric_risk_pass": true,
+        "descriptive_univariate_daily_proxy_beta": {
+          "BTC": 0.22659983907525935,
+          "ETH": 0.14067554630674314
+        },
+        "implementation_admitted": false,
+        "log_convention_diagnostic": {
+          "absolute_floor_classification_changed": false,
+          "difference_usd": "-203.9541267664467026131685914",
+          "erroneous_log_path_profit_usd": "-948.3253657980166864083071304",
+          "never_booked_as_cash": true
+        },
+        "max_crypto_fraction": "0.2988587153474174792257141441",
+        "mean_crypto_fraction": "0.2284778284637573741663492232",
+        "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+        "net_cash_profit_usd": "-744.371239031569983795138539",
+        "observed_discrete_max_drawdown": "0.1718828817660073031816161375",
+        "policy": "H5",
+        "promotion_admitted": false,
+        "scenario": "frictionless",
+        "scope": "Conditional authored costs and historical bar/USD proxies only",
+        "simple_net_return": "-0.0744371239031569983795138539",
+        "status": "complete",
+        "stress": {
+          "btc50-eth90": {
+            "lock_days": 0,
+            "loss_fraction": "0.1494293576737087396128570720",
+            "loss_usd": "1391.858669838037500000000000",
+            "maximum_loss_usd": "1391.987291310000000000000000",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "7922.634087852021516204861461",
+            "origin_nav": "9314.492757690059016204861461",
+            "origin_phase": "open",
+            "origin_timestamp": 1787875200
+          },
+          "combined-crypto-depeg-outage": {
+            "lock_days": 30,
+            "loss_fraction": "0.2898723337577023665061318964",
+            "loss_usd": "2700.013753440834303240972292",
+            "maximum_loss_usd": "2874.086700674416001620486145",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "6614.479004249224712963889169",
+            "origin_nav": "9314.492757690059016204861461",
+            "origin_phase": "open",
+            "origin_timestamp": 1787875200
+          },
+          "crypto-minus50": {
+            "lock_days": 0,
+            "loss_fraction": "0.1494293576737087396128570720",
+            "loss_usd": "1391.858669838037500000000000",
+            "maximum_loss_usd": "1391.987291310000000000000000",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "7922.634087852021516204861461",
+            "origin_nav": "9314.492757690059016204861461",
+            "origin_phase": "open",
+            "origin_timestamp": 1787875200
+          },
+          "crypto-minus80": {
+            "lock_days": 0,
+            "loss_fraction": "0.2390869722779339833805713153",
+            "loss_usd": "2226.973871740860000000000000",
+            "maximum_loss_usd": "2227.179666096000000000000000",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "7087.518885949199016204861461",
+            "origin_nav": "9314.492757690059016204861461",
+            "origin_phase": "open",
+            "origin_timestamp": 1787875200
+          },
+          "double-then-minus60": {
+            "intervening_actions": 1,
+            "lock_days": 0,
+            "loss_fraction": "0.1499988617552424024024024022",
+            "loss_usd": "1498.488628934871599999999998",
+            "maximum_loss_usd": "1498.566526739999999999999998",
+            "maximum_stress_peak_drawdown": "0.2761119852215603335896120502",
+            "nav": "8491.511371065128400000000002",
+            "origin_nav": "9990.00000000000000000000000",
+            "origin_phase": "open",
+            "origin_timestamp": 1756684800,
+            "stress_peak_drawdown": "0.1499988617552424024024024022"
+          },
+          "seven-day-outage": {
+            "lock_days": 7,
+            "loss_fraction": "0.1494293576737087396128570720",
+            "loss_usd": "1391.858669838037500000000000",
+            "maximum_loss_usd": "1391.987291310000000000000000",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "7922.634087852021516204861461",
+            "origin_nav": "9314.492757690059016204861461",
+            "origin_phase": "open",
+            "origin_timestamp": 1787875200
+          },
+          "stable-depeg-redemption-lock": {
+            "lock_days": 30,
+            "loss_fraction": "0.2002160847254844669316444639",
+            "loss_usd": "1853.125752193686003240972292",
+            "maximum_loss_usd": "2000.200060018005401620486145",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "7402.503008774744012963889169",
+            "origin_nav": "9255.628760968430016204861461",
+            "origin_phase": "after-terminal-BTC",
+            "origin_timestamp": 1788220800
+          },
+          "total-binance-loss": {
+            "lock_days": null,
+            "loss_fraction": "1",
+            "loss_usd": "9990.00000000000000000000000",
+            "maximum_loss_usd": "10337.10907529786500810243073",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "0",
+            "origin_nav": "9990.00000000000000000000000",
+            "origin_phase": "open",
+            "origin_timestamp": 1756684800,
+            "separate_tail": true
+          }
+        },
+        "terminal_liquidation_usd": "9255.628760968430016204861461",
+        "terminal_loss_fraction": "0.0744371239031569983795138539",
+        "trade_count": 13,
+        "turnover_usd": "8062.111700862450000000",
+        "worst_rolling_30day_loss": "0.08902425132477358905749912496"
+      },
+      "full_promotion": "unavailable: actual B1 and implementation/confirmation evidence missing",
+      "placebo": {
+        "absolute_floor_pass_conditional": false,
+        "active_days": 334,
+        "actual_B1_comparison": "unavailable",
+        "actual_continuous_drawdown": "unavailable",
+        "cash_attribution": {
+          "commission_usd": "0E-18",
+          "market_pnl_usd": {
+            "BTC": "-763.537568917267000000",
+            "ETH": "0E-12",
+            "USDC": "1.059420127770016204861458438"
+          },
+          "reconstructed_profit_usd": "-772.4781487894969837951385416",
+          "spread_impact_usd": "0E-18",
+          "terminal_dust_markdown_usd": "0E-18",
+          "terminal_route_usd": "10"
+        },
+        "cash_days": 31,
+        "complete_tail_loss_fraction": "1",
+        "conditional_numeric_risk_pass": null,
+        "descriptive_univariate_daily_proxy_beta": {
+          "BTC": 0.22260956474560567,
+          "ETH": 0.1380121408225074
+        },
+        "implementation_admitted": false,
+        "log_convention_diagnostic": {
+          "absolute_floor_classification_changed": false,
+          "difference_usd": "-196.3771260176002098049003249",
+          "erroneous_log_path_profit_usd": "-968.8552748070971936000388639",
+          "never_booked_as_cash": true
+        },
+        "max_crypto_fraction": "0.2988614906945224418311554306",
+        "mean_crypto_fraction": "0.2079546883081188658776821551",
+        "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+        "net_cash_profit_usd": "-772.478148789496983795138539",
+        "observed_discrete_max_drawdown": "0.1561901281078551781206583541",
+        "policy": "H5",
+        "promotion_admitted": false,
+        "scenario": "frictionless",
+        "scope": "Conditional authored costs and historical bar/USD proxies only",
+        "simple_net_return": "-0.0772478148789496983795138539",
+        "status": "complete",
+        "stress": {},
+        "terminal_liquidation_usd": "9227.521851210503016204861461",
+        "terminal_loss_fraction": "0.0772478148789496983795138539",
+        "trade_count": 12,
+        "turnover_usd": "9016.127166761425000000",
+        "worst_rolling_30day_loss": "0.08621119095979396311381079653"
+      },
+      "positive_cash_profit_conditional": false
+    },
+    "primary": {
+      "benchmark_differences": {
+        "B0": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": true,
+          "difference_usd": "-751.772250245538826226999999",
+          "incremental_floor_pass_conditional": false,
+          "positive_difference_conditional": false,
+          "status": "complete"
+        },
+        "B1": {
+          "reason": "candidate or benchmark book unavailable",
+          "status": "unavailable"
+        },
+        "B2": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": false,
+          "difference_usd": "2085.500971260143573499000000",
+          "incremental_floor_pass_conditional": true,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B3": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": false,
+          "difference_usd": "3555.121809326910408333000000",
+          "incremental_floor_pass_conditional": true,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B4": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": false,
+          "difference_usd": "2820.295865198472952797000000",
+          "incremental_floor_pass_conditional": true,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B5": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": true,
+          "difference_usd": "-145.102316459747293845000000",
+          "incremental_floor_pass_conditional": false,
+          "positive_difference_conditional": false,
+          "status": "complete"
+        },
+        "B6": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": true,
+          "difference_usd": "542.544088009047456816000000",
+          "incremental_floor_pass_conditional": true,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B7": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": true,
+          "difference_usd": "40.783039039437038784000000",
+          "incremental_floor_pass_conditional": false,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B8": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": false,
+          "difference_usd": "920.319879910422646710000000",
+          "incremental_floor_pass_conditional": true,
+          "positive_difference_conditional": true,
+          "status": "complete"
+        },
+        "B9": {
+          "actual_benchmark_feasibility": "unavailable",
+          "benchmark_conditional_numeric_risk_pass": true,
+          "difference_usd": "-41.747553044159491881000000",
+          "incremental_floor_pass_conditional": false,
+          "positive_difference_conditional": false,
+          "status": "complete"
+        }
+      },
+      "candidate": {
+        "absolute_floor_pass_conditional": false,
+        "active_days": 364,
+        "actual_B1_comparison": "unavailable",
+        "actual_continuous_drawdown": "unavailable",
+        "cash_attribution": {
+          "commission_usd": "8.058175908113140533000000",
+          "market_pnl_usd": {
+            "BTC": "-735.104715029533000000",
+            "ETH": "0E-12",
+            "USDC": "1.448681675559441510861458438"
+          },
+          "reconstructed_profit_usd": "-759.7716500654848100221385416",
+          "spread_impact_usd": "8.057440803398111000000",
+          "terminal_dust_markdown_usd": "0E-18",
+          "terminal_route_usd": "10"
+        },
+        "cash_days": 1,
+        "complete_tail_loss_fraction": "1",
+        "conditional_numeric_risk_pass": true,
+        "descriptive_univariate_daily_proxy_beta": {
+          "BTC": 0.2260431222594922,
+          "ETH": 0.14036779180201417
+        },
+        "implementation_admitted": false,
+        "log_convention_diagnostic": {
+          "absolute_floor_classification_changed": false,
+          "difference_usd": "-203.7374251035824752827364420",
+          "erroneous_log_path_profit_usd": "-963.5090751690672853048749810",
+          "never_booked_as_cash": true
+        },
+        "max_crypto_fraction": "0.2988943019598698327231934944",
+        "mean_crypto_fraction": "0.2285164127250977424799628565",
+        "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+        "net_cash_profit_usd": "-759.771650065484810022138539",
+        "observed_discrete_max_drawdown": "0.1721673663540949755493046000",
+        "policy": "H5",
+        "promotion_admitted": false,
+        "scenario": "primary",
+        "scope": "Conditional authored costs and historical bar/USD proxies only",
+        "simple_net_return": "-0.0759771650065484810022138539",
+        "status": "complete",
+        "stress": {
+          "btc50-eth90": {
+            "lock_days": 0,
+            "loss_fraction": "0.1491484061251260264637899153",
+            "loss_usd": "1386.913609801333091362500000",
+            "maximum_loss_usd": "1387.041774300964530000000000",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "7911.969602117142152042361461",
+            "origin_nav": "9298.883211918475243404861461",
+            "origin_phase": "open",
+            "origin_timestamp": 1787875200
+          },
+          "combined-crypto-depeg-outage": {
+            "lock_days": 30,
+            "loss_fraction": "0.2903013140816090757048024248",
+            "loss_usd": "2699.478015911347088048472292",
+            "maximum_loss_usd": "2874.847028675096910570686145",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "6599.405196007128155356389169",
+            "origin_nav": "9298.883211918475243404861461",
+            "origin_phase": "open",
+            "origin_timestamp": 1787875200
+          },
+          "crypto-minus50": {
+            "lock_days": 0,
+            "loss_fraction": "0.1491484061251260264637899153",
+            "loss_usd": "1386.913609801333091362500000",
+            "maximum_loss_usd": "1387.041774300964530000000000",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "7911.969602117142152042361461",
+            "origin_nav": "9298.883211918475243404861461",
+            "origin_phase": "open",
+            "origin_timestamp": 1787875200
+          },
+          "crypto-minus80": {
+            "lock_days": 0,
+            "loss_fraction": "0.2386374498002016423420638645",
+            "loss_usd": "2219.061775682132946180000000",
+            "maximum_loss_usd": "2219.266838881543248000000000",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "7079.821436236342297224861461",
+            "origin_nav": "9298.883211918475243404861461",
+            "origin_phase": "open",
+            "origin_timestamp": 1787875200
+          },
+          "double-then-minus60": {
+            "intervening_actions": 1,
+            "lock_days": 0,
+            "loss_fraction": "0.1506990064422952888560160158",
+            "loss_usd": "1505.483074358529935671599998",
+            "maximum_loss_usd": "1505.561335764646739999999998",
+            "maximum_stress_peak_drawdown": "0.2757121263202369612569211797",
+            "nav": "8484.516925641470064328400002",
+            "origin_nav": "9990.00000000000000000000000",
+            "origin_phase": "open",
+            "origin_timestamp": 1756684800,
+            "stress_peak_drawdown": "0.1506990064422952888560160158"
+          },
+          "seven-day-outage": {
+            "lock_days": 7,
+            "loss_fraction": "0.1497455969404418463895708559",
+            "loss_usd": "1392.466817448185275912500000",
+            "maximum_loss_usd": "1392.595495118986410000000000",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "7906.416394470289967492361461",
+            "origin_nav": "9298.883211918475243404861461",
+            "origin_phase": "open",
+            "origin_timestamp": 1787875200
+          },
+          "stable-depeg-redemption-lock": {
+            "lock_days": 30,
+            "loss_fraction": "0.2002164448674057036535273860",
+            "loss_usd": "1850.045669986903037995572292",
+            "maximum_loss_usd": "2000.200060018005401620486145",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "7390.182679947612151982289169",
+            "origin_nav": "9240.228349934515189977861461",
+            "origin_phase": "after-terminal-BTC",
+            "origin_timestamp": 1788220800
+          },
+          "total-binance-loss": {
+            "lock_days": null,
+            "loss_fraction": "1",
+            "loss_usd": "9990.00000000000000000000000",
+            "maximum_loss_usd": "10326.29311742409591184443073",
+            "maximum_stress_peak_drawdown": "0",
+            "nav": "0",
+            "origin_nav": "9990.00000000000000000000000",
+            "origin_phase": "open",
+            "origin_timestamp": 1756684800,
+            "separate_tail": true
+          }
+        },
+        "terminal_liquidation_usd": "9240.228349934515189977861461",
+        "terminal_loss_fraction": "0.0759771650065484810022138539",
+        "trade_count": 13,
+        "turnover_usd": "8058.175908113140533000000",
+        "worst_rolling_30day_loss": "0.08897951501257929377116189914"
+      },
+      "full_promotion": "unavailable: actual B1 and implementation/confirmation evidence missing",
+      "placebo": {
+        "absolute_floor_pass_conditional": false,
+        "active_days": 334,
+        "actual_B1_comparison": "unavailable",
+        "actual_continuous_drawdown": "unavailable",
+        "cash_attribution": {
+          "commission_usd": "9.005956298874562512000000",
+          "market_pnl_usd": {
+            "BTC": "-763.382511612512000000",
+            "ETH": "0E-12",
+            "USDC": "1.058335266163804272861458438"
+          },
+          "reconstructed_profit_usd": "-790.3353255615857082391385416",
+          "spread_impact_usd": "9.005192916362950000000",
+          "terminal_dust_markdown_usd": "0E-18",
+          "terminal_route_usd": "10"
+        },
+        "cash_days": 31,
+        "complete_tail_loss_fraction": "1",
+        "conditional_numeric_risk_pass": null,
+        "descriptive_univariate_daily_proxy_beta": {
+          "BTC": 0.22210326367189256,
+          "ETH": 0.13765909580658778
+        },
+        "implementation_admitted": false,
+        "log_convention_diagnostic": {
+          "absolute_floor_classification_changed": false,
+          "difference_usd": "-196.1632516118093071095910691",
+          "erroneous_log_path_profit_usd": "-986.4985771733950153487296081",
+          "never_booked_as_cash": true
+        },
+        "max_crypto_fraction": "0.2988989616656872708706520968",
+        "mean_crypto_fraction": "0.2079960606801318952019690230",
+        "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+        "net_cash_profit_usd": "-790.335325561585708239138539",
+        "observed_discrete_max_drawdown": "0.1566752227431571615181766148",
+        "policy": "H5",
+        "promotion_admitted": false,
+        "scenario": "primary",
+        "scope": "Conditional authored costs and historical bar/USD proxies only",
+        "simple_net_return": "-0.0790335325561585708239138539",
+        "status": "complete",
+        "stress": {},
+        "terminal_liquidation_usd": "9209.664674438414291760861461",
+        "terminal_loss_fraction": "0.0790335325561585708239138539",
+        "trade_count": 12,
+        "turnover_usd": "9005.956298874562512000000",
+        "worst_rolling_30day_loss": "0.08616941490583169843867571430"
+      },
+      "positive_cash_profit_conditional": false
+    }
+  },
+  "confirmation_admitted": false,
+  "measurement_defect": false,
+  "promotion_admitted": false,
+  "recipe": "H5",
+  "scope": "Conditional development; no validated or selected strategy",
+  "source_acquisitions": 0
+}

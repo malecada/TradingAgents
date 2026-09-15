@@ -4,9 +4,9 @@ Source: `6d8bbd0`. Fixed 365-day interval: September 1, 2025 to September 1, 202
 
 | Cost scenario | Net cash profit | Net return | Difference versus B0 cash | Difference versus B5 monthly 25% BTC | Difference versus B9 held 25% BTC |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| primary | $-708.33 | -7.08% | $-700.33 | $-93.66 | $9.69 |
-| doubled | $-728.47 | -7.28% | $-710.47 | $-90.49 | $7.42 |
-| frictionless | $-697.46 | -6.97% | $-689.46 | $-96.75 | $11.97 |
+| primary | -$708.33 | -7.08% | -$700.33 | -$93.66 | $9.69 |
+| doubled | -$728.47 | -7.28% | -$710.47 | -$90.49 | $7.42 |
+| frictionless | -$697.46 | -6.97% | -$689.46 | -$96.75 | $11.97 |
 
 All three scenarios fail the absolute $1,000 annual cash-profit floor and fail the $200 incremental floor versus B0, B5 and B9. Primary observed discrete drawdown is 15.92%; largest registered market/stablecoin stress loss is 28.34% of its origin NAV. These conditional risk passes do not establish actual continuous drawdown or a worst-case bound. Separate Binance total-loss tail remains 100%.
 
