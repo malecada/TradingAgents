@@ -1,0 +1,1731 @@
+{
+  "cells": [
+    {
+      "id": "ethereum-chain",
+      "status": "complete",
+      "value": 1
+    },
+    {
+      "id": "ethereum-history-header",
+      "status": "complete",
+      "value": {
+        "hash": "0xf5e1d15a3e380006bd271e73c8eeed75fafc3ae6942b16f63c21361079bba709",
+        "number": 21000000,
+        "provider_assertion_only": true,
+        "timestamp": 1729345547
+      }
+    },
+    {
+      "id": "ethereum-finalized-header",
+      "status": "complete",
+      "value": {
+        "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+        "number": 25983967,
+        "provider_assertion_only": true,
+        "timestamp": 1789488599
+      }
+    },
+    {
+      "id": "ethereum-history-usdc-decimals",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'historical state 9c7216c7718d65de085264ec9d1e564660e445aed3a94e297c95e7b2902f872a is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-weth-decimals",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'historical state 9c7216c7718d65de085264ec9d1e564660e445aed3a94e297c95e7b2902f872a is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-aave-pool-identity",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'historical state 9c7216c7718d65de085264ec9d1e564660e445aed3a94e297c95e7b2902f872a is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-aave-underlying",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'historical state 9c7216c7718d65de085264ec9d1e564660e445aed3a94e297c95e7b2902f872a is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-aave-income",
+      "reason": "ValueError: RPC error/null: {'code': -32603, 'message': 'state at block #21000001 is pruned'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-aave-config",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'historical state 9c7216c7718d65de085264ec9d1e564660e445aed3a94e297c95e7b2902f872a is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-aave-contract-cash",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'historical state 9c7216c7718d65de085264ec9d1e564660e445aed3a94e297c95e7b2902f872a is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-aave-scaled-supply",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'historical state 9c7216c7718d65de085264ec9d1e564660e445aed3a94e297c95e7b2902f872a is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-aave-total-supply",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'historical state 9c7216c7718d65de085264ec9d1e564660e445aed3a94e297c95e7b2902f872a is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-lp-factory",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'historical state 9c7216c7718d65de085264ec9d1e564660e445aed3a94e297c95e7b2902f872a is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-lp-token0",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'historical state 9c7216c7718d65de085264ec9d1e564660e445aed3a94e297c95e7b2902f872a is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-lp-token1",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'historical state 9c7216c7718d65de085264ec9d1e564660e445aed3a94e297c95e7b2902f872a is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-lp-fee",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'historical state 9c7216c7718d65de085264ec9d1e564660e445aed3a94e297c95e7b2902f872a is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-lp-spacing",
+      "reason": "ValueError: RPC error/null: {'code': -32603, 'message': 'state at block #21000001 is pruned'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-lp-slot0",
+      "reason": "ValueError: RPC error/null: {'code': -32603, 'message': 'state at block #21000001 is pruned'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-lp-liquidity",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'historical state 9c7216c7718d65de085264ec9d1e564660e445aed3a94e297c95e7b2902f872a is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-lp-fee0",
+      "reason": "ValueError: RPC error/null: {'code': -32603, 'message': 'state at block #21000001 is pruned'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-lp-fee1",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'historical state 9c7216c7718d65de085264ec9d1e564660e445aed3a94e297c95e7b2902f872a is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-lp-lower",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'historical state 9c7216c7718d65de085264ec9d1e564660e445aed3a94e297c95e7b2902f872a is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-lp-upper",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'historical state 9c7216c7718d65de085264ec9d1e564660e445aed3a94e297c95e7b2902f872a is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-aave-supply-identity",
+      "reason": "required Aave source field unavailable",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-history-lp-source-identity",
+      "reason": "required LP source field unavailable",
+      "status": "unavailable"
+    },
+    {
+      "id": "ethereum-finalized-usdc-decimals",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "decimals()",
+        "words": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-weth-decimals",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "decimals()",
+        "words": [
+          18
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-aave-pool-identity",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "POOL()",
+        "words": [
+          "0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2"
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-aave-underlying",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "UNDERLYING_ASSET_ADDRESS()",
+        "words": [
+          "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-aave-income",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "getReserveNormalizedIncome(address)",
+        "words": [
+          1185749388559004347147808840
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-aave-config",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "getConfiguration(address)",
+        "words": [
+          7237005577332262213973186574461225012726266025894705449840963830289119321420
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-aave-contract-cash",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "balanceOf(address)",
+        "words": [
+          190951905156370
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-aave-scaled-supply",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "scaledTotalSupply()",
+        "words": [
+          2011132779448650
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-aave-total-supply",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "totalSupply()",
+        "words": [
+          2384699463542207
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-lp-factory",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "getPool(address,address,uint24)",
+        "words": [
+          "0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8"
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-lp-token0",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "token0()",
+        "words": [
+          "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-lp-token1",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "token1()",
+        "words": [
+          "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-lp-fee",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "fee()",
+        "words": [
+          3000
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-lp-spacing",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "tickSpacing()",
+        "words": [
+          60
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-lp-slot0",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "slot0()",
+        "words": [
+          1610133307582257375144520524703439,
+          198399,
+          35,
+          1440,
+          1440,
+          102,
+          true
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-lp-liquidity",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "liquidity()",
+        "words": [
+          2894847169106152914
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-lp-fee0",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "feeGrowthGlobal0X128()",
+        "words": [
+          5905909349951684739851973502504046
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-lp-fee1",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "feeGrowthGlobal1X128()",
+        "words": [
+          2513307556406139788495041927320472342947868
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-lp-lower",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "ticks(int24)",
+        "words": [
+          7103102929692946,
+          7103102929692946,
+          918936720859512749840172491911924,
+          367012162860625047920182703084801789879413,
+          1550414597744,
+          198044337547991851355361269968355524095914,
+          1627989453,
+          true
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-lp-upper",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x6ab7a1f5fb7ee2116bfebc8a3af1c7f8fc994a225af446ab51ab564dbd087140",
+          "number": 25983967,
+          "provider_assertion_only": true,
+          "timestamp": 1789488599
+        },
+        "signature": "ticks(int24)",
+        "words": [
+          7263278025751271,
+          -7263278025751271,
+          0,
+          0,
+          0,
+          0,
+          0,
+          true
+        ]
+      }
+    },
+    {
+      "id": "ethereum-finalized-aave-supply-identity",
+      "status": "complete",
+      "value": {
+        "index_scaled_supply_reconciliation_base_units": -1,
+        "scope": "Public protocol supply identity only; cash balance is not user withdrawal capacity"
+      }
+    },
+    {
+      "id": "ethereum-finalized-lp-source-identity",
+      "status": "complete",
+      "value": {
+        "positive_active_liquidity": true,
+        "scope": "Named pool source coherence; no full historical range, executable capacity or fee return claim"
+      }
+    },
+    {
+      "id": "base-chain",
+      "status": "complete",
+      "value": 8453
+    },
+    {
+      "id": "base-history-header",
+      "status": "complete",
+      "value": {
+        "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+        "number": 20000000,
+        "provider_assertion_only": true,
+        "timestamp": 1726789347
+      }
+    },
+    {
+      "id": "base-finalized-header",
+      "status": "complete",
+      "value": {
+        "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+        "number": 51349610,
+        "provider_assertion_only": true,
+        "timestamp": 1789488567
+      }
+    },
+    {
+      "id": "base-history-usdc-decimals",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "decimals()",
+        "words": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "base-history-weth-decimals",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "decimals()",
+        "words": [
+          18
+        ]
+      }
+    },
+    {
+      "id": "base-history-aave-pool-identity",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "POOL()",
+        "words": [
+          "0xa238dd80c259a72e81d7e4664a9801593f98d1c5"
+        ]
+      }
+    },
+    {
+      "id": "base-history-aave-underlying",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "UNDERLYING_ASSET_ADDRESS()",
+        "words": [
+          "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
+        ]
+      }
+    },
+    {
+      "id": "base-history-aave-income",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "getReserveNormalizedIncome(address)",
+        "words": [
+          1044432862773347400954526380
+        ]
+      }
+    },
+    {
+      "id": "base-history-aave-config",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "getConfiguration(address)",
+        "words": [
+          7237005577332262213973186568751989996258197824552196797186860499115345190220
+        ]
+      }
+    },
+    {
+      "id": "base-history-aave-contract-cash",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "balanceOf(address)",
+        "words": [
+          13859094581825
+        ]
+      }
+    },
+    {
+      "id": "base-history-aave-scaled-supply",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "scaledTotalSupply()",
+        "words": [
+          42360722915854
+        ]
+      }
+    },
+    {
+      "id": "base-history-aave-total-supply",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "totalSupply()",
+        "words": [
+          44242931104154
+        ]
+      }
+    },
+    {
+      "id": "base-history-lp-factory",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "getPool(address,address,uint24)",
+        "words": [
+          "0x6c561b446416e1a00e8e93e221854d6ea4171372"
+        ]
+      }
+    },
+    {
+      "id": "base-history-lp-token0",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "token0()",
+        "words": [
+          "0x4200000000000000000000000000000000000006"
+        ]
+      }
+    },
+    {
+      "id": "base-history-lp-token1",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "token1()",
+        "words": [
+          "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
+        ]
+      }
+    },
+    {
+      "id": "base-history-lp-fee",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "fee()",
+        "words": [
+          3000
+        ]
+      }
+    },
+    {
+      "id": "base-history-lp-spacing",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "tickSpacing()",
+        "words": [
+          60
+        ]
+      }
+    },
+    {
+      "id": "base-history-lp-slot0",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "slot0()",
+        "words": [
+          3938672024954328222236924,
+          -198195,
+          3,
+          100,
+          100,
+          0,
+          true
+        ]
+      }
+    },
+    {
+      "id": "base-history-lp-liquidity",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "liquidity()",
+        "words": [
+          27901757465063856
+        ]
+      }
+    },
+    {
+      "id": "base-history-lp-fee0",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "feeGrowthGlobal0X128()",
+        "words": [
+          302028237284011799786298103246718377435516
+        ]
+      }
+    },
+    {
+      "id": "base-history-lp-fee1",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "feeGrowthGlobal1X128()",
+        "words": [
+          1455897188217945677466428861431415
+        ]
+      }
+    },
+    {
+      "id": "base-history-lp-lower",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "ticks(int24)",
+        "words": [
+          43771146154259,
+          43771146154259,
+          13724107170204722894970180265311361340481,
+          34519978097144403207660990407564,
+          -765854739592,
+          136458673653196700666554069817741511965824909,
+          1703835283,
+          true
+        ]
+      }
+    },
+    {
+      "id": "base-history-lp-upper",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+          "number": 20000000,
+          "provider_assertion_only": true,
+          "timestamp": 1726789347
+        },
+        "signature": "ticks(int24)",
+        "words": [
+          47417728038114,
+          -47417728038114,
+          0,
+          0,
+          0,
+          0,
+          0,
+          true
+        ]
+      }
+    },
+    {
+      "id": "base-history-aave-supply-identity",
+      "status": "complete",
+      "value": {
+        "index_scaled_supply_reconciliation_base_units": 0,
+        "scope": "Public protocol supply identity only; cash balance is not user withdrawal capacity"
+      }
+    },
+    {
+      "id": "base-history-lp-source-identity",
+      "status": "complete",
+      "value": {
+        "positive_active_liquidity": true,
+        "scope": "Named pool source coherence; no full historical range, executable capacity or fee return claim"
+      }
+    },
+    {
+      "id": "base-finalized-usdc-decimals",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "decimals()",
+        "words": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-weth-decimals",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "decimals()",
+        "words": [
+          18
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-aave-pool-identity",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "POOL()",
+        "words": [
+          "0xa238dd80c259a72e81d7e4664a9801593f98d1c5"
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-aave-underlying",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "UNDERLYING_ASSET_ADDRESS()",
+        "words": [
+          "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-aave-income",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "getReserveNormalizedIncome(address)",
+        "words": [
+          1145814667612700860339256716
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-aave-config",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "getConfiguration(address)",
+        "words": [
+          7237005577332262213973186568752004119305653224248996801175139707821393190220
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-aave-contract-cash",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "balanceOf(address)",
+        "words": [
+          21273792965691
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-aave-scaled-supply",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "scaledTotalSupply()",
+        "words": [
+          157833640686657
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-aave-total-supply",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "totalSupply()",
+        "words": [
+          180848100541484
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-lp-factory",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "getPool(address,address,uint24)",
+        "words": [
+          "0x6c561b446416e1a00e8e93e221854d6ea4171372"
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-lp-token0",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "token0()",
+        "words": [
+          "0x4200000000000000000000000000000000000006"
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-lp-token1",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "token1()",
+        "words": [
+          "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-lp-fee",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "fee()",
+        "words": [
+          3000
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-lp-spacing",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "tickSpacing()",
+        "words": [
+          60
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-lp-slot0",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "slot0()",
+        "words": [
+          3899789874319963521638472,
+          -198394,
+          901,
+          2000,
+          2000,
+          102,
+          true
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-lp-liquidity",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "liquidity()",
+        "words": [
+          27391953597064654650
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-lp-fee0",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "feeGrowthGlobal0X128()",
+        "words": [
+          1065581720265795091132837655710931776433215
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-lp-fee1",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "feeGrowthGlobal1X128()",
+        "words": [
+          3444358344556492942650867190136266
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-lp-lower",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "ticks(int24)",
+        "words": [
+          8185304004572124,
+          8185304004572124,
+          13724107170204722894970180265311361340481,
+          34519978097144403207660990407564,
+          -765854739592,
+          136458673653196700666554069817741511965824909,
+          1703835283,
+          true
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-lp-upper",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0x8fb4a72412b58fe373aff1af79da94d378698cf00ca2933d7293b0f4a65b1953",
+          "number": 51349610,
+          "provider_assertion_only": true,
+          "timestamp": 1789488567
+        },
+        "signature": "ticks(int24)",
+        "words": [
+          1167660673408735,
+          -1167660673408735,
+          0,
+          0,
+          0,
+          0,
+          0,
+          true
+        ]
+      }
+    },
+    {
+      "id": "base-finalized-aave-supply-identity",
+      "status": "complete",
+      "value": {
+        "index_scaled_supply_reconciliation_base_units": 0,
+        "scope": "Public protocol supply identity only; cash balance is not user withdrawal capacity"
+      }
+    },
+    {
+      "id": "base-finalized-lp-source-identity",
+      "status": "complete",
+      "value": {
+        "positive_active_liquidity": true,
+        "scope": "Named pool source coherence; no full historical range, executable capacity or fee return claim"
+      }
+    },
+    {
+      "id": "arbitrum-chain",
+      "status": "complete",
+      "value": 42161
+    },
+    {
+      "id": "arbitrum-history-header",
+      "status": "complete",
+      "value": {
+        "hash": "0x97a377f6231ddc21edc1e6c5156e713f747059ebf518dd730a9feed582d2612a",
+        "number": 280000000,
+        "provider_assertion_only": true,
+        "timestamp": 1733000765
+      }
+    },
+    {
+      "id": "arbitrum-finalized-header",
+      "status": "complete",
+      "value": {
+        "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+        "number": 505471842,
+        "provider_assertion_only": true,
+        "timestamp": 1789488904
+      }
+    },
+    {
+      "id": "arbitrum-history-usdc-decimals",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-weth-decimals",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'missing trie node 3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 (path ) state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available, not found'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-aave-pool-identity",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'missing trie node 3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 (path ) state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available, not found'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-aave-underlying",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'missing trie node 3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 (path ) state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available, not found'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-aave-income",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'missing trie node 3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 (path ) state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available, not found'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-aave-config",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'missing trie node 3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 (path ) state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available, not found'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-aave-contract-cash",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'missing trie node 3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 (path ) state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available, not found'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-aave-scaled-supply",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-aave-total-supply",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'missing trie node 3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 (path ) state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available, not found'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-lp-factory",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-lp-token0",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'missing trie node 3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 (path ) state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available, not found'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-lp-token1",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'missing trie node 3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 (path ) state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available, not found'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-lp-fee",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'missing trie node 3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 (path ) state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available, not found'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-lp-spacing",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'missing trie node 3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 (path ) state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available, not found'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-lp-slot0",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'missing trie node 3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 (path ) state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available, not found'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-lp-liquidity",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'missing trie node 3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 (path ) state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available, not found'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-lp-fee0",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'missing trie node 3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 (path ) state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available, not found'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-lp-fee1",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'missing trie node 3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 (path ) state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available, not found'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-lp-lower",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'missing trie node 3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 (path ) state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available, not found'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-lp-upper",
+      "reason": "ValueError: RPC error/null: {'code': -32000, 'message': 'state 0x3068d1622af5d7e5794501faf5fbc78a3e4dcd0f43b2dd38f0c4823512401009 is not available'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-aave-supply-identity",
+      "reason": "required Aave source field unavailable",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-history-lp-source-identity",
+      "reason": "required LP source field unavailable",
+      "status": "unavailable"
+    },
+    {
+      "id": "arbitrum-finalized-usdc-decimals",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "decimals()",
+        "words": [
+          6
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-weth-decimals",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "decimals()",
+        "words": [
+          18
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-aave-pool-identity",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "POOL()",
+        "words": [
+          "0x794a61358d6845594f94dc1db02a252b5b4814ad"
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-aave-underlying",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "UNDERLYING_ASSET_ADDRESS()",
+        "words": [
+          "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-aave-income",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "getReserveNormalizedIncome(address)",
+        "words": [
+          1178380053163124250375395173
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-aave-config",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "getConfiguration(address)",
+        "words": [
+          7237005577332262213973186942896424937551795037297819859365743234882012192076
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-aave-contract-cash",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "balanceOf(address)",
+        "words": [
+          34380469649841
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-aave-scaled-supply",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "scaledTotalSupply()",
+        "words": [
+          153757683348666
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-aave-total-supply",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "totalSupply()",
+        "words": [
+          181184987078639
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-lp-factory",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "getPool(address,address,uint24)",
+        "words": [
+          "0xc473e2aee3441bf9240be85eb122abb059a3b57c"
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-lp-token0",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "token0()",
+        "words": [
+          "0x82af49447d8a07e3bd95bd0d56f35241523fbab1"
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-lp-token1",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "token1()",
+        "words": [
+          "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-lp-fee",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "fee()",
+        "words": [
+          3000
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-lp-spacing",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "tickSpacing()",
+        "words": [
+          60
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-lp-slot0",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "slot0()",
+        "words": [
+          3896318991206138605731840,
+          -198412,
+          1140,
+          1200,
+          1200,
+          102,
+          true
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-lp-liquidity",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "liquidity()",
+        "words": [
+          440487805380209904
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-lp-fee0",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "feeGrowthGlobal0X128()",
+        "words": [
+          1041892718238311800713179588152396730526377
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-lp-fee1",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "feeGrowthGlobal1X128()",
+        "words": [
+          2751670852603013007207561402147291
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-lp-lower",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "ticks(int24)",
+        "words": [
+          61238307813912065178982,
+          61238307813912065178982,
+          16859729955048606579101040714193735699269,
+          24887248817975628064794170216407,
+          -214171829634,
+          9527912410740392706948337411736309520955,
+          1687321213,
+          true
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-lp-upper",
+      "status": "complete",
+      "value": {
+        "block": {
+          "hash": "0xf60f9abe7553394b1fb37e9ce682cc6afdee3bd284426ebf65c34131c259368e",
+          "number": 505471842,
+          "provider_assertion_only": true,
+          "timestamp": 1789488904
+        },
+        "signature": "ticks(int24)",
+        "words": [
+          272850711801978,
+          -272850711801978,
+          0,
+          0,
+          0,
+          0,
+          0,
+          true
+        ]
+      }
+    },
+    {
+      "id": "arbitrum-finalized-aave-supply-identity",
+      "status": "complete",
+      "value": {
+        "index_scaled_supply_reconciliation_base_units": -1,
+        "scope": "Public protocol supply identity only; cash balance is not user withdrawal capacity"
+      }
+    },
+    {
+      "id": "arbitrum-finalized-lp-source-identity",
+      "status": "complete",
+      "value": {
+        "positive_active_liquidity": true,
+        "scope": "Named pool source coherence; no full historical range, executable capacity or fee return claim"
+      }
+    }
+  ],
+  "elapsed_seconds": 541.4125825270021,
+  "elapsed_time_kill": false,
+  "financial_outcomes_computed": false,
+  "implementation_admitted": false,
+  "limits": "Per-request timeout and finite request/body bounds; no overall wall-time or CPU-duration cutoff",
+  "raw_bytes": 100951,
+  "requests": 129,
+  "scope": "Read-only public protocol accounting state observability; no profitability, withdrawal capacity or implementation claim"
+}

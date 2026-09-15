@@ -1,43 +1,33 @@
 # Successor checkpoint — September 15, 2026
 
-Status: **Q1 source packet independently reviewed and ready for committed
-metadata admission and execution. No actual protocol RPC request yet.**
+Status: Q1 capture completed once from `4c09857`; no process remains running.
+Structural verification passes 141 cells / 44 unavailable / 400 outputs.
+Independent actual-data review passed; the full raw matrix was reconstructed. No financial outcomes were computed.
+See `Q1-RESULT.md` and the immutable `research_runs/defi-depth-q1-20260915/`.
 
-The user authorized deeper continuation and no time-killed experiments. The
-initial allocation phase remains closed188/189, with6/6admissions and4/4recipes,
-zero validated strategies. Its source/financial/confirmation criteria stay fixed.
+The user authorized deeper continuation without overall experiment time limits.
+Per-request timeouts and finite acquisition/question inventories still apply.
+The initial allocation phase remains closed at 188/189, with six admissions and
+four fixed negative financial recipes. Zero strategies are validated.
 
-The successor phase grant is six source/history questions, at most four distinct
-financial recipes and one shared justified repair; no new confirmation episode.
-Q1/Q2 share an independently reviewed new source-only observability family,
-prior1/cap3. Its one imported predecessor is already in old188 and is not counted
-again globally. Related44DeFi records and unknown broader multiplicity remain.
+Successor usage: source questions 1/6; financial recipes 0/4; repair 0/1;
+new claims 1/11. Q1/Q2 source family effective count 2/3 includes one original
+DEX predecessor already inside old188. Related44 DeFi records and unknown wider
+multiplicity remain overlapping history. No new confirmation slot is granted.
 
-Q1 fixes AaveV3nativeUSDC and the prior Uniswapv3WETH/nativeUSDC3000pool across
-Ethereum/Base/Arbitrum, at the retained old2024heights and a finalized anchor.
-129requestcells+12coherencecells=141;400immutableoutputs. The only balance query
-is a public protocol contract, not the user's account. No return/yield/capacity
-claim. Exact addresses, ABIwords, canonical hashes and denied/missing cases are
-fixed by q1-spec.json and q1-charter.md.
+Q1 retained 129 public requests / 100,951 raw bytes / 541.4126 elapsed seconds.
+The finite phase ceiling is 25,000 acquisition requests / 2GiB raw bytes.
+Documentary operations used: 35/60, including three retained raw official
+address-book snapshots and one failed Aave source-path open. No paid resources,
+account/wallet actions, orders or production changes occurred.
 
-18focused invented tests pass. The final no-network full lifecycle preflight
-passes141completecells/400outputs in35.9211seconds. Independent review passed
-ABI/address/history/denominator and failure checks after two pre-execution
-validation fixes. Original source/runtime files are unchanged. The sole initial
-synthetic-fixture failure occurred before its own fake claim and consumed no
-actual research slot; its explanation and earlier successful preflight remain.
+Base historical and current accounting states passed source consistency checks.
+Ethereum and Arbitrum current states passed; selected old states were unavailable
+at those endpoints. Missing history is not a strategy failure. Q2 preparation
+will freeze a continuous Base panel and preserve every missing day/cohort before
+capture. Oracle prices are potential valuation proxies, not executable quotes;
+gas, withdrawal, identity/version and finite-liquidity limits remain explicit.
 
-Runtime: no total elapsed/CPU-duration cutoff; synchronous public requests retain
-10second individual network deadlines and256KiB response bounds. Every attempt,
-raw receipt and parsed result is published before proceeding. No retries or
-provider substitution. Per-endpoint denials retain remaining unavailable cells.
-Q1 reserves129requests/33,816,576rawbytes inside25,000requests/2GiBphase ceilings.
-25documentary operations and3raw official code-document snapshots are already
-retained; no new empirical source or financial claim has run yet.
-
-Exact next action: commit reviewed packet; metadata check gates-q1.json with
-experiment defi-depth-q1-20260915 and the full execution commit; then execute
-q1_source.py directly with --source. No old resource guard or options worker is
-used. Preserve the terminal result, independently decode raw receipts, update
-this checkpoint and continue the ranked eligible questions without another
-permission request. Do not run any completed/failed claim again.
+Next: independently review, commit and admit Q2 before acquisition. Continue Q3–Q6 and any justified
+financial questions under the finite grant without another permission request.
+Do not restart Q1, edit its frozen sources or touch the separate options effort.

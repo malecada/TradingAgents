@@ -45,3 +45,26 @@ operations (3 search queries, 8 page opens, 11 finds, 3 raw-document requests).
 The raw three source snapshots retain URL, UTC clocks, exact bytes and hashes
 under documents/. They provide candidate ABI/address configuration only.
 The Arbitrum native-USDC aToken is USDCn_A_TOKEN; USDC_A_TOKEN is not substituted.
+
+Independent Q2 design review used seven additional documentary operations:
+four official source opens and three finds on the already opened Uniswap source.
+Cumulative documentary operations32/60. No RPC or financial observations were
+made by that review. Sources:
+- https://raw.githubusercontent.com/aave/aave-v3-core/master/contracts/protocol/libraries/logic/ReserveLogic.sol
+- https://raw.githubusercontent.com/aave/aave-v3-core/master/contracts/protocol/libraries/math/MathUtils.sol
+- https://raw.githubusercontent.com/aave-dao/aave-v3-origin/main/src/contracts/protocol/libraries/logic/ReserveLogic.sol
+- https://raw.githubusercontent.com/Uniswap/v3-core/main/contracts/UniswapV3Pool.sol
+The review identifies separately mutated interest indices/timestamps, historical
+instantaneous index changes, and LP intra-swap/flash fee changes. Event-only
+reconstruction requires a version-complete mutation proof; one matching endpoint
+or a ReserveDataUpdated-only trace is not enough. Q1's newly qualified Base state
+route may avoid that replay; its full-calendar coverage still needs Q2 admission.
+
+Q2 root preparation added three official opens (35/60 total): the incorrect
+protocol/configuration/AaveOracle.sol path returned404; the correct
+contracts/misc/AaveOracle.sol establishes USD zero-address base and immutable
+unit plus fallback semantics; BaseUpgradeabilityProxy.sol documents the EIP1967
+implementation slot. Sources:
+https://raw.githubusercontent.com/aave/aave-v3-core/master/contracts/misc/AaveOracle.sol
+and https://raw.githubusercontent.com/aave/aave-v3-core/master/contracts/dependencies/openzeppelin/upgradeability/BaseUpgradeabilityProxy.sol .
+These are interface witnesses, not deployed-version proof or executable marks.
