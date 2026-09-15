@@ -31,3 +31,9 @@ gas, withdrawal, identity/version and finite-liquidity limits remain explicit.
 Next: independently review, commit and admit Q2 before acquisition. Continue Q3–Q6 and any justified
 financial questions under the finite grant without another permission request.
 Do not restart Q1, edit its frozen sources or touch the separate options effort.
+
+Q2 prepared and independently reviewed: 1,096 fixed daily targets, three365-day
+cohorts, 20,890cells/5,484outputs; at most2,193HTTP/18,689RPCsubcalls and
+574,881,792rawbytes. Eleven focused invented tests and full in-memory inventory
+plus compact disk lifecycle pass. No actual Q2 request has run at this checkpoint.
+Daily coverage does not certify boundary oracle units/code or executable prices.
