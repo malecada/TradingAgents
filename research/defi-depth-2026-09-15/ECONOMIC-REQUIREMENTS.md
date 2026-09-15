@@ -127,8 +127,9 @@ valid at that C. No larger capital amount is selected merely to improve a report
 
 ## Next admission decision
 
-Q3's two eligible source cohorts are still being captured. Their source values
-will require independent review before any financial use. F1/F3 require a
+Q3's boundary observations passed for two cohorts, but the runner subsequently
+failed its current-HEAD check; see Q3-RESULT.md. No annual panel was captured.
+Retained values require independent review before any financial use. F1/F3 require a
 legitimate source route after the preserved failed R1, not a renamed retry;
 independent review is assessing whether a distinct financial recipe can acquire
 never-attempted prerequisites within the remaining grants. Q4/Q6 source limits

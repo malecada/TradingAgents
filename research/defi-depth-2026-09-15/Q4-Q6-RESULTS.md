@@ -107,7 +107,6 @@ information-family multiplicity remains unknown.
 
 Q4/Q6 consume two source questions, not financial recipes. Q5's earlier reviewed
 carry books remain actual negative economic findings specific to those recipes;
-these source limitations are a different result category. Q3 continues its fixed
-staking source acquisition. F1/F3 still lack a complete qualified annual protocol
+these source limitations are a different result category. Q3 later closed after an execution-root HEAD error; see Q3-RESULT.md. F1/F3 still lack a complete qualified annual protocol
 panel after R1's preserved provider-limit failure. Useful questions remain under
 assessment; this document does not declare the entire phase exhausted.

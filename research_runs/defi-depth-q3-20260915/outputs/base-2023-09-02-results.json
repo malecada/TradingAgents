@@ -1,0 +1,69 @@
+{
+  "block": {
+    "hash": "0x561c649233c3323ce73a212b56e0750e14c8ea243dabd9a353bd042af494634c",
+    "number": 3411726,
+    "provider_assertion_only": true,
+    "target_timestamp": 1693612800,
+    "timestamp": 1693612799
+  },
+  "cells": [
+    {
+      "id": "base-2023-09-02-canonical-bracket",
+      "source_role": "Q3 qualification of retained raw source",
+      "status": "complete",
+      "value": {
+        "hash": "0x561c649233c3323ce73a212b56e0750e14c8ea243dabd9a353bd042af494634c",
+        "number": 3411726,
+        "provider_assertion_only": true,
+        "target_timestamp": 1693612800,
+        "timestamp": 1693612799
+      }
+    },
+    {
+      "id": "base-2023-09-02-oracle-wsteth-price",
+      "reason": "RPC error/null: {'code': 3, 'message': 'execution reverted'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "base-2023-09-02-oracle-wsteth-source",
+      "reason": "implementation/source address absent",
+      "status": "unavailable"
+    },
+    {
+      "id": "base-2023-09-02-wrapper-decimals",
+      "reason": "RPC byte string length mismatch",
+      "status": "unavailable"
+    },
+    {
+      "id": "base-2023-09-02-wrapper-code",
+      "reason": "contract deployment absent",
+      "status": "unavailable"
+    },
+    {
+      "id": "base-2023-09-02-oracle-unit",
+      "reason": "retained first boundary state unavailable",
+      "status": "unavailable"
+    },
+    {
+      "id": "base-2023-09-02-oracle-base",
+      "source_role": "retained R1 raw",
+      "status": "complete",
+      "value": {
+        "words": [
+          "0x0000000000000000000000000000000000000000"
+        ]
+      }
+    },
+    {
+      "id": "base-2023-09-02-oracle-source-code",
+      "reason": "same-block oracle source address unavailable",
+      "status": "unavailable"
+    }
+  ],
+  "day": {
+    "candidate_block": 3411726,
+    "date": "2023-09-02",
+    "timestamp": 1693612800
+  },
+  "scope": "source only; oracle is not an executable price"
+}
