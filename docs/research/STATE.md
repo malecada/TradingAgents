@@ -5,7 +5,9 @@ The user subsequently said “lets keep going then”, lifting the earlier
 pause-after-setup instruction. The single prospective options episode is now admitted from remotely verified
 commit ebc21e931541e7e03e139e48f7d2069a8426742f. Its twentieth claim is active;
 all nineteen predecessors remain terminal and preserved. The exact VPS release
-is verified; consult active state for the finite launch/process status.
+ran once and stopped at entry on frozen source-age/chronology rejection for both
+assets. No financial book ran. Raw return and external quiescence are verified;
+independent failure-only terminal closure is pending. Consult active state.
 The user explicitly launched the saved research prompt and superseded the
 preparation pause. Read the [active program state](../../research/strategy-search-2026-09-11/STATE.md),
 [charter](../../research/strategy-search-2026-09-11/CHARTER.md),

@@ -1,0 +1,200 @@
+{
+  "checked_at": "2026-09-15T09:00:58.208235+00:00",
+  "scope": "operational only; no scientific/source admission",
+  "data_root_exists": true,
+  "tmux": {
+    "exit_code": 1,
+    "stdout": "",
+    "stderr": "no server running on /tmp/tmux-0/thesis-options-20260915\n"
+  },
+  "processes": [],
+  "launch_log": "finite launch entered 2026-09-15T08:50:15Z\n/opt/thesis-research/options-episode-20260911/release-ebc21e9/release_bootstrap.py: OK\nverified bootstrap execution 2026-09-15T08:58:00Z\n",
+  "journals": {
+    "bootstrap": {
+      "receipt_count": 3,
+      "sample_count": 3,
+      "sample_statuses": {
+        "received": 3
+      },
+      "sample_http_statuses": {
+        "200": 3
+      },
+      "sample": [
+        {
+          "slot": "initial-funding-rules",
+          "status": "received",
+          "http_status": 200,
+          "body_complete": false,
+          "error": "ValueError: response body exceeds bound",
+          "body_bytes": 65536,
+          "clock_consistent": true,
+          "within_controller_deadline": true
+        },
+        {
+          "slot": "initial-futures-rules",
+          "status": "received",
+          "http_status": 200,
+          "body_complete": true,
+          "error": null,
+          "body_bytes": 1113601,
+          "clock_consistent": true,
+          "within_controller_deadline": true
+        },
+        {
+          "slot": "initial-options-rules",
+          "status": "received",
+          "http_status": 200,
+          "body_complete": true,
+          "error": null,
+          "body_bytes": 1037727,
+          "clock_consistent": true,
+          "within_controller_deadline": true
+        }
+      ],
+      "seal_exists": true
+    },
+    "known": {
+      "receipt_count": 8,
+      "sample_count": 8,
+      "sample_statuses": {
+        "received": 8
+      },
+      "sample_http_statuses": {
+        "200": 8
+      },
+      "sample": [
+        {
+          "slot": "h0000-btc-index",
+          "status": "received",
+          "http_status": 200,
+          "body_complete": true,
+          "error": null,
+          "body_bytes": 52,
+          "clock_consistent": true,
+          "within_controller_deadline": true
+        },
+        {
+          "slot": "h0000-btc-perp-depth",
+          "status": "received",
+          "http_status": 200,
+          "body_complete": true,
+          "error": null,
+          "body_bytes": 506,
+          "clock_consistent": true,
+          "within_controller_deadline": true
+        },
+        {
+          "slot": "h0000-btc-perp-mark",
+          "status": "received",
+          "http_status": 200,
+          "body_complete": true,
+          "error": null,
+          "body_bytes": 231,
+          "clock_consistent": true,
+          "within_controller_deadline": true
+        },
+        {
+          "slot": "h0000-eth-index",
+          "status": "received",
+          "http_status": 200,
+          "body_complete": true,
+          "error": null,
+          "body_bytes": 51,
+          "clock_consistent": true,
+          "within_controller_deadline": true
+        },
+        {
+          "slot": "h0000-eth-perp-depth",
+          "status": "received",
+          "http_status": 200,
+          "body_complete": true,
+          "error": null,
+          "body_bytes": 493,
+          "clock_consistent": true,
+          "within_controller_deadline": true
+        },
+        {
+          "slot": "h0000-eth-perp-mark",
+          "status": "received",
+          "http_status": 200,
+          "body_complete": true,
+          "error": null,
+          "body_bytes": 229,
+          "clock_consistent": true,
+          "within_controller_deadline": true
+        },
+        {
+          "slot": "h0000-futures-time",
+          "status": "received",
+          "http_status": 200,
+          "body_complete": true,
+          "error": null,
+          "body_bytes": 28,
+          "clock_consistent": true,
+          "within_controller_deadline": true
+        },
+        {
+          "slot": "h0000-options-time",
+          "status": "received",
+          "http_status": 200,
+          "body_complete": true,
+          "error": null,
+          "body_bytes": 28,
+          "clock_consistent": true,
+          "within_controller_deadline": true
+        }
+      ],
+      "seal_exists": true
+    },
+    "daily": {
+      "receipt_count": 0,
+      "sample_count": 0,
+      "sample_statuses": {},
+      "sample_http_statuses": {},
+      "sample": [],
+      "seal_exists": true
+    },
+    "final": {
+      "receipt_count": 0,
+      "sample_count": 0,
+      "sample_statuses": {},
+      "sample_http_statuses": {},
+      "sample": [],
+      "seal_exists": true
+    }
+  },
+  "selection_statuses": {
+    "BTC": {
+      "status": "unavailable",
+      "reason": "source age or chronology",
+      "scheduled_exit_ms": null
+    },
+    "ETH": {
+      "status": "unavailable",
+      "reason": "source age or chronology",
+      "scheduled_exit_ms": null
+    }
+  },
+  "source_seal": {
+    "status": "failed",
+    "reason": "ValueError: initial selection unavailable; no replacement entry",
+    "quiescent_ms": 1789462800805,
+    "intended_slot_count": 17144,
+    "unresolved_selected_slots": 8456
+  },
+  "supervisor_exits": [
+    {
+      "file": "supervisor-exit-000000.json",
+      "assignment_sha256": "8349daecd93b39ed2e41e48194b58790706edaf209cf2a3b24ba62b0b430eccf",
+      "child_exit_code": 2,
+      "child_pid": 685966,
+      "ended_ms": 1789462800916,
+      "reason": "child exited with code 2",
+      "sampled_peak_aggregate_rss": 283189248,
+      "scope": "Supervisor exit evidence; raw journal admission remains separate.",
+      "stderr_bytes_observed": 0,
+      "stderr_truncated": false,
+      "stderr_text": ""
+    }
+  ]
+}

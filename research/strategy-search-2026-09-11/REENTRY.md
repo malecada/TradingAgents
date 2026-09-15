@@ -1,5 +1,15 @@
 # Research resumed September 15, 2026
 
+**Current operational status09:02UTC: source worker stopped and sealed FAILED.**
+Both BTC/ETH entry selections rejected source age/chronology; no positions or
+financial calculation occurred. All11requests and all17144intended slots remain
+accounted for, including unattempted conditional sources. Authenticated process
+absence and locks prove quiescence. All93package/data/logfiles(7,893,176bytes)
+match the preserved local and VPS copies. Independent failure-only closure is
+pending; do not restart, change timestamps/caps or create a replacement claim.
+The admitted launch record below is historical status, not a running collector.
+
+
 Latest instruction “lets keep going then” supersedes the pause-after-options/VPS
 boundary. Read AGENTS.md, docs/RESEARCH_START.md, current program STATE.md,
 CHARTER.md, MAP.md, BACKLOG.md and reviews/options-actual-*20260915*.

@@ -1,5 +1,15 @@
 # Active program state
 
+**Current operational status09:02UTC: source worker stopped and sealed FAILED.**
+Both BTC/ETH entry selections rejected source age/chronology; no positions or
+financial calculation occurred. All11requests and all17144intended slots remain
+accounted for, including unattempted conditional sources. Authenticated process
+absence and locks prove quiescence. All93package/data/logfiles(7,893,176bytes)
+match the preserved local and VPS copies. Independent failure-only closure is
+pending; do not restart, change timestamps/caps or create a replacement claim.
+The admitted launch record below is historical status, not a running collector.
+
+
 Research resumed September 15, 2026 under “lets keep going then”, superseding the
 pause-after-options/VPS instruction. Zero strategies are validated.
 Branch `research/strategy-search-2026-09-11`; inspect actual status before work.
@@ -171,7 +181,9 @@ settled funding events/marks/fees and account applicability. No deferred settlem
 revisit, paid sources, provider contact, orders or production operation.
 
 Verified source backup:ebc21e931541e7e03e139e48f7d2069a8426742f. Claim/launch-state
-backup is being pushed separately after retaining the finite launch record.
+backup f814ef1b0c8844aee12feef6692cf396cf99c422 was pushed and independently
+queried equal on the remote branch. It includes the actual claim, assignment,
+release reviews, exact launcher versions and finite waiting-process record.
 Local and VPS copies of the invented fixture are hash verified. Future actual raw
 observations do not yet exist and have no claimed complete backup. Earlier reviewed
 checkpoints/results remain in Git ancestry; their preparation-only launch status

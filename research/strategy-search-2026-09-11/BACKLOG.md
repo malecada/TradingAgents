@@ -33,7 +33,9 @@ and finite launch status are in STATE.md. No recurring scheduler was created.
 - [x] Verify current VPS access read-only: confirmed host, root login, Python3.12.3, tmux/screen,2CPUs and39,759,348KiB free. No remote mutation or collection.
 - [x] Verify actual nineteen-history hashes with the candidate controller inventory:16complete/3failed,7.977seconds and51,208,192sampled aggregate RSS bytes. This is engineering proof, not a twentieth claim.
 - [x] Complete reviewed prospective lifecycle, effective5 grant, frozen policy, verified source backup, sole local claim and exact VPS release.
-- [ ] Record finite initial launch and first operational source status; preserve raw return/stop contract.
+- [x] Record finite launch, source-age failure, complete raw return and external stopped-process evidence.
+- [ ] Complete independently reviewed failure-only closure of the sole options episode.
+- [ ] Finish value_rev preservation and pure synthetic readiness review; freeze source interpretations before any second vintage or P0.
 - [ ] Existing value_rev remains deferred until a second vintage September 18 or later; no early replay or renamed gate.
 - [ ] Re-rank relative-value, liquidity, factor and information questions against
   the resulting evidence; register only a distinct justified prediction.
