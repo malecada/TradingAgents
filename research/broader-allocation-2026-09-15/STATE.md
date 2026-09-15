@@ -144,3 +144,10 @@ NordVPN through Finland. VPN egress was not independently measured or changed.
 The earlier launch failure was local; neither it nor present public reachability
 establishes account eligibility. No orders, signatures, transfers, paid services,
 account operations, paper start, production change or background task occurred.
+
+## Authorized successor
+
+The user subsequently requested deeper continuation with no elapsed-time kills
+for new experiments. The initial result and allowance above remain unchanged.
+Continue from [the successor state](../defi-depth-2026-09-15/STATE.md) and its
+separately reviewed finite grant. No original experiment is reopened by this link.

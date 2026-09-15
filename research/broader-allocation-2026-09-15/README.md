@@ -50,3 +50,10 @@ Old closed claims are not reopened by changing the objective. All future runs
 must use the existing shared `research_runs/` root and committed registration
 contract. No orders, paid resources, provider contact, production changes,
 paper trading or background task is authorized by this document.
+
+## Authorized successor
+
+The user subsequently requested deeper continuation with no elapsed-time kills
+for new experiments. The initial result and allowance above remain unchanged.
+Continue from [the successor state](../defi-depth-2026-09-15/STATE.md) and its
+separately reviewed finite grant. No original experiment is reopened by this link.

@@ -1,0 +1,773 @@
+{
+  "scope": "Read-only public protocol accounting state observability; no profitability, withdrawal capacity or implementation claim",
+  "chains": [
+    {
+      "name": "ethereum",
+      "chain_id": 1,
+      "url": "https://ethereum-rpc.publicnode.com",
+      "factory": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
+      "weth": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "usdc": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      "historical_block": 21000000,
+      "get_pool_calldata": "0x1698ee82000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb480000000000000000000000000000000000000000000000000000000000000bb8",
+      "aave_pool": "0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2",
+      "atoken": "0x98c23e9d8f34fefb1b7bd6a91b7ff122f4e16f5c",
+      "pool": "0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8",
+      "history_header": {
+        "hash": "0xf5e1d15a3e380006bd271e73c8eeed75fafc3ae6942b16f63c21361079bba709",
+        "number": 21000000,
+        "provider_finality_assertion_only": false,
+        "timestamp": 1729345547,
+        "timestamp_utc": "2024-10-19T13:45:47+00:00"
+      },
+      "actions": [
+        {
+          "key": "usdc-decimals",
+          "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "data": "0x313ce567",
+          "signature": "decimals()",
+          "types": [
+            "uint8"
+          ],
+          "expected": [
+            6
+          ]
+        },
+        {
+          "key": "weth-decimals",
+          "to": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+          "data": "0x313ce567",
+          "signature": "decimals()",
+          "types": [
+            "uint8"
+          ],
+          "expected": [
+            18
+          ]
+        },
+        {
+          "key": "aave-pool-identity",
+          "to": "0x98c23e9d8f34fefb1b7bd6a91b7ff122f4e16f5c",
+          "data": "0x7535d246",
+          "signature": "POOL()",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2"
+          ]
+        },
+        {
+          "key": "aave-underlying",
+          "to": "0x98c23e9d8f34fefb1b7bd6a91b7ff122f4e16f5c",
+          "data": "0xb16a19de",
+          "signature": "UNDERLYING_ASSET_ADDRESS()",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+          ]
+        },
+        {
+          "key": "aave-income",
+          "to": "0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2",
+          "data": "0xd15e0053000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "signature": "getReserveNormalizedIncome(address)",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "aave-config",
+          "to": "0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2",
+          "data": "0xc44b11f7000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "signature": "getConfiguration(address)",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "aave-contract-cash",
+          "to": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "data": "0x70a0823100000000000000000000000098c23e9d8f34fefb1b7bd6a91b7ff122f4e16f5c",
+          "signature": "balanceOf(address)",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "aave-scaled-supply",
+          "to": "0x98c23e9d8f34fefb1b7bd6a91b7ff122f4e16f5c",
+          "data": "0xb1bf962d",
+          "signature": "scaledTotalSupply()",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "aave-total-supply",
+          "to": "0x98c23e9d8f34fefb1b7bd6a91b7ff122f4e16f5c",
+          "data": "0x18160ddd",
+          "signature": "totalSupply()",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "lp-factory",
+          "to": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
+          "data": "0x1698ee82000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb480000000000000000000000000000000000000000000000000000000000000bb8",
+          "signature": "getPool(address,address,uint24)",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8"
+          ]
+        },
+        {
+          "key": "lp-token0",
+          "to": "0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8",
+          "data": "0x0dfe1681",
+          "signature": "token0()",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"
+          ]
+        },
+        {
+          "key": "lp-token1",
+          "to": "0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8",
+          "data": "0xd21220a7",
+          "signature": "token1()",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+          ]
+        },
+        {
+          "key": "lp-fee",
+          "to": "0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8",
+          "data": "0xddca3f43",
+          "signature": "fee()",
+          "types": [
+            "uint24"
+          ],
+          "expected": [
+            3000
+          ]
+        },
+        {
+          "key": "lp-spacing",
+          "to": "0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8",
+          "data": "0xd0c93a7c",
+          "signature": "tickSpacing()",
+          "types": [
+            "int24"
+          ],
+          "expected": [
+            60
+          ]
+        },
+        {
+          "key": "lp-slot0",
+          "to": "0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8",
+          "data": "0x3850c7bd",
+          "signature": "slot0()",
+          "types": [
+            "uint160",
+            "int24",
+            "uint16",
+            "uint16",
+            "uint16",
+            "uint8",
+            "bool"
+          ]
+        },
+        {
+          "key": "lp-liquidity",
+          "to": "0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8",
+          "data": "0x1a686502",
+          "signature": "liquidity()",
+          "types": [
+            "uint128"
+          ]
+        },
+        {
+          "key": "lp-fee0",
+          "to": "0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8",
+          "data": "0xf3058399",
+          "signature": "feeGrowthGlobal0X128()",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "lp-fee1",
+          "to": "0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8",
+          "data": "0x46141319",
+          "signature": "feeGrowthGlobal1X128()",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "lp-lower",
+          "to": "0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8",
+          "data": "0xf30dba93fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2764c",
+          "signature": "ticks(int24)",
+          "types": [
+            "uint128",
+            "int128",
+            "uint256",
+            "uint256",
+            "int56",
+            "uint160",
+            "uint32",
+            "bool"
+          ]
+        },
+        {
+          "key": "lp-upper",
+          "to": "0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8",
+          "data": "0xf30dba9300000000000000000000000000000000000000000000000000000000000d89b4",
+          "signature": "ticks(int24)",
+          "types": [
+            "uint128",
+            "int128",
+            "uint256",
+            "uint256",
+            "int56",
+            "uint160",
+            "uint32",
+            "bool"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "base",
+      "chain_id": 8453,
+      "url": "https://mainnet.base.org",
+      "factory": "0x33128a8fc17869897dce68ed026d694621f6fdfd",
+      "weth": "0x4200000000000000000000000000000000000006",
+      "usdc": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+      "historical_block": 20000000,
+      "get_pool_calldata": "0x1698ee820000000000000000000000004200000000000000000000000000000000000006000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda029130000000000000000000000000000000000000000000000000000000000000bb8",
+      "aave_pool": "0xa238dd80c259a72e81d7e4664a9801593f98d1c5",
+      "atoken": "0x4e65fe4dba92790696d040ac24aa414708f5c0ab",
+      "pool": "0x6c561b446416e1a00e8e93e221854d6ea4171372",
+      "history_header": {
+        "hash": "0x14e37e2af3b0930a7a0e5965da362ee34480f2e48a21ebed18d5d523d8a0f915",
+        "number": 20000000,
+        "provider_finality_assertion_only": false,
+        "timestamp": 1726789347,
+        "timestamp_utc": "2024-09-19T23:42:27+00:00"
+      },
+      "actions": [
+        {
+          "key": "usdc-decimals",
+          "to": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+          "data": "0x313ce567",
+          "signature": "decimals()",
+          "types": [
+            "uint8"
+          ],
+          "expected": [
+            6
+          ]
+        },
+        {
+          "key": "weth-decimals",
+          "to": "0x4200000000000000000000000000000000000006",
+          "data": "0x313ce567",
+          "signature": "decimals()",
+          "types": [
+            "uint8"
+          ],
+          "expected": [
+            18
+          ]
+        },
+        {
+          "key": "aave-pool-identity",
+          "to": "0x4e65fe4dba92790696d040ac24aa414708f5c0ab",
+          "data": "0x7535d246",
+          "signature": "POOL()",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0xa238dd80c259a72e81d7e4664a9801593f98d1c5"
+          ]
+        },
+        {
+          "key": "aave-underlying",
+          "to": "0x4e65fe4dba92790696d040ac24aa414708f5c0ab",
+          "data": "0xb16a19de",
+          "signature": "UNDERLYING_ASSET_ADDRESS()",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
+          ]
+        },
+        {
+          "key": "aave-income",
+          "to": "0xa238dd80c259a72e81d7e4664a9801593f98d1c5",
+          "data": "0xd15e0053000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+          "signature": "getReserveNormalizedIncome(address)",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "aave-config",
+          "to": "0xa238dd80c259a72e81d7e4664a9801593f98d1c5",
+          "data": "0xc44b11f7000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+          "signature": "getConfiguration(address)",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "aave-contract-cash",
+          "to": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+          "data": "0x70a082310000000000000000000000004e65fe4dba92790696d040ac24aa414708f5c0ab",
+          "signature": "balanceOf(address)",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "aave-scaled-supply",
+          "to": "0x4e65fe4dba92790696d040ac24aa414708f5c0ab",
+          "data": "0xb1bf962d",
+          "signature": "scaledTotalSupply()",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "aave-total-supply",
+          "to": "0x4e65fe4dba92790696d040ac24aa414708f5c0ab",
+          "data": "0x18160ddd",
+          "signature": "totalSupply()",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "lp-factory",
+          "to": "0x33128a8fc17869897dce68ed026d694621f6fdfd",
+          "data": "0x1698ee820000000000000000000000004200000000000000000000000000000000000006000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda029130000000000000000000000000000000000000000000000000000000000000bb8",
+          "signature": "getPool(address,address,uint24)",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0x6c561b446416e1a00e8e93e221854d6ea4171372"
+          ]
+        },
+        {
+          "key": "lp-token0",
+          "to": "0x6c561b446416e1a00e8e93e221854d6ea4171372",
+          "data": "0x0dfe1681",
+          "signature": "token0()",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0x4200000000000000000000000000000000000006"
+          ]
+        },
+        {
+          "key": "lp-token1",
+          "to": "0x6c561b446416e1a00e8e93e221854d6ea4171372",
+          "data": "0xd21220a7",
+          "signature": "token1()",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
+          ]
+        },
+        {
+          "key": "lp-fee",
+          "to": "0x6c561b446416e1a00e8e93e221854d6ea4171372",
+          "data": "0xddca3f43",
+          "signature": "fee()",
+          "types": [
+            "uint24"
+          ],
+          "expected": [
+            3000
+          ]
+        },
+        {
+          "key": "lp-spacing",
+          "to": "0x6c561b446416e1a00e8e93e221854d6ea4171372",
+          "data": "0xd0c93a7c",
+          "signature": "tickSpacing()",
+          "types": [
+            "int24"
+          ],
+          "expected": [
+            60
+          ]
+        },
+        {
+          "key": "lp-slot0",
+          "to": "0x6c561b446416e1a00e8e93e221854d6ea4171372",
+          "data": "0x3850c7bd",
+          "signature": "slot0()",
+          "types": [
+            "uint160",
+            "int24",
+            "uint16",
+            "uint16",
+            "uint16",
+            "uint8",
+            "bool"
+          ]
+        },
+        {
+          "key": "lp-liquidity",
+          "to": "0x6c561b446416e1a00e8e93e221854d6ea4171372",
+          "data": "0x1a686502",
+          "signature": "liquidity()",
+          "types": [
+            "uint128"
+          ]
+        },
+        {
+          "key": "lp-fee0",
+          "to": "0x6c561b446416e1a00e8e93e221854d6ea4171372",
+          "data": "0xf3058399",
+          "signature": "feeGrowthGlobal0X128()",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "lp-fee1",
+          "to": "0x6c561b446416e1a00e8e93e221854d6ea4171372",
+          "data": "0x46141319",
+          "signature": "feeGrowthGlobal1X128()",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "lp-lower",
+          "to": "0x6c561b446416e1a00e8e93e221854d6ea4171372",
+          "data": "0xf30dba93fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2764c",
+          "signature": "ticks(int24)",
+          "types": [
+            "uint128",
+            "int128",
+            "uint256",
+            "uint256",
+            "int56",
+            "uint160",
+            "uint32",
+            "bool"
+          ]
+        },
+        {
+          "key": "lp-upper",
+          "to": "0x6c561b446416e1a00e8e93e221854d6ea4171372",
+          "data": "0xf30dba9300000000000000000000000000000000000000000000000000000000000d89b4",
+          "signature": "ticks(int24)",
+          "types": [
+            "uint128",
+            "int128",
+            "uint256",
+            "uint256",
+            "int56",
+            "uint160",
+            "uint32",
+            "bool"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "arbitrum",
+      "chain_id": 42161,
+      "url": "https://arb1.arbitrum.io/rpc",
+      "factory": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
+      "weth": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+      "usdc": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "historical_block": 280000000,
+      "get_pool_calldata": "0x1698ee8200000000000000000000000082af49447d8a07e3bd95bd0d56f35241523fbab1000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e58310000000000000000000000000000000000000000000000000000000000000bb8",
+      "aave_pool": "0x794a61358d6845594f94dc1db02a252b5b4814ad",
+      "atoken": "0x724dc807b04555b71ed48a6896b6f41593b8c637",
+      "pool": "0xc473e2aee3441bf9240be85eb122abb059a3b57c",
+      "history_header": {
+        "hash": "0x97a377f6231ddc21edc1e6c5156e713f747059ebf518dd730a9feed582d2612a",
+        "number": 280000000,
+        "provider_finality_assertion_only": false,
+        "timestamp": 1733000765,
+        "timestamp_utc": "2024-11-30T21:06:05+00:00"
+      },
+      "actions": [
+        {
+          "key": "usdc-decimals",
+          "to": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+          "data": "0x313ce567",
+          "signature": "decimals()",
+          "types": [
+            "uint8"
+          ],
+          "expected": [
+            6
+          ]
+        },
+        {
+          "key": "weth-decimals",
+          "to": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+          "data": "0x313ce567",
+          "signature": "decimals()",
+          "types": [
+            "uint8"
+          ],
+          "expected": [
+            18
+          ]
+        },
+        {
+          "key": "aave-pool-identity",
+          "to": "0x724dc807b04555b71ed48a6896b6f41593b8c637",
+          "data": "0x7535d246",
+          "signature": "POOL()",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0x794a61358d6845594f94dc1db02a252b5b4814ad"
+          ]
+        },
+        {
+          "key": "aave-underlying",
+          "to": "0x724dc807b04555b71ed48a6896b6f41593b8c637",
+          "data": "0xb16a19de",
+          "signature": "UNDERLYING_ASSET_ADDRESS()",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
+          ]
+        },
+        {
+          "key": "aave-income",
+          "to": "0x794a61358d6845594f94dc1db02a252b5b4814ad",
+          "data": "0xd15e0053000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831",
+          "signature": "getReserveNormalizedIncome(address)",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "aave-config",
+          "to": "0x794a61358d6845594f94dc1db02a252b5b4814ad",
+          "data": "0xc44b11f7000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e5831",
+          "signature": "getConfiguration(address)",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "aave-contract-cash",
+          "to": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+          "data": "0x70a08231000000000000000000000000724dc807b04555b71ed48a6896b6f41593b8c637",
+          "signature": "balanceOf(address)",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "aave-scaled-supply",
+          "to": "0x724dc807b04555b71ed48a6896b6f41593b8c637",
+          "data": "0xb1bf962d",
+          "signature": "scaledTotalSupply()",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "aave-total-supply",
+          "to": "0x724dc807b04555b71ed48a6896b6f41593b8c637",
+          "data": "0x18160ddd",
+          "signature": "totalSupply()",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "lp-factory",
+          "to": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
+          "data": "0x1698ee8200000000000000000000000082af49447d8a07e3bd95bd0d56f35241523fbab1000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e58310000000000000000000000000000000000000000000000000000000000000bb8",
+          "signature": "getPool(address,address,uint24)",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0xc473e2aee3441bf9240be85eb122abb059a3b57c"
+          ]
+        },
+        {
+          "key": "lp-token0",
+          "to": "0xc473e2aee3441bf9240be85eb122abb059a3b57c",
+          "data": "0x0dfe1681",
+          "signature": "token0()",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0x82af49447d8a07e3bd95bd0d56f35241523fbab1"
+          ]
+        },
+        {
+          "key": "lp-token1",
+          "to": "0xc473e2aee3441bf9240be85eb122abb059a3b57c",
+          "data": "0xd21220a7",
+          "signature": "token1()",
+          "types": [
+            "address"
+          ],
+          "expected": [
+            "0xaf88d065e77c8cc2239327c5edb3a432268e5831"
+          ]
+        },
+        {
+          "key": "lp-fee",
+          "to": "0xc473e2aee3441bf9240be85eb122abb059a3b57c",
+          "data": "0xddca3f43",
+          "signature": "fee()",
+          "types": [
+            "uint24"
+          ],
+          "expected": [
+            3000
+          ]
+        },
+        {
+          "key": "lp-spacing",
+          "to": "0xc473e2aee3441bf9240be85eb122abb059a3b57c",
+          "data": "0xd0c93a7c",
+          "signature": "tickSpacing()",
+          "types": [
+            "int24"
+          ],
+          "expected": [
+            60
+          ]
+        },
+        {
+          "key": "lp-slot0",
+          "to": "0xc473e2aee3441bf9240be85eb122abb059a3b57c",
+          "data": "0x3850c7bd",
+          "signature": "slot0()",
+          "types": [
+            "uint160",
+            "int24",
+            "uint16",
+            "uint16",
+            "uint16",
+            "uint8",
+            "bool"
+          ]
+        },
+        {
+          "key": "lp-liquidity",
+          "to": "0xc473e2aee3441bf9240be85eb122abb059a3b57c",
+          "data": "0x1a686502",
+          "signature": "liquidity()",
+          "types": [
+            "uint128"
+          ]
+        },
+        {
+          "key": "lp-fee0",
+          "to": "0xc473e2aee3441bf9240be85eb122abb059a3b57c",
+          "data": "0xf3058399",
+          "signature": "feeGrowthGlobal0X128()",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "lp-fee1",
+          "to": "0xc473e2aee3441bf9240be85eb122abb059a3b57c",
+          "data": "0x46141319",
+          "signature": "feeGrowthGlobal1X128()",
+          "types": [
+            "uint256"
+          ]
+        },
+        {
+          "key": "lp-lower",
+          "to": "0xc473e2aee3441bf9240be85eb122abb059a3b57c",
+          "data": "0xf30dba93fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2764c",
+          "signature": "ticks(int24)",
+          "types": [
+            "uint128",
+            "int128",
+            "uint256",
+            "uint256",
+            "int56",
+            "uint160",
+            "uint32",
+            "bool"
+          ]
+        },
+        {
+          "key": "lp-upper",
+          "to": "0xc473e2aee3441bf9240be85eb122abb059a3b57c",
+          "data": "0xf30dba9300000000000000000000000000000000000000000000000000000000000d89b4",
+          "signature": "ticks(int24)",
+          "types": [
+            "uint128",
+            "int128",
+            "uint256",
+            "uint256",
+            "int56",
+            "uint160",
+            "uint32",
+            "bool"
+          ]
+        }
+      ]
+    }
+  ],
+  "epochs": [
+    "history",
+    "finalized"
+  ],
+  "max_requests": 129,
+  "request_timeout_seconds": 10,
+  "max_response_bytes": 262144,
+  "max_raw_bytes": 33816576,
+  "overall_elapsed_time_kill": false,
+  "retry_count": 0,
+  "http_denials_stop_endpoint": [
+    403,
+    418,
+    429,
+    451
+  ],
+  "protocol_selection": "AaveV3 nativeUSDC and prior fixed Uniswapv3WETH/nativeUSDC3000 pool; preselected by documented mechanism, not current yields",
+  "consistency_cells": [
+    "aave-supply-identity",
+    "lp-source-identity"
+  ]
+}
