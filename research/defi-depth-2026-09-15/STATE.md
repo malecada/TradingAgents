@@ -1,6 +1,6 @@
 # Active deeper-research checkpoint
 
-**No empirical worker is active. Q1/Q4/Q6 are complete; Q2/R1/Q3 are failed and closed. Financial preparation continues. Zero validated strategies.**
+**F2 is ACTIVE in its isolated fixed-HEAD checkout. Do not restart it or change that checkout HEAD. Q1/Q4/Q6 complete; Q2/R1/Q3 failed/closed. Zero validated strategies.**
 
 The user's instruction authorizes autonomous depth, with no elapsed/CPU kill for
 new experiments. PHASE.md and phase-grant.json retain finite question, data and
@@ -108,3 +108,38 @@ added. Source/gate hashes refreshed, independent final check pending. F2executio
 root metadata admission atf34083fcda53330d732c713f0bbd9dfd5d7de34ePASS,19sources/
 33inputs/runtime/charter andcorrect packageorigin verified. It is still claim-free
 and must move beforeclaim to the final reviewed source including exact-D fix.
+
+## ACTIVE F2 launch — latest state supersedes earlier preparation checkpoints
+
+The independently reviewed F2 runner started2026-09-15T19:40:41.528401UTC from
+15a61b70ee60b38dfde07512ec19b264276764f2. Sole execution root:
+/home/malecada/master_thesis/TradingAgents-defi-f2. Foreground tool session44555.
+Claim exists; no terminal at the launch check. Initial input/source checks were
+still running (zero outputs at that first check); do not infer failure or restart.
+Final exact19sources/33inputs/charter/runtime hash checks and ordinary metadata
+admission passed in that root. Python3.13.13 imports tradingagents from the
+isolatedroot; computation thread environments limited to2. No elapsed-time limit.
+
+There are now7/11phaseclaims;source5/6,financial1/4(F2consumed),repair1/1spent.
+F2reserves1094RPC/286785536rawbytes beyond prior1841RPC;22065RPCremain outside
+that reservation. Actual F2calls/bytes must be read from its own receipts/summary;
+the reservation is not an actual count. Documentary57/60. Earlier188/189 and
+44relatedDeFirecords remain. F2has1532cells/2611outputs; one fixed recipe, all
+27book cells and36comparisons retained. No confirmation/promotion authority.
+
+All further development, docs and commits MUST occur in TradingAgents-audit-fixes,
+never the active F2root. No checkout/commit/merge in F2root until terminal closure.
+Use write_stdin session44555 for progress, plus read-only exact claim/receipt
+checks when needed. Import byte-identical terminal evidence before later admission.
+
+Offline resolution: originalnamedprofile1911pass/81subtests/oneheritablefixture
+failure; timestampcollision independently reproduced and qualified. Deterministic
+fixturefix plus all27focusedtests independentlyPASS. Final exact-D change reviewed.
+Nofrozenheritagehelper,Q4Q6source/results oroptions work changed. Reviews retained
+in f2-preexecution-review.md and heritage-fingerprint-limitation.md.
+
+Continue F1/F3 preparation during F2 execution; no independent common-header
+requests or unregistered financial observations. F1pure lending math independent
+reviewPASS; next contract needs post-update treasury/index consistency or an
+explicit conservative source-model bound. F3stillrequires complete financial
+book/source/implementation/headroom/counterfactual-fee contract before admission.
