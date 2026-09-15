@@ -1,0 +1,2041 @@
+{
+  "as_of_utc": "2026-09-15T12:44:12.755195+00:00",
+  "source_head": "d2dd62e19544e80de26bfb79a22804a73050b102",
+  "scope": "Metadata and retained results only; no raw market arrays parsed or financial experiments executed. Active options operational state is the saved local checkpoint, not a fresh remote inspection.",
+  "ledgers": {
+    "predlab": {
+      "rows": 820,
+      "top_level_gate_keys": 41,
+      "records_by_experiment": {
+        "predlab_p1_classical": 335,
+        "predlab_p2_ml": 71,
+        "predlab_p2_t7": 17,
+        "predlab_p4_fm": 33,
+        "predlab_p5_holdout": 18,
+        "predlab_p5": 10,
+        "predlab_pp": 14,
+        "predlab_pp2": 3,
+        "predlab_opt": 75,
+        "llm_c2_veto_ovl": 2,
+        "xasset_equity_r1": 1,
+        "xasset_equity_bab": 3,
+        "xasset_equity_bab2": 2,
+        "xasset_equity_bab3": 1,
+        "xasset_futfx_r1": 1,
+        "predlab_s1_live": 1,
+        "engine_correction_2026-08-24": 3,
+        "predlab_opt2": 24,
+        "predlab_rviv_p0": 12,
+        "predlab_xfam_cal": 11,
+        "predlab_xfam_amx": 1,
+        "predlab_xfam_llg": 5,
+        "predlab_xfam_pos": 2,
+        "predlab_xfam_prx": 1,
+        "predlab_nlst_bin": 3,
+        "predlab_nlst_byb": 3,
+        "predlab_nlst_x": 2,
+        "predlab_nlst_dex": 3,
+        "predlab_nlst2_dexlegit": 3,
+        "predlab_nlst3_moonshot": 1,
+        "predlab_oflow": 9,
+        "predlab_cal2": 12,
+        "predlab_exec_fcst": 3,
+        "predlab_liq_fade_v1": 1,
+        "predlab_smw_xs": 10,
+        "predlab_nlst4": 1,
+        "audit_correction_2026_09_09": 1,
+        "audit_reevaluation_2026_09_09": 26,
+        "audit_recovered_liq_2026_09_10": 6,
+        "audit_factor_floor_2026_09_10": 18,
+        "risk_policy_2026_09_10": 72
+      }
+    },
+    "rebuild": {
+      "rows": 146,
+      "top_level_gate_keys": 21,
+      "records_by_experiment": {
+        "carry_audit": 7,
+        "factor_floor": 37,
+        "axis_horizons": 7,
+        "axis_target": 4,
+        "axis_pool": 3,
+        "axis_features": 4,
+        "axis_sizing": 7,
+        "holdout_oneshot": 4,
+        "stress_ews": 9,
+        "xs_mom_p1": 12,
+        "fg_beta_d1": 1,
+        "trend_wide_t1": 6,
+        "carry_xs_t1": 6,
+        "liq_mr_t1": 6,
+        "llm_p5_hybrid": 1,
+        "liq_fade_i1": 6,
+        "value_xs_t1": 4,
+        "combo_c1": 4,
+        "exec_pf": 9,
+        "stress_ews2": 9
+      }
+    },
+    "llm_event_xs": {
+      "rows": 2,
+      "top_level_gate_keys": 1,
+      "records_by_experiment": {
+        "llm_c1_event_xs": 2
+      }
+    },
+    "llm_pair_xs": {
+      "rows": 5,
+      "top_level_gate_keys": 2,
+      "records_by_experiment": {
+        "llm_c3p_pair_xs": 5
+      }
+    },
+    "llm_rank_xs": {
+      "rows": 1,
+      "top_level_gate_keys": 1,
+      "records_by_experiment": {
+        "llm_c3_rank_xs": 1
+      }
+    }
+  },
+  "correction_rows": 48,
+  "claims": [
+    {
+      "id": "bitrue-metadata-20260911",
+      "status": "complete",
+      "family": {
+        "attempt_budget": 3,
+        "history_reference": "research/strategy-search-2026-09-11/HISTORY.md venue-segmentation ancestry; zero known exact Binance-Bitrue funding gates in five preserved gatefiles, not zero broad funding/venue search. Sep10 Bitrue documentation-only dated scope and NLST spillover preserved. Unknown complete statistical multiplicity; three new administrative investigations also MAP row7.",
+        "mechanism_id": "binance-bitrue-matched-usdt-perpetual-funding-differential",
+        "prior_attempts": 0
+      },
+      "parent": null,
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "bitrue-source-definition",
+          "end": "2026-09-11T09:12:21.519683+00:00",
+          "start": "2026-09-11T09:12:21.519513+00:00"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "identity": "binance-options-request-definition-20260911",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "identity": "binance-eoh-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.161697+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2025-04-01T00:00:00Z",
+          "identity": "binance-btc-eoh-option-summary-history",
+          "start": "2022-06-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.166591+00:00",
+          "identity": "binance-triangle-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.166552+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+          "start": "2026-09-11T09:10:25.404644+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:12:21.519683+00:00",
+          "identity": "bitrue-contract-request-definition-20260911",
+          "start": "2026-09-11T09:12:21.519513+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "carry-book-20260911",
+      "status": "complete",
+      "family": {
+        "attempt_budget": 11,
+        "history_reference": "research/strategy-search-2026-09-11/HISTORY.md; known 8 direct audit/holdout records only; earlier P0-P5/P1.5 and blend searches incompletely enumerated; cap adds exactly 3 new investigations, NOT complete historical trial count. No confirmatory inference.",
+        "legacy_total_attempts": "unknown",
+        "mechanism_id": "btc-eth-spot-perpetual-funding-carry",
+        "new_program_incremental_cap": 3,
+        "prior_attempts": 8
+      },
+      "parent": "carry-inputs-20260911",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "legacy",
+          "end": "2026-07-01T00:00:00Z",
+          "start": "2026-04-01T00:00:00Z"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        }
+      ]
+    },
+    {
+      "id": "carry-definition-20260911",
+      "status": "complete",
+      "family": {
+        "attempt_budget": 11,
+        "history_reference": "research/strategy-search-2026-09-11/HISTORY.md; known 8 direct audit/holdout records only; earlier P0-P5/P1.5 and blend searches incompletely enumerated; cap adds exactly 3 new investigations, NOT complete historical trial count. No confirmatory inference.",
+        "legacy_total_attempts": "unknown",
+        "mechanism_id": "btc-eth-spot-perpetual-funding-carry",
+        "new_program_incremental_cap": 3,
+        "prior_attempts": 8
+      },
+      "parent": null,
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "legacy",
+          "end": "2025-03-31T00:00:00Z",
+          "start": "2021-11-08T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "legacy",
+          "end": "2026-07-01T00:00:00Z",
+          "start": "2025-04-01T00:00:00Z"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        }
+      ]
+    },
+    {
+      "id": "carry-inputs-20260911",
+      "status": "complete",
+      "family": {
+        "attempt_budget": 11,
+        "history_reference": "research/strategy-search-2026-09-11/HISTORY.md; known 8 direct audit/holdout records only; earlier P0-P5/P1.5 and blend searches incompletely enumerated; cap adds exactly 3 new investigations, NOT complete historical trial count. No confirmatory inference.",
+        "legacy_total_attempts": "unknown",
+        "mechanism_id": "btc-eth-spot-perpetual-funding-carry",
+        "new_program_incremental_cap": 3,
+        "prior_attempts": 8
+      },
+      "parent": "carry-definition-20260911",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "legacy",
+          "end": "2026-07-01T00:00:00Z",
+          "start": "2026-04-01T00:00:00Z"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        }
+      ]
+    },
+    {
+      "id": "dated-archive-20260911",
+      "status": "complete",
+      "family": {
+        "attempt_budget": 4,
+        "history_reference": "docs/carry-feasibility-2026-09-10/INTERPRETATION.md; one dated capture with432correlated scenarios, not432independent attempts. New incremental cap3; funding-carry and old spending remain separately recorded.",
+        "mechanism_id": "binance-btc-eth-dated-basis-convergence",
+        "prior_attempts": 1
+      },
+      "parent": null,
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "dated-quarter",
+          "end": "2026-07-01T00:00:00Z",
+          "start": "2026-05-01T00:00:00Z"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "dated-book-20260911",
+      "status": "failed",
+      "family": {
+        "attempt_budget": 4,
+        "history_reference": "docs/carry-feasibility-2026-09-10/INTERPRETATION.md; one dated capture with432correlated scenarios, not432independent attempts. New incremental cap3; funding-carry and old spending remain separately recorded.",
+        "mechanism_id": "binance-btc-eth-dated-basis-convergence",
+        "prior_attempts": 1
+      },
+      "parent": "dated-archive-20260911",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "dated-quarter",
+          "end": "2026-06-26T00:00:00Z",
+          "start": "2026-05-01T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "legacy",
+          "end": "2026-06-26T00:00:00Z",
+          "start": "2026-05-01T00:00:00Z"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "dated-book-amended-20260911",
+      "status": "complete",
+      "family": {
+        "attempt_budget": 4,
+        "history_reference": "docs/carry-feasibility-2026-09-10/INTERPRETATION.md; one dated capture with432correlated scenarios, not432independent attempts. New incremental cap3; funding-carry and old spending remain separately recorded.",
+        "mechanism_id": "binance-btc-eth-dated-basis-convergence",
+        "prior_attempts": 1
+      },
+      "parent": "dated-book-resource-correction-20260911",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "dated-quarter",
+          "end": "2026-06-26T00:00:00Z",
+          "start": "2026-05-01T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "legacy",
+          "end": "2026-06-26T00:00:00Z",
+          "start": "2026-05-01T00:00:00Z"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "identity": "binance-options-request-definition-20260911",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "identity": "binance-eoh-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.161697+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2025-04-01T00:00:00Z",
+          "identity": "binance-btc-eoh-option-summary-history",
+          "start": "2022-06-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.166591+00:00",
+          "identity": "binance-triangle-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.166552+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+          "start": "2026-09-11T09:10:25.404644+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:12:21.519683+00:00",
+          "identity": "bitrue-contract-request-definition-20260911",
+          "start": "2026-09-11T09:12:21.519513+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:30:47.099983+00:00",
+          "identity": "binance-wbeth-source-definition-20260911",
+          "start": "2026-09-11T09:30:47.099732+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-wbeth-usdt-spot-market-history",
+          "start": "2026-04-01T00:00:00Z",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "dated-book-resource-correction-20260911",
+      "status": "failed",
+      "family": {
+        "attempt_budget": 4,
+        "history_reference": "docs/carry-feasibility-2026-09-10/INTERPRETATION.md; one dated capture with432correlated scenarios, not432independent attempts. New incremental cap3; funding-carry and old spending remain separately recorded.",
+        "mechanism_id": "binance-btc-eth-dated-basis-convergence",
+        "prior_attempts": 1
+      },
+      "parent": "dated-book-20260911",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "dated-quarter",
+          "end": "2026-06-26T00:00:00Z",
+          "start": "2026-05-01T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "legacy",
+          "end": "2026-06-26T00:00:00Z",
+          "start": "2026-05-01T00:00:00Z"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "dated-mark-20260911",
+      "status": "complete",
+      "family": {
+        "attempt_budget": 4,
+        "history_reference": "docs/carry-feasibility-2026-09-10/INTERPRETATION.md; one dated capture with432correlated scenarios, not432independent attempts. New incremental cap3; funding-carry and old spending remain separately recorded.",
+        "mechanism_id": "binance-btc-eth-dated-basis-convergence",
+        "prior_attempts": 1
+      },
+      "parent": "dated-book-amended-20260911",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "dated-mark-definition",
+          "end": "2026-09-11T11:03:40.951452+00:00",
+          "start": "2026-09-11T11:03:40.950496+00:00"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "identity": "binance-options-request-definition-20260911",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "identity": "binance-eoh-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.161697+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2025-04-01T00:00:00Z",
+          "identity": "binance-btc-eoh-option-summary-history",
+          "start": "2022-06-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.166591+00:00",
+          "identity": "binance-triangle-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.166552+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+          "start": "2026-09-11T09:10:25.404644+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:12:21.519683+00:00",
+          "identity": "bitrue-contract-request-definition-20260911",
+          "start": "2026-09-11T09:12:21.519513+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:30:47.099983+00:00",
+          "identity": "binance-wbeth-source-definition-20260911",
+          "start": "2026-09-11T09:30:47.099732+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-wbeth-usdt-spot-market-history",
+          "start": "2026-04-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:03:47.610019+00:00",
+          "identity": "saved-news-seven-path-provenance-definition-20260911",
+          "start": "2026-09-11T10:03:47.591240+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:30:02.537002+00:00",
+          "identity": "triangle-fixed-local-stream-source-definition-20260911",
+          "start": "2026-09-11T10:30:02.485798+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:44:51.919593+00:00",
+          "identity": "fixed-current-options-entry-component-definition-20260911",
+          "start": "2026-09-11T10:44:51.919367+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:40:16.763026+00:00",
+          "identity": "options-metadata-20260911-original-capture-admission-and-exchange-info-receipt",
+          "start": "2026-09-11T08:40:11.517399+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T11:03:40.951452+00:00",
+          "identity": "fixed-expired-dated-daily-mark-source-definition-20260911",
+          "start": "2026-09-11T11:03:40.950496+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "dated-spread-book-20260911",
+      "status": "failed",
+      "family": {
+        "attempt_budget": 4,
+        "history_reference": "docs/carry-feasibility-2026-09-10/INTERPRETATION.md; one dated capture with432correlated scenarios, not432independent attempts. New incremental cap3; funding-carry and old spending remain separately recorded.",
+        "mechanism_id": "binance-btc-eth-dated-basis-convergence",
+        "prior_attempts": 1
+      },
+      "parent": "dated-mark-20260911",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "legacy",
+          "end": "2026-06-26T00:00:00Z",
+          "start": "2026-05-01T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "dated-quarter",
+          "end": "2026-06-26T00:00:00Z",
+          "start": "2026-05-01T00:00:00Z"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "identity": "binance-options-request-definition-20260911",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "identity": "binance-eoh-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.161697+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2025-04-01T00:00:00Z",
+          "identity": "binance-btc-eoh-option-summary-history",
+          "start": "2022-06-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.166591+00:00",
+          "identity": "binance-triangle-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.166552+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+          "start": "2026-09-11T09:10:25.404644+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:12:21.519683+00:00",
+          "identity": "bitrue-contract-request-definition-20260911",
+          "start": "2026-09-11T09:12:21.519513+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:30:47.099983+00:00",
+          "identity": "binance-wbeth-source-definition-20260911",
+          "start": "2026-09-11T09:30:47.099732+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-wbeth-usdt-spot-market-history",
+          "start": "2026-04-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:03:47.610019+00:00",
+          "identity": "saved-news-seven-path-provenance-definition-20260911",
+          "start": "2026-09-11T10:03:47.591240+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:30:02.537002+00:00",
+          "identity": "triangle-fixed-local-stream-source-definition-20260911",
+          "start": "2026-09-11T10:30:02.485798+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:44:51.919593+00:00",
+          "identity": "fixed-current-options-entry-component-definition-20260911",
+          "start": "2026-09-11T10:44:51.919367+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:40:16.763026+00:00",
+          "identity": "options-metadata-20260911-original-capture-admission-and-exchange-info-receipt",
+          "start": "2026-09-11T08:40:11.517399+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T11:03:40.951452+00:00",
+          "identity": "fixed-expired-dated-daily-mark-source-definition-20260911",
+          "start": "2026-09-11T11:03:40.950496+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "news-provenance-20260911",
+      "status": "complete",
+      "family": {
+        "attempt_budget": 1,
+        "history_reference": "research/strategy-search-2026-09-11/news-provenance-charter.md and reviews/news-provenance-design.md; zero known exact sevenpath sourceinventory, NOT zero historical news/LLM search. C1/C3/NLST/SMW/DEX ancestry and spent samples inherited; unknown complete multiplicity. Exactly one claim uses third MAProw8 allowance after2WBETH questions, not another3trialbudget.",
+        "mechanism_id": "saved-news-observation-version-source-admission",
+        "prior_attempts": 0
+      },
+      "parent": null,
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "news-inventory-definition",
+          "end": "2026-09-11T10:03:47.610019+00:00",
+          "start": "2026-09-11T10:03:47.591240+00:00"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "identity": "binance-options-request-definition-20260911",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "identity": "binance-eoh-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.161697+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2025-04-01T00:00:00Z",
+          "identity": "binance-btc-eoh-option-summary-history",
+          "start": "2022-06-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.166591+00:00",
+          "identity": "binance-triangle-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.166552+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+          "start": "2026-09-11T09:10:25.404644+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:12:21.519683+00:00",
+          "identity": "bitrue-contract-request-definition-20260911",
+          "start": "2026-09-11T09:12:21.519513+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:30:47.099983+00:00",
+          "identity": "binance-wbeth-source-definition-20260911",
+          "start": "2026-09-11T09:30:47.099732+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-wbeth-usdt-spot-market-history",
+          "start": "2026-04-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:03:47.610019+00:00",
+          "identity": "saved-news-seven-path-provenance-definition-20260911",
+          "start": "2026-09-11T10:03:47.591240+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "options-entry-20260911",
+      "status": "complete",
+      "family": {
+        "attempt_budget": 4,
+        "history_reference": "research/strategy-search-2026-09-11/options-metadata-charter.md; one known predlab_rviv_p0 administrative gate bundle,12 exact ledger rows; failed HAR30/DVOL claim preserved; counts are not independent trials or complete search multiplicity. Three new investigations allowed.",
+        "mechanism_id": "binance-option-delta-hedged-volatility-premium",
+        "prior_attempts": 1
+      },
+      "parent": "options-eoh-schema-20260911",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "options-saved-metadata",
+          "end": "2026-09-11T08:40:16.763026+00:00",
+          "start": "2026-09-11T08:40:11.517399+00:00"
+        },
+        {
+          "availability": "existing",
+          "dataset": "options-entry-definition",
+          "end": "2026-09-11T10:44:51.919593+00:00",
+          "start": "2026-09-11T10:44:51.919367+00:00"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "identity": "binance-options-request-definition-20260911",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "identity": "binance-eoh-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.161697+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2025-04-01T00:00:00Z",
+          "identity": "binance-btc-eoh-option-summary-history",
+          "start": "2022-06-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.166591+00:00",
+          "identity": "binance-triangle-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.166552+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+          "start": "2026-09-11T09:10:25.404644+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:12:21.519683+00:00",
+          "identity": "bitrue-contract-request-definition-20260911",
+          "start": "2026-09-11T09:12:21.519513+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:30:47.099983+00:00",
+          "identity": "binance-wbeth-source-definition-20260911",
+          "start": "2026-09-11T09:30:47.099732+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-wbeth-usdt-spot-market-history",
+          "start": "2026-04-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:03:47.610019+00:00",
+          "identity": "saved-news-seven-path-provenance-definition-20260911",
+          "start": "2026-09-11T10:03:47.591240+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:30:02.537002+00:00",
+          "identity": "triangle-fixed-local-stream-source-definition-20260911",
+          "start": "2026-09-11T10:30:02.485798+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:44:51.919593+00:00",
+          "identity": "fixed-current-options-entry-component-definition-20260911",
+          "start": "2026-09-11T10:44:51.919367+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:40:16.763026+00:00",
+          "identity": "options-metadata-20260911-original-capture-admission-and-exchange-info-receipt",
+          "start": "2026-09-11T08:40:11.517399+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "options-eoh-schema-20260911",
+      "status": "complete",
+      "family": {
+        "attempt_budget": 4,
+        "history_reference": "research/strategy-search-2026-09-11/options-metadata-charter.md; one known predlab_rviv_p0 administrative gate bundle,12 exact ledger rows; failed HAR30/DVOL claim preserved; counts are not independent trials or complete search multiplicity. Three new investigations allowed.",
+        "mechanism_id": "binance-option-delta-hedged-volatility-premium",
+        "prior_attempts": 1
+      },
+      "parent": "options-metadata-20260911",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "eoh-source-definition",
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "start": "2026-09-11T08:59:38.161697+00:00"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "identity": "binance-options-request-definition-20260911",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "identity": "binance-eoh-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.161697+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2025-04-01T00:00:00Z",
+          "identity": "binance-btc-eoh-option-summary-history",
+          "start": "2022-06-01T00:00:00Z",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "options-episode-20260911",
+      "status": "failed",
+      "family": {
+        "attempt_budget": 4,
+        "history_reference": "research/strategy-search-2026-09-11/options-metadata-charter.md; one known predlab_rviv_p0 administrative gate bundle,12 exact ledger rows; failed HAR30/DVOL claim preserved; counts are not independent trials or complete search multiplicity. Three new investigations allowed.",
+        "mechanism_id": "binance-option-delta-hedged-volatility-premium",
+        "prior_attempts": 1
+      },
+      "parent": "options-entry-20260911",
+      "windows": [
+        {
+          "availability": "prospective",
+          "dataset": "options-episode-prospective",
+          "end": "2026-10-29T09:00:05+00:00",
+          "start": "2026-09-15T09:00:00+00:00"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "identity": "binance-options-request-definition-20260911",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "identity": "binance-eoh-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.161697+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2025-04-01T00:00:00Z",
+          "identity": "binance-btc-eoh-option-summary-history",
+          "start": "2022-06-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.166591+00:00",
+          "identity": "binance-triangle-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.166552+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+          "start": "2026-09-11T09:10:25.404644+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:12:21.519683+00:00",
+          "identity": "bitrue-contract-request-definition-20260911",
+          "start": "2026-09-11T09:12:21.519513+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:30:47.099983+00:00",
+          "identity": "binance-wbeth-source-definition-20260911",
+          "start": "2026-09-11T09:30:47.099732+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-wbeth-usdt-spot-market-history",
+          "start": "2026-04-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:03:47.610019+00:00",
+          "identity": "saved-news-seven-path-provenance-definition-20260911",
+          "start": "2026-09-11T10:03:47.591240+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:30:02.537002+00:00",
+          "identity": "triangle-fixed-local-stream-source-definition-20260911",
+          "start": "2026-09-11T10:30:02.485798+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:44:51.919593+00:00",
+          "identity": "fixed-current-options-entry-component-definition-20260911",
+          "start": "2026-09-11T10:44:51.919367+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:40:16.763026+00:00",
+          "identity": "options-metadata-20260911-original-capture-admission-and-exchange-info-receipt",
+          "start": "2026-09-11T08:40:11.517399+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T11:03:40.951452+00:00",
+          "identity": "fixed-expired-dated-daily-mark-source-definition-20260911",
+          "start": "2026-09-11T11:03:40.950496+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "options-metadata-20260911",
+      "status": "complete",
+      "family": {
+        "attempt_budget": 4,
+        "history_reference": "research/strategy-search-2026-09-11/options-metadata-charter.md; one known predlab_rviv_p0 administrative gate bundle,12 exact ledger rows; failed HAR30/DVOL claim preserved; counts are not independent trials or complete search multiplicity. Three new investigations allowed.",
+        "mechanism_id": "binance-option-delta-hedged-volatility-premium",
+        "prior_attempts": 1
+      },
+      "parent": null,
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "options-source-definition",
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "start": "2026-09-11T08:38:02.442372+00:00"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "identity": "binance-options-request-definition-20260911",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "options-timing-20260915",
+      "status": "active",
+      "family": {
+        "attempt_budget": 4,
+        "history_reference": "research/strategy-search-2026-09-11/options-metadata-charter.md; one known predlab_rviv_p0 administrative gate bundle,12 exact ledger rows; failed HAR30/DVOL claim preserved; counts are not independent trials or complete search multiplicity. Three new investigations allowed.",
+        "mechanism_id": "binance-option-delta-hedged-volatility-premium",
+        "prior_attempts": 1
+      },
+      "parent": "options-episode-20260911",
+      "windows": [
+        {
+          "availability": "prospective",
+          "dataset": "options-timing-prospective",
+          "end": "2026-10-29T11:00:05+00:00",
+          "start": "2026-09-15T11:00:00+00:00"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "identity": "binance-options-request-definition-20260911",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "identity": "binance-eoh-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.161697+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2025-04-01T00:00:00Z",
+          "identity": "binance-btc-eoh-option-summary-history",
+          "start": "2022-06-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.166591+00:00",
+          "identity": "binance-triangle-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.166552+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+          "start": "2026-09-11T09:10:25.404644+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:12:21.519683+00:00",
+          "identity": "bitrue-contract-request-definition-20260911",
+          "start": "2026-09-11T09:12:21.519513+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:30:47.099983+00:00",
+          "identity": "binance-wbeth-source-definition-20260911",
+          "start": "2026-09-11T09:30:47.099732+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-wbeth-usdt-spot-market-history",
+          "start": "2026-04-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:03:47.610019+00:00",
+          "identity": "saved-news-seven-path-provenance-definition-20260911",
+          "start": "2026-09-11T10:03:47.591240+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:30:02.537002+00:00",
+          "identity": "triangle-fixed-local-stream-source-definition-20260911",
+          "start": "2026-09-11T10:30:02.485798+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:44:51.919593+00:00",
+          "identity": "fixed-current-options-entry-component-definition-20260911",
+          "start": "2026-09-11T10:44:51.919367+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:40:16.763026+00:00",
+          "identity": "options-metadata-20260911-original-capture-admission-and-exchange-info-receipt",
+          "start": "2026-09-11T08:40:11.517399+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T11:03:40.951452+00:00",
+          "identity": "fixed-expired-dated-daily-mark-source-definition-20260911",
+          "start": "2026-09-11T11:03:40.950496+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "triangle-inputs-20260911",
+      "status": "complete",
+      "family": {
+        "attempt_budget": 3,
+        "history_reference": "triangle-inputs-charter.md and reviews/neutral-alternatives-source-20260911.md; no known exact triangle gate, not zero historical liquidity search. OFLOW/passive failures and unknown broader multiplicity preserved. At most3newquestions alsochargedtoMAProw5 allowance.",
+        "mechanism_id": "binance-btc-eth-usdt-static-triangular-conversion",
+        "prior_attempts": 0
+      },
+      "parent": null,
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "triangle-source-definition",
+          "end": "2026-09-11T08:59:38.166591+00:00",
+          "start": "2026-09-11T08:59:38.166552+00:00"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "identity": "binance-options-request-definition-20260911",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "identity": "binance-eoh-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.161697+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2025-04-01T00:00:00Z",
+          "identity": "binance-btc-eoh-option-summary-history",
+          "start": "2022-06-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.166591+00:00",
+          "identity": "binance-triangle-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.166552+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "triangle-proxy-20260911",
+      "status": "complete",
+      "family": {
+        "attempt_budget": 3,
+        "history_reference": "triangle-inputs-charter.md and reviews/neutral-alternatives-source-20260911.md; no known exact triangle gate, not zero historical liquidity search. OFLOW/passive failures and unknown broader multiplicity preserved. At most3newquestions alsochargedtoMAProw5 allowance.",
+        "mechanism_id": "binance-btc-eth-usdt-static-triangular-conversion",
+        "prior_attempts": 0
+      },
+      "parent": "triangle-inputs-20260911",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "triangle-observation",
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "start": "2026-09-11T09:10:25.404644+00:00"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "identity": "binance-options-request-definition-20260911",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "identity": "binance-eoh-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.161697+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2025-04-01T00:00:00Z",
+          "identity": "binance-btc-eoh-option-summary-history",
+          "start": "2022-06-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.166591+00:00",
+          "identity": "binance-triangle-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.166552+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+          "start": "2026-09-11T09:10:25.404644+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "triangle-stream-20260911",
+      "status": "complete",
+      "family": {
+        "attempt_budget": 3,
+        "history_reference": "triangle-inputs-charter.md and reviews/neutral-alternatives-source-20260911.md; no known exact triangle gate, not zero historical liquidity search. OFLOW/passive failures and unknown broader multiplicity preserved. At most3newquestions alsochargedtoMAProw5 allowance.",
+        "mechanism_id": "binance-btc-eth-usdt-static-triangular-conversion",
+        "prior_attempts": 0
+      },
+      "parent": "triangle-proxy-20260911",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "triangle-observation",
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "start": "2026-09-11T09:10:25.404644+00:00"
+        },
+        {
+          "availability": "existing",
+          "dataset": "triangle-stream-definition",
+          "end": "2026-09-11T10:30:02.537002+00:00",
+          "start": "2026-09-11T10:30:02.485798+00:00"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "identity": "binance-options-request-definition-20260911",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "identity": "binance-eoh-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.161697+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2025-04-01T00:00:00Z",
+          "identity": "binance-btc-eoh-option-summary-history",
+          "start": "2022-06-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.166591+00:00",
+          "identity": "binance-triangle-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.166552+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+          "start": "2026-09-11T09:10:25.404644+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:12:21.519683+00:00",
+          "identity": "bitrue-contract-request-definition-20260911",
+          "start": "2026-09-11T09:12:21.519513+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:30:47.099983+00:00",
+          "identity": "binance-wbeth-source-definition-20260911",
+          "start": "2026-09-11T09:30:47.099732+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-wbeth-usdt-spot-market-history",
+          "start": "2026-04-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:03:47.610019+00:00",
+          "identity": "saved-news-seven-path-provenance-definition-20260911",
+          "start": "2026-09-11T10:03:47.591240+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T10:30:02.537002+00:00",
+          "identity": "triangle-fixed-local-stream-source-definition-20260911",
+          "start": "2026-09-11T10:30:02.485798+00:00",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "wbeth-book-20260911",
+      "status": "complete",
+      "family": {
+        "attempt_budget": 3,
+        "history_reference": "research/strategy-search-2026-09-11/HISTORY.md and reviews/wbeth-linked-value-source.md; no known exact WBETH gate in five retained gatefiles, not zero prior staking/relative-value/funding search; PRX/DEX-ratio/carry failures and incomplete multiplicity retained. Three new administrative questions also charged to MAP rows3/8.",
+        "mechanism_id": "binance-wbeth-spot-eth-perpetual-fixed-market-value-hedge",
+        "prior_attempts": 0
+      },
+      "parent": "wbeth-inputs-20260911",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "wbeth-market-history",
+          "end": "2026-07-01T00:00:00Z",
+          "start": "2026-04-01T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "legacy",
+          "end": "2026-07-01T00:00:00Z",
+          "start": "2026-04-01T00:00:00Z"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "identity": "binance-options-request-definition-20260911",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "identity": "binance-eoh-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.161697+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2025-04-01T00:00:00Z",
+          "identity": "binance-btc-eoh-option-summary-history",
+          "start": "2022-06-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.166591+00:00",
+          "identity": "binance-triangle-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.166552+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+          "start": "2026-09-11T09:10:25.404644+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:12:21.519683+00:00",
+          "identity": "bitrue-contract-request-definition-20260911",
+          "start": "2026-09-11T09:12:21.519513+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:30:47.099983+00:00",
+          "identity": "binance-wbeth-source-definition-20260911",
+          "start": "2026-09-11T09:30:47.099732+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-wbeth-usdt-spot-market-history",
+          "start": "2026-04-01T00:00:00Z",
+          "state": "exposed"
+        }
+      ]
+    },
+    {
+      "id": "wbeth-inputs-20260911",
+      "status": "complete",
+      "family": {
+        "attempt_budget": 3,
+        "history_reference": "research/strategy-search-2026-09-11/HISTORY.md and reviews/wbeth-linked-value-source.md; no known exact WBETH gate in five retained gatefiles, not zero prior staking/relative-value/funding search; PRX/DEX-ratio/carry failures and incomplete multiplicity retained. Three new administrative questions also charged to MAP rows3/8.",
+        "mechanism_id": "binance-wbeth-spot-eth-perpetual-fixed-market-value-hedge",
+        "prior_attempts": 0
+      },
+      "parent": null,
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "wbeth-source-definition",
+          "end": "2026-09-11T09:30:47.099983+00:00",
+          "start": "2026-09-11T09:30:47.099732+00:00"
+        }
+      ],
+      "prior_exposures": [
+        {
+          "end": "2025-03-31T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2021-11-08T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-spot-perpetual-carry-history",
+          "start": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-btc-eth-usdt-260626-contract-history",
+          "start": "2025-12-26T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:38:02.442471+00:00",
+          "identity": "binance-options-request-definition-20260911",
+          "start": "2026-09-11T08:38:02.442372+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.161767+00:00",
+          "identity": "binance-eoh-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.161697+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2025-04-01T00:00:00Z",
+          "identity": "binance-btc-eoh-option-summary-history",
+          "start": "2022-06-01T00:00:00Z",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T08:59:38.166591+00:00",
+          "identity": "binance-triangle-request-definition-20260911",
+          "start": "2026-09-11T08:59:38.166552+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:10:29.052054+00:00",
+          "identity": "binance-btc-eth-usdt-triangle-capture-20260911",
+          "start": "2026-09-11T09:10:25.404644+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:12:21.519683+00:00",
+          "identity": "bitrue-contract-request-definition-20260911",
+          "start": "2026-09-11T09:12:21.519513+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-09-11T09:30:47.099983+00:00",
+          "identity": "binance-wbeth-source-definition-20260911",
+          "start": "2026-09-11T09:30:47.099732+00:00",
+          "state": "exposed"
+        },
+        {
+          "end": "2026-07-01T00:00:00Z",
+          "identity": "binance-wbeth-usdt-spot-market-history",
+          "start": "2026-04-01T00:00:00Z",
+          "state": "exposed"
+        }
+      ]
+    }
+  ],
+  "protected_anchors": {
+    "AGENTS.md": {
+      "sha256": "c8213f2d1eb52604e16cead6f5754a9a68c41f0a8b88e1aa1771cdd35a76601d",
+      "bytes": 3888
+    },
+    "data/llm_event_xs/gates.json": {
+      "sha256": "be9aeeec703baa4342ed3bf46595882569cfaac1462d5ccd64db86e122f5f1db",
+      "bytes": 4285
+    },
+    "data/llm_event_xs/trial_ledger.jsonl": {
+      "sha256": "0d0818be89558cb9742d3ee4ffe506845a4fca0d44b162457f6fc32e8f8fb01d",
+      "bytes": 901
+    },
+    "data/llm_pair_xs/gates.json": {
+      "sha256": "ac8c0df8052a71b54cc76653810d5a9be064bd3badb700f5e37beeaaa14d34a7",
+      "bytes": 3926
+    },
+    "data/llm_pair_xs/trial_ledger.jsonl": {
+      "sha256": "dec57b540c09380b76d2c8268976a817c230cb3f948c61a2fdd739fc3b8655e9",
+      "bytes": 2194
+    },
+    "data/llm_rank_xs/gates.json": {
+      "sha256": "81bdd1c40c693c6f51cc10c8758a1800f06c2fdb1c9a0a793c525500d41bdab8",
+      "bytes": 2100
+    },
+    "data/llm_rank_xs/trial_ledger.jsonl": {
+      "sha256": "5340ab9d5d39f87df6caf810806ce92e3b6ddc6eb555b9b5f573290094e4190f",
+      "bytes": 381
+    },
+    "data/predlab/gates.json": {
+      "sha256": "b9ae3ca8b5654461d8f0db8309de8c5f7f994fb41e04e459b0488f07c231c44c",
+      "bytes": 333659
+    },
+    "data/predlab/trial_ledger.jsonl": {
+      "sha256": "4459ddc70d41d9a99db06ab53d9ad4c8f42b6f4d282abd93b4857b4474041927",
+      "bytes": 5844626
+    },
+    "data/rebuild/gates.json": {
+      "sha256": "e56ec8ac97bfa525a336ca33dca6e06943b9029ff548e7bcff73f26c8a85bf88",
+      "bytes": 53500
+    },
+    "data/rebuild/trial_ledger.jsonl": {
+      "sha256": "45a5fe9e1b0c92de5dd853c9fa091a8dfdb8636e260a4c5b4cc89db6903f9627",
+      "bytes": 96152
+    },
+    "docs/RESEARCH_START.md": {
+      "sha256": "1b2099716ef2753a86f92ec8e14bff64aea8af18f7b78bd82bd81decb91d7d5b",
+      "bytes": 3070
+    },
+    "docs/audit/corrections.jsonl": {
+      "sha256": "0e69b04682c56ad520e75f8a2c9100aaf5ede66fb4fe683dc9db27274b01067e",
+      "bytes": 34273
+    },
+    "docs/research/EVIDENCE_INDEX.md": {
+      "sha256": "0672b90d7f1f933fe948d3ea0b67f44c0cdcb2e716c6b4a170ae1c4f1cee2f3d",
+      "bytes": 5212
+    },
+    "docs/research/STATE.md": {
+      "sha256": "b3b4724249e4aefbe191223e94f8c211fc49d1507908ed4222b512bcbd12541b",
+      "bytes": 5078
+    },
+    "research/strategy-search-2026-09-11/CHARTER.md": {
+      "sha256": "60893c9e9fd88ded106f1c2d4c228b99b7e12c5b9acf8e84ede31a8ed52f3a54",
+      "bytes": 5486
+    },
+    "research/strategy-search-2026-09-11/HISTORY.md": {
+      "sha256": "86a3255d4cb29623691eb8f60299de8d1d21a53b71f043c831d6cd7207229c23",
+      "bytes": 4417
+    },
+    "research/strategy-search-2026-09-11/MAP.md": {
+      "sha256": "ea659ff2a050a96ca1295f067b917785de6238b54c943599c2e73db0e84ccd5a",
+      "bytes": 6724
+    },
+    "research/strategy-search-2026-09-11/STATE.md": {
+      "sha256": "ca073b29770fc2ba50f47d79a32e037584e5aa721edb607a7837bb2c91c4e639",
+      "bytes": 22632
+    },
+    "research/strategy-search-2026-09-11/gates-bitrue-metadata.json": {
+      "sha256": "c8325be306f6a4faa4af5df94f8764d741c9550a81409ae01117195b51dba51c",
+      "bytes": 39857
+    },
+    "research/strategy-search-2026-09-11/gates-book.json": {
+      "sha256": "66bf66deabbc639dd4151d7bd6df7273b90594b1c086daae796000f20b81ecfe",
+      "bytes": 9421
+    },
+    "research/strategy-search-2026-09-11/gates-capture.json": {
+      "sha256": "0d1823da3cede971f5ab3eba774eb53a1b0d4e5368fd297a26179aca584b7031",
+      "bytes": 6457
+    },
+    "research/strategy-search-2026-09-11/gates-dated-amended.json": {
+      "sha256": "cc5e0458ccf4c51a545e9f9c1ac59f94e2241134bd77573129c4917dce1b66ae",
+      "bytes": 49614
+    },
+    "research/strategy-search-2026-09-11/gates-dated-archive.json": {
+      "sha256": "8fcec4c91b48428d37401f776a115ac41a353a1bb54e1ba48367769de31a5a85",
+      "bytes": 12935
+    },
+    "research/strategy-search-2026-09-11/gates-dated-book.json": {
+      "sha256": "ef446526b30409cfd32a5c0175a3b58ed3953248fac71ca2a9465cf8f5085ee6",
+      "bytes": 16694
+    },
+    "research/strategy-search-2026-09-11/gates-dated-correction.json": {
+      "sha256": "2fe1fef99d9b9f6c2454ac705e0bf89753b79f3a83d34c875ae8bd0eaae73322",
+      "bytes": 20733
+    },
+    "research/strategy-search-2026-09-11/gates-dated-mark.json": {
+      "sha256": "0abec8fd1204cf28baa9e3637c855f1c43010a5376e75fb46c08f8509ea897fb",
+      "bytes": 74077
+    },
+    "research/strategy-search-2026-09-11/gates-dated-spread.json": {
+      "sha256": "b725eb118ff54da9a0389dc2571ae623f3d3fd84bb47c42269d937c35de335f0",
+      "bytes": 82602
+    },
+    "research/strategy-search-2026-09-11/gates-news-provenance.json": {
+      "sha256": "e85a08c4ee2878c38aa111506f5d179d83161a430e7aa925b242177bb41f5bee",
+      "bytes": 57660
+    },
+    "research/strategy-search-2026-09-11/gates-options-entry.json": {
+      "sha256": "54d47d9c295a9b91a65b60af8ec16df07ef53554daa277f1f55066c15d5db3ad",
+      "bytes": 68549
+    },
+    "research/strategy-search-2026-09-11/gates-options-eoh.json": {
+      "sha256": "a1f63a88374a3514728a966c45744691fadfb79e51cf972bc6c4a5beb728fe5b",
+      "bytes": 28328
+    },
+    "research/strategy-search-2026-09-11/gates-options-episode.json": {
+      "sha256": "fbe58ce62f090aa81454e9eac7b1ca2107672c548ddb9b7c2991321f39e5d40c",
+      "bytes": 91493
+    },
+    "research/strategy-search-2026-09-11/gates-options-metadata.json": {
+      "sha256": "328358c2d5f5a12d4118d0f8526e26d41a811d8eaf47677bad8b9b3e2f1eb406",
+      "bytes": 24651
+    },
+    "research/strategy-search-2026-09-11/gates-options-timing.json": {
+      "sha256": "9da069b88b84814e3134a1eca8381fae6ffca885f5725edf511c332b9de18eff",
+      "bytes": 101784
+    },
+    "research/strategy-search-2026-09-11/gates-triangle-inputs.json": {
+      "sha256": "fcf50aa82ba0947d4858945edae0d897b3c927faa89b086a43a05c6819e8560a",
+      "bytes": 32352
+    },
+    "research/strategy-search-2026-09-11/gates-triangle-proxy.json": {
+      "sha256": "e5981da6917982c7d845e885ff552963f344a48cab3b67f815edce616a1b629b",
+      "bytes": 36045
+    },
+    "research/strategy-search-2026-09-11/gates-triangle-stream.json": {
+      "sha256": "ce6e02d9f789fac3cb289fa6371327c6d7403975ec1b32001ec27bd60be652cd",
+      "bytes": 62963
+    },
+    "research/strategy-search-2026-09-11/gates-wbeth-book.json": {
+      "sha256": "9e92592a79b88716a15e7d5bba2a1b0e3c3b0891fdc415ee245c3136142c2afa",
+      "bytes": 53757
+    },
+    "research/strategy-search-2026-09-11/gates-wbeth-inputs.json": {
+      "sha256": "38f0038210d7e368c7bf807473500f1accb723c9741b2ef7e322cb6fa1a0d4ea",
+      "bytes": 44000
+    },
+    "research/strategy-search-2026-09-11/gates.json": {
+      "sha256": "e8a730b5dcad042798951c8a6eff9950dc11ef1df2190d87bf52c1c39d30f6f7",
+      "bytes": 3952
+    },
+    "research_runs/bitrue-metadata-20260911/claim.json": {
+      "sha256": "540188f7a68a7193703f881bf9dc1d2b638cbf5f13b00139c9e7ec13a42940bf",
+      "bytes": 6024
+    },
+    "research_runs/bitrue-metadata-20260911/complete.json": {
+      "sha256": "9e184b8f5533079abc25048efe3939c6019468f0a2abbe449da9dadfdd8d6f6c",
+      "bytes": 1023
+    },
+    "research_runs/carry-book-20260911/claim.json": {
+      "sha256": "eead5141ab52c4a7224cf5962dc15cd5208eabd5c6189cab891fcdcf847e0997",
+      "bytes": 4892
+    },
+    "research_runs/carry-book-20260911/complete.json": {
+      "sha256": "6ce4533670a6fe712f1b72606f6dac8b6590f78f9b2574f6bf07f2c746190f46",
+      "bytes": 3167
+    },
+    "research_runs/carry-definition-20260911/claim.json": {
+      "sha256": "4e720cd7f77fa75894d8810cadc25006326b70bb1b5b08d1990104f4a05c92ca",
+      "bytes": 5392
+    },
+    "research_runs/carry-definition-20260911/complete.json": {
+      "sha256": "20570e2797d6388a7fcc11f53033defafb93216f474425f86ec1f9c45ab03771",
+      "bytes": 1227
+    },
+    "research_runs/carry-inputs-20260911/claim.json": {
+      "sha256": "388c4a594773418082d8b66ef68641a5f51b8e81f883c45466181e40fc284e40",
+      "bytes": 4232
+    },
+    "research_runs/carry-inputs-20260911/complete.json": {
+      "sha256": "0145b9859f8034eebb01760b3bce90ab41c397073786add55ebb591a60a50f90",
+      "bytes": 2283
+    },
+    "research_runs/dated-archive-20260911/claim.json": {
+      "sha256": "b7f8595e487efffe5c84a57ce30b83ab5803a4505df8ee10d6c775235ccaedc0",
+      "bytes": 4484
+    },
+    "research_runs/dated-archive-20260911/complete.json": {
+      "sha256": "91f03121720c46505452097dafa012e7937c41779f4cf94dba9243aa6c1a65c9",
+      "bytes": 2101
+    },
+    "research_runs/dated-book-20260911/claim.json": {
+      "sha256": "ba160d29788a2eaadfd88a25bd08775a5dcbde133a41bfd897ef92c03615ac8c",
+      "bytes": 6437
+    },
+    "research_runs/dated-book-20260911/failed.json": {
+      "sha256": "559ed7175c55a67e08d3f46b3a5c80ea21013bb783759d2fc2569b6783d84018",
+      "bytes": 255
+    },
+    "research_runs/dated-book-amended-20260911/claim.json": {
+      "sha256": "df9a32ba15e70f815e9a4e0dc3c412e993add9e2c1c4371941bbee43a54477c4",
+      "bytes": 10270
+    },
+    "research_runs/dated-book-amended-20260911/complete.json": {
+      "sha256": "575c607f4baa677d83b92523eb8c7d18db08fd180148a5f9765ba57394a39daa",
+      "bytes": 1843
+    },
+    "research_runs/dated-book-resource-correction-20260911/claim.json": {
+      "sha256": "b53f7e55fd6312b9c33cf944a701abc2f0722c4353471134578ab2306e0466a7",
+      "bytes": 6717
+    },
+    "research_runs/dated-book-resource-correction-20260911/failed.json": {
+      "sha256": "2733fc66a7a12d00d8dc385894925a5e4948d0fc3a7a764c2c81ec2f2d3cff40",
+      "bytes": 328
+    },
+    "research_runs/dated-mark-20260911/claim.json": {
+      "sha256": "0b65ed7dbbe221b3e0544f677266ac320eb67e03134f5cfdd39137f0d6eac274",
+      "bytes": 10385
+    },
+    "research_runs/dated-mark-20260911/complete.json": {
+      "sha256": "d2d7c1624a7c2ed076467f6f6c71acf31ffaab05706692ddc68b5bd17ffc5c23",
+      "bytes": 988
+    },
+    "research_runs/dated-spread-book-20260911/claim.json": {
+      "sha256": "d0116773878c723689d6c21a1b6c00bbda4839acccd0a0cd5b744a97e9fb3c2d",
+      "bytes": 15906
+    },
+    "research_runs/dated-spread-book-20260911/failed.json": {
+      "sha256": "4527836bd62688857764f7d68f7c98660522b6e54f5e64b81f5841c959a4b021",
+      "bytes": 894
+    },
+    "research_runs/news-provenance-20260911/claim.json": {
+      "sha256": "ba8ff933a51e046c74d0eb3ab5caf9b71bdcf3ee324b5dcc0865d968e729ffa5",
+      "bytes": 6602
+    },
+    "research_runs/news-provenance-20260911/complete.json": {
+      "sha256": "ce3c478ca39f048fa73f1b15ef3b7a5f9364209285142b833a0819ad8fa8037d",
+      "bytes": 2532
+    },
+    "research_runs/options-entry-20260911/claim.json": {
+      "sha256": "f988dd5c5f03de3b1494f4cbf2348d9889ec1220e0b776734fb94d31d293d9a5",
+      "bytes": 10029
+    },
+    "research_runs/options-entry-20260911/complete.json": {
+      "sha256": "996863c5b69cce63f16915f00b3702f06a17dfebba9a44b8bc15b32a3d607019",
+      "bytes": 2453
+    },
+    "research_runs/options-eoh-schema-20260911/claim.json": {
+      "sha256": "53cd79ca1539b7ab4a4572e4050463989dd8039c3f5e4944a25f6d047ad421b7",
+      "bytes": 5294
+    },
+    "research_runs/options-eoh-schema-20260911/complete.json": {
+      "sha256": "9302839ed6131e8dbb07f1240062bd3b4c1e7eb79a5235956cd1b8fde1a3011c",
+      "bytes": 1043
+    },
+    "research_runs/options-episode-20260911/claim.json": {
+      "sha256": "9755f008355cbffdef9c0b561e3806ed39a1c2d874fb7a0f285def2ebab9dd78",
+      "bytes": 13635
+    },
+    "research_runs/options-episode-20260911/failed.json": {
+      "sha256": "7b5c5fbbe531e259a5b1229d0e2fcb84a335c6699478f62b14be67a0a2ae002a",
+      "bytes": 2331
+    },
+    "research_runs/options-metadata-20260911/claim.json": {
+      "sha256": "894e854f463c2e72a138dc3b3dff12ef9b4a9505618ff8200754c63fee9f416f",
+      "bytes": 5139
+    },
+    "research_runs/options-metadata-20260911/complete.json": {
+      "sha256": "355a33ff92ff843b515b870bfeba56fa8baaab3afaf34174f29d3f2609f58d38",
+      "bytes": 1428
+    },
+    "research_runs/options-timing-20260915/claim.json": {
+      "sha256": "550c753279b8ae290ca988c9a23d5201b18ef4fd85b3c405a2f6e8a1078e8a73",
+      "bytes": 15042
+    },
+    "research_runs/triangle-inputs-20260911/claim.json": {
+      "sha256": "d34c7c5e09390632125fe5b429ec7f4830cb8e0e5db8173f75306126ecc71d47",
+      "bytes": 5781
+    },
+    "research_runs/triangle-inputs-20260911/complete.json": {
+      "sha256": "33bacfe4d62d418260071419bef89e844058478cb2667c13414285b4cbd84bc1",
+      "bytes": 1789
+    },
+    "research_runs/triangle-proxy-20260911/claim.json": {
+      "sha256": "fb27246edb41d1410f8b7096f16f77b17ea9eb9805852df5c3d937e0c92cd7d7",
+      "bytes": 6372
+    },
+    "research_runs/triangle-proxy-20260911/complete.json": {
+      "sha256": "db79e13556f1dd6d062a3a22939251ef5bb71e052278f92ab31dd0e17606e809",
+      "bytes": 1158
+    },
+    "research_runs/triangle-stream-20260911/claim.json": {
+      "sha256": "aa8237411e56368c34f18e0ae2bb83ac16a976e5af5c39aefa368dabdb8aaed4",
+      "bytes": 9403
+    },
+    "research_runs/triangle-stream-20260911/complete.json": {
+      "sha256": "277b64cd686ed319b60ee6b4e990874f138bdfd8f87099f0839102f00224283b",
+      "bytes": 4224
+    },
+    "research_runs/wbeth-book-20260911/claim.json": {
+      "sha256": "b0466afdf823091c249de5768d7a04e7b930c462a7c6ee258d3383fb1b25d5a1",
+      "bytes": 8540
+    },
+    "research_runs/wbeth-book-20260911/complete.json": {
+      "sha256": "7da6fdf3877a9dc8a9e578db9be7e0bf0835736235c910316c69049bf2f06ab2",
+      "bytes": 1270
+    },
+    "research_runs/wbeth-inputs-20260911/claim.json": {
+      "sha256": "ac52c855a6e2128b5aa5b451fe68d1865f692ac7196785f9bda37e2210269591",
+      "bytes": 6285
+    },
+    "research_runs/wbeth-inputs-20260911/complete.json": {
+      "sha256": "fd9c8f89c08d28f8c57dffec619b63d00f9320772d476aa6554bb750737ddbde",
+      "bytes": 1004
+    }
+  }
+}
