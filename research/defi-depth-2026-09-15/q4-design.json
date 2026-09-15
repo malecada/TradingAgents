@@ -1,0 +1,66 @@
+{
+  "experiment": "defi-depth-q4-20260915",
+  "status": "pre-execution design; no raw inspection authorized by this file alone",
+  "question": "Can the retained new-pool and wallet-flow pipelines supply a causal mature-token adoption universe and full holding-period source contract, rather than repeat their old signals?",
+  "mechanism": "mature-token adoption universe and value-capture source qualification",
+  "competing_explanations": [
+    "survivor-selected current token mapping",
+    "ETH beta",
+    "incentive or wash-driven addresses",
+    "issuance/unlocks",
+    "product adoption without tokenholder value capture",
+    "unsellable failed tokens removed by joins"
+  ],
+  "source_code_inventory": [
+    "scripts/predlab_nlst_dex_fetch.py",
+    "scripts/predlab_nlst3_features.py",
+    "scripts/predlab_nlst4_features.py",
+    "scripts/predlab_smw_map.py",
+    "scripts/predlab_smw_pools.py",
+    "scripts/predlab_smw_depth.py",
+    "scripts/predlab_smw_fetch.py",
+    "scripts/predlab_smw_features.py"
+  ],
+  "fixed_metadata_candidates_relative_to_each_root": [
+    "data/predlab/smw/token_map.json",
+    "data/predlab/smw/pools.json",
+    "data/predlab/smw/month_blocks.json",
+    "data/predlab/smw/universe.json"
+  ],
+  "roots": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "/home/malecada/master_thesis/TradingAgents-predlab"
+  ],
+  "metadata_read_policy": "No symlink traversal; regular files only; JSON up to4MiB each. Retain exact hash and sanitized recursive key/type/count structure, date-shaped dictionary keys only as values, never numeric observations/token rankings/returns. Raw universe metadata are source evidence and remain exposed. Missing files stay unavailable. No raw pool log arrays, forecast/feature values, empirical PnL, retries or network.",
+  "requirements": [
+    "failed/delisted roster retention",
+    "decision-time circulating supply and revisions",
+    "mature eligibility and predecision history",
+    "adoption-to-token-value link",
+    "issuance/unlock publication clocks",
+    "two-way execution and terminal recovery",
+    "complete365day horizon",
+    "causal source availability and chain/block clock"
+  ],
+  "decision": "Presence or metadata-schema evidence alone cannot satisfy causal coverage or executable prices. Compare the explicit stored pipeline contract with every requirement; retain absent or unproved cases. No recipe filters or financial ranking.",
+  "draft_filters_unadmitted": {
+    "circulating_cap_usd": [
+      10000000,
+      250000000
+    ],
+    "minimum_age_days": 90
+  },
+  "family_history_proposal": "One source successor with44related NLST/SMW/T7 rows plus original DEX source imported conservatively; prior45/cap46 for exactlyone Q4 source claim. Imports overlap wider history, not45new independent trials. Exact ancestry and claims pinned. Reviewer must verify whether additional exact predecessor imports are necessary.",
+  "outputs": "Eight code-contract assessments, eight fixed metadata inspections, eight requirement decisions, one full lineage/summary; all unavailable cells retained",
+  "network_calls": 0,
+  "raw_metadata_cap_bytes": 33554432,
+  "elapsed_time_kill": false,
+  "financial_outcomes": false,
+  "sanitization": {
+    "allowed_schema_keys": "Exact FIELDS constant in pinned heritage_source.py; all other keys aggregated as SHA256 hashes/count only",
+    "max_nodes": 100000,
+    "max_depth": 32,
+    "max_structure_json_bytes": 122880,
+    "max_cell_json_bytes": 131072
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "experiment": "defi-depth-q6-20260915",
+  "status": "pre-execution design; no article inspection or collection",
+  "question": "Can exact retained ingestion/exporter contracts establish lineage and causal retrieval/revision clocks for the previously unavailable news source, or identify a reusable prospective source contract?",
+  "source_code_inventory": [
+    "tradingagents/dataflows/sentiment_store.py",
+    "tradingagents/dataflows/crypto_sentiment_pit.py",
+    "tradingagents/dataflows/news_data_pit.py",
+    "tradingagents/dataflows/vintages.py",
+    "scripts/backfill_alpaca_news.py",
+    "scripts/backfill_gdelt.py",
+    "scripts/ingest_hf_bitcoin_news.py"
+  ],
+  "inspection": "Read only these exact pinned tracked code files as text/AST; do not import or execute their mains, query their stores or read credentials. Determine declared formats/identities, publication vs first retrieval/version clocks, revision preservation, unknown-availability handling and any explicit external CSV export connection. Persist sanitized code-contract evidence and file hashes/line references. Absence of connection is limited to these seven files.",
+  "external_csv": "/home/malecada/master_thesis/News_fulltext/News_fulltext/full_articles.csv",
+  "external_csv_policy": "Path is reference only. No stat/reopen/header/record/body read or whole-file hash. Previous13-byte first-line finding remains unchanged; no records were read. No alternate corpus search.",
+  "requirements": [
+    "specific corpus/export identity",
+    "declared format/schema",
+    "first-observed retrieval clock",
+    "publication vs revision clocks",
+    "versions preserved rather than overwritten",
+    "historical exported bytes tied to producer version",
+    "complete causal coin universe and article availability"
+  ],
+  "family_history_proposal": "Reviewed prior12/cap13:11scoped C1/C2/C3/P5 ledger records plus news-provenance-20260911. Exact row and ledger hashes in q6-ancestry.json; additional related history retained, not complete multiplicity.",
+  "decision": "Code capability is not proof of historical data provenance. If exact exporter or original version/clock evidence remains absent, historical source stays unavailable; document the future capture contract without starting an observer.",
+  "network_calls": 0,
+  "article_records_read": 0,
+  "elapsed_time_kill": false,
+  "financial_outcomes": false,
+  "previous_inspection": "Old news-provenance design already discussed four producer/store files; Q6 interprets the explicit bounded producer/export relationship and clock behavior, not fresh discovery of those filenames."
+}

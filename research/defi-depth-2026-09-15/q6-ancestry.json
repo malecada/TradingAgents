@@ -1,0 +1,340 @@
+{
+  "scope": "11exact inspected information/LLM records; news source claim is additional12th direct import; wider multiplicity unknown",
+  "rows": [
+    {
+      "path": "data/llm_event_xs/trial_ledger.jsonl",
+      "line": 1,
+      "ledger_sha256": "0d0818be89558cb9742d3ee4ffe506845a4fca0d44b162457f6fc32e8f8fb01d",
+      "row_sha256": "c5526b7bed1fe69202c624dca9a1e8e212132b406a7294177ce6fdfc7206be52",
+      "record": {
+        "ts_utc": "2026-08-14T14:52:00.683278+00:00",
+        "experiment": "llm_c1_event_xs",
+        "cell": "P0_extraction_quality",
+        "model": "gpt-5.4-mini + human adjudication (haiku pre-label)",
+        "config": {
+          "sample": 300,
+          "adjudicated": 115
+        },
+        "config_hash": "p0-v1",
+        "git_commit": "2316a22",
+        "window": [
+          "2021-01-01",
+          "2025-03-31"
+        ],
+        "metrics": {
+          "asset_link": 0.96875,
+          "prefilter_recall": 0.52985233237455,
+          "anon_agreement": 0.94,
+          "agreement_check_error_rate": 0.03333333333333333,
+          "verdict": "FAIL"
+        }
+      }
+    },
+    {
+      "path": "data/llm_event_xs/trial_ledger.jsonl",
+      "line": 2,
+      "ledger_sha256": "0d0818be89558cb9742d3ee4ffe506845a4fca0d44b162457f6fc32e8f8fb01d",
+      "row_sha256": "2afdd712d090498038e3742e4564eb381ccac58933d0eb8c5e21277e6d4a9e19",
+      "record": {
+        "ts_utc": "2026-08-14T15:38:39.763388+00:00",
+        "experiment": "llm_c1_event_xs",
+        "cell": "P0_v2_extraction_quality",
+        "model": "gpt-5.4-mini v2 + human adjudication",
+        "config": {
+          "sample": 100,
+          "amendment": "round 2"
+        },
+        "config_hash": "p0-v2",
+        "git_commit": "ffd571b",
+        "window": [
+          "2021-01-01",
+          "2025-03-31"
+        ],
+        "metrics": {
+          "asset_link": 1.0,
+          "prefilter_recall": 0.6998246734850321,
+          "anon_agreement": 0.96,
+          "verdict": "STOP"
+        }
+      }
+    },
+    {
+      "path": "data/llm_pair_xs/trial_ledger.jsonl",
+      "line": 1,
+      "ledger_sha256": "dec57b540c09380b76d2c8268976a817c230cb3f948c61a2fdd739fc3b8655e9",
+      "row_sha256": "c3fd94b48396c181ee3b06a095d7533e6f47a4c3f225b357b200a234321cdcc5",
+      "record": {
+        "ts_utc": "2026-08-17T16:39:06.533041+00:00",
+        "experiment": "llm_c3p_pair_xs",
+        "cell": "P0_swap_stability",
+        "model": "gpt-5.4-mini",
+        "config": {
+          "weeks": 8,
+          "k_rounds": 10,
+          "duels_per_prompt": 20,
+          "seed": 20260817
+        },
+        "config_hash": "p0-swap-stability",
+        "git_commit": "366b0cc-dirty",
+        "window": [
+          "2021-01-01",
+          "2025-03-31"
+        ],
+        "metrics": {
+          "pooled_swap_consistency": 0.7817106317106317,
+          "slot1_rate": 0.5074319059165565,
+          "min_rerun_agreement": 0.9366071428571429,
+          "min_shuffle_agreement": 0.8188172043010753,
+          "verdict": "PASS"
+        }
+      }
+    },
+    {
+      "path": "data/llm_pair_xs/trial_ledger.jsonl",
+      "line": 2,
+      "ledger_sha256": "dec57b540c09380b76d2c8268976a817c230cb3f948c61a2fdd739fc3b8655e9",
+      "row_sha256": "9fd63538326f3bead29752523bdd8a6bb0a8039c125309b600e9fbc5feb4c078",
+      "record": {
+        "ts_utc": "2026-08-17T16:52:49.592576+00:00",
+        "experiment": "llm_c3p_pair_xs",
+        "cell": "P1_anon_26wk",
+        "model": "gpt-5.4-mini",
+        "config": {
+          "weeks": 26,
+          "fwd_days": 5,
+          "seed": 20260818
+        },
+        "config_hash": "P1_anon_26wk",
+        "git_commit": "746728e-dirty",
+        "window": [
+          "2021-01-01",
+          "2025-03-31"
+        ],
+        "metrics": {
+          "mean_weekly_ic": -0.022926192280557325,
+          "verdict": "PASS"
+        }
+      }
+    },
+    {
+      "path": "data/llm_pair_xs/trial_ledger.jsonl",
+      "line": 3,
+      "ledger_sha256": "dec57b540c09380b76d2c8268976a817c230cb3f948c61a2fdd739fc3b8655e9",
+      "row_sha256": "5c4e016828460b52cdd121c24c0dd6c0cdbe2afcbfe0881d382cb9f8aeae0af5",
+      "record": {
+        "ts_utc": "2026-08-17T16:52:49.592692+00:00",
+        "experiment": "llm_c3p_pair_xs",
+        "cell": "P1_named_26wk",
+        "model": "gpt-5.4-mini",
+        "config": {
+          "weeks": 26,
+          "fwd_days": 5,
+          "seed": 20260818
+        },
+        "config_hash": "P1_named_26wk",
+        "git_commit": "746728e-dirty",
+        "window": [
+          "2021-01-01",
+          "2025-03-31"
+        ],
+        "metrics": {
+          "mean_weekly_ic": -0.034198785273377746,
+          "verdict": "PASS"
+        }
+      }
+    },
+    {
+      "path": "data/llm_pair_xs/trial_ledger.jsonl",
+      "line": 4,
+      "ledger_sha256": "dec57b540c09380b76d2c8268976a817c230cb3f948c61a2fdd739fc3b8655e9",
+      "row_sha256": "abdaa3cafc00d0db61ed1dc8507ae545a72d829504430827e4f79bd93c44d62b",
+      "record": {
+        "ts_utc": "2026-08-18T10:22:08.412065+00:00",
+        "experiment": "llm_c3p_pair_xs",
+        "cell": "P2_llm_dev",
+        "model": "gpt-5.4-mini",
+        "config": {
+          "factors": [
+            "vol_ewma20",
+            "ret_4w",
+            "size_rank"
+          ],
+          "nw_lag": 4,
+          "min_train_weeks": 52,
+          "refit_every": 13
+        },
+        "config_hash": "P2_llm_dev",
+        "git_commit": "7b48fbd-dirty",
+        "window": [
+          "2021-01-01",
+          "2025-03-31"
+        ],
+        "metrics": {
+          "mean_resid_ic_5d": 0.007880978406025863,
+          "nw_t_5d": 1.012908297718945,
+          "verdict": "STOP"
+        }
+      }
+    },
+    {
+      "path": "data/llm_pair_xs/trial_ledger.jsonl",
+      "line": 5,
+      "ledger_sha256": "dec57b540c09380b76d2c8268976a817c230cb3f948c61a2fdd739fc3b8655e9",
+      "row_sha256": "0408b2dd95d3d27c2804438d83b6cf9d229ce6eb55212e162b7a5366ebc7471f",
+      "record": {
+        "ts_utc": "2026-08-18T10:22:08.412211+00:00",
+        "experiment": "llm_c3p_pair_xs",
+        "cell": "P2_gbdt_twin",
+        "model": "lightgbm-twin",
+        "config": {
+          "factors": [
+            "vol_ewma20",
+            "ret_4w",
+            "size_rank"
+          ],
+          "nw_lag": 4,
+          "min_train_weeks": 52,
+          "refit_every": 13
+        },
+        "config_hash": "P2_gbdt_twin",
+        "git_commit": "7b48fbd-dirty",
+        "window": [
+          "2021-01-01",
+          "2025-03-31"
+        ],
+        "metrics": {
+          "mean_resid_ic_5d": 0.007295350871184329,
+          "common_llm": 0.017377461235683893,
+          "common_twin": 0.007295350871184329,
+          "verdict": "STOP"
+        }
+      }
+    },
+    {
+      "path": "data/llm_rank_xs/trial_ledger.jsonl",
+      "line": 1,
+      "ledger_sha256": "5340ab9d5d39f87df6caf810806ce92e3b6ddc6eb555b9b5f573290094e4190f",
+      "row_sha256": "e89c444660bd02dbee5918d7d1e59a9ea8c231705a72b9a1529003b6300a6632",
+      "record": {
+        "ts_utc": "2026-08-17T15:26:50.806921+00:00",
+        "experiment": "llm_c3_rank_xs",
+        "cell": "P0_stability",
+        "model": "gpt-5.4-mini",
+        "config": {
+          "weeks": 8,
+          "batch": 25,
+          "rounds": 2
+        },
+        "config_hash": "p0-stability",
+        "git_commit": "764d4c5",
+        "window": [
+          "2021-01-01",
+          "2025-03-31"
+        ],
+        "metrics": {
+          "min_rerun_rho": 0.936324534535134,
+          "min_shuffle_rho": 0.6327350900619871,
+          "verdict": "STOP"
+        }
+      }
+    },
+    {
+      "path": "data/predlab/trial_ledger.jsonl",
+      "line": 577,
+      "ledger_sha256": "4459ddc70d41d9a99db06ab53d9ad4c8f42b6f4d282abd93b4857b4474041927",
+      "row_sha256": "0bab3714b2ae5b844f0682975edc18cb04a005554a3b33a2da7b0d9fa2575e1e",
+      "record": {
+        "ts_utc": "2026-08-10T09:55:39.169864+00:00",
+        "experiment": "llm_c2_veto_ovl",
+        "cell": "P0_oracle",
+        "model": "oracle_foresight",
+        "config": {
+          "k_per_year": 10,
+          "m_veto": 0.0,
+          "book": "ewma_20 eq_h1 top200 + vt15_naive20_b100"
+        },
+        "config_hash": "p0-oracle-k10-m0",
+        "git_commit": "11341b7",
+        "window": [
+          "2021-01-01",
+          "2025-03-31"
+        ],
+        "metrics": {
+          "sr_book": 1.7125827963249844,
+          "sr_veto": 3.40692496823115,
+          "maxdd_book": 0.1762516531054008,
+          "maxdd_veto": 0.08814173259628721,
+          "rel_maxdd_reduction": 0.4999097537906365,
+          "d_sr": 1.6943421719061655,
+          "rel_cvar5_improvement": 0.2689034372754159
+        }
+      }
+    },
+    {
+      "path": "data/predlab/trial_ledger.jsonl",
+      "line": 578,
+      "ledger_sha256": "4459ddc70d41d9a99db06ab53d9ad4c8f42b6f4d282abd93b4857b4474041927",
+      "row_sha256": "c5c123b56b0805c335fb278ac385d4f08980aa65729cfd34200828b403e75d8b",
+      "record": {
+        "ts_utc": "2026-08-11T04:02:52.204460+00:00",
+        "experiment": "llm_c2_veto_ovl",
+        "cell": "P1_news_recall",
+        "model": "gpt-5.4-mini",
+        "config": {
+          "window_hours": 48,
+          "coverage_floor": 0.6
+        },
+        "config_hash": "p1-recall-48h",
+        "git_commit": "213fff7",
+        "window": [
+          "2021-01-01",
+          "2025-03-31"
+        ],
+        "metrics": {
+          "coverage": 0.54,
+          "n_days": 50,
+          "n_with_crisis_news": 27
+        }
+      }
+    },
+    {
+      "path": "data/rebuild/trial_ledger.jsonl",
+      "line": 114,
+      "ledger_sha256": "45a5fe9e1b0c92de5dd853c9fa091a8dfdb8636e260a4c5b4cc89db6903f9627",
+      "row_sha256": "14df44c7b19c99ef67da03584ac954a2e584e2ee3e808078d774de00592d081f",
+      "record": {
+        "ts": "2026-07-28T19:45:59.025717+00:00",
+        "git_commit": "a5f0ab6",
+        "experiment": "llm_p5_hybrid",
+        "config": {
+          "experiment": "llm_p5_hybrid",
+          "coin": "ethereum",
+          "window": [
+            "2026-01-16",
+            "2026-05-21"
+          ],
+          "arm_b": "generate_hybrid_signals v1 prompt, onchain+prediction, gpt-5.4-mini/nano, quant_pred_dir=multi_2coins_pit_wf_p5, D-1 slot alignment",
+          "engine": "llm_p5_ab causal, costs_for_coin(ethereum,causal), price_stop 3%"
+        },
+        "config_hash": "9b0bdc346884",
+        "window": [
+          "2026-01-16",
+          "2026-05-21"
+        ],
+        "metrics": {
+          "p_pos": 0.065,
+          "gate_pass": false,
+          "sr_quant": 0.6986051866886546,
+          "sr_hybrid": 0.23394799327446408,
+          "delta_sr": -0.4646571934141905,
+          "ci": [
+            -1.0374944060073765,
+            0.06937557105370444
+          ],
+          "n_bars": 126,
+          "parity_match_rate": 0.6587301587301587
+        }
+      }
+    }
+  ]
+}
