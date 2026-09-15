@@ -51,3 +51,29 @@ def test_closed_boundary_attacks(case,mutation):
         terminal=json.loads((root/'research_runs'/PARENT/'failed.json').read_bytes());terminal['unavailable_count']=0;write(root,f'research_runs/{PARENT}/failed.json',terminal)
     else:write(root,'grant.json',{})
     with pytest.raises((ValueError,KeyError)):check(case)
+
+
+@pytest.mark.parametrize('mutation',['omitted','outputs','controls','claims'])
+def test_same_invocation_proof_mapping_must_match_grant(case,monkeypatch,mutation):
+    start(case)
+    original=h.verify_parent
+    def changed(**kwargs):
+        proof=original(**kwargs)
+        if mutation=='omitted':
+            proof['verified_inventory'].pop('history-04');proof['verified_claims'].pop('history-04')
+        elif mutation=='outputs':proof['verified_inventory'][PARENT]['output_sha256']={'fake.json':'0'*64}
+        elif mutation=='controls':proof['verified_inventory'][PARENT]['control_sha256']={}
+        else:proof['verified_claims'].pop(PARENT)
+        return proof
+    monkeypatch.setattr(h,'verify_parent',changed)
+    from tradingagents.research_options_timing import independent_verify
+    with pytest.raises(ValueError):independent_verify.verify(root=case[0],now_utc=now())
+    with pytest.raises(ValueError):control.Episode.resume(root=case[0],now_utc=now())
+
+
+def test_old_bytes_changed_between_calls_are_not_cached(case):
+    start(case)
+    from tradingagents.research_options_timing import independent_verify
+    assert independent_verify.verify(root=case[0],now_utc=now())['status']=='active'
+    write(case[0],'parent-return/ack.json',{'changed_between_calls':True})
+    with pytest.raises(ValueError):independent_verify.verify(root=case[0],now_utc=now())

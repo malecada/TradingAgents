@@ -209,8 +209,13 @@ def _admit(root,registration,source,design_source,now,own=None):
     if cert.get('original_grant')!=grant['consumed_episode_grant']:raise ControlError('consumed fifth grant mismatch')
     oldgrant=json.loads(reference(root,grant['consumed_episode_grant'],source));reference(root,grant['consumed_episode_grant'],design_source)
     if oldgrant.get('effective_budget')!=5 or oldgrant.get('target_experiment')!=parent or oldgrant.get('prior_claims')!={k:v for k,v in grant['prior_claims'].items() if k!=parent}:raise ControlError('original nineteen/grant boundary changed')
-    closed_history.verify_parent(root=root,certificate=grant['closed_parent'],source=source,design_source=design_source,now_utc=now.isoformat(),successor={'experiment_id':TARGET,'source':source,'design_source':design_source,'grant':exp['episode_book_grant']})
-    actual,claims=inventory(root,own,allow_active=own is not None)
+    history_proof=closed_history.verify_parent(root=root,certificate=grant['closed_parent'],source=source,design_source=design_source,now_utc=now.isoformat(),successor={'experiment_id':TARGET,'source':source,'design_source':design_source,'grant':exp['episode_book_grant']})
+    # The fresh closed-parent reconstruction already verifies every retained
+    # predecessor against the original boundary and scans the full live tree.
+    # Reuse only this invocation's result; retain all NEW-source checks below.
+    actual={k:v for k,v in history_proof['verified_inventory'].items() if k!=own}
+    claims={k:v for k,v in history_proof['verified_claims'].items() if k!=own}
+    if set(actual)!=set(claims):raise ControlError('verified history claim/inventory denominator')
     prior=grant['prior_claims']
     if not isinstance(prior,dict) or len(prior)!=20 or any(actual.get(k)!=v for k,v in prior.items()):raise ControlError('complete twenty-claim history changed')
     extra=set(actual)-set(prior)

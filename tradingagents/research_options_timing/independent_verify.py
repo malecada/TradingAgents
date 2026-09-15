@@ -187,31 +187,22 @@ def reconstruct(root, claim, now):
     oldgrant = reference(root, grant['consumed_episode_grant'], source, parse=True)
     reference(root, grant['consumed_episode_grant'], design)
     require(oldgrant.get('effective_budget') == 5 and oldgrant.get('target_experiment') == parent and oldgrant.get('prior_claims') == {k:v for k,v in prior.items() if k != parent}, 'original nineteen-grant boundary')
-    closed_history.verify_parent(root=root, certificate=grant['closed_parent'], source=source, design_source=design, now_utc=now.isoformat(), successor={'experiment_id':TARGET,'source':source,'design_source':design,'grant':exp['episode_book_grant']})
+    history_proof = closed_history.verify_parent(root=root, certificate=grant['closed_parent'], source=source, design_source=design, now_utc=now.isoformat(), successor={'experiment_id':TARGET,'source':source,'design_source':design,'grant':exp['episode_book_grant']})
+    # The closed-parent proof is freshly reconstructed above, never cached.
+    # It includes the full current tree and exact predecessor byte inventories.
+    live_inventory=history_proof['verified_inventory']
+    live_claims=history_proof['verified_claims']
+    require(set(live_inventory)==set(live_claims), 'verified history denominator')
     old_claims = {}
-    for directory in sorted((root / 'research_runs').iterdir()):
-        if directory.name.startswith('.') or directory.name == TARGET:
+    for name in sorted(live_claims):
+        if name == TARGET:
             continue
-        require(not directory.is_symlink() and directory.is_dir(), 'historical directory safety')
-        regular(directory / 'claim.json', MAX_JSON)
-        old = verify_claim(directory)
-        old_claims[directory.name] = old
-        if directory.name not in prior:
+        old=live_claims[name]
+        old_claims[name]=old
+        if name not in prior:
             require(old['family']['mechanism_id'] != MECHANISM and timestamp(old['started_at']) > timestamp(claim['started_at']), 'unbound prior or same-family descendant')
             continue
-        names = [n for n in ('complete.json', 'failed.json') if (directory / n).exists()]
-        require(len(names) == 1, 'retained historical terminal')
-        receipt = json_file(directory / names[0])
-        for p in (directory / 'outputs').iterdir():
-            regular(p)
-        verify_history(directory)
-        observed = {'claim_sha256': file_hash(directory/'claim.json'), 'terminal': names[0], 'terminal_sha256': file_hash(directory/names[0]), 'output_sha256': receipt['output_sha256']}
-        if directory.name == parent:
-            limits = old['episode_protocol']['resources']
-            controls = members(directory/'control', CONTROL_NAMES, limits['control_total_bytes'], limits['control_total_bytes'])
-            require(controls == receipt['control_sha256'], 'parent control inventory')
-            observed['control_sha256'] = controls
-        require(observed == prior[directory.name], 'historical claim/terminal/output inventory')
+        require(live_inventory[name] == prior[name], 'historical claim/terminal/output/control inventory')
         oldspec = json.loads(_blob(root, old['source'], old['registration']))
         require(all(all(spec[group].get(k) == v for k, v in oldspec[group].items()) for group in ('experiments', 'families', 'datasets')), 'historical gate preservation')
         baseline = _blob(root, grant['history_source'], old['registration'])

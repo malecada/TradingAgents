@@ -179,6 +179,7 @@ def reconstruct(root, claim, now, successor=None):
     prior = grant['prior_claims']
     require(isinstance(prior, dict) and len(prior) == 19, 'all nineteen predecessors')
     old_claims = {}
+    verified_inventory = {}
     for directory in sorted((root / 'research_runs').iterdir()):
         if directory.name.startswith('.') or directory.name == TARGET:
             continue
@@ -193,6 +194,14 @@ def reconstruct(root, claim, now, successor=None):
                 require(old['experiment'].get('parent') == TARGET and timestamp(old['started_at']) > timestamp(json_file(root/'research_runs'/TARGET/'failed.json')['ended_at']), 'successor chronology/parent')
             else:
                 require(timestamp(old['started_at']) > timestamp(claim['started_at']), 'unbound prior descendant')
+            names = [n for n in ('complete.json', 'failed.json') if (directory/n).exists()]
+            require(len(names)<=1, 'extra descendant terminal denominator')
+            if names:
+                verify_history(directory)
+                receipt=json_file(directory/names[0])
+                verified_inventory[directory.name]={'claim_sha256':file_hash(directory/'claim.json'),'terminal':names[0],'terminal_sha256':file_hash(directory/names[0]),'output_sha256':receipt['output_sha256']}
+            else:
+                verified_inventory[directory.name]={'claim_sha256':file_hash(directory/'claim.json'),'terminal':None,'terminal_sha256':None,'output_sha256':{}}
             continue
         names = [n for n in ('complete.json', 'failed.json') if (directory / n).exists()]
         require(len(names) == 1, 'retained historical terminal')
@@ -202,6 +211,7 @@ def reconstruct(root, claim, now, successor=None):
         verify_history(directory)
         observed = {'claim_sha256': file_hash(directory/'claim.json'), 'terminal': names[0], 'terminal_sha256': file_hash(directory/names[0]), 'output_sha256': receipt['output_sha256']}
         require(observed == prior[directory.name], 'historical claim/terminal/output inventory')
+        verified_inventory[directory.name] = observed
         oldspec = json.loads(_blob(root, old['source'], old['registration']))
         require(all(all(spec[group].get(k) == v for k, v in oldspec[group].items()) for group in ('experiments', 'families', 'datasets')), 'historical gate preservation')
         baseline = _blob(root, grant['history_source'], old['registration'])
@@ -233,7 +243,7 @@ def reconstruct(root, claim, now, successor=None):
     for ref in [grant['review'], grant['preflight'], review['independent_review'], *preflight['reports']]:
         for commit in {source, design}:
             reference(root, ref, commit)
-    return exp, protocol, limits, target_hash
+    return exp, protocol, limits, target_hash, verified_inventory, old_claims
 
 
 def quiescence(root, claim, claim_hash, now, evidence):
@@ -267,7 +277,7 @@ def _verify_original(*, root, now_utc, quiescence_evidence=None, successor=None)
     regular(directory/'claim.json', MAX_JSON)
     # Legacy function is used only for structural envelope reconstruction.
     claim = verify_claim(directory)
-    exp, protocol, limits, target_hash = reconstruct(root, claim, now, successor)
+    exp, protocol, limits, target_hash, history_inventory, history_claims = reconstruct(root, claim, now, successor)
     claimed = file_hash(directory/'claim.json')
     controls = members(directory/'control', CONTROL_NAMES, limits['control_total_bytes'], limits['control_total_bytes'])
     outputs = members(directory/'outputs', exp['outputs'], limits['output_total_bytes'], limits['output_file_bytes'])
@@ -332,7 +342,9 @@ def _verify_original(*, root, now_utc, quiescence_evidence=None, successor=None)
     require(len({c['id'] for c in cells}) == len(cells) and receipt['cell_count'] == len(cells) and receipt['unavailable_count'] == sum(c['status']=='unavailable' for c in cells), 'terminal cell accounting')
     if status == 'complete':
         require(intent is not None and timestamp(intent['started_at']) <= ended and set(outputs) == set(exp['outputs']) and {c['id'] for c in cells} == set(exp['cells']), 'complete episode denominator')
-    return {'status':status,'claim_sha256':claimed,'history_count':19,'quiescence':'externally-reviewed','scientific_validation':False}
+    history_inventory[TARGET]={'claim_sha256':claimed,'terminal':terminals[0],'terminal_sha256':file_hash(directory/terminals[0]),'output_sha256':outputs,'control_sha256':controls}
+    history_claims[TARGET]=claim
+    return {'status':status,'claim_sha256':claimed,'history_count':19,'quiescence':'externally-reviewed','scientific_validation':False,'verified_inventory':history_inventory,'verified_claims':history_claims}
 
 
 def verify_parent(*, root, certificate, source, design_source, now_utc, successor=None):
@@ -377,4 +389,4 @@ def verify_parent(*, root, certificate, source, design_source, now_utc, successo
     report = reference(root, cert['closure_review'], source, parse=True)
     reference(root, cert['closure_review'], design_source)
     require(report['terminal_sha256'] == cert['terminal_sha256'] and report['quiescence_evidence'] == cert['quiescence_evidence'] and report['terminal_verification']['status'] == 'failed' and report['terminal_verification']['claim_sha256'] == cert['claim_sha256'] and report['cell_count'] == report['unavailable_count'] == 8 and report['financial_output_count'] == 0 and report['analysis_intent'] is False and report['total_identities'] == 20, 'closure review identity')
-    return {'status':'failed','claim_sha256':cert['claim_sha256'],'terminal_sha256':cert['terminal_sha256'],'control_sha256':cert['control_sha256'],'history_count':20,'quiescence':'externally-reviewed','scientific_validation':False}
+    return {'status':'failed','claim_sha256':cert['claim_sha256'],'terminal_sha256':cert['terminal_sha256'],'control_sha256':cert['control_sha256'],'history_count':20,'quiescence':'externally-reviewed','scientific_validation':False,'verified_inventory':result['verified_inventory'],'verified_claims':result['verified_claims']}
