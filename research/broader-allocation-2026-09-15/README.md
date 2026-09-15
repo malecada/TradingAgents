@@ -25,15 +25,21 @@ does not amend an old gate, grant another options episode, or start a collector.
    [machine-readable inventory](history-inventory.json).
 4. [Registration and confirmation protocol](PROTOCOL.md).
 5. [Independent review and resolved findings](reviews/design-review.md).
-6. [Current checkpoint and next action](STATE.md).
+6. [Wallet/DeFi extension](DEFI.md) and [inherited DEX history](DEFI-HISTORY.md).
+7. [Current checkpoint and next action](STATE.md).
 
-Accepted choices: $10,000 baseline with justified larger capital, at least 10%
-annual net return, 30% maximum drawdown and 50% modeled stress loss. These loss
-limits are research criteria, not guaranteed caps. The 12-month investment
-horizon, initial unlevered BTC/ETH spot/cash scope and 2% benchmark-improvement
-floor remain proposed; spending currency, cash vehicle, tax basis and venue/
-product eligibility still require resolution before financial registration.
-No historical outcomes were used to infer the accepted preferences.
+Accepted choices: $10,000 baseline with justified larger capital, at least10%
+annual net return,30% maximum drawdown and50% market/stablecoin stress loss;
+USD reporting, Czech Binance account and stablecoin cash. The user also permits
+wallet-held assets and DeFi consideration on Ethereum, Base and Arbitrum with
+Uniswap. Total exchange failure, wallet compromise, contract exploits and token
+failures are separately reported as potential total affected-position losses,
+including correlated loss of the full account. These are not guaranteed caps.
+
+The365-day horizon, pre-personal-tax scope and2% incremental hurdle are disclosed
+research assumptions under the go-ahead. Exact eligibility, cash terms, contracts,
+execution and inference remain admission requirements. The initial four core
+recipes stay fixed; the DeFi source check uses the existing repair reserve.
 
 Research budgets and sample exposure remain cumulative across both programs.
 Old closed claims are not reopened by changing the objective. All future runs

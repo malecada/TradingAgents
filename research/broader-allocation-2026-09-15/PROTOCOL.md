@@ -7,17 +7,11 @@ registration. No executable registration with placeholder preferences, empty
 history or guessed hashes is created. Exact dates, access, cash terms, economic
 preferences, source files and inference choices must be resolved first.
 
-The proposed source-admission queue is finite:
-
-1. Resolve the investment contract and accessible cash/spot/FX implementation.
-2. Reconcile exact H2–H5 ancestor/config/sample IDs and required allowance amendments.
-3. Audit named existing spot sources and historical filters against the needed
-   daily signals and action prices; classify proxy-only/unavailable fields.
-4. Check custody, transfer/prefund timing, lots and cash costs at $10,000.
-   If capital is the blocker, derive and freeze one justified C_plus using
-   DESIGN before outcomes; report the minimum required amount and uncertainty.
-5. Verify a pooled signed-quantity cash engine with independent synthetic books.
-6. Freeze the development panel, precision/power design and confirmation route.
+The authorized six-question source-admission queue is now maintained in
+[ADMISSION.md](ADMISSION.md). The wallet/DeFi amendment reassigns the unused repair
+reserve; it adds no slot. DEFI.md extends accounting and comparison requirements,
+but the current four-recipe/88-contrast inference reserve covers the core only.
+Any DeFi financial panel requires a pre-outcome denominator and budget amendment.
 
 Metadata-only engineering checks are not financial trials. New quote/source
 measurements still require their own committed charter and separate measurement
@@ -141,8 +135,8 @@ stopping for profit, early promotion, automatic restart or extension after a
 near miss. A defective run preserves every artifact and consumes its budget.
 
 Proposed inference family reserves four original recipes x two possible capital
-scenarios x six contrasts (absolute P plus five primary benchmark differences):
-**48 tests maximum**. Use one-sided Bonferroni alpha 0.05/48 or an independently
+scenarios x eleven contrasts (absolute P plus ten primary benchmark differences):
+**88 tests maximum**. Use one-sided Bonferroni alpha 0.05/88 or an independently
 reviewed simultaneous method frozen before data; these are not independent
 hypotheses. Retain that conservative allocation if only the baseline is used
 or only one recipe/capital combination reaches confirmation. Historical

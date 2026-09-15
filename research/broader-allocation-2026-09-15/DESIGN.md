@@ -3,8 +3,9 @@
 **Capital baseline confirmed at $10,000; larger capital may be considered if needed.
 The annual net-return target is at least 10%; 30% maximum drawdown and 50%
 stress loss are accepted research limits. Other contract details remain open.**
-The September 15 request authorizes design and state recovery. Before financial
-experiments, record the user's investment choices and resolve this contract.
+The September 15 go-ahead authorizes bounded research. The later wallet/DeFi
+choice is recorded in [the additive extension](DEFI.md). Financial registration
+still requires concrete source, execution and inference admission.
 Changing a draft now is legitimate; changing a frozen gate after outcomes is not.
 
 ## Capital, horizon and tolerances
@@ -12,16 +13,16 @@ Changing a draft now is legitimate; changing a frozen gate after outcomes is not
 | Item | Accepted choice or proposed assumption | Meaning / unresolved detail |
 | --- | --- | --- |
 | Capital | $10,000 baseline; larger amount if capital is the demonstrated blocker | Determine and report the required amount under the capital policy below. All capital is committed on day zero; no leverage or later top-up is implied. |
-| Spending currency | USD provisionally | Confirm USD/EUR/CZK; translate cashflows and FX costs into the chosen currency. USDT is not automatically a dollar. |
+| Reporting currency | USD, specified by the user | Price and report cashflows in dollars; stablecoin units are not automatically dollar cash. CZK conversion is outside the initial reporting objective. |
 | Investment horizon | 365 days | No required interim withdrawal; this is distinct from the length of evidence needed to estimate performance. |
 | Annual net-return target | At least 10% of C per 365 days ($1,000 at $10,000) | User-requested target after modeled implementation costs; neither a forecast nor a guaranteed minimum each year. Tax basis remains to be settled. |
 | Useful incremental cash benefit | 2% of C per 365 days ($200 at $10,000) | Proposed 2% benefit over each eligible simple benchmark; a separate preference from absolute profit. |
 | Maximum drawdown | 30% of prior liquidation NAV peak; accepted by the user | Include initial NAV, fees, gaps and terminal conversion; not a guaranteed stop-loss fill. The earlier 20% proposal was not accepted. |
 | Maximum stress loss | 50% of total capital at each stress origin; accepted by the user | Apply the scenarios below throughout the path; separately report drawdown from original capital. The earlier 35% proposal was not accepted. |
-| Instruments | Unlevered BTC and ETH spot; accessible cash | No short, perpetual, option, lending or staking book in the initial four tests. Those require a later explicit scope choice and inherited-budget review. |
-| Venue | Binance only if product/account applicability is established | Public API reachability is insufficient. No credentials/private endpoints needed for this design. |
+| Instruments | Core: unlevered BTC/ETH spot and cash. Added consideration: wallet-held spot including low-cap tokens, LP, lending and staking | Initial four financial recipes stay fixed. DeFi source admission and inherited-budget review precede any additional financial book; no leverage is inferred. |
+| Venue | Binance Czech account; wallet/Uniswap alternatives on Ethereum, Base and Arbitrum accepted for comparison | Exact entity, products, contracts and executable routes remain unverified. Public reachability is insufficient. |
 | Operational burden | At most one scheduled decision per month, two assets, no intraday discretionary response | Continuous prices may be needed for honest risk measurement; this does not imply frequent trading. |
-| Cash location | Majority outside exchange/crypto credit risk, if accessible | Model transfer time/fees and prefunding explicitly. Keeping everything in exchange USDT cannot be called safe cash. |
+| Cash location | Binance stablecoins for the core; wallet-held alternatives now in scope | A wallet broadens the earlier Binance-only choice. Model depeg, gas funding, transfers and exit costs across all committed locations; no automatic yield or bank insurance. |
 | Taxes and labor | Net of implementation costs, pre-personal-tax; labor shown separately | Confirm whether useful profit must instead be after tax and time cost before freezing. No tax assumptions silently treated as zero. |
 
 The capital boundary includes bank cash assigned to the strategy, idle money,
@@ -97,17 +98,23 @@ Revalue quantities, cash, fees and access under: (a) simultaneous BTC/ETH -50%;
 including any intervening monthly rebalance; (e) a seven-day trading/transfer
 outage during -50% crypto, with spread/impact five times primary on reopening;
 (f) stablecoin -20% with redemption unavailable for 30 days; and (g) complete loss
-of assets at one exchange/custodian. Include a combined -50% crypto/-20%
+of assets at Binance, separately reported as potential100% loss under the user’s
+explicit exception; it does not enter the50% market/stablecoin pass/fail gate. Include a combined -50% crypto/-20%
 stablecoin/outage scenario, avoiding double-counting already lost balances.
 Specify the within-scenario clocks and recovery prices in the experiment contract.
 No assumed emergency stop execution or instant cash transfer.
 
 These are deterministic adverse scenarios, not probabilities or worst possible
 loss bounds. Report maximum drawdown, worst rolling 30-day loss, terminal loss,
-exposure drift, custody concentration and liquidity lockup. The accepted 50% stress limit may
-make an all-on-exchange implementation unacceptable even if its market exposure
-is small. Such a result is implementation/risk infeasibility, not absence of a
-return mechanism. No strategy can guarantee the accepted drawdown limit.
+exposure drift, custody concentration and liquidity lockup. The50% stress limit
+applies to market/stablecoin scenarios. Total Binance failure is a separately
+accepted potential100% tail loss, never hidden in cash or called insured. This
+exception does not waive depeg, market loss, execution or liquidity constraints.
+No strategy can guarantee the accepted drawdown limit. The user also accepts
+wallet compromise, contract exploits and token failures as separately reported
+potential total affected-position losses under DEFI.md. Ordinary crashes, depegs
+and illiquidity remain market stress; actual losses remain in net wealth and
+observed drawdown. Tail exceptions do not permit post-outcome reclassification.
 
 ## Benchmarks: same money, clocks, costs and available instruments
 
@@ -132,12 +139,14 @@ quotes or selectable primary rates. There is no best-cash-rate choice after
 results. Use each date's admitted information/terms, not today's yield backfilled.
 If B1 is unavailable, show conditional results but withhold an implementable pass.
 
-Primary comparator set is B0, B1, B5, B7, B9. Each must independently satisfy the
+Primary comparator set is all ten predeclared benchmarks B0–B9. Each must independently satisfy the
 same capital/access, 30% drawdown and 50% stress-loss limits to be a feasible
 alternative; retain the others with reasons. Report every contrast even when a
-benchmark is infeasible. B2/B3/B4/B6/B8 remain compulsory context: outperforming
-their returns at substantially lower exposure is not required, and reduced loss
-from merely holding more cash is not evidence of timing skill.
+benchmark is infeasible. Outperformance is required against every feasible
+simple alternative, including a higher-crypto allocation if it passes the same
+risk and access limits. Reduced loss from merely holding more cash is not
+evidence of timing skill. This pre-outcome amendment follows independent
+ancestry/admission review; no new benchmark recipe is added.
 
 Candidate and simple controls start from equal capital, use identical cash
 economics, fees, custody and transfer models, and have the same information

@@ -1,96 +1,86 @@
 # Broader program checkpoint — September 15, 2026
 
-Status: **design amended; $10,000 baseline, justified larger capital and 10%+ annual target; 30% drawdown / 50% stress loss accepted;
-zero new experiments, zero validated strategies**. The program's own [README](README.md)
-is the entry point; old options state remains authoritative for that study.
+**Authorized bounded research; custody admission prepared; wallet/DeFi branch
+added; no new lifecycle claim yet and zero validated strategies.**
+The options study remains governed by its own frozen state and source. This
+checkpoint owns only the additive broader-program paths.
 
-Completed: recovered 974 historical ledger rows, 48 correction rows and 21 local
-lifecycle claims (16 complete / four failed / one active); drafted a distinct
-full-capital objective, explicit proposed investment assumptions, ten fixed
-benchmarks, eight ranked mechanism questions, four candidate recipes and finite
-budget; specified accounting, ancestry, preregistration and confirmation gates.
-Preservation evidence is scoped to the [81 anchor inventory](history-inventory.json)
-and the additive Git diff, not a new backup of raw stores.
+## Current mandate
 
-No gate has been frozen as an accepted investment contract. No financial result,
-measurement collection, confirmation look, account action, option-study edit,
-worker restart, SSH command or production change occurred. The existing active
-options collection is described from saved local state only.
+- $10,000 baseline; one larger scenario only for a documented capital blocker.
+- Target10%+ annual net return on all committed capital, reported separately
+  from benchmark value;30% drawdown and50% market/stablecoin stress limits.
+- USD reporting; Czech Binance account; Binance stablecoins are the core cash
+  location. Wallet/DeFi alternatives are now expressly in scope.
+- Compare Ethereum, Base and Arbitrum with Uniswap. Wallet-held low-cap spot,
+  LP, unlevered lending and staking are finite consideration questions, not
+  selected financial recipes.
+- Complete Binance failure, wallet compromise, contract exploits and token
+  failures are separately assessed as potential total affected-position losses,
+  including correlated full-account loss. Ordinary crashes/depegs/illiquidity
+  remain market stress. Actual losses remain in net wealth and drawdown.
+- 365-day horizon, pre-personal-tax net reporting and2% incremental cash hurdle
+  are disclosed research assumptions under the go-ahead. Actual product/access,
+  costs, cash terms and source evidence remain implementation dependencies.
 
-## Capital amendment
+## Recovered history and finite design
 
-The user's latest clarification is “10k or more should 10k be the blocker”.
-$10,000 is now the baseline, with one justified larger-capital scenario permitted
-in the initial finite design if a documented capital constraint warrants it.
-This supersedes the interim $10,000-only wording. Determine the required amount
-from implementation constraints before outcomes, and retain the baseline result.
-No unlimited personal budget or investment commitment is inferred.
+Original recovery:974ledger rows,48correction rows,21lifecycle claims
+(16complete/four failed/one active). The81protected anchor inventory is retained;
+local hashes are not proof of remote raw-data backup. No original gate, ledger,
+raw store, options output or spent sample was changed.
 
-The latest return amendment sets a 10% absolute target and retains the proposed
-2% incremental floor ($1,000/$200 at baseline), both scaled to all committed
-capital in a larger scenario. Other investment
-preferences remain pending. There are 42 baseline cells per window, at most 84
-with C_plus, at most 252 development cells, and 48 reserved inferential contrasts.
-Confirmation selects at most one recipe and capital amount.
+The exact core ancestry union contains178records. Independent DeFi recovery adds
+44nonoverlapping related records (26direct, one correction,17T7parent), making a
+scoped222union within existing history. These counts are not independent tests;
+complete historical statistical multiplicity remains unknown. See HISTORY.md,
+ancestry-crosswalk.json and [DEFI-HISTORY.md](DEFI-HISTORY.md).
 
-No financial outcomes or claims exist for this program. Original review,
-inventory and verification records retain their bytes and original scope;
-[capital amendment checks](capital-amendment-verification.json) record the
-current document consistency and preservation checks. The original independent
-review covers the prior draft, not an independent sign-off on this amendment.
-The existing options study and historical search budgets remain unchanged.
+Four initial H2–H5 recipes and ten B0–B9 benchmarks remain the core financial
+panel. All ten benchmarks are primary when risk/access feasible. Current reserve:
+88inferential contrasts,42baseline cells/window,84with justifiedC_plus,252maximum
+across three windows, and one fixed confirmation episode/selected capital.
+This reserve does not cover an added DeFi financial panel.
 
-## Return and risk amendment
+Six admission questions remain six: custody; three-chain DEX source audit;
+EEA-compatible spot source; cash/FX/transfer terms; synthetic pooled accounting;
+precision/selection. The former repair reserve was reassigned to DEX source
+admission before the first run. Core administrative limit178+11=189 retains
+category caps. No old NLST/SMW/staking/carry allowance is reset.
 
-The user requests 10% or more annually, with possibly greater drawdown/risk.
-The broader program now uses a 10% annual net-return hurdle; this is separate
-from the still-proposed 2% benchmark improvement. The user then accepted the proposed 30% drawdown / 50% stress-loss pair
-with “lets go with that”. This is the selected pair; the 40% / 60% alternative
-and earlier 20% / 35% proposal are not selected. These research acceptance
-limits do not guarantee actual losses are capped.
+## Prepared work and review
 
-The hypothetical absolute-profit alternative for joint-gate power is now 20%,
-above the 10% observed-effect hurdle, and remains a simulation assumption rather
-than a forecast. Existing policy sizing and comparator roles require alignment
-with accepted risk limits before registration; no exposure sweep has started.
-Earlier independent review and verification receipts remain unchanged. Current
-checks are in [return-risk-amendment-verification.json](return-risk-amendment-verification.json).
+The first packet `gates-custody.json` / `custody-charter.md` /
+`custody_admission.py` registers36invented wallet nodes and6unavailable actual
+implementation terms. It is explanatory, not a strategy/custody adoption gate,
+and does not model DeFi losses or stablecoin depegs. Independent review passed
+its42cell denominator and source/input hashes. Eleven focused synthetic tests
+passed. The named full offline check completed successfully:1,734tests and
+81subtests in891.52seconds. Its retained log is
+reviews/offline-admission-20260915.txt. The process exited0; no test job remains.
+Independent review passed the DeFi design and44record crosswalk; its scope
+and residual source dependencies are in reviews/defi-design-review.md.
 
-## Risk acceptance checkpoint
-
-The accepted mandate is $10,000 baseline (more if a documented capital blocker
-justifies it), 10%+ annual net return, 30% maximum drawdown from prior liquidation
-NAV peak, and 50% loss in the specified stress scenarios. All capital remains
-committed and included in comparisons. Acceptance applies to this broader
-program only; the existing options study retains its frozen contract.
-
-[Risk acceptance checks](risk-acceptance-verification.json) verify the updated
-references and preserved evidence. Earlier reviews and receipts retain their
-original scope. No financial experiment or new risk/exposure sweep was started.
+The DeFi design is in [DEFI.md](DEFI.md). Public official documentation was
+reviewed; no market API, token screening, wallet connection, signature, bridge,
+transfer, order, paid source or production action was performed.
 
 ## Exact next action
 
-1. Use the accepted capital, 10% return target and 30%/50% risk limits without
-   requesting those choices again. Resolve the remaining investment horizon,
-   spending currency and instrument scope. Also settle the proposed
-   2%-of-capital incremental benefit and cash
-   vehicle/custody/tax basis before financial registration. A missing response
-   is not acceptance of the draft numbers.
-2. Read the completed [independent review](reviews/design-review.md): all three
-   findings are resolved. The review approves design readiness, not empirical
-   accounting, actual statistical power or financial execution.
-3. Once preferences are settled, progress through PROTOCOL's six admission
-   questions in order. Prepare exact legacy ancestry/allowance imports and cash/
-   source contracts before the first development registration. No unknown count,
-   placeholder input, unavailable cash term or old holdout can silently pass.
-4. Commit the accepted charter, exact experiment gate/configuration and reviewed
-   executable source before outcomes. Run admission-only validation first, then
-   the authorized finite experiment and independent substantive review. Continue
-   the next justified question within the fixed budget without routine requests
-   to continue. Confirmation remains dependent on selection, power and untouched
-   evidence, with a separately frozen prospective start.
+1. Offline and independent design checks are complete;81protected anchors match.
+   Commit the reviewed packet before outcomes.
+2. Use the committed custody registration and exact source SHA.
+   Use admission-only validation with that full commit, followed by the pinned
+   resource guard for the one synthetic claim and lifecycle verification.
+3. Independently review the retained result and reconcile all42cells. Preserve
+   any failed attempt. Then prepare a separate bounded three-chain source contract
+   under DEFI.md; no low-cap outcome ranking or retrospective freshness claim.
+4. Continue the remaining authorized admission questions under ADMISSION.md.
+   Any DeFi financial replacement/addition needs explicit preregistered ancestry,
+   complete comparator denominator, revised multiplicity/power and finite budget.
+   Missing evidence is unavailable/inadequate, not economic failure or exhaustion.
 
-No background job or automatic wakeup was configured. Existing study source and
-shared claim history must be checked again before future admission because other
-tasks can legitimately advance them. A local design checkpoint does not assert
-that every raw input has an external recoverable copy.
+Original reviews and preservation receipts retain their original scope and bytes.
+No automatic wakeup, background observer, paper start or deployment is configured.
+No additional permission is needed for the already authorized bounded research;
+financial adoption still depends on evidence and the frozen decision rule.

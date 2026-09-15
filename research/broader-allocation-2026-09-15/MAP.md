@@ -22,6 +22,16 @@ dependencies, not a reserve of extra tests when the first results disappoint.
 An inherited recipe needs a reviewed allowance amendment/import before admission;
 these proposed slots do not themselves override an old exhausted family.
 
+## Added wallet/DeFi branch
+
+[DEFI.md](DEFI.md) adds a finite ranked set: major-asset route admission,
+low-turnover small-token adoption, low-maintenance LP, unlevered stablecoin
+lending and on-chain staking. Ethereum/Base/Arbitrum with Uniswap is the accepted
+comparison set. [DEFI-HISTORY.md](DEFI-HISTORY.md) imports44related ledger rows;
+new chain or custody does not reset prior selection. One of the existing six
+admission slots is reassigned from the repair reserve to DEX source admission.
+No financial recipe or confirmation slot is added.
+
 ## Sizing alignment with accepted risk limits
 
 The user has accepted a 10%+ annual net-return target, 30% maximum drawdown
@@ -32,8 +42,8 @@ against the accepted risk envelope. A single justified pre-outcome sizing
 revision may replace a draft setting, with ancestry and independent review;
 no unregistered leverage, exposure sweep or extra candidate allowance follows.
 If higher-exposure simple benchmarks become feasible under the accepted limits,
-review their primary-comparator role and the associated multiplicity allocation
-before outcomes. Do not claim superior value from a more favorable comparator
+all ten predeclared benchmarks have primary-comparator status when risk/access
+feasible, with88reserved contrasts under ADMISSION.md. Do not claim superior value from a more favorable comparator
 subset after results. Source admission must distinguish a capital blocker from
 insufficient exposure-adjusted economics or inadequate evidence.
 
