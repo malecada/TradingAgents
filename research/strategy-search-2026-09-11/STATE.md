@@ -4,7 +4,7 @@ Research remains authorized by “lets keep going then”, superseding the earli
 pause-after-options/VPS boundary. Zero strategies are validated. Branch
 `research/strategy-search-2026-09-11`; inspect actual claims and Git status first.
 
-## Current status: timing successor claimed; approved release awaiting VPS launch
+## Current status: timing successor claimed; finite VPS launcher waiting for lease
 
 There are21identities:16complete,4failed,1active. The active target is
 options-timing-20260915, claimed at2026-09-15T10:02:56.191462+00:00 from
@@ -19,9 +19,12 @@ Observation endOctober29 11:00:05UTC; finalhistoryOctober30 11:00UTC;
 worker lease10:58UTC September15 throughOctober30 11:01UTC. The local master
 owns source/analysis/terminal authority; the VPS receives raw-worker authority.
 The exact package and corrected finite v2launcher passed independent review.
-V1 was never run and remains preserved. Remote transfer/hash verification and
-sole finite tmux launch are the immediate next operations. No new collector is
-running at this checkpoint and no future market body has been requested.
+V1 was never run and remains preserved. Remote ten-file/runtime/hash/space checks
+passed, then the sole tmux launcher started10:14:29UTC. Observed pane709702 and
+sleep child709707 are waiting until10:58; actual data root remains absent at
+10:14:29.514829UTC. Collection has not started at that observation. Do not launch
+again. See options-timing-vps-runbook-20260915.md and the retained actual launch
+report. Operational checks after worker activation are the next source step.
 
 Local package: /home/malecada/master_thesis/research-deployment/options-timing-20260915/release-22bdf6c.
 New remote root: /opt/thesis-research/options-timing-20260915.
@@ -237,9 +240,12 @@ A bounded independent coverage review identified one useful preparation gap:
 value_rev controls have mismatched breadth/universe and further eligibility,
 orientation, lag and funding-contract ambiguities. The source-only audit is in
 reviews/value-rev-engine-parity-audit-20260915.md. An isolated pure declaration/
-cohort/control-alignment helper and invented tests are now being prepared; no
+cohort/control-alignment helper passed14targetedtests and221independent invented
+bundles; no
 legacy main, original gate, actual P0/P1/P2 or financial engine is changed or run.
 The helper cannot admit source semantics or fix unreviewed gate interpretations.
-After this finite preparation, actual options observations and separately
+A bounded independent review is now separating available conservative
+preparation decisions from unproved source/day/financial-convention claims.
+Actual options observations and separately
 admitted value-source/time conditions are genuine waiting dependencies; see
 reviews/research-continuation-coverage-20260915.md.

@@ -9,8 +9,10 @@ source22bdf6c17398425e2a22855e88f9a501b4f2f3f4, verified remotely before claim.
 Effective6 is consumed; no seventh allowance exists. Its exact11:00UTC entry,
 N+2second acquisition/N+5second deadline and source/economic criteria are frozen.
 Named offline1709tests+58subtests, resource and independent release reviews passed.
-The approved finite v2launcher awaits remote verification and launch at this
-checkpoint; inspect active operational state before acting. No newcollector runs yet.
+The approved finite v2launcher was remotely verified and started10:14:29UTC,
+waiting for10:58worker activation/11:00entry. Atthat observation no actualdata
+root existed; collection had not started. Inspect active operational state;
+do not launch another worker.
 Existing value_rev pure readiness is independently checked; actual
 source/P0 admission remains pending. Consult active state.
 The user explicitly launched the saved research prompt and superseded the

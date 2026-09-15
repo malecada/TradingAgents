@@ -1,0 +1,58 @@
+{
+  "scope": "Sole authorized finite research launcher; no systemd, cron, production change or automatic restart",
+  "source_commit": "22bdf6c17398425e2a22855e88f9a501b4f2f3f4",
+  "claim_sha256": "550c753279b8ae290ca988c9a23d5201b18ef4fd85b3c405a2f6e8a1078e8a73",
+  "assignment_sha256": "375d70df4656f8ad851b038ffaabb0cf61bb71115aadd750ac2d8dc9a933d4a3",
+  "deployment_report_sha256": "cccf933cc55e96a2d6bead2754093cd5b14daa85ef4b92d13d5594985c0b30e5",
+  "command": [
+    "ssh",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "root@46.225.169.184",
+    "/opt/thesis-research/options-episode-20260911/runtime/cpython-3.13.13-linux-x86_64-gnu/bin/python3.13 -I -B -"
+  ],
+  "returncode": 0,
+  "stderr": "",
+  "stdout": "{\n  \"checked_at\": \"2026-09-15T10:14:29.514829+00:00\",\n  \"command\": [\n    \"tmux\",\n    \"-L\",\n    \"thesis-options-timing-20260915\",\n    \"new-session\",\n    \"-d\",\n    \"-s\",\n    \"capture\",\n    \"/bin/bash\",\n    \"/opt/thesis-research/options-timing-20260915/launch-options-timing-20260915-v2.sh\"\n  ],\n  \"tmux_server\": \"thesis-options-timing-20260915\",\n  \"pane\": \"709702|bash|0\",\n  \"processes\": [\n    {\n      \"pid\": 709702,\n      \"comm\": \"bash\",\n      \"executable\": \"/usr/bin/bash\"\n    },\n    {\n      \"pid\": 709707,\n      \"comm\": \"sleep\",\n      \"executable\": \"/usr/bin/sleep\"\n    }\n  ],\n  \"launch_log\": \"finite launch entered 2026-09-15T10:14:29Z\\n\",\n  \"launcher_sha256\": \"abf99bf272063d63c17852c6c2f331032c04f63067b2364dbd2ef3a1cf5fe9b5\",\n  \"data_root_absent\": true,\n  \"status\": \"finite launcher alive, waiting before worker lease; collection not started\",\n  \"entry_ms\": 1789470000000,\n  \"lease_not_before_ms\": 1789469880000,\n  \"automatic_restart\": false\n}\n",
+  "input_sha256": "effa12d99a6ace5fb666831ba4862daeb9e22646ca13e7b825b765a5797794d5",
+  "pass": true,
+  "observed": {
+    "checked_at": "2026-09-15T10:14:29.514829+00:00",
+    "command": [
+      "tmux",
+      "-L",
+      "thesis-options-timing-20260915",
+      "new-session",
+      "-d",
+      "-s",
+      "capture",
+      "/bin/bash",
+      "/opt/thesis-research/options-timing-20260915/launch-options-timing-20260915-v2.sh"
+    ],
+    "tmux_server": "thesis-options-timing-20260915",
+    "pane": "709702|bash|0",
+    "processes": [
+      {
+        "pid": 709702,
+        "comm": "bash",
+        "executable": "/usr/bin/bash"
+      },
+      {
+        "pid": 709707,
+        "comm": "sleep",
+        "executable": "/usr/bin/sleep"
+      }
+    ],
+    "launch_log": "finite launch entered 2026-09-15T10:14:29Z\n",
+    "launcher_sha256": "abf99bf272063d63c17852c6c2f331032c04f63067b2364dbd2ef3a1cf5fe9b5",
+    "data_root_absent": true,
+    "status": "finite launcher alive, waiting before worker lease; collection not started",
+    "entry_ms": 1789470000000,
+    "lease_not_before_ms": 1789469880000,
+    "automatic_restart": false
+  }
+}

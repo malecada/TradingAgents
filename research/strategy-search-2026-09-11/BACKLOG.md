@@ -7,7 +7,7 @@ The sole options episode failed source timing and is closed; effective5 is
 consumed. One isolated timing correction is engineered with independent review,
 representative resource and VPS round-trip proofs. Named offline1709+58 and exact sixth-grant/claim/release review passed.
 The new21stclaim is active; effective6 consumed. Remote verification and sole
-finite launch remain next; no newcollector exists at this checkpoint.
+finite launch completed10:14:29UTC; waiting for10:58activation/11:00entry.
 
 - [x] Complete registered carry-definition diagnostic and independent review; retained with this results checkpoint.
 - [x] Admit actual public event marks and matched bars once; independent review passed.
@@ -48,3 +48,13 @@ finite launch remain next; no newcollector exists at this checkpoint.
 
 Every completed item needs a decision and highest-value next action. The list is
 revisable; finishing this initial list does not establish research exhaustion.
+
+- [x] Admit the separate timing-corrected21stclaim,effective6; fullnamed1709+58,
+  actualhistory/resource, independenttarget/release and VPSidentity checks passed.
+- [x] Start one finite v2tmux launcher at10:14:29UTC; observedwaitingfor10:58lease
+  and11:00entry. Do not relaunch or infer actualsource success yet.
+- [x] Audit value control comparisons; preserve breadth/universe/lag/coverage
+  ambiguities and originalcode/gates. Puredeclarationassembler14tests+221independent
+  bundles passed; no source or financial admission.
+- [ ] Finish bounded independent value preparation-decision review, then record
+  explicit conservative decisions or evidence-backed deferrals without source fiction.

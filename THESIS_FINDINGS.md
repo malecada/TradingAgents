@@ -7209,3 +7209,50 @@ follow-up requires its own information-value review and cumulative allowance;
 no replacement is granted by the failure. Decision20 and the independent actual
 source-failure review retain exact timestamps, hashes, denominators and limits.
 Zero strategies are validated.
+
+
+## 119. Timing-corrected options episode admitted; no economic outcome yet (September 15, 2026)
+
+A separately reviewed information-value decision admitted one fixed acquisition
+phase correction after the failed source episode. Hourly requests begin at
+nominalN+2seconds while source freshness, modeled action and deadline remain
+N+5seconds. Selection, economic/cost/accounting rules and all20predecessors are
+preserved. The21stclaim options-timing-20260915 consumes effective allowance6;
+original budget4/prior1 remains explicit and no seventh attempt is granted.
+
+The isolated successor passed1709named offline tests and58subtests. A full
+invented17144-slot source lifecycle retained interrupted segments and all missing
+outcomes. A history/output preflight first failed the120second limit; freshly
+verified history was then reused within each invocation without cross-call
+caching or weaker provenance. The revised representative envelope passed in
+103.029seconds. The failed fixtures and corrected full source have verified
+local and VPS archives. Synthetic accounting and latency/resource tests do not
+establish profitability, live execution or a universal maximum-load bound.
+
+The exact source22bdf6c and newclaim were backed up before deployment. Independent
+release review found an unused launcher clock-boundary defect; its preservedv2
+replacement adds lower/upper checks after sleep and after source hashing. The
+VPS package/runtime matched all approved bytes before the sole finite launcher
+started at10:14:29UTC. At10:14:29.514829UTC it was waiting for10:58activation; the
+data root did not yet exist. First observation is fixed at11:00UTC. No financial
+book or actual newsource result is inferred from this queued status. The latest
+operational state and exact hashes are in the timing VPS runbook and dated
+actual launch/release reports.
+
+## 120. Value control-comparison declarations require explicit parity (September 15, 2026)
+
+Source-only inspection found that legacy value controls use decile breadth even
+for tercile cells, and their signal-dependent eligible sets differ from value
+metric cohorts. Additional placebo missingness, common lag, reversal convention,
+funding coverage and calendar/output boundaries require explicit contracts before
+new financial interpretation. This is not an observed value-strategy loss.
+
+An isolated pure declaration assembler now retains the four fixed metric/breadth
+cells, their full required cohorts and all three roles. It requires explicit
+orientation, availability/decision clocks and a shared execution-input reference;
+incomplete/misaligned declarations remain unavailable without shrinking cohorts.
+Fourteen targeted tests and221independent invented bundles passed. The helper
+performs no ranking, weights, returns or source I/O, and every result remains
+readiness-only with source/empirical admission false. It does not prove actual
+pipeline equivalence, resolve source-day semantics or adopt a financial policy.
+Original mains, charter, gates, sources and outcomes remain unchanged.
