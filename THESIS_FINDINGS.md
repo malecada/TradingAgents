@@ -7256,3 +7256,26 @@ performs no ranking, weights, returns or source I/O, and every result remains
 readiness-only with source/empirical admission false. It does not prove actual
 pipeline equivalence, resolve source-day semantics or adopt a financial policy.
 Original mains, charter, gates, sources and outcomes remain unchanged.
+
+## 121. Value preparation separates choices from unavailable source facts (September 15, 2026)
+
+Additive, independently reviewed preparation contracts now fix conservative
+protocol-day/metric completeness, zero cases, constituent requirements, common
+cohorts and lag, compounded reversal orientation, ranking and endpoints. The
+original charter and gate remain unchanged. No actual P0/P1/P2, second vintage,
+financial outcome or new trial allowance was produced.
+
+The exact-byte first-vintage VPS witness at September 15 09:10:51.915449 UTC
+sets every future second-request start no earlier than September 29 at the same
+instant. It is an existence bound, not September 4 retrieval or historical
+publication evidence. Provider day/finality/valuation semantics, historical
+availability and event-complete funding remain source requirements. Compounded
+and summed returns can rank an invented reversal pair differently; explicit
+orientation prevents an accidental momentum comparison. The old code is not
+silently relabeled as implementing the clarified definition.
+
+A considered nonzero circular-shift null can lose every required comparison on
+sparse histories and does not establish exchangeable inference merely through
+reproducibility. Its execution/inferential admission is deliberately deferred;
+no successful-only draws, replacement null or premature financial engine follow.
+The preparation contracts and their independent reviews preserve these limits.

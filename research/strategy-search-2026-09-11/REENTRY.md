@@ -17,16 +17,22 @@ No seventh allowance, automatic restart or recurring scheduler is admitted.
 
 Immediate source next work: operational checks after10:58activation/11:00entry;
 no financial look during capture. Exactremote/runtime verification and solefinite
-launch are complete. Parallel bounded pure
-value-control alignment preparation is in progress after its source-only audit;
-no actual value outcome or gate interpretation has been admitted.
+launch are complete. The last read-only VPS observation was
+2026-09-15T10:28:44.889930UTC: the same bash/sleep PIDs were alive, the log
+unchanged and data root absent. See the retained operational-check JSON.
 
-Existing value_rev pure readiness has synthetic/independent proofs and704verified
-first-vintage rawfiles backed up on VPS. No actual P0, secondvintage, sourceadmission,
-metric/day clarification or financial test is admitted. Read the interpretation,
-time-bound and source-semantics reviews before any future source recipe. Sep18
-eligibility is conditional; strict current-byte witness implies Sep29. Do not
-pretend a date label or capturestart proves a complete14daygap.
+Value preparation is complete within its bounded scope: 14 control-helper tests
+and 221 independent synthetic cases passed. Read value-rev-preparation-contract-
+20260915.md and value-rev-control-policy-20260915.md with their independent
+reviews. Conservative metric/zero/completeness/cohort/lag, C2, ranking and endpoint
+conventions are explicitly adopted for preparation; original gates/mains remain
+unchanged. The strict second-request bound is September 29, 2026
+09:10:51.915449 UTC, based on the verified first-vintage VPS byte witness.
+No actual capture/P0/P1/P2 or financial run is admitted. Provider day semantics,
+historical availability, event funding and scientific A-null justification remain
+blocking. No further general platform implementation or repeated source search
+is justified before a concrete dependency changes. This is temporary observation/
+source waiting, not strategy validation or exhaustion of all crypto mechanisms.
 
 No early outcome look, credential access, paid/provider work, orders, production
 changes or revisit of22deferred settlements. Keep precise durable state and verify

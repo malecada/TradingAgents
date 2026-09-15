@@ -13,8 +13,12 @@ The approved finite v2launcher was remotely verified and started10:14:29UTC,
 waiting for10:58worker activation/11:00entry. Atthat observation no actualdata
 root existed; collection had not started. Inspect active operational state;
 do not launch another worker.
-Existing value_rev pure readiness is independently checked; actual
-source/P0 admission remains pending. Consult active state.
+Latest read-only VPS check at10:28:44.889930UTC confirms the same waiting
+launcher and absent actual data root. Existing value_rev pure readiness and
+explicit conservative preparation/control contracts are independently reviewed.
+Every second-vintage request is bounded to September29 09:10:51.915449UTC or
+later; source/P0 and financial admission remain pending. No automatic Codex
+wakeup is configured. Consult active state and the finite-job runbook.
 The user explicitly launched the saved research prompt and superseded the
 preparation pause. Read the [active program state](../../research/strategy-search-2026-09-11/STATE.md),
 [charter](../../research/strategy-search-2026-09-11/CHARTER.md),

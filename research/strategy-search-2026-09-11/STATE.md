@@ -110,10 +110,11 @@ are unchanged; do not execute the legacy mains.
 Official API docs support dailyFees/dailyRevenue endpoint/schema identities;
 provider day boundaries, partial-day/finality and historical publication remain
 unresolved. The named public serializer repository returned404; failures retained.
-First-vintage Sep4completion is contemporaneously reported in Git, but exact-byte
-historicalbinding is not established. Sep18eligibility needs explicit continuity
-admission; a strict current-byte bound implies Sep29. No date rule or proposed
-metric/zero/day interpretation is silently adopted. Read the value-rev reviews.
+First-vintage September4 completion is contemporaneously reported in Git, but
+exact-byte historical binding is not established. The additive preparation
+contract explicitly adopts the conservative exact-byte VPS witness: every second
+request must start on/after September29 09:10:51.915449UTC. This is no capture
+grant or historical publication claim. See the latest preparation decisions below.
 
 ## Verification and recoverability
 
@@ -244,8 +245,39 @@ cohort/control-alignment helper passed14targetedtests and221independent invented
 bundles; no
 legacy main, original gate, actual P0/P1/P2 or financial engine is changed or run.
 The helper cannot admit source semantics or fix unreviewed gate interpretations.
-A bounded independent review is now separating available conservative
-preparation decisions from unproved source/day/financial-convention claims.
+Independent review now supports the two explicit preparation contracts linked
+below; provider facts and scientific null assumptions remain distinct.
 Actual options observations and separately
 admitted value-source/time conditions are genuine waiting dependencies; see
 reviews/research-continuation-coverage-20260915.md.
+
+
+## Reviewed preparation checkpoint and waiting boundary
+
+The finite launcher remained alive and waiting at10:28:44.889930UTC; bash709702,
+sleep709707, unchanged log, actual data root absent. The retained read-only
+observation is reviews/options-timing-operational-check-20260915-1029.json.
+Next source check is after10:58activation/11:00entry. No relaunch or early PnL.
+
+[value preparation contract](value-rev-preparation-contract-20260915.md) and
+[control policy](value-rev-control-policy-20260915.md) explicitly adopt conservative
+pre-outcome conventions after independent reviews. C2 now has a declared
+compounded30-day return and orientation; common ranking preserves original
+rounding/tie priority, while all-equal/missing comparisons remain unavailable.
+Endpoints include the full scored interval and final liquidation, conditional
+on admitted execution and funding support. The considered sparse circular-shift
+A has no demonstrated inferential admission and is deliberately deferred; no
+fallback null or empirical engine is authorized by this preparation.
+
+The older preparation-contract statement that C2/ranks/endpoints await review is
+superseded by the later control policy, preserving that reviewed document's bytes.
+Source chart semantics, historical publication, event funding, an admitted null
+law and the actual fourteen-day gap remain distinct dependencies. The bounded
+control engineering is complete; no additional actual financial experiment is
+currently justified by the independent continuation coverage. This is temporary
+waiting on future observations/source evidence, not permanent exhaustion. The
+finite VPS job continues without an additional user message; no Codex wakeup or
+automatic analysis is configured.
+
+Checkpoint ad7c20506f74c3a04bf8e46a04a7e6b5b1bf8a94 was pushed and independently
+queried equal. Later preparation changes require their own verified push.

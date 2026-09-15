@@ -41,8 +41,8 @@ finite launch completed10:14:29UTC; waiting for10:58activation/11:00entry.
 - [x] Verify704first-vintage raw members and external VPS backup; pure value_rev readiness20tests/4subtests and54independentchecks pass. No sourceadmission or actualP0.
 - [x] Complete bounded source-semantics/time reviews; preserve unresolved interval/finality and exact-byte timing distinctions.
 - [x] Review information value of one fixed2s hourly acquisition correction; conditional preparation supported, no sixthgrant yet.
-- [ ] Prepare isolated timing-successor design, full20-history closed-protocol proof, exact shared3s acquisition budget and adversarial synthetic/resource tests before any newgrant/window.
-- [ ] Existing value_rev remains deferred until a second vintage September 18 or later; no early replay or renamed gate.
+- [x] Complete isolated timing-successor design, full20-history proof, shared3s acquisition budget and adversarial synthetic/resource checks before its exact sixth grant.
+- [ ] Existing value_rev capture remains unadmitted. The adopted conservative bound is September 29, 2026 09:10:51.915449 UTC; source/recipe review is also required. No early replay or renamed gate.
 - [ ] Re-rank relative-value, liquidity, factor and information questions against
   the resulting evidence; register only a distinct justified prediction.
 
@@ -56,5 +56,6 @@ revisable; finishing this initial list does not establish research exhaustion.
 - [x] Audit value control comparisons; preserve breadth/universe/lag/coverage
   ambiguities and originalcode/gates. Puredeclarationassembler14tests+221independent
   bundles passed; no source or financial admission.
-- [ ] Finish bounded independent value preparation-decision review, then record
-  explicit conservative decisions or evidence-backed deferrals without source fiction.
+- [x] Complete independent preparation-decision review and adopt explicit conservative value source/control conventions in the two dated preparation contracts. No source or financial admission.
+- [ ] Await actual options source observations under the frozen worker; independently diagnose and preserve any failure without a replay.
+- [ ] Value source semantics, historical availability, event funding and A randomization justification remain actual admission dependencies. No speculative engine build or repeated semantic search.
