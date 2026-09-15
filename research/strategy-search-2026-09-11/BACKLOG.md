@@ -34,8 +34,11 @@ and finite launch status are in STATE.md. No recurring scheduler was created.
 - [x] Verify actual nineteen-history hashes with the candidate controller inventory:16complete/3failed,7.977seconds and51,208,192sampled aggregate RSS bytes. This is engineering proof, not a twentieth claim.
 - [x] Complete reviewed prospective lifecycle, effective5 grant, frozen policy, verified source backup, sole local claim and exact VPS release.
 - [x] Record finite launch, source-age failure, complete raw return and external stopped-process evidence.
-- [ ] Complete independently reviewed failure-only closure of the sole options episode.
-- [ ] Finish value_rev preservation and pure synthetic readiness review; freeze source interpretations before any second vintage or P0.
+- [x] Independently failure-close sole options episode:8unavailable/0outputs,20terminal(16complete/4failed); no collector running.
+- [x] Verify704first-vintage raw members and external VPS backup; pure value_rev readiness20tests/4subtests and54independentchecks pass. No sourceadmission or actualP0.
+- [x] Complete bounded source-semantics/time reviews; preserve unresolved interval/finality and exact-byte timing distinctions.
+- [x] Review information value of one fixed2s hourly acquisition correction; conditional preparation supported, no sixthgrant yet.
+- [ ] Prepare isolated timing-successor design, full20-history closed-protocol proof, exact shared3s acquisition budget and adversarial synthetic/resource tests before any newgrant/window.
 - [ ] Existing value_rev remains deferred until a second vintage September 18 or later; no early replay or renamed gate.
 - [ ] Re-rank relative-value, liquidity, factor and information questions against
   the resulting evidence; register only a distinct justified prediction.

@@ -7185,3 +7185,27 @@ option profit, true exposure, margin feasibility or account access. One entire
 source lifecycle, cumulative registration and manual rollout preparation are
 next. No twentieth empirical attempt, capture, paper or deployment has started.
 Zero strategies are validated; the phase remains active and incomplete.
+
+
+## 118. Prospective options source timing failure (2026-09-15)
+
+The separately reviewed fifth options allowance ran once with a frozen09:00UTC
+entry and stopped before contract selection. Both index sources were cached about
+one second before entry. At the modeled action five seconds later, conservative
+clock bounds imply ages6.153/6.154seconds, exceeding the five-second freshness
+limit. Perpetual mark timestamps also fail that bound; successful HTTP responses
+and depth freshness do not supply the complete admitted source set.
+
+The result is source-operability failure with eight unavailable cases, not a
+negative options cash book. No financial analysis, positions or economic outputs
+were created. All17144intended source slots reconcile and all93returned package,
+raw and logfiles match the VPS originals. External process/lock evidence supported
+independently verified failure-only closure under the fixed resource limits.
+All20attempts remain16complete/4failed, with the fifth options allowance consumed.
+
+A future source design would need to coordinate request time, event-update cadence,
+clock uncertainty and modeled action without changing observed evidence. Any
+follow-up requires its own information-value review and cumulative allowance;
+no replacement is granted by the failure. Decision20 and the independent actual
+source-failure review retain exact timestamps, hashes, denominators and limits.
+Zero strategies are validated.

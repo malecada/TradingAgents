@@ -1,67 +1,76 @@
-# Active program state
+# Active program state — September15,2026
 
-**Current operational status09:02UTC: source worker stopped and sealed FAILED.**
-Both BTC/ETH entry selections rejected source age/chronology; no positions or
-financial calculation occurred. All11requests and all17144intended slots remain
-accounted for, including unattempted conditional sources. Authenticated process
-absence and locks prove quiescence. All93package/data/logfiles(7,893,176bytes)
-match the preserved local and VPS copies. Independent failure-only closure is
-pending; do not restart, change timestamps/caps or create a replacement claim.
-The admitted launch record below is historical status, not a running collector.
+Research remains authorized by “lets keep going then”, superseding the earlier
+pause-after-options/VPS boundary. Zero strategies are validated. Branch
+`research/strategy-search-2026-09-11`; inspect actual claims and Git status first.
 
+## Current status: options source failed and closed; no collector running
 
-Research resumed September 15, 2026 under “lets keep going then”, superseding the
-pause-after-options/VPS instruction. Zero strategies are validated.
-Branch `research/strategy-search-2026-09-11`; inspect actual status before work.
+All20identities are terminal:16complete and4failed. The sole options episode
+`options-episode-20260911` failed initial source freshness for both assets and
+was independently failure-closed. Eight planned cells are unavailable; no positions,
+financial calculation, analysis intent or economic output exists. Do not start,
+resume, relabel or replace this claim. Effective options allowance5 is consumed;
+original budget4/prior1 and all prior evidence remain intact. No sixth grant exists.
 
-## Sole prospective options episode admitted
+The initial worker ran once on confirmed pck-preds-1(46.225.169.184), started08:58UTC,
+attempted entry09:00 and stopped09:00:00.805. Supervisor exit2 was recorded at.916.
+At09:02:29UTC authenticated process absence and both available locks independently
+established quiescence. No systemd, cron, production change or automatic restart.
+See decision-20.md and reviews/options-actual-source-failure-review-20260915.md.
 
-At08:45UTC the authoritative local admission and independent active verification
-passed. `research_runs/options-episode-20260911/claim.json` SHA256
-`9755f008355cbffdef9c0b561e3806ed39a1c2d874fb7a0f285def2ebab9dd78`
-reserves the single full-book options increment: original budget4/prior1 remains,
-effective5 is now consumed. The nineteen predecessors remain16complete/3failed;
-the twentieth identity is active. Never create a replacement or repeat admission.
+Frozen source/grant:ebc21e931541e7e03e139e48f7d2069a8426742f.
+ClaimSHA:9755f008355cbffdef9c0b561e3806ed39a1c2d874fb7a0f285def2ebab9dd78.
+AssignmentSHA:8349daecd93b39ed2e41e48194b58790706edaf209cf2a3b24ba62b0b430eccf.
+Failed terminalSHA:7b5c5fbbe531e259a5b1229d0e2fcb84a335c6699478f62b14be67a0a2ae002a.
+Final failure closure independently passed47.975seconds/68,472,832sampledRSS.
+All17144source roles reconcile:11received,8677suppressed,8456unresolvedselected.
+All93regular package/data/logmembers(7,893,176bytes) are verified equal locally
+and on the VPS. Runtime/archive/release/root paths are in the dated runbook.
 
-Source/grant commit `ebc21e931541e7e03e139e48f7d2069a8426742f` was pushed and
-independently queried equal on the remote branch before claim creation.
-Frozen entry:2026-09-15 09:00UTC; observation end:2026-10-29 09:00:05UTC.
-Absolute worker lease:2026-09-15 08:58 through2026-10-30 09:01UTC.
-No interim financial evaluation is permitted. Eight correlated development cases
-cover BTC/ETH,1000/10000 capital,base/stress costs. This does not validate expected
-profit, actual commissions/account access/margin, true delta or tail safety.
+Independent diagnosis: at frozen actionT+5seconds, BTC/ETH index worstages
+6153/6154ms exceed the5000ms freshnesslimit; marks5128ms also fail, depths pass.
+HTTP200 and fastarrival did not establish recent-enough events. OptionalfundingInfo
+truncation64KiB remains retained and is not the entry-failure cause. This provides
+source-timing evidence, not economic rejection of option selling.
 
-The exact10-member release is copied and verified on pck-preds-1(46.225.169.184):
-`/opt/thesis-research/options-episode-20260911/release-ebc21e9`.
-The sole data root is `/opt/thesis-research/options-episode-20260911/data`.
-Assignment SHA256:`8349daecd93b39ed2e41e48194b58790706edaf209cf2a3b24ba62b0b430eccf`.
-The dedicated Python3.13.13 runtime's5367-member inventory matches locally and
-remotely. Shared runtime, production, systemd and cron were not changed.
-At08:50:15UTC the approved v2 launcher started in dedicated tmux socket
-`thesis-options-20260915`, session `options-episode-20260911`, panePID683626.
-At08:50:24 it is waiting (`sleep 465`,PID683631), with no data root or market
-request. It executes the anchored bootstrap at08:58UTC and refuses launch from
-08:59 onward. The first metadata/entry operational check remains pending.
-See options-vps-runbook-20260915.md and reviews/options-actual-*-20260915.*.
+## Current next work
 
-## Completed integration evidence
+A separate post-failure information-value review is assessing whether an explicitly
+counted timing-corrected follow-up merits another allowance compared with other
+families. No new window/claim/source request is admitted by that assessment alone.
+Do not relax the existing criteria or silently retry the failed entry.
 
-Independent target review approves contract c3525104…b0446c only. The named offline
-profile passed1554tests+30subtests in694.55seconds; later actual-entry/package tests
-passed separately. All four original runtime packages and nineteen predecessors
-are preserved. Guarded actual admission/start/independent verification passed in
-24.525seconds with66,707,456bytes sampled aggregate RSS. Package construction
-passed8.484seconds/59,940,864bytes.
+Existing value_rev readiness: all704first-vintage rawfiles(83,368,599bytes) match
+the preserved manifest in two guarded hash passes, without parsing economic bodies.
+The same rawfiles and manifest now have an independently hash-verified VPS backup
+under `/opt/thesis-research/value-rev-preservation-20260915/first-vintage`.
+This proves recoverability now, not a September4 exact-byte publication time.
+New pure readiness helpers pass20synthetictests and54independent boundarychecks.
+Their outputs explicitly remain readiness-only with sourceadmissionfalse. No actual
+P0/P1/P2 or ratio/financial evaluation has occurred. Original charter/gates/mains
+are unchanged; do not execute the legacy mains.
 
-The invented full worker calendar resolved17144slots:17126received,13missed,
-5unavailable. Earlier canonical-URL failure and compressed-total120second timeouts
-remain retained; resumptions preserved old bytes and never retried attempts.
-Return preparation plus8intentionally unavailable cases passed35.231seconds.
-The separate known8-book1057hour fixture passed4.947seconds and retained11.62MB.
-Eight scans of actual nineteen-history plus full atomic output passed57.214seconds.
-The real VPS round-trip of the invented raw tree independently preserved all38680
-package/datafiles. These are modular engineering proofs, not financial observations
-or a universal worst-case network/source bound. Source and runtime caps remain fixed.
+Official API docs support dailyFees/dailyRevenue endpoint/schema identities;
+provider day boundaries, partial-day/finality and historical publication remain
+unresolved. The named public serializer repository returned404; failures retained.
+First-vintage Sep4completion is contemporaneously reported in Git, but exact-byte
+historicalbinding is not established. Sep18eligibility needs explicit continuity
+admission; a strict current-byte bound implies Sep29. No date rule or proposed
+metric/zero/day interpretation is silently adopted. Read the value-rev reviews.
+
+## Verification and recoverability
+
+Named offline profile1554tests+30subtests passed before actual source capture,
+with later executable-entry checks separately passed. Full17144slot invented
+lifecycle, maximum-length8books,19-history/output and real inventedraw VPSroundtrip
+proofs remain retained with their earlier failures. They did not guarantee live
+sourcefreshness. All four original runtime packages are immutable.
+Source/grant backup ebc21e9 and actual claim/launch backup f814ef1 were pushed and
+independently compared equal. Preclosure raw/quiescence backup
+b4ae894b28ba42e7f291c819a56cbd6697a1bc0b is also remotely verified. Terminal,
+Decision20 and new readiness checkpoint are being backed up next; do not claim
+an unqueried remote equality for that later commit.
 
 ## Retained results
 
@@ -165,26 +174,6 @@ noncash diagnostics corrected two retained arithmetic failures. The measured
 routine footprint is206,969,986bytes, not a full collector/lifecycle guarantee.
 No new market input or empirical identity was created.
 
-## Next action and preservation
 
-Finish the reviewed finite initial launch and inspect operational process/source
-status only. The source worker never has local-master admission or analysis authority.
-Follow options-vps-runbook-20260915.md for STOP, immutable attempts, independently
-proved quiescence, complete raw return and the exclusive later analysis intent.
-A source seal alone is not external stopped-process proof. A failed early source
-episode consumes the grant and requires failure diagnosis; no automatic replacement.
-
-Re-rank independent eligible questions against MAP.md, budgets and spent samples.
-Existing value_rev needs its second vintage September18 or later; no early substitute.
-News requires versioned source identity/observation clocks. Bitrue needs authoritative
-settled funding events/marks/fees and account applicability. No deferred settlement
-revisit, paid sources, provider contact, orders or production operation.
-
-Verified source backup:ebc21e931541e7e03e139e48f7d2069a8426742f. Claim/launch-state
-backup f814ef1b0c8844aee12feef6692cf396cf99c422 was pushed and independently
-queried equal on the remote branch. It includes the actual claim, assignment,
-release reviews, exact launcher versions and finite waiting-process record.
-Local and VPS copies of the invented fixture are hash verified. Future actual raw
-observations do not yet exist and have no claimed complete backup. Earlier reviewed
-checkpoints/results remain in Git ancestry; their preparation-only launch status
-is superseded here. Preserve all original worktrees/raw stores and22deferred cases.
+Preserve original worktrees/raw stores, all gates and22deferred settlement cases.
+No credentials, purchases, provider contact, orders or production operations.

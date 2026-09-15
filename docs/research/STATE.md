@@ -3,11 +3,14 @@
 **Current scope: research resumed September 15; complete options/VPS integration first. Zero validated strategies.**
 The user subsequently said “lets keep going then”, lifting the earlier
 pause-after-setup instruction. The single prospective options episode is now admitted from remotely verified
-commit ebc21e931541e7e03e139e48f7d2069a8426742f. Its twentieth claim is active;
-all nineteen predecessors remain terminal and preserved. The exact VPS release
+commit ebc21e931541e7e03e139e48f7d2069a8426742f. All twenty claims are terminal
+(16complete/4failed); all nineteen predecessors remain preserved. The exact VPS release
 ran once and stopped at entry on frozen source-age/chronology rejection for both
-assets. No financial book ran. Raw return and external quiescence are verified;
-independent failure-only terminal closure is pending. Consult active state.
+assets. No financial book ran. Raw return, external quiescence and the failure-only terminal are independently
+verified. No collector is running. One fixed timing correction has conditional
+information-value support for preparation, but no sixth allowance or new claim
+exists. Existing value_rev pure readiness is independently checked; actual
+source/P0 admission remains pending. Consult active state.
 The user explicitly launched the saved research prompt and superseded the
 preparation pause. Read the [active program state](../../research/strategy-search-2026-09-11/STATE.md),
 [charter](../../research/strategy-search-2026-09-11/CHARTER.md),
