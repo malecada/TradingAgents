@@ -1,0 +1,3850 @@
+{
+  "B0": {
+    "doubled": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 0,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "0",
+        "market_pnl_usd": {
+          "BTC": "0E-12",
+          "ETH": "0E-12",
+          "USDC": "2.000600180054016204861458438"
+        },
+        "reconstructed_profit_usd": "-17.99939981994598379513854156",
+        "spread_impact_usd": "0",
+        "terminal_dust_markdown_usd": "0E-12",
+        "terminal_route_usd": "20"
+      },
+      "cash_days": 365,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": true,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.00018341801425051453,
+        "ETH": 0.00010137464709753653
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-0.02591352394036196784024896428",
+        "erroneous_log_path_profit_usd": "-18.02531334388634576297878896",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0E+11",
+      "mean_crypto_fraction": "0",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-17.99939981994598379513854",
+      "observed_discrete_max_drawdown": "0.0022000600180054016204861456",
+      "policy": "B0",
+      "promotion_admitted": false,
+      "scenario": "doubled",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.001799939981994598379513854",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0",
+          "loss_usd": "0E-23",
+          "maximum_loss_usd": "0E-23",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "9980.00000000000000000000000",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.2004008819643817758104606654",
+          "loss_usd": "1999.599879963989196759027709",
+          "maximum_loss_usd": "2000.600180054016204861458438",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7978.399519855956787036110835",
+          "origin_nav": "9977.999399819945983795138544",
+          "origin_phase": "open",
+          "origin_timestamp": 1759190400
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0",
+          "loss_usd": "0E-23",
+          "maximum_loss_usd": "0E-23",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "9980.00000000000000000000000",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0",
+          "loss_usd": "0E-23",
+          "maximum_loss_usd": "0E-23",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "9980.00000000000000000000000",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800
+        },
+        "double-then-minus60": {
+          "intervening_actions": 0,
+          "lock_days": 0,
+          "loss_fraction": "0",
+          "loss_usd": "0E-23",
+          "maximum_loss_usd": "0E-23",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "9980.00000000000000000000000",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "stress_peak_drawdown": "0"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0",
+          "loss_usd": "0E-23",
+          "maximum_loss_usd": "0E-23",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "9980.00000000000000000000000",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2004008819643817758104606654",
+          "loss_usd": "1999.599879963989196759027709",
+          "maximum_loss_usd": "2000.600180054016204861458438",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7978.399519855956787036110835",
+          "origin_nav": "9977.999399819945983795138544",
+          "origin_phase": "open",
+          "origin_timestamp": 1759190400
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9980.00000000000000000000000",
+          "maximum_loss_usd": "9983.00090027008102430729219",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "9982.00060018005401620486146",
+      "terminal_loss_fraction": "0.001799939981994598379513854",
+      "trade_count": 0,
+      "turnover_usd": "0",
+      "worst_rolling_30day_loss": "0.00200000000000000000000"
+    },
+    "frictionless": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 0,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "0",
+        "market_pnl_usd": {
+          "BTC": "0E-12",
+          "ETH": "0E-12",
+          "USDC": "2.000600180054016204861458438"
+        },
+        "reconstructed_profit_usd": "-7.999399819945983795138541562",
+        "spread_impact_usd": "0",
+        "terminal_dust_markdown_usd": "0E-12",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 365,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": true,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.00023366209749271408,
+        "ETH": 6.097219305455314e-05
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-0.02591352394036196784024896428",
+        "erroneous_log_path_profit_usd": "-8.025313343886345762978788964",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0E+11",
+      "mean_crypto_fraction": "0",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-7.99939981994598379513854",
+      "observed_discrete_max_drawdown": "0.0012000600180054016204861456",
+      "policy": "B0",
+      "promotion_admitted": false,
+      "scenario": "frictionless",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.000799939981994598379513854",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0",
+          "loss_usd": "0E-23",
+          "maximum_loss_usd": "0E-23",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "9990.00000000000000000000000",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.2002002403003784776028610107",
+          "loss_usd": "1999.599879963989196759027709",
+          "maximum_loss_usd": "2000.600180054016204861458438",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7988.399519855956787036110835",
+          "origin_nav": "9987.999399819945983795138544",
+          "origin_phase": "open",
+          "origin_timestamp": 1759190400
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0",
+          "loss_usd": "0E-23",
+          "maximum_loss_usd": "0E-23",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "9990.00000000000000000000000",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0",
+          "loss_usd": "0E-23",
+          "maximum_loss_usd": "0E-23",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "9990.00000000000000000000000",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800
+        },
+        "double-then-minus60": {
+          "intervening_actions": 0,
+          "lock_days": 0,
+          "loss_fraction": "0",
+          "loss_usd": "0E-23",
+          "maximum_loss_usd": "0E-23",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "9990.00000000000000000000000",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "stress_peak_drawdown": "0"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0",
+          "loss_usd": "0E-23",
+          "maximum_loss_usd": "0E-23",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "9990.00000000000000000000000",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2002002403003784776028610107",
+          "loss_usd": "1999.599879963989196759027709",
+          "maximum_loss_usd": "2000.600180054016204861458438",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7988.399519855956787036110835",
+          "origin_nav": "9987.999399819945983795138544",
+          "origin_phase": "open",
+          "origin_timestamp": 1759190400
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "9993.00090027008102430729219",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "9992.00060018005401620486146",
+      "terminal_loss_fraction": "0.000799939981994598379513854",
+      "trade_count": 0,
+      "turnover_usd": "0",
+      "worst_rolling_30day_loss": "0.00100000000000000000000"
+    },
+    "primary": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 0,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "0",
+        "market_pnl_usd": {
+          "BTC": "0E-12",
+          "ETH": "0E-12",
+          "USDC": "2.000600180054016204861458438"
+        },
+        "reconstructed_profit_usd": "-7.999399819945983795138541562",
+        "spread_impact_usd": "0",
+        "terminal_dust_markdown_usd": "0E-12",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 365,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": true,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.00023366209749271408,
+        "ETH": 6.097219305455314e-05
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-0.02591352394036196784024896428",
+        "erroneous_log_path_profit_usd": "-8.025313343886345762978788964",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0E+11",
+      "mean_crypto_fraction": "0",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-7.99939981994598379513854",
+      "observed_discrete_max_drawdown": "0.0012000600180054016204861456",
+      "policy": "B0",
+      "promotion_admitted": false,
+      "scenario": "primary",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.000799939981994598379513854",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0",
+          "loss_usd": "0E-23",
+          "maximum_loss_usd": "0E-23",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "9990.00000000000000000000000",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.2002002403003784776028610107",
+          "loss_usd": "1999.599879963989196759027709",
+          "maximum_loss_usd": "2000.600180054016204861458438",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7988.399519855956787036110835",
+          "origin_nav": "9987.999399819945983795138544",
+          "origin_phase": "open",
+          "origin_timestamp": 1759190400
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0",
+          "loss_usd": "0E-23",
+          "maximum_loss_usd": "0E-23",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "9990.00000000000000000000000",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0",
+          "loss_usd": "0E-23",
+          "maximum_loss_usd": "0E-23",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "9990.00000000000000000000000",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800
+        },
+        "double-then-minus60": {
+          "intervening_actions": 0,
+          "lock_days": 0,
+          "loss_fraction": "0",
+          "loss_usd": "0E-23",
+          "maximum_loss_usd": "0E-23",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "9990.00000000000000000000000",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "stress_peak_drawdown": "0"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0",
+          "loss_usd": "0E-23",
+          "maximum_loss_usd": "0E-23",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "9990.00000000000000000000000",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2002002403003784776028610107",
+          "loss_usd": "1999.599879963989196759027709",
+          "maximum_loss_usd": "2000.600180054016204861458438",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7988.399519855956787036110835",
+          "origin_nav": "9987.999399819945983795138544",
+          "origin_phase": "open",
+          "origin_timestamp": 1759190400
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "9993.00090027008102430729219",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "9992.00060018005401620486146",
+      "terminal_loss_fraction": "0.000799939981994598379513854",
+      "trade_count": 0,
+      "turnover_usd": "0",
+      "worst_rolling_30day_loss": "0.00100000000000000000000"
+    }
+  },
+  "B1": {
+    "doubled": {
+      "implementation_admitted": false,
+      "partial": null,
+      "promotion_admitted": false,
+      "reason": "Actual accessible cash vehicle B1 and its costs/valuation/access are unestablished.",
+      "status": "unavailable"
+    },
+    "frictionless": {
+      "implementation_admitted": false,
+      "partial": null,
+      "promotion_admitted": false,
+      "reason": "Actual accessible cash vehicle B1 and its costs/valuation/access are unestablished.",
+      "status": "unavailable"
+    },
+    "primary": {
+      "implementation_admitted": false,
+      "partial": null,
+      "promotion_admitted": false,
+      "reason": "Actual accessible cash vehicle B1 and its costs/valuation/access are unestablished.",
+      "status": "unavailable"
+    }
+  },
+  "B2": {
+    "doubled": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "34.262691063005057640000000",
+        "market_pnl_usd": {
+          "BTC": "-2796.369485969410000000",
+          "ETH": "0E-12",
+          "USDC": "1.000305598332516204861458438"
+        },
+        "reconstructed_profit_usd": "-2883.883377019143721435138542",
+        "spread_impact_usd": "34.251505585061180000000",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "20"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": false,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 1.0015324651884776,
+        "ETH": 0.6190050195334094
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-702.7697563511714509691225335",
+        "erroneous_log_path_profit_usd": "-3586.653133370315172404261072",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "1.007792470521304326121681578",
+      "mean_crypto_fraction": "1.004050234726175661015663675",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-2883.883377019143721435138539",
+      "observed_discrete_max_drawdown": "0.5316092960043599787082232976",
+      "policy": "B2",
+      "promotion_admitted": false,
+      "scenario": "doubled",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.2883883377019143721435138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.5018826659045505970172496692",
+          "loss_usd": "2658.469333687338553200000000",
+          "maximum_loss_usd": "5664.433241287142489179999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2638.524394709197545097569273",
+          "origin_nav": "5296.993728396536098297569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782864000
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.5059078524005076965970902445",
+          "loss_usd": "2679.790721312049738779513855",
+          "maximum_loss_usd": "5709.850534182108174080486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2617.203007084486359518055418",
+          "origin_nav": "5296.993728396536098297569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782864000
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.5018826659045505970172496692",
+          "loss_usd": "2658.469333687338553200000000",
+          "maximum_loss_usd": "5664.433241287142489179999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2638.524394709197545097569273",
+          "origin_nav": "5296.993728396536098297569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782864000
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.8030122654472809552275994708",
+          "loss_usd": "4253.550933899741685120000000",
+          "maximum_loss_usd": "9063.093186059427982687999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "1043.442794496794413177569273",
+          "origin_nav": "5296.993728396536098297569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782864000
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.6043918345150222170212424848",
+          "loss_usd": "6031.830508459921725871999998",
+          "maximum_loss_usd": "6032.376383646746639999999998",
+          "maximum_stress_peak_drawdown": "0.6043918345150222170212424848",
+          "nav": "3948.169491540078274128000002",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "stress_peak_drawdown": "0.6043918345150222170212424848"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.5059057734468716438871274221",
+          "loss_usd": "2679.779709107677940400000000",
+          "maximum_loss_usd": "5709.839519774414172459999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2617.214019288858157897569273",
+          "origin_nav": "5296.993728396536098297569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782864000
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2005621043346988385590432387",
+          "loss_usd": "1427.223324596171255712972292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5688.893298384685022851889169",
+          "origin_nav": "7116.116622980856278564861461",
+          "origin_phase": "after-terminal-BTC",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9980.00000000000000000000000",
+          "maximum_loss_usd": "11308.92155461275498646243073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "7116.116622980856278564861461",
+      "terminal_loss_fraction": "0.2883883377019143721435138539",
+      "trade_count": 2,
+      "turnover_usd": "17131.345531502528820000000",
+      "worst_rolling_30day_loss": "0.3307084547649186512565175696"
+    },
+    "frictionless": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "0E-18",
+        "market_pnl_usd": {
+          "BTC": "-2804.771319832622000000",
+          "ETH": "0E-12",
+          "USDC": "1.001301355054016204861458438"
+        },
+        "reconstructed_profit_usd": "-2813.770018477567983795138542",
+        "spread_impact_usd": "0E-18",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": false,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.9994910647773002,
+        "ETH": 0.6172744119931858
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-704.8812893014718841508077684",
+        "erroneous_log_path_profit_usd": "-3518.651307779039867945946307",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.9999992691395196076792533792",
+      "mean_crypto_fraction": "0.9972588150237038948295161551",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-2813.770018477567983795138539",
+      "observed_discrete_max_drawdown": "0.5306730555938111338852002349",
+      "policy": "B2",
+      "promotion_admitted": false,
+      "scenario": "frictionless",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.2813770018477567983795138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.4999996345697598038396266892",
+          "loss_usd": "5229.410786599999999999999996",
+          "maximum_loss_usd": "5704.246487042088999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5229.418430544945983795138544",
+          "origin_nav": "10458.82921714494598379513854",
+          "origin_phase": "open",
+          "origin_timestamp": 1759190400
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.5003730459010629297184880886",
+          "loss_usd": "2679.156478975854598379513855",
+          "maximum_loss_usd": "5706.248616590094401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2675.161666101838393518055418",
+          "origin_nav": "5354.318145077692991897569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782864000
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.4999996345697598038396266892",
+          "loss_usd": "5229.410786599999999999999996",
+          "maximum_loss_usd": "5704.246487042088999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5229.418430544945983795138544",
+          "origin_nav": "10458.82921714494598379513854",
+          "origin_phase": "open",
+          "origin_timestamp": 1759190400
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.7999994153116156861434027030",
+          "loss_usd": "8367.057258559999999999999996",
+          "maximum_loss_usd": "9126.794379267342399999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2091.771958584945983795138544",
+          "origin_nav": "10458.82921714494598379513854",
+          "origin_phase": "open",
+          "origin_timestamp": 1759190400
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.5999954470209696096096096094",
+          "loss_usd": "5993.954515739486399999999998",
+          "maximum_loss_usd": "5994.528254519999999999999998",
+          "maximum_stress_peak_drawdown": "0.5999997807417757587182265386",
+          "nav": "3996.045484260513600000000002",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "stress_peak_drawdown": "0.5999954470209696096096096094"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.4999996345697598038396266892",
+          "loss_usd": "5229.410786599999999999999996",
+          "maximum_loss_usd": "5704.246487042088999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5229.418430544945983795138544",
+          "origin_nav": "10458.82921714494598379513854",
+          "origin_phase": "open",
+          "origin_timestamp": 1759190400
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2002783100464558597211557842",
+          "loss_usd": "1439.245996304486403240972292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5746.983985217945612963889169",
+          "origin_nav": "7186.229981522432016204861461",
+          "origin_phase": "after-terminal-BTC",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "11408.50362182420500810243073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "7186.229981522432016204861461",
+      "terminal_loss_fraction": "0.2813770018477567983795138539",
+      "trade_count": 2,
+      "turnover_usd": "17177.207984867378000000",
+      "worst_rolling_30day_loss": "0.3299331219302678487230872137"
+    },
+    "primary": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "17.162733009239400726000000",
+        "market_pnl_usd": {
+          "BTC": "-2801.950266126726000000",
+          "ETH": "0E-12",
+          "USDC": "1.000308869310291204861458438"
+        },
+        "reconstructed_profit_usd": "-2845.272621325628383521138542",
+        "spread_impact_usd": "17.159931058973274000000",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": false,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 1.0005206363675814,
+        "ETH": 0.61810982674117
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-704.1722904181468498705133564",
+        "erroneous_log_path_profit_usd": "-3549.444911743775233391651895",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "1.003867024508208143441259764",
+      "mean_crypto_fraction": "1.000633525596049246199380954",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-2845.272621325628383521138539",
+      "observed_discrete_max_drawdown": "0.5311362424415057697563622434",
+      "policy": "B2",
+      "promotion_admitted": false,
+      "scenario": "primary",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.2845272621325628383521138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.5009301471631081176812603428",
+          "loss_usd": "2669.115803998146883380000000",
+          "maximum_loss_usd": "5687.117806260955329836999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2659.203561713844775277569273",
+          "origin_nav": "5328.319365711991658657569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782864000
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.5029391674891763767570336180",
+          "loss_usd": "2679.820505907645408239513855",
+          "maximum_loss_usd": "5709.906603783319554109486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2648.498859804346250418055418",
+          "origin_nav": "5328.319365711991658657569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782864000
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.5009301471631081176812603428",
+          "loss_usd": "2669.115803998146883380000000",
+          "maximum_loss_usd": "5687.117806260955329836999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2659.203561713844775277569273",
+          "origin_nav": "5328.319365711991658657569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782864000
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.8014882354609729882900165485",
+          "loss_usd": "4270.585286397035013408000000",
+          "maximum_loss_usd": "9099.388490017528527739199998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "1057.734079314956645249569273",
+          "origin_nav": "5328.319365711991658657569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782864000
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.6021951629542079749362962961",
+          "loss_usd": "6015.929677912537669613599998",
+          "maximum_loss_usd": "6016.451177155180639999999998",
+          "maximum_stress_peak_drawdown": "0.6021951629542079749362962961",
+          "nav": "3974.070322087462330386400002",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "stress_peak_drawdown": "0.6021951629542079749362962961"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.5029358734780755175518559798",
+          "loss_usd": "2679.802954364505829860000000",
+          "maximum_loss_usd": "5709.889048728466662488999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2648.516411347485828797569273",
+          "origin_nav": "5328.319365711991658657569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782864000
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2002795354587459571573940589",
+          "loss_usd": "1432.945475734874323295772292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5721.781902939497293183089169",
+          "origin_nav": "7154.727378674371616478861461",
+          "origin_phase": "after-terminal-BTC",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "11364.32338779617511777643073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "7154.727378674371616478861461",
+      "terminal_loss_fraction": "0.2845272621325628383521138539",
+      "trade_count": 2,
+      "turnover_usd": "17162.733009239400726000000",
+      "worst_rolling_30day_loss": "0.3303166621953911825235919739"
+    }
+  },
+  "B3": {
+    "doubled": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "31.32946962672031932000000",
+        "market_pnl_usd": {
+          "BTC": "0E-12",
+          "ETH": "-4265.99664799483000000",
+          "USDC": "1.000301722626075204861458438"
+        },
+        "reconstructed_profit_usd": "-4347.638221539052584115138542",
+        "spread_impact_usd": "31.31240564012834000000",
+        "terminal_dust_markdown_usd": "0E-17",
+        "terminal_route_usd": "20"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": false,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 1.3121996692692703,
+        "ETH": 1.00291694757409
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-1256.160777761658729218645925",
+        "erroneous_log_path_profit_usd": "-5603.798999300711313333784464",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "1.009616676598218711175722580",
+      "mean_crypto_fraction": "1.004858691056727026730033331",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-4347.638221539052584115138539",
+      "observed_discrete_max_drawdown": "0.6691986531468840967270628209",
+      "policy": "B3",
+      "promotion_admitted": false,
+      "scenario": "doubled",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.4347638221539052584115138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.9050240235226790062852779535",
+          "loss_usd": "3239.861397282828160416000000",
+          "maximum_loss_usd": "9757.595245983243894647999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "340.0009191583667737215692731",
+          "origin_nav": "3579.862316441194934137569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782432000
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.5068224256890021010233208857",
+          "loss_usd": "1814.354502851376443819513855",
+          "maximum_loss_usd": "5464.343510291667366940486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "1765.507813589818490318055418",
+          "origin_nav": "3579.862316441194934137569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782432000
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.5027911241792661146029321964",
+          "loss_usd": "1799.922998490460089120000000",
+          "maximum_loss_usd": "5420.886247768468830359999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "1779.939317950734845017569273",
+          "origin_nav": "3579.862316441194934137569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782432000
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.8044657986868257833646915142",
+          "loss_usd": "2879.876797584736142592000000",
+          "maximum_loss_usd": "8673.417996429550128575999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "699.9855188564587915455692731",
+          "origin_nav": "3579.862316441194934137569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782432000
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.6043948166913055209523046090",
+          "loss_usd": "6031.860270579229099103999998",
+          "maximum_loss_usd": "6032.450095179907916607999998",
+          "maximum_stress_peak_drawdown": "0.6043948166913055209523046090",
+          "nav": "3948.139729420770900896000002",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "stress_peak_drawdown": "0.6043948166913055209523046090"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.5068215139522462036979456809",
+          "loss_usd": "1814.351238959321492640000000",
+          "maximum_loss_usd": "5464.340245746572788919999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "1765.511077481873441497569273",
+          "origin_nav": "3579.862316441194934137569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782432000
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2007076687863898795724980944",
+          "loss_usd": "1134.472355692189483176972292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "4517.889422768757932707889169",
+          "origin_nav": "5652.361778460947415884861461",
+          "origin_phase": "after-terminal-ETH",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9980.00000000000000000000000",
+          "maximum_loss_usd": "10821.78881826241055082243073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "5652.361778460947415884861461",
+      "terminal_loss_fraction": "0.4347638221539052584115138539",
+      "trade_count": 2,
+      "turnover_usd": "15664.73481336015966000000",
+      "worst_rolling_30day_loss": "0.4478189741122898500152569026"
+    },
+    "frictionless": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "0E-17",
+        "market_pnl_usd": {
+          "BTC": "0E-12",
+          "ETH": "-4278.80123424082000000",
+          "USDC": "1.001300476554016204861458438"
+        },
+        "reconstructed_profit_usd": "-4287.799933764265983795138542",
+        "spread_impact_usd": "0E-17",
+        "terminal_dust_markdown_usd": "0E-17",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": false,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 1.3081743030066941,
+        "ETH": 0.9993272859340923
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-1259.931228108162913648343679",
+        "erroneous_log_path_profit_usd": "-5547.731161872428897443482218",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "1.000000244955959534886860361",
+      "mean_crypto_fraction": "0.9972599559307609221184172934",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-4287.799933764265983795138539",
+      "observed_discrete_max_drawdown": "0.6679652475295177093037700036",
+      "policy": "B3",
+      "promotion_admitted": false,
+      "scenario": "frictionless",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.4287799933764265983795138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.9000002204603635813981743247",
+          "loss_usd": "4176.246828801600000000000000",
+          "maximum_loss_usd": "9826.148408453747999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "464.0262887598459837951385439",
+          "origin_nav": "4640.273117561445983795138544",
+          "origin_phase": "open",
+          "origin_timestamp": 1780358400
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.5005517145629613938606650735",
+          "loss_usd": "1814.568547387914598379513855",
+          "maximum_loss_usd": "5460.971710929265401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "1810.568465622298393518055418",
+          "origin_nav": "3625.137013010212991897569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782432000
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.5000001224779797674434301804",
+          "loss_usd": "2320.137127112000000000000000",
+          "maximum_loss_usd": "5458.971338029859999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2320.135990449445983795138544",
+          "origin_nav": "4640.273117561445983795138544",
+          "origin_phase": "open",
+          "origin_timestamp": 1780358400
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.8000001959647676279094882886",
+          "loss_usd": "3712.219403379200000000000000",
+          "maximum_loss_usd": "8734.354140847775999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "928.0537141822459837951385439",
+          "origin_nav": "4640.273117561445983795138544",
+          "origin_phase": "open",
+          "origin_timestamp": 1780358400
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.5999998880294082070259690548",
+          "loss_usd": "5994.599061355799999999999998",
+          "maximum_loss_usd": "5994.599061355799999999999998",
+          "maximum_stress_peak_drawdown": "0.6000000734867788599538437242",
+          "nav": "3996.401238734227008102430732",
+          "origin_nav": "9991.00030009002700810243073",
+          "origin_phase": "open",
+          "origin_timestamp": 1756771200,
+          "stress_peak_drawdown": "0.5999998880294082070259690548"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.5000001224779797674434301804",
+          "loss_usd": "2320.137127112000000000000000",
+          "maximum_loss_usd": "5458.971338029859999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2320.135990449445983795138544",
+          "origin_nav": "4640.273117561445983795138544",
+          "origin_phase": "open",
+          "origin_timestamp": 1780358400
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2003501277925858738592138080",
+          "loss_usd": "1144.440013247146803240972292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "4567.760052988587212963889169",
+          "origin_nav": "5712.200066235734016204861461",
+          "origin_phase": "after-terminal-ETH",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "10917.94454055674700810243073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "5712.200066235734016204861461",
+      "terminal_loss_fraction": "0.4287799933764265983795138539",
+      "trade_count": 2,
+      "turnover_usd": "15703.19563694518000000",
+      "worst_rolling_30day_loss": "0.4466379165897859254771262731"
+    },
+    "primary": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "15.69173806851072906000000",
+        "market_pnl_usd": {
+          "BTC": "0E-12",
+          "ETH": "-4274.51456178906000000",
+          "USDC": "1.000304019124450704861458438"
+        },
+        "reconstructed_profit_usd": "-4314.893459392395218355138542",
+        "spread_impact_usd": "15.68746355394894000000",
+        "terminal_dust_markdown_usd": "0E-17",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": false,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 1.3101898591886947,
+        "ETH": 1.0010856894217257
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-1258.668953441665052343556983",
+        "erroneous_log_path_profit_usd": "-5573.562412834060270698695522",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "1.004772102479774172274955558",
+      "mean_crypto_fraction": "1.001036669408925334690435876",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-4314.893459392395218355138539",
+      "observed_discrete_max_drawdown": "0.6685769735218466369964744523",
+      "policy": "B3",
+      "promotion_admitted": false,
+      "scenario": "primary",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.4314893459392395218355138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.9024872067422253933341201299",
+          "loss_usd": "3252.839358787635194928000000",
+          "maximum_loss_usd": "9796.681391948643044483999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "351.4658706788846088895692731",
+          "origin_nav": "3604.305229466519803817569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782432000
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.5033914955367116562697454985",
+          "loss_usd": "1814.376599831942085899513855",
+          "maximum_loss_usd": "5464.400825216555633680486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "1789.928629634577717918055418",
+          "origin_nav": "3604.305229466519803817569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782432000
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.5013817815234585518522889610",
+          "loss_usd": "1807.132977104241774960000000",
+          "maximum_loss_usd": "5442.600773304801691379999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "1797.172252362278028857569273",
+          "origin_nav": "3604.305229466519803817569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782432000
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.8022108504375336829636623377",
+          "loss_usd": "2891.412763366786839936000000",
+          "maximum_loss_usd": "8708.161237287682706207999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "712.8924660997329638815692731",
+          "origin_nav": "3604.305229466519803817569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782432000
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.6021975976719920544071166977",
+          "loss_usd": "6016.556379054365965183999998",
+          "maximum_loss_usd": "6016.556379054365965183999998",
+          "maximum_stress_peak_drawdown": "0.6021975976719920544071166977",
+          "nav": "3974.443921035661042918430732",
+          "origin_nav": "9991.00030009002700810243073",
+          "origin_phase": "close",
+          "origin_timestamp": 1756771200,
+          "stress_peak_drawdown": "0.6021975976719920544071166977"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.5033893161842131406484943222",
+          "loss_usd": "1814.368744780334835120000000",
+          "maximum_loss_usd": "5464.392968593309405859999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "1789.936484686184968697569273",
+          "origin_nav": "3604.305229466519803817569273",
+          "origin_phase": "close",
+          "origin_timestamp": 1782432000
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2003517963974314977088811401",
+          "loss_usd": "1139.021308121520956328972292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "4546.085232486083825315889169",
+          "origin_nav": "5685.106540607604781644861461",
+          "origin_phase": "after-terminal-ETH",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "10875.24082972583452186243073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "5685.106540607604781644861461",
+      "terminal_loss_fraction": "0.4314893459392395218355138539",
+      "trade_count": 2,
+      "turnover_usd": "15691.73806851072906000000",
+      "worst_rolling_30day_loss": "0.4472235327026994260841984855"
+    }
+  },
+  "B4": {
+    "doubled": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "32.795824643206029144000000",
+        "market_pnl_usd": {
+          "BTC": "-1398.169411171086000000",
+          "ETH": "-2132.98908547920000000",
+          "USDC": "1.000311311115276204861458438"
+        },
+        "reconstructed_profit_usd": "-3615.735709991596180939138542",
+        "spread_impact_usd": "32.781700009219428000000",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "20"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": false,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 1.1395717290645333,
+        "ETH": 0.7903082942582038
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-979.4586937748779653071918833",
+        "erroneous_log_path_profit_usd": "-4595.194403766474146246330422",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "1.008506003124335907246286412",
+      "mean_crypto_fraction": "1.004383931321798060578598031",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-3615.735709991596180939138539",
+      "observed_discrete_max_drawdown": "0.5972587227408898910389641602",
+      "policy": "B4",
+      "promotion_admitted": false,
+      "scenario": "doubled",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.3615735709991596180939138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.7040816630478331855692076179",
+          "loss_usd": "7514.348091547439765843999998",
+          "maximum_loss_usd": "7681.310380893198209027999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "3158.203809633002722484000002",
+          "origin_nav": "10672.55190118044248832800000",
+          "origin_phase": "open",
+          "origin_timestamp": 1757721600
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.5062690114128528304337360263",
+          "loss_usd": "2249.455878161761609019513855",
+          "maximum_loss_usd": "5570.463979122479337736486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2193.746900306092837118055418",
+          "origin_nav": "4443.202778467854446137569273",
+          "origin_phase": "open",
+          "origin_timestamp": 1782864000
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.5022380065679255304804651259",
+          "loss_usd": "2231.545306234763247120000000",
+          "maximum_loss_usd": "5526.143795578041434627999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2211.657472233091199017569273",
+          "origin_nav": "4443.202778467854446137569273",
+          "origin_phase": "open",
+          "origin_timestamp": 1782864000
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.8035808105086808487687442014",
+          "loss_usd": "3570.472489975621195392000000",
+          "maximum_loss_usd": "8841.830072924866295404799998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "872.7302884922332507455692731",
+          "origin_nav": "4443.202778467854446137569273",
+          "origin_phase": "open",
+          "origin_timestamp": 1782864000
+        },
+        "double-then-minus60": {
+          "intervening_actions": 2,
+          "lock_days": 0,
+          "loss_fraction": "0.6043906607935173371246492984",
+          "loss_usd": "6031.818794719303024503999998",
+          "maximum_loss_usd": "6032.341931761941951999999998",
+          "maximum_stress_peak_drawdown": "0.6043906607935173371246492984",
+          "nav": "3948.181205280696975496000002",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "stress_peak_drawdown": "0.6043906607935173371246492984"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.5062639625323978794221923013",
+          "loss_usd": "2249.433444962096018640000000",
+          "maximum_loss_usd": "5570.441541434378440115999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2193.769333505758427497569273",
+          "origin_nav": "4443.202778467854446137569273",
+          "origin_phase": "open",
+          "origin_timestamp": 1782864000
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2006265404780093674140781073",
+          "loss_usd": "1280.852858001680763812172292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5103.411432006723055248689169",
+          "origin_nav": "6384.264290008403819060861461",
+          "origin_phase": "after-terminal-ETH",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9980.00000000000000000000000",
+          "maximum_loss_usd": "11032.39977959658735735843073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "6384.264290008403819060861461",
+      "terminal_loss_fraction": "0.3615735709991596180939138539",
+      "trade_count": 4,
+      "turnover_usd": "16397.912321603014572000000",
+      "worst_rolling_30day_loss": "0.3858529172170199981728364568"
+    },
+    "frictionless": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "0E-18",
+        "market_pnl_usd": {
+          "BTC": "-1402.370328102692000000",
+          "ETH": "-2139.40061712041000000",
+          "USDC": "1.001306378304016204861458438"
+        },
+        "reconstructed_profit_usd": "-3550.769638844797983795138542",
+        "spread_impact_usd": "0E-18",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": false,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 1.1367326829764794,
+        "ETH": 0.7878402134568003
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-982.4024057307181000577703992",
+        "erroneous_log_path_profit_usd": "-4533.172044575516083852908938",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.9999945903550200068965634677",
+      "mean_crypto_fraction": "0.9972508630282878607931053332",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-3550.769638844797983795138539",
+      "observed_discrete_max_drawdown": "0.5961809598262417020646610850",
+      "policy": "B4",
+      "promotion_admitted": false,
+      "scenario": "frictionless",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.3550769638844797983795138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.7027683018708903705124812443",
+          "loss_usd": "7567.170366930212999999999998",
+          "maximum_loss_usd": "7735.306140877683999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "3200.489965479631000000000002",
+          "origin_nav": "10767.66033240984400000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1757721600
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.5004410575732674091739201172",
+          "loss_usd": "2249.243057708034598379513855",
+          "maximum_loss_usd": "5567.000946620109401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2245.278372278218393518055418",
+          "origin_nav": "4494.521429986252991897569273",
+          "origin_phase": "open",
+          "origin_timestamp": 1782864000
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.4999972951775100034482817336",
+          "loss_usd": "5440.033384062731999999999997",
+          "maximum_loss_usd": "5564.988772581403999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5440.092241679704991897569273",
+          "origin_nav": "10880.12562574243699189756927",
+          "origin_phase": "open",
+          "origin_timestamp": 1759968000
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.7999956722840160055172507739",
+          "loss_usd": "8704.053414500371199999999997",
+          "maximum_loss_usd": "8903.982036130246399999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2176.072211242065791897569273",
+          "origin_nav": "10880.12562574243699189756927",
+          "origin_phase": "open",
+          "origin_timestamp": 1759968000
+        },
+        "double-then-minus60": {
+          "intervening_actions": 2,
+          "lock_days": 0,
+          "loss_fraction": "0.5999939335316091291291291289",
+          "loss_usd": "5993.939395980775199999999998",
+          "maximum_loss_usd": "5994.537771616199999999999998",
+          "maximum_stress_peak_drawdown": "0.5999983771021163513743084305",
+          "nav": "3996.060604019224800000000002",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "stress_peak_drawdown": "0.5999939335316091291291291289"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.4999972951775100034482817336",
+          "loss_usd": "5440.033384062731999999999997",
+          "maximum_loss_usd": "5564.988772581403999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5440.092241679704991897569273",
+          "origin_nav": "10880.12562574243699189756927",
+          "origin_phase": "open",
+          "origin_timestamp": 1759968000
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2003101145234393139396665147",
+          "loss_usd": "1291.846072231040403240972292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5157.384288924161612963889169",
+          "origin_nav": "6449.230361155202016204861461",
+          "origin_phase": "after-terminal-ETH",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "11130.03841535633500810243073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "6449.230361155202016204861461",
+      "terminal_loss_fraction": "0.3550769638844797983795138539",
+      "trade_count": 4,
+      "turnover_usd": "16440.107914569898000000",
+      "worst_rolling_30day_loss": "0.3848961775503690344084527475"
+    },
+    "primary": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "16.427141627206870274000000",
+        "market_pnl_usd": {
+          "BTC": "-1400.959801249744000000",
+          "ETH": "-2137.25728089453000000",
+          "USDC": "1.000311917647833454861458438"
+        },
+        "reconstructed_profit_usd": "-3580.067515263957762819138542",
+        "spread_impact_usd": "16.423603410124726000000",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": false,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 1.138160975903619,
+        "ETH": 0.7890434278007418
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-981.4167689560892674421747415",
+        "erroneous_log_path_profit_usd": "-4561.484284220047030261313280",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "1.004217578049385288594777900",
+      "mean_crypto_fraction": "1.000797493946745665190516493",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-3580.067515263957762819138539",
+      "observed_discrete_max_drawdown": "0.5967155636883694852390984601",
+      "policy": "B4",
+      "promotion_admitted": false,
+      "scenario": "primary",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.3580067515263957762819138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.7034201003233606804772576943",
+          "loss_usd": "7544.467121867091073826999998",
+          "maximum_loss_usd": "7712.097900212593757717999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "3180.940239109537332421000002",
+          "origin_nav": "10725.40736097662840624800000",
+          "origin_phase": "open",
+          "origin_timestamp": 1757721600
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.5031167888679467355613300390",
+          "loss_usd": "2249.481457972762601099513855",
+          "maximum_loss_usd": "5570.527981461963085286486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2221.610558324838824118055418",
+          "origin_nav": "4471.092016297601425217569273",
+          "origin_phase": "open",
+          "origin_timestamp": 1782864000
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.5011050735554322837014384696",
+          "loss_usd": "2240.486893699915601160000000",
+          "maximum_loss_usd": "5548.288959741185792477999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2230.605122597685824057569273",
+          "origin_nav": "4471.092016297601425217569273",
+          "origin_phase": "open",
+          "origin_timestamp": 1782864000
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.8017681176886916539223015514",
+          "loss_usd": "3584.779029919864961856000000",
+          "maximum_loss_usd": "8877.262335585897267964799998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "886.3129863777364633615692731",
+          "origin_nav": "4471.092016297601425217569273",
+          "origin_phase": "open",
+          "origin_timestamp": 1782864000
+        },
+        "double-then-minus60": {
+          "intervening_actions": 2,
+          "lock_days": 0,
+          "loss_fraction": "0.6021923328388409445412884235",
+          "loss_usd": "6016.503778104773302591999998",
+          "maximum_loss_usd": "6016.503778104773302591999998",
+          "maximum_stress_peak_drawdown": "0.6021923328388409445412884235",
+          "nav": "3974.496521985253705510430732",
+          "origin_nav": "9991.00030009002700810243073",
+          "origin_phase": "close",
+          "origin_timestamp": 1756771200,
+          "stress_peak_drawdown": "0.6021923328388409445412884235"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.5031115002763749555080508359",
+          "loss_usd": "2249.457812193208556520000000",
+          "maximum_loss_usd": "5570.504330951360710565999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "2221.634204104392868697569273",
+          "origin_nav": "4471.092016297601425217569273",
+          "origin_phase": "open",
+          "origin_timestamp": 1782864000
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2003115297559211373384753805",
+          "loss_usd": "1285.986496947208447436172292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5133.945987788833789744689169",
+          "origin_nav": "6419.932484736042237180861461",
+          "origin_phase": "after-terminal-ETH",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "11086.69617203538345855843073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "6419.932484736042237180861461",
+      "terminal_loss_fraction": "0.3580067515263957762819138539",
+      "trade_count": 4,
+      "turnover_usd": "16427.141627206870274000000",
+      "worst_rolling_30day_loss": "0.3853706650263814968153121605"
+    }
+  },
+  "B5": {
+    "doubled": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "14.624876456298091788000000",
+        "market_pnl_usd": {
+          "BTC": "-590.351368324447000000",
+          "ETH": "0E-12",
+          "USDC": "1.615301237679490236861458438"
+        },
+        "reconstructed_profit_usd": "-637.9834585938903955511385416",
+        "spread_impact_usd": "14.622515050824794000000",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "20"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": true,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.2437220718392692,
+        "ETH": 0.15087062464739837
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-220.2465661228726332062338610",
+        "erroneous_log_path_profit_usd": "-858.2300247167630287573724000",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.2989368665705449661544408510",
+      "mean_crypto_fraction": "0.2492328763985028966131018327",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-637.983458593890395551138539",
+      "observed_discrete_max_drawdown": "0.1593051221497792613907077067",
+      "policy": "B5",
+      "promotion_admitted": false,
+      "scenario": "doubled",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.0637983458593890395551138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.1488711574258645342348438527",
+          "loss_usd": "1402.564795519452394500000000",
+          "maximum_loss_usd": "1402.694406343045200000000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8018.768522305441444628861461",
+          "origin_nav": "9421.333317824893839128861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.2909406187830724535801153966",
+          "loss_usd": "2741.048545249551626525772292",
+          "maximum_loss_usd": "2874.694202499907229368486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6680.284772575342212603089169",
+          "origin_nav": "9421.333317824893839128861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.1488711574258645342348438527",
+          "loss_usd": "1402.564795519452394500000000",
+          "maximum_loss_usd": "1402.694406343045200000000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8018.768522305441444628861461",
+          "origin_nav": "9421.333317824893839128861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.2381938518813832547757501643",
+          "loss_usd": "2244.103672831123831200000000",
+          "maximum_loss_usd": "2244.311050148872320000000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7177.229644993770007928861461",
+          "origin_nav": "9421.333317824893839128861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.1513980384965413464181119953",
+          "loss_usd": "1511.103867667020639999999998",
+          "maximum_loss_usd": "1511.103867667020639999999998",
+          "maximum_stress_peak_drawdown": "0.2753171979777020830010421186",
+          "nav": "8469.896432423006368102430732",
+          "origin_nav": "9981.00030009002700810243073",
+          "origin_phase": "close",
+          "origin_timestamp": 1756771200,
+          "stress_peak_drawdown": "0.1513980384965413464181119953"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.1500645133972141497397323806",
+          "loss_usd": "1413.807799892353816500000000",
+          "maximum_loss_usd": "1413.938449680464400000000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8007.525517932540022628861461",
+          "origin_nav": "9421.333317824893839128861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2004272583777553578100660941",
+          "loss_usd": "1876.403308281221920889772292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7485.613233124887683559089169",
+          "origin_nav": "9362.016541406109604448861461",
+          "origin_phase": "after-terminal-BTC",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9980.00000000000000000000000",
+          "maximum_loss_usd": "10305.14951677818923565443073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "9362.016541406109604448861461",
+      "terminal_loss_fraction": "0.0637983458593890395551138539",
+      "trade_count": 13,
+      "turnover_usd": "7312.438228149045894000000",
+      "worst_rolling_30day_loss": "0.09027762266214063550641853049"
+    },
+    "frictionless": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "0E-18",
+        "market_pnl_usd": {
+          "BTC": "-592.324375072133000000",
+          "ETH": "0E-12",
+          "USDC": "1.615424524948016204861458438"
+        },
+        "reconstructed_profit_usd": "-600.7089505471849837951385416",
+        "spread_impact_usd": "0E-18",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": true,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.24508306345118377,
+        "ETH": 0.15154568791994286
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-220.9383726301436997484100266",
+        "erroneous_log_path_profit_usd": "-821.6473231773286835435485656",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.2988558814514098022200789702",
+      "mean_crypto_fraction": "0.2491632796032945193452209612",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-600.708950547184983795138539",
+      "observed_discrete_max_drawdown": "0.1590287243170937445049288218",
+      "policy": "B5",
+      "promotion_admitted": false,
+      "scenario": "frictionless",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.0600708950547184983795138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.1494279407257049011100394851",
+          "loss_usd": "1413.449073331762500000000000",
+          "maximum_loss_usd": "1413.579689970000000000000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8045.619066584175516204861461",
+          "origin_nav": "9459.068139915938016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.2898682017536044517086552818",
+          "loss_usd": "2741.883071982245103240972292",
+          "maximum_loss_usd": "2874.086700674416001620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6717.185067933692912963889169",
+          "origin_nav": "9459.068139915938016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.1494279407257049011100394851",
+          "loss_usd": "1413.449073331762500000000000",
+          "maximum_loss_usd": "1413.579689970000000000000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8045.619066584175516204861461",
+          "origin_nav": "9459.068139915938016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.2390847051611278417760631761",
+          "loss_usd": "2261.518517330820000000000000",
+          "maximum_loss_usd": "2261.727503952000000000000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7197.549622585118016204861461",
+          "origin_nav": "9459.068139915938016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.1499988617552424024024024022",
+          "loss_usd": "1498.488628934871599999999998",
+          "maximum_loss_usd": "1498.566526739999999999999998",
+          "maximum_stress_peak_drawdown": "0.2761099694455269714143884963",
+          "nav": "8491.511371065128400000000002",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "stress_peak_drawdown": "0.1499988617552424024024024022"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.1494279407257049011100394851",
+          "loss_usd": "1413.449073331762500000000000",
+          "maximum_loss_usd": "1413.579689970000000000000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8045.619066584175516204861461",
+          "origin_nav": "9459.068139915938016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2002127820055233241360521735",
+          "loss_usd": "1881.858209890563003240972292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7517.432839562252012963889169",
+          "origin_nav": "9399.291049452815016204861461",
+          "origin_phase": "after-terminal-BTC",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "10337.10907529786500810243073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "9399.291049452815016204861461",
+      "terminal_loss_fraction": "0.0600708950547184983795138539",
+      "trade_count": 13,
+      "turnover_usd": "7321.579843885013000000",
+      "worst_rolling_30day_loss": "0.09042988896360644152609471692"
+    },
+    "primary": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "7.320487776030494316000000",
+        "market_pnl_usd": {
+          "BTC": "-591.644120140316000000",
+          "ETH": "0E-12",
+          "USDC": "1.615170442519332138861458438"
+        },
+        "reconstructed_profit_usd": "-614.6693336057375161771385416",
+        "spread_impact_usd": "7.319896131910354000000",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": true,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.24442787032439825,
+        "ETH": 0.15118809676545253
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-220.7030855549369649779750211",
+        "erroneous_log_path_profit_usd": "-835.3724191606744811551135601",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.2988960712907623960084006048",
+      "mean_crypto_fraction": "0.2491982580319056123973373016",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-614.669333605737516177138539",
+      "observed_discrete_max_drawdown": "0.1591673640528834437800299164",
+      "policy": "B5",
+      "promotion_admitted": false,
+      "scenario": "primary",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.0614669333605737516177138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.1491492890221260809893899060",
+          "loss_usd": "1408.701157917996154162500000",
+          "maximum_loss_usd": "1408.831335802010610000000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8036.205801772689182159361461",
+          "origin_nav": "9444.906959690685336321861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.2902985220995207223133245362",
+          "loss_usd": "2741.842531765683493111872292",
+          "maximum_loss_usd": "2874.847028675096910570686145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6703.064427925001843209989169",
+          "origin_nav": "9444.906959690685336321861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.1491492890221260809893899060",
+          "loss_usd": "1408.701157917996154162500000",
+          "maximum_loss_usd": "1408.831335802010610000000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8036.205801772689182159361461",
+          "origin_nav": "9444.906959690685336321861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.2386388624354017295830238496",
+          "loss_usd": "2253.921852668793846660000000",
+          "maximum_loss_usd": "2254.130137283216976000000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7190.985107021891489661861461",
+          "origin_nav": "9444.906959690685336321861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.1506990064422952888560160158",
+          "loss_usd": "1505.483074358529935671599998",
+          "maximum_loss_usd": "1505.561335764646739999999998",
+          "maximum_stress_peak_drawdown": "0.2757133834285857787262681349",
+          "nav": "8484.516925641470064328400002",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "stress_peak_drawdown": "0.1506990064422952888560160158"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.1497464833725650242566146904",
+          "loss_usd": "1414.341602994744887512500000",
+          "maximum_loss_usd": "1414.472302111528170000000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8030.565356695940448809361461",
+          "origin_nav": "9444.906959690685336321861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2002130985120387215189616269",
+          "loss_usd": "1879.066133278852496764572292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7506.264533115409987058289169",
+          "origin_nav": "9385.330666394262483822861461",
+          "origin_phase": "after-terminal-BTC",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "10326.29311742409591184443073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "9385.330666394262483822861461",
+      "terminal_loss_fraction": "0.0614669333605737516177138539",
+      "trade_count": 13,
+      "turnover_usd": "7320.487776030494316000000",
+      "worst_rolling_30day_loss": "0.09035376909215697033027652947"
+    }
+  },
+  "B6": {
+    "doubled": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "24.850995701515508260000000",
+        "market_pnl_usd": {
+          "BTC": "-1264.363281859565000000",
+          "ETH": "0E-12",
+          "USDC": "1.332473449710260924861458438"
+        },
+        "reconstructed_profit_usd": "-1332.727742359758317335138542",
+        "spread_impact_usd": "24.845938248388070000000",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "20"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": true,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.49004614781062006,
+        "ETH": 0.3032328261341594
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-408.9496315963843937576051313",
+        "erroneous_log_path_profit_usd": "-1741.677373956142711092743670",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.5614304185767551599889670055",
+      "mean_crypto_fraction": "0.4981475790047562878274792405",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-1332.727742359758317335138539",
+      "observed_discrete_max_drawdown": "0.2997548729805857324762831259",
+      "policy": "B6",
+      "promotion_admitted": false,
+      "scenario": "doubled",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.1332727742359758317335138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.2795934713120612231848255467",
+          "loss_usd": "2452.309999985892355650000000",
+          "maximum_loss_usd": "2714.232181345090766951999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6318.674488592555914370861461",
+          "origin_nav": "8770.984488578448270020861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.3704533621658374364150319970",
+          "loss_usd": "3249.240693298294344794172292",
+          "maximum_loss_usd": "3781.147430962927190412486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5521.743795280153925226689169",
+          "origin_nav": "8770.984488578448270020861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.2795934713120612231848255467",
+          "loss_usd": "2452.309999985892355650000000",
+          "maximum_loss_usd": "2714.232181345090766951999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6318.674488592555914370861461",
+          "origin_nav": "8770.984488578448270020861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.4473495540992979570957208747",
+          "loss_usd": "3923.695999977427769040000000",
+          "maximum_loss_usd": "4342.771490152145227123199998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "4847.288488601020500980861461",
+          "origin_nav": "8770.984488578448270020861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.3028001777310536214856913826",
+          "loss_usd": "3021.945773755915142427199998",
+          "maximum_loss_usd": "3022.207735334041279999999998",
+          "maximum_stress_peak_drawdown": "0.4303681058408610893732780897",
+          "nav": "6958.054226244084857572800002",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "stress_peak_drawdown": "0.3028001777310536214856913826"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.2818347015430196297835015030",
+          "loss_usd": "2471.967795576961633050000000",
+          "maximum_loss_usd": "2735.989553540241795143999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6299.016693001486636970861461",
+          "origin_nav": "8770.984488578448270020861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2004615062133849529177634242",
+          "loss_usd": "1737.454451528048336532972292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6929.817806112193346131889169",
+          "origin_nav": "8667.272257640241682664861461",
+          "origin_phase": "after-terminal-BTC",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9980.00000000000000000000000",
+          "maximum_loss_usd": "10634.25374980360851024643073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "8667.272257640241682664861461",
+      "terminal_loss_fraction": "0.1332727742359758317335138539",
+      "trade_count": 13,
+      "turnover_usd": "12425.497850757754130000000",
+      "worst_rolling_30day_loss": "0.1750199199029993715422479934"
+    },
+    "frictionless": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "0E-18",
+        "market_pnl_usd": {
+          "BTC": "-1271.945458137533000000",
+          "ETH": "0E-12",
+          "USDC": "1.330067434108016204861458438"
+        },
+        "reconstructed_profit_usd": "-1280.615390703424983795138542",
+        "spread_impact_usd": "0E-18",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": true,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.49258761387769473,
+        "ETH": 0.304534969545071
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-410.9308812251763577128395031",
+        "erroneous_log_path_profit_usd": "-1691.546271928601341507978042",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.5611621261305610150774998544",
+      "mean_crypto_fraction": "0.4979091305394105808818728866",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-1280.615390703424983795138539",
+      "observed_discrete_max_drawdown": "0.2997812148930196893263688817",
+      "policy": "B6",
+      "promotion_admitted": false,
+      "scenario": "frictionless",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.1280615390703424983795138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.2805810630652805075387499272",
+          "loss_usd": "2475.873501013687500000000000",
+          "maximum_loss_usd": "2738.841544325557999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6348.219878508672516204861461",
+          "origin_nav": "8824.093379522360016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.3685752900190558498818790396",
+          "loss_usd": "3252.342776512684503240972292",
+          "maximum_loss_usd": "3783.050254156904201620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5571.750603009675512963889169",
+          "origin_nav": "8824.093379522360016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.2805810630652805075387499272",
+          "loss_usd": "2475.873501013687500000000000",
+          "maximum_loss_usd": "2738.841544325557999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6348.219878508672516204861461",
+          "origin_nav": "8824.093379522360016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.4489297009044488120619998835",
+          "loss_usd": "3961.397601621900000000000000",
+          "maximum_loss_usd": "4382.146470920892799999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "4862.695777900460016204861461",
+          "origin_nav": "8824.093379522360016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.2999977235104848048048048046",
+          "loss_usd": "2996.977257869743199999999998",
+          "maximum_loss_usd": "2997.264127259999999999999998",
+          "maximum_stress_peak_drawdown": "0.4313418446972731575246545174",
+          "nav": "6993.022742130256800000000002",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "stress_peak_drawdown": "0.2999977235104848048048048046"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.2805810630652805075387499272",
+          "loss_usd": "2475.873501013687500000000000",
+          "maximum_loss_usd": "2738.841544325557999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6348.219878508672516204861461",
+          "origin_nav": "8824.093379522360016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2002293739856213714366843074",
+          "loss_usd": "1745.876921859315003240972292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6973.507687437260012963889169",
+          "origin_nav": "8719.384609296575016204861461",
+          "origin_phase": "after-terminal-BTC",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "10688.72663780784700810243073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "8719.384609296575016204861461",
+      "terminal_loss_fraction": "0.1280615390703424983795138539",
+      "trade_count": 13,
+      "turnover_usd": "12434.561817693483000000",
+      "worst_rolling_30day_loss": "0.1754158372695830303843659029"
+    },
+    "primary": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "12.436437117362378647000000",
+        "market_pnl_usd": {
+          "BTC": "-1268.775084679647000000",
+          "ETH": "0E-12",
+          "USDC": "1.330952064754810808861458438"
+        },
+        "reconstructed_profit_usd": "-1302.315738074532266838138542",
+        "spread_impact_usd": "12.435168342277699000000",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": true,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.4913412325913127,
+        "ETH": 0.3038632761263977
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-410.1454540584751850081488480",
+        "erroneous_log_path_profit_usd": "-1712.461192133007451846287387",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.5612974712338540159002822547",
+      "mean_crypto_fraction": "0.4980283430071021420625470882",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-1302.315738074532266838138539",
+      "observed_discrete_max_drawdown": "0.2997663200526278490931739136",
+      "policy": "B6",
+      "promotion_admitted": false,
+      "scenario": "primary",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.1302315738074532266838138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.2800877187944287708612487952",
+          "loss_usd": "2465.317140296314026937500000",
+          "maximum_loss_usd": "2727.889659853329307229999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6336.629445964902965189361461",
+          "origin_nav": "8801.946586261216992126861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.3694013260891678914295545056",
+          "loss_usd": "3251.450741130917956837872292",
+          "maximum_loss_usd": "3783.019736628258350125686145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5550.495845130299035288989169",
+          "origin_nav": "8801.946586261216992126861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.2800877187944287708612487952",
+          "loss_usd": "2465.317140296314026937500000",
+          "maximum_loss_usd": "2727.889659853329307229999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6336.629445964902965189361461",
+          "origin_nav": "8801.946586261216992126861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.4481403500710860333779980724",
+          "loss_usd": "3944.507424474102443100000000",
+          "maximum_loss_usd": "4364.623455765326891567999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "4857.439161787114549026861461",
+          "origin_nav": "8801.946586261216992126861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.3013980128845905777120320318",
+          "loss_usd": "3010.966148717059871343199998",
+          "maximum_loss_usd": "3011.254357118007259999999998",
+          "maximum_stress_peak_drawdown": "0.4308557287284842728945530611",
+          "nav": "6979.033851282940128656800002",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "stress_peak_drawdown": "0.3013980128845905777120320318"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.2812091911419540111850175592",
+          "loss_usd": "2475.188279997200169187500000",
+          "maximum_loss_usd": "2738.812140973863158309999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6326.758306264016822939361461",
+          "origin_nav": "8801.946586261216992126861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2002299462638296835448283817",
+          "loss_usd": "1741.536852385093546632372292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6956.147409540374186529489169",
+          "origin_nav": "8697.684261925467733161861461",
+          "origin_phase": "after-terminal-BTC",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "10666.81729797863457353843073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "8697.684261925467733161861461",
+      "terminal_loss_fraction": "0.1302315738074532266838138539",
+      "trade_count": 13,
+      "turnover_usd": "12436.437117362378647000000",
+      "worst_rolling_30day_loss": "0.1752172005172872101359710521"
+    }
+  },
+  "B7": {
+    "doubled": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "15.138950963155571672000000",
+        "market_pnl_usd": {
+          "BTC": "-288.870145499788000000",
+          "ETH": "-486.71276513313000000",
+          "USDC": "1.579871456985801940861458438"
+        },
+        "reconstructed_profit_usd": "-824.2778387706008097311385416",
+        "spread_impact_usd": "15.135848631513040000000",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "20"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": true,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.2806106677530871,
+        "ETH": 0.19698303907535655
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-334.7285571992108437337523836",
+        "erroneous_log_path_profit_usd": "-1159.006395969811653464890923",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.3057505466959791775351422892",
+      "mean_crypto_fraction": "0.2489364646659563653801382420",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-824.277838770600809731138539",
+      "observed_discrete_max_drawdown": "0.1889211323268433524990603890",
+      "policy": "B7",
+      "promotion_admitted": false,
+      "scenario": "doubled",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.0824277838770600809731138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.2151012683978510537296188796",
+          "loss_usd": "1985.495769178170796800000000",
+          "maximum_loss_usd": "1985.495769178170796800000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7245.020554443873825356861461",
+          "origin_nav": "9230.516323622044622156861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.2930125316420691135826569511",
+          "loss_usd": "2704.656956347939815951372292",
+          "maximum_loss_usd": "2863.203005471749605985286145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6525.859367274104806205489169",
+          "origin_nav": "9230.516323622044622156861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.1522643837556910223708559303",
+          "loss_usd": "1405.478879763157267200000000",
+          "maximum_loss_usd": "1405.478879763157267200000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7825.037443858887354956861461",
+          "origin_nav": "9230.516323622044622156861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.2436230140091056357933694885",
+          "loss_usd": "2248.766207621051627520000000",
+          "maximum_loss_usd": "2248.766207621051627520000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6981.750116000992994636861461",
+          "origin_nav": "9230.516323622044622156861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.1764726511907390847035814727",
+          "loss_usd": "1759.612240708133031200000000",
+          "maximum_loss_usd": "1759.612240708133031200000000",
+          "maximum_stress_peak_drawdown": "0.2801276063162555200160229248",
+          "nav": "8211.407227947493976902430732",
+          "origin_nav": "9971.019468655627008102430732",
+          "origin_phase": "after-month-1756771200-BTC-buy",
+          "origin_timestamp": 1756771200,
+          "stress_peak_drawdown": "0.2677303076867618355722339574"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.1534849399381013712475762183",
+          "loss_usd": "1416.745243528793798400000000",
+          "maximum_loss_usd": "1416.745243528793798400000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7813.771080093250823756861461",
+          "origin_nav": "9230.516323622044622156861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2004359329903101669694302510",
+          "loss_usd": "1839.144432245879838053772292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7336.577728983519352215089169",
+          "origin_nav": "9175.722161229399190268861461",
+          "origin_phase": "after-terminal-ETH",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9980.00000000000000000000000",
+          "maximum_loss_usd": "10239.51441388590891327043073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "9175.722161229399190268861461",
+      "terminal_loss_fraction": "0.0824277838770600809731138539",
+      "trade_count": 25,
+      "turnover_usd": "7569.475481577785836000000",
+      "worst_rolling_30day_loss": "0.1094132967306827390387729283"
+    },
+    "frictionless": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "0E-18",
+        "market_pnl_usd": {
+          "BTC": "-289.823648947936000000",
+          "ETH": "-487.75569648258000000",
+          "USDC": "1.580344371468016204861458438"
+        },
+        "reconstructed_profit_usd": "-785.9990010590479837951385416",
+        "spread_impact_usd": "0E-18",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": true,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.28210086524629546,
+        "ETH": 0.1978188211524948
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-335.7312959498874607226866177",
+        "erroneous_log_path_profit_usd": "-1121.730297008935444517825157",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.3056574911332665833797375144",
+      "mean_crypto_fraction": "0.2488412533413851792370531781",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-785.999001059047983795138539",
+      "observed_discrete_max_drawdown": "0.1885714330421632760194131481",
+      "policy": "B7",
+      "promotion_admitted": false,
+      "scenario": "frictionless",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.0785999001059047983795138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.2158992086543155919361471579",
+          "loss_usd": "2001.219175818225000000000000",
+          "maximum_loss_usd": "2001.219175818225000000000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7268.009684684237016204861461",
+          "origin_nav": "9269.228860502462016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.2919130150192658206907140690",
+          "loss_usd": "2705.808543572867403240972292",
+          "maximum_loss_usd": "2861.620879538375801620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6563.420316929594612963889169",
+          "origin_nav": "9269.228860502462016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.1528287455666332916898687572",
+          "loss_usd": "1416.604619120625000000000000",
+          "maximum_loss_usd": "1416.604619120625000000000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7852.624241381837016204861461",
+          "origin_nav": "9269.228860502462016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.2445259929066132667037900115",
+          "loss_usd": "2266.567390593000000000000000",
+          "maximum_loss_usd": "2266.567390593000000000000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7002.661469909462016204861461",
+          "origin_nav": "9269.228860502462016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.1749946923363264989007312072",
+          "loss_usd": "1748.372023646400000000000000",
+          "maximum_loss_usd": "1748.372023646400000000000000",
+          "maximum_stress_peak_drawdown": "0.2809228238269130224221142238",
+          "nav": "8242.628276443627008102430732",
+          "origin_nav": "9991.000300090027008102430732",
+          "origin_phase": "after-month-1756771200-BTC-buy",
+          "origin_timestamp": 1756771200,
+          "stress_peak_drawdown": "0.2666574078043081827837312749"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.1528287455666332916898687572",
+          "loss_usd": "1416.604619120625000000000000",
+          "maximum_loss_usd": "1416.604619120625000000000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7852.624241381837016204861461",
+          "origin_nav": "9269.228860502462016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2002170609706065668956712182",
+          "loss_usd": "1844.800199788190403240972292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7369.200799152761612963889169",
+          "origin_nav": "9214.000998940952016204861461",
+          "origin_phase": "after-terminal-ETH",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "10270.99887416302900810243073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "9214.000998940952016204861461",
+      "terminal_loss_fraction": "0.0785999001059047983795138539",
+      "trade_count": 25,
+      "turnover_usd": "7584.562206412970000000",
+      "worst_rolling_30day_loss": "0.1095568201980504045682678958"
+    },
+    "primary": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "7.580858482944187853000000",
+        "market_pnl_usd": {
+          "BTC": "-289.495375268183000000",
+          "ETH": "-487.47827359667000000",
+          "USDC": "1.579899752170662046861458438"
+        },
+        "reconstructed_profit_usd": "-800.5546891049218488061385416",
+        "spread_impact_usd": "7.580081509295323000000",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": true,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.2813815176146718,
+        "ETH": 0.19738106126265237
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-335.3984407052554993493313803",
+        "erroneous_log_path_profit_usd": "-1135.953129810177348155469919",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.3056997277918236380263257020",
+      "mean_crypto_fraction": "0.2488889949106894843979168656",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-800.554689104921848806138539",
+      "observed_discrete_max_drawdown": "0.1887455205223299117687473600",
+      "policy": "B7",
+      "promotion_admitted": false,
+      "scenario": "primary",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.0800554689104921848806138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.2154979875632492178337047391",
+          "loss_usd": "1994.322386460259462612500000",
+          "maximum_loss_usd": "1994.322386460259462612500000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7260.160260970128599396361461",
+          "origin_nav": "9254.482647430388062008861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.2923534897532320415147730966",
+          "loss_usd": "2705.580297837003692239272292",
+          "maximum_loss_usd": "2862.838053240096519070686145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6548.902349593384369769589169",
+          "origin_nav": "9254.482647430388062008861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.1525443170179838912869555385",
+          "loss_usd": "1411.718734807051961812500000",
+          "maximum_loss_usd": "1411.718734807051961812500000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7842.763912623336100196361461",
+          "origin_nav": "9254.482647430388062008861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.2440709072287742260591288616",
+          "loss_usd": "2258.749975691283138900000000",
+          "maximum_loss_usd": "2258.749975691283138900000000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6995.732671739104923108861461",
+          "origin_nav": "9254.482647430388062008861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.1757327133100394591452323017",
+          "loss_usd": "1754.867767543506846400000000",
+          "maximum_loss_usd": "1754.867767543506846400000000",
+          "maximum_stress_peak_drawdown": "0.2805222199437770729023180328",
+          "nav": "8231.137310790720161702430732",
+          "origin_nav": "9986.005078334227008102430732",
+          "origin_phase": "after-month-1756771200-BTC-buy",
+          "origin_timestamp": 1756771200,
+          "stress_peak_drawdown": "0.2671913198785049268904886107"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.1531551050741119549157321372",
+          "loss_usd": "1417.371262273746864562500000",
+          "maximum_loss_usd": "1417.371262273746864562500000",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7837.111385156641197446361461",
+          "origin_nav": "9254.482647430388062008861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2002174044121585637276541105",
+          "loss_usd": "1841.889062179015630238772292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7357.556248716062520955089169",
+          "origin_nav": "9199.445310895078151193861461",
+          "origin_phase": "after-terminal-ETH",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "10260.38196246750476305643073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "9199.445310895078151193861461",
+      "terminal_loss_fraction": "0.0800554689104921848806138539",
+      "trade_count": 25,
+      "turnover_usd": "7580.858482944187853000000",
+      "worst_rolling_30day_loss": "0.1094865039392371704587829414"
+    }
+  },
+  "B8": {
+    "doubled": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "25.144688539492951620000000",
+        "market_pnl_usd": {
+          "BTC": "-606.097341278125000000",
+          "ETH": "-1034.79075374028000000",
+          "USDC": "1.290198850807380828861458438"
+        },
+        "reconstructed_profit_usd": "-1709.880709694203448791138542",
+        "spread_impact_usd": "25.138124987112878000000",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "20"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": false,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.5644390748602338,
+        "ETH": 0.3960473922749038
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-609.6435052729271999890424937",
+        "erroneous_log_path_profit_usd": "-2319.524214967130648780181033",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.5691501564760097705206736202",
+      "mean_crypto_fraction": "0.4976064058930465048206598940",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-1709.880709694203448791138539",
+      "observed_discrete_max_drawdown": "0.3500908761192697581340054628",
+      "policy": "B8",
+      "promotion_admitted": false,
+      "scenario": "doubled",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.1709880709694203448791138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.4004665483690665914032023771",
+          "loss_usd": "3357.009313956451870200000000",
+          "maximum_loss_usd": "3788.344480548022335203999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5025.736579872014462936861461",
+          "origin_nav": "8382.745893828466333136861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.3728119677732556814908960991",
+          "loss_usd": "3125.187992021369583147372292",
+          "maximum_loss_usd": "3743.778694724814724122086145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5257.557901807096749989489169",
+          "origin_nav": "8382.745893828466333136861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.2834379162253658177388365042",
+          "loss_usd": "2375.988028393482142200000000",
+          "maximum_loss_usd": "2696.535296189039326883999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6006.757865434984190936861461",
+          "origin_nav": "8382.745893828466333136861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.4535006659605853083821384067",
+          "loss_usd": "3801.580845429571427520000000",
+          "maximum_loss_usd": "4314.456473902462923014399998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "4581.165048398894905616861461",
+          "origin_nav": "8382.745893828466333136861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.3533041950392280770330510588",
+          "loss_usd": "3519.276737478095036000000000",
+          "maximum_loss_usd": "3519.276737478095036000000000",
+          "maximum_stress_peak_drawdown": "0.4824345785545899811676051352",
+          "nav": "6441.761899743131972102430732",
+          "origin_nav": "9961.038637221227008102430732",
+          "origin_phase": "after-month-1756771200-BTC-buy",
+          "origin_timestamp": 1756771200,
+          "stress_peak_drawdown": "0.4824345785545899811676051352"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.2857099636500180487427550333",
+          "loss_usd": "2395.034024613069173400000000",
+          "maximum_loss_usd": "2718.150809585344251347999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5987.711869215397159736861461",
+          "origin_nav": "8382.745893828466333136861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2004825021040019862634142111",
+          "loss_usd": "1662.023858061159310241772292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6628.095432244637240967089169",
+          "origin_nav": "8290.119290305796551208861461",
+          "origin_phase": "after-terminal-ETH",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9980.00000000000000000000000",
+          "maximum_loss_usd": "10501.21001807543101763843073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "8290.119290305796551208861461",
+      "terminal_loss_fraction": "0.1709880709694203448791138539",
+      "trade_count": 24,
+      "turnover_usd": "12572.344269746475810000000",
+      "worst_rolling_30day_loss": "0.2103222644437648986699803300"
+    },
+    "frictionless": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "0E-18",
+        "market_pnl_usd": {
+          "BTC": "-610.049033997973000000",
+          "ETH": "-1039.78036179066000000",
+          "USDC": "1.288209384414016204861458438"
+        },
+        "reconstructed_profit_usd": "-1658.541186404218983795138542",
+        "spread_impact_usd": "0E-18",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": false,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.567252930332618,
+        "ETH": 0.3976841867208858
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-612.5623091432243757058860677",
+        "erroneous_log_path_profit_usd": "-2271.103495547443359501024607",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.5687027952335988450109374745",
+      "mean_crypto_fraction": "0.4973318589552247021771036504",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-1658.541186404218983795138539",
+      "observed_discrete_max_drawdown": "0.3501342726242595632179031521",
+      "policy": "B8",
+      "promotion_admitted": false,
+      "scenario": "frictionless",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.1658541186404218983795138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.4017892304465939860745867141",
+          "loss_usd": "3389.076324473400000000000000",
+          "maximum_loss_usd": "3822.615429838827999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5045.884265949587016204861461",
+          "origin_nav": "8434.960590422987016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.3708479469689346274333789077",
+          "loss_usd": "3128.087817722237403240972292",
+          "maximum_loss_usd": "3745.645298872458601620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5306.872772700749612963889169",
+          "origin_nav": "8434.960590422987016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.2843513976167994225054687372",
+          "loss_usd": "2398.492832729400000000000000",
+          "maximum_loss_usd": "2720.915121177387999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6036.467757693587016204861461",
+          "origin_nav": "8434.960590422987016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.4549622361868790760087499796",
+          "loss_usd": "3837.588532367040000000000000",
+          "maximum_loss_usd": "4353.464193883820799999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "4597.372058055947016204861461",
+          "origin_nav": "8434.960590422987016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.3499967531313847362681008405",
+          "loss_usd": "3496.817665566200000000000000",
+          "maximum_loss_usd": "3496.817665566200000000000000",
+          "maximum_stress_peak_drawdown": "0.4799961546636123462720895473",
+          "nav": "6494.182634523827008102430732",
+          "origin_nav": "9991.000300090027008102430732",
+          "origin_phase": "after-month-1756771200-BTC-buy",
+          "origin_timestamp": 1756771200,
+          "stress_peak_drawdown": "0.4799961546636123462720895473"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.2843513976167994225054687372",
+          "loss_usd": "2398.492832729400000000000000",
+          "maximum_loss_usd": "2720.915121177387999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6036.467757693587016204861461",
+          "origin_nav": "8434.960590422987016204861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2002397662141231448697795207",
+          "loss_usd": "1670.291762719156203240972292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6671.167050876624812963889169",
+          "origin_nav": "8341.458813595781016204861461",
+          "origin_phase": "after-terminal-ETH",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "10555.48113083012900810243073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "8341.458813595781016204861461",
+      "terminal_loss_fraction": "0.1658541186404218983795138539",
+      "trade_count": 24,
+      "turnover_usd": "12602.275365153551000000",
+      "worst_rolling_30day_loss": "0.2107344581922777145416129146"
+    },
+    "primary": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "12.593479824906448893000000",
+        "market_pnl_usd": {
+          "BTC": "-608.396504602483000000",
+          "ETH": "-1037.79859194541000000",
+          "USDC": "1.288880026701893160861458438"
+        },
+        "reconstructed_profit_usd": "-1680.091529975907456732138542",
+        "spread_impact_usd": "12.591833629809901000000",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": false,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.5658714561178438,
+        "ETH": 0.3968455716803479
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-611.4076453613953102583310070",
+        "erroneous_log_path_profit_usd": "-2291.499175337302766990469546",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.5689240089004660908815597027",
+      "mean_crypto_fraction": "0.4974697061001330855041171378",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-1680.091529975907456732138539",
+      "observed_discrete_max_drawdown": "0.3501124198678439342595351750",
+      "policy": "B8",
+      "promotion_admitted": false,
+      "scenario": "primary",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.1680091529975907456732138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.4011268143638861619433751146",
+          "loss_usd": "3374.687035379942127450000000",
+          "maximum_loss_usd": "3807.331192161541137824999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5038.330779775544746413861461",
+          "origin_nav": "8413.017815155486873863861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.3717104559351372661020458293",
+          "loss_usd": "3127.206687861878400962772292",
+          "maximum_loss_usd": "3745.591730442427120751086145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "5285.811127293608472901089169",
+          "origin_nav": "8413.017815155486873863861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.2838933649033370295829437324",
+          "loss_usd": "2388.399936536211874650000000",
+          "maximum_loss_usd": "2710.040558984929468304999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6024.617878619274999213861461",
+          "origin_nav": "8413.017815155486873863861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.4542293838453392473327099719",
+          "loss_usd": "3821.439898457938999440000000",
+          "maximum_loss_usd": "4336.064894375887149287999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "4591.577916697547874423861461",
+          "origin_nav": "8413.017815155486873863861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.3516487364928218529394801661",
+          "loss_usd": "3509.809351348441166200000000",
+          "maximum_loss_usd": "3509.809351348441166200000000",
+          "maximum_stress_peak_drawdown": "0.4812139870725964662510203309",
+          "nav": "6471.200068317385841902430732",
+          "origin_nav": "9981.009419665827008102430732",
+          "origin_phase": "after-month-1756771200-BTC-buy",
+          "origin_timestamp": 1756771200,
+          "stress_peak_drawdown": "0.4812139870725964662510203309"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.2850300750731201608325250887",
+          "loss_usd": "2397.963099445265776050000000",
+          "maximum_loss_usd": "2720.891572234118375084999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6015.054715710221097813861461",
+          "origin_nav": "8413.017815155486873863861461",
+          "origin_phase": "open",
+          "origin_timestamp": 1787875200
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2002403872599327055408746616",
+          "loss_usd": "1665.981694004818508653572292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "6653.926776019274034614289169",
+          "origin_nav": "8319.908470024092543267861461",
+          "origin_phase": "after-terminal-ETH",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "10533.58190901140266494043073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "8319.908470024092543267861461",
+      "terminal_loss_fraction": "0.1680091529975907456732138539",
+      "trade_count": 24,
+      "turnover_usd": "12593.479824906448893000000",
+      "worst_rolling_30day_loss": "0.2105289970629545395857530892"
+    }
+  },
+  "B9": {
+    "doubled": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "8.582673552752755488000000",
+        "market_pnl_usd": {
+          "BTC": "-700.479900624872000000",
+          "ETH": "0E-12",
+          "USDC": "1.750030198971216204861458438"
+        },
+        "reconstructed_profit_usd": "-735.8924156118037952831385416",
+        "spread_impact_usd": "8.579871633150256000000",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "20"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": true,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.19258805234867002,
+        "ETH": 0.120520118161621
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-176.0605683355557684829484501",
+        "erroneous_log_path_profit_usd": "-911.9529839473595637660869891",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.2762578018890587614031580987",
+      "mean_crypto_fraction": "0.1995168307034315425561983708",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-735.892415611803795283138539",
+      "observed_discrete_max_drawdown": "0.1461622221031749763351235512",
+      "policy": "B9",
+      "promotion_admitted": false,
+      "scenario": "doubled",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.0735892415611803795283138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.1375769378563550412962955393",
+          "loss_usd": "1418.918942529343527855999998",
+          "maximum_loss_usd": "1418.918942529343527855999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8894.720571753536135958430732",
+          "origin_nav": "10313.63951428287966381443073",
+          "origin_phase": "close",
+          "origin_timestamp": 1759795200
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.2840368197916004829213306704",
+          "loss_usd": "2929.453368113896226052486145",
+          "maximum_loss_usd": "2929.453368113896226052486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7384.186146168983437761944585",
+          "origin_nav": "10313.63951428287966381443073",
+          "origin_phase": "close",
+          "origin_timestamp": 1759795200
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.1375769378563550412962955393",
+          "loss_usd": "1418.918942529343527855999998",
+          "maximum_loss_usd": "1418.918942529343527855999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8894.720571753536135958430732",
+          "origin_nav": "10313.63951428287966381443073",
+          "origin_phase": "close",
+          "origin_timestamp": 1759795200
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.2201231005701680660740728629",
+          "loss_usd": "2270.270308046949644569599998",
+          "maximum_loss_usd": "2270.270308046949644569599998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8043.369206235930019244830732",
+          "origin_nav": "10313.63951428287966381443073",
+          "origin_phase": "close",
+          "origin_timestamp": 1759795200
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.1513980384965413464181119953",
+          "loss_usd": "1511.103867667020639999999998",
+          "maximum_loss_usd": "1511.103867667020639999999998",
+          "maximum_stress_peak_drawdown": "0.2589371033128884267576682028",
+          "nav": "8469.896432423006368102430732",
+          "origin_nav": "9981.00030009002700810243073",
+          "origin_phase": "close",
+          "origin_timestamp": 1756771200,
+          "stress_peak_drawdown": "0.1513980384965413464181119953"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.1386797590014961638718169464",
+          "loss_usd": "1430.293042269057704431999998",
+          "maximum_loss_usd": "1430.293042269057704431999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8883.346472013821959382430732",
+          "origin_nav": "10313.63951428287966381443073",
+          "origin_phase": "close",
+          "origin_timestamp": 1759795200
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2004317739149252508297436323",
+          "loss_usd": "1856.821516877639240943372292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7407.286067510556963773489169",
+          "origin_nav": "9264.107584388196204716861461",
+          "origin_phase": "after-terminal-BTC",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9980.00000000000000000000000",
+          "maximum_loss_usd": "10313.63951428287966381443073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9980.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "9264.107584388196204716861461",
+      "terminal_loss_fraction": "0.0735892415611803795283138539",
+      "trade_count": 2,
+      "turnover_usd": "4291.336776376377744000000",
+      "worst_rolling_30day_loss": "0.07321758871252127705883274175"
+    },
+    "frictionless": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "0E-18",
+        "market_pnl_usd": {
+          "BTC": "-701.185164051346000000",
+          "ETH": "0E-12",
+          "USDC": "1.750778205054016204861458438"
+        },
+        "reconstructed_profit_usd": "-709.4343858462919837951385416",
+        "spread_impact_usd": "0E-18",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": true,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.19324953051566837,
+        "ETH": 0.1207559607905656
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-176.2378309812735930926794627",
+        "erroneous_log_path_profit_usd": "-885.6722168275655768878180017",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.2756877173257547833581206158",
+      "mean_crypto_fraction": "0.1991425143828096617677084395",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-709.434385846291983795138539",
+      "observed_discrete_max_drawdown": "0.1464452162925028730514113771",
+      "policy": "B9",
+      "promotion_admitted": false,
+      "scenario": "frictionless",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.0709434385846291983795138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.1378438586628773916790603077",
+          "loss_usd": "1426.046031105526999999999998",
+          "maximum_loss_usd": "1426.046031105526999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8919.326225145554008102430732",
+          "origin_nav": "10345.37225625108100810243073",
+          "origin_phase": "close",
+          "origin_timestamp": 1759795200
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.2828996383523177568711717054",
+          "loss_usd": "2926.702069913532401620486145",
+          "maximum_loss_usd": "2926.702069913532401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7418.670186337548606481944585",
+          "origin_nav": "10345.37225625108100810243073",
+          "origin_phase": "close",
+          "origin_timestamp": 1759795200
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.1378438586628773916790603077",
+          "loss_usd": "1426.046031105526999999999998",
+          "maximum_loss_usd": "1426.046031105526999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8919.326225145554008102430732",
+          "origin_nav": "10345.37225625108100810243073",
+          "origin_phase": "close",
+          "origin_timestamp": 1759795200
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.2205501738606038266864964924",
+          "loss_usd": "2281.673649768843199999999998",
+          "maximum_loss_usd": "2281.673649768843199999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8063.698606482237808102430732",
+          "origin_nav": "10345.37225625108100810243073",
+          "origin_phase": "close",
+          "origin_timestamp": 1759795200
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.1499988617552424024024024022",
+          "loss_usd": "1498.488628934871599999999998",
+          "maximum_loss_usd": "1498.566526739999999999999998",
+          "maximum_stress_peak_drawdown": "0.2593309132774439455992562646",
+          "nav": "8491.511371065128400000000002",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "stress_peak_drawdown": "0.1499988617552424024024024022"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.1378438586628773916790603077",
+          "loss_usd": "1426.046031105526999999999998",
+          "maximum_loss_usd": "1426.046031105526999999999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8919.326225145554008102430732",
+          "origin_nav": "10345.37225625108100810243073",
+          "origin_phase": "close",
+          "origin_timestamp": 1759795200
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2002152721462892529274428863",
+          "loss_usd": "1860.113122830741603240972292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7430.452491322966412963889169",
+          "origin_nav": "9290.565614153708016204861461",
+          "origin_phase": "after-terminal-BTC",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "10345.37225625108100810243073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "9290.565614153708016204861461",
+      "terminal_loss_fraction": "0.0709434385846291983795138539",
+      "trade_count": 2,
+      "turnover_usd": "4294.255048048654000000",
+      "worst_rolling_30day_loss": "0.07337009742906359304728072124"
+    },
+    "primary": {
+      "absolute_floor_pass_conditional": false,
+      "active_days": 364,
+      "actual_B1_comparison": "unavailable",
+      "actual_continuous_drawdown": "unavailable",
+      "cash_attribution": {
+        "commission_usd": "4.294956233212705346000000",
+        "market_pnl_usd": {
+          "BTC": "-701.185164051346000000",
+          "ETH": "0E-12",
+          "USDC": "1.750278311282041204861458438"
+        },
+        "reconstructed_profit_usd": "-718.0240970213253181411385416",
+        "spread_impact_usd": "4.294255048048654000000",
+        "terminal_dust_markdown_usd": "0E-18",
+        "terminal_route_usd": "10"
+      },
+      "cash_days": 1,
+      "complete_tail_loss_fraction": "1",
+      "conditional_numeric_risk_pass": true,
+      "descriptive_univariate_daily_proxy_beta": {
+        "BTC": 0.19294440102900068,
+        "ETH": 0.12061814676668843
+      },
+      "implementation_admitted": false,
+      "log_convention_diagnostic": {
+        "absolute_floor_classification_changed": false,
+        "difference_usd": "-176.2378180561510906946580017",
+        "erroneous_log_path_profit_usd": "-894.2619150774764088357965407",
+        "never_booked_as_cash": true
+      },
+      "max_crypto_fraction": "0.2759731310313937727806696313",
+      "mean_crypto_fraction": "0.1993300033305082925587901950",
+      "mean_exposure_and_cash_days_sampling": "daily open after scheduled actions; maximum uses all retained states",
+      "net_cash_profit_usd": "-718.024097021325318141138539",
+      "observed_discrete_max_drawdown": "0.1463039744748901771496032722",
+      "policy": "B9",
+      "promotion_admitted": false,
+      "scenario": "primary",
+      "scope": "Conditional authored costs and historical bar/USD proxies only",
+      "simple_net_return": "-0.0718024097021325318141138539",
+      "status": "complete",
+      "stress": {
+        "btc50-eth90": {
+          "lock_days": 0,
+          "loss_fraction": "0.1377107303712310083144405362",
+          "loss_usd": "1423.195365089347051526999998",
+          "maximum_loss_usd": "1423.195365089347051526999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8911.477621197168009629430732",
+          "origin_nav": "10334.67298628651506115643073",
+          "origin_phase": "close",
+          "origin_timestamp": 1759795200
+        },
+        "combined-crypto-depeg-outage": {
+          "lock_days": 30,
+          "loss_fraction": "0.2833713558365337490023606426",
+          "loss_usd": "2928.550296251208929039486145",
+          "maximum_loss_usd": "2928.550296251208929039486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7406.122690035306132116944585",
+          "origin_nav": "10334.67298628651506115643073",
+          "origin_phase": "close",
+          "origin_timestamp": 1759795200
+        },
+        "crypto-minus50": {
+          "lock_days": 0,
+          "loss_fraction": "0.1377107303712310083144405362",
+          "loss_usd": "1423.195365089347051526999998",
+          "maximum_loss_usd": "1423.195365089347051526999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8911.477621197168009629430732",
+          "origin_nav": "10334.67298628651506115643073",
+          "origin_phase": "close",
+          "origin_timestamp": 1759795200
+        },
+        "crypto-minus80": {
+          "lock_days": 0,
+          "loss_fraction": "0.2203371685939696133031048580",
+          "loss_usd": "2277.112584142955282443199998",
+          "maximum_loss_usd": "2277.112584142955282443199998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8057.560402143559778713230732",
+          "origin_nav": "10334.67298628651506115643073",
+          "origin_phase": "close",
+          "origin_timestamp": 1759795200
+        },
+        "double-then-minus60": {
+          "intervening_actions": 1,
+          "lock_days": 0,
+          "loss_fraction": "0.1506990064422952888560160158",
+          "loss_usd": "1505.483074358529935671599998",
+          "maximum_loss_usd": "1505.561335764646739999999998",
+          "maximum_stress_peak_drawdown": "0.2591345394945423508738381626",
+          "nav": "8484.516925641470064328400002",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "stress_peak_drawdown": "0.1506990064422952888560160158"
+        },
+        "seven-day-outage": {
+          "lock_days": 7,
+          "loss_fraction": "0.1382621246870317330724563141",
+          "loss_usd": "1428.893845029644737418999998",
+          "maximum_loss_usd": "1428.893845029644737418999998",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "8905.779141256870323737430732",
+          "origin_nav": "10334.67298628651506115643073",
+          "origin_phase": "close",
+          "origin_timestamp": 1759795200
+        },
+        "stable-depeg-redemption-lock": {
+          "lock_days": 30,
+          "loss_fraction": "0.2002154713630917939472448808",
+          "loss_usd": "1858.395180595734936371772292",
+          "maximum_loss_usd": "2000.200060018005401620486145",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "7423.580722382939745487089169",
+          "origin_nav": "9281.975902978674681858861461",
+          "origin_phase": "after-terminal-BTC",
+          "origin_timestamp": 1788220800
+        },
+        "total-binance-loss": {
+          "lock_days": null,
+          "loss_fraction": "1",
+          "loss_usd": "9990.00000000000000000000000",
+          "maximum_loss_usd": "10334.67298628651506115643073",
+          "maximum_stress_peak_drawdown": "0",
+          "nav": "0",
+          "origin_nav": "9990.00000000000000000000000",
+          "origin_phase": "open",
+          "origin_timestamp": 1756684800,
+          "separate_tail": true
+        }
+      },
+      "terminal_liquidation_usd": "9281.975902978674681858861461",
+      "terminal_loss_fraction": "0.0718024097021325318141138539",
+      "trade_count": 2,
+      "turnover_usd": "4294.956233212705346000000",
+      "worst_rolling_30day_loss": "0.07329402739371600619128899017"
+    }
+  }
+}
