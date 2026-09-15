@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "chains": [
+    {
+      "name": "ethereum",
+      "chain_id": 1,
+      "url": "https://ethereum-rpc.publicnode.com",
+      "factory": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
+      "weth": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "usdc": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      "historical_block": 21000000,
+      "get_pool_calldata": "0x1698ee82000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000a0b86991c6218b36c1d19d4a2e9eb0ce3606eb480000000000000000000000000000000000000000000000000000000000000bb8"
+    },
+    {
+      "name": "base",
+      "chain_id": 8453,
+      "url": "https://mainnet.base.org",
+      "factory": "0x33128a8fc17869897dce68ed026d694621f6fdfd",
+      "weth": "0x4200000000000000000000000000000000000006",
+      "usdc": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+      "historical_block": 20000000,
+      "get_pool_calldata": "0x1698ee820000000000000000000000004200000000000000000000000000000000000006000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda029130000000000000000000000000000000000000000000000000000000000000bb8"
+    },
+    {
+      "name": "arbitrum",
+      "chain_id": 42161,
+      "url": "https://arb1.arbitrum.io/rpc",
+      "factory": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
+      "weth": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+      "usdc": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "historical_block": 280000000,
+      "get_pool_calldata": "0x1698ee8200000000000000000000000082af49447d8a07e3bd95bd0d56f35241523fbab1000000000000000000000000af88d065e77c8cc2239327c5edb3a432268e58310000000000000000000000000000000000000000000000000000000000000bb8"
+    }
+  ],
+  "groups": [
+    "chain",
+    "finalized",
+    "pool",
+    "gas",
+    "history_header",
+    "history_code"
+  ],
+  "fee_tier": 3000,
+  "max_requests": 18,
+  "timeout_seconds": 10,
+  "max_response_bytes": 262144,
+  "cooperative_seconds": 200,
+  "wall_seconds": 240,
+  "max_output_bytes": 8388608,
+  "reported_network_route": "NordVPN Finland according to user; not independently observed; no settings changed",
+  "scope": "Source capability only; no liquidity, swap-cost, history-coverage, token-safety or investment admission"
+}
