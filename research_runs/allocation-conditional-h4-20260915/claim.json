@@ -1,0 +1,177 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "cd4e9fc55be4dd724396adbc66ea11838699433c",
+  "experiment": {
+    "cells": [
+      "h4-primary",
+      "h4-doubled",
+      "h4-frictionless"
+    ],
+    "charter": {
+      "path": "research/broader-allocation-2026-09-15/conditional-charter.md",
+      "sha256": "1a3d780b7b61811cfea70dcc55fda3cc9c43e7d35cef3b43d8ecbd163293bc95"
+    },
+    "family": "allocation-decision",
+    "inputs": {
+      "ancestry": {
+        "dataset": "allocation-usdc-daily-proxy",
+        "path": "research/broader-allocation-2026-09-15/ancestry-crosswalk.json",
+        "sha256": "5ac19444ff2c016b32334701551d86fd866acb8b837222536669cb4bc774dcb2"
+      },
+      "benchmarks": {
+        "dataset": "allocation-usdc-daily-proxy",
+        "path": "research_runs/allocation-conditional-h2-20260915/outputs/benchmarks.json",
+        "sha256": "53ba49300e53ae2d95f542ebb39c3c832f6f9556b22520b606a43594b6c74df5"
+      },
+      "cash_terms": {
+        "dataset": "allocation-usdc-daily-proxy",
+        "path": "research_runs/allocation-cash-terms-20260915/outputs/cash-terms.json",
+        "sha256": "5be1cc7fff5f24dd58625c5bed7478d8aa68162f997b7f4000ab0cae6dd8a142"
+      },
+      "panel": {
+        "dataset": "allocation-usdc-daily-proxy",
+        "path": "research_runs/allocation-input-readiness-20260915/outputs/panel.json",
+        "sha256": "9b96ad55128b6e8771311c4aa90841b5f45d59365ed9124934b0f43e6f0244b3"
+      },
+      "spec": {
+        "dataset": "allocation-usdc-daily-proxy",
+        "path": "research/broader-allocation-2026-09-15/conditional-spec.json",
+        "sha256": "b9db53367e4b4a3e8d59e444b0019e32bb65dc9093a398c8c92c76a1c427b908"
+      }
+    },
+    "outputs": [
+      "h4-primary-attempt.json",
+      "h4-primary.json",
+      "h4-doubled-attempt.json",
+      "h4-doubled.json",
+      "h4-frictionless-attempt.json",
+      "h4-frictionless.json",
+      "h4-primary-placebo-attempt.json",
+      "h4-primary-placebo.json",
+      "h4-doubled-placebo-attempt.json",
+      "h4-doubled-placebo.json",
+      "h4-frictionless-placebo-attempt.json",
+      "h4-frictionless-placebo.json",
+      "summary.json"
+    ],
+    "parent": "allocation-conditional-h3-20260915",
+    "question": "What are the fixed H4 conditional full-capital cash, benchmark, stress and diagnostic outcomes without a real-account promotion claim?",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+      "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+    },
+    "selection": null,
+    "source_files": {
+      "research/broader-allocation-2026-09-15/conditional_book.py": "dc4a6d49d5f0c66ae11491e5059f74b3a2527cea0535dd7259b60acebd437beb",
+      "research/broader-allocation-2026-09-15/conditional_launcher.py": "3f594623597df65c5298b03691d08b1cc6acbe3f7d9558b5f7a067a39f719a96",
+      "research/broader-allocation-2026-09-15/conditional_run.py": "ac856a90e4a236c16804e7ca8f2a37cd6634db650657fd1a1655c3875286a3d2",
+      "research/broader-allocation-2026-09-15/register_conditional.py": "bccede21e0b0feaaa6de1242611166c86ea3afeb77b1c334dfd850f5f0051064",
+      "research/broader-allocation-2026-09-15/spot_book.py": "28877e2c61962f1c8afd5c56610a393b5745f8e4beec9e3e00159c9134c97709",
+      "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+      "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+    },
+    "stage": "development",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "allocation-usdc-daily-proxy",
+        "end": "2026-09-02T00:00:00Z",
+        "start": "2025-02-13T00:00:00Z"
+      }
+    ]
+  },
+  "experiment_id": "allocation-conditional-h4-20260915",
+  "family": {
+    "attempt_budget": 189,
+    "history_reference": "research/broader-allocation-2026-09-15/dex-source-charter.md and custody-launch-failure.json:178scoped allocation rows+1charged unclaimed failedlaunch;44additional relatedDeFirows not independent or fresh. Admission2/6;4core development+1confirmation caps remain; original unclaimed gate178preserved.",
+    "mechanism_id": "btc-eth-spot-cash-capital-allocation",
+    "prior_attempts": 179
+  },
+  "inputs": {
+    "ancestry": {
+      "dataset": "allocation-usdc-daily-proxy",
+      "path": "research/broader-allocation-2026-09-15/ancestry-crosswalk.json",
+      "sha256": "5ac19444ff2c016b32334701551d86fd866acb8b837222536669cb4bc774dcb2"
+    },
+    "benchmarks": {
+      "dataset": "allocation-usdc-daily-proxy",
+      "path": "research_runs/allocation-conditional-h2-20260915/outputs/benchmarks.json",
+      "sha256": "53ba49300e53ae2d95f542ebb39c3c832f6f9556b22520b606a43594b6c74df5"
+    },
+    "cash_terms": {
+      "dataset": "allocation-usdc-daily-proxy",
+      "path": "research_runs/allocation-cash-terms-20260915/outputs/cash-terms.json",
+      "sha256": "5be1cc7fff5f24dd58625c5bed7478d8aa68162f997b7f4000ab0cae6dd8a142"
+    },
+    "panel": {
+      "dataset": "allocation-usdc-daily-proxy",
+      "path": "research_runs/allocation-input-readiness-20260915/outputs/panel.json",
+      "sha256": "9b96ad55128b6e8771311c4aa90841b5f45d59365ed9124934b0f43e6f0244b3"
+    },
+    "spec": {
+      "dataset": "allocation-usdc-daily-proxy",
+      "path": "research/broader-allocation-2026-09-15/conditional-spec.json",
+      "sha256": "b9db53367e4b4a3e8d59e444b0019e32bb65dc9093a398c8c92c76a1c427b908"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2026-09-15T14:09:54.742416+00:00",
+      "identity": "broader-allocation-authored-dex-spec-20260915",
+      "start": "2026-09-15T14:09:53.742416+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-15T14:16:11.985774+00:00",
+      "identity": "broader-allocation-authored-spot-spec-20260915",
+      "start": "2026-09-15T14:16:10.985774+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-15T14:48:07.735893+00:00",
+      "identity": "retained-evidence-authored-cash-contract-20260915",
+      "start": "2026-09-15T14:48:06.735893+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-15T14:54:13.786874+00:00",
+      "identity": "fixed-invented-funded-spot-examples-20260915",
+      "start": "2026-09-15T14:54:12.786874+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-15T15:00:14.841784+00:00",
+      "identity": "fixed-historical-source-readiness-spec-20260915",
+      "start": "2026-09-15T15:00:13.841784+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-16T00:00:00Z",
+      "identity": "binance-btcusdc-ethusdc-kraken-usdcusd-daily-proxy-20250213-20260915",
+      "start": "2025-02-13T00:00:00Z",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "broader-allocation-2026-09-15",
+  "registration": "research/broader-allocation-2026-09-15/gates-conditional-h4.json",
+  "registration_sha256": "f75397322a74ee4296a04b35d100e013f00b9d7d5aea27117b940ca1001c4c2e",
+  "schema_version": 1,
+  "source": "cd4e9fc55be4dd724396adbc66ea11838699433c",
+  "started_at": "2026-09-15T15:44:54.747873+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "allocation-usdc-daily-proxy",
+      "end": "2026-09-02T00:00:00Z",
+      "identity": "binance-btcusdc-ethusdc-kraken-usdcusd-daily-proxy-20250213-20260915",
+      "start": "2025-02-13T00:00:00Z",
+      "state": "exposed"
+    }
+  ]
+}
