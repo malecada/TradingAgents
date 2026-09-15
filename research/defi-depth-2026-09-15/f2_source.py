@@ -1,6 +1,6 @@
 """F2 indivisible acquisition and conditional financial attempt; no CLI until admitted."""
 import argparse
-from datetime import datetime
+from datetime import datetime, timezone
 from fractions import Fraction as F
 import hashlib
 import importlib.util
@@ -38,7 +38,7 @@ def manifests(design):
     for year in ('2024','2025','2026'):
         for policy in book.POLICIES:
             for scenario in book.SCENARIOS:
-                cid=year+'-'+policy.lower()+'-'+scenario;cells.append(cid);outputs.append(cid+'.json')
+                cid=year+'-'+policy.lower()+'-'+scenario;cells.append(cid);outputs += [cid+'-attempt.json',cid+'.json']
     for scenario in book.SCENARIOS:
         for baseline in ['B'+str(i) for i in range(10)]+['wallet-ETH25','wallet-cash']:
             cells.append('D-'+scenario+'-'+baseline)
@@ -133,6 +133,9 @@ def financial(summary,benchmarks,publish):
         for policy in book.POLICIES:
             for scenario in book.SCENARIOS:
                 cid=year+'-'+policy.lower()+'-'+scenario
+                attempted=year=='2026' and panel is not None and defect is None
+                reason=None if attempted else ('Earlier frozen cohort prerequisites unavailable' if year!='2026' else ('Daily source panel unavailable' if panel is None else 'Prior measurement defect: '+defect))
+                publish(cid+'-attempt.json',{'id':cid,'attempted':attempted,'reason':reason,'started_utc':datetime.now(timezone.utc).isoformat(),'policy':policy,'scenario':scenario,'capital_usd':10000})
                 if year!='2026':out=unavailable('Earlier frozen cohort lacks complete retained prerequisites; no backfill in F2')
                 elif panel is None:out=unavailable('Indivisible F2 daily source prerequisite unavailable')
                 elif defect:out=unavailable('Not attempted after financial measurement defect: '+defect)

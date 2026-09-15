@@ -150,6 +150,11 @@ historical screen.27book cells (threecohorts×threepolicies×threescenarios) and
 allocation. A log-return convention diagnostic deliberately computes the wrong
 cash adjustment separately; actual PnL never uses it.
 
+Every one of27financial book cells publishes a durable before-calculation intent
+with attempted flag, reason andUTC. Catchable failures retain partial signed
+events/balances; a fatal interruption cannot turn a started book into an unattempted
+case.1532cells and2611outputs are fixed; the additional intents add no recipes.
+
 Synthetic flat/gain/loss/rounding/gas/depeg tests and independent accounting,
 source/history and exact preregistration review precede execution. Post-run review
 reconstructs raw source, every cell and signed balances independently. Missing
