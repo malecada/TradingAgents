@@ -1,0 +1,34 @@
+{
+  "start_epoch": 1739404800,
+  "terminal_epoch": 1788220800,
+  "cohort_start": "2025-09-01T00:00:00Z",
+  "cohort_end": "2026-09-01T00:00:00Z",
+  "expected_days": 566,
+  "max_requests": 4,
+  "timeout_seconds": 10,
+  "max_response_bytes": 262144,
+  "max_output_bytes": 2097152,
+  "cooperative_seconds": 70,
+  "requests": [
+    {
+      "id": "btc_bars",
+      "url": "https://api.binance.com/api/v3/klines?symbol=BTCUSDC&interval=1d&startTime=1739404800000&endTime=1788220800000&limit=1000",
+      "host": "api.binance.com"
+    },
+    {
+      "id": "eth_bars",
+      "url": "https://api.binance.com/api/v3/klines?symbol=ETHUSDC&interval=1d&startTime=1739404800000&endTime=1788220800000&limit=1000",
+      "host": "api.binance.com"
+    },
+    {
+      "id": "usd_identity",
+      "url": "https://api.kraken.com/0/public/AssetPairs?pair=USDCUSD",
+      "host": "api.kraken.com"
+    },
+    {
+      "id": "usd_bars",
+      "url": "https://api.kraken.com/0/public/OHLC?pair=USDCUSD&interval=1440&since=1739404800",
+      "host": "api.kraken.com"
+    }
+  ]
+}

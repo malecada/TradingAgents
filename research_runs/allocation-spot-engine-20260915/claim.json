@@ -1,0 +1,146 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "361f089cdac2ee78c4bdaf7987910f35c815c472",
+  "experiment": {
+    "cells": [
+      "round-trip",
+      "full-capital-profit",
+      "base-fee",
+      "third-asset-fee",
+      "insufficient-cash",
+      "phased-entry-idle-cash",
+      "lot-dust-nav",
+      "unvalued-transfer",
+      "pending-transfer-nav",
+      "pending-not-spendable",
+      "settlement-no-double-count",
+      "missing-held",
+      "depeg-token-total-loss",
+      "unknown-exit-fee",
+      "causal-next-bar",
+      "future-information-rejected",
+      "pre-decision-fill-rejected",
+      "late-fill-rejected",
+      "simple-versus-log-convention"
+    ],
+    "charter": {
+      "path": "research/broader-allocation-2026-09-15/spot-engine-charter.md",
+      "sha256": "5b4fe91f31d6c3190e748615012ff3c920820df84f6fc56566320a77faa34aec"
+    },
+    "family": "allocation-decision",
+    "inputs": {
+      "ancestry": {
+        "dataset": "authored-spot-engine",
+        "path": "research/broader-allocation-2026-09-15/ancestry-crosswalk.json",
+        "sha256": "5ac19444ff2c016b32334701551d86fd866acb8b837222536669cb4bc774dcb2"
+      },
+      "cash_result": {
+        "dataset": "authored-spot-engine",
+        "path": "research_runs/allocation-cash-terms-20260915/outputs/cash-terms.json",
+        "sha256": "5be1cc7fff5f24dd58625c5bed7478d8aa68162f997b7f4000ab0cae6dd8a142"
+      },
+      "spec": {
+        "dataset": "authored-spot-engine",
+        "path": "research/broader-allocation-2026-09-15/spot-engine-spec.json",
+        "sha256": "855584e605ca2316e4f55ae1af202557c8cd001559d8fd6df5ef08dff5b7f380"
+      }
+    },
+    "outputs": [
+      "engine-cases.json"
+    ],
+    "parent": "allocation-cash-terms-20260915",
+    "question": "Does the funded ledger conserve all cash and inventories with explicit fees, unavailable values and causal supplied clocks?",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+      "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+    },
+    "selection": null,
+    "source_files": {
+      "research/broader-allocation-2026-09-15/engine_admission.py": "c5392f409d991d816dd25bfc9047e9cc9fb088ac6f143290026f5951e313526b",
+      "research/broader-allocation-2026-09-15/spot_book.py": "28877e2c61962f1c8afd5c56610a393b5745f8e4beec9e3e00159c9134c97709",
+      "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+      "uv.lock": "61f517666a354255da7589bb6b2f03ab633ef523df1fe2c67bf9faa2a8bfc164"
+    },
+    "stage": "discovery",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "authored-spot-engine",
+        "end": "2026-09-15T14:54:13.786874+00:00",
+        "start": "2026-09-15T14:54:12.786874+00:00"
+      }
+    ]
+  },
+  "experiment_id": "allocation-spot-engine-20260915",
+  "family": {
+    "attempt_budget": 189,
+    "history_reference": "research/broader-allocation-2026-09-15/dex-source-charter.md and custody-launch-failure.json:178scoped allocation rows+1charged unclaimed failedlaunch;44additional relatedDeFirows not independent or fresh. Admission2/6;4core development+1confirmation caps remain; original unclaimed gate178preserved.",
+    "mechanism_id": "btc-eth-spot-cash-capital-allocation",
+    "prior_attempts": 179
+  },
+  "inputs": {
+    "ancestry": {
+      "dataset": "authored-spot-engine",
+      "path": "research/broader-allocation-2026-09-15/ancestry-crosswalk.json",
+      "sha256": "5ac19444ff2c016b32334701551d86fd866acb8b837222536669cb4bc774dcb2"
+    },
+    "cash_result": {
+      "dataset": "authored-spot-engine",
+      "path": "research_runs/allocation-cash-terms-20260915/outputs/cash-terms.json",
+      "sha256": "5be1cc7fff5f24dd58625c5bed7478d8aa68162f997b7f4000ab0cae6dd8a142"
+    },
+    "spec": {
+      "dataset": "authored-spot-engine",
+      "path": "research/broader-allocation-2026-09-15/spot-engine-spec.json",
+      "sha256": "855584e605ca2316e4f55ae1af202557c8cd001559d8fd6df5ef08dff5b7f380"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2026-09-15T14:09:54.742416+00:00",
+      "identity": "broader-allocation-authored-dex-spec-20260915",
+      "start": "2026-09-15T14:09:53.742416+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-15T14:16:11.985774+00:00",
+      "identity": "broader-allocation-authored-spot-spec-20260915",
+      "start": "2026-09-15T14:16:10.985774+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-15T14:48:07.735893+00:00",
+      "identity": "retained-evidence-authored-cash-contract-20260915",
+      "start": "2026-09-15T14:48:06.735893+00:00",
+      "state": "exposed"
+    },
+    {
+      "end": "2026-09-15T14:54:13.786874+00:00",
+      "identity": "fixed-invented-funded-spot-examples-20260915",
+      "start": "2026-09-15T14:54:12.786874+00:00",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "broader-allocation-2026-09-15",
+  "registration": "research/broader-allocation-2026-09-15/gates-spot-engine.json",
+  "registration_sha256": "e24a895c592fe68e295c91189976566f63850a223afcfcbb491525efa30d7ecf",
+  "schema_version": 1,
+  "source": "361f089cdac2ee78c4bdaf7987910f35c815c472",
+  "started_at": "2026-09-15T14:56:50.430250+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "authored-spot-engine",
+      "end": "2026-09-15T14:54:13.786874+00:00",
+      "identity": "fixed-invented-funded-spot-examples-20260915",
+      "start": "2026-09-15T14:54:12.786874+00:00",
+      "state": "exposed"
+    }
+  ]
+}
