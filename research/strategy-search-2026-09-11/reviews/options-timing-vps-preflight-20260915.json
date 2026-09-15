@@ -1,0 +1,37 @@
+{
+  "scope": "Authenticated read-only dedicated runtime and research filesystem recheck; no requests, claims or collector launch",
+  "command": [
+    "ssh",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "root@46.225.169.184",
+    "/opt/thesis-research/options-episode-20260911/runtime/cpython-3.13.13-linux-x86_64-gnu/bin/python3.13 -I -B - /opt/thesis-research/options-episode-20260911/runtime/cpython-3.13.13-linux-x86_64-gnu"
+  ],
+  "returncode": 0,
+  "stdout": "{\"bytecode_writes\": false, \"inventory_sha256\": \"cb70f90810dd532e244f23c37c8b2ba2e4ac2da3485ad69cb84b00ff2abeb5df\", \"isolated\": 1, \"members\": 5367, \"openssl\": \"OpenSSL 3.5.6 7 Apr 2026\", \"python\": \"3.13.13\"}\n{\"allocation_unit_bytes\": 4096, \"available_bytes\": 40348737536, \"checked_at\": \"2026-09-15T09:38:47.547272+00:00\", \"cpu_count\": 2, \"free_inodes\": 4484365, \"host\": \"pck-preds-1\", \"new_data_root_absent\": true, \"old_source_seal_sha256\": \"aecf7ac0245054e1a8c4859d7844b55a034265bc04fd5d00ef60f39e579e0595\"}\n",
+  "stderr": "",
+  "script_sha256": "917c945dac4bf0c7448d78e05b56af765a144bf125657014cce971f979ffad12",
+  "runtime": {
+    "bytecode_writes": false,
+    "inventory_sha256": "cb70f90810dd532e244f23c37c8b2ba2e4ac2da3485ad69cb84b00ff2abeb5df",
+    "isolated": 1,
+    "members": 5367,
+    "openssl": "OpenSSL 3.5.6 7 Apr 2026",
+    "python": "3.13.13"
+  },
+  "filesystem": {
+    "allocation_unit_bytes": 4096,
+    "available_bytes": 40348737536,
+    "checked_at": "2026-09-15T09:38:47.547272+00:00",
+    "cpu_count": 2,
+    "free_inodes": 4484365,
+    "host": "pck-preds-1",
+    "new_data_root_absent": true,
+    "old_source_seal_sha256": "aecf7ac0245054e1a8c4859d7844b55a034265bc04fd5d00ef60f39e579e0595"
+  },
+  "pass": true
+}

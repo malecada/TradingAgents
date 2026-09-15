@@ -36,10 +36,33 @@ source-timing evidence, not economic rejection of option selling.
 
 ## Current next work
 
-A separate post-failure information-value review is assessing whether an explicitly
-counted timing-corrected follow-up merits another allowance compared with other
-families. No new window/claim/source request is admitted by that assessment alone.
-Do not relax the existing criteria or silently retry the failed entry.
+Independent information-value review supports one fixed timing correction for
+preparation. Separate research_options_timing source preserves all five old
+packages and all20terminal identities. New hourly acquisition begins N+2000;
+action/freshness/deadline remains N+5000. No new window/grant/claim exists yet.
+
+Engineering checkpoint: c1c513356d32a9a6b330b34d9d7b9cb33aef8713 was pushed and
+separately queried equal. Optimized history source ad2be0c0f07e03e79af9b9585d5978c1b27b75c9
+is committed locally; backup of this later checkpoint remains pending. The
+closed-parent-only certificate grants no new allowance. Current named offline
+profile is running with unchanged source; see options-timing-offline-20260915.log.
+
+The full corrected invented calendar retains17144receipts, all225daily/4final
+requests and every failed compressed-loop segment. Returned normalization plus
+eight unavailable cells passes27.088seconds; separate known1057hour/eight cash
+books pass5.902seconds. Actual20-history repeated-operation preflight initially
+failed120seconds. Fresh per-call history reuse, independently reviewed, removes
+only immediate duplicate validation; revised representative envelope passes
+103.029seconds/190.3MB with16.971seconds margin. Full new-target metadata costs
+remain separately synthetic, not a universal maximum-load guarantee.
+
+The complete invented source archive is now verified on VPS and copied back:
+38686regular members/24,296,328bytes. Runtime fingerprint and filesystem reserve
+pass; actual new data root remains absent. Final named offline result, exact
+future window/target/grant review, committed remote backup and exclusive claim
+are prerequisites before one later release. See options-timing-engineering-20260915.md
+and reviews/options-timing-integration-review-20260915.md. No criteria relaxation
+or silent retry of the failed entry is authorized.
 
 Existing value_rev readiness: all704first-vintage rawfiles(83,368,599bytes) match
 the preserved manifest in two guarded hash passes, without parsing economic bodies.

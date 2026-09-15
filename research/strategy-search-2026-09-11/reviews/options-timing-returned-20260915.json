@@ -1,0 +1,240 @@
+{
+  "cells": {
+    "btc-1000-base": {
+      "funding_count": 0,
+      "reason": "funding coverage unknown; no zero-filled financial book",
+      "status": "unavailable",
+      "trace_count": 0,
+      "trade_count": 0
+    },
+    "btc-1000-stress": {
+      "funding_count": 0,
+      "reason": "funding coverage unknown; no zero-filled financial book",
+      "status": "unavailable",
+      "trace_count": 0,
+      "trade_count": 0
+    },
+    "btc-10000-base": {
+      "funding_count": 0,
+      "reason": "funding coverage unknown; no zero-filled financial book",
+      "status": "unavailable",
+      "trace_count": 0,
+      "trade_count": 0
+    },
+    "btc-10000-stress": {
+      "funding_count": 0,
+      "reason": "funding coverage unknown; no zero-filled financial book",
+      "status": "unavailable",
+      "trace_count": 0,
+      "trade_count": 0
+    },
+    "eth-1000-base": {
+      "funding_count": 0,
+      "reason": "funding coverage unknown; no zero-filled financial book",
+      "status": "unavailable",
+      "trace_count": 0,
+      "trade_count": 0
+    },
+    "eth-1000-stress": {
+      "funding_count": 0,
+      "reason": "funding coverage unknown; no zero-filled financial book",
+      "status": "unavailable",
+      "trace_count": 0,
+      "trade_count": 0
+    },
+    "eth-10000-base": {
+      "funding_count": 0,
+      "reason": "funding coverage unknown; no zero-filled financial book",
+      "status": "unavailable",
+      "trace_count": 0,
+      "trade_count": 0
+    },
+    "eth-10000-stress": {
+      "funding_count": 0,
+      "reason": "funding coverage unknown; no zero-filled financial book",
+      "status": "unavailable",
+      "trace_count": 0,
+      "trade_count": 0
+    }
+  },
+  "elapsed_seconds": 26.81917554699976,
+  "exact_eight_cells": true,
+  "financial_evidence": false,
+  "funding_coverage": {
+    "BTC": false,
+    "ETH": false
+  },
+  "kind": "invented-engineering-only",
+  "mode": "returned",
+  "normalization_bytes": 1357470,
+  "normalized_hours": {
+    "BTC": 145,
+    "ETH": 145
+  },
+  "output": {
+    "bytes": 2102,
+    "path": "research/strategy-search-2026-09-11/reviews/options-timing-returned-books-20260915.json",
+    "sha256": "5aa8121c0665378a25d87497f8d20444e311cc3b96c88b792bc6cf34f6267472"
+  },
+  "output_below_16MiB": true,
+  "package_assignment_unchanged": true,
+  "pass": true,
+  "raw_inventory_after": {
+    "inventory_sha256": "1236c6d763fd127fdf446dc8de51fccacd9c978c27734f78cdfd3f063d1cca8e",
+    "logical_bytes": 24188570,
+    "member_count": 38676
+  },
+  "raw_inventory_before": {
+    "inventory_sha256": "1236c6d763fd127fdf446dc8de51fccacd9c978c27734f78cdfd3f063d1cca8e",
+    "logical_bytes": 24188570,
+    "member_count": 38676
+  },
+  "raw_unchanged": true,
+  "returned_source_report": {
+    "assignment_sha256": "441584fbd0648469251e52d3494cd2aba078529102b0c37e26e6a61f3d29df68",
+    "intended_slot_count": 17144,
+    "inventory_sha256": "1236c6d763fd127fdf446dc8de51fccacd9c978c27734f78cdfd3f063d1cca8e",
+    "journal_reports": {
+      "bootstrap": {
+        "logical_bytes": 12011,
+        "members": 12,
+        "slots": 3,
+        "states": {
+          "received": 3
+        }
+      },
+      "daily": {
+        "logical_bytes": 836002,
+        "members": 678,
+        "slots": 225,
+        "states": {
+          "received": 225
+        }
+      },
+      "final": {
+        "logical_bytes": 65597,
+        "members": 15,
+        "slots": 4,
+        "states": {
+          "received": 4
+        }
+      },
+      "known": {
+        "logical_bytes": 12185992,
+        "members": 19899,
+        "slots": 8456,
+        "states": {
+          "received": 8455,
+          "unavailable": 1
+        }
+      },
+      "selected": {
+        "logical_bytes": 11083216,
+        "members": 18069,
+        "slots": 8456,
+        "states": {
+          "missed": 8,
+          "received": 8446,
+          "unavailable": 2
+        }
+      }
+    },
+    "logical_bytes": 24188570,
+    "member_count": 38676,
+    "original_data_root": "/tmp/options-timing-full-episode-yktcby37/data",
+    "original_host": "malecada-Zenbook-UM3402YA-UM3402YA",
+    "quiescence": "unavailable: independent external observation review required",
+    "reasons": [],
+    "selection_result": {
+      "BTC": {
+        "asset": "BTC",
+        "candidate_count": 1,
+        "entry_ms": 1798761600000,
+        "excluded_counts": {},
+        "index": "100",
+        "scope": "Rule-bound public metadata only; no access, margin, fills, premium or profitability claim.",
+        "selected": {
+          "call": "BTC-270108-100-C",
+          "call_rule": {
+            "maximum": "1000",
+            "minimum": "0.01",
+            "step": "0.01",
+            "tick": "0.1"
+          },
+          "exit_ms": 1799280000000,
+          "expiry_ms": 1799366400000,
+          "metadata_status": {
+            "call": "unverified",
+            "put": "unverified"
+          },
+          "option_tick": "0.1",
+          "price_filter_compliance": "unavailable; each execution still requires min/max/offset price validation",
+          "put": "BTC-270108-100-P",
+          "put_rule": {
+            "maximum": "1000",
+            "minimum": "0.01",
+            "step": "0.01",
+            "tick": "0.1"
+          },
+          "quantity": "0.01",
+          "quantity_grid": "(quantity-minQty) is an integer multiple of stepSize",
+          "strike": "100",
+          "unit": 1
+        },
+        "status": "complete"
+      },
+      "ETH": {
+        "asset": "ETH",
+        "candidate_count": 1,
+        "entry_ms": 1798761600000,
+        "excluded_counts": {},
+        "index": "100",
+        "scope": "Rule-bound public metadata only; no access, margin, fills, premium or profitability claim.",
+        "selected": {
+          "call": "ETH-270108-100-C",
+          "call_rule": {
+            "maximum": "1000",
+            "minimum": "0.01",
+            "step": "0.01",
+            "tick": "0.1"
+          },
+          "exit_ms": 1799280000000,
+          "expiry_ms": 1799366400000,
+          "metadata_status": {
+            "call": "unverified",
+            "put": "unverified"
+          },
+          "option_tick": "0.1",
+          "price_filter_compliance": "unavailable; each execution still requires min/max/offset price validation",
+          "put": "ETH-270108-100-P",
+          "put_rule": {
+            "maximum": "1000",
+            "minimum": "0.01",
+            "step": "0.01",
+            "tick": "0.1"
+          },
+          "quantity": "0.01",
+          "quantity_grid": "(quantity-minQty) is an integer multiple of stepSize",
+          "strike": "100",
+          "unit": 1
+        },
+        "status": "complete"
+      }
+    },
+    "source_status": "complete",
+    "staged_data_root": "/tmp/options-timing-full-episode-yktcby37/data"
+  },
+  "source_sha256": {
+    "tradingagents/research_options_timing/adapter.py": "17fb1a79d08ce4f13957e8a210b6a58bdafa899ace54cf65251b2521b970bc6a",
+    "tradingagents/research_options_timing/analysis.py": "af84494179d7cfdd0fae940ed9e786d86054e9869054ea764b0d98c1dabc3417",
+    "tradingagents/research_options_timing/closed_history.py": "119e9367afa093ed05c3dcf71e9be5c08b140459bddb5a6af62091bb0a31e687",
+    "tradingagents/research_options_timing/control.py": "409ba34335bb1489262cb9cc523f4234fdc573939aca3c81065d8e792138717c",
+    "tradingagents/research_options_timing/funding.py": "2bb225953b00231b1a3f8b8ae794c8576c0c072a7924a917ba8be4409e1f5d3a",
+    "tradingagents/research_options_timing/independent_verify.py": "eaac7c0eea33f908c9197af8fb3645389592ffe132dc8099de511bc7fb4a3293",
+    "tradingagents/research_options_timing/journal.py": "0ceebb774e33a1f9faffaaf0c58769dc30bfc65acbb0b12dc82e596b22b02bdd",
+    "tradingagents/research_options_timing/returned.py": "e43bae94f0b3fe52218def55eec2c7d8127d0c17fefc7598954b2f6a794e70b9",
+    "tradingagents/research_options_timing/schedule.py": "55126e0830166a98c6d30f837516ef68f4d5281e1aee645cd2bf68e5e3de5c18",
+    "tradingagents/research_options_timing/transport.py": "0c96d542101a5455c8674b76ac8f2964de66ed28b09cafb69bbc82ce197e8b4e",
+    "tradingagents/research_options_timing/worker.py": "340dc23251f50b35a3c69bc91ce4644c15facea9c416fafa376a5edcadc0c19a"
+  }
+}

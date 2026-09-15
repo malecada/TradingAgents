@@ -3,8 +3,10 @@
 September 15 resumption: the user said “lets keep going then”. Complete the
 options/VPS integration and frozen single-episode admission first. Then re-rank
 eligible independent questions using the retained evidence and cumulative budgets.
-The sole options episode is now admitted; effective5 is consumed. Exact release
-and finite launch status are in STATE.md. No recurring scheduler was created.
+The sole options episode failed source timing and is closed; effective5 is
+consumed. One isolated timing correction is engineered with independent review,
+representative resource and VPS round-trip proofs. Named offline verification
+and final sixth-grant/target review remain pending; no new collector exists.
 
 - [x] Complete registered carry-definition diagnostic and independent review; retained with this results checkpoint.
 - [x] Admit actual public event marks and matched bars once; independent review passed.
