@@ -1,0 +1,146 @@
+{
+  "canonical_block": {
+    "hash": "0x9943cd35a4e6985807df3d0e554cf9ffb34896ad065fa6c79023f63cb4d58ffa",
+    "number": 6046926,
+    "provider_assertion_only": true,
+    "target_timestamp": 1698883200,
+    "timestamp": 1698883199
+  },
+  "cells": [
+    {
+      "id": "2023-11-02-header-left",
+      "status": "complete",
+      "value": {
+        "baseFeePerGas": 50,
+        "hash": "0x9943cd35a4e6985807df3d0e554cf9ffb34896ad065fa6c79023f63cb4d58ffa",
+        "number": 6046926,
+        "parentHash": "0x07db3bfe2879db59abc8128989af5621a50577dcf2e71004ca1e91322ab10c92",
+        "timestamp": 1698883199
+      }
+    },
+    {
+      "id": "2023-11-02-header-right",
+      "status": "complete",
+      "value": {
+        "baseFeePerGas": 50,
+        "hash": "0x5d0df258ec2abdc14626d9f1854c6f557da2f2710a08f411be8e09f6a715d80a",
+        "number": 6046927,
+        "parentHash": "0x9943cd35a4e6985807df3d0e554cf9ffb34896ad065fa6c79023f63cb4d58ffa",
+        "timestamp": 1698883201
+      }
+    },
+    {
+      "id": "2023-11-02-canonical-bracket",
+      "status": "complete",
+      "value": {
+        "hash": "0x9943cd35a4e6985807df3d0e554cf9ffb34896ad065fa6c79023f63cb4d58ffa",
+        "number": 6046926,
+        "provider_assertion_only": true,
+        "target_timestamp": 1698883200,
+        "timestamp": 1698883199
+      }
+    },
+    {
+      "id": "2023-11-02-aave-income",
+      "reason": "positive source value required",
+      "status": "unavailable"
+    },
+    {
+      "id": "2023-11-02-aave-config",
+      "status": "complete",
+      "value": {
+        "words": [
+          0
+        ]
+      }
+    },
+    {
+      "id": "2023-11-02-aave-contract-cash",
+      "status": "complete",
+      "value": {
+        "words": [
+          0
+        ]
+      }
+    },
+    {
+      "id": "2023-11-02-aave-scaled-supply",
+      "reason": "RPC byte string length mismatch",
+      "status": "unavailable"
+    },
+    {
+      "id": "2023-11-02-aave-total-supply",
+      "reason": "RPC byte string length mismatch",
+      "status": "unavailable"
+    },
+    {
+      "id": "2023-11-02-lp-slot0",
+      "reason": "missing/error/null member: {'jsonrpc': '2.0', 'error': {'code': -32016, 'message': 'over rate limit'}, 'id': '2023-11-02-lp-slot0'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "2023-11-02-lp-liquidity",
+      "reason": "missing/error/null member: {'jsonrpc': '2.0', 'error': {'code': -32016, 'message': 'over rate limit'}, 'id': '2023-11-02-lp-liquidity'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "2023-11-02-lp-fee0",
+      "reason": "missing/error/null member: {'jsonrpc': '2.0', 'error': {'code': -32016, 'message': 'over rate limit'}, 'id': '2023-11-02-lp-fee0'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "2023-11-02-lp-fee1",
+      "reason": "missing/error/null member: {'jsonrpc': '2.0', 'error': {'code': -32016, 'message': 'over rate limit'}, 'id': '2023-11-02-lp-fee1'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "2023-11-02-lp-lower",
+      "reason": "missing/error/null member: {'jsonrpc': '2.0', 'error': {'code': -32016, 'message': 'over rate limit'}, 'id': '2023-11-02-lp-lower'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "2023-11-02-lp-upper",
+      "reason": "RPC byte string length mismatch",
+      "status": "unavailable"
+    },
+    {
+      "id": "2023-11-02-oracle-usdc-price",
+      "reason": "missing/error/null member: {'jsonrpc': '2.0', 'error': {'code': 3, 'message': 'execution reverted'}, 'id': '2023-11-02-oracle-usdc-price'}",
+      "status": "unavailable"
+    },
+    {
+      "id": "2023-11-02-oracle-weth-price",
+      "status": "complete",
+      "value": {
+        "words": [
+          184626790604
+        ]
+      }
+    },
+    {
+      "id": "2023-11-02-aave-implementation",
+      "status": "complete",
+      "value": {
+        "words": [
+          "0xdc9bafe7b1df4f7af863fcada6827e488d06bb20"
+        ]
+      }
+    },
+    {
+      "id": "2023-11-02-atoken-implementation",
+      "reason": "implementation/source address absent",
+      "status": "unavailable"
+    },
+    {
+      "id": "2023-11-02-aave-supply-identity",
+      "reason": "'aave-income'",
+      "status": "unavailable"
+    }
+  ],
+  "day": {
+    "candidate_block": 6046926,
+    "date": "2023-11-02",
+    "timestamp": 1698883200
+  },
+  "scope": "Source states and provider valuation proxies; no cashflow or execution admission"
+}

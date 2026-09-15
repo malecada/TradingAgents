@@ -1,0 +1,170 @@
+{
+  "attempted": true,
+  "body_base64": "W3sianNvbnJwYyI6IjIuMCIsInJlc3VsdCI6IjB4MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIsImlkIjoiMjAyMy0wOS0xNC1hYXZlLWluY29tZSJ9LHsianNvbnJwYyI6IjIuMCIsInJlc3VsdCI6IjB4MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIsImlkIjoiMjAyMy0wOS0xNC1hYXZlLWNvbmZpZyJ9LHsianNvbnJwYyI6IjIuMCIsInJlc3VsdCI6IjB4MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIsImlkIjoiMjAyMy0wOS0xNC1hYXZlLWNvbnRyYWN0LWNhc2gifSx7Impzb25ycGMiOiIyLjAiLCJyZXN1bHQiOiIweCIsImlkIjoiMjAyMy0wOS0xNC1hYXZlLXNjYWxlZC1zdXBwbHkifSx7Impzb25ycGMiOiIyLjAiLCJyZXN1bHQiOiIweCIsImlkIjoiMjAyMy0wOS0xNC1hYXZlLXRvdGFsLXN1cHBseSJ9LHsianNvbnJwYyI6IjIuMCIsImVycm9yIjp7ImNvZGUiOi0zMjAxNiwibWVzc2FnZSI6Im92ZXIgcmF0ZSBsaW1pdCJ9LCJpZCI6IjIwMjMtMDktMTQtbHAtc2xvdDAifSx7Impzb25ycGMiOiIyLjAiLCJlcnJvciI6eyJjb2RlIjotMzIwMTYsIm1lc3NhZ2UiOiJvdmVyIHJhdGUgbGltaXQifSwiaWQiOiIyMDIzLTA5LTE0LWxwLWxpcXVpZGl0eSJ9LHsianNvbnJwYyI6IjIuMCIsImVycm9yIjp7ImNvZGUiOi0zMjAxNiwibWVzc2FnZSI6Im92ZXIgcmF0ZSBsaW1pdCJ9LCJpZCI6IjIwMjMtMDktMTQtbHAtZmVlMCJ9LHsianNvbnJwYyI6IjIuMCIsImVycm9yIjp7ImNvZGUiOi0zMjAxNiwibWVzc2FnZSI6Im92ZXIgcmF0ZSBsaW1pdCJ9LCJpZCI6IjIwMjMtMDktMTQtbHAtZmVlMSJ9LHsianNvbnJwYyI6IjIuMCIsImVycm9yIjp7ImNvZGUiOi0zMjAxNiwibWVzc2FnZSI6Im92ZXIgcmF0ZSBsaW1pdCJ9LCJpZCI6IjIwMjMtMDktMTQtbHAtbG93ZXIifV0K",
+  "body_bytes": 1011,
+  "body_complete": true,
+  "body_sha256": "9e657e8c4bf74a1e82275a16065dd6b8be7cdc5d44d12ca98a9c4fbb48b5344d",
+  "elapsed_seconds": 4.962223244001507,
+  "error": null,
+  "headers": {
+    "Content-Type": "application/json",
+    "Date": "Tue, 15 Sep 2026 17:19:40 GMT"
+  },
+  "http_status": 200,
+  "reason": null,
+  "request": [
+    {
+      "id": "2023-09-14-aave-income",
+      "jsonrpc": "2.0",
+      "method": "eth_call",
+      "params": [
+        {
+          "data": "0xd15e0053000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+          "to": "0xa238dd80c259a72e81d7e4664a9801593f98d1c5"
+        },
+        {
+          "blockHash": "0x454b6f55c6d982774c1bf2a5fd15faa13f68164bac1586577f912fbbcfa8c415",
+          "requireCanonical": true
+        }
+      ]
+    },
+    {
+      "id": "2023-09-14-aave-config",
+      "jsonrpc": "2.0",
+      "method": "eth_call",
+      "params": [
+        {
+          "data": "0xc44b11f7000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+          "to": "0xa238dd80c259a72e81d7e4664a9801593f98d1c5"
+        },
+        {
+          "blockHash": "0x454b6f55c6d982774c1bf2a5fd15faa13f68164bac1586577f912fbbcfa8c415",
+          "requireCanonical": true
+        }
+      ]
+    },
+    {
+      "id": "2023-09-14-aave-contract-cash",
+      "jsonrpc": "2.0",
+      "method": "eth_call",
+      "params": [
+        {
+          "data": "0x70a082310000000000000000000000004e65fe4dba92790696d040ac24aa414708f5c0ab",
+          "to": "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
+        },
+        {
+          "blockHash": "0x454b6f55c6d982774c1bf2a5fd15faa13f68164bac1586577f912fbbcfa8c415",
+          "requireCanonical": true
+        }
+      ]
+    },
+    {
+      "id": "2023-09-14-aave-scaled-supply",
+      "jsonrpc": "2.0",
+      "method": "eth_call",
+      "params": [
+        {
+          "data": "0xb1bf962d",
+          "to": "0x4e65fe4dba92790696d040ac24aa414708f5c0ab"
+        },
+        {
+          "blockHash": "0x454b6f55c6d982774c1bf2a5fd15faa13f68164bac1586577f912fbbcfa8c415",
+          "requireCanonical": true
+        }
+      ]
+    },
+    {
+      "id": "2023-09-14-aave-total-supply",
+      "jsonrpc": "2.0",
+      "method": "eth_call",
+      "params": [
+        {
+          "data": "0x18160ddd",
+          "to": "0x4e65fe4dba92790696d040ac24aa414708f5c0ab"
+        },
+        {
+          "blockHash": "0x454b6f55c6d982774c1bf2a5fd15faa13f68164bac1586577f912fbbcfa8c415",
+          "requireCanonical": true
+        }
+      ]
+    },
+    {
+      "id": "2023-09-14-lp-slot0",
+      "jsonrpc": "2.0",
+      "method": "eth_call",
+      "params": [
+        {
+          "data": "0x3850c7bd",
+          "to": "0x6c561b446416e1a00e8e93e221854d6ea4171372"
+        },
+        {
+          "blockHash": "0x454b6f55c6d982774c1bf2a5fd15faa13f68164bac1586577f912fbbcfa8c415",
+          "requireCanonical": true
+        }
+      ]
+    },
+    {
+      "id": "2023-09-14-lp-liquidity",
+      "jsonrpc": "2.0",
+      "method": "eth_call",
+      "params": [
+        {
+          "data": "0x1a686502",
+          "to": "0x6c561b446416e1a00e8e93e221854d6ea4171372"
+        },
+        {
+          "blockHash": "0x454b6f55c6d982774c1bf2a5fd15faa13f68164bac1586577f912fbbcfa8c415",
+          "requireCanonical": true
+        }
+      ]
+    },
+    {
+      "id": "2023-09-14-lp-fee0",
+      "jsonrpc": "2.0",
+      "method": "eth_call",
+      "params": [
+        {
+          "data": "0xf3058399",
+          "to": "0x6c561b446416e1a00e8e93e221854d6ea4171372"
+        },
+        {
+          "blockHash": "0x454b6f55c6d982774c1bf2a5fd15faa13f68164bac1586577f912fbbcfa8c415",
+          "requireCanonical": true
+        }
+      ]
+    },
+    {
+      "id": "2023-09-14-lp-fee1",
+      "jsonrpc": "2.0",
+      "method": "eth_call",
+      "params": [
+        {
+          "data": "0x46141319",
+          "to": "0x6c561b446416e1a00e8e93e221854d6ea4171372"
+        },
+        {
+          "blockHash": "0x454b6f55c6d982774c1bf2a5fd15faa13f68164bac1586577f912fbbcfa8c415",
+          "requireCanonical": true
+        }
+      ]
+    },
+    {
+      "id": "2023-09-14-lp-lower",
+      "jsonrpc": "2.0",
+      "method": "eth_call",
+      "params": [
+        {
+          "data": "0xf30dba93fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff2764c",
+          "to": "0x6c561b446416e1a00e8e93e221854d6ea4171372"
+        },
+        {
+          "blockHash": "0x454b6f55c6d982774c1bf2a5fd15faa13f68164bac1586577f912fbbcfa8c415",
+          "requireCanonical": true
+        }
+      ]
+    }
+  ],
+  "request_utc": "2026-09-15T17:19:35.494054+00:00",
+  "retrieval_utc": "2026-09-15T17:19:40.456259+00:00",
+  "url": "https://mainnet.base.org"
+}

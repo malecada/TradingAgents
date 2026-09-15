@@ -1,0 +1,91 @@
+{
+  "attempted": true,
+  "body_base64": "W3sianNvbnJwYyI6IjIuMCIsInJlc3VsdCI6IjB4IiwiaWQiOiIyMDIzLTEwLTE1LWxwLXVwcGVyIn0seyJqc29ucnBjIjoiMi4wIiwiZXJyb3IiOnsiY29kZSI6MywibWVzc2FnZSI6ImV4ZWN1dGlvbiByZXZlcnRlZCJ9LCJpZCI6IjIwMjMtMTAtMTUtb3JhY2xlLXVzZGMtcHJpY2UifSx7Impzb25ycGMiOiIyLjAiLCJyZXN1bHQiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDI0MzZlODBkMDAiLCJpZCI6IjIwMjMtMTAtMTUtb3JhY2xlLXdldGgtcHJpY2UifSx7Impzb25ycGMiOiIyLjAiLCJyZXN1bHQiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRjOWJhZmU3YjFkZjRmN2FmODYzZmNhZGE2ODI3ZTQ4OGQwNmJiMjAiLCJpZCI6IjIwMjMtMTAtMTUtYWF2ZS1pbXBsZW1lbnRhdGlvbiJ9LHsianNvbnJwYyI6IjIuMCIsInJlc3VsdCI6IjB4MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIsImlkIjoiMjAyMy0xMC0xNS1hdG9rZW4taW1wbGVtZW50YXRpb24ifV0K",
+  "body_bytes": 567,
+  "body_complete": true,
+  "body_sha256": "fee3291c98f54b4a01365ae13404b6984e2aadf39dad77b1105115c8d96d6de0",
+  "elapsed_seconds": 4.764937854997697,
+  "error": null,
+  "headers": {
+    "Content-Type": "application/json",
+    "Date": "Tue, 15 Sep 2026 17:36:21 GMT"
+  },
+  "http_status": 200,
+  "reason": null,
+  "request": [
+    {
+      "id": "2023-10-15-lp-upper",
+      "jsonrpc": "2.0",
+      "method": "eth_call",
+      "params": [
+        {
+          "data": "0xf30dba9300000000000000000000000000000000000000000000000000000000000d89b4",
+          "to": "0x6c561b446416e1a00e8e93e221854d6ea4171372"
+        },
+        {
+          "blockHash": "0x2a16aa75a62aa1a1c58dc5c21d25481fdad196cf56d0c7337e38d023d81bbc39",
+          "requireCanonical": true
+        }
+      ]
+    },
+    {
+      "id": "2023-10-15-oracle-usdc-price",
+      "jsonrpc": "2.0",
+      "method": "eth_call",
+      "params": [
+        {
+          "data": "0xb3596f07000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+          "to": "0x2cc0fc26ed4563a5ce5e8bdcfe1a2878676ae156"
+        },
+        {
+          "blockHash": "0x2a16aa75a62aa1a1c58dc5c21d25481fdad196cf56d0c7337e38d023d81bbc39",
+          "requireCanonical": true
+        }
+      ]
+    },
+    {
+      "id": "2023-10-15-oracle-weth-price",
+      "jsonrpc": "2.0",
+      "method": "eth_call",
+      "params": [
+        {
+          "data": "0xb3596f070000000000000000000000004200000000000000000000000000000000000006",
+          "to": "0x2cc0fc26ed4563a5ce5e8bdcfe1a2878676ae156"
+        },
+        {
+          "blockHash": "0x2a16aa75a62aa1a1c58dc5c21d25481fdad196cf56d0c7337e38d023d81bbc39",
+          "requireCanonical": true
+        }
+      ]
+    },
+    {
+      "id": "2023-10-15-aave-implementation",
+      "jsonrpc": "2.0",
+      "method": "eth_getStorageAt",
+      "params": [
+        "0xa238dd80c259a72e81d7e4664a9801593f98d1c5",
+        "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
+        {
+          "blockHash": "0x2a16aa75a62aa1a1c58dc5c21d25481fdad196cf56d0c7337e38d023d81bbc39",
+          "requireCanonical": true
+        }
+      ]
+    },
+    {
+      "id": "2023-10-15-atoken-implementation",
+      "jsonrpc": "2.0",
+      "method": "eth_getStorageAt",
+      "params": [
+        "0x4e65fe4dba92790696d040ac24aa414708f5c0ab",
+        "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc",
+        {
+          "blockHash": "0x2a16aa75a62aa1a1c58dc5c21d25481fdad196cf56d0c7337e38d023d81bbc39",
+          "requireCanonical": true
+        }
+      ]
+    }
+  ],
+  "request_utc": "2026-09-15T17:36:16.511313+00:00",
+  "retrieval_utc": "2026-09-15T17:36:21.276252+00:00",
+  "url": "https://mainnet.base.org"
+}
