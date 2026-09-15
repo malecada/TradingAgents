@@ -83,10 +83,10 @@ burn proceeds round down. Periphery sizing retains its intermediate truncation,
 then verifies that core mint quantities fit both funded token balances. Leftover
 tokens remain in the wallet. Integer helpers reject unsupported overflow ranges.
 
-The tick-to-square-root conversion is deliberately not implemented yet; frozen
-financial configuration must supply exact, independently verified TickMath
-boundaries. Decimal powers or an approximate floating-point exponent do not
-establish the exact usable v3 ticks.
+The additive v3_ticks.py helper now supplies exact TickMath boundaries, retaining
+integer intermediate truncation and contract rounding. Five invented-input tests
+and independent170digit multiplier reconstruction pass. Actual pool spacing and
+deployed semantics remain source qualifications; see reviews/v3-ticks-review.md.
 
 Inside fee growth excludes growth below and above the position. Boundary-outside
 counters depend on current tick and boundary initialization/crossings; their
@@ -102,6 +102,15 @@ meaning of the counters. A caller's `boundaries_qualified=True` flag is a requir
 assertion, not its proof. The consuming gate must specify evidence or mark the
 position's fee calculation unavailable. Likewise, modular arithmetic cannot
 distinguish a legitimate wrap from an incorrectly joined/reset source counter.
+
+A subsequently reviewed proof supplies a narrower exception for a continuously
+held **full usable-range** virtual position on the fixed historical path:
+global fee-growth increments equal its virtual inside-growth increments.
+Historical boundary clearing therefore does not require reconstruction for that
+specific attribution. Arbitrary ranges retain the above requirements. See
+reviews/full-range-fee-identity.md for proof and assumptions. This does not prove
+counterfactual earnings after adding liquidity, especially during historical
+zero-liquidity intervals, or establish actual mint/exit capacity.
 
 The primary LP comparator starts with the exact same token quantities and gas
 reserve. Account return and incremental LP value are both reported. There is no

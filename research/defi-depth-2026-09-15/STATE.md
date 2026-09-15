@@ -25,7 +25,7 @@ complete version semantics or profitable strategies.
 
 Successor claims3/11:Q1complete,Q2failed,R1active. Source slots2/6, financial0/4,
 repair1/1. Full R1 reservation plus actual predecessors18,986/25,000RPCsubcalls,
-leaving6,014. Documentary operations46/60. Raw reservation remains below2GiB.
+leaving6,014. Documentary operations49/60. Raw reservation remains below2GiB.
 The q3-design.json draft proposes2221additional subcalls; it is not an admitted
 reservation or experiment. Old allocation188/189, its four negative financial
 recipes, original options work and44related overlapping DeFi history remain.
@@ -53,3 +53,10 @@ No further go-ahead is needed. Do not call elapsed duration or missing data
 strategy failure or phase exhaustion. No orders, paid resources, user account or
 wallet actions, VPN changes, production changes or options-worker inspection.
 No implicit background automation or observer has been created.
+
+Additional preparation: exact v3_ticks.py passes5invented tests and independent
+review. A reviewed full-usable-range fee-index identity removes unnecessary
+historical boundary reconstruction for conditional historical-path attribution;
+actual counterfactual capacity/price effects remain unknown. STRESS-DESIGN.md
+records LP inventory changes, queue timing and lending/market-loss requirements.
+No financial gate or actual DeFi cash book has been executed.

@@ -88,3 +88,10 @@ to46/60. It documents aggregate queue views, request/finalization/claim ownershi
 and the distinction between accrued wrapper value and delayed ETH redemption.
 URL: https://docs.lido.fi/contracts/withdrawal-queue-erc721/ . No queue state,
 account, protocol yield or financial outcome was queried.
+
+Exact tick/range preparation added one official TickMath.sol open (47/60):
+https://raw.githubusercontent.com/Uniswap/v3-core/main/contracts/libraries/TickMath.sol .
+Independent full-range fee attribution review reopened UniswapV3Pool.sol and
+Tick.sol (two opens,49/60). The new proof and its conditional historical-path
+domain are retained in reviews/full-range-fee-identity.md; no market data or
+financial calculation was used. Historical source captures remain unchanged.
