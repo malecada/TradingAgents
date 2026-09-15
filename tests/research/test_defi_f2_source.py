@@ -71,3 +71,15 @@ def test_excludes_old_underlying_call_key_before_transport(capsys):
     d['prior_base_request_keys']=[m.p.request_key('eth_call',params)]
     with pytest.raises(ValueError,match='retried'):m.capture(d,c,p,f,**clocks)
     assert calls==[]
+
+def test_missing_left_header_suppresses_right_without_retry(capsys):
+    d,c,o,calls,f,p,clocks=fixture()
+    def missing(url,payload):
+        if payload['id']=='2025-09-02-header-left':
+            calls.append(payload)
+            body=json.dumps({'jsonrpc':'2.0','id':payload['id'],'error':{'code':-32000,'message':'historical state missing'}}).encode()
+            return {'body':body,'http_status':200,'headers':{},'error':None,'body_complete':True}
+        return f(url,payload)
+    summary,cells=m.capture(d,c,p,missing,**clocks)
+    assert len(calls)==2 and summary['status']=='unavailable'
+    assert o['2025-09-02-header-right-attempt.json']['attempted'] is False

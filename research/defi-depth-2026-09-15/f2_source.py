@@ -95,6 +95,7 @@ def capture(design,context,publish,fetch=q.public_post,**clocks):
             if date in context:row={'id':rid,'status':'complete','value':context[date]['headers'][off],'source_role':'retained Q3 raw'}
             else:row=request('base',q.member(rid,'eth_getBlockByNumber',[hex(day['candidate_block']+off),False]),lambda v,t,off=off:p.old.parse_header(v,day['candidate_block']+off,t),dependency=stop)
             headers.append(row);local.append(row)
+            if row['status']!='complete':stop=stop or 'First missing indispensable canonical header; no later acquisition'
         try:
             if any(r['status']!='complete' for r in headers):raise ValueError('canonical header unavailable')
             block=p.old.bracket(*(r['value'] for r in headers),day['timestamp'])
@@ -138,6 +139,8 @@ def financial(summary,benchmarks,publish):
                 else:
                     progress={}
                     try:out={**book.run_book(panel,policy,scenario,progress=progress),'status':'complete'}
+                    except book.FinancialUnavailable as exc:
+                        out={**unavailable('Authored feasibility unavailable: '+str(exc)),'partial':book.partial_snapshot(progress)}
                     except (ValueError,ArithmeticError) as exc:
                         defect=type(exc).__name__+': '+str(exc)
                         out={**unavailable('Financial measurement failure: '+defect),'partial':book.partial_snapshot(progress)}

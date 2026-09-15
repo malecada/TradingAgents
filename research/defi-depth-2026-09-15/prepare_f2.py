@@ -31,7 +31,7 @@ order=['2025-09-01','2025-09-02','2026-09-01']+[d['date'] for d in days if d['da
 design={k:q3[k] for k in ('pacing','recognized_rpc_throttling','max_response_bytes','denials_stop_endpoint')}
 design.update(prior_base_request_keys=sorted(all_keys),experiment=m.EXPERIMENT,recipe='One25%-of-initial-investable-USDC wrapped staking oracle/cash screen',days=days,acquisition_order=order,
  chains={'base':{'url':'https://mainnet.base.org','chain_id':8453}},max_rpc_subcalls=requests,max_http_requests=requests,worst_case_raw_bytes=requests*262144,
- prior_phase_rpc=1841,phase_rpc_cap=25000,post_reservation_rpc_remaining=25000-1841-requests,documentary_used=55,
+ prior_phase_rpc=1841,phase_rpc_cap=25000,post_reservation_rpc_remaining=25000-1841-requests,documentary_used=57,
  raw_known=754936,unknown_q2_reservation=262144,prior_existing_metadata_reads=1140942,phase_raw_cap=2147483648,
  prior_claims=6,phase_claim_cap=11,financial_slot='F2',financial_prior_used=0,shared_repair_used=1,
  primary_cohort='2026',other_cohorts=['2024','2025'],capital_usd=10000,annual_target_usd=1000,incremental_target_usd=200,
@@ -42,7 +42,7 @@ design.update(prior_base_request_keys=sorted(all_keys),experiment=m.EXPERIMENT,r
 write('f2-design.json',design)
 gate=json.loads((HERE/'gates-q3.json').read_text());family='unhedged-wrapper-cash-financial';dataset='wrapper-cash-exposed-financial'
 gate['families'][family]={'mechanism_id':'base-wsteth-unhedged-fixed-cash-oracle-price-increment-v1','prior_attempts':7,'attempt_budget':8,'history_reference':BASE+'f2-charter.md; seven direct imported predecessor claims,188original/44related records overlap; no source/repair budget reset'}
-gate['datasets'][dataset]={'identity':'base-wrapper-eth-usdc-exposed-20230902-20260901-plus-prior-source-history','history_reference':BASE+'f2-charter.md; Q1/Q2/R1/Q3 and original allocation/WBETH spent exposure inherited','exposures':[{'start':'2023-09-02T00:00:00Z','end':'2026-09-16T00:00:00Z','state':'exposed'}]}
+gate['datasets'][dataset]={'identity':'base-wrapper-eth-usdc-exposed-20230902-20260901-plus-prior-source-history','history_reference':BASE+'f2-charter.md; Q1/Q2/R1/Q3 and original allocation/WBETH spent exposure inherited','exposures':[{'start':'2023-09-02T00:00:00Z','end':'2026-09-15T19:24:00Z','state':'exposed'}]}
 paths={'design':BASE+'f2-design.json','attempt_history':BASE+'f2-attempt-history.json','q3_design':BASE+'q3-design-v2.json','phase':BASE+'phase-grant.json',
  'core_ancestry':'research/broader-allocation-2026-09-15/ancestry-crosswalk.json','defi_ancestry':'research/broader-allocation-2026-09-15/defi-ancestry-crosswalk.json',
  'benchmarks':'research_runs/allocation-conditional-h2-20260915/outputs/benchmarks.json',
@@ -62,7 +62,7 @@ cells,outputs=m.manifests(design)
 gate['experiments'][m.EXPERIMENT]={'family':family,'parent':None,'question':'Does one fixed25% wrapper/cash allocation deliver at least$1000 annual conditional net profit and$200 incremental value against eligible fixed controls within numerical risk limits?',
  'charter':ref(BASE+'f2-charter.md'),'stage':'development','reuse':'exploratory','selection':None,'source_files':sources,'runtime_hashes':runtime_hashes(),
  'inputs':{name:{**ref(path),'dataset':dataset} for name,path in paths.items()},
- 'windows':[{'dataset':dataset,'start':'2023-09-02T00:00:00Z','end':'2026-09-16T00:00:00Z','availability':'existing'}],
+ 'windows':[{'dataset':dataset,'start':'2023-09-02T00:00:00Z','end':'2026-09-15T19:24:00Z','availability':'existing'}],
  'cells':cells,'outputs':outputs}
 write('gates-f2.json',gate)
 print({'cells':len(cells),'outputs':len(outputs),'inputs':len(paths),'requests':requests,'raw_reservation':requests*262144})

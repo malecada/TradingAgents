@@ -19,6 +19,9 @@ SCENARIOS={'primary':{'gas':10**14,'haircut':F(3,1000),'adverse':F(1,1000),'rout
 'frictionless':{'gas':0,'haircut':F(0),'adverse':F(0),'route':F(10)}}
 POLICIES=('F2','wallet-ETH25','wallet-cash')
 
+class FinancialUnavailable(ValueError):
+    """Authored capital/execution feasibility fails for this cell only."""
+
 def floor(x): return x.numerator//x.denominator
 
 def render(x):
@@ -62,12 +65,12 @@ def liquidation(q,p,cost):
     """
     q=dict(q);gas=cost['gas'];operations=[]
     if q['WST']:
-        if q['ETH']<2*gas: raise ValueError('insufficient gas for wrapper exit')
+        if q['ETH']<2*gas: raise FinancialUnavailable('insufficient gas for wrapper exit')
         receive=sell_value(q['WST'],'WST',p,cost)
         operations.append({'asset':'WST','sold_atoms':q['WST'],'received_usdc_atoms':receive,'gas_atoms':2*gas})
         q['ETH']-=2*gas;q['USDC']+=receive;q['WST']=0
     if q['ETH']:
-        if q['ETH']<=gas: raise ValueError('insufficient gas for native terminal sale')
+        if q['ETH']<=gas: raise FinancialUnavailable('insufficient gas for native terminal sale')
         sold=q['ETH']-gas;receive=sell_value(sold,'ETH',p,cost)
         operations.append({'asset':'ETH','sold_atoms':sold,'received_usdc_atoms':receive,'gas_atoms':gas})
         q['ETH']=0;q['USDC']+=receive
@@ -109,7 +112,7 @@ def run_book(panel,policy,scenario,progress=None):
     if policy not in POLICIES or scenario not in SCENARIOS: raise ValueError('unregistered book')
     c=SCENARIOS[scenario];p0=panel[0]['prices']
     usdc=floor((CAPITAL-F(RESERVE,10**18)*p0['ETH'])/p0['USDC']*10**6)
-    if usdc<=0: raise ValueError('gas reserve exhausts capital')
+    if usdc<=0: raise FinancialUnavailable('gas reserve exhausts capital')
     initial={'USDC':usdc,'ETH':RESERVE,'WST':0}
     book=M.ProtocolBook({ASSETS[a]:q for a,q in initial.items()})
     formation=CAPITAL-mark(initial,p0)
@@ -130,6 +133,8 @@ def run_book(panel,policy,scenario,progress=None):
                 if oldq[a] and ratio!=1 and log_error is None:
                     try:log_adjust+=F(oldq[a],SCALE[a])*oldp[a]*(F(str(math.log(float(ratio))))-(ratio-1))
                     except (ValueError,OverflowError,ZeroDivisionError) as exc:log_error=type(exc).__name__+': '+str(exc)
+        checkpoint()
+        if progress is not None:progress.update(current_date=date,current_phase=phase,current_prices={a:fraction_record(v) for a,v in p.items()})
         value=liquidation(q,p,c)[0]
         states.append({'date':date,'phase':phase,'atoms':dict(q),'prices':{a:fraction_record(p[a]) for a in ASSETS},'liquidation_usd':fraction_record(value)})
         for name,row in stress(q,p,c).items():
@@ -148,6 +153,7 @@ def run_book(panel,policy,scenario,progress=None):
         after=amounts(book);loss=value-mark(after,p)
         event_loss+=loss
         economic_events.append({'id':event,'date':date,'debits_atoms':debits,'credits_atoms':credits,'gas_atoms':gas,'before_atoms':before,'after_atoms':after,'marked_loss_usd':fraction_record(loss)})
+        checkpoint()
         previous=(after,dict(p))
         observe(date,'after-'+event,p)
     for i,row in enumerate(panel):
@@ -157,12 +163,12 @@ def run_book(panel,policy,scenario,progress=None):
             budget=usdc//4
             factor=((1-c['haircut'])/(1+c['adverse']))**hops
             bought=floor(F(budget,10**6)*p['USDC']/p[a]*SCALE[a]*factor)
-            if not bought: raise ValueError('entry amount rounds to zero')
+            if not bought: raise FinancialUnavailable('entry amount rounds to zero')
             post(date,p,'entry',{'USDC':budget},{a:bought},2*c['gas'])
         if i==365:
             expected,terminal,operations=liquidation(amounts(book),p,c)
             for index,op in enumerate(operations):
-                if not op['received_usdc_atoms']: raise ValueError('terminal positive sale rounds to zero')
+                if not op['received_usdc_atoms']: raise FinancialUnavailable('terminal positive sale rounds to zero')
                 post(date,p,'exit-'+str(index),{op['asset']:op['sold_atoms']},{'USDC':op['received_usdc_atoms']},op['gas_atoms'])
             if amounts(book)!=terminal: raise ValueError('terminal atoms differ from liquidation plan')
             ending=mark(terminal,p)-c['route']

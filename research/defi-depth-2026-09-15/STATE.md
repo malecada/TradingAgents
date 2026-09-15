@@ -40,7 +40,7 @@ negative full cash books stay negative. No rerun for a missing complete.json.
 ## Cumulative budget
 
 Six claims of eleven:Q1,Q2,R1,Q3,Q4,Q6. Source5/6,financial0/4,repair1/1spent.
-Documentary55/60. Actual publicRPC1841/25000,23159remaining. Known new raw754936
+Documentary57/60. Actual publicRPC1841/25000,23159remaining. Known new raw754936
 bytes plus262144conservativeQ2unknown. Q4 existing metadata reads are tracked
 separately. UnusedQ3/R1 reservations release resources, not trial allowances.
 Original allocation188/189 and44relatedDeFi records remain unchanged. Original

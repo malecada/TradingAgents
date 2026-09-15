@@ -80,8 +80,9 @@ request and byte charge. No financial book is calculated without all366marks.
 
 1094newRPCmax;286785536rawbytesreserved. Prior1841RPC leaves22065after maximum
 reservation. Prior known raw754936, Q2unknown262144 and existing metadata reads
-1140942 are conservatively charged separately. Total remains below2GiB.55/60
-source documentary operations have been used. The additional operation reviewed
+1140942 are conservatively charged separately. Total remains below2GiB.57/60
+source documentary operations have been used (two later operations prepared the
+lending source model). F2's additional operation, number55, reviewed
 [AaveOracle](https://raw.githubusercontent.com/aave/aave-v3-core/master/contracts/misc/AaveOracle.sol).
 No paid resources or external account actions.
 
