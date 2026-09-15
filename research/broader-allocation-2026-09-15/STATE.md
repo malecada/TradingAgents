@@ -1,8 +1,8 @@
 # Broader program checkpoint — September 15, 2026
 
-**Wallet/DeFi design reviewed; first synthetic launch failed in the resource
-monitor before any lifecycle claim. One admission slot charged; no economic
-result and zero validated strategies.**
+**Wallet/DeFi design reviewed; existing corrected monitor verified for the next
+source step. The earlier failed launch remains charged1/6 with no economic
+result. Zero validated strategies.**
 The options study remains governed by its own frozen state and source. This
 checkpoint owns only the additive broader-program paths.
 
@@ -80,7 +80,8 @@ The guard report and [failure record](custody-launch-failure.json) are retained.
    effective count; see reviews/custody-launch-failure-review.md. No repeat of
    this launch, edited old registration or new-ID retry is permitted. Any pure
    guard diagnosis must use invented subprocesses and preserve the options/shared
-   runtime; a code defect has not yet been established from this error alone.
+   runtime. Subsequent recovery found the already reviewed v2 process-exit
+   correction; no new monitor code or original-claim retry is required.
 2. Before the next source registration, reconcile the off-ledger failed launch:
    core prior178 + one charged launch =179administrative consumption, despite
    zero new lifecycle claims. Keep the189cap and five remaining admission slots;
@@ -89,7 +90,10 @@ The guard report and [failure record](custody-launch-failure.json) are retained.
 3. Prepare the bounded Ethereum/Base/Arbitrum Uniswap source contract under
    DEFI.md, with exact contracts/requests/cells and source coverage classification.
    No token return ranking or financial screen is admitted by that preparation.
-   Resource monitoring must be independently dependable before another capture.
+   The existing reviewed resource_guard_v2.py now passes focused and isolated
+   synthetic lifecycle checks; see reviews/monitor-recovery.md. Pin its exact
+   version in the next source registration and preflight that source workflow.
+   The old guard/source/failed launch remain unchanged.
 4. Continue cash/source/engine/power admission within the finite remainder.
    Any DeFi financial replacement/addition requires ancestry, comparator,
    multiplicity and allowance review before outcomes. Missing evidence is
@@ -102,3 +106,13 @@ Original reviews and preservation receipts retain their original scope and bytes
 No automatic wakeup, background observer, paper start or deployment is configured.
 No additional permission is needed for the already authorized bounded research;
 financial adoption still depends on evidence and the frozen decision rule.
+
+## VPN clarification and recovered execution route
+
+The user reports NordVPN via Finland. The failed launch was a local memory
+sampling error before market requests; no evidence implicates VPN routing.
+The preparation had pinned the older guard despite an existing reviewed v2.
+Four focused tests and a complete isolated synthetic preflight now pass under
+v2. This resolves the monitor-selection blocker for preparing the next distinct
+DEX source question. No VPN setting, shared source, options worker, old gate or
+failed-launch charge changed. No test process remains running.
