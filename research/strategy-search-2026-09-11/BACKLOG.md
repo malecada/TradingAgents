@@ -59,3 +59,11 @@ revisable; finishing this initial list does not establish research exhaustion.
 - [x] Complete independent preparation-decision review and adopt explicit conservative value source/control conventions in the two dated preparation contracts. No source or financial admission.
 - [ ] Await actual options source observations under the frozen worker; independently diagnose and preserve any failure without a replay.
 - [ ] Value source semantics, historical availability, event funding and A randomization justification remain actual admission dependencies. No speculative engine build or repeated semantic search.
+
+- [x] Verify actual11:00entry: both asset selections complete; worker alive,
+  19 initial receipts, no source seal/exit at11:00:32.157477UTC. Full source and
+  economic admission remain pending; no replay or early financial look.
+- [x] Source-audit exact original null statistic/formula/stream and DAILY shift
+  index; preserve the unadopted weekly alternative and invalid-statistic defect.
+- [ ] Bounded inference review of inherited DAILY shifts under fixed cohorts and
+  temporal dependence; do not infer calibration from the plus-one formula.

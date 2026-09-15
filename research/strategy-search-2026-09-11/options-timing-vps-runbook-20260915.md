@@ -68,3 +68,13 @@ actual-deployment-20260915.json and reviews/options-timing-actual-launch-2026091
 The release byte review and seven shell-clock cases document the unusedv1 defect
 and v2 lower/upper checks. Worker guards remain necessary; shell clock tests
 cannot promise atomic execution under arbitrary OS scheduling or clock changes.
+
+
+## Latest observed entry status
+
+At2026-09-15T11:00:32.157477UTC, the original pane709702 held a live Python3.13
+worker. Both BTC/ETH initial selections were complete;3bootstrap,8known and
+8selected receipts existed. No source seal or supervisor exit existed. The
+retained operational-entry-check JSON supports this collection milestone only.
+No financial output was read or calculated; all subsequent source criteria and
+one-attempt rules remain in force. Earlier waiting observations are preserved.

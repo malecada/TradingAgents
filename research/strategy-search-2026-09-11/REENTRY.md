@@ -15,7 +15,11 @@ again or mutate any of the six frozen runtime packages. Old options-episode-
 20260911 remains failed/closed,8unavailable/0outputs; never restart that source.
 No seventh allowance, automatic restart or recurring scheduler is admitted.
 
-Immediate source next work: operational checks after10:58activation/11:00entry;
+Latest source status: the original Python worker was alive at11:00:32.157477UTC,
+BTC/ETH initial selections complete,3bootstrap/8known/8selected receipts and no
+source seal or supervisor exit. See operational-entry-check JSON. The earlier
+waiting observations below are historical. Immediate source next work: preserve
+the frozen subsequent hourly collection and inspect operational status as needed;
 no financial look during capture. Exactremote/runtime verification and solefinite
 launch are complete. The last read-only VPS observation was
 2026-09-15T10:28:44.889930UTC: the same bash/sleep PIDs were alive, the log

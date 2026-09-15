@@ -4,7 +4,7 @@ Research remains authorized by “lets keep going then”, superseding the earli
 pause-after-options/VPS boundary. Zero strategies are validated. Branch
 `research/strategy-search-2026-09-11`; inspect actual claims and Git status first.
 
-## Current status: timing successor claimed; finite VPS launcher waiting for lease
+## Current status: timing successor collecting after successful initial selection
 
 There are21identities:16complete,4failed,1active. The active target is
 options-timing-20260915, claimed at2026-09-15T10:02:56.191462+00:00 from
@@ -13,6 +13,16 @@ ClaimSHA550c753279b8ae290ca988c9a23d5201b18ef4fd85b3c405a2f6e8a1078e8a73.
 AssignmentSHA375d70df4656f8ad851b038ffaabb0cf61bb71115aadd750ac2d8dc9a933d4a3.
 The original options budget4/prior1 is preserved; effective6 is now consumed.
 There is no seventh allowance. Never call start again or change its source/gate.
+
+Latest authenticated operational observation: September15 11:00:32.157477UTC.
+The Python worker is alive in the original pane709702; BTC and ETH initial
+selection statuses are both complete. There are3bootstrap,8known and8selected
+receipts, with no source seal or supervisor exit. This establishes operational
+progress past the earlier initial-selection failure; it is not full source
+admission, selected-quote economic interpretation or a profitability result.
+See reviews/options-timing-operational-entry-check-20260915.json. Continue the
+frozen collection; no restart, replacement selection or interim financial look.
+
 
 Entry is11:00UTC September15; hourly acquisitionN+2000/deadlineN+5000.
 Observation endOctober29 11:00:05UTC; finalhistoryOctober30 11:00UTC;
@@ -281,3 +291,30 @@ automatic analysis is configured.
 
 Checkpoint ad7c20506f74c3a04bf8e46a04a7e6b5b1bf8a94 was pushed and independently
 queried equal. Later preparation changes require their own verified push.
+
+
+## September15 first-entry update
+
+The waiting-state passages above describe earlier observations and are superseded
+operationally by the11:00:32 check at the top. The next source milestone is the
+next frozen hourly acquisition, followed by the fixed future calendar. No
+continuous Codex monitor or automatic analysis has been configured. The completed source-only
+original-null audit resolves the exact statistic, >= tail, plus-one formula,
+single RNG stream and DAILY dev-row shifts. The proposed weekly replacement
+would be a material change and remains unadopted. The helper lacks finite/count
+validation; numerical formula recovery does not establish calibration. The next
+useful bounded preparation question is the validity of the inherited daily null
+under fixed cohorts and temporal dependence, retaining failure if unjustified.
+See reviews/value-rev-original-null-source-audit-20260915.md. No draw or new
+financial experiment is admitted.
+
+
+One independently proposed abstract null witness was enumerated in exactly30
+comparisons: a uniform six-phase observation with one elevated statistic and
+five zero statistics. The nonzero-only shift screen rejects with exact
+probability1/6 at nominal1/20 for that invented example, regardless of which
+nonzero offsets are drawn. This refutes universal calibration from the numerical
+formula alone; it does not measure actual daily Sharpe or strategy error rates.
+See reviews/value-rev-abstract-null-counterexample-20260915.json and its source
+review. Stop this specific witness after enumeration; no larger simulation sweep,
+new null law, changed gate or financial run follows automatically.

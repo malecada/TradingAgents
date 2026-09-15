@@ -1,0 +1,102 @@
+{
+  "scope": "Invented abstract six-phase finite-orbit enumeration, not a market/Sharpe/strategy experiment. Counterexample to universal calibration of nonzero-only shifts plus the finite-simulation formula. Does not measure actual value_rev false-positive rate.",
+  "source_review": "value-rev-original-null-source-audit-20260915.md",
+  "sampling_scope": "Explicit balanced deterministic offset recipe; high-phase rejection is independent of which nonzero offsets an IID recipe draws. Lower phases have p=1 for every recipe.",
+  "observed_phase_law": "uniform over all six phases",
+  "comparisons": 30,
+  "rows": [
+    {
+      "observed_phase": 0,
+      "observed_abstract_statistic": 1,
+      "five_nonzero_shift_statistics": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "each_offset_repeated": 100,
+      "null_draw_count": 500,
+      "p": "1/501",
+      "reject_at_005": true
+    },
+    {
+      "observed_phase": 1,
+      "observed_abstract_statistic": 0,
+      "five_nonzero_shift_statistics": [
+        1,
+        0,
+        0,
+        0,
+        0
+      ],
+      "each_offset_repeated": 100,
+      "null_draw_count": 500,
+      "p": "1",
+      "reject_at_005": false
+    },
+    {
+      "observed_phase": 2,
+      "observed_abstract_statistic": 0,
+      "five_nonzero_shift_statistics": [
+        0,
+        1,
+        0,
+        0,
+        0
+      ],
+      "each_offset_repeated": 100,
+      "null_draw_count": 500,
+      "p": "1",
+      "reject_at_005": false
+    },
+    {
+      "observed_phase": 3,
+      "observed_abstract_statistic": 0,
+      "five_nonzero_shift_statistics": [
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "each_offset_repeated": 100,
+      "null_draw_count": 500,
+      "p": "1",
+      "reject_at_005": false
+    },
+    {
+      "observed_phase": 4,
+      "observed_abstract_statistic": 0,
+      "five_nonzero_shift_statistics": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "each_offset_repeated": 100,
+      "null_draw_count": 500,
+      "p": "1",
+      "reject_at_005": false
+    },
+    {
+      "observed_phase": 5,
+      "observed_abstract_statistic": 0,
+      "five_nonzero_shift_statistics": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "each_offset_repeated": 100,
+      "null_draw_count": 500,
+      "p": "1",
+      "reject_at_005": false
+    }
+  ],
+  "rejection_probability": "1/6",
+  "nominal_probability": "1/20",
+  "conclusion": "Universal finite-orbit calibration does not follow from excluding identity and adding one. Actual daily Sharpe null remains unadmitted; no weekly alternative or p-rule amendment adopted."
+}

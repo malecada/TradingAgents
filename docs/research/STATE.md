@@ -13,8 +13,10 @@ The approved finite v2launcher was remotely verified and started10:14:29UTC,
 waiting for10:58worker activation/11:00entry. Atthat observation no actualdata
 root existed; collection had not started. Inspect active operational state;
 do not launch another worker.
-Latest read-only VPS check at10:28:44.889930UTC confirms the same waiting
-launcher and absent actual data root. Existing value_rev pure readiness and
+Latest authenticated VPS check at11:00:32.157477UTC confirms the Python
+worker is alive, BTC/ETH initial selections complete and19initial receipts
+present, with no source seal or supervisor exit. The earlier waiting status is
+superseded; frozen collection is proceeding, full source/economic admission pending. Existing value_rev pure readiness and
 explicit conservative preparation/control contracts are independently reviewed.
 Every second-vintage request is bounded to September29 09:10:51.915449UTC or
 later; source/P0 and financial admission remain pending. No automatic Codex
