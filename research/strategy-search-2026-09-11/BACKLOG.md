@@ -1,8 +1,9 @@
 # Prioritized backlog
 
-Latest user instruction: finish only the current options/VPS work, then pause.
-The later independent-family entries are deferred during that pause. No automatic
-wakeup or implicit collection launch follows from this backlog.
+September 15 resumption: the user said “lets keep going then”. Complete the
+options/VPS integration and frozen single-episode admission first. Then re-rank
+eligible independent questions using the retained evidence and cumulative budgets.
+No new empirical claim, collector or scheduler exists yet.
 
 - [x] Complete registered carry-definition diagnostic and independent review; retained with this results checkpoint.
 - [x] Admit actual public event marks and matched bars once; independent review passed.

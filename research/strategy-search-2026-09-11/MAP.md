@@ -4,10 +4,10 @@ Initial ranking, September 11, 2026. All rows unvalidated. Ranked by information
 value, plausible economic relevance, data quality and effort; not near-pass
 selection. Sources and limitations are in SOURCES.md and HISTORY.md.
 
-Latest user boundary: finish the current options/VPS setup, then pause. The map
-remains an evidence record, not an instruction to start another family during
-that pause. The deployable options collector remains incomplete; reviewed
-components and outstanding work are in `options-capture-engineering-checkpoint.md`.
+September 15 resumption: the user said “lets keep going then”. Complete the
+options/VPS integration and frozen single-episode admission first. Then re-rank
+eligible independent questions using the retained evidence and cumulative budgets.
+No new empirical claim, collector or scheduler exists yet.
 
 | Rank / family | Mechanism and plausible payer | Earlier evidence and open question | Cheapest informative test / deeper-work trigger | Capital/exposure/cost limits | Current disposition |
 |---|---|---|---|---|---|

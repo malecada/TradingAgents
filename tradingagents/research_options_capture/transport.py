@@ -40,7 +40,8 @@ def request_url(request):
     for key in ('startTime','endTime'):
         if key in params and (type(params[key]) is not int or not 0<=params[key]<=2**63-1):raise ValueError('integer funding window')
     if 'startTime' in params and params['startTime']>params['endTime']:raise ValueError('funding window ordering')
-    return endpoint+('?' + urlencode(params) if params else '')
+    ordered=[(key,params[key]) for key in routes[url.hostname][url.path]]
+    return endpoint+('?' + urlencode(ordered) if ordered else '')
 
 
 def _emit(value):
@@ -58,7 +59,8 @@ def worker(spec):
     cap=spec['body_cap'];deadline=spec['deadline_monotonic_ns']
     if type(cap) is not int or not 0<cap<=5*1024**2 or type(deadline) is not int:raise ValueError('body/deadline bound')
     before=time.time_ns()//1000000;mono=time.monotonic_ns();body=bytearray();pending=bytearray();status=None;error=None;complete=False;conn=None
-    # At most63 full frames plus one tail, matching the journal's64-prefix cap.
+    # At most63 frames including the tail; the parent enforces this body-specific
+    # production bound, preventing tiny-frame fragmentation of routine bodies.
     # Small routine bodies use a single frame. Unpublished child/pipe bytes are
     # not claimed durable; parent recovery preserves the uncertain intent.
     frame_size=max(8192,(cap+62)//63)
@@ -127,7 +129,7 @@ def _collect(journal,names,*,deadline_ms,spawn_command=None):
         urls[name]=request_url(slot['request'])
     if len({journal.slots[n]['scheduled_ms'] for n in names})!=1:raise ValueError('same scheduled group required')
     selector=selectors.DefaultSelector();children={};results={};stop=False
-    command=spawn_command or [sys.executable,'-B',str(Path(__file__).resolve()),'--worker']
+    command=spawn_command or [sys.executable,'-I','-B',str(Path(__file__).resolve()),'--worker']
     invalid_name=None
     try:
         for name in names:
@@ -164,7 +166,9 @@ def _collect(journal,names,*,deadline_ms,spawn_command=None):
                     elif kind=='chunk':
                         if row['phase']!='body' or set(frame)!={'kind','base64'} or not isinstance(frame['base64'],str):raise ValueError('worker chunk frame')
                         part=base64.b64decode(frame['base64'],validate=True)
-                        if not part or len(row['body'])+len(part)>journal.slots[name]['body_cap'] or row['frames']>=64:raise ValueError('worker body bound')
+                        cap=journal.slots[name]['body_cap'];frame_size=max(8192,(cap+62)//63)
+                        max_frames=(cap+frame_size-1)//frame_size
+                        if not part or len(row['body'])+len(part)>cap or row['frames']>=max_frames:raise ValueError('worker body/frame bound')
                         journal.partial(name,part)
                         row['body'].extend(part);row['frames']+=1
                     elif kind=='done':
@@ -204,6 +208,8 @@ def _collect(journal,names,*,deadline_ms,spawn_command=None):
         for name in names:
             row=children.get(name);body=bytes(row['body']) if row else b''
             metadata=dict(row['metadata']) if row else {'request_url':urls[name],'child_started':False,'attempted':False}
+            metadata.update(controller_window_start_ms=wall,controller_window_start_monotonic_ns=mono,
+                            controller_deadline_ms=deadline_ms,controller_deadline_monotonic_ns=deadline)
             if not row or not row['done'] or not row['eof'] or row['buffer'] or metadata.get('child_exit_code')!=0:
                 metadata.update(body_complete=False,error='incomplete/deadline/worker protocol; no retry',retrieval_ms=time.time_ns()//1000000,retrieval_monotonic_ns=time.monotonic_ns())
             start=metadata.get('request_ms');start_mono=metadata.get('request_monotonic_ns')

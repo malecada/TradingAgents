@@ -1,9 +1,9 @@
 """Local-only controller for one explicitly granted prospective options episode.
 
 No transport, scheduler, credentials, or financial evaluation is provided.
-Grant schema is checked by _admit; episode_protocol contains exactly version1,
+Grant schema is checked by _admit; episode_protocol contains exactly version2,
 observation_window(start,end), worker_lease(not_before,expires_at), and
-analysis_inputs. All clocks are explicit UTC ISO strings. Initial inputs
+analysis_inputs and resources. All clocks are explicit UTC ISO strings. Initial inputs
 are existing design bytes; future observed bytes are phase products, not inputs.
 Control callbacks/records grant no authority to a remote financial process.
 """
@@ -58,6 +58,7 @@ def local(root,name):
 
 
 def file_sha(path):
+    if not stat.S_ISREG(path.lstat().st_mode):raise ControlError('nonregular file refused before hashing')
     h=hashlib.sha256()
     with path.open('rb') as f:
         for chunk in iter(lambda:f.read(1024*1024),b''):h.update(chunk)
@@ -79,6 +80,7 @@ def syncdir(path):
 
 
 def immutable(path,value):
+    if path.exists() or path.is_symlink():raise FileExistsError(path)
     raw=value if isinstance(value,bytes) else encoded(value)
     temp=path.parent/('.pending-'+uuid.uuid4().hex)
     fd=os.open(temp,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
@@ -120,6 +122,30 @@ def inventory(root,own=None,allow_active=False):
     return items,claims
 
 
+RESOURCE_MAXIMA={'output_total_bytes':64*1024**2,'output_file_bytes':16*1024**2,
+                 'control_total_bytes':4*1024**2,'terminal_reserve_bytes':1024**2,
+                 'staging_reserve_bytes':16*1024**2}
+
+def validate_resources(value):
+    if not isinstance(value,dict) or set(value)!=set(RESOURCE_MAXIMA):raise ControlError('resource schema')
+    if any(type(value[k]) is not int or not 1<=value[k]<=v for k,v in RESOURCE_MAXIMA.items()):raise ControlError('resource cap')
+    if value['output_file_bytes']>value['output_total_bytes'] or value['terminal_reserve_bytes']<65536 or value['staging_reserve_bytes']<max(value['output_file_bytes'],value['control_total_bytes'],value['terminal_reserve_bytes']):raise ControlError('staging/failure reserve')
+
+
+def member_sizes(directory,allowed,total_cap,file_cap):
+    # Entire inventory is lstat-checked before any hash or content read. Crash
+    # staging is retained, but requires separate forensic closure, never deletion.
+    paths=list(directory.iterdir());sizes={}
+    for path in paths:
+        mode=path.lstat()
+        if not stat.S_ISREG(mode.st_mode) or path.name not in allowed:
+            raise ControlError('unsafe, pending, or unregistered member retained; terminal publication refused')
+        if mode.st_size>file_cap:raise ControlError('individual retained byte cap')
+        sizes[path.name]=mode.st_size
+    if sum(sizes.values())>total_cap:raise ControlError('total retained byte cap')
+    return sizes
+
+
 def _admit(root,registration,source,design_source,now,own=None):
     now=utc(now);root=Path(root).resolve()
     raw=_blob(root,source,registration)
@@ -128,7 +154,7 @@ def _admit(root,registration,source,design_source,now,own=None):
     if exp['family']!=FAMILY or family['mechanism_id']!=MECHANISM or type(family['attempt_budget']) is not int or family['attempt_budget']!=4 or type(family['prior_attempts']) is not int or family['prior_attempts']!=1:raise ControlError('original options family changed')
     if exp['stage'] not in ('development','exploratory') or len(exp['cells'])!=8 or len(set(exp['cells']))!=8:raise ControlError('fixed eight development cases required')
     protocol=exp['episode_protocol']
-    if set(protocol)!={'schema_version','observation_window','worker_lease','analysis_inputs'} or type(protocol['schema_version']) is not int or protocol['schema_version']!=1:raise ControlError('episode protocol schema')
+    if set(protocol)!={'schema_version','observation_window','worker_lease','analysis_inputs','resources'} or type(protocol['schema_version']) is not int or protocol['schema_version']!=2:raise ControlError('episode protocol schema')
     if set(protocol['observation_window'])!={'start','end'} or set(protocol['worker_lease'])!={'not_before','expires_at'}:raise ControlError('clock schema')
     start,end=map(utc,(protocol['observation_window']['start'],protocol['observation_window']['end']))
     lease_start,lease_end=map(utc,(protocol['worker_lease']['not_before'],protocol['worker_lease']['expires_at']))
@@ -139,8 +165,10 @@ def _admit(root,registration,source,design_source,now,own=None):
     for name,item in protocol['analysis_inputs'].items():
         if not re.fullmatch('[a-z][a-z0-9_-]{0,63}',name) or set(item)!={'path'}:raise ControlError('fixed analysis path schema')
         local(root,item['path'])
+    validate_resources(protocol['resources'])
+    if not isinstance(exp['outputs'],list) or not 1<=len(exp['outputs'])<=16:raise ControlError('bounded output denominator')
     for name in exp['outputs']:
-        if Path(name).name!=name or not name.endswith('.json'):raise ControlError('output basename required')
+        if not isinstance(name,str) or not re.fullmatch(r'[a-zA-Z0-9_-]{1,64}\.json',name):raise ControlError('bounded output basename required')
     if len(set(exp['outputs']))!=len(exp['outputs']):raise ControlError('duplicate outputs')
     if exp['runtime_hashes']!=runtime_hashes():raise ControlError('runtime source changed')
     pins=dict(exp['source_files'])
@@ -226,6 +254,7 @@ class Episode:
                    'windows':[{**w,'identity':spec['datasets'][w['dataset']]['identity'],'state':'exposed'} for w in exp['windows']],
                    'prior_exposures':[{**e,'identity':d['identity']} for d in spec['datasets'].values() for e in d['exposures']],
                    'episode_protocol':protocol,'episode_book_grant':exp['episode_book_grant'],'authority':'local-master-only'}
+            if len(encoded(claim))>4*1024**2:raise ControlError('claim byte cap')
             immutable(directory/'claim.json',claim)
             return cls(root,claim)
 
@@ -236,6 +265,9 @@ class Episode:
             claim=verify_claim(root/'research_runs'/TARGET);obj=cls(root,claim);obj._active(now_utc);return obj
 
     def _active(self,now,allow_analysis_failure=False):
+        allowed={'claim.json','control','outputs','complete.json','failed.json'}
+        if any(p.name not in allowed or p.is_symlink() for p in self.directory.iterdir()):raise ControlError('unsafe or pending episode member retained')
+        if (self.directory/'claim.json').stat().st_size>4*1024**2:raise ControlError('claim byte cap')
         if file_sha(self.directory/'claim.json')!=self.claim_hash or any((self.directory/n).exists() for n in ('complete.json','failed.json')):raise ControlError('changed or terminal claim')
         if utc(now)<utc(self.claim['started_at']):raise ControlError('control clock predates claim')
         _admit(self.root,self.claim['registration'],self.claim['source'],self.claim['design_source'],now,TARGET)
@@ -279,8 +311,10 @@ class Episode:
         return bound
 
     def _check_controls(self,now,check_analysis=True):
-        self._source_binding(now);self._stop_ack(now)
         allowed={'source-binding.json','stop-ack.json','analysis-intent.json','stop-pending.json'}
+        limits=self.claim['episode_protocol']['resources']
+        member_sizes(self.directory/'control',allowed,limits['control_total_bytes'],limits['control_total_bytes'])
+        self._source_binding(now);self._stop_ack(now)
         for path in (self.directory/'control').iterdir():
             if path.is_symlink() or not path.is_file() or (path.name not in allowed and not re.fullmatch(r'\.pending-[0-9a-f]{32}',path.name)):raise ControlError('unsafe control member')
         path=self.directory/'control/analysis-intent.json'
@@ -293,7 +327,11 @@ class Episode:
             value=json.loads(path.read_bytes())
             if set(value)!={'claim_sha256','requested_at','reason'} or value['claim_sha256']!=self.claim_hash or not utc(self.claim['started_at'])<=utc(value['requested_at'])<=utc(now):raise ControlError('stop-pending identity')
 
-    def _write(self,name,value):immutable(self.directory/'control'/name,value)
+    def _write(self,name,value):
+        raw=encoded(value);limits=self.claim['episode_protocol']['resources']
+        sizes=member_sizes(self.directory/'control',{'source-binding.json','stop-ack.json','analysis-intent.json','stop-pending.json'},limits['control_total_bytes'],limits['control_total_bytes'])
+        if sum(sizes.values())+len(raw)>limits['control_total_bytes'] or len(raw)>limits['staging_reserve_bytes']:raise ControlError('control publication byte cap')
+        immutable(self.directory/'control'/name,raw)
 
     def bind_source(self,*,seal,manifest,now_utc):
         with lock(self.root):
@@ -323,6 +361,9 @@ class Episode:
         with lock(self.root):
             self._active(now_utc)
             if not (self.directory/'control/analysis-intent.json').exists() or name not in self.claim['experiment']['outputs'] or not isinstance(body,bytes):raise ControlError('authorized analysis output required')
+            limits=self.claim['episode_protocol']['resources']
+            sizes=member_sizes(self.directory/'outputs',self.claim['experiment']['outputs'],limits['output_total_bytes'],limits['output_file_bytes'])
+            if len(body)>limits['output_file_bytes'] or sum(sizes.values())+len(body)>limits['output_total_bytes'] or len(body)>limits['staging_reserve_bytes']:raise ControlError('output publication byte cap')
             immutable(self.directory/'outputs'/name,body)
 
     def finish(self,*,status,cells,reason,now_utc):
@@ -334,6 +375,8 @@ class Episode:
                 if not path.exists():self._write('stop-pending.json',{'claim_sha256':self.claim_hash,'requested_at':utc(now_utc).isoformat(),'reason':reason})
                 return {'status':'stop-pending','terminal':False}
             if status not in ('complete','failed'):raise ControlError('terminal status')
+            limits=self.claim['episode_protocol']['resources']
+            member_sizes(self.directory/'outputs',self.claim['experiment']['outputs'],limits['output_total_bytes'],limits['output_file_bytes'])
             output_paths=list((self.directory/'outputs').iterdir())
             # Reject every unsafe/unregistered member before reading any output.
             # Pending crash files remain in place for separate forensic closure.
@@ -345,7 +388,9 @@ class Episode:
                 if not (self.directory/'control/analysis-intent.json').exists() or set(outputs)!=set(self.claim['experiment']['outputs']) or {c['id'] for c in cells}!=set(self.claim['experiment']['cells']) or len(cells)!=8 or any(c['status'] not in ('complete','unavailable') or c['status']=='unavailable' and not c.get('reason') for c in cells):raise ControlError('analysis/output/cell denominator incomplete')
             control={p.name:file_sha(p) for p in (self.directory/'control').iterdir()}
             receipt={'schema_version':1,'experiment_id':TARGET,'status':status,'ended_at':utc(now_utc).isoformat(),'source':self.claim['source'],'registration_sha256':self.claim['registration_sha256'],'claim_sha256':self.claim_hash,'output_sha256':outputs,'control_sha256':control,'cells':cells,'cell_count':len(cells),'unavailable_count':sum(c['status']=='unavailable' for c in cells),'reason':reason}
-            immutable(self.directory/(status+'.json'),receipt)
+            raw=encoded(receipt)
+            if len(raw)>limits['terminal_reserve_bytes'] or len(raw)>limits['staging_reserve_bytes']:raise ControlError('terminal failure reserve exceeded')
+            immutable(self.directory/(status+'.json'),raw)
             return {'status':status,'terminal':True}
 
 
@@ -361,7 +406,11 @@ def verify_episode(*,root,now_utc):
         if not terminals:
             episode._check_controls(now_utc)
             return {'status':'active','claim_sha256':episode.claim_hash,'authority':'local-master-only'}
-        receipt=json.loads((episode.directory/terminals[0]).read_bytes())
+        limits=claim['episode_protocol']['resources']
+        terminal_path=episode.directory/terminals[0]
+        if not stat.S_ISREG(terminal_path.lstat().st_mode) or terminal_path.stat().st_size>limits['terminal_reserve_bytes']:raise ControlError('unsafe or oversized terminal')
+        member_sizes(episode.directory/'outputs',claim['experiment']['outputs'],limits['output_total_bytes'],limits['output_file_bytes'])
+        receipt=json.loads(terminal_path.read_bytes())
         episode._check_controls(now_utc,check_analysis=receipt['status']!='failed')
         if utc(receipt['ended_at'])>utc(now_utc) or not episode._quiescent(receipt['ended_at']):raise ControlError('terminal preceded worker quiescence')
         controls={p.name:file_sha(p) for p in (episode.directory/'control').iterdir()}

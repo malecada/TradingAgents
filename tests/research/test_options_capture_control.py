@@ -46,7 +46,7 @@ def build_fixture(root):
     history_source=commit(root)
     now=datetime.now(timezone.utc);start=now+timedelta(days=1);end=start+timedelta(days=44)
     spec=copy.deepcopy(spec);spec['datasets']['future']={'identity':'invented-future','exposures':[],'history_reference':'new prospective'}
-    protocol={'schema_version':1,'observation_window':{'start':start.isoformat(),'end':end.isoformat()},'worker_lease':{'not_before':start.isoformat(),'expires_at':(end+timedelta(days=1)).isoformat()},'analysis_inputs':{'observations':{'path':'returned/observations.json'}}}
+    protocol={'schema_version':2,'resources':{'output_total_bytes':64*1024**2,'output_file_bytes':16*1024**2,'control_total_bytes':4*1024**2,'terminal_reserve_bytes':65536,'staging_reserve_bytes':16*1024**2},'observation_window':{'start':start.isoformat(),'end':end.isoformat()},'worker_lease':{'not_before':start.isoformat(),'expires_at':(end+timedelta(days=1)).isoformat()},'analysis_inputs':{'observations':{'path':'returned/observations.json'}}}
     exp={'family':m.FAMILY,'stage':'exploratory','parent':'history-02','source_files':{'runner.py':m.file_sha(root/'runner.py')},'runtime_hashes':m.runtime_hashes(),'charter':ref(root,'charter.md'),'selection':ref(root,'policy.md'),'inputs':{'design':{'path':'design.json','sha256':m.file_sha(root/'design.json'),'dataset':'history'}},'outputs':['books.json'],'cells':[f'case-{i}' for i in range(8)],'windows':[{'dataset':'future','start':start.isoformat(),'end':end.isoformat(),'availability':'prospective'}],'episode_protocol':protocol}
     prior,_=m.inventory(root)
     grant={'schema_version':1,'target_experiment':m.TARGET,'program_id':'invented','family_id':m.FAMILY,'mechanism_id':m.MECHANISM,'original_budget':4,'prior_attempts':1,'increment':1,'effective_budget':5,'target_contract_sha256':m.sha(m.canonical(exp)),'history_source':history_source,'prior_claims':prior,'options_prior_ids':['history-00','history-01','history-02']}
@@ -210,3 +210,41 @@ def test_finish_rejects_unsafe_output_before_hashing(fixture,monkeypatch,status,
         e.finish(status=status,cells=[],reason='invented',now_utc=fixture[4])
     assert not reads and path.lstat()
     assert not (e.directory/'complete.json').exists() and not (e.directory/'failed.json').exists()
+
+
+@pytest.mark.parametrize('key,value',[('output_total_bytes',64*1024**2+1),('output_file_bytes',16*1024**2+1),('control_total_bytes',4*1024**2+1),('terminal_reserve_bytes',65535),('staging_reserve_bytes',1)])
+def test_resource_registration_rejects_relaxation(fixture,key,value):
+    root,spec,grant,source,now=fixture
+    spec['experiments'][m.TARGET]['episode_protocol']['resources'][key]=value
+    source=rebind(root,spec,grant)
+    with pytest.raises(m.ControlError):m.Episode.start(root=root,registration='episode.json',source=source,now_utc=now)
+    assert not (root/'research_runs'/m.TARGET).exists()
+
+
+def test_output_publication_caps_and_duplicate_has_no_staging(fixture):
+    root,spec,grant,source,now=fixture
+    exp=spec['experiments'][m.TARGET];exp['outputs']=['books.json','diagnostic.json']
+    exp['episode_protocol']['resources']['output_file_bytes']=4
+    exp['episode_protocol']['resources']['output_total_bytes']=6
+    source=rebind(root,spec,grant);fixture=(root,spec,grant,source,datetime.now(timezone.utc).isoformat())
+    episode=start(fixture);end=episode.claim['episode_protocol']['observation_window']['end']
+    later=(*fixture[:4],end);binding,commit_id=source_binding(later,episode)
+    episode.analysis_intent(binding=binding,commit=commit_id,now_utc=end)
+    with pytest.raises(m.ControlError,match='byte cap'):episode.write_output('books.json',b'12345',now_utc=end)
+    episode.write_output('books.json',b'1234',now_utc=end)
+    with pytest.raises(m.ControlError,match='byte cap'):episode.write_output('diagnostic.json',b'123',now_utc=end)
+    assert list((episode.directory/'outputs').iterdir())==[episode.directory/'outputs/books.json']
+    episode.write_output('diagnostic.json',b'12',now_utc=end)
+    assert not list((episode.directory/'outputs').glob('.pending-*'))
+
+
+def test_control_and_terminal_reserve_before_publication(fixture):
+    episode=start(fixture)
+    with pytest.raises(m.ControlError,match='control publication'):
+        episode.finish(status='failed',cells=[],reason='x'*(4*1024**2),now_utc=fixture[4])
+    assert not list((episode.directory/'control').iterdir())
+    expiry=episode.claim['episode_protocol']['worker_lease']['expires_at']
+    with pytest.raises(m.ControlError,match='terminal failure reserve'):
+        episode.finish(status='failed',cells=[],reason='x'*65536,now_utc=expiry)
+    assert not (episode.directory/'failed.json').exists()
+    assert not list(episode.directory.glob('.pending-*'))

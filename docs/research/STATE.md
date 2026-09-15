@@ -1,10 +1,10 @@
-# Current research state — September 11, 2026
+# Current research state — September 15, 2026
 
-**Current scope: finish options/VPS work, then pause. Zero validated strategies.**
-The latest user instruction supersedes open-ended continuation: after the current
-options/VPS work, stop research for a while. Do not start another family or
-install a wakeup. Setup remains incomplete and no options collector is running;
-the program checkpoint distinguishes reviewed components from missing rollout.
+**Current scope: research resumed September 15; complete options/VPS integration first. Zero validated strategies.**
+The user subsequently said “lets keep going then”, lifting the earlier
+pause-after-setup instruction. The single prospective options episode remains
+unregistered and no collector is running. Reviewed components are being integrated
+and independently checked before the frozen grant, claim and research-only launch.
 The user explicitly launched the saved research prompt and superseded the
 preparation pause. Read the [active program state](../../research/strategy-search-2026-09-11/STATE.md),
 [charter](../../research/strategy-search-2026-09-11/CHARTER.md),

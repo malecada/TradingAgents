@@ -30,6 +30,7 @@ body=b'x'*s['body_cap']
 if mode=='overflow':body+=b'x'
 step=max(8192,(s['body_cap']+62)//63)
 if mode=='overflow':step=len(body)
+if mode=='fragmented':step=128
 for offset in range(0,len(body),step):emit(kind='chunk',base64=base64.b64encode(body[offset:offset+step]).decode())
 if mode=='partial':sys.exit(0)
 end=time.time_ns()//1000000+(500 if mode=='clockjump' else 0)
@@ -55,6 +56,17 @@ def setup(tmp_path, count=1, duration=5000, cap=8192):
 def collect(j, deadline, mode):
     return t._collect(j,list(j.slots),deadline_ms=deadline,
                       spawn_command=[sys.executable,'-B','-c',FAKE,mode])
+
+
+def test_tiny_frame_fragmentation_stops_at_production_bound(tmp_path):
+    path,args,now,deadline=setup(tmp_path)
+    with Journal(path,**args) as j:
+        j.begin_group(list(j.slots),now_ms=now)
+        with pytest.raises(ValueError,match='body/frame bound'):collect(j,deadline,'fragmented')
+        saved=json.loads((path/'receipt-s0.json').read_bytes())
+        assert not saved['metadata']['body_complete']
+        assert saved['body_bytes']==128 and len(list(path.glob('partial-*.bin')))==1
+        assert base64.b64decode(saved['body_base64'])==b'x'*128
 
 
 def test_full_sixteen_durable_prefixes_and_no_retry(tmp_path):
@@ -200,3 +212,10 @@ def test_no_network_without_active_journal(tmp_path,monkeypatch,state):
     if state=='unlocked':
         with pytest.raises(JournalError):collect(j,deadline,'ok')
     assert not calls
+
+
+def test_parameter_order_is_route_canonical_after_journal_sort():
+    req={'endpoint':'https://fapi.binance.com/fapi/v1/depth','parameters':{'symbol':'BTCUSDT','limit':10}}
+    expected='https://fapi.binance.com/fapi/v1/depth?symbol=BTCUSDT&limit=10'
+    assert t.request_url(req)==expected
+    assert t.request_url(json.loads(json.dumps(req,sort_keys=True)))==expected

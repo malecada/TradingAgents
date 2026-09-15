@@ -1,14 +1,54 @@
 # Active program state
 
-Latest user instruction: finish the current options/VPS work, then pause for a
-while. Only that bounded setup remains active; do not start another family,
-additional experiment or automatic wakeup. The research program remains
-incomplete; zero strategies are validated. Branch `research/strategy-search-2026-09-11`.
+Research resumed September 15, 2026: the user said “lets keep going then”, lifting
+the earlier pause-after-options/VPS instruction. Complete the reviewed options
+collector integration first, then its exact pre-window grant and verification.
+The program remains incomplete; zero strategies are validated.
+Branch `research/strategy-search-2026-09-11`.
 All19 attempted identities are terminal:16 completed investigations and three
 failed harness/resource attempts. No capture, paper session, order, scheduler or
 background job has been started by the current options setup. Inspect actual
 claims and Git status before resumption; never
 repeat a completed or failed identity.
+
+## September 15 integration in progress
+
+The dedicated VPS runtime is installed and independently verified: Python3.13.13,
+5367members with matching local/remote inventory cb70f90810dd532e244f23c37c8b2ba2e4ac2da3485ad69cb84b00ff2abeb5df.
+Only `/opt/thesis-research/options-episode-20260911/runtime` and its runtime-staging
+archive have been created remotely. No collector, twentieth claim, new grant or
+market request exists. No shared runtime, production service, systemd or cron changed.
+See options-vps-runbook-20260915.md and reviews/options-vps-runtime-20260915.json.
+
+Exact calendar/worker, source/rule/funding adapters, portable return normalization,
+independent protocol verifier and eight-case analysis now exist. Adversarial
+integration corrected URL parameter-order binding, raw-clock verification,
+per-asset rule identities and exposure denominators. The full known eight-book
+1057hour synthetic wrapper passes:11,618,712bytes,4.947seconds,78,340,096sampledRSS.
+Actual history reverified19=16complete+3failed in8.27seconds under the guard.
+
+Integration verification is complete. Named offline profile:1554tests+30subtests
+PASS694.55seconds, with two later executable-entry tests separately passed.
+The full17144-slot syntheticworker journal was completed across controlled
+resumptions after two retained compressed-total120second timeouts. Final states:
+17126received,13missed,5unavailable; no request was retried and prior bytes remain
+unchanged. A separate first rehearsal exposed URL parameter ordering and failed;
+its raw source and report remain preserved. These are invented engineering checks,
+not empirical claims or financial reruns.
+
+Returned-source preparation plus all8intentionally unavailable syntheticcases
+passed35.231seconds/116,428,800sampledRSS. Eight repeated actual19-history scans
+plus11.6MBatomic output publication passed57.214seconds/92,532,736RSS. The actual
+VPS rawroundtrip of that invented fixture preserved all38680package/datafiles,
+passed24.752seconds/122,896,384RSS and was admitted through returned.prepare.
+Full invented raw copies now exist locally and on the confirmed VPS, with hashes
+checked; this is not a backup claim for nonexistent future observations.
+The modular proofs do not guarantee allmaximumsource/nonlocalnetwork costs.
+
+Remaining: finish full-source/restart/return proof, independent final admission,
+CLI/package proof, exact future clocks and committed effective5 grant, verified
+branch backup, actual local claim, externally anchored source release and finite
+VPS launch. Current code is not yet authorized to gather market observations.
 
 ## Retained results
 
@@ -130,10 +170,10 @@ Next action, without another routine permission question:
    tmux/screen,2CPUs and39,759,348KiB free. Python3.13 was not on PATH; an isolated
    pinned runtime remains a prerequisite. No systemd edits, remote mutations,
    production reuse or implicit scheduler. No capture has started.
-4. After the current options/VPS setup, record its exact verified status and pause
-   as requested by the user. Do not continue independent families or schedule a
-   wakeup. This is a user-directed pause, not research exhaustion. Coverage review
-   retains the prospective episode as meaningful; no current snapshot is justified.
+4. After the options/VPS setup, verify its actual launch/stop state and preserve
+   the exact source, claim and raw-return contract. Continue only justified
+   registered work under the resumed authorization and cumulative budgets.
+   No scheduler or automated financial look follows implicitly.
 
 Current [setup checkpoint](options-capture-engineering-checkpoint.md): standalone journal, deterministic selection, bounded
 public transport and local episode-controller prototypes now exist. They do not
@@ -154,11 +194,11 @@ raw return. No such grant, actual claim or remote assignment exists. The local
 controller's stop/seal declarations require independently established worker
 quiescence; its verify_episode is a self-check, not the scientific reviewer.
 
-The user was asked whether future hourly collection should continue during the
-requested pause or all research processes should remain stopped. The answer is
-pending. Do not infer unattended collection authority from elapsed time or start
-collection while this newer pause-scope preference is unresolved. Independent
-preparation may continue only within the bounded setup; do not report it finished.
+The prior pause-scope question is superseded by the explicit September 15
+resumption. Collection still requires the complete reviewed frozen protocol;
+resumption is not a substitute for admission. Current engineering adds exact
+calendar/worker integration, independent protocol/resource verification and
+source/rule/funding adapters. No new source observations have been gathered.
 
 Existing value_rev needs its second vintage September18 or later, not an early
 substitute. News needs versioned source identity and observation clocks; Bitrue
@@ -193,5 +233,5 @@ actual historical snapshot proof, then9,344actual failed-run forensic checks.
 
 Preserve raw stores, original worktrees, all gates/ledgers and22deferred settlement
 cases. No credentials, provider contact, paid sources, orders or production changes.
-The latest pause-after-setup instruction supersedes open-ended continuation.
-Preserve a precise handoff and wait for the user to resume after that boundary.
+The September 15 resumption supersedes the earlier pause-after-setup boundary.
+Preserve a precise handoff, immutable attempts and the current running status.

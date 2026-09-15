@@ -1,0 +1,37 @@
+{
+  "scope": "Named reviewed offline profile plus final two executable-entry tests; no empirical/network test inputs",
+  "named_profile": {
+    "tests_passed": 1554,
+    "subtests_passed": 30,
+    "seconds": 694.55,
+    "exit_code": 0,
+    "log_path": "research/strategy-search-2026-09-11/reviews/options-integration-offline-20260915.log",
+    "log_sha256": "dc7dd2f94bffd77280e141be841754a7f4a788b2cec6aba8df93efc39f395eb0"
+  },
+  "additional_target_entries": {
+    "tests_passed": 2,
+    "seconds": 11.14,
+    "scope": "Actual target analysis and package build on disposable19-history fixtures; added after named-profile collection"
+  },
+  "final_builder_fixed_path_test": {
+    "tests_passed": 1,
+    "seconds": 2.3,
+    "scope": "Same package case rechecked after restricting sole remote data root"
+  },
+  "capture_source_unchanged_during_named_profile": true,
+  "source_sha256": {
+    "tradingagents/research_options_capture/adapter.py": "33604759509332850a2b2255da8ebc5ba8d5db296bf2a2ada3ebf2826d604b27",
+    "tradingagents/research_options_capture/analysis.py": "af84494179d7cfdd0fae940ed9e786d86054e9869054ea764b0d98c1dabc3417",
+    "tradingagents/research_options_capture/control.py": "c703f3a141eb96afa25f18e65a1fa31122614e830ec92e960d61b75103689249",
+    "tradingagents/research_options_capture/funding.py": "246742b0b56b5734949677462885040d7094ee67fb5c3a181f1ac03d959f6595",
+    "tradingagents/research_options_capture/independent_verify.py": "4a84ca1b50b67034e11bd04623208e8ba5d2a74f945c8d81368b15ad8fe06af4",
+    "tradingagents/research_options_capture/journal.py": "0ceebb774e33a1f9faffaaf0c58769dc30bfc65acbb0b12dc82e596b22b02bdd",
+    "tradingagents/research_options_capture/returned.py": "c1e68f426fdb825f3a4a22b8cb68bd95270bda8948a93dea535c440314d3e6cc",
+    "tradingagents/research_options_capture/schedule.py": "debe91112302449d1fa9ffe04dfc806e4cd9a179286d35cb7b2a91bdc8cff4e9",
+    "tradingagents/research_options_capture/transport.py": "0c96d542101a5455c8674b76ac8f2964de66ed28b09cafb69bbc82ce197e8b4e",
+    "tradingagents/research_options_capture/worker.py": "c597074eb022acad0edbc5676c93ea177098eac375451acffc11b39162625315",
+    "scripts/options_release_bootstrap.py": "07b53240e7967d209e98de426f50da05865cc4f4f203357e05e5ba1008cd33a3",
+    "scripts/options_release_package.py": "064cbd248ac691c3820f1751fb45162d51c9ee2a9d27d3bd8e6fc9751627470d",
+    "scripts/options_episode_analyze.py": "fb71bcf4d9a77c0d0938a5b7a0e25830c335e976198252d846a33ae25fce5d05"
+  }
+}
