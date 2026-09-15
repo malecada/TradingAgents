@@ -41,3 +41,15 @@ def test_overflow_negative_and_unknown_treasury_rejected():
     with pytest.raises(ValueError):m.ray_div(1,0)
     with pytest.raises(ValueError):m.deposit_preview(1,m.RAY,ACTIVE,0,None)
     with pytest.raises(ValueError):m.deposit_preview(-1,m.RAY,ACTIVE,0,0)
+
+def test_disabled_cap_does_not_require_unknown_treasury_or_debt():
+    r=m.supply_cap_sufficient_bound(1,None,ACTIVE,None,None,None,debt_bound_qualified=False)
+    assert r['sufficient_cap_pass'] and r['cap_disabled']
+
+def test_sufficient_treasury_bound_not_false_cap_failure():
+    config=ACTIVE|(1000<<116)|(1000<<64)
+    r=m.supply_cap_sufficient_bound(100*10**6,m.RAY,config,500*10**6,50*10**6,300*10**6,debt_bound_qualified=True)
+    assert r['sufficient_cap_pass']
+    r=m.supply_cap_sufficient_bound(200*10**6,m.RAY,config,500*10**6,50*10**6,300*10**6,debt_bound_qualified=True)
+    assert not r['sufficient_cap_pass'] and r['inconclusive_if_false']
+    with pytest.raises(m.SourceModelUnavailable):m.supply_cap_sufficient_bound(1,m.RAY,config,0,0,0,debt_bound_qualified=False)

@@ -143,3 +143,37 @@ requests or unregistered financial observations. F1pure lending math independent
 reviewPASS; next contract needs post-update treasury/index consistency or an
 explicit conservative source-model bound. F3stillrequires complete financial
 book/source/implementation/headroom/counterfactual-fee contract before admission.
+
+During activeF2, source inception/entry/terminal and initialdailyprice vectors
+completed without throttle; exactprogress remains session44555. F1nowhas a
+pre-financial70%lending/30%cash proposal in f1-financial-design-draft.md, replacing
+the prior unfrozen100%proposal because combined50%creditloss/20%depeg implies
+w≤75%beforegas. The proposal is not source-outcome selected or admitted. New
+pure sufficient-cap helper8inventedtestsPASS, independent addition review pending.
+No F1/F3financial observation or new documentary operation; phase remains57/60.
+
+Superseding documentary count:60/60 after three optional Multicall source-route
+reads (MULTICALL-PREFLIGHT.md). No aggregation contract is admitted; Base deployment
+was not visible in the retained tool excerpt. Individual RPC remains the simpler
+available design. F1proposal/cap bound independent preparation review PASS,8tests
+plus1000independent exact-rational bounds. F1source/book admission remains pending.
+
+F2 source acquisition stopped at2025-11-19 after238RPC/3523731rawbytes. The left
+header succeeded; the right header returned HTTP503 with complete134byte RPCerror
+-32011,"no backend is currently healthy to serve traffic". Noendpointdenial/throttle.
+The worker remains responsible for suppressed-cell publication and terminalclosure;
+no restart or frozencontractchange. This is source unavailability, not economicloss.
+
+Preparatory F1/F3cashbooks now exist with exact fundedatoms and separate nativeETH/
+receiptidentities. Thirty focused inventedtests passed before an additional narrow
+ceilingendpointtest; independentreviewidentified partialvaluation-preservation gaps,
+now addressed by literal_receipts.py, retaining authoritative low-level ledger,
+partialstress/currentrow and explicitly incomplete attribution. Re-review pending.
+No empirical F1/F3values opened or financial trial claimed.
+
+Prospective source simplification received provisional independent support: actual
+canonical left-block clock within[target−1s,target], no nearest-block/bracketclaim,
+only terminal-audited provablyunsent new keys; alloldfailed/uncertainkeys excluded.
+Withinclaim bounded retries for newlyowned transientrequests may be registered,
+with physicalattemptdenominators, costs and no denial/throttle retry. Exact code,
+review, budget and registration remain required. F2isneverfilledorrecalculated.

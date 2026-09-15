@@ -56,3 +56,28 @@ def withdrawal_preview(scaled,income,config_word,contract_cash):
     if contract_cash<amount:raise SourceModelUnavailable('insufficient observed contract cash, no invented withdrawal')
     return {'underlying_credit_atoms':amount,'scaled_burn_atoms':burned,'remaining_scaled_atoms':0,
             'scope':'observed contract cash is not a solvency or future-priority guarantee'}
+
+
+def supply_cap_sufficient_bound(amount,income,config_word,scaled_supply,stored_treasury,
+                                current_debt_upper_bound,*,debt_bound_qualified):
+    """Sufficient cap test under independently qualified debt-accrual assumptions.
+
+    False means inconclusive, not cap failure. The zero-cap branch deliberately
+    does not infer or require unknown treasury/debt values. See independent review.
+    Does not replace mint units, flags, execution or implementation qualification.
+    """
+    m.uint(amount);cfg=configuration(config_word)
+    if amount==0 or cfg['decimals']!=6:raise SourceModelUnavailable('native USDC amount/decimals required')
+    if cfg['supply_cap_whole_tokens']==0:
+        return {'sufficient_cap_pass':True,'cap_disabled':True,'scope':'source-model cap branch only'}
+    if debt_bound_qualified is not True:raise SourceModelUnavailable('same-block debt/treasury bound assumptions unqualified')
+    index(income);m.uint(scaled_supply);m.uint(stored_treasury,128);m.uint(current_debt_upper_bound)
+    reserve_factor=(config_word>>64)&65535
+    if reserve_factor>10000:raise SourceModelUnavailable('reserve factor exceeds 100 percent')
+    delta_scaled=ray_div(current_debt_upper_bound,income)
+    upper_scaled=m.uint(scaled_supply+stored_treasury+delta_scaled)
+    upper_underlying=ray_mul(upper_scaled,income)
+    total=m.uint(upper_underlying+amount)
+    cap=cfg['supply_cap_whole_tokens']*10**6
+    return {'sufficient_cap_pass':total<=cap,'cap_disabled':False,'upper_supply_plus_deposit_atoms':total,
+            'cap_atoms':cap,'inconclusive_if_false':True,'scope':'qualified conservative source-model bound; no exact cap-failure claim'}
