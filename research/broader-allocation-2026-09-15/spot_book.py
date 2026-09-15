@@ -150,3 +150,22 @@ def cash_profit(ending_nav, initial_committed_usd):
         raise ValueError('positive total committed USD capital required')
     profit = amount(ending_nav) - capital
     return {'net_cash_profit_usd': profit, 'simple_net_return': profit / capital}
+
+
+def check_action_clock(signal_close, known_at, decision, fill, timeout_seconds):
+    """Check supplied UTC clocks; does not establish historical publication time."""
+    from datetime import datetime, timezone
+    def parse(value):
+        if not isinstance(value, str):
+            raise ValueError('ISO UTC timestamp required')
+        value = datetime.fromisoformat(value.replace('Z', '+00:00'))
+        if value.tzinfo is None or value.utcoffset().total_seconds() != 0:
+            raise ValueError('UTC timestamp required')
+        return value.astimezone(timezone.utc)
+    close, available, choose, execute = map(parse, (signal_close, known_at, decision, fill))
+    timeout = amount(timeout_seconds)
+    if timeout < 0 or available < close or max(close, available) > choose or execute < choose:
+        raise ValueError('noncausal action clock')
+    if amount(str((execute - choose).total_seconds())) > timeout:
+        raise ValueError('fill exceeds declared timeout')
+    return True

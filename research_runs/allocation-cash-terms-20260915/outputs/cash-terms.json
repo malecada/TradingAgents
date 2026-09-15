@@ -1,0 +1,75 @@
+{
+  "absolute_net_profit": null,
+  "benchmark_relative_value": null,
+  "cells": [
+    {
+      "id": "capital-boundary",
+      "kind": "authored convention",
+      "status": "complete",
+      "value": "All starting balances and reserves valued in USD; pre-start fees sunk; new entry/exit charges inside the chosen start boundary."
+    },
+    {
+      "id": "cash-control",
+      "kind": "authored convention",
+      "status": "complete",
+      "value": "Zero nominal USDC accrual conditional control; USD value still needs marks. B1 is not established."
+    },
+    {
+      "id": "risk-tax-horizon",
+      "kind": "existing disclosed contract",
+      "status": "complete",
+      "value": "365 days, pre-personal-tax USD; 10% absolute/2% incremental floors; 30% drawdown/50% market-stablecoin stress; separate accepted catastrophic tails."
+    },
+    {
+      "id": "confirmed-funding-basis",
+      "reason": "User has not specified already-funded USDC versus new-money entry; parameterized conditional basis is not a fact.",
+      "status": "unavailable"
+    },
+    {
+      "id": "account-fees",
+      "reason": "10bp/side is proposed only; actual commissions, fee currency and applicability unverified.",
+      "status": "unavailable"
+    },
+    {
+      "id": "usdc-usd-valuation",
+      "reason": "No admitted executable USD valuation/exit series; USDC symbol and pool identity do not establish one-dollar realizability.",
+      "status": "unavailable"
+    },
+    {
+      "id": "implemented-cash-vehicle",
+      "reason": "Actual B1 yield/product terms, charges, access and liquidation value not established; no invented Earn yield.",
+      "status": "unavailable"
+    },
+    {
+      "id": "entry-conversion-transfer",
+      "reason": "New-money conversion, fixed/percentage charges, route, minimums and delay unestablished; needed for fresh-money case.",
+      "status": "unavailable"
+    },
+    {
+      "id": "terminal-exit",
+      "reason": "Actual USD liquidation/redemption/withdrawal route and charges unestablished; no assumed issuer retail redemption.",
+      "status": "unavailable"
+    },
+    {
+      "id": "cex-account-eligibility",
+      "reason": "Public BTCUSDC/ETHUSDC status and depth do not establish Czech account eligibility.",
+      "status": "unavailable"
+    },
+    {
+      "id": "dex-fees-and-transfer",
+      "reason": "Raw gasPrice and pool mapping omit swap gas units, data fees, bridges, approvals, execution impact and failed transactions.",
+      "status": "unavailable"
+    },
+    {
+      "id": "historical-applicability",
+      "reason": "Current source observations do not establish historical fee, rule, cash or fill applicability for the fixed development windows.",
+      "status": "unavailable"
+    }
+  ],
+  "conditional_basis": "conditional already-funded USDC at inception; not a confirmed personal starting balance",
+  "financial_run_admitted_by_this_audit": false,
+  "implementation_admitted": false,
+  "initial_committed_usd": "10000",
+  "new_requests": 0,
+  "scope": "Retained-evidence cash admission; no financial result"
+}

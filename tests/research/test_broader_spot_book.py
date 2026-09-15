@@ -83,3 +83,9 @@ def test_zero_balance_does_not_need_price_but_exit_cost_does():
     b = m.SpotBook({('x', 'USD'): '1', ('x', 'DEAD'): '0'})
     with pytest.raises(m.MissingValuation): b.liquidation_nav({('x', 'USD'): '1'}, exit_cost_usd=None, pending_marks={})
     assert b.liquidation_nav({('x', 'USD'): '1'}, exit_cost_usd='2', pending_marks={}) == D('-1')
+
+
+def test_action_clock_validates_availability_and_execution_separately():
+    assert m.check_action_clock('2025-09-01T00:00:00Z', '2025-09-01T00:00:00Z', '2025-09-01T00:05:00Z', '2025-09-02T00:00:00Z', '86100')
+    for known, fill, timeout in [('2025-09-01T00:06:00Z','2025-09-02T00:00:00Z','86100'),('2025-09-01T00:00:00Z','2025-09-01T00:00:00Z','86100'),('2025-09-01T00:00:00Z','2025-09-02T00:00:00Z','86099')]:
+        with pytest.raises(ValueError): m.check_action_clock('2025-09-01T00:00:00Z',known,'2025-09-01T00:05:00Z',fill,timeout)
