@@ -43,7 +43,8 @@ action/freshness/deadline remains N+5000. No new window/grant/claim exists yet.
 
 Engineering checkpoint: c1c513356d32a9a6b330b34d9d7b9cb33aef8713 was pushed and
 separately queried equal. Optimized history source ad2be0c0f07e03e79af9b9585d5978c1b27b75c9
-is committed locally; backup of this later checkpoint remains pending. The
+is included in evidence checkpoint5d76fffae909d65a1a4c4957549d8841800e4c45,
+which was pushed and separately queried equal. The
 closed-parent-only certificate grants no new allowance. Current named offline
 profile is running with unchanged source; see options-timing-offline-20260915.log.
 

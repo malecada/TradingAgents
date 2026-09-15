@@ -1,0 +1,81 @@
+{
+  "scope": "Inert failed synthetic engineering backup only; no market/source/collector execution",
+  "pass": true,
+  "steps": [
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "root@46.225.169.184",
+        "/opt/thesis-research/options-episode-20260911/runtime/cpython-3.13.13-linux-x86_64-gnu/bin/python3.13 -I -B -"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "scp",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "/home/malecada/master_thesis/research-deployment/options-timing-20260915/failed-engineering/options-timing-failed-engineering-20260915.tar.gz",
+        "root@46.225.169.184:/opt/thesis-research/options-timing-20260915/failed-engineering-preservation/options-timing-failed-engineering-20260915.tar.gz"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "scp",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "/home/malecada/master_thesis/research-deployment/options-timing-20260915/failed-engineering/options-timing-failed-engineering-20260915.members.json",
+        "root@46.225.169.184:/opt/thesis-research/options-timing-20260915/failed-engineering-preservation/options-timing-failed-engineering-20260915.members.json"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "ssh",
+        "-o",
+        "BatchMode=yes",
+        "-o",
+        "ConnectTimeout=10",
+        "-o",
+        "StrictHostKeyChecking=yes",
+        "root@46.225.169.184",
+        "/opt/thesis-research/options-episode-20260911/runtime/cpython-3.13.13-linux-x86_64-gnu/bin/python3.13 -I -B -"
+      ],
+      "returncode": 0,
+      "stdout": "{\"options-timing-failed-engineering-20260915.tar.gz\": \"85d6c84fff9900c3a7eea6c14b76448ba7efd8324880cd26c58e2287200c234b\", \"options-timing-failed-engineering-20260915.members.json\": \"26b59d445d4e9252c60bc8f5b00200621f27522bf9676e0e3cb9adc1fec4893e\"}\n",
+      "stderr": ""
+    }
+  ],
+  "checked_at": "2026-09-15T09:48:04.574981+00:00",
+  "local": "/home/malecada/master_thesis/research-deployment/options-timing-20260915/failed-engineering",
+  "remote": "/opt/thesis-research/options-timing-20260915/failed-engineering-preservation",
+  "local_hashes": {
+    "options-timing-failed-engineering-20260915.tar.gz": "85d6c84fff9900c3a7eea6c14b76448ba7efd8324880cd26c58e2287200c234b",
+    "options-timing-failed-engineering-20260915.members.json": "26b59d445d4e9252c60bc8f5b00200621f27522bf9676e0e3cb9adc1fec4893e"
+  },
+  "remote_hashes": {
+    "options-timing-failed-engineering-20260915.tar.gz": "85d6c84fff9900c3a7eea6c14b76448ba7efd8324880cd26c58e2287200c234b",
+    "options-timing-failed-engineering-20260915.members.json": "26b59d445d4e9252c60bc8f5b00200621f27522bf9676e0e3cb9adc1fec4893e"
+  }
+}

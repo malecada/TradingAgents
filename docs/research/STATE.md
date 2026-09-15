@@ -2,14 +2,14 @@
 
 **Current scope: research resumed September 15; complete options/VPS integration first. Zero validated strategies.**
 The user subsequently said “lets keep going then”, lifting the earlier
-pause-after-setup instruction. The single prospective options episode is now admitted from remotely verified
-commit ebc21e931541e7e03e139e48f7d2069a8426742f. All twenty claims are terminal
+pause-after-setup instruction. The first prospective options episode was admitted from remotely verified
+commit ebc21e931541e7e03e139e48f7d2069a8426742f and is now failed and closed. All twenty claims are terminal
 (16complete/4failed); all nineteen predecessors remain preserved. The exact VPS release
 ran once and stopped at entry on frozen source-age/chronology rejection for both
 assets. No financial book ran. Raw return, external quiescence and the failure-only terminal are independently
-verified. No collector is running. One fixed timing correction has conditional
-information-value support for preparation, but no sixth allowance or new claim
-exists. Existing value_rev pure readiness is independently checked; actual
+verified. No collector is running. One isolated fixed timing correction has passed source/policy review,
+representative resource and VPS recovery checks; its named offline suite is
+running. No sixth allowance, absolute window or new claim exists yet. Existing value_rev pure readiness is independently checked; actual
 source/P0 admission remains pending. Consult active state.
 The user explicitly launched the saved research prompt and superseded the
 preparation pause. Read the [active program state](../../research/strategy-search-2026-09-11/STATE.md),
@@ -36,8 +36,8 @@ book hit the120second wall limit after publishing all outputs; failure-only
 closure preserves them. Independent9,344checks find8retained books cashnegative,
 with positive frictionless cash still below relevance. No rerun or eighth grant.
 Options accounting and source-control integration passed the named offline profile
-(1554tests+30subtests) and independent admission review. The sole effective5 options
-allowance is consumed by the active prospective episode. No candidate has reached
+(1554tests+30subtests) and independent admission review. The effective5 options
+allowance is consumed by the failed and closed prospective episode. No candidate has reached
 confirmation.
 Read active state for exact sources, receipts, reviews, budgets and next actions.
 New runs use the additive lifecycle and complete sharded receipts.
