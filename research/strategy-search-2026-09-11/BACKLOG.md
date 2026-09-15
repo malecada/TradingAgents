@@ -67,3 +67,11 @@ revisable; finishing this initial list does not establish research exhaustion.
   index; preserve the unadopted weekly alternative and invalid-statistic defect.
 - [ ] Bounded inference review of inherited DAILY shifts under fixed cohorts and
   temporal dependence; do not infer calibration from the plus-one formula.
+
+- [x] Complete user-requested bounded non-options branching pass: exact old
+  predictive overlap, saved-source reuse and current event-schema matrix.
+- [x] Review practical information value; complete the sole approved written
+  event-response design and independent verdict. Draft deferred for unsupported
+  causal transfer, hedge confounding and incomplete comparison/source contracts.
+  No new allowance, collector or financial test. Reopen only with a concrete
+  supported mechanism and full reviewed protocol; no sign/horizon sweep.

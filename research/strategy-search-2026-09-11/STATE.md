@@ -318,3 +318,28 @@ formula alone; it does not measure actual daily Sharpe or strategy error rates.
 See reviews/value-rev-abstract-null-counterexample-20260915.json and its source
 review. Stop this specific witness after enumeration; no larger simulation sweep,
 new null law, changed gate or financial run follows automatically.
+
+
+## User-requested non-options branching review
+
+The user asked whether research should branch out while options data accumulates.
+A bounded literature/source and independent ancestry pass is complete; see
+non-options-discovery-20260915.md and event-response-source-matrix-20260915.md.
+Generic BTC/ETH-to-alt prediction and statistical pair selection overlap prior
+LLG/OFLOW/PRX work. The exact saved event bytes cannot instantiate a new aggressive
+leader/follower-perpetual receipt-time question. Official futures schemas identify
+needed event/quote fields but add batching, hidden-liquidity and separate-connection
+qualifications. No financial test, socket or allowance was started. The new
+specific candidate requires an information-value/ancestry decision before a
+prospective source registration; it cannot borrow unused relative-value slots
+to bypass exhausted liquidity history. Options collection remains unchanged.
+
+
+The branching review's approved finite design step is now complete. Its draft
+(event-response-screen-design-20260915.md) is deferred by independent verdict:
+unsupported transfer from hourly bar reversal to one-second aggressive-flow
+residual response, hedge/response confounding, any-positive overlapping-event
+criterion and unresolved full-population/source support. Preserve the draft and
+reviews; no capture/implementation/grant. A causal/source rationale and complete
+comparison must precede any reopening. Do not change signs/horizons until one
+passes. This is a specific design failure, not an empirical strategy failure.

@@ -41,3 +41,12 @@ source waiting, not strategy validation or exhaustion of all crypto mechanisms.
 No early outcome look, credential access, paid/provider work, orders, production
 changes or revisit of22deferred settlements. Keep precise durable state and verify
 remote commit equality when backing up authorized work.
+
+
+The later user-requested non-options branching pass is complete. Read
+non-options-discovery-20260915.md and reviews/event-response-design-verdict-
+20260915.md. BTC/ETH-to-alt bars and PRX are inherited coverage. The sole new
+receipt-time draft was deferred before capture for causal/hedge/comparison/source
+problems. No event-response implementation or new allowance exists. Do not treat
+the earlier conditional design-stage support as capture approval or automatically
+change the draft's sign/horizon/pair. The active options collection is unchanged.
