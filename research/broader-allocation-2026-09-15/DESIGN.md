@@ -1,7 +1,7 @@
 # Proposed investment contract
 
 **Capital baseline confirmed at $10,000; larger capital may be considered if needed.
-Other numerical preferences remain proposals.**
+The annual net-return target is at least 10%; numerical loss limits remain proposals.**
 The September 15 request authorizes design and state recovery. Before financial
 experiments, record the user's investment choices and resolve this contract.
 Changing a draft now is legitimate; changing a frozen gate after outcomes is not.
@@ -13,10 +13,10 @@ Changing a draft now is legitimate; changing a frozen gate after outcomes is not
 | Capital | $10,000 baseline; larger amount if capital is the demonstrated blocker | Determine and report the required amount under the capital policy below. All capital is committed on day zero; no leverage or later top-up is implied. |
 | Spending currency | USD provisionally | Confirm USD/EUR/CZK; translate cashflows and FX costs into the chosen currency. USDT is not automatically a dollar. |
 | Investment horizon | 365 days | No required interim withdrawal; this is distinct from the length of evidence needed to estimate performance. |
-| Useful absolute net cash profit | 5% of C per 365 days ($500 at $10,000) | 5% of initial capital, measured after modeled implementation costs. Confirm that these are useful cash amounts. |
+| Annual net-return target | At least 10% of C per 365 days ($1,000 at $10,000) | User-requested target after modeled implementation costs; neither a forecast nor a guaranteed minimum each year. Tax basis remains to be settled. |
 | Useful incremental cash benefit | 2% of C per 365 days ($200 at $10,000) | Proposed 2% benefit over each eligible simple benchmark; a separate preference from absolute profit. |
-| Maximum drawdown | 20% of prior liquidation NAV peak | Include initial NAV, fees, gaps and terminal conversion; not a guaranteed stop-loss fill. |
-| Maximum stress loss | 35% of total capital at each stress origin | Apply the scenarios below throughout the path; separately report drawdown from original capital. |
+| Maximum drawdown | Proposed 30% of prior liquidation NAV peak; user choice pending | Include initial NAV, fees, gaps and terminal conversion; not a guaranteed stop-loss fill. The earlier 20% proposal was not accepted. |
+| Maximum stress loss | Proposed 50% of total capital at each stress origin; user choice pending | Apply the scenarios below throughout the path; separately report drawdown from original capital. The earlier 35% proposal was not accepted. |
 | Instruments | Unlevered BTC and ETH spot; accessible cash | No short, perpetual, option, lending or staking book in the initial four tests. Those require a later explicit scope choice and inherited-budget review. |
 | Venue | Binance only if product/account applicability is established | Public API reachability is insufficient. No credentials/private endpoints needed for this design. |
 | Operational burden | At most one scheduled decision per month, two assets, no intraday discretionary response | Continuous prices may be needed for honest risk measurement; this does not imply frequent trading. |
@@ -28,6 +28,34 @@ prefunded venue wallets, fee assets, transfer balances and unusable dust. A phas
 entry strategy starts with the full capital committed; it cannot divide profit
 by only the money already invested. No annualization of a short favorable episode
 can establish the annual cash target.
+
+## Return target and unresolved risk choice
+
+The user requested 10% or more annually and expressed willingness to consider
+greater drawdown/risk. This changes the absolute return objective from the
+unaccepted 5% proposal to a 10% hurdle. It does not establish an acceptable
+loss amount, authorize leverage or imply that extra risk creates a return.
+A proposed 30% drawdown / 50% stress-loss pair is presented for user choice;
+40% / 60% and the earlier 20% / 35% pair are alternative preference choices,
+not extra backtest cells or a grid from which to select after outcomes.
+Freeze exactly one accepted pair before financial experiments.
+
+At a $10,000 reference value, the proposed 30% drawdown is $3,000 from a
+$10,000 peak; 50% stress loss is $5,000 from a $10,000 scenario origin. These
+dollar limits scale with the relevant peak/origin and with larger committed
+capital. Drawdown and deterministic stress loss are distinct measurements.
+
+The 10% hurdle concerns total net profit, not 10% excess return over benchmarks.
+The separate proposed benchmark-improvement floor remains 2% of C ($200 at
+baseline). Report positive net returns below 10% as target shortfalls, separately
+from losses, benchmark underperformance and inadequate evidence. Raising the
+target does not justify changing an outcome window, discarding a failed case
+or weakening confirmation. The investment horizon and personal-tax basis
+remain unresolved; a stated annual target is not a guarantee for every year.
+
+[Investor.gov’s risk/return explanation](https://www.investor.gov/introduction-investing/investing-basics/investment-products)
+supports the distinction between higher potential returns and greater chances
+of loss; it does not establish that this target is achievable by these recipes.
 
 ## Capital policy: baseline plus justified larger capital
 
@@ -54,8 +82,9 @@ reported leads; additional financial capital scenarios need a recorded budget
 amendment. Researching a required amount does not commit that investment, and
 no unlimited available balance or personal maximum is assumed.
 
-Proposed percentage profit/risk thresholds remain constant at larger capital:
-5% absolute and 2% incremental annual cash profit, with both dollar amounts shown.
+The 10% absolute target and proposed 2% incremental annual cash-profit floor
+remain proportional to larger capital, with both dollar amounts shown. Accepted
+percentage risk limits, once chosen, must also apply at larger capital.
 Thus larger capital cannot pass merely by increasing dollar profit while diluting
 return on total committed capital. Confirmation selects at most one recipe and
 one capital amount, with the capital choice included in the selection history.
@@ -75,7 +104,7 @@ No assumed emergency stop execution or instant cash transfer.
 
 These are deterministic adverse scenarios, not probabilities or worst possible
 loss bounds. Report maximum drawdown, worst rolling 30-day loss, terminal loss,
-exposure drift, custody concentration and liquidity lockup. The 35% proposal may
+exposure drift, custody concentration and liquidity lockup. The proposed stress limit may
 make an all-on-exchange implementation unacceptable even if its market exposure
 is small. Such a result is implementation/risk infeasibility, not absence of a
 return mechanism. No strategy can guarantee the proposed drawdown limit.
@@ -104,7 +133,7 @@ results. Use each date's admitted information/terms, not today's yield backfille
 If B1 is unavailable, show conditional results but withhold an implementable pass.
 
 Primary comparator set is B0, B1, B5, B7, B9. Each must independently satisfy the
-same capital/access, 20% drawdown and 35% stress limits to be a feasible
+same capital/access and the user-accepted drawdown/stress limits to be a feasible
 alternative; retain the others with reasons. Report every contrast even when a
 benchmark is infeasible. B2/B3/B4/B6/B8 remain compulsory context: outperforming
 their returns at substantially lower exposure is not required, and reduced loss
@@ -128,7 +157,7 @@ The proposed adoption rule is conjunctive:
 1. Accounting, point-in-time data, access, all capital, execution and independent
    review pass; no material unknown held value or cash term remains.
 2. Candidate satisfies the fixed drawdown/stress constraints and operational limits.
-3. Absolute profitability: observed 365-day P >= 0.05*C ($500 at baseline) and the simultaneous
+3. Absolute profitability: observed 365-day P >= 0.10*C ($1,000 at baseline) and the simultaneous
    one-sided 95% lower bound on expected 365-day net profit is above zero.
 4. Benchmark value: observed D >= 0.02*C ($200 at baseline) against **every feasible member of
    the frozen primary comparator set**, and simultaneous one-sided 95% lower

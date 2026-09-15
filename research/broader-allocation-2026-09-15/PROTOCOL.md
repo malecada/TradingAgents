@@ -159,9 +159,14 @@ under a symmetric sampling model, regardless of how precisely it is measured.
 
 The proposed **confirmation admission** condition is at least 80% simulated
 joint adoption-gate power at a separately fixed planning alternative above the
-effect floors: true expected annual P = 10% of C and minimum expected D across
+effect floors: true expected annual P = 20% of C and minimum expected D across
 primary comparators = 4% of C. These are hypothetical design alternatives,
-not return forecasts or additional investment preferences. Freeze a coherent
+not return forecasts or additional investment preferences. The P alternative
+was raised from 10% to 20% when the absolute hurdle became 10%, to keep the
+power alternative above the observed-effect threshold. This preserves the
+earlier independent review’s distinction between rejection power and full-gate
+power; the new alternative still needs independent pre-registration review.
+Freeze a coherent
 joint candidate/benchmark/cash path model, dependence and risk assumptions,
 then simulate the entire conjunction: absolute profit, all benchmark contrasts,
 family confidence bounds, risk and doubled-cost gates. Report its sensitivity

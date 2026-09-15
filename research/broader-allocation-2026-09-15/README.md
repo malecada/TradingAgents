@@ -5,7 +5,8 @@ Program ID: `broader-allocation-2026-09-15`. September 15, 2026.
 
 The objective is an implementable improvement in the return–risk tradeoff of
 deploying $10,000 as the baseline, with larger capital considered when $10,000
-is a demonstrated constraint. Directional
+is a demonstrated constraint. The annual net-return target is at least 10%
+of all committed capital ($1,000 at the baseline). Directional
 crypto exposure, cash and infrequent trading are acceptable. Absolute net cash
 profit and value relative to benchmarks are separate claims. A simple allocation
 or cash can be the useful conclusion; complexity is not an objective.
@@ -26,8 +27,9 @@ does not amend an old gate, grant another options episode, or start a collector.
 6. [Current checkpoint and next action](STATE.md).
 
 The design asks for confirmation or edits to these **proposed**, unaccepted
-preferences: 12-month investment horizon; 20% maximum drawdown; 35% stress loss;
-minimum useful annual net cash profit 5% of capital ($500 at the baseline);
+preferences: 12-month investment horizon; proposed 30% maximum drawdown and
+50% stress loss, with the numerical risk choice pending. The user has confirmed
+the 10%+ annual return target, not any particular higher loss tolerance;
 initially unlevered BTC/ETH spot
 and cash. Spending currency, accessible cash vehicle and venue/product eligibility
 also require resolution. No historical outcomes were used to infer these preferences.

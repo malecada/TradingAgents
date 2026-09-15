@@ -1,6 +1,6 @@
 # Broader program checkpoint — September 15, 2026
 
-Status: **design amended; $10,000 baseline with justified larger capital, other preferences pending;
+Status: **design amended; $10,000 baseline, justified larger capital and 10%+ annual target; risk choice pending;
 zero new experiments, zero validated strategies**. The program's own [README](README.md)
 is the entry point; old options state remains authoritative for that study.
 
@@ -26,8 +26,9 @@ This supersedes the interim $10,000-only wording. Determine the required amount
 from implementation constraints before outcomes, and retain the baseline result.
 No unlimited personal budget or investment commitment is inferred.
 
-Proposed cash floors remain 5% absolute and 2% incremental ($500/$200 at the
-baseline), scaled to all committed capital in a larger scenario. Other investment
+The latest return amendment sets a 10% absolute target and retains the proposed
+2% incremental floor ($1,000/$200 at baseline), both scaled to all committed
+capital in a larger scenario. Other investment
 preferences remain pending. There are 42 baseline cells per window, at most 84
 with C_plus, at most 252 development cells, and 48 reserved inferential contrasts.
 Confirmation selects at most one recipe and capital amount.
@@ -39,10 +40,26 @@ current document consistency and preservation checks. The original independent
 review covers the prior draft, not an independent sign-off on this amendment.
 The existing options study and historical search budgets remain unchanged.
 
+## Return and risk amendment
+
+The user requests 10% or more annually, with possibly greater drawdown/risk.
+The broader program now uses a 10% annual net-return hurdle; this is separate
+from the still-proposed 2% benchmark improvement. A 30% drawdown / 50% stress-loss
+pair is proposed, with 40% / 60% and the earlier 20% / 35% offered as alternative
+preferences. None is accepted by merely expressing openness to greater risk.
+The pending user question must resolve one pair before financial experiments.
+
+The hypothetical absolute-profit alternative for joint-gate power is now 20%,
+above the 10% observed-effect hurdle, and remains a simulation assumption rather
+than a forecast. Existing policy sizing and comparator roles require alignment
+with accepted risk limits before registration; no exposure sweep has started.
+Earlier independent review and verification receipts remain unchanged. Current
+checks are in [return-risk-amendment-verification.json](return-risk-amendment-verification.json).
+
 ## Exact next action
 
 1. Record the user's response to the pending investment-contract question:
-   horizon, drawdown/stress losses, useful profit, spending currency and permitted
+   horizon, numerical drawdown/stress losses, spending currency and permitted
    instruments. Also settle the proposed 2%-of-capital incremental benefit and cash
    vehicle/custody/tax basis before financial registration. A missing response
    is not acceptance of the draft numbers.

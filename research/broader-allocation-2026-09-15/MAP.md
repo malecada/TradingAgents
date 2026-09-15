@@ -22,6 +22,21 @@ dependencies, not a reserve of extra tests when the first results disappoint.
 An inherited recipe needs a reviewed allowance amendment/import before admission;
 these proposed slots do not themselves override an old exhausted family.
 
+## Pending risk and sizing alignment
+
+The user now targets at least 10% annual net return and may accept greater risk.
+The four recipes above retain their existing 25% exposure/entry settings as
+preliminary designs until the numerical drawdown/stress limits are chosen.
+Before registration, check those settings and the benchmark comparison set
+against the accepted risk envelope. A single justified pre-outcome sizing
+revision may replace a draft setting, with ancestry and independent review;
+no unregistered leverage, exposure sweep or extra candidate allowance follows.
+If higher-exposure simple benchmarks become feasible under the accepted limits,
+review their primary-comparator role and the associated multiplicity allocation
+before outcomes. Do not claim superior value from a more favorable comparator
+subset after results. Source admission must distinguish a capital blocker from
+insufficient exposure-adjusted economics or inadequate evidence.
+
 ## Finite research budget
 
 - Design: this state/history recovery, one bounded public-document review and
