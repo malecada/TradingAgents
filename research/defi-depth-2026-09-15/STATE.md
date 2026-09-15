@@ -177,3 +177,17 @@ only terminal-audited provablyunsent new keys; alloldfailed/uncertainkeys exclud
 Withinclaim bounded retries for newlyowned transientrequests may be registered,
 with physicalattemptdenominators, costs and no denial/throttle retry. Exact code,
 review, budget and registration remain required. F2isneverfilledorrecalculated.
+
+
+Superseding F1 preparation checkpoint: corrected source ownership, terminal audit,
+registered raw-evidence binding, frozen charter and terminal-only registration
+builder received independent preparatory PASS in reviews/f1-context-review.md.
+The initial actionable findings remain in that file with their dispositions.
+Forty-eight focused invented tests passed; a subsequent full LP-source synthetic
+inventory/decoder test brings the covered total to49. No empirical F1 claim,
+source request or financial calculation has occurred. prepare_f1.py must only run
+after complete F2 terminal publication, byte-exact import and closure review.
+Its exact generated gate still needs independent review and committed admission.
+F2 session44555 remains active publishing suppressed cells, with238actualRPC and
+3523731retainedrawbytes; its root remains untouched at15a61b70ee60b38dfde07512ec19b264276764f2.
+New f3-charter.md is an unadmitted prospective draft, no LP observations opened.
