@@ -125,3 +125,42 @@ personal access, tax treatment or cash availability during a lock. Source/cost
 conditions and unknown B1 prevent implementability or promotion even if numerical
 conditions pass. No options worker, production source, order, external account
 or additional resource was accessed.
+
+## Subsequent narrow pre-execution precision review
+
+The additional `financial` change uses `exact_net_cash_profit` rational records
+when present, retaining the original frozen decimal-string basis for legacy
+comparators. It also publishes `difference_exact`. This is approved as a
+precision correction before outcomes: a true advantage of200 dollars minus
+1e-80 must fail the unchanged200-dollar hurdle even when its displayed decimal
+rounds to200. All seven F2 source tests passed independently after this change.
+The updated `f2_source.py` reviewed hash is
+`da456a757dba9b54e161ddd614e2c645f0a2a0777b1d9919ee598d1b52dbb763`.
+The final registration/source hashes and execution commit must bind this updated
+code before acquisition; the earlier commit/hash listing above documents the
+earlier reviewed packet and is not a claim that its bytes are unchanged.
+
+The reported broad-suite failure was independently reproduced without reading
+actual Q4 inputs. Across100 invented same-size file rewrites during the second
+`fstat`,92 had identical dev/inode/size/mtime_ns/ctime_ns fingerprints and returned
+complete; eight had distinguishable fingerprints and returned unavailable.
+Every returned digest and byte charge matched the exact old bytes read. Forcing
+a different mtime made the intended detected-change fixture deterministic.
+The test's assumption that every immediate rewrite changes this fingerprint is
+false on this filesystem. The frozen inspector detects distinguishable metadata
+changes, not every possible concurrent mutation or atomic-snapshot consistency.
+This does not establish an actual mutation of Q4 evidence, and no historical
+helper, gate, result or claim should be rewritten. A deterministic synthetic
+fixture correction and explicit interpretation of that limitation are justified.
+The complete named-suite result itself was not rerun by this reviewer.
+
+### Final resolution
+
+The deterministic fixture change and `heritage-fingerprint-limitation.md` were
+reviewed. The combined focused suite passed independently:27 tests comprising
+heritage6, F2 source7, wrapper8 and lending6. This resolves the identified
+test/precision issues for F2 launch after the final commit, detached-root
+content checks and ordinary admission. No further full-suite rerun is required
+by these narrow changes. Preserve the reported original named-suite result as
+1,911 passed,81 subtests and one fixture failure, followed by the independently
+verified27-test resolution; do not relabel the original run as entirely passing.

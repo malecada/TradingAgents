@@ -39,7 +39,12 @@ class HeritageTests(unittest.TestCase):
    def changing(fd):
     nonlocal calls
     calls+=1
-    if calls==2:p.write_text('{"map": {"inventedtoken": 2}}')
+    if calls==2:
+     before=real_fstat(fd)
+     p.write_text('{"map": {"inventedtoken": 2}}')
+     # Same-length writes can share a filesystem timestamp tick. This case
+     # tests an observable identity change, so make that change deterministic.
+     os.utime(p,ns=(before.st_atime_ns,before.st_mtime_ns+1_000_000_000))
     return real_fstat(fd)
    with patch.object(h.os,'fstat',changing):r=h.inspect_metadata(p,100)
    self.assertEqual(r['status'],'unavailable');self.assertEqual(r['bytes'],len(b'{"map": {"inventedtoken": 1}}'));self.assertFalse(r['body_complete'])

@@ -95,3 +95,16 @@ unopened). A further invented per-cell feasibility continuation regression passe
 F2focused total14tests. EXECUTION-F2.md fixes the sole detached root and no-HEAD-
 mutation rule. The pending named offline-suite failure must be diagnosed before
 launch. There is still no financial claim or active empirical worker.
+
+Named offline terminal:1911passed/81subtests/one heritage same-length concurrent-
+write fixturefailure (920seconds). Invented100case reproduction found84undetected
+within identicalmetadata fingerprints/16detected. Originalfstat-basedreader cannot
+guarantee immutable snapshots; see reviews/heritage-fingerprint-limitation.md.
+Only the test fixture is corrected to force an observablemtime change; frozen
+source/gates/Q4Q6raw/output remain unchanged. Focused checks in session5726pending.
+F2 does not import this metadata reader. Final F2 tiny exact-D correction now uses
+new-wallet exact profit fractions, not rounded display strings; threshold regression
+added. Source/gate hashes refreshed, independent final check pending. F2execution
+root metadata admission atf34083fcda53330d732c713f0bbd9dfd5d7de34ePASS,19sources/
+33inputs/runtime/charter andcorrect packageorigin verified. It is still claim-free
+and must move beforeclaim to the final reviewed source including exact-D fix.

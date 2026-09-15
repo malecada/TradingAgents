@@ -98,3 +98,17 @@ def test_one_infeasible_cell_does_not_suppress_other_books(monkeypatch):
     assert outputs['2026-f2-doubled.json']['status']=='complete'
     assert outputs['2026-wallet-cash-primary-attempt.json']['attempted'] is True
     assert outputs['2024-f2-primary-attempt.json']['attempted'] is False
+
+def test_incremental_gate_uses_exact_new_book_fraction(monkeypatch):
+    marks=[{'date':(date(2025,9,1)+timedelta(days=i)).isoformat(),'prices_atoms_1e8':{'USDC':10**8,'ETH':2000*10**8,'WST':2400*10**8}} for i in range(366)]
+    source={'status':'complete','price_rows':marks};outputs={}
+    from fractions import Fraction as F
+    def calculate(panel,policy,scenario,progress=None):
+        profit=F(1200)-F(1,10**80) if policy=='F2' else F(1000)
+        return {'net_cash_profit_usd':m.book.render(profit),'exact_net_cash_profit':m.book.fraction_record(profit),'absolute_floor_pass_conditional':True,'numerical_risk_pass_conditional':True}
+    monkeypatch.setattr(m.book,'run_book',calculate)
+    baseline={'B'+str(i):{k:{'status':'complete','net_cash_profit_usd':'1000','conditional_numeric_risk_pass':True} for k in m.book.SCENARIOS} for i in range(10)}
+    m.financial(source,baseline,lambda name,obj:outputs.__setitem__(name,obj))
+    contrast=outputs['financial-summary.json']['comparisons']['primary']['wallet-cash']
+    assert contrast['incremental_floor_pass_conditional'] is False
+    exact=contrast['difference_exact'];assert F(exact['numerator'],exact['denominator'])<200

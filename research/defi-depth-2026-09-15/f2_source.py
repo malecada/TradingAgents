@@ -155,8 +155,11 @@ def financial(summary,benchmarks,publish):
             other=results[(name,scenario)] if name.startswith('wallet-') else benchmarks[name][scenario]
             if candidate['status']!=other['status'] or candidate['status']!='complete':row=unavailable('Candidate or fixed comparator unavailable')
             else:
-                difference=F(candidate['net_cash_profit_usd'])-F(other['net_cash_profit_usd'])
-                row={'status':'complete','difference_usd':book.render(difference),'incremental_floor_pass_conditional':difference>=200,
+                def exact_profit(result):
+                    exact=result.get('exact_net_cash_profit')
+                    return F(exact['numerator'],exact['denominator']) if exact else F(result['net_cash_profit_usd'])
+                difference=exact_profit(candidate)-exact_profit(other)
+                row={'status':'complete','difference_usd':book.render(difference),'difference_exact':book.fraction_record(difference),'incremental_floor_pass_conditional':difference>=200,
                      'benchmark_numeric_risk_pass':other.get('numerical_risk_pass_conditional',other.get('conditional_numeric_risk_pass')),
                      'basis':'same-block same-oracle wallet control' if name.startswith('wallet-') else 'retained CEX book; oracle/bar/route basis differs, not clean mechanism attribution'}
             contrasts[name]=row;cells.append({'id':'D-'+scenario+'-'+name,'status':row['status'],**({'reason':row['reason']} if row['status']!='complete' else {})})
