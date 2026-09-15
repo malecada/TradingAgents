@@ -77,3 +77,21 @@ recipe frozen together, price oracle vectors only, no native redemption claims.
 Independent exact review pending. No financial observations calculated and no
 new network capture. First complete source plan belongs toF2;F1/F3preparation
 can proceed independently during its fixedHEAD execution.
+
+F1 additional pure lending_math.py6inventedtests pass; independent review pending.
+F1-ACCOUNTING-PREFLIGHT.md records treasury-inclusive supply cap, half-up ray
+rounding and freeze-versus-pause distinctions from official model sources. No
+financial/source acquisition forF1 yet. F2 package corrections are committed
+ce02615; exact independent review pending,13inventedF2testsPASS. Named offline
+profile started from prior3f2250b with workingF2preparation; one failure observed
+mid-suite, full terminal/details pending in session36113. No empirical run active.
+FutureF2root /home/malecada/master_thesis/TradingAgents-defi-f2 currently detached
+e8d0ec6 and may move only before claim to final reviewed source.
+
+F2 exact independent preexecution review PASS at3ce3aef8f7b39c1675c779a87a9d007556e48715.
+reviews/f2-preexecution-review.md retained; final1532cells/2611outputs/19sources/
+33inputs. Ordinary metadata admission alsoPASS (before claim, empirical inputs
+unopened). A further invented per-cell feasibility continuation regression passes;
+F2focused total14tests. EXECUTION-F2.md fixes the sole detached root and no-HEAD-
+mutation rule. The pending named offline-suite failure must be diagnosed before
+launch. There is still no financial claim or active empirical worker.

@@ -83,3 +83,18 @@ def test_missing_left_header_suppresses_right_without_retry(capsys):
     summary,cells=m.capture(d,c,p,missing,**clocks)
     assert len(calls)==2 and summary['status']=='unavailable'
     assert o['2025-09-02-header-right-attempt.json']['attempted'] is False
+
+def test_one_infeasible_cell_does_not_suppress_other_books(monkeypatch):
+    marks=[{'date':(date(2025,9,1)+timedelta(days=i)).isoformat(),'prices_atoms_1e8':{'USDC':10**8,'ETH':2000*10**8,'WST':2400*10**8}} for i in range(366)]
+    source={'status':'complete','price_rows':marks};outputs={};called=[]
+    def calculate(panel,policy,scenario,progress=None):
+        called.append((policy,scenario))
+        if (policy,scenario)==('F2','primary'):raise m.book.FinancialUnavailable('invented cell constraint')
+        return {'net_cash_profit_usd':'0','absolute_floor_pass_conditional':False,'numerical_risk_pass_conditional':True}
+    monkeypatch.setattr(m.book,'run_book',calculate)
+    baseline={'B'+str(i):{k:m.unavailable('invented missing baseline') for k in m.book.SCENARIOS} for i in range(10)}
+    m.financial(source,baseline,lambda name,obj:outputs.__setitem__(name,obj))
+    assert len(called)==9 and outputs['2026-f2-primary.json']['status']=='unavailable'
+    assert outputs['2026-f2-doubled.json']['status']=='complete'
+    assert outputs['2026-wallet-cash-primary-attempt.json']['attempted'] is True
+    assert outputs['2024-f2-primary-attempt.json']['attempted'] is False
