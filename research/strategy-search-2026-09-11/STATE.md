@@ -1,54 +1,57 @@
 # Active program state
 
-Research resumed September 15, 2026: the user said “lets keep going then”, lifting
-the earlier pause-after-options/VPS instruction. Complete the reviewed options
-collector integration first, then its exact pre-window grant and verification.
-The program remains incomplete; zero strategies are validated.
-Branch `research/strategy-search-2026-09-11`.
-All19 attempted identities are terminal:16 completed investigations and three
-failed harness/resource attempts. No capture, paper session, order, scheduler or
-background job has been started by the current options setup. Inspect actual
-claims and Git status before resumption; never
-repeat a completed or failed identity.
+Research resumed September 15, 2026 under “lets keep going then”, superseding the
+pause-after-options/VPS instruction. Zero strategies are validated.
+Branch `research/strategy-search-2026-09-11`; inspect actual status before work.
 
-## September 15 integration in progress
+## Sole prospective options episode admitted
 
-The dedicated VPS runtime is installed and independently verified: Python3.13.13,
-5367members with matching local/remote inventory cb70f90810dd532e244f23c37c8b2ba2e4ac2da3485ad69cb84b00ff2abeb5df.
-Only `/opt/thesis-research/options-episode-20260911/runtime` and its runtime-staging
-archive have been created remotely. No collector, twentieth claim, new grant or
-market request exists. No shared runtime, production service, systemd or cron changed.
-See options-vps-runbook-20260915.md and reviews/options-vps-runtime-20260915.json.
+At08:45UTC the authoritative local admission and independent active verification
+passed. `research_runs/options-episode-20260911/claim.json` SHA256
+`9755f008355cbffdef9c0b561e3806ed39a1c2d874fb7a0f285def2ebab9dd78`
+reserves the single full-book options increment: original budget4/prior1 remains,
+effective5 is now consumed. The nineteen predecessors remain16complete/3failed;
+the twentieth identity is active. Never create a replacement or repeat admission.
 
-Exact calendar/worker, source/rule/funding adapters, portable return normalization,
-independent protocol verifier and eight-case analysis now exist. Adversarial
-integration corrected URL parameter-order binding, raw-clock verification,
-per-asset rule identities and exposure denominators. The full known eight-book
-1057hour synthetic wrapper passes:11,618,712bytes,4.947seconds,78,340,096sampledRSS.
-Actual history reverified19=16complete+3failed in8.27seconds under the guard.
+Source/grant commit `ebc21e931541e7e03e139e48f7d2069a8426742f` was pushed and
+independently queried equal on the remote branch before claim creation.
+Frozen entry:2026-09-15 09:00UTC; observation end:2026-10-29 09:00:05UTC.
+Absolute worker lease:2026-09-15 08:58 through2026-10-30 09:01UTC.
+No interim financial evaluation is permitted. Eight correlated development cases
+cover BTC/ETH,1000/10000 capital,base/stress costs. This does not validate expected
+profit, actual commissions/account access/margin, true delta or tail safety.
 
-Integration verification is complete. Named offline profile:1554tests+30subtests
-PASS694.55seconds, with two later executable-entry tests separately passed.
-The full17144-slot syntheticworker journal was completed across controlled
-resumptions after two retained compressed-total120second timeouts. Final states:
-17126received,13missed,5unavailable; no request was retried and prior bytes remain
-unchanged. A separate first rehearsal exposed URL parameter ordering and failed;
-its raw source and report remain preserved. These are invented engineering checks,
-not empirical claims or financial reruns.
+The exact10-member release is copied and verified on pck-preds-1(46.225.169.184):
+`/opt/thesis-research/options-episode-20260911/release-ebc21e9`.
+The sole data root is `/opt/thesis-research/options-episode-20260911/data`.
+Assignment SHA256:`8349daecd93b39ed2e41e48194b58790706edaf209cf2a3b24ba62b0b430eccf`.
+The dedicated Python3.13.13 runtime's5367-member inventory matches locally and
+remotely. Shared runtime, production, systemd and cron were not changed.
+At08:50:15UTC the approved v2 launcher started in dedicated tmux socket
+`thesis-options-20260915`, session `options-episode-20260911`, panePID683626.
+At08:50:24 it is waiting (`sleep 465`,PID683631), with no data root or market
+request. It executes the anchored bootstrap at08:58UTC and refuses launch from
+08:59 onward. The first metadata/entry operational check remains pending.
+See options-vps-runbook-20260915.md and reviews/options-actual-*-20260915.*.
 
-Returned-source preparation plus all8intentionally unavailable syntheticcases
-passed35.231seconds/116,428,800sampledRSS. Eight repeated actual19-history scans
-plus11.6MBatomic output publication passed57.214seconds/92,532,736RSS. The actual
-VPS rawroundtrip of that invented fixture preserved all38680package/datafiles,
-passed24.752seconds/122,896,384RSS and was admitted through returned.prepare.
-Full invented raw copies now exist locally and on the confirmed VPS, with hashes
-checked; this is not a backup claim for nonexistent future observations.
-The modular proofs do not guarantee allmaximumsource/nonlocalnetwork costs.
+## Completed integration evidence
 
-Remaining: finish full-source/restart/return proof, independent final admission,
-CLI/package proof, exact future clocks and committed effective5 grant, verified
-branch backup, actual local claim, externally anchored source release and finite
-VPS launch. Current code is not yet authorized to gather market observations.
+Independent target review approves contract c3525104…b0446c only. The named offline
+profile passed1554tests+30subtests in694.55seconds; later actual-entry/package tests
+passed separately. All four original runtime packages and nineteen predecessors
+are preserved. Guarded actual admission/start/independent verification passed in
+24.525seconds with66,707,456bytes sampled aggregate RSS. Package construction
+passed8.484seconds/59,940,864bytes.
+
+The invented full worker calendar resolved17144slots:17126received,13missed,
+5unavailable. Earlier canonical-URL failure and compressed-total120second timeouts
+remain retained; resumptions preserved old bytes and never retried attempts.
+Return preparation plus8intentionally unavailable cases passed35.231seconds.
+The separate known8-book1057hour fixture passed4.947seconds and retained11.62MB.
+Eight scans of actual nineteen-history plus full atomic output passed57.214seconds.
+The real VPS round-trip of the invented raw tree independently preserved all38680
+package/datafiles. These are modular engineering proofs, not financial observations
+or a universal worst-case network/source bound. Source and runtime caps remain fixed.
 
 ## Retained results
 
@@ -152,86 +155,24 @@ noncash diagnostics corrected two retained arithmetic failures. The measured
 routine footprint is206,969,986bytes, not a full collector/lifecycle guarantee.
 No new market input or empirical identity was created.
 
-Next action, without another routine permission question:
+## Next action and preservation
 
-1. Implement and independently review the narrow prospective source lifecycle
-   described in reviews/options-prospective-lifecycle-design.md, reconciling its
-   exact single-episode design in reviews/options-capture-admission-decision.md.
-   Capture, source seal/admission and one later financial evaluation are phases
-   of one proposed book claim; original budget4/prior1 remains, with an explicit
-   effective5 book extension required. None exists yet. Preserve all19terminal
-   claims and allfour frozen runtime packages.
-2. Prepare the fixed selection/calendar, immutable per-slot intent/raw journal,
-   source clocks, bounded transport and deterministic missing/restart behavior.
-   Freeze the later financial policy before observations. Benchmark complete
-   history admission and actual retention; the Decision19 overhead warning stands.
-3. Prepare the separately hashed manual VPS research package. The user confirms
-   pck-preds-1 /46.225.169.184. Read-only SSH confirmed root login, Python3.12.3,
-   tmux/screen,2CPUs and39,759,348KiB free. Python3.13 was not on PATH; an isolated
-   pinned runtime remains a prerequisite. No systemd edits, remote mutations,
-   production reuse or implicit scheduler. No capture has started.
-4. After the options/VPS setup, verify its actual launch/stop state and preserve
-   the exact source, claim and raw-return contract. Continue only justified
-   registered work under the resumed authorization and cumulative budgets.
-   No scheduler or automated financial look follows implicitly.
+Finish the reviewed finite initial launch and inspect operational process/source
+status only. The source worker never has local-master admission or analysis authority.
+Follow options-vps-runbook-20260915.md for STOP, immutable attempts, independently
+proved quiescence, complete raw return and the exclusive later analysis intent.
+A source seal alone is not external stopped-process proof. A failed early source
+episode consumes the grant and requires failure diagnosis; no automatic replacement.
 
-Current [setup checkpoint](options-capture-engineering-checkpoint.md): standalone journal, deterministic selection, bounded
-public transport and local episode-controller prototypes now exist. They do not
-constitute a deployable collector. Actual nineteen-history structural verification
-passed in7.977seconds at51,208,192sampled aggregate RSS bytes, retaining16complete
-and3failed receipts. Synthetic transport groups passed with16×8192-byte routine
-bodies and3×5MiB initialization bodies; measured aggregate RSS305,315,840bytes.
-Those resource reports precede the final active-journal precondition patch and
-do not cover the complete calendar, accumulated prefix duplication, full history
-plus capture or actual network latency. Final deployment admission is outstanding.
+Re-rank independent eligible questions against MAP.md, budgets and spent samples.
+Existing value_rev needs its second vintage September18 or later; no early substitute.
+News requires versioned source identity/observation clocks. Bitrue needs authoritative
+settled funding events/marks/fees and account applicability. No deferred settlement
+revisit, paid sources, provider contact, orders or production operation.
 
-Remaining setup work: exact outer assignment/calendar and deterministic initial
-selection integration; daily rule/funding coverage and returned-member admission;
-independent full-protocol verification, output/whole-episode resource bounds;
-frozen absolute future window, charter and explicit effective5 book grant;
-isolated runtime, externally anchored package, manual launch/stop and demonstrated
-raw return. No such grant, actual claim or remote assignment exists. The local
-controller's stop/seal declarations require independently established worker
-quiescence; its verify_episode is a self-check, not the scientific reviewer.
-
-The prior pause-scope question is superseded by the explicit September 15
-resumption. Collection still requires the complete reviewed frozen protocol;
-resumption is not a substitute for admission. Current engineering adds exact
-calendar/worker integration, independent protocol/resource verification and
-source/rule/funding adapters. No new source observations have been gathered.
-
-Existing value_rev needs its second vintage September18 or later, not an early
-substitute. News needs versioned source identity and observation clocks; Bitrue
-needs authoritative settled funding events/marks/fees. Its three-page bounded
-websocket-document follow-up supplied no event route. Account country/product
-and fee facts were requested without credentials and remain unknown. Preserve
-all negative, positive-but-small, unavailable and spent-sample qualifications.
-
-## Backup and preservation
-
-Latest verified component/checkpoint backup:ba9ba625e45719878ccf12f0557d46114ae25160,
-pushed successfully and independently queried equal on the remote branch. It
-contains the journal, selection, transport/controller prototypes and independent
-reviews, explicit unfinished-rollout requirements and the user's pause boundary.
-It creates no grant, claim, VPS deployment or collector. The preceding backup
-63b6f7d3183a954d1ddc05d788925288196c7337 contains the accepted options engine/batch,
-independent reviews and Finding117.
-Earlier result backup139b50ad3708874fe43f6a144b0fba9346d26d15 includes the failed
-spread outputs, independent forensics and Decision19/Finding116.
-It was pushed and independently compared equal to the remote branch. Source
-freeze6d6d65f9712dd41e135672a2f0fb8a7d8389507b and prior dated-mark results
-0e55be23d78cd3a897241fd054839d9fad6343e2 are also recoverable.
-The named offline profile passed1,175tests+20subtests before the latest helpers.
-The options-capture checkpoint now includes a later named-profile pass:
-1,426tests+20subtests in624.14seconds, plus thirteen focused final-controller-patch
-checks. The full suite began before that last patch; the verification record
-preserves this scope and binds final source/test hashes. See
-reviews/options-capture-checkpoint-verification.json and the saved offline log.
-Latest focused proof:26successor tests,23financial/adapter tests including three
-exactCLIguards,7,432independent syntheticcash checks,14adapterscenarios/directHAC,
-actual historical snapshot proof, then9,344actual failed-run forensic checks.
-
-Preserve raw stores, original worktrees, all gates/ledgers and22deferred settlement
-cases. No credentials, provider contact, paid sources, orders or production changes.
-The September 15 resumption supersedes the earlier pause-after-setup boundary.
-Preserve a precise handoff, immutable attempts and the current running status.
+Verified source backup:ebc21e931541e7e03e139e48f7d2069a8426742f. Claim/launch-state
+backup is being pushed separately after retaining the finite launch record.
+Local and VPS copies of the invented fixture are hash verified. Future actual raw
+observations do not yet exist and have no claimed complete backup. Earlier reviewed
+checkpoints/results remain in Git ancestry; their preparation-only launch status
+is superseded here. Preserve all original worktrees/raw stores and22deferred cases.

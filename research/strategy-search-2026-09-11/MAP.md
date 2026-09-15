@@ -7,7 +7,8 @@ selection. Sources and limitations are in SOURCES.md and HISTORY.md.
 September 15 resumption: the user said “lets keep going then”. Complete the
 options/VPS integration and frozen single-episode admission first. Then re-rank
 eligible independent questions using the retained evidence and cumulative budgets.
-No new empirical claim, collector or scheduler exists yet.
+The sole options episode is now admitted; effective5 is consumed. Exact release
+and finite launch status are in STATE.md. No recurring scheduler was created.
 
 | Rank / family | Mechanism and plausible payer | Earlier evidence and open question | Cheapest informative test / deeper-work trigger | Capital/exposure/cost limits | Current disposition |
 |---|---|---|---|---|---|

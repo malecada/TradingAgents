@@ -2,9 +2,10 @@
 
 **Current scope: research resumed September 15; complete options/VPS integration first. Zero validated strategies.**
 The user subsequently said “lets keep going then”, lifting the earlier
-pause-after-setup instruction. The single prospective options episode remains
-unregistered and no collector is running. Reviewed components are being integrated
-and independently checked before the frozen grant, claim and research-only launch.
+pause-after-setup instruction. The single prospective options episode is now admitted from remotely verified
+commit ebc21e931541e7e03e139e48f7d2069a8426742f. Its twentieth claim is active;
+all nineteen predecessors remain terminal and preserved. The exact VPS release
+is verified; consult active state for the finite launch/process status.
 The user explicitly launched the saved research prompt and superseded the
 preparation pause. Read the [active program state](../../research/strategy-search-2026-09-11/STATE.md),
 [charter](../../research/strategy-search-2026-09-11/CHARTER.md),
@@ -29,8 +30,9 @@ source follow-up admits all112daily mark slots. Its separately granted financial
 book hit the120second wall limit after publishing all outputs; failure-only
 closure preserves them. Independent9,344checks find8retained books cashnegative,
 with positive frictionless cash still below relevance. No rerun or eighth grant.
-Options accounting and source-control components have offline proofs; the complete
-prospective collector and rollout remain unadmitted. No candidate has reached
+Options accounting and source-control integration passed the named offline profile
+(1554tests+30subtests) and independent admission review. The sole effective5 options
+allowance is consumed by the active prospective episode. No candidate has reached
 confirmation.
 Read active state for exact sources, receipts, reviews, budgets and next actions.
 New runs use the additive lifecycle and complete sharded receipts.

@@ -1,12 +1,14 @@
 # Dedicated options research launch and return
 
-September 15, 2026. Runtime preparation is complete; the source release, grant,
-claim and collector are not yet created. No market request has been made by
-this setup. This document is a reviewed manual procedure draft, not a launch log.
+September15,2026: source/grant/claim and exact VPS release are admitted and
+verified. The approved v2 launcher started08:50:15UTC and is waiting until08:58.
+No market collection was present at08:50:24. The durable launch evidence is
+reviews/options-actual-launch-20260915.json; later operational records supersede
+this snapshot. This procedure is unchanged; do not rerun the initial launcher.
 
 Confirmed host pck-preds-1 /46.225.169.184. Dedicated root:
-`/opt/thesis-research/options-episode-20260911`. Only its new research runtime
-has been installed. The shared Python, systemd, cron, production code and journals
+`/opt/thesis-research/options-episode-20260911`. Its isolated runtime, exact source package, preserved synthetic return proof and
+finite launcher are installed. The shared Python, systemd, cron, production code and journals
 were not changed. Runtime evidence is in `reviews/options-vps-runtime-20260915.json`.
 
 Pinned executable:
@@ -95,3 +97,22 @@ record which full raw copies are actually recoverable. A raw manifest or configu
 remote alone is not a complete raw backup. The user resumed broader research on
 September15; continuing another justified question still requires its own frozen
 gate and remaining cumulative budget.
+
+## Actual launch identity and status route
+
+Source:ebc21e931541e7e03e139e48f7d2069a8426742f.
+Claim:9755f008355cbffdef9c0b561e3806ed39a1c2d874fb7a0f285def2ebab9dd78.
+Assignment:8349daecd93b39ed2e41e48194b58790706edaf209cf2a3b24ba62b0b430eccf.
+Release:`/opt/thesis-research/options-episode-20260911/release-ebc21e9`.
+Approved launcher:`launch-options-20260915-v2.sh`, hash
+1b6350518d078806b946f0cb3371f26560b75239953d0d5355aae0b0f4dab71d.
+Original v1 remains evidence and is not approved for execution.
+
+Read-only SSH on confirmed host can use `tmux -L thesis-options-20260915 list-panes
+-t options-episode-20260911 -F '#{pane_pid} #{pane_current_command} #{pane_dead}'`
+and process/log/receipt status counts within the dedicated root. Read only
+operational fields; never derive Greeks, returns or financial significance during
+capture. The one finite command does not create a Codex follow-up or automatic
+restart. Loss of tmux/session is an error/exit requiring retained evidence review.
+Use fresh preserved logs for any separately reviewed manual resume; never overwrite
+or retry the initial launch. No data root relocation or entry reselection.

@@ -1,20 +1,21 @@
 # Research resumed September 15, 2026
 
-Latest user instruction: “lets keep going then”. This resumes authorized research
-and supersedes the earlier pause-after-options/VPS boundary. Complete the options
-integration, independent review, future-window registration and verified bounded
-research-only launch first. No collector, grant or twentieth claim exists yet.
+Latest instruction “lets keep going then” supersedes the pause-after-options/VPS
+boundary. Read AGENTS.md, docs/RESEARCH_START.md, current program STATE.md,
+CHARTER.md, MAP.md, BACKLOG.md and reviews/options-actual-*20260915*.
+Inspect actual Git status and claims before empirical work.
 
-Read AGENTS.md, docs/RESEARCH_START.md, docs/research/STATE.md, this program's
-STATE.md, CHARTER.md, MAP.md, BACKLOG.md and the latest decision/review. Use the
-pinned local interpreter and research lifecycle. Inspect actual branch, working
-tree and research_runs claims before doing anything empirical.
+The twentieth identity options-episode-20260911 is ACTIVE, claimed from source
+ebc21e931541e7e03e139e48f7d2069a8426742f before the prospective lease. It consumes
+sole effective5 options allowance. Do not run Episode.start again. All nineteen
+predecessors remain16complete/3failed. The operative source/assignment/host/data
+identity and current finite tmux status are in STATE.md and the VPS runbook.
 
-Completed and failed identities are immutable and must not be rerun. Use their
-receipts, decisions and exact next action. A pending claim requires independent
-recovery review; never delete it or rename a retry to reset the attempt count.
-Complete integration verification, state updates and verified branch backup.
-Continue justified registered work within cumulative budgets. Keep
-historical settlements deferred, source stores immutable,
-cash/quantity accounting explicit and old sample exposure intact. No credentials,
-orders, paid sources, production operations or implicit recurring jobs.
+Use read-only operational checks first; never perform an interim financial look.
+Follow the runbook for immutable return, independent quiescence and one later
+analysis intent. A partial/failed run requires independent recovery review;
+never delete receipts or rename a retry. No automatic restart or Codex scheduler.
+
+Continue only distinct justified registered work within cumulative budgets.
+Preserve old runtimes, raw stores, spent samples and22deferred settlements.
+No credentials, orders, purchases, provider contact or production changes.

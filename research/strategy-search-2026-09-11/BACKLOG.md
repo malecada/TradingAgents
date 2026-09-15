@@ -3,7 +3,8 @@
 September 15 resumption: the user said “lets keep going then”. Complete the
 options/VPS integration and frozen single-episode admission first. Then re-rank
 eligible independent questions using the retained evidence and cumulative budgets.
-No new empirical claim, collector or scheduler exists yet.
+The sole options episode is now admitted; effective5 is consumed. Exact release
+and finite launch status are in STATE.md. No recurring scheduler was created.
 
 - [x] Complete registered carry-definition diagnostic and independent review; retained with this results checkpoint.
 - [x] Admit actual public event marks and matched bars once; independent review passed.
@@ -31,7 +32,8 @@ No new empirical claim, collector or scheduler exists yet.
 - [x] Implement and review standalone journal/selection components; preserve full-construction failure and scoped near-complete resource proof.
 - [x] Verify current VPS access read-only: confirmed host, root login, Python3.12.3, tmux/screen,2CPUs and39,759,348KiB free. No remote mutation or collection.
 - [x] Verify actual nineteen-history hashes with the candidate controller inventory:16complete/3failed,7.977seconds and51,208,192sampled aggregate RSS bytes. This is engineering proof, not a twentieth claim.
-- [ ] Prepare/review target-specific prospective source lifecycle, explicit options extension, frozen financial policy and bounded manual VPS rollout. Userconfirmsalways-onVPS; no capture/grant/deployment yet.
+- [x] Complete reviewed prospective lifecycle, effective5 grant, frozen policy, verified source backup, sole local claim and exact VPS release.
+- [ ] Record finite initial launch and first operational source status; preserve raw return/stop contract.
 - [ ] Existing value_rev remains deferred until a second vintage September 18 or later; no early replay or renamed gate.
 - [ ] Re-rank relative-value, liquidity, factor and information questions against
   the resulting evidence; register only a distinct justified prediction.
