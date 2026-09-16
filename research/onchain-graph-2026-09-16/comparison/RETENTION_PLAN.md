@@ -40,8 +40,13 @@ hashes permit independent reconstruction; a production feature must still pass
 its declared independent numerical checks before ephemeral values are released.
 
 The existing Python-set cross-day uniqueness helper is unsuitable for the full
-corpus under 8 GiB RSS. A separately implemented and tested hash-bucket/external
-sort can compare complete 32-byte transaction identities exactly. At minimum,
+corpus under 8 GiB RSS. The new `hash_audit.py` helper compares complete 32-byte transaction identities
+exactly using bounded buckets and in-place heapsort. Thirteen focused synthetic
+tests and an independent Counter oracle passed. The retained maximum-bucket
+benchmark checked 8,388,608 occurrences in one 256 MiB bucket, with 1,048,576
+unique identities and 7,340,032 excess duplicates. It completed in 4.842 seconds
+at 345,997,312 bytes sampled peak process-tree RSS under the unchanged 8 GiB
+guard. This is synthetic utility evidence, not full-panel integration. At minimum,
 unsorted identity storage is 32 times the actual total transaction count; sort
 buffers, receipts and temporary copies require additional space. The 48 GiB
 ceiling is not yet proven sufficient. Actual footer row counts and a synthetic
@@ -64,8 +69,13 @@ cannot hold the proposed 122 GiB retained ceiling. A full-corpus external backup
 destination remains unresolved; local retention and external recovery must be
 reported separately rather than claiming an unverified backup.
 
-Next engineering work: finish and independently verify the first source tranche,
-measure its actual stored/metadata bytes, then freeze a full-cohort retention and
-checkpoint design with exact byte accounting. The future numerical panel must
+The first tranche is independently verified and preserved: 940 source files
+total 754,265,130 bytes, and the full 990-file import totals 754,630,488 bytes.
+Commit `3454966e7e33ee655d4df0a065e099d594b9e978` was pushed and its remote
+branch hash verified. That backup covers the first tranche, not future captures.
+Next engineering work is a full-cohort retention and checkpoint design with
+exact byte accounting. The hash utility checks a free-space threshold, not a
+physical reservation: filesystem overhead and concurrent writers need explicit
+allowance in that future design. The future numerical panel must
 resolve completion-day boundaries and the interrupted pilot lineage before the
 matched financial evaluation. No price outcome has been selected in this note.
