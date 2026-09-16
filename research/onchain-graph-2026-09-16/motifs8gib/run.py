@@ -7,7 +7,7 @@ from tradingagents.research_amended import ResearchRun
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[2]
 EXPERIMENT='eth-temporal-motifs-8gib-20260916'
-REGISTRATION='research/onchain-graph-2026-09-16/motifs8gib/gates.json'
+REGISTRATION='research/onchain-graph-2026-09-16/motifs8gib/gates-v2.json'
 
 
 def main():

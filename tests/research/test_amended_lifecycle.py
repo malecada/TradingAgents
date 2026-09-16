@@ -285,3 +285,38 @@ def test_independent_verifier_rejects_recommitted_dataset_reset(amendment,field,
     write(run.directory,'claim.json',claim)
     with pytest.raises(ValueError,match='dataset history definition'):
         verify_claim(run.directory)
+
+
+def foreign_amendment_claim(root, spec, source):
+    """Base-bound synthetic history with a foreign amendment dialect; never executed."""
+    claim=json.loads((root/'research_runs/failed-two/claim.json').read_text())
+    claim.update(experiment_id='amended',source=source,design_source=source,
+                 registration_sha256=sha((root/'registration.json').read_bytes()),
+                 experiment=spec['experiments']['amended'])
+    claim['budget_amendment']={'foreign_policy':'invented historical amendment dialect'}
+    directory=root/'research_runs/amended';directory.mkdir()
+    (directory/'claim.json').write_text(json.dumps(claim))
+    return directory
+
+
+def test_scoped_history_keeps_foreign_claims_and_exposures(amendment):
+    from tradingagents.research_amended.admission import claims
+    root,spec,cert,source=amendment
+    foreign_amendment_claim(root,spec,source)
+    # The certificate/accounting dialect is intentionally not valid for this helper.
+    with pytest.raises(ValueError):claims(root)
+    with pytest.raises(ValueError):claims(root,mechanism_id='mechanism')
+    historical=claims(root,mechanism_id='different-target-mechanism')
+    assert {c['experiment_id'] for c in historical}=={'failed-one','failed-two','amended'}
+    assert all(c['windows'] and c['prior_exposures'] for c in historical)
+
+
+@pytest.mark.parametrize('field',['windows','family','inputs'])
+def test_scoping_never_hides_foreign_base_metadata_tampering(amendment,field):
+    from tradingagents.research_amended.admission import claims
+    root,spec,cert,source=amendment
+    directory=foreign_amendment_claim(root,spec,source)
+    claim=json.loads((directory/'claim.json').read_text())
+    claim[field]=[] if field=='windows' else {}
+    (directory/'claim.json').write_text(json.dumps(claim))
+    with pytest.raises(ValueError):claims(root,mechanism_id='different-target-mechanism')

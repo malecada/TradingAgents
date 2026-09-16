@@ -48,7 +48,7 @@ def run_with_limit(command,guard,root):
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--source',required=True)
     args=parser.parse_args();here=Path(__file__).resolve().parent;root=here.parents[2]
-    admit(root=root,registration='research/onchain-graph-2026-09-16/motifs8gib/gates.json',
+    admit(root=root,registration='research/onchain-graph-2026-09-16/motifs8gib/gates-v2.json',
           experiment='eth-temporal-motifs-8gib-20260916',source=args.source)
     spec=importlib.util.spec_from_file_location('retained_two_cpu_guard',root/'research/strategy-search-2026-09-11/resource_guard_v2.py')
     guard=importlib.util.module_from_spec(spec);spec.loader.exec_module(guard)

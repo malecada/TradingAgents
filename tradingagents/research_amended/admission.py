@@ -81,7 +81,7 @@ def _overlaps(left, right):
     return a < d and c < b
 
 
-def claims(root: Path) -> list[dict]:
+def claims(root: Path, *, mechanism_id: str | None = None) -> list[dict]:
     """Every start spends one attempt and exposes its windows, including failures."""
     folder = root / "research_runs"
     if not folder.exists():
@@ -93,7 +93,16 @@ def claims(root: Path) -> list[dict]:
         if not child.is_dir() or not (child / "claim.json").is_file():
             raise ValueError("partial run claim requires manual recovery; automatic reuse prohibited")
         from .verify import verify_claim
-        claim = verify_claim(child)
+        if mechanism_id is None:
+            claim = verify_claim(child)
+        else:
+            # Preserve all source-bound history and exposures. The single-+1
+            # amendment dialect applies only to this admission's mechanism;
+            # unrelated families may use different, separately frozen policies.
+            from tradingagents.research.verify import verify_claim as original_claim
+            claim = original_claim(child)
+            if claim["family"]["mechanism_id"] == mechanism_id:
+                claim = verify_claim(child)
         if claim["experiment_id"] != child.name:
             raise ValueError("run claim identity differs from its directory")
         if (child / "complete.json").exists() and (child / "failed.json").exists():
@@ -212,7 +221,7 @@ def admit(*, root, registration, experiment, source, design_source=None, binding
             if exposure["state"] not in {"exposed", "spent"}:
                 raise ValueError("invalid prior exposure state")
             history.append({**exposure, "identity": info["identity"]})
-    prior = claims(root)
+    prior = claims(root, mechanism_id=family["mechanism_id"])
     if any(c["experiment_id"] == experiment for c in prior if c["experiment_id"] != _own_claim):
         raise ValueError("repeat run prohibited; use a separately justified registration")
     relevant = [c for c in prior if c["family"]["mechanism_id"] == family["mechanism_id"]]
