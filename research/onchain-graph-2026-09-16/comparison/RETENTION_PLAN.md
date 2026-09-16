@@ -50,7 +50,8 @@ guard. This is synthetic utility evidence, not full-panel integration. At minimu
 unsorted identity storage is 32 times the actual total transaction count; sort
 buffers, receipts and temporary copies require additional space. The 48 GiB
 ceiling is not yet proven sufficient. Actual footer row counts and a synthetic
-disk/RSS-bound demonstration are admission prerequisites; no truncated hashes,
+disk/RSS-bound demonstration are prerequisites for the full numerical identity
+audit; bounded raw capture can proceed without allocating that scratch; no truncated hashes,
 probabilistic uniqueness claim or silently discarded identity column is allowed.
 
 ## Recovery status
@@ -73,8 +74,11 @@ The first tranche is independently verified and preserved: 940 source files
 total 754,265,130 bytes, and the full 990-file import totals 754,630,488 bytes.
 Commit `3454966e7e33ee655d4df0a065e099d594b9e978` was pushed and its remote
 branch hash verified. That backup covers the first tranche, not future captures.
-Next engineering work is a full-cohort retention and checkpoint design with
-exact byte accounting. The hash utility checks a free-space threshold, not a
+The [remaining-cohort capture contract](BULK_CHARTER.md) now specifies
+1,084 dates, existing-source reuse, aggregate byte accounting, independent daily
+raw checks and immutable checkpoints. It allocates no numerical scratch and
+stops if storage is insufficient. Numerical panel assembly remains subsequent
+work; completion of that raw job is not assumed. The hash utility checks a free-space threshold, not a
 physical reservation: filesystem overhead and concurrent writers need explicit
 allowance in that future design. The future numerical panel must
 resolve completion-day boundaries and the interrupted pilot lineage before the
