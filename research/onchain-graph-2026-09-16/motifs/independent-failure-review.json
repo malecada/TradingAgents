@@ -1,0 +1,51 @@
+{
+  "benchmark_success": false,
+  "bounded_subset_event_counts": [
+    30,
+    30,
+    30,
+    30,
+    30,
+    30
+  ],
+  "bounded_subsets_recomputed": 6,
+  "claim_sha256": "6ba7c1697b7b9e0fa4e8928e596b78efee593eac953d924734b9df38844d8eb1",
+  "directed_pairs": 443937,
+  "eligible_events": 547332,
+  "excluded_exact_sentinels": 777,
+  "execution_resource": {
+    "child_exit_code": -15,
+    "elapsed_seconds": 219.6569345980006,
+    "elapsed_time_kill": false,
+    "limit_reason": "sampled aggregate RSS limit exceeded",
+    "peak_sampled_tree_rss_bytes": 2656620544,
+    "qualification": "Sampled RSS can miss brief peaks. Per-request socket timeout and finite request/byte budgets remain.",
+    "rss_limit_bytes": 2147483648,
+    "sample_interval_seconds": 0.02,
+    "source": "82b92974606cedd43f787df4d4cfb86434232792"
+  },
+  "expected_outputs": 44,
+  "failure_audit_passed": true,
+  "financial_admission": false,
+  "gate_sha256": "c0c025c487352bf8c257f6c1d5ade3b97f8aef0a16540367d6133be74aef9a6f",
+  "new_network_requests": 0,
+  "nodes": 381191,
+  "ordered_events_sha256": "1d9f9fd78c2a4363f508b7ecbb3fcc5fc729d7ea62f65c9a77ae337fbf7a535d",
+  "qualification": "Memory-failed benchmark: raw input, graph event/order identity and six bounded event subsets independently reconciled. No full-day motif counts, local vectors, concentration results or timing split were produced or independently calculated.",
+  "raw_transactions": 1101465,
+  "registered_cells": 5,
+  "retained_output_sha256": {
+    "bounded-oracle.json": "33abe95f96ae3d166960ad5c6d92fe5b8e6f288c7ec3ae61ef6377f82ec21df3",
+    "graph-build.json": "056501cbeafe6f76218c75a7bd30d463f7c57179d145131ccd8135d41a35c202",
+    "integrity.json": "c0d30ef69478e8ddbecfc4a5f13b0b54fbf51d7b725685078d594ae8d7373f41"
+  },
+  "retained_outputs": 3,
+  "reviewed_at": "2026-09-16T13:43:21.029292+00:00",
+  "reviewer_script_sha256": "f80ddeae30d9cb56a2bc0ea6374fb0a570884c33ff9e4727c0fb7893f98bdd4c",
+  "source": "82b92974606cedd43f787df4d4cfb86434232792",
+  "structural_verification": {
+    "status": "claimed-incomplete"
+  },
+  "unpublished_outputs": 41,
+  "whole_day_motif_outcomes_computed_by_reviewer": false
+}
