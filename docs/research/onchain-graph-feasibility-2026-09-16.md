@@ -4,6 +4,8 @@ Reviewed September 16, 2026. Documentary and design review; no financial experim
 
 Subsequent authorized engineering evidence is preserved in the [one-day Ethereum graph result](../../research/onchain-graph-2026-09-16/forensic/RESULT.md). It demonstrates bounded column extraction and a conditional static graph reconstruction; the original strict graph gate remains unavailable. The documentary assessment below is retained as the pre-experiment review.
 
+The subsequent [local temporal-motif benchmark](../../research/onchain-graph-2026-09-16/motifs/RESULT.md) preserved graph identity and passed small-sample counting checks, but exceeded the tested 2 GiB memory budget before producing full-day motif counts. This limits the measured implementation's feasibility; predictive value remains untested.
+
 **Verdict: a bounded graph-feature study is technically plausible. The supplied 13-week specification is not ready for implementation, and its claimed connection to successful price prediction is insufficient.** Entity classification, graph-based forecasting and a profitable strategy with little crypto-price exposure are separate claims. The cheapest useful test should isolate the incremental information in graph features before building an entity-classification platform.
 
 The reviewed input is `/home/malecada/master_thesis/onchain-transaction-graph-spec.md`, SHA-256 `cf6904afb1d4dc60817d48237c4a8b9073450809fc6d710230849eafb071324e`. The active checkout was clean at `06c7a82ed2a0041e94b86329bfc799bb6b1b9f19`, on `research/strategy-search-2026-09-11`, before adding this review. The original spec and active research state are unchanged.
