@@ -1,0 +1,36 @@
+{
+  "events": 547332,
+  "exact_sentinels_excluded": 777,
+  "expected_directed_pairs": 443937,
+  "expected_nodes": 381191,
+  "historical_feature_panel_admitted": false,
+  "integrity": {
+    "boundary": "Only retained UTC-day blocks; no prior-day state or cross-day edges. Provider-internal consistency only; outside boundary headers and independent canonicality not checked.",
+    "categories": {
+      "graph_event": 547332,
+      "invalid": 0,
+      "null_recipient": 762,
+      "reverted": 20524,
+      "self_transfer": 2496,
+      "zero_value": 530351
+    },
+    "checks_pass_after_declared_normalization": true,
+    "errors": {},
+    "expected_rows": 1101465,
+    "flags_nonexclusive": {
+      "failed_receipt": 20524,
+      "null_recipient": 777,
+      "self_transfer": 27642,
+      "zero_value": 545979
+    },
+    "missing_block_positions": 0,
+    "ordering": "File order measured, not presumed chronological. Canonical event order is (block_number, transaction_index); no time-dependent feature calculated.",
+    "rows": 1101465,
+    "source_order_inversions": 3,
+    "unique_transaction_hashes": 1101465
+  },
+  "ordered_events_sha256": "1d9f9fd78c2a4363f508b7ecbb3fcc5fc729d7ea62f65c9a77ae337fbf7a535d",
+  "ordering": "timestamp=integer Unix seconds; event_id=ordinal after (block,transaction_index) sort",
+  "original_lifecycle_changed": false,
+  "pair_count_sha256": "ff0f034a037b373f11191b5c19a4c0fe20fec33ac524dd31bdc1a1551dd4492e"
+}
