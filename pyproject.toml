@@ -61,6 +61,9 @@ dependencies = [
 tradingagents = "cli.main:app"
 
 [project.optional-dependencies]
+onchain = [
+    "raphtory==0.17.0; python_version >= '3.11'",
+]
 v3 = [
     "xgboost>=2.0.0",
     "catboost>=1.2.0",
