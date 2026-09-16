@@ -1,5 +1,7 @@
 # Ethereum graph feasibility checkpoint
 
+The user has authorized continuing the feasibility study. The next [panel-readiness contract](panel_readiness/CHARTER.md) and [gate](panel_readiness/gates.json) freeze a metadata-only 2022–2024 inventory plus synthetic completion-day boundary tests. Preparation is in progress; no new archive claim has started. Earlier empirical conclusions below remain unchanged.
+
 September 16, 2026. Zero validated strategies. The user-authorized 8 GiB successor **completed** the same one-day temporal-motif operation that failed under the earlier 2 GiB cap. [Latest result](motifs8gib/RESULT.md), [independent closure](motifs8gib/CLOSURE_REVIEW.md), [original failed motif result](motifs/RESULT.md), [static graph diagnostic](forensic/RESULT.md), [original prototype result](prototype/RESULT.md) and [source result](SOURCE_RESULT.md) preserve the distinct claims. The root specification remains unchanged.
 
 The retained January 1, 2024 Ethereum day contains 1,101,465 transactions across 7,107 blocks. Projected column capture is 118,730,958 bytes. Declared normalization of exactly 777 recipient strings `"None"` permits 547,332 eligible ordered events, 443,937 directed pairs and 381,191 incident addresses. The strict acquisition prototype remains 117 complete acquisition cells plus two unavailable integrity/graph cells; no retrospective relabelling occurred. The separate static reconstruction took 14.36 seconds and 516.23 MiB sampled peak RSS.
