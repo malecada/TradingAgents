@@ -5,7 +5,7 @@ from pathlib import Path
 
 from tradingagents.research import ResearchRun
 from graph_capture import capture_graph, DATES, day, storage
-from spot_capture import capture_spot, MONTHS
+from spot_capture import capture_spot, MONTHS, registered_url
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
@@ -43,6 +43,10 @@ def main():
         plan = json.loads(run.read_input('capture_plan'))
         inventory = json.loads(run.read_input('inventory'))
         run.read_input('history')
+        spot_plan = json.loads(run.read_input('spot_plan'))
+        if spot_plan['months'] != list(MONTHS) or spot_plan['urls'] != [
+                registered_url(month, checksum) for month in MONTHS for checksum in (False, True)]:
+            raise ValueError('spot acquisition plan differs from frozen source cohort')
         directory = HERE/'capture-artifacts'
         directory.mkdir(exist_ok=False)
         spot = capture_spot(directory/'spot')

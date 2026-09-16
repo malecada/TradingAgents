@@ -81,3 +81,21 @@ execution, fees, funding and profitability remain untested. No PnL convention
 is implemented or claimed here. No higher reasoning effort is indicated for
 the reviewed capture; the outstanding checks require actual retained capture
 evidence and a later admitted numerical panel.
+
+## Admission-only correction review
+
+The initial committed preparation failed the read-only admission check because
+the `eth-spot` window lacked a mapped input. The separate ADMISSION_NOTES.md
+preserves that failure and the preceding rejected short source hash. Independent
+inspection found no capture claim directory, capture artifacts or resource
+receipt in either the consolidated or Data execution checkout. This is a
+pre-execution correction, not a consumed capture or a replay.
+
+The successor adds `spot-plan.json` as a hash-bound `eth-spot` input and checks
+its exact cohort/URL sequence before any acquisition. Independently generated
+month and URL lists matched all 38 months and 76 anonymous URLs. All 28 source
+hashes, all 16 input hashes and the charter hash matched the corrected files.
+Bounds, windows, cells, allowance and scientific rules are unchanged. No new
+material blocker was found. The existing unused execution checkout may move
+to the reviewed successor commit before claiming; retain the original commit
+and admission notes and verify the successor's full HEAD through admission.
