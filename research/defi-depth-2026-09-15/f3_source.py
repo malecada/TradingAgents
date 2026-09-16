@@ -16,6 +16,7 @@ def module(name,file):
 S=module('f3_exact_source_collector','protocol_financial_source.py')
 R=module('f3_exact_financial_results','protocol_financial_results.py')
 C=module('f3_exact_context','f3_context.py')
+P=module('f3_parent_recovery_provenance','recovery_chain.py')
 
 
 def manifests(design):
@@ -27,9 +28,11 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--source',required=True);args=p.parse_args()
     with ResearchRun.start(root=ROOT,registration=REGISTRATION,experiment=EXPERIMENT,source=args.source) as run:
         design=json.loads(run.read_input('design'));packet=json.loads(run.read_input('source_context'))
-        context=C.verify_packet(packet,design,run.read_input('f1_claim'),run.read_input('f1_terminal'))
+        parent={name:run.read_input(name) for name in P.INPUTS}
+        recovery=P.verify(parent,ROOT)
+        context=C.verify_packet(packet,design,parent['f1_claim'],parent['f1_terminal'])
         run.write_json('history.json',{'prior_request_keys':design['prior_request_keys'],
-            'price_field_history':design['price_field_history'],'f1_audit':packet['f1_audit'],
+            'price_field_history':design['price_field_history'],'f1_audit':packet['f1_audit'],'f1_recovery_provenance':recovery,
             'scope':'No common observation retry or prior-result backfill; terminal-bound retained source bytes'})
         summary,cells=S.capture(design,context,run.write_json)
         cells+=R.financial(summary,json.loads(run.read_input('benchmarks')),'F3',run.write_json)

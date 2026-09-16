@@ -53,16 +53,24 @@ def prepare():
         'core_ancestry':'research/broader-allocation-2026-09-15/ancestry-crosswalk.json',
         'defi_ancestry':'research/broader-allocation-2026-09-15/defi-ancestry-crosswalk.json',
         'closure_text':'research/broader-allocation-2026-09-15/RESULTS.md'}
+    paths.update(recovery_config=BASE+'f1-restart-recovery.json',
+        recovery_import=BASE+'f1-recovery-import.json',
+        recovery_attachment='research_recoveries/defi-depth-f1-restart-20260916/attachment.json',
+        recovery_started='research_recoveries/defi-depth-f1-restart-20260916/started.json',
+        recovery_complete='research_recoveries/defi-depth-f1-restart-20260916/complete.json',
+        recovery_adapter_review=BASE+'reviews/f1-restart-adapter-review.md',
+        **M.P.FILES)
     for label,eid,terminal in [('dex','allocation-dex-source-20260915','complete'),('q1','defi-depth-q1-20260915','complete'),
         ('q2','defi-depth-q2-20260915','failed'),('r1','defi-depth-r1-20260915','failed'),('q3','defi-depth-q3-20260915','failed'),
         ('f2','defi-depth-f2-20260915','complete'),('f1','defi-depth-f1-20260915','complete')]:
         paths[label+'_claim']='research_runs/'+eid+'/claim.json';paths[label+'_terminal']='research_runs/'+eid+'/'+terminal+'.json'
     for name in ('f3-charter-review','lending-book-review','financial-source-policy-review','protocol-financial-source-review',
-                 'protocol-financial-results-review','protocol-closure-audit-review','f1-closure-review','f3-context-review'):
+                 'protocol-financial-results-review','protocol-closure-audit-review','f1-closure-review','f3-context-review','f3-recovery-chain-review'):
         paths[name+'_text']=BASE+'reviews/'+name+'.md'
     previous=json.loads((HERE/'gates-f1.json').read_bytes())
     sources=dict(previous['experiments']['defi-depth-f1-20260915']['source_files'])
-    for name in ('f3_source.py','f3_context.py','prepare_f3.py','protocol_closure_audit.py','f3-design.json'):
+    M.P.verify({name:(ROOT/paths[name]).read_bytes() for name in M.P.INPUTS},ROOT)
+    for name in ('f3_source.py','f3_context.py','prepare_f3.py','protocol_closure_audit.py','recovery_chain.py','f3-design.json'):
         sources[BASE+name]=registered_ref(BASE+name)['sha256']
     for path,expected in sources.items():
         if registered_ref(path)['sha256']!=expected:raise ValueError('inherited source differs; exact successor review required')

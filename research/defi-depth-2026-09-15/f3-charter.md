@@ -132,6 +132,14 @@ ownership. Genuinely new LP-only keys require the complete terminal exclusion
 union and semantic novelty checks; they have no earlier suppression receipt.
 No new F2 or F1 result is filled or recalculated by F3.
 
+F1's subsequent PC interruption happened with an empty output directory. Its
+separately reviewed same-claim recovery preserves the scientific trial and
+budget but adds execution provenance. F3 must register and verify the original
+claim/terminal, shared attachment marker, recovery started/completed receipts,
+recovery config/source/decision and review. The original source commit alone is
+not the complete execution chain. These operational records do not create a
+fresh sample, source retry or another financial attempt.
+
 The daily fee-growth path remains conditional. Historical global counters do
 not prove realizable fees after this account changes pool liquidity, nor do
 daily capacity diagnostics bound intraday conditions. Oracle ETH/USD and USDC/USD
@@ -168,3 +176,10 @@ are different claims. Independent raw/accounting/denominator/selection review
 must distinguish economic failure, source absence and inadequate evidence.
 No orders, paid resources, wallet/account action, production mutation or new
 ongoing monitor is authorized by this contract.
+
+The F1 closure review must inventory the entire original recovery-receipt
+directory, including hidden, failed or pending records, and preserve it byte for
+byte before adding the separate attachment marker to the imported directory.
+The F3 handoff accepts exactly started.json, complete.json and attachment.json;
+any additional record requires a separately reviewed disposition before F3
+admission. A selected completion subset does not prove successful recovery.
