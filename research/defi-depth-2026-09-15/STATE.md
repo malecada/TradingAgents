@@ -229,3 +229,38 @@ byte-exact terminal evidence before F3 preparation. F3helper/main/builder curren
 uncommitted and synthetic-only; independent context review pending. F3 may not
 requery any F1 actual/uncertain common source or proceed through an inherited
 endpoint denial. Continue justified research without another go-ahead.
+
+
+## PC restart and active same-claim continuation — September16
+
+The user reported a PC restart and requested resume. Original F1 process absent;
+claim2ad4dc79f812cafa80486b64a28cea1a45170c99380bb3eff9aaac187a1c6730
+remained with a completely empty output directory, no pending/terminal. Frozen
+control flow and independent review establish no new F1send/financial attempt
+under intact-root/source assumptions. Originalclaim/source/inputhashes verified.
+The claim was neither erased nor closed failed, and no new trial was claimed.
+
+Reviewed F1-RESTART-DECISION.md/f1-restart-recovery.json define one guarded manual
+attachment only. Nine synthetic tests and independent fullentrypoint reviewPASS
+in reviews/f1-restart-adapter-review.md. Originalscientificsource remains
+b2a1659e2645c6fa6cba03bba6b73d0c74b30bb8 at TradingAgents-defi-f1. Additional
+recovery execution sourcee91889c4f7a94d02c7032d1bf164f30f9d398ed8 is fixed at
+/home/malecada/master_thesis/TradingAgents-defi-f1-recovery.
+DO NOT change either execution HEAD/source/input set while this process is active.
+
+Recovery started2026-09-16T10:24:06.374580UTC, unified exec session51245, under a
+shared original-root process lock and durable one-shot attachment marker. Its
+immutable started receipt is research_recoveries/defi-depth-f1-restart-20260916/
+started.json in the recovery checkout. Originalrun ownership/read/write/finish
+logic remains, with an additional recovery-source guard. Initial originalinput
+verification resumes before any capture. There is no time/CPU kill. Session15783
+is dead; do not invoke originalstart or the recoveryadapter a second time.
+
+The original claim/time, sample exposure and phase8/11 financial2/4 repair1/1
+counts are unchanged. The old source alone is incomplete execution provenance;
+all F1closure/F3handoff must retain bothsources and recoveryreceipts/marker.
+After terminal, import originalrun, copy sharedmarker as attachment.json alongside
+externalstarted/complete recoveryreceipts, and independently verify the chain.
+New future recovery_chain.py and F3integration enforce this chain;12invented
+chain/context testsPASS, independent review pending. Never treat another crash
+with nonempty output as eligible for this narrow empty-state adapter.
