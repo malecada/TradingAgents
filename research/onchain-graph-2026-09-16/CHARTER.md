@@ -1,0 +1,39 @@
+# Ethereum graph information — bounded source admission
+
+User authorization: September 16, 2026, “sounds good, let's go with the proposed approach”, following the documentary review in `docs/research/onchain-graph-feasibility-2026-09-16.md`.
+
+The objective is to determine whether a credible comparison of market features, ordinary on-chain activity, and graph features can be constructed. The first executable question is source feasibility, not price prediction. No model, financial outcome, trading policy, paid service, account credential, provider contact, production action or background job is included in this registration.
+
+## History and bounded extension
+
+This study inherits `research/strategy-search-2026-09-11/HISTORY.md`, the current program MAP/STATE, and the predlab NLST/SMW gates and subsequent corrections. Wallet features have ten recorded historical rows; broader multiplicity remains unknown. Historical price windows remain exposed/spent. The five retained gatefiles were searched for graph/motif/wallet/SMW/NLST/DEX; no exact native-ETH temporal-motif gate was identified. This is not a claim of zero related research.
+
+MAP row 8 already consumed three administrative questions: WBETH inputs, WBETH book, and news provenance. The user's new direction justifies ONE additional source-admission question, bringing the row's cumulative allowance to four for this purpose. This additive extension does not change the old three-question cap or reopen failed economic claims. The lifecycle mechanism is `ethereum-native-transfer-graph-source-admission`, with one allowed claim and no known exact prior claim. New source and financial stages require separate frozen contracts and an information-value review; no unbounded three-trial reset is granted. Independent review of this history, extension and source implementation is required before the claim.
+
+## Fixed acquisition and retention
+
+Source: AWS Public Blockchain open Ethereum dataset, anonymously via HTTPS at `https://aws-public-blockchain.s3.us-east-2.amazonaws.com/`. Official description: https://registry.opendata.aws/aws-public-blockchain/ . No AWS SDK, local AWS profile, account or hosted query is used.
+
+List `v1.0/eth/{blocks,transactions}/date={2024-01-01,2025-01-01,2026-09-01}/`, once per prefix, max 1,000 keys, no pagination. A truncated listing is incomplete and not day coverage. These dates are fixed before archive inspection; they are source sentinels, not a selected market sample.
+
+For the January 1, 2024 primary date only: select the lexicographically first nonempty `.parquet` object in each table. Fetch its final eight bytes, then exactly the declared footer plus eight bytes, with If-Match against the listed ETag. Decode Parquet metadata only. A footer larger than 4 MiB, mismatched range/ETag/length, missing schema or HTTP denial makes that operation unavailable. No alternate key/date/provider is tried. Optional complete object download occurs only when compressed size <=16 MiB, declared uncompressed size <=128 MiB, and row count <=100,000. Otherwise retain the resource reason and footer; do not sample rows silently.
+
+At most 12 HTTPS requests: six listings, four footer requests, two conditional downloads. Each request has a 20-second socket timeout plus an external 360-second whole-run wall limit. One process with two CPU cores and sampled aggregate RSS <=2 GiB; maximum response body per request 16 MiB+1 and total retained raw response bodies <=48 MiB. Redirects and automatic retries are disabled. A 401/403/429 denies further requests to the source for this run; remaining cells are retained as unavailable. Raw bodies (including errors/partial bodies) are base64-encoded inside immutable lifecycle JSON, with SHA-256, request/retrieval UTC times, status, URL, requested Range/If-Match and selected response headers. No response header credentials are saved.
+
+All eight declared cells and all declared output files must remain, including skipped samples and missing historical availability. Each request intent is published before I/O. Caught failures preserve received prefixes; an external kill can leave an intent without a response receipt, in which case the request outcome and any received body are explicitly unavailable. Such a partial attempt is never repeated or represented as complete retention. Unexpected failures retain failed receipts or incomplete claims and partial outputs; the identity must never be rerun. Resource monitor receipt is retained outside the lifecycle output folder. Ambient proxy discovery is disabled. The pinned Python 3.13.13 / uv.lock environment and existing lifecycle are used unchanged.
+
+## Interpretation and admission rules
+
+1. Listing availability does not establish full historical coverage, original publication timing, canonicality or continuing maintenance. Even three successful dates establish only three sentinel observations.
+2. The footer must contain expected identifiers, block timestamps and receipt status. Type evidence is reported, not silently coerced. AWS documentation lists `value` as double: floating quantities are NOT admitted as exact wei, balance accounting or exact cashflows. A count/topology-only branch remains possible, but is not silently substituted for a volume-feature experiment.
+3. A complete downloaded object can support schema/integrity development, not a complete-day graph unless all partition objects and boundary blocks are separately reconciled. Returned bytes preserve their retrieval vintage; historical publication remains unknown.
+4. A source row is a transaction envelope. A successful positive-value top-level transfer is not necessarily an EOA payment or the complete native-ETH flow. Internal transfers, gas, token events, contract creations and self-transfers require explicit treatment. No entity labels or clustering are used.
+5. No prices, targets, correlations, fitted models or strategy PnL are opened in this stage. No Sharpe/return gate applies to a metadata audit. Failure is classified as unavailable source, incomplete coverage, unsupported semantics, missing historical timing, or resource excess, never evidence against predictive value.
+
+## Proposed financial comparison (not executable under this source gate)
+
+The intended matched arms are M0 causal market features, M1=M0+ordinary on-chain activity, M2=M1+fixed graph features, using the same LightGBM configuration, rows and chronological folds. Ethereum and a daily decision/24-hour horizon are the starting design. The source audit determines whether lagged historical features can be admitted at all. A decision lag is an explicit assumption unless historical availability is evidenced. A separate development contract must freeze exact dates and source hashes, the market-feature baseline, target definition, graph window/delta and null seeds, model parameters, dependency-aware uncertainty, minimum relevant effect, multiplicity, placebo tests, complete cells and costs before outcomes. No current tag set, existing spent price sample, or source-only success becomes fresh confirmation.
+
+Graph admission should start with identity nodes and explicit event IDs. Temporal motifs use a pinned Raphtory implementation with hand-countable synthetic checks before empirical use. Graph and simple activity features must be ablated separately. Missing days remain unavailable rather than zero. Signed quantities/cashflows govern any subsequent economic test, and the existing program's low-beta, drawdown, margin and all-capital relevance standards remain inherited. Profitable directional forecasts alone do not meet the economic objective.
+
+Stop this source claim after its fixed denominator, review the preserved results, and decide the next concrete dependency. A full cloud platform, entity classifier, GNN, multi-chain data lake and prospective trading collection are deferred.
