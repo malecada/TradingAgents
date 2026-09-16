@@ -1,0 +1,41 @@
+{
+  "binding_sha256": "bf600e73b3975993361e117a656bf9c15f84ef6c64bc02793cadcddf3ff9c72b",
+  "claim_sha256": "1a672d84204a2e444cc87e3e80b2fc2cca8fa14da273d3c78cbf18712e844b42",
+  "closed_at": "2026-09-16T16:56:20.919324+00:00",
+  "cumulative_allowance_consumed": "6/6",
+  "failed_sha256": "ddbaf82fade8a6474c74ebbd230ec140b43f5cbd0203a976bdcd908c1dfcb87d",
+  "failure_reason": "External/session interruption left the pilot without a lifecycle terminal and with an empty original resource receipt. No pilot executor was observed alive at preservation/closure checks. Terminating signal, exit code, peak RSS and guard disposition are unknown; an 8 GiB breach is not established. Append-only failure closure preserves claim, five published outputs, partial binary evidence and original empty resource file. No replay, new claim, finish, network or motif computation.",
+  "finish_called": false,
+  "interruption_observation_sha256": "ffc12ea44f5555724762085ae3c60a8946b5ff9ce0c4e0ec88ea2a0f98aa9c6d",
+  "motif_computation": false,
+  "new_claim": false,
+  "new_network_requests": 0,
+  "operation": "append-only failure closure",
+  "original_files_preserved": 1726,
+  "process_absence_before_terminal": {
+    "matching_pilot_executor_pids": [],
+    "observed_at": "2026-09-16T16:56:20.278316+00:00",
+    "qualification": "Current /proc observation only; it does not determine the earlier signal, exit code or resource peak."
+  },
+  "published_outputs": [
+    "boundary.json",
+    "context.json",
+    "source-2024-01-02.json",
+    "source-2024-01-03.json",
+    "source-2024-01-04.json"
+  ],
+  "qualification": "Failed receipt completed-cell count is zero. Existing phase receipts describe pre-interruption progress, not successful pilot completion. Original empty resource file remains unchanged.",
+  "registered_cells": 17,
+  "registered_outputs": 21,
+  "replay": false,
+  "source": "dcbd80e38db4b1bf2ea88689dc1eb1cbe53f31ca",
+  "successor_authorized": false,
+  "verification": {
+    "cell_count": 0,
+    "experiment": "eth-seven-day-pilot-20260916",
+    "output_count": 5,
+    "status": "failed",
+    "unavailable_count": 0,
+    "verification": "structural hashes and denominators only; no scientific validation"
+  }
+}
