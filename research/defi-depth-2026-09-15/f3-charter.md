@@ -37,7 +37,9 @@ core mint rounding and the authored WETH purchase cost. This solves a funding
 constraint; it is not return optimization. Both sides must be positive at entry.
 Check observed boundary gross liquidity plus the new position against the actual
 spacing60 maxLiquidityPerTick, and active-liquidity uint128 headroom at entry.
-Preserve matched-control output if candidate mint capacity is unavailable.
+Preserve matched-control output when qualified capacity observations show
+insufficient candidate mint headroom. Missing common panel/witness evidence
+makes both LP and matched control unavailable under the fixed source recipe.
 
 The candidate has ten modeled transactions: two for USDC approval/WETH purchase;
 three for two token approvals and mint; two for burn/collect; two for WETH approval
@@ -92,7 +94,7 @@ a free remedy for an economically negative percentage return.
 Three annual cohorts ending2024/2025/2026 remain visible. Only the fixed latest
 cohort has a new source plan. The financial denominator is36books: three cohorts
 by F3, matched-entry-inventory, walletcash and walletETH25, by three cost scenarios.
-There are39 fixed primary-cost D comparisons (13percohort), plus boundary,
+There are39 fixed latest-cohort D comparisons (13percostscenario), plus boundary,
 primary-decision, implementation and confirmation:79financialcells and73outputs.
 Every numerical book has an immutable attempt before financial arithmetic.
 Incomplete source and cell-local feasibility failures remain unavailable; a
@@ -124,8 +126,10 @@ uncertain keys. Reuse USDC decimals/code already attempted in F1 at the same
 blocks; a failed shared witness stays unavailable. No duplicate or semantic
 alias of an earlier actual/uncertain source request is allowed. Fixed left-block
 clocks must be within[target−1second,target]; no canonical adjacent-bracket or
-nearest-block assertion is made. A legitimate unattempted field requires an
-exact terminal-audited suppression proof before new ownership is admitted.
+nearest-block assertion is made. Transferred unattempted shared header/price/USDC
+witness slots require exact terminal-audited suppression proof before new
+ownership. Genuinely new LP-only keys require the complete terminal exclusion
+union and semantic novelty checks; they have no earlier suppression receipt.
 No new F2 or F1 result is filled or recalculated by F3.
 
 The daily fee-growth path remains conditional. Historical global counters do
