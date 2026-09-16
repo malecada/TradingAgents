@@ -244,7 +244,7 @@ def main():
     parser.add_argument('--source', required=True)
     args = parser.parse_args()
     with ResearchRun.start(root=Path(args.root),
-            registration='research/onchain-graph-2026-09-16/gates-source.json',
+            registration='research/onchain-graph-2026-09-16/gates-source-v2.json',
             experiment='eth-graph-source-20260916', source=args.source) as run:
         spec = json.loads(run.read_input('request_spec'))
         cells = execute(spec, run.write_json)

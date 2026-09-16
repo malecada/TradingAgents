@@ -3,6 +3,7 @@ import importlib.util
 import io
 from pathlib import Path
 import struct
+import subprocess
 from unittest.mock import patch
 
 import pyarrow as pa
@@ -124,3 +125,55 @@ def test_intent_exists_before_io_and_no_ambient_proxy():
     with patch.object(cap.opener, 'open', side_effect=network):
         cap.get(config()['base_url'])
     assert 'TimeoutError' in records['request-01.json']['error']
+
+
+def launcher():
+    spec = importlib.util.spec_from_file_location('onchain_source_launcher',
+        ROOT / 'research/onchain-graph-2026-09-16/launch_source.py')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_resource_monitor_does_not_kill_for_elapsed_time():
+    from types import SimpleNamespace
+    from unittest.mock import Mock
+    launch = launcher()
+    child = Mock(pid=123, poll=Mock(side_effect=[None, None, 0]), wait=Mock(return_value=0))
+    guard = SimpleNamespace(_limits=lambda: None, tree_rss=lambda pid: 1000)
+    with patch.object(launch.subprocess, 'Popen', return_value=child), \
+         patch.object(launch.time, 'sleep'), \
+         patch.object(launch.time, 'monotonic', side_effect=[0, 1000000]), \
+         patch.object(launch.os, 'killpg') as kill:
+        result = launch.run_without_elapsed_kill(['synthetic'], guard, ROOT)
+    kill.assert_not_called()
+    assert result['elapsed_seconds'] == 1000000
+    assert result['elapsed_time_kill'] is False and result['limit_reason'] is None
+
+
+@pytest.mark.parametrize('error', [OSError('launch failed'), subprocess.SubprocessError('preexec failed')])
+def test_resource_setup_failure_is_retained(error):
+    from types import SimpleNamespace
+    launch = launcher()
+    with patch.object(launch.subprocess, 'Popen', side_effect=error):
+        result = launch.run_without_elapsed_kill(['synthetic'], SimpleNamespace(_limits=lambda: None), ROOT)
+    assert result['child_exit_code'] is None and result['peak_sampled_tree_rss_bytes'] is None
+    assert result['retry'] is False and result['elapsed_time_kill'] is False
+    assert 'launch/setup failed' in result['limit_reason']
+
+
+@pytest.mark.parametrize('monitor, reason', [
+    (lambda pid: 2 * 1024**3 + 1, 'RSS limit'),
+    (lambda pid: (_ for _ in ()).throw(RuntimeError('unreadable')), 'monitor failed'),
+])
+def test_resource_monitor_stops_for_memory_or_unknown_usage(monitor, reason):
+    from types import SimpleNamespace
+    from unittest.mock import Mock
+    launch = launcher()
+    child = Mock(pid=123, poll=Mock(return_value=None), wait=Mock(return_value=-15))
+    guard = SimpleNamespace(_limits=lambda: None, tree_rss=monitor)
+    with patch.object(launch.subprocess, 'Popen', return_value=child), \
+         patch.object(launch.os, 'killpg') as kill:
+        result = launch.run_without_elapsed_kill(['synthetic'], guard, ROOT)
+    kill.assert_called_once_with(123, launch.signal.SIGTERM)
+    assert reason in result['limit_reason'] and result['child_exit_code'] == -15
