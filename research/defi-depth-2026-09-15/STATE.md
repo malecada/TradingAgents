@@ -2,6 +2,23 @@
 
 **F1 is ACTIVE in its isolated fixed-HEAD checkout. F2 is terminal/source-unavailable. F3 remains unadmitted preparation. Zero validated strategies.**
 
+Latest continuation: the one-shot F1 recovery remains live in session51245
+(PID78373 at check); both fixed execution HEADs are unchanged. No second recovery
+or scientific claim was started. The immutable recovery start is10:24:06.374580UTC.
+Future F3 recovery-chain source/config commit binding, complete imported-directory
+checks and source-to-import manifest binding passed independent review and18
+invented chain/context checks; committedeb2c9ce. Actual terminal import/review
+and F3 registration remain pending. See [exact closure handoff](F1-CLOSURE-HANDOFF.md).
+
+The independently reviewed [mechanism interpretation](MECHANISM-INTERPRETATION.md)
+derives lending/LP and capital-size hurdles using invented values only. No new
+financial result or market observation is claimed by those calculations.
+Latest phase consumption remains8/11claims, source5/6,financial2/4,repair1/1;
+documentary60/60. Pre-F1actualRPC2079; active F1actual usage must come from its own
+receipts at closure. Its7239maximum physical-request reservation is not usage.
+The dated checkpoints below preserve earlier states and are superseded by the
+latest active continuation and exact closure handoff.
+
 The user's instruction authorizes autonomous depth, with no elapsed/CPU kill for
 new experiments. PHASE.md and phase-grant.json retain finite question, data and
 request limits. No orders, paid resources, account/wallet actions, VPN changes,
