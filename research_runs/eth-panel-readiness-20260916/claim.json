@@ -1,0 +1,392 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "76558b095ceed78c09a5101a44ccf4bfbb2afd64",
+  "experiment": {
+    "cells": [
+      "inventory-blocks-2022",
+      "inventory-transactions-2022",
+      "inventory-blocks-2023",
+      "inventory-transactions-2023",
+      "inventory-blocks-2024",
+      "inventory-transactions-2024",
+      "schema-blocks-2022-01-01",
+      "schema-transactions-2022-01-01",
+      "schema-blocks-2022-04-01",
+      "schema-transactions-2022-04-01",
+      "schema-blocks-2022-07-01",
+      "schema-transactions-2022-07-01",
+      "schema-blocks-2022-10-01",
+      "schema-transactions-2022-10-01",
+      "schema-blocks-2023-01-01",
+      "schema-transactions-2023-01-01",
+      "schema-blocks-2023-04-01",
+      "schema-transactions-2023-04-01",
+      "schema-blocks-2023-07-01",
+      "schema-transactions-2023-07-01",
+      "schema-blocks-2023-10-01",
+      "schema-transactions-2023-10-01",
+      "schema-blocks-2024-01-01",
+      "schema-transactions-2024-01-01",
+      "schema-blocks-2024-04-01",
+      "schema-transactions-2024-04-01",
+      "schema-blocks-2024-07-01",
+      "schema-transactions-2024-07-01",
+      "schema-blocks-2024-10-01",
+      "schema-transactions-2024-10-01"
+    ],
+    "charter": {
+      "path": "research/onchain-graph-2026-09-16/panel_readiness/CHARTER.md",
+      "sha256": "4af7e035125f8b912ef1d427b11eb86064fc43834ef80a46537047c67595d5e6"
+    },
+    "family": "eth-panel-readiness",
+    "inputs": {
+      "blocks-footer": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-20260916/outputs/request-08.json",
+        "sha256": "9d554562d716c0688ca2222236c48916ccdc6569209516404cebb804f7c5bde6"
+      },
+      "blocks-tail": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-20260916/outputs/request-07.json",
+        "sha256": "65496f990832073342aa7ee07b5e78231b9579c51c28d0c6b0eb7272c619e845"
+      },
+      "history": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/panel_readiness/history.json",
+        "sha256": "730482a706c9d28328b59870a2760d8a3a42fada9cd8a892ca17ce3612a85bab"
+      },
+      "plan": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/panel_readiness/plan.json",
+        "sha256": "968183b750153bb166a7a4147a2d2cc50dda8641e26572a624d87a7295cf340d"
+      },
+      "preparation-tests": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/panel_readiness/preparation-tests.json",
+        "sha256": "93eae3af385bc837e23261d20df9d02c864b1f9080045572c6bebc83791243e1"
+      },
+      "source-audit": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-20260916/outputs/source-audit.json",
+        "sha256": "b1e81cec2cadb7d3255b1797730c760ef5eccf8b0d77d182a5d44f2a6de1497b"
+      },
+      "transactions-footer": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-20260916/outputs/request-11.json",
+        "sha256": "4b568e9995a4d7cb234c6103dda1b4be55389b49e4252c6e8b65c8e007dec16e"
+      },
+      "transactions-tail": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-20260916/outputs/request-10.json",
+        "sha256": "6dc57bc2602fee9d19752dec7c591476d94d894c6805046ea0cbc57c7f3c91b5"
+      },
+      "upstream-0-claim": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-20260916/claim.json",
+        "sha256": "7996ebf3d19fd1470c9914d20e48e660ecb251f403fb67fef2c419c5a428ac29"
+      },
+      "upstream-0-terminal": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-20260916/complete.json",
+        "sha256": "1bb34125bd580e11a0d30a53c01268adae6fc20e453cc3ee0b6f884b3ee137aa"
+      },
+      "upstream-1-claim": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/claim.json",
+        "sha256": "5558c42758879b68254cf493715023cc836690e0b1e61b160c8bca3996014ac9"
+      },
+      "upstream-1-terminal": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/complete.json",
+        "sha256": "a99203d299f82443ad767f390f9f79dc954399d4df368df72932c89854b854a3"
+      },
+      "upstream-2-claim": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-temporal-motifs-20260916/claim.json",
+        "sha256": "6ba7c1697b7b9e0fa4e8928e596b78efee593eac953d924734b9df38844d8eb1"
+      },
+      "upstream-2-terminal": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-temporal-motifs-20260916/failed.json",
+        "sha256": "eab9bd876ddebcbf041ab93bf1ac5f4b9e0ed090b75acb3b5041ec3d066ea625"
+      },
+      "upstream-3-claim": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-temporal-motifs-8gib-20260916/claim.json",
+        "sha256": "1cc63edd9f45044009c529d7fadfeaaed0479bd2f5a25cf30a00002b731691d4"
+      },
+      "upstream-3-terminal": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-temporal-motifs-8gib-20260916/complete.json",
+        "sha256": "0fe63a35a4317d3a9c73890df9109623b4e2756687711accf31f63d28e6d3e1b"
+      }
+    },
+    "outputs": [
+      "request-01-intent.json",
+      "request-01.json",
+      "request-02-intent.json",
+      "request-02.json",
+      "request-03-intent.json",
+      "request-03.json",
+      "request-04-intent.json",
+      "request-04.json",
+      "request-05-intent.json",
+      "request-05.json",
+      "request-06-intent.json",
+      "request-06.json",
+      "request-07-intent.json",
+      "request-07.json",
+      "request-08-intent.json",
+      "request-08.json",
+      "request-09-intent.json",
+      "request-09.json",
+      "request-10-intent.json",
+      "request-10.json",
+      "request-11-intent.json",
+      "request-11.json",
+      "request-12-intent.json",
+      "request-12.json",
+      "request-13-intent.json",
+      "request-13.json",
+      "request-14-intent.json",
+      "request-14.json",
+      "request-15-intent.json",
+      "request-15.json",
+      "request-16-intent.json",
+      "request-16.json",
+      "request-17-intent.json",
+      "request-17.json",
+      "request-18-intent.json",
+      "request-18.json",
+      "request-19-intent.json",
+      "request-19.json",
+      "request-20-intent.json",
+      "request-20.json",
+      "request-21-intent.json",
+      "request-21.json",
+      "request-22-intent.json",
+      "request-22.json",
+      "request-23-intent.json",
+      "request-23.json",
+      "request-24-intent.json",
+      "request-24.json",
+      "request-25-intent.json",
+      "request-25.json",
+      "request-26-intent.json",
+      "request-26.json",
+      "request-27-intent.json",
+      "request-27.json",
+      "request-28-intent.json",
+      "request-28.json",
+      "request-29-intent.json",
+      "request-29.json",
+      "request-30-intent.json",
+      "request-30.json",
+      "request-31-intent.json",
+      "request-31.json",
+      "request-32-intent.json",
+      "request-32.json",
+      "request-33-intent.json",
+      "request-33.json",
+      "request-34-intent.json",
+      "request-34.json",
+      "request-35-intent.json",
+      "request-35.json",
+      "request-36-intent.json",
+      "request-36.json",
+      "request-37-intent.json",
+      "request-37.json",
+      "request-38-intent.json",
+      "request-38.json",
+      "request-39-intent.json",
+      "request-39.json",
+      "request-40-intent.json",
+      "request-40.json",
+      "request-41-intent.json",
+      "request-41.json",
+      "request-42-intent.json",
+      "request-42.json",
+      "request-43-intent.json",
+      "request-43.json",
+      "request-44-intent.json",
+      "request-44.json",
+      "request-45-intent.json",
+      "request-45.json",
+      "request-46-intent.json",
+      "request-46.json",
+      "request-47-intent.json",
+      "request-47.json",
+      "request-48-intent.json",
+      "request-48.json",
+      "request-49-intent.json",
+      "request-49.json",
+      "request-50-intent.json",
+      "request-50.json",
+      "request-51-intent.json",
+      "request-51.json",
+      "request-52-intent.json",
+      "request-52.json",
+      "request-53-intent.json",
+      "request-53.json",
+      "request-54-intent.json",
+      "request-54.json",
+      "inventory.json",
+      "schemas.json",
+      "summary.json"
+    ],
+    "parent": null,
+    "question": "Do fixed2022-2024current object inventories and24quarter-start schemas support planning a multi-day graph panel with synthetic-tested completion-day motifs?",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+      "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+    },
+    "selection": null,
+    "source_files": {
+      "pyproject.toml": "fa319e95452e538ac22d78584f87f5f13a24d4b8bb83064b51d015706ef594b9",
+      "research/onchain-graph-2026-09-16/motifs/oracle.py": "a0fa3bbdbd32165356724285be378bf67c76070b68bd838ba6169c944b9af249",
+      "research/onchain-graph-2026-09-16/motifs8gib/launch.py": "9dfad213fad3b8c29c20f3b1863244e8b1fa79192506608519f82b1da6b601f2",
+      "research/onchain-graph-2026-09-16/panel_readiness/audit.py": "60b260603049b83182a2e6f2779d223ee6fa175de85f4bafd085884f5a1a44c7",
+      "research/onchain-graph-2026-09-16/panel_readiness/boundary.py": "c98b619fea3680ff4d5d11207d4ef7fa2cb414fbaf38b52f7b6f221e6b06beff",
+      "research/onchain-graph-2026-09-16/panel_readiness/launch.py": "3a4999159213831db253babfd5ba9d28a735d14e793ba85804cdfdfc8c150db4",
+      "research/onchain-graph-2026-09-16/source_probe.py": "d4f7cf193f41635910ee24d671a69b3e68b466cd01186c40c8f21b3c636231c0",
+      "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+      "tests/research/test_onchain_panel_boundary.py": "6cebbb3b285bdc2073bee98106e09358869517fbc7fe135578bbc92d9c9380b0",
+      "tests/research/test_onchain_panel_readiness.py": "dfb6f417a00e074857a1fe082651f7e328a7afddcd84b802b77c7cc46b708a8f",
+      "tradingagents/research_amended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "tradingagents/research_amended/admission.py": "34eeca06c4fac1b4f8343437d45aad346cd92a90659f9150325a6af207aeb0d3",
+      "tradingagents/research_amended/amendment.py": "516b82264fb9152f2135a036eb030feefb7f507221aa213b9509e6f424fe1bfd",
+      "tradingagents/research_amended/lifecycle.py": "a4681c16e441e41496c1de88017dbcc27b3ce4e30309023ac3ffe83d5f7a1b52",
+      "tradingagents/research_amended/verify.py": "ccc85b7b98c97e048a3c17a8335b4e735e220398604e05eb19dea96616b84666",
+      "tradingagents/research_amended/verify_amendment.py": "5b056e3c8f002f1e5391e851840a1d7aa90c0939a9b21a73726137380a2c8e13",
+      "uv.lock": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a"
+    },
+    "stage": "development",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "eth-history",
+        "end": "2025-01-01T00:00:00Z",
+        "start": "2022-01-01T00:00:00Z"
+      }
+    ]
+  },
+  "experiment_id": "eth-panel-readiness-20260916",
+  "family": {
+    "attempt_budget": 5,
+    "history_reference": "research/onchain-graph-2026-09-16/panel_readiness/CHARTER.md and history.json; four exact lineage claims imported once; original source/prototype/motif objects and exhausted amendment unchanged. New user-authorized downstream readiness question, not a reset or financial trial.",
+    "mechanism_id": "ethereum-multiday-panel-readiness",
+    "prior_attempts": 4
+  },
+  "inputs": {
+    "blocks-footer": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-20260916/outputs/request-08.json",
+      "sha256": "9d554562d716c0688ca2222236c48916ccdc6569209516404cebb804f7c5bde6"
+    },
+    "blocks-tail": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-20260916/outputs/request-07.json",
+      "sha256": "65496f990832073342aa7ee07b5e78231b9579c51c28d0c6b0eb7272c619e845"
+    },
+    "history": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/panel_readiness/history.json",
+      "sha256": "730482a706c9d28328b59870a2760d8a3a42fada9cd8a892ca17ce3612a85bab"
+    },
+    "plan": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/panel_readiness/plan.json",
+      "sha256": "968183b750153bb166a7a4147a2d2cc50dda8641e26572a624d87a7295cf340d"
+    },
+    "preparation-tests": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/panel_readiness/preparation-tests.json",
+      "sha256": "93eae3af385bc837e23261d20df9d02c864b1f9080045572c6bebc83791243e1"
+    },
+    "source-audit": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-20260916/outputs/source-audit.json",
+      "sha256": "b1e81cec2cadb7d3255b1797730c760ef5eccf8b0d77d182a5d44f2a6de1497b"
+    },
+    "transactions-footer": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-20260916/outputs/request-11.json",
+      "sha256": "4b568e9995a4d7cb234c6103dda1b4be55389b49e4252c6e8b65c8e007dec16e"
+    },
+    "transactions-tail": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-20260916/outputs/request-10.json",
+      "sha256": "6dc57bc2602fee9d19752dec7c591476d94d894c6805046ea0cbc57c7f3c91b5"
+    },
+    "upstream-0-claim": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-20260916/claim.json",
+      "sha256": "7996ebf3d19fd1470c9914d20e48e660ecb251f403fb67fef2c419c5a428ac29"
+    },
+    "upstream-0-terminal": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-20260916/complete.json",
+      "sha256": "1bb34125bd580e11a0d30a53c01268adae6fc20e453cc3ee0b6f884b3ee137aa"
+    },
+    "upstream-1-claim": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/claim.json",
+      "sha256": "5558c42758879b68254cf493715023cc836690e0b1e61b160c8bca3996014ac9"
+    },
+    "upstream-1-terminal": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/complete.json",
+      "sha256": "a99203d299f82443ad767f390f9f79dc954399d4df368df72932c89854b854a3"
+    },
+    "upstream-2-claim": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-temporal-motifs-20260916/claim.json",
+      "sha256": "6ba7c1697b7b9e0fa4e8928e596b78efee593eac953d924734b9df38844d8eb1"
+    },
+    "upstream-2-terminal": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-temporal-motifs-20260916/failed.json",
+      "sha256": "eab9bd876ddebcbf041ab93bf1ac5f4b9e0ed090b75acb3b5041ec3d066ea625"
+    },
+    "upstream-3-claim": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-temporal-motifs-8gib-20260916/claim.json",
+      "sha256": "1cc63edd9f45044009c529d7fadfeaaed0479bd2f5a25cf30a00002b731691d4"
+    },
+    "upstream-3-terminal": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-temporal-motifs-8gib-20260916/complete.json",
+      "sha256": "0fe63a35a4317d3a9c73890df9109623b4e2756687711accf31f63d28e6d3e1b"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2024-01-02T00:00:00Z",
+      "identity": "ethereum-native-top-level-transactions-chain-1",
+      "start": "2024-01-01T00:00:00Z",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "onchain-graph-2026-09-16",
+  "registration": "research/onchain-graph-2026-09-16/panel_readiness/gates.json",
+  "registration_sha256": "871974b1dea5addd33a3b3c11d86e871e03ae1b15b399be60654eaf989650214",
+  "schema_version": 1,
+  "source": "76558b095ceed78c09a5101a44ccf4bfbb2afd64",
+  "started_at": "2026-09-16T14:49:19.103581+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "eth-history",
+      "end": "2025-01-01T00:00:00Z",
+      "identity": "ethereum-native-top-level-transactions-chain-1",
+      "start": "2022-01-01T00:00:00Z",
+      "state": "exposed"
+    }
+  ]
+}
