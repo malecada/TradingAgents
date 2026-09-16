@@ -79,6 +79,8 @@ def prepare():
       'benchmark_terminal':'research_runs/allocation-conditional-h2-20260915/complete.json',
       'q1_spec':BASE+'q1-spec.json','q2_spec':BASE+'q2-spec.json','f2_design':BASE+'f2-design.json',
       'prior_attempt_history':BASE+'f2-attempt-history.json',
+      'f2_closure_audit':BASE+'f2-closure-audit.json',
+      'f2_closure_review':BASE+'reviews/f2-closure-review.md',
       'core_ancestry':'research/broader-allocation-2026-09-15/ancestry-crosswalk.json',
       'defi_ancestry':'research/broader-allocation-2026-09-15/defi-ancestry-crosswalk.json',
       'closure_text':'research/broader-allocation-2026-09-15/RESULTS.md'}

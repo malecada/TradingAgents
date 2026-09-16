@@ -1,6 +1,6 @@
 # Active deeper-research checkpoint
 
-**F2 is ACTIVE in its isolated fixed-HEAD checkout. Do not restart it or change that checkout HEAD. Q1/Q4/Q6 complete; Q2/R1/Q3 failed/closed. Zero validated strategies.**
+**F2 is terminal: source unavailable, no financial books calculated. F1/F3 exact admission remains pending. Zero validated strategies.**
 
 The user's instruction authorizes autonomous depth, with no elapsed/CPU kill for
 new experiments. PHASE.md and phase-grant.json retain finite question, data and
@@ -191,3 +191,15 @@ Its exact generated gate still needs independent review and committed admission.
 F2 session44555 remains active publishing suppressed cells, with238actualRPC and
 3523731retainedrawbytes; its root remains untouched at15a61b70ee60b38dfde07512ec19b264276764f2.
 New f3-charter.md is an unadmitted prospective draft, no LP observations opened.
+
+
+## September16 terminal continuation — supersedes active F2 checkpoints
+
+F2 completed09:26:08.957776UTC; session44555 exited0. F2-RESULT.md and
+f2-closure-audit.json retain1532cells322complete/1210unavailable,2611outputs,
+238actualRPC/856suppressed,3523731rawbytes,80pricevectors and27unattemptedbooks.
+Byte-exact2613file import verified; isolated source root remains unchanged.
+Phase7/11claims, financial1/4,2079actualRPC,4278667knownraw; documentary60/60.
+F1metadata preparation waits for independent review of actual terminal ownership,
+including original request:null suppression representation; no F1claim exists.
+F3source reuse helper is new synthetic preparation only, not admitted acquisition.

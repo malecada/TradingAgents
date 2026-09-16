@@ -31,6 +31,23 @@ def test_legitimate_unsent_requests_qualify_without_inventing_data():
     assert m.verify_packet(packet,design)=={'2025-10-01':{}}
 
 
+def test_frozen_null_suppression_requires_exact_contract_and_source_mapping():
+    packet,design,item=first_owner()
+    for proof in item.values():proof.update(request=None,reason='First missing indispensable canonical header; no later acquisition')
+    with pytest.raises(ValueError,match='contract provenance'):m.verify_packet(packet,design)
+    packet['f2_design']={'days':design['days'],'max_rpc_subcalls':3}
+    cells,outputs=m.F2.manifests(packet['f2_design'])
+    packet['f2_contract']={'cells':cells,'outputs':outputs,'source_files':{
+        'research/defi-depth-2026-09-15/'+name:m.sha((HERE/name).read_bytes()) for name in ('f2_source.py','q3_protocol.py')}}
+    assert m.verify_packet(packet,design)=={'2025-10-01':{}}
+    changed=deepcopy(packet);changed['f2_design']['days'][0]['candidate_block']+=1
+    with pytest.raises(ValueError,match='first-acquisition'):m.verify_packet(changed,design)
+    changed=deepcopy(packet);changed['f2_contract']['outputs'].remove('2025-10-01-header-left-attempt.json')
+    with pytest.raises(ValueError,match='manifest'):m.verify_packet(changed,design)
+    changed=deepcopy(packet);changed['f2_contract']['source_files']['research/defi-depth-2026-09-15/f2_source.py']='0'*64
+    with pytest.raises(ValueError,match='source mapping'):m.verify_packet(changed,design)
+
+
 @pytest.mark.parametrize('proof_name', ['suppressed_header_intent','suppressed_price_intent'])
 @pytest.mark.parametrize('mutation', ['url','method','id','params','attempted','rpc'])
 def test_false_first_owner_proofs_rejected(proof_name,mutation):

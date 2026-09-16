@@ -42,6 +42,13 @@ def verify_registered_evidence(packet,read_input):
         raise ValueError('audited terminal provenance differs')
     if evidence[terminal['path']]['claim_sha256']!=claim['sha256']:
         raise ValueError('registered F2 terminal belongs to another claim')
+    if 'f2_contract' in packet:
+        original=evidence[claim['path']]
+        if packet['f2_contract']!=original['experiment']:
+            raise ValueError('embedded F2 contract differs from registered claim')
+        design_ref=original['inputs']['design']
+        if packet['f2_design']!=evidence[design_ref['path']]:
+            raise ValueError('embedded F2 design differs from registered raw design')
 
 
 def header_from_receipt(day,receipt):
@@ -67,6 +74,26 @@ def verify_packet(packet,design):
     previous=set(packet['prior_request_keys'])
     if sorted(previous)!=design['prior_request_keys']:raise ValueError('source exclusion inventory differs')
     if O.price_fields(previous)!=design['price_field_history']:raise ValueError('source semantic exclusion inventory differs')
+    null_mapping=None
+    if any(item.get(key,{}).get('request','absent') is None for item in packet['days'].values()
+           for key in ('suppressed_header_intent','suppressed_price_intent')):
+        if not isinstance(packet.get('f2_design'),dict) or not isinstance(packet.get('f2_contract'),dict):
+            raise ValueError('null suppression needs frozen F2 contract provenance')
+        frozen=packet['f2_design'];contract=packet['f2_contract']
+        cells,outputs=F2.manifests(frozen)
+        if cells!=contract['cells'] or outputs!=contract['outputs']:
+            raise ValueError('F2 frozen suppression manifest differs')
+        for name in ('f2_source.py','q3_protocol.py'):
+            path='research/defi-depth-2026-09-15/'+name
+            if sha((HERE/name).read_bytes())!=contract['source_files'][path]:
+                raise ValueError('F2 frozen null-suppression source mapping differs')
+        null_mapping={d['date']:d for d in frozen['days']}
+    def null_proved(proof,day):
+        return (null_mapping is not None and null_mapping.get(day['date'])==day
+                and proof['id']+'-attempt.json' in packet['f2_contract']['outputs']
+                and proof['id']+'-receipt.json' in packet['f2_contract']['outputs']
+                and proof.get('request','absent') is None and isinstance(proof.get('reason'),str)
+                and bool(proof['reason']))
     context={}
     for day in design['days']:
         d=day['date'];item=packet['days'][d];owner=design['ownership'][d];out={}
@@ -78,7 +105,8 @@ def verify_packet(packet,design):
             expected=F2.q.member(d+'-header-left','eth_getBlockByNumber',[hex(day['candidate_block']),False])
             expected_key=S.Q.request_key(expected['method'],expected['params'])
             if (proof.get('attempted') is not False or proof.get('id')!=expected['id']
-                or proof.get('url')!='https://mainnet.base.org' or proof.get('request')!=expected or expected_key in previous):
+                or proof.get('url')!='https://mainnet.base.org'
+                or (proof.get('request')!=expected and not null_proved(proof,day)) or expected_key in previous):
                 raise ValueError('new-header first-acquisition proof differs')
         elif owner['header']!='unavailable':raise ValueError('invalid header owner')
         if owner['prices']=='retained':
@@ -92,7 +120,8 @@ def verify_packet(packet,design):
             if 'header' in out:tags.append({'blockHash':out['header']['hash'],'requireCanonical':True})
             expected=[F2.q.member(d+'-oracle-prices','eth_call',[action,tag]) for tag in tags]
             if (proof.get('attempted') is not False or proof.get('id')!=d+'-oracle-prices'
-                or proof.get('url')!='https://mainnet.base.org' or proof.get('request') not in expected):
+                or proof.get('url')!='https://mainnet.base.org'
+                or (proof.get('request') not in expected and not null_proved(proof,day))):
                 raise ValueError('new-price first-acquisition proof differs')
             if 'header' in out:O.assert_new_price_fields(out['header']['hash'],[F2.TOKENS[a] for a in ('ETH','USDC')],design['price_field_history'])
         elif owner['prices']!='unavailable':raise ValueError('invalid price owner')
@@ -139,6 +168,9 @@ def prepare(root,days):
             'prior_history_ref':prior_ref,'f2_source_attempt_refs':attempt_refs,'prior_request_keys':sorted(prior_keys),
             'inherited_endpoint_stop':json.loads((run/'outputs/source-summary.json').read_text())['stopped'],
             'days':{}}
+    frozen,frozen_ref=read_ref(claim['inputs']['design']['path'])
+    if frozen_ref['sha256']!=claim['inputs']['design']['sha256']:raise ValueError('original F2 design hash differs')
+    packet.update(f2_contract=claim['experiment'],f2_design=frozen)
     owners={}
     for day in days:
         d=day['date'];item={};owner={}
