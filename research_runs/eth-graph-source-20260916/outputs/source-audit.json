@@ -1,0 +1,215 @@
+{
+  "acquired_at": "2026-09-16T11:45:04.685776+00:00",
+  "cells": [
+    {
+      "id": "blocks-2024-01-01",
+      "status": "complete"
+    },
+    {
+      "id": "transactions-2024-01-01",
+      "status": "complete"
+    },
+    {
+      "id": "blocks-2025-01-01",
+      "status": "complete"
+    },
+    {
+      "id": "transactions-2025-01-01",
+      "status": "complete"
+    },
+    {
+      "id": "blocks-2026-09-01",
+      "status": "complete"
+    },
+    {
+      "id": "transactions-2026-09-01",
+      "status": "complete"
+    },
+    {
+      "id": "blocks-primary-schema",
+      "status": "complete"
+    },
+    {
+      "id": "transactions-primary-schema",
+      "status": "complete"
+    }
+  ],
+  "financial_evaluation_admitted": false,
+  "full_history_admitted": false,
+  "historical_publication_admitted": false,
+  "inspected": {
+    "blocks": {
+      "metadata": {
+        "created_by": "parquet-mr version 1.10.1 (build 65f31597b18a0f2718a129fd2d69af0168952c55)",
+        "exact_wei_supported": null,
+        "missing_columns": [],
+        "row_groups": 1,
+        "rows": 7107,
+        "schema": {
+          "base_fee_per_gas": "int64",
+          "date": "string",
+          "difficulty": "double",
+          "extra_data": "string",
+          "gas_limit": "int64",
+          "gas_used": "int64",
+          "hash": "string",
+          "last_modified": "timestamp[ns]",
+          "logs_bloom": "string",
+          "miner": "string",
+          "nonce": "string",
+          "number": "int64",
+          "parent_hash": "string",
+          "receipts_root": "string",
+          "sha3_uncles": "string",
+          "size": "int64",
+          "state_root": "string",
+          "timestamp": "timestamp[ns]",
+          "total_difficulty": "double",
+          "transaction_count": "int64",
+          "transactions_root": "string"
+        },
+        "uncompressed_bytes": 6641103
+      },
+      "object": {
+        "etag": "\"0addd1d45c4a71f4be227dd7d51a5126\"",
+        "key": "v1.0/eth/blocks/date=2024-01-01/part-00000-a4a50e49-24b4-458d-900f-d3e2aecb9a06-c000.snappy.parquet",
+        "last_modified": "2025-09-30T19:56:48.000Z",
+        "size": 6168273
+      },
+      "sample": {
+        "body_sha256": "d2f1129b56805b2e6d2a9daf73f7a393c8522369e45f6a52a43b9c1d78e28da1",
+        "null_counts": {
+          "hash": 0,
+          "number": 0,
+          "parent_hash": 0,
+          "timestamp": 0,
+          "transaction_count": 0
+        },
+        "qualification": "one object only; no day/chain completeness or canonicality admission",
+        "request_number": 9,
+        "rows": 7107,
+        "status": "complete"
+      }
+    },
+    "transactions": {
+      "metadata": {
+        "created_by": "parquet-mr version 1.10.1 (build 65f31597b18a0f2718a129fd2d69af0168952c55)",
+        "exact_wei_supported": false,
+        "missing_columns": [],
+        "row_groups": 13,
+        "rows": 1101465,
+        "schema": {
+          "block_hash": "string",
+          "block_number": "int64",
+          "block_timestamp": "timestamp[ns]",
+          "date": "string",
+          "from_address": "string",
+          "gas": "int64",
+          "gas_price": "int64",
+          "hash": "string",
+          "input": "string",
+          "last_modified": "timestamp[ns]",
+          "max_fee_per_gas": "int64",
+          "max_priority_fee_per_gas": "int64",
+          "nonce": "int64",
+          "receipt_contract_address": "string",
+          "receipt_cumulative_gas_used": "int64",
+          "receipt_effective_gas_price": "int64",
+          "receipt_gas_used": "int64",
+          "receipt_status": "int64",
+          "to_address": "string",
+          "transaction_index": "int64",
+          "transaction_type": "int64",
+          "value": "double"
+        },
+        "uncompressed_bytes": 2330183535
+      },
+      "object": {
+        "etag": "\"a5dba6a4028ec6ceaa5a102625711cdf-24\"",
+        "key": "v1.0/eth/transactions/date=2024-01-01/part-00000-36261470-9afa-48c7-ac89-6867ddafc0fa-c000.snappy.parquet",
+        "last_modified": "2025-09-30T21:59:52.000Z",
+        "size": 1572869635
+      },
+      "sample": {
+        "reason": "complete object exceeds frozen compressed/row/uncompressed sample bound",
+        "status": "unavailable"
+      }
+    }
+  },
+  "inventories": {
+    "blocks-2024-01-01": {
+      "listed_bytes": 6168273,
+      "objects": [
+        {
+          "etag": "\"0addd1d45c4a71f4be227dd7d51a5126\"",
+          "key": "v1.0/eth/blocks/date=2024-01-01/part-00000-a4a50e49-24b4-458d-900f-d3e2aecb9a06-c000.snappy.parquet",
+          "last_modified": "2025-09-30T19:56:48.000Z",
+          "size": 6168273
+        }
+      ],
+      "truncated": false
+    },
+    "blocks-2025-01-01": {
+      "listed_bytes": 6144166,
+      "objects": [
+        {
+          "etag": "\"7ee5285875d2589b93f2c55f90cddaf5\"",
+          "key": "v1.0/eth/blocks/date=2025-01-01/part-00000-19b29697-f6bc-419e-b95e-804927309d4a-c000.snappy.parquet",
+          "last_modified": "2025-09-30T19:56:59.000Z",
+          "size": 6144166
+        }
+      ],
+      "truncated": false
+    },
+    "blocks-2026-09-01": {
+      "listed_bytes": 5628346,
+      "objects": [
+        {
+          "etag": "\"a3afd96f37289c0f947623643a0cfe61\"",
+          "key": "v1.0/eth/blocks/date=2026-09-01/part-00000-8ae83d7b-0aa8-4aba-8e8d-ad74c5ff11c1-c000.snappy.parquet",
+          "last_modified": "2026-09-03T03:29:58.000Z",
+          "size": 5628346
+        }
+      ],
+      "truncated": false
+    },
+    "transactions-2024-01-01": {
+      "listed_bytes": 1572869635,
+      "objects": [
+        {
+          "etag": "\"a5dba6a4028ec6ceaa5a102625711cdf-24\"",
+          "key": "v1.0/eth/transactions/date=2024-01-01/part-00000-36261470-9afa-48c7-ac89-6867ddafc0fa-c000.snappy.parquet",
+          "last_modified": "2025-09-30T21:59:52.000Z",
+          "size": 1572869635
+        }
+      ],
+      "truncated": false
+    },
+    "transactions-2025-01-01": {
+      "listed_bytes": 327024927,
+      "objects": [
+        {
+          "etag": "\"39df6cb4c7c3cb3ac500789a86d7d786-5\"",
+          "key": "v1.0/eth/transactions/date=2025-01-01/part-00000-1e19e244-f989-4151-9957-1165f904f0fe-c000.snappy.parquet",
+          "last_modified": "2025-09-30T21:58:29.000Z",
+          "size": 327024927
+        }
+      ],
+      "truncated": false
+    },
+    "transactions-2026-09-01": {
+      "listed_bytes": 818020642,
+      "objects": [
+        {
+          "etag": "\"d00816e255a1c66acb504160dd260636-98\"",
+          "key": "v1.0/eth/transactions/date=2026-09-01/part-00000-6b79de72-e317-4f1a-8dab-532cf84596b0-c000.snappy.parquet",
+          "last_modified": "2026-09-03T03:32:58.000Z",
+          "size": 818020642
+        }
+      ],
+      "truncated": false
+    }
+  },
+  "raw_response_bytes": 6216363,
+  "requests": 11
+}

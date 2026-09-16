@@ -1,0 +1,134 @@
+{
+  "created_at": "2026-09-16T11:47:14.133177+00:00",
+  "analysis": "post-capture source-metadata planning only; no transaction rows or financial outcomes opened",
+  "parent_experiment": "eth-graph-source-20260916",
+  "footer_receipt": "research_runs/eth-graph-source-20260916/outputs/request-11.json",
+  "footer_receipt_sha256": "4b568e9995a4d7cb234c6103dda1b4be55389b49e4252c6e8b65c8e007dec16e",
+  "footer_body_sha256": "35f905fe65a1a83d79b68c31095108f56fc5b2dd9649c56ceb9837b017072f9c",
+  "required_columns": {
+    "block_hash": {
+      "compressed_bytes": 496209,
+      "uncompressed_bytes": 537293
+    },
+    "block_number": {
+      "compressed_bytes": 58324,
+      "uncompressed_bytes": 86488
+    },
+    "block_timestamp": {
+      "compressed_bytes": 79726,
+      "uncompressed_bytes": 114900
+    },
+    "from_address": {
+      "compressed_bytes": 30030558,
+      "uncompressed_bytes": 40310779
+    },
+    "hash": {
+      "compressed_bytes": 70197543,
+      "uncompressed_bytes": 77115949
+    },
+    "receipt_status": {
+      "compressed_bytes": 41323,
+      "uncompressed_bytes": 56257
+    },
+    "to_address": {
+      "compressed_bytes": 13276068,
+      "uncompressed_bytes": 16316264
+    },
+    "transaction_index": {
+      "compressed_bytes": 295255,
+      "uncompressed_bytes": 1475513
+    },
+    "value": {
+      "compressed_bytes": 4255952,
+      "uncompressed_bytes": 4616125
+    }
+  },
+  "all_columns_compressed_total": 1572831585,
+  "selected_total_compressed": 118730958,
+  "selected_total_uncompressed": 140629568,
+  "row_groups": [
+    {
+      "group": 0,
+      "rows": 72121,
+      "selected_compressed_bytes": 7370861,
+      "selected_uncompressed_bytes": 8553470
+    },
+    {
+      "group": 1,
+      "rows": 71777,
+      "selected_compressed_bytes": 7890456,
+      "selected_uncompressed_bytes": 9255593
+    },
+    {
+      "group": 2,
+      "rows": 69299,
+      "selected_compressed_bytes": 7269428,
+      "selected_uncompressed_bytes": 8383122
+    },
+    {
+      "group": 3,
+      "rows": 71111,
+      "selected_compressed_bytes": 7420435,
+      "selected_uncompressed_bytes": 8575781
+    },
+    {
+      "group": 4,
+      "rows": 73044,
+      "selected_compressed_bytes": 7669198,
+      "selected_uncompressed_bytes": 8870479
+    },
+    {
+      "group": 5,
+      "rows": 84347,
+      "selected_compressed_bytes": 8941472,
+      "selected_uncompressed_bytes": 10400845
+    },
+    {
+      "group": 6,
+      "rows": 86564,
+      "selected_compressed_bytes": 9416789,
+      "selected_uncompressed_bytes": 11326644
+    },
+    {
+      "group": 7,
+      "rows": 99993,
+      "selected_compressed_bytes": 11126543,
+      "selected_uncompressed_bytes": 13665690
+    },
+    {
+      "group": 8,
+      "rows": 89363,
+      "selected_compressed_bytes": 9802868,
+      "selected_uncompressed_bytes": 11864691
+    },
+    {
+      "group": 9,
+      "rows": 99160,
+      "selected_compressed_bytes": 10891652,
+      "selected_uncompressed_bytes": 12848376
+    },
+    {
+      "group": 10,
+      "rows": 105192,
+      "selected_compressed_bytes": 11176553,
+      "selected_uncompressed_bytes": 13590286
+    },
+    {
+      "group": 11,
+      "rows": 98849,
+      "selected_compressed_bytes": 10861234,
+      "selected_uncompressed_bytes": 12833420
+    },
+    {
+      "group": 12,
+      "rows": 80645,
+      "selected_compressed_bytes": 8893469,
+      "selected_uncompressed_bytes": 10461171
+    }
+  ],
+  "input_column": {
+    "compressed_bytes": 1421172126,
+    "uncompressed_bytes": 2141141385
+  },
+  "qualification": "Parquet encoded-column sizes exclude HTTP overhead and do not measure Python/Rust decoded memory, address indexing, sorting, motif complexity or runtime. No range extraction was performed. This is one day, not a full-history cost estimate."
+}
