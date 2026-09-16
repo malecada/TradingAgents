@@ -1,6 +1,6 @@
 # Active deeper-research checkpoint
 
-**F2 is terminal: source unavailable, no financial books calculated. F1/F3 exact admission remains pending. Zero validated strategies.**
+**F1 is ACTIVE in its isolated fixed-HEAD checkout. F2 is terminal/source-unavailable. F3 remains unadmitted preparation. Zero validated strategies.**
 
 The user's instruction authorizes autonomous depth, with no elapsed/CPU kill for
 new experiments. PHASE.md and phase-grant.json retain finite question, data and
@@ -203,3 +203,29 @@ Phase7/11claims, financial1/4,2079actualRPC,4278667knownraw; documentary60/60.
 F1metadata preparation waits for independent review of actual terminal ownership,
 including original request:null suppression representation; no F1claim exists.
 F3source reuse helper is new synthetic preparation only, not admitted acquisition.
+
+
+## Active F1 execution — September16,2026
+
+F1 claim started09:36:19.909003UTC at exact source
+b2a1659e2645c6fa6cba03bba6b73d0c74b30bb8 in the clean detached checkout
+/home/malecada/master_thesis/TradingAgents-defi-f1; unified exec session15783.
+DO NOT change that checkout HEAD, source, inputs or active outputs; do not launch
+another F1 process. Coordination-only engineering may continue here. No duration
+or cumulativeCPU kill. Initial work verifies all registered retained evidence
+before acquisition; absence of financial outputs is not an execution failure.
+
+Independent exact review PASS in reviews/f1-preexecution-review.md, committed in
+coordination; ordinary metadata admission ready=true and all1652input hashes
+verified at the detached execution HEAD.3380cells/14913outputs,36sourcefiles.
+Ownership81retained/285unsentheaders,80retained/286unsentpricevectors.2413newlogical
+slots reserve7239physicalrequests and329613312retainedprefixbytes;15682RPC remain
+after full reservation. Phase8/11claimed, financial2/4; actual newF1 usage remains
+in its active receipts, not the reservation. No F1 financial outcome yet.
+
+After terminal only: use protocol_closure_audit.py and unchanged verify_run,
+independently reconcile raw/physical retries and financial cash books, then import
+byte-exact terminal evidence before F3 preparation. F3helper/main/builder currently
+uncommitted and synthetic-only; independent context review pending. F3 may not
+requery any F1 actual/uncertain common source or proceed through an inherited
+endpoint denial. Continue justified research without another go-ahead.
