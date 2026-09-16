@@ -1,6 +1,6 @@
 # Ethereum graph feasibility checkpoint
 
-The user has authorized continuing the feasibility study. The next [panel-readiness contract](panel_readiness/CHARTER.md) and [gate](panel_readiness/gates.json) freeze a metadata-only 2022–2024 inventory plus synthetic completion-day boundary tests. Preparation is in progress; no new archive claim has started. Earlier empirical conclusions below remain unchanged.
+The user has authorized continuing the feasibility study. The next [panel-readiness contract](panel_readiness/CHARTER.md) and [gate](panel_readiness/gates.json) freeze a metadata-only 2022–2024 inventory plus synthetic completion-day boundary tests. The independently reviewed audit is active from fixed source `76558b095ceed78c09a5101a44ccf4bfbb2afd64` in `/home/malecada/master_thesis/TradingAgents-onchain-panel` (supervised session76521). Do not relaunch or move execution HEAD; inspect `research_runs/eth-panel-readiness-20260916/` and `panel_readiness/resource.json` for status. Resource JSON may be empty until exit. Earlier empirical conclusions below remain unchanged.
 
 September 16, 2026. Zero validated strategies. The user-authorized 8 GiB successor **completed** the same one-day temporal-motif operation that failed under the earlier 2 GiB cap. [Latest result](motifs8gib/RESULT.md), [independent closure](motifs8gib/CLOSURE_REVIEW.md), [original failed motif result](motifs/RESULT.md), [static graph diagnostic](forensic/RESULT.md), [original prototype result](prototype/RESULT.md) and [source result](SOURCE_RESULT.md) preserve the distinct claims. The root specification remains unchanged.
 
@@ -12,7 +12,7 @@ The same computation under the explicitly requested 8 GiB cap completed five cel
 
 The output contains 184,966,228 unique ordered three-event occurrences: 80,215,753 stars, 104,736,340 two-node motifs and 14,135 triangles. Their 289,730,838 local role participations are not unique occurrence totals. Only 20,831 addresses have nonzero Local40 roles; some counters are heavily concentrated. Independent reconstruction reconciled all raw events, order, six bounded subsets, every shard/summary and every full-day two-node vector. Full-day star/triangle counts have synthetic, bounded-subset and consistency checks, not an independent whole-day recount. Fifty exact files were imported under the [manifest](motifs8gib/import-manifest.json). Both structural verifiers report complete with no unavailable cells.
 
-All study executions are terminal. No study job remains active. Preserve these fixed execution HEADs; never rerun these identities:
+All earlier study executions in the following table are terminal; the newly authorized metadata audit is active as stated above. Preserve these fixed execution HEADs; never rerun these identities:
 
 | Artifact | Source commit | Preserved checkout |
 |---|---|---|
