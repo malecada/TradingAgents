@@ -1,0 +1,83 @@
+{
+  "spot_stage": {
+    "stage": "spot_only_graph_running",
+    "checked_at": "2026-09-16T17:38:53.093824+00:00",
+    "source": "4ea20258a72286721157736b12c7147423b26214",
+    "months": 38,
+    "network_requests": 76,
+    "spot_raw_bytes": 81893,
+    "spot_rows": 1158,
+    "retained_files": 268,
+    "manifest_sha256": "ed1d32bc3991dadcc8c4f5b23a8e9ef17f7a33d3e7bb32773b2396a6da010116",
+    "price_fields_parsed": false,
+    "independent_archive_check": "passed",
+    "graph_check": "pending terminal capture"
+  },
+  "final_closure": {
+    "status": "verified",
+    "cells": 46,
+    "complete_cells": 46,
+    "files": 940,
+    "received_bytes": 1032495329,
+    "price_fields_parsed": false,
+    "graph_rows_decoded": false,
+    "qualification": "Capture integrity only; no historical availability, graph numerical or predictive admission.",
+    "checked_at": "2026-09-16T17:50:18.293818+00:00",
+    "source": "4ea20258a72286721157736b12c7147423b26214",
+    "structural_verifier": {
+      "experiment": "eth-matched-input-capture-20260916",
+      "status": "complete",
+      "cell_count": 46,
+      "unavailable_count": 0,
+      "output_count": 47,
+      "verification": "structural hashes and denominators only; no scientific validation"
+    },
+    "actual_spot_requests": 76,
+    "actual_graph_requests": 219,
+    "actual_total_requests": 295,
+    "complete_spot_months": 38,
+    "complete_graph_days": 7,
+    "output_file_count": 47,
+    "raw_manifest_sha256": "212be94570af8e53f2ebae38a46bb5092373d7b7fa5452e845fb0eb40383458c",
+    "capture_resource": {
+      "child_exit_code": 0,
+      "limit_reason": null,
+      "elapsed_seconds": 703.1633733999997,
+      "elapsed_time_kill": false,
+      "peak_sampled_tree_rss_bytes": 287535104,
+      "rss_limit_bytes": 8589934592,
+      "sample_interval_seconds": 0.02,
+      "qualification": "Sampled RSS can miss brief peaks; cap is not a memory reservation. Two logical CPUs; no elapsed/CPU-duration kill.",
+      "source": "4ea20258a72286721157736b12c7147423b26214"
+    },
+    "independent_check_resource": {
+      "child_exit_code": 0,
+      "limit_reason": null,
+      "elapsed_seconds": 3.664881456999865,
+      "elapsed_time_kill": false,
+      "peak_sampled_tree_rss_bytes": 281169920,
+      "rss_limit_bytes": 8589934592,
+      "sample_interval_seconds": 0.02,
+      "qualification": "Sampled RSS can miss brief peaks; cap is not a memory reservation. Two logical CPUs; no elapsed/CPU-duration kill."
+    },
+    "independently_counted_request_receipts": 295,
+    "all_request_receipts_successful": true,
+    "retained_payload_and_metadata_bytes": 754265130,
+    "claim_and_terminal_source_match": true,
+    "family_prior_attempts": 6,
+    "family_attempt_budget": 7,
+    "remote_backup_verified": false
+  },
+  "import_stage": {
+    "checked_at": "2026-09-16T17:53:04.126850+00:00",
+    "status": "verified",
+    "file_count": 990,
+    "bytes": 754630488,
+    "source": "4ea20258a72286721157736b12c7147423b26214",
+    "source_root": "/home/malecada/Data/onchain-research/TradingAgents-onchain-comparison",
+    "destination_root": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "import_manifest_sha256": "efab7eff5b4226888925617980299ab44266d37cea39cc4d2b7c248f65660e40",
+    "checks": "All source and destination sizes and streaming SHA256; exact three-part membership; no symlinks or duplicate members.",
+    "remote_backup_verified": false
+  }
+}
