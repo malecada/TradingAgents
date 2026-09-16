@@ -1,0 +1,824 @@
+{
+  "base_url": "https://aws-public-blockchain.s3.us-east-2.amazonaws.com/",
+  "dates": [
+    "2024-01-02",
+    "2024-01-03",
+    "2024-01-04",
+    "2024-01-05",
+    "2024-01-06",
+    "2024-01-07",
+    "2024-01-08"
+  ],
+  "inventory_input": "inventory",
+  "required_types": {
+    "hash": "string",
+    "block_hash": "string",
+    "block_number": "int64",
+    "block_timestamp": "timestamp[ns]",
+    "transaction_index": "int64",
+    "from_address": "string",
+    "to_address": "string",
+    "value": "double",
+    "receipt_status": "int64"
+  },
+  "block_required_types": {
+    "number": "int64",
+    "hash": "string",
+    "parent_hash": "string",
+    "timestamp": "timestamp[ns]",
+    "transaction_count": "int64"
+  },
+  "limits": {
+    "max_logical_bytes": 8589934592,
+    "max_footer_bytes": 4194304,
+    "max_projection_bytes": 268435456,
+    "max_response_bytes": 33554432,
+    "max_block_bytes": 16777216,
+    "max_requests": 2100,
+    "max_total_bytes": 2147483648,
+    "max_day_bytes": 285212672,
+    "max_day_requests": 291,
+    "timeout_seconds": 30
+  },
+  "context": {
+    "plan_input": "jan1_plan",
+    "blocks_input": "jan1_blocks",
+    "footer_input": "jan1_footer",
+    "range_inputs": [
+      "jan1_range_001",
+      "jan1_range_002",
+      "jan1_range_003",
+      "jan1_range_004",
+      "jan1_range_005",
+      "jan1_range_006",
+      "jan1_range_007",
+      "jan1_range_008",
+      "jan1_range_009",
+      "jan1_range_010",
+      "jan1_range_011",
+      "jan1_range_012",
+      "jan1_range_013",
+      "jan1_range_014",
+      "jan1_range_015",
+      "jan1_range_016",
+      "jan1_range_017",
+      "jan1_range_018",
+      "jan1_range_019",
+      "jan1_range_020",
+      "jan1_range_021",
+      "jan1_range_022",
+      "jan1_range_023",
+      "jan1_range_024",
+      "jan1_range_025",
+      "jan1_range_026",
+      "jan1_range_027",
+      "jan1_range_028",
+      "jan1_range_029",
+      "jan1_range_030",
+      "jan1_range_031",
+      "jan1_range_032",
+      "jan1_range_033",
+      "jan1_range_034",
+      "jan1_range_035",
+      "jan1_range_036",
+      "jan1_range_037",
+      "jan1_range_038",
+      "jan1_range_039",
+      "jan1_range_040",
+      "jan1_range_041",
+      "jan1_range_042",
+      "jan1_range_043",
+      "jan1_range_044",
+      "jan1_range_045",
+      "jan1_range_046",
+      "jan1_range_047",
+      "jan1_range_048",
+      "jan1_range_049",
+      "jan1_range_050",
+      "jan1_range_051",
+      "jan1_range_052",
+      "jan1_range_053",
+      "jan1_range_054",
+      "jan1_range_055",
+      "jan1_range_056",
+      "jan1_range_057",
+      "jan1_range_058",
+      "jan1_range_059",
+      "jan1_range_060",
+      "jan1_range_061",
+      "jan1_range_062",
+      "jan1_range_063",
+      "jan1_range_064",
+      "jan1_range_065",
+      "jan1_range_066",
+      "jan1_range_067",
+      "jan1_range_068",
+      "jan1_range_069",
+      "jan1_range_070",
+      "jan1_range_071",
+      "jan1_range_072",
+      "jan1_range_073",
+      "jan1_range_074",
+      "jan1_range_075",
+      "jan1_range_076",
+      "jan1_range_077",
+      "jan1_range_078",
+      "jan1_range_079",
+      "jan1_range_080",
+      "jan1_range_081",
+      "jan1_range_082",
+      "jan1_range_083",
+      "jan1_range_084",
+      "jan1_range_085",
+      "jan1_range_086",
+      "jan1_range_087",
+      "jan1_range_088",
+      "jan1_range_089",
+      "jan1_range_090",
+      "jan1_range_091",
+      "jan1_range_092",
+      "jan1_range_093",
+      "jan1_range_094",
+      "jan1_range_095",
+      "jan1_range_096",
+      "jan1_range_097",
+      "jan1_range_098",
+      "jan1_range_099",
+      "jan1_range_100",
+      "jan1_range_101",
+      "jan1_range_102",
+      "jan1_range_103",
+      "jan1_range_104",
+      "jan1_range_105",
+      "jan1_range_106",
+      "jan1_range_107",
+      "jan1_range_108",
+      "jan1_range_109",
+      "jan1_range_110",
+      "jan1_range_111",
+      "jan1_range_112",
+      "jan1_range_113",
+      "jan1_range_114",
+      "jan1_range_115",
+      "jan1_range_116",
+      "jan1_range_117"
+    ]
+  },
+  "inputs": {
+    "inventory": {
+      "path": "research_runs/eth-panel-readiness-20260916/outputs/inventory.json",
+      "sha256": "97da7ac5cef01718a6d479396ff3b7339f4b46a36146339a8f46d2f738def939",
+      "dataset": "eth-history"
+    },
+    "jan1_plan": {
+      "path": "research/onchain-graph-2026-09-16/prototype/plan.json",
+      "sha256": "4e3716ad928b43902b111e0c4a1e849bfd7c9b35cdbc32993dcc887ddcf07800",
+      "dataset": "eth-history"
+    },
+    "jan1_blocks": {
+      "path": "research_runs/eth-graph-source-20260916/outputs/request-09.json",
+      "sha256": "57c33fdaf9a4b5334519a6c52de00cc870ee41b1e057743c0e71ba3d0697984c",
+      "dataset": "eth-history"
+    },
+    "jan1_footer": {
+      "path": "research_runs/eth-graph-source-20260916/outputs/request-11.json",
+      "sha256": "4b568e9995a4d7cb234c6103dda1b4be55389b49e4252c6e8b65c8e007dec16e",
+      "dataset": "eth-history"
+    },
+    "jan1_range_001": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-01.json",
+      "sha256": "b8c63f13e9c2aa963eb31347dae431b7528715363f3c94150306292836346472",
+      "dataset": "eth-history"
+    },
+    "jan1_range_002": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-02.json",
+      "sha256": "316df9faec8ea4b4cdb8bc50b65d8106204dc364a861c5cae009241cfdf10f16",
+      "dataset": "eth-history"
+    },
+    "jan1_range_003": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-03.json",
+      "sha256": "c68aaefc8e418229cb923af6bcc3a54321ec5ed449eb3176c273443f64412afb",
+      "dataset": "eth-history"
+    },
+    "jan1_range_004": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-04.json",
+      "sha256": "99dc66a30d8624573b7d4fbdcbf8a6125f9a8f31c6f63f34b33473838b16f3b1",
+      "dataset": "eth-history"
+    },
+    "jan1_range_005": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-05.json",
+      "sha256": "acdc2a43dda544e21e2d8e92dcf61fcdc099ca27d35dc2f52ea82e896c04db13",
+      "dataset": "eth-history"
+    },
+    "jan1_range_006": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-06.json",
+      "sha256": "2f84cc2d17209bd357a69238757d1c8005e6c7716788048ebccd017b3e574340",
+      "dataset": "eth-history"
+    },
+    "jan1_range_007": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-07.json",
+      "sha256": "70e9af977d9f9d8083106cdb7a78d657a745ac261485418d3a0f29ab88c4c225",
+      "dataset": "eth-history"
+    },
+    "jan1_range_008": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-08.json",
+      "sha256": "729d06571f03cd01b62cffc65caed2af7283472df269614f647aced8388d68ff",
+      "dataset": "eth-history"
+    },
+    "jan1_range_009": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-09.json",
+      "sha256": "a737060f87b466f56f1893a5d16e7454b6755625309cfd206c66a91650b38846",
+      "dataset": "eth-history"
+    },
+    "jan1_range_010": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-10.json",
+      "sha256": "c1b39dc4fea8fbe66296500afc348ed4746974ea4b5d6aa8e7a1cc92dfdd1443",
+      "dataset": "eth-history"
+    },
+    "jan1_range_011": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-11.json",
+      "sha256": "1a1d7a7339dc5cedcb2e4bc0697540aede021656a3cd62e860f47614f0304042",
+      "dataset": "eth-history"
+    },
+    "jan1_range_012": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-12.json",
+      "sha256": "d1042351b5c0ceb9682de7b44d55be74dbfaeb587705106020e8308fdcac69a7",
+      "dataset": "eth-history"
+    },
+    "jan1_range_013": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-13.json",
+      "sha256": "7bf0c85c6fbae47891ba65970bb95a742deb2823c5483941319fa3c0f3de1e52",
+      "dataset": "eth-history"
+    },
+    "jan1_range_014": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-14.json",
+      "sha256": "7b25987ddae119ac57a857308142660498e53847468e0a5fb5a7902cdc7ea475",
+      "dataset": "eth-history"
+    },
+    "jan1_range_015": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-15.json",
+      "sha256": "46940a4d9af5c87d75e7cbd58f0362bc60ba928687dba6633fda0847ee79b153",
+      "dataset": "eth-history"
+    },
+    "jan1_range_016": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-16.json",
+      "sha256": "62ce94a0ff2a6a0030c74fa6e6d93d5810de7e6be088e116382d3ebef9e00cdb",
+      "dataset": "eth-history"
+    },
+    "jan1_range_017": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-17.json",
+      "sha256": "7cb5d29130d64156d03357298c3e263cccd93dbf0f7473ba10c6e0b039a2ed06",
+      "dataset": "eth-history"
+    },
+    "jan1_range_018": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-18.json",
+      "sha256": "62381387f7420b6821be5a91c9b7c9bf119f88f0f83d5cc0e39cbfb87bd72759",
+      "dataset": "eth-history"
+    },
+    "jan1_range_019": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-19.json",
+      "sha256": "e665d93350c2f10c9dba552cd7abd3fe2c22c7f57999c0caf6bb8facb623b11b",
+      "dataset": "eth-history"
+    },
+    "jan1_range_020": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-20.json",
+      "sha256": "3c1d07c0aaae61cd50fadbba052a911fe2417b785f36a3e1f06ef4b45bbc937d",
+      "dataset": "eth-history"
+    },
+    "jan1_range_021": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-21.json",
+      "sha256": "a424150e6802b9c027b4be6e6b2b4c10484ae8411e8a44a587be4281a55cf4cc",
+      "dataset": "eth-history"
+    },
+    "jan1_range_022": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-22.json",
+      "sha256": "4a30930c7cfec7795bfb665133940e1760ca00eb0820848ae4e1d6f7fdecaee6",
+      "dataset": "eth-history"
+    },
+    "jan1_range_023": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-23.json",
+      "sha256": "08bfdf8674b6cdc8b6578c7d7c234454d4aea44ead7ae6e5f1e3334577951006",
+      "dataset": "eth-history"
+    },
+    "jan1_range_024": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-24.json",
+      "sha256": "823fb80577e51fb9e309fd88f2ca3f31330b8ec1dbb93dea1ef020474ee03aad",
+      "dataset": "eth-history"
+    },
+    "jan1_range_025": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-25.json",
+      "sha256": "0877e7accc983452518ff0969d071b022d5ed7f3cbbc313652286c57a20b6fc0",
+      "dataset": "eth-history"
+    },
+    "jan1_range_026": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-26.json",
+      "sha256": "9cbbb60fd316e27fb76e270e8935c55c73d49637a8fb0e536c5eec59d48e876f",
+      "dataset": "eth-history"
+    },
+    "jan1_range_027": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-27.json",
+      "sha256": "744717574c25dead300354e6679e371e8bb93d4f6053a598e6379e1b76acd90a",
+      "dataset": "eth-history"
+    },
+    "jan1_range_028": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-28.json",
+      "sha256": "0a7dcd0166027230aea2e6507582dd647a353099b4dbe9cf0462c98e5ef902a0",
+      "dataset": "eth-history"
+    },
+    "jan1_range_029": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-29.json",
+      "sha256": "f68dc1c0786a09835cbc8c5987f9e900a7355d1ed7cf051f7015cf3f62c49285",
+      "dataset": "eth-history"
+    },
+    "jan1_range_030": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-30.json",
+      "sha256": "91b53e43f07b17e94d438b597d1dd7c19f29abbec284804d0df08975adb939de",
+      "dataset": "eth-history"
+    },
+    "jan1_range_031": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-31.json",
+      "sha256": "68f81cfe66a35d6e414ac24dd35e19513bea945f7a06dae3b2f9af81100eda23",
+      "dataset": "eth-history"
+    },
+    "jan1_range_032": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-32.json",
+      "sha256": "a0db80202ef041a09d2220f102e02d47dcf496d1d3af623cd7eaab2e255cadd9",
+      "dataset": "eth-history"
+    },
+    "jan1_range_033": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-33.json",
+      "sha256": "9093db113548e565d9f4173e00e3b4d6456b9c66fad3b7162580ea93a9b13a7b",
+      "dataset": "eth-history"
+    },
+    "jan1_range_034": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-34.json",
+      "sha256": "dabac775f8500a59661cbfa5ea4569a199216ba5de2927b409269c20302799fb",
+      "dataset": "eth-history"
+    },
+    "jan1_range_035": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-35.json",
+      "sha256": "569534d8c8c63b61d8a707b3b7959a1de00d16dac5d440960cd84b65580eb852",
+      "dataset": "eth-history"
+    },
+    "jan1_range_036": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-36.json",
+      "sha256": "3a3a8a8b2c0cc0499f16ca58efb0a6cce3b2ba65d00424d08e4749e491fa00d2",
+      "dataset": "eth-history"
+    },
+    "jan1_range_037": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-37.json",
+      "sha256": "3dee978a07b9dbe88e1edc5faa1e21c2f491ac0dd36c82e4a9e41a66ae570dd2",
+      "dataset": "eth-history"
+    },
+    "jan1_range_038": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-38.json",
+      "sha256": "9de30907f78f88b28178759d5f1c9a3f1914f360700eb0075bd8d49f7a40735a",
+      "dataset": "eth-history"
+    },
+    "jan1_range_039": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-39.json",
+      "sha256": "deadb077beeaf8bb7fd674f7533968e782b716372bf19d207fe875a714095df8",
+      "dataset": "eth-history"
+    },
+    "jan1_range_040": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-40.json",
+      "sha256": "53f1b28edcdcfadf785ccda54c4d8289e1f34b6af35ad19a5287f5e4ac8dbea9",
+      "dataset": "eth-history"
+    },
+    "jan1_range_041": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-41.json",
+      "sha256": "675b68a66a5aa84aed9eb61f8f663b419d1ff5f9bf5fab577085102f3566ee25",
+      "dataset": "eth-history"
+    },
+    "jan1_range_042": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-42.json",
+      "sha256": "47dd5fe3c65ede27fb7ca347129081645b8e1855db9da172ea12e690463d7844",
+      "dataset": "eth-history"
+    },
+    "jan1_range_043": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-43.json",
+      "sha256": "859cc68885116bad89aac77c6457e38a975c1070fc49ba71547b66d686ce0632",
+      "dataset": "eth-history"
+    },
+    "jan1_range_044": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-44.json",
+      "sha256": "4ca2127680476599384dc73b6806c439065f241366bd379166a61fec23ddbfa5",
+      "dataset": "eth-history"
+    },
+    "jan1_range_045": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-45.json",
+      "sha256": "fa95cac3a50f65d89c4637e7a81d768fbb409ab94dc7aa06355ef62f90d2704f",
+      "dataset": "eth-history"
+    },
+    "jan1_range_046": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-46.json",
+      "sha256": "b67c84b78710ce38babc6ade0a9e12c3be33dcac30358c0369cf820d32ec7416",
+      "dataset": "eth-history"
+    },
+    "jan1_range_047": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-47.json",
+      "sha256": "daf560a9394d3dc5a3b4a759da3c7720aafc47fa3647e452e0e3bdba7ce9a404",
+      "dataset": "eth-history"
+    },
+    "jan1_range_048": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-48.json",
+      "sha256": "714766b0d45ec84e0d706fb9bb1f7b4a3c2417738a005537f7266a7534a89e34",
+      "dataset": "eth-history"
+    },
+    "jan1_range_049": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-49.json",
+      "sha256": "fca984598d37e3464cd99e3a8ae9d47af32650b0eb8fe876152e741e678c00b7",
+      "dataset": "eth-history"
+    },
+    "jan1_range_050": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-50.json",
+      "sha256": "26b6c61b1911882942b547518ca32d8926073abd7a842538124003d75768689e",
+      "dataset": "eth-history"
+    },
+    "jan1_range_051": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-51.json",
+      "sha256": "782fa18011e85b48908b84e0915940f3f95a30c1bc76ced0ffc391d53f140ead",
+      "dataset": "eth-history"
+    },
+    "jan1_range_052": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-52.json",
+      "sha256": "cb65d7e6e64497da5afa5d0cb3c35318bdecebb02a056c5f7eda90ab8208e303",
+      "dataset": "eth-history"
+    },
+    "jan1_range_053": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-53.json",
+      "sha256": "fc1c2addc9a5f439c775bf0be938ee133bbe33080dc40a29b7b15faa7c622b9a",
+      "dataset": "eth-history"
+    },
+    "jan1_range_054": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-54.json",
+      "sha256": "d9c7076afcd1f13e35c60fcce0028b9ee2f6e69c3583a7e6bba77cf19bdfe87c",
+      "dataset": "eth-history"
+    },
+    "jan1_range_055": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-55.json",
+      "sha256": "0daca6dca460722922fb47ac90fc395090aa0e82541a79618a86a1bd57da5f0a",
+      "dataset": "eth-history"
+    },
+    "jan1_range_056": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-56.json",
+      "sha256": "1462042dbb39f3cd3dee9db72536e66dc1be0b6675c8811e644dfcc11f6dcfe3",
+      "dataset": "eth-history"
+    },
+    "jan1_range_057": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-57.json",
+      "sha256": "d9e830b5d6150322fa543e3b9f9df612d7f1ee8e72b1b4856217de981d09b585",
+      "dataset": "eth-history"
+    },
+    "jan1_range_058": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-58.json",
+      "sha256": "fdad23b31a741646b392fa30ded45f6001e7103ec98a571de3f150ad5a3d0f0d",
+      "dataset": "eth-history"
+    },
+    "jan1_range_059": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-59.json",
+      "sha256": "960b229687e1509c70fad4a5a538516c0998966f7f37b99199ef21104a255203",
+      "dataset": "eth-history"
+    },
+    "jan1_range_060": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-60.json",
+      "sha256": "3cea7574d495cfd6532da14add0ae0ad998c0736d0771fb0be7aac743ba760f2",
+      "dataset": "eth-history"
+    },
+    "jan1_range_061": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-61.json",
+      "sha256": "ad4bfcc8805280460a54bfd403e086c3ed25f9c497e12a00e7ce56d83429940b",
+      "dataset": "eth-history"
+    },
+    "jan1_range_062": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-62.json",
+      "sha256": "b1d1f4098d9e30db456fed6da23e651d8a79cc641ec171d8c5fa9c44a8e4e097",
+      "dataset": "eth-history"
+    },
+    "jan1_range_063": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-63.json",
+      "sha256": "662b965e5115ddd9a5e068ec3c1706f8d21ac3f99b98dd0e4d60b42a8021592c",
+      "dataset": "eth-history"
+    },
+    "jan1_range_064": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-64.json",
+      "sha256": "dc7f0db7006b2edc81f7f0efdc88e75315be158374bcb73052bb8be19cf5cee3",
+      "dataset": "eth-history"
+    },
+    "jan1_range_065": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-65.json",
+      "sha256": "dbcdca6d6f7bad8ca365c3c17aff8dae619e2cb430ea6a4d7a99c7885d9668c6",
+      "dataset": "eth-history"
+    },
+    "jan1_range_066": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-66.json",
+      "sha256": "a354e285fcccfdf8cb5ca6fe26414d8e56146606c52ee3df9b16d941e181077e",
+      "dataset": "eth-history"
+    },
+    "jan1_range_067": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-67.json",
+      "sha256": "f54d00479d79f08ccc8c446102d3b546640a5103661bace4af20b52f3d68338e",
+      "dataset": "eth-history"
+    },
+    "jan1_range_068": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-68.json",
+      "sha256": "986550b1b0fdb4cad395f1e6114681ed2715f89c2a223c7081924c955b985aa3",
+      "dataset": "eth-history"
+    },
+    "jan1_range_069": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-69.json",
+      "sha256": "fb9994eb0a0f50baeafc4ff690fb509d1d561fec953db9b5bebce4392c28d61a",
+      "dataset": "eth-history"
+    },
+    "jan1_range_070": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-70.json",
+      "sha256": "7815183df0f2758feb2e43c1f258be5a35d6471ed00da215257668c3a421dc4f",
+      "dataset": "eth-history"
+    },
+    "jan1_range_071": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-71.json",
+      "sha256": "16212dcb7941f8a381776fb082dac44390d7eb197ab45ee205a47ab5ecbe7a0e",
+      "dataset": "eth-history"
+    },
+    "jan1_range_072": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-72.json",
+      "sha256": "40d4d2e5d0c4c5cd41420066446b42b6324138f54bceb0a5d30c8b0a630d5fa8",
+      "dataset": "eth-history"
+    },
+    "jan1_range_073": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-73.json",
+      "sha256": "9d3d4e90e413681c3c612d4d50acff0df2ae02546ef6dd67ef1b59edf79837ee",
+      "dataset": "eth-history"
+    },
+    "jan1_range_074": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-74.json",
+      "sha256": "e2ae26b8e646899bcb5a5616be1bbebd1c731df1327ccf880ad3e61d02b40f6c",
+      "dataset": "eth-history"
+    },
+    "jan1_range_075": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-75.json",
+      "sha256": "f610d4360e2633bc7c57b12a036f265d37732732397b2a28e6787c6025fb03de",
+      "dataset": "eth-history"
+    },
+    "jan1_range_076": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-76.json",
+      "sha256": "5758121eca5a5ecf7ef8db8fea9425eba948045e067f58e8ae81a9dcf1c4e767",
+      "dataset": "eth-history"
+    },
+    "jan1_range_077": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-77.json",
+      "sha256": "94b820041dfbee80977d0615b9e346cc98a1ead8b2e837504104aca781b965d0",
+      "dataset": "eth-history"
+    },
+    "jan1_range_078": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-78.json",
+      "sha256": "73a575adcb9507fea02a27621319c1f77929349a175474bc2a528dc7df19506e",
+      "dataset": "eth-history"
+    },
+    "jan1_range_079": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-79.json",
+      "sha256": "d6058a4c980468c143a0b1968319d0af3c34791d751a5d122b2c6f37ac3aaa64",
+      "dataset": "eth-history"
+    },
+    "jan1_range_080": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-80.json",
+      "sha256": "f084ba3f1b21d4f052a7a1d1685a1ca9de48e32a50d9199b4ce424a65419c7a1",
+      "dataset": "eth-history"
+    },
+    "jan1_range_081": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-81.json",
+      "sha256": "1541be6792f97605197170753953f49c3efc301fd38b090f2841c7e222b21b30",
+      "dataset": "eth-history"
+    },
+    "jan1_range_082": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-82.json",
+      "sha256": "b00ed9f725c20dc11b887558289f8a500159cb2e7042a3191e2a96ae91e638c7",
+      "dataset": "eth-history"
+    },
+    "jan1_range_083": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-83.json",
+      "sha256": "e597f9bde725a955508b7137ea8f02fd7713da2855f3fcaa01e1b98ae6fd9379",
+      "dataset": "eth-history"
+    },
+    "jan1_range_084": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-84.json",
+      "sha256": "ad39a7b3b4a20fd76ab72c4705de0c6b34ab7714bacc170d3ec3f00f3bc8d33e",
+      "dataset": "eth-history"
+    },
+    "jan1_range_085": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-85.json",
+      "sha256": "6e5fe260cb71b8f7275e72d4c12167b7132aecf618ed8201ee63fbac3a34c0b2",
+      "dataset": "eth-history"
+    },
+    "jan1_range_086": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-86.json",
+      "sha256": "1643d2e26a5266f6115b86ae2134f30e6dfe5125be035fb527d2fe8ac38fc0ad",
+      "dataset": "eth-history"
+    },
+    "jan1_range_087": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-87.json",
+      "sha256": "84f6c536d468689d2f7de0c41b92bb15983f47983bfa834ed0e70af0ae631cf6",
+      "dataset": "eth-history"
+    },
+    "jan1_range_088": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-88.json",
+      "sha256": "4c9c16105dee7d9601526c69600d1285132715695697a075ac7bde6f90a9157a",
+      "dataset": "eth-history"
+    },
+    "jan1_range_089": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-89.json",
+      "sha256": "895cc7ba7701b85dac03211148b74df447d8f3b8e335e0b63477e00c042a4651",
+      "dataset": "eth-history"
+    },
+    "jan1_range_090": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-90.json",
+      "sha256": "262843c748d780c213a77a99f721d3dd8798ee84c3b7176af235dc82906c1de2",
+      "dataset": "eth-history"
+    },
+    "jan1_range_091": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-91.json",
+      "sha256": "71e746608498e5117c0aa796d078c25b73d536d3d9b046b720755d17fe94bf3b",
+      "dataset": "eth-history"
+    },
+    "jan1_range_092": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-92.json",
+      "sha256": "bf3d95a22e5b838db3082c1e03b46914a5b4fe8ad2ab770cbd79ae7809f07f86",
+      "dataset": "eth-history"
+    },
+    "jan1_range_093": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-93.json",
+      "sha256": "f67870fe5a49fd00ebc5aafcca9dee29bb0937d6e6273163d431bcfe4c2a3267",
+      "dataset": "eth-history"
+    },
+    "jan1_range_094": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-94.json",
+      "sha256": "2188628b610c2c88919a03297d06324480e1ce894998f3a616dff3d3761eb876",
+      "dataset": "eth-history"
+    },
+    "jan1_range_095": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-95.json",
+      "sha256": "469f6060732a7549eb8292fbd5400b63037870f256e73936a6eb1b1eea4fb6b1",
+      "dataset": "eth-history"
+    },
+    "jan1_range_096": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-96.json",
+      "sha256": "db31f80c9c1b4e8bb99bd5c051277c0972bd9b30cc8b83be007c0eb2f315ce0d",
+      "dataset": "eth-history"
+    },
+    "jan1_range_097": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-97.json",
+      "sha256": "fc589a58120edaa18b31c373184d9c4cdd7d0d3e1221145715fd32e790e45776",
+      "dataset": "eth-history"
+    },
+    "jan1_range_098": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-98.json",
+      "sha256": "1f92461727bf1dd87baf1f045ee988f564b56a26f92db0d1a127a82f944dfd7f",
+      "dataset": "eth-history"
+    },
+    "jan1_range_099": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-99.json",
+      "sha256": "399781f4eeb703d025d4a7abba7b5fa4359fa625e1cd5ba591337bc71600e11d",
+      "dataset": "eth-history"
+    },
+    "jan1_range_100": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-100.json",
+      "sha256": "3453363feffc665c00d9f3a1acfa6a74e20de6264d6a3015192976ae5845ec02",
+      "dataset": "eth-history"
+    },
+    "jan1_range_101": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-101.json",
+      "sha256": "464faaf9944c1be242756159941ca81edcf1cc04b850e134071e9c45c42f3e4d",
+      "dataset": "eth-history"
+    },
+    "jan1_range_102": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-102.json",
+      "sha256": "175f516bb7cf800ce37dd6f814d4089c3c6295575a933e265db194aff0464387",
+      "dataset": "eth-history"
+    },
+    "jan1_range_103": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-103.json",
+      "sha256": "528b562d00a049638e119c5fa4e406ac0bef1cbb9d9b931e7af7e1f556ec2e9c",
+      "dataset": "eth-history"
+    },
+    "jan1_range_104": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-104.json",
+      "sha256": "5efbf74fe340893315547ba7ac538c4f3c7c657f887ed075752877bb72d0e846",
+      "dataset": "eth-history"
+    },
+    "jan1_range_105": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-105.json",
+      "sha256": "fcced0a6997f160032ebb156da2cc2c62123ea2c94240ab856773cd98d6aba18",
+      "dataset": "eth-history"
+    },
+    "jan1_range_106": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-106.json",
+      "sha256": "d9b9a9553cd16218f78a39be7f7959722f5982f0cdf86a8b358a90dea9b4dbef",
+      "dataset": "eth-history"
+    },
+    "jan1_range_107": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-107.json",
+      "sha256": "0c3ac66ea9a3bd5ab1b9d548353f8b1a5481ee1064081a9a5a16b223099f5c5f",
+      "dataset": "eth-history"
+    },
+    "jan1_range_108": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-108.json",
+      "sha256": "f7f2fae03fcbb34cec46797836e12cf2928fa5cbee19569a84a859571ae70233",
+      "dataset": "eth-history"
+    },
+    "jan1_range_109": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-109.json",
+      "sha256": "f9cefb2a1f40d519d5bbbc17dfdd42e572e46980eb07080e6160bc2ecacf1458",
+      "dataset": "eth-history"
+    },
+    "jan1_range_110": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-110.json",
+      "sha256": "12838ae9bd7ab679a128feaec2ab8bc9186b163faa044afa8acf29aa13c3fbb9",
+      "dataset": "eth-history"
+    },
+    "jan1_range_111": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-111.json",
+      "sha256": "7305e757bfe7692c74772d1fed6e9d47e3769ff8254b4fe922adfcb00809c8ee",
+      "dataset": "eth-history"
+    },
+    "jan1_range_112": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-112.json",
+      "sha256": "d76e8f013d4451ed7176eabc314652ab12600b70a9dab4114548c8016dc86a1e",
+      "dataset": "eth-history"
+    },
+    "jan1_range_113": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-113.json",
+      "sha256": "584ff53529f0495e36b8e44a9fc40f66abdce48b0fdc66a2c3f13313ad60d1d5",
+      "dataset": "eth-history"
+    },
+    "jan1_range_114": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-114.json",
+      "sha256": "511043acc6e975a6605ad60e7717e17131f939eae4c9ef95a4e598814e6704f5",
+      "dataset": "eth-history"
+    },
+    "jan1_range_115": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-115.json",
+      "sha256": "b6e1366e84780676220a491b80a24fa49a5542323b90b8a8381c7e1100e83907",
+      "dataset": "eth-history"
+    },
+    "jan1_range_116": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-116.json",
+      "sha256": "307fcfb64107cf92afc074a9418068bf987ee9dcc9d2bed48afdfa883a3c60f2",
+      "dataset": "eth-history"
+    },
+    "jan1_range_117": {
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-117.json",
+      "sha256": "c1ef186ace56e67819e8ad708f332cd33f88593432dd8a5f1b56bc65b66468be",
+      "dataset": "eth-history"
+    },
+    "upstream_0_claim": {
+      "path": "research_runs/eth-graph-source-20260916/claim.json",
+      "sha256": "7996ebf3d19fd1470c9914d20e48e660ecb251f403fb67fef2c419c5a428ac29",
+      "dataset": "eth-history"
+    },
+    "upstream_0_complete": {
+      "path": "research_runs/eth-graph-source-20260916/complete.json",
+      "sha256": "1bb34125bd580e11a0d30a53c01268adae6fc20e453cc3ee0b6f884b3ee137aa",
+      "dataset": "eth-history"
+    },
+    "upstream_1_claim": {
+      "path": "research_runs/eth-graph-prototype-20260916/claim.json",
+      "sha256": "5558c42758879b68254cf493715023cc836690e0b1e61b160c8bca3996014ac9",
+      "dataset": "eth-history"
+    },
+    "upstream_1_complete": {
+      "path": "research_runs/eth-graph-prototype-20260916/complete.json",
+      "sha256": "a99203d299f82443ad767f390f9f79dc954399d4df368df72932c89854b854a3",
+      "dataset": "eth-history"
+    },
+    "upstream_2_claim": {
+      "path": "research_runs/eth-temporal-motifs-20260916/claim.json",
+      "sha256": "6ba7c1697b7b9e0fa4e8928e596b78efee593eac953d924734b9df38844d8eb1",
+      "dataset": "eth-history"
+    },
+    "upstream_2_failed": {
+      "path": "research_runs/eth-temporal-motifs-20260916/failed.json",
+      "sha256": "eab9bd876ddebcbf041ab93bf1ac5f4b9e0ed090b75acb3b5041ec3d066ea625",
+      "dataset": "eth-history"
+    },
+    "upstream_3_claim": {
+      "path": "research_runs/eth-temporal-motifs-8gib-20260916/claim.json",
+      "sha256": "1cc63edd9f45044009c529d7fadfeaaed0479bd2f5a25cf30a00002b731691d4",
+      "dataset": "eth-history"
+    },
+    "upstream_3_complete": {
+      "path": "research_runs/eth-temporal-motifs-8gib-20260916/complete.json",
+      "sha256": "0fe63a35a4317d3a9c73890df9109623b4e2756687711accf31f63d28e6d3e1b",
+      "dataset": "eth-history"
+    },
+    "upstream_4_claim": {
+      "path": "research_runs/eth-panel-readiness-20260916/claim.json",
+      "sha256": "8cc9d1a66a1f851fa633ecbce236793e11f78262f2abee5628b6464506ab2a5b",
+      "dataset": "eth-history"
+    },
+    "upstream_4_complete": {
+      "path": "research_runs/eth-panel-readiness-20260916/complete.json",
+      "sha256": "11fe23f49738c0b1b3ba5f676a43bf4967f35c1071c0b1e0bfd63b95337e6247",
+      "dataset": "eth-history"
+    }
+  }
+}
