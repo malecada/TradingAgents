@@ -1,0 +1,167 @@
+{
+  "actual_late_clock_policy": "common-row exclusion",
+  "bootstrap": {
+    "block_days": 14,
+    "method": "noncircular_overlapping_percentile",
+    "required_days": 366,
+    "required_end_exclusive": "2025-01-01T00:00:00Z",
+    "required_start": "2024-01-01T00:00:00Z",
+    "resamples": 2000,
+    "seed": 42
+  },
+  "decisions": {
+    "end_exclusive": "2025-01-01T00:00:00Z",
+    "start": "2022-01-09T00:00:00Z"
+  },
+  "empty_overlap_policy": "undefined fraction excludes common row",
+  "feature_sets": {
+    "M0": [
+      "return_1",
+      "return_7",
+      "return_30",
+      "volatility_7",
+      "volatility_30",
+      "log_quote_volume",
+      "relative_quote_volume_7"
+    ],
+    "M1": [
+      "return_1",
+      "return_7",
+      "return_30",
+      "volatility_7",
+      "volatility_30",
+      "log_quote_volume",
+      "relative_quote_volume_7",
+      "events_log_count",
+      "events_relative_7",
+      "nodes_log_count",
+      "nodes_relative_7",
+      "directed_pairs_log_count",
+      "directed_pairs_relative_7"
+    ],
+    "M2": [
+      "return_1",
+      "return_7",
+      "return_30",
+      "volatility_7",
+      "volatility_30",
+      "log_quote_volume",
+      "relative_quote_volume_7",
+      "events_log_count",
+      "events_relative_7",
+      "nodes_log_count",
+      "nodes_relative_7",
+      "directed_pairs_log_count",
+      "directed_pairs_relative_7",
+      "stars_log_count",
+      "stars_per_event",
+      "dyads_log_count",
+      "dyads_per_event",
+      "triangles_log_count",
+      "triangles_per_event",
+      "nonzero_fraction"
+    ]
+  },
+  "folds": [
+    {
+      "end": "2024-02-01T00:00:00Z",
+      "id": "2024-01",
+      "start": "2024-01-01T00:00:00Z"
+    },
+    {
+      "end": "2024-03-01T00:00:00Z",
+      "id": "2024-02",
+      "start": "2024-02-01T00:00:00Z"
+    },
+    {
+      "end": "2024-04-01T00:00:00Z",
+      "id": "2024-03",
+      "start": "2024-03-01T00:00:00Z"
+    },
+    {
+      "end": "2024-05-01T00:00:00Z",
+      "id": "2024-04",
+      "start": "2024-04-01T00:00:00Z"
+    },
+    {
+      "end": "2024-06-01T00:00:00Z",
+      "id": "2024-05",
+      "start": "2024-05-01T00:00:00Z"
+    },
+    {
+      "end": "2024-07-01T00:00:00Z",
+      "id": "2024-06",
+      "start": "2024-06-01T00:00:00Z"
+    },
+    {
+      "end": "2024-08-01T00:00:00Z",
+      "id": "2024-07",
+      "start": "2024-07-01T00:00:00Z"
+    },
+    {
+      "end": "2024-09-01T00:00:00Z",
+      "id": "2024-08",
+      "start": "2024-08-01T00:00:00Z"
+    },
+    {
+      "end": "2024-10-01T00:00:00Z",
+      "id": "2024-09",
+      "start": "2024-09-01T00:00:00Z"
+    },
+    {
+      "end": "2024-11-01T00:00:00Z",
+      "id": "2024-10",
+      "start": "2024-10-01T00:00:00Z"
+    },
+    {
+      "end": "2024-12-01T00:00:00Z",
+      "id": "2024-11",
+      "start": "2024-11-01T00:00:00Z"
+    },
+    {
+      "end": "2025-01-01T00:00:00Z",
+      "id": "2024-12",
+      "start": "2024-12-01T00:00:00Z"
+    }
+  ],
+  "graph_availability_floor": "source_day + 2 days",
+  "market_availability_floor": "source_day + 1 day + 5 minutes",
+  "missing_policy": "common finite mask, no imputation",
+  "model": {
+    "library": "lightgbm",
+    "params": {
+      "deterministic": true,
+      "force_col_wise": true,
+      "learning_rate": 0.05,
+      "max_depth": 3,
+      "min_child_samples": 30,
+      "n_estimators": 100,
+      "n_jobs": 2,
+      "num_leaves": 7,
+      "random_state": 42,
+      "reg_lambda": 1,
+      "verbosity": -1
+    },
+    "version": "4.6.0"
+  },
+  "protocol": "PROTOCOL.md",
+  "purge_gap": "1D",
+  "schema_version": 1,
+  "screening": {
+    "ci95_upper_strictly_below": 0,
+    "monthly_negative_minimum": 8,
+    "months_required": 12,
+    "primary": "M2-M1:log_loss"
+  },
+  "source_lag_days": 2,
+  "status": "preparation_only",
+  "target": {
+    "decision_utc": "00:00:00",
+    "label_days": 1,
+    "market": "spot",
+    "positive": "open_D_plus_1 > open_D",
+    "symbol": "ETHUSDT",
+    "ties": 0,
+    "venue": "Binance"
+  }
+}

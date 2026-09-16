@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "program_id": "onchain-graph-2026-09-16",
+  "families": {
+    "eth-matched-input-capture": {
+      "mechanism_id": "ethereum-matched-forecast-first-training-source-capture",
+      "prior_attempts": 6,
+      "attempt_budget": 7,
+      "history_reference": "research/onchain-graph-2026-09-16/comparison/capture-history.json and CAPTURE_CHARTER.md; six graph predecessors, source-only prerequisite no reset/replay."
+    }
+  },
+  "datasets": {
+    "eth-history": {
+      "identity": "ethereum-native-top-level-transactions-chain-1",
+      "history_reference": "Prior Jan1 raw/graph/motif exposure and2022-2024metadata; current pilot targetsJan2-8, contextJan1, wholeJan9blocks throughJan10exclusive. No historical publication verification. Original broader source history inherited.",
+      "exposures": [
+        {
+          "start": "2024-01-01T00:00:00Z",
+          "end": "2024-01-02T00:00:00Z",
+          "state": "exposed"
+        }
+      ]
+    },
+    "eth-spot": {
+      "identity": "binance-spot-ETHUSDT-daily-bars",
+      "history_reference": "comparison/SOURCE_INVENTORY.md and docs/diagnostics-2026-09-10/forecast-charter.md; historical ETH direction spent, current capture is archive vintage only.",
+      "exposures": [
+        {
+          "start": "2021-12-01T00:00:00Z",
+          "end": "2025-04-01T00:00:00Z",
+          "state": "spent"
+        }
+      ]
+    }
+  },
+  "experiments": {
+    "eth-matched-input-capture-20260916": {
+      "family": "eth-matched-input-capture",
+      "parent": null,
+      "question": "Can the fixed first seven training-source days and38spotmonthlyarchives be captured with bounded immutable raw evidence? Six graph predecessors imported explicitly; no model outcome.",
+      "charter": {
+        "path": "research/onchain-graph-2026-09-16/comparison/CAPTURE_CHARTER.md",
+        "sha256": "2d6493d30dafcb6bb4e0ffbbbc105d6feb4ae9519db8849b9625d59da7a8d427"
+      },
+      "stage": "development",
+      "reuse": "exploratory",
+      "windows": [
+        {
+          "dataset": "eth-history",
+          "start": "2022-01-01T00:00:00Z",
+          "end": "2025-01-01T00:00:00Z",
+          "availability": "existing"
+        },
+        {
+          "dataset": "eth-spot",
+          "start": "2021-12-01T00:00:00Z",
+          "end": "2025-02-01T00:00:00Z",
+          "availability": "existing"
+        }
+      ],
+      "selection": null,
+      "source_files": {
+        "research/onchain-graph-2026-09-16/comparison/capture_run.py": "91603edd3915fcbb5c9e9c3b481a1247a8f0cc5d1cf1b4fd5449e9224e069155",
+        "research/onchain-graph-2026-09-16/comparison/capture_launch.py": "6285c346dca3d9e20739861b89a2fe6ce40f1103a120cf476cf27d9bacbf82a9",
+        "research/onchain-graph-2026-09-16/comparison/graph_capture.py": "f296f39e85a316bb16007d823f06a5546c73c751fa71cd7b99ebed940c5fdbba",
+        "research/onchain-graph-2026-09-16/comparison/spot_capture.py": "771d0dd14f2eacdd2303a15d4cf5258e56dd6a6ced96df79da7b43ba8d03439e",
+        "research/onchain-graph-2026-09-16/comparison/capture-plan.json": "2915fdf4e9b0e6539e20484379040fd3ce7e526976e770fc59cd1352997e57dc",
+        "pyproject.toml": "fa319e95452e538ac22d78584f87f5f13a24d4b8bb83064b51d015706ef594b9",
+        "research/onchain-graph-2026-09-16/motifs/oracle.py": "a0fa3bbdbd32165356724285be378bf67c76070b68bd838ba6169c944b9af249",
+        "research/onchain-graph-2026-09-16/motifs8gib/launch.py": "9dfad213fad3b8c29c20f3b1863244e8b1fa79192506608519f82b1da6b601f2",
+        "research/onchain-graph-2026-09-16/panel_readiness/boundary.py": "c98b619fea3680ff4d5d11207d4ef7fa2cb414fbaf38b52f7b6f221e6b06beff",
+        "research/onchain-graph-2026-09-16/pilot/day.py": "b96e3f02847d1270b9ec3aefa6fa4d71cdd3ae456d15caa74e309d4ecc43ebae",
+        "research/onchain-graph-2026-09-16/pilot/launch.py": "ac9ec904d772640c7828d7bfa0b35a2bdf86ddd2fe10ed1bc401f94b34062a85",
+        "research/onchain-graph-2026-09-16/pilot/numeric.py": "3343a8fb9fe77b71cfdb35ec6113d0eb7c4b24e18a42436bc0a277f277bdd11f",
+        "research/onchain-graph-2026-09-16/pilot/run.py": "3aa24d9a9e15fcfa4093f75e9162b313093b2866d8bf782fa3ef41161d058659",
+        "research/onchain-graph-2026-09-16/pilot/storage.py": "bb7fedc103949d58a7ff27665e102126f5784f40f76f0794eae4fb056a5dd086",
+        "research/onchain-graph-2026-09-16/prototype/graph_math.py": "b813f3580a24a4657c6a50a31836ffd77685201474251ccbc11630f4f68ba0b6",
+        "research/onchain-graph-2026-09-16/prototype/run.py": "bae52de26eafc7b9a84865d153e6343f7f55af8678423ae0ee5f91cd7f56a5b1",
+        "research/onchain-graph-2026-09-16/source_probe.py": "d4f7cf193f41635910ee24d671a69b3e68b466cd01186c40c8f21b3c636231c0",
+        "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+        "tradingagents/research_amended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "tradingagents/research_amended/admission.py": "34eeca06c4fac1b4f8343437d45aad346cd92a90659f9150325a6af207aeb0d3",
+        "tradingagents/research_amended/amendment.py": "516b82264fb9152f2135a036eb030feefb7f507221aa213b9509e6f424fe1bfd",
+        "tradingagents/research_amended/lifecycle.py": "a4681c16e441e41496c1de88017dbcc27b3ce4e30309023ac3ffe83d5f7a1b52",
+        "tradingagents/research_amended/verify.py": "ccc85b7b98c97e048a3c17a8335b4e735e220398604e05eb19dea96616b84666",
+        "tradingagents/research_amended/verify_amendment.py": "5b056e3c8f002f1e5391e851840a1d7aa90c0939a9b21a73726137380a2c8e13",
+        "uv.lock": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a",
+        "tests/research/test_onchain_graph_capture.py": "4bce308aa12c97ff15ea92d43078f37415759793c0fbe53cce41b2ad193980f0",
+        "tests/research/test_onchain_spot_capture.py": "0bbd81017088e7112ac6ae8014282c89382f61e20fc64ebc4993b8a13839646b",
+        "research/onchain-graph-2026-09-16/comparison/check_capture.py": "b5af556cee4dc8fc0b3d46d6cd8aa478dbd83ff4fb0e2a92213b5ddb2c7de0d3"
+      },
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "inputs": {
+        "capture_plan": {
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-plan.json",
+          "sha256": "2915fdf4e9b0e6539e20484379040fd3ce7e526976e770fc59cd1352997e57dc",
+          "dataset": "eth-history"
+        },
+        "history": {
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-history.json",
+          "sha256": "c6136dec24a876771aad2eba3bf12fd2212a81be8726d601d2c90bf4216acdf6",
+          "dataset": "eth-history"
+        },
+        "inventory": {
+          "path": "research_runs/eth-panel-readiness-20260916/outputs/inventory.json",
+          "sha256": "97da7ac5cef01718a6d479396ff3b7339f4b46a36146339a8f46d2f738def939",
+          "dataset": "eth-history"
+        },
+        "parent_0": {
+          "path": "research_runs/eth-graph-source-20260916/claim.json",
+          "sha256": "7996ebf3d19fd1470c9914d20e48e660ecb251f403fb67fef2c419c5a428ac29",
+          "dataset": "eth-history"
+        },
+        "parent_1": {
+          "path": "research_runs/eth-graph-source-20260916/complete.json",
+          "sha256": "1bb34125bd580e11a0d30a53c01268adae6fc20e453cc3ee0b6f884b3ee137aa",
+          "dataset": "eth-history"
+        },
+        "parent_2": {
+          "path": "research_runs/eth-graph-prototype-20260916/claim.json",
+          "sha256": "5558c42758879b68254cf493715023cc836690e0b1e61b160c8bca3996014ac9",
+          "dataset": "eth-history"
+        },
+        "parent_3": {
+          "path": "research_runs/eth-graph-prototype-20260916/complete.json",
+          "sha256": "a99203d299f82443ad767f390f9f79dc954399d4df368df72932c89854b854a3",
+          "dataset": "eth-history"
+        },
+        "parent_4": {
+          "path": "research_runs/eth-temporal-motifs-20260916/claim.json",
+          "sha256": "6ba7c1697b7b9e0fa4e8928e596b78efee593eac953d924734b9df38844d8eb1",
+          "dataset": "eth-history"
+        },
+        "parent_5": {
+          "path": "research_runs/eth-temporal-motifs-20260916/failed.json",
+          "sha256": "eab9bd876ddebcbf041ab93bf1ac5f4b9e0ed090b75acb3b5041ec3d066ea625",
+          "dataset": "eth-history"
+        },
+        "parent_6": {
+          "path": "research_runs/eth-temporal-motifs-8gib-20260916/claim.json",
+          "sha256": "1cc63edd9f45044009c529d7fadfeaaed0479bd2f5a25cf30a00002b731691d4",
+          "dataset": "eth-history"
+        },
+        "parent_7": {
+          "path": "research_runs/eth-temporal-motifs-8gib-20260916/complete.json",
+          "sha256": "0fe63a35a4317d3a9c73890df9109623b4e2756687711accf31f63d28e6d3e1b",
+          "dataset": "eth-history"
+        },
+        "parent_8": {
+          "path": "research_runs/eth-panel-readiness-20260916/claim.json",
+          "sha256": "8cc9d1a66a1f851fa633ecbce236793e11f78262f2abee5628b6464506ab2a5b",
+          "dataset": "eth-history"
+        },
+        "parent_9": {
+          "path": "research_runs/eth-panel-readiness-20260916/complete.json",
+          "sha256": "11fe23f49738c0b1b3ba5f676a43bf4967f35c1071c0b1e0bfd63b95337e6247",
+          "dataset": "eth-history"
+        },
+        "parent_10": {
+          "path": "research_runs/eth-seven-day-pilot-20260916/claim.json",
+          "sha256": "1a672d84204a2e444cc87e3e80b2fc2cca8fa14da273d3c78cbf18712e844b42",
+          "dataset": "eth-history"
+        },
+        "parent_11": {
+          "path": "research_runs/eth-seven-day-pilot-20260916/failed.json",
+          "sha256": "ddbaf82fade8a6474c74ebbd230ec140b43f5cbd0203a976bdcd908c1dfcb87d",
+          "dataset": "eth-history"
+        }
+      },
+      "cells": [
+        "graph-2022-01-01",
+        "graph-2022-01-02",
+        "graph-2022-01-03",
+        "graph-2022-01-04",
+        "graph-2022-01-05",
+        "graph-2022-01-06",
+        "graph-2022-01-07",
+        "spot-2021-12",
+        "spot-2022-01",
+        "spot-2022-02",
+        "spot-2022-03",
+        "spot-2022-04",
+        "spot-2022-05",
+        "spot-2022-06",
+        "spot-2022-07",
+        "spot-2022-08",
+        "spot-2022-09",
+        "spot-2022-10",
+        "spot-2022-11",
+        "spot-2022-12",
+        "spot-2023-01",
+        "spot-2023-02",
+        "spot-2023-03",
+        "spot-2023-04",
+        "spot-2023-05",
+        "spot-2023-06",
+        "spot-2023-07",
+        "spot-2023-08",
+        "spot-2023-09",
+        "spot-2023-10",
+        "spot-2023-11",
+        "spot-2023-12",
+        "spot-2024-01",
+        "spot-2024-02",
+        "spot-2024-03",
+        "spot-2024-04",
+        "spot-2024-05",
+        "spot-2024-06",
+        "spot-2024-07",
+        "spot-2024-08",
+        "spot-2024-09",
+        "spot-2024-10",
+        "spot-2024-11",
+        "spot-2024-12",
+        "spot-2025-01",
+        "manifest"
+      ],
+      "outputs": [
+        "graph-2022-01-01.json",
+        "graph-2022-01-02.json",
+        "graph-2022-01-03.json",
+        "graph-2022-01-04.json",
+        "graph-2022-01-05.json",
+        "graph-2022-01-06.json",
+        "graph-2022-01-07.json",
+        "spot-2021-12.json",
+        "spot-2022-01.json",
+        "spot-2022-02.json",
+        "spot-2022-03.json",
+        "spot-2022-04.json",
+        "spot-2022-05.json",
+        "spot-2022-06.json",
+        "spot-2022-07.json",
+        "spot-2022-08.json",
+        "spot-2022-09.json",
+        "spot-2022-10.json",
+        "spot-2022-11.json",
+        "spot-2022-12.json",
+        "spot-2023-01.json",
+        "spot-2023-02.json",
+        "spot-2023-03.json",
+        "spot-2023-04.json",
+        "spot-2023-05.json",
+        "spot-2023-06.json",
+        "spot-2023-07.json",
+        "spot-2023-08.json",
+        "spot-2023-09.json",
+        "spot-2023-10.json",
+        "spot-2023-11.json",
+        "spot-2023-12.json",
+        "spot-2024-01.json",
+        "spot-2024-02.json",
+        "spot-2024-03.json",
+        "spot-2024-04.json",
+        "spot-2024-05.json",
+        "spot-2024-06.json",
+        "spot-2024-07.json",
+        "spot-2024-08.json",
+        "spot-2024-09.json",
+        "spot-2024-10.json",
+        "spot-2024-11.json",
+        "spot-2024-12.json",
+        "spot-2025-01.json",
+        "manifest.json",
+        "summary.json"
+      ]
+    }
+  }
+}
