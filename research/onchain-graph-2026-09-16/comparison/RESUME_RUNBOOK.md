@@ -9,8 +9,10 @@ This is a local desktop task; checks require the host and app to be available.
 
 ## Current continuation
 
-Preparation is in progress for `eth-graph-source-resume-20260917`. Do not duplicate
-work while this task is active. Planned new execution checkout:
+The continuation `eth-graph-source-resume-20260917` is active from fixed source
+`e01968240a67632cadaf96f5e0a6341ff0ed2f6a`, launched22:01:25UTC September17.
+Launcher607888/startticks3143994, worker608637. Do not duplicate the worker.
+Execution checkout:
 `/home/malecada/Data/onchain-research/TradingAgents-onchain-resume`.
 Consult STATE.md and RESUME_STATUS.md for the latest exact committed source and
 launch evidence. Old `eth-graph-source-recovery-20260917` is terminal14complete/
