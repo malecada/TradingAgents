@@ -1,3 +1,9 @@
+# Superseded startup snapshot
+
+The first recovery is terminal14complete/507unavailable. See
+[closure](RECOVERY_CLOSURE.md) and [current continuation](RESUME_STATUS.md).
+The original startup record below is historical and is not a live status.
+
 # Active missing-source recovery checkpoint
 
 The user-authorized finite recovery started at 13:42:36 UTC on September 17,
