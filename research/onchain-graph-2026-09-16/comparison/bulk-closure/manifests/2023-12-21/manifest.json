@@ -1,0 +1,53 @@
+{
+  "budget_before_manifest": {
+    "existing_metadata_bytes": 268435456,
+    "existing_raw_bytes": 2147483648,
+    "metadata_ceiling": 2147483648,
+    "new_metadata_bytes": 245301248,
+    "new_raw_bytes": 55201087233,
+    "raw_ceiling": 128849018880,
+    "stopped": null,
+    "total_metadata_bytes": 513736704,
+    "total_raw_bytes": 57348570881
+  },
+  "files": [
+    {
+      "bytes": 1695,
+      "path": "day-intent.json",
+      "sha256": "f88c8250cb5cfba3ff595253d4783403b2327c5d7ee5db30ca9a0071b4c9d139"
+    },
+    {
+      "bytes": 399,
+      "path": "request-0001-intent.json",
+      "sha256": "6bd614e28c00653846c9b692fcdbdfc7c3702470311c57a0b0ce8af536b77adf"
+    },
+    {
+      "bytes": 13,
+      "path": "request-0001.body.zst",
+      "sha256": "f96deff1816083fdff8bc3e46c3fe6ca46a6bb49f4d5a00627616c13237a512c"
+    },
+    {
+      "bytes": 1006,
+      "path": "request-0001.json",
+      "sha256": "1fc6e080e36d2faf161124cd970a7aa7bb82f67d9a3177054442e88ff03ede76"
+    }
+  ],
+  "qualification": "raw metadata only; no numerical rows decoded",
+  "result": {
+    "bindings_valid": true,
+    "date": "2023-12-21",
+    "denied": false,
+    "metadata_allocated_before_manifest": 12288,
+    "numerical_integrity_admitted": false,
+    "projected_rows": null,
+    "reason": "ValueError: unavailable body or changed object ETag",
+    "received_bytes": 0,
+    "requests": 1,
+    "reused_blocks": null,
+    "selected_bytes": null,
+    "status": "unavailable",
+    "stopped": null,
+    "stored_raw_bytes": 13
+  },
+  "schema_version": 1
+}

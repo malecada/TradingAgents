@@ -1,4 +1,6 @@
-# Remaining graph capture — active checkpoint
+# Remaining graph capture — historical active checkpoint
+
+**Superseded September 17:** the original job is terminal with 563 complete and 521 unavailable source dates. See [closure](BULK_CLOSURE.md) and [recovery runbook](RECOVERY_RUNBOOK.md). The observations below are historical, not current liveness.
 
 The finite capture started at 18:22:04 UTC on September 16, 2026 from reviewed
 source `771dfeb54a90ca0724e345ddd183754e5ca80e2b`. That exact source was pushed and

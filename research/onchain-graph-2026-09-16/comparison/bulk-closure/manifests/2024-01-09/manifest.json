@@ -1,0 +1,63 @@
+{
+  "budget_before_manifest": {
+    "existing_metadata_bytes": 268435456,
+    "existing_raw_bytes": 2147483648,
+    "metadata_ceiling": 2147483648,
+    "new_metadata_bytes": 245534720,
+    "new_raw_bytes": 55201087415,
+    "raw_ceiling": 128849018880,
+    "stopped": null,
+    "total_metadata_bytes": 513970176,
+    "total_raw_bytes": 57348571063
+  },
+  "files": [
+    {
+      "bytes": 1694,
+      "path": "day-intent.json",
+      "sha256": "4e0e9864bacdf2f0f898f6fcd3fbd3b7074b8da99eadb0da903fcd2caa70afcf"
+    },
+    {
+      "bytes": 452,
+      "path": "request-0001-intent.json",
+      "sha256": "ccc1c8485a72d82530314fb7c669dc8f99b4987ccf6f09d9870ae03e855f9290"
+    },
+    {
+      "bytes": 13,
+      "path": "request-0001.body.zst",
+      "sha256": "f96deff1816083fdff8bc3e46c3fe6ca46a6bb49f4d5a00627616c13237a512c"
+    },
+    {
+      "bytes": 1060,
+      "path": "request-0001.json",
+      "sha256": "f4dd534e14ee715dea9952b145dfa346a7be6d12235fdec89b1180f28f9506ee"
+    },
+    {
+      "bytes": 1666,
+      "path": "reused-blocks.json",
+      "sha256": "948f9bf1ff4c44b8452509d0c1a46653dace3d3dab111f05dfde5b85fb1709a6"
+    }
+  ],
+  "qualification": "raw metadata only; no numerical rows decoded",
+  "result": {
+    "bindings_valid": true,
+    "date": "2024-01-09",
+    "denied": false,
+    "metadata_allocated_before_manifest": 16384,
+    "numerical_integrity_admitted": false,
+    "projected_rows": null,
+    "reason": "ValueError: unavailable body or changed object ETag",
+    "received_bytes": 0,
+    "requests": 1,
+    "reused_blocks": {
+      "blob_path": "research/onchain-graph-2026-09-16/pilot/artifacts/boundary-2024-01-09/request-0001.body.zst",
+      "receipt_path": "research/onchain-graph-2026-09-16/pilot/artifacts/boundary-2024-01-09/request-0001.json",
+      "receipt_sha256": "8630c3df041d139619359253339c667501c05f559f2bcb8dc4a54210b5410134",
+      "stored_sha256": "866b42ef05784bca43a5f72bf4044127e244c4993e190a4d1b917391abd10aed"
+    },
+    "selected_bytes": null,
+    "status": "unavailable",
+    "stopped": null,
+    "stored_raw_bytes": 13
+  },
+  "schema_version": 1
+}
