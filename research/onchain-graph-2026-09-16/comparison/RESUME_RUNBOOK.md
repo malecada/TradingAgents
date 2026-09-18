@@ -9,23 +9,23 @@ This is a local desktop task; checks require the host and app to be available.
 
 ## Current continuation
 
-The continuation `eth-graph-source-resume-20260917` is active from fixed source
-`e01968240a67632cadaf96f5e0a6341ff0ed2f6a`, launched22:01:25UTC September17.
-Launcher607888/startticks3143994, worker608637. Do not duplicate the worker.
+The continuation `eth-graph-source-resume2-20260918` is active from fixed source
+`ee2a1b806b28b9815eb2347fba7984ec67e208f3`, launched00:21:17UTC September18.
+Launcher1059665/startticks3983261, worker1060485. Do not duplicate the worker.
 Execution checkout:
-`/home/malecada/Data/onchain-research/TradingAgents-onchain-resume`.
-Consult STATE.md and RESUME_STATUS.md for the latest exact committed source and
-launch evidence. Old `eth-graph-source-recovery-20260917` is terminal14complete/
-507unavailable; its last process30581 is gone. Never relaunch it.
+`/home/malecada/Data/onchain-research/TradingAgents-onchain-resume2`.
+Consult STATE.md and RESUME2_STATUS.md for the latest exact committed source and
+launch evidence. Old `eth-graph-source-resume-20260917` is terminal61complete/
+446unavailable; its last process607888 is gone. Never relaunch it.
 
 Before first launch, commit and independently approve the final source/gate/
 charter/amendment, push and verify remote hash. Create the new fixed checkout on
 Data, use the pinned coordinator `.venv/bin/python -B`, and call
-`resume_start.py --source FULL_HEAD` there. Custom policy admission and standard
+`resume2_start.py --source FULL_HEAD` there. Custom policy admission and standard
 lifecycle admission must pass. No existing claim or launch intent is reusable.
 
-Inspect `comparison/resume-started.json`, PID/startticks/bootID/command, live
-worker/resource receipt, `research_runs/eth-graph-source-resume-20260917/outputs/`
+Inspect `comparison/resume2-started.json`, PID/startticks/bootID/command, live
+worker/resource receipt, `research_runs/eth-graph-source-resume2-20260918/outputs/`
 and terminal receipts. An empty resource receipt is normal while the guard is
 active. Distinguish complete date cells from a lifecycle receipt named complete.
 Source evidence is in `comparison/bulk-artifacts/DATE` and sibling
@@ -45,7 +45,7 @@ A subsequent continuation must use a fresh registered identity, exact remaining
 cohort and valid saved-prefix reuse, with a concrete source-only amendment that
 preserves the cumulative lineage and byte budgets. Independent engineering review,
 synthetic failure checks, frozen source, committed gate and remote verification
-remain required. The current one-use9-to10certificate cannot grant another claim.
+remain required. The current one-use10-to11certificate cannot grant another claim.
 The standing user request authorizes this preparation and continuation; numerical
 experiments, provider switches and trading remain outside its scope.
 
