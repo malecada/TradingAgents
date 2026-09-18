@@ -1,3 +1,8 @@
+# Superseded startup snapshot
+
+This run is terminal61complete/446unavailable. See [closure](RESUME_CLOSURE.md)
+and [current continuation](RESUME2_STATUS.md). The startup record below is historical.
+
 # Active source continuation checkpoint
 
 The user-authorized continuation started at22:01:25.247200UTC on September17,
