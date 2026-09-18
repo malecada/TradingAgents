@@ -1,3 +1,8 @@
+# Superseded startup snapshot
+
+This run is terminal0complete/446unavailable. See [closure](RESUME2_CLOSURE.md)
+and [current preparation](RESUME3_STATUS.md). The record below is historical.
+
 # Active second source continuation
 
 The standing user-authorized continuation started at2026-09-18T00:21:17.917851UTC
