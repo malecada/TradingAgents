@@ -1,4 +1,12 @@
-# Third source continuation status
+# Third source continuation — complete
+
+**Final status:** closed at 11:54:11.237533 UTC on September 18 (13:54 Prague),
+446/446 dates complete, zero unavailable. The bulk cohort is now 1,084/1,084
+complete; 12 earlier reference dates are separate. No worker remains active.
+See [closure](RESUME3_CLOSURE.md) and [independent review](RESUME3_CLOSURE_REVIEW.md).
+The paragraphs below preserve historical startup observations and are superseded
+by this final record. Independent closure review passed and the download monitor is paused.
+
 
 The continuation `eth-graph-source-resume3-20260918` started at
 01:12:02.592767 UTC on September 18, 2026 (03:12 Prague time) from source

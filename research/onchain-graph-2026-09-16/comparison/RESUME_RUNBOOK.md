@@ -1,8 +1,16 @@
 # Source continuation and recurring monitor
 
+**Completion checkpoint:** resume3 closed at 11:54:11 UTC September 18 with
+446/446 complete dates. All 1,084 bulk dates are complete; no acquisition worker
+remains. Consult RESUME3_CLOSURE.md and RESUME3_CLOSURE_REVIEW.md. Independent closure review passed and the monitor is paused; do not create a
+successor acquisition claim.
+The live-worker and subsequent-stop instructions below are retained historical
+procedures. Numerical and predictive work remain separate downstream stages.
+
+
 The user explicitly authorized resumption, ongoing monitoring and resumption
 when the process stops. The app heartbeat
-`monitor-and-resume-on-chain-history-download` is active every30minutes, attached
+`monitor-and-resume-on-chain-history-download` previously ran every30minutes, attached
 to this task. It should stay quiet while unchanged, report meaningful restarts,
 completion or actionable problems, and pause after verified source completion.
 This is a local desktop task; checks require the host and app to be available.

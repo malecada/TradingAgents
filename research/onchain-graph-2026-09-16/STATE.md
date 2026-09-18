@@ -1,21 +1,26 @@
 # Ethereum graph feasibility checkpoint
 
-**Latest observation, September 18:** [resume3](comparison/RESUME3_STATUS.md)
-started at 01:12:02.592767 UTC from fixed, remotely verified source
-`c27a93d7f736cd05e41277d966572bd931e659b8` in
-`/home/malecada/Data/onchain-research/TradingAgents-onchain-resume3`.
-Launcher PID 1479563/start ticks 4287728, worker PID 1480459; claim retained.
-The 446 missing dates, 13 cached October 8 responses and unchanged acquisition
-engine/resource ceilings are frozen. The cumulative source allowance is consumed
-at 12/12; further continuation requires a concrete reviewed contract preserving
-lineage and storage accounting. The existing 30-minute monitor remains active
-under standing user authorization. Consult the [runbook](comparison/RESUME_RUNBOOK.md)
-for fresh checks and compact closure requirements. The independent 01:13:15 UTC check found 33 successful new responses, including
-the previously blocked request, and the first resumed date, October 8, 2023, subsequently completed with 80 new
-and 13 reused responses and verified source checks. There are now 445 dates
-remaining; 639 bulk/recovery dates are complete. Older active-status paragraphs below
-are historical and superseded; resume2 closed with zero new complete dates.
-Prediction and numerical graph evaluation remain pending.
+**Source acquisition complete, September 18:** the final continuation closed at
+11:54:11 UTC (13:54 Prague time) with all 446 remaining dates complete and zero
+unavailable cells. The bulk cohort now has **1,084 of 1,084 dates complete**;
+12 earlier reference dates are outside that denominator. The worker exited
+normally; no downloader is active. Never replay a terminal identity.
+
+[Closure](comparison/RESUME3_CLOSURE.md) and the
+[independent closure review](comparison/RESUME3_CLOSURE_REVIEW.md) identify the
+exact evidence and limits. Source remains
+`c27a93d7f736cd05e41277d966572bd931e659b8` in Data/TradingAgents-onchain-resume3;
+terminal SHA256 is
+`5f4062cea0b7d431cda40dfde26152682a4a13c1c76ae44159942644d4b3a874`.
+Structural verification passed 447 cells and 448 output hashes. Peak sampled
+process-tree RSS was 0.746 GiB under the 8 GiB cap. Compact closure metadata
+was imported after allocation preflight; raw/full manifests remain on Data.
+The cumulative source allowance remains consumed at 12/12.
+
+Independent closure review passed and the download monitor is paused. Numerical
+integrity, graph features and matched M0/M1/M2 prediction evaluation remain
+pending. There is no verified off-device raw backup. All active-state statements
+below are historical and superseded by this completion record.
 
 **Active September18 source continuation:** [resume2](comparison/RESUME2_STATUS.md) started00:21:17.917851UTC from fixed `ee2a1b806b28b9815eb2347fba7984ec67e208f3`, remotely verified before launch, in Data/TradingAgents-onchain-resume2. Launcher1059665/startticks3983261, worker1060485; bootID retained. Exactly446remaining dates,13cached October8responses,638priorcomplete dates excluded. Initial TLS handshake timeout entered the approved retry path; no firstdate completion established by startup snapshot. Current one-use allowance consumed11/11, localclaim inventory48. The30minute monitor remains authorized; [runbook](comparison/RESUME_RUNBOOK.md) identifies this liveworker. Never restart old identities or duplicate the active worker. Numerical/prediction work remains pending.
 
