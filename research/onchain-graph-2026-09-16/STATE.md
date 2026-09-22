@@ -1,3 +1,10 @@
+> September22 18:28UTC monitor correction: the continuation stopped at18:05:58UTC.
+> systemd-oomd killed its unit for sustained ancestor memory pressure. All206
+> source-day outputs remain preserved; no new source day completed. The4GiB
+> memory.high throttle likely contributed; kernelOOM counters remained zero.
+> Recovery preparation is under fullpanel_resume2; no worker currently runs.
+> The original reboot cause remains undetermined.
+
 # Ethereum graph feasibility checkpoint
 
 **September 22 full-panel continuation running:** the feature worker restarted at

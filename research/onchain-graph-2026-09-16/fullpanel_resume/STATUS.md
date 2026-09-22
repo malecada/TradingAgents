@@ -1,3 +1,10 @@
+> September22 18:28UTC monitor correction: the continuation stopped at18:05:58UTC.
+> systemd-oomd killed its unit for sustained ancestor memory pressure. All206
+> source-day outputs remain preserved; no new source day completed. The4GiB
+> memory.high throttle likely contributed; kernelOOM counters remained zero.
+> Recovery preparation is under fullpanel_resume2; no worker currently runs.
+> The original reboot cause remains undetermined.
+
 # Continuation running — September 22, 2026
 
 The feature worker restarted at **17:51:19 UTC (19:51 Prague)** from remotely
