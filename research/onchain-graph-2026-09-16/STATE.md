@@ -1,19 +1,23 @@
 # Ethereum graph feasibility checkpoint
 
-**September 22 full-panel recovery:** the original extraction was interrupted by
-reboot after 206 independently checked source days and 205 graph days through
-2022-07-25. Its failure-only terminal and every published/partial artifact are
-preserved. The user reported OOM with other processes running; the responsible
-process and peak memory are unknown. The original worker is absent.
-[Continuation status](fullpanel_resume/STATUS.md), [charter](fullpanel_resume/CHARTER.md)
-and [runbook](fullpanel_resume/RUNBOOK.md) supersede the old live-job instructions.
-A single cumulative prior14/cap15 continuation is being prepared to reuse the
-completed days and process only the remaining890, with a6GiB kernel job limit.
-Original numerical criteria and old hash bytes stay unchanged; new hashes use
-a separate root and exact union verification. No new feature worker is launched
-yet. Full numerical/global-uniqueness admission remains pending. The30-minute
-monitor follows recovery; completed source and pilot monitors stay paused.
-Matched price/label/model evaluation remains a separate next decision.
+**September 22 full-panel continuation running:** the feature worker restarted at
+17:51:19 UTC from remotely verified source
+`c739b6f0958e23b90ff5038dd46c9356581369c3` in the dedicated Data continuation
+checkout. The new identity `eth-full-history-feature-panel-resume-20260922`
+consumes the single cumulative 15/15 allowance. It initially republishes the
+206 preserved source-day outputs, then processes only the remaining 890 dates
+from 2022-07-26. Actual kernel limits are 6 GiB RAM, 4 GiB high watermark,
+512 MiB swap and two CPUs; the 30-minute monitor follows this worker.
+[Continuation status](fullpanel_resume/STATUS.md) and
+[runbook](fullpanel_resume/RUNBOOK.md) bind exact process/source/receipt identity.
+Independent release review and 2,584 offline tests plus 97 subtests passed.
+The original reboot-interrupted run has a preserved failure-only terminal,
+206 checked source days and 205 graph days through July25. The responsible OOM
+process and peak remain unknown; other processes were running. Original
+numerical criteria and old hash bytes are unchanged; new hashes use a separate
+root and exact union verification. Full numerical admission remains pending.
+Completed source and pilot monitors stay paused. Matched price/label/model
+evaluation remains a separate next decision.
 
 **September 22 numerical pilot complete:** the fixed January 2–8, 2024 pilot
 passed the corrected independent check: all 17 cells/20 outputs complete,

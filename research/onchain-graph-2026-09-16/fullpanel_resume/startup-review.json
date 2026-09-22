@@ -1,0 +1,596 @@
+{
+  "cgroup_members": [
+    {
+      "affinity": [
+        0,
+        1
+      ],
+      "argv": [
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+        "-B",
+        "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume/research/onchain-graph-2026-09-16/fullpanel_resume/memory_guard.py",
+        "--child",
+        "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume/research/onchain-graph-2026-09-16/fullpanel_resume/resources/compute",
+        "--cpus",
+        "0,1",
+        "--lease",
+        "15.0",
+        "--",
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+        "-B",
+        "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume/research/onchain-graph-2026-09-16/fullpanel_resume/run.py",
+        "--source",
+        "c739b6f0958e23b90ff5038dd46c9356581369c3"
+      ],
+      "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-6c8905d1544d46efbf56c676221a8722.service",
+      "cwd": "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume",
+      "pid": 408887,
+      "ppid": 5095,
+      "start_ticks": 420726
+    },
+    {
+      "affinity": [
+        0,
+        1
+      ],
+      "argv": [
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+        "-B",
+        "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume/research/onchain-graph-2026-09-16/fullpanel_resume/run.py",
+        "--source",
+        "c739b6f0958e23b90ff5038dd46c9356581369c3"
+      ],
+      "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-6c8905d1544d46efbf56c676221a8722.service",
+      "cwd": "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume",
+      "pid": 408890,
+      "ppid": 408887,
+      "start_ticks": 420731
+    }
+  ],
+  "claim_budget": {
+    "cap": 15,
+    "consumed": 15,
+    "prior": 14
+  },
+  "claim_sha256": "ccb26c79ace449d1874ad8c5a07744f5542e37b724e74ad7cd72536120561202",
+  "claim_started_at": "2026-09-22T17:51:33.976460+00:00",
+  "contained_worker": {
+    "affinity": [
+      0,
+      1
+    ],
+    "argv": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+      "-B",
+      "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume/research/onchain-graph-2026-09-16/fullpanel_resume/run.py",
+      "--source",
+      "c739b6f0958e23b90ff5038dd46c9356581369c3"
+    ],
+    "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-6c8905d1544d46efbf56c676221a8722.service",
+    "cwd": "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume",
+    "pid": 408890,
+    "ppid": 408887,
+    "start_ticks": 420731
+  },
+  "current_memory_bytes": 502792192,
+  "filesystem_free_bytes": {
+    "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume": 43778744320,
+    "/home/malecada/master_thesis": 57158217728
+  },
+  "gate_sha256": "71a7b390dcfc4ee4ff8aaf5b6176ad2208247f1e66afde9577e3ce4dd4bd3ae9",
+  "guard_final_present": false,
+  "guard_peak_sampled_memory_current_bytes": 504078336,
+  "host_mem_available_bytes": 10472042496,
+  "input_files_verified": 2919,
+  "kernel_controls": {
+    "memory.high": "4294967296",
+    "memory.max": "6442450944",
+    "memory.swap.max": "536870912"
+  },
+  "kernel_memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "launcher": {
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "argv": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+      "-B",
+      "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume/research/onchain-graph-2026-09-16/fullpanel_resume/launch.py",
+      "--source",
+      "c739b6f0958e23b90ff5038dd46c9356581369c3"
+    ],
+    "cgroup": "0::/user.slice/user-1000.slice/user@1000.service/app.slice/app-org.chromium.Chromium-6485.scope",
+    "cwd": "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume",
+    "pid": 407768,
+    "ppid": 5095,
+    "start_ticks": 420327
+  },
+  "lease_age_seconds": 0.027833521000502515,
+  "live_guard": {
+    "boot_id": "6690623b-3299-42d4-8d7b-0847268fbe0c",
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-6c8905d1544d46efbf56c676221a8722.service",
+    "child_exit_code": null,
+    "command": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+      "-B",
+      "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume/research/onchain-graph-2026-09-16/fullpanel_resume/run.py",
+      "--source",
+      "c739b6f0958e23b90ff5038dd46c9356581369c3"
+    ],
+    "cpus": [
+      0,
+      1
+    ],
+    "cwd": "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume",
+    "elapsed_seconds": 277.5994141729998,
+    "elapsed_time_kill": false,
+    "host_mem_available_bytes": 10472042496,
+    "initial_memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "kernel_controls": {
+      "memory.high": "4294967296",
+      "memory.max": "6442450944",
+      "memory.swap.max": "536870912"
+    },
+    "lease_seconds": 15.0,
+    "limit_reason": null,
+    "memory_current_bytes": 502296576,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "memory_high_bytes": 4294967296,
+    "memory_max_bytes": 6442450944,
+    "memory_swap_max_bytes": 536870912,
+    "monitor_pid": 407768,
+    "monotonic_seconds": 4484.840029839,
+    "peak_sampled_memory_current_bytes": 504078336,
+    "phase": "running",
+    "receipt_dir": "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume/research/onchain-graph-2026-09-16/fullpanel_resume/resources/compute",
+    "reserve_bytes": 3221225472,
+    "retry": false,
+    "sample_seconds": 0.25,
+    "start_reserve_bytes": 9663676416,
+    "unit": "onchain-resume-6c8905d1544d46efbf56c676221a8722.service",
+    "unit_properties": {
+      "ActiveState": "active",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-6c8905d1544d46efbf56c676221a8722.service",
+      "ExecMainStatus": "0",
+      "Result": "success",
+      "SubState": "running"
+    },
+    "wait_seconds": 300.0
+  },
+  "matching_fullpanel_python_processes": [
+    {
+      "argv": [
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+        "-B",
+        "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume/research/onchain-graph-2026-09-16/fullpanel_resume/launch.py",
+        "--source",
+        "c739b6f0958e23b90ff5038dd46c9356581369c3"
+      ],
+      "pid": 407768
+    },
+    {
+      "argv": [
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+        "-B",
+        "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume/research/onchain-graph-2026-09-16/fullpanel_resume/run.py",
+        "--source",
+        "c739b6f0958e23b90ff5038dd46c9356581369c3"
+      ],
+      "pid": 408890
+    }
+  ],
+  "new_hash_receipt_file_count": 0,
+  "new_published_outputs": [],
+  "observed_at": "2026-09-22T17:56:00.971233+00:00",
+  "passed": true,
+  "qualification": "Point-in-time startup ownership/source/containment and immutable seed-byte verification only. Seed republication is not new source progress. No raw decode or recount, global hash-body scan, numerical full-panel admission, financial claim or OOM-cause attribution.",
+  "registered_cells": 2193,
+  "registered_outputs": 1099,
+  "root": "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume",
+  "runtime_files_verified": 6,
+  "schema_version": 1,
+  "scratch_dates": [],
+  "seed_artifacts_expected": 1417,
+  "seed_artifacts_present_and_byte_verified": 1417,
+  "seed_output_snapshot": {
+    "byte_identical": true,
+    "count": 70,
+    "first": "2022-01-01",
+    "last": "2022-03-11",
+    "records": [
+      {
+        "bytes": 126992,
+        "date": "2022-01-01",
+        "sha256": "8a103278ea620560b0cb22dedc0c8be4809cb47e46efeecbb9ee2c71e9b5b973"
+      },
+      {
+        "bytes": 257727,
+        "date": "2022-01-02",
+        "sha256": "d14e4b9c8e199b9a0f9d73131527b836f952581a838e95cc2e9cc9b9ea813990"
+      },
+      {
+        "bytes": 264474,
+        "date": "2022-01-03",
+        "sha256": "9aaa5504ceda3bdeb3fb0f126cdf84099dabd65177d4738ffebc6d8f1dfac118"
+      },
+      {
+        "bytes": 269566,
+        "date": "2022-01-04",
+        "sha256": "7dee18bf2c87c2bddf7a4e0dfea198e45e5775abd9e2ccc5b459c071cc8755a2"
+      },
+      {
+        "bytes": 272068,
+        "date": "2022-01-05",
+        "sha256": "d2af84ce257a57658d9db2fac8e1e8964fc70e3236a534268a4c890399fb80fa"
+      },
+      {
+        "bytes": 272258,
+        "date": "2022-01-06",
+        "sha256": "5959d7c10d0ee430a7ddc6eb035c1f0fdc737896e1ba511a2c0ff38e69af40e0"
+      },
+      {
+        "bytes": 267556,
+        "date": "2022-01-07",
+        "sha256": "a364c6254cd5f5cd86fdf3efcfab17084e8d9cd022f3f0e9cca60a08ca5d2a21"
+      },
+      {
+        "bytes": 269275,
+        "date": "2022-01-08",
+        "sha256": "52f3a1b7c4dc6083a7e3f1650b3657d30af059d8d00f3c3e467945b49d749ca4"
+      },
+      {
+        "bytes": 264279,
+        "date": "2022-01-09",
+        "sha256": "dd0da8ab2d27aea40b5dbf2bc9141319885bc2d9defdba47fd72e4a55a0f2285"
+      },
+      {
+        "bytes": 254561,
+        "date": "2022-01-10",
+        "sha256": "504a30ad2489402263e6b2d847701c7e50818e5da465eb9808b45dedd82e9876"
+      },
+      {
+        "bytes": 266188,
+        "date": "2022-01-11",
+        "sha256": "3266c27e359d53bb94a8500821a000a3185318e21c16566ea9bef0dced94e0ae"
+      },
+      {
+        "bytes": 273628,
+        "date": "2022-01-12",
+        "sha256": "a4c0a0a251260edfc2c344d82816fe03c29f201910b49bde0e1b72bc4fb176f1"
+      },
+      {
+        "bytes": 279584,
+        "date": "2022-01-13",
+        "sha256": "8a161d2c1f2305c5e96ccb42d2bdc3457728e00ee6fc57cd860272dc0e65d3fd"
+      },
+      {
+        "bytes": 272848,
+        "date": "2022-01-14",
+        "sha256": "df657cba5da0145ee7b3076dfab801b2d6a91504642ec70569468cfc84f7df4f"
+      },
+      {
+        "bytes": 271859,
+        "date": "2022-01-15",
+        "sha256": "9bf7ce907582133734697703cd6f82ac87d1bc2c21f5768c7e6ef49595ff4311"
+      },
+      {
+        "bytes": 269912,
+        "date": "2022-01-16",
+        "sha256": "3f32ca3122dadfb2286402a0888a37a536fa22a42c2c90e7b53174eb630652a7"
+      },
+      {
+        "bytes": 269865,
+        "date": "2022-01-17",
+        "sha256": "e1700dfa12e68ec9f44c13e646debcdbe4ab975e0a36f5eeb978b227f6360f9c"
+      },
+      {
+        "bytes": 266028,
+        "date": "2022-01-18",
+        "sha256": "9edd4aee1ce81559666a77b0e57f5ef2419e0f28428711206392cb97a51d7f54"
+      },
+      {
+        "bytes": 270954,
+        "date": "2022-01-19",
+        "sha256": "77fb3f2a502125afdbdcf737f61ad436b5f07f0c447efa297bdbdefe28b640ed"
+      },
+      {
+        "bytes": 268560,
+        "date": "2022-01-20",
+        "sha256": "59458615a5af42c73e4d6cc4b1839053972f557a362f262e92476b53993bdce0"
+      },
+      {
+        "bytes": 264143,
+        "date": "2022-01-21",
+        "sha256": "182f909779666e2f26a3dc57fe7052983205ef9cf804a93b2eceee44c0a834c1"
+      },
+      {
+        "bytes": 264362,
+        "date": "2022-01-22",
+        "sha256": "c6b2ee502a8f43ff6eb8c87d1d07b213c42d2b5401501e9c6658b03749859b96"
+      },
+      {
+        "bytes": 260845,
+        "date": "2022-01-23",
+        "sha256": "71081eddb3b55a6bb0f655a1a88188651e7a614fb53a1d97c6f8e96f96300db5"
+      },
+      {
+        "bytes": 258743,
+        "date": "2022-01-24",
+        "sha256": "d2fd5948bc5ab6de774479abc526396260028fe3b153e485184ea734274bc820"
+      },
+      {
+        "bytes": 265042,
+        "date": "2022-01-25",
+        "sha256": "ab97dc83872df0473a0f8b463fc3a0e21d4fcadda257b2339c539181a5cc045f"
+      },
+      {
+        "bytes": 260340,
+        "date": "2022-01-26",
+        "sha256": "b235a90c50110d9380d2b162c42ac9461d17aa5353ecaad0cbb7e23672dab10d"
+      },
+      {
+        "bytes": 258478,
+        "date": "2022-01-27",
+        "sha256": "48636879a0703c9eb624ad1cf3eebd96b1672e964ac3cf70a5ca1d05242f247f"
+      },
+      {
+        "bytes": 260149,
+        "date": "2022-01-28",
+        "sha256": "41dfc12555e28dca3c5e38179e045e9b346e7f283a7ff59a5d3eafb9037af295"
+      },
+      {
+        "bytes": 266121,
+        "date": "2022-01-29",
+        "sha256": "e147f6a05a752d36fec0c46a05ef21cf0a813571dfe2806fafa7216069efa95e"
+      },
+      {
+        "bytes": 271056,
+        "date": "2022-01-30",
+        "sha256": "82a3850a8f7ae46d98f60044acfa4a75781f6ce322b8151ec2ee510276d961fc"
+      },
+      {
+        "bytes": 271985,
+        "date": "2022-01-31",
+        "sha256": "2127381532be0d49d38ba48c5bad6889e07c5c29b74592bd129b8d4686d74a84"
+      },
+      {
+        "bytes": 268977,
+        "date": "2022-02-01",
+        "sha256": "bd90a08faaf4c5e6e38e917928b5f8b0ed38d41508ffe99d1f70d3bcfc238fa8"
+      },
+      {
+        "bytes": 261539,
+        "date": "2022-02-02",
+        "sha256": "56f496de1fcbe1277c42677e1edd8ebff72cb7768a2e75cc7d392e7f3fbf7ea5"
+      },
+      {
+        "bytes": 262595,
+        "date": "2022-02-03",
+        "sha256": "845519025a70f3ed285bea75f24522de1eef2efe3422ec9abd92c3974100f9d0"
+      },
+      {
+        "bytes": 257501,
+        "date": "2022-02-04",
+        "sha256": "fb4d01ae0d9283f3a0ab5d644c30c1e98f3e8a362db73d268578e6757f569185"
+      },
+      {
+        "bytes": 275863,
+        "date": "2022-02-05",
+        "sha256": "a90c0b00d6e574ffc1eb647eef70e5d250c166203029cf73e5efef1bbe1ce1c1"
+      },
+      {
+        "bytes": 270812,
+        "date": "2022-02-06",
+        "sha256": "42573f3cdecbce437d31278a5815d73687afb08aeafe8b0a77517e111ac901a8"
+      },
+      {
+        "bytes": 266288,
+        "date": "2022-02-07",
+        "sha256": "2e90698da8824c7801566147bdc59d91268251786e27b2970b8b788ff2bf00fb"
+      },
+      {
+        "bytes": 266505,
+        "date": "2022-02-08",
+        "sha256": "39f1dabf26eb25846a21ce55e735128f49faaedb029ec1bebbdc19b2d333cbe3"
+      },
+      {
+        "bytes": 271981,
+        "date": "2022-02-09",
+        "sha256": "fe91ad4d3aa1ce7a6191f45f32bc9eb98c608315e5c84eccd90fa5d0a5497a94"
+      },
+      {
+        "bytes": 269385,
+        "date": "2022-02-10",
+        "sha256": "3dbf0591d0d77cedec232c28738085ccaf1b36665d4b72fcedd0bfb360d373a7"
+      },
+      {
+        "bytes": 268953,
+        "date": "2022-02-11",
+        "sha256": "40ce8c931e5333d9a581993993626c52a67c3b05322556ec8fede0d880c95d0f"
+      },
+      {
+        "bytes": 260926,
+        "date": "2022-02-12",
+        "sha256": "47431b54ccc046703dc8a26645823f5613eb23a75a7a53fa68342eb5bb2b70f9"
+      },
+      {
+        "bytes": 266386,
+        "date": "2022-02-13",
+        "sha256": "cf365290fd0ff50fcf980eddd516ba32453edca9be75557d2f08037e40241f20"
+      },
+      {
+        "bytes": 262079,
+        "date": "2022-02-14",
+        "sha256": "dbae2cf5c41b990b56eeeb35c9897504d2cba3461f862abf1bffc629c163598f"
+      },
+      {
+        "bytes": 264586,
+        "date": "2022-02-15",
+        "sha256": "ca31b4f035e04d30aaae1f3fdb5e7d8b5e74784d5181e6f3b83172e639abe2d4"
+      },
+      {
+        "bytes": 261975,
+        "date": "2022-02-16",
+        "sha256": "1b67056233a65fcfe0b6847f0a6e22bf39afb215aa3c9ec8d6825b877c661deb"
+      },
+      {
+        "bytes": 260243,
+        "date": "2022-02-17",
+        "sha256": "f2b2335a79b4dc82b687c752cd32c1583a91f969dc7210530e4c5424ce2162a0"
+      },
+      {
+        "bytes": 252850,
+        "date": "2022-02-18",
+        "sha256": "1c9407469aa6533f54cdd6857d91c41337956c416d8695acc24e6de76d815592"
+      },
+      {
+        "bytes": 256500,
+        "date": "2022-02-19",
+        "sha256": "428edcfa47178e7f705771e122459a143d9cd63e30dacf40ee196d112f71ad00"
+      },
+      {
+        "bytes": 256999,
+        "date": "2022-02-20",
+        "sha256": "4f6d5828f736edb088eb0c556e2ca6e6027b37fdf47eaab685b407ca68e2c595"
+      },
+      {
+        "bytes": 261549,
+        "date": "2022-02-21",
+        "sha256": "5e91c06cce8d5721422dda08e4365c888a3166d547efd288baf9e5f3f0dd0863"
+      },
+      {
+        "bytes": 252335,
+        "date": "2022-02-22",
+        "sha256": "ea14d71646dd265b6370f36d9ad3754f4be039d38c5c8180eb0569099b5c5200"
+      },
+      {
+        "bytes": 263802,
+        "date": "2022-02-23",
+        "sha256": "2f8581a88c096f7b9310feb2bd92bacb3349091c621b63571ba1c0d81a3e1bf2"
+      },
+      {
+        "bytes": 264201,
+        "date": "2022-02-24",
+        "sha256": "f4e1be4bd78576bd05e1113359dc9befd07d3101a98ee3b71c5d43680a879f9a"
+      },
+      {
+        "bytes": 263987,
+        "date": "2022-02-25",
+        "sha256": "fdb26a9b3f18abd563212354a0dd957f5785d498f0ad18a330e986eb430004a4"
+      },
+      {
+        "bytes": 270402,
+        "date": "2022-02-26",
+        "sha256": "ebb555b0d801385a15530e31aa7c55f9a40bcdf19fb5283cd91dd9c6c5808a34"
+      },
+      {
+        "bytes": 256396,
+        "date": "2022-02-27",
+        "sha256": "82ab1b9fcf879dba2b8fb338bb700cfd24af90e7037f6c10c79af0744a40eb37"
+      },
+      {
+        "bytes": 258905,
+        "date": "2022-02-28",
+        "sha256": "dbc3209e14dda53e0b2bbfdfca2b74ddd31a67d0c2cd689282204bfa9d202f1a"
+      },
+      {
+        "bytes": 264911,
+        "date": "2022-03-01",
+        "sha256": "06cc58e4f1d7caefc7a0d904c39d44f9e1fad800452abb653911aa66f6ac298e"
+      },
+      {
+        "bytes": 270779,
+        "date": "2022-03-02",
+        "sha256": "bb0651259c2845e6b3328402ea7e294056b9a1dcaeb5693af1e4470c8a29d1a8"
+      },
+      {
+        "bytes": 270094,
+        "date": "2022-03-03",
+        "sha256": "478aefa35c87dad185161bba73862695a171ac8bc5b39f894e97c8e3bd89a6e8"
+      },
+      {
+        "bytes": 268213,
+        "date": "2022-03-04",
+        "sha256": "dc568a9ee1f06a5534adb5b3e4029a6630c6ae72f0336b2105158643cc093e2e"
+      },
+      {
+        "bytes": 260695,
+        "date": "2022-03-05",
+        "sha256": "51fe2ce52776a762a48ec34bdf80a4c00cec67be6aa9145d67c088c95c531ece"
+      },
+      {
+        "bytes": 263782,
+        "date": "2022-03-06",
+        "sha256": "21b2c6f1695955d4f1380e219b7bff4fff17f6ce257f0358af6e2b887dbf7aa3"
+      },
+      {
+        "bytes": 267677,
+        "date": "2022-03-07",
+        "sha256": "353f8aa77f7a074ed346103e0b2abebbb3f4424a59a16b767ba908de0d134787"
+      },
+      {
+        "bytes": 265981,
+        "date": "2022-03-08",
+        "sha256": "3db28a55c8f5cd6d0ae65ebe46f074eeaf307935aabeda9078194f39efb28e51"
+      },
+      {
+        "bytes": 263919,
+        "date": "2022-03-09",
+        "sha256": "6440071d6c4038666269679160f0d369d0c6791619126561a34b2a3a25d1b209"
+      },
+      {
+        "bytes": 263731,
+        "date": "2022-03-10",
+        "sha256": "7591ea1254cb8aa0c8f007c9c99f01160869986ea009b0ff90ef946ace3eae8f"
+      },
+      {
+        "bytes": 262996,
+        "date": "2022-03-11",
+        "sha256": "e36b35f2b8dd8d6d893758d69e2711c2f75dde9a402bd2e4945da6f66469fcdc"
+      }
+    ]
+  },
+  "source": "c739b6f0958e23b90ff5038dd46c9356581369c3",
+  "source_files_verified": 68,
+  "status": "running_seed_republication",
+  "terminal_present": false,
+  "unit_properties": {
+    "ActiveState": "active",
+    "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-6c8905d1544d46efbf56c676221a8722.service",
+    "ExecMainPID": "408887",
+    "Result": "success",
+    "SubState": "running"
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "copied_immutable_files": {
+    "research/onchain-graph-2026-09-16/fullpanel_resume/admission-observation.json": {
+      "bytes": 847,
+      "sha256": "0a63794521145f9588c331b67c53aaac47bdf8a618febf0e85ec6b08429c38e6"
+    },
+    "research/onchain-graph-2026-09-16/fullpanel_resume/launch-observation.json": {
+      "bytes": 1033,
+      "sha256": "3f8e99588a86c6f1b85d2c185ac199a6d6c46cf2a7086cf646601621b8d9e7c6"
+    },
+    "research_runs/eth-full-history-feature-panel-resume-20260922/claim.json": {
+      "bytes": 1734996,
+      "sha256": "ccb26c79ace449d1874ad8c5a07744f5542e37b724e74ad7cd72536120561202"
+    }
+  },
+  "live_snapshot": {
+    "boot_id": "6690623b-3299-42d4-8d7b-0847268fbe0c",
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-6c8905d1544d46efbf56c676221a8722.service",
+    "child_exit_code": null,
+    "command": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+      "-B",
+      "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume/research/onchain-graph-2026-09-16/fullpanel_resume/run.py",
+      "--source",
+      "c739b6f0958e23b90ff5038dd46c9356581369c3"
+    ],
+    "cpus": [
+      0,
+      1
+    ],
+    "cwd": "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume",
+    "elapsed_seconds": 86.32222239099974,
+    "elapsed_time_kill": false,
+    "host_mem_available_bytes": 10519179264,
+    "initial_memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "kernel_controls": {
+      "memory.high": "4294967296",
+      "memory.max": "6442450944",
+      "memory.swap.max": "536870912"
+    },
+    "lease_seconds": 15.0,
+    "limit_reason": null,
+    "memory_current_bytes": 466735104,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "memory_high_bytes": 4294967296,
+    "memory_max_bytes": 6442450944,
+    "memory_swap_max_bytes": 536870912,
+    "monitor_pid": 407768,
+    "monotonic_seconds": 4293.562838207,
+    "peak_sampled_memory_current_bytes": 482844672,
+    "phase": "running",
+    "receipt_dir": "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume/research/onchain-graph-2026-09-16/fullpanel_resume/resources/compute",
+    "reserve_bytes": 3221225472,
+    "retry": false,
+    "sample_seconds": 0.25,
+    "start_reserve_bytes": 9663676416,
+    "unit": "onchain-resume-6c8905d1544d46efbf56c676221a8722.service",
+    "unit_properties": {
+      "ActiveState": "active",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-6c8905d1544d46efbf56c676221a8722.service",
+      "ExecMainStatus": "0",
+      "Result": "success",
+      "SubState": "running"
+    },
+    "wait_seconds": 300.0
+  },
+  "observed_at": "2026-09-22T17:52:49.572563+00:00",
+  "qualification": "Startup snapshot only; live resource counters are not terminal success. Published seed outputs are metadata republication, not new source processing.",
+  "source": "c739b6f0958e23b90ff5038dd46c9356581369c3"
+}
