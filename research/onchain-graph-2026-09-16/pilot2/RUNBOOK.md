@@ -77,3 +77,12 @@ Monitor identity: `monitor-seven-day-ethereum-graph-pilot`, created as a 30-minu
 thread heartbeat on September 22, 2026. The older source-download heartbeat is
 still paused. If this foreground task closes the pilot before a heartbeat runs,
 pause the numerical monitor immediately after closure.
+
+## Superseding review status, September 22
+
+Compute completed all17cells/20outputs. The original independent check stopped
+on an activity dictionary schema mismatch and is terminal, with its log/resource
+preserved. Do not rerun original --review. ACTIVITY_CHECK_CORRECTION.md records
+the bounded separately committed correction; its contract/launcher use new
+independent-report-v2.json and independent-resource-v2.json paths. The active
+foreground task owns preparation/launch; never start a duplicate on a heartbeat.
