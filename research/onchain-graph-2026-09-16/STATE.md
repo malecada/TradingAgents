@@ -1,30 +1,21 @@
-> September22 18:28UTC monitor correction: the continuation stopped at18:05:58UTC.
-> systemd-oomd killed its unit for sustained ancestor memory pressure. All206
-> source-day outputs remain preserved; no new source day completed. The4GiB
-> memory.high throttle likely contributed; kernelOOM counters remained zero.
-> Recovery preparation is under fullpanel_resume2; no worker currently runs.
-> The original reboot cause remains undetermined.
-
 # Ethereum graph feasibility checkpoint
 
-**September 22 full-panel continuation running:** the feature worker restarted at
-17:51:19 UTC from remotely verified source
-`c739b6f0958e23b90ff5038dd46c9356581369c3` in the dedicated Data continuation
-checkout. The new identity `eth-full-history-feature-panel-resume-20260922`
-consumes the single cumulative 15/15 allowance. It initially republishes the
-206 preserved source-day outputs, then processes only the remaining 890 dates
-from 2022-07-26. Actual kernel limits are 6 GiB RAM, 4 GiB high watermark,
-512 MiB swap and two CPUs; the 30-minute monitor follows this worker.
-[Continuation status](fullpanel_resume/STATUS.md) and
-[runbook](fullpanel_resume/RUNBOOK.md) bind exact process/source/receipt identity.
-Independent release review and 2,584 offline tests plus 97 subtests passed.
-The original reboot-interrupted run has a preserved failure-only terminal,
-206 checked source days and 205 graph days through July25. The responsible OOM
-process and peak remain unknown; other processes were running. Original
-numerical criteria and old hash bytes are unchanged; new hashes use a separate
-root and exact union verification. Full numerical admission remains pending.
-Completed source and pilot monitors stay paused. Matched price/label/model
-evaluation remains a separate next decision.
+**September22 second continuation running:** the successor started19:02:19 UTC
+from remotely verified source `87b6ac39d12a4f9a2ac1832f34f68647c52c53c8` in the
+fixed Data resume2 checkout. Run `eth-full-history-feature-panel-resume2-20260922`
+consumes cumulative16/16. It restores206 preserved source-day outputs before
+continuing890 remaining dates fromJuly26. Actual memory.max and memory.high are
+both6 GiB; other guards and all numerical criteria are unchanged. The lower
+watermark was raised after systemd-oomd killed the previous continuation for
+sustained ancestor memory pressure. That failed attempt added no source day;
+its terminal, partials and independent failure review are preserved. The earlier
+reboot cause remains unknown. Startup restoration does not yet prove the
+previous counting failure resolved.
+[Current status](fullpanel_resume2/STATUS.md) and [runbook](fullpanel_resume2/RUNBOOK.md)
+bind exact process, source and review instructions. Independent release review
+and2,682 offline tests plus97 subtests passed. The30-minute monitor is active;
+old download/pilot monitors remain paused. Full numerical/global-union admission
+is pending; matched price/model evaluation remains a separate next decision.
 
 **September 22 numerical pilot complete:** the fixed January 2–8, 2024 pilot
 passed the corrected independent check: all 17 cells/20 outputs complete,

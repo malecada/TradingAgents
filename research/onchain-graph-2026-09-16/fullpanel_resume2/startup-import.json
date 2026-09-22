@@ -1,0 +1,103 @@
+{
+  "copied_immutable_files": {
+    "research/onchain-graph-2026-09-16/fullpanel_resume2/admission-observation.json": {
+      "bytes": 707,
+      "sha256": "e5bd5ccb664358163630b45c4dad57d960136e690d297170150ecb4e9ddfb57f"
+    },
+    "research/onchain-graph-2026-09-16/fullpanel_resume2/launch-observation.json": {
+      "bytes": 1038,
+      "sha256": "1d71bb65ae92979d07149963a14ab5ce02cd6b4fc1b6a6da4c7737eba777311d"
+    },
+    "research_runs/eth-full-history-feature-panel-resume2-20260922/claim.json": {
+      "bytes": 1743142,
+      "sha256": "ee911f1282e5db2cfc0f8008d73af66d0608946e817897e12e68d7a7b4a2edcf"
+    }
+  },
+  "live_snapshot": {
+    "boot_id": "6690623b-3299-42d4-8d7b-0847268fbe0c",
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-1c93e59484014df7ba31aaa38a09de49.service",
+    "child_exit_code": null,
+    "command": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+      "-B",
+      "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume2/research/onchain-graph-2026-09-16/fullpanel_resume2/run.py",
+      "--source",
+      "87b6ac39d12a4f9a2ac1832f34f68647c52c53c8"
+    ],
+    "cpus": [
+      0,
+      1
+    ],
+    "cwd": "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume2",
+    "elapsed_seconds": 53.015847992999625,
+    "elapsed_time_kill": false,
+    "host_mem_available_bytes": 10207547392,
+    "initial_memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "kernel_controls": {
+      "memory.high": "6442450944",
+      "memory.max": "6442450944",
+      "memory.swap.max": "536870912"
+    },
+    "lease_seconds": 15.0,
+    "limit_reason": null,
+    "memory_current_bytes": 492347392,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "memory_high_bytes": 6442450944,
+    "memory_max_bytes": 6442450944,
+    "memory_swap_max_bytes": 536870912,
+    "monitor_pid": 1037781,
+    "monotonic_seconds": 8520.538674359,
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 86654976,
+        "file_bytes": 396533760,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-1c93e59484014df7ba31aaa38a09de49.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=470\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=470",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 4275408896,
+        "file_bytes": 9203597312,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.00 avg60=2.47 avg300=2.73 total=37301037\nfull avg10=0.00 avg60=2.35 avg300=2.59 total=36235753",
+        "swap_current_bytes": 2080980992,
+        "unavailable": {}
+      }
+    },
+    "peak_sampled_memory_current_bytes": 496562176,
+    "phase": "running",
+    "receipt_dir": "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume2/research/onchain-graph-2026-09-16/fullpanel_resume2/resources/compute",
+    "reserve_bytes": 3221225472,
+    "retry": false,
+    "sample_seconds": 0.25,
+    "start_reserve_bytes": 9663676416,
+    "unit": "onchain-resume-1c93e59484014df7ba31aaa38a09de49.service",
+    "unit_properties": {
+      "ActiveState": "active",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-1c93e59484014df7ba31aaa38a09de49.service",
+      "ExecMainStatus": "0",
+      "Result": "success",
+      "SubState": "running"
+    },
+    "wait_seconds": 300.0
+  },
+  "observed_at": "2026-09-22T19:03:16.601758+00:00",
+  "qualification": "Live startup snapshot, not terminal success or proof the previous counting failure is resolved.",
+  "source": "87b6ac39d12a4f9a2ac1832f34f68647c52c53c8"
+}
