@@ -1,5 +1,14 @@
 # Ethereum graph feasibility checkpoint
 
+**September 22 authorized next step:** preparation of the fixed January 2–8,
+2024 offline numerical pilot is underway. [Pilot status](pilot2/STATUS.md) records
+the new identity, exact retained-input mapping, independent checks and resource
+bounds. No new data acquisition, full-panel run or price/model evaluation is
+authorized by this step. The download monitor remains paused. Twelve historical
+claims and the original failed pilot remain immutable; the new one-use numerical
+continuation requires committed admission and independent review before outcomes.
+
+
 **Source acquisition complete, September 18:** the final continuation closed at
 11:54:11 UTC (13:54 Prague time) with all 446 remaining dates complete and zero
 unavailable cells. The bulk cohort now has **1,084 of 1,084 dates complete**;
