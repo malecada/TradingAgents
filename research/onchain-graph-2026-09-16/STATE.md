@@ -1,5 +1,13 @@
 # Ethereum graph feasibility checkpoint
 
+**September 22 full-panel preparation authorized:** step 2 is the complete
+2022–2024 compact source/graph panel, with 1,096 dates and two declared
+boundary-unavailable graph rows. The [charter](fullpanel/CHARTER.md),
+[status](fullpanel/STATUS.md) and [runbook](fullpanel/RUNBOOK.md) govern the new
+single cumulative 14/14 allowance. No full-panel claim has started in this
+preparation checkpoint. All previous terminal results below remain preserved.
+Matched price/label/model evaluation remains a separate next decision.
+
 **September 22 numerical pilot complete:** the fixed January 2–8, 2024 pilot
 passed the corrected independent check: all 17 cells/20 outputs complete,
 8,626,480 unique transactions across eight source/context days, all seven motif
