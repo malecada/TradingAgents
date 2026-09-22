@@ -10,7 +10,7 @@ HERE=ROOT/'research/onchain-graph-2026-09-16/pilot2'
 spec=importlib.util.spec_from_file_location('pilot2_policy_test',HERE/'admission.py');policy=importlib.util.module_from_spec(spec);spec.loader.exec_module(policy)
 
 def fixture():
-    exp=dict(family='new',parent='eth-seven-day-pilot-20260916',cells=policy.CELLS,outputs=policy.OUTPUTS,inputs={})
+    exp=dict(family='new',parent=None,continuation_of='eth-seven-day-pilot-20260916',cells=policy.CELLS,outputs=policy.OUTPUTS,inputs={})
     gate=dict(experiments={policy.EXPERIMENT:exp},families={'new':dict(prior_attempts=12,attempt_budget=13,mechanism_id='ethereum-seven-day-offline-numerical-continuation')})
     cert=dict(schema_version=1,target_experiment=policy.EXPERIMENT,prior_claims=12,additional_claims=1,cumulative_cap=13,network_allowed=False,prices_or_models_allowed=False,automatic_restart=False,target_contract_sha256=policy.contract(exp))
     failed={'eth-temporal-motifs-20260916','eth-seven-day-pilot-20260916'}
@@ -55,3 +55,25 @@ def test_orchestration_relative_paths_and_missing_coverage(tmp_path,monkeypatch,
     assert run.outputs['cross-day-integrity.json']['status']==('unavailable' if missing else 'complete')
     assert sum(c['status']=='complete' for c in cells if c['id'].startswith('motifs-'))==(0 if missing else 7)
     assert sum(a['--mode']=='count' for a in calls)==(0 if missing else 7)
+
+@pytest.mark.parametrize('parent,continuation', [('eth-seven-day-pilot-20260916','eth-seven-day-pilot-20260916'),(None,None)])
+def test_cross_family_continuation_requires_explicit_history_not_lifecycle_parent(parent,continuation):
+    args=fixture();exp=args[0]['experiments'][policy.EXPERIMENT]
+    exp.update(parent=parent,continuation_of=continuation)
+    args[1]['target_contract_sha256']=policy.contract(exp)
+    with pytest.raises(ValueError,match='pilot denominator differs'):policy.validate(*args)
+
+def test_cross_family_reference_with_standard_committed_admission(tmp_path):
+    spec=importlib.util.spec_from_file_location('pilot2_lifecycle_fixture',ROOT/'tests/research/test_lifecycle.py')
+    fixtures=importlib.util.module_from_spec(spec);spec.loader.exec_module(fixtures)
+    root,gate,_=fixtures.registered.__wrapped__(tmp_path)
+    exp=gate['experiments']['example-a']
+    exp.update(parent='eth-seven-day-pilot-20260916')
+    source=fixtures.commit(root,gate)
+    with pytest.raises(ValueError,match='invalid parent ancestry'):
+        policy.admit(root=root,registration='registration.json',experiment='example-a',source=source)
+    exp.update(parent=None,continuation_of='eth-seven-day-pilot-20260916')
+    source=fixtures.commit(root,gate)
+    admitted=policy.admit(root=root,registration='registration.json',experiment='example-a',source=source)
+    assert admitted.experiment['continuation_of']=='eth-seven-day-pilot-20260916'
+    assert not (root/'research_runs').exists()

@@ -32,7 +32,7 @@ def validate(gate,cert,history,plan,approval,old_pilot,old_source):
     if set(history['metadata_hashes'])!=paths:raise ValueError('history receipt denominator differs')
     old=old_pilot['families']['eth-seven-day-pilot'];src=old_source['families']['eth-graph-source-resume3']
     if old['prior_attempts']!=5 or old['attempt_budget']!=6 or src['prior_attempts']!=11 or src['attempt_budget']!=12:raise ValueError('old budgets changed')
-    if exp['parent']!='eth-seven-day-pilot-20260916' or exp['cells']!=CELLS or exp['outputs']!=OUTPUTS:raise ValueError('pilot denominator differs')
+    if exp['parent'] is not None or exp.get('continuation_of')!='eth-seven-day-pilot-20260916' or exp['cells']!=CELLS or exp['outputs']!=OUTPUTS:raise ValueError('pilot denominator differs')
     if plan['dates']!=DATES or plan['network_allowed'] is not False or set(plan['captures'])!={f'2024-01-{i:02d}' for i in range(2,10)}:raise ValueError('fixed offline window differs')
     for k,v in {'max_requests':0,'max_total_bytes':0,'max_derived_bytes':8*2**30,'min_free_bytes':20*2**30}.items():
         if type(plan['limits'][k]) is not int or plan['limits'][k]!=v:raise ValueError('resource policy differs')

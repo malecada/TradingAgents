@@ -25,7 +25,8 @@
   "experiments": {
     "eth-seven-day-offline-pilot-20260922": {
       "family": "eth-seven-day-offline-pilot",
-      "parent": "eth-seven-day-pilot-20260916",
+      "parent": null,
+      "continuation_of": "eth-seven-day-pilot-20260916",
       "question": "Can the fixed Jan2\u20138 2024 numerical and cross-midnight pilot complete offline from preserved captures under8GiB, with independent raw reconstruction and retained failed lineage?",
       "charter": {
         "path": "research/onchain-graph-2026-09-16/pilot2/CHARTER.md",
@@ -54,7 +55,7 @@
         "research/onchain-graph-2026-09-16/pilot/numeric.py": "3343a8fb9fe77b71cfdb35ec6113d0eb7c4b24e18a42436bc0a277f277bdd11f",
         "research/onchain-graph-2026-09-16/pilot/run.py": "3aa24d9a9e15fcfa4093f75e9162b313093b2866d8bf782fa3ef41161d058659",
         "research/onchain-graph-2026-09-16/pilot/storage.py": "bb7fedc103949d58a7ff27665e102126f5784f40f76f0794eae4fb056a5dd086",
-        "research/onchain-graph-2026-09-16/pilot2/admission.py": "2278c86d2f002bda16f29e773dd0b55d5adc816d3e42024e3c569eea037ef8ab",
+        "research/onchain-graph-2026-09-16/pilot2/admission.py": "919725ed6500e05f0f51c675f63e8b49ba4f1a48f19aa98f3e8c6d1fd5d5b9c4",
         "research/onchain-graph-2026-09-16/pilot2/check_independent.py": "3809fbe4b0b7605c265076b7b41466b9b164df79f233eeec0d2d0c1a465735ac",
         "research/onchain-graph-2026-09-16/pilot2/day.py": "523c6e1b115bebda7028997cdd5825139479620b893e0ee83d06f3b9a845d356",
         "research/onchain-graph-2026-09-16/pilot2/launch.py": "f66d6d0fe26858b64189c5dd8e0b4feaa3425bb3d87e82f5b1e9c7be1e1567b6",
@@ -68,7 +69,7 @@
         "tests/research/test_onchain_panel_boundary.py": "6cebbb3b285bdc2073bee98106e09358869517fbc7fe135578bbc92d9c9380b0",
         "tests/research/test_onchain_pilot2_day.py": "e61eb31a82d39629e1ee462767f4830e064d21958b18b083198214b4ecb3f566",
         "tests/research/test_onchain_pilot2_independent.py": "584be5717f43f6380afbaea3fe05bb783632cf432410fde6c9d5a6b1e72f7343",
-        "tests/research/test_onchain_pilot2_policy.py": "de3ac9d1c82aa15c05e69b28a3ee832d7b17f4a5e1b73b61c846816cd3a79219",
+        "tests/research/test_onchain_pilot2_policy.py": "7d994668f23c22cf3801833b4a92dbfaf281147b35b5d8e2a6e496986115a65f",
         "tests/research/test_onchain_pilot_day.py": "9e97e4ca04bb0e2cf0f1e4ad7a7610ee5e7294694f3f32c5e68dd4e3e87c07fb",
         "tests/research/test_onchain_pilot_numeric.py": "f277b43e4d9a3234fe617d2c49ca6aa9fb01aa75c7dfbf579690a822cab64f50",
         "tests/research/test_onchain_pilot_run.py": "66cc3d82f20d81d5d2b6c843fa2093f5c63f318d0257669752ce10aa03e4ae2e",
@@ -882,22 +883,22 @@
         },
         "approval": {
           "path": "research/onchain-graph-2026-09-16/pilot2/APPROVAL.json",
-          "sha256": "184b7ad27a975135c17f1c4fcebe54466c551cf67cbd9a8b14dfa579550f66b1",
+          "sha256": "9763a453ed64946dccfe685de904057e03096d744cf094e2347742785bbbe1db",
           "dataset": "eth-history"
         },
         "review": {
           "path": "research/onchain-graph-2026-09-16/pilot2/PRE_EXECUTION_REVIEW.md",
-          "sha256": "bc5f2095072f5fc22fa0d15bf4f66c4f82e8342145e2200ea103a4a5b8b93828",
+          "sha256": "50d36bfa60a1fcf9589fe6d048e209864c12c53136db11cade411de72d73c32b",
           "dataset": "eth-history"
         },
         "verification": {
           "path": "research/onchain-graph-2026-09-16/pilot2/verification.json",
-          "sha256": "2dd6fa90891f0e2082b623f9e5a8b1aca38a7803a65a5b33a666467b2c58faec",
+          "sha256": "be9256d5f5a1688fc0621e5bacfa00bc91a26d89fd2ef01551676421846bbd54",
           "dataset": "eth-history"
         },
         "amendment": {
           "path": "research/onchain-graph-2026-09-16/pilot2/amendment.json",
-          "sha256": "24972bab969eb0d469a210ca0e749b1f6e6a64c764b725a7239a834dfac5b5a2",
+          "sha256": "eed2e2a38a3b66cc94cc7528d905a9ddb14d3f240ed9080ec54a0248964cc078",
           "dataset": "eth-history"
         }
       },

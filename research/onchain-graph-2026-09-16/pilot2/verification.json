@@ -5,6 +5,11 @@
   "summary": "2311 passed, 97 subtests passed in 1128.17s (0:18:48)",
   "log_path": "research/onchain-graph-2026-09-16/pilot2/offline-tests.log",
   "log_sha256": "aa652d4b66396b88574819e3183f797ec838df5cd245bd79d6b07c132290b31a",
-  "focused_final_tests_passed": 35,
-  "qualification": "Final focused adapter, policy and independent-checker synthetic tests passed in the independent pre-execution review. No empirical input decoding in these checks."
+  "focused_final_tests_passed": 38,
+  "qualification": "Broad named offline suite passed before the registration-parent correction. Final focused38 include a synthetic committed standard-admission regression for cross-family continuation. No empirical decoding. Real committed admission remains required before claim.",
+  "focused_command": ".venv/bin/python -B -m pytest -q tests/research/test_onchain_pilot2_day.py tests/research/test_onchain_pilot2_policy.py tests/research/test_onchain_pilot2_independent.py",
+  "focused_exit_code": 0,
+  "focused_summary": "38 passed in 3.53s",
+  "focused_log_sha256": "0774006a48f69b7fdc9870f948d5b64abd1effa0169c3516e2aab9a4d6f7fe89",
+  "focused_log_path": "research/onchain-graph-2026-09-16/pilot2/focused-tests.log"
 }

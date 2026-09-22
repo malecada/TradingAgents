@@ -2,7 +2,8 @@
 
 Decision: approve the single registered offline engineering attempt
 `eth-seven-day-offline-pilot-20260922`, after the normal committed-source,
-final hash-binding, named offline verification and remote-source checks.
+final hash-binding, named offline verification, actual committed admission and
+remote-source checks.
 This review does not report empirical numerical success. No real graph rows
 were decoded, no motif experiment was executed and no ledger was written during
 review. The repository research-governance contract governs this distinction.
@@ -40,6 +41,19 @@ were also brought into the same phase schema, and the independent review command
 now carries the expected source identity. The checked final source includes
 these corrections; no real retry was needed.
 
+The first committed read-only admission subsequently rejected the gate before
+claim creation with `ValueError: invalid parent ancestry`. The standard lifecycle
+requires `parent` to resolve inside the same gate and family; the old pilot is a
+separate imported family. The corrected registration uses `parent: null` and
+`continuation_of: eth-seven-day-pilot-20260916`. The custom policy requires both
+exactly, while still requiring all twelve ancestors and the unchanged cumulative
+and original family caps. This fixes the lifecycle interface without resetting
+exposure or granting another attempt. The rejected commit and diagnosis remain
+in `admission-rejection.json`; no empirical inputs were decoded and no claim was
+created. A synthetic committed-Git integration test reproduces the rejected
+ancestry and verifies standard admission accepts the corrected representation.
+Actual admission against the corrected committed source is required before claim.
+
 The new independent checker imports prior reviewer algorithms, not production
 numeric/storage implementations. It reconstructs transaction rows, event order,
 categories, activity and eight-day exact hash identities from retained bytes;
@@ -49,15 +63,20 @@ bounded Local40 subsets; and checks exact lifecycle/output denominators.
 `numerical_pilot_success` requires all seven motif days and independent closure.
 A failed run receives preservation-only review, not fabricated numerical results.
 
-Synthetic validation passed 35 focused tests across the new adapter, admission
-policy and independent checker. Eighteen reviewer tests cover hand-counted
+Synthetic validation initially passed 35 focused tests across the new adapter,
+admission policy and independent checker. After the bounded ancestry correction,
+all 38 focused tests passed, including two policy rejection cases and the
+committed-Git standard-admission regression. Eighteen reviewer tests cover hand-counted
 projected decoding, omitted projection columns, cross-midnight dyads/oracles,
 altered count/summary data, missing nodes, invalid prefix timing, boundary
 height/hash/time faults, changed or omitted retained members, path escapes,
 new-tree extras, unbound blobs and corrupt raw hashes. These synthetic checks
 do not establish real-data numerical validity or feasibility within 8 GiB.
-The final named offline verification receipt must be frozen with the gate before
-execution; this focused review does not replace it.
+The named offline target passed 2,311 tests and 97 subtests before this bounded
+admission correction. The later focused suite passed 38 tests in 3.53 seconds;
+both logs and their SHA-256 bindings are retained in `verification.json`.
+The full target was not repeated after the correction. The final verification
+receipt must be frozen with the gate before execution.
 
 Not tested here: full real source/stored/raw hash roundtrips or numerical
 decoding; seven-day numerical results; live peak memory or elapsed time;
@@ -76,7 +95,7 @@ dependencies, tests, runtime files and input metadata):
 | CHARTER.md | `a841d512b3cbc075c9145b2d7956a06cf149aaebb1193d3b5c4693acbb4d99bd` |
 | plan.json | `2ecea1bcbee3da1eab047c93f72ef7a02e746246fa999c81823662aee7a1d8ab` |
 | history.json | `29c7261dd21d40b6270d9d4938f3046ac697166db8504b04b5c20bf349985b1b` |
-| admission.py | `2278c86d2f002bda16f29e773dd0b55d5adc816d3e42024e3c569eea037ef8ab` |
+| admission.py | `919725ed6500e05f0f51c675f63e8b49ba4f1a48f19aa98f3e8c6d1fd5d5b9c4` |
 | run.py | `4e40ad5b59dbdfead2947a07dd5c3ebcac823b8d07a93e050650241235b4c640` |
 | day.py | `523c6e1b115bebda7028997cdd5825139479620b893e0ee83d06f3b9a845d356` |
 | launch.py | `f66d6d0fe26858b64189c5dd8e0b4feaa3425bb3d87e82f5b1e9c7be1e1567b6` |
