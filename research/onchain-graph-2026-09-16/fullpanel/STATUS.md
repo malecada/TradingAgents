@@ -35,8 +35,15 @@ JSON hashes because integer degree-histogram keys become strings after reload.
 STARTUP_REVIEW.md preserves exact failing/restored hashes. The original full
 checker has not been executed. Compute and daily checks remain unchanged.
 The separate phase-correction.json binds a narrow wrapper restoring only those
-two fresh-source key types; all strict comparisons remain. It passed135focused
+two fresh-source key types; all strict comparisons remain. It passed 135 focused
 tests and independent original verify_daily checks on the first three days.
 See PHASE_CORRECTION.md and PHASE_CORRECTION_REVIEW.md. Use corrected
 launch_phase_v2.py after compute closes, never original launch.py --review.
-The exact committed correction source is recorded in the subsequent checkpoint.
+Committed correction source `649691c8a085852986c2d802b4d1170daee186f8` passed
+its byte-bound contract and was pushed/remote-hash verified. The active heartbeat
+was updated to invoke that exact corrected review; see monitor-correction.json.
+
+Latest running snapshot: 2026-09-22T10:40:03.718011+00:00, 8 independently
+checked source days and 7 graph days, through 2022-01-08.
+PID/start/boot identity remains valid; no terminal is present. [progress-20260922T104003Z.json](progress-20260922T104003Z.json)
+records instantaneous resource/free-space evidence. No full-panel verdict yet.
