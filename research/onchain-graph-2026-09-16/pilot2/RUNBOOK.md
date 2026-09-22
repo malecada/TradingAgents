@@ -1,3 +1,9 @@
+# Terminal status
+
+The numerical pilot and corrected independent check are complete and passed.
+See RESULT.md. All process-start instructions below are historical; do not
+replay any compute or review identity. The numerical and source-download monitors are paused after closure.
+
 # Seven-day numerical pilot operation and closure
 
 The user selected step 1 and previously requested ongoing process monitoring.

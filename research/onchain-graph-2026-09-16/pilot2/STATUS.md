@@ -1,4 +1,12 @@
-# Seven-day offline numerical pilot — preparation
+# Seven-day offline numerical pilot — complete
+
+The numerical pilot and corrected independent review passed. See [result](RESULT.md)
+for resources, complete evidence, preserved failures and scientific limits.
+No process is running and no identity may be replayed. Full-panel processing
+and prediction work remain subsequent decisions.
+
+## Original preparation record
+
 
 The user authorized step 1 on September 22, 2026. The fixed window remains
 January 2–8, 2024, with January 1 context and January 9 closing blocks. The

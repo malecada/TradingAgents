@@ -1,17 +1,19 @@
 # Ethereum graph feasibility checkpoint
 
-**September 22 active numerical pilot:** fixed January 2–8, 2024 offline
-validation is running from remotely verified source
-`d6b556de45859a1cdd098ad69aad7e161caad96c` in
-`/home/malecada/Data/onchain-research/TradingAgents-onchain-pilot2`.
-The new identity is `eth-seven-day-offline-pilot-20260922`; its one-use allowance
-is now consumed at cumulative 13/13. [Runbook](pilot2/RUNBOOK.md) provides exact
-status, independent-check and closure instructions. [Startup metadata](pilot2/launch-observation.json)
-records launcher PID 1660211, boot identity and start ticks. No terminal or
-numerical verdict existed at launch. Never restart this claimed identity.
-The download monitor remains paused; this step makes no acquisitions and opens
-no prices/models. Preserve all predecessor evidence. Full-panel processing and
-prediction evaluation remain subsequent user decisions.
+**September 22 numerical pilot complete:** the fixed January 2–8, 2024 pilot
+passed the corrected independent check: all 17 cells/20 outputs complete,
+8,626,480 unique transactions across eight source/context days, all seven motif
+days and boundary links verified within the declared independent scope.
+[Result](pilot2/RESULT.md) records exact counts, resources and limitations.
+Compute took 8.95 minutes, peak 1.903 GiB; independent review took 4.19 minutes,
+peak 1.605 GiB, under the 8 GiB/two-CPU guard. The original checker schema failure
+and separately committed strict correction remain preserved. No production run was replayed.
+Execution source remains d6b556de45859a1cdd098ad69aad7e161caad96c; correction
+source fae09ecf519f59d21cf7b70da95c3ed748d1d046. All755new evidence files were
+mirrored with hashes; the cumulative13/13 allowance is consumed. Neither compute
+nor review should be restarted. Full-panel extraction and prediction evaluation
+remain separate next decisions. No prediction accuracy or validated strategy.
+Both the numerical and completed-download monitors are paused.
 
 **Source acquisition complete, September 18:** the final continuation closed at
 11:54:11 UTC (13:54 Prague time) with all 446 remaining dates complete and zero
@@ -30,9 +32,9 @@ process-tree RSS was 0.746 GiB under the 8 GiB cap. Compact closure metadata
 was imported after allocation preflight; raw/full manifests remain on Data.
 The cumulative source allowance remains consumed at 12/12.
 
-Independent closure review passed and the download monitor is paused. Numerical
-integrity, graph features and matched M0/M1/M2 prediction evaluation remain
-pending. There is no verified off-device raw backup. All active-state statements
+Independent closure review passed and the download monitor is paused. Full-history numerical
+integrity/features and matched M0/M1/M2 prediction evaluation remain pending;
+the bounded seven-day result above supersedes the old pilot-pending status. There is no verified off-device raw backup. All active-state statements
 below are historical and superseded by this completion record.
 
 **Active September18 source continuation:** [resume2](comparison/RESUME2_STATUS.md) started00:21:17.917851UTC from fixed `ee2a1b806b28b9815eb2347fba7984ec67e208f3`, remotely verified before launch, in Data/TradingAgents-onchain-resume2. Launcher1059665/startticks3983261, worker1060485; bootID retained. Exactly446remaining dates,13cached October8responses,638priorcomplete dates excluded. Initial TLS handshake timeout entered the approved retry path; no firstdate completion established by startup snapshot. Current one-use allowance consumed11/11, localclaim inventory48. The30minute monitor remains authorized; [runbook](comparison/RESUME_RUNBOOK.md) identifies this liveworker. Never restart old identities or duplicate the active worker. Numerical/prediction work remains pending.
