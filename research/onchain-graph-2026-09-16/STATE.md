@@ -1,15 +1,18 @@
 # Ethereum graph feasibility checkpoint
 
-**September 22 full-panel extraction active:** the complete 2022–2024 compact
-source/graph panel started at 10:24:49 UTC from remotely verified source
-`fdb33cf27ca97b8d32926f046be422d8b8b45b6f` in Data/TradingAgents-onchain-fullpanel.
-The [status](fullpanel/STATUS.md), [charter](fullpanel/CHARTER.md) and
-[runbook](fullpanel/RUNBOOK.md) identify the live process and frozen 1096-date
-scope. The single cumulative 14/14 allowance is consumed. Startup independently confirmed three source/two graph days. A separately
-reviewed final-checker JSON-order correction preserves exact phase hashes;
-see [correction](fullpanel/PHASE_CORRECTION.md). Compute remains unchanged;
-full numerical/global-uniqueness admission remains pending.
-A 30-minute full-panel heartbeat is active; earlier monitors remain paused.
+**September 22 full-panel recovery:** the original extraction was interrupted by
+reboot after 206 independently checked source days and 205 graph days through
+2022-07-25. Its failure-only terminal and every published/partial artifact are
+preserved. The user reported OOM with other processes running; the responsible
+process and peak memory are unknown. The original worker is absent.
+[Continuation status](fullpanel_resume/STATUS.md), [charter](fullpanel_resume/CHARTER.md)
+and [runbook](fullpanel_resume/RUNBOOK.md) supersede the old live-job instructions.
+A single cumulative prior14/cap15 continuation is being prepared to reuse the
+completed days and process only the remaining890, with a6GiB kernel job limit.
+Original numerical criteria and old hash bytes stay unchanged; new hashes use
+a separate root and exact union verification. No new feature worker is launched
+yet. Full numerical/global-uniqueness admission remains pending. The30-minute
+monitor follows recovery; completed source and pilot monitors stay paused.
 Matched price/label/model evaluation remains a separate next decision.
 
 **September 22 numerical pilot complete:** the fixed January 2–8, 2024 pilot

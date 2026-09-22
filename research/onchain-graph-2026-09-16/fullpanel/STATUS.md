@@ -1,3 +1,8 @@
+> Superseded after reboot: this run now has a failure-only terminal. Its206
+> completed source days/205graph days and partialJuly26 evidence remain immutable.
+> No original worker is active; do not replay it or launch its full final checker.
+> Follow [continuation status](../fullpanel_resume/STATUS.md). OOM cause is unknown.
+
 # Full-history extraction active
 
 Started September 22, 2026 at 10:24:49 UTC (12:24 Prague time), from remotely
