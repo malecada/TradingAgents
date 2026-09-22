@@ -1,13 +1,17 @@
 # Ethereum graph feasibility checkpoint
 
-**September 22 authorized next step:** preparation of the fixed January 2–8,
-2024 offline numerical pilot is underway. [Pilot status](pilot2/STATUS.md) records
-the new identity, exact retained-input mapping, independent checks and resource
-bounds. No new data acquisition, full-panel run or price/model evaluation is
-authorized by this step. The download monitor remains paused. Twelve historical
-claims and the original failed pilot remain immutable; the new one-use numerical
-continuation requires committed admission and independent review before outcomes.
-
+**September 22 active numerical pilot:** fixed January 2–8, 2024 offline
+validation is running from remotely verified source
+`d6b556de45859a1cdd098ad69aad7e161caad96c` in
+`/home/malecada/Data/onchain-research/TradingAgents-onchain-pilot2`.
+The new identity is `eth-seven-day-offline-pilot-20260922`; its one-use allowance
+is now consumed at cumulative 13/13. [Runbook](pilot2/RUNBOOK.md) provides exact
+status, independent-check and closure instructions. [Startup metadata](pilot2/launch-observation.json)
+records launcher PID 1660211, boot identity and start ticks. No terminal or
+numerical verdict existed at launch. Never restart this claimed identity.
+The download monitor remains paused; this step makes no acquisitions and opens
+no prices/models. Preserve all predecessor evidence. Full-panel processing and
+prediction evaluation remain subsequent user decisions.
 
 **Source acquisition complete, September 18:** the final continuation closed at
 11:54:11 UTC (13:54 Prague time) with all 446 remaining dates complete and zero

@@ -1,0 +1,1769 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "d6b556de45859a1cdd098ad69aad7e161caad96c",
+  "experiment": {
+    "cells": [
+      "context",
+      "boundary",
+      "source-2024-01-02",
+      "source-2024-01-03",
+      "source-2024-01-04",
+      "source-2024-01-05",
+      "source-2024-01-06",
+      "source-2024-01-07",
+      "source-2024-01-08",
+      "uniqueness",
+      "motifs-2024-01-02",
+      "motifs-2024-01-03",
+      "motifs-2024-01-04",
+      "motifs-2024-01-05",
+      "motifs-2024-01-06",
+      "motifs-2024-01-07",
+      "motifs-2024-01-08"
+    ],
+    "charter": {
+      "path": "research/onchain-graph-2026-09-16/pilot2/CHARTER.md",
+      "sha256": "a841d512b3cbc075c9145b2d7956a06cf149aaebb1193d3b5c4693acbb4d99bd"
+    },
+    "continuation_of": "eth-seven-day-pilot-20260916",
+    "family": "eth-seven-day-offline-pilot",
+    "inputs": {
+      "amendment": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/pilot2/amendment.json",
+        "sha256": "eed2e2a38a3b66cc94cc7528d905a9ddb14d3f240ed9080ec54a0248964cc078"
+      },
+      "ancestor_00": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-20260916/claim.json",
+        "sha256": "7996ebf3d19fd1470c9914d20e48e660ecb251f403fb67fef2c419c5a428ac29"
+      },
+      "ancestor_01": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-20260916/complete.json",
+        "sha256": "1bb34125bd580e11a0d30a53c01268adae6fc20e453cc3ee0b6f884b3ee137aa"
+      },
+      "ancestor_02": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/claim.json",
+        "sha256": "5558c42758879b68254cf493715023cc836690e0b1e61b160c8bca3996014ac9"
+      },
+      "ancestor_03": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/complete.json",
+        "sha256": "a99203d299f82443ad767f390f9f79dc954399d4df368df72932c89854b854a3"
+      },
+      "ancestor_04": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-temporal-motifs-20260916/claim.json",
+        "sha256": "6ba7c1697b7b9e0fa4e8928e596b78efee593eac953d924734b9df38844d8eb1"
+      },
+      "ancestor_05": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-temporal-motifs-20260916/failed.json",
+        "sha256": "eab9bd876ddebcbf041ab93bf1ac5f4b9e0ed090b75acb3b5041ec3d066ea625"
+      },
+      "ancestor_06": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-temporal-motifs-8gib-20260916/claim.json",
+        "sha256": "1cc63edd9f45044009c529d7fadfeaaed0479bd2f5a25cf30a00002b731691d4"
+      },
+      "ancestor_07": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-temporal-motifs-8gib-20260916/complete.json",
+        "sha256": "0fe63a35a4317d3a9c73890df9109623b4e2756687711accf31f63d28e6d3e1b"
+      },
+      "ancestor_08": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-panel-readiness-20260916/claim.json",
+        "sha256": "8cc9d1a66a1f851fa633ecbce236793e11f78262f2abee5628b6464506ab2a5b"
+      },
+      "ancestor_09": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-panel-readiness-20260916/complete.json",
+        "sha256": "11fe23f49738c0b1b3ba5f676a43bf4967f35c1071c0b1e0bfd63b95337e6247"
+      },
+      "ancestor_10": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-seven-day-pilot-20260916/claim.json",
+        "sha256": "1a672d84204a2e444cc87e3e80b2fc2cca8fa14da273d3c78cbf18712e844b42"
+      },
+      "ancestor_11": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-seven-day-pilot-20260916/failed.json",
+        "sha256": "ddbaf82fade8a6474c74ebbd230ec140b43f5cbd0203a976bdcd908c1dfcb87d"
+      },
+      "ancestor_12": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-matched-input-capture-20260916/claim.json",
+        "sha256": "bf43b220f2d4d4389d7736d4a3d92aba339b57e2d45492d07737f747afe12aa5"
+      },
+      "ancestor_13": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-matched-input-capture-20260916/complete.json",
+        "sha256": "726f4a51ea48e6eda967112f745422bd232db721ac66ade1963b8cd238185c63"
+      },
+      "ancestor_14": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-remaining-graph-capture-20260916/claim.json",
+        "sha256": "eef97d061815e073c8a8de7c97ee21ef05d2aa9483e22f816f6e29e637342f95"
+      },
+      "ancestor_15": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-remaining-graph-capture-20260916/complete.json",
+        "sha256": "9eed03b230b8c09eac2508b8f0eae3df1da13da7c2fe84722def43814c02e419"
+      },
+      "ancestor_16": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-recovery-20260917/claim.json",
+        "sha256": "bd31d163979c30bb33285c78148a90eda18f8e3573deae10a139f99d13a9449a"
+      },
+      "ancestor_17": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-recovery-20260917/complete.json",
+        "sha256": "9899d0edefe8708599c65b3577ae61cd933726373154e4044e851258f8a5a0e1"
+      },
+      "ancestor_18": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-resume-20260917/claim.json",
+        "sha256": "1295a5c376190e66b058834a4a17b26be8bde5d79f88275f5f9b23476261a0f7"
+      },
+      "ancestor_19": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-resume-20260917/complete.json",
+        "sha256": "de1147b69190d5d3048103c79d0a9929651295bbbf1d108dab7e26419a435006"
+      },
+      "ancestor_20": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-resume2-20260918/claim.json",
+        "sha256": "0e30b179e3c41210bd0e93223007b47df9b70e0cc630b096cb14692a2900e831"
+      },
+      "ancestor_21": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-resume2-20260918/complete.json",
+        "sha256": "215b393be985bcc1fcebc5e470815b3ec1ea45703c7daaf157086821f328733f"
+      },
+      "ancestor_22": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-resume3-20260918/claim.json",
+        "sha256": "c094cf03e4525adebd1fcdde9cfc077af9314d30bdc9267b617c8c30f6acf31b"
+      },
+      "ancestor_23": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-resume3-20260918/complete.json",
+        "sha256": "5f4062cea0b7d431cda40dfde26152682a4a13c1c76ae44159942644d4b3a874"
+      },
+      "approval": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/pilot2/APPROVAL.json",
+        "sha256": "9763a453ed64946dccfe685de904057e03096d744cf094e2347742785bbbe1db"
+      },
+      "bulk_reuse": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/comparison/bulk-reuse.json",
+        "sha256": "6f6ace559674740c9fca7d1e1c89942da62ab418d839d91a8799fc0fce596c5c"
+      },
+      "capture_2024-01-02": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/pilot2/input-manifests/2024-01-02.json",
+        "sha256": "48b9e1a05913f4289cf0c9c9cf0a359aec0c3dd64d71d5face75a80ffcfc9c77"
+      },
+      "capture_2024-01-03": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/pilot2/input-manifests/2024-01-03.json",
+        "sha256": "c767f28cbc28f97fcbe6335316e889ce9e3bc9e7e32227109afa1fb132fc3198"
+      },
+      "capture_2024-01-04": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/pilot2/input-manifests/2024-01-04.json",
+        "sha256": "b2ef3343e3bc29d8d8687f345b37e3bbe5e39a72b86952070ffa763743e1ab4e"
+      },
+      "capture_2024-01-05": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/pilot2/input-manifests/2024-01-05.json",
+        "sha256": "b320d52473958eee72352a0e799c1d531e83ed2cca299060777ef264d7771e82"
+      },
+      "capture_2024-01-06": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/pilot2/input-manifests/2024-01-06.json",
+        "sha256": "1d705bf7b982fa7e0c7507544afb102ba23c81cb9e311bf2867c729fb01c7ae4"
+      },
+      "capture_2024-01-07": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/pilot2/input-manifests/2024-01-07.json",
+        "sha256": "fd66f16ea8e8f3858d219e2e47a1f0b67372219d1505e77aaafde451832efff8"
+      },
+      "capture_2024-01-08": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/pilot2/input-manifests/2024-01-08.json",
+        "sha256": "ae416719a6e153cb9e1137823a34945c484b44f9d681f4013961fec20fa1ac0d"
+      },
+      "capture_2024-01-09": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/pilot2/input-manifests/2024-01-09.json",
+        "sha256": "4e9bd6c382b922cf0d713b796aaf64186f83727803df8ef0aefc714c48e65018"
+      },
+      "history": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/pilot2/history.json",
+        "sha256": "29c7261dd21d40b6270d9d4938f3046ac697166db8504b04b5c20bf349985b1b"
+      },
+      "inventory": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-panel-readiness-20260916/outputs/inventory.json",
+        "sha256": "97da7ac5cef01718a6d479396ff3b7339f4b46a36146339a8f46d2f738def939"
+      },
+      "jan1_blocks": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-20260916/outputs/request-09.json",
+        "sha256": "57c33fdaf9a4b5334519a6c52de00cc870ee41b1e057743c0e71ba3d0697984c"
+      },
+      "jan1_footer": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-source-20260916/outputs/request-11.json",
+        "sha256": "4b568e9995a4d7cb234c6103dda1b4be55389b49e4252c6e8b65c8e007dec16e"
+      },
+      "jan1_plan": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/prototype/plan.json",
+        "sha256": "4e3716ad928b43902b111e0c4a1e849bfd7c9b35cdbc32993dcc887ddcf07800"
+      },
+      "jan1_range_001": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-01.json",
+        "sha256": "b8c63f13e9c2aa963eb31347dae431b7528715363f3c94150306292836346472"
+      },
+      "jan1_range_002": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-02.json",
+        "sha256": "316df9faec8ea4b4cdb8bc50b65d8106204dc364a861c5cae009241cfdf10f16"
+      },
+      "jan1_range_003": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-03.json",
+        "sha256": "c68aaefc8e418229cb923af6bcc3a54321ec5ed449eb3176c273443f64412afb"
+      },
+      "jan1_range_004": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-04.json",
+        "sha256": "99dc66a30d8624573b7d4fbdcbf8a6125f9a8f31c6f63f34b33473838b16f3b1"
+      },
+      "jan1_range_005": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-05.json",
+        "sha256": "acdc2a43dda544e21e2d8e92dcf61fcdc099ca27d35dc2f52ea82e896c04db13"
+      },
+      "jan1_range_006": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-06.json",
+        "sha256": "2f84cc2d17209bd357a69238757d1c8005e6c7716788048ebccd017b3e574340"
+      },
+      "jan1_range_007": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-07.json",
+        "sha256": "70e9af977d9f9d8083106cdb7a78d657a745ac261485418d3a0f29ab88c4c225"
+      },
+      "jan1_range_008": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-08.json",
+        "sha256": "729d06571f03cd01b62cffc65caed2af7283472df269614f647aced8388d68ff"
+      },
+      "jan1_range_009": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-09.json",
+        "sha256": "a737060f87b466f56f1893a5d16e7454b6755625309cfd206c66a91650b38846"
+      },
+      "jan1_range_010": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-10.json",
+        "sha256": "c1b39dc4fea8fbe66296500afc348ed4746974ea4b5d6aa8e7a1cc92dfdd1443"
+      },
+      "jan1_range_011": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-11.json",
+        "sha256": "1a1d7a7339dc5cedcb2e4bc0697540aede021656a3cd62e860f47614f0304042"
+      },
+      "jan1_range_012": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-12.json",
+        "sha256": "d1042351b5c0ceb9682de7b44d55be74dbfaeb587705106020e8308fdcac69a7"
+      },
+      "jan1_range_013": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-13.json",
+        "sha256": "7bf0c85c6fbae47891ba65970bb95a742deb2823c5483941319fa3c0f3de1e52"
+      },
+      "jan1_range_014": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-14.json",
+        "sha256": "7b25987ddae119ac57a857308142660498e53847468e0a5fb5a7902cdc7ea475"
+      },
+      "jan1_range_015": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-15.json",
+        "sha256": "46940a4d9af5c87d75e7cbd58f0362bc60ba928687dba6633fda0847ee79b153"
+      },
+      "jan1_range_016": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-16.json",
+        "sha256": "62ce94a0ff2a6a0030c74fa6e6d93d5810de7e6be088e116382d3ebef9e00cdb"
+      },
+      "jan1_range_017": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-17.json",
+        "sha256": "7cb5d29130d64156d03357298c3e263cccd93dbf0f7473ba10c6e0b039a2ed06"
+      },
+      "jan1_range_018": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-18.json",
+        "sha256": "62381387f7420b6821be5a91c9b7c9bf119f88f0f83d5cc0e39cbfb87bd72759"
+      },
+      "jan1_range_019": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-19.json",
+        "sha256": "e665d93350c2f10c9dba552cd7abd3fe2c22c7f57999c0caf6bb8facb623b11b"
+      },
+      "jan1_range_020": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-20.json",
+        "sha256": "3c1d07c0aaae61cd50fadbba052a911fe2417b785f36a3e1f06ef4b45bbc937d"
+      },
+      "jan1_range_021": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-21.json",
+        "sha256": "a424150e6802b9c027b4be6e6b2b4c10484ae8411e8a44a587be4281a55cf4cc"
+      },
+      "jan1_range_022": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-22.json",
+        "sha256": "4a30930c7cfec7795bfb665133940e1760ca00eb0820848ae4e1d6f7fdecaee6"
+      },
+      "jan1_range_023": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-23.json",
+        "sha256": "08bfdf8674b6cdc8b6578c7d7c234454d4aea44ead7ae6e5f1e3334577951006"
+      },
+      "jan1_range_024": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-24.json",
+        "sha256": "823fb80577e51fb9e309fd88f2ca3f31330b8ec1dbb93dea1ef020474ee03aad"
+      },
+      "jan1_range_025": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-25.json",
+        "sha256": "0877e7accc983452518ff0969d071b022d5ed7f3cbbc313652286c57a20b6fc0"
+      },
+      "jan1_range_026": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-26.json",
+        "sha256": "9cbbb60fd316e27fb76e270e8935c55c73d49637a8fb0e536c5eec59d48e876f"
+      },
+      "jan1_range_027": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-27.json",
+        "sha256": "744717574c25dead300354e6679e371e8bb93d4f6053a598e6379e1b76acd90a"
+      },
+      "jan1_range_028": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-28.json",
+        "sha256": "0a7dcd0166027230aea2e6507582dd647a353099b4dbe9cf0462c98e5ef902a0"
+      },
+      "jan1_range_029": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-29.json",
+        "sha256": "f68dc1c0786a09835cbc8c5987f9e900a7355d1ed7cf051f7015cf3f62c49285"
+      },
+      "jan1_range_030": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-30.json",
+        "sha256": "91b53e43f07b17e94d438b597d1dd7c19f29abbec284804d0df08975adb939de"
+      },
+      "jan1_range_031": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-31.json",
+        "sha256": "68f81cfe66a35d6e414ac24dd35e19513bea945f7a06dae3b2f9af81100eda23"
+      },
+      "jan1_range_032": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-32.json",
+        "sha256": "a0db80202ef041a09d2220f102e02d47dcf496d1d3af623cd7eaab2e255cadd9"
+      },
+      "jan1_range_033": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-33.json",
+        "sha256": "9093db113548e565d9f4173e00e3b4d6456b9c66fad3b7162580ea93a9b13a7b"
+      },
+      "jan1_range_034": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-34.json",
+        "sha256": "dabac775f8500a59661cbfa5ea4569a199216ba5de2927b409269c20302799fb"
+      },
+      "jan1_range_035": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-35.json",
+        "sha256": "569534d8c8c63b61d8a707b3b7959a1de00d16dac5d440960cd84b65580eb852"
+      },
+      "jan1_range_036": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-36.json",
+        "sha256": "3a3a8a8b2c0cc0499f16ca58efb0a6cce3b2ba65d00424d08e4749e491fa00d2"
+      },
+      "jan1_range_037": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-37.json",
+        "sha256": "3dee978a07b9dbe88e1edc5faa1e21c2f491ac0dd36c82e4a9e41a66ae570dd2"
+      },
+      "jan1_range_038": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-38.json",
+        "sha256": "9de30907f78f88b28178759d5f1c9a3f1914f360700eb0075bd8d49f7a40735a"
+      },
+      "jan1_range_039": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-39.json",
+        "sha256": "deadb077beeaf8bb7fd674f7533968e782b716372bf19d207fe875a714095df8"
+      },
+      "jan1_range_040": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-40.json",
+        "sha256": "53f1b28edcdcfadf785ccda54c4d8289e1f34b6af35ad19a5287f5e4ac8dbea9"
+      },
+      "jan1_range_041": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-41.json",
+        "sha256": "675b68a66a5aa84aed9eb61f8f663b419d1ff5f9bf5fab577085102f3566ee25"
+      },
+      "jan1_range_042": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-42.json",
+        "sha256": "47dd5fe3c65ede27fb7ca347129081645b8e1855db9da172ea12e690463d7844"
+      },
+      "jan1_range_043": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-43.json",
+        "sha256": "859cc68885116bad89aac77c6457e38a975c1070fc49ba71547b66d686ce0632"
+      },
+      "jan1_range_044": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-44.json",
+        "sha256": "4ca2127680476599384dc73b6806c439065f241366bd379166a61fec23ddbfa5"
+      },
+      "jan1_range_045": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-45.json",
+        "sha256": "fa95cac3a50f65d89c4637e7a81d768fbb409ab94dc7aa06355ef62f90d2704f"
+      },
+      "jan1_range_046": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-46.json",
+        "sha256": "b67c84b78710ce38babc6ade0a9e12c3be33dcac30358c0369cf820d32ec7416"
+      },
+      "jan1_range_047": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-47.json",
+        "sha256": "daf560a9394d3dc5a3b4a759da3c7720aafc47fa3647e452e0e3bdba7ce9a404"
+      },
+      "jan1_range_048": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-48.json",
+        "sha256": "714766b0d45ec84e0d706fb9bb1f7b4a3c2417738a005537f7266a7534a89e34"
+      },
+      "jan1_range_049": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-49.json",
+        "sha256": "fca984598d37e3464cd99e3a8ae9d47af32650b0eb8fe876152e741e678c00b7"
+      },
+      "jan1_range_050": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-50.json",
+        "sha256": "26b6c61b1911882942b547518ca32d8926073abd7a842538124003d75768689e"
+      },
+      "jan1_range_051": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-51.json",
+        "sha256": "782fa18011e85b48908b84e0915940f3f95a30c1bc76ced0ffc391d53f140ead"
+      },
+      "jan1_range_052": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-52.json",
+        "sha256": "cb65d7e6e64497da5afa5d0cb3c35318bdecebb02a056c5f7eda90ab8208e303"
+      },
+      "jan1_range_053": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-53.json",
+        "sha256": "fc1c2addc9a5f439c775bf0be938ee133bbe33080dc40a29b7b15faa7c622b9a"
+      },
+      "jan1_range_054": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-54.json",
+        "sha256": "d9c7076afcd1f13e35c60fcce0028b9ee2f6e69c3583a7e6bba77cf19bdfe87c"
+      },
+      "jan1_range_055": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-55.json",
+        "sha256": "0daca6dca460722922fb47ac90fc395090aa0e82541a79618a86a1bd57da5f0a"
+      },
+      "jan1_range_056": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-56.json",
+        "sha256": "1462042dbb39f3cd3dee9db72536e66dc1be0b6675c8811e644dfcc11f6dcfe3"
+      },
+      "jan1_range_057": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-57.json",
+        "sha256": "d9e830b5d6150322fa543e3b9f9df612d7f1ee8e72b1b4856217de981d09b585"
+      },
+      "jan1_range_058": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-58.json",
+        "sha256": "fdad23b31a741646b392fa30ded45f6001e7103ec98a571de3f150ad5a3d0f0d"
+      },
+      "jan1_range_059": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-59.json",
+        "sha256": "960b229687e1509c70fad4a5a538516c0998966f7f37b99199ef21104a255203"
+      },
+      "jan1_range_060": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-60.json",
+        "sha256": "3cea7574d495cfd6532da14add0ae0ad998c0736d0771fb0be7aac743ba760f2"
+      },
+      "jan1_range_061": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-61.json",
+        "sha256": "ad4bfcc8805280460a54bfd403e086c3ed25f9c497e12a00e7ce56d83429940b"
+      },
+      "jan1_range_062": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-62.json",
+        "sha256": "b1d1f4098d9e30db456fed6da23e651d8a79cc641ec171d8c5fa9c44a8e4e097"
+      },
+      "jan1_range_063": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-63.json",
+        "sha256": "662b965e5115ddd9a5e068ec3c1706f8d21ac3f99b98dd0e4d60b42a8021592c"
+      },
+      "jan1_range_064": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-64.json",
+        "sha256": "dc7f0db7006b2edc81f7f0efdc88e75315be158374bcb73052bb8be19cf5cee3"
+      },
+      "jan1_range_065": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-65.json",
+        "sha256": "dbcdca6d6f7bad8ca365c3c17aff8dae619e2cb430ea6a4d7a99c7885d9668c6"
+      },
+      "jan1_range_066": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-66.json",
+        "sha256": "a354e285fcccfdf8cb5ca6fe26414d8e56146606c52ee3df9b16d941e181077e"
+      },
+      "jan1_range_067": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-67.json",
+        "sha256": "f54d00479d79f08ccc8c446102d3b546640a5103661bace4af20b52f3d68338e"
+      },
+      "jan1_range_068": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-68.json",
+        "sha256": "986550b1b0fdb4cad395f1e6114681ed2715f89c2a223c7081924c955b985aa3"
+      },
+      "jan1_range_069": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-69.json",
+        "sha256": "fb9994eb0a0f50baeafc4ff690fb509d1d561fec953db9b5bebce4392c28d61a"
+      },
+      "jan1_range_070": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-70.json",
+        "sha256": "7815183df0f2758feb2e43c1f258be5a35d6471ed00da215257668c3a421dc4f"
+      },
+      "jan1_range_071": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-71.json",
+        "sha256": "16212dcb7941f8a381776fb082dac44390d7eb197ab45ee205a47ab5ecbe7a0e"
+      },
+      "jan1_range_072": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-72.json",
+        "sha256": "40d4d2e5d0c4c5cd41420066446b42b6324138f54bceb0a5d30c8b0a630d5fa8"
+      },
+      "jan1_range_073": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-73.json",
+        "sha256": "9d3d4e90e413681c3c612d4d50acff0df2ae02546ef6dd67ef1b59edf79837ee"
+      },
+      "jan1_range_074": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-74.json",
+        "sha256": "e2ae26b8e646899bcb5a5616be1bbebd1c731df1327ccf880ad3e61d02b40f6c"
+      },
+      "jan1_range_075": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-75.json",
+        "sha256": "f610d4360e2633bc7c57b12a036f265d37732732397b2a28e6787c6025fb03de"
+      },
+      "jan1_range_076": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-76.json",
+        "sha256": "5758121eca5a5ecf7ef8db8fea9425eba948045e067f58e8ae81a9dcf1c4e767"
+      },
+      "jan1_range_077": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-77.json",
+        "sha256": "94b820041dfbee80977d0615b9e346cc98a1ead8b2e837504104aca781b965d0"
+      },
+      "jan1_range_078": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-78.json",
+        "sha256": "73a575adcb9507fea02a27621319c1f77929349a175474bc2a528dc7df19506e"
+      },
+      "jan1_range_079": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-79.json",
+        "sha256": "d6058a4c980468c143a0b1968319d0af3c34791d751a5d122b2c6f37ac3aaa64"
+      },
+      "jan1_range_080": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-80.json",
+        "sha256": "f084ba3f1b21d4f052a7a1d1685a1ca9de48e32a50d9199b4ce424a65419c7a1"
+      },
+      "jan1_range_081": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-81.json",
+        "sha256": "1541be6792f97605197170753953f49c3efc301fd38b090f2841c7e222b21b30"
+      },
+      "jan1_range_082": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-82.json",
+        "sha256": "b00ed9f725c20dc11b887558289f8a500159cb2e7042a3191e2a96ae91e638c7"
+      },
+      "jan1_range_083": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-83.json",
+        "sha256": "e597f9bde725a955508b7137ea8f02fd7713da2855f3fcaa01e1b98ae6fd9379"
+      },
+      "jan1_range_084": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-84.json",
+        "sha256": "ad39a7b3b4a20fd76ab72c4705de0c6b34ab7714bacc170d3ec3f00f3bc8d33e"
+      },
+      "jan1_range_085": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-85.json",
+        "sha256": "6e5fe260cb71b8f7275e72d4c12167b7132aecf618ed8201ee63fbac3a34c0b2"
+      },
+      "jan1_range_086": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-86.json",
+        "sha256": "1643d2e26a5266f6115b86ae2134f30e6dfe5125be035fb527d2fe8ac38fc0ad"
+      },
+      "jan1_range_087": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-87.json",
+        "sha256": "84f6c536d468689d2f7de0c41b92bb15983f47983bfa834ed0e70af0ae631cf6"
+      },
+      "jan1_range_088": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-88.json",
+        "sha256": "4c9c16105dee7d9601526c69600d1285132715695697a075ac7bde6f90a9157a"
+      },
+      "jan1_range_089": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-89.json",
+        "sha256": "895cc7ba7701b85dac03211148b74df447d8f3b8e335e0b63477e00c042a4651"
+      },
+      "jan1_range_090": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-90.json",
+        "sha256": "262843c748d780c213a77a99f721d3dd8798ee84c3b7176af235dc82906c1de2"
+      },
+      "jan1_range_091": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-91.json",
+        "sha256": "71e746608498e5117c0aa796d078c25b73d536d3d9b046b720755d17fe94bf3b"
+      },
+      "jan1_range_092": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-92.json",
+        "sha256": "bf3d95a22e5b838db3082c1e03b46914a5b4fe8ad2ab770cbd79ae7809f07f86"
+      },
+      "jan1_range_093": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-93.json",
+        "sha256": "f67870fe5a49fd00ebc5aafcca9dee29bb0937d6e6273163d431bcfe4c2a3267"
+      },
+      "jan1_range_094": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-94.json",
+        "sha256": "2188628b610c2c88919a03297d06324480e1ce894998f3a616dff3d3761eb876"
+      },
+      "jan1_range_095": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-95.json",
+        "sha256": "469f6060732a7549eb8292fbd5400b63037870f256e73936a6eb1b1eea4fb6b1"
+      },
+      "jan1_range_096": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-96.json",
+        "sha256": "db31f80c9c1b4e8bb99bd5c051277c0972bd9b30cc8b83be007c0eb2f315ce0d"
+      },
+      "jan1_range_097": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-97.json",
+        "sha256": "fc589a58120edaa18b31c373184d9c4cdd7d0d3e1221145715fd32e790e45776"
+      },
+      "jan1_range_098": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-98.json",
+        "sha256": "1f92461727bf1dd87baf1f045ee988f564b56a26f92db0d1a127a82f944dfd7f"
+      },
+      "jan1_range_099": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-99.json",
+        "sha256": "399781f4eeb703d025d4a7abba7b5fa4359fa625e1cd5ba591337bc71600e11d"
+      },
+      "jan1_range_100": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-100.json",
+        "sha256": "3453363feffc665c00d9f3a1acfa6a74e20de6264d6a3015192976ae5845ec02"
+      },
+      "jan1_range_101": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-101.json",
+        "sha256": "464faaf9944c1be242756159941ca81edcf1cc04b850e134071e9c45c42f3e4d"
+      },
+      "jan1_range_102": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-102.json",
+        "sha256": "175f516bb7cf800ce37dd6f814d4089c3c6295575a933e265db194aff0464387"
+      },
+      "jan1_range_103": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-103.json",
+        "sha256": "528b562d00a049638e119c5fa4e406ac0bef1cbb9d9b931e7af7e1f556ec2e9c"
+      },
+      "jan1_range_104": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-104.json",
+        "sha256": "5efbf74fe340893315547ba7ac538c4f3c7c657f887ed075752877bb72d0e846"
+      },
+      "jan1_range_105": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-105.json",
+        "sha256": "fcced0a6997f160032ebb156da2cc2c62123ea2c94240ab856773cd98d6aba18"
+      },
+      "jan1_range_106": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-106.json",
+        "sha256": "d9b9a9553cd16218f78a39be7f7959722f5982f0cdf86a8b358a90dea9b4dbef"
+      },
+      "jan1_range_107": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-107.json",
+        "sha256": "0c3ac66ea9a3bd5ab1b9d548353f8b1a5481ee1064081a9a5a16b223099f5c5f"
+      },
+      "jan1_range_108": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-108.json",
+        "sha256": "f7f2fae03fcbb34cec46797836e12cf2928fa5cbee19569a84a859571ae70233"
+      },
+      "jan1_range_109": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-109.json",
+        "sha256": "f9cefb2a1f40d519d5bbbc17dfdd42e572e46980eb07080e6160bc2ecacf1458"
+      },
+      "jan1_range_110": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-110.json",
+        "sha256": "12838ae9bd7ab679a128feaec2ab8bc9186b163faa044afa8acf29aa13c3fbb9"
+      },
+      "jan1_range_111": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-111.json",
+        "sha256": "7305e757bfe7692c74772d1fed6e9d47e3769ff8254b4fe922adfcb00809c8ee"
+      },
+      "jan1_range_112": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-112.json",
+        "sha256": "d76e8f013d4451ed7176eabc314652ab12600b70a9dab4114548c8016dc86a1e"
+      },
+      "jan1_range_113": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-113.json",
+        "sha256": "584ff53529f0495e36b8e44a9fc40f66abdce48b0fdc66a2c3f13313ad60d1d5"
+      },
+      "jan1_range_114": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-114.json",
+        "sha256": "511043acc6e975a6605ad60e7717e17131f939eae4c9ef95a4e598814e6704f5"
+      },
+      "jan1_range_115": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-115.json",
+        "sha256": "b6e1366e84780676220a491b80a24fa49a5542323b90b8a8381c7e1100e83907"
+      },
+      "jan1_range_116": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-116.json",
+        "sha256": "307fcfb64107cf92afc074a9418068bf987ee9dcc9d2bed48afdfa883a3c60f2"
+      },
+      "jan1_range_117": {
+        "dataset": "eth-history",
+        "path": "research_runs/eth-graph-prototype-20260916/outputs/request-117.json",
+        "sha256": "c1ef186ace56e67819e8ad708f332cd33f88593432dd8a5f1b56bc65b66468be"
+      },
+      "old_pilot_gate": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/pilot/gates.json",
+        "sha256": "ba525b15cfa20abf89170051825434808eff1143d44651a1372d36c634f21693"
+      },
+      "old_source_gate": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/comparison/resume3-gates.json",
+        "sha256": "4722c9ff8f6f4c0a3db9a4181ec40b4f0dac2bf6a95a3ec42394f2936124a0a4"
+      },
+      "plan": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/pilot2/plan.json",
+        "sha256": "2ecea1bcbee3da1eab047c93f72ef7a02e746246fa999c81823662aee7a1d8ab"
+      },
+      "review": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/pilot2/PRE_EXECUTION_REVIEW.md",
+        "sha256": "50d36bfa60a1fcf9589fe6d048e209864c12c53136db11cade411de72d73c32b"
+      },
+      "verification": {
+        "dataset": "eth-history",
+        "path": "research/onchain-graph-2026-09-16/pilot2/verification.json",
+        "sha256": "be9256d5f5a1688fc0621e5bacfa00bc91a26d89fd2ef01551676421846bbd54"
+      }
+    },
+    "outputs": [
+      "context.json",
+      "boundary.json",
+      "source-2024-01-02.json",
+      "source-2024-01-03.json",
+      "source-2024-01-04.json",
+      "source-2024-01-05.json",
+      "source-2024-01-06.json",
+      "source-2024-01-07.json",
+      "source-2024-01-08.json",
+      "cross-day-integrity.json",
+      "features-2024-01-02.json",
+      "features-2024-01-03.json",
+      "features-2024-01-04.json",
+      "features-2024-01-05.json",
+      "features-2024-01-06.json",
+      "features-2024-01-07.json",
+      "features-2024-01-08.json",
+      "manifest.json",
+      "features.json",
+      "summary.json"
+    ],
+    "parent": null,
+    "question": "Can the fixed Jan2\u20138 2024 numerical and cross-midnight pilot complete offline from preserved captures under8GiB, with independent raw reconstruction and retained failed lineage?",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+      "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+    },
+    "selection": null,
+    "source_files": {
+      "pyproject.toml": "fa319e95452e538ac22d78584f87f5f13a24d4b8bb83064b51d015706ef594b9",
+      "research/onchain-graph-2026-09-16/motifs/oracle.py": "a0fa3bbdbd32165356724285be378bf67c76070b68bd838ba6169c944b9af249",
+      "research/onchain-graph-2026-09-16/motifs8gib/check_independent.py": "cfb464b4b6b3c8ab98e5265d885c476f4b49064cd1f0748dc2e92892e73dc98c",
+      "research/onchain-graph-2026-09-16/motifs8gib/launch.py": "9dfad213fad3b8c29c20f3b1863244e8b1fa79192506608519f82b1da6b601f2",
+      "research/onchain-graph-2026-09-16/panel_readiness/boundary.py": "c98b619fea3680ff4d5d11207d4ef7fa2cb414fbaf38b52f7b6f221e6b06beff",
+      "research/onchain-graph-2026-09-16/pilot/check_independent.py": "7804dba5c72362c99c1fdd7f0bb7bddc4e052fcc314d9e91d1bd56a05d1f3f36",
+      "research/onchain-graph-2026-09-16/pilot/day.py": "b96e3f02847d1270b9ec3aefa6fa4d71cdd3ae456d15caa74e309d4ecc43ebae",
+      "research/onchain-graph-2026-09-16/pilot/launch.py": "ac9ec904d772640c7828d7bfa0b35a2bdf86ddd2fe10ed1bc401f94b34062a85",
+      "research/onchain-graph-2026-09-16/pilot/numeric.py": "3343a8fb9fe77b71cfdb35ec6113d0eb7c4b24e18a42436bc0a277f277bdd11f",
+      "research/onchain-graph-2026-09-16/pilot/run.py": "3aa24d9a9e15fcfa4093f75e9162b313093b2866d8bf782fa3ef41161d058659",
+      "research/onchain-graph-2026-09-16/pilot/storage.py": "bb7fedc103949d58a7ff27665e102126f5784f40f76f0794eae4fb056a5dd086",
+      "research/onchain-graph-2026-09-16/pilot2/admission.py": "919725ed6500e05f0f51c675f63e8b49ba4f1a48f19aa98f3e8c6d1fd5d5b9c4",
+      "research/onchain-graph-2026-09-16/pilot2/check_independent.py": "3809fbe4b0b7605c265076b7b41466b9b164df79f233eeec0d2d0c1a465735ac",
+      "research/onchain-graph-2026-09-16/pilot2/day.py": "523c6e1b115bebda7028997cdd5825139479620b893e0ee83d06f3b9a845d356",
+      "research/onchain-graph-2026-09-16/pilot2/launch.py": "f66d6d0fe26858b64189c5dd8e0b4feaa3425bb3d87e82f5b1e9c7be1e1567b6",
+      "research/onchain-graph-2026-09-16/pilot2/run.py": "4e40ad5b59dbdfead2947a07dd5c3ebcac823b8d07a93e050650241235b4c640",
+      "research/onchain-graph-2026-09-16/prototype/graph_math.py": "b813f3580a24a4657c6a50a31836ffd77685201474251ccbc11630f4f68ba0b6",
+      "research/onchain-graph-2026-09-16/prototype/run.py": "bae52de26eafc7b9a84865d153e6343f7f55af8678423ae0ee5f91cd7f56a5b1",
+      "research/onchain-graph-2026-09-16/source_probe.py": "d4f7cf193f41635910ee24d671a69b3e68b466cd01186c40c8f21b3c636231c0",
+      "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+      "tests/research/test_onchain_graph_motifs.py": "cefcd11c74450af964bcde17ec9216f27c81fd06dea511ff5855fb64e1e54275",
+      "tests/research/test_onchain_graph_prototype.py": "21ed6615a70d29d599a27c3a25d1f4160d3252a4c6615cd3dcf60ed18709b67f",
+      "tests/research/test_onchain_panel_boundary.py": "6cebbb3b285bdc2073bee98106e09358869517fbc7fe135578bbc92d9c9380b0",
+      "tests/research/test_onchain_pilot2_day.py": "e61eb31a82d39629e1ee462767f4830e064d21958b18b083198214b4ecb3f566",
+      "tests/research/test_onchain_pilot2_independent.py": "584be5717f43f6380afbaea3fe05bb783632cf432410fde6c9d5a6b1e72f7343",
+      "tests/research/test_onchain_pilot2_policy.py": "7d994668f23c22cf3801833b4a92dbfaf281147b35b5d8e2a6e496986115a65f",
+      "tests/research/test_onchain_pilot_day.py": "9e97e4ca04bb0e2cf0f1e4ad7a7610ee5e7294694f3f32c5e68dd4e3e87c07fb",
+      "tests/research/test_onchain_pilot_numeric.py": "f277b43e4d9a3234fe617d2c49ca6aa9fb01aa75c7dfbf579690a822cab64f50",
+      "tests/research/test_onchain_pilot_run.py": "66cc3d82f20d81d5d2b6c843fa2093f5c63f318d0257669752ce10aa03e4ae2e",
+      "tests/research/test_onchain_pilot_storage.py": "f7a81e6483368ef4df6362d5fe2daf45ce889f14e2c880c370e2c7c35b32a120",
+      "tradingagents/research_amended/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "tradingagents/research_amended/admission.py": "34eeca06c4fac1b4f8343437d45aad346cd92a90659f9150325a6af207aeb0d3",
+      "tradingagents/research_amended/amendment.py": "516b82264fb9152f2135a036eb030feefb7f507221aa213b9509e6f424fe1bfd",
+      "tradingagents/research_amended/lifecycle.py": "a4681c16e441e41496c1de88017dbcc27b3ce4e30309023ac3ffe83d5f7a1b52",
+      "tradingagents/research_amended/verify.py": "ccc85b7b98c97e048a3c17a8335b4e735e220398604e05eb19dea96616b84666",
+      "tradingagents/research_amended/verify_amendment.py": "5b056e3c8f002f1e5391e851840a1d7aa90c0939a9b21a73726137380a2c8e13",
+      "uv.lock": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a"
+    },
+    "stage": "development",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "eth-history",
+        "end": "2024-01-10T00:00:00Z",
+        "start": "2024-01-01T00:00:00Z"
+      }
+    ]
+  },
+  "experiment_id": "eth-seven-day-offline-pilot-20260922",
+  "family": {
+    "attempt_budget": 13,
+    "history_reference": "pilot2/CHARTER.md,history.json,amendment.json: explicit single offline numerical continuation; original pilot6 and source12 caps unchanged.",
+    "mechanism_id": "ethereum-seven-day-offline-numerical-continuation",
+    "prior_attempts": 12
+  },
+  "inputs": {
+    "amendment": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/pilot2/amendment.json",
+      "sha256": "eed2e2a38a3b66cc94cc7528d905a9ddb14d3f240ed9080ec54a0248964cc078"
+    },
+    "ancestor_00": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-20260916/claim.json",
+      "sha256": "7996ebf3d19fd1470c9914d20e48e660ecb251f403fb67fef2c419c5a428ac29"
+    },
+    "ancestor_01": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-20260916/complete.json",
+      "sha256": "1bb34125bd580e11a0d30a53c01268adae6fc20e453cc3ee0b6f884b3ee137aa"
+    },
+    "ancestor_02": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/claim.json",
+      "sha256": "5558c42758879b68254cf493715023cc836690e0b1e61b160c8bca3996014ac9"
+    },
+    "ancestor_03": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/complete.json",
+      "sha256": "a99203d299f82443ad767f390f9f79dc954399d4df368df72932c89854b854a3"
+    },
+    "ancestor_04": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-temporal-motifs-20260916/claim.json",
+      "sha256": "6ba7c1697b7b9e0fa4e8928e596b78efee593eac953d924734b9df38844d8eb1"
+    },
+    "ancestor_05": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-temporal-motifs-20260916/failed.json",
+      "sha256": "eab9bd876ddebcbf041ab93bf1ac5f4b9e0ed090b75acb3b5041ec3d066ea625"
+    },
+    "ancestor_06": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-temporal-motifs-8gib-20260916/claim.json",
+      "sha256": "1cc63edd9f45044009c529d7fadfeaaed0479bd2f5a25cf30a00002b731691d4"
+    },
+    "ancestor_07": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-temporal-motifs-8gib-20260916/complete.json",
+      "sha256": "0fe63a35a4317d3a9c73890df9109623b4e2756687711accf31f63d28e6d3e1b"
+    },
+    "ancestor_08": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-panel-readiness-20260916/claim.json",
+      "sha256": "8cc9d1a66a1f851fa633ecbce236793e11f78262f2abee5628b6464506ab2a5b"
+    },
+    "ancestor_09": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-panel-readiness-20260916/complete.json",
+      "sha256": "11fe23f49738c0b1b3ba5f676a43bf4967f35c1071c0b1e0bfd63b95337e6247"
+    },
+    "ancestor_10": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-seven-day-pilot-20260916/claim.json",
+      "sha256": "1a672d84204a2e444cc87e3e80b2fc2cca8fa14da273d3c78cbf18712e844b42"
+    },
+    "ancestor_11": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-seven-day-pilot-20260916/failed.json",
+      "sha256": "ddbaf82fade8a6474c74ebbd230ec140b43f5cbd0203a976bdcd908c1dfcb87d"
+    },
+    "ancestor_12": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-matched-input-capture-20260916/claim.json",
+      "sha256": "bf43b220f2d4d4389d7736d4a3d92aba339b57e2d45492d07737f747afe12aa5"
+    },
+    "ancestor_13": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-matched-input-capture-20260916/complete.json",
+      "sha256": "726f4a51ea48e6eda967112f745422bd232db721ac66ade1963b8cd238185c63"
+    },
+    "ancestor_14": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-remaining-graph-capture-20260916/claim.json",
+      "sha256": "eef97d061815e073c8a8de7c97ee21ef05d2aa9483e22f816f6e29e637342f95"
+    },
+    "ancestor_15": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-remaining-graph-capture-20260916/complete.json",
+      "sha256": "9eed03b230b8c09eac2508b8f0eae3df1da13da7c2fe84722def43814c02e419"
+    },
+    "ancestor_16": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-recovery-20260917/claim.json",
+      "sha256": "bd31d163979c30bb33285c78148a90eda18f8e3573deae10a139f99d13a9449a"
+    },
+    "ancestor_17": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-recovery-20260917/complete.json",
+      "sha256": "9899d0edefe8708599c65b3577ae61cd933726373154e4044e851258f8a5a0e1"
+    },
+    "ancestor_18": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-resume-20260917/claim.json",
+      "sha256": "1295a5c376190e66b058834a4a17b26be8bde5d79f88275f5f9b23476261a0f7"
+    },
+    "ancestor_19": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-resume-20260917/complete.json",
+      "sha256": "de1147b69190d5d3048103c79d0a9929651295bbbf1d108dab7e26419a435006"
+    },
+    "ancestor_20": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-resume2-20260918/claim.json",
+      "sha256": "0e30b179e3c41210bd0e93223007b47df9b70e0cc630b096cb14692a2900e831"
+    },
+    "ancestor_21": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-resume2-20260918/complete.json",
+      "sha256": "215b393be985bcc1fcebc5e470815b3ec1ea45703c7daaf157086821f328733f"
+    },
+    "ancestor_22": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-resume3-20260918/claim.json",
+      "sha256": "c094cf03e4525adebd1fcdde9cfc077af9314d30bdc9267b617c8c30f6acf31b"
+    },
+    "ancestor_23": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-resume3-20260918/complete.json",
+      "sha256": "5f4062cea0b7d431cda40dfde26152682a4a13c1c76ae44159942644d4b3a874"
+    },
+    "approval": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/pilot2/APPROVAL.json",
+      "sha256": "9763a453ed64946dccfe685de904057e03096d744cf094e2347742785bbbe1db"
+    },
+    "bulk_reuse": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/comparison/bulk-reuse.json",
+      "sha256": "6f6ace559674740c9fca7d1e1c89942da62ab418d839d91a8799fc0fce596c5c"
+    },
+    "capture_2024-01-02": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/pilot2/input-manifests/2024-01-02.json",
+      "sha256": "48b9e1a05913f4289cf0c9c9cf0a359aec0c3dd64d71d5face75a80ffcfc9c77"
+    },
+    "capture_2024-01-03": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/pilot2/input-manifests/2024-01-03.json",
+      "sha256": "c767f28cbc28f97fcbe6335316e889ce9e3bc9e7e32227109afa1fb132fc3198"
+    },
+    "capture_2024-01-04": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/pilot2/input-manifests/2024-01-04.json",
+      "sha256": "b2ef3343e3bc29d8d8687f345b37e3bbe5e39a72b86952070ffa763743e1ab4e"
+    },
+    "capture_2024-01-05": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/pilot2/input-manifests/2024-01-05.json",
+      "sha256": "b320d52473958eee72352a0e799c1d531e83ed2cca299060777ef264d7771e82"
+    },
+    "capture_2024-01-06": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/pilot2/input-manifests/2024-01-06.json",
+      "sha256": "1d705bf7b982fa7e0c7507544afb102ba23c81cb9e311bf2867c729fb01c7ae4"
+    },
+    "capture_2024-01-07": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/pilot2/input-manifests/2024-01-07.json",
+      "sha256": "fd66f16ea8e8f3858d219e2e47a1f0b67372219d1505e77aaafde451832efff8"
+    },
+    "capture_2024-01-08": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/pilot2/input-manifests/2024-01-08.json",
+      "sha256": "ae416719a6e153cb9e1137823a34945c484b44f9d681f4013961fec20fa1ac0d"
+    },
+    "capture_2024-01-09": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/pilot2/input-manifests/2024-01-09.json",
+      "sha256": "4e9bd6c382b922cf0d713b796aaf64186f83727803df8ef0aefc714c48e65018"
+    },
+    "history": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/pilot2/history.json",
+      "sha256": "29c7261dd21d40b6270d9d4938f3046ac697166db8504b04b5c20bf349985b1b"
+    },
+    "inventory": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-panel-readiness-20260916/outputs/inventory.json",
+      "sha256": "97da7ac5cef01718a6d479396ff3b7339f4b46a36146339a8f46d2f738def939"
+    },
+    "jan1_blocks": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-20260916/outputs/request-09.json",
+      "sha256": "57c33fdaf9a4b5334519a6c52de00cc870ee41b1e057743c0e71ba3d0697984c"
+    },
+    "jan1_footer": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-source-20260916/outputs/request-11.json",
+      "sha256": "4b568e9995a4d7cb234c6103dda1b4be55389b49e4252c6e8b65c8e007dec16e"
+    },
+    "jan1_plan": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/prototype/plan.json",
+      "sha256": "4e3716ad928b43902b111e0c4a1e849bfd7c9b35cdbc32993dcc887ddcf07800"
+    },
+    "jan1_range_001": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-01.json",
+      "sha256": "b8c63f13e9c2aa963eb31347dae431b7528715363f3c94150306292836346472"
+    },
+    "jan1_range_002": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-02.json",
+      "sha256": "316df9faec8ea4b4cdb8bc50b65d8106204dc364a861c5cae009241cfdf10f16"
+    },
+    "jan1_range_003": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-03.json",
+      "sha256": "c68aaefc8e418229cb923af6bcc3a54321ec5ed449eb3176c273443f64412afb"
+    },
+    "jan1_range_004": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-04.json",
+      "sha256": "99dc66a30d8624573b7d4fbdcbf8a6125f9a8f31c6f63f34b33473838b16f3b1"
+    },
+    "jan1_range_005": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-05.json",
+      "sha256": "acdc2a43dda544e21e2d8e92dcf61fcdc099ca27d35dc2f52ea82e896c04db13"
+    },
+    "jan1_range_006": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-06.json",
+      "sha256": "2f84cc2d17209bd357a69238757d1c8005e6c7716788048ebccd017b3e574340"
+    },
+    "jan1_range_007": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-07.json",
+      "sha256": "70e9af977d9f9d8083106cdb7a78d657a745ac261485418d3a0f29ab88c4c225"
+    },
+    "jan1_range_008": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-08.json",
+      "sha256": "729d06571f03cd01b62cffc65caed2af7283472df269614f647aced8388d68ff"
+    },
+    "jan1_range_009": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-09.json",
+      "sha256": "a737060f87b466f56f1893a5d16e7454b6755625309cfd206c66a91650b38846"
+    },
+    "jan1_range_010": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-10.json",
+      "sha256": "c1b39dc4fea8fbe66296500afc348ed4746974ea4b5d6aa8e7a1cc92dfdd1443"
+    },
+    "jan1_range_011": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-11.json",
+      "sha256": "1a1d7a7339dc5cedcb2e4bc0697540aede021656a3cd62e860f47614f0304042"
+    },
+    "jan1_range_012": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-12.json",
+      "sha256": "d1042351b5c0ceb9682de7b44d55be74dbfaeb587705106020e8308fdcac69a7"
+    },
+    "jan1_range_013": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-13.json",
+      "sha256": "7bf0c85c6fbae47891ba65970bb95a742deb2823c5483941319fa3c0f3de1e52"
+    },
+    "jan1_range_014": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-14.json",
+      "sha256": "7b25987ddae119ac57a857308142660498e53847468e0a5fb5a7902cdc7ea475"
+    },
+    "jan1_range_015": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-15.json",
+      "sha256": "46940a4d9af5c87d75e7cbd58f0362bc60ba928687dba6633fda0847ee79b153"
+    },
+    "jan1_range_016": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-16.json",
+      "sha256": "62ce94a0ff2a6a0030c74fa6e6d93d5810de7e6be088e116382d3ebef9e00cdb"
+    },
+    "jan1_range_017": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-17.json",
+      "sha256": "7cb5d29130d64156d03357298c3e263cccd93dbf0f7473ba10c6e0b039a2ed06"
+    },
+    "jan1_range_018": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-18.json",
+      "sha256": "62381387f7420b6821be5a91c9b7c9bf119f88f0f83d5cc0e39cbfb87bd72759"
+    },
+    "jan1_range_019": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-19.json",
+      "sha256": "e665d93350c2f10c9dba552cd7abd3fe2c22c7f57999c0caf6bb8facb623b11b"
+    },
+    "jan1_range_020": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-20.json",
+      "sha256": "3c1d07c0aaae61cd50fadbba052a911fe2417b785f36a3e1f06ef4b45bbc937d"
+    },
+    "jan1_range_021": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-21.json",
+      "sha256": "a424150e6802b9c027b4be6e6b2b4c10484ae8411e8a44a587be4281a55cf4cc"
+    },
+    "jan1_range_022": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-22.json",
+      "sha256": "4a30930c7cfec7795bfb665133940e1760ca00eb0820848ae4e1d6f7fdecaee6"
+    },
+    "jan1_range_023": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-23.json",
+      "sha256": "08bfdf8674b6cdc8b6578c7d7c234454d4aea44ead7ae6e5f1e3334577951006"
+    },
+    "jan1_range_024": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-24.json",
+      "sha256": "823fb80577e51fb9e309fd88f2ca3f31330b8ec1dbb93dea1ef020474ee03aad"
+    },
+    "jan1_range_025": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-25.json",
+      "sha256": "0877e7accc983452518ff0969d071b022d5ed7f3cbbc313652286c57a20b6fc0"
+    },
+    "jan1_range_026": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-26.json",
+      "sha256": "9cbbb60fd316e27fb76e270e8935c55c73d49637a8fb0e536c5eec59d48e876f"
+    },
+    "jan1_range_027": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-27.json",
+      "sha256": "744717574c25dead300354e6679e371e8bb93d4f6053a598e6379e1b76acd90a"
+    },
+    "jan1_range_028": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-28.json",
+      "sha256": "0a7dcd0166027230aea2e6507582dd647a353099b4dbe9cf0462c98e5ef902a0"
+    },
+    "jan1_range_029": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-29.json",
+      "sha256": "f68dc1c0786a09835cbc8c5987f9e900a7355d1ed7cf051f7015cf3f62c49285"
+    },
+    "jan1_range_030": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-30.json",
+      "sha256": "91b53e43f07b17e94d438b597d1dd7c19f29abbec284804d0df08975adb939de"
+    },
+    "jan1_range_031": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-31.json",
+      "sha256": "68f81cfe66a35d6e414ac24dd35e19513bea945f7a06dae3b2f9af81100eda23"
+    },
+    "jan1_range_032": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-32.json",
+      "sha256": "a0db80202ef041a09d2220f102e02d47dcf496d1d3af623cd7eaab2e255cadd9"
+    },
+    "jan1_range_033": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-33.json",
+      "sha256": "9093db113548e565d9f4173e00e3b4d6456b9c66fad3b7162580ea93a9b13a7b"
+    },
+    "jan1_range_034": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-34.json",
+      "sha256": "dabac775f8500a59661cbfa5ea4569a199216ba5de2927b409269c20302799fb"
+    },
+    "jan1_range_035": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-35.json",
+      "sha256": "569534d8c8c63b61d8a707b3b7959a1de00d16dac5d440960cd84b65580eb852"
+    },
+    "jan1_range_036": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-36.json",
+      "sha256": "3a3a8a8b2c0cc0499f16ca58efb0a6cce3b2ba65d00424d08e4749e491fa00d2"
+    },
+    "jan1_range_037": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-37.json",
+      "sha256": "3dee978a07b9dbe88e1edc5faa1e21c2f491ac0dd36c82e4a9e41a66ae570dd2"
+    },
+    "jan1_range_038": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-38.json",
+      "sha256": "9de30907f78f88b28178759d5f1c9a3f1914f360700eb0075bd8d49f7a40735a"
+    },
+    "jan1_range_039": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-39.json",
+      "sha256": "deadb077beeaf8bb7fd674f7533968e782b716372bf19d207fe875a714095df8"
+    },
+    "jan1_range_040": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-40.json",
+      "sha256": "53f1b28edcdcfadf785ccda54c4d8289e1f34b6af35ad19a5287f5e4ac8dbea9"
+    },
+    "jan1_range_041": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-41.json",
+      "sha256": "675b68a66a5aa84aed9eb61f8f663b419d1ff5f9bf5fab577085102f3566ee25"
+    },
+    "jan1_range_042": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-42.json",
+      "sha256": "47dd5fe3c65ede27fb7ca347129081645b8e1855db9da172ea12e690463d7844"
+    },
+    "jan1_range_043": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-43.json",
+      "sha256": "859cc68885116bad89aac77c6457e38a975c1070fc49ba71547b66d686ce0632"
+    },
+    "jan1_range_044": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-44.json",
+      "sha256": "4ca2127680476599384dc73b6806c439065f241366bd379166a61fec23ddbfa5"
+    },
+    "jan1_range_045": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-45.json",
+      "sha256": "fa95cac3a50f65d89c4637e7a81d768fbb409ab94dc7aa06355ef62f90d2704f"
+    },
+    "jan1_range_046": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-46.json",
+      "sha256": "b67c84b78710ce38babc6ade0a9e12c3be33dcac30358c0369cf820d32ec7416"
+    },
+    "jan1_range_047": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-47.json",
+      "sha256": "daf560a9394d3dc5a3b4a759da3c7720aafc47fa3647e452e0e3bdba7ce9a404"
+    },
+    "jan1_range_048": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-48.json",
+      "sha256": "714766b0d45ec84e0d706fb9bb1f7b4a3c2417738a005537f7266a7534a89e34"
+    },
+    "jan1_range_049": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-49.json",
+      "sha256": "fca984598d37e3464cd99e3a8ae9d47af32650b0eb8fe876152e741e678c00b7"
+    },
+    "jan1_range_050": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-50.json",
+      "sha256": "26b6c61b1911882942b547518ca32d8926073abd7a842538124003d75768689e"
+    },
+    "jan1_range_051": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-51.json",
+      "sha256": "782fa18011e85b48908b84e0915940f3f95a30c1bc76ced0ffc391d53f140ead"
+    },
+    "jan1_range_052": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-52.json",
+      "sha256": "cb65d7e6e64497da5afa5d0cb3c35318bdecebb02a056c5f7eda90ab8208e303"
+    },
+    "jan1_range_053": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-53.json",
+      "sha256": "fc1c2addc9a5f439c775bf0be938ee133bbe33080dc40a29b7b15faa7c622b9a"
+    },
+    "jan1_range_054": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-54.json",
+      "sha256": "d9c7076afcd1f13e35c60fcce0028b9ee2f6e69c3583a7e6bba77cf19bdfe87c"
+    },
+    "jan1_range_055": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-55.json",
+      "sha256": "0daca6dca460722922fb47ac90fc395090aa0e82541a79618a86a1bd57da5f0a"
+    },
+    "jan1_range_056": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-56.json",
+      "sha256": "1462042dbb39f3cd3dee9db72536e66dc1be0b6675c8811e644dfcc11f6dcfe3"
+    },
+    "jan1_range_057": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-57.json",
+      "sha256": "d9e830b5d6150322fa543e3b9f9df612d7f1ee8e72b1b4856217de981d09b585"
+    },
+    "jan1_range_058": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-58.json",
+      "sha256": "fdad23b31a741646b392fa30ded45f6001e7103ec98a571de3f150ad5a3d0f0d"
+    },
+    "jan1_range_059": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-59.json",
+      "sha256": "960b229687e1509c70fad4a5a538516c0998966f7f37b99199ef21104a255203"
+    },
+    "jan1_range_060": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-60.json",
+      "sha256": "3cea7574d495cfd6532da14add0ae0ad998c0736d0771fb0be7aac743ba760f2"
+    },
+    "jan1_range_061": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-61.json",
+      "sha256": "ad4bfcc8805280460a54bfd403e086c3ed25f9c497e12a00e7ce56d83429940b"
+    },
+    "jan1_range_062": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-62.json",
+      "sha256": "b1d1f4098d9e30db456fed6da23e651d8a79cc641ec171d8c5fa9c44a8e4e097"
+    },
+    "jan1_range_063": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-63.json",
+      "sha256": "662b965e5115ddd9a5e068ec3c1706f8d21ac3f99b98dd0e4d60b42a8021592c"
+    },
+    "jan1_range_064": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-64.json",
+      "sha256": "dc7f0db7006b2edc81f7f0efdc88e75315be158374bcb73052bb8be19cf5cee3"
+    },
+    "jan1_range_065": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-65.json",
+      "sha256": "dbcdca6d6f7bad8ca365c3c17aff8dae619e2cb430ea6a4d7a99c7885d9668c6"
+    },
+    "jan1_range_066": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-66.json",
+      "sha256": "a354e285fcccfdf8cb5ca6fe26414d8e56146606c52ee3df9b16d941e181077e"
+    },
+    "jan1_range_067": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-67.json",
+      "sha256": "f54d00479d79f08ccc8c446102d3b546640a5103661bace4af20b52f3d68338e"
+    },
+    "jan1_range_068": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-68.json",
+      "sha256": "986550b1b0fdb4cad395f1e6114681ed2715f89c2a223c7081924c955b985aa3"
+    },
+    "jan1_range_069": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-69.json",
+      "sha256": "fb9994eb0a0f50baeafc4ff690fb509d1d561fec953db9b5bebce4392c28d61a"
+    },
+    "jan1_range_070": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-70.json",
+      "sha256": "7815183df0f2758feb2e43c1f258be5a35d6471ed00da215257668c3a421dc4f"
+    },
+    "jan1_range_071": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-71.json",
+      "sha256": "16212dcb7941f8a381776fb082dac44390d7eb197ab45ee205a47ab5ecbe7a0e"
+    },
+    "jan1_range_072": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-72.json",
+      "sha256": "40d4d2e5d0c4c5cd41420066446b42b6324138f54bceb0a5d30c8b0a630d5fa8"
+    },
+    "jan1_range_073": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-73.json",
+      "sha256": "9d3d4e90e413681c3c612d4d50acff0df2ae02546ef6dd67ef1b59edf79837ee"
+    },
+    "jan1_range_074": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-74.json",
+      "sha256": "e2ae26b8e646899bcb5a5616be1bbebd1c731df1327ccf880ad3e61d02b40f6c"
+    },
+    "jan1_range_075": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-75.json",
+      "sha256": "f610d4360e2633bc7c57b12a036f265d37732732397b2a28e6787c6025fb03de"
+    },
+    "jan1_range_076": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-76.json",
+      "sha256": "5758121eca5a5ecf7ef8db8fea9425eba948045e067f58e8ae81a9dcf1c4e767"
+    },
+    "jan1_range_077": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-77.json",
+      "sha256": "94b820041dfbee80977d0615b9e346cc98a1ead8b2e837504104aca781b965d0"
+    },
+    "jan1_range_078": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-78.json",
+      "sha256": "73a575adcb9507fea02a27621319c1f77929349a175474bc2a528dc7df19506e"
+    },
+    "jan1_range_079": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-79.json",
+      "sha256": "d6058a4c980468c143a0b1968319d0af3c34791d751a5d122b2c6f37ac3aaa64"
+    },
+    "jan1_range_080": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-80.json",
+      "sha256": "f084ba3f1b21d4f052a7a1d1685a1ca9de48e32a50d9199b4ce424a65419c7a1"
+    },
+    "jan1_range_081": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-81.json",
+      "sha256": "1541be6792f97605197170753953f49c3efc301fd38b090f2841c7e222b21b30"
+    },
+    "jan1_range_082": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-82.json",
+      "sha256": "b00ed9f725c20dc11b887558289f8a500159cb2e7042a3191e2a96ae91e638c7"
+    },
+    "jan1_range_083": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-83.json",
+      "sha256": "e597f9bde725a955508b7137ea8f02fd7713da2855f3fcaa01e1b98ae6fd9379"
+    },
+    "jan1_range_084": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-84.json",
+      "sha256": "ad39a7b3b4a20fd76ab72c4705de0c6b34ab7714bacc170d3ec3f00f3bc8d33e"
+    },
+    "jan1_range_085": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-85.json",
+      "sha256": "6e5fe260cb71b8f7275e72d4c12167b7132aecf618ed8201ee63fbac3a34c0b2"
+    },
+    "jan1_range_086": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-86.json",
+      "sha256": "1643d2e26a5266f6115b86ae2134f30e6dfe5125be035fb527d2fe8ac38fc0ad"
+    },
+    "jan1_range_087": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-87.json",
+      "sha256": "84f6c536d468689d2f7de0c41b92bb15983f47983bfa834ed0e70af0ae631cf6"
+    },
+    "jan1_range_088": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-88.json",
+      "sha256": "4c9c16105dee7d9601526c69600d1285132715695697a075ac7bde6f90a9157a"
+    },
+    "jan1_range_089": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-89.json",
+      "sha256": "895cc7ba7701b85dac03211148b74df447d8f3b8e335e0b63477e00c042a4651"
+    },
+    "jan1_range_090": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-90.json",
+      "sha256": "262843c748d780c213a77a99f721d3dd8798ee84c3b7176af235dc82906c1de2"
+    },
+    "jan1_range_091": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-91.json",
+      "sha256": "71e746608498e5117c0aa796d078c25b73d536d3d9b046b720755d17fe94bf3b"
+    },
+    "jan1_range_092": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-92.json",
+      "sha256": "bf3d95a22e5b838db3082c1e03b46914a5b4fe8ad2ab770cbd79ae7809f07f86"
+    },
+    "jan1_range_093": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-93.json",
+      "sha256": "f67870fe5a49fd00ebc5aafcca9dee29bb0937d6e6273163d431bcfe4c2a3267"
+    },
+    "jan1_range_094": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-94.json",
+      "sha256": "2188628b610c2c88919a03297d06324480e1ce894998f3a616dff3d3761eb876"
+    },
+    "jan1_range_095": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-95.json",
+      "sha256": "469f6060732a7549eb8292fbd5400b63037870f256e73936a6eb1b1eea4fb6b1"
+    },
+    "jan1_range_096": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-96.json",
+      "sha256": "db31f80c9c1b4e8bb99bd5c051277c0972bd9b30cc8b83be007c0eb2f315ce0d"
+    },
+    "jan1_range_097": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-97.json",
+      "sha256": "fc589a58120edaa18b31c373184d9c4cdd7d0d3e1221145715fd32e790e45776"
+    },
+    "jan1_range_098": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-98.json",
+      "sha256": "1f92461727bf1dd87baf1f045ee988f564b56a26f92db0d1a127a82f944dfd7f"
+    },
+    "jan1_range_099": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-99.json",
+      "sha256": "399781f4eeb703d025d4a7abba7b5fa4359fa625e1cd5ba591337bc71600e11d"
+    },
+    "jan1_range_100": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-100.json",
+      "sha256": "3453363feffc665c00d9f3a1acfa6a74e20de6264d6a3015192976ae5845ec02"
+    },
+    "jan1_range_101": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-101.json",
+      "sha256": "464faaf9944c1be242756159941ca81edcf1cc04b850e134071e9c45c42f3e4d"
+    },
+    "jan1_range_102": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-102.json",
+      "sha256": "175f516bb7cf800ce37dd6f814d4089c3c6295575a933e265db194aff0464387"
+    },
+    "jan1_range_103": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-103.json",
+      "sha256": "528b562d00a049638e119c5fa4e406ac0bef1cbb9d9b931e7af7e1f556ec2e9c"
+    },
+    "jan1_range_104": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-104.json",
+      "sha256": "5efbf74fe340893315547ba7ac538c4f3c7c657f887ed075752877bb72d0e846"
+    },
+    "jan1_range_105": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-105.json",
+      "sha256": "fcced0a6997f160032ebb156da2cc2c62123ea2c94240ab856773cd98d6aba18"
+    },
+    "jan1_range_106": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-106.json",
+      "sha256": "d9b9a9553cd16218f78a39be7f7959722f5982f0cdf86a8b358a90dea9b4dbef"
+    },
+    "jan1_range_107": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-107.json",
+      "sha256": "0c3ac66ea9a3bd5ab1b9d548353f8b1a5481ee1064081a9a5a16b223099f5c5f"
+    },
+    "jan1_range_108": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-108.json",
+      "sha256": "f7f2fae03fcbb34cec46797836e12cf2928fa5cbee19569a84a859571ae70233"
+    },
+    "jan1_range_109": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-109.json",
+      "sha256": "f9cefb2a1f40d519d5bbbc17dfdd42e572e46980eb07080e6160bc2ecacf1458"
+    },
+    "jan1_range_110": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-110.json",
+      "sha256": "12838ae9bd7ab679a128feaec2ab8bc9186b163faa044afa8acf29aa13c3fbb9"
+    },
+    "jan1_range_111": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-111.json",
+      "sha256": "7305e757bfe7692c74772d1fed6e9d47e3769ff8254b4fe922adfcb00809c8ee"
+    },
+    "jan1_range_112": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-112.json",
+      "sha256": "d76e8f013d4451ed7176eabc314652ab12600b70a9dab4114548c8016dc86a1e"
+    },
+    "jan1_range_113": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-113.json",
+      "sha256": "584ff53529f0495e36b8e44a9fc40f66abdce48b0fdc66a2c3f13313ad60d1d5"
+    },
+    "jan1_range_114": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-114.json",
+      "sha256": "511043acc6e975a6605ad60e7717e17131f939eae4c9ef95a4e598814e6704f5"
+    },
+    "jan1_range_115": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-115.json",
+      "sha256": "b6e1366e84780676220a491b80a24fa49a5542323b90b8a8381c7e1100e83907"
+    },
+    "jan1_range_116": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-116.json",
+      "sha256": "307fcfb64107cf92afc074a9418068bf987ee9dcc9d2bed48afdfa883a3c60f2"
+    },
+    "jan1_range_117": {
+      "dataset": "eth-history",
+      "path": "research_runs/eth-graph-prototype-20260916/outputs/request-117.json",
+      "sha256": "c1ef186ace56e67819e8ad708f332cd33f88593432dd8a5f1b56bc65b66468be"
+    },
+    "old_pilot_gate": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/pilot/gates.json",
+      "sha256": "ba525b15cfa20abf89170051825434808eff1143d44651a1372d36c634f21693"
+    },
+    "old_source_gate": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/comparison/resume3-gates.json",
+      "sha256": "4722c9ff8f6f4c0a3db9a4181ec40b4f0dac2bf6a95a3ec42394f2936124a0a4"
+    },
+    "plan": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/pilot2/plan.json",
+      "sha256": "2ecea1bcbee3da1eab047c93f72ef7a02e746246fa999c81823662aee7a1d8ab"
+    },
+    "review": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/pilot2/PRE_EXECUTION_REVIEW.md",
+      "sha256": "50d36bfa60a1fcf9589fe6d048e209864c12c53136db11cade411de72d73c32b"
+    },
+    "verification": {
+      "dataset": "eth-history",
+      "path": "research/onchain-graph-2026-09-16/pilot2/verification.json",
+      "sha256": "be9256d5f5a1688fc0621e5bacfa00bc91a26d89fd2ef01551676421846bbd54"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2024-01-02T00:00:00Z",
+      "identity": "ethereum-native-top-level-transactions-chain-1",
+      "start": "2024-01-01T00:00:00Z",
+      "state": "exposed"
+    }
+  ],
+  "program_id": "onchain-graph-2026-09-16",
+  "registration": "research/onchain-graph-2026-09-16/pilot2/gates.json",
+  "registration_sha256": "081c75d1121ceb14ac234bb3084da4d1dce8fb6f896072e39789760d9bb6e869",
+  "schema_version": 1,
+  "source": "d6b556de45859a1cdd098ad69aad7e161caad96c",
+  "started_at": "2026-09-22T08:45:22.788858+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "eth-history",
+      "end": "2024-01-10T00:00:00Z",
+      "identity": "ethereum-native-top-level-transactions-chain-1",
+      "start": "2024-01-01T00:00:00Z",
+      "state": "exposed"
+    }
+  ]
+}
