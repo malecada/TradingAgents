@@ -3,14 +3,18 @@
 **September22 second continuation running:** the successor started19:02:19 UTC
 from remotely verified source `87b6ac39d12a4f9a2ac1832f34f68647c52c53c8` in the
 fixed Data resume2 checkout. Run `eth-full-history-feature-panel-resume2-20260922`
-consumes cumulative16/16. It restores206 preserved source-day outputs before
-continuing890 remaining dates fromJuly26. Actual memory.max and memory.high are
+consumes cumulative16/16. At19:42 UTC, all206 saved outputs matched their
+checkpoint bytes and12 new days had completed through2022-08-06, giving218/1096
+source days and217 graph days. July26 passed its daily check, hash append and
+cleanup, beyond the preceding failure point. Actual memory.max and memory.high are
 both6 GiB; other guards and all numerical criteria are unchanged. The lower
 watermark was raised after systemd-oomd killed the previous continuation for
 sustained ancestor memory pressure. That failed attempt added no source day;
 its terminal, partials and independent failure review are preserved. The earlier
-reboot cause remains unknown. Startup restoration does not yet prove the
-previous counting failure resolved.
+reboot cause remains unknown. The worker remains active: sampled cgroup peak
+4.848 GiB, no recorded high/max/OOM events, and37.02/52.24 GiB Data/root free.
+The [recovery observation](fullpanel_resume2/recovery-milestone-20260922/observation.json)
+records verified process identity, checkpoint equality and daily-check receipts.
 [Current status](fullpanel_resume2/STATUS.md) and [runbook](fullpanel_resume2/RUNBOOK.md)
 bind exact process, source and review instructions. Independent release review
 and2,682 offline tests plus97 subtests passed. The30-minute monitor is active;

@@ -4,9 +4,19 @@ The successor started at **19:02:19 UTC (21:02 Prague)** from remotely verified
 source `87b6ac39d12a4f9a2ac1832f34f68647c52c53c8` in
 `/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume2`.
 Identity `eth-full-history-feature-panel-resume2-20260922` has claimed its single
-cumulative 16/16 allowance. The worker is restoring the 206 saved daily outputs
-before new extraction from 2022-07-26. Restoration previously took approximately
-12.5 minutes. Startup is not yet evidence that the July 26 counting stop is resolved.
+cumulative 16/16 allowance. At **19:42:00 UTC (21:42 Prague)**, all 206 saved
+daily outputs were verified byte-identical and **12 new source/graph days** had
+completed through **2022-08-06**: 218/1,096 source days and 217 graph days.
+The July 26 counting failure point has been passed; its independent daily check,
+hash append and cleanup receipts agree. Full-panel admission remains pending.
+
+The same PID/start/boot and fixed source were verified. Kernel limits remain
+6 GiB high/max and 512 MiB swap; sampled live members have CPU affinity0,1.
+Sampled cgroup peak is4.848 GiB, with zero high/max/OOM/OOM-kill events.
+Data/root free space is37.02/52.24 GiB, above both20 GiB floors. The excluded
+previous hash root is still empty. The [recovery observation](recovery-milestone-20260922/observation.json)
+preserves output hashes and first-new-day evidence. This is an operational and
+receipt check, not a new raw recount or final global hash-union verification.
 
 Outer PID1037781, start ticks846345, boot
 `6690623b-3299-42d4-8d7b-0847268fbe0c`; unit
