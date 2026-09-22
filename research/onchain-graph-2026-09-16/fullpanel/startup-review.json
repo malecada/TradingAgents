@@ -1,0 +1,136 @@
+{
+  "boot_id": "7efe60e3-fabc-4267-8881-15dfec9f3450",
+  "claim_sha256": "a268d4a04764e8b3ae657fb53441df26aacf704bd21f05d7d5449bcdb6d84df3",
+  "compute_resource_receipt_bytes": 0,
+  "correction_required": {
+    "cause": "Fresh integer degree-histogram keys sort numerically during original phase serialization; retained JSON converts keys to strings, whose reserialization sorts lexically.",
+    "fields": [
+      "source.activity.in_degree_histogram",
+      "source.activity.out_degree_histogram"
+    ],
+    "file": "research/onchain-graph-2026-09-16/fullpanel/check_final.py",
+    "function": "verify_daily",
+    "minimal_correction": "Restore strictly validated integer keys for exactly these two maps when source_reused is false before original phase digest reconstruction; retain original string keys for reused source. Preserve exact original audit and scratch-manifest SHA/length comparisons."
+  },
+  "days": [
+    {
+      "audit_sha256": "34c97e52e88ea43f57a5e948417aa3abd811d764735750dea9a1997b32f2b92b",
+      "boundary_status": "unavailable: missing previous or following evidence",
+      "cleanup_released": true,
+      "count_verified": false,
+      "date": "2022-01-01",
+      "graph": "unavailable",
+      "hash_receipt_sha256": "02d75d0e7538586d24280ab761b2fe808a170490e4a15586b2baad95b820bb20",
+      "original_phase_sha256": "696ab15b66e26b5ee785f1dc08e5ba1b2f6352a0bc0aa22409e5b42ad29df7c3",
+      "output_sha256": "8a103278ea620560b0cb22dedc0c8be4809cb47e46efeecbb9ee2c71e9b5b973",
+      "phase_bytes": 61045,
+      "prefix_blobs": 3,
+      "reason": "registered panel edge lacks preceding or following boundary",
+      "restored_integer_histogram_phase_sha256": "696ab15b66e26b5ee785f1dc08e5ba1b2f6352a0bc0aa22409e5b42ad29df7c3",
+      "source": "complete",
+      "source_hash_digest": "f0733420e3404a42bf8383e1ef8a63d151f87859b4c1866fdda9db07c0e3ce5a",
+      "source_rows": 1180989,
+      "unmodified_final_checker_reconstruction_sha256": "1c253b90b6fd5c2016e698e2aa6f4e0ecdf80a24164c727fd8c8223460b4569a"
+    },
+    {
+      "audit_sha256": "1dc6f55803c16612b17e93b86cc7081c26aafbc5a3bef157f2d8f6db5ba656d5",
+      "boundary_status": "passed",
+      "cleanup_released": true,
+      "count_verified": true,
+      "date": "2022-01-02",
+      "graph": "complete",
+      "hash_receipt_sha256": "c369ae46c881bcd1189f3612d4cc8ecb3d752371689155ee797468b5ccad1f16",
+      "original_phase_sha256": "cb558637c8925e2e8c3455f9d764908a38bf491209d84ebae3673755d989ed12",
+      "output_sha256": "d14e4b9c8e199b9a0f9d73131527b836f952581a838e95cc2e9cc9b9ea813990",
+      "phase_bytes": 180513,
+      "prefix_blobs": 3,
+      "reason": null,
+      "restored_integer_histogram_phase_sha256": "cb558637c8925e2e8c3455f9d764908a38bf491209d84ebae3673755d989ed12",
+      "source": "complete",
+      "source_hash_digest": "3ab62864fe0f7e7055ad6e2ca0154761ed366924542c211ad44f29b6d81210de",
+      "source_rows": 1158900,
+      "unmodified_final_checker_reconstruction_sha256": "0916c379f8f37a15a14c8226d9f145693d0041979e5410b276acee7a229ec65a"
+    },
+    {
+      "audit_sha256": "9673cb43486a57292e537027f88029287397276aa640204b9f6093f1b409244e",
+      "boundary_status": "passed",
+      "cleanup_released": true,
+      "count_verified": true,
+      "date": "2022-01-03",
+      "graph": "complete",
+      "hash_receipt_sha256": "474411504264d60ee4a036d1819e99d6d038e851480fa6af3f7f50de086c0c81",
+      "original_phase_sha256": "07c8b6b5ecfd9eb096503f0fbc1002e40ad71f8472acf640446dedb791ca17e0",
+      "output_sha256": "9aaa5504ceda3bdeb3fb0f126cdf84099dabd65177d4738ffebc6d8f1dfac118",
+      "phase_bytes": 185829,
+      "prefix_blobs": 3,
+      "reason": null,
+      "restored_integer_histogram_phase_sha256": "07c8b6b5ecfd9eb096503f0fbc1002e40ad71f8472acf640446dedb791ca17e0",
+      "source": "complete",
+      "source_hash_digest": "d24e9ed16618eec8a91e4df42e12b27d48e6da629c1f247b05830a9837c89ee6",
+      "source_rows": 1209173,
+      "unmodified_final_checker_reconstruction_sha256": "a873b4492a9bba3c174c778177729d3fc44086ee00aafab1f126d462ada16f01"
+    }
+  ],
+  "execution_root": "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel",
+  "financial_admission": false,
+  "gate_sha256": "6f54f80ed24642fe759259090765434b1aaf27d238e3626332ad217a7da71b78",
+  "global_hash_audit_completed": false,
+  "hash_scratch": "/home/malecada/master_thesis/onchain-fullpanel-hash-scratch-20260922",
+  "hash_scratch_bytes_at_snapshot": 113712090,
+  "historical_availability_verified": false,
+  "input_bindings_verified": 1285,
+  "launch_pid": 2182802,
+  "launch_start_ticks": 6170009,
+  "matching_processes": [
+    {
+      "cpu_affinity": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "pid": 2182802,
+      "ppid": 5229,
+      "script": "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel/research/onchain-graph-2026-09-16/fullpanel/launch.py",
+      "start_ticks": 6170009
+    },
+    {
+      "cpu_affinity": [
+        0,
+        1
+      ],
+      "pid": 2183798,
+      "ppid": 2182802,
+      "script": "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel/research/onchain-graph-2026-09-16/fullpanel/run.py",
+      "start_ticks": 6170351
+    },
+    {
+      "cpu_affinity": [
+        0,
+        1
+      ],
+      "pid": 2198536,
+      "ppid": 2183798,
+      "script": "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel/research/onchain-graph-2026-09-16/fullpanel/check_day.py",
+      "start_ticks": 6204866
+    }
+  ],
+  "observed_at": "2026-09-22T10:30:39.144018+00:00",
+  "published_graph_days": 2,
+  "published_source_days": 3,
+  "qualification": "Read-only startup metadata/retained-byte review; no raw decode, numerical recount or full raw-store rehash. Launch monitor itself is not affinity-limited; guarded compute descendants observed on two CPUs. Empty guard receipt is live state, not a clean-exit claim.",
+  "runtime_bindings_verified": 6,
+  "source": "fdb33cf27ca97b8d32926f046be422d8b8b45b6f",
+  "source_binding_verified_at": "2026-09-22T10:27:23.799545+00:00",
+  "source_bindings_verified": 54,
+  "terminal_present": false,
+  "verdict": "compute startup consistent; final-checker serialization correction required before closure"
+}

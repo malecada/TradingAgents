@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "purpose": "Exact original phase serialization reconstruction only; no value, criterion, output or compute change.",
+  "execution_root": "/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel",
+  "execution_source": "fdb33cf27ca97b8d32926f046be422d8b8b45b6f",
+  "target_experiment": "eth-full-history-feature-panel-20260922",
+  "compute_replay_allowed": false,
+  "new_claim_allowed": false,
+  "network_allowed": false,
+  "report": "independent-report-v2.json",
+  "resource": "independent-resource-v2.json",
+  "committed_files": {
+    "research/onchain-graph-2026-09-16/fullpanel/check_final_phase_v2.py": "2e6749442c7c7351645ca183f7a8515956ca08e59f809745681b0c8480e65ab4",
+    "research/onchain-graph-2026-09-16/fullpanel/launch_phase_v2.py": "9a496521848e98d4169e2c2d46a768547f09a81e3f5b3f2594bcf770e18a8b82",
+    "research/onchain-graph-2026-09-16/fullpanel/PHASE_CORRECTION.md": "aa17e0220ea9bf1b210b42e3b348e29461ecaf2228057090ce3848e03c005e2c",
+    "research/onchain-graph-2026-09-16/fullpanel/PHASE_CORRECTION_REVIEW.md": "a4952b4762982c28b3629e245beee1944cf6199941aa27c0e5912b35ddf2b494",
+    "research/onchain-graph-2026-09-16/fullpanel/PHASE_CORRECTION_APPROVAL.json": "69627e105febf456e19554f3ceaaf795fa1034fbb4afbda17d717a28b851245c",
+    "research/onchain-graph-2026-09-16/fullpanel/phase-correction-verification.json": "24a90d78dc30d7447d185a04c2ca67fbe00f9e74cfb16b7c6510ca8ec93c73da",
+    "research/onchain-graph-2026-09-16/fullpanel/phase-correction-tests.log": "451c5b41d9911042da7589b0461607ffd4e8a116e7d71cff753ff878e19748be",
+    "research/onchain-graph-2026-09-16/fullpanel/STARTUP_REVIEW.md": "f2300165ae69a6aa40d8d81456b673228f1ca7245a33a693ee9add8b92959d20",
+    "research/onchain-graph-2026-09-16/fullpanel/startup-review.json": "79faaea80db3bbfb2edbbc4ec810307672e91a8606fd64f660f062fd52c74e52",
+    "tests/research/test_onchain_fullpanel_phase_v2.py": "675640369cf9329d9593540e0e2cadd31011ce90f439bebfebf7e069dbfccb44",
+    "tests/research/test_onchain_fullpanel_phase_launch.py": "cf5f7f86cffa568feab47a650690d4227720cc46109d162043d8df9b659dfc27"
+  },
+  "execution_files": {
+    "research/onchain-graph-2026-09-16/fullpanel/gates.json": "6f54f80ed24642fe759259090765434b1aaf27d238e3626332ad217a7da71b78",
+    "research/onchain-graph-2026-09-16/fullpanel/plan.json": "19f3716454216afc172aec2939a9908ba3b57921e99249951e1860b995d1d691",
+    "research/onchain-graph-2026-09-16/fullpanel/check_final.py": "214ca8e0312b8cc832a4a46e7f518364f61681aad9553121758f5e6d5e96905f",
+    "research/onchain-graph-2026-09-16/fullpanel/check_day.py": "997991361a2c00f527906e5065281c827bf842a1d75650c7f4a6bfe2b90ff73a",
+    "research/onchain-graph-2026-09-16/fullpanel/day.py": "2f9b30f600c08f92a33fe9c1037b332c5f1e49ef233c1a8347c618e6b1edc10e",
+    "research/onchain-graph-2026-09-16/fullpanel/launch.py": "e3a9e316223f8ae3d50c83123f9be33fff2b31480b8982431c0184e5b4788ff4",
+    "research_runs/eth-full-history-feature-panel-20260922/claim.json": "a268d4a04764e8b3ae657fb53441df26aacf704bd21f05d7d5449bcdb6d84df3",
+    "research/strategy-search-2026-09-11/resource_guard_v2.py": "feb2c1ed2984100b069261cceaf6d7a1bdac4406eff3dee5b18fdc51f6965298",
+    "research/onchain-graph-2026-09-16/motifs8gib/launch.py": "9dfad213fad3b8c29c20f3b1863244e8b1fa79192506608519f82b1da6b601f2"
+  },
+  "qualification": "One corrected final review after terminal compute under unchanged8GiB/twoCPUguard. Original checker failure detected at startup is preserved; original full main was not run. All original strict comparisons remain."
+}
