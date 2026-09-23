@@ -1,5 +1,19 @@
 # Ethereum graph feasibility checkpoint
 
+**September 23, 21:00 UTC — independent final verification running.**
+The frozen review launcher started at 20:59:51 UTC (22:59 Prague), after host
+available RAM reached 9.4 GiB. Compute is not being replayed. Launcher PID9238,
+start ticks12504, boot `df1f8c6b-0492-497f-8d23-bb55c45d37f6`; review unit
+`onchain-resume-0f30e5a99d374456ae665f2ea48ee752.service`.
+Live checker membership and actual 6 GiB memory high/max, 512 MiB swap and CPUs
+0,1 were verified. At 21:00:33 UTC cgroup memory was 1.33 GiB with no OOM events.
+See the [review startup observation](fullpanel_resume2/review-startup-20260923/observation.json).
+No final review verdict exists yet. Never duplicate this review attempt; use
+its launch observation, resources/review receipts and independent-report.json.
+Full compact evidence import/backup still needs additional main-partition space
+above the 20 GiB reserve. Continue the authorized comparison preparation after
+reviewed graph closure and preservation; no model has been fitted.
+
 **September 23 — matched comparison continuation authorized.** The user approved
 proceeding with final graph verification and the saved M0/M1/M2 evaluation.
 The unchanged protocol and 38 retained spot months are bound in the

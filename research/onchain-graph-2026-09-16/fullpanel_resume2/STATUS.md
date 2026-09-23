@@ -1,5 +1,19 @@
 # Second continuation running — September 22, 2026
 
+**September 23, 21:00 UTC — independent final verification running.**
+The frozen review launcher started at 20:59:51 UTC (22:59 Prague), after host
+available RAM reached 9.4 GiB. Compute is not being replayed. Launcher PID9238,
+start ticks12504, boot `df1f8c6b-0492-497f-8d23-bb55c45d37f6`; review unit
+`onchain-resume-0f30e5a99d374456ae665f2ea48ee752.service`.
+Live checker membership and actual 6 GiB memory high/max, 512 MiB swap and CPUs
+0,1 were verified. At 21:00:33 UTC cgroup memory was 1.33 GiB with no OOM events.
+See the [review startup observation](review-startup-20260923/observation.json).
+No final review verdict exists yet. Never duplicate this review attempt; use
+its launch observation, resources/review receipts and independent-report.json.
+Full compact evidence import/backup still needs additional main-partition space
+above the 20 GiB reserve. Continue the authorized comparison preparation after
+reviewed graph closure and preservation; no model has been fitted.
+
 **September 23, 18:57 UTC — compute complete; final review awaiting capacity.**
 Compute terminated successfully at 18:35:02 UTC, with 2,193 cells/1,099 outputs
 and only the two registered graph-boundary exclusions. All terminal output
