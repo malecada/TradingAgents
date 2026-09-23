@@ -1,4 +1,25 @@
-# Second continuation running — September 22, 2026
+# Second continuation — verification passed; preservation pending
+
+**September 23, 21:32 UTC — independent full-panel verification passed.**
+The frozen checker finished at 21:10:08 UTC, admitting all 1,096 source days,
+1,094 graph days and exactly 1,221,389,903 distinct transaction hashes with zero
+duplicates. The independent two-root check reconstructed all 1,096 sorted daily
+hash streams. Only the two registered boundary exclusions remain. Report output
+hashes match the compute terminal. The review guard exited zero with verified
+cleanup, no limit event and no OOM events; elapsed 612.79 seconds, peak cgroup
+5.03 GiB. No review or compute replay is permitted.
+
+The [review completion snapshot](review-completion-20260923/observation.json) preserves the full independent report,
+launch observation/log and resource receipts with size/SHA256 bindings. Full
+compact evidence import and final preservation closure remain pending: main
+free space is about 20.30 GiB against the 20 GiB reserve, insufficient for about
+0.91 GiB payload plus Git overhead. Additional main-partition space (about 3 GiB)
+is needed. Raw/hash roots remain preserved; no off-device raw backup is claimed.
+The monitor remains active for preservation and the already authorized matched
+comparison. No empirical prices/labels have been opened or model fitted. This
+verification establishes the stated computational checks, not historical
+availability, canonical-chain proof, exhaustive full-day star/triangle recount,
+forecast accuracy or profitability.
 
 **September 23, 21:00 UTC — independent final verification running.**
 The frozen review launcher started at 20:59:51 UTC (22:59 Prague), after host
