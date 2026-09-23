@@ -1,5 +1,18 @@
 # Ethereum graph feasibility checkpoint
 
+**September 23 — matched comparison continuation authorized.** The user approved
+proceeding with final graph verification and the saved M0/M1/M2 evaluation.
+The unchanged protocol and 38 retained spot months are bound in the
+[preparation checkpoint](comparison/evaluation-preparation-20260923/PLAN.md).
+A pure input adapter and 51 focused synthetic tests passed; independent bounded
+review found no blocker. No empirical prices/labels were parsed or models fitted.
+At 19:13 UTC host available RAM was about 2.0 GiB, below the frozen 9 GiB graph
+review startup requirement. Evidence-import disk capacity also remains insufficient.
+Final graph review, full preservation, comparison runner/checker, exact lifecycle
+registration, broad offline verification and independent admission remain pending.
+The monitor continues this authorized sequence when resources permit. No old
+claim is replayed and no prior budget, numerical rule or protocol is changed.
+
 **September 23, 18:57 UTC — compute complete; final review awaiting capacity.**
 Compute terminated successfully at 18:35:02 UTC, with 2,193 cells/1,099 outputs
 and only the two registered graph-boundary exclusions. All terminal output
