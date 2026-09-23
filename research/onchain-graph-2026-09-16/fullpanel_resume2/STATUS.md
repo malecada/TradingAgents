@@ -1,5 +1,24 @@
 # Second continuation running — September 22, 2026
 
+**September 23, 18:57 UTC — compute complete; final review awaiting capacity.**
+Compute terminated successfully at 18:35:02 UTC, with 2,193 cells/1,099 outputs
+and only the two registered graph-boundary exclusions. All terminal output
+hashes were checked. Global uniqueness admitted 1,221,389,903 distinct
+transactions with zero duplicates; the 6 GiB guard completed with no OOM events
+and verified cleanup. Elapsed compute time was 23h32m40s.
+
+Independent review has not been launched: no review owner, review resource
+directory or report exists. Host MemAvailable is approximately 8.6 GiB, below
+the frozen 9 GiB startup threshold. Wait until it meets that threshold before
+using the same frozen launch.py --review exactly once. Do not lower limits or
+replay compute. The main partition has about 20.49 GiB free; the full compact
+evidence payload is approximately 0.91 GiB before Git overhead, so full import
+would breach the 20 GiB floor. Additional main-partition space is needed before
+full import. A small immutable terminal/summary/panel/hash-audit/resource snapshot
+is preserved under [compute completion](compute-completion-20260923/observation.json).
+All original raw and hash roots remain preserved. Review, full evidence backup
+and final closure remain pending; the monitor stays active.
+
 **September 23, 18:24 UTC — all daily extraction finished.** All1,096 source
 days and1,094 graph days are published, with only the two registered boundary
 exclusions (2022-01-01 and2024-12-31). Retained daily checks cover1,221,389,903
