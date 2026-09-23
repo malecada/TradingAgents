@@ -1,5 +1,16 @@
 # Ethereum graph feasibility checkpoint
 
+**September 23, 18:24 UTC — all daily extraction finished.** All1,096 source
+days and1,094 graph days are published, with only the two registered boundary
+exclusions (2022-01-01 and2024-12-31). Retained daily checks cover1,221,389,903
+source rows. Every daily output/audit/cleanup hash link was checked. The worker
+remains active in the final global identity audit; no compute terminal or final
+guard receipt exists yet, and independent final review has not been launched.
+No OOM events are recorded; memory-cap reclaim events occurred. Main-partition
+free space is about20.5 GiB, so evidence-import capacity must be checked before
+copying results. Preserve all hash roots. See the
+[daily completion observation](fullpanel_resume2/daily-completion-20260923/observation.json).
+
 **September22 second continuation running:** the successor started19:02:19 UTC
 from remotely verified source `87b6ac39d12a4f9a2ac1832f34f68647c52c53c8` in the
 fixed Data resume2 checkout. Run `eth-full-history-feature-panel-resume2-20260922`

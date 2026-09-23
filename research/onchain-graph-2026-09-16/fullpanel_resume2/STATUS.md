@@ -1,5 +1,16 @@
 # Second continuation running — September 22, 2026
 
+**September 23, 18:24 UTC — all daily extraction finished.** All1,096 source
+days and1,094 graph days are published, with only the two registered boundary
+exclusions (2022-01-01 and2024-12-31). Retained daily checks cover1,221,389,903
+source rows. Every daily output/audit/cleanup hash link was checked. The worker
+remains active in the final global identity audit; no compute terminal or final
+guard receipt exists yet, and independent final review has not been launched.
+No OOM events are recorded; memory-cap reclaim events occurred. Main-partition
+free space is about20.5 GiB, so evidence-import capacity must be checked before
+copying results. Preserve all hash roots. See the
+[daily completion observation](daily-completion-20260923/observation.json).
+
 The successor started at **19:02:19 UTC (21:02 Prague)** from remotely verified
 source `87b6ac39d12a4f9a2ac1832f34f68647c52c53c8` in
 `/home/malecada/Data/onchain-research/TradingAgents-onchain-fullpanel-resume2`.
