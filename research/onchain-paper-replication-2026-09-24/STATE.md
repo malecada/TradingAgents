@@ -188,3 +188,63 @@ remote objects into the independent clone and extracting into a separate empty
 all396artifact hashes/bytes are checked. The original partial checkout refused
 an overwrite and is preserved. Branch e446e1f9 is pushed; external recoverability
 of this new metadata remains pending. Full body backup remains unknown.
+
+Remote metadata recovery02 failed and is terminal (session4634). Partial-clone
+archive unexpectedly initiated a broad34524-object promisor fetch; owned
+fetch/archive/SSH processes were stopped and existing directories preserved.
+No new recovery success is claimed. See replay/remote-metadata-recovery-02-failed.json.
+Both e446e1f9 and corrected successor c6b568d4 are pushed, but new metadata
+retrieval remains unverified. Original f276 bounded replay recovery remains valid.
+Successor02 admission at c6b568d4 passed88inputhashes, but startupMemAvailable
+was5.5GiB below6GiB; no guard/owner/claim created. Continue source/software work.
+
+External metadata recovery03 COMPLETE via byte-bounded HTTPS from published
+e446e1f9:411members/13,451,854bytes verified (396raw metadata artifacts plus
+compact run/guard/owner receipts). Guard256MiB cap,49,172,480bytes sampled peak,
+45.15seconds,child0/cleanup verified. Receipt replay/remote-metadata-recovery-03-
+complete.json; raw recovery /tmp/onchain-paper-remote-recovery-20260924-03.
+No full transaction-body or empirical-model backup claim follows. Failed02 is
+retained.
+
+ACTIVE successor02 launched once from c6b568d4b1c177ab94ac37fbad462c2decc721c0
+after MemAvailable recovered above6GiB. Terminal session88571. New owner/monitor
+under pilot-02-supervisor/, guard pilot-02-guard/, artifacts pilot-02/ under
+research_artifacts/onchain-paper-replication-2026-09-24/. Research identity
+eth-paper-resource-pilot-20260924-02; gate33ca7e3a000eaa5d2586967c5c1379c17962935c9b5082258f3c64377391f66d.
+Do not duplicate/relaunch or change HEAD/bound source/inputs while active.
+20cumulativeclaims once admitted; all1420predictivefits still pending. Inspect
+live ownership/progress and retain every terminal cell. Independent unbound
+representation-journal integration may continue.
+
+While successor02 remains active at c6b568d4, independent offline work continued.
+Feature-journal original findings and repeated pre-event interruption are fixed
+and independently closed; retained regression XMLs01–04 are additive. External
+metadata recovery03 independently verified all411members/13,451,854bytes and
+guard cleanup. Price registrations prices-01/gate-v1 draft had exact-family and
+parser findings; corrected gate-v2 now pending re-review/tests, no price request.
+BTC selected-leaf Parquet planner/decoder passed two synthetic multi-row-group
+tests; no actual BTC body captured/decoded. These changes remain uncommitted
+while pilot02 binds current HEAD. All1420predictive fits still pending.
+
+Price gate-v2 independent precommit release review passed after exact-family,
+explicit1d granularity and same-buffer hashing corrections.13synthetic price
+tests passed. No price capture yet: wait for activepilot02 terminal closure
+before changing HEAD, then commit/bind/admit each asset sequentially.
+Selected-column Parquet header/external-file findings fixed and independently
+closed (4synthetic tests). Registered representation ownership/continuation
+software is under review; same numerical motif identity now covers proposed,
+mcm_without_gat and training_label_permutation, with published journal references
+for exact same-run reuse.20component/recovery tests passed; two new targeted
+regressions running. Prospective fit-allocation-v1.json retains15batches/1420fits;
+table-status-pre-fit-v1.json retains44rows/1540table cells, allpending. Two
+comparison tests passed. No completed empirical graph/prediction claimed yet.
+
+First successor02 whole-week decode_graph2022-01-03 phase COMPLETE:8,373,297rows,
+4,415,050admitted;2,049,095nodes/3,182,055edges;562,559,884graphbytes;
+2205.61seconds;2,529,021,952peakworkerRSS. Phase receipt pilot-02/cell-001.json;
+graphmanifest bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98.
+This is an intermediate resource result, not full pilot or C04independent closure.
+Pilot02 remainsACTIVE under unchanged c6b568d4; now neighborhood phase.
+Registry motif-reuse/buffer regressions passed2(new03XML). Table-report v2 now
+retains complete per-cell dispositions and exact failure/unavailability reasons,
+with no survivor-only headline average. No financial fits or price captures.

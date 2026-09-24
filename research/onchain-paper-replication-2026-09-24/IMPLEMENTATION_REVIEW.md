@@ -742,3 +742,287 @@ amendment, successful normal admission/parent checks, absence of a successor own
 claim and live cap/reserve/disk checks. Closed pilot01 must never be relaunched.
 This review does not authorize financial fits, extra fit identities, silent source
 scope reduction, paid resources, provider contact or a further unregistered retry.
+
+Feature-journal/resume independent review (September24; corrections pending):
+three material integration findings were reproduced using only tiny synthetic
+journal payloads. No empirical continuation or successor pilot was executed.
+
+- P1, feature_journal.py:59,62–74: max_array_bytes is reset for each event and
+  recursive parent read. Two completed graph records with4,000-byte arrays each
+  are both returned under a5,000-byte limit. Retained workflow arrays therefore
+  exceed the supplied bound; completed graphs also keep superseded progress.
+  Preflight and enforce a shared retained-state budget across events/ancestors,
+  select only latest useful progress, discard progress superseded by completion,
+  and keep only the final alignment basis required for continuation. Adjust the
+  pipeline's completed-prefix iteration consistently. JSON/scalar metadata and
+  sample/dictionary list-to-array reconstruction remain additional memory costs;
+  the outer guard remains required and the bound's meaning must be explicit.
+- P2, feature_journal.py:16–20,59–60: failed-parent recovery mishandles two valid
+  failure boundaries. A parent sealed before its first checkpoint has identity
+  None; a successor accepts that parent during construction but later fails
+  readback when it acquires its first workflow identity. A failed parent that
+  already contains representation_complete can be read itself, but a successor
+  that only republishes the identical completed binding fails because
+  prior_binding is not None. Define and validate empty-parent inheritance and
+  publication-only recovery of already completed numerical work. Preserve failed
+  lifecycle status, prohibit refitting, and keep admission external.
+- P2, feature_journal.py:38–44,74–80: completion checks do not validate the final
+  context binding_hash and accept an empty feature_hashes mapping with no graph
+  records. A validly written/sealed synthetic journal with an intentionally
+  mismatched binding_hash was returned as complete. Verify cache_key(payload)
+  against the recorded binding hash and require a nonempty, exact expected graph
+  closure with required schema/lineage. Do not treat a supplied empty subset as
+  proof of completion; the registered producer must independently bind its
+  expected graph membership.
+
+These findings concern reconstruction/closure contracts, not observed financial
+results. Existing externally hashed component bytes still protect against simple
+file corruption, and the original publication-order causal alignment correction
+is retained. No empirical recovery authorization follows from these helper APIs.
+
+Feature-journal correction re-review (September24): the original retained-state
+counterexample now raises the shared array-budget error, completed progress is
+removed, and only the latest completed static alignment basis is kept. Independent
+GIN orchestration confirms that a failed but numerically complete parent can
+produce a one-event publication-only successor with an identical final binding.
+Mandatory nonempty required graph membership, final binding hash, schema, exact
+required feature hashes and graph/dictionary/alignment lineage checks address the
+previous false-completion finding. The retained feature-recovery-synthetic-03.xml
+has18 passes and no failures/errors/skips; SHA256
+82c1810ea181cd275e87e1b35d835f153e12d29f8587b03df3f53a3643653a48.
+
+One remaining P2 recovery boundary was independently reproduced:
+feature_journal.py:43,83–87 initializes every new journal identity to None even
+when its pinned failed parent already has a workflow identity. If that successor
+is itself sealed failed before its first event, readback inherits the parent's
+numerical state then rejects parent identity versus child None. Initialize or
+explicitly inherit the parent's identity for zero-event successors, retaining
+None only for entirely empty ancestry. Add a two-interruption regression so the
+second failed journal remains readable and preserves its ancestor work without
+recomputation. This blocks complete recovery-contract closure, not the already
+active separate resource pilot. Array budgeting remains a retained-payload bound;
+JSON metadata and transient allocations still require the outer resource guard.
+
+External metadata backup03 independent verification (September24; no new network
+request): all411 recovered files under the registered temporary recovery root
+match both the pinned contract hashes/sizes and the retained local original bytes.
+The verified total is13,451,854 bytes, within20MiB overall and4MiB per member.
+Every individual receipt records HTTP200 from the exact public
+raw.githubusercontent.com/malecada/TradingAgents/e446e1f948a8e0116bc08c212e5c0bed29ae72f1
+member path. The411 unique receipts equal the completion results; the recovery
+intent binds the contract hash and the output result equals the retained complete
+receipt. Static downloader review confirms direct bounded GETs, no redirects,
+exclusive destinations, per-member hash/size checks, four workers and no retries;
+it does not use a local-copy fallback or Git promisor archive fetch.
+
+Contract SHA256:
+26bd35135a94ea800c7577097649df47f8c386b8c3b7f1a3c89a44f18c4a8dd2;
+completion SHA256:
+28158fcd263681a899e5d073795e5927e9b08ead6e7120bcc1ad39914b942066;
+guard final/live SHA256:
+1a6d5f775ffcfe8b22340c21950f95f89d8978a28038ba572505dbf00dd3fd35.
+Guard release, child exit0, final/live bytes, verified cleanup and absent recorded
+cgroup agree; no OOM/OOM-kill or limit reason was recorded. Elapsed time is45.147s
+and sampled peak memory49,172,480 bytes. This establishes retrieved external
+recoverability for the finite metadata/compact-receipt set only. No transaction
+body, empirical model, full historical raw store or full C16 scope is certified.
+Earlier failed recovery attempts remain separate; this success does not overwrite
+or reclassify them. The active pilot was not inspected, controlled or modified.
+
+Final zero-event journal correction verification (September24): independent
+synthetic reconstruction now reads a twice-interrupted ancestry correctly for
+both an entirely empty parent and a parent with completed numerical state. The
+successor inherits the pinned parent's workflow identity before its first event,
+so no ancestor state is lost or recomputed. The retained2-case
+feature-recovery-synthetic-04.xml is passing; SHA256
+219fbaba76395a0037a428e7351e3268bbba99aa9569a71157e6af3072187285.
+The remaining journal finding is closed. This closes the bounded software review,
+not empirical continuation admission.
+
+Prospective price-source release review (September24; corrections required):
+gate-v1 SHA256
+13eb5e346907d957f96cb0fe511a66d366b0da34b0d8571ecb897ccc93198570
+matches the reviewed draft. Both assets have matching13 source-file bindings,
+8 inputs, lifecycle runtime hashes and charter. The query timestamps independently
+resolve to2016-01-01 through2025-01-01 exclusive at interval1d, and each asset has
+exactly3,289 unique cells:1 capture plus3,288 daily dispositions. Missing/null
+prices remain unavailable rather than filled. Separate asset-specific owner/
+monitor/guard/claim namespaces, parent-death behavior, postmortem denominator and
+no-retry capture intent follow the previously reviewed supervision design. The
+512MiB cap plus3GiB reserve gives3.5GiB startup headroom. No price claim exists.
+The retained7-case price/parser/supervisor XML has no failures/errors; SHA256
+8b31cbe1e5b53e1f6e2fb24eae4e83110bef2811166b1f229ffa22453da48eaf.
+
+Three material corrections are required before source release:
+
+- P1, prices-01/gate-v1.json families.paper.history_reference: appended allocation
+  text changes the family object relative to the consumed metadata/pilot claims.
+  admission.py:215–217 requires exact equality and will reject both assets before
+  claim. Preserve the exact established family object; keep the allocation detail
+  in separately bound inputs/charter. No budget or sample-history reset is needed.
+- P1, prices.py:20–26: dataGranularity is not validated. A synthetic Yahoo result
+  explicitly marked1wk, with a UTC-midnight timestamp and positive Close, is
+  accepted as a daily bar. Weekly Close at a period-start timestamp would be
+  assigned the wrong daily clock and label meaning. Require declared1d granularity
+  before admitting daily values, retaining mismatched/missing schema as unavailable
+  under the chosen explicit policy. Add the adversarial weekly-bar fixture.
+- P2, prices.py:14–16: hashing the path and later reading it separately does not
+  bind the bytes actually parsed. Independent synthetic replacement between those
+  operations returns a999 Close while the panel retains the original100-body
+  source hash. Read once, verify that exact byte buffer and parse the same buffer;
+  retain immutable/hash-bound source publication. Add a parsed-byte drift fixture.
+
+The review confirms the two price allowances already exist in the unchanged51
+claim/1420-fit plan; their correctness does not cure the exact-family mismatch.
+Prepare a preserved prospective registration revision with corrected source hashes
+and worker/observer gate references. Financial execution remains unadmitted and
+historical publication time remains an explicit retrospective-source assumption.
+No actual Yahoo request, empirical capture, fit, active-pilot modification or
+commit was performed by this reviewer.
+
+Price-source v2 release re-review (September24): all three prior findings are
+resolved. Gate-v2 SHA256
+14a0bd784aa0a9086a9071739f650d7a1187e3d6f3ac640a0cbfb8ed70f08302
+retains the exact established family object, matching the consumed metadata claim;
+all source/input/runtime/charter bindings match, worker and observer select v2,
+and the original v1 bytes remain preserved. Independent synthetic reconstruction
+confirms an explicitly weekly response is refused and a100→999 file replacement
+after the first read leaves parsing bound to the original100 response buffer.
+Each asset retains3,289 distinct cells and no price claim exists. The13-case
+synthetic-02.xml has no failures/errors/skips; SHA256
+9025f30b37fcb4f743e95ec09384b6a14995083950582d91b73bf0b42ef3954b.
+
+No remaining bounded precommit blocker was found for these two sequential,
+source-only price captures. Conditions remain exact committed reviewed source/
+gate, ordinary cumulative-family admission, exclusive asset identity and live
+resource/startup checks. The active pilot's source/HEAD constraints still apply.
+This approval does not admit predictive fitting or reinterpret retrospective
+publication assumptions as verified historical availability. No actual source
+request was performed by the reviewer.
+
+Selected-column Parquet software review (September24; corrections pending): the
+planner retains every selected physical leaf in every row group, includes
+header/footer framing spans, splits bounded contiguous ranges and binds the
+recomputed plan to the decoded projected manifest. An independent synthetic
+fixture successfully decodes all2 rows across2 row groups using selected nested
+BTC leaves while unused script pages remain unavailable. The retained2-case
+selected-columns-synthetic-01.xml has no failure/error/skip; SHA256
+f2093589476a53a8d0cc38f2a9b46455ee322a83c59136181398d01b2076e282.
+
+Two P2 source-qualification gaps were independently reproduced:
+
+- parquet_ranges.py:80–87 supplies pre-parsed metadata to ParquetFile without
+  checking the acquired first four bytes. Replacing the source header with FAIL
+  while retaining valid footer/data pages and updated synthetic range hashes
+  still yields both rows. Verify the actual acquired header equals PAR1 before
+  treating the source as an admitted Parquet object.
+- parquet_ranges.py:43–51 ignores ColumnChunk.file_path. Synthetic footer metadata
+  declaring external-object.parquet for its chunks still produces a current-file
+  byte plan and successfully reads current-file rows. Reject nonempty external
+  chunk locations unless a separate explicit source mapping admits and binds the
+  referenced object; silently interpreting external offsets in the current file
+  weakens source identity and completeness.
+
+The proposed fixes belong to the new unadmitted range planner/decoder, not an
+active pilot-bound adapter. No real BTC object, transaction page, network capture,
+model fit or active-pilot source was read/changed. Exact projected storage and
+full-history feasibility remain unmeasured; this pure helper does not admit the
+source acquisition or replace the registered field/date denominator.
+
+
+Selected-column Parquet correction closure (September 24): the planner now
+rejects selected nonempty ColumnChunk.file_path and the decoder checks the
+actual acquired four-byte PAR1 header before trusting supplied metadata. The
+four targeted synthetic cases independently pass, including both prior
+counterexamples. Retained selected-columns-synthetic-02.xml has four passes,
+no failures/errors/skips; SHA256
+ dcd07c6800ee296718f7de32e5aaf4fb79673a96d91f298aed78fae4b593f8e8.
+No remaining bounded blocker was found in these two corrections. This remains
+pure adapter verification, without real BTC decoding or acquisition admission.
+
+Registered feature producer review (September 24; corrections pending): the
+exclusive descriptor directory, active-run/source checks, exact registered
+plan membership, failed-parent requirement, completed numerical reuse and
+ancestry closure were inspected. Both retained lifecycle tests independently
+pass. A separate synthetic three-attempt reconstruction confirms that trying
+to resume the first failed ancestor after a second failed successor is refused
+with the explicit omitted-prior-attempt error. Retained
+registered-features-synthetic-01.xml has two passes and SHA256
+480f80e3f1dbc83a8c75ca5a4f2f60a8a38497cae4ae7cfda02a58640fe585af.
+
+Two material integration corrections remain:
+
+- P2, registered_features.py:47–48: graph output verification reads the parsed
+  buffer and hashes a separate later read. An independent synthetic replacement
+  reproduces acceptance of an unregistered graph-hash buffer while the second
+  read matches a different published buffer. Hash the exact raw buffer passed
+  to json.loads against the run's published output hash. This is an actual
+  provenance check bypass, not merely a missing durability guarantee.
+- P2, registered_features.py:23–24 and feature_pipeline.py:50–51: scientific arm
+  enters representation identity directly. Consequently proposed,
+  mcm_without_gat and training_label_permutation can own separate equivalent
+  dictionary/MCM producers, contrary to the frozen exact-reuse requirement.
+  Canonicalize their common representation identity and provide bound read-only
+  same-run reuse; retain the predictive arm in its separate fit identity. The
+  producer author independently identified this same integration requirement.
+
+The bounded targeted run passed all six Parquet/registry tests. Pytest emitted
+six cleanup warnings for pre-existing temporary garbage directories; these do
+not concern assertions in the selected tests. No production source was edited,
+no actual empirical input was decoded, and no network request, fit, commit,
+active-pilot process control or research ledger change was performed. The
+outer guarded producer runner and post-death reconciliation remain explicitly
+unimplemented release conditions. This review does not approve financial
+execution or establish empirical coverage, agreement or recovery.
+
+
+Registered representation correction closure and comparison review (September
+24): graph output references now validate digest(raw) on the exact parsed
+buffer. All three motif-sharing arms use the same descriptor and workflow
+identity. A registered, published journal pointer supports exact same-run
+read-only reuse; completed journal path, owner and workflow identity are checked.
+The four registry tests and two comparison tests independently pass. A separate
+synthetic motif checkpoint test passes with sampling, dictionary fitting and
+MCM computation replaced by forbidden callbacks during replay for proposed and
+both diagnostic arms; dictionary identity and binding remain exact. Both prior
+registry findings are closed. Retained registered-features-synthetic-02.xml
+contains 20 passes, SHA256
+ eae71f4702a3c353a996e075b0835645c85bf151f69c6c6223d770f41b716d29;
+registered-features-synthetic-03.xml contains two passes, SHA256
+2ccb1a5de6092b986ef87e4c21d89421459908c6b4ca9b82ec231431ee47647e.
+
+Independent enumeration reconstructs 44 printed rows times seven years times
+five seeds = 1,540 printed cells, with 1,400 distinct paper fits and 20 additional
+diagnostic fits. The 15 execution batches allocate every distinct fit exactly
+once, including the initial 45 ETH-2024 fits and the other 100 ETH-2024 fits.
+Generated fit-allocation-v1.json and table-status-pre-fit-v1.json exactly match
+recomputation; all pre-fit dispositions remain pending. An independent nonlinear
+annual-value fixture gives the expected equally weighted year/seed mean 51.6.
+Shared proposed rows reuse identical fit identities; one missing member prevents
+the entire affected printed row's aggregate. metrics_verified=false and
+numerical_agreement=null correctly preserve the arithmetic-only scope.
+
+One P2 reporting correction remains in comparison.py:31,36–40,57–60. The function
+accepts each exact failed/unavailable reason but returns only aggregate counts,
+IDs and the ledger hash, so the per-cell dispositions and reasons cannot be
+recovered from its report. A synthetic exact missing-source reason disappears
+from the output. Retain the reconciled full ledger or a hash-bound retrievable
+ledger reference, and expose exact remaining requirements for incomplete rows.
+This does not invalidate the denominator or arithmetic checks, but the current
+report is insufficient as a standalone failure/coverage account.
+
+No empirical graph, price, model outcome or active-pilot input was inspected or
+changed. No new financial registration, claim, execution or release is approved;
+guarded producer execution, post-death reconciliation and independently verified
+prediction evidence remain separate requirements.
+
+Comparison reporting correction closure (September 24): the returned report now
+retains a deep copy of all reconciled cell dispositions, including exact reasons,
+attempts and supplied metrics. Independent reconstruction confirms the retained
+ledger hash matches these bytes semantically and later mutation of the caller's
+nested attempts does not change the report. The preserved pre-fit v1 remains;
+new table-status-pre-fit-v2.json exactly matches recomputation and remains wholly
+pending. comparison-synthetic-02.xml records two passes and SHA256
+26f3de9d955928d284dcb62f4e713e928af7364967a054d6abd9237e720a5193.
+The reporting finding is closed; no additional bounded software blocker was
+identified. All prior empirical-release and verification limits remain in force.

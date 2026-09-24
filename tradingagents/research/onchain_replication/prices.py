@@ -5,31 +5,36 @@ from pathlib import Path
 import json
 import math
 from .contracts import PricePanel
-from .provenance import file_hash,utc
+from .provenance import digest,utc
 
 
 def read_prices(manifest: dict,price_config: dict) -> PricePanel:
     if manifest.get('status')!='complete':raise ValueError('unavailable price source cell')
     path=Path(manifest['path'])
-    if file_hash(path)!=manifest['sha256']:raise ValueError('price source hash mismatch')
+    raw=path.read_bytes()
+    if digest(raw)!=manifest['sha256']:raise ValueError('price source hash mismatch')
     utc(manifest['retrieved_at'])
-    body=json.loads(path.read_bytes())
+    body=json.loads(raw)
     chart=body['chart']
     if chart.get('error') is not None or not chart.get('result'):raise ValueError('unavailable Yahoo response')
     if len(chart['result'])!=1:raise ValueError('ambiguous price response')
     data=chart['result'][0];meta=data['meta']
     if meta['symbol']!=price_config['symbol'] or meta.get('currency')!='USD':raise ValueError('price instrument mismatch')
     if meta.get('exchangeTimezoneName') not in ('UTC','Etc/UTC'):raise ValueError('price timezone not admitted')
+    if meta.get('dataGranularity')!='1d':raise ValueError('daily price granularity not admitted')
     if price_config['field']!='unadjusted daily Close':raise ValueError('unsupported price field')
-    timestamps=data['timestamp'];closes=data['indicators']['quote'][0]['close']
+    quotes=data['indicators']['quote']
+    if len(quotes)!=1:raise ValueError('ambiguous quote array')
+    timestamps=data['timestamp'];closes=quotes[0]['close']
     if len(timestamps)!=len(closes):raise ValueError('price length mismatch')
     values={}
     for ts,close in zip(timestamps,closes,strict=True):
+        if type(ts) is not int:raise ValueError('invalid daily timestamp')
         t=datetime.fromtimestamp(ts,timezone.utc)
         if (t.hour,t.minute,t.second,t.microsecond)!=(0,0,0,0):raise ValueError('nonmidnight daily bar')
         date=t.date().isoformat()
         if date in values:raise ValueError('duplicate price date')
-        if close is not None and (not math.isfinite(close) or close<=0):raise ValueError('invalid close')
+        if close is not None and (type(close) not in (int,float) or not math.isfinite(close) or close<=0):raise ValueError('invalid close')
         values[date]=close
     expected=manifest['expected_dates']
     if len(expected)!=len(set(expected)) or expected!=sorted(expected):raise ValueError('invalid price denominator')
