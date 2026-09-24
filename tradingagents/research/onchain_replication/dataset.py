@@ -46,7 +46,24 @@ class Scaler:
     def inverse(self,x):return np.asarray(x)*self.std+self.mean
 
 
+@dataclass(frozen=True)
+class CalendarGraph:
+    """Metadata only: identity must come from a separately admitted graph manifest."""
+    asset:str
+    start_utc:str
+    end_utc:str
+    available_at:str
+    source_hashes:tuple[str,...]
+    identity:str
+
+
 def build_examples(graphs,prices,fold,config):
+    metadata=(CalendarGraph(g.asset,g.start_utc,g.end_utc,g.available_at,
+                            g.source_hashes,graph_hash(g)) for g in graphs)
+    return build_examples_from_metadata(metadata,prices,fold,config)
+
+
+def build_examples_from_metadata(graphs,prices,fold,config):
     if len(prices.dates)!=len(prices.closes) or len(set(prices.dates))!=len(prices.dates):raise ValueError('invalid price membership')
     lookup=dict(zip(prices.dates,prices.closes,strict=True))
     if not all(np.isfinite(v) and v>0 for v in lookup.values()):raise ValueError('invalid close')
@@ -57,7 +74,7 @@ def build_examples(graphs,prices,fold,config):
         if key in graph_map:raise ValueError('duplicate weekly graph')
         if utc(g.start_utc).weekday()!=0 or utc(g.start_utc).time().isoformat()!='00:00:00' or utc(g.end_utc)-utc(g.start_utc)!=timedelta(days=7):raise ValueError('invalid complete week')
         if utc(g.available_at)<utc(g.end_utc)+timedelta(days=1):raise ValueError('graph availability precedes frozen lag')
-        graph_map[key]=(g,graph_hash(g));sources.update(g.source_hashes)
+        graph_map[key]=(g,g.identity);sources.update(g.source_hashes)
     train=[];test=[];excluded=[]
     decision=utc(fold.train_start)
     while decision<utc(fold.test_end):

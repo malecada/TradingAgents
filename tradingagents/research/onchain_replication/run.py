@@ -12,7 +12,7 @@ import json
 from ..lifecycle import ResearchRun, _immutable
 from .baselines import training_controls
 from .cells import lifecycle_cell_id, reconcile_cells
-from .evaluation import evaluate_cell, example_binding, validate_scientific_cell, prediction_directory
+from .evaluation import evaluate_cell, example_binding, validate_scientific_cell, prediction_directory, validate_manifest
 from .model_registry import PRICE_ARMS, GRAPH_ARMS, VECTOR_WIDTHS
 from .metrics import classification_metrics
 from .provenance import canonical_bytes, digest, file_hash, durable_mkdir, sync_directory
@@ -79,6 +79,7 @@ def preflight_batch(run, populations, representations=None, *, plan_input='batch
             raise ValueError('actual prepared population bytes/membership differ before fitting')
         if canonical_bytes(reference['binding']) != canonical_bytes(example_binding(examples, scaler)):
             raise ValueError('prepared population differs from registered membership')
+        validate_manifest(run, reference.get('input'), reference.get('output'), example_binding(examples, scaler))
         if (reference['train_examples'], reference['test_examples']) != (len(examples.train), len(examples.test)):
             raise ValueError('prepared population denominator differs')
         if reference['asset'] != cell['asset'] or reference['fold'] != cell['fold'] or reference['variant'] != cell['variant']:
@@ -176,7 +177,8 @@ def execute_batch(run, populations, representations, *, plan_input='batch_plan')
             try:
                 _, metrics = evaluate_cell(run, cell, examples, scaler, features, plan['model'], plan['training'], provenance,
                     expected_test_mask=reference['binding']['test_mask_hash'], feature_binding=binding,
-                    example_binding_input=reference['input'], feature_binding_input=feature_reference.get('input'),
+                    example_binding_input=reference.get('input'), example_binding_output=reference.get('output'),
+                    feature_binding_input=feature_reference.get('input'),
                     feature_binding_output=feature_reference.get('output'), **recovery_args)
                 path = prediction_directory(run, lifecycle_cell_id(cell['id']))/'cell.json'
                 row.update(status='complete', metrics=metrics, cell_record=str(path.relative_to(run.admission.root)),

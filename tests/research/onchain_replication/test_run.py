@@ -222,3 +222,17 @@ def test_batch_prediction_recovery_uses_completed_parent_fit_without_refitting(r
         recovered = json.loads((root/rows[0]['cell_record']).with_name('predictions.json').read_bytes())
         assert recovered == parent_predictions
     assert len(list((root/'research_artifacts/onchain_fit_cells'/digest(b'sum')).glob('*/claim.json'))) == 1
+
+
+@pytest.mark.parametrize('fault',['missing_output','wrong_input','both'])
+def test_population_artifact_reference_is_validated_before_representation_work(registered,fault):
+    from tradingagents.research.onchain_replication.run import preflight_batch
+    registered,populations,plan=setup(registered)
+    reference=plan['populations']['whole']
+    if fault=='missing_output':
+        reference.pop('input');reference['output']='not-published.json'
+    elif fault=='wrong_input':reference['input']='blocked_evidence'
+    else:reference['output']='not-published.json'
+    registered=register_plan(registered,plan)
+    with start(registered) as run,pytest.raises((ValueError,FileNotFoundError)):
+        preflight_batch(run,populations)

@@ -2290,3 +2290,123 @@ member/marker/cleanup evidence and a measured time/resource forecast within the
 frozen eight-hour bulk window. Any failed or interrupted identity stays closed;
 no implicit retry, source deletion, decoding, fitting or reduced denominator is
 authorized. This is preservation-only approval, not full raw backup completion.
+
+
+### Independent metadata-population adapter review — fold binding finding
+
+The pure population_assembly.py/dataset.py adapter was inspected while raw backup
+pilot execution was owned by the root agent. Its required-week range agrees
+with existing daily input-step clocks: the earliest step is train_start minus
+lookback_days plus one day, and the final step precedes test_end. Complete and
+unavailable weeks remain explicit, array bytes are not loaded or falsely claimed
+reverified, and example construction uses the existing causal implementation.
+
+One material admission gap remains in the reviewed version: only Fold.member_hash
+is compared to the admitted fold hash. Actual Fold fields are not compared with
+the matching row in the hash-bound calendar. A counterexample is replacing
+train_end with an earlier date while preserving member_hash, train_start and
+test_end. The required-week set and every admitted graph/price/calendar hash
+remain unchanged, but training membership changes. Bind canonical complete Fold
+fields or check exact id/date/validation fields against the admitted calendar
+row, and test altered fields with the old hash. This finding was established
+from the actual branch conditions; no financial data or fitting was involved.
+Unavailable-week evidence hashes are currently only format checked by the pure
+adapter; the registered wrapper must additionally preserve their exact bound
+input references before empirical use. Same-claim producer integration was
+still under implementation and was not approved by this partial review.
+
+
+### Independent raw-preservation pilot01 closure and population follow-up
+
+The preservation pilot's retained contract remains SHA256
+bc35b31404b4144c24ff6e9e47f482e33b41cdfac2a08a20ff2f069b7ec5953d,
+and its intent binds source 0b429dd3b2d287794128b8f15a2463e5ac704d1b.
+The final/live guard bytes both hash to
+7cc10f3aab769c002da0c463b9691c618d58dcd6de3552588170bcfb807e8e04;
+the failed disposition hashes to
+c3413f239b6389b27e2cc0929e69ab707037622e6e735aca1d514be5c59acd15.
+The 242.81270394-second attempt stopped because observed host available memory
+3213705216 bytes fell below the enforced 3221225472-byte reserve. Sampled
+unit peak was 402903040 bytes. Final guard high events were 6129; the later
+post-stop child snapshot records 6130 and exit -15. Kernel OOM counters were
+zero. All observed monitor/workload/SSH PIDs and the owned cgroup were absent
+at review, with the same boot identifier. Cleanup is verified; no completion
+marker or recovered archive exists. The original generated 517416960-byte
+archive and 84332-byte manifest remain. Their payload bytes were not rescanned
+by this review. Remote partial extent/hash was not inspected and remains
+unknown. No bulk release or successful raw-backup claim follows from this
+failed pilot; its identity must remain closed.
+
+Population Fold fields are now checked against the unique hash-bound calendar
+row, closing the earlier retained-member-hash counterexample. Exact unavailable
+week records are now hashed in admission and registered wrappers read their
+bytes through ResearchRun. Same-claim population, binding and assembly outputs
+are registered and published before fitting, without an additional empirical
+claim. Static review found a remaining preflight ordering issue: run.py
+preflight_batch compares the literal population binding but does not read and
+validate the actual referenced input/output binding artifact. An unproduced or
+incorrect output reference can therefore pass preflight and permit expensive
+representation computation, before evaluate_cell eventually refuses it.
+Require exactly one input/output reference and validate its actual admitted or
+same-run published bytes during preflight, before graph loading. No concurrent
+tests, transaction decoding, financial fitting, remote queries or job control
+were performed during this review.
+
+
+### Independent population integration closure and preservation successor02 pilot release
+
+The population preflight finding is closed: validate_manifest now verifies
+exactly one actual admitted input or same-run published output binding before
+representation loading or fitting. Its exact bytes must match the calculated
+example/scaler/source membership. The Fold-field and unavailable-week evidence
+fixes remain in place. Retained population-integration-02.xml reports 53 tests,
+zero failures/errors/skips in 71.463 seconds, SHA256
+6a8343c5c442c9cec0ec51eee9011a949313e077136314b9ec3010d7e5885ac3.
+The actual synthetic producer test executes two SVM cells and retains one
+unavailable cell under a single claim. No extra tests or empirical jobs were
+started for this review. This closes the bounded metadata-population interface
+review, not raw-to-weekly production ownership or empirical paper evaluation.
+
+Successor02 contract SHA256
+a009822b0b44c19a91e7dfe83c6ac7a91d284bdf4280a76284a292ab5d591d73
+and transfer.py SHA256
+b9f30824f4f596237c3a834d8da0b6eef7283637f7c36f99e3b22a824aaca99b
+were independently checked against every five source and seven input bindings.
+The same 195 batch partitions cover all 59083 files / 103524489043 raw bytes
+exactly. The failed01 contract, terminal, guard and recorded remote partial
+are bound unchanged. The remote observation reports 504233984 partial bytes
+with SHA256 0bb5e78e6688ffa8ec12756ef8177f6f03ced8e96f8427fed35e43f4cbb732a9;
+this is a retained remote hash/length observation, not a recovered-member
+verification. No reviewer remote request was made. The successor uses a new
+remote leaf and exclusive local pilot/controller directories, retaining the
+original failed archive and partial remote object.
+
+One successor02 pilot execution is cleared after committing the exact reviewed
+source/contract and subject to live guard and capacity admission. Its max/high
+are 256/192 MiB, swap zero, runtime host reserve remains 3 GiB, startup is
+3.25 GiB, disk floor remains 20 GiB, two CPUs and 1800 seconds. No simultaneous
+root synthetic tests are part of this release. Batch0 retains the same149 files
+and whole-archive/member/marker round-trip requirement; lower memory caps do
+not constitute measured success. No pilot/controller directory existed at
+review.
+
+Bulk remains unreleased. All phase payload budgets sum to exactly263066746880
+bytes (245 GiB); contiguous bulk01..13 cover batches1..194. A successful measured
+pilot and exact BULK_RELEASE.json are necessary. A bulk-only implementation
+edge should be corrected before its release: run_phase clips the guard wall
+limit to remaining cumulative time, but worker asserts the full phase limit.
+If less than28800 seconds remains, it reserves a new phase that must then fail
+before transfer. Refuse before phase reservation when insufficient full phase
+time remains, or bind and validate the effective shorter limit. This does not
+affect the pilot path. No full-raw preservation, financial result, or completed
+paper-scope claim is established by this preflight.
+
+
+Correction to the immediately preceding bulk-only finding: independent follow-up
+inspection of resources.py:374 confirms assert_guarded_worker permits a tighter
+live wall limit using `0 < live['wall_seconds'] <= wall_seconds <= 28800`.
+Therefore clipping the live phase limit to the remaining cumulative budget is
+valid and does not cause the alleged admission rejection. That finding is
+withdrawn; no source change is required. The exact successor02 pilot clearance
+above stands. Bulk still requires successful measured pilot evidence and its
+separate exact release record, for the originally stated operational reasons.

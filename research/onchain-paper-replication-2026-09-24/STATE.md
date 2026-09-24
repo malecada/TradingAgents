@@ -109,21 +109,24 @@ in the authorized scope. The historical negative screen is unchanged.
   raw contents were not freshly hashed or uploaded. Full transaction-raw backup
   remains incomplete. No originals were removed and no financial run started.
 
-- **Unblocked preservation preparation:** `storage/raw-preservation-2026-09-24-01/`
-  binds all 59,083 retained ETH raw files into 195 finite bundles. Fifteen synthetic
-  preservation tests pass, including corruption, interruption and bounded
-  retrieval. Independent prelaunch review is underway; no transaction bytes have
-  been uploaded by this new job yet. The pilot is batch zero, with a separate
-  measured release before the 194-batch bulk phase. No historical job is reopened.
-- **Population integration in progress:** a metadata-only graph-calendar adapter
-  and population producer passed 13 focused synthetic checks with the existing
-  dataset tests. It preserves complete date/week denominators, missing/late-week
-  exclusions, training-only scaling and exact source/configuration identities.
-  Registered same-claim publication and broader verification remain pending;
-  no actual financial population was assembled and no fit was launched.
+- **Raw preservation attempt01 terminal FAILED:** its guard stopped at242.813s
+  when host available memory3213705216bytes crossed the3GiB reserve during
+  concurrent synthetic testing. Cleanup independently verified; kernelOOM0.
+  The517416960-byte local archive and504233984-byte remote partial remain,
+  with a read-only remote hash receipt. No raw backup completion is claimed.
+  New `storage/raw-preservation-2026-09-24-02/` lowers memory to256/192MiB,
+  keeps the3GiB host reserve, and splits bulk into13 finite phases. Pilot release
+  review cleared the exact02 source/contract; no02 process is active yet. Never relaunch01.
+- **Population integration implemented:** `full_sources/population-preparation-01/`
+  binds the metadata-only calendar producer, same-claim population publication,
+  and exact input/output binding preflight. Fifty-three focused tests passed,
+  including two synthetic SVM fits. No real financial population or fit occurred.
+  Full raw-to-graph production/admission and full-sized execution remain pending.
+  Prior387-test evidence stays tied to its older snapshot; it is not a new full
+  suite run for this increment. Independent review is complete.
 
-Next safe action: finish raw-preservation release review, execute its finite pilot,
-review measured evidence before bulk transfer, and complete population integration.
+Next safe action: finish continuation02 release review and execute its pilot with
+no concurrent synthetic tests; review measured transfer before the bulk controller.
 A feasible compute/local-scratch allocation is still needed to finish
 raw-to-graph/population integration and prepare/review its exact source, phase,
 reuse, ownership and cumulative admission contract before execution. All 1,420

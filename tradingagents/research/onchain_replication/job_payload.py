@@ -46,8 +46,16 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
     registered = json.loads(run.read_input(job_input))
     if registered['kind'] != 'fit' or canonical_bytes(registered['payload']) != canonical_bytes(payload):
         raise ValueError('fit job payload differs from registration')
-    populations = {name: population_from_record(json.loads(run.read_input(reference)))
-                   for name, reference in payload['population_inputs'].items()}
+    populations = {}
+    for name, reference in payload['population_inputs'].items():
+        if isinstance(reference, str):
+            record = json.loads(run.read_input(reference))
+        elif isinstance(reference, dict) and set(reference) == {'producer_input'}:
+            from .population_assembly import produce_registered_population
+            record = produce_registered_population(run, reference['producer_input'])['population']
+        else:
+            raise ValueError('invalid population input/producer reference')
+        populations[name] = population_from_record(record)
     batch_plan = json.loads(run.read_input(payload['batch_plan_input']))
     if set(populations) != set(batch_plan['populations']):
         raise ValueError('job population membership differs from batch')
