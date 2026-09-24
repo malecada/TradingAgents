@@ -74,7 +74,7 @@ in the authorized scope. The historical negative screen is unchanged.
   approximately6.39GB/2.50GB. This is an arithmetic projection, not measured
   full-MCM/neural capacity; largest-week pilot ended before a durable graph result. See reviewed
   review/capacity-closed-partial-03.json. Full-body acquisition is not released.
-- C01–C18 interim matrix exists in review/completion-interim-05.json; independent
+- C01–C18 interim matrix exists in review/completion-interim-06.json; independent
   review confirmed all18criteria and conservativeflags. Latest expanded source
   passed387tests/1CUDA skip in the earlier clean locked offline environment with
   unchanged installed distributions; two saved predictionsreplayedexactly. Guard
@@ -89,11 +89,17 @@ in the authorized scope. The historical negative screen is unchanged.
   reviewed source/tests,metadata,synthetic bundles and bothYahoo denials.
   Checkpoint04 independently recovered all6653changedmembers/12,981,017bytes,
   including both CoinMetricscaptures, completepricecells and attribution.
-  Latestpilotclosure is a later artifact awaiting its own compact backup.
+  Checkpoint 05 independently recovered 101 changed members (2,409,232 bytes).
+  Supplement 06 recovered three logs (688 bytes) omitted by Git ignore rules.
+  Together they preserve all 52 compact closure copies, journals and audit
+  receipts; both recoveries are terminal, independently checked and clean.
+  Source checkpoint 288363ea and supplemental commit 6552f435 were pushed.
   Full raw-data off-device backup remains unverified.
 
-Next safe actions: commit, push and externally recover the independently verified
-compact closure. All 1,420 financial fits remain pending.
+Next safe action: obtain a feasible existing host/storage allocation, then finish
+raw-to-graph/population integration and prepare/review its exact source, phase,
+reuse, ownership and cumulative admission contract before execution. All 1,420
+financial fits remain pending; no empirical process is active.
 Further empirical admission needs a feasible host/storage contract, complete
 source/graph/population accounting and a reviewed cumulative allocation for any
 successor. The optional question about already available compute/storage remains

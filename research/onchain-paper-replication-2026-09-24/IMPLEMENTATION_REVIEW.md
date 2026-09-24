@@ -2036,3 +2036,73 @@ transaction-field cells preserve the full 88776 logical source denominator;
 this does not reclassify failed Yahoo attempts or the pilot's own cell ledger.
 No material contradictory disposition was found. The latest closure's external
 recovery remains pending until its separate bundle is actually checked.
+
+
+### Independent recovery05 exact-delta check and retained-log omission
+
+Recovered archive05 (388858 bytes, SHA256
+358b3bc75e5f44bdefd3d0af0b849fda3412365397d1069d3473d9cd41a0537e)
+and manifest05 (26320 bytes, SHA256
+3dd101183543314e4189ffb4cf8fedeef1f763732fb343f5fa617efe216d7c0f)
+match the two HTTP200 receipts pinned to publication
+0594e743c8a339158e26aea184015256951f8ef1. All 101 unique regular entries,
+2409232 uncompressed bytes, independently match their manifest and every local
+Git blob at snapshot 288363eae4fc1115aba2059a53846b6fd44f7e96. Git diff from
+7aa1c0ca7e5df42113b29ea55d77b244859d131c has exactly these added/modified paths,
+with no deletion/rename omission. All Git reads disabled lazy fetching; no
+request, decoding or repeat large-artifact scan occurred in this review.
+
+A scope omission remains despite exact agreement with Git: closure.json lists
+52 retained compact copies, but only 51 are present in snapshot288 and bundle05.
+The missing retained pilot-02-guard/child.log is an existing zero-byte file with
+SHA256 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.
+The hash-audit-01-guard/child.log is also absent from the snapshot: 278 bytes,
+SHA256 72f602475d5b445979bd1e323e2d410dcc7f479ecaa9b985318ae9f01593f8bc.
+Both local files remain intact. Ignore rules appear to have excluded .log files;
+this does not invalidate the successful byte-hash audit, whose result and
+17 per-file receipts are preserved, but an assertion that all 52 retained
+copies are externally backed up would be premature. Preserve closed bundle05
+and add exact logs through a separately identified compact supplemental recovery.
+
+The other 51 copies and both local-journal files match closure hashes. All 17
+large-file audit receipts agree with their frozen contract, whose hash agrees
+with the audit completion; the original audit final guard hash is preserved.
+Recovery05 completion SHA256
+ecb7cdbdf9ae90e21b5715e4aeb0f6f4dec6b824fcd3ac441ab7b052305f253a
+records two files and 415178 received bytes. Guard SHA256
+1af507120407db453f6b3a85b70e66fbfad3ba834e19e23fc00be63273107d2d
+records 1.152879496 seconds, 24371200-byte sampled peak, child zero, no memory
+events/limit and verified cleanup; its cgroup and monitor PID are absent.
+Full transaction/large graph/scratch off-device backup remains outside this
+compact recovery scope.
+
+
+### Independent recovery06 supplement — compact closure preservation complete
+
+The separately identified three-file supplement recovered at
+/tmp/onchain-paper-preparation-recovery-20260924-06 was checked against its
+pinned HTTP200 receipts, exact local bytes and Git blobs at
+6552f435607bda2a3c4e6efc49295d42d2730ab1, with GIT_NO_LAZY_FETCH=1 and no
+new network request. The retained pilot child.log is zero bytes and matches
+its closure-manifest empty-file hash; hash-audit child.log is 278 bytes and
+matches 72f602475d5b445979bd1e323e2d410dcc7f479ecaa9b985318ae9f01593f8bc;
+recovery05 child.log is 410 bytes and matches
+01d9b32c7782ea4fad977c2166c9f90d69d2617a655e5c0f73a7af9e7e567de4.
+All three match the frozen supplement contract, totaling 688 bytes. The bundle05
+bytes remain unchanged. Together recovery05 and supplement06 preserve all
+52 of 52 closure-manifest copies, both scoped journals and the complete
+large-artifact hash-audit receipts/log. The previously reported log omission
+is closed; no empirical identity or large-file scan was repeated.
+
+Recovery06 completion SHA256
+dd03439b59241e41afc24c92a2bf001e7873e9ad2480614fca4c8f69aa74d5ee;
+guard SHA256
+693f2b4f0a34244461522e71aeb3636673f7d86087eb778acbab4b86bdeb9ba6.
+The guard reports 1.163323229 seconds, 23121920-byte sampled peak, child zero,
+no memory events or triggered limit and verified cleanup. Its cgroup and
+monitor PID are absent at independent inspection. No material unresolved
+preservation finding remains for the scoped compact pilot closure and prior
+recovered checkpoint chain. This does not claim an off-device copy of large
+raw transaction stores, graph/MCM arrays or SQLite scratch, real raw-to-prediction
+replay, full-workload feasibility or overall study completion. Later review,
+state and recovery-receipt additions are outside the pinned bundle's bytes.

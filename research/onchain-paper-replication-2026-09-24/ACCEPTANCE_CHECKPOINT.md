@@ -21,11 +21,11 @@ The failed pilot is closed with all cells retained. The authorized 13-task scope
 | C13 | partial | Synthetic CPUcheckpoint/independent metric checks passed; empirical saved-model and metric comparisons remain unevaluated. |
 | C14 | partial | Fullcurrent387pass/1CUDA skip suite and two saved synthetic predictions replayedexactly in earlier cleanlocked offline environment with unchanged distributions. Real admitted raw-to-prediction example remainspending. |
 | C15 | partial | Pilot 02 failed under independently verified systemd-oomd ancestor memory pressure. All 109 cells and 69 artifact hashes verified; 7 complete, 102 unavailable. Owners are dead and cleanup verified. Fourteen source-days are decoded and a third week was attempted despite unavailable source-day finalization. Full-size MCM/neural/worst-week feasibility remains unavailable. |
-| C16 | partial | Compact snapshots652,03delta and04delta independently externallyrecovered;04preserves6653members/12981017bytes including both CM rawpanels/cells/attribution. Largepilot/transaction stores and real raw-to-prediction replay remainunverified. |
+| C16 | partial | Compact source/price snapshots and checkpoint 05 exact delta (101 members, 2,409,232 bytes) independently recovered. Supplement 06 recovers three omitted logs (688 bytes); together 05+06 preserve all 52 compact pilot closure copies, journals and audit receipts. Large raw/graph/scratch off-device backup and real raw-to-prediction replay remain unverified. |
 | C17 | partial | All44Tables1–6 rows mapped; none empirically completed. Original65fundentity/25Alameda cohort and vintage unavailable; this blocks Tables5–6 full completion. |
 | C18 | pending | Incremental independent reviews recorded; full experiment/metric/resource closure and final review are not complete. |
 
-Exact evidence paths are retained in `review/completion-interim-05.json`.
+Exact evidence paths are retained in `review/completion-interim-06.json`.
 Implementation completion is not yet asserted; full paper scope is incomplete;
 numerical agreement is unevaluated; exact reproduction eligibility is false.
 
