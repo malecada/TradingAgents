@@ -1507,3 +1507,167 @@ declared relocation mapping. Old gates/controllers and the active pilot checkout
 remain unchanged. This disposition admits only the two finite sequential source
 captures after those checks; it does not admit prediction fitting or new claims
 outside the existing family allocation.
+
+
+Actual price worktree release-condition closure (September 24, before requests):
+independent read-only admission from /tmp/onchain-paper-prices-checkout-20260924-01
+confirms HEAD 652b2766cacd0c5f5b2c830bafeaa7315bb42fc2 and gate-v3
+e1112f5d9330a611f9b738ad4a8537f7787e315aaa130de267a20661bff13bed.
+Both assets are ready with 59 source files, ten exact-hash inputs and 3289 cells.
+The job module is imported from that worktree; actual Python 3.13.13 is the
+explicit shared pinned interpreter and its inventory exactly matches the bound
+environment. This confirms the mapped runtime directly; it does not assert the
+checkout-local runtime helper passed.
+
+Physical ledger and artifact paths match workspace-03.json, the .lock inode is
+shared with the active main checkout, all three paths use the same filesystem,
+and verified prior claims give 20/51 before price capture. Both per-asset claim,
+generic owner/guard and source directories are absent. Main HEAD remains
+c6b568d4b1c177ab94ac37fbad462c2decc721c0. At this read-only check
+MemAvailable was 5242516 KiB and guarded-volume free bytes 30391209984; actual
+launch must still enforce fresh live checks. Retained job-prices XML02 contains
+38 passes and no failures/errors/skips, SHA256
+5c1d50a5ee8afb2914410441cd09313e0fdf659cc0e3c9e859e595d472b62455.
+
+The outstanding source/checkout conditions are satisfied. Release is scoped to
+one BTC request followed by one ETH request, each under its own registered
+generic guard and existing identity, with complete closure/evidence inspection
+between assets and no retry of a claimed identity. The two source allocations
+remain within the same 51 ceiling. This review performed no request, claim,
+financial fit or process action and grants no predictive-data admission.
+
+
+Independent Yahoo BTC/ETH terminal audit (September 24; no refetch): both exact
+source-652b2766cacd0c5f5b2c830bafeaa7315bb42fc2 captures received HTTP429.
+Each retains one 23-byte response, SHA256
+0d24c98db98d3b4a87b9626a026e7d72c99754ab6bd88211a17bc372350b7d89,
+with distinct request URL/timestamps/receipts and the original error reason.
+Independent calendar construction confirms all 3288 dates from 2016-01-01
+through 2024-12-31, plus capture: exactly 3289 unavailable cells per asset,
+zero admitted prices, null parsed panels, and no missing date omitted. All
+3295 indexed files per asset match retained hashes and sizes. Capture manifest
+member hashes, response-byte binding, lifecycle claim/output hashes and observer
+owner/evidence/terminal bindings agree. BTC closure precedes ETH claim start.
+
+BTC guard SHA256 c45169ac4a8483b6a7952c7f5eb0f2de648126f27f7adb9f9e89deac34a65c4c
+records 70.24708 seconds and 84238336 bytes sampled peak; terminal SHA256
+1a60689f8bd818e5d0d49f73e7796fc4be4f60aa6a41fc49dbecdbed318c8577,
+observer SHA256 f198ca06d07d1b6d0c0e53b643766c3e0efae55709e76b8d87abcd56bce3bd44.
+ETH guard SHA256 1ed79e60bc5836aaa16acc4c87408fd78e09b30bab4c493acae6e4f43e22444c
+records 104.13779 seconds and 84918272 bytes sampled peak; terminal SHA256
+12497fb854fdc2dc878f127f91e160b8c0a68d2e41b32a1cf9b59f0b5e7a96d4,
+observer SHA256 1faa46693731b0f603cfcd416f7ebd71e161db3e83f6d01fd884f8a867592ae9.
+Both guards have child zero, verified cleanup, no limit reason and zero memory
+events. Their cgroups and recorded supervisor/monitor/workload PIDs are absent.
+These are completed source attempts with unavailable data, not successful price
+coverage. Both claims remain consumed; cumulative use is now 22/51. No request,
+market-value reconstruction or fitting was performed during this review.
+
+Any alternative price provider requires an explicit prospective protocol and
+cumulative-budget amendment before capture. In particular, current lifecycle
+admission requires exact family equality with prior claims; simply changing the
+family ceiling from 51 to 53 is not an implemented extension mechanism. Preserve
+all old claim bytes, mechanism identity and failed source attempts while using
+or implementing a separately reviewed explicit extension path. No alternative
+source capture has been approved by this terminal audit.
+
+
+Prospective Coin Metrics allocation/protocol review (September 24; no CSV
+retrieval): the proposed unchanged-ceiling allocation is legitimate prospective
+batch regrouping. Arithmetic remains 17 historical + 2 resource pilots +
+17 source claims + 15 registered financial batches = 51. Source allocation is
+1 metadata + 4 price attempts (two closed Yahoo and two prospective alternatives)
++ 12 body batches. Combining the unclaimed BTC2016–2019 years into one batch
+releases two slots; the other five BTC years and six missing ETH years remain,
+with all required source cells and 1420 fits preserved. Five consumed new claims
+remain visible, so use stays 22/51 before any alternative capture. Exact prior
+family identity must remain unchanged in the eventual gate. This does not prove
+four-year acquisition feasibility: its later finite manifest must retain every
+date/field and explicit request/byte/time/resource bounds without implicit
+continuation or retry under the same identity.
+
+The proposed calendar changes only provider, price field, schema version and
+explicit retrospective-source qualification; all seven folds, decision/label
+clocks, horizon, lookback and graph join are unchanged. Independent metadata-only
+inspection confirms that Coin Metrics defines daily PriceUSD at UTC day-end
+([provider documentation](https://gitbook-docs.coinmetrics.io/network-data/network-data-overview/market/price)).
+The pinned [archive generator](https://raw.githubusercontent.com/coinmetrics/data/f1a36afb962731c387bb03982758ab0103063da5/scripts/generate.js)
+selects daily metrics and writes the date component of API time. The proposed
+D-to-next-midnight availability is explicitly assumed; historical publication
+latency and author-exact price identity are not recovered. The [official archive](https://github.com/coinmetrics/data)
+states its CC BY-NC 4.0 license and warns that available assets/metrics may change.
+No archive CSV or financial values were retrieved. Actual schema/coverage and
+strict parser/gate/resource admission remain pending; this protocol review is
+not an alternative-capture release.
+
+Independent preparation recovery02 audit: all 2270 unique required results,
+34235495 bytes, were hashed against both retained recovered files and exact Git
+blobs at commit 652b2766cacd0c5f5b2c830bafeaa7315bb42fc2, using local
+cat-file with lazy fetching disabled. Every retained result has HTTP200, the
+exact pinned raw-GitHub URL and matching path/size/hash; no remote request was
+repeated. Contract SHA256
+70581d676e628b59e962aa1aa792c4f3871cd5e6a0ca10f28a61014082a507ea;
+completion SHA256
+24b97930427f24686b015ef2c77ca539c2a6fe868bbac8a42de223ad5b045589.
+Guard SHA256 e41bdae07b2533afd17efcd5a4720bed0b2dd19510d8035d7a7daffae866b14c
+records child zero, cleanup verified, no limit/memory event, 251.72321 seconds,
+101588992-byte sampled peak under 256 MiB maximum; cgroup is absent. This proves
+external recovery of the enumerated compact source/synthetic/public-metadata
+snapshot, not full transaction-body or empirical-model backup.
+
+Implementation coverage-v3 SHA256
+584bbcb5d5a29cdd5e48bc4fed312f6ca83354f64e1587ad9c1f451b439aeb3a
+was independently checked: frozen-fidelity parent and prior-report hashes agree;
+all 34 record dispositions, 728 test references and 37 referenced source files
+match the retained evidence. All 101 source/test snapshot members were compared
+to commit652b: only job.py and test_job.py differ from the 350-pass/one-CUDA-skip
+baseline, exactly as declared, with 38 subsequent passing targeted tests. Baseline
+guard records 256.85701 seconds, 631595008-byte sampled peak, child zero, clean
+cleanup and no memory event/limit; its cgroup is absent. These are overlapping
+evidence sets, not 388 distinct full-suite passes or complete empirical coverage.
+The report appropriately retains explicit assumptions, known deviation and
+blocked fund-cohort/source items; no frozen fidelity record was changed.
+
+
+Coin Metrics implementation and prospective source-gate review (September 24):
+exact gate SHA256
+232d416fdc96acc0f8f9ce9287fdfbf920962e9ddf87b815cc23c54ae5855979
+binds sixty current source files and twelve inputs per asset; all source/input/
+charter hashes and protocol-freeze-v5 parent/file links independently match.
+Family objects equal the prior Yahoo gate exactly; both 3289-cell denominators,
+windows, outputs and exploratory reuse remain unchanged. New provider-specific
+dataset identities do not reset the shared mechanism budget. Retained inputs
+include history, runtime/lockfile and full required source grid.
+
+Reviewed job.py SHA256
+ce3aa010033e0de5d1adb22f79a71eb42ad16244e45c409fb0a7d7e0325a0723
+and coinmetrics_prices.py SHA256
+5e14eae6fafccdfe562ab07c73ac3854f5e86751d74e468807b82be0a3a0a62f
+use the reviewed generic owner/guard/observer path. The source policy fixes one
+asset-specific pinned URL, one request, 30-second transport timeout, 32 MiB plus
+sentinel bound and no redirects/proxy/retry. Exclusive durable intent precedes
+transport. Known IncompleteRead partial bytes are retained; interrupted or
+invalid sources remain unavailable, never retried by reopening the identity.
+The parser hashes the exact byte buffer, rejects invalid UTF8/CSV, duplicate
+headers/dates, unsorted or noncanonical dates, excessive rows/columns and invalid
+PriceUSD values. It selects only PriceUSD, excludes outside-window rows and
+retains missing required dates. Source HTTP completion is distinct from schema
+and daily data acceptance. The 512 MiB/384 MiB/zero-swap/two-CPU/300-second
+resource contract is unchanged; no parser success implies financial admission.
+
+Seventeen targeted parser/capture synthetic cases independently pass. An
+additional independently constructed CSV with conflicting ReferenceRateUSD,
+outside-window prices and an absent required date returns only PriceUSD
+11 and 13 on the original dates and preserves the gap. Retained synthetic-01.xml
+contains 61 passing cases and no errors/failures/skips, SHA256
+650cb3ddd29e747743d18e5344f13c2fdf8b47175d922e925465e57ed1765601.
+No empirical CSV or provider request was accessed during this code review.
+
+No material implementation/admission blocker was identified for this exact
+prospective source gate. Conditional release requires a committed matching
+source checkout, actual imported-root/runtime/workspace/shared-lock/input checks,
+absent new claim/owner/source identities and fresh guarded resource preflight.
+Then one BTC capture followed by one ETH capture is within the reviewed existing
+51-claim allocation; each must close and retain its full denominator before the
+next starts. This does not approve source-value fitting, scope reduction,
+alternate metrics/providers, date blending or retry of either closed Yahoo run.

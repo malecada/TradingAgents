@@ -64,11 +64,11 @@ def resource_policy(value, root):
 
 
 def job_schema(job):
-    if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices'):
+    if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices'):
         raise ValueError('execution job schema/kind differs')
     if job['kind'] == 'ranges' and job['payload'] != {}:
         raise ValueError('range job has no implicit payload overrides')
-    if job['kind'] == 'prices' and (not isinstance(job['payload'], dict) or set(job['payload']) != {'asset'} or job['payload']['asset'] not in ('BTC', 'ETH')):
+    if job['kind'] in ('prices', 'coinmetrics_prices') and (not isinstance(job['payload'], dict) or set(job['payload']) != {'asset'} or job['payload']['asset'] not in ('BTC', 'ETH')):
         raise ValueError('price job requires one explicit supported asset')
 
 
@@ -196,6 +196,9 @@ def execute_source_job(run, kind, payload):
     elif kind == 'prices':
         from .price_source import capture_admitted_prices
         cells, summary, directory = capture_admitted_prices(run, payload['asset'])
+    elif kind == 'coinmetrics_prices':
+        from .coinmetrics_prices import capture_admitted_prices
+        cells, summary, directory = capture_admitted_prices(run, payload['asset'])
     else:
         raise ValueError('source job kind required')
     run.write_json('cell-ledger.json', cells)
@@ -225,7 +228,7 @@ def worker(args):
         from .environment import inventory
         if inventory(root, include_torch=job['kind'] == 'fit') != json.loads(run.read_input(job['environment_input'])):
             raise ValueError('registered execution environment differs')
-        if job['kind'] in ('ranges', 'prices'):
+        if job['kind'] in ('ranges', 'prices', 'coinmetrics_prices'):
             cells = execute_source_job(run, job['kind'], job['payload'])
         else:
             import torch

@@ -1,0 +1,3613 @@
+{
+  "parent_fidelity_sha256": "a115b80961289ab3909f7ba52b2b012a6452322adc18d117e923169d2fb35a75",
+  "previous_report": {
+    "path": "research/onchain-paper-replication-2026-09-24/implementation-coverage-v2.json",
+    "sha256": "342e32af09afc4fdd1fff7182a154ef904d9142d215851d2c395f91eca59b411"
+  },
+  "records": [
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/btc_source.py": "deb5f4003ab63a69f945756f1e40fdd6212733331b2ef0133bab2ba0f69acead",
+        "tradingagents/research/onchain_replication/eth_source.py": "78e0731e16d2751534e3530dde7313e94950bd852f99b30cec4661dbf7db1487",
+        "tradingagents/research/onchain_replication/parquet_ranges.py": "482c0686e552aae3157bf6cf12f802e0d284c68ce14d879000253b895450b044",
+        "tradingagents/research/onchain_replication/price_source.py": "66af531218352999667f2cac88c8393e70ddcf956b8e9f05db16a52c6b2f6e74",
+        "tradingagents/research/onchain_replication/range_source.py": "5f1e004a89e2339d1f21c941415dc3976e9523f509a1d1591f23a8ea7a836bd7"
+      },
+      "decision": "Native top-level successful positive transfers; BTC rational projection; original provider/filters unavailable.",
+      "id": "F01",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "ETH retained and BTC selected-column decoders/capture are integrated as components; real full-source body admission remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_btc_source.py": [
+          {
+            "status": "passed",
+            "test": "test_normalized_source_preserves_exact_prevouts_and_chain_position"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[count-count]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[index-contiguous]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[duplicate-contiguous]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[day-date]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[precision-satoshi-grid]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[missing_position-index]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[negative_position-position]"
+          },
+          {
+            "status": "passed",
+            "test": "test_missing_address_is_explicit_and_nonstring_source_schema_is_unadmitted"
+          },
+          {
+            "status": "passed",
+            "test": "test_coinbase_position_and_null_prevout_are_not_fabricated"
+          },
+          {
+            "status": "passed",
+            "test": "test_streamed_parquet_body_is_hash_count_date_and_position_bound"
+          }
+        ],
+        "tests/research/onchain_replication/test_eth_source.py": [
+          {
+            "status": "passed",
+            "test": "test_verified_stream_keeps_precision_and_filter_inputs"
+          },
+          {
+            "status": "passed",
+            "test": "test_projected_archive_columns_are_decoded_without_missing_byte_fill[zstd]"
+          },
+          {
+            "status": "passed",
+            "test": "test_projected_archive_columns_are_decoded_without_missing_byte_fill[receipt_base64]"
+          },
+          {
+            "status": "passed",
+            "test": "test_empty_source_member_inventory_rejected"
+          }
+        ],
+        "tests/research/onchain_replication/test_parquet_ranges.py": [
+          {
+            "status": "passed",
+            "test": "test_exact_nested_leaf_projection_decodes_every_row_without_script_pages[False]"
+          },
+          {
+            "status": "passed",
+            "test": "test_exact_nested_leaf_projection_decodes_every_row_without_script_pages[True]"
+          },
+          {
+            "status": "passed",
+            "test": "test_column_planner_rejects_missing_required_fields_and_bad_framing"
+          },
+          {
+            "status": "passed",
+            "test": "test_external_column_chunks_are_not_silently_read_from_current_object"
+          }
+        ],
+        "tests/research/onchain_replication/test_range_source.py": [
+          {
+            "status": "passed",
+            "test": "test_registered_selected_capture_decodes_and_preserves_missing_date"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_response_is_retained_and_never_retried[etag]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_response_is_retained_and_never_retried[range]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_response_is_retained_and_never_retried[oversize]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_response_is_retained_and_never_retried[denied]"
+          },
+          {
+            "status": "passed",
+            "test": "test_request_budget_does_not_shrink_date_denominator"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_registered_cell_membership_refuses_before_network"
+          },
+          {
+            "status": "passed",
+            "test": "test_transport_failure_retains_prefix_and_conservatively_spends_budget[12345678]"
+          },
+          {
+            "status": "passed",
+            "test": "test_transport_failure_retains_prefix_and_conservatively_spends_budget[None]"
+          },
+          {
+            "status": "passed",
+            "test": "test_capture_parent_is_durable_before_first_request"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/btc_store.py": "79f78d1bfc46d3e975f506407f3fcea102835235b5aa5b68cf6b1d7674c10452",
+        "tradingagents/research/onchain_replication/btc_weekly.py": "36d37d39566ab0786d7da3252e3cdc1764fad7178e68c76b92cccc75debf66a9",
+        "tradingagents/research/onchain_replication/graph_store.py": "bf10aae3b1532e7b687b5febc5803cbf3e9f695c8b086294bcc92fcd811be379",
+        "tradingagents/research/onchain_replication/weekly.py": "99df9c97685fe7c56702db7583af2d6b18342e657e2f13c53337c03c64e5e0a3"
+      },
+      "decision": "Directed aggregated pairs with count/value and four node activity attributes; approximate ETH units retained.",
+      "id": "F02",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "ETH/BTC exact aggregation and store components pass fixtures; real raw-to-graph independent reconciliation and full history remain pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_btc_store.py": [
+          {
+            "status": "passed",
+            "test": "test_exact_graph_and_whale_sidecar_survive_immutable_checkpoint"
+          },
+          {
+            "status": "passed",
+            "test": "test_inconsistent_exact_incident_values_cannot_be_published"
+          },
+          {
+            "status": "passed",
+            "test": "test_large_exact_denominator_is_not_rounded_or_decimal_digit_limited"
+          },
+          {
+            "status": "passed",
+            "test": "test_whale_hash_supports_huge_exact_rationals_and_rejects_float_substitution"
+          }
+        ],
+        "tests/research/onchain_replication/test_btc_weekly.py": [
+          {
+            "status": "passed",
+            "test": "test_exact_weekly_projection_and_incident_sidecar"
+          },
+          {
+            "status": "passed",
+            "test": "test_rejects_unavailable_or_duplicate_ledger_before_yield[duplicate_transaction-transaction]"
+          },
+          {
+            "status": "passed",
+            "test": "test_rejects_unavailable_or_duplicate_ledger_before_yield[double_spend-spent prevout]"
+          },
+          {
+            "status": "passed",
+            "test": "test_rejects_unavailable_or_duplicate_ledger_before_yield[missing_prevout-unavailable prevout]"
+          },
+          {
+            "status": "passed",
+            "test": "test_rejects_unavailable_or_duplicate_ledger_before_yield[conflicting_prevout-spent prevout]"
+          },
+          {
+            "status": "passed",
+            "test": "test_cross_week_double_spend_is_rejected_and_partial_coverage_is_rejected"
+          },
+          {
+            "status": "passed",
+            "test": "test_empty_expected_week_is_not_fabricated"
+          },
+          {
+            "status": "passed",
+            "test": "test_observed_creator_cannot_have_phantom_prevout[False]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observed_creator_cannot_have_phantom_prevout[True]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observed_creator_values_must_agree_with_source_resolution"
+          },
+          {
+            "status": "passed",
+            "test": "test_observed_chain_consistency_uses_position_not_timestamp[future-precedes]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observed_chain_consistency_uses_position_not_timestamp[duplicate_position-duplicate observed]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observed_chain_consistency_uses_position_not_timestamp[block_hash-conflicting block]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observed_chain_consistency_uses_position_not_timestamp[mixed-mixed chain]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observed_chain_consistency_uses_position_not_timestamp[immature-immature]"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonmonotone_block_timestamp_does_not_invent_invalid_chain"
+          },
+          {
+            "status": "passed",
+            "test": "test_block_identity_and_timestamp_are_consistent_within_observed_source[reused_hash-multiple heights]"
+          },
+          {
+            "status": "passed",
+            "test": "test_block_identity_and_timestamp_are_consistent_within_observed_source[block_timestamp-timestamp within]"
+          }
+        ],
+        "tests/research/onchain_replication/test_weekly.py": [
+          {
+            "status": "passed",
+            "test": "test_monday_utc_boundary"
+          },
+          {
+            "status": "passed",
+            "test": "test_conservation_and_attributes"
+          },
+          {
+            "status": "passed",
+            "test": "test_duplicates_even_excluded_fail"
+          },
+          {
+            "status": "passed",
+            "test": "test_partial_week_requires_explicit_disposition"
+          },
+          {
+            "status": "passed",
+            "test": "test_declared_empty_week_is_not_silently_omitted"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/price_source.py": "66af531218352999667f2cac88c8393e70ddcf956b8e9f05db16a52c6b2f6e74",
+        "tradingagents/research/onchain_replication/prices.py": "5f44f1e689b614121c4b9cab5da75e17322074a9ec9f2a30a174ac353093798f"
+      },
+      "decision": "Monday UTC complete weeks; daily Yahoo unadjusted closes, one-day availability lag.",
+      "id": "F03",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Parser and bounded immutable capture software verified; actual price source capture/admission has not occurred.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_price_source.py": [
+          {
+            "status": "passed",
+            "test": "test_price_source_retains_complete_denominator_and_never_retries[valid_partial]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_source_retains_complete_denominator_and_never_retries[http_denial]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_source_retains_complete_denominator_and_never_retries[invalid_schema]"
+          }
+        ],
+        "tests/research/onchain_replication/test_prices.py": [
+          {
+            "status": "passed",
+            "test": "test_yahoo_instrument_gaps_and_unadjusted_field"
+          },
+          {
+            "status": "passed",
+            "test": "test_capture_retains_denial_and_never_retries"
+          },
+          {
+            "status": "passed",
+            "test": "test_ambiguous_or_nonnumeric_price_schema_rejected[boolean_close]"
+          },
+          {
+            "status": "passed",
+            "test": "test_ambiguous_or_nonnumeric_price_schema_rejected[boolean_timestamp]"
+          },
+          {
+            "status": "passed",
+            "test": "test_ambiguous_or_nonnumeric_price_schema_rejected[multiple_quotes]"
+          },
+          {
+            "status": "passed",
+            "test": "test_ambiguous_or_nonnumeric_price_schema_rejected[weekly]"
+          },
+          {
+            "status": "passed",
+            "test": "test_ambiguous_or_nonnumeric_price_schema_rejected[granularity_absent]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_parser_uses_the_same_buffer_as_hash_check"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/neighborhoods.py": "cffeac41c84f2e94059a3c8a3833dfb96168f6279c88c34c1b0d3d0d96875e70"
+      },
+      "decision": "Weighted without-replacement weak one-hop sampling, 512 samples, probabilities halved on overlap.",
+      "id": "F04",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "One real resource-pilot week sampled512 neighborhoods; full fold dictionary population not executed.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_neighborhoods.py": [
+          {
+            "status": "passed",
+            "test": "test_weak_induced_neighborhood_and_hub_refusal"
+          },
+          {
+            "status": "passed",
+            "test": "test_overlap_probabilities_reproducible_and_future_invariant"
+          },
+          {
+            "status": "passed",
+            "test": "test_indexed_neighborhood_matches_original_directed_induction"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/dictionary.py": "32e27a4a17dc2aa993d1440d6486c75b0d4dcff341969dbf99bdff412dd7e446"
+      },
+      "decision": "Average linkage, 32 medoids, declared recursive partition rule.",
+      "id": "F05",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "One real resource-pilot week produced32 motifs from512 samples; full training-fold resource feasibility remains unproved.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_dictionary.py": [
+          {
+            "status": "passed",
+            "test": "test_average_linkage_and_medoid_ties"
+          },
+          {
+            "status": "passed",
+            "test": "test_dictionary_determinism"
+          },
+          {
+            "status": "passed",
+            "test": "test_partition_ties_use_original_indices_and_expand_membership"
+          },
+          {
+            "status": "passed",
+            "test": "test_dictionary_is_immutable_and_content_bound"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/matching_reference.py": "75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332"
+      },
+      "decision": "Literal Eq1, RBF attributes, alpha1, missing-edge zero; directed self score need not1.",
+      "id": "F06",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_matching_reference.py": [
+          {
+            "status": "passed",
+            "test": "test_hard_assignment_is_injective"
+          },
+          {
+            "status": "passed",
+            "test": "test_literal_directed_and_zero_edge_scores"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[1-3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[2-2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[3-2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[4-4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_extreme_finite_features_and_capacity"
+          },
+          {
+            "status": "passed",
+            "test": "test_single_iteration_matches_literal_half_coefficient"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/matching_reference.py": "75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332"
+      },
+      "decision": "Literal half coefficient, one row/column pass, multiplicative beta; symbols resolved by argument type.",
+      "id": "F07",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_matching_reference.py": [
+          {
+            "status": "passed",
+            "test": "test_hard_assignment_is_injective"
+          },
+          {
+            "status": "passed",
+            "test": "test_literal_directed_and_zero_edge_scores"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[1-3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[2-2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[3-2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[4-4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_extreme_finite_features_and_capacity"
+          },
+          {
+            "status": "passed",
+            "test": "test_single_iteration_matches_literal_half_coefficient"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/matching.py": "8198d3505bf250152e7f6949372efb38b7d83837c1067194b862958e17923280"
+      },
+      "decision": "Batched tensor implementation planned instead of custom CTA CUDA; GPU parity blocked on available device.",
+      "id": "F08",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "CPU accelerated checks pass; CUDA device unavailable.",
+      "paper_disposition": "known_deviation",
+      "tests": {
+        "tests/research/onchain_replication/test_matching_accelerated.py": [
+          {
+            "status": "passed",
+            "test": "test_batched_cpu_float32_parity"
+          },
+          {
+            "status": "skipped",
+            "test": "test_gpu_parity_if_available"
+          },
+          {
+            "status": "passed",
+            "test": "test_iterative_roundoff_does_not_change_tie_free_assignment"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/component_store.py": "33d20291369aca936245062b0771f34ad7e5bde403da9d267e23f91fff2cd99a",
+        "tradingagents/research/onchain_replication/feature_journal.py": "d95ead5e805d6f238d6f8ab44da75c2b5ab66fb465b7273ce4d34566fbc37dfd",
+        "tradingagents/research/onchain_replication/feature_pipeline.py": "8f3b28d35f15c3b67139582d626ffa1d5265d557ba8d1f470a709e46bc1fcf2f",
+        "tradingagents/research/onchain_replication/mcm.py": "3825d424496927dcb9f27935a12e00502f19d04b864017a7419954c2d5b4aeae",
+        "tradingagents/research/onchain_replication/registered_features.py": "46c4c1326320efc7885a83e8853c071e07a357b277f5fc71a29da416cec28d8f"
+      },
+      "decision": "Full motif similarities then downstream-trainable 32\u219264\u219232 ReLU MLP.",
+      "id": "F09",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "First real full-node MCM became unavailable at frozen10,000-node neighborhood ceiling; no truncation or larger cap used.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_component_store.py": [
+          {
+            "status": "passed",
+            "test": "test_streamed_optimizer_rng_and_numpy_state_roundtrip"
+          },
+          {
+            "status": "passed",
+            "test": "test_component_refuses_corruption_drift_and_unbounded_allocation"
+          },
+          {
+            "status": "passed",
+            "test": "test_multiple_arrays_cannot_bypass_aggregate_allocation_bound"
+          }
+        ],
+        "tests/research/onchain_replication/test_feature_journal.py": [
+          {
+            "status": "passed",
+            "test": "test_completed_and_interrupted_graph_journal_reuses_numerical_work"
+          },
+          {
+            "status": "passed",
+            "test": "test_dictionary_and_mcm_complete_checkpoint_never_refit_on_resume"
+          },
+          {
+            "status": "passed",
+            "test": "test_unsealed_or_duplicate_journal_cannot_masquerade_as_completion"
+          },
+          {
+            "status": "passed",
+            "test": "test_second_interruption_before_new_event_preserves_parent_identity[False]"
+          },
+          {
+            "status": "passed",
+            "test": "test_second_interruption_before_new_event_preserves_parent_identity[True]"
+          },
+          {
+            "status": "passed",
+            "test": "test_retained_arrays_are_bounded_across_events_and_completed_progress_removed"
+          },
+          {
+            "status": "passed",
+            "test": "test_empty_and_numerically_complete_failed_parents_recover_without_refit[before_first_checkpoint]"
+          },
+          {
+            "status": "passed",
+            "test": "test_empty_and_numerically_complete_failed_parents_recover_without_refit[after_representation_complete]"
+          },
+          {
+            "status": "passed",
+            "test": "test_final_binding_and_required_population_cannot_be_fabricated[binding_hash]"
+          },
+          {
+            "status": "passed",
+            "test": "test_final_binding_and_required_population_cannot_be_fabricated[empty_membership]"
+          }
+        ],
+        "tests/research/onchain_replication/test_feature_pipeline.py": [
+          {
+            "status": "passed",
+            "test": "test_graph_producer_binds_raw_topology_and_fixed_population[gin]"
+          },
+          {
+            "status": "passed",
+            "test": "test_graph_producer_binds_raw_topology_and_fixed_population[gat_without_mcm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_graph_producer_binds_raw_topology_and_fixed_population[graphwave]"
+          },
+          {
+            "status": "passed",
+            "test": "test_proposed_runs_dictionary_then_mcm_then_full_trainable_model"
+          },
+          {
+            "status": "passed",
+            "test": "test_missing_or_foreign_graph_never_becomes_empty_feature_vector"
+          },
+          {
+            "status": "passed",
+            "test": "test_delayed_intermediate_cannot_change_earlier_feature_and_all_ancestors_are_bound[node2vec]"
+          },
+          {
+            "status": "passed",
+            "test": "test_delayed_intermediate_cannot_change_earlier_feature_and_all_ancestors_are_bound[watchyourstep]"
+          }
+        ],
+        "tests/research/onchain_replication/test_mcm.py": [
+          {
+            "status": "passed",
+            "test": "test_mcm_reference_accelerated_and_dictionary_order"
+          }
+        ],
+        "tests/research/onchain_replication/test_registered_features.py": [
+          {
+            "status": "passed",
+            "test": "test_registered_representation_exclusive_ownership_and_completed_reuse"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_failed_representation_continues_without_repeating_completed_graph"
+          },
+          {
+            "status": "passed",
+            "test": "test_motif_control_descriptors_are_one_scientific_representation"
+          },
+          {
+            "status": "passed",
+            "test": "test_graph_output_hash_checks_the_exact_parsed_buffer"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/gat.py": "c2292bb164869bb4202a2af028a453f547d8e2930cd9d58ee4a59ffcb72913d6"
+      },
+      "decision": "Full incoming-neighbor/self GAT with frozen head dimensions.",
+      "id": "F10",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_gat.py": [
+          {
+            "status": "passed",
+            "test": "test_three_node_directed_attention_against_scalar_calculation"
+          },
+          {
+            "status": "passed",
+            "test": "test_padding_and_relabeling"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/pooling.py": "054845bed22c44294ce41f2263155df0397c42b0b306755e36791ae5a3960303"
+      },
+      "decision": "Mean pooling after GAT and joint downstream gradients; pooling omitted by source.",
+      "id": "F11",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_model.py": [
+          {
+            "status": "passed",
+            "test": "test_joint_gradient_and_structure_time_learning"
+          },
+          {
+            "status": "passed",
+            "test": "test_regression_head_is_distinct"
+          },
+          {
+            "status": "passed",
+            "test": "test_masked_nan_padding_has_finite_gradients"
+          },
+          {
+            "status": "passed",
+            "test": "test_pool_rejects_wholly_masked_graph"
+          },
+          {
+            "status": "passed",
+            "test": "test_shared_graph_reuse_keeps_joint_gradients_and_is_local_to_forward"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/temporal.py": "d8adafb5a50716ce472848df05e8bbb804525ed8003958c7f9a25c82d81ad226"
+      },
+      "decision": "LSTM64 plus tanh additive attention querying final valid state; 28 daily steps.",
+      "id": "F12",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_temporal.py": [
+          {
+            "status": "passed",
+            "test": "test_attention_mask_and_future_padding_invariance"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/model.py": "199ce63ee56a76deae60495598a4ca4ac6306d7d7f24cf6483a7d1f89feb4944"
+      },
+      "decision": "Separate regression scalar and directly trained two-logit classifier; no regressor-sign substitute.",
+      "id": "F13",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_model.py": [
+          {
+            "status": "passed",
+            "test": "test_joint_gradient_and_structure_time_learning"
+          },
+          {
+            "status": "passed",
+            "test": "test_regression_head_is_distinct"
+          },
+          {
+            "status": "passed",
+            "test": "test_masked_nan_padding_has_finite_gradients"
+          },
+          {
+            "status": "passed",
+            "test": "test_pool_rejects_wholly_masked_graph"
+          },
+          {
+            "status": "passed",
+            "test": "test_shared_graph_reuse_keeps_joint_gradients_and_is_local_to_forward"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/evaluation.py": "1c12251eed4ffefb9e21775d20c8486ca3c16b804564238ea12f49ee60f6c072",
+        "tradingagents/research/onchain_replication/job.py": "dfe7a862a5dc1d4708bb1a5f0a954378a0abfa54a71ae86511c872a4ef1cdea5",
+        "tradingagents/research/onchain_replication/job_payload.py": "a2f8c8770064ffe4eac6d5b25c71509f051c6b7efc6228fd186a44fbeba8dd25",
+        "tradingagents/research/onchain_replication/journal_recovery.py": "1f5a280789572a01d943e80081930e324e621127b742ef67b6d93b6041ed009d",
+        "tradingagents/research/onchain_replication/run.py": "f10cb29ad147587bfc147dd91ffe9b425005344e362bd1882a045667e386ab09",
+        "tradingagents/research/onchain_replication/training.py": "a178c226a4eb05d144798204be60a0a9c3b3640f4702f5c89d24d988a08784af"
+      },
+      "decision": "Rolling2018\u20132024 reconstructed folds, fixed100epochs/five seeds; original folds unavailable.",
+      "id": "F14",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Registered batch/payload/recovery integration verified synthetically; no real financial fit. Full-history source-to-population preparation/admission remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_evaluation.py": [
+          {
+            "status": "passed",
+            "test": "test_registered_synthetic_cell_predictions_independently_reconcile[lstm-direction]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_synthetic_cell_predictions_independently_reconcile[constant_graph-regression]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_synthetic_cell_predictions_independently_reconcile[svm-direction]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_synthetic_cell_predictions_independently_reconcile[svm-regression]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_only_recovery_does_not_claim_or_repeat_fit[lstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_only_recovery_does_not_claim_or_repeat_fit[svm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scientific_cell_cannot_be_relabeled"
+          }
+        ],
+        "tests/research/onchain_replication/test_job.py": [
+          {
+            "status": "passed",
+            "test": "test_explicit_limits_refuse_missing_or_inadequate_contract"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload0]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload1]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_generic_source_job_publishes_real_capture_denominator_with_synthetic_transport"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_retains_denominator_and_closes_only_owned_partial_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_rejects_foreign_ownership_before_any_action[owner]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_rejects_foreign_ownership_before_any_action[boot]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_rejects_foreign_ownership_before_any_action[command]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_rejects_foreign_ownership_before_any_action[cgroup]"
+          },
+          {
+            "status": "passed",
+            "test": "test_active_monitor_refuses_external_reconciliation"
+          },
+          {
+            "status": "passed",
+            "test": "test_dependency_closure_includes_every_executed_component"
+          },
+          {
+            "status": "passed",
+            "test": "test_workspace_binding_records_shared_physical_ledger_and_artifacts"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_workspace_mapping_refuses_before_job_access[root]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_workspace_mapping_refuses_before_job_access[ledger]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_workspace_mapping_refuses_before_job_access[artifacts]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_workspace_mapping_refuses_before_job_access[git_common]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_retained_terminal[terminal]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_retained_terminal[output]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_retained_terminal[claim]"
+          },
+          {
+            "status": "passed",
+            "test": "test_successful_guard_must_be_the_same_owner_and_command[False]"
+          },
+          {
+            "status": "passed",
+            "test": "test_successful_guard_must_be_the_same_owner_and_command[True]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_resource_and_denominator_evidence[True-guard/final.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_resource_and_denominator_evidence[False-postmortem-cells.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_resource_and_denominator_evidence[False-guard/observer-death.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_resource_and_denominator_evidence[False-unsealed-journals.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[False-status-complete]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[False-claim_sha256-ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-experiment_id-unrelated]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-source-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-cells-value4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-registration_sha256-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-output_sha256-value6]"
+          }
+        ],
+        "tests/research/onchain_replication/test_job_payload.py": [
+          {
+            "status": "passed",
+            "test": "test_registered_population_roundtrip_and_payload_execution"
+          },
+          {
+            "status": "passed",
+            "test": "test_producer_in_same_claim_publishes_dynamic_binding_or_visible_capacity_failure[1-None]"
+          },
+          {
+            "status": "passed",
+            "test": "test_producer_in_same_claim_publishes_dynamic_binding_or_visible_capacity_failure[10485760-None]"
+          },
+          {
+            "status": "passed",
+            "test": "test_producer_in_same_claim_publishes_dynamic_binding_or_visible_capacity_failure[10485760-labels]"
+          },
+          {
+            "status": "passed",
+            "test": "test_producer_in_same_claim_publishes_dynamic_binding_or_visible_capacity_failure[10485760-descriptor]"
+          }
+        ],
+        "tests/research/onchain_replication/test_journal_recovery.py": [
+          {
+            "status": "passed",
+            "test": "test_unsealed_journal_recovers_only_durable_prefix_without_recomputing"
+          },
+          {
+            "status": "passed",
+            "test": "test_unproven_death_or_broken_journal_does_not_create_terminal[live]"
+          },
+          {
+            "status": "passed",
+            "test": "test_unproven_death_or_broken_journal_does_not_create_terminal[wrong_owner]"
+          },
+          {
+            "status": "passed",
+            "test": "test_unproven_death_or_broken_journal_does_not_create_terminal[event_gap]"
+          },
+          {
+            "status": "passed",
+            "test": "test_unproven_death_or_broken_journal_does_not_create_terminal[corrupt_component]"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_observer_finishes_identical_publication_without_work[recovery-candidate.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_observer_finishes_identical_publication_without_work[recovery-evidence.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_terminal_must_bind_exact_claim[status-complete]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_terminal_must_bind_exact_claim[experiment_id-unrelated]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_terminal_must_bind_exact_claim[claim_sha256-ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff]"
+          }
+        ],
+        "tests/research/onchain_replication/test_run.py": [
+          {
+            "status": "passed",
+            "test": "test_prepared_batch_retains_controls_and_full_denominator"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_cell_does_not_discard_an_independent_cell"
+          },
+          {
+            "status": "passed",
+            "test": "test_population_change_refuses_before_any_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonunique_or_unordered_decisions_refuse_before_any_fit[train-duplicate]"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonunique_or_unordered_decisions_refuse_before_any_fit[test-duplicate]"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonunique_or_unordered_decisions_refuse_before_any_fit[train-reverse]"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonunique_or_unordered_decisions_refuse_before_any_fit[test-reverse]"
+          },
+          {
+            "status": "passed",
+            "test": "test_equal_dates_cannot_hide_different_labels_or_fold[up]"
+          },
+          {
+            "status": "passed",
+            "test": "test_equal_dates_cannot_hide_different_labels_or_fold[target_price]"
+          },
+          {
+            "status": "passed",
+            "test": "test_equal_dates_cannot_hide_different_labels_or_fold[fold_hash]"
+          },
+          {
+            "status": "passed",
+            "test": "test_full_motif_architecture_executes_through_registered_batch"
+          },
+          {
+            "status": "passed",
+            "test": "test_same_width_wrong_graph_representation_is_rejected"
+          },
+          {
+            "status": "passed",
+            "test": "test_published_representation_failure_preserves_independent_price_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_batch_prediction_recovery_uses_completed_parent_fit_without_refitting"
+          }
+        ],
+        "tests/research/onchain_replication/test_training.py": [
+          {
+            "status": "passed",
+            "test": "test_finite_fit_rejects_duplicate_and_predicts"
+          },
+          {
+            "status": "passed",
+            "test": "test_unregistered_cell_cannot_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_fit_requires_new_registered_attempt_and_replays[1]"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_fit_requires_new_registered_attempt_and_replays[3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_flat_regression_target_cannot_broadcast"
+          },
+          {
+            "status": "passed",
+            "test": "test_predictions_cannot_drop_rows"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/baselines.py": "8ad95719b412aa633607f966e72e3246cceeceffb68e6ced90b4289637b3954a"
+      },
+      "decision": "Full + LSTM/HLSTM/GRU/SVR both assets; HLSTM declared two-level chunk adaptation.",
+      "id": "F15",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_metrics_baselines.py": [
+          {
+            "status": "passed",
+            "test": "test_metrics_hand_calculation_and_probability_limits"
+          },
+          {
+            "status": "passed",
+            "test": "test_interval_rejects_gaps_and_preserves_pairing"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[lstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[gru]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[hlstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_svm_contract_and_zero_fit_controls"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/baselines.py": "8ad95719b412aa633607f966e72e3246cceeceffb68e6ced90b4289637b3954a"
+      },
+      "decision": "Same five directly trained direction arms, uncalibrated SVC sigmoid diagnostic probabilities labeled.",
+      "id": "F16",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_metrics_baselines.py": [
+          {
+            "status": "passed",
+            "test": "test_metrics_hand_calculation_and_probability_limits"
+          },
+          {
+            "status": "passed",
+            "test": "test_interval_rejects_gaps_and_preserves_pairing"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[lstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[gru]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[hlstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_svm_contract_and_zero_fit_controls"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/component_store.py": "33d20291369aca936245062b0771f34ad7e5bde403da9d267e23f91fff2cd99a",
+        "tradingagents/research/onchain_replication/feature_pipeline.py": "8f3b28d35f15c3b67139582d626ffa1d5265d557ba8d1f470a709e46bc1fcf2f",
+        "tradingagents/research/onchain_replication/graph_baselines.py": "f284a85a0ce3aa5dee24c748c6a376d9d44a2d775409b874540215ff0e594907",
+        "tradingagents/research/onchain_replication/model_registry.py": "fb22c17ea6b5780fcc639e2f21372be650f85870f67399f1092c51c0983300e6",
+        "tradingagents/research/onchain_replication/registered_features.py": "46c4c1326320efc7885a83e8853c071e07a357b277f5fc71a29da416cec28d8f"
+      },
+      "decision": "Node2Vec/GraphWave/GIN/WatchYourStep plus matched temporal heads with declared alignment.",
+      "id": "F17",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Graph representation production/reuse and temporal assembly are integrated and synthetic-tested; full-size/history execution remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_feature_pipeline.py": [
+          {
+            "status": "passed",
+            "test": "test_graph_producer_binds_raw_topology_and_fixed_population[gin]"
+          },
+          {
+            "status": "passed",
+            "test": "test_graph_producer_binds_raw_topology_and_fixed_population[gat_without_mcm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_graph_producer_binds_raw_topology_and_fixed_population[graphwave]"
+          },
+          {
+            "status": "passed",
+            "test": "test_proposed_runs_dictionary_then_mcm_then_full_trainable_model"
+          },
+          {
+            "status": "passed",
+            "test": "test_missing_or_foreign_graph_never_becomes_empty_feature_vector"
+          },
+          {
+            "status": "passed",
+            "test": "test_delayed_intermediate_cannot_change_earlier_feature_and_all_ancestors_are_bound[node2vec]"
+          },
+          {
+            "status": "passed",
+            "test": "test_delayed_intermediate_cannot_change_earlier_feature_and_all_ancestors_are_bound[watchyourstep]"
+          }
+        ],
+        "tests/research/onchain_replication/test_graph_baselines.py": [
+          {
+            "status": "passed",
+            "test": "test_graphwave_against_dense_three_node_oracle"
+          },
+          {
+            "status": "passed",
+            "test": "test_historical_alignment_and_walk_reproducibility"
+          },
+          {
+            "status": "passed",
+            "test": "test_watchyourstep_objective_matches_scalar_and_gin_gradients"
+          },
+          {
+            "status": "passed",
+            "test": "test_node2vec_mid_epoch_recovery_matches_uninterrupted"
+          },
+          {
+            "status": "passed",
+            "test": "test_wys_partial_gradient_checkpoint_and_graphwave_replay"
+          }
+        ],
+        "tests/research/onchain_replication/test_registered_features.py": [
+          {
+            "status": "passed",
+            "test": "test_registered_representation_exclusive_ownership_and_completed_reuse"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_failed_representation_continues_without_repeating_completed_graph"
+          },
+          {
+            "status": "passed",
+            "test": "test_motif_control_descriptors_are_one_scientific_representation"
+          },
+          {
+            "status": "passed",
+            "test": "test_graph_output_hash_checks_the_exact_parsed_buffer"
+          }
+        ],
+        "tests/research/onchain_replication/test_registry.py": [
+          {
+            "status": "passed",
+            "test": "test_every_neural_arm_assembles_and_receives_gradients[lstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_every_neural_arm_assembles_and_receives_gradients[gru]"
+          },
+          {
+            "status": "passed",
+            "test": "test_every_neural_arm_assembles_and_receives_gradients[hlstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_every_neural_arm_assembles_and_receives_gradients[node2vec]"
+          },
+          {
+            "status": "passed",
+            "test": "test_every_neural_arm_assembles_and_receives_gradients[graphwave]"
+          },
+          {
+            "status": "passed",
+            "test": "test_every_neural_arm_assembles_and_receives_gradients[watchyourstep]"
+          },
+          {
+            "status": "passed",
+            "test": "test_every_neural_arm_assembles_and_receives_gradients[gin]"
+          },
+          {
+            "status": "passed",
+            "test": "test_every_neural_arm_assembles_and_receives_gradients[constant_graph]"
+          },
+          {
+            "status": "passed",
+            "test": "test_every_neural_arm_assembles_and_receives_gradients[mcm_without_gat]"
+          },
+          {
+            "status": "passed",
+            "test": "test_every_neural_arm_assembles_and_receives_gradients[gat_without_mcm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_every_neural_arm_assembles_and_receives_gradients[training_label_permutation]"
+          },
+          {
+            "status": "passed",
+            "test": "test_every_neural_arm_assembles_and_receives_gradients[proposed]"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/btc_store.py": "79f78d1bfc46d3e975f506407f3fcea102835235b5aa5b68cf6b1d7674c10452",
+        "tradingagents/research/onchain_replication/btc_subsets.py": "79f1cc4de5b5bf52e491201d05941bbe0ff29555d814f343294411f4591ed736",
+        "tradingagents/research/onchain_replication/subsets.py": "59a17cb12711d8ec518f6f25ec4518f143647b79c3ef3286399dada114b7a22c"
+      },
+      "decision": "Weekly incident value >90% same-week maximum; retain equality; recompute features after removal.",
+      "id": "F18",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "ETH incident-value and BTC exact-rational incident sidecars/subset rebuilding implemented; empirical treatments remain unexecuted.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_btc_store.py": [
+          {
+            "status": "passed",
+            "test": "test_exact_graph_and_whale_sidecar_survive_immutable_checkpoint"
+          },
+          {
+            "status": "passed",
+            "test": "test_inconsistent_exact_incident_values_cannot_be_published"
+          },
+          {
+            "status": "passed",
+            "test": "test_large_exact_denominator_is_not_rounded_or_decimal_digit_limited"
+          },
+          {
+            "status": "passed",
+            "test": "test_whale_hash_supports_huge_exact_rationals_and_rejects_float_substitution"
+          }
+        ],
+        "tests/research/onchain_replication/test_btc_subsets.py": [
+          {
+            "status": "passed",
+            "test": "test_whale_selection_uses_bound_exact_sidecar_and_preserves_isolates"
+          },
+          {
+            "status": "passed",
+            "test": "test_fund_rebuilds_exact_retained_edges_and_rejects_rounded_node_features"
+          }
+        ],
+        "tests/research/onchain_replication/test_subsets.py": [
+          {
+            "status": "passed",
+            "test": "test_whales_removed_features_rebuilt_and_origin_counters_explicit"
+          },
+          {
+            "status": "passed",
+            "test": "test_fund_cohort_cannot_be_invented"
+          },
+          {
+            "status": "passed",
+            "test": "test_whale_strict_boundary_uses_raw_aggregates"
+          },
+          {
+            "status": "passed",
+            "test": "test_induced_fund_graph_retains_isolated_selected_vertex"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/btc_subsets.py": "79f1cc4de5b5bf52e491201d05941bbe0ff29555d814f343294411f4591ed736",
+        "tradingagents/research/onchain_replication/subsets.py": "59a17cb12711d8ec518f6f25ec4518f143647b79c3ef3286399dada114b7a22c"
+      },
+      "decision": "Exact65-entity address cohort and vintage absent; current labels cannot replace it. Synthetic filter software remains implementable.",
+      "id": "F19",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Original65-entity historical fund cohort absent; synthetic subset code does not recover it.",
+      "paper_disposition": "blocked",
+      "tests": {
+        "tests/research/onchain_replication/test_btc_subsets.py": [
+          {
+            "status": "passed",
+            "test": "test_whale_selection_uses_bound_exact_sidecar_and_preserves_isolates"
+          },
+          {
+            "status": "passed",
+            "test": "test_fund_rebuilds_exact_retained_edges_and_rejects_rounded_node_features"
+          }
+        ],
+        "tests/research/onchain_replication/test_subsets.py": [
+          {
+            "status": "passed",
+            "test": "test_whales_removed_features_rebuilt_and_origin_counters_explicit"
+          },
+          {
+            "status": "passed",
+            "test": "test_fund_cohort_cannot_be_invented"
+          },
+          {
+            "status": "passed",
+            "test": "test_whale_strict_boundary_uses_raw_aggregates"
+          },
+          {
+            "status": "passed",
+            "test": "test_induced_fund_graph_retains_isolated_selected_vertex"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/comparison.py": "b157f41b2b98517c67152209bac46fbedf3a2eb9471fd27f9c588a41e60c8c23",
+        "tradingagents/research/onchain_replication/metrics.py": "03e27c21e87d3a9394c483fc9514c3a223a7c3573b00f2633b8a1f209c216e38",
+        "tradingagents/research/onchain_replication/verification.py": "c492cc9be2eb0956035800c26bde5d6cc2999844cd7466eb151bd3ea82815873"
+      },
+      "decision": "Primary binary-up metrics averaged over annual folds; pooled/macro/weighted secondary; retain published contradictions.",
+      "id": "F20",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Metric/checker arithmetic verified; no empirical accuracy or agreement reported.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_comparison.py": [
+          {
+            "status": "passed",
+            "test": "test_full_matrix_allocates_initial_once_and_every_later_asset_year"
+          },
+          {
+            "status": "passed",
+            "test": "test_printed_rows_reuse_identical_cells_and_do_not_average_survivors"
+          }
+        ],
+        "tests/research/onchain_replication/test_metrics_baselines.py": [
+          {
+            "status": "passed",
+            "test": "test_metrics_hand_calculation_and_probability_limits"
+          },
+          {
+            "status": "passed",
+            "test": "test_interval_rejects_gaps_and_preserves_pairing"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[lstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[gru]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[hlstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_svm_contract_and_zero_fit_controls"
+          }
+        ],
+        "tests/research/onchain_replication/test_verification.py": [
+          {
+            "status": "passed",
+            "test": "test_classification_has_hand_counted_denominators_and_tie_rule"
+          },
+          {
+            "status": "passed",
+            "test": "test_single_class_and_clipped_probability_conventions_are_explicit"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_classification_populations_are_rejected[labels0-probabilities0]"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_classification_populations_are_rejected[labels1-probabilities1]"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_classification_populations_are_rejected[labels2-probabilities2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_classification_populations_are_rejected[labels3-probabilities3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_classification_populations_are_rejected[labels4-probabilities4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_classification_populations_are_rejected[labels5-probabilities5]"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_classification_populations_are_rejected[labels6-probabilities6]"
+          },
+          {
+            "status": "passed",
+            "test": "test_regression_uses_original_price_units_and_percentage_mape"
+          },
+          {
+            "status": "passed",
+            "test": "test_invalid_regression_denominators_are_rejected[actual0-predicted0]"
+          },
+          {
+            "status": "passed",
+            "test": "test_invalid_regression_denominators_are_rejected[actual1-predicted1]"
+          },
+          {
+            "status": "passed",
+            "test": "test_invalid_regression_denominators_are_rejected[actual2-predicted2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_invalid_regression_denominators_are_rejected[actual3-predicted3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_invalid_regression_denominators_are_rejected[actual4-predicted4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_summary_comparison_enforces_c13_and_exact_counts"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_rows_bind_complete_clocks_and_exact_membership"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[max_input_available_at-2024-01-01T00:00:01Z]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[max_input_available_at-2024-01-01T00:00:00.0000001Z]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[decision_at-2024-01-01T00:00:00]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[label_start-2023-12-31T00:00:00Z]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[label_end-2024-01-04T00:00:00Z]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[checkpoint_hash-bad]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[probability_up-value6]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[probability_up-nan]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[probability_up-1.01]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[predicted_price-2.0]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[y_true-2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[seed-23]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[asset-BTC]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[arm-gru]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[lane-causal_audit]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[fold_id-2023]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_denominator_cannot_drop_duplicate_or_add_fields"
+          },
+          {
+            "status": "passed",
+            "test": "test_completion_keeps_numerical_agreement_separate_from_work"
+          },
+          {
+            "status": "passed",
+            "test": "test_blockers_and_scope_cannot_be_hidden_by_complete_cell_counts"
+          },
+          {
+            "status": "passed",
+            "test": "test_completion_requires_complete_explicit_evidence_contract[missing]"
+          },
+          {
+            "status": "passed",
+            "test": "test_completion_requires_complete_explicit_evidence_contract[extra]"
+          },
+          {
+            "status": "passed",
+            "test": "test_completion_requires_complete_explicit_evidence_contract[unknown_status]"
+          },
+          {
+            "status": "passed",
+            "test": "test_completion_requires_complete_explicit_evidence_contract[no_evidence]"
+          },
+          {
+            "status": "passed",
+            "test": "test_completion_requires_complete_explicit_evidence_contract[no_reason]"
+          },
+          {
+            "status": "passed",
+            "test": "test_completion_requires_complete_explicit_evidence_contract[narrow_paper]"
+          },
+          {
+            "status": "passed",
+            "test": "test_completion_requires_complete_explicit_evidence_contract[empty_implementation]"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/btc_source.py": "deb5f4003ab63a69f945756f1e40fdd6212733331b2ef0133bab2ba0f69acead",
+        "tradingagents/research/onchain_replication/eth_source.py": "78e0731e16d2751534e3530dde7313e94950bd852f99b30cec4661dbf7db1487",
+        "tradingagents/research/onchain_replication/parquet_ranges.py": "482c0686e552aae3157bf6cf12f802e0d284c68ce14d879000253b895450b044",
+        "tradingagents/research/onchain_replication/price_source.py": "66af531218352999667f2cac88c8393e70ddcf956b8e9f05db16a52c6b2f6e74",
+        "tradingagents/research/onchain_replication/range_source.py": "5f1e004a89e2339d1f21c941415dc3976e9523f509a1d1591f23a8ea7a836bd7"
+      },
+      "decision": "Provider and event universe not reported; independent retained-source native-transfer definition.",
+      "id": "U01",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "implemented_choice_reference": "F01",
+      "limitation": "Provider and event universe not reported; independent retained-source native-transfer definition.",
+      "paper_disposition": "declared_assumption",
+      "qualification": "Links implement the declared assumption or refusal; they do not recover a missing published setting.",
+      "tests": {
+        "tests/research/onchain_replication/test_btc_source.py": [
+          {
+            "status": "passed",
+            "test": "test_normalized_source_preserves_exact_prevouts_and_chain_position"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[count-count]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[index-contiguous]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[duplicate-contiguous]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[day-date]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[precision-satoshi-grid]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[missing_position-index]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[negative_position-position]"
+          },
+          {
+            "status": "passed",
+            "test": "test_missing_address_is_explicit_and_nonstring_source_schema_is_unadmitted"
+          },
+          {
+            "status": "passed",
+            "test": "test_coinbase_position_and_null_prevout_are_not_fabricated"
+          },
+          {
+            "status": "passed",
+            "test": "test_streamed_parquet_body_is_hash_count_date_and_position_bound"
+          }
+        ],
+        "tests/research/onchain_replication/test_eth_source.py": [
+          {
+            "status": "passed",
+            "test": "test_verified_stream_keeps_precision_and_filter_inputs"
+          },
+          {
+            "status": "passed",
+            "test": "test_projected_archive_columns_are_decoded_without_missing_byte_fill[zstd]"
+          },
+          {
+            "status": "passed",
+            "test": "test_projected_archive_columns_are_decoded_without_missing_byte_fill[receipt_base64]"
+          },
+          {
+            "status": "passed",
+            "test": "test_empty_source_member_inventory_rejected"
+          }
+        ],
+        "tests/research/onchain_replication/test_parquet_ranges.py": [
+          {
+            "status": "passed",
+            "test": "test_exact_nested_leaf_projection_decodes_every_row_without_script_pages[False]"
+          },
+          {
+            "status": "passed",
+            "test": "test_exact_nested_leaf_projection_decodes_every_row_without_script_pages[True]"
+          },
+          {
+            "status": "passed",
+            "test": "test_column_planner_rejects_missing_required_fields_and_bad_framing"
+          },
+          {
+            "status": "passed",
+            "test": "test_external_column_chunks_are_not_silently_read_from_current_object"
+          }
+        ],
+        "tests/research/onchain_replication/test_range_source.py": [
+          {
+            "status": "passed",
+            "test": "test_registered_selected_capture_decodes_and_preserves_missing_date"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_response_is_retained_and_never_retried[etag]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_response_is_retained_and_never_retried[range]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_response_is_retained_and_never_retried[oversize]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_response_is_retained_and_never_retried[denied]"
+          },
+          {
+            "status": "passed",
+            "test": "test_request_budget_does_not_shrink_date_denominator"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_registered_cell_membership_refuses_before_network"
+          },
+          {
+            "status": "passed",
+            "test": "test_transport_failure_retains_prefix_and_conservatively_spends_budget[12345678]"
+          },
+          {
+            "status": "passed",
+            "test": "test_transport_failure_retains_prefix_and_conservatively_spends_budget[None]"
+          },
+          {
+            "status": "passed",
+            "test": "test_capture_parent_is_durable_before_first_request"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/btc_store.py": "79f78d1bfc46d3e975f506407f3fcea102835235b5aa5b68cf6b1d7674c10452",
+        "tradingagents/research/onchain_replication/btc_weekly.py": "36d37d39566ab0786d7da3252e3cdc1764fad7178e68c76b92cccc75debf66a9",
+        "tradingagents/research/onchain_replication/graph_store.py": "bf10aae3b1532e7b687b5febc5803cbf3e9f695c8b086294bcc92fcd811be379",
+        "tradingagents/research/onchain_replication/weekly.py": "99df9c97685fe7c56702db7583af2d6b18342e657e2f13c53337c03c64e5e0a3"
+      },
+      "decision": "Features, direction, aggregation and precision explicitly independently chosen.",
+      "id": "U02",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "implemented_choice_reference": "F02",
+      "limitation": "Features, direction, aggregation and precision explicitly independently chosen.",
+      "paper_disposition": "declared_assumption",
+      "qualification": "Links implement the declared assumption or refusal; they do not recover a missing published setting.",
+      "tests": {
+        "tests/research/onchain_replication/test_btc_store.py": [
+          {
+            "status": "passed",
+            "test": "test_exact_graph_and_whale_sidecar_survive_immutable_checkpoint"
+          },
+          {
+            "status": "passed",
+            "test": "test_inconsistent_exact_incident_values_cannot_be_published"
+          },
+          {
+            "status": "passed",
+            "test": "test_large_exact_denominator_is_not_rounded_or_decimal_digit_limited"
+          },
+          {
+            "status": "passed",
+            "test": "test_whale_hash_supports_huge_exact_rationals_and_rejects_float_substitution"
+          }
+        ],
+        "tests/research/onchain_replication/test_btc_weekly.py": [
+          {
+            "status": "passed",
+            "test": "test_exact_weekly_projection_and_incident_sidecar"
+          },
+          {
+            "status": "passed",
+            "test": "test_rejects_unavailable_or_duplicate_ledger_before_yield[duplicate_transaction-transaction]"
+          },
+          {
+            "status": "passed",
+            "test": "test_rejects_unavailable_or_duplicate_ledger_before_yield[double_spend-spent prevout]"
+          },
+          {
+            "status": "passed",
+            "test": "test_rejects_unavailable_or_duplicate_ledger_before_yield[missing_prevout-unavailable prevout]"
+          },
+          {
+            "status": "passed",
+            "test": "test_rejects_unavailable_or_duplicate_ledger_before_yield[conflicting_prevout-spent prevout]"
+          },
+          {
+            "status": "passed",
+            "test": "test_cross_week_double_spend_is_rejected_and_partial_coverage_is_rejected"
+          },
+          {
+            "status": "passed",
+            "test": "test_empty_expected_week_is_not_fabricated"
+          },
+          {
+            "status": "passed",
+            "test": "test_observed_creator_cannot_have_phantom_prevout[False]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observed_creator_cannot_have_phantom_prevout[True]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observed_creator_values_must_agree_with_source_resolution"
+          },
+          {
+            "status": "passed",
+            "test": "test_observed_chain_consistency_uses_position_not_timestamp[future-precedes]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observed_chain_consistency_uses_position_not_timestamp[duplicate_position-duplicate observed]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observed_chain_consistency_uses_position_not_timestamp[block_hash-conflicting block]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observed_chain_consistency_uses_position_not_timestamp[mixed-mixed chain]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observed_chain_consistency_uses_position_not_timestamp[immature-immature]"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonmonotone_block_timestamp_does_not_invent_invalid_chain"
+          },
+          {
+            "status": "passed",
+            "test": "test_block_identity_and_timestamp_are_consistent_within_observed_source[reused_hash-multiple heights]"
+          },
+          {
+            "status": "passed",
+            "test": "test_block_identity_and_timestamp_are_consistent_within_observed_source[block_timestamp-timestamp within]"
+          }
+        ],
+        "tests/research/onchain_replication/test_weekly.py": [
+          {
+            "status": "passed",
+            "test": "test_monday_utc_boundary"
+          },
+          {
+            "status": "passed",
+            "test": "test_conservation_and_attributes"
+          },
+          {
+            "status": "passed",
+            "test": "test_duplicates_even_excluded_fail"
+          },
+          {
+            "status": "passed",
+            "test": "test_partial_week_requires_explicit_disposition"
+          },
+          {
+            "status": "passed",
+            "test": "test_declared_empty_week_is_not_silently_omitted"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/btc_source.py": "deb5f4003ab63a69f945756f1e40fdd6212733331b2ef0133bab2ba0f69acead",
+        "tradingagents/research/onchain_replication/eth_source.py": "78e0731e16d2751534e3530dde7313e94950bd852f99b30cec4661dbf7db1487",
+        "tradingagents/research/onchain_replication/parquet_ranges.py": "482c0686e552aae3157bf6cf12f802e0d284c68ce14d879000253b895450b044",
+        "tradingagents/research/onchain_replication/price_source.py": "66af531218352999667f2cac88c8393e70ddcf956b8e9f05db16a52c6b2f6e74",
+        "tradingagents/research/onchain_replication/range_source.py": "5f1e004a89e2339d1f21c941415dc3976e9523f509a1d1591f23a8ea7a836bd7"
+      },
+      "decision": "Proportional rational input-output projection; exact satoshi inputs, not observed bilateral flows.",
+      "id": "U03",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "implemented_choice_reference": "F01",
+      "limitation": "Proportional rational input-output projection; exact satoshi inputs, not observed bilateral flows.",
+      "paper_disposition": "declared_assumption",
+      "qualification": "Links implement the declared assumption or refusal; they do not recover a missing published setting.",
+      "tests": {
+        "tests/research/onchain_replication/test_btc_source.py": [
+          {
+            "status": "passed",
+            "test": "test_normalized_source_preserves_exact_prevouts_and_chain_position"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[count-count]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[index-contiguous]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[duplicate-contiguous]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[day-date]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[precision-satoshi-grid]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[missing_position-index]"
+          },
+          {
+            "status": "passed",
+            "test": "test_malformed_or_incomplete_source_remains_unavailable[negative_position-position]"
+          },
+          {
+            "status": "passed",
+            "test": "test_missing_address_is_explicit_and_nonstring_source_schema_is_unadmitted"
+          },
+          {
+            "status": "passed",
+            "test": "test_coinbase_position_and_null_prevout_are_not_fabricated"
+          },
+          {
+            "status": "passed",
+            "test": "test_streamed_parquet_body_is_hash_count_date_and_position_bound"
+          }
+        ],
+        "tests/research/onchain_replication/test_eth_source.py": [
+          {
+            "status": "passed",
+            "test": "test_verified_stream_keeps_precision_and_filter_inputs"
+          },
+          {
+            "status": "passed",
+            "test": "test_projected_archive_columns_are_decoded_without_missing_byte_fill[zstd]"
+          },
+          {
+            "status": "passed",
+            "test": "test_projected_archive_columns_are_decoded_without_missing_byte_fill[receipt_base64]"
+          },
+          {
+            "status": "passed",
+            "test": "test_empty_source_member_inventory_rejected"
+          }
+        ],
+        "tests/research/onchain_replication/test_parquet_ranges.py": [
+          {
+            "status": "passed",
+            "test": "test_exact_nested_leaf_projection_decodes_every_row_without_script_pages[False]"
+          },
+          {
+            "status": "passed",
+            "test": "test_exact_nested_leaf_projection_decodes_every_row_without_script_pages[True]"
+          },
+          {
+            "status": "passed",
+            "test": "test_column_planner_rejects_missing_required_fields_and_bad_framing"
+          },
+          {
+            "status": "passed",
+            "test": "test_external_column_chunks_are_not_silently_read_from_current_object"
+          }
+        ],
+        "tests/research/onchain_replication/test_range_source.py": [
+          {
+            "status": "passed",
+            "test": "test_registered_selected_capture_decodes_and_preserves_missing_date"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_response_is_retained_and_never_retried[etag]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_response_is_retained_and_never_retried[range]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_response_is_retained_and_never_retried[oversize]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_response_is_retained_and_never_retried[denied]"
+          },
+          {
+            "status": "passed",
+            "test": "test_request_budget_does_not_shrink_date_denominator"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_registered_cell_membership_refuses_before_network"
+          },
+          {
+            "status": "passed",
+            "test": "test_transport_failure_retains_prefix_and_conservatively_spends_budget[12345678]"
+          },
+          {
+            "status": "passed",
+            "test": "test_transport_failure_retains_prefix_and_conservatively_spends_budget[None]"
+          },
+          {
+            "status": "passed",
+            "test": "test_capture_parent_is_durable_before_first_request"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/price_source.py": "66af531218352999667f2cac88c8393e70ddcf956b8e9f05db16a52c6b2f6e74",
+        "tradingagents/research/onchain_replication/prices.py": "5f44f1e689b614121c4b9cab5da75e17322074a9ec9f2a30a174ac353093798f"
+      },
+      "decision": "Monday UTC complete weeks and daily Close, next-day horizon.",
+      "id": "U04",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "implemented_choice_reference": "F03",
+      "limitation": "Monday UTC complete weeks and daily Close, next-day horizon.",
+      "paper_disposition": "declared_assumption",
+      "qualification": "Links implement the declared assumption or refusal; they do not recover a missing published setting.",
+      "tests": {
+        "tests/research/onchain_replication/test_price_source.py": [
+          {
+            "status": "passed",
+            "test": "test_price_source_retains_complete_denominator_and_never_retries[valid_partial]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_source_retains_complete_denominator_and_never_retries[http_denial]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_source_retains_complete_denominator_and_never_retries[invalid_schema]"
+          }
+        ],
+        "tests/research/onchain_replication/test_prices.py": [
+          {
+            "status": "passed",
+            "test": "test_yahoo_instrument_gaps_and_unadjusted_field"
+          },
+          {
+            "status": "passed",
+            "test": "test_capture_retains_denial_and_never_retries"
+          },
+          {
+            "status": "passed",
+            "test": "test_ambiguous_or_nonnumeric_price_schema_rejected[boolean_close]"
+          },
+          {
+            "status": "passed",
+            "test": "test_ambiguous_or_nonnumeric_price_schema_rejected[boolean_timestamp]"
+          },
+          {
+            "status": "passed",
+            "test": "test_ambiguous_or_nonnumeric_price_schema_rejected[multiple_quotes]"
+          },
+          {
+            "status": "passed",
+            "test": "test_ambiguous_or_nonnumeric_price_schema_rejected[weekly]"
+          },
+          {
+            "status": "passed",
+            "test": "test_ambiguous_or_nonnumeric_price_schema_rejected[granularity_absent]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_parser_uses_the_same_buffer_as_hash_check"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/evaluation.py": "1c12251eed4ffefb9e21775d20c8486ca3c16b804564238ea12f49ee60f6c072",
+        "tradingagents/research/onchain_replication/job.py": "dfe7a862a5dc1d4708bb1a5f0a954378a0abfa54a71ae86511c872a4ef1cdea5",
+        "tradingagents/research/onchain_replication/job_payload.py": "a2f8c8770064ffe4eac6d5b25c71509f051c6b7efc6228fd186a44fbeba8dd25",
+        "tradingagents/research/onchain_replication/journal_recovery.py": "1f5a280789572a01d943e80081930e324e621127b742ef67b6d93b6041ed009d",
+        "tradingagents/research/onchain_replication/run.py": "f10cb29ad147587bfc147dd91ffe9b425005344e362bd1882a045667e386ab09",
+        "tradingagents/research/onchain_replication/training.py": "a178c226a4eb05d144798204be60a0a9c3b3640f4702f5c89d24d988a08784af"
+      },
+      "decision": "Graph end+1day <= sequence decision; original latency unknown.",
+      "id": "U05",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "implemented_choice_reference": "F14",
+      "limitation": "Graph end+1day <= sequence decision; original latency unknown.",
+      "paper_disposition": "declared_assumption",
+      "qualification": "Links implement the declared assumption or refusal; they do not recover a missing published setting.",
+      "tests": {
+        "tests/research/onchain_replication/test_evaluation.py": [
+          {
+            "status": "passed",
+            "test": "test_registered_synthetic_cell_predictions_independently_reconcile[lstm-direction]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_synthetic_cell_predictions_independently_reconcile[constant_graph-regression]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_synthetic_cell_predictions_independently_reconcile[svm-direction]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_synthetic_cell_predictions_independently_reconcile[svm-regression]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_only_recovery_does_not_claim_or_repeat_fit[lstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_only_recovery_does_not_claim_or_repeat_fit[svm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scientific_cell_cannot_be_relabeled"
+          }
+        ],
+        "tests/research/onchain_replication/test_job.py": [
+          {
+            "status": "passed",
+            "test": "test_explicit_limits_refuse_missing_or_inadequate_contract"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload0]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload1]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_generic_source_job_publishes_real_capture_denominator_with_synthetic_transport"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_retains_denominator_and_closes_only_owned_partial_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_rejects_foreign_ownership_before_any_action[owner]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_rejects_foreign_ownership_before_any_action[boot]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_rejects_foreign_ownership_before_any_action[command]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_rejects_foreign_ownership_before_any_action[cgroup]"
+          },
+          {
+            "status": "passed",
+            "test": "test_active_monitor_refuses_external_reconciliation"
+          },
+          {
+            "status": "passed",
+            "test": "test_dependency_closure_includes_every_executed_component"
+          },
+          {
+            "status": "passed",
+            "test": "test_workspace_binding_records_shared_physical_ledger_and_artifacts"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_workspace_mapping_refuses_before_job_access[root]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_workspace_mapping_refuses_before_job_access[ledger]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_workspace_mapping_refuses_before_job_access[artifacts]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_workspace_mapping_refuses_before_job_access[git_common]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_retained_terminal[terminal]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_retained_terminal[output]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_retained_terminal[claim]"
+          },
+          {
+            "status": "passed",
+            "test": "test_successful_guard_must_be_the_same_owner_and_command[False]"
+          },
+          {
+            "status": "passed",
+            "test": "test_successful_guard_must_be_the_same_owner_and_command[True]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_resource_and_denominator_evidence[True-guard/final.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_resource_and_denominator_evidence[False-postmortem-cells.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_resource_and_denominator_evidence[False-guard/observer-death.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_resource_and_denominator_evidence[False-unsealed-journals.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[False-status-complete]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[False-claim_sha256-ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-experiment_id-unrelated]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-source-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-cells-value4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-registration_sha256-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-output_sha256-value6]"
+          }
+        ],
+        "tests/research/onchain_replication/test_job_payload.py": [
+          {
+            "status": "passed",
+            "test": "test_registered_population_roundtrip_and_payload_execution"
+          },
+          {
+            "status": "passed",
+            "test": "test_producer_in_same_claim_publishes_dynamic_binding_or_visible_capacity_failure[1-None]"
+          },
+          {
+            "status": "passed",
+            "test": "test_producer_in_same_claim_publishes_dynamic_binding_or_visible_capacity_failure[10485760-None]"
+          },
+          {
+            "status": "passed",
+            "test": "test_producer_in_same_claim_publishes_dynamic_binding_or_visible_capacity_failure[10485760-labels]"
+          },
+          {
+            "status": "passed",
+            "test": "test_producer_in_same_claim_publishes_dynamic_binding_or_visible_capacity_failure[10485760-descriptor]"
+          }
+        ],
+        "tests/research/onchain_replication/test_journal_recovery.py": [
+          {
+            "status": "passed",
+            "test": "test_unsealed_journal_recovers_only_durable_prefix_without_recomputing"
+          },
+          {
+            "status": "passed",
+            "test": "test_unproven_death_or_broken_journal_does_not_create_terminal[live]"
+          },
+          {
+            "status": "passed",
+            "test": "test_unproven_death_or_broken_journal_does_not_create_terminal[wrong_owner]"
+          },
+          {
+            "status": "passed",
+            "test": "test_unproven_death_or_broken_journal_does_not_create_terminal[event_gap]"
+          },
+          {
+            "status": "passed",
+            "test": "test_unproven_death_or_broken_journal_does_not_create_terminal[corrupt_component]"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_observer_finishes_identical_publication_without_work[recovery-candidate.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_observer_finishes_identical_publication_without_work[recovery-evidence.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_terminal_must_bind_exact_claim[status-complete]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_terminal_must_bind_exact_claim[experiment_id-unrelated]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_terminal_must_bind_exact_claim[claim_sha256-ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff]"
+          }
+        ],
+        "tests/research/onchain_replication/test_run.py": [
+          {
+            "status": "passed",
+            "test": "test_prepared_batch_retains_controls_and_full_denominator"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_cell_does_not_discard_an_independent_cell"
+          },
+          {
+            "status": "passed",
+            "test": "test_population_change_refuses_before_any_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonunique_or_unordered_decisions_refuse_before_any_fit[train-duplicate]"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonunique_or_unordered_decisions_refuse_before_any_fit[test-duplicate]"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonunique_or_unordered_decisions_refuse_before_any_fit[train-reverse]"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonunique_or_unordered_decisions_refuse_before_any_fit[test-reverse]"
+          },
+          {
+            "status": "passed",
+            "test": "test_equal_dates_cannot_hide_different_labels_or_fold[up]"
+          },
+          {
+            "status": "passed",
+            "test": "test_equal_dates_cannot_hide_different_labels_or_fold[target_price]"
+          },
+          {
+            "status": "passed",
+            "test": "test_equal_dates_cannot_hide_different_labels_or_fold[fold_hash]"
+          },
+          {
+            "status": "passed",
+            "test": "test_full_motif_architecture_executes_through_registered_batch"
+          },
+          {
+            "status": "passed",
+            "test": "test_same_width_wrong_graph_representation_is_rejected"
+          },
+          {
+            "status": "passed",
+            "test": "test_published_representation_failure_preserves_independent_price_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_batch_prediction_recovery_uses_completed_parent_fit_without_refitting"
+          }
+        ],
+        "tests/research/onchain_replication/test_training.py": [
+          {
+            "status": "passed",
+            "test": "test_finite_fit_rejects_duplicate_and_predicts"
+          },
+          {
+            "status": "passed",
+            "test": "test_unregistered_cell_cannot_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_fit_requires_new_registered_attempt_and_replays[1]"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_fit_requires_new_registered_attempt_and_replays[3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_flat_regression_target_cannot_broadcast"
+          },
+          {
+            "status": "passed",
+            "test": "test_predictions_cannot_drop_rows"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/neighborhoods.py": "cffeac41c84f2e94059a3c8a3833dfb96168f6279c88c34c1b0d3d0d96875e70"
+      },
+      "decision": "512 samples,32 dictionary,1hop; RBF, no tuning.",
+      "id": "U06",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "implemented_choice_reference": "F04",
+      "limitation": "512 samples,32 dictionary,1hop; RBF, no tuning.",
+      "paper_disposition": "declared_assumption",
+      "qualification": "Links implement the declared assumption or refusal; they do not recover a missing published setting.",
+      "tests": {
+        "tests/research/onchain_replication/test_neighborhoods.py": [
+          {
+            "status": "passed",
+            "test": "test_weak_induced_neighborhood_and_hub_refusal"
+          },
+          {
+            "status": "passed",
+            "test": "test_overlap_probabilities_reproducible_and_future_invariant"
+          },
+          {
+            "status": "passed",
+            "test": "test_indexed_neighborhood_matches_original_directed_induction"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/matching_reference.py": "75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332"
+      },
+      "decision": "Literal Algorithm1, rectangular hard constraints, explicit zero-edge case.",
+      "id": "U07",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "implemented_choice_reference": "F07",
+      "limitation": "Literal Algorithm1, rectangular hard constraints, explicit zero-edge case.",
+      "paper_disposition": "declared_assumption",
+      "qualification": "Links implement the declared assumption or refusal; they do not recover a missing published setting.",
+      "tests": {
+        "tests/research/onchain_replication/test_matching_reference.py": [
+          {
+            "status": "passed",
+            "test": "test_hard_assignment_is_injective"
+          },
+          {
+            "status": "passed",
+            "test": "test_literal_directed_and_zero_edge_scores"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[1-3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[2-2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[3-2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[4-4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_extreme_finite_features_and_capacity"
+          },
+          {
+            "status": "passed",
+            "test": "test_single_iteration_matches_literal_half_coefficient"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/pooling.py": "054845bed22c44294ce41f2263155df0397c42b0b306755e36791ae5a3960303"
+      },
+      "decision": "Mean node pooling after full GAT; joint trainable path.",
+      "id": "U08",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "implemented_choice_reference": "F11",
+      "limitation": "Mean node pooling after full GAT; joint trainable path.",
+      "paper_disposition": "declared_assumption",
+      "qualification": "Links implement the declared assumption or refusal; they do not recover a missing published setting.",
+      "tests": {
+        "tests/research/onchain_replication/test_model.py": [
+          {
+            "status": "passed",
+            "test": "test_joint_gradient_and_structure_time_learning"
+          },
+          {
+            "status": "passed",
+            "test": "test_regression_head_is_distinct"
+          },
+          {
+            "status": "passed",
+            "test": "test_masked_nan_padding_has_finite_gradients"
+          },
+          {
+            "status": "passed",
+            "test": "test_pool_rejects_wholly_masked_graph"
+          },
+          {
+            "status": "passed",
+            "test": "test_shared_graph_reuse_keeps_joint_gradients_and_is_local_to_forward"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/evaluation.py": "1c12251eed4ffefb9e21775d20c8486ca3c16b804564238ea12f49ee60f6c072",
+        "tradingagents/research/onchain_replication/job.py": "dfe7a862a5dc1d4708bb1a5f0a954378a0abfa54a71ae86511c872a4ef1cdea5",
+        "tradingagents/research/onchain_replication/job_payload.py": "a2f8c8770064ffe4eac6d5b25c71509f051c6b7efc6228fd186a44fbeba8dd25",
+        "tradingagents/research/onchain_replication/journal_recovery.py": "1f5a280789572a01d943e80081930e324e621127b742ef67b6d93b6041ed009d",
+        "tradingagents/research/onchain_replication/run.py": "f10cb29ad147587bfc147dd91ffe9b425005344e362bd1882a045667e386ab09",
+        "tradingagents/research/onchain_replication/training.py": "a178c226a4eb05d144798204be60a0a9c3b3640f4702f5c89d24d988a08784af"
+      },
+      "decision": "No recovered crypto hyperparameters; fixed Adam100epochs five seeds.",
+      "id": "U09",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "implemented_choice_reference": "F14",
+      "limitation": "No recovered crypto hyperparameters; fixed Adam100epochs five seeds.",
+      "paper_disposition": "declared_assumption",
+      "qualification": "Links implement the declared assumption or refusal; they do not recover a missing published setting.",
+      "tests": {
+        "tests/research/onchain_replication/test_evaluation.py": [
+          {
+            "status": "passed",
+            "test": "test_registered_synthetic_cell_predictions_independently_reconcile[lstm-direction]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_synthetic_cell_predictions_independently_reconcile[constant_graph-regression]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_synthetic_cell_predictions_independently_reconcile[svm-direction]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_synthetic_cell_predictions_independently_reconcile[svm-regression]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_only_recovery_does_not_claim_or_repeat_fit[lstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_only_recovery_does_not_claim_or_repeat_fit[svm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scientific_cell_cannot_be_relabeled"
+          }
+        ],
+        "tests/research/onchain_replication/test_job.py": [
+          {
+            "status": "passed",
+            "test": "test_explicit_limits_refuse_missing_or_inadequate_contract"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload0]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload1]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_generic_source_job_publishes_real_capture_denominator_with_synthetic_transport"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_retains_denominator_and_closes_only_owned_partial_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_rejects_foreign_ownership_before_any_action[owner]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_rejects_foreign_ownership_before_any_action[boot]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_rejects_foreign_ownership_before_any_action[command]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_rejects_foreign_ownership_before_any_action[cgroup]"
+          },
+          {
+            "status": "passed",
+            "test": "test_active_monitor_refuses_external_reconciliation"
+          },
+          {
+            "status": "passed",
+            "test": "test_dependency_closure_includes_every_executed_component"
+          },
+          {
+            "status": "passed",
+            "test": "test_workspace_binding_records_shared_physical_ledger_and_artifacts"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_workspace_mapping_refuses_before_job_access[root]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_workspace_mapping_refuses_before_job_access[ledger]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_workspace_mapping_refuses_before_job_access[artifacts]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_workspace_mapping_refuses_before_job_access[git_common]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_retained_terminal[terminal]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_retained_terminal[output]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_retained_terminal[claim]"
+          },
+          {
+            "status": "passed",
+            "test": "test_successful_guard_must_be_the_same_owner_and_command[False]"
+          },
+          {
+            "status": "passed",
+            "test": "test_successful_guard_must_be_the_same_owner_and_command[True]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_resource_and_denominator_evidence[True-guard/final.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_resource_and_denominator_evidence[False-postmortem-cells.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_resource_and_denominator_evidence[False-guard/observer-death.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_resource_and_denominator_evidence[False-unsealed-journals.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[False-status-complete]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[False-claim_sha256-ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-experiment_id-unrelated]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-source-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-cells-value4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-registration_sha256-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-output_sha256-value6]"
+          }
+        ],
+        "tests/research/onchain_replication/test_job_payload.py": [
+          {
+            "status": "passed",
+            "test": "test_registered_population_roundtrip_and_payload_execution"
+          },
+          {
+            "status": "passed",
+            "test": "test_producer_in_same_claim_publishes_dynamic_binding_or_visible_capacity_failure[1-None]"
+          },
+          {
+            "status": "passed",
+            "test": "test_producer_in_same_claim_publishes_dynamic_binding_or_visible_capacity_failure[10485760-None]"
+          },
+          {
+            "status": "passed",
+            "test": "test_producer_in_same_claim_publishes_dynamic_binding_or_visible_capacity_failure[10485760-labels]"
+          },
+          {
+            "status": "passed",
+            "test": "test_producer_in_same_claim_publishes_dynamic_binding_or_visible_capacity_failure[10485760-descriptor]"
+          }
+        ],
+        "tests/research/onchain_replication/test_journal_recovery.py": [
+          {
+            "status": "passed",
+            "test": "test_unsealed_journal_recovers_only_durable_prefix_without_recomputing"
+          },
+          {
+            "status": "passed",
+            "test": "test_unproven_death_or_broken_journal_does_not_create_terminal[live]"
+          },
+          {
+            "status": "passed",
+            "test": "test_unproven_death_or_broken_journal_does_not_create_terminal[wrong_owner]"
+          },
+          {
+            "status": "passed",
+            "test": "test_unproven_death_or_broken_journal_does_not_create_terminal[event_gap]"
+          },
+          {
+            "status": "passed",
+            "test": "test_unproven_death_or_broken_journal_does_not_create_terminal[corrupt_component]"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_observer_finishes_identical_publication_without_work[recovery-candidate.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_observer_finishes_identical_publication_without_work[recovery-evidence.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_terminal_must_bind_exact_claim[status-complete]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_terminal_must_bind_exact_claim[experiment_id-unrelated]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_terminal_must_bind_exact_claim[claim_sha256-ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff]"
+          }
+        ],
+        "tests/research/onchain_replication/test_run.py": [
+          {
+            "status": "passed",
+            "test": "test_prepared_batch_retains_controls_and_full_denominator"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_cell_does_not_discard_an_independent_cell"
+          },
+          {
+            "status": "passed",
+            "test": "test_population_change_refuses_before_any_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonunique_or_unordered_decisions_refuse_before_any_fit[train-duplicate]"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonunique_or_unordered_decisions_refuse_before_any_fit[test-duplicate]"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonunique_or_unordered_decisions_refuse_before_any_fit[train-reverse]"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonunique_or_unordered_decisions_refuse_before_any_fit[test-reverse]"
+          },
+          {
+            "status": "passed",
+            "test": "test_equal_dates_cannot_hide_different_labels_or_fold[up]"
+          },
+          {
+            "status": "passed",
+            "test": "test_equal_dates_cannot_hide_different_labels_or_fold[target_price]"
+          },
+          {
+            "status": "passed",
+            "test": "test_equal_dates_cannot_hide_different_labels_or_fold[fold_hash]"
+          },
+          {
+            "status": "passed",
+            "test": "test_full_motif_architecture_executes_through_registered_batch"
+          },
+          {
+            "status": "passed",
+            "test": "test_same_width_wrong_graph_representation_is_rejected"
+          },
+          {
+            "status": "passed",
+            "test": "test_published_representation_failure_preserves_independent_price_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_batch_prediction_recovery_uses_completed_parent_fit_without_refitting"
+          }
+        ],
+        "tests/research/onchain_replication/test_training.py": [
+          {
+            "status": "passed",
+            "test": "test_finite_fit_rejects_duplicate_and_predicts"
+          },
+          {
+            "status": "passed",
+            "test": "test_unregistered_cell_cannot_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_fit_requires_new_registered_attempt_and_replays[1]"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_fit_requires_new_registered_attempt_and_replays[3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_flat_regression_target_cannot_broadcast"
+          },
+          {
+            "status": "passed",
+            "test": "test_predictions_cannot_drop_rows"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/evaluation.py": "1c12251eed4ffefb9e21775d20c8486ca3c16b804564238ea12f49ee60f6c072",
+        "tradingagents/research/onchain_replication/job.py": "dfe7a862a5dc1d4708bb1a5f0a954378a0abfa54a71ae86511c872a4ef1cdea5",
+        "tradingagents/research/onchain_replication/job_payload.py": "a2f8c8770064ffe4eac6d5b25c71509f051c6b7efc6228fd186a44fbeba8dd25",
+        "tradingagents/research/onchain_replication/journal_recovery.py": "1f5a280789572a01d943e80081930e324e621127b742ef67b6d93b6041ed009d",
+        "tradingagents/research/onchain_replication/run.py": "f10cb29ad147587bfc147dd91ffe9b425005344e362bd1882a045667e386ab09",
+        "tradingagents/research/onchain_replication/training.py": "a178c226a4eb05d144798204be60a0a9c3b3640f4702f5c89d24d988a08784af"
+      },
+      "decision": "2018\u20132024 eligible rolling folds; no invented pre2016 data.",
+      "id": "U10",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "implemented_choice_reference": "F14",
+      "limitation": "2018\u20132024 eligible rolling folds; no invented pre2016 data.",
+      "paper_disposition": "declared_assumption",
+      "qualification": "Links implement the declared assumption or refusal; they do not recover a missing published setting.",
+      "tests": {
+        "tests/research/onchain_replication/test_evaluation.py": [
+          {
+            "status": "passed",
+            "test": "test_registered_synthetic_cell_predictions_independently_reconcile[lstm-direction]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_synthetic_cell_predictions_independently_reconcile[constant_graph-regression]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_synthetic_cell_predictions_independently_reconcile[svm-direction]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_synthetic_cell_predictions_independently_reconcile[svm-regression]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_only_recovery_does_not_claim_or_repeat_fit[lstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_only_recovery_does_not_claim_or_repeat_fit[svm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scientific_cell_cannot_be_relabeled"
+          }
+        ],
+        "tests/research/onchain_replication/test_job.py": [
+          {
+            "status": "passed",
+            "test": "test_explicit_limits_refuse_missing_or_inadequate_contract"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload0]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload1]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_job_accepts_only_one_explicit_asset[payload4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_generic_source_job_publishes_real_capture_denominator_with_synthetic_transport"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_retains_denominator_and_closes_only_owned_partial_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_rejects_foreign_ownership_before_any_action[owner]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_rejects_foreign_ownership_before_any_action[boot]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_rejects_foreign_ownership_before_any_action[command]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_rejects_foreign_ownership_before_any_action[cgroup]"
+          },
+          {
+            "status": "passed",
+            "test": "test_active_monitor_refuses_external_reconciliation"
+          },
+          {
+            "status": "passed",
+            "test": "test_dependency_closure_includes_every_executed_component"
+          },
+          {
+            "status": "passed",
+            "test": "test_workspace_binding_records_shared_physical_ledger_and_artifacts"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_workspace_mapping_refuses_before_job_access[root]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_workspace_mapping_refuses_before_job_access[ledger]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_workspace_mapping_refuses_before_job_access[artifacts]"
+          },
+          {
+            "status": "passed",
+            "test": "test_registered_workspace_mapping_refuses_before_job_access[git_common]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_retained_terminal[terminal]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_retained_terminal[output]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_retained_terminal[claim]"
+          },
+          {
+            "status": "passed",
+            "test": "test_successful_guard_must_be_the_same_owner_and_command[False]"
+          },
+          {
+            "status": "passed",
+            "test": "test_successful_guard_must_be_the_same_owner_and_command[True]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_resource_and_denominator_evidence[True-guard/final.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_resource_and_denominator_evidence[False-postmortem-cells.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_resource_and_denominator_evidence[False-guard/observer-death.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_repeated_observer_revalidates_resource_and_denominator_evidence[False-unsealed-journals.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[False-status-complete]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[False-claim_sha256-ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-experiment_id-unrelated]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-source-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-cells-value4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-registration_sha256-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb]"
+          },
+          {
+            "status": "passed",
+            "test": "test_observer_refuses_unlinked_or_incomplete_lifecycle_terminal[True-output_sha256-value6]"
+          }
+        ],
+        "tests/research/onchain_replication/test_job_payload.py": [
+          {
+            "status": "passed",
+            "test": "test_registered_population_roundtrip_and_payload_execution"
+          },
+          {
+            "status": "passed",
+            "test": "test_producer_in_same_claim_publishes_dynamic_binding_or_visible_capacity_failure[1-None]"
+          },
+          {
+            "status": "passed",
+            "test": "test_producer_in_same_claim_publishes_dynamic_binding_or_visible_capacity_failure[10485760-None]"
+          },
+          {
+            "status": "passed",
+            "test": "test_producer_in_same_claim_publishes_dynamic_binding_or_visible_capacity_failure[10485760-labels]"
+          },
+          {
+            "status": "passed",
+            "test": "test_producer_in_same_claim_publishes_dynamic_binding_or_visible_capacity_failure[10485760-descriptor]"
+          }
+        ],
+        "tests/research/onchain_replication/test_journal_recovery.py": [
+          {
+            "status": "passed",
+            "test": "test_unsealed_journal_recovers_only_durable_prefix_without_recomputing"
+          },
+          {
+            "status": "passed",
+            "test": "test_unproven_death_or_broken_journal_does_not_create_terminal[live]"
+          },
+          {
+            "status": "passed",
+            "test": "test_unproven_death_or_broken_journal_does_not_create_terminal[wrong_owner]"
+          },
+          {
+            "status": "passed",
+            "test": "test_unproven_death_or_broken_journal_does_not_create_terminal[event_gap]"
+          },
+          {
+            "status": "passed",
+            "test": "test_unproven_death_or_broken_journal_does_not_create_terminal[corrupt_component]"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_observer_finishes_identical_publication_without_work[recovery-candidate.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_observer_finishes_identical_publication_without_work[recovery-evidence.json]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_terminal_must_bind_exact_claim[status-complete]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_terminal_must_bind_exact_claim[experiment_id-unrelated]"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_terminal_must_bind_exact_claim[claim_sha256-ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff]"
+          }
+        ],
+        "tests/research/onchain_replication/test_run.py": [
+          {
+            "status": "passed",
+            "test": "test_prepared_batch_retains_controls_and_full_denominator"
+          },
+          {
+            "status": "passed",
+            "test": "test_failed_cell_does_not_discard_an_independent_cell"
+          },
+          {
+            "status": "passed",
+            "test": "test_population_change_refuses_before_any_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonunique_or_unordered_decisions_refuse_before_any_fit[train-duplicate]"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonunique_or_unordered_decisions_refuse_before_any_fit[test-duplicate]"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonunique_or_unordered_decisions_refuse_before_any_fit[train-reverse]"
+          },
+          {
+            "status": "passed",
+            "test": "test_nonunique_or_unordered_decisions_refuse_before_any_fit[test-reverse]"
+          },
+          {
+            "status": "passed",
+            "test": "test_equal_dates_cannot_hide_different_labels_or_fold[up]"
+          },
+          {
+            "status": "passed",
+            "test": "test_equal_dates_cannot_hide_different_labels_or_fold[target_price]"
+          },
+          {
+            "status": "passed",
+            "test": "test_equal_dates_cannot_hide_different_labels_or_fold[fold_hash]"
+          },
+          {
+            "status": "passed",
+            "test": "test_full_motif_architecture_executes_through_registered_batch"
+          },
+          {
+            "status": "passed",
+            "test": "test_same_width_wrong_graph_representation_is_rejected"
+          },
+          {
+            "status": "passed",
+            "test": "test_published_representation_failure_preserves_independent_price_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_batch_prediction_recovery_uses_completed_parent_fit_without_refitting"
+          }
+        ],
+        "tests/research/onchain_replication/test_training.py": [
+          {
+            "status": "passed",
+            "test": "test_finite_fit_rejects_duplicate_and_predicts"
+          },
+          {
+            "status": "passed",
+            "test": "test_unregistered_cell_cannot_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_fit_requires_new_registered_attempt_and_replays[1]"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_fit_requires_new_registered_attempt_and_replays[3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_flat_regression_target_cannot_broadcast"
+          },
+          {
+            "status": "passed",
+            "test": "test_predictions_cannot_drop_rows"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/comparison.py": "b157f41b2b98517c67152209bac46fbedf3a2eb9471fd27f9c588a41e60c8c23",
+        "tradingagents/research/onchain_replication/metrics.py": "03e27c21e87d3a9394c483fc9514c3a223a7c3573b00f2633b8a1f209c216e38",
+        "tradingagents/research/onchain_replication/verification.py": "c492cc9be2eb0956035800c26bde5d6cc2999844cd7466eb151bd3ea82815873"
+      },
+      "decision": "Binary-up primary annual means; extra conventions separate.",
+      "id": "U11",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "implemented_choice_reference": "F20",
+      "limitation": "Binary-up primary annual means; extra conventions separate.",
+      "paper_disposition": "declared_assumption",
+      "qualification": "Links implement the declared assumption or refusal; they do not recover a missing published setting.",
+      "tests": {
+        "tests/research/onchain_replication/test_comparison.py": [
+          {
+            "status": "passed",
+            "test": "test_full_matrix_allocates_initial_once_and_every_later_asset_year"
+          },
+          {
+            "status": "passed",
+            "test": "test_printed_rows_reuse_identical_cells_and_do_not_average_survivors"
+          }
+        ],
+        "tests/research/onchain_replication/test_metrics_baselines.py": [
+          {
+            "status": "passed",
+            "test": "test_metrics_hand_calculation_and_probability_limits"
+          },
+          {
+            "status": "passed",
+            "test": "test_interval_rejects_gaps_and_preserves_pairing"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[lstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[gru]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[hlstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_svm_contract_and_zero_fit_controls"
+          }
+        ],
+        "tests/research/onchain_replication/test_verification.py": [
+          {
+            "status": "passed",
+            "test": "test_classification_has_hand_counted_denominators_and_tie_rule"
+          },
+          {
+            "status": "passed",
+            "test": "test_single_class_and_clipped_probability_conventions_are_explicit"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_classification_populations_are_rejected[labels0-probabilities0]"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_classification_populations_are_rejected[labels1-probabilities1]"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_classification_populations_are_rejected[labels2-probabilities2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_classification_populations_are_rejected[labels3-probabilities3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_classification_populations_are_rejected[labels4-probabilities4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_classification_populations_are_rejected[labels5-probabilities5]"
+          },
+          {
+            "status": "passed",
+            "test": "test_bad_classification_populations_are_rejected[labels6-probabilities6]"
+          },
+          {
+            "status": "passed",
+            "test": "test_regression_uses_original_price_units_and_percentage_mape"
+          },
+          {
+            "status": "passed",
+            "test": "test_invalid_regression_denominators_are_rejected[actual0-predicted0]"
+          },
+          {
+            "status": "passed",
+            "test": "test_invalid_regression_denominators_are_rejected[actual1-predicted1]"
+          },
+          {
+            "status": "passed",
+            "test": "test_invalid_regression_denominators_are_rejected[actual2-predicted2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_invalid_regression_denominators_are_rejected[actual3-predicted3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_invalid_regression_denominators_are_rejected[actual4-predicted4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_summary_comparison_enforces_c13_and_exact_counts"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_rows_bind_complete_clocks_and_exact_membership"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[max_input_available_at-2024-01-01T00:00:01Z]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[max_input_available_at-2024-01-01T00:00:00.0000001Z]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[decision_at-2024-01-01T00:00:00]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[label_start-2023-12-31T00:00:00Z]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[label_end-2024-01-04T00:00:00Z]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[checkpoint_hash-bad]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[probability_up-value6]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[probability_up-nan]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[probability_up-1.01]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[predicted_price-2.0]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[y_true-2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[seed-23]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[asset-BTC]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[arm-gru]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[lane-causal_audit]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_lineage_counterexamples_fail[fold_id-2023]"
+          },
+          {
+            "status": "passed",
+            "test": "test_prediction_denominator_cannot_drop_duplicate_or_add_fields"
+          },
+          {
+            "status": "passed",
+            "test": "test_completion_keeps_numerical_agreement_separate_from_work"
+          },
+          {
+            "status": "passed",
+            "test": "test_blockers_and_scope_cannot_be_hidden_by_complete_cell_counts"
+          },
+          {
+            "status": "passed",
+            "test": "test_completion_requires_complete_explicit_evidence_contract[missing]"
+          },
+          {
+            "status": "passed",
+            "test": "test_completion_requires_complete_explicit_evidence_contract[extra]"
+          },
+          {
+            "status": "passed",
+            "test": "test_completion_requires_complete_explicit_evidence_contract[unknown_status]"
+          },
+          {
+            "status": "passed",
+            "test": "test_completion_requires_complete_explicit_evidence_contract[no_evidence]"
+          },
+          {
+            "status": "passed",
+            "test": "test_completion_requires_complete_explicit_evidence_contract[no_reason]"
+          },
+          {
+            "status": "passed",
+            "test": "test_completion_requires_complete_explicit_evidence_contract[narrow_paper]"
+          },
+          {
+            "status": "passed",
+            "test": "test_completion_requires_complete_explicit_evidence_contract[empty_implementation]"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/btc_subsets.py": "79f1cc4de5b5bf52e491201d05941bbe0ff29555d814f343294411f4591ed736",
+        "tradingagents/research/onchain_replication/subsets.py": "59a17cb12711d8ec518f6f25ec4518f143647b79c3ef3286399dada114b7a22c"
+      },
+      "decision": "Original fund address list and historical timestamp required.",
+      "id": "U12",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "implemented_choice_reference": "F19",
+      "limitation": "Original fund address list and historical timestamp required.",
+      "paper_disposition": "blocked",
+      "qualification": "Links implement the declared assumption or refusal; they do not recover a missing published setting.",
+      "tests": {
+        "tests/research/onchain_replication/test_btc_subsets.py": [
+          {
+            "status": "passed",
+            "test": "test_whale_selection_uses_bound_exact_sidecar_and_preserves_isolates"
+          },
+          {
+            "status": "passed",
+            "test": "test_fund_rebuilds_exact_retained_edges_and_rejects_rounded_node_features"
+          }
+        ],
+        "tests/research/onchain_replication/test_subsets.py": [
+          {
+            "status": "passed",
+            "test": "test_whales_removed_features_rebuilt_and_origin_counters_explicit"
+          },
+          {
+            "status": "passed",
+            "test": "test_fund_cohort_cannot_be_invented"
+          },
+          {
+            "status": "passed",
+            "test": "test_whale_strict_boundary_uses_raw_aggregates"
+          },
+          {
+            "status": "passed",
+            "test": "test_induced_fund_graph_retains_isolated_selected_vertex"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/btc_store.py": "79f78d1bfc46d3e975f506407f3fcea102835235b5aa5b68cf6b1d7674c10452",
+        "tradingagents/research/onchain_replication/btc_subsets.py": "79f1cc4de5b5bf52e491201d05941bbe0ff29555d814f343294411f4591ed736",
+        "tradingagents/research/onchain_replication/subsets.py": "59a17cb12711d8ec518f6f25ec4518f143647b79c3ef3286399dada114b7a22c"
+      },
+      "decision": "Per-wallet weekly incoming+outgoing, including self twice, strict >0.9max.",
+      "id": "U13",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "implemented_choice_reference": "F18",
+      "limitation": "Per-wallet weekly incoming+outgoing, including self twice, strict >0.9max.",
+      "paper_disposition": "declared_assumption",
+      "qualification": "Links implement the declared assumption or refusal; they do not recover a missing published setting.",
+      "tests": {
+        "tests/research/onchain_replication/test_btc_store.py": [
+          {
+            "status": "passed",
+            "test": "test_exact_graph_and_whale_sidecar_survive_immutable_checkpoint"
+          },
+          {
+            "status": "passed",
+            "test": "test_inconsistent_exact_incident_values_cannot_be_published"
+          },
+          {
+            "status": "passed",
+            "test": "test_large_exact_denominator_is_not_rounded_or_decimal_digit_limited"
+          },
+          {
+            "status": "passed",
+            "test": "test_whale_hash_supports_huge_exact_rationals_and_rejects_float_substitution"
+          }
+        ],
+        "tests/research/onchain_replication/test_btc_subsets.py": [
+          {
+            "status": "passed",
+            "test": "test_whale_selection_uses_bound_exact_sidecar_and_preserves_isolates"
+          },
+          {
+            "status": "passed",
+            "test": "test_fund_rebuilds_exact_retained_edges_and_rejects_rounded_node_features"
+          }
+        ],
+        "tests/research/onchain_replication/test_subsets.py": [
+          {
+            "status": "passed",
+            "test": "test_whales_removed_features_rebuilt_and_origin_counters_explicit"
+          },
+          {
+            "status": "passed",
+            "test": "test_fund_cohort_cannot_be_invented"
+          },
+          {
+            "status": "passed",
+            "test": "test_whale_strict_boundary_uses_raw_aggregates"
+          },
+          {
+            "status": "passed",
+            "test": "test_induced_fund_graph_retains_isolated_selected_vertex"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/matching.py": "8198d3505bf250152e7f6949372efb38b7d83837c1067194b862958e17923280"
+      },
+      "decision": "52GB treated as ambiguous host memory; no52GB VRAM inference.",
+      "id": "U14",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "implemented_choice_reference": "F08",
+      "limitation": "52GB treated as ambiguous host memory; no52GB VRAM inference.",
+      "paper_disposition": "declared_assumption",
+      "qualification": "Links implement the declared assumption or refusal; they do not recover a missing published setting.",
+      "tests": {
+        "tests/research/onchain_replication/test_matching_accelerated.py": [
+          {
+            "status": "passed",
+            "test": "test_batched_cpu_float32_parity"
+          },
+          {
+            "status": "skipped",
+            "test": "test_gpu_parity_if_available"
+          },
+          {
+            "status": "passed",
+            "test": "test_iterative_roundoff_does_not_change_tie_free_assignment"
+          }
+        ]
+      }
+    }
+  ],
+  "schema_version": 3,
+  "scope": "Current synthetic implementation traceability; no full empirical coverage or numerical agreement claim. Prior report retained unchanged.",
+  "validation": {
+    "baseline": {
+      "errors": 0,
+      "failed": 0,
+      "guard": "research/onchain-paper-replication-2026-09-24/replay/expanded-synthetic-01-guard/final.json",
+      "guard_sha256": "ed2fac01b381aed4d5e6f02ecc263f348e44fa9f4eb094a12f163beb1d190112",
+      "passed": 350,
+      "path": "research/onchain-paper-replication-2026-09-24/replay/expanded-synthetic-01.xml",
+      "sha256": "2de46f2eb70528ff62bf1ed43eeeb2dc369d35332bb22cce1761aed872c8fb26",
+      "skipped": 1,
+      "source_snapshot": "research/onchain-paper-replication-2026-09-24/replay/expanded-synthetic-01-source.json",
+      "source_snapshot_sha256": "9ed013278376c5b85fc726bd593be06ad704d3d5452cd878fe9884392af1ebc7"
+    },
+    "changed_source_hashes": {
+      "tests/research/onchain_replication/test_job.py": "8070c220055547899044b951312d56574b64e9d42db0934a0aee4d0476641889",
+      "tradingagents/research/onchain_replication/job.py": "dfe7a862a5dc1d4708bb1a5f0a954378a0abfa54a71ae86511c872a4ef1cdea5"
+    },
+    "qualification": "350-pass/one-CUDA-skip suite plus38 subsequent targeted passing tests after onlyjob.py/test_job.py changed. This is not a new full-suite run.",
+    "updated_controller_tests": {
+      "passed": 38,
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/job-prices-synthetic-02.xml",
+      "sha256": "5c1d50a5ee8afb2914410441cd09313e0fdf659cc0e3c9e859e595d472b62455"
+    }
+  }
+}

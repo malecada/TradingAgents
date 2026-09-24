@@ -6,8 +6,8 @@ in the authorized scope. The historical negative screen is unchanged.
 - **Active empirical job:** `eth-paper-resource-pilot-20260924-02`, source
   `c6b568d4b1c177ab94ac37fbad462c2decc721c0`, exec session88571. Do not change
   active HEAD or its 26 bound source files/88 inputs. Do not relaunch this claim.
-  The fixed denominator is 109 cells. Six cells have dispositions; the second
-  registered week (2022-06-13) is being decoded and aggregated.
+  The fixed denominator is 109 cells. Eleven cells have dispositions; the third
+  registered week (2022-07-25) is being decoded and aggregated.
 - First week 2022-01-03: complete graph (2,049,095 nodes/3,182,055 edges),
   512-neighborhood sample and 32-motif dictionary. Dictionary took2667.812s.
   Full-node MCM is **unavailable**,544.051s, because a neighborhood exceeds the
@@ -23,7 +23,7 @@ in the authorized scope. The historical negative screen is unchanged.
   full-history graph admission and empirical fits remain pending. Retained
   ETH2022–2024 metadata maps1,096days/156completeweeks and is independently
   checked; this does not itself admit raw bodies or graphs. Original fund
-  cohort/vintage remains unavailable. Budget remains20 consumed of51 claims.
+  cohort/vintage remains unavailable. Budget is22 consumed of51 claims.
 - Generic finite batch/payload/owned-job code is independently reviewed and
   synthetic-tested. Expanded onchain offline suite COMPLETE:350passed/1CUDA skip,
   253.70test seconds; guard256.857s,631,595,008peak bytes, no memory events,
@@ -46,29 +46,34 @@ in the authorized scope. The historical negative screen is unchanged.
   15MCM graph completions and optimizer/RNG checkpoint with all neural blocks.
   Sourcec9f03c003f899ce752a6aad292e323e8fb9592f5 and all811files/3,196,004bytes
   retained in replay/controller-synthetic-03.tar.gz with bundle manifest.
-- Price source work can run independently from a separate exact checkout, using
-  the same physical cumulative ledger/lock and artifact store. Pre-launch review
-  found terminal/observer integrity gaps in the legacy price controller; it
-  remains unlaunched. New gate-v3 freezes the verified generic controller with
- 59sourcefiles/10inputs per asset and hash-bound workspace mapping. Scientific
-  policy, two unclaimed price identities,3289cells per asset,51claim ceiling and
-  512MiB/300s limits are unchanged. New source and gate require independent
-  release and snapshot commit before execution; main pilotHEAD stays fixed.
+- Both Yahoo source claims are CLOSED, independently checked: BTC and ETH each
+  returned HTTP429, retained23response bytes and all3289unavailable cells. No
+  price panel or real financial fit exists. Guards closed with child0/cleanup,
+  peak84.24MB/84.92MB. Source652b2766 was executed from the mapped sparse checkout
+  with the physical shared cumulative ledger; no closed identity may be retried.
+- Prospective Coin Metrics PriceUSD source amendment is being prepared before
+  any CSV retrieval or fit. Same51claim family/ceiling:1metadata+4price+12body
+  sources. Still-unlaunched BTC2016–2019 body dates are grouped into one batch;
+  all required dates/fields,1420fits and88,776source-field cells remain unchanged.
+  Independent review accepted allocation arithmetic in principle, conditional on
+  exact finite source plans and unchanged caps. Full four-year feasibility is
+  not established. See full_sources/prices-coinmetrics-01/.
 - The implementation/paper-scope/numerical-agreement conclusions remain separate:
   **implementation integration pending; full paper scope incomplete; numerical
   agreement unevaluated.** No financial accuracy or validated strategy claim.
-- Reviewed preparation snapshot35c92e56 was pushed separately and recovered
-  externally (53files/1,899,175bytes) without changing activeHEAD. New controller,
-  source-mapping and test evidence since that snapshot is not yet externally
-  recovered. Full raw-data off-device backup remains unverified.
+- Reviewed preparation snapshot652b2766 was pushed separately and recovered
+  externally:2270files/34,235,495bytes hash-checked. Independent recovery audit is
+  underway. It includes retained source metadata and full synthetic controller
+  bundles, not full raw-data bodies. New Yahoo outcomes, v3traceability and
+  prospective Coin Metrics amendment are later artifacts not yet backed up.
+  Full raw-data off-device backup remains unverified.
 
-Next safe actions: finish generic price execution review, preserve a separately
-committed preparation snapshot and admit the mapped shared-ledger checkout before
-sequential price requests. Update requirement traceability and prospective
-registrations; continue independent preparation while pilot02 runs. After the pilot terminates, preserve
-all109 cell dispositions, verify cleanup and resource limits independently, then
-commit/push reviewed source and release individually reviewed source/price jobs
-under their exact gates. No repeated terminal identity or widened empirical cap.
+Next safe actions: finish strict Coin Metrics source implementation/tests, freeze
+and independently review its protocol/gate, then preserve a committed snapshot
+and admit a separate mapped checkout before one request per asset. Continue
+full-scope graph/population and source preparation while pilot02 runs. After the
+pilot terminates, retain all109dispositions and independently verify cleanup.
+No repeated terminal identity, omitted paper scope or silently widened cap.
 
 ## Historical checkpoints (preserved; newer entries supersede older statements)
 

@@ -25,9 +25,10 @@ def test_explicit_limits_refuse_missing_or_inadequate_contract(tmp_path):
 
 
 @pytest.mark.parametrize('payload', [{'asset': 'ETH'}, {'asset': 'BTC'}, {}, {'asset': 'DOGE'}, {'asset': 'ETH', 'retries': 1}])
-def test_price_job_accepts_only_one_explicit_asset(tmp_path, payload):
+@pytest.mark.parametrize('kind', ['prices', 'coinmetrics_prices'])
+def test_price_job_accepts_only_one_explicit_asset(tmp_path, payload, kind):
     from tradingagents.research.onchain_replication.job import job_schema
-    job = {'schema_version': 1, 'kind': 'prices', 'resources': policy(tmp_path), 'environment_input': 'environment', 'payload': payload}
+    job = {'schema_version': 1, 'kind': kind, 'resources': policy(tmp_path), 'environment_input': 'environment', 'payload': payload}
     if payload in ({'asset': 'ETH'}, {'asset': 'BTC'}):
         job_schema(job)
     else:
@@ -35,12 +36,16 @@ def test_price_job_accepts_only_one_explicit_asset(tmp_path, payload):
             job_schema(job)
 
 
-def test_generic_source_job_publishes_real_capture_denominator_with_synthetic_transport(registered, monkeypatch):
+@pytest.mark.parametrize('kind', ['prices', 'coinmetrics_prices'])
+def test_generic_source_job_publishes_real_capture_denominator_with_synthetic_transport(registered, monkeypatch, kind):
     from tests.research.test_lifecycle import commit
     from tradingagents.research.onchain_replication.job import execute_source_job
     from tradingagents.research.onchain_replication.source_inventory import required_dates
     from tradingagents.research.onchain_replication.price_source import price_policy
     import tradingagents.research.onchain_replication.price_source as source
+    if kind == 'coinmetrics_prices':
+        import tradingagents.research.onchain_replication.coinmetrics_prices as source
+        price_policy = source.price_policy
     root, spec, _ = registered
     (root/'policy.json').write_text(json.dumps(price_policy('ETH')))
     spec['experiments']['example-a']['inputs']['price_policy'] = {'path': 'policy.json', 'sha256': file_hash(root/'policy.json'), 'dataset': 'sample'}
@@ -53,7 +58,7 @@ def test_generic_source_job_publishes_real_capture_denominator_with_synthetic_tr
         return 429, {}, b'synthetic refusal'
     monkeypatch.setattr(source, 'capture_admitted_prices', lambda run, asset: actual(run, asset, fetch=fetch))
     with start((root, spec, commit(root, spec))) as run:
-        cells = execute_source_job(run, 'prices', {'asset': 'ETH'})
+        cells = execute_source_job(run, kind, {'asset': 'ETH'})
         terminal = run.finish(cells)
         assert terminal['cell_count'] == terminal['unavailable_count'] == 3289
         summary = json.loads((run.directory/'outputs/source-summary.json').read_bytes())

@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "status": "interim not final pilot forecast",
+  "observed_at": "2026-09-24T15:05:11.572604+00:00",
+  "completed_graph_weeks": [
+    {
+      "week": "2022-01-03",
+      "result_path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/result.json",
+      "sha256": "633568740b817889edf8cd39590ccd772066f4792725d102ff969675e860d3a7",
+      "elapsed_seconds": 2205.6086120830005,
+      "admitted_count": 4415050,
+      "aggregate_seconds": 1890.6767122049423,
+      "decode_seconds": 234.18503428406257,
+      "edges": 3182055,
+      "exclusion_counts": {
+        "failed": 246648,
+        "null_recipient": 3752,
+        "zero_value": 3707847
+      },
+      "graph_bytes": 562559884,
+      "graph_manifest": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json",
+      "graph_manifest_sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98",
+      "nodes": 2049095,
+      "raw_count": 8373297,
+      "rows": 8373297
+    },
+    {
+      "week": "2022-06-13",
+      "result_path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/result.json",
+      "sha256": "8b9b85b369f9e590fcfb2f02fa4faeae34cacac091b637e57c54ea5004814e18",
+      "elapsed_seconds": 1757.2415494590023,
+      "admitted_count": 3601893,
+      "aggregate_seconds": 1494.3442883998796,
+      "decode_seconds": 223.09182052712276,
+      "edges": 2518332,
+      "exclusion_counts": {
+        "failed": 256785,
+        "null_recipient": 5074,
+        "zero_value": 3717341
+      },
+      "graph_bytes": 474535780,
+      "graph_manifest": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+      "graph_manifest_sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59",
+      "nodes": 1768268,
+      "raw_count": 7581093,
+      "rows": 7581093
+    }
+  ],
+  "weeks_assumed_for_initial_ETH_2022_2024": 156,
+  "seeds": 5,
+  "motifs": 32,
+  "dtype_bytes": 4,
+  "mean_graph_bytes": 518547832.0,
+  "mean_nodes": 1908681.5,
+  "unmargined_graph_storage_bytes": 80893461792.0,
+  "unmargined_MCM_5_seed_storage_bytes": 190562760960.0,
+  "margin": 1.5,
+  "margined_graph_and_MCM_storage_bytes": 407184334128.0,
+  "available_bytes": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes": 27861266432,
+    "/home/malecada/Data": 23975342080
+  },
+  "disk_floor_bytes": 21474836480,
+  "headroom_above_floor": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes": 6386429952,
+    "/home/malecada/Data": 2500505600
+  },
+  "excluded_storage": [
+    "already preserved103524489043 raw compressed ETH2022\u20132024bytes",
+    "additionalBTC/ETHraw",
+    "dictionary samples",
+    "model checkpoints and retained intermediates",
+    "SQLite scratch/temporary peak",
+    "external backup",
+    "other folds and comparisons"
+  ],
+  "qualifications": [
+    "Only two dispersed weeks; largest training stress week is running and must not be inferred measured.",
+    "MCM storage is arithmetic shape projection, not completed feature generation; both full-node MCM attempts are unavailable at frozen10000node neighborhood ceiling.",
+    "Neural estimates10713395200 and8778956800bytes exceeded registered1GiB allowance before forward; these are conservative formula estimates, not measured minimumRAM.",
+    "Concurrent local work and memory.high pressure qualify elapsed timings.",
+    "Root and Data are same physical drive; do not count as independent backup.",
+    "No cap change, new capture, fit or empirical successor authorized by this forecast."
+  ]
+}
