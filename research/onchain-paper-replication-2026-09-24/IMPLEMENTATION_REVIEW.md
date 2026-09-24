@@ -172,3 +172,67 @@ cleanup evidence. No transaction bodies or financial experiments were read or
 rerun during this review. The full offline suite was not duplicated. Real source
 completeness, throughput, memory/storage forecasts, CUDA parity, saved-model CPU
 replay, financial comparison coverage and numerical agreement remain unproved.
+
+Financial evaluation follow-up review (September24; no financial release approval):
+reversible scientific/lifecycle IDs, actual feature-tensor hashes, admitted feature
+binding artifacts, source/fold/training-row checks, scaler values in configuration
+identity, early prediction reservation, synchronized SVM persistence and completed-
+model inference recovery address the previous implementation findings. Completed
+fit recovery reads a registered completion receipt/checkpoint from the registered
+parent fit directory and verifies checkpoint/member hashes. It performs no refit.
+
+Four remaining corrections were identified in the reviewed evaluation snapshot:
+
+- The actual test dates are not rehashed; `require_test_mask` only compares stored
+  strings. An independent synthetic90-row example still passes after dropping its
+  final row while retaining the old hash. Exact ordered unique test dates must be
+  recomputed, and test input/label bytes must be bound to an admitted example
+  artifact so a common mask cannot conceal altered outcomes or price inputs.
+- Completed-fit recovery bypasses `_reserve`, so the common entry path must check
+  that the current lifecycle cell is registered and that provenance.source_commit
+  equals the admitted source before reserving any prediction output.
+- Neural prediction/recovery errors lack the prediction failed receipt currently
+  written only for SVM errors. All post-reservation branches need one durable
+  failure path; a completed fit must remain completed and must not be repeated.
+- Configuration identity omits lane/asset although predictions write both. Bind
+  those fields and verify that the production seven-component scientific ID
+  agrees with the cell fields, preventing an unchanged fit identity from acquiring
+  a different asset/lane label.
+
+Current masked GAT/GIN/diagnostic paths zero excluded node inputs before learned
+layers, exclude masked endpoints from message aggregation, and exclude them from
+pooling. Feature hashes include the mask bytes. This does not independently prove
+that producer-supplied topology or masks correspond to the admitted whole-graph
+hash; the eventual registered feature producer must establish that relationship.
+No empirical examples, actual saved models, raw payloads, or financial outcomes
+were inspected. The named full offline suite was not duplicated.
+
+Evaluation correction review (September24, supersedes the four evaluation defects
+above): common admission now checks the active run, registered lifecycle cell and
+current source on both ordinary fitting and completed-fit recovery. Actual ordered
+unique test dates are rehashed; actual test rows, fold/source identities and scaler
+values must match an admitted or already published example manifest. All scientific
+cell fields enter configuration identity, and production scientific IDs must agree
+with those fields. A common post-reservation exception handler now preserves
+prediction failures across neural, SVM and recovery paths without invalidating or
+repeating a completed fit.
+
+An independent synthetic Git fixture rejected each of four mutations before
+fitting: one dropped test date, a changed test label with unchanged dates, a wrong
+source commit, and an unregistered cell. An injected neural fit-entry error produced
+the expected durable prediction failure receipt. No remaining defect was identified
+in this bounded correction review. Producer-specific graph topology/mask lineage,
+real price/calendar admission and independent real saved-model replay remain
+financial release requirements; this does not grant financial release.
+
+Offline runtime isolation review: `scripts/verify_offline.py` now launches the
+standard and neural groups in separate fresh pytest processes. Independent inventory
+reconstruction found212 modules partitioned into184 standard and28 neural modules,
+with no omissions, duplicates or overlap. Existing process limits and assertions
+are unchanged; either group's failure still makes the named command fail. The
+retained first full-suite log shows the five failures were the low-RSS checks
+(one dated lifecycle test and four options-worker subtests). The synthetic shared-
+collection regression passed independently, confirming that neural collection state
+cannot contaminate the standard test process. This tests isolation rather than
+asserting that the active second full suite has passed. That suite was not duplicated,
+and the original failed-suite evidence remains retained.

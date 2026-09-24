@@ -111,3 +111,17 @@ def test_v2_replay_uses_copied_inputs_without_running_backtest(tmp_path, monkeyp
     (copy / "report_v2").mkdir()
     (copy / "report_v2/metrics.json").write_text("fabricated output")
     assert {p.name: p.read_bytes() for p in original.iterdir()} == before
+
+
+def test_named_profile_isolates_heavy_neural_collection(isolated_repo):
+    # Shared collection state stands in for retained native PyTorch memory. Older
+    # tests enforce small RSS budgets; neither their limits nor imports may change.
+    (isolated_repo/'tests/test_offline_workflow.py').write_text(
+        'import builtins\ndef test_small_resource_runtime():\n    assert not getattr(builtins,"neural_runtime_loaded",False)\n')
+    neural=isolated_repo/'tests/research/onchain_replication';neural.mkdir(parents=True)
+    (neural/'test_heavy.py').write_text(
+        'import builtins\nbuiltins.neural_runtime_loaded=True\ndef test_neural_runtime():\n    assert builtins.neural_runtime_loaded\n')
+    code='import sys;sys.path.insert(0,"scripts");import verify_offline as v;v.OFFLINE_FILES=frozenset({"tests/test_offline_workflow.py"});raise SystemExit(v.main())'
+    result=subprocess.run([sys.executable,'-B','-c',code],cwd=isolated_repo,env=dict(os.environ,PYTHONPATH=str(isolated_repo)),capture_output=True,text=True,timeout=30)
+    assert result.returncode==0,result.stdout+result.stderr
+    assert result.stdout.count('1 passed')==2

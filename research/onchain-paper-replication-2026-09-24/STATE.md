@@ -43,8 +43,12 @@ The previous summary-feature study remains closed and unchanged.
 Named pre-change offline baseline:2746tests+97subtests passed;6 inherited cleanup
 warnings; log `.superpowers/sdd/2026-09-24-onchain-paper-replication/baseline.log`.
 Focused synthetic results and review findings: IMPLEMENTATION_REVIEW.md. Full
-post-change offline check is active under the new guard at
-`resources/offline-postchange-01/` (terminal session22888). Never duplicate it.
+post-change offline check01 retained2921passes/1CUDA skip/5resource-test failures.
+The failures reproduce heavy neural collection contaminating older512MiB test
+contracts; the affected tests pass separately, and a red→green isolation
+regression covers the corrected runner. No old resource criterion was relaxed.
+Corrected named full check02 is active at `resources/offline-postchange-02/`
+(terminal session31935); never duplicate it.
 Focused suite:176passed,1CUDA skip. Independent checker:43synthetic tests.
 
 Known external requirements: exact original data/config/folds unrecovered;
@@ -52,11 +56,19 @@ Known external requirements: exact original data/config/folds unrecovered;
 feasibility unmeasured. Pinned Python3.13.13 / torch2.10.0+cu128 supports CPU tests.
 Full raw off-device backup remains unverified. No active empirical jobs.
 
-Next safe action: finish independent release review of109-cell pilot, preserve
-the initial draft gate and bind a reviewed successor revision; commit before
-empirical execution and wait for the active named offline verification. Release
+Resource pilot109-cell gate-v2 and source committed at
+`f020f75e13616959e500e4d1029b943d014ba744`; metadata admission passes, no claim
+created. Independent review conditionally approves only this pilot after the named
+offline check passes. Initial gate/source maps and failed preparation are retained.
+Next safe action: wait for active full check02; resolve failures if any, commit
+the test-isolation evidence, then launch the pilot once. Release
 review fixes include exact worker input binding, durable MCM prefixes and external
-post-death reconciliation. Model registry/evaluation is synthetic-tested, with
-review corrections pending before financial-run release. Continue independently executable software work if
+post-death reconciliation. Model registry/evaluation is synthetic-tested. Completed LSTM/SVM inference-only
+recovery has replayed identical predictions under separate synthetic registrations
+without another fit. Common actual test-row/source/scaler/feature binding and
+failure receipts are undergoing final review before financial-run release.
+Broader source inventory software accounts for85,488asset/date/field cells; no
+new remote transaction metadata or bodies acquired. BTC binary64 unique-satoshi
+grid inverse is synthetic-tested and remains unadmitted for empirical data. Continue independently executable software work if
 capacity or source coverage blocks a milestone. Never relaunch historical jobs.
 All1420 planned one-lane fits remain pending. M0 ready; M1–M4 incomplete.

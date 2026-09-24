@@ -82,9 +82,20 @@ def main():
                PYTEST_DISABLE_PLUGIN_AUTOLOAD="1", RUN_ONLINE_TESTS="0")
     env.pop("PYTEST_ADDOPTS", None)
     command = [sys.executable, "-B", "-m", "pytest", "-q", "-p", "no:cacheprovider",
-               "--import-mode=importlib", *(["--collect-only"] if args.collect_only else []), *paths]
+               "--import-mode=importlib", *(["--collect-only"] if args.collect_only else [])]
+    # Collection imports native libraries before any test executes. Keep the
+    # neural runtime out of historical synthetic tests with small RSS contracts;
+    # fork/exec can inherit the collecting process's historical RSS high-water mark.
+    neural_prefix = "tests/research/onchain_replication/"
+    batches = ([p for p in paths if not p.startswith(neural_prefix)],
+               [p for p in paths if p.startswith(neural_prefix)])
     print(f"Reviewed offline profile: {len(paths)} modules; legacy/unreviewed modules excluded.", flush=True)
-    return subprocess.run(command, cwd=ROOT, env=env).returncode
+    statuses = []
+    for name, batch in zip(("standard", "neural"), batches):
+        if batch:
+            print(f"Isolated {name} runtime: {len(batch)} modules.", flush=True)
+            statuses.append(subprocess.run([*command, *batch], cwd=ROOT, env=env).returncode)
+    return next((code for code in statuses if code), 0)
 
 
 if __name__ == "__main__":
