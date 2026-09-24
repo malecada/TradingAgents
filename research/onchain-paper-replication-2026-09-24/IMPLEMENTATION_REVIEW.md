@@ -2015,3 +2015,24 @@ closed attempt in a normal source/evidence commit. This closes its failure-cause
 and preservation review, not the full study's resource feasibility, raw backup,
 empirical raw-to-graph reconciliation, numerical reproduction or C01–C18 overall
 completion. External recovery of this later closure remains a separate check.
+
+
+### Independent post-closure checkpoint consistency review
+
+STATE.md's leading current section, RESULT.md, ACCEPTANCE_CHECKPOINT.md and
+completion-interim-05.json were read after incorporation of pilot closure.
+The new matrix SHA256 is
+85c64a8bea11084b8777ae74ea7b2aa8612a08e90c718328faa2b0e5bf172be8;
+it contains all C01–C18 exactly once, preserves the preceding matrix hash and
+has no missing evidence path. The reports correctly retain the failed pilot,
+7/102 dispositions, all 69 verified artifact hashes and explained oomd cause.
+They distinguish 14 decoded source-days and an attempted third week from the
+63 unavailable final source-day dispositions, without rewriting the closed
+ledger. Resource feasibility, complete empirical populations, all 1420 financial
+fits, numerical agreement and exact cohort/vintage remain outstanding. The
+implementation/paper-scope/exactness flags remain false and numerical agreement
+unevaluated. The 6576 admitted logical price-date cells plus 82200 remaining
+transaction-field cells preserve the full 88776 logical source denominator;
+this does not reclassify failed Yahoo attempts or the pilot's own cell ledger.
+No material contradictory disposition was found. The latest closure's external
+recovery remains pending until its separate bundle is actually checked.
