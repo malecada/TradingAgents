@@ -12,11 +12,20 @@ The full motif dictionary → MCM → MLP → GAT → graph pooling → attentio
 ## Completed evidence
 
 - Source/artifact audit and explicit protocol configurations were frozen before predictive fitting. Unknown graph, dictionary, architecture, split and training choices are recorded as independent assumptions.
-- Latest expanded offline verification passed 387 tests with one CUDA skip; the clean locked environment retained identical installed distributions and two saved predictions replayed exactly.
+- The prior pinned expanded offline snapshot passed 387 tests with one CUDA skip; the clean locked environment retained identical installed distributions and two saved predictions replayed exactly.
+- The current metadata-based population producer and same-claim publication path passed53focused tests, including two synthetic SVM fits. Exact fold/source/price/calendar and actual binding artifacts are checked before representation work. This increment does not claim a new full-suite run or an admitted real financial population.
 - Expanded synthetic architecture/controller evidence includes a completed motif→MCM→GAT→attentionLSTM fit with optimizer/RNG checkpoint, an SVM comparison and a deliberately unavailable cell. Independent replay/metrics and immutable journals were checked. Synthetic performance is not a financial result.
 - Two Yahoo source attempts returnedHTTP 429 and remain closed with all 3,289unavailable cells per asset. After a reviewed prospective source amendment, Coin Metrics captures admitted all 3,288required dates per asset. Independent checks matched all dates and values to retained CSVbytes, every artifact hash and process-death evidence.
 - Cumulative accounting is24/51 claims; the 17 historical claims and both pilot attempts remain preserved. Four price, one metadata and twelve body source allocations retain every required date/field and 1,420 unique fits. No test result selected a provider or model setting.
 - Compact preparation snapshot 652b2766 and the exact 6,651-file delta to 3b8e6608 were recovered externally and independently hash-checked. Checkpoint 04 additionally preserved and independently recovered all 6,653 changed members, including both complete Coin Metrics captures and attribution. Checkpoint 05 and its separately recovered log supplement 06 additionally preserve all 52 compact pilot closure copies, journals and audit receipts; the exact 101-member delta and supplement were independently checked. Full raw/graph/scratch backup remains unverified.
+
+The supplied Storage Box has a verified compact checkpoint with16,110 recovered
+Git blobs. The retained-ETH byte-preservation continuation02 pilot completed149
+files/517,291,351raw bytes in518.699guard seconds, with member-level download
+verification and clean cleanup. The failed first backup attempt remains retained.
+Full103.5GB raw preservation is still incomplete and separate from empirical
+source admission. These byte-copy jobs do not add financial trials or reopen
+historical claims.
 
 ## Resource and coverage limits
 
@@ -81,4 +90,4 @@ The source audit records Algorithm1/Eq2 ambiguities and inconsistent printed met
 
 Every mapped row retains all seven folds and five seeds. There is no survivor-only mean, signed accuracy difference, uncertainty interval or recovered baseline claim because the required real predictions do not exist. The full finite ledger is retained in `full_sources/table-status-pre-fit-v2.json`.
 
-The criterion-by-criterion checkpoint is `review/completion-interim-06.json`; independent findings are in `IMPLEMENTATION_REVIEW.md`. This is an ongoing checkpoint, not a declaration that all 13 tasks or C01–C18 are complete.
+The criterion-by-criterion checkpoint is `review/completion-interim-07.json`; independent findings are in `IMPLEMENTATION_REVIEW.md`. This is an ongoing checkpoint, not a declaration that all 13 tasks or C01–C18 are complete.

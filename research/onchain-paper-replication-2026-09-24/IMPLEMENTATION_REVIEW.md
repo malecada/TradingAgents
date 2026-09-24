@@ -2410,3 +2410,92 @@ valid and does not cause the alleged admission rejection. That finding is
 withdrawn; no source change is required. The exact successor02 pilot clearance
 above stands. Bulk still requires successful measured pilot evidence and its
 separate exact release record, for the originally stated operational reasons.
+
+
+### Independent incremental acceptance checkpoint07 review
+
+Proposed completion-interim-07.json SHA256
+d625808316a7a5ef22b4e46c029358626944c3f41e9f53464de8b5a9a4757f2e
+correctly supersedes exact checkpoint06. Its C01-C18 identifiers/statuses and
+all four completion flags are unchanged: implementation and paper scope remain
+incomplete, numerical agreement unevaluated, exact reproduction ineligible.
+Every linked evidence path exists. The population-preparation verification
+record's ten source/test hashes match current bytes; its XML hash matches the
+previously inspected 53-pass focused result. The prior 387-pass/one-CUDA-skip
+suite is expressly confined to its earlier source snapshot, and no new full
+clean-environment verification is claimed for this increment.
+
+C16 accurately distinguishes the independently recovered compact Storage Box
+checkpoint from still-incomplete transaction/raw/large-graph preservation.
+The failed first raw-transfer pilot remains explicit and the successor is
+only in preparation/execution; no successful whole-store backup is inferred.
+The new population interface does not imply raw-to-graph production admission,
+full-scale capacity, empirical prediction lineage or any of the pending1420
+financial fits. No material scope/flag inconsistency was found; checkpoint07
+is cleared for adoption with these incomplete dispositions. Review used small
+local metadata/source hashes only, without tests, network calls, large reads
+or interaction with the active preservation pilot.
+
+
+### Independent successor02 preservation pilot closure and finite bulk release
+
+The successful pilot is bound to committed source
+34d51de913956567fcd9ca1701c9c5ebbfb16378 and contract
+a009822b0b44c19a91e7dfe83c6ac7a91d284bdf4280a76284a292ab5d591d73.
+All five source/seven input hashes remain exact. The reviewer independently
+compared every149 manifest members, including original path/size/hash/mtime and
+ordered archive identity, with the first149 frozen inventory rows using bounded
+streaming metadata reads. The total is517291351 raw bytes. Original/recovered
+manifest hashes match3330fce57125e74bdaab83d300296e5ea2474ee988a3edc7ac11586d8f3d1b4d.
+Batch completion/payload/recovered-marker bytes all hash to
+761e31f0cf6698be2e84659e84959997922f28b5071f71fc6a8378eaae3964ac;
+phase equivalents all hash to
+2e28731a334d6095eaec137033385b9455737bd3250efa0f40cd4ea9deade6d8.
+Recovered contract, batch plan and compressed inventory equal frozen inputs.
+The reviewed worker performed the full archive download and per-member checks
+before removing only its two generated tar copies. The reviewer did not repeat
+that download or scan source bodies. One separately authorized read-only remote
+sha256sum independently confirmed the retained517416960-byte archive hash
+a7f3cacdb3f4f3cdb55262dd97b1b9b9da4f1ab57d5c6ce3f28825b53d718568.
+No remote mutation, credential content read or financial computation occurred.
+
+Guard final SHA256
+4251770de6476c3d552d1e823f733254ef81fc50afac01aecdb5818dfbb78df7
+records518.698803264 seconds,202473472-byte sampled peak, child0, cleanup
+verified and no limit reason. All observed monitor/workload PIDs and the cgroup
+are absent; no failed terminal exists. Memory-high throttling occurred13257
+times; kernel max/OOM counters stayed zero. This is bounded success with
+throttling, not evidence of unconstrained host capacity. Original failed01
+bytes, remote partial and identity remain preserved.
+
+Bulk candidate SHA256
+4890fafe4237b480c0ba6d5fd4e4272d37a1793bdf383a3961e60425a8066351
+correctly describes the remaining58934 files /103007197692 raw bytes in194
+bundles and13 contiguous phases. Independent arithmetic gives28.69096135 hours
+from the single pilot's bytes/time ratio,43.03644203 hours with1.5 margin, and
+3.57954249 hours for the largest phase with that margin. These are within the
+48-hour cumulative and8-hour per-phase ceilings. The245-GiB aggregate payload
+allowance equals all frozen phase allowances; originals are not deleted.
+
+One all-bulk controller under this exact contract is cleared after publication
+of the exact BULK_RELEASE.json binding this contract and successful pilot.
+The release remains conditional on every live256/192-MiB guard, zero swap,
+3-GiB host reserve,20-GiB disk floor, two-CPU restriction and remote retained
+capacity reservation. No concurrent synthetic tests, retries or reopening of
+failed phases are released. Stop at the first failed phase and retain every
+completed/partial artifact. The point estimate and margin are planning figures
+from one bundle; later file mix, hash work, host pressure or transport slowdown
+may exhaust the limits. No guaranteed completion or full raw preservation is
+claimed before the complete finite denominator and recovered-member evidence
+exist. Large graph/MCM/scratch backup and empirical evaluation remain separate.
+
+
+Additional independent member verification closed before bulk launch: the
+preserved failed01 local tar is byte-identical to the successful02 archive
+(and the independently observed remote SHA256 above). A separate stdlib
+tarfile/hashlib streaming reconstruction, without the production verifier,
+checked all149 regular members in exact order, every size and original content
+hash, and the complete517416960-byte archive hash. Buffers were bounded at1MiB;
+no extraction, transaction decoding, source-file mutation or extra download
+was performed. All149 members /517291351 raw bytes passed. This also preserves
+the distinction between failed01 transfer status and its intact local tar.

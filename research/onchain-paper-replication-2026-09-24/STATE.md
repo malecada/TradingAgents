@@ -74,12 +74,12 @@ in the authorized scope. The historical negative screen is unchanged.
   approximately6.39GB/2.50GB. This is an arithmetic projection, not measured
   full-MCM/neural capacity; largest-week pilot ended before a durable graph result. See reviewed
   review/capacity-closed-partial-03.json. Full-body acquisition is not released.
-- C01–C18 interim matrix exists in review/completion-interim-06.json; independent
-  review confirmed all18criteria and conservativeflags. Latest expanded source
+- C01–C18 interim matrix exists in review/completion-interim-07.json; independent
+  review confirmed all18criteria and conservativeflags. Earlier expanded source
   passed387tests/1CUDA skip in the earlier clean locked offline environment with
   unchanged installed distributions; two saved predictionsreplayedexactly. Guard
   443.445s/934,776,832peak sampledbytes, no memoryevents and cleanupverified.
-  implementation-coverage-v4.json maps currentcode/tests. Nofinancialfit.
+  implementation-coverage-v4.json maps that earlier source snapshot. Nofinancialfit.
 - The implementation/paper-scope/numerical-agreement conclusions remain separate:
   **implementation integration pending; full paper scope incomplete; numerical
   agreement unevaluated.** No financial accuracy or validated strategy claim.
@@ -116,7 +116,13 @@ in the authorized scope. The historical negative screen is unchanged.
   with a read-only remote hash receipt. No raw backup completion is claimed.
   New `storage/raw-preservation-2026-09-24-02/` lowers memory to256/192MiB,
   keeps the3GiB host reserve, and splits bulk into13 finite phases. Pilot release
-  review cleared the exact02 source/contract; no02 process is active yet. Never relaunch01.
+  review cleared the exact02 source/contract. Its pilot from `34d51de9` is
+  COMPLETE:149files/517291351raw bytes,518.699guard seconds,202473472peak
+  sampled bytes, child0 and cleanup verified. All downloaded members/markers
+  matched. Independent review also checked all149 original member hashes and
+  the current remote archive hash. `BULK_RELEASE.json` releases one finite
+  controller for194remaining bundles/58934files. No job is currently active;
+  full raw preservation remains incomplete. Never relaunch01.
 - **Population integration implemented:** `full_sources/population-preparation-01/`
   binds the metadata-only calendar producer, same-claim population publication,
   and exact input/output binding preflight. Fifty-three focused tests passed,
@@ -125,8 +131,8 @@ in the authorized scope. The historical negative screen is unchanged.
   Prior387-test evidence stays tied to its older snapshot; it is not a new full
   suite run for this increment. Independent review is complete.
 
-Next safe action: finish continuation02 release review and execute its pilot with
-no concurrent synthetic tests; review measured transfer before the bulk controller.
+Next safe action: start the independently released continuation02 all-bulk
+controller once, then observe its checkpoints without concurrent heavy tests.
 A feasible compute/local-scratch allocation is still needed to finish
 raw-to-graph/population integration and prepare/review its exact source, phase,
 reuse, ownership and cumulative admission contract before execution. All 1,420

@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "scope": "byte preservation only; no new transaction decoding or experiment",
+  "inventory_path": "research/onchain-paper-replication-2026-09-24/storage/storage-box-2026-09-24-01/raw-source-inventory.json.gz",
+  "connection_path": "research/onchain-paper-replication-2026-09-24/storage/storage-box-2026-09-24-01/connection.json",
+  "input_sha256": {
+    "research/onchain-paper-replication-2026-09-24/storage/storage-box-2026-09-24-01/raw-source-inventory.json.gz": "8bcaab6b23a1d4e6540286300a16fd7e1af7f9b466ad8e7186aaf29f7523c420",
+    "research/onchain-paper-replication-2026-09-24/storage/storage-box-2026-09-24-01/connection.json": "d79023381eb9f2788709a7a4c043046d8998c30bb4abab678cb41caaf4dc70ef",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/batches.json": "ff91998022f756187a5baac14176c437f8e98103da3abe300c14188663c97965",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-01/contract.json": "bc35b31404b4144c24ff6e9e47f482e33b41cdfac2a08a20ff2f069b7ec5953d",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-01/pilot/failed.json": "c3413f239b6389b27e2cc0929e69ab707037622e6e735aca1d514be5c59acd15",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-01/pilot/guard/final.json": "7cc10f3aab769c002da0c463b9691c618d58dcd6de3552588170bcfb807e8e04",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-01/pilot/remote-partial.json": "27990ea53cd72bb093144853c7c16b2475e9d37c927b022d31ff0c6422358f82"
+  },
+  "source_sha256": {
+    "tradingagents/research/onchain_replication/preservation.py": "2849670dcf847a97274cf590a2c6732cd7749e0e9e3e64e802cb2e415f08a410",
+    "tradingagents/research/onchain_replication/resources.py": "bc4676f3ad566d68bad9c66a7e7dd0b8e630c3a79b5a10b9200959ecea029791",
+    "tradingagents/research/lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+    "tradingagents/research/onchain_replication/provenance.py": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/transfer.py": "b9f30824f4f596237c3a834d8da0b6eef7283637f7c36f99e3b22a824aaca99b"
+  },
+  "expected_files": 59083,
+  "expected_raw_bytes": 103524489043,
+  "maximum_batch_raw_bytes": 536870912,
+  "maximum_batch_members": 4096,
+  "maximum_concurrent_batches": 1,
+  "maximum_temporary_bytes": 2147483648,
+  "scp_kbit_per_second": 65536,
+  "remote_free_floor_bytes": 274877906944,
+  "maximum_network_bytes": 263066746880,
+  "allowed_source_roots": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "/home/malecada/Data/onchain-research"
+  ],
+  "remote_parent": "research-backups/onchain-paper-replication-2026-09-24/raw-retained-ETH-02",
+  "phases": {
+    "pilot": {
+      "start": 0,
+      "stop": 1,
+      "wall_seconds": 1800,
+      "maximum_network_payload_bytes": 2147483648
+    },
+    "bulk01": {
+      "start": 1,
+      "stop": 17,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk02": {
+      "start": 17,
+      "stop": 33,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk03": {
+      "start": 33,
+      "stop": 49,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk04": {
+      "start": 49,
+      "stop": 65,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk05": {
+      "start": 65,
+      "stop": 81,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk06": {
+      "start": 81,
+      "stop": 97,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk07": {
+      "start": 97,
+      "stop": 113,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk08": {
+      "start": 113,
+      "stop": 129,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk09": {
+      "start": 129,
+      "stop": 145,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk10": {
+      "start": 145,
+      "stop": 161,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk11": {
+      "start": 161,
+      "stop": 177,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk12": {
+      "start": 177,
+      "stop": 193,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk13": {
+      "start": 193,
+      "stop": 195,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 3221225472
+    }
+  },
+  "failure_rule": "Preserve failed01 unchanged; new02 identity verifies same source bytes. Bulk controller and every phase exclusive; stop all on first failed phase. Successor reconciliation required.",
+  "cleanup_rule": "only generated bundle.tar and recovered.tar after whole-archive/member/marker verification; originals never deleted",
+  "release_rule": "independent code/contract review before pilot; measured pilot review before bulk",
+  "maximum_network_bytes_qualification": "File payload upper bounds reserved before each operation. Upload size exact; remote dd emits at most one extra 32768-byte block and local receiver refuses excess before writing. SSH protocol overhead excluded.",
+  "download_protocol": "SSH dd bounded count, streamed receiver with byte/rate/time limits; port23 direct dd documented by Hetzner",
+  "remote_floor_rule": "Require phase raw bytes +1GiB metadata/padding reserve above256GiB floor before any upload",
+  "parent_failed_attempt": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-01/pilot",
+  "resource_amendment": "256MiB max/192MiB high/0swap,3GiB reserve,3.25GiB startup; no simultaneous root synthetic tests",
+  "bulk_cumulative_wall_seconds": 172800,
+  "bulk_phase_sizing": "At most16bundles per guarded phase; measured pilot reviewed before all-bulk. Each phase <=8h, cumulative <=48h; stop on first failure; no automatic retry."
+}
