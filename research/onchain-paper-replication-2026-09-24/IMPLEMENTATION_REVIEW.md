@@ -48,3 +48,21 @@ Both were corrected before fits: contiguous original batch IDs remain required,
 empty admitted graphs reject, and masked inputs are zeroed before the MLP.
 53 focused tests passed,1 CUDA parity check skipped at this checkpoint. Full
 post-change offline validation and empirical scale checks remain pending.
+
+Task7: independent review found no clock leakage in the frozen expected-week join,
+label purge or unique training-input scaler. Retained fixes reject regression
+broadcasting and contracted prediction batches, preserve constructor failures,
+recover a final-epoch checkpoint without refitting, and prohibit continuing a
+completed cell even when another cell caused the enclosing run to fail.
+Synthetic registered Git fixtures exercise original and new continuation claims;
+interruption after epoch1 and after finalepoch3 reproduces uninterrupted weights
+and loss logs exactly. Original claim identities remain consumed. Real worker-death
+proof and exact empirical factory/input membership still require release review.
+Task7 pure checkpoint tests also reject corrupt bytes, absent RNG and provenance
+mismatch. No empirical fit has been performed.
+
+Task9 software review: independent four-chunk HLSTM calculation matches exactly;
+asymmetric classification/regression fixtures and within-year moving-block
+bootstrap match the frozen conventions. Actual baseline fits and comparison
+coverage are pending. Resource guard review and synthetic containment evidence
+are recorded separately in the forthcoming resource amendment.

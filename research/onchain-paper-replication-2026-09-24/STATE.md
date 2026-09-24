@@ -22,8 +22,14 @@ The previous summary-feature study remains closed and unchanged.
 - Task6 full MLP→GAT→mean pooling→attention LSTM implemented. Synthetic gradient
   and learning checks pass; independent scalar GAT oracle agrees. Padding review
   corrections are undergoing regression checks.
-- Task7 chronological datasets and checkpoint recovery in progress.
-- Tasks8–13 pending; all source, resource, comparison and empirical scope remains
+- Task7 chronological datasets, fixed finite fit engine, exclusive fit cells and
+  exact checkpoint continuation implemented and independently reviewed. Synthetic
+  interrupted/replayed weights and logs match, including the final-checkpoint case.
+- Task8 resource guard and source metadata bindings in progress. Tiny real
+  synthetic process/thread probe03 passed; probes01/02 failures remain preserved.
+  CPU quota controller is absent; explicit reviewed affinity amendment pending.
+- Task9 price baselines/metrics implemented and independently checked; no fits.
+- Tasks10–13 pending; all source, resource, comparison and empirical scope remains
   required. No measured predictive performance or completed empirical milestone.
 
 Named pre-change offline baseline:2746tests+97subtests passed;6 inherited cleanup
@@ -36,7 +42,7 @@ Known external requirements: exact original data/config/folds unrecovered;
 feasibility unmeasured. Pinned Python3.13.13 / torch2.10.0+cu128 supports CPU tests.
 Full raw off-device backup remains unverified. No active empirical jobs.
 
-Next safe action: complete Task7 synthetic recovery and chronological invariants;
+Next safe action: finish resource shutdown checks, freeze the affinity amendment;
 prepare and independently review exact source/resource registrations, then commit
 before any empirical pilot. Continue independently executable software work if
 capacity or source coverage blocks a milestone. Never relaunch historical jobs.
