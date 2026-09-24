@@ -47,8 +47,10 @@ post-change offline check01 retained2921passes/1CUDA skip/5resource-test failure
 The failures reproduce heavy neural collection contaminating older512MiB test
 contracts; the affected tests pass separately, and a red→green isolation
 regression covers the corrected runner. No old resource criterion was relaxed.
-Corrected named full check02 is active at `resources/offline-postchange-02/`
-(terminal session31935); never duplicate it.
+Corrected named full check02 completed:2747standard tests+97subtests and189neural
+tests passed;1CUDA skip. Resource guard child0, cleanup verified, no limit breach;
+1331.41seconds, sampled peak2,130,657,280bytes. Receipt resources/offline-postchange-02/.
+Never repeat either terminal verification identity.
 Focused suite:176passed,1CUDA skip. Independent checker:43synthetic tests.
 
 Known external requirements: exact original data/config/folds unrecovered;
@@ -60,8 +62,8 @@ Resource pilot109-cell gate-v2 and source committed at
 `f020f75e13616959e500e4d1029b943d014ba744`; metadata admission passes, no claim
 created. Independent review conditionally approves only this pilot after the named
 offline check passes. Initial gate/source maps and failed preparation are retained.
-Next safe action: wait for active full check02; resolve failures if any, commit
-the test-isolation evidence, then launch the pilot once. Release
+Next safe action: commit completed verification evidence and launch the reviewed
+resource pilot once; preserve active ownership and every terminal outcome. Release
 review fixes include exact worker input binding, durable MCM prefixes and external
 post-death reconciliation. Model registry/evaluation is synthetic-tested. Completed LSTM/SVM inference-only
 recovery has replayed identical predictions under separate synthetic registrations
@@ -72,3 +74,9 @@ new remote transaction metadata or bodies acquired. BTC binary64 unique-satoshi
 grid inverse is synthetic-tested and remains unadmitted for empirical data. Continue independently executable software work if
 capacity or source coverage blocks a milestone. Never relaunch historical jobs.
 All1420 planned one-lane fits remain pending. M0 ready; M1–M4 incomplete.
+
+Fresh locked offline environment replay:2synthetic predictions agree exactly;
+190tests pass/1CUDA skip in replay/fresh-synthetic-suite-01.xml. Independent review
+verified34coverage records/88test links. This supports synthetic C14 only; empirical
+raw-to-prediction reproduction and remote recovery remain pending. Bitcoin exact
+weekly aggregation is under independent review; no BTC data has been decoded.

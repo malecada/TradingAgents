@@ -236,3 +236,81 @@ collection regression passed independently, confirming that neural collection st
 cannot contaminate the standard test process. This tests isolation rather than
 asserting that the active second full suite has passed. That suite was not duplicated,
 and the original failed-suite evidence remains retained.
+
+Task13 bounded engineering reproduction review (September24): the reviewer loaded
+and replayed the preserved `replay/synthetic-01` checkpoint using the separate
+`/tmp/onchain-paper-replay-env-20260924-01/bin/python` interpreter with a network-
+denying audit hook installed before neural imports. Both saved predictions match
+exactly (maximum absolute difference0; fixed atol1e-5,rtol1e-4). The five fixture
+members cover all saved input/configuration/expected/checkpoint files and total
+507,035 bytes including the outer manifest. The checked fixture manifest SHA256 is
+`ad3047707bbb903b2647e43b633b4deb7aa9d016d66af35ec25f3ba130f43b09`.
+No fixture, saved expected value, checkpoint or previous receipt was regenerated.
+The interpreter's actual runtime inventory matches `fresh-environment-01.json`;
+its virtual-environment configuration disables system site packages.
+
+The preserved fresh-environment JUnit evidence contains191 test cases:190 passed,
+zero failures/errors and one explicit CUDA-unavailable skip. Independent inspection
+of `implementation-coverage-v1.json` verified all34 F/U IDs against frozen fidelity,
+all recorded code hashes, all88 linked test dispositions against that JUnit file,
+and the parent fidelity/JUnit hashes. No missing or mismatched link was found.
+Coverage SHA256 is
+`97aa7f61a748c71e405d1be2fdba1136dc91b41f07cf72df7b5b370611b54983`.
+The frozen fidelity file remains unchanged; blocked original fund-cohort and other
+empirical limitations remain explicit despite passing component tests.
+
+This evidence supports the clean-environment synthetic reproduction requirement.
+It does not establish empirical C13, independent reconstruction from transaction
+raw data, all-architecture/asset/lane saved-model replay, paper numerical agreement,
+or external recoverability under C16. The example uses synthetic MCM inputs and
+one synthetic optimizer step, not an empirical motif dictionary or prediction
+experiment. Execution loaded source from the current checkout; committed compact
+backup, remote commit verification and bounded retrieval remain separate actions.
+The active named full offline suite was not rerun by the reviewer.
+
+BTC weekly assembly independent review (September24, correction required): exact
+rational edge and incident-volume arithmetic passes an independent fixture with
+repeated sender/recipient addresses, an observed self-transfer and an excluded
+nonunique script. The manually derived edges are2,5/2,2,5/2 satoshis; incident totals
+are17/2,9/2,5, summing to twice the9-satoshi transferred amount. Included and known
+excluded fees total2 satoshis. Per-edge contributing-transaction counts, log/native
+attributes and strict whale filtering against the exact sidecar agree. The current
+full-stream ingestion performs duplicate identity/spend and observed value/address
+checks before yielding weekly graphs; complete-week declarations still require
+independent decoder/source admission.
+
+A material observed-prevout completeness defect remains at this review snapshot:
+`btc_weekly.py:68–77` accepts a spend of index9 from an observed creator transaction
+that declares only output0, because the supplied prevout creates a new output key.
+An independent synthetic example is admitted as two transactions. Track each
+observed creator's complete output count and reject every referenced index outside
+that range, regardless of stream order, before yielding any graph. Matching a
+supplied prevout value is insufficient when that output was never declared.
+
+An initial suggestion to infer spend order from timestamp comparison was withdrawn:
+Bitcoin header time is bounded by the preceding11-block median, rather than the
+immediately preceding block timestamp. Same-block transaction order is separately
+constrained. Therefore chain-order validation requires admitted block height and
+transaction position, not a strict creator-time≤spender-time rule. See the
+[Bitcoin developer block reference](https://developer.bitcoin.org/reference/block_chain.html).
+The timestamp-only fixture is not evidence of an invalid chain. Prevout source
+lineage, chain order/maturity, complete raw decoding, external sidecar persistence
+and real full-history conservation remain source/integration admission requirements.
+No empirical transactions were read or historical job rerun.
+
+Pilot release condition satisfied (September24): independent verification against
+commit `040d4145fa83e8c4f826abd18d1cf15dd2163413` found the reviewed gate-v2, all
+registered source/input/charter bytes and runtime helper hashes committed and
+unchanged. Gate SHA256 remains
+`b0a06f6a7710ec0788f8e94105b76caa57f16e0655c75f974e9c743721faed57`.
+The named full offline check02 is terminal successful:2747 standard tests plus97
+subtests,189 neural tests and1 explicit CUDA skip. Guard child exit is0, cleanup is
+verified, limit reason is null and OOM counters are zero. Terminal receipt SHA256:
+`7a0e66e7dc969dd4f242a5064030b39f4ae567f72865faeb4ebbbd3a69a0cb6a`;
+retained log SHA256:
+`dd97e5a7557465615915202ed77cfe6a57837f1491cc0a1dc7173422a8660088`.
+No pilot claim existed at the independent check. The earlier conditional approval
+is now satisfied for one launch of the exact registered109-cell resource-only
+pilot, subject to the launcher's live admission/resource checks. A later compact
+evidence commit must retain these bound bytes. This is not financial-run approval,
+a resource feasibility conclusion, or empirical replication completion.

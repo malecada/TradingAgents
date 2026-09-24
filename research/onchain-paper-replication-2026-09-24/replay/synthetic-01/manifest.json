@@ -1,0 +1,31 @@
+{
+  "checkpoint": "checkpoint/47165bc658f8f464c7dc340a7a38e62187563f45737df2d377cbffd1cc5e0ab8/manifest.json",
+  "data_kind": "synthetic_neural_inputs",
+  "files": {
+    "checkpoint/47165bc658f8f464c7dc340a7a38e62187563f45737df2d377cbffd1cc5e0ab8/manifest.json": "175e797e87f1ea3d65937c689cabc5721dd70f0e5efca6ab5c32c133cb53f6d1",
+    "checkpoint/47165bc658f8f464c7dc340a7a38e62187563f45737df2d377cbffd1cc5e0ab8/state.pt": "ab9c8fe9339971fac82a50923a391857915109d36f253e62f0e6360a7acf1577",
+    "expected.json": "c1c343b1f523b9e8fb52895155c0fea16e214657a679917f7a72d0a1ed18ada5",
+    "inputs.json": "17524641fe8fa7eea3209511d14ecac091cfe90c4fe0de9dde3cf6c94f3ee7be",
+    "model.json": "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d"
+  },
+  "provenance": {
+    "cell_id": "synthetic-full-model-replay",
+    "config_hash": "29af65736dddfbd22b5ce94c6ff3e507041b00dc81dfcc94c6919a615a68dcb7",
+    "dictionary_hash": "4653838b439688dce2e2addd5676f44625639342b4645ac595e8a584ae802547",
+    "fold_id": "synthetic",
+    "input_hash": "17524641fe8fa7eea3209511d14ecac091cfe90c4fe0de9dde3cf6c94f3ee7be",
+    "source_commit": "040d4145fa83e8c4f826abd18d1cf15dd2163413",
+    "source_hashes": [
+      "17524641fe8fa7eea3209511d14ecac091cfe90c4fe0de9dde3cf6c94f3ee7be",
+      "20f451c08143dd81491b5c9fa0a90243ee6a9363df1fbbfcbd9c45b32f9b054d"
+    ]
+  },
+  "qualification": "One synthetic optimizer step; validates offline checkpoint inference only, not predictive performance, dictionary fitting or empirical raw recovery.",
+  "source_files": {
+    "gat.py": "c2292bb164869bb4202a2af028a453f547d8e2930cd9d58ee4a59ffcb72913d6",
+    "model.py": "199ce63ee56a76deae60495598a4ca4ac6306d7d7f24cf6483a7d1f89feb4944",
+    "pooling.py": "054845bed22c44294ce41f2263155df0397c42b0b306755e36791ae5a3960303",
+    "replay.py": "37cb3925ac1e4a453ed385fd560b463e88f1ddb91cf00af338c08230ed244691",
+    "temporal.py": "d8adafb5a50716ce472848df05e8bbb804525ed8003958c7f9a25c82d81ad226"
+  }
+}

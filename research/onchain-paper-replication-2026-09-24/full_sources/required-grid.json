@@ -1,0 +1,75 @@
+{
+  "assets": {
+    "BTC": {
+      "date_count": 3288,
+      "field_cell_count": 52608,
+      "fields": [
+        "hash",
+        "block_hash",
+        "block_number",
+        "block_timestamp",
+        "is_coinbase",
+        "input_count",
+        "output_count",
+        "inputs.index",
+        "inputs.spent_transaction_hash",
+        "inputs.spent_output_index",
+        "inputs.address",
+        "inputs.value",
+        "outputs.index",
+        "outputs.address",
+        "outputs.value",
+        "price.Close"
+      ],
+      "year_date_counts": {
+        "2016": 366,
+        "2017": 365,
+        "2018": 365,
+        "2019": 365,
+        "2020": 366,
+        "2021": 365,
+        "2022": 365,
+        "2023": 365,
+        "2024": 366
+      }
+    },
+    "ETH": {
+      "date_count": 3288,
+      "field_cell_count": 32880,
+      "fields": [
+        "hash",
+        "block_hash",
+        "block_number",
+        "block_timestamp",
+        "transaction_index",
+        "from_address",
+        "to_address",
+        "value",
+        "receipt_status",
+        "price.Close"
+      ],
+      "year_date_counts": {
+        "2016": 366,
+        "2017": 365,
+        "2018": 365,
+        "2019": 365,
+        "2020": 366,
+        "2021": 365,
+        "2022": 365,
+        "2023": 365,
+        "2024": 366
+      }
+    }
+  },
+  "boundary_policy": "Incomplete first/last graph weeks and price warmup are explicit calendar exclusions; no fabricated pre2016 history.",
+  "default_reason": "Complete source/body/schema/clock admission not established for this replication",
+  "default_status": "pending",
+  "end_exclusive": "2025-01-01",
+  "exceptions": [],
+  "new_transaction_body_acquisition": false,
+  "schema_version": 1,
+  "scope": "required source denominator; no new transaction data admission",
+  "source_docs_manifest": "full_sources/docs/manifest.json",
+  "start": "2016-01-01",
+  "total_field_cells": 85488
+}

@@ -1,0 +1,771 @@
+{
+  "parent_fidelity_sha256": "a115b80961289ab3909f7ba52b2b012a6452322adc18d117e923169d2fb35a75",
+  "records": [
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/eth_source.py": "78e0731e16d2751534e3530dde7313e94950bd852f99b30cec4661dbf7db1487"
+      },
+      "decision": "Native top-level successful positive transfers; BTC rational projection; original provider/filters unavailable.",
+      "id": "F01",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real full-source admission pending; BTC full decoder not integrated.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_eth_source.py": [
+          {
+            "status": "passed",
+            "test": "test_verified_stream_keeps_precision_and_filter_inputs"
+          },
+          {
+            "status": "passed",
+            "test": "test_projected_archive_columns_are_decoded_without_missing_byte_fill[zstd]"
+          },
+          {
+            "status": "passed",
+            "test": "test_projected_archive_columns_are_decoded_without_missing_byte_fill[receipt_base64]"
+          },
+          {
+            "status": "passed",
+            "test": "test_empty_source_member_inventory_rejected"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/weekly.py": "99df9c97685fe7c56702db7583af2d6b18342e657e2f13c53337c03c64e5e0a3"
+      },
+      "decision": "Directed aggregated pairs with count/value and four node activity attributes; approximate ETH units retained.",
+      "id": "F02",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "ETH software verified; independent real raw reconciliation and BTC weekly transform pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_weekly.py": [
+          {
+            "status": "passed",
+            "test": "test_monday_utc_boundary"
+          },
+          {
+            "status": "passed",
+            "test": "test_conservation_and_attributes"
+          },
+          {
+            "status": "passed",
+            "test": "test_duplicates_even_excluded_fail"
+          },
+          {
+            "status": "passed",
+            "test": "test_partial_week_requires_explicit_disposition"
+          },
+          {
+            "status": "passed",
+            "test": "test_declared_empty_week_is_not_silently_omitted"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/prices.py": "68dc6334bd6da9d778bbcd19fb40ce26cc3719ed4a1a52a9528cf135d54f1614"
+      },
+      "decision": "Monday UTC complete weeks; daily Yahoo unadjusted closes, one-day availability lag.",
+      "id": "F03",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Parser/capture interface only; real Yahoo admission pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_prices.py": [
+          {
+            "status": "passed",
+            "test": "test_yahoo_instrument_gaps_and_unadjusted_field"
+          },
+          {
+            "status": "passed",
+            "test": "test_capture_retains_denial_and_never_retries"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/neighborhoods.py": "cffeac41c84f2e94059a3c8a3833dfb96168f6279c88c34c1b0d3d0d96875e70"
+      },
+      "decision": "Weighted without-replacement weak one-hop sampling, 512 samples, probabilities halved on overlap.",
+      "id": "F04",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_neighborhoods.py": [
+          {
+            "status": "passed",
+            "test": "test_weak_induced_neighborhood_and_hub_refusal"
+          },
+          {
+            "status": "passed",
+            "test": "test_overlap_probabilities_reproducible_and_future_invariant"
+          },
+          {
+            "status": "passed",
+            "test": "test_indexed_neighborhood_matches_original_directed_induction"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/dictionary.py": "32e27a4a17dc2aa993d1440d6486c75b0d4dcff341969dbf99bdff412dd7e446"
+      },
+      "decision": "Average linkage, 32 medoids, declared recursive partition rule.",
+      "id": "F05",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_dictionary.py": [
+          {
+            "status": "passed",
+            "test": "test_average_linkage_and_medoid_ties"
+          },
+          {
+            "status": "passed",
+            "test": "test_dictionary_determinism"
+          },
+          {
+            "status": "passed",
+            "test": "test_partition_ties_use_original_indices_and_expand_membership"
+          },
+          {
+            "status": "passed",
+            "test": "test_dictionary_is_immutable_and_content_bound"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/matching_reference.py": "75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332"
+      },
+      "decision": "Literal Eq1, RBF attributes, alpha1, missing-edge zero; directed self score need not1.",
+      "id": "F06",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_matching_reference.py": [
+          {
+            "status": "passed",
+            "test": "test_hard_assignment_is_injective"
+          },
+          {
+            "status": "passed",
+            "test": "test_literal_directed_and_zero_edge_scores"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[1-3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[2-2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[3-2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[4-4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_extreme_finite_features_and_capacity"
+          },
+          {
+            "status": "passed",
+            "test": "test_single_iteration_matches_literal_half_coefficient"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/matching_reference.py": "75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332"
+      },
+      "decision": "Literal half coefficient, one row/column pass, multiplicative beta; symbols resolved by argument type.",
+      "id": "F07",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_matching_reference.py": [
+          {
+            "status": "passed",
+            "test": "test_hard_assignment_is_injective"
+          },
+          {
+            "status": "passed",
+            "test": "test_literal_directed_and_zero_edge_scores"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[1-3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[2-2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[3-2]"
+          },
+          {
+            "status": "passed",
+            "test": "test_scores_against_exhaustive_independent_bound[4-4]"
+          },
+          {
+            "status": "passed",
+            "test": "test_extreme_finite_features_and_capacity"
+          },
+          {
+            "status": "passed",
+            "test": "test_single_iteration_matches_literal_half_coefficient"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/matching.py": "8198d3505bf250152e7f6949372efb38b7d83837c1067194b862958e17923280"
+      },
+      "decision": "Batched tensor implementation planned instead of custom CTA CUDA; GPU parity blocked on available device.",
+      "id": "F08",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "CPU accelerated checks pass; CUDA device unavailable.",
+      "paper_disposition": "known_deviation",
+      "tests": {
+        "tests/research/onchain_replication/test_matching_accelerated.py": [
+          {
+            "status": "passed",
+            "test": "test_batched_cpu_float32_parity"
+          },
+          {
+            "status": "skipped",
+            "test": "test_gpu_parity_if_available"
+          },
+          {
+            "status": "passed",
+            "test": "test_iterative_roundoff_does_not_change_tie_free_assignment"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/mcm.py": "3825d424496927dcb9f27935a12e00502f19d04b864017a7419954c2d5b4aeae"
+      },
+      "decision": "Full motif similarities then downstream-trainable 32\u219264\u219232 ReLU MLP.",
+      "id": "F09",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_mcm.py": [
+          {
+            "status": "passed",
+            "test": "test_mcm_reference_accelerated_and_dictionary_order"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/gat.py": "c2292bb164869bb4202a2af028a453f547d8e2930cd9d58ee4a59ffcb72913d6"
+      },
+      "decision": "Full incoming-neighbor/self GAT with frozen head dimensions.",
+      "id": "F10",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_gat.py": [
+          {
+            "status": "passed",
+            "test": "test_three_node_directed_attention_against_scalar_calculation"
+          },
+          {
+            "status": "passed",
+            "test": "test_padding_and_relabeling"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/pooling.py": "054845bed22c44294ce41f2263155df0397c42b0b306755e36791ae5a3960303"
+      },
+      "decision": "Mean pooling after GAT and joint downstream gradients; pooling omitted by source.",
+      "id": "F11",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_model.py": [
+          {
+            "status": "passed",
+            "test": "test_joint_gradient_and_structure_time_learning"
+          },
+          {
+            "status": "passed",
+            "test": "test_regression_head_is_distinct"
+          },
+          {
+            "status": "passed",
+            "test": "test_masked_nan_padding_has_finite_gradients"
+          },
+          {
+            "status": "passed",
+            "test": "test_pool_rejects_wholly_masked_graph"
+          },
+          {
+            "status": "passed",
+            "test": "test_shared_graph_reuse_keeps_joint_gradients_and_is_local_to_forward"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/temporal.py": "d8adafb5a50716ce472848df05e8bbb804525ed8003958c7f9a25c82d81ad226"
+      },
+      "decision": "LSTM64 plus tanh additive attention querying final valid state; 28 daily steps.",
+      "id": "F12",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_temporal.py": [
+          {
+            "status": "passed",
+            "test": "test_attention_mask_and_future_padding_invariance"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/model.py": "199ce63ee56a76deae60495598a4ca4ac6306d7d7f24cf6483a7d1f89feb4944"
+      },
+      "decision": "Separate regression scalar and directly trained two-logit classifier; no regressor-sign substitute.",
+      "id": "F13",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_model.py": [
+          {
+            "status": "passed",
+            "test": "test_joint_gradient_and_structure_time_learning"
+          },
+          {
+            "status": "passed",
+            "test": "test_regression_head_is_distinct"
+          },
+          {
+            "status": "passed",
+            "test": "test_masked_nan_padding_has_finite_gradients"
+          },
+          {
+            "status": "passed",
+            "test": "test_pool_rejects_wholly_masked_graph"
+          },
+          {
+            "status": "passed",
+            "test": "test_shared_graph_reuse_keeps_joint_gradients_and_is_local_to_forward"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/training.py": "a178c226a4eb05d144798204be60a0a9c3b3640f4702f5c89d24d988a08784af"
+      },
+      "decision": "Rolling2018\u20132024 reconstructed folds, fixed100epochs/five seeds; original folds unavailable.",
+      "id": "F14",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Finite fit/recovery synthetic-tested; no financial fit executed.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_training.py": [
+          {
+            "status": "passed",
+            "test": "test_finite_fit_rejects_duplicate_and_predicts"
+          },
+          {
+            "status": "passed",
+            "test": "test_unregistered_cell_cannot_fit"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_fit_requires_new_registered_attempt_and_replays[1]"
+          },
+          {
+            "status": "passed",
+            "test": "test_interrupted_fit_requires_new_registered_attempt_and_replays[3]"
+          },
+          {
+            "status": "passed",
+            "test": "test_flat_regression_target_cannot_broadcast"
+          },
+          {
+            "status": "passed",
+            "test": "test_predictions_cannot_drop_rows"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/baselines.py": "8ad95719b412aa633607f966e72e3246cceeceffb68e6ced90b4289637b3954a"
+      },
+      "decision": "Full + LSTM/HLSTM/GRU/SVR both assets; HLSTM declared two-level chunk adaptation.",
+      "id": "F15",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_metrics_baselines.py": [
+          {
+            "status": "passed",
+            "test": "test_metrics_hand_calculation_and_probability_limits"
+          },
+          {
+            "status": "passed",
+            "test": "test_interval_rejects_gaps_and_preserves_pairing"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[lstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[gru]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[hlstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_svm_contract_and_zero_fit_controls"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/baselines.py": "8ad95719b412aa633607f966e72e3246cceeceffb68e6ced90b4289637b3954a"
+      },
+      "decision": "Same five directly trained direction arms, uncalibrated SVC sigmoid diagnostic probabilities labeled.",
+      "id": "F16",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Real source/fold application remains pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_metrics_baselines.py": [
+          {
+            "status": "passed",
+            "test": "test_metrics_hand_calculation_and_probability_limits"
+          },
+          {
+            "status": "passed",
+            "test": "test_interval_rejects_gaps_and_preserves_pairing"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[lstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[gru]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[hlstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_svm_contract_and_zero_fit_controls"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/graph_baselines.py": "f284a85a0ce3aa5dee24c748c6a376d9d44a2d775409b874540215ff0e594907"
+      },
+      "decision": "Node2Vec/GraphWave/GIN/WatchYourStep plus matched temporal heads with declared alignment.",
+      "id": "F17",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Comparator algorithms/registry verified synthetically; actual graph feature producer integration pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_graph_baselines.py": [
+          {
+            "status": "passed",
+            "test": "test_graphwave_against_dense_three_node_oracle"
+          },
+          {
+            "status": "passed",
+            "test": "test_historical_alignment_and_walk_reproducibility"
+          },
+          {
+            "status": "passed",
+            "test": "test_watchyourstep_objective_matches_scalar_and_gin_gradients"
+          },
+          {
+            "status": "passed",
+            "test": "test_node2vec_mid_epoch_recovery_matches_uninterrupted"
+          },
+          {
+            "status": "passed",
+            "test": "test_wys_partial_gradient_checkpoint_and_graphwave_replay"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/subsets.py": "4fcc55817ba2752af9d73c549ffb69e4247b84abb51affe73ef359a3b2f8e07d"
+      },
+      "decision": "Weekly incident value >90% same-week maximum; retain equality; recompute features after removal.",
+      "id": "F18",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "ETH exact raw aggregates used; BTC exact incident-volume sidecar integration pending.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_subsets.py": [
+          {
+            "status": "passed",
+            "test": "test_whales_removed_features_rebuilt_and_origin_counters_explicit"
+          },
+          {
+            "status": "passed",
+            "test": "test_fund_cohort_cannot_be_invented"
+          },
+          {
+            "status": "passed",
+            "test": "test_whale_strict_boundary_uses_raw_aggregates"
+          },
+          {
+            "status": "passed",
+            "test": "test_induced_fund_graph_retains_isolated_selected_vertex"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/subsets.py": "4fcc55817ba2752af9d73c549ffb69e4247b84abb51affe73ef359a3b2f8e07d"
+      },
+      "decision": "Exact65-entity address cohort and vintage absent; current labels cannot replace it. Synthetic filter software remains implementable.",
+      "id": "F19",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Original65-entity historical fund cohort absent; synthetic subset code does not recover it.",
+      "paper_disposition": "blocked",
+      "tests": {
+        "tests/research/onchain_replication/test_subsets.py": [
+          {
+            "status": "passed",
+            "test": "test_whales_removed_features_rebuilt_and_origin_counters_explicit"
+          },
+          {
+            "status": "passed",
+            "test": "test_fund_cohort_cannot_be_invented"
+          },
+          {
+            "status": "passed",
+            "test": "test_whale_strict_boundary_uses_raw_aggregates"
+          },
+          {
+            "status": "passed",
+            "test": "test_induced_fund_graph_retains_isolated_selected_vertex"
+          }
+        ]
+      }
+    },
+    {
+      "code": {
+        "tradingagents/research/onchain_replication/metrics.py": "03e27c21e87d3a9394c483fc9514c3a223a7c3573b00f2633b8a1f209c216e38"
+      },
+      "decision": "Primary binary-up metrics averaged over annual folds; pooled/macro/weighted secondary; retain published contradictions.",
+      "id": "F20",
+      "implementation_status": "synthetic_verified_component",
+      "limitation": "Metric/checker arithmetic verified; no empirical accuracy or agreement reported.",
+      "paper_disposition": "declared_assumption",
+      "tests": {
+        "tests/research/onchain_replication/test_metrics_baselines.py": [
+          {
+            "status": "passed",
+            "test": "test_metrics_hand_calculation_and_probability_limits"
+          },
+          {
+            "status": "passed",
+            "test": "test_interval_rejects_gaps_and_preserves_pairing"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[lstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[gru]"
+          },
+          {
+            "status": "passed",
+            "test": "test_price_models_have_distinct_joint_trainable_structure[hlstm]"
+          },
+          {
+            "status": "passed",
+            "test": "test_svm_contract_and_zero_fit_controls"
+          }
+        ]
+      }
+    },
+    {
+      "code": {},
+      "decision": "Provider and event universe not reported; independent retained-source native-transfer definition.",
+      "id": "U01",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "limitation": "Provider and event universe not reported; independent retained-source native-transfer definition.",
+      "paper_disposition": "declared_assumption",
+      "tests": {}
+    },
+    {
+      "code": {},
+      "decision": "Features, direction, aggregation and precision explicitly independently chosen.",
+      "id": "U02",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "limitation": "Features, direction, aggregation and precision explicitly independently chosen.",
+      "paper_disposition": "declared_assumption",
+      "tests": {}
+    },
+    {
+      "code": {},
+      "decision": "Proportional rational input-output projection; exact satoshi inputs, not observed bilateral flows.",
+      "id": "U03",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "limitation": "Proportional rational input-output projection; exact satoshi inputs, not observed bilateral flows.",
+      "paper_disposition": "declared_assumption",
+      "tests": {}
+    },
+    {
+      "code": {},
+      "decision": "Monday UTC complete weeks and daily Close, next-day horizon.",
+      "id": "U04",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "limitation": "Monday UTC complete weeks and daily Close, next-day horizon.",
+      "paper_disposition": "declared_assumption",
+      "tests": {}
+    },
+    {
+      "code": {},
+      "decision": "Graph end+1day <= sequence decision; original latency unknown.",
+      "id": "U05",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "limitation": "Graph end+1day <= sequence decision; original latency unknown.",
+      "paper_disposition": "declared_assumption",
+      "tests": {}
+    },
+    {
+      "code": {},
+      "decision": "512 samples,32 dictionary,1hop; RBF, no tuning.",
+      "id": "U06",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "limitation": "512 samples,32 dictionary,1hop; RBF, no tuning.",
+      "paper_disposition": "declared_assumption",
+      "tests": {}
+    },
+    {
+      "code": {},
+      "decision": "Literal Algorithm1, rectangular hard constraints, explicit zero-edge case.",
+      "id": "U07",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "limitation": "Literal Algorithm1, rectangular hard constraints, explicit zero-edge case.",
+      "paper_disposition": "declared_assumption",
+      "tests": {}
+    },
+    {
+      "code": {},
+      "decision": "Mean node pooling after full GAT; joint trainable path.",
+      "id": "U08",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "limitation": "Mean node pooling after full GAT; joint trainable path.",
+      "paper_disposition": "declared_assumption",
+      "tests": {}
+    },
+    {
+      "code": {},
+      "decision": "No recovered crypto hyperparameters; fixed Adam100epochs five seeds.",
+      "id": "U09",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "limitation": "No recovered crypto hyperparameters; fixed Adam100epochs five seeds.",
+      "paper_disposition": "declared_assumption",
+      "tests": {}
+    },
+    {
+      "code": {},
+      "decision": "2018\u20132024 eligible rolling folds; no invented pre2016 data.",
+      "id": "U10",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "limitation": "2018\u20132024 eligible rolling folds; no invented pre2016 data.",
+      "paper_disposition": "declared_assumption",
+      "tests": {}
+    },
+    {
+      "code": {},
+      "decision": "Binary-up primary annual means; extra conventions separate.",
+      "id": "U11",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "limitation": "Binary-up primary annual means; extra conventions separate.",
+      "paper_disposition": "declared_assumption",
+      "tests": {}
+    },
+    {
+      "code": {},
+      "decision": "Original fund address list and historical timestamp required.",
+      "id": "U12",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "limitation": "Original fund address list and historical timestamp required.",
+      "paper_disposition": "blocked",
+      "tests": {}
+    },
+    {
+      "code": {},
+      "decision": "Per-wallet weekly incoming+outgoing, including self twice, strict >0.9max.",
+      "id": "U13",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "limitation": "Per-wallet weekly incoming+outgoing, including self twice, strict >0.9max.",
+      "paper_disposition": "declared_assumption",
+      "tests": {}
+    },
+    {
+      "code": {},
+      "decision": "52GB treated as ambiguous host memory; no52GB VRAM inference.",
+      "id": "U14",
+      "implementation_status": "explicit_source_assumption_or_blocker",
+      "limitation": "52GB treated as ambiguous host memory; no52GB VRAM inference.",
+      "paper_disposition": "declared_assumption",
+      "tests": {}
+    }
+  ],
+  "scope": "implementation traceability only; frozen fidelity.json unchanged",
+  "validation": {
+    "failures": 0,
+    "passed": 190,
+    "path": "research/onchain-paper-replication-2026-09-24/replay/fresh-synthetic-suite-01.xml",
+    "sha256": "a4708d241402c351cd677e11168786fd83501dea45eeab0b88270b0e7d3b88e6",
+    "skipped": 1
+  }
+}
