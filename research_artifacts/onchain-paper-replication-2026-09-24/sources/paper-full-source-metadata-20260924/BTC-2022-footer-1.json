@@ -1,0 +1,161 @@
+{
+  "asset": "BTC",
+  "footer_sha256": "4718feda40c81eae15daf95e531d3828a9f04b635851ef7fec27a7ea0b0e1860",
+  "id": "BTC-2022-footer-1",
+  "object": {
+    "bytes": 651659968,
+    "date": "2022-02-12",
+    "etag": "\"732f5799a9e070cd5c0cc8a0d7f00c82-10\"",
+    "key": "v1.0/btc/transactions/date=2022-02-12/part-00000-3e258979-a030-433a-ab45-738a895f9c62-c000.snappy.parquet",
+    "last_modified": "2026-02-18T16:44:33.000Z"
+  },
+  "received_bytes": 34977,
+  "status": "complete",
+  "summary": {
+    "column_compressed_bytes": {
+      "block_hash": 13057,
+      "block_number": 1981,
+      "block_timestamp": 2470,
+      "date": 681,
+      "fee": 642492,
+      "hash": 15045185,
+      "index": 201675,
+      "input_count": 103363,
+      "input_value": 1825394,
+      "inputs.list.element.address": 38376027,
+      "inputs.list.element.index": 510438,
+      "inputs.list.element.required_signatures": 67446,
+      "inputs.list.element.script_asm": 106142777,
+      "inputs.list.element.script_hex": 106338620,
+      "inputs.list.element.sequence": 190524,
+      "inputs.list.element.spent_output_index": 1643474,
+      "inputs.list.element.spent_transaction_hash": 78844227,
+      "inputs.list.element.txinwitness.list.element": 169807778,
+      "inputs.list.element.type": 204097,
+      "inputs.list.element.value": 10095838,
+      "is_coinbase": 2147,
+      "last_modified": 1706497,
+      "lock_time": 94642,
+      "output_count": 99373,
+      "output_value": 1826066,
+      "outputs.list.element.address": 28694387,
+      "outputs.list.element.index": 388231,
+      "outputs.list.element.required_signatures": 68100,
+      "outputs.list.element.script_asm": 33764998,
+      "outputs.list.element.script_hex": 32483252,
+      "outputs.list.element.type": 349120,
+      "outputs.list.element.value": 6257144,
+      "size": 347701,
+      "txid": 15133388,
+      "version": 29973,
+      "virtual_size": 322424
+    },
+    "physical_types": {
+      "block_hash": "BYTE_ARRAY",
+      "block_number": "INT64",
+      "block_timestamp": "INT96",
+      "date": "BYTE_ARRAY",
+      "fee": "DOUBLE",
+      "hash": "BYTE_ARRAY",
+      "index": "INT64",
+      "input_count": "INT64",
+      "input_value": "DOUBLE",
+      "inputs.list.element.address": "BYTE_ARRAY",
+      "inputs.list.element.index": "INT64",
+      "inputs.list.element.required_signatures": "INT64",
+      "inputs.list.element.script_asm": "BYTE_ARRAY",
+      "inputs.list.element.script_hex": "BYTE_ARRAY",
+      "inputs.list.element.sequence": "INT64",
+      "inputs.list.element.spent_output_index": "INT64",
+      "inputs.list.element.spent_transaction_hash": "BYTE_ARRAY",
+      "inputs.list.element.txinwitness.list.element": "BYTE_ARRAY",
+      "inputs.list.element.type": "BYTE_ARRAY",
+      "inputs.list.element.value": "DOUBLE",
+      "is_coinbase": "BOOLEAN",
+      "last_modified": "INT96",
+      "lock_time": "INT64",
+      "output_count": "INT64",
+      "output_value": "DOUBLE",
+      "outputs.list.element.address": "BYTE_ARRAY",
+      "outputs.list.element.index": "INT64",
+      "outputs.list.element.required_signatures": "INT64",
+      "outputs.list.element.script_asm": "BYTE_ARRAY",
+      "outputs.list.element.script_hex": "BYTE_ARRAY",
+      "outputs.list.element.type": "BYTE_ARRAY",
+      "outputs.list.element.value": "DOUBLE",
+      "size": "INT64",
+      "txid": "BYTE_ARRAY",
+      "version": "INT64",
+      "virtual_size": "INT64"
+    },
+    "qualification": "sampled current metadata only; no complete daily schema, canonical-chain, historical-vintage or value verification",
+    "required_fields": {
+      "block_hash": {
+        "physical_path": "block_hash",
+        "status": "metadata_present"
+      },
+      "block_number": {
+        "physical_path": "block_number",
+        "status": "metadata_present"
+      },
+      "block_timestamp": {
+        "physical_path": "block_timestamp",
+        "status": "metadata_present"
+      },
+      "hash": {
+        "physical_path": "hash",
+        "status": "metadata_present"
+      },
+      "input_count": {
+        "physical_path": "input_count",
+        "status": "metadata_present"
+      },
+      "inputs.address": {
+        "physical_path": "inputs.list.element.address",
+        "status": "metadata_present"
+      },
+      "inputs.index": {
+        "physical_path": "inputs.list.element.index",
+        "status": "metadata_present"
+      },
+      "inputs.spent_output_index": {
+        "physical_path": "inputs.list.element.spent_output_index",
+        "status": "metadata_present"
+      },
+      "inputs.spent_transaction_hash": {
+        "physical_path": "inputs.list.element.spent_transaction_hash",
+        "status": "metadata_present"
+      },
+      "inputs.value": {
+        "physical_path": "inputs.list.element.value",
+        "status": "metadata_present"
+      },
+      "is_coinbase": {
+        "physical_path": "is_coinbase",
+        "status": "metadata_present"
+      },
+      "output_count": {
+        "physical_path": "output_count",
+        "status": "metadata_present"
+      },
+      "outputs.address": {
+        "physical_path": "outputs.list.element.address",
+        "status": "metadata_present"
+      },
+      "outputs.index": {
+        "physical_path": "outputs.list.element.index",
+        "status": "metadata_present"
+      },
+      "outputs.value": {
+        "physical_path": "outputs.list.element.value",
+        "status": "metadata_present"
+      }
+    },
+    "row_groups": 6,
+    "rows": 228189,
+    "schema": "<pyarrow._parquet.ParquetSchema object at 0x75f4189ea000>\nrequired group field_id=-1 spark_schema {\n  optional binary field_id=-1 txid (String);\n  optional binary field_id=-1 hash (String);\n  optional int64 field_id=-1 version;\n  optional int64 field_id=-1 size;\n  optional binary field_id=-1 block_hash (String);\n  optional int64 field_id=-1 block_number;\n  optional int64 field_id=-1 index;\n  optional int64 field_id=-1 virtual_size;\n  optional int64 field_id=-1 lock_time;\n  optional int64 field_id=-1 input_count;\n  optional int64 field_id=-1 output_count;\n  optional boolean field_id=-1 is_coinbase;\n  optional double field_id=-1 output_value;\n  optional group field_id=-1 outputs (List) {\n    repeated group field_id=-1 list {\n      optional group field_id=-1 element {\n        optional binary field_id=-1 address (String);\n        optional int64 field_id=-1 index;\n        optional int64 field_id=-1 required_signatures;\n        optional binary field_id=-1 script_asm (String);\n        optional binary field_id=-1 script_hex (String);\n        optional binary field_id=-1 type (String);\n        optional double field_id=-1 value;\n      }\n    }\n  }\n  optional int96 field_id=-1 block_timestamp;\n  optional binary field_id=-1 date (String);\n  optional int96 field_id=-1 last_modified;\n  optional double field_id=-1 fee;\n  optional double field_id=-1 input_value;\n  optional group field_id=-1 inputs (List) {\n    repeated group field_id=-1 list {\n      optional group field_id=-1 element {\n        optional binary field_id=-1 address (String);\n        optional int64 field_id=-1 index;\n        optional int64 field_id=-1 required_signatures;\n        optional binary field_id=-1 script_asm (String);\n        optional binary field_id=-1 script_hex (String);\n        optional int64 field_id=-1 sequence;\n        optional int64 field_id=-1 spent_output_index;\n        optional binary field_id=-1 spent_transaction_hash (String);\n        optional group field_id=-1 txinwitness (List) {\n          repeated group field_id=-1 list {\n            optional binary field_id=-1 element (String);\n          }\n        }\n        optional binary field_id=-1 type (String);\n        optional double field_id=-1 value;\n      }\n    }\n  }\n}\n",
+    "transaction_data_admitted": false
+  },
+  "transaction_data_admitted": false,
+  "year": 2022
+}

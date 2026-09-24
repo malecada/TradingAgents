@@ -407,3 +407,253 @@ are admitted by this review. All85,488 transaction-value/price requirement cells
 remain unavailable pending their own source releases. The unchanged6GiB pilot
 still needs its own host reserve. No HTTP request or empirical claim was made by
 the reviewer.
+
+Metadata commit condition satisfied: independent Git-object verification confirms
+that `d7ac2b5d4bc10e1adbd944f62342f0534ecb9d76` contains the exact reviewed gate-v3,
+all registered source/input/charter bytes and lifecycle runtime helper hashes,
+matching the current files. No metadata claim existed at this check. The bounded
+72-slot metadata release conditions are satisfied; live admission and resource
+checks still apply.
+
+Separate proposed pilot startup amendment assessment: lowering startup
+MemAvailable from9GiB to4GiB while retaining an effective6GiB kernel memory.max is
+not approved as preserving3GiB additional host reserve. With6.5GiB available, a
+rapid6GiB allocation can leave approximately0.5GiB before the0.25-second userspace
+monitor reacts; memory.high5GiB does not close that headroom gap. Runtime monitoring
+remains useful but is not a reservation against rapid allocations or competing
+host activity. The current implementation explicitly requires startup headroom at
+least memory.max+reserve.
+
+A bounded alternative is to wait for the original9GiB startup headroom, or register
+a smaller effective kernel cap and matching high watermark/startup requirement
+before any attempt (for example3GiB cap plus3GiB host reserve). Such a measurement
+must retain the whole graph and all attempted/unavailable cells, and qualify any
+capacity outcome by its smaller tested resource budget. A staged cap would need
+kernel readback and renewed peak-headroom checks before every increase. None of
+these alternatives permits terminating competing workloads, reducing method scope,
+reusing a terminal identity or inferring intrinsic-method infeasibility. No pilot
+amendment or pilot launch occurred during this assessment.
+
+BTC decoder/storage follow-up review (September24; corrections pending): the new
+Parquet adapter binds object hash/count/date, required transaction position,
+contiguous nested indexes and an explicit binary64 satoshi-grid inverse policy.
+Observed creator/spender positions and100-block coinbase maturity are checked
+without assuming monotonic timestamps across blocks. The immutable wrapper hashes
+graph bytes and exact hexadecimal rational sidecars; observed overlap validation
+remains distinct from canonical-chain and external-prevout proof.
+
+Independent synthetic adversarial checks identify three remaining issues:
+
+- The observed block table binds height→hash but not hash→height or consistent
+  timestamp within a block. Identical hash/height with January7 and January8
+  timestamps yields two weekly graphs with observed_chain_order_checked=True;
+  reusing one hash at two heights is also accepted. Bind observed block hash,
+  height and timestamp consistently, without imposing cross-block time ordering.
+- A20000-bit rational sidecar saves and reloads exactly through btc_store, but
+  whale filtering fails because subsets.py still converts exact incident values
+  to decimal strings for hashing. Use canonical hexadecimal numerator/denominator
+  records throughout that exact hash path, with the identity schema explicit.
+- The decoder treats every list/tuple address as absent, including a singleton
+  uniquely mappable address. Normalize a valid singleton explicitly or reject its
+  source schema as unadmitted; do not silently classify it as a nonunique script.
+
+These findings concern synthetic software behavior. BTC body data is not admitted;
+chain identity, external prevout values/maturity, schema/precision provenance and
+full source/calendar coverage still require their own release and evidence.
+Transaction position is an additional required BTC source field; any denominator
+amendment must preserve the currently active metadata gate and original85,488-cell
+inventory. The reviewer performed no empirical HTTP/body read or control action
+on the active metadata attempt.
+
+BTC correction verification (September24; synthetic scope only): all three prior
+counterexamples now behave as required. Independent reconstruction rejects one
+observed block with differing January7/January8 timestamps and rejects one block
+hash at two heights. Cross-block timestamp monotonicity is still not required.
+A coherent three-node graph with20000-bit exact rational edge/incident values
+roundtrips through the immutable wrapper, then whale filtering removes the middle
+node and preserves the two isolated endpoints without decimal conversion failure.
+Its receipt explicitly declares schema2 and hex-rational-v1. A singleton address
+list now fails as an unadmitted source schema instead of silently becoming absent.
+The store also checks Fraction incident types and boolean chain qualification.
+
+The retained btc-synthetic-01.xml contains37 passing cases, zero failures/errors/
+skips; SHA256
+10b28a5e64c2b8f092ed18087cff2bb671a118d16d2c7e6ca3dd848957be9a22.
+No remaining blocker was found in these bounded corrections. This closes the
+three software findings only. Empirical BTC schema/precision, canonical-chain
+coverage, unobserved prevout proof and calendar completeness remain untested and
+unadmitted. Whale integration must pass the exact incident sidecar from the
+validated BTC wrapper associated with the same graph; the generic filter accepts
+caller-supplied incident values. No empirical payload, HTTP request, active-job
+control, registration or ledger mutation was performed by this review.
+
+Feature-pipeline integration review (September24; synthetic, corrections pending):
+training-only motif sampling retains the frozen fold bounds, and raw GAT/GIN
+features keep topology attached to trainable model inputs. The proposed synthetic
+32-sample/32-motif fixture does not alter the production512 configuration.
+Two integration defects require correction before this producer is admitted:
+
+- P1, feature_pipeline.py:64–90: alignment is sorted by graph start but predecessor
+  availability is checked only against the latest required graph in the entire
+  population. Independent synthetic orchestration accepted a January26 training
+  decision whose required January25-available graph was aligned to an unscored
+  earlier-week graph unavailable until January30. Select only an eligible causal
+  predecessor and bind the availability of its complete alignment ancestry;
+  reject a noncausal chain before starting its embedding work. Add a delayed
+  intermediate-snapshot regression, including transitive predecessor effects.
+- P2, feature_pipeline.py:51–54,89,99: the final lineage covers required graphs
+  only, although unscored intermediate embeddings affect those graph features.
+  The same fixture leaves the intermediate graph absent from lineage and its
+  hash present only as an unresolved alignment_previous_graph_hash. Retain the
+  complete ordered dependency closure, including intermediate raw graph hashes,
+  source hashes, clocks, topology identities and predecessor links. The final
+  representation identity must bind that closure for cache/recovery review.
+
+The independent counterexample mocked only the embedding and alignment numerical
+kernels, exercising the actual orchestration and final binding without fitting.
+No empirical inputs were read. Mandatory callbacks supply checkpoints but this
+API has no resume/cache/admission lifecycle; those remain explicitly unimplemented
+integration requirements, not completed-run replay permission. Cross-arm reuse
+must be enforced by the later registered representation owner. This review does
+not approve financial execution, prove production resource feasibility or assert
+completion of the end-to-end financial pipeline.
+
+Feature-pipeline correction verification (September24): independent replay of the
+prior delayed-intermediate orchestration now processes publication order
+(available_at,start_utc,graph_hash). The January26 example's January25-available
+graph depends only on the earlier available anchor; the January30 publication
+enters later representations. Schema2 retains every intermediate parent and its
+raw/source/topology/clock lineage, and motif dictionary training inputs are also
+included. The prior P1/P2 findings are closed for this pure component. The retained
+feature-synthetic-01.xml has7 passes and no failure/error/skip; SHA256
+bac141b57b2c97a3b8e051bba15f554f550d8e06c3773a0f2bf3bd3457c432e7.
+Registered empirical ownership, durable cache/continuation and production resource
+feasibility remain separate integration gates.
+
+Independent terminal metadata audit (September24): the single closed
+paper-full-source-metadata-20260924 attempt identifies committed source
+369f2c38383155464a578d12d0c6c6945a0a7bf3 and gate-v3
+7f528bfd1af7c43abcb068df46fd5222b525064caa20fd965be9d6b1aa8f7318.
+All37 source/input/gate/charter bindings were checked against that Git commit.
+All396 indexed retained artifacts match their SHA256 and byte lengths, with no
+unindexed file in the source evidence root. Their total is9,078,969 retained bytes;
+verified embedded raw HTTP catalogue/footer/trailer bodies total3,815,411 bytes.
+The terminal binds all four output hashes and the claim hash. All72 registered
+slots occur exactly once and are complete:18 listings and54 sampled footers.
+
+Independent XML reconstruction reproduces6,576 distinct asset/date objects across
+BTC/ETH2016–2024, with every expected calendar date represented. All54 footer and
+trailer bodies match response hashes and valid Parquet trailer lengths; reading
+metadata only independently reproduces row counts, row-group counts and every
+reported compressed-column size. The unchanged85,488 required value/price cells
+remain explicitly unavailable. The prospective additional BTC transaction-index
+requirement still needs its preserved additive denominator; listing completeness
+and sampled metadata do not admit transaction values or prices.
+
+Whole listed object sizes reproduce1,661,405,812,699 bytes for BTC and
+1,056,738,255,253 bytes for ETH. These are complete-object sizes, not necessary
+projected-column storage. In the sampled objects, the declared required physical
+columns (including BTC transaction index for this diagnostic) occupy approximately
+13.69–35.93% of BTC and5.62–78.72% of ETH object bytes. These extrema are descriptive
+sample metadata, not an estimate or guarantee for the full history. Exact projected
+acquisition, footer coverage, checkpoint/graph growth and recoverable backup space
+remain unmeasured; whole-object totals cannot establish projected infeasibility.
+
+Guard/owner/monitor/observer identities and every observer-bound guard hash agree.
+The guard records child exit0, cleanup_verified=true, no limit reason, zero OOM
+and OOM-kill events,1,049.697 seconds and97,943,552 bytes sampled peak memory. The
+recorded cgroup is absent at review; the observer and lifecycle both report
+complete. Terminal SHA256:
+46fe5b65159755226e3aedd36c7a6a0c6c2c60eef1155fdb21cd3b18106a1c3f.
+No new metadata closure defect was found. The review used retained local metadata
+only: no network request, relaunch, transaction-page decoding, financial fit or
+registration/ledger mutation. Canonical chain, historical vintage, values/prices,
+full daily schema consistency and external raw recoverability were not established.
+
+Prospective pilot cap-v4 review (September24; no launch by reviewer): the reduced
+3GiB kernel memory.max and2.5GiB memory.high, zero swap and unchanged3GiB additional
+host reserve imply6GiB startup headroom. This addresses the earlier rejected
+startup-only relaxation; the kernel cap is actually reduced. The1GiB neural
+intermediate estimate is an explicit preallocation screen, not measured OOM or
+proof that the remaining2GiB suffices for graph/model/runtime. All9 whole weeks,
+109 cells,512 sampled centers and resource-only32 motifs remain unchanged. A
+capacity failure under this cap cannot establish failure at6GiB or an intrinsic
+method limit.
+
+Gate-v3 SHA256
+073300d64b60cb42ae2d42e63f8da9c41b1aefa6afb816c87056c11154807998
+binds26 source files and85 inputs plus CHARTER-v2. Every binding and the v4 parent
+freeze/file hashes match the reviewed working bytes. The original gate, gate-v2
+and CHARTER.md match their committed preserved bytes. Both run.py and phase.py
+request the3GiB/2.5GiB contract, and assert_guarded_worker checks exact kernel
+readback, zero swap, containment/affinity, lease, covered disks, deadline and
+startup cap-plus-reserve. Only the completed metadata claim exists in this
+mechanism family:17 inherited plus1 new claim equals18 consumed of51, leaving33
+before the prospective pilot. Family objects remain exactly equal; no allowance
+is reset by keeping prior_attempts=17. No pilot owner, guard or claim exists.
+
+The36-case retained resource/pilot synthetic report has no failures/errors/skips;
+SHA25654c4ea6f36b2fdebfdc500bdf39460ceea48f66d610ac3b2ed6cbdd56ae22bf8.
+The amendment design is approved for a new small synthetic actual-guard probe.
+Resource-only empirical pilot release remains conditional on successful probe
+readback/cleanup and an exact committed source/gate matching these reviewed bytes,
+plus live admission/startup checks. This is not financial-fit approval and does
+not authorize reusing a terminal owner or claim identity. No guard execution or
+empirical launch was performed by this reviewer.
+
+BTC exact-subset integration review (September24): an independent coherent
+four-node,20000-bit rational fixture with a self-loop confirms whale removal
+preserves three isolated endpoints, fund selection preserves exact retained edge
+order, incident values and incoming/outgoing node counts/volumes, and fees remain
+explicit origin fees. Save/load preserves the exact result; altered node features
+are rejected before filtering. Parent graph hash plus exact-parent hash binds
+edges, incident values, fees and chain-order qualification. This closes the prior
+caller-side linkage qualification when integration uses filter_btc_graph and its
+validated ExactBTCGraph wrapper. The generic ETH/BTC filter by itself still does
+not establish that linkage. The39-case retained BTC report has no failure/error/
+skip; SHA256
+0d24a524148b3082d1f0f3c147806abcc4bc4f78d6e627d9c61445f03dc19342.
+No new bounded numerical defect was found. Empirical BTC input admission, full
+source coverage and canonical/external-prevout qualifications remain untested.
+
+Cap-v4 actual synthetic probe verification (September24): retained probe-v4-01
+final/live bytes are identical and record complete, child exit0, verified cleanup,
+no limit reason and no OOM/OOM-kill events. Kernel readbacks are exactly
+memory.max3221225472, memory.high2684354560 and memory.swap.max0; startup headroom
+is6442450944 with3221225472 additional host reserve. release.json confirms verified
+controls. The retained child command invokes assert_guarded_worker with the exact
+3GiB/2.5GiB contract, then allocates16MiB; child.log confirms successful verification
+and16777216 payload bytes. The recorded unit is inactive/success and its cgroup is
+absent. The0.371-second probe's sampled peak is not its instantaneous allocation
+peak and is not production capacity evidence.
+
+Probe final/live SHA256:
+973139124796de4394d5425b83da797cf6e5ae4e397b81277d69968c5d28de62;
+child.log SHA256:
+f2405788f51045e9189284936d1b2d5908fc6ae9c3e4fdbd50dc3c030cd9fede;
+child_exit.json SHA256:
+bfb91ca807d851d6a51a64eb3a12f1436de28ed581d2e5bbbe4be531149c972d.
+The actual synthetic-probe condition is satisfied. No remaining precommit review
+blocker was found for the previously reviewed resource-only109-cell pilot.
+Exact committed reviewed source/gate verification and live admission/startup
+checks remain required before its single launch; financial fits remain unapproved.
+The reviewer inspected receipts only and did not execute or relaunch any process.
+
+Prospective BTC denominator/documentation review (September24): required-grid-v2
+SHA256452f8c781489c2c1dee686bbe361bcf4af937e2b184e61308c13a7139e46c675
+adds only BTC top-level transaction index. Independent calendar reconstruction
+finds3,288 dates per asset (2016–2024 including three leap years):17 BTC fields give
+55,896 cells and10 ETH fields give32,880, totaling88,776. The3,288 added cells are
+prospective requirements, not captured/admitted values. The parent grid SHA256
+5a4f769f40bfbe2e80698ea4e6f93554332550266332d83574fb67307117662e matches
+preserved committed bytes; the terminal metadata source-coverage hash remains
+079022f7775bb1e29ebe7e4d00f633ab0ae595672ae288f119b23884131f0339 and
+retains85,488 cells. Historical receipts were not retroactively expanded.
+
+BTC_REFINEMENTS_V2.md accurately distinguishes scalar-address schema rejection,
+source binary64 precision assumptions, observed-chain checks, exact sidecars and
+origin-fee/counter semantics from real source admission. Generic receipt schema2
+and BTC wrapper schema3 describe new transformations; they do not reclassify old
+receipts. Future body acquisition must bind the revised grid explicitly. Full
+values, original fund cohort, canonical chain and independent raw-to-graph checks
+remain pending; no financial outcome or new capture was evaluated by this review.

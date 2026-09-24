@@ -1,0 +1,160 @@
+{
+  "asset": "BTC",
+  "footer_sha256": "6e8b7f9442edb7fec4e6aff6acac2692745574c9681b2a9de7cad9a1645756e4",
+  "object": {
+    "bytes": 435898985,
+    "date": "2019-12-31",
+    "etag": "\"679c3abd342c67dcd3f460bcf04749d4-7\"",
+    "key": "v1.0/btc/transactions/date=2019-12-31/part-00000-dbad2fc6-ac19-4020-9b80-9e3d52fb2f13-c000.snappy.parquet",
+    "last_modified": "2026-02-18T16:36:37.000Z"
+  },
+  "received_bytes": 24465,
+  "status": "complete",
+  "summary": {
+    "column_compressed_bytes": {
+      "block_hash": 325405,
+      "block_number": 296813,
+      "block_timestamp": 298808,
+      "date": 711,
+      "fee": 695301,
+      "hash": 19367991,
+      "index": 494671,
+      "input_count": 130751,
+      "input_value": 2347525,
+      "inputs.list.element.address": 20610533,
+      "inputs.list.element.index": 363907,
+      "inputs.list.element.required_signatures": 79510,
+      "inputs.list.element.script_asm": 74000637,
+      "inputs.list.element.script_hex": 74043238,
+      "inputs.list.element.sequence": 246572,
+      "inputs.list.element.spent_output_index": 668258,
+      "inputs.list.element.spent_transaction_hash": 42223772,
+      "inputs.list.element.txinwitness.list.element": 75355620,
+      "inputs.list.element.type": 268676,
+      "inputs.list.element.value": 5148584,
+      "is_coinbase": 2256,
+      "last_modified": 2423293,
+      "lock_time": 177435,
+      "output_count": 134310,
+      "output_value": 2348002,
+      "outputs.list.element.address": 23897086,
+      "outputs.list.element.index": 458989,
+      "outputs.list.element.required_signatures": 88900,
+      "outputs.list.element.script_asm": 32432055,
+      "outputs.list.element.script_hex": 30965424,
+      "outputs.list.element.type": 360103,
+      "outputs.list.element.value": 5288839,
+      "size": 462251,
+      "txid": 19364448,
+      "version": 41402,
+      "virtual_size": 462440
+    },
+    "physical_types": {
+      "block_hash": "BYTE_ARRAY",
+      "block_number": "INT64",
+      "block_timestamp": "INT96",
+      "date": "BYTE_ARRAY",
+      "fee": "DOUBLE",
+      "hash": "BYTE_ARRAY",
+      "index": "INT64",
+      "input_count": "INT64",
+      "input_value": "DOUBLE",
+      "inputs.list.element.address": "BYTE_ARRAY",
+      "inputs.list.element.index": "INT64",
+      "inputs.list.element.required_signatures": "INT64",
+      "inputs.list.element.script_asm": "BYTE_ARRAY",
+      "inputs.list.element.script_hex": "BYTE_ARRAY",
+      "inputs.list.element.sequence": "INT64",
+      "inputs.list.element.spent_output_index": "INT64",
+      "inputs.list.element.spent_transaction_hash": "BYTE_ARRAY",
+      "inputs.list.element.txinwitness.list.element": "BYTE_ARRAY",
+      "inputs.list.element.type": "BYTE_ARRAY",
+      "inputs.list.element.value": "DOUBLE",
+      "is_coinbase": "BOOLEAN",
+      "last_modified": "INT96",
+      "lock_time": "INT64",
+      "output_count": "INT64",
+      "output_value": "DOUBLE",
+      "outputs.list.element.address": "BYTE_ARRAY",
+      "outputs.list.element.index": "INT64",
+      "outputs.list.element.required_signatures": "INT64",
+      "outputs.list.element.script_asm": "BYTE_ARRAY",
+      "outputs.list.element.script_hex": "BYTE_ARRAY",
+      "outputs.list.element.type": "BYTE_ARRAY",
+      "outputs.list.element.value": "DOUBLE",
+      "size": "INT64",
+      "txid": "BYTE_ARRAY",
+      "version": "INT64",
+      "virtual_size": "INT64"
+    },
+    "qualification": "sampled current metadata only; no complete daily schema, canonical-chain, historical-vintage or value verification",
+    "required_fields": {
+      "block_hash": {
+        "physical_path": "block_hash",
+        "status": "metadata_present"
+      },
+      "block_number": {
+        "physical_path": "block_number",
+        "status": "metadata_present"
+      },
+      "block_timestamp": {
+        "physical_path": "block_timestamp",
+        "status": "metadata_present"
+      },
+      "hash": {
+        "physical_path": "hash",
+        "status": "metadata_present"
+      },
+      "input_count": {
+        "physical_path": "input_count",
+        "status": "metadata_present"
+      },
+      "inputs.address": {
+        "physical_path": "inputs.list.element.address",
+        "status": "metadata_present"
+      },
+      "inputs.index": {
+        "physical_path": "inputs.list.element.index",
+        "status": "metadata_present"
+      },
+      "inputs.spent_output_index": {
+        "physical_path": "inputs.list.element.spent_output_index",
+        "status": "metadata_present"
+      },
+      "inputs.spent_transaction_hash": {
+        "physical_path": "inputs.list.element.spent_transaction_hash",
+        "status": "metadata_present"
+      },
+      "inputs.value": {
+        "physical_path": "inputs.list.element.value",
+        "status": "metadata_present"
+      },
+      "is_coinbase": {
+        "physical_path": "is_coinbase",
+        "status": "metadata_present"
+      },
+      "output_count": {
+        "physical_path": "output_count",
+        "status": "metadata_present"
+      },
+      "outputs.address": {
+        "physical_path": "outputs.list.element.address",
+        "status": "metadata_present"
+      },
+      "outputs.index": {
+        "physical_path": "outputs.list.element.index",
+        "status": "metadata_present"
+      },
+      "outputs.value": {
+        "physical_path": "outputs.list.element.value",
+        "status": "metadata_present"
+      }
+    },
+    "row_groups": 4,
+    "rows": 293447,
+    "schema": "<pyarrow._parquet.ParquetSchema object at 0x75f41000b240>\nrequired group field_id=-1 spark_schema {\n  optional binary field_id=-1 txid (String);\n  optional binary field_id=-1 hash (String);\n  optional int64 field_id=-1 version;\n  optional int64 field_id=-1 size;\n  optional binary field_id=-1 block_hash (String);\n  optional int64 field_id=-1 block_number;\n  optional int64 field_id=-1 index;\n  optional int64 field_id=-1 virtual_size;\n  optional int64 field_id=-1 lock_time;\n  optional int64 field_id=-1 input_count;\n  optional int64 field_id=-1 output_count;\n  optional boolean field_id=-1 is_coinbase;\n  optional double field_id=-1 output_value;\n  optional group field_id=-1 outputs (List) {\n    repeated group field_id=-1 list {\n      optional group field_id=-1 element {\n        optional binary field_id=-1 address (String);\n        optional int64 field_id=-1 index;\n        optional int64 field_id=-1 required_signatures;\n        optional binary field_id=-1 script_asm (String);\n        optional binary field_id=-1 script_hex (String);\n        optional binary field_id=-1 type (String);\n        optional double field_id=-1 value;\n      }\n    }\n  }\n  optional int96 field_id=-1 block_timestamp;\n  optional binary field_id=-1 date (String);\n  optional int96 field_id=-1 last_modified;\n  optional double field_id=-1 fee;\n  optional double field_id=-1 input_value;\n  optional group field_id=-1 inputs (List) {\n    repeated group field_id=-1 list {\n      optional group field_id=-1 element {\n        optional binary field_id=-1 address (String);\n        optional int64 field_id=-1 index;\n        optional int64 field_id=-1 required_signatures;\n        optional binary field_id=-1 script_asm (String);\n        optional binary field_id=-1 script_hex (String);\n        optional int64 field_id=-1 sequence;\n        optional int64 field_id=-1 spent_output_index;\n        optional binary field_id=-1 spent_transaction_hash (String);\n        optional group field_id=-1 txinwitness (List) {\n          repeated group field_id=-1 list {\n            optional binary field_id=-1 element (String);\n          }\n        }\n        optional binary field_id=-1 type (String);\n        optional double field_id=-1 value;\n      }\n    }\n  }\n}\n",
+    "transaction_data_admitted": false
+  },
+  "transaction_data_admitted": false,
+  "year": 2019
+}

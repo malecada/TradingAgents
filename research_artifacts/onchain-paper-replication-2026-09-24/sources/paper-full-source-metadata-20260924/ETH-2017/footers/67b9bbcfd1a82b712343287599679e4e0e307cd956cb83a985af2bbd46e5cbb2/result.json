@@ -1,0 +1,108 @@
+{
+  "asset": "ETH",
+  "footer_sha256": "83cd49ddde0d64bc050dbd0ba3ed5f5285b0df7752cb0b275226a2c0dca4800c",
+  "object": {
+    "bytes": 154945186,
+    "date": "2017-12-31",
+    "etag": "\"cb6d0287058c4e90017a96368a3d5625-3\"",
+    "key": "v1.0/eth/transactions/date=2017-12-31/part-00000-2c0618ed-1217-486e-b7cb-ebddb56cde32-c000.snappy.parquet",
+    "last_modified": "2025-09-30T21:32:42.000Z"
+  },
+  "received_bytes": 7950,
+  "status": "complete",
+  "summary": {
+    "column_compressed_bytes": {
+      "block_hash": 410439,
+      "block_number": 47285,
+      "block_timestamp": 64808,
+      "date": 1248,
+      "from_address": 23480909,
+      "gas": 964686,
+      "gas_price": 435004,
+      "hash": 60356688,
+      "input": 25268441,
+      "last_modified": 5112518,
+      "max_fee_per_gas": 662,
+      "max_priority_fee_per_gas": 662,
+      "nonce": 2740297,
+      "receipt_contract_address": 361628,
+      "receipt_cumulative_gas_used": 4845263,
+      "receipt_effective_gas_price": 435004,
+      "receipt_gas_used": 970543,
+      "receipt_status": 33734,
+      "to_address": 23960011,
+      "transaction_index": 158669,
+      "transaction_type": 662,
+      "value": 5288071
+    },
+    "physical_types": {
+      "block_hash": "BYTE_ARRAY",
+      "block_number": "INT64",
+      "block_timestamp": "INT96",
+      "date": "BYTE_ARRAY",
+      "from_address": "BYTE_ARRAY",
+      "gas": "INT64",
+      "gas_price": "INT64",
+      "hash": "BYTE_ARRAY",
+      "input": "BYTE_ARRAY",
+      "last_modified": "INT96",
+      "max_fee_per_gas": "INT64",
+      "max_priority_fee_per_gas": "INT64",
+      "nonce": "INT64",
+      "receipt_contract_address": "BYTE_ARRAY",
+      "receipt_cumulative_gas_used": "INT64",
+      "receipt_effective_gas_price": "INT64",
+      "receipt_gas_used": "INT64",
+      "receipt_status": "INT64",
+      "to_address": "BYTE_ARRAY",
+      "transaction_index": "INT64",
+      "transaction_type": "INT64",
+      "value": "DOUBLE"
+    },
+    "qualification": "sampled current metadata only; no complete daily schema, canonical-chain, historical-vintage or value verification",
+    "required_fields": {
+      "block_hash": {
+        "physical_path": "block_hash",
+        "status": "metadata_present"
+      },
+      "block_number": {
+        "physical_path": "block_number",
+        "status": "metadata_present"
+      },
+      "block_timestamp": {
+        "physical_path": "block_timestamp",
+        "status": "metadata_present"
+      },
+      "from_address": {
+        "physical_path": "from_address",
+        "status": "metadata_present"
+      },
+      "hash": {
+        "physical_path": "hash",
+        "status": "metadata_present"
+      },
+      "receipt_status": {
+        "physical_path": "receipt_status",
+        "status": "metadata_present"
+      },
+      "to_address": {
+        "physical_path": "to_address",
+        "status": "metadata_present"
+      },
+      "transaction_index": {
+        "physical_path": "transaction_index",
+        "status": "metadata_present"
+      },
+      "value": {
+        "physical_path": "value",
+        "status": "metadata_present"
+      }
+    },
+    "row_groups": 2,
+    "rows": 946981,
+    "schema": "<pyarrow._parquet.ParquetSchema object at 0x75f41a06bf80>\nrequired group field_id=-1 spark_schema {\n  optional int64 field_id=-1 gas;\n  optional binary field_id=-1 hash (String);\n  optional binary field_id=-1 input (String);\n  optional int64 field_id=-1 nonce;\n  optional double field_id=-1 value;\n  optional int64 field_id=-1 block_number;\n  optional binary field_id=-1 block_hash (String);\n  optional int64 field_id=-1 transaction_index;\n  optional binary field_id=-1 from_address (String);\n  optional binary field_id=-1 to_address (String);\n  optional int64 field_id=-1 gas_price;\n  optional int64 field_id=-1 receipt_cumulative_gas_used;\n  optional int64 field_id=-1 receipt_gas_used;\n  optional binary field_id=-1 receipt_contract_address (String);\n  optional int64 field_id=-1 receipt_status;\n  optional int64 field_id=-1 receipt_effective_gas_price;\n  optional int64 field_id=-1 transaction_type;\n  optional int64 field_id=-1 max_fee_per_gas;\n  optional int64 field_id=-1 max_priority_fee_per_gas;\n  optional int96 field_id=-1 block_timestamp;\n  optional binary field_id=-1 date (String);\n  optional int96 field_id=-1 last_modified;\n}\n",
+    "transaction_data_admitted": false
+  },
+  "transaction_data_admitted": false,
+  "year": 2017
+}

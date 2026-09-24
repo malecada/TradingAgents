@@ -26,6 +26,7 @@ class ExactBTCGraph:
     edge_satoshis: tuple[Fraction, ...]
     incident_satoshis: tuple[Fraction, ...]
     fee_satoshis: int
+    observed_chain_order_checked: bool = False
 
 
 def _bind_output(db, key, output):
@@ -52,15 +53,30 @@ def build_btc_weekly(events, graph_config, *, coverage, scratch):
         try:
             db.execute('PRAGMA cache_size=-32768');db.execute('PRAGMA temp_store=FILE')
             db.executescript('''
-                CREATE TABLE transactions(id TEXT PRIMARY KEY,week TEXT,status TEXT,source TEXT,fee INTEGER,output_count INTEGER);
-                CREATE TABLE spent(txid TEXT,vout INTEGER,PRIMARY KEY(txid,vout)) WITHOUT ROWID;
+                CREATE TABLE transactions(id TEXT PRIMARY KEY,week TEXT,status TEXT,source TEXT,fee INTEGER,output_count INTEGER,height INTEGER,position INTEGER,coinbase INTEGER,UNIQUE(height,position));
+                CREATE TABLE spent(txid TEXT,vout INTEGER,spender TEXT,PRIMARY KEY(txid,vout)) WITHOUT ROWID;
                 CREATE TABLE outputs(txid TEXT,vout INTEGER,payload TEXT,PRIMARY KEY(txid,vout)) WITHOUT ROWID;
                 CREATE TABLE transfers(week TEXT,sender TEXT,recipient TEXT,id TEXT,numerator TEXT,denominator TEXT);
+                CREATE TABLE blocks(height INTEGER PRIMARY KEY,hash TEXT UNIQUE,timestamp TEXT);
             ''')
+            ordered_source=None
             for event in events:
                 source=event['source_hash'];require_hash(source)
                 transaction=event['transaction'];require_hash(transaction['id'])
                 timestamp=utc(event['timestamp'])
+                positioned='chain_position' in event
+                if ordered_source is not None and positioned!=ordered_source:raise ValueError('mixed chain position completeness')
+                ordered_source=positioned;height=position=None
+                if positioned:
+                    pair=event['chain_position']
+                    if len(pair)!=2 or any(type(v) is not int or v<0 for v in pair):raise ValueError('invalid chain position')
+                    height,position=pair;block_hash=event['block_hash'];require_hash(block_hash)
+                    old=db.execute('SELECT hash,timestamp FROM blocks WHERE height=?',(height,)).fetchone()
+                    if old is not None and old[0]!=block_hash:raise ValueError('conflicting block hash at observed height')
+                    if old is not None and old[1]!=stamp(timestamp):raise ValueError('conflicting timestamp within observed block')
+                    if old is None:
+                        try:db.execute('INSERT INTO blocks VALUES(?,?,?)',(height,block_hash,stamp(timestamp)))
+                        except sqlite3.IntegrityError as error:raise ValueError('observed block hash appears at multiple heights') from error
                 if not any(a<=timestamp<b for a,b in intervals):raise ValueError('transaction outside admitted coverage')
                 week=week_start(event['timestamp'],graph_config['week_anchor'])
                 if db.execute('SELECT 1 FROM transactions WHERE id=?',(transaction['id'],)).fetchone():raise ValueError('duplicate transaction identity')
@@ -70,17 +86,22 @@ def build_btc_weekly(events, graph_config, *, coverage, scratch):
                         require_hash(key[0])
                         if type(key[1]) is not int or key[1]<0:raise ValueError('invalid prevout index')
                         if key[0]==transaction['id']:raise ValueError('self-referencing transaction')
-                        try:db.execute('INSERT INTO spent VALUES(?,?)',key)
+                        try:db.execute('INSERT INTO spent VALUES(?,?,?)',(*key,transaction['id']))
                         except sqlite3.IntegrityError as error:raise ValueError('duplicate spent prevout across source stream') from error
                         if key not in event['prevouts']:raise ValueError('unavailable prevout')
                         _bind_output(db,key,event['prevouts'][key])
                 for index,output in enumerate(transaction['outputs']):_bind_output(db,(transaction['id'],index),output)
                 result=project_transaction(transaction,event['prevouts'])
-                db.execute('INSERT INTO transactions VALUES(?,?,?,?,?,?)',(result.transaction_id,week,result.status,source,result.fee_satoshis,len(transaction['outputs'])))
+                try:db.execute('INSERT INTO transactions VALUES(?,?,?,?,?,?,?,?,?)',(result.transaction_id,week,result.status,source,result.fee_satoshis,len(transaction['outputs']),height,position,int(transaction['coinbase'])))
+                except sqlite3.IntegrityError as error:raise ValueError('duplicate observed chain position') from error
                 db.executemany('INSERT INTO transfers VALUES(?,?,?,?,?,?)',
                     ((week,a,b,result.transaction_id,str(value.numerator),str(value.denominator)) for (a,b),value in result.edges.items()))
             db.commit()
             if db.execute('SELECT 1 FROM spent JOIN transactions ON spent.txid=transactions.id WHERE spent.vout>=transactions.output_count LIMIT 1').fetchone():raise ValueError('prevout index absent from observed creator transaction')
+            if ordered_source:
+                for creator_height,creator_position,coinbase,spender_height,spender_position in db.execute('SELECT c.height,c.position,c.coinbase,s.height,s.position FROM spent JOIN transactions c ON spent.txid=c.id JOIN transactions s ON spent.spender=s.id'):
+                    if (creator_height,creator_position)>=(spender_height,spender_position):raise ValueError('spend precedes observed creator chain position')
+                    if coinbase and spender_height-creator_height<100:raise ValueError('observed coinbase output is immature')
             db.execute('CREATE INDEX edge_order ON transfers(week,sender,recipient,id)')
             observed={x[0] for x in db.execute('SELECT DISTINCT week FROM transactions')}
             if not observed:raise ValueError('empty source stream')
@@ -117,5 +138,5 @@ def build_btc_weekly(events, graph_config, *, coverage, scratch):
                 graph=GraphSnapshot('BTC',start,stamp(end),stamp(end+timedelta(days=1)),sources,cache_key(graph_config),ids,np.log1p(features),np.asarray(edges,dtype=np.int64).reshape(-1,2).T,np.log1p(weights),admitted+sum(counts.values()),admitted,counts,weights)
                 validate_graph(graph)
                 fee=sum(row[0] for row in db.execute('SELECT fee FROM transactions WHERE week=? AND fee IS NOT NULL',(start,)))
-                yield ExactBTCGraph(graph,tuple(exact),tuple(a+b for a,b in node_volumes),fee)
+                yield ExactBTCGraph(graph,tuple(exact),tuple(a+b for a,b in node_volumes),fee,bool(ordered_source))
         finally:db.close()

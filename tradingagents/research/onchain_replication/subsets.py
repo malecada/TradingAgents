@@ -12,6 +12,7 @@ def filter_graph(graph,variant,*,cohort=None,cohort_hash=None,exact_incident_vol
         if graph.asset=='BTC':
             from fractions import Fraction
             if exact_incident_volumes is None or len(exact_incident_volumes)!=len(graph.node_ids):raise ValueError('exact BTC incident volumes required')
+            if any(type(v) not in (int,Fraction) or v<0 for v in exact_incident_volumes):raise ValueError('exact nonnegative BTC rational incident volumes required')
             incident=np.array([Fraction(v) for v in exact_incident_volumes],dtype=object)
         else:
             incident=np.zeros(len(graph.node_ids))
@@ -34,7 +35,11 @@ def filter_graph(graph,variant,*,cohort=None,cohort_hash=None,exact_incident_vol
     for (a,b),(count,value) in zip(edges.T,weights,strict=True):
         features[a,1]+=count;features[a,3]+=value;features[b,0]+=count;features[b,2]+=value
     parent=graph_hash(graph)
-    receipt={'variant':variant,'parent_graph_hash':parent,'decision':decision,'exact_incident_volume_hash':None if exact_incident_volumes is None else cache_key([str(v) for v in exact_incident_volumes]),'retained_nodes':len(nodes),'retained_edges':len(weights),'removed_edges':int((~mask).sum()),'raw_event_counter_policy':'origin admission counters retained; variant edge removals separately recorded, not relabeled raw exclusions'}
+    exact_hash=None
+    if exact_incident_volumes is not None:
+        from fractions import Fraction
+        exact_hash=cache_key([[format(Fraction(v).numerator,'x'),format(Fraction(v).denominator,'x')] for v in exact_incident_volumes])
+    receipt={'schema_version':2,'variant':variant,'parent_graph_hash':parent,'decision':decision,'exact_incident_encoding':'hex-rational-v1','exact_incident_volume_hash':exact_hash,'retained_nodes':len(nodes),'retained_edges':len(weights),'removed_edges':int((~mask).sum()),'raw_event_counter_policy':'origin admission counters retained; variant edge removals separately recorded, not relabeled raw exclusions'}
     result=GraphSnapshot(graph.asset,graph.start_utc,graph.end_utc,graph.available_at,graph.source_hashes,cache_key({'parent_config':graph.graph_config_hash,'variant':receipt}),tuple(graph.node_ids[i] for i in nodes),np.log1p(features),edges,np.log1p(weights),graph.raw_count,graph.admitted_count,graph.exclusion_counts,weights)
     validate_graph(result)
     return result,receipt

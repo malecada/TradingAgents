@@ -64,3 +64,28 @@ M2−M1 log loss is +0.007387, paired 95% CI [−0.009289,+0.019717], with six n
 months. The frozen follow-up criterion fails. This is an exploratory result
 for the fixed motif summaries, not replication of the paper's neural model or
 financial validation. All prior claims and failures remain retained.
+
+## Paper-faithful graph replication — planning, September 24, 2026
+
+[Replication specification](../../research/onchain-paper-replication-2026-09-24/REPLICATION_SPEC.md)
+and [implementation plan](../superpowers/plans/2026-09-24-onchain-paper-replication.md)
+define a separately requested paper-replication objective, 13 work packages and
+18 completion criteria. The [session handoff](../../research/onchain-paper-replication-2026-09-24/START_NEXT_SESSION.md)
+is prepared for later execution. No implementation, empirical run or new attempt
+allowance follows from these planning documents. The earlier negative screen
+remains unchanged; implementation fidelity, paper coverage and numerical agreement
+are distinct outcomes.
+
+## Paper-faithful graph replication — execution, September 24, 2026
+
+The separately authorized execution is tracked in the [study state](../../research/onchain-paper-replication-2026-09-24/STATE.md)
+and [independent review](../../research/onchain-paper-replication-2026-09-24/IMPLEMENTATION_REVIEW.md).
+The full motif dictionary→MCM→GAT→attention LSTM and comparison modules are
+implemented with synthetic verification; empirical model evaluation remains
+pending. The completed metadata-only source attempt retains all72slots,396hashed
+artifacts and6,576asset/date objects. It admits no transaction values or prices.
+The safe lower-cap whole-graph resource pilot is independently reviewed before
+release; all9weeks/109cells remain required. Historical17claims/results are
+unchanged; metadata adds one claim under the cumulative51ceiling. Compact
+synthetic-checkpoint remote recovery has been demonstrated; full raw/empirical
+model recovery and C01–C18 final completion remain incomplete.

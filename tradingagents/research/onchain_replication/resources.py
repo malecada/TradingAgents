@@ -355,7 +355,10 @@ def guarded_run(command, *, cwd, receipt_dir, memory_max_bytes=6 * GIB,
     return state
 
 
-def assert_guarded_worker(receipt,command,*,required_paths,wall_seconds):
+def assert_guarded_worker(receipt,command,*,required_paths,wall_seconds,
+                          memory_max_bytes=6*GIB,memory_high_bytes=5*GIB):
+    if not 0<memory_high_bytes<=memory_max_bytes<=6*GIB:
+        raise ValueError('worker memory contract outside admitted ceiling')
     receipt=Path(receipt).resolve(strict=True)
     live=json.loads((receipt/'live.json').read_bytes())
     if live['command']!=command or live['phase']!='running':raise RuntimeError('guard command identity differs')
@@ -363,13 +366,14 @@ def assert_guarded_worker(receipt,command,*,required_paths,wall_seconds):
     if live['boot_id']!=Path('/proc/sys/kernel/random/boot_id').read_text().strip():raise RuntimeError('guard boot mismatch')
     if not 0<=time.monotonic()-live['monotonic_seconds']<=live['lease_seconds']:raise RuntimeError('guard lease expired')
     if str(_own_cgroup())!=live['cgroup'] or set(os.sched_getaffinity(0))!=set(live['cpus']):raise RuntimeError('guard containment differs')
-    _verify_controls(_read_controls(_own_cgroup()),6*GIB,5*GIB,0)
+    _verify_controls(_read_controls(_own_cgroup()),memory_max_bytes,memory_high_bytes,0)
     verify_cpu_tree(_own_cgroup(),live['cpus'])
     if not required_paths or not live['disk_paths']:raise RuntimeError('guard disk volumes unbound')
     covered={Path(p).stat().st_dev for p in live['disk_paths']}
     if not {Path(p).stat().st_dev for p in required_paths}<=covered:raise RuntimeError('guard misses required volume')
     if not 0<live['wall_seconds']<=wall_seconds<=28800:raise RuntimeError('guard wall limit differs')
     if live['reserve_bytes']<3*GIB or live['disk_floor_bytes']<20*GIB:raise RuntimeError('guard reserve below protocol')
+    if live['start_reserve_bytes']<memory_max_bytes+live['reserve_bytes']:raise RuntimeError('guard startup reserve below contract')
     return live
 
 

@@ -46,14 +46,16 @@ def forecast(cells,index):
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--source',required=True);parser.add_argument('--guard',required=True);args=parser.parse_args()
     command=[sys.executable,'-B',str(Path(__file__).resolve()),'--source',args.source,'--guard',args.guard]
-    assert_guarded_worker(args.guard,command,required_paths=[ROOT,Path('/home/malecada/Data')],wall_seconds=28800)
+    limits=json.loads((HERE/'resource-contract-v4.json').read_bytes())
+    assert_guarded_worker(args.guard,command,required_paths=[ROOT,Path('/home/malecada/Data')],wall_seconds=28800,
+        memory_max_bytes=limits['memory_max_bytes'],memory_high_bytes=limits['memory_high_bytes'])
     os.environ['PAPER_SOURCE_COMMIT']=args.source
     begin=time.monotonic();active=None;stopping=[False]
     def stop(signum,frame):
         stopping[0]=True
         if active is not None and active.poll() is None:active.terminate()
     signal.signal(signal.SIGTERM,stop);signal.signal(signal.SIGINT,stop)
-    registration=str((HERE/'gate-v2.json').relative_to(ROOT))
+    registration=str((HERE/'gate-v3.json').relative_to(ROOT))
     from tradingagents.research.onchain_replication.environment import inventory
     if inventory(ROOT,include_torch=True)!=json.loads((HERE/'environment.json').read_bytes()):raise ValueError('pinned pilot runtime differs')
     with ResearchRun.start(root=ROOT,registration=registration,experiment=EXPERIMENT,source=args.source) as run:

@@ -2,7 +2,7 @@
 
 September24,2026: execution authorized for all13 tasks. Dedicated branch
 `research/onchain-paper-replication-2026-09-24`, original HEAD
-`8f6aefc0dc04785512ccb15ad43bd1491db7a9d1`. No empirical claim or job launched.
+`8f6aefc0dc04785512ccb15ad43bd1491db7a9d1`. One metadata-only empirical claim completed; no transaction decoding or model fitting started.
 The previous summary-feature study remains closed and unchanged.
 
 - Task1 complete: public paper/artifact audit, explicit assumptions, all44 table
@@ -21,7 +21,7 @@ The previous summary-feature study remains closed and unchanged.
   original sample tie order, expanded memberships and stale dictionary rejection.
 - Task6 full MLP→GAT→mean pooling→attention LSTM implemented. Synthetic gradient
   and learning checks pass; independent scalar GAT oracle agrees. Padding review
-  corrections are undergoing regression checks.
+  corrections passed the recorded focused and full offline suites.
 - Task7 chronological datasets, fixed finite fit engine, exclusive fit cells and
   exact checkpoint continuation implemented and independently reviewed. Synthetic
   interrupted/replayed weights and logs match, including the final-checkpoint case.
@@ -62,15 +62,15 @@ Resource pilot109-cell gate-v2 and source committed at
 `f020f75e13616959e500e4d1029b943d014ba744`; metadata admission passes, no claim
 created. Independent review conditionally approves only this pilot after the named
 offline check passes. Initial gate/source maps and failed preparation are retained.
-Next safe action: commit completed verification evidence and launch the reviewed
-resource pilot once; preserve active ownership and every terminal outcome. Release
+The completed verification is retained. Resource pilot remains unclaimed until
+its startup reserve is available or a safe prospective cap amendment is reviewed. Release
 review fixes include exact worker input binding, durable MCM prefixes and external
 post-death reconciliation. Model registry/evaluation is synthetic-tested. Completed LSTM/SVM inference-only
 recovery has replayed identical predictions under separate synthetic registrations
 without another fit. Common actual test-row/source/scaler/feature binding and
 failure receipts are undergoing final review before financial-run release.
-Broader source inventory software accounts for85,488asset/date/field cells; no
-new remote transaction metadata or bodies acquired. BTC binary64 unique-satoshi
+The first metadata stage accounts for85,488asset/date/field cells; current
+catalogues and sampled footers acquired; transaction bodies not acquired. BTC binary64 unique-satoshi
 grid inverse is synthetic-tested and remains unadmitted for empirical data. Continue independently executable software work if
 capacity or source coverage blocks a milestone. Never relaunch historical jobs.
 All1420 planned one-lane fits remain pending. M0 ready; M1–M4 incomplete.
@@ -79,7 +79,8 @@ Fresh locked offline environment replay:2synthetic predictions agree exactly;
 190tests pass/1CUDA skip in replay/fresh-synthetic-suite-01.xml. Independent review
 verified34coverage records/88test links. This supports synthetic C14 only; empirical
 raw-to-prediction reproduction and remote recovery remain pending. Bitcoin exact
-weekly aggregation is under independent review; no BTC data has been decoded.
+weekly aggregation and normalized source decoder are independently reviewed with
+37passing fixtures; no BTC data has been decoded.
 
 Pilot release review is satisfied; current host startup prerequisite is not:
 9GiB MemAvailable required, approximately6.6GiB observed. See resources/pilot-preflight-01.json.
@@ -91,15 +92,59 @@ was pushed, fetched independently into /tmp/onchain-paper-remote-recovery-202609
 and its saved synthetic checkpoint replayed in the fresh locked interpreter with
 network denied (2predictions,0difference). replay/remote-recovery-01.json records
 the bounded recovery; raw stores and empirical-model backups remain unverified.
-BTC exact weekly assembly now independently reviewed after phantom-output
-correction;10targetedtests pass, with exact rational incident sidecars. Metadata
-source release is under review at full_sources/metadata-01/gate-v3.json; no HTTP
-acquisition or claim yet.72source slots retain85,488value/price cells as unavailable.
+BTC decoder, disk-backed weekly assembly and exact-rational graph sidecars have
+passed independent synthetic review (full_sources/btc-synthetic-01.xml,37tests).
+The source schema/precision and canonical-chain qualifications remain unadmitted.
 
-Full-source metadata gate-v3 independently approved (10sources25inputs72slots),
-committed source d7ac2b5d4bc10e1adbd944f62342f0534ecb9d76; admissionready.
-Source allocation remains18claims:1metadata+15missingasset/year bodies+2prices.
-No retries/newfits/secondlane allowed. Metadata startup requires4GiB available
-(1GiBcap+3GiBreserve), separate from unchanged9GiB neural-pilot prerequisite.
-Next safe action: launch full_sources/metadata-01/launch.py once after release
-evidence commit, record ownership/job state, retain all failed/unavailable cells.
+Metadata attempt paper-full-source-metadata-20260924 is COMPLETE, not active.
+Source369f2c38383155464a578d12d0c6c6945a0a7bf3; gate-v3 SHA256
+7f528bfd1af7c43abcb068df46fd5222b525064caa20fd965be9d6b1aa8f7318.
+All72slots completed:18annual current catalogues and54sampled Parquet footers.
+Both assets have3288dates listed for2016–2024. Transaction values and prices are
+still unadmitted. No transaction pages, price payloads or model fits were read/run.
+The retained metadata occupies9,078,969bytes. Listed whole objects total
+BTC1,661,405,812,699bytes and ETH1,056,738,255,253bytes; selected-column storage
+and full raw/backup feasibility remain unmeasured. Whole-object totals are not a
+minimum required download/storage claim. Outputs: research_runs/paper-full-source-
+metadata-20260924/outputs/ (one actual directory name, joined without line break).
+Guard completed child0 with no limit/OOM,1049.70seconds,97,943,552bytes sampled
+peak; observer confirmed empty cgroup and terminal SHA256
+46fe5b65159755226e3aedd36c7a6a0c6c2c60eef1155fdb21cd3b18106a1c3f.
+Guard and owner evidence: research_artifacts/onchain-paper-replication-2026-09-24/
+source-metadata-01-guard/ and source-metadata-01-supervisor/.
+Never relaunch terminal session63196 or this experiment identity.
+Independent post-result source/hash review passed:396artifact hashes,72slots,
+54footers and6,576asset/date objects independently verified.
+
+Budget:18consumed claims including17preserved historical claims and this one
+metadata claim; cumulative ceiling51. Source allocation remains18new claims:
+1metadata+15missingasset/year bodies+2asset price batches. No new fit/retry/lane
+allowance. All1420fits remain pending. Neural pilot has no owner/guard/claim.
+
+Feature assembly now includes dictionary/MCM through trainable GAT inputs and
+static graph representations. Review found delayed-publication alignment leakage
+and incomplete predecessor lineage; corrected publication order and full closure
+pass7synthetic tests (full_sources/feature-synthetic-01.xml), independent review
+closed both findings. Exact BTC subset wrapper passes39tests and independent
+20,000-bit rational/self-loop reconstruction.
+No registered representation producer/cache/recovery integration is admitted yet.
+
+Next safe actions: finish independent metadata/feature review; commit the completed
+attempt and BTC refinements; finish exact BTC subset and immutable producer
+integration. Prospective source-grid-v2 includes BTC transaction index:88,776cells;
+old85,488metadata grid remains unchanged. No BTC body admission follows. The neural pilot still requires9GiB available under its frozen6GiB
+cap+3GiBreserve; approximately6.2GiB observed. Any smaller effective cap requires
+explicit pre-result review and new gate while retaining whole-graph/phase scope.
+No active empirical jobs. M0ready; M1–M4 incomplete. Numerical agreement unknown.
+
+Prospective safe pilot cap amendment v4/gate-v3 prepared and independently
+reviewed:3GiBmax/2.5GiBhigh/zero swap;3GiB host reserve,6GiB startup,
+1GiBneural-intermediate estimate ceiling with2GiB graph/model/runtime allowance.
+All9wholeweeks/109cells unchanged; no extra claim or retry. Resource-only
+capacity outcomes do not establish impossibility under original6GiB/otherhardware.
+36resource/pilot synthetic tests pass. Tiny actual guard probe-v4-01 completed
+child0/cleanup verified with exact kernel readback and16MiB synthetic payload;
+independent final probe review passed. Commit exact reviewed release and verify
+live admission before the single resource-only pilot launch. No financial fit
+is admitted. Gate-v3 SHA256073300d6 (full hash in gate); all26sources/85inputs
+reviewed. No pilot owner/guard/claim exists at this checkpoint.

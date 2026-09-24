@@ -20,7 +20,9 @@ if __name__=='__main__':
     _immutable(ownership/'monitor.json',identity)
     receipt=ROOT/'research_artifacts/onchain-paper-replication-2026-09-24/pilot-01-guard'
     command=[sys.executable,'-B',str(HERE/'run.py'),'--source',args.source,'--guard',str(receipt)]
-    result=guarded_run(command,cwd=ROOT,receipt_dir=receipt,disk_paths=[ROOT,Path('/home/malecada/Data')],wall_seconds=28800,owner_identity=identity)
+    limits=json.loads((HERE/'resource-contract-v4.json').read_bytes())
+    result=guarded_run(command,cwd=ROOT,receipt_dir=receipt,disk_paths=[ROOT,Path('/home/malecada/Data')],wall_seconds=28800,owner_identity=identity,
+        memory_max_bytes=limits['memory_max_bytes'],memory_high_bytes=limits['memory_high_bytes'])
     signal.signal(signal.SIGTERM,signal.SIG_IGN);signal.signal(signal.SIGINT,signal.SIG_IGN)
     spec=importlib.util.spec_from_file_location('pilot_reconcile',HERE/'reconcile.py');module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
     observed=module.reconcile(receipt,receipt.parent/'pilot-01',args.source,identity)

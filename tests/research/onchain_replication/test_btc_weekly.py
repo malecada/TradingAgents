@@ -71,3 +71,35 @@ def test_observed_creator_values_must_agree_with_source_resolution(tmp_path):
     spender=event('c',previous='a')
     with pytest.raises(ValueError,match='conflicting observed prevout'):
         list(build_btc_weekly([creator,spender],CONFIG,coverage=COVERAGE,scratch=tmp_path))
+
+
+@pytest.mark.parametrize('mutation,reason',[('future','precedes'),('duplicate_position','duplicate observed'),('block_hash','conflicting block'),('mixed','mixed chain'),('immature','immature')])
+def test_observed_chain_consistency_uses_position_not_timestamp(tmp_path,mutation,reason):
+    creator=event();spender=event('c',previous='a')
+    creator.update(chain_position=(100,1),block_hash='1'*64)
+    spender.update(chain_position=(101,1),block_hash='2'*64)
+    spender['prevouts']={('a'*64,0):{'address':'z','satoshis':5},('a'*64,1):{'address':'a','satoshis':2}}
+    if mutation=='future':spender['chain_position']=(99,1)
+    if mutation=='duplicate_position':spender.update(chain_position=(100,1),block_hash='1'*64)
+    if mutation=='block_hash':spender['chain_position']=(100,2)
+    if mutation=='mixed':del spender['chain_position']
+    if mutation=='immature':creator['transaction']['coinbase']=True
+    with pytest.raises(ValueError,match=reason):list(build_btc_weekly([spender,creator],CONFIG,coverage=COVERAGE,scratch=tmp_path))
+
+
+def test_nonmonotone_block_timestamp_does_not_invent_invalid_chain(tmp_path):
+    creator=event(day='02');spender=event('c',previous='a',day='01')
+    creator.update(chain_position=(100,1),block_hash='1'*64)
+    spender.update(chain_position=(101,1),block_hash='2'*64)
+    spender['prevouts']={('a'*64,0):{'address':'z','satoshis':5},('a'*64,1):{'address':'a','satoshis':2}}
+    result=list(build_btc_weekly([spender,creator],CONFIG,coverage=COVERAGE,scratch=tmp_path))[0]
+    assert result.observed_chain_order_checked
+
+
+@pytest.mark.parametrize('mutation,reason',[('reused_hash','multiple heights'),('block_timestamp','timestamp within')])
+def test_block_identity_and_timestamp_are_consistent_within_observed_source(tmp_path,mutation,reason):
+    first=event();second=event('c',previous='d')
+    first.update(chain_position=(100,1),block_hash='1'*64)
+    second.update(chain_position=(101,1),block_hash='1'*64)
+    if mutation=='block_timestamp':second.update(chain_position=(100,2),timestamp='2024-01-02T12:00:00Z')
+    with pytest.raises(ValueError,match=reason):list(build_btc_weekly([first,second],CONFIG,coverage=COVERAGE,scratch=tmp_path))

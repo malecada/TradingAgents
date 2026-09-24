@@ -92,6 +92,35 @@ def test_verified_success_and_kernel_command(tmp_path, monkeypatch):
     assert len(result['cpus']) <= 2
 
 
+def test_smaller_effective_cap_keeps_full_additional_reserve(tmp_path,monkeypatch):
+    controls={'memory.max':str(3*guard.GIB),'memory.high':str(5*guard.GIB//2),'memory.swap.max':'0'}
+    receipt,calls=mock_unit(tmp_path,monkeypatch,controls=controls,completed=True)
+    result=guard.guarded_run(['true'],cwd=tmp_path,receipt_dir=receipt,
+        memory_max_bytes=3*guard.GIB,memory_high_bytes=5*guard.GIB//2)
+    assert result['phase']=='complete' and result['start_reserve_bytes']==6*guard.GIB
+    assert result['reserve_bytes']==3*guard.GIB
+    assert '--property=MemoryMax=3221225472' in calls[0]
+
+
+def test_worker_rejects_different_or_unbounded_effective_cap(tmp_path,monkeypatch):
+    import time
+    receipt=tmp_path/'receipt';receipt.mkdir();cg=tmp_path/'cg';cg.mkdir()
+    command=['true'];cpus=set(guard.os.sched_getaffinity(0))
+    live={'command':command,'phase':'running','boot_id':Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
+        'monotonic_seconds':time.monotonic(),'lease_seconds':15,'cgroup':str(cg),'cpus':list(cpus),
+        'disk_paths':[str(tmp_path)],'wall_seconds':100,'reserve_bytes':3*guard.GIB,
+        'disk_floor_bytes':20*guard.GIB,'start_reserve_bytes':6*guard.GIB}
+    (receipt/'live.json').write_text(json.dumps(live));(receipt/'release.json').write_text('{"kernel_controls_verified":true}')
+    monkeypatch.setattr(guard,'_own_cgroup',lambda:cg);monkeypatch.setattr(guard,'verify_cpu_tree',lambda *a:None)
+    monkeypatch.setattr(guard,'_read_controls',lambda _:{'memory.max':str(3*guard.GIB),'memory.high':str(5*guard.GIB//2),'memory.swap.max':'0'})
+    kwargs=dict(required_paths=[tmp_path],wall_seconds=100,memory_max_bytes=3*guard.GIB,memory_high_bytes=5*guard.GIB//2)
+    assert guard.assert_guarded_worker(receipt,command,**kwargs)==live
+    with pytest.raises(RuntimeError,match='memory controls'):
+        guard.assert_guarded_worker(receipt,command,required_paths=[tmp_path],wall_seconds=100)
+    live['start_reserve_bytes']=5*guard.GIB;(receipt/'live.json').write_text(json.dumps(live))
+    with pytest.raises(RuntimeError,match='startup reserve'):guard.assert_guarded_worker(receipt,command,**kwargs)
+
+
 def test_bad_readback_keeps_gate_closed_and_stops_unit(tmp_path, monkeypatch):
     receipt, calls = mock_unit(tmp_path, monkeypatch, controls={'memory.max': 'max'}, completed=True)
     result = guard.guarded_run(['true'], cwd=tmp_path, receipt_dir=receipt)

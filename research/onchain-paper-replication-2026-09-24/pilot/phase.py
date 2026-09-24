@@ -89,7 +89,8 @@ def perform(phase,week,directory,artifacts,index,bindings):
         graph=verified_graph(graph_path);rng=seed_all(11);model=ReplicationModel(load(STUDY/'config/model.json'),'classification')
         # Conservative explicit memory forecast for dense edge/head intermediates.
         estimate=graph.edge_index.shape[1]*4*64*8+len(graph.node_ids)*32*4*16
-        if estimate>4*1024**3:raise ValueError('capacity: neural intermediate estimate exceeds 4GiB working allowance under 6GiB aggregate cap: '+str(estimate))
+        limits=load(STUDY/'pilot/resource-contract-v4.json')
+        if estimate>limits['neural_intermediate_allowance_bytes']:raise ValueError('capacity: neural intermediate estimate exceeds registered working allowance '+str(limits['neural_intermediate_allowance_bytes'])+' under cap '+str(limits['memory_max_bytes'])+': '+str(estimate))
         item={'mcm':torch.from_numpy(rng.random((len(graph.node_ids),32),dtype=np.float32)),'edge_index':torch.tensor(graph.edge_index.copy(),dtype=torch.long)}
         prices=torch.linspace(-1,1,16*28).reshape(16,28,1);labels=torch.arange(16)%2;optimizer=torch.optim.Adam(model.parameters(),lr=.001)
         forward=time.monotonic();out=model([[item]*28 for _ in range(16)],prices);loss=torch.nn.functional.cross_entropy(out,labels);loss.backward();optimizer.step();forward=time.monotonic()-forward
@@ -103,13 +104,15 @@ def perform(phase,week,directory,artifacts,index,bindings):
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--intent',required=True);args=parser.parse_args();intent_path=Path(args.intent);intent=load(intent_path)
-    command=intent['guard_command'];assert_guarded_worker(intent['guard_receipt'],command,required_paths=[ROOT,intent_path.parent,Path('/home/malecada/Data')],wall_seconds=28800)
+    global BINDINGS
+    BINDINGS=intent['bindings']
+    limits=load(STUDY/'pilot/resource-contract-v4.json')
+    command=intent['guard_command'];assert_guarded_worker(intent['guard_receipt'],command,required_paths=[ROOT,intent_path.parent,Path('/home/malecada/Data')],wall_seconds=28800,
+        memory_max_bytes=limits['memory_max_bytes'],memory_high_bytes=limits['memory_high_bytes'])
     if intent['worker_command']!=[sys.executable,'-B',str(Path(__file__).resolve()),'--intent',str(intent_path)]:raise ValueError('phase command differs')
     if os.getppid()!=intent['owner_pid']:raise ValueError('phase owner differs')
     def stop(signum,frame):raise TimeoutError('registered phase stop signal '+str(signum))
     signal.signal(signal.SIGTERM,stop);torch.set_num_threads(2)
-    global BINDINGS
-    BINDINGS=intent['bindings']
     directory=intent_path.parent;begin=time.monotonic()
     try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])
     except BaseException as error:
