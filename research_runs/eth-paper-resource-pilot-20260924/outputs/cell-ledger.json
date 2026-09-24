@@ -1,0 +1,873 @@
+[
+  {
+    "elapsed_seconds": 0.00020421500084921718,
+    "id": "decode_graph-2022-01-03",
+    "peak_sampled_cgroup_bytes": 642502656,
+    "peak_worker_rss_bytes": 593616896,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2022-01-03",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2022-01-03",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2022-01-03/decode_graph",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "id": "matching-2022-01-03",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2022-01-03/neighborhoods",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "id": "neural_checkpoint-2022-01-03",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2022-01-03/decode_graph",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "id": "dictionary-2022-01-03",
+    "phase": "dictionary",
+    "reason": "unavailable prerequisite: 2022-01-03/neighborhoods",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "id": "mcm-2022-01-03",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "elapsed_seconds": 0.00025568799901520833,
+    "id": "decode_graph-2022-06-13",
+    "peak_sampled_cgroup_bytes": 595013632,
+    "peak_worker_rss_bytes": 593514496,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2022-06-13",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2022-06-13",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2022-06-13/decode_graph",
+    "status": "unavailable",
+    "week": "2022-06-13"
+  },
+  {
+    "id": "matching-2022-06-13",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2022-06-13/neighborhoods",
+    "status": "unavailable",
+    "week": "2022-06-13"
+  },
+  {
+    "id": "neural_checkpoint-2022-06-13",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2022-06-13/decode_graph",
+    "status": "unavailable",
+    "week": "2022-06-13"
+  },
+  {
+    "id": "mcm-2022-06-13",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2022-06-13"
+  },
+  {
+    "elapsed_seconds": 0.0002144820027751848,
+    "id": "decode_graph-2022-07-25",
+    "peak_sampled_cgroup_bytes": 646610944,
+    "peak_worker_rss_bytes": 593514496,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2022-07-25",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2022-07-25",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2022-07-25/decode_graph",
+    "status": "unavailable",
+    "week": "2022-07-25"
+  },
+  {
+    "id": "matching-2022-07-25",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2022-07-25/neighborhoods",
+    "status": "unavailable",
+    "week": "2022-07-25"
+  },
+  {
+    "id": "neural_checkpoint-2022-07-25",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2022-07-25/decode_graph",
+    "status": "unavailable",
+    "week": "2022-07-25"
+  },
+  {
+    "id": "mcm-2022-07-25",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2022-07-25"
+  },
+  {
+    "elapsed_seconds": 0.0001843110003392212,
+    "id": "decode_graph-2022-11-07",
+    "peak_sampled_cgroup_bytes": 606617600,
+    "peak_worker_rss_bytes": 593375232,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2022-11-07",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2022-11-07",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2022-11-07/decode_graph",
+    "status": "unavailable",
+    "week": "2022-11-07"
+  },
+  {
+    "id": "matching-2022-11-07",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2022-11-07/neighborhoods",
+    "status": "unavailable",
+    "week": "2022-11-07"
+  },
+  {
+    "id": "neural_checkpoint-2022-11-07",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2022-11-07/decode_graph",
+    "status": "unavailable",
+    "week": "2022-11-07"
+  },
+  {
+    "id": "mcm-2022-11-07",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2022-11-07"
+  },
+  {
+    "elapsed_seconds": 0.0001961840025614947,
+    "id": "decode_graph-2023-06-05",
+    "peak_sampled_cgroup_bytes": 647200768,
+    "peak_worker_rss_bytes": 593612800,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2023-06-05",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2023-06-05",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2023-06-05/decode_graph",
+    "status": "unavailable",
+    "week": "2023-06-05"
+  },
+  {
+    "id": "matching-2023-06-05",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2023-06-05/neighborhoods",
+    "status": "unavailable",
+    "week": "2023-06-05"
+  },
+  {
+    "id": "neural_checkpoint-2023-06-05",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2023-06-05/decode_graph",
+    "status": "unavailable",
+    "week": "2023-06-05"
+  },
+  {
+    "id": "mcm-2023-06-05",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2023-06-05"
+  },
+  {
+    "elapsed_seconds": 0.0002771989966277033,
+    "id": "decode_graph-2024-01-01",
+    "peak_sampled_cgroup_bytes": 636194816,
+    "peak_worker_rss_bytes": 593477632,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2024-01-01",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2024-01-01",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2024-01-01/decode_graph",
+    "status": "unavailable",
+    "week": "2024-01-01"
+  },
+  {
+    "id": "matching-2024-01-01",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2024-01-01/neighborhoods",
+    "status": "unavailable",
+    "week": "2024-01-01"
+  },
+  {
+    "id": "neural_checkpoint-2024-01-01",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2024-01-01/decode_graph",
+    "status": "unavailable",
+    "week": "2024-01-01"
+  },
+  {
+    "id": "mcm-2024-01-01",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2024-01-01"
+  },
+  {
+    "elapsed_seconds": 0.0002146219994756393,
+    "id": "decode_graph-2024-03-11",
+    "peak_sampled_cgroup_bytes": 650240000,
+    "peak_worker_rss_bytes": 593358848,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2024-03-11",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2024-03-11",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2024-03-11/decode_graph",
+    "status": "unavailable",
+    "week": "2024-03-11"
+  },
+  {
+    "id": "matching-2024-03-11",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2024-03-11/neighborhoods",
+    "status": "unavailable",
+    "week": "2024-03-11"
+  },
+  {
+    "id": "neural_checkpoint-2024-03-11",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2024-03-11/decode_graph",
+    "status": "unavailable",
+    "week": "2024-03-11"
+  },
+  {
+    "id": "mcm-2024-03-11",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2024-03-11"
+  },
+  {
+    "elapsed_seconds": 0.0002012819968513213,
+    "id": "decode_graph-2024-08-05",
+    "peak_sampled_cgroup_bytes": 623845376,
+    "peak_worker_rss_bytes": 593580032,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2024-08-05",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2024-08-05",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2024-08-05/decode_graph",
+    "status": "unavailable",
+    "week": "2024-08-05"
+  },
+  {
+    "id": "matching-2024-08-05",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2024-08-05/neighborhoods",
+    "status": "unavailable",
+    "week": "2024-08-05"
+  },
+  {
+    "id": "neural_checkpoint-2024-08-05",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2024-08-05/decode_graph",
+    "status": "unavailable",
+    "week": "2024-08-05"
+  },
+  {
+    "id": "mcm-2024-08-05",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2024-08-05"
+  },
+  {
+    "elapsed_seconds": 0.00018857100076274946,
+    "id": "decode_graph-2024-12-23",
+    "peak_sampled_cgroup_bytes": 632184832,
+    "peak_worker_rss_bytes": 593522688,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2024-12-23",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2024-12-23",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2024-12-23/decode_graph",
+    "status": "unavailable",
+    "week": "2024-12-23"
+  },
+  {
+    "id": "matching-2024-12-23",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2024-12-23/neighborhoods",
+    "status": "unavailable",
+    "week": "2024-12-23"
+  },
+  {
+    "id": "neural_checkpoint-2024-12-23",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2024-12-23/decode_graph",
+    "status": "unavailable",
+    "week": "2024-12-23"
+  },
+  {
+    "id": "mcm-2024-12-23",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2024-12-23"
+  },
+  {
+    "id": "source-2022-01-03",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1209173,
+    "source_map_sha256": "b098614ab0a18199811bbf2040dbbceef8518cc8b8a24e186b1fa1b20fa8f00f",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "id": "source-2022-01-04",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1221316,
+    "source_map_sha256": "0e3f9d58ed26f9b29de00cf6d89bb1ba313042f09f04a08311942f40d644eb7b",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "id": "source-2022-01-05",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1249628,
+    "source_map_sha256": "cc77d75545687596abd9d3fe1da328edaee2d08360492448a4f8b8ace9be3551",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "id": "source-2022-01-06",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1212495,
+    "source_map_sha256": "73f0f8204ef195d6e0167a49ff35a2d10a81a83e372f2f56a20c8291199c70a2",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "id": "source-2022-01-07",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1188490,
+    "source_map_sha256": "5825ebb0b91352a7094edbd462aca119069892b895fc883f9b8bd6fb4e2671c8",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "id": "source-2022-01-08",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1183873,
+    "source_map_sha256": "5f14077caafc721d527463603cc416f4c9f3c0a67b013b0012ea70912304fcdc",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "id": "source-2022-01-09",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1108322,
+    "source_map_sha256": "40afba994707cdd5b74f734b822c9dc534b27c419573085a19221b46137926c6",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "id": "source-2022-06-13",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1109435,
+    "source_map_sha256": "89a337e96f886bcf0cc076562d4bbe7ee9f58ee55ce0034e792577911bcf04b3",
+    "status": "unavailable",
+    "week": "2022-06-13"
+  },
+  {
+    "id": "source-2022-06-14",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1086757,
+    "source_map_sha256": "d20442fbcb8b455fed90d1390ec56bc24e5d3b2bd369e96b785c79c789b80ad7",
+    "status": "unavailable",
+    "week": "2022-06-13"
+  },
+  {
+    "id": "source-2022-06-15",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1097000,
+    "source_map_sha256": "238fb121b282dce970ca7cbdaff102769a11817ebe42cfac16b85e5584dfc6f7",
+    "status": "unavailable",
+    "week": "2022-06-13"
+  },
+  {
+    "id": "source-2022-06-16",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1100312,
+    "source_map_sha256": "3c221307faaa331561d8251630874befc885872e1f06e9fed2821141999edc5d",
+    "status": "unavailable",
+    "week": "2022-06-13"
+  },
+  {
+    "id": "source-2022-06-17",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1110579,
+    "source_map_sha256": "42afe182bbf8e9a3689008a01f65ea43e986602c03ad058e89a37c72d3de4151",
+    "status": "unavailable",
+    "week": "2022-06-13"
+  },
+  {
+    "id": "source-2022-06-18",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1058336,
+    "source_map_sha256": "a9eaea951a39f052cfc75dc87b80427ef60688653fb1cdef18fcbbf3426cafe2",
+    "status": "unavailable",
+    "week": "2022-06-13"
+  },
+  {
+    "id": "source-2022-06-19",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1018674,
+    "source_map_sha256": "6f97d58f35f84c7e302b22b9076819a5ed14f94175037d6ec57d9d7bf72119a2",
+    "status": "unavailable",
+    "week": "2022-06-13"
+  },
+  {
+    "id": "source-2022-07-25",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1275861,
+    "source_map_sha256": "37c81e6ffa8ab59b3f9410a0d1ae43055f633a89bede81baafab74c46b051094",
+    "status": "unavailable",
+    "week": "2022-07-25"
+  },
+  {
+    "id": "source-2022-07-26",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1679068,
+    "source_map_sha256": "bc27304dd19aa7064a806539dc7181a3ad4b00dc68018af68884677c4aefc4ec",
+    "status": "unavailable",
+    "week": "2022-07-25"
+  },
+  {
+    "id": "source-2022-07-27",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1197448,
+    "source_map_sha256": "13c45eb3b1d17a7925d2446ec9193f06e8df22de484ae18a1b88704ece5f27a6",
+    "status": "unavailable",
+    "week": "2022-07-25"
+  },
+  {
+    "id": "source-2022-07-28",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1158611,
+    "source_map_sha256": "7d73c1e1bfd4fc1bed57fc7438495b7836e7028c4947c07c8262d8502a6f326d",
+    "status": "unavailable",
+    "week": "2022-07-25"
+  },
+  {
+    "id": "source-2022-07-29",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1192330,
+    "source_map_sha256": "b9aabfb8b4c5bd710031abaf6177947e4fcdf053c65a295ddfa22b1344403c9a",
+    "status": "unavailable",
+    "week": "2022-07-25"
+  },
+  {
+    "id": "source-2022-07-30",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1179749,
+    "source_map_sha256": "4477c69239e4288d56c7e332e57c18e35d0014a60338ad6185c962ece2b52b56",
+    "status": "unavailable",
+    "week": "2022-07-25"
+  },
+  {
+    "id": "source-2022-07-31",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1158621,
+    "source_map_sha256": "7ee7e4a16bbb66a4d68a3ff13ebd651522ea7891040cc5bb4503aead3ac88d8f",
+    "status": "unavailable",
+    "week": "2022-07-25"
+  },
+  {
+    "id": "source-2022-11-07",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1106711,
+    "source_map_sha256": "806a4e689d51e8850248bcc55a0618c2e2af790f54c03ca40d1317a966f61882",
+    "status": "unavailable",
+    "week": "2022-11-07"
+  },
+  {
+    "id": "source-2022-11-08",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1132048,
+    "source_map_sha256": "465cfdd579603aee070c172b6cdf462a807679cf89b2e9cdb206ee95944cf76d",
+    "status": "unavailable",
+    "week": "2022-11-07"
+  },
+  {
+    "id": "source-2022-11-09",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1219648,
+    "source_map_sha256": "d508e6054ce84b4bd46180db535039ffd69a779194975253a8c880d67dbc8598",
+    "status": "unavailable",
+    "week": "2022-11-07"
+  },
+  {
+    "id": "source-2022-11-10",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1184632,
+    "source_map_sha256": "be7026ac02b242eae30b8bbb873654cf7b6ce246502c51abf07ba2763bece45b",
+    "status": "unavailable",
+    "week": "2022-11-07"
+  },
+  {
+    "id": "source-2022-11-11",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1118967,
+    "source_map_sha256": "369cc2896f5dfcd1729f0b1bfffc1d3b77e3ec11b4ad050d71ecd66efd887387",
+    "status": "unavailable",
+    "week": "2022-11-07"
+  },
+  {
+    "id": "source-2022-11-12",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1033438,
+    "source_map_sha256": "83ec8c69e60bc1bcb5afe88d0ce94c86838176d05848b2ca3ff7996100d0bad0",
+    "status": "unavailable",
+    "week": "2022-11-07"
+  },
+  {
+    "id": "source-2022-11-13",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1133442,
+    "source_map_sha256": "76be910d33298b3913b4e49cc3aa922a411246286ed5a4917565e0565f7fef06",
+    "status": "unavailable",
+    "week": "2022-11-07"
+  },
+  {
+    "id": "source-2023-06-05",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1151611,
+    "source_map_sha256": "fa78c6daa30a10a1c16e14592a149936b33ae209befd19c636cc17b7edbae338",
+    "status": "unavailable",
+    "week": "2023-06-05"
+  },
+  {
+    "id": "source-2023-06-06",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1095144,
+    "source_map_sha256": "b2ab4e529261d904813de1ed87b740728b1016f9d012023e7a14ce8d872c9fd8",
+    "status": "unavailable",
+    "week": "2023-06-05"
+  },
+  {
+    "id": "source-2023-06-07",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1071257,
+    "source_map_sha256": "db24f638292a3a4f60b40b85a7f54d1c0d0951031dad84ee5b292dc59225b72d",
+    "status": "unavailable",
+    "week": "2023-06-05"
+  },
+  {
+    "id": "source-2023-06-08",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1008582,
+    "source_map_sha256": "0ffce7e9aa790bafb30f59ae10f4e08dd5d8af9dc791353c6f7cb923467a7d15",
+    "status": "unavailable",
+    "week": "2023-06-05"
+  },
+  {
+    "id": "source-2023-06-09",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1046976,
+    "source_map_sha256": "649fc9d55cd9ebfe5d3eade58100da4316349c59e333a6db86da06582e8357bb",
+    "status": "unavailable",
+    "week": "2023-06-05"
+  },
+  {
+    "id": "source-2023-06-10",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1204433,
+    "source_map_sha256": "c73d44006713a8d31558a4f41146e74a6121286819fa005ce2f1b3eef07ec2ea",
+    "status": "unavailable",
+    "week": "2023-06-05"
+  },
+  {
+    "id": "source-2023-06-11",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1106073,
+    "source_map_sha256": "8ba90f9b1811857c93e8196d53713bb626b5d81fb59d687ef8efa5515e5e8fb1",
+    "status": "unavailable",
+    "week": "2023-06-05"
+  },
+  {
+    "id": "source-2024-01-01",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1101465,
+    "source_map_sha256": "f88a874a22558489f76ebe42c708312e9c8ba9a31c851c88c183da4f9296bf8b",
+    "status": "unavailable",
+    "week": "2024-01-01"
+  },
+  {
+    "id": "source-2024-01-02",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1128657,
+    "source_map_sha256": "3452da59c60cd8f30a321ad7c6decfac6d6b362caeef4730398ec7c65059643d",
+    "status": "unavailable",
+    "week": "2024-01-01"
+  },
+  {
+    "id": "source-2024-01-03",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1092220,
+    "source_map_sha256": "4dc10864ffc1c54e622deaced8808b9f080d8fe65fd2ff0687c03e0d49a91d06",
+    "status": "unavailable",
+    "week": "2024-01-01"
+  },
+  {
+    "id": "source-2024-01-04",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1116573,
+    "source_map_sha256": "b19aa03b321bfe5020b66b4218ae905fdfcf7125f8cdd4b6efb5219dc1457c4e",
+    "status": "unavailable",
+    "week": "2024-01-01"
+  },
+  {
+    "id": "source-2024-01-05",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1069252,
+    "source_map_sha256": "acedb3fe8f6150bdb7c0c44469172122a92256af88477c51756fa579e74e6bdf",
+    "status": "unavailable",
+    "week": "2024-01-01"
+  },
+  {
+    "id": "source-2024-01-06",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 994947,
+    "source_map_sha256": "363b1f7c8d89ffbaf37523d966fc400fcc71c0bf201f14e9b7d2ec845838350a",
+    "status": "unavailable",
+    "week": "2024-01-01"
+  },
+  {
+    "id": "source-2024-01-07",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1049831,
+    "source_map_sha256": "92003be6a33a25348efcdc0d1b720df5c5c5a789077c6861984f948054add5c6",
+    "status": "unavailable",
+    "week": "2024-01-01"
+  },
+  {
+    "id": "source-2024-03-11",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1245874,
+    "source_map_sha256": "30245db775071f534737c15a4b0f83923db36b3dd4f01393bfa790a45e65e9ef",
+    "status": "unavailable",
+    "week": "2024-03-11"
+  },
+  {
+    "id": "source-2024-03-12",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1232719,
+    "source_map_sha256": "8f30bec3c74901980e7931d3712143d07bc7ca8c7b3740ce75b1ceaed5480ba3",
+    "status": "unavailable",
+    "week": "2024-03-11"
+  },
+  {
+    "id": "source-2024-03-13",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1277221,
+    "source_map_sha256": "15f75306e9c826d8e3a525d9a2402c90b45d18aa36cbc757a88fd6e3e2defde2",
+    "status": "unavailable",
+    "week": "2024-03-11"
+  },
+  {
+    "id": "source-2024-03-14",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1300877,
+    "source_map_sha256": "c906498eea34a69d97b8db079c5d90b152a2dd853b4815a3d72df906a6b16d60",
+    "status": "unavailable",
+    "week": "2024-03-11"
+  },
+  {
+    "id": "source-2024-03-15",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1312102,
+    "source_map_sha256": "decd6cb69fecd75ae99e62eb8e93fbee2aa44853e96194dde8755c316296b5bb",
+    "status": "unavailable",
+    "week": "2024-03-11"
+  },
+  {
+    "id": "source-2024-03-16",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1275332,
+    "source_map_sha256": "552694ce06193d0d627e0e76791a3e55c521ea691f30841683f4a5f144888c63",
+    "status": "unavailable",
+    "week": "2024-03-11"
+  },
+  {
+    "id": "source-2024-03-17",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1204019,
+    "source_map_sha256": "6959e667df6823766f03d1c4b2f3c9b61a85157e2f165f9b27740ace29bb42df",
+    "status": "unavailable",
+    "week": "2024-03-11"
+  },
+  {
+    "id": "source-2024-08-05",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1133164,
+    "source_map_sha256": "4b6016bbc3fe6688cda004d9664522106fd2a4b8507fa2c3c1dc7fb3829720e6",
+    "status": "unavailable",
+    "week": "2024-08-05"
+  },
+  {
+    "id": "source-2024-08-06",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1130468,
+    "source_map_sha256": "2a0e877f2266c7844828c186bfec0c114b898554f08ba894b11625274226757b",
+    "status": "unavailable",
+    "week": "2024-08-05"
+  },
+  {
+    "id": "source-2024-08-07",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1123175,
+    "source_map_sha256": "4a023bc123123dfd7f7eed9231ca284668795a670e830ddac6c1fcadc7e471ee",
+    "status": "unavailable",
+    "week": "2024-08-05"
+  },
+  {
+    "id": "source-2024-08-08",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1097066,
+    "source_map_sha256": "8b138dc8ec9a21b1ff23d95b88c8a610565c6b4276c9d41f33335942d8a9ce68",
+    "status": "unavailable",
+    "week": "2024-08-05"
+  },
+  {
+    "id": "source-2024-08-09",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1100553,
+    "source_map_sha256": "a53e3b4cc7388aa0e975dbdff638c6c5a3b04130f0d4eb540403b6369781cdff",
+    "status": "unavailable",
+    "week": "2024-08-05"
+  },
+  {
+    "id": "source-2024-08-10",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1051563,
+    "source_map_sha256": "23baf7a9f2f4f9ac18d24d05569060428b35c061ebace78a05a3721293c8d888",
+    "status": "unavailable",
+    "week": "2024-08-05"
+  },
+  {
+    "id": "source-2024-08-11",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 985147,
+    "source_map_sha256": "66029f02f29da04fc57d8ebf7a36ce90c88ff3510568edccdc31359630979c8b",
+    "status": "unavailable",
+    "week": "2024-08-05"
+  },
+  {
+    "id": "source-2024-12-23",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1306194,
+    "source_map_sha256": "442059260ea1ffcecdd22ea00211838716b6327c271b78662a16820e0c36882e",
+    "status": "unavailable",
+    "week": "2024-12-23"
+  },
+  {
+    "id": "source-2024-12-24",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1263508,
+    "source_map_sha256": "311460f539374e18998b23521511438e1085fb4518d9d595a34c6da53abe888b",
+    "status": "unavailable",
+    "week": "2024-12-23"
+  },
+  {
+    "id": "source-2024-12-25",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1206212,
+    "source_map_sha256": "9d1459468515755dc0f80dbd793c3793ad5a6ffcb1a760193a94cb41c269d055",
+    "status": "unavailable",
+    "week": "2024-12-23"
+  },
+  {
+    "id": "source-2024-12-26",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1208665,
+    "source_map_sha256": "45252cb298d717533b42e38ae617c0173a3ff7e3bd5b334424fa58e016aa3e2e",
+    "status": "unavailable",
+    "week": "2024-12-23"
+  },
+  {
+    "id": "source-2024-12-27",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1240371,
+    "source_map_sha256": "a788fcf24dc502b8b37ebfb42f7041c46a969fa7cef03027076c84e204b327bb",
+    "status": "unavailable",
+    "week": "2024-12-23"
+  },
+  {
+    "id": "source-2024-12-28",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1193108,
+    "source_map_sha256": "e293cb716bd273261ae2837578e62468595661877eab94e7f44ae83a0256cde5",
+    "status": "unavailable",
+    "week": "2024-12-23"
+  },
+  {
+    "id": "source-2024-12-29",
+    "reason": "whole-week count/hash validation failed",
+    "rows_declared": 1199862,
+    "source_map_sha256": "092504846ccfef9f5e1966d62dfcc7d8e8767cceb82d65620971b010ecb779bb",
+    "status": "unavailable",
+    "week": "2024-12-23"
+  }
+]

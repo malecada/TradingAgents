@@ -657,3 +657,88 @@ and BTC wrapper schema3 describe new transformations; they do not reclassify old
 receipts. Future body acquisition must bind the revised grid explicitly. Full
 values, original fund cohort, canonical chain and independent raw-to-graph checks
 remain pending; no financial outcome or new capture was evaluated by this review.
+
+Component-store independent software review (September24; active pilot untouched):
+no material defect was found in the bounded numeric checkpoint implementation.
+An independent tiny synthetic Adam fixture performs a saved first update and then
+compares the next restored update against uninterrupted parameters exactly; PCG
+and Torch random outputs also match. Empty tensors, noncontiguous tensor views,
+big-endian NumPy arrays and tuple/integer dictionary keys roundtrip as expected.
+The restore creates writable independent arrays for optimizer continuation.
+
+Synthetic malformed member traversal is refused. A save interrupted by an
+unsupported nested type leaves its partial directory and array evidence without
+a final manifest; another save to that directory raises FileExistsError. The
+numeric member schema, no-pickle NumPy load, file size/hash and shape/dtype checks,
+aggregate array-byte accounting and post-copy hash verification prevent the
+reviewed corruption/allocation bypasses. Manifest/context identity still depends
+on the caller retaining the externally bound manifest hash; a directory's mere
+existence never proves checkpoint completion.
+
+The max_array_bytes limit covers copied array payloads, not total process memory:
+JSON parsing/scalar trees, object overhead, mapped pages and temporary copies need
+the outer resource cap. Torch tensors restore on CPU and require explicit device
+restoration if a later admitted GPU implementation needs it. Files can be streamed
+without pickle but this primitive does not itself authorize continuation, enforce
+research lease ownership, reconstruct publication after interruption, or permit
+restarting terminal jobs. Those remain the registered representation owner's
+responsibility. No pilot-bound file, active process, empirical input, gate or
+ledger was read or modified by this review; only source, synthetic temporary
+fixtures and this append-only review record were used.
+
+Independent pilot01 failure/successor02 review (September24; no execution): parent
+eth-paper-resource-pilot-20260924 is durably terminal failed at source
+e446e1f948a8e0116bc08c212e5c0bed29ae72f1. Its registered109 identities are present
+exactly once in both the run ledger and observer ledger:9 decode_graph failures
+and100 unavailable cells. Every failed traceback stops at file_hash(path) with
+AttributeError: 'str' object has no attribute 'open', before decode_eth is reached.
+Each phase directory contains only intent/result/log files, with no decoded graph.
+Input metadata/configuration and declared exploratory windows were still inspected
+and reserved; the failed attempt remains consumed and never becomes a fresh sample.
+
+Terminal output hashes, all observer-bound guard hashes and every retained
+postmortem-index artifact hash/size match. Guard child exit1, verified cleanup,
+zero OOM/OOM-kill and absent recorded cgroup corroborate implementation failure,
+not a resource-capacity result. Final guard SHA256
+c7b2bcb087ed73eb20d56acbc2fa031ec206b06528a854e3836f1eb712d111d2;
+failed terminal SHA256
+da08129d8e983047829180efec3fb01e6fb8c9fee6af316d9f83a450c6bd18d8;
+observer ledger SHA256
+928382a899504d2ed742f0ebf322925eb89cd0deacd93ed7df8b603b37cd7c7b.
+All parent registered source files still match their bound hashes and committed
+source; original phase.py, gate-v3 and charter bytes remain unchanged.
+
+Successor02 gate-v3 SHA256
+33ca7e3a000eaa5d2586967c5c1379c17962935c9b5082258f3c64377391f66d
+has26 matching source bindings and88 matching input bindings plus matching charter.
+It binds the exact parent claim/failure and includes the unchanged parent experiment
+object required by admission. Its source index, resource contract and109-cell list
+match the parent's; launch/monitor/run/reconcile consistently use the new
+eth-paper-resource-pilot-20260924-02 and pilot-02 namespaces. The only runtime
+behavior correction, apart from successor paths/identities, is Path(path) before
+hashing serialized binding strings. The retained2-case synthetic report reproduces
+the original error on synthetic bytes and exercises successor main's serialized
+binding route through a synthetic Parquet graph plus drift refusal; SHA256
+4b03a312b66f8fc06bba69c33feed81e2487e3d0e52c6645b86a26f193c74b23.
+The guard assertion is mocked in that fixture; actual guard evidence remains the
+previously reviewed unchanged cap-v4 probe. No empirical successor execution was
+performed during this review.
+
+The prospective allocation amendment is accepted within the unchanged51 cumulative
+claim ceiling:17 source claims (1 metadata+14 missing-body batches+2 price batches),
+2 resource pilots,1 initial ETH experiment and14 remaining asset folds give34 new
+allowances plus17 preserved claims. Combining only still-unclaimed BTC2016/2017
+body acquisition into one future finite registration preserves all15 missing
+asset-years;13 other body batches are explicitly enumerated. It does not remove
+any of the88,776 required field/date cells or change1420 fits. That two-year body
+capture still needs its own finite request/storage/resource registration; this
+allocation is not acquisition admission. Exactly two new family claims currently
+exist, so19 total are consumed before the successor and20 would be consumed upon
+its claim. Family budget/history objects remain exactly equal.
+
+No remaining bounded precommit blocker was found for one resource-only successor02
+launch. Approval is conditional on committing the exact reviewed source/gate and
+amendment, successful normal admission/parent checks, absence of a successor owner/
+claim and live cap/reserve/disk checks. Closed pilot01 must never be relaunched.
+This review does not authorize financial fits, extra fit identities, silent source
+scope reduction, paid resources, provider contact or a further unregistered retry.

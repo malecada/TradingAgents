@@ -148,3 +148,43 @@ independent final probe review passed. Commit exact reviewed release and verify
 live admission before the single resource-only pilot launch. No financial fit
 is admitted. Gate-v3 SHA256073300d6 (full hash in gate); all26sources/85inputs
 reviewed. No pilot owner/guard/claim exists at this checkpoint.
+
+ACTIVE resource-only pilot: launched once from committed e446e1f948a8e0116bc08c212e5c0bed29ae72f1,
+gate-v3 SHA256073300d64b60cb42ae2d42e63f8da9c41b1aefa6afb816c87056c11154807998.
+Terminal session1571; owner/monitor recorded under pilot-01-supervisor/, guard
+pilot-01-guard/, work artifacts pilot-01/ beneath research_artifacts/onchain-paper-
+replication-2026-09-24/. Read current receipts for exact live PIDs/nonces.
+Do not duplicate or relaunch. No source-bound code/config/input changes while
+active; independent producer integration files may proceed. Observe progress and
+retain all109 terminal cells. Resource-only synthetic labels; no price/model
+predictive fit authorized by this release. The earlier no-active statement is
+superseded by this active ownership entry.
+
+Pilot01 is now TERMINAL FAILED; session1571 finished. All109cells retained:
+9decode failures/100unavailable. Every decode failed before raw body reading at
+phase.py input hashing: serialized str passed to Path-only file_hash. Guard
+cleanup and empty cgroup verified, no OOM/limit breach;224.29seconds. Finalguard
+c7b2bcb087ed73eb20d56acbc2fa031ec206b06528a854e3836f1eb712d111d2;
+failedterminal da08129d8e983047829180efec3fb01e6fb8c9fee6af316d9f83a450c6bd18d8.
+19cumulativeclaims consumed. No predictive fit or decoded transaction body.
+No active empirical job. Never relaunch pilot01. A separately named successor02
+is being prepared for this narrow correction, with independent review and a
+prospective within51allocation amendment; full source/fit scope remains unchanged.
+
+Successor02 independent release review passed; gate-v3 under pilot_successor_02/
+binds26sources/88inputs, exact terminal parent object and failure receipt.
+The narrow serialized Path correction passes two synthetic CLI/binding tests.
+The within51allocation amendment preserves1420fits and88,776source cells by
+grouping unclaimed BTC2016+2017 into one future body-capture claim.
+19claims consumed before successor;20if claimed. No duplicate active process.
+Next safe action: commit successor and parent closure, verify current admission
+and6GiB startup availability, then launch pilot_successor_02/launch.py once.
+No predictive fit is released. Independent feature journal/recovery work remains
+uncommitted and outside the pilot's bound source files.
+
+External metadata recovery02 is in progress in terminal session4634, fetching
+remote objects into the independent clone and extracting into a separate empty
+/tmp/onchain-paper-remote-recovery-20260924-02. No completion is asserted until
+all396artifact hashes/bytes are checked. The original partial checkout refused
+an overwrite and is preserved. Branch e446e1f9 is pushed; external recoverability
+of this new metadata remains pending. Full body backup remains unknown.
