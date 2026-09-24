@@ -3,16 +3,16 @@
 No transaction-column body is decoded and no missing date is filled. Metadata
 coverage is deliberately separate from admitted transaction and price coverage.
 """
-from datetime import date,timedelta
+from datetime import date,timedelta,datetime,timezone
 import json
 from pathlib import Path
 import re
 from urllib.parse import urlencode
-from urllib.request import Request,urlopen
+from urllib.request import Request,build_opener,ProxyHandler,HTTPRedirectHandler
 from urllib.error import HTTPError
 import xml.etree.ElementTree as ET
 from ..lifecycle import ResearchRun,_immutable
-from .provenance import digest
+from .provenance import digest,durable_mkdir,sync_directory
 
 HOST='https://aws-public-blockchain.s3.us-east-2.amazonaws.com/'
 FIELDS={
@@ -63,8 +63,10 @@ def catalogue_summary(asset,year,objects,complete):
 
 def http_transport(url,headers,limit):
     if not url.startswith(HOST):raise ValueError('unregistered source host')
+    class NoRedirect(HTTPRedirectHandler):
+        def redirect_request(self,*args,**kwargs):return None
     request=Request(url,headers=headers)
-    try:response=urlopen(request,timeout=30)
+    try:response=build_opener(ProxyHandler({}),NoRedirect()).open(request,timeout=30)
     except HTTPError as error:response=error
     with response:
         if not response.geturl().startswith(HOST):raise ValueError('unexpected source redirect')
@@ -72,29 +74,34 @@ def http_transport(url,headers,limit):
         return response.status,dict(response.headers),body
 
 
-def capture_catalogue(run,asset,year,*,output_directory,transport=http_transport,max_pages=8,max_bytes=32*1024**2):
+def capture_catalogue(run,asset,year,*,output_directory,transport=http_transport,max_pages=8,max_bytes=32*1024**2,source_policy_input='source_policy'):
+    if type(max_pages) is not int or not 1<=max_pages<=8 or type(max_bytes) is not int or not 0<max_bytes<=32*1024**2:raise ValueError('source capture bounds')
     if not isinstance(run,ResearchRun):raise ValueError('admitted source run required')
     run._active();run._check_source()
-    policy=json.loads(run.read_input('source_policy'))
+    policy=json.loads(run.read_input(source_policy_input))
     expected={'asset':asset,'year':year,'host':HOST,'max_pages':max_pages,'max_bytes':max_bytes,'kind':'unsigned_listing_only'}
     if policy!=expected:raise ValueError('source policy differs from registered limits')
     directory=Path(output_directory).resolve();allowed=run.admission.root/'research_artifacts/onchain-paper-replication-2026-09-24/sources'/run.admission.experiment_id
+    if source_policy_input!='source_policy':allowed=allowed/(asset+'-'+str(year))
     if directory!=allowed.resolve():raise ValueError('source output root differs')
-    directory.mkdir(parents=True,exist_ok=False);objects=[];token=None;used=0;tokens=set();reason=None;complete=False
+    durable_mkdir(directory.parent);directory.mkdir(exist_ok=False);sync_directory(directory.parent)
+    objects=[];token=None;used=0;tokens=set();reason=None;complete=False
     for page in range(max_pages):
         run._active();run._check_source();params={'list-type':'2','prefix':f'v1.0/{asset.lower()}/transactions/date={year}-','max-keys':'1000'}
         if token is not None:params['continuation-token']=token
         url=HOST+'?'+urlencode(params);limit=min(4*1024**2,max_bytes-used)
         if limit<=0:reason='registered byte budget exhausted';break
-        _immutable(directory/f'intent-{page:02d}.json',{'url':url,'max_response_bytes':limit,'retry':False})
+        _immutable(directory/f'intent-{page:02d}.json',{'url':url,'max_response_bytes':limit,'retry':False,'requested_at':datetime.now(timezone.utc).isoformat(),'source_commit':run.admission.source})
         try:
             status,headers,body=transport(url,{},limit);used+=len(body)
             # Preserve failed/over-limit response bytes, without admitting them.
             import base64
-            _immutable(directory/f'response-{page:02d}.json',{'status':status,'headers':headers,'body_base64':base64.b64encode(body).decode(),'sha256':digest(body),'bytes':len(body)})
+            _immutable(directory/f'response-{page:02d}.json',{'status':status,'headers':headers,'body_base64':base64.b64encode(body).decode(),'sha256':digest(body),'bytes':len(body),'retrieved_at':datetime.now(timezone.utc).isoformat()})
             if len(body)>limit:raise ValueError('response byte limit exceeded')
             if status!=200:raise ValueError('source HTTP status '+str(status))
-            members,next_token=parse_listing(body,asset,year);objects.extend(members)
+            members,next_token=parse_listing(body,asset,year)
+            if {x['key'] for x in objects}&{x['key'] for x in members}:raise ValueError('duplicate object across pages')
+            objects.extend(members)
             if next_token is None:complete=True;break
             if next_token in tokens:raise ValueError('repeated pagination token')
             tokens.add(next_token);token=next_token

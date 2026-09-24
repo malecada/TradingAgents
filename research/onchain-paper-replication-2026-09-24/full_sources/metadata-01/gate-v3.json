@@ -1,0 +1,285 @@
+{
+  "datasets": {
+    "btc": {
+      "exposures": [],
+      "history_reference": "No transaction data acquired by this replication; old17claims/history.json retained; this retrospective metadata stage asserts no fresh confirmation",
+      "identity": "bitcoin-native-transactions-chain-mainnet"
+    },
+    "eth": {
+      "exposures": [
+        {
+          "end": "2025-01-01T00:00:00Z",
+          "start": "2022-01-01T00:00:00Z",
+          "state": "spent"
+        }
+      ],
+      "history_reference": "research/onchain-paper-replication-2026-09-24/history.json",
+      "identity": "ethereum-native-top-level-transactions-chain-1"
+    }
+  },
+  "experiments": {
+    "paper-full-source-metadata-20260924": {
+      "cells": [
+        "BTC-2016-catalogue",
+        "BTC-2016-footer-0",
+        "BTC-2016-footer-1",
+        "BTC-2016-footer-2",
+        "BTC-2017-catalogue",
+        "BTC-2017-footer-0",
+        "BTC-2017-footer-1",
+        "BTC-2017-footer-2",
+        "BTC-2018-catalogue",
+        "BTC-2018-footer-0",
+        "BTC-2018-footer-1",
+        "BTC-2018-footer-2",
+        "BTC-2019-catalogue",
+        "BTC-2019-footer-0",
+        "BTC-2019-footer-1",
+        "BTC-2019-footer-2",
+        "BTC-2020-catalogue",
+        "BTC-2020-footer-0",
+        "BTC-2020-footer-1",
+        "BTC-2020-footer-2",
+        "BTC-2021-catalogue",
+        "BTC-2021-footer-0",
+        "BTC-2021-footer-1",
+        "BTC-2021-footer-2",
+        "BTC-2022-catalogue",
+        "BTC-2022-footer-0",
+        "BTC-2022-footer-1",
+        "BTC-2022-footer-2",
+        "BTC-2023-catalogue",
+        "BTC-2023-footer-0",
+        "BTC-2023-footer-1",
+        "BTC-2023-footer-2",
+        "BTC-2024-catalogue",
+        "BTC-2024-footer-0",
+        "BTC-2024-footer-1",
+        "BTC-2024-footer-2",
+        "ETH-2016-catalogue",
+        "ETH-2016-footer-0",
+        "ETH-2016-footer-1",
+        "ETH-2016-footer-2",
+        "ETH-2017-catalogue",
+        "ETH-2017-footer-0",
+        "ETH-2017-footer-1",
+        "ETH-2017-footer-2",
+        "ETH-2018-catalogue",
+        "ETH-2018-footer-0",
+        "ETH-2018-footer-1",
+        "ETH-2018-footer-2",
+        "ETH-2019-catalogue",
+        "ETH-2019-footer-0",
+        "ETH-2019-footer-1",
+        "ETH-2019-footer-2",
+        "ETH-2020-catalogue",
+        "ETH-2020-footer-0",
+        "ETH-2020-footer-1",
+        "ETH-2020-footer-2",
+        "ETH-2021-catalogue",
+        "ETH-2021-footer-0",
+        "ETH-2021-footer-1",
+        "ETH-2021-footer-2",
+        "ETH-2022-catalogue",
+        "ETH-2022-footer-0",
+        "ETH-2022-footer-1",
+        "ETH-2022-footer-2",
+        "ETH-2023-catalogue",
+        "ETH-2023-footer-0",
+        "ETH-2023-footer-1",
+        "ETH-2023-footer-2",
+        "ETH-2024-catalogue",
+        "ETH-2024-footer-0",
+        "ETH-2024-footer-1",
+        "ETH-2024-footer-2"
+      ],
+      "charter": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/CHARTER.md",
+        "sha256": "04124371d0c4eca36aa88988ab00e480c87121d4b488a8f0d8007c79090d1a7d"
+      },
+      "family": "paper",
+      "inputs": {
+        "BTC-2016": {
+          "dataset": "btc",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/BTC-2016.json",
+          "sha256": "f16cd395f35087688851ab1409d2f030ebe1a72d19f1850d76fadc46b5fadad8"
+        },
+        "BTC-2017": {
+          "dataset": "btc",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/BTC-2017.json",
+          "sha256": "1af09a716286b5803b7a7a01fcd5eeb91558692a3d3bc8cd05f398891313257a"
+        },
+        "BTC-2018": {
+          "dataset": "btc",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/BTC-2018.json",
+          "sha256": "0e7f1db660c40079a2fd6d5daf93f8dc05b029610f049695571e846f62c38c31"
+        },
+        "BTC-2019": {
+          "dataset": "btc",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/BTC-2019.json",
+          "sha256": "630b5f2437252ad83a6d0bee72393bb4569e3a1cf59f3aca58880982314b6a7f"
+        },
+        "BTC-2020": {
+          "dataset": "btc",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/BTC-2020.json",
+          "sha256": "c8e787154be1109e6a8a404d67cb560d7ecdf76651d29ab2c63085d216df7f1a"
+        },
+        "BTC-2021": {
+          "dataset": "btc",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/BTC-2021.json",
+          "sha256": "591fca991808f2a50c93d694fe7be51bdcbd47414a582802ba83724dcb593b60"
+        },
+        "BTC-2022": {
+          "dataset": "btc",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/BTC-2022.json",
+          "sha256": "52114010e61b9deb53dc86268b12d5feb99614392ce543ed820a6be63f3bd2bd"
+        },
+        "BTC-2023": {
+          "dataset": "btc",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/BTC-2023.json",
+          "sha256": "ef02c42a5c5068b8a56a257091ea6b66ddbea0746b44a5715bceb4a19dcf2f0b"
+        },
+        "BTC-2024": {
+          "dataset": "btc",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/BTC-2024.json",
+          "sha256": "3bdf0f6a0bd2d556c61ff939553234cd37653991cefdbc11296fd0f243eb1c6c"
+        },
+        "ETH-2016": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/ETH-2016.json",
+          "sha256": "e0324025be5ebf56954f4f7b998fd42df1a3185fa03f5efc11f1758cb0572c98"
+        },
+        "ETH-2017": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/ETH-2017.json",
+          "sha256": "f2c96a9a8dc0637680b8d1eec062841cefbc5d49a9da2e8aa1e8dcaf70f27971"
+        },
+        "ETH-2018": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/ETH-2018.json",
+          "sha256": "fdf0da68fdc6e70dc4a1ec9eabc1f4c2c61fc336d1d1d1a816c8e283dd95640a"
+        },
+        "ETH-2019": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/ETH-2019.json",
+          "sha256": "fa85ecb8246e4dd3bb3c5c985becf0f4e339b60977cfbe42c5dbed5493203b94"
+        },
+        "ETH-2020": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/ETH-2020.json",
+          "sha256": "028975ddaf5e8ba2c70fa1559113ffc284a110d708054a153db792b974230b9b"
+        },
+        "ETH-2021": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/ETH-2021.json",
+          "sha256": "57044622802095642875539a9637368138b57be4d39f00331e965cdf2b9f587d"
+        },
+        "ETH-2022": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/ETH-2022.json",
+          "sha256": "171e1331fa5f85a7299797475cf765d642a8f565230005004688a136115c5540"
+        },
+        "ETH-2023": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/ETH-2023.json",
+          "sha256": "1c6bb7a6d2afcfe6da69a4fbbade73b90c7f744554cd570fae87b99180ac435e"
+        },
+        "ETH-2024": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/ETH-2024.json",
+          "sha256": "a8c68b0f921e454e5e9dad8aff3a28c3f7a22482b69aac1d2e937ccb41501346"
+        },
+        "environment": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/environment.json",
+          "sha256": "9007769fadc307a2f7fc1ddc25cb689057ee4d233e99aa9539b3964cd508cbd3"
+        },
+        "footer_policy": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/footer-policy.json",
+          "sha256": "0d4082b3563b23c1f8f66a1c979d008166a4e5150c2085025e36b621749e7627"
+        },
+        "history": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/history.json",
+          "sha256": "68e4ea2f328996cef6966f2ec9f35c494b38f38182e33ae0fb7697383750aae0"
+        },
+        "lockfile": {
+          "dataset": "eth",
+          "path": "uv.lock",
+          "sha256": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a"
+        },
+        "prior_budget": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/budget-amendment.proposed.json",
+          "sha256": "53807814cc9ba2f89d31aecc61f8934a095f01e89cea0c6ec10f3631ad8a450e"
+        },
+        "project_runtime": {
+          "dataset": "eth",
+          "path": "pyproject.toml",
+          "sha256": "fa319e95452e538ac22d78584f87f5f13a24d4b8bb83064b51d015706ef594b9"
+        },
+        "required_grid": {
+          "dataset": "eth",
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/required-grid.json",
+          "sha256": "5a4f769f40bfbe2e80698ea4e6f93554332550266332d83574fb67307117662e"
+        }
+      },
+      "outputs": [
+        "cell-ledger.json",
+        "source-coverage.json",
+        "artifact-index.json",
+        "storage-summary.json"
+      ],
+      "parent": null,
+      "question": "Full2016-2024 current public source catalogue and deterministic bounded footer storage/schema evidence; no decoded values or fits",
+      "reuse": "exploratory",
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "selection": null,
+      "source_files": {
+        "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/launch.py": "f5daeeddbf3f854d9cd44b561cbfc3f0bcb5fbd9761facbe6429aaf07e054f20",
+        "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/monitor.py": "e1ade89b647f840ba7bc5fef40181114b20a77e4b2e5327dc1c556196d3e1091",
+        "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/reconcile.py": "7b3f6dc81b9beed4ec26491f50c40792ca5b3e3aa103bb7451e596acb3dafa54",
+        "research/onchain-paper-replication-2026-09-24/full_sources/metadata-01/worker.py": "7780e44dbf92a20c7794f63f8f0fb60a482e42d66904f167a13c7d7731c5552f",
+        "tradingagents/research/onchain_replication/__init__.py": "905f63046b02552c4d7cd90014328a48d77bcdb336b4a1f3351b453b83878fd1",
+        "tradingagents/research/onchain_replication/environment.py": "8b3d09acbce94502f58f5d595c0018e45e9854b8f04241705c50fb21051b8a28",
+        "tradingagents/research/onchain_replication/provenance.py": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471",
+        "tradingagents/research/onchain_replication/resources.py": "bf61c099dc6511f78df79a12d115895d97b246d75960a36225db38ebdcc8e050",
+        "tradingagents/research/onchain_replication/source_footers.py": "65005ceca3072760befb09680f9c7aa469d5aaa5ab3f2af6a741d4ed2fef660e",
+        "tradingagents/research/onchain_replication/source_inventory.py": "6d868efe77d4d84af97fdb1657585ad86fda15866b44541f111656d3e09759db"
+      },
+      "stage": "development",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "btc",
+          "end": "2025-01-01T00:00:00Z",
+          "start": "2016-01-01T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "eth",
+          "end": "2025-01-01T00:00:00Z",
+          "start": "2016-01-01T00:00:00Z"
+        }
+      ]
+    }
+  },
+  "families": {
+    "paper": {
+      "attempt_budget": 51,
+      "history_reference": "research/onchain-paper-replication-2026-09-24/history.json; correlated earlier screen17claims included; explicit cumulative proposal budget-amendment.proposed.json; no fresh-sample assertion",
+      "mechanism_id": "celik-sefer-transaction-graph-full-neural-replication",
+      "prior_attempts": 17
+    }
+  },
+  "program_id": "onchain-paper-replication-2026-09-24",
+  "schema_version": 1
+}
