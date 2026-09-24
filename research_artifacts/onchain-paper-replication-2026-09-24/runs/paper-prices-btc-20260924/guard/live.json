@@ -1,0 +1,168 @@
+{
+  "boot_id": "df1f8c6b-0492-497f-8d23-bb55c45d37f6",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-d1dbfe9e9a304662a242ca13c5c37db4.service",
+  "child_exit_code": 0,
+  "cleanup_stop_returncode": 5,
+  "cleanup_unit_properties": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "dead"
+  },
+  "cleanup_verified": true,
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "-m",
+    "tradingagents.research.onchain_replication.job",
+    "--mode",
+    "worker",
+    "--root",
+    "/tmp/onchain-paper-prices-checkout-20260924-01",
+    "--registration",
+    "research/onchain-paper-replication-2026-09-24/full_sources/prices-01/gate-v3.json",
+    "--experiment",
+    "paper-prices-btc-20260924",
+    "--source",
+    "652b2766cacd0c5f5b2c830bafeaa7315bb42fc2"
+  ],
+  "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+  "cpu_quota_controller_available": false,
+  "cpu_thread_readback": {
+    "2912727": [
+      0,
+      1
+    ],
+    "2912757": [
+      0,
+      1
+    ],
+    "2919662": [
+      0,
+      1
+    ],
+    "2928817": [
+      0,
+      1
+    ]
+  },
+  "cpus": [
+    0,
+    1
+  ],
+  "cwd": "/tmp/onchain-paper-prices-checkout-20260924-01",
+  "disk_floor_bytes": 21474836480,
+  "disk_free_bytes": {
+    "/tmp/onchain-paper-prices-checkout-20260924-01": 30363779072
+  },
+  "disk_paths": [
+    "/tmp/onchain-paper-prices-checkout-20260924-01"
+  ],
+  "elapsed_seconds": 70.24707639299595,
+  "elapsed_time_kill": false,
+  "host_mem_available_bytes": 5383098368,
+  "initial_memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "kernel_controls": {
+    "memory.high": "402653184",
+    "memory.max": "536870912",
+    "memory.swap.max": "0"
+  },
+  "lease_seconds": 15.0,
+  "limit_reason": null,
+  "memory_current_bytes": 32493568,
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "memory_high_bytes": 402653184,
+  "memory_max_bytes": 536870912,
+  "memory_swap_max_bytes": 0,
+  "monitor_pid": 2910159,
+  "monotonic_seconds": 64189.099429786,
+  "optional_memory_telemetry": {
+    "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+    "unit": {
+      "anon_bytes": 8515584,
+      "file_bytes": 17285120,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-d1dbfe9e9a304662a242ca13c5c37db4.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=2\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=2",
+      "swap_current_bytes": 0,
+      "unavailable": {}
+    },
+    "user_ancestor": {
+      "anon_bytes": 8588480512,
+      "file_bytes": 2849443840,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.54 total=141823306\nfull avg10=0.00 avg60=0.00 avg300=0.48 total=134375778",
+      "swap_current_bytes": 2062155776,
+      "unavailable": {}
+    }
+  },
+  "owner_identity": {
+    "experiment": "paper-prices-btc-20260924",
+    "monitor_pid": 2910159,
+    "monitor_start_ticks": "6411392",
+    "nonce": "082b86c9fb574f2caa39a808fe0fda45",
+    "source_commit": "652b2766cacd0c5f5b2c830bafeaa7315bb42fc2",
+    "supervisor_pid": 2908757
+  },
+  "peak_sampled_memory_current_bytes": 84238336,
+  "phase": "complete",
+  "receipt_dir": "/tmp/onchain-paper-prices-checkout-20260924-01/research_artifacts/onchain-paper-replication-2026-09-24/runs/paper-prices-btc-20260924/guard",
+  "reserve_bytes": 3221225472,
+  "retry": false,
+  "sample_seconds": 0.25,
+  "start_reserve_bytes": 3758096384,
+  "terminal_memory_snapshot": {
+    "memory_current_bytes": 32493568,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 8515584,
+        "file_bytes": 17285120,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-d1dbfe9e9a304662a242ca13c5c37db4.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=2\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=2",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 8588480512,
+        "file_bytes": 2849443840,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.54 total=141823306\nfull avg10=0.00 avg60=0.00 avg300=0.48 total=134375778",
+        "swap_current_bytes": 2062155776,
+        "unavailable": {}
+      }
+    }
+  },
+  "unit": "onchain-replication-d1dbfe9e9a304662a242ca13c5c37db4.service",
+  "unit_properties": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "dead"
+  },
+  "wait_seconds": 30.0,
+  "wall_seconds": 300
+}

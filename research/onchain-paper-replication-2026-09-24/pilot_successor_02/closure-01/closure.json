@@ -1,0 +1,321 @@
+{
+  "cause": "local journal identifies systemd-oomd ancestor-user memory pressure kill,51.89percent above50percent forover20seconds with reclaim activity; not kernel cgroupOOM",
+  "cell_ledger_sha256": "09750888389e7bba366818aa4134ae07e72f6fdeeb4af59594e7f0f627cc3e5c",
+  "cells": 109,
+  "cleanup_verified": true,
+  "dispositions": {
+    "complete": 7,
+    "unavailable": 102
+  },
+  "elapsed_seconds": 10247.693756140005,
+  "identity": "eth-paper-resource-pilot-20260924-02",
+  "journal_commands": {
+    "oomd-journal.txt": [
+      "journalctl",
+      "-u",
+      "systemd-oomd.service",
+      "--since",
+      "2026-09-24 17:28:00",
+      "--until",
+      "2026-09-24 17:30:00",
+      "--no-pager",
+      "-n",
+      "30"
+    ],
+    "unit-journal.txt": [
+      "journalctl",
+      "--user",
+      "-u",
+      "onchain-replication-053212326dbe41ddbb6240673bef616e.service",
+      "--no-pager",
+      "-n",
+      "25"
+    ]
+  },
+  "journal_sha256": {
+    "oomd-journal.txt": "6371f32d8f322bb712cda1bae5d68e135a4eaeebff0bd600b9a65b6355636738",
+    "unit-journal.txt": "3d97c6f057c1bf3f48b833c7973321715b20ae07ee6533e7298e70c820156ed9"
+  },
+  "kill_at_utc": "2026-09-24T15:28:59Z",
+  "largest_week": "2022-07-25",
+  "largest_week_status": "interrupted before durable graph result; no completed largest-week graph asserted",
+  "members": {
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02-guard/child.log": {
+      "bytes": 0,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02-guard/child.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02-guard/cpu_ready.json": {
+      "bytes": 51,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02-guard/cpu_ready.json",
+      "sha256": "597fd93229de1cc5f82175745c1a9f0be9a634237324fd1b8785effddc7c6dc9"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02-guard/final.json": {
+      "bytes": 4319,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02-guard/final.json",
+      "sha256": "572cd9d941be58f0fa36a749c98423c93e05a68a23376b6b7b2cad0248df6b6d"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02-guard/live.json": {
+      "bytes": 4319,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02-guard/live.json",
+      "sha256": "572cd9d941be58f0fa36a749c98423c93e05a68a23376b6b7b2cad0248df6b6d"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02-guard/observer.json": {
+      "bytes": 1653,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02-guard/observer.json",
+      "sha256": "b675b64c7fa168b5ee98777982197b05563e85b325ec5e17eeef5ca1f9c2b2fb"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02-guard/release.json": {
+      "bytes": 39,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02-guard/release.json",
+      "sha256": "82560e2694628ad002f9cc4b76fe2cd7b1b545cc825269f01057f04c6fe268b5"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02-supervisor/monitor.json": {
+      "bytes": 141,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02-supervisor/monitor.json",
+      "sha256": "552064433a2921ea67c242fddce9921804aa8a1e165f1273cd6157d8acf74b0f"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02-supervisor/owner.json": {
+      "bytes": 124,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02-supervisor/owner.json",
+      "sha256": "78d5168d6f1746637101aa0dcb25562eef3f3d0f2c8071be03bf827a98bbb10f"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json": {
+      "bytes": 1604,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json",
+      "sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/intent.json": {
+      "bytes": 19664,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/intent.json",
+      "sha256": "ea4171c34f385d4c11065d9444325a204971706eba5b99aa786f0f02eeba6beb"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/result.json": {
+      "bytes": 817,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/result.json",
+      "sha256": "633568740b817889edf8cd39590ccd772066f4792725d102ff969675e860d3a7"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/dictionary/dictionary.json": {
+      "bytes": 67827,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/dictionary/dictionary.json",
+      "sha256": "7347dbd764144d3f9b2c934f802a6e9520224efd34ae8febc486803faf0cf1ad"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/dictionary/intent.json": {
+      "bytes": 20588,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/dictionary/intent.json",
+      "sha256": "801bc9396344b1414a0dcd2df1c7932ee04b3baa2ebd483db5477d455370ea73"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/dictionary/result.json": {
+      "bytes": 303,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/dictionary/result.json",
+      "sha256": "a228201bc8b01c652f4b46788692fcf8110f205f8392f8773f7c30faf23c279b"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/matching/intent.json": {
+      "bytes": 20584,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/matching/intent.json",
+      "sha256": "4ba0ae277a2813909eb26e74cef7baf1b87271a8189123b220aea4c785181c25"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/matching/result.json": {
+      "bytes": 1068,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/matching/result.json",
+      "sha256": "60ddda103f1e64ff2d307c06a33c22fe83937a2b283460bc932f94c8316592b6"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/mcm/intent.json": {
+      "bytes": 23685,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/mcm/intent.json",
+      "sha256": "37e805f01f4c90198eceeb33e1884789d4ae32f5ea3343b9ac0b14c62a8fbdb3"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/mcm/result.json": {
+      "bytes": 2074,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/mcm/result.json",
+      "sha256": "bccfa3d05e6d718d21513454352ac9b685d24d160d81a323b680a692da9f1c51"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neighborhoods/intent.json": {
+      "bytes": 21806,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neighborhoods/intent.json",
+      "sha256": "82e50f913f0907c3d630d5cfbb3f4257462ca3fbe33e71bb60fdf9e468a817ba"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neighborhoods/result.json": {
+      "bytes": 302,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neighborhoods/result.json",
+      "sha256": "25f711dc4cd56852df02f1f01ecfd29f3f46d05825eeebb65ac517fc0e5d89a1"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neighborhoods/samples.json": {
+      "bytes": 731010,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neighborhoods/samples.json",
+      "sha256": "3b6285b26cbfa1945b18ad021700d85019fd7bd6e65b727395985f6adbbd39a4"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neural_checkpoint/intent.json": {
+      "bytes": 21814,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neural_checkpoint/intent.json",
+      "sha256": "1873c77cde572c526d1ec120ac5ea9188dd95fe18b1649037bbf6922ad177ad9"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neural_checkpoint/result.json": {
+      "bytes": 1701,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neural_checkpoint/result.json",
+      "sha256": "cb1053a0083bba070d522a11186046184b91751621e8fdaa63f83514d1a0e4c4"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json": {
+      "bytes": 1604,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+      "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/intent.json": {
+      "bytes": 19664,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/intent.json",
+      "sha256": "85501afe7fe78693d0da8a0cff4d0fa8264d0a2e061ca5952bfd6a48183cd836"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/result.json": {
+      "bytes": 817,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/result.json",
+      "sha256": "8b9b85b369f9e590fcfb2f02fa4faeae34cacac091b637e57c54ea5004814e18"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/matching/intent.json": {
+      "bytes": 20584,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/matching/intent.json",
+      "sha256": "f4bd6ce87ce0a177fbb8415ed1845c87306a7a68d489bd4059cdfeecfef9a031"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/matching/result.json": {
+      "bytes": 1062,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/matching/result.json",
+      "sha256": "0bc83075c6bbb046e9558c87e1bc29b17f77e19c69ad3178517ae844afba2d61"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/mcm/intent.json": {
+      "bytes": 23685,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/mcm/intent.json",
+      "sha256": "89e7751c5f4a468bfa6dad4ca51e1c138bfb55119844fba448eb473981b2598b"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/mcm/result.json": {
+      "bytes": 2075,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/mcm/result.json",
+      "sha256": "cedbe13c8354a759b478ca7eaf39b7fdff1453f35340b341cc3fee6470b9fdef"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/neighborhoods/intent.json": {
+      "bytes": 21806,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/neighborhoods/intent.json",
+      "sha256": "1fbc1d5e83dd6905f264e6c7b32061ceee65c76cc147ed3a0e32185affb874ac"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/neighborhoods/result.json": {
+      "bytes": 303,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/neighborhoods/result.json",
+      "sha256": "3c0515c98690d94b6f95200cdd222633b91bee8bb9b2df4f459fa2404a6910d2"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/neighborhoods/samples.json": {
+      "bytes": 862308,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/neighborhoods/samples.json",
+      "sha256": "492edd753a329083d5cfa83c7688a3f82637f891049a9a5241fa9e19df3c31bf"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/neural_checkpoint/intent.json": {
+      "bytes": 21814,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/neural_checkpoint/intent.json",
+      "sha256": "b2049aa8e7636c10eb0127a8762b42ad2776f6f74a0ac6a16e94ee43aedcadb4"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/neural_checkpoint/result.json": {
+      "bytes": 1698,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/neural_checkpoint/result.json",
+      "sha256": "6db9466fce3e7612030b751ed09bdc5787238b72e8d32cc5045216a5c18a1003"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-07-25/decode_graph/intent.json": {
+      "bytes": 19664,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-07-25/decode_graph/intent.json",
+      "sha256": "ba3c7ebcedd82f4679938248c3b992994a174f2d7a4ded164a9585f4d14759c1"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-001.json": {
+      "bytes": 920,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-001.json",
+      "sha256": "9c89c3108d9a395f80a9a960ca854e5f4d90d3ac50787c7e156054bca4e23bbd"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-002.json": {
+      "bytes": 406,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-002.json",
+      "sha256": "c59bb5d48c178f42999ec9d8a91918cb54a3f238a8cdf1226ac0657a55349e41"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-003.json": {
+      "bytes": 1167,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-003.json",
+      "sha256": "9e0a7422992d085ba13abce06eb59d43e372f65f673950a2d01d31dc67f64de3"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-004.json": {
+      "bytes": 1809,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-004.json",
+      "sha256": "3bb6cf1316054d9398a2a9bee90c4958f82ade0826902c0f161edbaf4e1b01a4"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-005.json": {
+      "bytes": 404,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-005.json",
+      "sha256": "f35817b8826de6ba7eb4c0232d709bb1bc791b204dd63a1a9708a989888ba9fb"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-006.json": {
+      "bytes": 2168,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-006.json",
+      "sha256": "af50350498ab0af2cfab68a858479a6f03e2ca608a7a3e09e1a64c590d5b316b"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-007.json": {
+      "bytes": 920,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-007.json",
+      "sha256": "7922b9cb48fc4f72c0ba008e3de4161e67934c655853f21001baa37873a27a27"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-008.json": {
+      "bytes": 407,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-008.json",
+      "sha256": "c2371c0b804759e1bfa9ea4574db102031787b299e694700f2c85284959fdfc6"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-009.json": {
+      "bytes": 1161,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-009.json",
+      "sha256": "e892cadf93875264f88147197366278c9940e8189ea19d61d400cae0a4d7dabf"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-010.json": {
+      "bytes": 1806,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-010.json",
+      "sha256": "b0b43bd8c64d5f658a4a7d44883d4bc7f7bda273275f610365135c89112741b4"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-011.json": {
+      "bytes": 2169,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/cell-011.json",
+      "sha256": "c16c525a16db54b67696122c27f9ffb6c889d316a74153293fa0affb66ccd419"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/postmortem/artifact-index.json": {
+      "bytes": 18389,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/postmortem/artifact-index.json",
+      "sha256": "208d00df2c42441ee512ca31011bed336de75282a3c492fd88f4994c3c3d3f59"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/postmortem/cell-ledger.json": {
+      "bytes": 28400,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/postmortem/cell-ledger.json",
+      "sha256": "09750888389e7bba366818aa4134ae07e72f6fdeeb4af59594e7f0f627cc3e5c"
+    },
+    "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/progress.json": {
+      "bytes": 212,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/progress.json",
+      "sha256": "20200d11be744b984528e24f640f0a2d1a88fe062561eee04ec320f06c805473"
+    },
+    "research_runs/eth-paper-resource-pilot-20260924-02/claim.json": {
+      "bytes": 50765,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_runs/eth-paper-resource-pilot-20260924-02/claim.json",
+      "sha256": "05d769f6f50a65c2cf3eeed569077eb84e3871b1e7c23ad3504eed461a0565ca"
+    },
+    "research_runs/eth-paper-resource-pilot-20260924-02/failed.json": {
+      "bytes": 490,
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_runs/eth-paper-resource-pilot-20260924-02/failed.json",
+      "sha256": "3d318717ff7adecb0f07b9db6f3d1bd2e24e0c77705c3e07062cd4b075f8d7f2"
+    }
+  },
+  "memory_events": {
+    "high": 231224,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "no_retry": true,
+  "peak_sampled_memory_current_bytes": 2783363072,
+  "processes_killed_reported_by_service": 8,
+  "schema_version": 1,
+  "scope": "compact closed-attempt evidence only; large graph arrays, incomplete MCM arrays, distance checkpoints and interrupted SQLite scratch remain at original paths and are indexed in preserved postmortem artifact index; no full raw backup or real financial fit",
+  "source_commit": "c6b568d4b1c177ab94ac37fbad462c2decc721c0",
+  "status": "failed",
+  "terminal_at_utc": "2026-09-24T15:29:30.694202+00:00",
+  "terminal_sha256": "3d318717ff7adecb0f07b9db6f3d1bd2e24e0c77705c3e07062cd4b075f8d7f2"
+}

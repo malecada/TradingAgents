@@ -1,0 +1,220 @@
+{
+  "status": "incomplete",
+  "latest_checkpoint": "completion-interim-05.json",
+  "checkpoint_sha256": "85c64a8bea11084b8777ae74ea7b2aa8612a08e90c718328faa2b0e5bf172be8",
+  "flags": {
+    "implementation_complete": false,
+    "paper_scope_complete": false,
+    "numerical_agreement": "unevaluated",
+    "exact_reproduction_eligible": false
+  },
+  "criteria": [
+    {
+      "id": "C01",
+      "status": "partial",
+      "disposition": "All34F/Urecords mapped to currentcode and387pass/1CUDA skip source snapshot; CoinMetricsprovider deviation explicit. Final consolidated review and empirical integration remain pending.",
+      "evidence": [
+        "fidelity.json",
+        "DECISIONS.md",
+        "IMPLEMENTATION_REVIEW.md",
+        "implementation-coverage-v4.json",
+        "replay/fresh-expanded-02.xml"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    },
+    {
+      "id": "C02",
+      "status": "met_synthetic",
+      "disposition": "Full motif dictionary\u2192MCM\u2192MLP\u2192GAT\u2192mean pool\u2192price-joined attentionLSTM implemented and independently reviewed. Source-silent choices declared; no omitted core block. Empirical integration/scale remains separate.",
+      "evidence": [
+        "replay/controller-synthetic-03-bundle.json",
+        "IMPLEMENTATION_REVIEW.md",
+        "implementation-coverage-v4.json",
+        "replay/fresh-expanded-02.xml"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    },
+    {
+      "id": "C03",
+      "status": "partial",
+      "disposition": "All88776logicalsourcefieldcells accounted:6576pricecellscomplete under explicitproviderdeviation;82200transactionfieldcells pending fullstudyadmission. Both oldYahoo attempts preserved.",
+      "evidence": [
+        "full_sources/required-grid-v2.json",
+        "full_sources/metadata-01/gate-v3.json",
+        "full_sources/prices-01/gate-v3.json",
+        "full_sources/prices-coinmetrics-01/gate.json",
+        "full_sources/prices-coinmetrics-01/RESULT.json",
+        "full_sources/required-grid-v3.json"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    },
+    {
+      "id": "C04",
+      "status": "partial",
+      "disposition": "ETH/BTC conservation and exclusion fixtures reviewed; real pilot graph counts retained. Independent full real raw-to-graph reconciliation across required history remains pending.",
+      "evidence": [
+        "IMPLEMENTATION_REVIEW.md",
+        "implementation-coverage-v4.json",
+        "replay/fresh-expanded-02.xml"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    },
+    {
+      "id": "C05",
+      "status": "met_synthetic",
+      "disposition": "CPUfloat64 scalar/oracle/feasible-assignment tests passed frozen tolerances; no tolerance widened.",
+      "evidence": [
+        "IMPLEMENTATION_REVIEW.md",
+        "implementation-coverage-v4.json",
+        "replay/fresh-expanded-02.xml"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    },
+    {
+      "id": "C06",
+      "status": "partial",
+      "disposition": "BatchedCPUfloat32/reference checks passed; CUDA parity unavailable on this host and full-scale acceleration not established.",
+      "evidence": [
+        "replay/fresh-expanded-02.xml",
+        "sources/runtime-inventory.json"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    },
+    {
+      "id": "C07",
+      "status": "met_synthetic",
+      "disposition": "Deterministic sampled dictionary identity and train-only/future-mutation checks passed; actual first pilot512sample/32dictionary retained.",
+      "evidence": [
+        "IMPLEMENTATION_REVIEW.md",
+        "implementation-coverage-v4.json",
+        "replay/fresh-expanded-02.xml"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    },
+    {
+      "id": "C08",
+      "status": "met_synthetic",
+      "disposition": "All intended trainable blocks have finite nonzero gradients; fixed nondegenerate fixture reduces loss\u226580percent within500updates. Synthetic controller03 retains neural optimizer/RNG checkpoint.",
+      "evidence": [
+        "IMPLEMENTATION_REVIEW.md",
+        "implementation-coverage-v4.json",
+        "replay/fresh-expanded-02.xml"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    },
+    {
+      "id": "C09",
+      "status": "met_synthetic",
+      "disposition": "Relabeling/padding/attention masks and joint graph reuse gradient tests pass frozen fixture tolerances.",
+      "evidence": [
+        "IMPLEMENTATION_REVIEW.md",
+        "implementation-coverage-v4.json",
+        "replay/fresh-expanded-02.xml"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    },
+    {
+      "id": "C10",
+      "status": "partial",
+      "disposition": "Clock/purge/scaler tests pass; every real prediction lineage remains pending because no real financial fit has run.",
+      "evidence": [
+        "IMPLEMENTATION_REVIEW.md",
+        "implementation-coverage-v4.json",
+        "replay/fresh-expanded-02.xml"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    },
+    {
+      "id": "C11",
+      "status": "partial",
+      "disposition": "1420unique fits predeclared with all44table rows; all claim attempts/cells retained. Full empirical denominator has not executed.",
+      "evidence": [
+        "full_sources/fit-allocation-v1.json",
+        "full_sources/table-status-pre-fit-v2.json"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    },
+    {
+      "id": "C12",
+      "status": "partial",
+      "disposition": "Price/graph comparators and variants implemented and synthetically checked; common real populations/masks must be admitted before fitting.",
+      "evidence": [
+        "IMPLEMENTATION_REVIEW.md",
+        "implementation-coverage-v4.json",
+        "replay/fresh-expanded-02.xml"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    },
+    {
+      "id": "C13",
+      "status": "partial",
+      "disposition": "Synthetic CPUcheckpoint/independent metric checks passed; empirical saved-model and metric comparisons remain unevaluated.",
+      "evidence": [
+        "replay/controller-synthetic-03-bundle.json",
+        "replay/fresh-environment-01.json",
+        "IMPLEMENTATION_REVIEW.md"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    },
+    {
+      "id": "C14",
+      "status": "partial",
+      "disposition": "Fullcurrent387pass/1CUDA skip suite and two saved synthetic predictions replayedexactly in earlier cleanlocked offline environment with unchanged distributions. Real admitted raw-to-prediction example remainspending.",
+      "evidence": [
+        "replay/fresh-environment-01.json",
+        "replay/fresh-synthetic-suite-01.xml",
+        "REPRODUCE.md",
+        "replay/fresh-expanded-02-replay.json",
+        "replay/fresh-expanded-02-guard/final.json"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    },
+    {
+      "id": "C15",
+      "status": "partial",
+      "disposition": "Pilot 02 failed under independently verified systemd-oomd ancestor memory pressure. All 109 cells and 69 artifact hashes verified; 7 complete, 102 unavailable. Owners are dead and cleanup verified. Fourteen source-days are decoded and a third week was attempted despite unavailable source-day finalization. Full-size MCM/neural/worst-week feasibility remains unavailable.",
+      "evidence": [
+        "pilot_successor_02/gate-v3.json",
+        "review/capacity-interim-02.json",
+        "IMPLEMENTATION_REVIEW.md",
+        "pilot_successor_02/closure-01/closure.json",
+        "review/capacity-closed-partial-03.json",
+        "pilot_successor_02/closure-01/hash-audit-01-complete.json",
+        "pilot_successor_02/closure-01/hash-audit-01-guard/final.json"
+      ],
+      "reviewer_disposition": "Independent terminal identity, ownership, source/input/runtime, all-cell and all-artifact closure review passed; no retry or full capacity release."
+    },
+    {
+      "id": "C16",
+      "status": "partial",
+      "disposition": "Compact snapshots652,03delta and04delta independently externallyrecovered;04preserves6653members/12981017bytes including both CM rawpanels/cells/attribution. Largepilot/transaction stores and real raw-to-prediction replay remainunverified.",
+      "evidence": [
+        "replay/preparation-recovery-02-complete.json",
+        "replay/controller-synthetic-03-bundle.json",
+        "replay/preparation-recovery-03-complete.json",
+        "replay/preparation-recovery-04-complete.json"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    },
+    {
+      "id": "C17",
+      "status": "partial",
+      "disposition": "All44Tables1\u20136 rows mapped; none empirically completed. Original65fundentity/25Alameda cohort and vintage unavailable; this blocks Tables5\u20136 full completion.",
+      "evidence": [
+        "TABLE_COVERAGE.md",
+        "full_sources/table-status-pre-fit-v2.json"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    },
+    {
+      "id": "C18",
+      "status": "pending",
+      "disposition": "Incremental independent reviews recorded; full experiment/metric/resource closure and final review are not complete.",
+      "evidence": [
+        "IMPLEMENTATION_REVIEW.md"
+      ],
+      "reviewer_disposition": "Interim18criteria/flags independently reviewed; component evidence and empirical limitations retained"
+    }
+  ],
+  "qualification": "Current criterion dispositions; no final full-scope acceptance. Original numbered criteria unchanged."
+}

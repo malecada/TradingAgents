@@ -1,0 +1,9 @@
+{
+  "elapsed_seconds": 56.179419406995294,
+  "peak_worker_rss_bytes": 1885659136,
+  "phase": "neural_checkpoint",
+  "reason": "ValueError: capacity: neural intermediate estimate exceeds registered working allowance 1073741824 under cap 3221225472: 10713395200",
+  "status": "unavailable",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot_successor_02/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py\", line 93, in perform\n    if estimate>limits['neural_intermediate_allowance_bytes']:raise ValueError('capacity: neural intermediate estimate exceeds registered working allowance '+str(limits['neural_intermediate_allowance_bytes'])+' under cap '+str(limits['memory_max_bytes'])+': '+str(estimate))\n                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: capacity: neural intermediate estimate exceeds registered working allowance 1073741824 under cap 3221225472: 10713395200\n",
+  "week": "2022-01-03"
+}

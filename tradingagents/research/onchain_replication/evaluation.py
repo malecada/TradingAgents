@@ -50,14 +50,17 @@ def evaluate_cell(run,cell,examples,scaler,features,model_config,training_config
     if not examples.train or not examples.test:raise ValueError('empty fixed train/test population')
     if scaler.train_hash!=examples.train_hash or provenance['input_hash']!=examples.train_hash:raise ValueError('training membership/scaler mismatch')
     if cell['arm'] not in PRICE_ARMS|{'constant_graph'}:
+        expected_representation='motif_mcm' if cell['arm'] in {'proposed','mcm_without_gat','training_label_permutation'} else cell['arm']
+        if feature_binding.get('representation')!=expected_representation or feature_binding.get('asset')!=cell['asset']:raise ValueError('feature representation/asset differs from requested cell')
         if feature_binding.get('fold_id')!=cell['fold'] or feature_binding.get('train_hash')!=examples.train_hash or feature_binding.get('dictionary_hash')!=provenance['dictionary_hash']:raise ValueError('feature fitted provenance mismatch')
         if feature_binding.get('seed')!=cell['seed'] or feature_binding.get('fold_hash')!=examples.fold_hash:raise ValueError('feature seed/fold binding differs')
         if (feature_binding_input is None)==(feature_binding_output is None):raise ValueError('exactly one admitted feature binding required')
         if feature_binding_input is not None:bound=json.loads(run.read_input(feature_binding_input))
         else:
             path=run.directory/'outputs'/feature_binding_output
-            if run._published_outputs.get(feature_binding_output)!=file_hash(path):raise ValueError('feature output not published by this run')
-            bound=json.loads(path.read_bytes())
+            raw=path.read_bytes()
+            if run._published_outputs.get(feature_binding_output)!=digest(raw):raise ValueError('feature output not published by this run')
+            bound=json.loads(raw)
         if canonical_bytes(bound)!=canonical_bytes(feature_binding):raise ValueError('feature binding differs from admitted artifact')
         if feature_binding.get('feature_hashes')!={h:feature_hash(v) for h,v in features.items()}:raise ValueError('feature tensor bytes differ')
         required={h for x in (*examples.train,*examples.test) for h in x.graph_hashes}

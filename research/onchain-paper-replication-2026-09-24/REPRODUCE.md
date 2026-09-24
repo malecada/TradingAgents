@@ -17,5 +17,25 @@ From the active checkout:
 ```
 
 These are synthetic/read-only checks and do not launch empirical experiments.
-No saved empirical inference example or fresh-environment offline reproduction
-has yet been produced; C14 remains pending. Do not infer raw backup from this file.
+A saved empirical inference example and real raw-to-prediction replay remain
+pending. Completed clean-environment synthetic reproduction is recorded below;
+its scope does not establish empirical replay or full raw-data backup.
+
+
+## Latest completed offline checkpoint
+
+`replay/fresh-expanded-02-source.json` freezes the current source and test bytes.
+The previously created clean offline locked environment at
+`/tmp/onchain-paper-replay-env-20260924-01` was reused with exactly unchanged
+installed distributions. Under a2.5 GiB guard and network-denying main-process
+audit hook, the expanded synthetic suite passed 387 tests with one CUDA skip and
+six inherited pytest temporary-directory cleanup warnings. Guard 443.445 seconds,
+peak sampled 934,776,832 bytes, child 0, no memory events and cleanup verified.
+`replay/fresh-expanded-02.xml` and its guard retain the full evidence.
+
+`replay/fresh-expanded-02-replay.json` records two saved synthetic model
+predictions with maximum absolute difference 0. This is saved-checkpoint replay,
+not a real financial fit. Full raw-to-prediction replay remains pending.
+The verifier script is `replay/fresh_expanded_02.py`; its output identities are
+closed evidence and must not be rerun into the same paths. A future verification
+uses a new bounded directory/identity and a new source freeze.

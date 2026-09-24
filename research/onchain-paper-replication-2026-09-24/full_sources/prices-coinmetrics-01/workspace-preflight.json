@@ -1,0 +1,62 @@
+{
+  "mapping": {
+    "root": "/tmp/onchain-paper-coinmetrics-checkout-20260924-01",
+    "ledger": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_runs",
+    "artifacts": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research_artifacts",
+    "git_common": "/home/malecada/master_thesis/TradingAgents/.git"
+  },
+  "import_path": "/tmp/onchain-paper-coinmetrics-checkout-20260924-01/tradingagents/research/onchain_replication/job.py",
+  "runtime_inventory": {
+    "python": "3.13.13",
+    "cpu_count": 12,
+    "lock_sha256": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a",
+    "packages": {
+      "numpy": "2.3.0",
+      "scipy": "1.17.1",
+      "pyarrow": "23.0.1",
+      "torch": "2.10.0",
+      "scikit-learn": "1.7.2"
+    }
+  },
+  "same_ledger_lock_inode": true,
+  "jobs": [
+    {
+      "identity": "paper-prices-coinmetrics-btc-20260924",
+      "ready": true,
+      "source": "3b8e660842c9634f0dadaea3ee81c34571d7772a",
+      "source_files": 60,
+      "inputs": 12,
+      "resources": {
+        "disk_floor_bytes": 21474836480,
+        "disk_paths": [
+          "/tmp/onchain-paper-coinmetrics-checkout-20260924-01"
+        ],
+        "memory_high_bytes": 402653184,
+        "memory_max_bytes": 536870912,
+        "reserve_bytes": 3221225472,
+        "start_reserve_bytes": 3758096384,
+        "wall_seconds": 300
+      }
+    },
+    {
+      "identity": "paper-prices-coinmetrics-eth-20260924",
+      "ready": true,
+      "source": "3b8e660842c9634f0dadaea3ee81c34571d7772a",
+      "source_files": 60,
+      "inputs": 12,
+      "resources": {
+        "disk_floor_bytes": 21474836480,
+        "disk_paths": [
+          "/tmp/onchain-paper-coinmetrics-checkout-20260924-01"
+        ],
+        "memory_high_bytes": 402653184,
+        "memory_max_bytes": 536870912,
+        "reserve_bytes": 3221225472,
+        "start_reserve_bytes": 3758096384,
+        "wall_seconds": 300
+      }
+    }
+  ],
+  "captured_csv": false,
+  "gate_sha256": "232d416fdc96acc0f8f9ce9287fdfbf920962e9ddf87b815cc23c54ae5855979"
+}

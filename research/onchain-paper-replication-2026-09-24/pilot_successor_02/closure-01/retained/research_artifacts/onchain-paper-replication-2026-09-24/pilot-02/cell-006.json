@@ -1,0 +1,12 @@
+{
+  "elapsed_seconds": 544.0508828520033,
+  "id": "mcm-2022-01-03",
+  "peak_sampled_cgroup_bytes": 2279645184,
+  "peak_worker_rss_bytes": 1885708288,
+  "phase": "mcm",
+  "reason": "ValueError: neighborhood capacity exceeded, no truncation",
+  "status": "unavailable",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot_successor_02/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py\", line 86, in perform\n    mcm_features(graph,dictionary,matching,output=output,checkpoint=checkpoint);output.flush()\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/mcm.py\", line 22, in mcm_features\n    local=index.neighborhood(center,dictionary.config)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/neighborhoods.py\", line 58, in neighborhood\n    g=self.graph;indices=self.selected(center,config);mapping={old:new for new,old in enumerate(indices)}\n                         ~~~~~~~~~~~~~^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/neighborhoods.py\", line 54, in selected\n    if len(selected)>config['maximum_neighborhood_nodes']:raise ValueError('neighborhood capacity exceeded, no truncation')\n                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: neighborhood capacity exceeded, no truncation\n",
+  "week": "2022-01-03",
+  "worker_exit_code": 0
+}
