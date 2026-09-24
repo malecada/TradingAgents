@@ -1026,3 +1026,484 @@ pending. comparison-synthetic-02.xml records two passes and SHA256
 26f3de9d955928d284dcb62f4e713e928af7364967a054d6abd9237e720a5193.
 The reporting finding is closed; no additional bounded software blocker was
 identified. All prior empirical-release and verification limits remain in force.
+
+
+Preparation snapshot external recovery review (September 24): all 53 recovered
+members, totaling 1,899,175 bytes, were independently compared with Git blobs
+from exact commit 35c92e56b143226df07050edaa8665b34d52663f (lazy fetching disabled),
+not the subsequently edited working files. Every byte count and SHA256 matches
+the contract, recovered file and retained HTTP-200 member receipt. The receipts
+use the exact pinned raw.githubusercontent.com/malecada/TradingAgents URLs;
+the recovered intent binds the contract and recovered result equals the retained
+completion. Contract SHA256
+1254d2464e9a5561bec5505260a3e1b02b43e02392ffe439928b31333354bbb4;
+completion SHA256
+2fc49cb726ea17c73b2efbdf8756c270fb01e6ba26267a4355ee044d2420dbe9.
+
+Guard final/live bytes agree (SHA256
+ a43fbe164b380e7ee9e53104f4107d8dc925d441c552dd6a87af7a72cb2180c3):
+child exit 0, cleanup verified, cgroup absent, no resource-limit reason or OOM;
+256 MiB hard cap, 192 MiB high threshold, zero unit swap, two observed CPUs.
+Observed elapsed time is 6.369 seconds and sampled peak is 31,383,552 bytes.
+Active HEAD remains c6b568d4b1c177ab94ac37fbad462c2decc721c0.
+This verifies recovery of the finite preparation snapshot, not a complete
+transaction-store/model backup or full empirical C16. No network request,
+fetch, checkout, commit or active-pilot action was performed by this reviewer.
+
+Retained ETH metadata mapping review (September 24): independent reconstruction
+confirms all 1,096 dates from 2022-01-01 through 2024-12-31 and all 156 consecutive
+complete Monday UTC weeks from 2022-01-03 through 2024-12-23. The weekly population
+contains 1,092 dates, seven exact members per week, and the four boundary dates
+2022-01-01, 2022-01-02, 2024-12-30 and 2024-12-31 remain explicitly excluded.
+Every generated day receipt/map hash and member row denominator agrees with the
+preserved fullpanel plan. Every ordinary map's 58,965 spans was checked against
+hashed old manifest/projection/request metadata, exact half-open range, object
+ETag/If-Match, declared raw/stored hashes, codecs and stored file size. The special
+2024-01-01 map's 118 spans were checked against its separately bound prototype,
+pilot-context and footer receipts. Only metadata and file stat calls were used;
+no transaction blob was read, hashed, decompressed or decoded.
+
+The index records 1,221,389,903 declared source rows and 103,524,489,043 summed
+stored-span bytes. These are retained metadata declarations, not newly decoded
+row validation or a newly measured unique physical disk footprint. The index
+explicitly leaves transaction_data_admitted=false. Index SHA256
+2f0f79e37e2beb5beb1baee0e4fb6c5242a10dd4b370e0c87f4413c859383636;
+completion SHA256
+b62e47e176d0a50a509ffb3f765bba830c58cba76ef09c006045d5e39b8c9f25.
+The mapping guard final/live SHA256 is
+f0c722397f37f05c6872a282dec51167baa3d76ca069372307acd5da55638359;
+child exit 0, cleanup verified, cgroup absent, no OOM or hard-limit reason,
+24.503 seconds and 402,653,184 sampled peak bytes. There were 815 memory.high
+throttling events, which must not be described as absent resource pressure.
+No current numerical completeness, value admission, forecast fit or paper-scope
+completion follows from this metadata mapping. No material mapping discrepancy
+was found within the inspected metadata scope.
+
+
+Selected-range capture review (September 24; corrections pending): the new
+range_source helper checks an admitted run, exact registered policy and date
+cells, complete asset/year catalogues, object keys and ETags before requests.
+Finite request/received/compressed-blob limits, conditional half-open range
+requests, full selected-column plan checks, planning/footer consistency, exclusive
+object directories and immutable normal/denied/one-byte-overflow responses were
+inspected. All seven retained synthetic tests independently pass. Successful
+byte retention explicitly leaves transaction_data_admitted=false, and missing
+objects/dates remain in the denominator. No real request was made.
+
+Two P2 corrections are required before empirical source release:
+
+- range_source.py:84–92 discards partial response bytes on transport exceptions
+  and charges no received bytes. An independent two-object fixture throws
+  IncompleteRead(partial=b'12345678') twice under a registered nine-byte maximum:
+  16 bytes were observed, summary.received_bytes was zero, and no body was
+  retained (two error-text receipts only). Preserve bounded exposed partial
+  prefixes, and charge a conservative reserved maximum or stop on errors whose
+  consumed byte count is unknown. The request counter alone does not enforce the
+  promised received-byte limit. The default HTTP reader can fail after partial
+  consumption, so this is not limited to an invalid oversized mock transport.
+- range_source.py:204–206 creates the objects subdirectory but fsyncs only the
+  capture directory's parent. Before the first request, the objects entry in
+  the capture directory has not been durably flushed. Independent instrumentation
+  confirms this missing parent sync. A power loss during the first object's
+  capture can lose its retained evidence subtree before the first daily receipt
+  later flushes that directory. Fsync the capture directory after objects.mkdir
+  and before releasing any request (or use the reviewed durable_mkdir helper).
+
+No other material issue was identified within this bounded helper review.
+Actual source acquisition still requires a committed finite registration and
+outer resource/ownership/post-death reconciliation; this helper does not admit
+values, canonical-chain completeness, model fitting or full paper coverage.
+Only temporary synthetic fixtures and the review appendix were written.
+
+
+Selected-range capture correction closure (September 24): both findings are
+resolved in the reviewed helper. A request reserves maximum+1 charged bytes
+before transport; only a normal bounded return refunds its unused reservation.
+Exceptions retain a compressed, hashed partial prefix when available and mark
+unknown received bytes explicitly. A separate charged-byte counter prevents
+reusing unknown transfer capacity. The capture directory is now fsynced after
+creating objects/ and before any request. Header fragments below four bytes
+are compared against the exact corresponding PAR1 slice.
+
+Independent repetition of the original two-object counterexample now makes
+only one request under the nine-byte budget, charges nine bytes, preserves all
+eight known prefix bytes with verified stored/raw hashes, retains the complete
+date denominator, and confirms the parent directory was synced before transport.
+All ten selected tests independently pass, including the unknown-timeout case.
+Retained range-capture-synthetic-03.xml has ten passes, no failures/errors/skips,
+SHA256 3bef332bfa6d865413f34f7729aa2d5df7aa360fa05377d55a333e51f888c92d.
+The earlier nine-case XML02 is preserved with SHA256
+0b248766dc70d4490c4b7863c463441fac41060de824621d86e63cf3a9d7e3d8.
+No additional bounded helper blocker was found. This remains synthetic software
+verification; no source request, transaction decoding, active-pilot mutation or
+empirical-release approval occurred. Committed finite registration, guarded
+ownership and post-death reconciliation remain required for actual acquisition.
+
+
+Prepared-component batch execution review (September 24): the exact registered
+cell denominator, exclusive batch directory, immutable per-cell dispositions,
+registered unavailable evidence, zero-fit controls and continuation of ordinary
+independent fit failures were inspected. The initial three synthetic SVM/
+isolated-failure/membership tests independently pass. Retained
+batch-execution-synthetic-01.xml SHA256 is
+0d2f8fa603813600203baab819b00bde40d36bb580204e04f7feef45e75cee81.
+
+The review identified three P2 integration gaps, corrected during review:
+(1) run.py originally matched only decision-date masks, allowing conflicting
+same-asset/fold labels and target prices across comparator populations;
+(2) neither batch nor evaluator matched representation identity to model arm,
+allowing WatchYourStep features to reach a Node2Vec fitting path; and
+(3) evaluation.py's same-run feature-output route hashed one file read but
+parsed a later read. The first two were independently reproduced with synthetic
+registered populations and a sentinel before numerical fitting.
+
+Current corrections compare common train/test price inputs, input dates,
+decision/label clocks, targets, up labels, fold identity and scaler values while
+allowing different graph lineage. Both batch and evaluator enforce the requested
+representation/asset (motif_mcm is shared only by the three appropriate arms).
+The evaluator hashes and parses one identical same-run output buffer.
+Independent repetitions confirm conflicting labels and wrong representation
+are refused before fitting. A substituted output buffer now produces a durable
+failed cell while the independent synthetic SVM cell continues. The three
+findings are closed within this bounded scope.
+
+The executor remains a prepared-component stage, without a connected raw-source
+controller, guarded whole-run lifecycle or post-death batch reconciliation.
+Failure attempts are retained as attempts, not established successful numerical
+fits; controls retain fit_count=0. Independent prediction/metric verification,
+real price/calendar checks and actual financial release remain outstanding.
+No real financial input, source request, active-pilot mutation or HEAD change
+was performed by this reviewer.
+
+
+Post-death representation journal recovery review (September 24; terminal-proof
+correction pending): the helper targets an exact owned representation directory,
+requires run-specific guard and launch-owner evidence, current boot, verified
+cleanup and an absent/empty owned cgroup, and validates the durable contiguous
+event prefix before publishing a terminal. Unpublished component bytes remain
+untouched, and neither computation nor successor admission occurs. Five initial
+targeted tests independently pass. These are synthetic proof fixtures, not an
+actual generic-controller crash or financial continuation test.
+
+Two P2 findings were independently reproduced. First, a synthetic observer crash
+after recovery-candidate publication left a permanent FileExistsError on the
+next closure attempt. This has been addressed in the current source by exact-byte
+idempotent candidate/evidence publication, with mismatched retained bytes refused;
+new author regressions cover interruption after either file's publication.
+Second, journal_recovery.py:_death originally verified the hash of failed.json
+but ignored its actual lifecycle fields. Replacing it in a synthetic proof with
+status=complete, experiment_id=unrelated and a wrong claim_sha256 still authorized
+journal closure. Require status=failed, the exact owner experiment_id and the
+hash linkage to the already verified claim before any candidate publication.
+The existing synthetic fixture's reason-only failed record must also be replaced
+with the actual lifecycle schema. No guard/process action, active-pilot change,
+empirical source access or model computation was performed by this reviewer.
+
+
+Post-death journal correction closure (September 24): both findings are closed.
+The actual failed lifecycle status, owner experiment_id and exact claim_sha256
+are now required before candidate publication. Independent repetition refuses
+the unrelated complete-status terminal before writing any candidate. Independent
+repetition of observer interruption after candidate validation now completes
+closure while retaining identical candidate bytes and untouched unpublished
+component bytes. All ten targeted journal tests independently pass, including
+individual status/owner/claim mismatch and both observer interruption positions.
+Retained journal-postdeath-synthetic-03.xml has ten passes, no failures/errors/
+skips; SHA256 ae8160e5525d2ea9bd822f9b413865255d2899303e6ccf82e1eb25e5dcb648e0.
+
+The updated batch/evaluation retained XML02 was also inspected: 15 passes, no
+failures/errors/skips, SHA256
+60f15e7d92f3cd2aedb5a8eac69c84c499b0e8deca8a23bbfdb59b6b65fd48d7.
+That evidence includes synthetic full-architecture integration; it does not
+establish empirical C13, whole-history scope or agreement with published values.
+No additional material blocker was identified in these bounded helpers.
+Connecting and verifying the generic guarded controller, batch observer and
+actual registration/admission remain separate release requirements.
+
+
+Generic job controller and prepared-payload review (September 24; pure-preflight
+ordering correction pending): launch/monitor/worker ownership, conditional guard
+policy, registered source/range payload dispatch, dynamic same-run representation
+bindings, independent price-cell continuation on representation capacity failure,
+and complete post-death cell denominator retention were inspected. The initial
+nine supervisor/payload cases independently pass. The observer correctly emits
+proof for unsealed journals without loading their numeric components; actual
+journal validation remains a separately guarded operation. Incomplete fit bytes
+are preserved rather than recomputed.
+
+Four P2 findings were identified and corrected during review: incomplete source
+dependency binding; external reconciliation able to stop a still-live monitor's
+owned group; successful final guard receipt accepted from another owner/command;
+and lifecycle terminal existence trusted without owner/claim/denominator linkage.
+Independent synthetic probes reproduced acceptance of a foreign successful guard,
+a simulated stop while the monitor remained alive, and both completed and failed
+terminal files carrying unrelated experiment and claim fields. No real process
+was stopped. Current source binds the complete local replication package and
+lifecycle entry files, verifies import root, checks PID/start ticks before any
+external action, validates final/live ownership, and checks lifecycle status,
+owner/claim/source/registration/output hashes and complete-cell denominator.
+Complete observer status now separates all_cells_complete from
+financial_completion=false. Updated supervisor cases independently pass.
+
+One material P2 ordering gap remains: job_payload.py:execute_fit_payload starts
+representation production before execute_batch validates the comparator
+populations and semantic job references. A fully registered synthetic payload
+with real tiny graph manifests and conflicting same-date labels reaches
+prepare_registered_features before rejection; a sentinel stopped it before any
+representation computation. Move pure population/cell/model/descriptor/output
+preflight ahead of all representation loading/fitting/reuse, deferring only checks
+of not-yet-produced binding bytes. An invalid comparison should not consume
+representation work before its frozen labels/splits are checked.
+
+The generic payload currently supports representation continuation but has no
+per-fit continuation or completed-fit prediction-recovery route in its batch
+item schema. Existing lower-level recovery APIs do not make this connected yet;
+this remains an explicit implementation requirement, not permission to rerun a
+closed fit. A new isolated synthetic guarded-controller probe is appropriate
+only after the preflight issue is closed. No empirical generic-job registration
+or launch has been approved, and no market capture, financial data read, active
+pilot mutation, source commit or HEAD change was performed by this reviewer.
+
+
+Generic payload preflight and fit-recovery closure (September 24): the remaining
+ordering finding is closed in the current source. run.preflight_batch now runs
+before representation loading, production or reuse; it verifies actual ordered
+unique training/test decisions, exact membership hashes, common comparator
+labels/prices/splits/scaler/mask, scientific cell semantics, registered outputs
+and recovery inputs. job_payload additionally checks every consumer descriptor,
+producer population training/fold/required-graph identity, registered producer
+outputs and unused representation jobs before loading any graph arrays. The
+original conflicting-label sentinel was independently repeated and refused
+before graph loading or producer entry. Five targeted payload cases independently
+pass. Only actual not-yet-produced feature bytes are deferred to batch execution.
+
+The per-fit continuation and completed-fit prediction-only routes are now wired
+through explicitly registered checkpoint/provenance inputs; prediction recovery
+also requires the registered completion input and a new parent run. Independent
+execution of test_batch_prediction_recovery_uses_completed_parent_fit_without_refitting
+passes: recovered predictions equal the completed parent's predictions, a
+sentinel forbids creating a new fit reservation, and exactly one fit claim
+remains. Existing lower-level interrupted-training evidence covers exact numeric
+continuation; this bounded check did not repeat every interruption mode through
+the generic controller.
+
+Retained job-payload-synthetic-03.xml contains 15 passes with no errors/failures
+(SHA256 d2fe97aedc9e748fb1aca9aec85151d8db40492877cc81fdf7d0bea53b81a7f0).
+The preceding XML02 collection error remains preserved (SHA256
+0c9f3679bd66315fb648e0de607886f79117099127802aa8ec04b90b504df9fd);
+it is not counted as a passing run or empirical exposure.
+
+No remaining material blocker was identified for one separately identified,
+isolated temporary-repository synthetic end-to-end guarded controller probe,
+subject to exact source/runtime/input admission and the existing resource limits.
+That probe must establish the actual child/monitor/observer terminal and cleanup
+evidence before claiming controller integration success. This conditional
+software disposition does not release source capture, market-data fitting,
+financial recovery, empirical C13, full paper coverage or numerical agreement.
+No network request, empirical body read, active-pilot input mutation, HEAD change
+or process control was performed by the reviewer.
+
+
+Repeated-observer integrity review (September 24; further correction required):
+the current patch revalidates retained lifecycle terminal SHA, owner claim, output
+bytes and contradictory terminal, and moves preexisting failed-terminal validation
+ahead of postmortem publication. Two independent synthetic counterexamples still
+pass through job.py:238–256: after successful reconciliation, changing the retained
+final guard child_exit_code from zero to one returns the unchanged complete
+observer; after failed reconciliation, replacing postmortem-cells.json with an
+empty list returns the unchanged failed observer and its stale cell_ledger_sha256.
+Bind and verify the retained guard/denominator evidence on repeated reconciliation,
+including the live/final or observer-death receipts and unsealed-journal list used
+by that disposition. This is a P2 evidence-integrity blocker for copying the final
+synthetic-probe controller source. The probes used only temporary synthetic
+repositories and fake nonexistent cgroup paths; no process was controlled.
+
+
+Repeated-observer integrity correction closure (September 24): job.py SHA256
+ced2f9d3505d41ab7f5af354669d2a279be3780134b38f1757c2c3fc2ef0fe5a
+now records and revalidates the exact present evidence map for launch, live/final
+guard, observer-death, postmortem cell ledger and unsealed-journal list. Independent
+repetition refuses both prior counterexamples (modified final exit code and
+emptied cell ledger), plus removal of the journal-list receipt and addition of a
+previously absent final guard receipt. All four targeted adversarial tests also
+independently pass. Retained job-supervisor-synthetic-05.xml contains 24 passes,
+no errors/failures/skips; SHA256
+4997521d618e60d2b722dc0be21f1448cc0e64aae7ced40fd77b891af6d47c9c.
+The identified blocker is closed for this exact controller source. The conditional
+disposition for one isolated, newly identified synthetic guarded controller probe
+is restored; the superseded unlaunched preparation is not an executed attempt.
+Actual guard/process/terminal receipts remain subject to independent inspection
+after the probe. No empirical release or active-pilot mutation is authorized by
+this software review.
+
+
+Dependency-closure addendum before any probe launch: the author identified the
+additional dynamic research/verify.py path during isolated source-copy preflight.
+The conservative source set now includes every parent research/*.py file, matching
+the lifecycle runtime-hash set as well as the full replication package and root
+initializer. Independent inspection of the change and targeted dependency test
+pass. The current reviewed job.py SHA256 is
+7c91e29a1d817b41af20747a68413a2a80e7cf231dfeed703856637e63c0092d;
+this supersedes the immediately preceding source hash without changing the
+conditional one-probe scope. Retained supervisor XML06 has 24 passes and no
+errors/failures/skips, SHA256
+f14f3a93811a767d7157912a29b54a55fea3afeb79cfa0f23ad9f4084e1a1917.
+
+
+Independent isolated guarded probe02 audit (September 24): retained temporary
+repository /tmp/onchain-paper-generic-job-synthetic-20260924-02, experiment
+controller-synthetic-20260924-02, source
+6b778c75e861403edf44c356f33429ed76456bfc. Exact raw ledger inspection corrects
+the initial author interpretation: only the SVM regression count cell completed.
+The proposed direction sum cell is unavailable because representation production
+failed with ValueError: insufficient unique centers; the deliberately blocked
+cell is also unavailable. All three cells and both distinct reasons are retained.
+The representation has failed/attempt-failed records with numerical_complete=false,
+and no neural fit claim/checkpoint exists. Therefore this probe establishes
+containment and independent-cell continuation, not full guarded motif execution.
+The initial claim of neural completion was immediately reported and withdrawn.
+
+Independent hashing verifies 59 admitted source files, 23 input artifacts, all
+five output files, owner/launch/live/final linkage, exact claim and lifecycle
+terminal linkage, and the source HEAD. Guard terminal SHA256
+55dbcfc8a580964a66e5d2b7961298cdfd2cb3acca30fc7e4a67f349a41757ff
+records child exit zero, cleanup verified, no limit reason or memory events,
+36.69961 seconds, 378937344 bytes sampled peak, 1.5 GiB hard/1.25 GiB high,
+zero swap and two-CPU affinity. The owned cgroup and recorded supervisor, monitor
+and workload PIDs are absent. Cleanup stop returncode five is retained alongside
+inactive/dead unit evidence. Observer SHA256
+0a5b760cb8de582ec9040cd7e6e52b3bd799544259dc5f046a6cc42716772e9a
+correctly has all_cells_complete=false and financial_completion=false. Lifecycle
+terminal SHA256 is
+3d524125e4e88d819a835290d7376fd793445efaf3539e80d123c26a16583c9d;
+claim SHA256 is f176baf83d7ecf671eab53126a1b003cc0eba298196aa05bde020d3c0c254519.
+
+The sole retained model.joblib SHA256
+28f01e45707723cd522ec50a760183695c2173210879e7b6e9ed85a35a8d59e3
+matches prediction/cell/fit completion bindings. Independent scalar recomputation
+from four saved synthetic regression rows reproduces MAE 0.8453929716747979,
+MSE 0.7160077297638942, RMSE 0.84617239955218 and MAPE percent
+0.7132448683850259 within 1e-12, with valid row clock inequalities. Model inference
+was not rerun. No classification metrics can be verified because that cell did
+not produce predictions. The 32-sample/32-motif fixture configuration is synthetic
+and does not alter production 512-sample requirements, establish empirical C13,
+or admit any market source or financial fit.
+
+
+Prospective synthetic probe03 fixture review (September 24; not executed by
+reviewer): prepared source c9f03c003f899ce752a6aad292e323e8fb9592f5,
+registration SHA256
+a46763bb1f824807da14e487e12c965a6e21151f2c836cf8d31a02298ec93df0,
+under /tmp/onchain-paper-generic-job-synthetic-20260924-03. All 59 copied source
+hashes equal probe02 exactly. Batch plan and population bytes are unchanged.
+The declared dictionary population now retains all 117 deterministic fixture
+graphs; independent metadata/array-member hash checking identifies 103 eligible
+training snapshots and 206 unique (snapshot, node) centers, sufficient for the
+unchanged sample_count=32 and dictionary size=32. The exact 15 required graph
+hashes remain unchanged and are included in the declared graph population.
+Training remains one epoch, batch size two, seed eleven and fixed configuration.
+The implementation still filters dictionary samples by the frozen training
+interval; enlarging this explicit synthetic population does not admit test
+graphs to dictionary fitting. No launch directory or lifecycle claim exists.
+
+This concrete fixture correction is appropriate for one separately identified
+probe03 under the same resource ceilings, after the other synthetic guarded
+suite ends and live reserve/admission checks pass. Probe02 must remain terminal
+and unchanged. This is ordinary synthetic verification, with no empirical
+family-budget use or implication for production 512-sample capacity. Success
+requires actual proposed-model completion evidence; a clean guard alone remains
+insufficient. No probe was launched, fitted or replayed by the reviewer.
+
+
+Legacy price-controller release re-review (September 24): sharing research_runs
+and research_artifacts through fixed worktree symlinks is compatible with the
+current lifecycle paths: the lock is the same physical .lock file, claims remain
+visible centrally, and verify_claim resolves the physical ledger root with shared
+Git objects. Actual prepared-worktree/runtime/admission checks would still be
+required. However, the pinned prices-01/reconcile.py retains the P2 observer
+integrity flaws corrected in the generic controller. An independent temporary
+synthetic fixture supplies a foreign-owner successful final guard plus a
+complete.json containing status=failed and an unrelated experiment; lines 44–48
+still publish complete. Replacing both files with empty objects then returns
+the same complete result through line 28 without revalidation. Therefore the
+legacy price-controller release remains blocked despite the earlier source
+review. No process or HTTP request was made. The parent accepted the finding and
+will preserve v1/v2 bytes while proposing price dispatch through the reviewed
+generic controller under a new exact source/gate freeze.
+
+
+Independent guarded synthetic probe03 terminal review (September 24): exact
+three-cell ledger now has proposed direction complete, SVM regression complete
+and the deliberately blocked cell unavailable without an attempt. All source,
+input, lifecycle-output, claim, owner and observer evidence hashes were checked.
+Guard terminal SHA256
+d1e33ea0b821f556d58c50e3042048eb140351a3db3d5d1ff29031b2fb0d261b
+records 143.08513 seconds, 477642752 bytes sampled peak, child zero, verified
+cleanup, no limit or memory event. Owned cgroup and supervisor/monitor/workload
+PIDs are absent. Observer SHA256
+41d1bb80f23962160578be20340ae31577bf6511fe1e750ab98fe207510c5b48
+and lifecycle terminal SHA256
+6ed0277719f7deac79390f47cad1709b5c19c3ba937954168bf7e489f8b916dd
+retain the expected unavailable cell rather than claiming all cells complete.
+
+The completed numerical journal contains samples, dictionary, all fifteen
+required MCM/graph completions and representation completion. All 33 event
+manifest hashes and 45 referenced numeric-array hashes were independently
+checked. Dictionary metadata contains 32 representatives, 32 memberships and
+103 training graph identities. Journal completion SHA256
+f26b15eab9e471683a2ad8b9e91f8840cb635c2b3a69e3312d9b0aba21562dda
+is retained. Neural checkpoint manifest
+97ab3a825819aadc4f3aeb8a3b90ff22ea6acfd590f2516321c59e10eab709db
+binds state.pt SHA256
+27640cbd837208c3406e81d73944e588e84cb21de4c888d6513711630f077a28.
+Read-only weights-only inspection confirms epoch one/batch zero, optimizer/RNG
+state and twenty finite model tensors covering motif MLP, both GAT layers, LSTM,
+query/key/alignment attention and output. No inference or fitting was rerun.
+
+Independent scalar metrics from the four saved rows match the frozen C13
+atol=1e-10/rtol=1e-8: regression matches exactly; classification has TP=4, other
+confusion counts zero, accuracy/up precision/recall/F1 one, macro/
+balanced measures one half, Brier 0.0000512087492969826 and independently
+computed log loss 0.007181726727244589. Reported log loss differs by
+1.3450053e-10, within that frozen combined tolerance (not within 1e-12). Clock
+inequalities and prediction/cell/checkpoint hashes agree. The all-up four-row
+fixture supports software plumbing only. This closes the intended guarded
+synthetic full-architecture probe; production sample count, empirical C13 model
+replay, paper-scope coverage and numerical agreement remain unestablished.
+Probe02 remains preserved with its distinct representation failure.
+
+
+Generic price dispatch and gate-v3 review (September 24; prospective source only):
+exact gate SHA256 e1112f5d9330a611f9b738ad4a8537f7787e315aaa130de267a20661bff13bed
+was compared with v2. Family objects, datasets, experiment identities, all
+3289 cells per asset, windows, outputs, prior eight inputs and capture policies
+are unchanged. Changes are the explicit generic-controller charter, two bound
+execution inputs (job and workspace) and conservative 59-file source closure.
+All current source/input/charter hashes match. Current job.py SHA256 is
+dfe7a862a5dc1d4708bb1a5f0a954378a0abfa54a71ae86511c872a4ef1cdea5.
+The prices branch calls the unchanged bounded price producer and uses the
+reviewed generic owner/terminal/evidence observer. Only an exact supported asset
+payload is accepted. Resource caps remain 512 MiB hard, 384 MiB high, zero swap,
+two CPUs, 3 GiB host reserve, 3.5 GiB startup, 20 GiB disk and 300 seconds.
+
+The hash-bound workspace mapping checks the exact checkout root, physical
+ledger/store and shared Git common directory before launch and worker admission.
+Independent targeted tests pass all eleven cases: strict asset schema, one
+synthetic HTTP429 response with all 3289 dispositions and indexed retained bytes,
+physical symlink mapping, and refusal of each altered root/ledger/store/Git
+mapping before job access. No real request was made. The current shared ledger
+contains three new family claims, all carrying the exact same family object;
+17 historical plus three new is 20/51. Both price identities and source
+directories remain unclaimed; sequential launches would reach 22/51, using the
+existing two allocations.
+
+No remaining material software or budget-equivalence blocker was identified for
+this prospective gate. Conditional release still requires the committed exact
+source, actual sparse-worktree/import/runtime/input verification, the same
+physical central ledger lock/artifact store, no existing per-asset owner/claim,
+and live resource admission. The worktree path must remain available while
+absolute capture-manifest references depend on it, or receive a separately
+declared relocation mapping. Old gates/controllers and the active pilot checkout
+remain unchanged. This disposition admits only the two finite sequential source
+captures after those checks; it does not admit prediction fitting or new claims
+outside the existing family allocation.

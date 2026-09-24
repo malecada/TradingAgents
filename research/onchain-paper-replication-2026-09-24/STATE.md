@@ -1,3 +1,77 @@
+# Current execution checkpoint — September 24, 2026
+
+This section supersedes the chronological snapshots below. All 13 tasks remain
+in the authorized scope. The historical negative screen is unchanged.
+
+- **Active empirical job:** `eth-paper-resource-pilot-20260924-02`, source
+  `c6b568d4b1c177ab94ac37fbad462c2decc721c0`, exec session88571. Do not change
+  active HEAD or its 26 bound source files/88 inputs. Do not relaunch this claim.
+  The fixed denominator is 109 cells. Six cells have dispositions; the second
+  registered week (2022-06-13) is being decoded and aggregated.
+- First week 2022-01-03: complete graph (2,049,095 nodes/3,182,055 edges),
+  512-neighborhood sample and 32-motif dictionary. Dictionary took2667.812s.
+  Full-node MCM is **unavailable**,544.051s, because a neighborhood exceeds the
+  frozen10,000-node ceiling; no truncation or increased cap was applied.
+  Neural checkpoint was unavailable before forward under the frozen memory
+  estimate. These are resource outcomes, not predictive results. Memory.high
+  pressure and concurrent host activity qualify pilot timings.
+- **Task1 complete. Tasks2–7/9–11 components implemented and incrementally
+  reviewed; Tasks8/12/13 remain in progress.** Main/extended empirical evaluation
+  is not complete. Exactly1,420 planned fits remain pending. Both assets,
+  2016–2024 history, all44 Tables1–6 rows and C01–C18 remain required.
+- Metadata capture is complete; selected transaction-body capture, prices,
+  full-history graph admission and empirical fits remain pending. Retained
+  ETH2022–2024 metadata maps1,096days/156completeweeks and is independently
+  checked; this does not itself admit raw bodies or graphs. Original fund
+  cohort/vintage remains unavailable. Budget remains20 consumed of51 claims.
+- Generic finite batch/payload/owned-job code is independently reviewed and
+  synthetic-tested. Expanded onchain offline suite COMPLETE:350passed/1CUDA skip,
+  253.70test seconds; guard256.857s,631,595,008peak bytes, no memory events,
+  child0 and cleanup verified. Receipt replay/expanded-synthetic-01-guard/.
+  New implementation-coverage-v2.json links all34F/Urecords to this snapshot.
+  Real-data graph-to-population preparation and resource feasibility still need
+  execution integration/admission before any full empirical completion claim.
+- Isolated **controller synthetic02 completed with one SVM cell and two
+  unavailable cells**. Proposed model did not fit: its selected fixture graph
+  population had fewer than32 training centers. No neural checkpoint exists.
+  Guard36.70s, child0, cleanup verified, no memory events. This proves containment
+  and independent-cell continuation only. All182files/2,005,999bytes preserved in
+  replay/controller-synthetic-02.tar.gz and its bundle manifest. Source672984b
+  preparation01 was superseded before launch and remains preserved.
+- **Synthetic03 COMPLETE and independently verified:**206 eligible fixture centers,
+  sample32/dictionary32, full motif→MCM→GAT→attention LSTM direction fit and
+  SVM regression complete; one deliberately unavailable cell retained. Core
+  production sample512 unchanged. Guard143.085s,477,642,752peak bytes, child0,
+  cleanup/no memory events. Review checked33journal events/45array hashes,
+  15MCM graph completions and optimizer/RNG checkpoint with all neural blocks.
+  Sourcec9f03c003f899ce752a6aad292e323e8fb9592f5 and all811files/3,196,004bytes
+  retained in replay/controller-synthetic-03.tar.gz with bundle manifest.
+- Price source work can run independently from a separate exact checkout, using
+  the same physical cumulative ledger/lock and artifact store. Pre-launch review
+  found terminal/observer integrity gaps in the legacy price controller; it
+  remains unlaunched. New gate-v3 freezes the verified generic controller with
+ 59sourcefiles/10inputs per asset and hash-bound workspace mapping. Scientific
+  policy, two unclaimed price identities,3289cells per asset,51claim ceiling and
+  512MiB/300s limits are unchanged. New source and gate require independent
+  release and snapshot commit before execution; main pilotHEAD stays fixed.
+- The implementation/paper-scope/numerical-agreement conclusions remain separate:
+  **implementation integration pending; full paper scope incomplete; numerical
+  agreement unevaluated.** No financial accuracy or validated strategy claim.
+- Reviewed preparation snapshot35c92e56 was pushed separately and recovered
+  externally (53files/1,899,175bytes) without changing activeHEAD. New controller,
+  source-mapping and test evidence since that snapshot is not yet externally
+  recovered. Full raw-data off-device backup remains unverified.
+
+Next safe actions: finish generic price execution review, preserve a separately
+committed preparation snapshot and admit the mapped shared-ledger checkout before
+sequential price requests. Update requirement traceability and prospective
+registrations; continue independent preparation while pilot02 runs. After the pilot terminates, preserve
+all109 cell dispositions, verify cleanup and resource limits independently, then
+commit/push reviewed source and release individually reviewed source/price jobs
+under their exact gates. No repeated terminal identity or widened empirical cap.
+
+## Historical checkpoints (preserved; newer entries supersede older statements)
+
 # Paper replication execution checkpoint
 
 September24,2026: execution authorized for all13 tasks. Dedicated branch
@@ -248,3 +322,65 @@ Pilot02 remainsACTIVE under unchanged c6b568d4; now neighborhood phase.
 Registry motif-reuse/buffer regressions passed2(new03XML). Table-report v2 now
 retains complete per-cell dispositions and exact failure/unavailability reasons,
 with no survivor-only headline average. No financial fits or price captures.
+
+Reviewed preparation was preserved without changing active HEAD: snapshotcommit
+35c92e56b143226df07050edaa8665b34d52663f, pushed separate branch
+research/onchain-paper-preparation-20260924-01. External byte-bounded recovery
+verified53changedmembers/1,899,175bytes; replay/preparation-recovery-01-complete.json
+andguard showchild0/cleanup/noOOM,31,383,552peakbytes. ActiveHEADremainsc6b568d4.
+Firstweek neighborhoods(512) andmatching(32pairs) complete. Neuralcheckpoint
+unavailable under registered cap:10,713,395,200estimated intermediatebytes
+exceed1,073,741,824allowance inside3,221,225,472cap. This conservative estimate
+is not a measured minimum or proof of method infeasibility. Dictionarycontinues.
+
+Existing ETH2022–2024 retained metadata mapped under512MiBguard, no refetch or
+bodydecode:1,096days/156completeweeks,1,221,389,903declaredrows,
+103,524,489,043retainedblobbytes. Full_sources/retained-ETH-2022-2024-01/
+source-index.json hash2f0f79e37e2beb5beb1baee0e4fb6c5242a10dd4b370e0c87f4413c859383636.
+Fourboundarydates remainexplicit Jan1–2,2022 andDec30–31,2024. Complete mapped
+week status means seven metadata members; full raw/body/graph admission pending.
+Guardchild0/cleanup/noOOM,402,653,184sampledpeakbytes. Metadataauditreviewpending.
+Pilot timings include concurrent bounded software tests/metadata preparation
+and ordinary host activity; no isolated benchmark or minimum-runtime claim.
+
+Independent retained ETH metadata review COMPLETE: all59,083 spans and1,096
+mapped days checked against retained metadata chains; no body decode or refetch.
+The mapping guard recorded815memory.high throttle events, so resource pressure
+was present despite no OOM/hard-limit failure. First pilot dictionary checkpoint
+partial-distance-00001.json now retained; pilot02 remains active, HEADunchanged.
+Selected-column acquisition software range_source.py added behind exact admitted
+policy/catalogue inputs and a finite date denominator. No actual acquisition.
+Initial7synthetic tests passed; independent review found partial-transfer byte
+charging/retention and parent-directory durability defects, both corrected with
+new regression tests. Unknown transport consumption charges the entire reserved
+bound; known partial prefixes remain hashed evidence. Re-review is pending.
+
+Range acquisition review closed both findings;10synthetic tests pass in
+full_sources/range-capture-synthetic-03.xml. No actual newbody requests.
+Prepared-component batch executor run.py added: exact registered denominator,
+shared labels/splits/prices/mask, explicit representation identity, immutable
+cell dispositions and zero-fit controls; independent failures continue.
+Batch/evaluation15tests pass, including synthetic registered full motifMCM→GAT→
+attentionLSTM fitting and independent metric reconstruction. Review closed
+same-width representation substitution, conflicting equal-date labels, and
+same-run feature-buffer hashing findings. No financial outcomes generated.
+Journal start records and post-death durable-prefix recovery added; retains
+partial components and requires exact failed-claim/guard ownership evidence.
+The prospective generic outercontroller path still needs integration. Current
+pilot02 remains unchanged and active, firstweek dictionary checkpoints01–02.
+
+Pilot02 firstweek dictionary COMPLETE:32motifs from512samples,2667.812seconds,
+625,795,072peakworkerRSS; dictionary identity48832eeb9774ef6ca13915364c17d1ac89f5c67165636de5811ebf82ad6ad726.
+Cell005 retained. Full-node MCM nowactive (worker2758624); all other phase/week
+requirements remain in the fixed109cell denominator. Guardmemory.high pressure
+is present; no OOM/hard-limit failure observed at this checkpoint.
+Generic job.py supervisor/guard/worker/observer and job_payload.py added as
+unreleased engineering. All source dependencies are pinned; live monitor PID/start
+ticks prevent accidental active-job reconciliation. Terminal lifecycle/guard
+owner/source/claim/output/cell checks added after independent findings.
+Supervisor17synthetic tests pass. Payload preflight now runs before representation
+work;15combined batch/payload tests pass (XML03), including same-run GIN production,
+capacity refusal preserving independent SVM, and prediction-only parent recovery
+without another fit claim. XML02 collection failure from a transient import
+indentation error is preserved; it performed no tests or empirical work.
+No actual predictive fit or new transaction acquisition has occurred.

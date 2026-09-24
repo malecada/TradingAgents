@@ -43,6 +43,8 @@ class FeatureJournal:
             if inherited_identity is not None:require_hash(inherited_identity)
         self.directory.mkdir(exist_ok=False);sync_directory(self.directory.parent)
         _immutable(self.directory/'owner.json',owner)
+        _immutable(self.directory/'start.json',{'schema_version':1,'owner':owner,
+            'required_graphs':self.required,'parent':parent,'workflow_identity':inherited_identity})
         self.owner=owner;self.records=[];self.identity=inherited_identity;self.sealed=False
 
     def __call__(self,stage,context,payload):
