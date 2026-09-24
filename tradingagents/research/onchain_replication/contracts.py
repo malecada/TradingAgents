@@ -129,3 +129,27 @@ def graph_to_dict(g: GraphSnapshot) -> dict:
     return {f.name: (getattr(g, f.name).tolist() if isinstance(getattr(g, f.name), np.ndarray)
                     else dict(g.exclusion_counts) if f.name == 'exclusion_counts'
                     else getattr(g, f.name)) for f in fields(g)}
+
+
+@dataclass(frozen=True)
+class Transaction:
+    asset: str
+    identity: str
+    timestamp: str
+    sender: str
+    recipient: str | None
+    value: float
+    receipt_status: int
+    source_hash: str
+    precision: str
+
+
+@dataclass(frozen=True)
+class PricePanel:
+    symbol: str
+    dates: tuple[str, ...]
+    closes: tuple[float, ...]
+    missing_dates: tuple[str, ...]
+    source_hash: str
+    retrieved_at: str
+    historical_vintage_verified: bool = False
