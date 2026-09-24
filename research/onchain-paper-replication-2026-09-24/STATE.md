@@ -19,11 +19,11 @@ in the authorized scope. The historical negative screen is unchanged.
   reviewed; Tasks8/12/13 remain in progress.** Main/extended empirical evaluation
   is not complete. Exactly1,420 planned fits remain pending. Both assets,
   2016–2024 history, all44 Tables1–6 rows and C01–C18 remain required.
-- Metadata capture is complete; selected transaction-body capture, prices,
+- Metadata and price capture are complete; selected transaction-body capture,
   full-history graph admission and empirical fits remain pending. Retained
   ETH2022–2024 metadata maps1,096days/156completeweeks and is independently
   checked; this does not itself admit raw bodies or graphs. Original fund
-  cohort/vintage remains unavailable. Budget is22 consumed of51 claims.
+  cohort/vintage remains unavailable. Budget is24 consumed of51 claims.
 - Generic finite batch/payload/owned-job code is independently reviewed and
   synthetic-tested. Expanded onchain offline suite COMPLETE:350passed/1CUDA skip,
   253.70test seconds; guard256.857s,631,595,008peak bytes, no memory events,
@@ -51,29 +51,42 @@ in the authorized scope. The historical negative screen is unchanged.
   price panel or real financial fit exists. Guards closed with child0/cleanup,
   peak84.24MB/84.92MB. Source652b2766 was executed from the mapped sparse checkout
   with the physical shared cumulative ledger; no closed identity may be retried.
-- Prospective Coin Metrics PriceUSD source amendment is being prepared before
-  any CSV retrieval or fit. Same51claim family/ceiling:1metadata+4price+12body
-  sources. Still-unlaunched BTC2016–2019 body dates are grouped into one batch;
-  all required dates/fields,1420fits and88,776source-field cells remain unchanged.
-  Independent review accepted allocation arithmetic in principle, conditional on
-  exact finite source plans and unchanged caps. Full four-year feasibility is
-  not established. See full_sources/prices-coinmetrics-01/.
+- Coin Metrics source claims are CLOSED and independently verified: BTC and ETH
+  each admit all3288required2016–2024dates,3289complete cells and3295artifact
+  hashes. BTCguard83.562s/91,312,128peak bytes; ETH104.926s/90,120,192peak;
+  child0,cleanup,no memory events. Both use exact source3b8e6608/gate232d416f.
+  The reviewed provider substitution is explicit; originalYahoo failures remain.
+  Raw archive extents BTC2009–2026/ETH2015–2026 are recorded as exposure; rows
+  outside2016–2024 are excluded from inputs and are not claimed fresh later.
+  Four price claims+metadata+twelve body claims preserve51ceiling/1420fits.
+- Interim capacity estimate from two completed graphs under the current uncompressed
+  artifact format is407.184GB for initial
+  ETH156weeks of graphs plus five-seed MCMarrays with1.5margin; it excludes new
+  raw,models,scratch andbackup. Root/Data headroom above20GiB floors was only
+  approximately6.39GB/2.50GB. This is an arithmetic projection, not measured
+  full-MCM/neural capacity; largest-week pilot remains active. See reviewed
+  review/capacity-interim-02.json. Full-body acquisition is not released.
+- C01–C18 interim matrix exists in review/completion-interim-03.json; independent
+  review confirmed all18criteria and conservativeflags. Latest expanded source
+  passed387tests/1CUDA skip in the earlier clean locked offline environment with
+  unchanged installed distributions; two saved predictionsreplayedexactly. Guard
+  443.445s/934,776,832peak sampledbytes, no memoryevents and cleanupverified.
+  implementation-coverage-v4.json maps currentcode/tests. Nofinancialfit.
 - The implementation/paper-scope/numerical-agreement conclusions remain separate:
   **implementation integration pending; full paper scope incomplete; numerical
   agreement unevaluated.** No financial accuracy or validated strategy claim.
-- Reviewed preparation snapshot652b2766 was pushed separately and recovered
-  externally:2270files/34,235,495bytes hash-checked. Independent recovery audit is
-  underway. It includes retained source metadata and full synthetic controller
-  bundles, not full raw-data bodies. New Yahoo outcomes, v3traceability and
-  prospective Coin Metrics amendment are later artifacts not yet backed up.
+- Snapshot652b2766 externally recovered2270files/34,235,495bytes and independently
+  verified. Snapshot3b8e6608 exact delta externally recovered6651files/6,964,291
+  bytes via bundlef45ffeca; every member independently matchedGit. Includes
+  reviewed source/tests,metadata,synthetic bundles and bothYahoo denials.
+  NewCoinMetrics outcomes and later checkpoint docs are not in those snapshots.
   Full raw-data off-device backup remains unverified.
 
-Next safe actions: finish strict Coin Metrics source implementation/tests, freeze
-and independently review its protocol/gate, then preserve a committed snapshot
-and admit a separate mapped checkout before one request per asset. Continue
-full-scope graph/population and source preparation while pilot02 runs. After the
-pilot terminates, retain all109dispositions and independently verify cleanup.
-No repeated terminal identity, omitted paper scope or silently widened cap.
+Next safe actions: preserve verified CoinMetrics outcomes and current checkpoint,
+complete explicit raw→graph→population
+assembly accounting before any financial claim. Continue independent engineering
+while pilot02runs; after it terminates retain all109dispositions and independently
+verify cleanup. No repeated terminal identity, omittedscope or silently widenedcap.
 
 ## Historical checkpoints (preserved; newer entries supersede older statements)
 

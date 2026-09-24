@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "scope": "append-only source exposure record; does not alter prior gates or declare financial fitting",
+  "records": [
+    {
+      "asset": "BTC",
+      "claim": "paper-prices-coinmetrics-btc-20260924",
+      "source_commit": "3b8e660842c9634f0dadaea3ee81c34571d7772a",
+      "source_summary_sha256": "bae8a1c22a36041bbccaa32b4aafc57e9fd19aa2b388c42632a43b230e4a6fe4",
+      "raw_sha256": "06495ff8e643432e6948b7b4686ce44fc106217287dabdc1b38351d9ddec46c3",
+      "captured_and_schema_parsed_extent": {
+        "first_date": "2009-01-03",
+        "last_date": "2026-05-24",
+        "outside_required_dates": 3063,
+        "rows": 6351
+      },
+      "admitted_model_input_window": {
+        "start": "2016-01-01",
+        "end_exclusive": "2025-01-01"
+      },
+      "outside_window_policy": "raw bytes retained and schema-validated; excluded from input and target construction",
+      "fitted_models": 0,
+      "financial_predictions": 0,
+      "freshness": "No future unseen-sample claim follows from retention; any subsequent study must review this exposure and all earlier spent windows."
+    },
+    {
+      "asset": "ETH",
+      "claim": "paper-prices-coinmetrics-eth-20260924",
+      "source_commit": "3b8e660842c9634f0dadaea3ee81c34571d7772a",
+      "source_summary_sha256": "4fd0aa26208cb1ccd24592d8cd690578b854500541295c1f3a2566f4553eedc1",
+      "raw_sha256": "46b18f3df967405374b1f6ee8a3d11ee1b7a5b176ac9fb4342caf6bf8648f2cc",
+      "captured_and_schema_parsed_extent": {
+        "first_date": "2015-07-30",
+        "last_date": "2026-05-24",
+        "outside_required_dates": 664,
+        "rows": 3952
+      },
+      "admitted_model_input_window": {
+        "start": "2016-01-01",
+        "end_exclusive": "2025-01-01"
+      },
+      "outside_window_policy": "raw bytes retained and schema-validated; excluded from input and target construction",
+      "fitted_models": 0,
+      "financial_predictions": 0,
+      "freshness": "No future unseen-sample claim follows from retention; any subsequent study must review this exposure and all earlier spent windows."
+    }
+  ]
+}

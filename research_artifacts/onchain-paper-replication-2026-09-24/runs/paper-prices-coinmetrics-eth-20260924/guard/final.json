@@ -1,0 +1,168 @@
+{
+  "boot_id": "df1f8c6b-0492-497f-8d23-bb55c45d37f6",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-ef3e9e6b74f449a2885bf41ecf3771fa.service",
+  "child_exit_code": 0,
+  "cleanup_stop_returncode": 5,
+  "cleanup_unit_properties": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "dead"
+  },
+  "cleanup_verified": true,
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "-m",
+    "tradingagents.research.onchain_replication.job",
+    "--mode",
+    "worker",
+    "--root",
+    "/tmp/onchain-paper-coinmetrics-checkout-20260924-01",
+    "--registration",
+    "research/onchain-paper-replication-2026-09-24/full_sources/prices-coinmetrics-01/gate.json",
+    "--experiment",
+    "paper-prices-coinmetrics-eth-20260924",
+    "--source",
+    "3b8e660842c9634f0dadaea3ee81c34571d7772a"
+  ],
+  "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+  "cpu_quota_controller_available": false,
+  "cpu_thread_readback": {
+    "2998035": [
+      0,
+      1
+    ],
+    "2998039": [
+      0,
+      1
+    ],
+    "3004361": [
+      0,
+      1
+    ],
+    "3015318": [
+      0,
+      1
+    ]
+  },
+  "cpus": [
+    0,
+    1
+  ],
+  "cwd": "/tmp/onchain-paper-coinmetrics-checkout-20260924-01",
+  "disk_floor_bytes": 21474836480,
+  "disk_free_bytes": {
+    "/tmp/onchain-paper-coinmetrics-checkout-20260924-01": 27358523392
+  },
+  "disk_paths": [
+    "/tmp/onchain-paper-coinmetrics-checkout-20260924-01"
+  ],
+  "elapsed_seconds": 104.92631060900749,
+  "elapsed_time_kill": false,
+  "host_mem_available_bytes": 5858197504,
+  "initial_memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "kernel_controls": {
+    "memory.high": "402653184",
+    "memory.max": "536870912",
+    "memory.swap.max": "0"
+  },
+  "lease_seconds": 15.0,
+  "limit_reason": null,
+  "memory_current_bytes": 32231424,
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "memory_high_bytes": 402653184,
+  "memory_max_bytes": 536870912,
+  "memory_swap_max_bytes": 0,
+  "monitor_pid": 2996514,
+  "monotonic_seconds": 65664.873868763,
+  "optional_memory_telemetry": {
+    "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+    "unit": {
+      "anon_bytes": 8507392,
+      "file_bytes": 17522688,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-ef3e9e6b74f449a2885bf41ecf3771fa.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=585\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=585",
+      "swap_current_bytes": 0,
+      "unavailable": {}
+    },
+    "user_ancestor": {
+      "anon_bytes": 8345944064,
+      "file_bytes": 4029423616,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+      "pressure": "some avg10=0.53 avg60=1.36 avg300=2.52 total=172323143\nfull avg10=0.09 avg60=1.01 avg300=2.23 total=163191120",
+      "swap_current_bytes": 2062172160,
+      "unavailable": {}
+    }
+  },
+  "owner_identity": {
+    "experiment": "paper-prices-coinmetrics-eth-20260924",
+    "monitor_pid": 2996514,
+    "monitor_start_ticks": "6555484",
+    "nonce": "ed761c7361fb4662bf24052bd0991295",
+    "source_commit": "3b8e660842c9634f0dadaea3ee81c34571d7772a",
+    "supervisor_pid": 2994951
+  },
+  "peak_sampled_memory_current_bytes": 90120192,
+  "phase": "complete",
+  "receipt_dir": "/tmp/onchain-paper-coinmetrics-checkout-20260924-01/research_artifacts/onchain-paper-replication-2026-09-24/runs/paper-prices-coinmetrics-eth-20260924/guard",
+  "reserve_bytes": 3221225472,
+  "retry": false,
+  "sample_seconds": 0.25,
+  "start_reserve_bytes": 3758096384,
+  "terminal_memory_snapshot": {
+    "memory_current_bytes": 32231424,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 8507392,
+        "file_bytes": 17522688,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-ef3e9e6b74f449a2885bf41ecf3771fa.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=585\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=585",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 8345944064,
+        "file_bytes": 4029423616,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.53 avg60=1.36 avg300=2.52 total=172323143\nfull avg10=0.09 avg60=1.01 avg300=2.23 total=163191120",
+        "swap_current_bytes": 2062172160,
+        "unavailable": {}
+      }
+    }
+  },
+  "unit": "onchain-replication-ef3e9e6b74f449a2885bf41ecf3771fa.service",
+  "unit_properties": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "dead"
+  },
+  "wait_seconds": 30.0,
+  "wall_seconds": 300
+}

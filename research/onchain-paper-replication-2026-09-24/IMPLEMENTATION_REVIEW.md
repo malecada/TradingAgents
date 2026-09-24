@@ -1671,3 +1671,216 @@ Then one BTC capture followed by one ETH capture is within the reviewed existing
 51-claim allocation; each must close and retain its full denominator before the
 next starts. This does not approve source-value fitting, scope reduction,
 alternate metrics/providers, date blending or retry of either closed Yahoo run.
+
+
+Interim capacity arithmetic review (September 24): capacity-interim-01.json
+SHA256 5214090521b21bbf8e157464cb44c0f30e7c8478ff68b5ff9ea50f2246acd11f
+was reconstructed from the exact first two completed decode_graph result bytes,
+whose retained hashes and stated counts/sizes/times match. Mean graph size
+518547832 bytes times 156 is 80893461792 bytes. Mean 1908681.5 nodes times
+32 motifs times four bytes times 156 weeks times five seeds is 190562760960
+bytes. Their sum is 271456222752 bytes; multiplying by 1.5 gives
+407184334128 bytes (407.184 decimal GB, 379.220 GiB). Both stated filesystem
+headroom subtractions above the 20 GiB floor are exact. This is an interim
+shape projection from two weeks, not a full-history measurement or safe storage
+reservation; simultaneous raw, intermediates, scratch, model, backup and other
+fold/arm requirements remain excluded. The excluded 103524489043-byte raw figure
+is specifically the retained mapping's summed stored-span bytes, not a proven
+unique physical raw-store size. No combined physical-drive headroom or independent
+backup should be inferred from the two path measurements.
+
+Retained phase receipts confirm both full-node MCM attempts are unavailable on
+neighborhood capacity, and neural phases stop before forward with formula
+estimates 10713395200 and 8778956800 bytes exceeding the 1073741824-byte
+registered allowance. These establish explicit capacity-check refusals, not
+measured neural minimum RAM or successful complete MCM sizes. The largest stress
+week remains outside this review. No graph computation, source query, empirical
+fit or active process action was performed.
+
+Critical assembly accounting requirement: raw-to-weekly-to-population preparation
+can be included prospectively within the existing fifteen financial-batch claims,
+but their present allocation alone is not an executable admission for those
+phases. Before decoding, freeze the complete source/date/field denominator,
+phase input/output bindings, explicit assembly resource bounds and ownership,
+common availability mask before any representation/model fitting, and train-only
+dictionary lineage. Shared graph reuse must reference an exact immutable owner
+and completed artifact; failure must preserve every downstream unavailable cell
+and permit only independently valid registered work. A checkpoint does not
+authorize reopening a terminal claim. Any interruption requiring a successor
+needs a separately registered identity with explicit remaining-budget treatment;
+no uncounted assembly claim or implicit retry is available in the fifteen slots.
+The current generic fit executor begins from prepared populations, so actual
+raw assembly integration remains an explicit unreleased requirement.
+
+
+Independent actual BTC Coin Metrics source audit (September 24; retained bytes
+only): source 3b8e660842c9634f0dadaea3ee81c34571d7772a and exact gate
+232d416fdc96acc0f8f9ce9287fdfbf920962e9ddf87b815cc23c54ae5855979
+remain bound to all sixty source files and twelve inputs, independently hashed
+from the mapped worktree. The single retained HTTP200 body is 2482497 bytes,
+SHA256 06495ff8e643432e6948b7b4686ce44fc106217287dabdc1b38351d9ddec46c3.
+Independent CSV parsing (without the producer parser) confirms 32 unique columns,
+6351 strictly increasing canonical dates from 2009-01-03 through 2026-05-24,
+and positive finite nonmissing required PriceUSD values. Exactly all 3288
+required dates 2016-01-01 through 2024-12-31 and their unchanged-date PriceUSD
+values match the saved panel; the 3063 outside-window rows are excluded. No
+ReferenceRate field, date shift, interpolation or gap fill is used. Availability
+at next midnight remains the documented provider-clock assumption, not recovered
+historical publication evidence; historical_vintage_verified remains false.
+
+All 3289 lifecycle cells are complete, including capture; every one of 3295
+indexed artifact files matches size/hash. Intent/receipt/capture members, raw
+manifest, panel, lifecycle outputs/claim, owner and observer evidence linkage
+independently agree. Claim SHA256
+d1bd8f7fa874b2d474521ed76d17c9fb587634ccdc38daf4f6d623b174a8e763;
+terminal SHA256
+2e34319ed8173e702c54e736efeda94c8c26ccece738026d3016e4903ed926fe;
+price-panel SHA256
+10ac061629f175d623f5dd22c77000ffc9bf65d2b90154ebe3b24f5ae8ff4679;
+observer SHA256
+ce11312027f1cd82a0f79f97ae9330b3cb73dd90f88c0822708794d9b9ec22ed.
+Guard SHA256
+b2267fd0d97c91444a48e62baa595465c083ff181b2b905718678e41079c7dd2
+records 83.56230 seconds, 91312128-byte sampled peak, child zero, verified
+cleanup, no limit and zero memory events. The owned cgroup and recorded
+supervisor/monitor/workload PIDs are absent.
+
+The BTC alternative consumes its separate allocated claim: 23/51 after BTC
+closure, with any subsequently claimed ETH attempt additionally consumed even
+before terminal. ETH artifacts were not inspected during this BTC-only review.
+This verifies BTC price-source coverage and provenance under the declared
+substitution, not author-exact source agreement, empirical predictive performance
+or financial admission; financial_completion remains false. No refetch, model
+fit, graph computation or process action occurred.
+
+
+Independent actual ETH Coin Metrics terminal audit (September 24): the retained
+2121732-byte HTTP200 CSV, SHA256
+46b18f3df967405374b1f6ee8a3d11ee1b7a5b176ac9fb4342caf6bf8648f2cc,
+was parsed independently of the producer. It has 32 unique columns and 3952
+strictly increasing canonical dates from 2015-07-30 through 2026-05-24. All
+3288 required dates and positive finite PriceUSD values exactly match the saved
+panel; 664 outside-window rows are excluded, with no shifts, filling or alternate
+metric use. All 3289 cells complete and 3295 indexed artifacts match sizes/hashes.
+Exact sixty-source/twelve-input gate, owner, capture, claim, outputs and observer
+chains agree. Claim SHA256
+e3706c46725b96c22b0e744705d7b5270e3fc4f0fdd179dcfca373df26a0706e;
+terminal SHA256
+5f73ee1f0a8028fa11c54e53ba56c9e45c7fe8b08e520fdf68f150355331ffc4;
+panel SHA256 f7a4d89ff66d37ec00d8d4d834a1a771ac55f36bc9b210cfbecb6768ecc3bbbe;
+observer SHA256
+cd3253767a68f2a9d4c9adc6fc9fb9692c3a0498e3fb8b648b859c363a9a97a0.
+Guard SHA256
+4825c56a01ce5bb6f2432780560a957c4c422aa5341d8953490b5aa2ec44d22c
+records child zero, clean cleanup, no limit/memory event, 104.92631 seconds and
+90120192-byte sampled peak. Cgroup and recorded process IDs are absent; BTC
+terminal precedes ETH claim. All seven new family claims carry the same family
+object, giving 17+7=24/51. Historical availability remains assumed and
+financial_completion remains false; no refetch or fit occurred in review.
+
+Independent snapshot03 delta recovery audit: both retained HTTP200 download
+results match their pinned remote f45ffecafec136db14c8214208690110b82dc216
+URLs, contract sizes and hashes. The 926053-byte archive SHA256
+03f08e6c9941839ded8902288bbe4d2d5d2208984e71cba1f8fea91bc99c522f
+contains exactly 6651 unique regular members and 6964291 uncompressed bytes.
+Every entry was hashed against the manifest and compared byte-for-byte to its
+local Git blob at 3b8e660842c9634f0dadaea3ee81c34571d7772a; no extraction,
+clone, git archive or network request was performed. Local Git comparison with
+base652b2766cacd0c5f5b2c830bafeaa7315bb42fc2 has exactly those added/modified
+paths and no omitted deletion/rename. Manifest SHA256
+df3e0cd3a8416c1d50e99a5ed6dde91a92fbdf6e599e001e15d9af70197160d5;
+recovery-completion SHA256
+5193fad9b2704c71f3ff04e988dedd63425781bb2bdf946ec51777c3cc0be63a.
+Guard SHA256 dcec327e3300b8833b985d084070e32304d54c278054fe2652f7fa3680dd6c98
+records child zero, verified cleanup, no memory event/limit, 2.68019 seconds and
+26718208-byte sampled peak under 256 MiB; cgroup is absent. This is exact delta
+recovery plus the separately verified compact base, not full raw-store backup
+or backup of later Coin Metrics outcome artifacts absent from source3b8.
+
+Consolidated interim acceptance review: completion-interim-01.json contains all
+C01–C18 exactly once, and every linked evidence path exists. Its met_synthetic
+dispositions are supported by component reviews and guarded synthetic evidence;
+partial/pending classifications and false implementation/paper-scope/exactness
+flags remain appropriate. Numerical agreement remains unevaluated. The document
+predates the latest outcomes: update C03 to state both completed Coin Metrics
+source coverages and C16 to state verified snapshot03 delta recovery. Neither
+change closes the criteria: full transaction/graph populations, empirical saved
+model/metric replay, required raw replay recovery, active pilot terminal/resource
+review and fund-cohort source scope remain outstanding. The 34 fidelity records,
+1420-fit denominator, all 44 table rows and all thirteen tasks must remain in
+scope; no accuracy result or source success supplies an exemption. No criteria,
+ledger, source or active HEAD was edited by the reviewer.
+
+
+### Independent consolidated checkpoint review — expanded verification 02
+
+Read-only inspection independently verified implementation-coverage-v4.json
+(SHA256 28369afb5d830b38bfd283c09f393ba7e47522a63e4c2188bf5dd6fb3aae6cc6),
+its unchanged parent fidelity identity and previous-report hash. All 103 source
+snapshot files match current bytes; all 38 distinct mapped code files match the
+snapshot; all 812 test references across 34 records match actual XML dispositions.
+The full XML has 388 cases: 387 passed, one CUDA skip, zero failures/errors.
+XML SHA256 554daa8de7b7354ff157383c4f96e586f107b3c611f93fb9d0493370cff173fc;
+source-freeze SHA256 4cb38060147fcc4c35dcb5600925aa5b453a1aa9366a96ca0123ea133ce0b4a4.
+The child log records six warnings. This is the expanded replication suite,
+not a claim that every legacy repository test was executed.
+
+Guard final SHA256 f5e0352465673c5b74b52d32a2487e2789c1fc1fd9d41ea807c6784d6a82198c
+agrees with release, child-exit and CPU-ready receipts: child zero, verified
+cleanup, 443.445245687 seconds, 934776832-byte sampled peak, unchanged zero
+memory-event counters, no triggered limit, 2.5 GiB maximum/2 GiB high/zero swap.
+The recorded cgroup, monitor PID, wrapper PID and workload PID are absent at
+independent inspection. The command uses the previously created clean locked
+Python environment. The verifier checks exact installed-distribution equality
+against its earlier inventory and freezes source bytes before and after testing.
+Its network-denying audit hook is explicitly main-process scoped. Replay receipt
+SHA256 1a336bceef418b63461df25abb0e4a4574eeeca7d2a88535e9c1fc4cbec8a801
+binds that source freeze and the actual saved fixture manifest; two predictions
+have recorded maximum absolute difference zero. No test or model was rerun by
+this review. This remains synthetic saved-checkpoint evidence, not empirical
+C13 or complete raw-to-prediction recovery.
+
+completion-interim-03.json contains C01–C18 exactly once, has no missing evidence
+path, and correctly hashes its preceding version. Its implementation-complete
+and paper-scope-complete flags remain false, numerical agreement remains
+unevaluated, and exact reproduction eligibility remains false. RESULT.md retains
+all 44 printed table rows and 1420 pending unique fits, distinguishes source
+coverage from fitting, declares the Coin Metrics deviation and retrospective
+availability limitation, and qualifies the 407.184 GB figure as a two-week
+projection for the current artifact format rather than intrinsic algorithmic
+minimum storage. Full-scale MCM/neural capacity is not established by estimates.
+
+The assembly admission document accurately states the remaining prepared-input
+integration gap. Its requirements preserve complete cross-year/week source and
+BTC spend/chain checks, exclusive transform ownership and exact completed reuse,
+pre-fit common populations/masks, all downstream unavailable cells and the
+24/51 cumulative accounting. No additional uncounted preparation claim is
+implicitly released. Whole-history raw admission, empirical graph reconciliation,
+financial fitting, real saved-model/metric replay, full raw off-device recovery,
+active pilot terminal review and original fund cohort/vintage remain unverified.
+
+Three stale prose claims were reported: REPRODUCE.md formerly denied any fresh
+synthetic reproduction (corrected and independently reread); ACCEPTANCE_CHECKPOINT.md
+C14 still described latest expanded synthetic clean-environment evidence as
+pending, and C16 still described snapshot03 recovery as pending at inspection.
+Those two table rows should match completion-interim-03.json while retaining
+empirical raw-to-prediction/full raw backup as outstanding. These are conservative
+understatements, not grounds to mark either criterion complete. No source, gate,
+ledger, empirical job or active HEAD was changed by this review.
+
+
+Follow-up: ACCEPTANCE_CHECKPOINT.md C14 and C16 were regenerated from the current
+machine-readable matrix and independently reread. Both stale statements are
+closed; the consolidated checkpoint is consistent at this reviewed scope.
+
+Bounded preparation-script review identified two preventive fixes before local
+snapshot assembly: replay/prepare_checkpoint_04.py checks aggregate archive bytes
+after reading a complete Git blob into memory, so the size must be compared with
+the remaining 128 MiB allowance before reading; its Git helper and cat-file
+subprocess should both receive GIT_NO_LAZY_FETCH=1 to enforce local-only Git
+access in this promisor repository. The earlier broad implicit-fetch failure
+makes that boundary material. Temporary-index assembly, explicit closed source
+claims, allowed path prefixes, exclusive outputs and active-HEAD preservation
+otherwise match the described compact checkpoint scope. This review does not
+prove a future push or external recovery; those require actual independent
+retrieval evidence.
