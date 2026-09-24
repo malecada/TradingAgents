@@ -1,0 +1,847 @@
+{
+  "datasets": {
+    "eth-history": {
+      "exposures": [
+        {
+          "end": "2025-01-01T00:00:00Z",
+          "start": "2022-01-01T00:00:00Z",
+          "state": "exposed"
+        }
+      ],
+      "history_reference": "All16 upstream claims and full graph independent review retained in comparison/evaluation-20260924/history.json and fullpanel_resume2/CLOSURE.md. Same exposed retrospective sample; no historical availability proof.",
+      "identity": "ethereum-native-top-level-transactions-chain-1"
+    },
+    "eth-spot": {
+      "exposures": [
+        {
+          "end": "2025-04-01T00:00:00Z",
+          "start": "2021-12-01T00:00:00Z",
+          "state": "spent"
+        }
+      ],
+      "history_reference": "comparison/SOURCE_INVENTORY.md and docs/diagnostics-2026-09-10/forecast-charter.md; historical ETH direction spent, current capture is archive vintage only.",
+      "identity": "binance-spot-ETHUSDT-daily-bars"
+    }
+  },
+  "experiments": {
+    "eth-matched-direction-20260924": {
+      "cells": [
+        "spot-2021-12",
+        "spot-2022-01",
+        "spot-2022-02",
+        "spot-2022-03",
+        "spot-2022-04",
+        "spot-2022-05",
+        "spot-2022-06",
+        "spot-2022-07",
+        "spot-2022-08",
+        "spot-2022-09",
+        "spot-2022-10",
+        "spot-2022-11",
+        "spot-2022-12",
+        "spot-2023-01",
+        "spot-2023-02",
+        "spot-2023-03",
+        "spot-2023-04",
+        "spot-2023-05",
+        "spot-2023-06",
+        "spot-2023-07",
+        "spot-2023-08",
+        "spot-2023-09",
+        "spot-2023-10",
+        "spot-2023-11",
+        "spot-2023-12",
+        "spot-2024-01",
+        "spot-2024-02",
+        "spot-2024-03",
+        "spot-2024-04",
+        "spot-2024-05",
+        "spot-2024-06",
+        "spot-2024-07",
+        "spot-2024-08",
+        "spot-2024-09",
+        "spot-2024-10",
+        "spot-2024-11",
+        "spot-2024-12",
+        "spot-2025-01",
+        "graph-panel",
+        "fold-2024-01-M0",
+        "fold-2024-01-M1",
+        "fold-2024-01-M2",
+        "fold-2024-02-M0",
+        "fold-2024-02-M1",
+        "fold-2024-02-M2",
+        "fold-2024-03-M0",
+        "fold-2024-03-M1",
+        "fold-2024-03-M2",
+        "fold-2024-04-M0",
+        "fold-2024-04-M1",
+        "fold-2024-04-M2",
+        "fold-2024-05-M0",
+        "fold-2024-05-M1",
+        "fold-2024-05-M2",
+        "fold-2024-06-M0",
+        "fold-2024-06-M1",
+        "fold-2024-06-M2",
+        "fold-2024-07-M0",
+        "fold-2024-07-M1",
+        "fold-2024-07-M2",
+        "fold-2024-08-M0",
+        "fold-2024-08-M1",
+        "fold-2024-08-M2",
+        "fold-2024-09-M0",
+        "fold-2024-09-M1",
+        "fold-2024-09-M2",
+        "fold-2024-10-M0",
+        "fold-2024-10-M1",
+        "fold-2024-10-M2",
+        "fold-2024-11-M0",
+        "fold-2024-11-M1",
+        "fold-2024-11-M2",
+        "fold-2024-12-M0",
+        "fold-2024-12-M1",
+        "fold-2024-12-M2",
+        "inference",
+        "screening"
+      ],
+      "charter": {
+        "path": "research/onchain-graph-2026-09-16/comparison/evaluation-20260924/CHARTER.md",
+        "sha256": "26aa805be0ea303f5180166f6b0ab5bc2e0ca9acf507874e59f36a56ad5ce204"
+      },
+      "family": "eth-matched-direction",
+      "graph_parent": "eth-full-history-feature-panel-resume2-20260922",
+      "inputs": {
+        "amendment": {
+          "dataset": "eth-history",
+          "path": "research/onchain-graph-2026-09-16/comparison/evaluation-20260924/amendment.json",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "approval": {
+          "dataset": "eth-history",
+          "path": "research/onchain-graph-2026-09-16/comparison/evaluation-20260924/approval.json",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "backup": {
+          "dataset": "eth-history",
+          "path": "research/onchain-graph-2026-09-16/fullpanel_resume2/full-import-20260924/backup.json",
+          "sha256": "71ddf84e96c6d80c0954c4846fb689b301612da5c9210811db61f7fa3d3451b7"
+        },
+        "config": {
+          "dataset": "eth-history",
+          "path": "research/onchain-graph-2026-09-16/comparison/config.json",
+          "sha256": "ea07a698b667963dafc51a4a37b7afb1c68d8bd6f0be13c4b4d2d4ebd248ac2c"
+        },
+        "graph_panel": {
+          "dataset": "eth-history",
+          "path": "research_runs/eth-full-history-feature-panel-resume2-20260922/outputs/panel.json",
+          "sha256": "a43eed74519c45757e58f11ad03bcdb00a609fcad80236cb8ad5c4ca7069a7b7"
+        },
+        "graph_review": {
+          "dataset": "eth-history",
+          "path": "research/onchain-graph-2026-09-16/fullpanel_resume2/independent-report.json",
+          "sha256": "ba2cab064b463a924eba402429f6eaee4308dd1e5d003ae2db33b53812481f4e"
+        },
+        "graph_review_guard": {
+          "dataset": "eth-history",
+          "path": "research/onchain-graph-2026-09-16/fullpanel_resume2/resources/review/final.json",
+          "sha256": "ef61f8eaa50fc7bfd8925fcfc7d77d370a57a1608ab2e127d35b11e29103e433"
+        },
+        "graph_terminal": {
+          "dataset": "eth-history",
+          "path": "research_runs/eth-full-history-feature-panel-resume2-20260922/complete.json",
+          "sha256": "6cfbe0ecf07c6a1d7d1de9c41ef6b9e0134b7fef547fba38e29d7cba2814b2e9"
+        },
+        "history": {
+          "dataset": "eth-history",
+          "path": "research/onchain-graph-2026-09-16/comparison/evaluation-20260924/history.json",
+          "sha256": "a0954fe20fa46329c92f83f58be3c65dcd93b4af34662c6e6ef7fae39f38d0b8"
+        },
+        "preservation": {
+          "dataset": "eth-history",
+          "path": "research/onchain-graph-2026-09-16/fullpanel_resume2/full-import-20260924/result.json",
+          "sha256": "0929404a42468bad676ac36a0264e873149487144b5607fb0335daed3f0ee25f"
+        },
+        "preservation_manifest": {
+          "dataset": "eth-history",
+          "path": "research/onchain-graph-2026-09-16/fullpanel_resume2/full-import-20260924/intent.json",
+          "sha256": "79a0f84815a343c2780be4b604daf4af09200c39e3c570e28810013eb178e9f9"
+        },
+        "protocol": {
+          "dataset": "eth-history",
+          "path": "research/onchain-graph-2026-09-16/comparison/PROTOCOL.md",
+          "sha256": "7d77e709d886dc14324a94f6b5245c88ada3dddbdbf739534e56b2b71a35a89f"
+        },
+        "release_review": {
+          "dataset": "eth-history",
+          "path": "research/onchain-graph-2026-09-16/comparison/evaluation-20260924/RELEASE_REVIEW.md",
+          "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "spot_2021-12_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0002.body.zst",
+          "sha256": "a2919a3f5cca9963caa4b84c06bbd6c5f6292f3e82df366ac03e3d1f6d304a99"
+        },
+        "spot_2021-12_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2021-12.json",
+          "sha256": "22435ec1e8307925919a2d10b01140f949dfefb75d66becf209f4f76ae14f330"
+        },
+        "spot_2021-12_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0001.body.zst",
+          "sha256": "303811d0f76bd5ff9d8957e19ced5b06c3d0e0fdf3c6355f32183653eb7c57fc"
+        },
+        "spot_2022-01_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0004.body.zst",
+          "sha256": "493287d08da54feb11f4deae64b738dae11d37b761075841d9d828dc40a87ea7"
+        },
+        "spot_2022-01_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2022-01.json",
+          "sha256": "5e6168fe061065acfebf76d27f8a15664b3cbaf24ccde1f7a4bb943209d5297f"
+        },
+        "spot_2022-01_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0003.body.zst",
+          "sha256": "7593de202d21fc091a642127475373e0d7610d7abf5472756318b4c9ab4122c0"
+        },
+        "spot_2022-02_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0006.body.zst",
+          "sha256": "586f97d25b83165aceb973de40f0e9feac70fbd74e42b2358a952b96d364b610"
+        },
+        "spot_2022-02_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2022-02.json",
+          "sha256": "21c0af832b774d1c2a2696d6893457f25de68ab0f5557959263e026ace5f806d"
+        },
+        "spot_2022-02_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0005.body.zst",
+          "sha256": "4e5f38f9a23f17c17c945798d062d6dea37505feab301f22aba76e7fa087b37d"
+        },
+        "spot_2022-03_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0008.body.zst",
+          "sha256": "165778dc20076bff48ef56d57d0736abe4e2f7715ec130122cdccae26f2ecc9d"
+        },
+        "spot_2022-03_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2022-03.json",
+          "sha256": "f60060ae00f719702a4b15e71d678d47cfb5b04fbb91b2139eed8a494d3d2593"
+        },
+        "spot_2022-03_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0007.body.zst",
+          "sha256": "835c8249a27983f8bed7d5e9624f66e0ac2796d9683526e0f8520260639aff7b"
+        },
+        "spot_2022-04_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0010.body.zst",
+          "sha256": "729678bcbad9ea16805875b8b25b0bf85bb8733f037b73f19df7b97904050e3a"
+        },
+        "spot_2022-04_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2022-04.json",
+          "sha256": "058acfb62cc9b963cb2987c2bfe4227427eaa4c5c5d7c993c7f652919663bbc7"
+        },
+        "spot_2022-04_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0009.body.zst",
+          "sha256": "a768bd79fac525ec39376514a0baa60662dadde19274228f51c91429412acd2e"
+        },
+        "spot_2022-05_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0012.body.zst",
+          "sha256": "a376ef1adf63b8c47434b8de7dc2a5fe1291527dd3aa38fd244888740ac36e18"
+        },
+        "spot_2022-05_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2022-05.json",
+          "sha256": "db65a79bda87d5836c2397641f39a7308b558db7824b93accf12dc7330e2ddcd"
+        },
+        "spot_2022-05_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0011.body.zst",
+          "sha256": "3065e84d818132fb992ac84fcc9975e6b97a23a8ce3516aeb88189b9a0a75210"
+        },
+        "spot_2022-06_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0014.body.zst",
+          "sha256": "083c6df9cbf399409c69071be3cd8456e5ebeed6633cc3d84c59d38ca5fe0f74"
+        },
+        "spot_2022-06_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2022-06.json",
+          "sha256": "42c6df70302a2c4252f079ad532cdb6f97ee0e647f845533003052716595b4c3"
+        },
+        "spot_2022-06_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0013.body.zst",
+          "sha256": "25f2fe7b42befdd87edd3a1808698469f1759f500cd40aeea2e1f615f374bf2c"
+        },
+        "spot_2022-07_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0016.body.zst",
+          "sha256": "7c617dd2753fe0a12d5f98d9d54349851e68cac49fe35cbc2f9e0058c11d95b2"
+        },
+        "spot_2022-07_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2022-07.json",
+          "sha256": "3df57ee5e26551da5c387ec06a654f2525a109009dd85798ccb41e52b776fcb7"
+        },
+        "spot_2022-07_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0015.body.zst",
+          "sha256": "a8ab36117b93d10370f86e44ca778140f1d4cc6e11eed73fc77ae2ab6e2217e4"
+        },
+        "spot_2022-08_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0018.body.zst",
+          "sha256": "9da4253082d3be3df99f3efda1ed1de17813be372f953fa2928becbb6136993e"
+        },
+        "spot_2022-08_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2022-08.json",
+          "sha256": "987979bead658b077ff19683aafbf778c653f5cdea31908b988924c6ceb11469"
+        },
+        "spot_2022-08_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0017.body.zst",
+          "sha256": "50841e8cabd899dc28a9a46ef43f1ae11b15f03dd4458f9a15e3e0d2f4a95206"
+        },
+        "spot_2022-09_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0020.body.zst",
+          "sha256": "22b02c07e9c7a014382ea3a7ecac0776833d2aabe59718b21d31ea2f7a89f1c9"
+        },
+        "spot_2022-09_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2022-09.json",
+          "sha256": "8f881683dbe6fc6c72ccd48a13a5d2185ad462c66250f7419bf6367c96ec92ee"
+        },
+        "spot_2022-09_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0019.body.zst",
+          "sha256": "058aa8c72aa08144f923f183d13b57620b14d8a716c92cb52b1b8cd5050e8d3d"
+        },
+        "spot_2022-10_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0022.body.zst",
+          "sha256": "244b04ea8d2000fe918d4926626222675d0fd690bf8b5b1a0ed72ad5ef8ead83"
+        },
+        "spot_2022-10_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2022-10.json",
+          "sha256": "aa29c44dab6fcbb1527166e7bda75f7785010bb2d600f2a73309baed7fdf7de1"
+        },
+        "spot_2022-10_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0021.body.zst",
+          "sha256": "d9ac336b8ee107371f829da9962f5c2e0e689bd5630efa95afe4c1333ffa8a24"
+        },
+        "spot_2022-11_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0024.body.zst",
+          "sha256": "318f65aef8ea1b1212cd216faab30cfeea0180a6487ea7e50ee046d7646317a5"
+        },
+        "spot_2022-11_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2022-11.json",
+          "sha256": "7c25b050421bc7c15a883f551b1a95a0125fea05621a25005d25044c548eda19"
+        },
+        "spot_2022-11_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0023.body.zst",
+          "sha256": "6bac4e2da010e23c22f15d606f2a5230142036f599d5302de5dab704164a3e29"
+        },
+        "spot_2022-12_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0026.body.zst",
+          "sha256": "d48e509908055ca4cca20f8125aeee9b2e3cbf68faa815399442ff0e49c726fd"
+        },
+        "spot_2022-12_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2022-12.json",
+          "sha256": "61e8e096159db1ca64e0a43c9c31a070772a9403c398b35f8654ab3caa77c265"
+        },
+        "spot_2022-12_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0025.body.zst",
+          "sha256": "c2f8861d3c84282c444712847ee421f1cbab10cdd904292419a397c7099c35ad"
+        },
+        "spot_2023-01_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0028.body.zst",
+          "sha256": "ef5c78e79654bf58b23be5a2982564d58f44ac835eee7850a070e276497dce90"
+        },
+        "spot_2023-01_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2023-01.json",
+          "sha256": "fc80b65ec00a00dd4fefd04432d261b1527f110fb8d296f0b4a368e37c4c5dfe"
+        },
+        "spot_2023-01_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0027.body.zst",
+          "sha256": "4773e789e5a1be289ed96a606fbed0b91d6b5c2b23bf6af0ed915ddad548dcde"
+        },
+        "spot_2023-02_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0030.body.zst",
+          "sha256": "ea4649501cecffe293e5afe7fcda67e17942b850152d80ceb288f9e3ace77c75"
+        },
+        "spot_2023-02_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2023-02.json",
+          "sha256": "f55ac7fc7788b2270965a3e2e81837f6c4c9fab50087b167f36f07f40d6f6769"
+        },
+        "spot_2023-02_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0029.body.zst",
+          "sha256": "080749048727496dd35185e2b23ea75bfc0175ab405d5e593002226f5674a602"
+        },
+        "spot_2023-03_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0032.body.zst",
+          "sha256": "32acfadd065aae351998179a43944aa695e4a99d54710d9a01cda2402b51573e"
+        },
+        "spot_2023-03_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2023-03.json",
+          "sha256": "35b7aa4989df541f2dd68a70bef1a60b161c82ad0a118cd6f9d5a8efc3a66e90"
+        },
+        "spot_2023-03_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0031.body.zst",
+          "sha256": "34ea3a9d6ae5426a1c44b6cfe1209e85f9a470c3ece0e6d88398fdcf253a7305"
+        },
+        "spot_2023-04_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0034.body.zst",
+          "sha256": "43b8e0a68486b803b3be50b320b39e19b1cf001be2422518a266903d8c97f937"
+        },
+        "spot_2023-04_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2023-04.json",
+          "sha256": "219f5562f30908851db03f4ce51fcb3ce0333b3259cfa2cc9ddd529d074ee7ae"
+        },
+        "spot_2023-04_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0033.body.zst",
+          "sha256": "4a4999056bfe5caf14502b1dda201133880824947ac542f7d8fb409fc63ec2b0"
+        },
+        "spot_2023-05_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0036.body.zst",
+          "sha256": "357c4f55bbaea4adedd51d0f2b8c52c14a118a330e37cee876d5a42c826059a4"
+        },
+        "spot_2023-05_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2023-05.json",
+          "sha256": "d352a27ba59e23ed8cb289d01535b26246de1e58c060b4cebb43385e1ca0499f"
+        },
+        "spot_2023-05_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0035.body.zst",
+          "sha256": "8f97f77dd82301c54d4d8e382396ae608469ca877421656516d2284857d4b748"
+        },
+        "spot_2023-06_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0038.body.zst",
+          "sha256": "44ad6d9123e88cbd63a94732b9a9a22a7bfbaa388497f98e2ba98e5674927aee"
+        },
+        "spot_2023-06_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2023-06.json",
+          "sha256": "f3ca9bdb5a620514eb93ef6976768ae4c05caa3e7b2a04222ee92d9afa9be559"
+        },
+        "spot_2023-06_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0037.body.zst",
+          "sha256": "a9b53ca62dd907ce23a24c61d7e3877bc8af6d47c143cde8c47c5b5edbb521ec"
+        },
+        "spot_2023-07_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0040.body.zst",
+          "sha256": "7dcda2342336b7404e5d4f23e33529c0fda2adf79a13fe08afdd9c8b12767db8"
+        },
+        "spot_2023-07_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2023-07.json",
+          "sha256": "fe895dd1828c2ea97a6320a662d029b3fc6af9205726d1f0a790c7dc4497743c"
+        },
+        "spot_2023-07_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0039.body.zst",
+          "sha256": "11bd84a5318ee68c007b64c9dccc2cec570dd361b2c990179531c1ed87fb06a1"
+        },
+        "spot_2023-08_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0042.body.zst",
+          "sha256": "30446e3dc2306364c619bbe0246c5821bbec5de4d837509913aa2b461ceea95a"
+        },
+        "spot_2023-08_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2023-08.json",
+          "sha256": "4a852f5c302e54a0760c0d9dea7c77d55208cf62fad1a451076c0fca92192c48"
+        },
+        "spot_2023-08_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0041.body.zst",
+          "sha256": "f0340db37f9284393100b7bb335da6cf9911552208dad10e16d08a4d545a0944"
+        },
+        "spot_2023-09_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0044.body.zst",
+          "sha256": "910ab3e9ffde01898cd16e02f8d5bf35b73860f4c30d0d3586516ae2da1d8754"
+        },
+        "spot_2023-09_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2023-09.json",
+          "sha256": "429732c552e70bb26d68dce24e853480b381bc4cdac460ccfc8005a07e4ca268"
+        },
+        "spot_2023-09_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0043.body.zst",
+          "sha256": "e596800f7d87a40d49b049eeb56096ab5bc407a1ecfc2d602b186a4333e86665"
+        },
+        "spot_2023-10_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0046.body.zst",
+          "sha256": "9286a444f95bcd29d28f6de6dbc6638b90c8e2b1f9fa54308c29bd10122151fe"
+        },
+        "spot_2023-10_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2023-10.json",
+          "sha256": "cf4425ab31c4dd4f8d431cbf1296c9d25a7501ad9c135ff2526281ff8f32526a"
+        },
+        "spot_2023-10_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0045.body.zst",
+          "sha256": "0c09560a3a925269983bb7519379d9aca9b92d4f778a4645e9a277164a3ffd76"
+        },
+        "spot_2023-11_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0048.body.zst",
+          "sha256": "bbf654f2d4024a374e2cb5485be0d0f31095822997c2c5a2c937359598cdc1ad"
+        },
+        "spot_2023-11_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2023-11.json",
+          "sha256": "e76c7c38260e04a5b57d10249b41c38a5d118ac6483b1f017f2918aeed3817ce"
+        },
+        "spot_2023-11_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0047.body.zst",
+          "sha256": "c99250f1494959dc5f01e675d37490b8b41c2ab7ec12cfcfb00ac20fb6b2c4b2"
+        },
+        "spot_2023-12_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0050.body.zst",
+          "sha256": "42caf4e80b0720c670f1befd4667802597b594a0b2093e06658d656e291d1406"
+        },
+        "spot_2023-12_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2023-12.json",
+          "sha256": "69917d6dfe739ef7fdbf892d431e9fe6d6652ef716ff00c42577f0edd734bc30"
+        },
+        "spot_2023-12_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0049.body.zst",
+          "sha256": "82b9a44339b500f045c8e8464918b663933ed697e196f0612825aa5c3387623c"
+        },
+        "spot_2024-01_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0052.body.zst",
+          "sha256": "009ed6edb100240268c95ad3881a899f651d34f482d2bbf05e3e97a55e25eb1d"
+        },
+        "spot_2024-01_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2024-01.json",
+          "sha256": "e9f01defcf04912eb163e303a9f12d519c0b84dd6d7ebf561aa0ff05d20686a6"
+        },
+        "spot_2024-01_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0051.body.zst",
+          "sha256": "0402baa93b0bb28d116fb6af8ff7559e9afdd86e1239a05d2257471e61ab7152"
+        },
+        "spot_2024-02_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0054.body.zst",
+          "sha256": "9a71a5003b9f029e8ab9d059c36979648a056f4e2df5916cb77f1fc74f72f33d"
+        },
+        "spot_2024-02_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2024-02.json",
+          "sha256": "ce71a27af3094d8a7ca71d4e996f33d90af768ba40468543b381cd29f8966f91"
+        },
+        "spot_2024-02_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0053.body.zst",
+          "sha256": "60c0f9ed2bfe230a1a6d63646a61accb3dc00b5e1ef493e3d8ed2a676eaaf29d"
+        },
+        "spot_2024-03_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0056.body.zst",
+          "sha256": "7c631e00b493771a61946b155e5f81b8d1236fb1716cbba1853c8663329f0513"
+        },
+        "spot_2024-03_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2024-03.json",
+          "sha256": "3c10e3fd92e70e9fba4379c89e70dc1cc29f6e976ed80d02a574510a223d92f6"
+        },
+        "spot_2024-03_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0055.body.zst",
+          "sha256": "c27f3436f002f2b5a007d67312af5b51ee9594f1b13ead1ea946379a4e4415cc"
+        },
+        "spot_2024-04_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0058.body.zst",
+          "sha256": "7773e9538518ed971133c89c2282e463f8b1954a86546a32616b4d84cf417567"
+        },
+        "spot_2024-04_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2024-04.json",
+          "sha256": "79458c9ed8a1e287afe3e171906eba93cd0e8887c0272ee5f152985d53ca1892"
+        },
+        "spot_2024-04_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0057.body.zst",
+          "sha256": "e2f16ddb7df09b74c664188058956b1ce0150b769ca84e30bfe521622e227c09"
+        },
+        "spot_2024-05_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0060.body.zst",
+          "sha256": "4c69bd65205dc880d7a51dc62361a705bbe9a7e8962b31e211b2a48880560ebe"
+        },
+        "spot_2024-05_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2024-05.json",
+          "sha256": "318ce73b3bedc56fbb1de7da02f0bc80aba5c5e60cc691dc115e057380b2c0ca"
+        },
+        "spot_2024-05_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0059.body.zst",
+          "sha256": "675cabe7e94ae53ea79933b5792e0a0f3584acef367b661656d40deca5189a42"
+        },
+        "spot_2024-06_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0062.body.zst",
+          "sha256": "aac592f315772cef0b4576e8be819870d16437884f347c967f68ebd12e216b4d"
+        },
+        "spot_2024-06_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2024-06.json",
+          "sha256": "0c78acd316fd4eee32cf11e5d7f6b2a1d16263c110a4b52aeabc7bf45393d9d6"
+        },
+        "spot_2024-06_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0061.body.zst",
+          "sha256": "dab5a1af670f1273348577bb7748a2c41b7ea764adcb54fd72d1e78f8dc556a2"
+        },
+        "spot_2024-07_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0064.body.zst",
+          "sha256": "0370f1f75d8d5f5d8c49169017a26aaff8f0044734700b6844948503238a0748"
+        },
+        "spot_2024-07_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2024-07.json",
+          "sha256": "5c212541a2d491046c8883f30a783b6e7528173cccbcf0a86fbb9c54ee3b6e9e"
+        },
+        "spot_2024-07_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0063.body.zst",
+          "sha256": "b8ee8e0fd8c83128f1f374866e8e4e297b4b175b83dac146171fa84afbaeec97"
+        },
+        "spot_2024-08_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0066.body.zst",
+          "sha256": "edfc9d5c682bf410709bd004783405eca8c84808380a99fd6599a7da58f3eb56"
+        },
+        "spot_2024-08_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2024-08.json",
+          "sha256": "443538828bbf690b54dfb0f5890b5f0912b2777dc90ea600aa2cc746ed829d42"
+        },
+        "spot_2024-08_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0065.body.zst",
+          "sha256": "508931d6b32a5943442ddc470987ab56a00b70aa70630a2be46109c03d9f1d7d"
+        },
+        "spot_2024-09_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0068.body.zst",
+          "sha256": "1b60d93b92f0b7dabd99b1b0bc1d8ff0dd8ffdfdf525c510e98057da5389dc48"
+        },
+        "spot_2024-09_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2024-09.json",
+          "sha256": "1be6c70f7f1738b624982d3a71443464f4b06607b558fe7a248e0db09966e947"
+        },
+        "spot_2024-09_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0067.body.zst",
+          "sha256": "4ebc1f4b24322f4a24fa982af42a7237a224229cc06e246d1e5962804db9fe85"
+        },
+        "spot_2024-10_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0070.body.zst",
+          "sha256": "f12b64e873e25e77bada5e28c840dd80cafddc6496cfc4ad42ecf9121c1651dc"
+        },
+        "spot_2024-10_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2024-10.json",
+          "sha256": "18aaabb2fcb2d46d539fba3b99de8e2aa13ecc135ba22fea8174875c01bc1516"
+        },
+        "spot_2024-10_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0069.body.zst",
+          "sha256": "ad39e6c35e3b126e87d457a7a79b72230326c4b9fff9dfbd2895dc8566401319"
+        },
+        "spot_2024-11_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0072.body.zst",
+          "sha256": "14fcfad0ebb06f615de33e53a6c5385111a4d0b2735ae5f28999b8bfa0cd3856"
+        },
+        "spot_2024-11_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2024-11.json",
+          "sha256": "78f0fba6532d9641920200ba7653ed185aa9a27d434136f2551cb35492b81c36"
+        },
+        "spot_2024-11_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0071.body.zst",
+          "sha256": "366059bde8ac94efd9bfae6fa32f102bee5049dcac50f8424806d6b391aed794"
+        },
+        "spot_2024-12_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0074.body.zst",
+          "sha256": "0d6ba27930148ce6c0518538ad38ec237f95fd22900e438bf6f6dc3d959c0eb6"
+        },
+        "spot_2024-12_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2024-12.json",
+          "sha256": "25ffab2984981a03303ff26016c0db09db97eddaff3da0669c07d7f5b4fa47c3"
+        },
+        "spot_2024-12_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0073.body.zst",
+          "sha256": "9ed214da5f74ff0bdf05d4e9efed4ce167904a62dedef9f53b9de61bcd9d8c44"
+        },
+        "spot_2025-01_checksum": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0076.body.zst",
+          "sha256": "9054aa832caa9603881b21789846552a8de6876aaebf888d763a5a4feb3356fe"
+        },
+        "spot_2025-01_metadata": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/month-2025-01.json",
+          "sha256": "08bc471624b4c532d4f14a8d5417b29cc4508ee51e00cd5b6268e631ffacbd6d"
+        },
+        "spot_2025-01_zip": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/request-0075.body.zst",
+          "sha256": "e5ed5ef97847d3fa8d16118b898ad5548a6484f22d2039abb8e0902c0dcee5c3"
+        },
+        "spot_capture_review": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/CAPTURE_REVIEW.json",
+          "sha256": "e94c3fbb6c40e49de442fd914eae792839d5f68b203a355812c768aaaf7ce52c"
+        },
+        "spot_manifest": {
+          "dataset": "eth-spot",
+          "path": "research/onchain-graph-2026-09-16/comparison/capture-artifacts/spot/manifest.json",
+          "sha256": "ed1d32bc3991dadcc8c4f5b23a8e9ef17f7a33d3e7bb32773b2396a6da010116"
+        },
+        "verification": {
+          "dataset": "eth-history",
+          "path": "research/onchain-graph-2026-09-16/comparison/evaluation-20260924/verification.json",
+          "sha256": "e4569a831540f91f3f63af36778f2e13b51bfb3795fe9f7a74dba5b5dcff9028"
+        },
+        "verification_log": {
+          "dataset": "eth-history",
+          "path": "research/onchain-graph-2026-09-16/comparison/evaluation-20260924/verification.log",
+          "sha256": "033e7b5962b3a28d7cf03dc9c81c09319b51987bfce0a9a04850a448cfeffad0"
+        }
+      },
+      "outputs": [
+        "inputs-admission.json",
+        "market.json",
+        "graph.json",
+        "panel.json",
+        "fits.json",
+        "predictions.json",
+        "evaluation.json",
+        "summary.json"
+      ],
+      "parent": null,
+      "question": "Do fixed temporal motif summaries improve next-day ETHUSDT direction log loss beyond identical market and ordinary graph activity controls?",
+      "reuse": "exploratory",
+      "runtime_hashes": {
+        "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+        "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+        "admission.py": "fbb9c00ef14f193255e7405c16bec380123ecb71cced64aa63f106e8ff8ba836",
+        "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+        "lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+        "verify.py": "70f7e33d1ee8e4edebf4292f7fa74d6b2410f0c20d2db20511d19efacc725313"
+      },
+      "selection": null,
+      "source_files": {
+        ".python-version": "56c16a411e41fec3219e828087f312d9891641e3b29093c69d08a05ec1e5d693",
+        "pyproject.toml": "fa319e95452e538ac22d78584f87f5f13a24d4b8bb83064b51d015706ef594b9",
+        "research/onchain-graph-2026-09-16/comparison/PROTOCOL.md": "7d77e709d886dc14324a94f6b5245c88ada3dddbdbf739534e56b2b71a35a89f",
+        "research/onchain-graph-2026-09-16/comparison/SOURCE_INVENTORY.md": "7a3f905f462cf564ce462d629857c31e6d6788c0c8fdeceed2b0c94ef6da9f23",
+        "research/onchain-graph-2026-09-16/comparison/config.json": "ea07a698b667963dafc51a4a37b7afb1c68d8bd6f0be13c4b4d2d4ebd248ac2c",
+        "research/onchain-graph-2026-09-16/comparison/evaluation-20260924/CONTRACT.md": "89f112f17641ddbb4bbd355d0ab4b63620788415c0b56589a736cc5f2b604903",
+        "research/onchain-graph-2026-09-16/comparison/evaluation-20260924/admission.py": "25af9f5296bb95f035d634f27dadc03dd6cab07c9b9fc47999bda3fd209f8a4f",
+        "research/onchain-graph-2026-09-16/comparison/evaluation-20260924/check_final.py": "3474ec8eb0f783e8f8dee22d074a36c422bfa88240db920893814f62b5125f23",
+        "research/onchain-graph-2026-09-16/comparison/evaluation-20260924/launch.py": "614b0207a46039c1d7bd6bf5267ef6f6fade9447c1197c270b23746b511c7532",
+        "research/onchain-graph-2026-09-16/comparison/evaluation-20260924/run.py": "75dca3f88aadcefefeb630da38692f6f73b1a578c889c6805266e220e4d2e986",
+        "research/onchain-graph-2026-09-16/comparison/evaluation-20260924/verification-resources/final.json": "e0c0747c03bc5abb8a3a0e045c631f5163be11ba6edcac89941c758c4a48d3ce",
+        "research/onchain-graph-2026-09-16/comparison/features.py": "be2c8bf3bec5e635874fe405d9e51202d8d550fb68fddf002282d6bdc09599eb",
+        "research/onchain-graph-2026-09-16/comparison/input_adapter.py": "35e4adaa8bfb10c88fb80dcffca3152cc814b68aa4dab2257f49664ba52452a2",
+        "research/onchain-graph-2026-09-16/comparison/model.py": "f75c9bbf941b0a01e3c476a94a71eeb9a80db2fbed35e33dbb5c4aef3fb74ab4",
+        "research/onchain-graph-2026-09-16/comparison/spot_capture.py": "771d0dd14f2eacdd2303a15d4cf5258e56dd6a6ced96df79da7b43ba8d03439e",
+        "research/onchain-graph-2026-09-16/fullpanel_resume2/memory_guard.py": "2a00b031b4a8a9ae5ac059c6f5f50c132f8bad205f935c33420b9accaea81b3b",
+        "research/onchain-graph-2026-09-16/pilot/storage.py": "bb7fedc103949d58a7ff27665e102126f5784f40f76f0794eae4fb056a5dd086",
+        "scripts/research_runtime.py": "cfe2341b1d90ae7e925bf136c750dec4a5c7509b615d2d0ce9d30d3096fccdf2",
+        "scripts/verify_offline.py": "36ee65942e667f5681565f0f7e312d9845b206fdeb47f15e7cd6aff75782d927",
+        "tests/research/test_onchain_matched_admission.py": "bfc949af6cab4f5b5709e84f1270321b2f78f7676b34f238ebd065f20d5dcc71",
+        "tests/research/test_onchain_matched_comparison.py": "df319e4f30832ada34d70a5599e0f36b06519a0af45aaa43574006310d659df1",
+        "tests/research/test_onchain_matched_features.py": "5d57745e7b9d53e01ca9900f9201bfb497ae025a82bcec4e88b3b69a6697d585",
+        "tests/research/test_onchain_matched_final.py": "e5c43c11dba12726afa3d0dc3f4613d78b60795f18cceb4875722b92db549e8e",
+        "tests/research/test_onchain_matched_inputs.py": "b5519d405bd52a274f02d3c0e53e654e8d924b2da3c9d4d02777d3b2473bcbaf",
+        "tests/research/test_onchain_matched_run.py": "4a6aeaff285571ff904b11b4fb99d1b4f4316334a88bcef3ca6574a591734acb",
+        "uv.lock": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a"
+      },
+      "stage": "development",
+      "windows": [
+        {
+          "availability": "existing",
+          "dataset": "eth-history",
+          "end": "2025-01-01T00:00:00Z",
+          "start": "2022-01-01T00:00:00Z"
+        },
+        {
+          "availability": "existing",
+          "dataset": "eth-spot",
+          "end": "2025-02-01T00:00:00Z",
+          "start": "2021-12-01T00:00:00Z"
+        }
+      ]
+    }
+  },
+  "families": {
+    "eth-matched-direction": {
+      "attempt_budget": 17,
+      "history_reference": "research/onchain-graph-2026-09-16/comparison/evaluation-20260924/CHARTER.md and history.json retain16upstream claims/4failures; one explicit fixed exploratory comparison allowance, all oldgates/budgets and spentETH exposure preserved.",
+      "mechanism_id": "ethereum-temporal-motif-incremental-direction-screen",
+      "prior_attempts": 16
+    }
+  },
+  "program_id": "onchain-graph-2026-09-16",
+  "schema_version": 1
+}

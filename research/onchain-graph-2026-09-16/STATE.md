@@ -1,5 +1,34 @@
 # Ethereum graph feasibility checkpoint
 
+**September24 07:44 UTC — matched comparison release approved.**
+The fixed M0/M1/M2 runner, independent checker and exact gate passed independent
+release review. Named offline verification passed2,746tests+97subtests with
+clean6GiB guard closure, unchanged source and peak1.88GiB. The gate binds131
+inputs,26sources,77cells/eight outputs and one additive cumulative17 allowance,
+retaining all16predecessors/4failures and spent ETH windows. Exact contract is
+`88e51d0a9a3c2d1acae1cc58e2865e4621fe2b6809499ed6e32038d28e9f693a`.
+See [release approval](comparison/evaluation-20260924/RELEASE_REVIEW.md) and
+[operations](comparison/evaluation-20260924/RUNBOOK.md). Commit/push verification
+and read-only admission are next, then the single already authorized comparison.
+No observed price/label or empirical model has yet been opened/fitted. Preserve
+all graph evidence; no graph computation or final graph review may be repeated.
+
+**September 24 — full graph evidence preserved and remotely verified.**
+All 8,432 imported evidence files matched their source hashes. Independent
+preservation review passed; all 1,099 outputs, daily audit/cleanup/append
+receipts and prior failed archives remain retained. Commit
+`d785a49824a02957399022eb732ff0d89de28189` was pushed and the exact remote head
+verified. See [preservation closure](fullpanel_resume2/CLOSURE.md) and
+[backup receipt](fullpanel_resume2/full-import-20260924/backup.json).
+Main-partition space is sufficient; original raw/hash roots remain unchanged.
+Full raw-data off-device backup is still unverified. The authorized fixed
+M0/M1/M2 comparison is in implementation/release review under
+[its charter](comparison/evaluation-20260924/CHARTER.md). Synthetic tests are
+passing; release review and the named offline suite remain pending. No observed
+price/label or fitted result has been opened, and no comparison claim exists.
+The previous disk block is superseded. Never rerun completed graph computation
+or its independent full-panel review.
+
 **September 23, 21:32 UTC — independent full-panel verification passed.**
 The frozen checker finished at 21:10:08 UTC, admitting all 1,096 source days,
 1,094 graph days and exactly 1,221,389,903 distinct transaction hashes with zero

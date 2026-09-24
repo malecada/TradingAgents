@@ -1,4 +1,14 @@
-# Second continuation — verification passed; preservation pending
+# Second continuation — verified and preserved
+
+**September 24 — preservation complete.** All8,432 imported evidence files
+matched source SHA256 and passed independent preservation review. Commit
+`d785a49824a02957399022eb732ff0d89de28189` is verified on the remote branch.
+See [closure](CLOSURE.md) and [backup receipt](full-import-20260924/backup.json).
+Prior space-blocked checkpoints below are historical and superseded. Neither
+compute nor final graph review may be replayed. The fixed matched comparison
+is now in preparation/release review under ../comparison/evaluation-20260924;
+no empirical comparison has been claimed or fitted. Raw/hash roots remain
+unchanged; a full off-device raw-data backup remains unverified.
 
 **September 23, 21:32 UTC — independent full-panel verification passed.**
 The frozen checker finished at 21:10:08 UTC, admitting all 1,096 source days,

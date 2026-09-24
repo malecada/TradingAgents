@@ -19,6 +19,10 @@ MODEL_PARAMS = dict(n_estimators=100, max_depth=3, num_leaves=7,
                     verbosity=-1, random_state=42)
 
 
+class AuditFitError(RuntimeError):
+    """Durable fit recording failed; stop the whole evaluation without retry."""
+
+
 def _utc(values):
     parsed = pd.to_datetime(values, utc=True, errors="raise")
     if pd.isna(parsed).any():
@@ -85,7 +89,7 @@ def binary_metrics(y, probabilities):
                 brier=float(((p-y)**2).mean()))
 
 
-def run_comparison(panel, feature_sets, folds, *, purge_gap="0D"):
+def run_comparison(panel, feature_sets, folds, *, purge_gap="0D", audit_fit=None):
     """One expanding fit per frozen [start,end) fold, common rows for all models.
 
     Training labels must end no later than fold start minus purge_gap. No
@@ -123,6 +127,11 @@ def run_comparison(panel, feature_sets, folds, *, purge_gap="0D"):
             learner = LGBMClassifier(**MODEL_PARAMS)
             columns = list(feature_sets[name])
             learner.fit(train[columns], train.y.astype(int))
+            if audit_fit is not None:
+                try:
+                    audit_fit(ident, name, learner, train, test)
+                except Exception as exc:
+                    raise AuditFitError(f"fit checkpoint failed: {type(exc).__name__}: {exc}") from exc
             p = learner.predict_proba(test[columns])[:, list(learner.classes_).index(1)]
             binary_metrics(test.y, p)  # Fail closed on malformed learner output.
             result[name + "_probability"] = p
@@ -187,7 +196,7 @@ def paired_loss_summary(predictions, *, block_days=14, resamples=2000, seed=42):
                 resamples=resamples, seed=seed, n=len(y))
 
 
-def evaluate(panel):
+def evaluate(panel, *, audit_fit=None):
     """Protocol-bound evaluation of caller-supplied admitted rows; no data I/O.
 
     The adjacent preparation config fixes the sample, arms, folds and inference.
@@ -220,7 +229,9 @@ def evaluate(panel):
     outputs, attempts = [], []
     for fold in config["folds"]:
         try:
-            result = run_comparison(frame, config["feature_sets"], [fold], purge_gap=config["purge_gap"])
+            result = run_comparison(frame, config["feature_sets"], [fold], purge_gap=config["purge_gap"], audit_fit=audit_fit)
+        except AuditFitError:
+            raise
         except Exception as exc:
             attempts.append(dict(fold=fold["id"], status="failed", error=f"{type(exc).__name__}: {exc}"))
         else:
@@ -245,14 +256,19 @@ def evaluate(panel):
     inference = dict(status="unavailable", reason="all 366 daily 2024 predictions required", missing_dates=missing.tolist())
     screening = dict(status="unavailable", supported=None)
     if actual.equals(required) and all(a["status"] == "complete" for a in attempts):
-        paired = paired_loss_summary(predictions, block_days=bootstrap["block_days"],
-                                     resamples=bootstrap["resamples"], seed=bootstrap["seed"])
-        inference = dict(status="available", result=paired, missing_dates=[])
-        negative_months = sum(m["M2_minus_M1_log_loss"] < 0 for m in monthly)
-        upper = paired["summaries"][config["screening"]["primary"]]["ci95"][1]
-        supported = (upper < config["screening"]["ci95_upper_strictly_below"] and
-                     negative_months >= config["screening"]["monthly_negative_minimum"])
-        screening = dict(status="available", supported=bool(supported), negative_months=negative_months)
+        try:
+            paired = paired_loss_summary(predictions, block_days=bootstrap["block_days"],
+                                         resamples=bootstrap["resamples"], seed=bootstrap["seed"])
+            inference = dict(status="available", result=paired, missing_dates=[])
+            negative_months = sum(m["M2_minus_M1_log_loss"] < 0 for m in monthly)
+            upper = paired["summaries"][config["screening"]["primary"]]["ci95"][1]
+            supported = (upper < config["screening"]["ci95_upper_strictly_below"] and
+                         negative_months >= config["screening"]["monthly_negative_minimum"])
+            screening = dict(status="available", supported=bool(supported), negative_months=negative_months)
+        except Exception as exc:
+            inference = dict(status="unavailable", reason=f"{type(exc).__name__}: {exc}",
+                             error_type="inference_failed", missing_dates=[])
+            screening = dict(status="unavailable", supported=None)
     return dict(predictions=predictions, admission=admission, attempts=pd.DataFrame(attempts),
                 monthly=pd.DataFrame(monthly), pooled_metrics=pooled,
                 fold_metrics=pd.concat([r["metrics"] for r in outputs], ignore_index=True) if outputs else pd.DataFrame(),
