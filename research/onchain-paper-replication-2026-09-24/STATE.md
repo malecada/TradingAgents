@@ -80,3 +80,8 @@ Fresh locked offline environment replay:2synthetic predictions agree exactly;
 verified34coverage records/88test links. This supports synthetic C14 only; empirical
 raw-to-prediction reproduction and remote recovery remain pending. Bitcoin exact
 weekly aggregation is under independent review; no BTC data has been decoded.
+
+Pilot release review is satisfied; current host startup prerequisite is not:
+9GiB MemAvailable required, approximately6.6GiB observed. See resources/pilot-preflight-01.json.
+No guard/owner identity or empirical claim has been created. Continue independent
+source/software work and launch once only when the unchanged reserve is met.

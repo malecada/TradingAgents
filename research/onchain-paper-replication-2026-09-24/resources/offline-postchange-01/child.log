@@ -1,0 +1,344 @@
+Reviewed offline profile: 211 modules; legacy/unreviewed modules excluded.
+........................................................................ [  2%]
+.................................................... [  4%]
+........................................................................ [  6%]
+........................................................................ [  9%]
+........................................................................ [ 11%]
+........................................................................ [ 14%]
+........................................................................ [ 16%]
+........................................................................ [ 19%]
+........................................................................ [ 21%]
+........................................................................ [ 23%]
+...........................s............................................ [ 26%]
+........................................................................ [ 28%]
+........................................................................ [ 31%]
+........................................................................ [ 33%]
+........................................................................ [ 36%]
+.............F.......................................................... [ 38%]
+........................................................................ [ 41%]
+........................................................................ [ 43%]
+........................................................................ [ 46%]
+........................................................................ [ 48%]
+........................................................................ [ 51%]
+........................................................................ [ 53%]
+........................................................................ [ 55%]
+........................................................................ [ 58%]
+........................................................................ [ 60%]
+........................................................................ [ 63%]
+........................................................................ [ 65%]
+........................................................................ [ 68%]
+........................................................................ [ 70%]
+................................................................................................................................ [ 75%]
+........................................................................ [ 77%]
+........................................................................ [ 80%]
+...................................................................................................................................... [ 84%]
+........................................................................ [ 87%]
+........................................................................ [ 89%]
+................................................................ [ 91%]
+........................................................ [ 93%]
+........................................................................ [ 96%]
+............................................. [ 97%]
+....................................................................     [100%]
+=================================== FAILURES ===================================
+______________ test_actual_dated_cli_real_hac_under_amended_guard ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-23/test_actual_dated_cli_real_hac0')
+
+    def test_actual_dated_cli_real_hac_under_amended_guard(tmp_path):
+        loader=importlib.util.spec_from_file_location('dated_amended_guard',DIRECTORY/'resource_guard_v2.py')
+        guard=importlib.util.module_from_spec(loader);loader.loader.exec_module(guard)
+        program=tmp_path/'research/strategy-search-2026-09-11';program.mkdir(parents=True)
+        for name in FILES:shutil.copyfile(DIRECTORY/name,program/name)
+        shutil.copyfile(ROOT/'uv.lock',tmp_path/'uv.lock')
+        package=tmp_path/'tradingagents';package.mkdir()
+        shutil.copyfile(ROOT/'tradingagents/__init__.py',package/'__init__.py')
+        for name in ('research','research_amended'):
+            shutil.copytree(ROOT/'tradingagents'/name,package/name,ignore=shutil.ignore_patterns('__pycache__'))
+        fixtures=tmp_path/'tests/research';fixtures.mkdir(parents=True)
+        shutil.copyfile(ROOT/'tests/research/test_dated_book_run.py',fixtures/'test_dated_book_run.py')
+        (tmp_path/'driver.py').write_text(DRIVER)
+        report=guard.run_guard([sys.executable,'-B',str(tmp_path/'driver.py')])
+        (tmp_path/'guard-report.json').write_text(json.dumps(report,indent=2)+'\n')
+>       assert report['child_exit_code']==0 and report['limit_reason'] is None,report
+E       AssertionError: {'child_exit_code': 1, 'limit_reason': None, 'elapsed_seconds': 8.483800524001708, 'peak_sampled_tree_rss_bytes': 436518912, ...}
+E       assert (1 == 0)
+
+tests/research/test_dated_amended_lifecycle.py:118: AssertionError
+----------------------------- Captured stderr call -----------------------------
+Traceback (most recent call last):
+  File "/tmp/pytest-of-malecada/pytest-23/test_actual_dated_cli_real_hac0/driver.py", line 80, in <module>
+    dated_book_amended.main()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/tmp/pytest-of-malecada/pytest-23/test_actual_dated_cli_real_hac0/research/strategy-search-2026-09-11/dated_book_amended.py", line 32, in main
+    raise RuntimeError('financial process historical RSS peak exceeds 512 MiB')
+RuntimeError: financial process historical RSS peak exceeds 512 MiB
+___ WorkerTests.test_supervisor_retains_failure_and_kill_reason (kill=False) ___
+
+self = <tests.research.test_options_capture_worker.WorkerTests testMethod=test_supervisor_retains_failure_and_kill_reason>
+
+    def test_supervisor_retains_failure_and_kill_reason(self):
+        original=subprocess.Popen
+        for kill in (False,True):
+            with self.subTest(kill=kill), tempfile.TemporaryDirectory() as td:
+                p=Path(td);data=p/'data';wall=int(time.time()*1000)
+                spec={'data_root':str(data),'lease_not_before_ms':wall-1000,'lease_expires_ms':wall+(300 if kill else 5000)}
+                code="import time; time.sleep(10)" if kill else "import sys; sys.stderr.write('invented failure'); sys.exit(3)"
+                def fake(command,**kwargs):
+                    self.assertEqual(command[1:4],['-I','-B',str(p/'release_bootstrap.py')])
+                    return original([sys.executable,'-B','-c',code],**kwargs)
+                affinity=os.sched_getaffinity(0)
+                try:
+                    with patch.object(worker,'assignment',return_value=spec),patch.object(worker.subprocess,'Popen',side_effect=fake):
+                        if kill:
+                            with self.assertRaisesRegex(RuntimeError,'lease expired'):worker.supervise(p,data,'a'*64)
+>                       else:self.assertEqual(worker.supervise(p,data,'a'*64),3)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_options_capture_worker.py:210: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research_options_capture/worker.py:260: in supervise
+    return _supervise_locked(package,data,expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+package = PosixPath('/tmp/tmpn_o2ukj3')
+data = PosixPath('/tmp/tmpn_o2ukj3/data')
+expected = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
+    def _supervise_locked(package,data,expected):
+        spec=assignment(package,expected);data=safe(data)
+        if str(data)!=spec['data_root']:raise ValueError('assignment data root mismatch')
+        if sys.version_info[:3]!=(3,13,13):raise ValueError('pinned Python3.13.13 required')
+        if not spec['lease_not_before_ms']<=time.time()*1000<spec['lease_expires_ms']:raise ValueError('outside lease')
+        data.mkdir(exist_ok=True)
+        prior=sorted(data.glob('supervisor-exit-*.json'))
+        if len(prior)>=64 or any(p.is_symlink() or p.stat().st_size>128*1024 for p in prior):raise ValueError('supervisor record bound')
+        if [p.name for p in prior]!=[f'supervisor-exit-{i:06d}.json' for i in range(len(prior))]:raise ValueError('supervisor record sequence')
+        if any(json.loads(read(p,128*1024)).get('assignment_sha256')!=expected for p in prior):raise ValueError('supervisor record assignment changed')
+        cpus=sorted(os.sched_getaffinity(0))[:2];os.sched_setaffinity(0,cpus)
+        r,w=os.pipe();os.set_blocking(r,False)
+        command=[sys.executable,'-I','-B',str(package/'release_bootstrap.py'),str(package),str(data),expected,'--child-fd',str(w)]
+        process=subprocess.Popen(command,cwd=package,pass_fds=(w,),start_new_session=True,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
+        os.close(w);os.set_blocking(process.stderr.fileno(),False)
+        last=time.monotonic();previous_wall=time.time();previous_mono=last
+        monotonic_lease_end=last+max(0,spec['lease_expires_ms']/1000-previous_wall)
+        reason=None;stderr=bytearray();stderr_bytes=0;peak=0
+        def drain():
+            nonlocal stderr_bytes
+            try:
+                chunk=os.read(process.stderr.fileno(),65536)
+                stderr_bytes+=len(chunk);stderr.extend(chunk[:max(0,65536-len(stderr))])
+            except BlockingIOError:pass
+        try:
+            while process.poll() is None:
+                try:
+                    if os.read(r,65536):last=time.monotonic()
+                except BlockingIOError:pass
+                drain();mono=time.monotonic();wall=time.time();rss=tree_rss(os.getpid())[0];peak=max(peak,rss)
+                reason=resource_reason(aggregate_rss=rss,progress_age=mono-last,
+                                       clock_drift=(wall-previous_wall)-(mono-previous_mono),wall_ms=wall*1000,
+                                       lease_end=spec['lease_expires_ms'],monotonic_now=mono,monotonic_lease_end=monotonic_lease_end)
+                previous_wall=wall;previous_mono=mono
+                if reason:break
+                time.sleep(.1)
+        except BaseException as exc:
+            reason=type(exc).__name__+': supervisor interrupted'
+            raise
+        finally:
+            if process.poll() is None:
+                _,descendants=tree_rss(process.pid)
+                for pid in descendants:
+                    try:os.kill(pid,signal.SIGKILL)
+                    except ProcessLookupError:pass
+            process.wait(timeout=5);drain();process.stderr.close();os.close(r)
+            publish(data/f'supervisor-exit-{len(prior):06d}.json',
+                    {'assignment_sha256':expected,'ended_ms':time.time_ns()//1000000,'child_pid':process.pid,
+                     'child_exit_code':process.returncode,'reason':reason or 'child exited with code '+str(process.returncode),'sampled_peak_aggregate_rss':peak,
+                     'stderr_base64':base64.b64encode(stderr).decode(),'stderr_bytes_observed':stderr_bytes,
+                     'stderr_truncated':stderr_bytes>len(stderr),'scope':'Supervisor exit evidence; raw journal admission remains separate.'})
+>       if reason:raise RuntimeError(reason+'; preserve interrupted intents, no automatic restart')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: sampled aggregate RSS limit; preserve interrupted intents, no automatic restart
+
+tradingagents/research_options_capture/worker.py:315: RuntimeError
+___ WorkerTests.test_supervisor_retains_failure_and_kill_reason (kill=True) ____
+RuntimeError: sampled aggregate RSS limit; preserve interrupted intents, no automatic restart
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.research.test_options_capture_worker.WorkerTests testMethod=test_supervisor_retains_failure_and_kill_reason>
+
+    def test_supervisor_retains_failure_and_kill_reason(self):
+        original=subprocess.Popen
+        for kill in (False,True):
+            with self.subTest(kill=kill), tempfile.TemporaryDirectory() as td:
+                p=Path(td);data=p/'data';wall=int(time.time()*1000)
+                spec={'data_root':str(data),'lease_not_before_ms':wall-1000,'lease_expires_ms':wall+(300 if kill else 5000)}
+                code="import time; time.sleep(10)" if kill else "import sys; sys.stderr.write('invented failure'); sys.exit(3)"
+                def fake(command,**kwargs):
+                    self.assertEqual(command[1:4],['-I','-B',str(p/'release_bootstrap.py')])
+                    return original([sys.executable,'-B','-c',code],**kwargs)
+                affinity=os.sched_getaffinity(0)
+                try:
+                    with patch.object(worker,'assignment',return_value=spec),patch.object(worker.subprocess,'Popen',side_effect=fake):
+                        if kill:
+>                           with self.assertRaisesRegex(RuntimeError,'lease expired'):worker.supervise(p,data,'a'*64)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                           AssertionError: "lease expired" does not match "sampled aggregate RSS limit; preserve interrupted intents, no automatic restart"
+
+tests/research/test_options_capture_worker.py:209: AssertionError
+___ WorkerTests.test_supervisor_retains_failure_and_kill_reason (kill=False) ___
+
+self = <tests.research.test_options_timing_worker.WorkerTests testMethod=test_supervisor_retains_failure_and_kill_reason>
+
+    def test_supervisor_retains_failure_and_kill_reason(self):
+        original=subprocess.Popen
+        for kill in (False,True):
+            with self.subTest(kill=kill), tempfile.TemporaryDirectory() as td:
+                p=Path(td);data=p/'data';wall=int(time.time()*1000)
+                spec={'data_root':str(data),'lease_not_before_ms':wall-1000,'lease_expires_ms':wall+(300 if kill else 5000)}
+                code="import time; time.sleep(10)" if kill else "import sys; sys.stderr.write('invented failure'); sys.exit(3)"
+                def fake(command,**kwargs):
+                    self.assertEqual(command[1:4],['-I','-B',str(p/'release_bootstrap.py')])
+                    return original([sys.executable,'-B','-c',code],**kwargs)
+                affinity=os.sched_getaffinity(0)
+                try:
+                    with patch.object(worker,'assignment',return_value=spec),patch.object(worker.subprocess,'Popen',side_effect=fake):
+                        if kill:
+                            with self.assertRaisesRegex(RuntimeError,'lease expired'):worker.supervise(p,data,'a'*64)
+>                       else:self.assertEqual(worker.supervise(p,data,'a'*64),3)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_options_timing_worker.py:278: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research_options_timing/worker.py:268: in supervise
+    return _supervise_locked(package,data,expected)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+package = PosixPath('/tmp/tmprltcj98d')
+data = PosixPath('/tmp/tmprltcj98d/data')
+expected = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
+    def _supervise_locked(package,data,expected):
+        spec=assignment(package,expected);data=safe(data)
+        if str(data)!=spec['data_root']:raise ValueError('assignment data root mismatch')
+        if sys.version_info[:3]!=(3,13,13):raise ValueError('pinned Python3.13.13 required')
+        if not spec['lease_not_before_ms']<=time.time()*1000<spec['lease_expires_ms']:raise ValueError('outside lease')
+        data.mkdir(exist_ok=True)
+        prior=sorted(data.glob('supervisor-exit-*.json'))
+        if len(prior)>=64 or any(p.is_symlink() or p.stat().st_size>128*1024 for p in prior):raise ValueError('supervisor record bound')
+        if [p.name for p in prior]!=[f'supervisor-exit-{i:06d}.json' for i in range(len(prior))]:raise ValueError('supervisor record sequence')
+        if any(json.loads(read(p,128*1024)).get('assignment_sha256')!=expected for p in prior):raise ValueError('supervisor record assignment changed')
+        cpus=sorted(os.sched_getaffinity(0))[:2];os.sched_setaffinity(0,cpus)
+        r,w=os.pipe();os.set_blocking(r,False)
+        command=[sys.executable,'-I','-B',str(package/'release_bootstrap.py'),str(package),str(data),expected,'--child-fd',str(w)]
+        process=subprocess.Popen(command,cwd=package,pass_fds=(w,),start_new_session=True,stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)
+        os.close(w);os.set_blocking(process.stderr.fileno(),False)
+        last=time.monotonic();previous_wall=time.time();previous_mono=last
+        monotonic_lease_end=last+max(0,spec['lease_expires_ms']/1000-previous_wall)
+        reason=None;stderr=bytearray();stderr_bytes=0;peak=0
+        def drain():
+            nonlocal stderr_bytes
+            try:
+                chunk=os.read(process.stderr.fileno(),65536)
+                stderr_bytes+=len(chunk);stderr.extend(chunk[:max(0,65536-len(stderr))])
+            except BlockingIOError:pass
+        try:
+            while process.poll() is None:
+                try:
+                    if os.read(r,65536):last=time.monotonic()
+                except BlockingIOError:pass
+                drain();mono=time.monotonic();wall=time.time();rss=tree_rss(os.getpid())[0];peak=max(peak,rss)
+                reason=resource_reason(aggregate_rss=rss,progress_age=mono-last,
+                                       clock_drift=(wall-previous_wall)-(mono-previous_mono),wall_ms=wall*1000,
+                                       lease_end=spec['lease_expires_ms'],monotonic_now=mono,monotonic_lease_end=monotonic_lease_end)
+                previous_wall=wall;previous_mono=mono
+                if reason:break
+                time.sleep(.1)
+        except BaseException as exc:
+            reason=type(exc).__name__+': supervisor interrupted'
+            raise
+        finally:
+            if process.poll() is None:
+                _,descendants=tree_rss(process.pid)
+                for pid in descendants:
+                    try:os.kill(pid,signal.SIGKILL)
+                    except ProcessLookupError:pass
+            process.wait(timeout=5);drain();process.stderr.close();os.close(r)
+            publish(data/f'supervisor-exit-{len(prior):06d}.json',
+                    {'assignment_sha256':expected,'ended_ms':time.time_ns()//1000000,'child_pid':process.pid,
+                     'child_exit_code':process.returncode,'reason':reason or 'child exited with code '+str(process.returncode),'sampled_peak_aggregate_rss':peak,
+                     'stderr_base64':base64.b64encode(stderr).decode(),'stderr_bytes_observed':stderr_bytes,
+                     'stderr_truncated':stderr_bytes>len(stderr),'scope':'Supervisor exit evidence; raw journal admission remains separate.'})
+>       if reason:raise RuntimeError(reason+'; preserve interrupted intents, no automatic restart')
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       RuntimeError: sampled aggregate RSS limit; preserve interrupted intents, no automatic restart
+
+tradingagents/research_options_timing/worker.py:323: RuntimeError
+___ WorkerTests.test_supervisor_retains_failure_and_kill_reason (kill=True) ____
+RuntimeError: sampled aggregate RSS limit; preserve interrupted intents, no automatic restart
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.research.test_options_timing_worker.WorkerTests testMethod=test_supervisor_retains_failure_and_kill_reason>
+
+    def test_supervisor_retains_failure_and_kill_reason(self):
+        original=subprocess.Popen
+        for kill in (False,True):
+            with self.subTest(kill=kill), tempfile.TemporaryDirectory() as td:
+                p=Path(td);data=p/'data';wall=int(time.time()*1000)
+                spec={'data_root':str(data),'lease_not_before_ms':wall-1000,'lease_expires_ms':wall+(300 if kill else 5000)}
+                code="import time; time.sleep(10)" if kill else "import sys; sys.stderr.write('invented failure'); sys.exit(3)"
+                def fake(command,**kwargs):
+                    self.assertEqual(command[1:4],['-I','-B',str(p/'release_bootstrap.py')])
+                    return original([sys.executable,'-B','-c',code],**kwargs)
+                affinity=os.sched_getaffinity(0)
+                try:
+                    with patch.object(worker,'assignment',return_value=spec),patch.object(worker.subprocess,'Popen',side_effect=fake):
+                        if kill:
+>                           with self.assertRaisesRegex(RuntimeError,'lease expired'):worker.supervise(p,data,'a'*64)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                           AssertionError: "lease expired" does not match "sampled aggregate RSS limit; preserve interrupted intents, no automatic restart"
+
+tests/research/test_options_timing_worker.py:277: AssertionError
+=============================== warnings summary ===============================
+.venv/lib/python3.13/site-packages/_pytest/pathlib.py:95
+  /home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/lib/python3.13/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-malecada/garbage-12dc6f3a-b1de-40a8-a8ee-872cee6358c7/test_cleanup_failure_keeps_ver0/hold
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-malecada/garbage-12dc6f3a-b1de-40a8-a8ee-872cee6358c7/test_cleanup_failure_keeps_ver0/hold'
+    warnings.warn(
+
+.venv/lib/python3.13/site-packages/_pytest/pathlib.py:95
+  /home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/lib/python3.13/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-malecada/garbage-12dc6f3a-b1de-40a8-a8ee-872cee6358c7/test_cleanup_failure_keeps_ver0
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-malecada/garbage-12dc6f3a-b1de-40a8-a8ee-872cee6358c7/test_cleanup_failure_keeps_ver0'
+    warnings.warn(
+
+.venv/lib/python3.13/site-packages/_pytest/pathlib.py:95
+  /home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/lib/python3.13/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-malecada/garbage-12dc6f3a-b1de-40a8-a8ee-872cee6358c7
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-malecada/garbage-12dc6f3a-b1de-40a8-a8ee-872cee6358c7'
+    warnings.warn(
+
+.venv/lib/python3.13/site-packages/_pytest/pathlib.py:95
+  /home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/lib/python3.13/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-malecada/garbage-bbc59789-61ba-4126-9f0f-eb8a9cd02909/test_cleanup_failure_keeps_ver0/hold
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-malecada/garbage-bbc59789-61ba-4126-9f0f-eb8a9cd02909/test_cleanup_failure_keeps_ver0/hold'
+    warnings.warn(
+
+.venv/lib/python3.13/site-packages/_pytest/pathlib.py:95
+  /home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/lib/python3.13/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-malecada/garbage-bbc59789-61ba-4126-9f0f-eb8a9cd02909/test_cleanup_failure_keeps_ver0
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-malecada/garbage-bbc59789-61ba-4126-9f0f-eb8a9cd02909/test_cleanup_failure_keeps_ver0'
+    warnings.warn(
+
+.venv/lib/python3.13/site-packages/_pytest/pathlib.py:95
+  /home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/lib/python3.13/site-packages/_pytest/pathlib.py:95: PytestWarning: (rm_rf) error removing /tmp/pytest-of-malecada/garbage-bbc59789-61ba-4126-9f0f-eb8a9cd02909
+  <class 'OSError'>: [Errno 39] Directory not empty: '/tmp/pytest-of-malecada/garbage-bbc59789-61ba-4126-9f0f-eb8a9cd02909'
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- reviewed profile: 75 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/test_dated_amended_lifecycle.py::test_actual_dated_cli_real_hac_under_amended_guard
+SUBFAILED(kill=False) tests/research/test_options_capture_worker.py::WorkerTests::test_supervisor_retains_failure_and_kill_reason
+SUBFAILED(kill=True) tests/research/test_options_capture_worker.py::WorkerTests::test_supervisor_retains_failure_and_kill_reason
+SUBFAILED(kill=False) tests/research/test_options_timing_worker.py::WorkerTests::test_supervisor_retains_failure_and_kill_reason
+SUBFAILED(kill=True) tests/research/test_options_timing_worker.py::WorkerTests::test_supervisor_retains_failure_and_kill_reason
+5 failed, 2921 passed, 1 skipped, 6 warnings, 93 subtests passed in 1105.26s (0:18:25)
