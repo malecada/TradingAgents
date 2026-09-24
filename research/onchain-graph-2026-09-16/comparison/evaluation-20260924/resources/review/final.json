@@ -1,0 +1,127 @@
+{
+  "boot_id": "df1f8c6b-0492-497f-8d23-bb55c45d37f6",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-1e09f48c78b1493a9a822eefe621dedf.service",
+  "child_exit_code": 0,
+  "cleanup_stop_returncode": 5,
+  "cleanup_unit_properties": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "dead"
+  },
+  "cleanup_verified": true,
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-graph-2026-09-16/comparison/evaluation-20260924/check_final.py",
+    "--root",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "--source",
+    "baa8129ed58096a202f5b909777eacc736c8631c",
+    "--report",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-graph-2026-09-16/comparison/evaluation-20260924/independent-report.json"
+  ],
+  "cpus": [
+    0,
+    1
+  ],
+  "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+  "elapsed_seconds": 5.544245322002098,
+  "elapsed_time_kill": false,
+  "host_mem_available_bytes": 10235215872,
+  "initial_memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "kernel_controls": {
+    "memory.high": "6442450944",
+    "memory.max": "6442450944",
+    "memory.swap.max": "536870912"
+  },
+  "lease_seconds": 15.0,
+  "limit_reason": null,
+  "memory_current_bytes": 8536064,
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "memory_high_bytes": 6442450944,
+  "memory_max_bytes": 6442450944,
+  "memory_swap_max_bytes": 536870912,
+  "monitor_pid": 874633,
+  "monotonic_seconds": 39327.529501948,
+  "optional_memory_telemetry": {
+    "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+    "unit": {
+      "anon_bytes": 7868416,
+      "file_bytes": 20480,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-1e09f48c78b1493a9a822eefe621dedf.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+      "swap_current_bytes": 0,
+      "unavailable": {}
+    },
+    "user_ancestor": {
+      "anon_bytes": 3977277440,
+      "file_bytes": 8221106176,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=12415105\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=12120969",
+      "swap_current_bytes": 2075361280,
+      "unavailable": {}
+    }
+  },
+  "peak_sampled_memory_current_bytes": 199421952,
+  "phase": "complete",
+  "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-graph-2026-09-16/comparison/evaluation-20260924/resources/review",
+  "reserve_bytes": 3221225472,
+  "retry": false,
+  "sample_seconds": 0.25,
+  "start_reserve_bytes": 9663676416,
+  "terminal_memory_snapshot": {
+    "memory_current_bytes": 8536064,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 7868416,
+        "file_bytes": 20480,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-1e09f48c78b1493a9a822eefe621dedf.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 3977277440,
+        "file_bytes": 8221106176,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=12415105\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=12120969",
+        "swap_current_bytes": 2075361280,
+        "unavailable": {}
+      }
+    }
+  },
+  "unit": "onchain-resume-1e09f48c78b1493a9a822eefe621dedf.service",
+  "unit_properties": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "dead"
+  },
+  "wait_seconds": 300.0
+}

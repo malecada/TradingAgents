@@ -1,0 +1,91 @@
+{
+  "claim_sha256": "63a10c19c156709742fa7c4ac3ffc58c77025249191f1f71a8e095cbdc0110bb",
+  "experiment": "eth-matched-direction-20260924",
+  "guard": {
+    "boot_id": "df1f8c6b-0492-497f-8d23-bb55c45d37f6",
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-5b3173636b534da488eec0c9a707c795.service",
+    "child_exit_code": null,
+    "command": [
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+      "-B",
+      "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-graph-2026-09-16/comparison/evaluation-20260924/run.py",
+      "--source",
+      "baa8129ed58096a202f5b909777eacc736c8631c"
+    ],
+    "cpus": [
+      0,
+      1
+    ],
+    "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "elapsed_seconds": 262.57926677900105,
+    "elapsed_time_kill": false,
+    "host_mem_available_bytes": 10324942848,
+    "initial_memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "kernel_controls": {
+      "memory.high": "6442450944",
+      "memory.max": "6442450944",
+      "memory.swap.max": "536870912"
+    },
+    "lease_seconds": 15.0,
+    "limit_reason": null,
+    "memory_current_bytes": 173486080,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "memory_high_bytes": 6442450944,
+    "memory_max_bytes": 6442450944,
+    "memory_swap_max_bytes": 536870912,
+    "monitor_pid": 713749,
+    "monotonic_seconds": 39052.050636686,
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 171102208,
+        "file_bytes": 212992,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-5b3173636b534da488eec0c9a707c795.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 4116615168,
+        "file_bytes": 8194789376,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=12414755\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=12120619",
+        "swap_current_bytes": 2075373568,
+        "unavailable": {}
+      }
+    },
+    "peak_sampled_memory_current_bytes": 178647040,
+    "phase": "running",
+    "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-graph-2026-09-16/comparison/evaluation-20260924/resources/compute",
+    "reserve_bytes": 3221225472,
+    "retry": false,
+    "sample_seconds": 0.25,
+    "start_reserve_bytes": 9663676416,
+    "unit": "onchain-resume-5b3173636b534da488eec0c9a707c795.service",
+    "unit_properties": {
+      "ActiveState": "active",
+      "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-5b3173636b534da488eec0c9a707c795.service",
+      "ExecMainStatus": "0",
+      "Result": "success",
+      "SubState": "running"
+    },
+    "wait_seconds": 300.0
+  },
+  "observed_at": "2026-09-24T07:48:38.648292+00:00",
+  "qualification": "Live operational snapshot only; no numerical verdict. Do not duplicate this claimed run.",
+  "source": "baa8129ed58096a202f5b909777eacc736c8631c"
+}

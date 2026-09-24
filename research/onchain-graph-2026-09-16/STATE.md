@@ -1,5 +1,36 @@
 # Ethereum graph feasibility checkpoint
 
+**September 24 — matched comparison complete; independently verified negative screen.**
+Run eth-matched-direction-20260924 completed all 77 cells, eight outputs,
+36 saved fits and all 366 daily 2024 predictions from fixed source
+`baa8129ed58096a202f5b909777eacc736c8631c`. The independent checker passed,
+including input reconstruction, feature clocks, masks, purged membership,
+saved-model replay, metrics, bootstrap and screening. Both resource guards
+closed cleanly with no OOM/limit events; all 36 durable fit checkpoints agree.
+Accuracy: M0 market 53.01%, M1 activity 55.19%, M2 motifs 50.27%.
+Primary M2−M1 log loss +0.007387, paired 95% CI [−0.009289,+0.019717],
+negative in 6/12 months. The predeclared neural-follow-up screen fails.
+See [verified result](comparison/evaluation-20260924/RESULT.md) and its evidence
+manifest/report. The claim consumes cumulative17/17; no rerun, tuning or neural
+experiment follows. Full graph reconstruction was computationally feasible;
+these fixed summaries did not demonstrate incremental predictive value.
+Historical availability remains assumed and the sample remains exploratory.
+Preservation/remote-backup closure and monitor retirement are the final steps;
+all earlier running/preclaim status below is historical and superseded.
+
+**September24 — single matched comparison running.**
+Read-only admission passed and exact source
+`baa8129ed58096a202f5b909777eacc736c8631c` was verified on the remote branch
+before claim. Run eth-matched-direction-20260924 has consumed its one additive
+allowance (cumulative17/17). The compute guard is active; input/source/history
+validation precedes all output publication. Inspect
+comparison/evaluation-20260924/resources/compute/live.json and child.log,
+launch-observation.json and the existing research_runs entry. Never duplicate
+or retry this claim. After its terminal and final guard, run the same frozen
+launch.py --review once; then preserve/review/back up the comparison. No old
+graph computation or graph final review is repeated. Earlier preclaim status
+below is superseded.
+
 **September24 07:44 UTC — matched comparison release approved.**
 The fixed M0/M1/M2 runner, independent checker and exact gate passed independent
 release review. Named offline verification passed2,746tests+97subtests with

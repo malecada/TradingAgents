@@ -1,5 +1,13 @@
 # Fixed matched comparison operations
 
+**Closed compute and independent review: do not replay either command.**
+The single comparison completed all 77 cells/36 fits/366 predictions and passed
+independent checking. Its statistical screen is negative. Execution source is
+baa8129ed58096a202f5b909777eacc736c8631c. Read RESULT.md, independent-report.json,
+evidence-manifest.json and the terminal resource receipts. Historical launch
+instructions below describe the completed attempt and supply no new allowance.
+Only reviewed preservation/remote-backup closure and monitor retirement remain.
+
 Graph computation, global identity reconstruction and independent full-panel
 review are terminal and never replayed. Full retained graph evidence is backed
 up at d785a49824a02957399022eb732ff0d89de28189; exact remote observation is in

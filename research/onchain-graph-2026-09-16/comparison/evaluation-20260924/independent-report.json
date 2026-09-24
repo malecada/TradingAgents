@@ -1,0 +1,467 @@
+{
+  "claim_sha256": "63a10c19c156709742fa7c4ac3ffc58c77025249191f1f71a8e095cbdc0110bb",
+  "evidence_verification_passed": true,
+  "execution_resource": {
+    "clean": true,
+    "reason": null,
+    "receipt": {
+      "boot_id": "df1f8c6b-0492-497f-8d23-bb55c45d37f6",
+      "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-5b3173636b534da488eec0c9a707c795.service",
+      "child_exit_code": 0,
+      "cleanup_stop_returncode": 5,
+      "cleanup_unit_properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "ExecMainStatus": "0",
+        "Result": "success",
+        "SubState": "dead"
+      },
+      "cleanup_verified": true,
+      "command": [
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+        "-B",
+        "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-graph-2026-09-16/comparison/evaluation-20260924/run.py",
+        "--source",
+        "baa8129ed58096a202f5b909777eacc736c8631c"
+      ],
+      "cpus": [
+        0,
+        1
+      ],
+      "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+      "elapsed_seconds": 478.23077015500166,
+      "elapsed_time_kill": false,
+      "host_mem_available_bytes": 10373791744,
+      "initial_memory_events": {
+        "high": 0,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0
+      },
+      "kernel_controls": {
+        "memory.high": "6442450944",
+        "memory.max": "6442450944",
+        "memory.swap.max": "536870912"
+      },
+      "lease_seconds": 15.0,
+      "limit_reason": null,
+      "memory_current_bytes": 22241280,
+      "memory_events": {
+        "high": 0,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0
+      },
+      "memory_high_bytes": 6442450944,
+      "memory_max_bytes": 6442450944,
+      "memory_swap_max_bytes": 536870912,
+      "monitor_pid": 713749,
+      "monotonic_seconds": 39267.702139084,
+      "optional_memory_telemetry": {
+        "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+        "unit": {
+          "anon_bytes": 8704000,
+          "file_bytes": 12492800,
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-5b3173636b534da488eec0c9a707c795.service",
+          "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+          "swap_current_bytes": 0,
+          "unavailable": {}
+        },
+        "user_ancestor": {
+          "anon_bytes": 3967549440,
+          "file_bytes": 8219459584,
+          "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+          "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=12415105\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=12120969",
+          "swap_current_bytes": 2075361280,
+          "unavailable": {}
+        }
+      },
+      "peak_sampled_memory_current_bytes": 206622720,
+      "phase": "complete",
+      "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-graph-2026-09-16/comparison/evaluation-20260924/resources/compute",
+      "reserve_bytes": 3221225472,
+      "retry": false,
+      "sample_seconds": 0.25,
+      "start_reserve_bytes": 9663676416,
+      "terminal_memory_snapshot": {
+        "memory_current_bytes": 22241280,
+        "memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0
+        },
+        "optional_memory_telemetry": {
+          "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+          "unit": {
+            "anon_bytes": 8704000,
+            "file_bytes": 12492800,
+            "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-resume-5b3173636b534da488eec0c9a707c795.service",
+            "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+            "swap_current_bytes": 0,
+            "unavailable": {}
+          },
+          "user_ancestor": {
+            "anon_bytes": 3967549440,
+            "file_bytes": 8219459584,
+            "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+            "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=12415105\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=12120969",
+            "swap_current_bytes": 2075361280,
+            "unavailable": {}
+          }
+        }
+      },
+      "unit": "onchain-resume-5b3173636b534da488eec0c9a707c795.service",
+      "unit_properties": {
+        "ActiveState": "inactive",
+        "ControlGroup": "",
+        "ExecMainStatus": "0",
+        "Result": "success",
+        "SubState": "dead"
+      },
+      "wait_seconds": 300.0
+    }
+  },
+  "execution_resource_sha256": "3e90c340b001d7c33888ab01d579dabe978b332032cf5cdcdae262f3d3d9b798",
+  "failed_run_evidence_only": false,
+  "financial_admission": false,
+  "fit_checkpoints": {
+    "count": 36,
+    "files": [
+      {
+        "arm": "M0",
+        "bytes": 108532,
+        "fold": "2024-01",
+        "path": "2024-01-M0.json",
+        "sequence": 0,
+        "sha256": "1221fd0cda9e820f8f600418ff1106b75f143dc2056a828055eeaeb3533e7ca0"
+      },
+      {
+        "arm": "M1",
+        "bytes": 112133,
+        "fold": "2024-01",
+        "path": "2024-01-M1.json",
+        "sequence": 1,
+        "sha256": "772169d07bb24e803046573147edd7e4bc6376bd66b74b61bfb90be22e071f8d"
+      },
+      {
+        "arm": "M2",
+        "bytes": 111866,
+        "fold": "2024-01",
+        "path": "2024-01-M2.json",
+        "sequence": 2,
+        "sha256": "2b8ad1bc64264a1ab88b18b6cf85542341ceedeb5af3363dae5eccd1a0848f78"
+      },
+      {
+        "arm": "M0",
+        "bytes": 109491,
+        "fold": "2024-02",
+        "path": "2024-02-M0.json",
+        "sequence": 3,
+        "sha256": "97374e2ecb8385d7b0d7bbd1e7c8577b4b2f9a4b2df1a33019e3988ced23dc47"
+      },
+      {
+        "arm": "M1",
+        "bytes": 108398,
+        "fold": "2024-02",
+        "path": "2024-02-M1.json",
+        "sequence": 4,
+        "sha256": "77b9b0c7de1e63a5326b4aa32b126ff71f6b31fbab777590324561e213a9b1f6"
+      },
+      {
+        "arm": "M2",
+        "bytes": 110054,
+        "fold": "2024-02",
+        "path": "2024-02-M2.json",
+        "sequence": 5,
+        "sha256": "3022a070848a201cf497ec10e690426480654ebc2ff758cec2cfc12bd06d91dc"
+      },
+      {
+        "arm": "M0",
+        "bytes": 111807,
+        "fold": "2024-03",
+        "path": "2024-03-M0.json",
+        "sequence": 6,
+        "sha256": "6e8be6465d6153e55a89d48ea1a30f6fd046ec2f139e8c4f84c4134db0f5bfec"
+      },
+      {
+        "arm": "M1",
+        "bytes": 115126,
+        "fold": "2024-03",
+        "path": "2024-03-M1.json",
+        "sequence": 7,
+        "sha256": "71e96289e43e5d86fcbe3fbfe5a0e934ebc385e358c26f05bca57e26634c4a75"
+      },
+      {
+        "arm": "M2",
+        "bytes": 115080,
+        "fold": "2024-03",
+        "path": "2024-03-M2.json",
+        "sequence": 8,
+        "sha256": "4644d362a0a486dfcee58da5227112f3c639ab77833013df5ee4919fada2cbec"
+      },
+      {
+        "arm": "M0",
+        "bytes": 112095,
+        "fold": "2024-04",
+        "path": "2024-04-M0.json",
+        "sequence": 9,
+        "sha256": "9167f1a01b55fff2a9ba747cda019d36457cc0924b13e8d4c8573ac8affb3e22"
+      },
+      {
+        "arm": "M1",
+        "bytes": 114406,
+        "fold": "2024-04",
+        "path": "2024-04-M1.json",
+        "sequence": 10,
+        "sha256": "875c8f6274ee45bb766e9c4c3d6d9346d06b47f932f390d3051b6b67fd2652f7"
+      },
+      {
+        "arm": "M2",
+        "bytes": 116549,
+        "fold": "2024-04",
+        "path": "2024-04-M2.json",
+        "sequence": 11,
+        "sha256": "08705c6b460343596084ceca2c1edddca2f364c1b0232d8e1052714efcc71ad9"
+      },
+      {
+        "arm": "M0",
+        "bytes": 113459,
+        "fold": "2024-05",
+        "path": "2024-05-M0.json",
+        "sequence": 12,
+        "sha256": "31686751e484ed5ff72cd9e74e44c923586b6029df25e74d49f3fafdd153202d"
+      },
+      {
+        "arm": "M1",
+        "bytes": 115821,
+        "fold": "2024-05",
+        "path": "2024-05-M1.json",
+        "sequence": 13,
+        "sha256": "a0c23130bd9d005123423ed1b9b53217e078c1216573e1f6a2eb0ec89d0c1824"
+      },
+      {
+        "arm": "M2",
+        "bytes": 117870,
+        "fold": "2024-05",
+        "path": "2024-05-M2.json",
+        "sequence": 14,
+        "sha256": "9ffa144440617de335fe77f64c7e09b7c0ad4cec979c9c1e7c8ae17ab5588722"
+      },
+      {
+        "arm": "M0",
+        "bytes": 115289,
+        "fold": "2024-06",
+        "path": "2024-06-M0.json",
+        "sequence": 15,
+        "sha256": "bc165bfaa4426493293267163246ea5c612c699fc0e484a4037c53b2854d2a4e"
+      },
+      {
+        "arm": "M1",
+        "bytes": 115218,
+        "fold": "2024-06",
+        "path": "2024-06-M1.json",
+        "sequence": 16,
+        "sha256": "6c3064fadd24e26e0effb74b019ad18c1fd1ecaea8d55db9376d8448fd3e0551"
+      },
+      {
+        "arm": "M2",
+        "bytes": 117496,
+        "fold": "2024-06",
+        "path": "2024-06-M2.json",
+        "sequence": 17,
+        "sha256": "2718531f2cec150110de4cf85c57f132e7bc23fcbfd3d222ae8ad193b30fb00d"
+      },
+      {
+        "arm": "M0",
+        "bytes": 118116,
+        "fold": "2024-07",
+        "path": "2024-07-M0.json",
+        "sequence": 18,
+        "sha256": "2c43e98728a01dbe8dc0ed2977a1aa4cded77e631a28a054edfa14da8112f9f6"
+      },
+      {
+        "arm": "M1",
+        "bytes": 120642,
+        "fold": "2024-07",
+        "path": "2024-07-M1.json",
+        "sequence": 19,
+        "sha256": "3f9ccc0382d19176051ff6a07402b70b629dfb2db691aadba174ecc7cadcd0fc"
+      },
+      {
+        "arm": "M2",
+        "bytes": 120334,
+        "fold": "2024-07",
+        "path": "2024-07-M2.json",
+        "sequence": 20,
+        "sha256": "16439888166dbb36616253c1e6d9d175a4cd1768a893a7b832493993d1ca7628"
+      },
+      {
+        "arm": "M0",
+        "bytes": 118742,
+        "fold": "2024-08",
+        "path": "2024-08-M0.json",
+        "sequence": 21,
+        "sha256": "015e5716829f50dadcdce3b493cf0403828682e5f01ad63218f9439b1b0a15e8"
+      },
+      {
+        "arm": "M1",
+        "bytes": 118234,
+        "fold": "2024-08",
+        "path": "2024-08-M1.json",
+        "sequence": 22,
+        "sha256": "d3c463978a32681973c385964010fd5675f7dc3744ac714eac72d9dbbb4db1d7"
+      },
+      {
+        "arm": "M2",
+        "bytes": 120508,
+        "fold": "2024-08",
+        "path": "2024-08-M2.json",
+        "sequence": 23,
+        "sha256": "6136cbd45c7810969c1efc14970051f2c3cda312d8ae9981af2e0ea8f36287f2"
+      },
+      {
+        "arm": "M0",
+        "bytes": 120287,
+        "fold": "2024-09",
+        "path": "2024-09-M0.json",
+        "sequence": 24,
+        "sha256": "6104ef5ec5b40e8831d919f4d080cb5d11caa0e434f22b57800b316acdd368fe"
+      },
+      {
+        "arm": "M1",
+        "bytes": 119333,
+        "fold": "2024-09",
+        "path": "2024-09-M1.json",
+        "sequence": 25,
+        "sha256": "92fcb7315371a4fa0d21b484ca01c7bcb718f2cad0ed48cd859e7222351dabfd"
+      },
+      {
+        "arm": "M2",
+        "bytes": 122100,
+        "fold": "2024-09",
+        "path": "2024-09-M2.json",
+        "sequence": 26,
+        "sha256": "381bd0ca5a7f7816fe28dbe13e1ccd929bf06cce64c21ec59530d6af113a75d9"
+      },
+      {
+        "arm": "M0",
+        "bytes": 119511,
+        "fold": "2024-10",
+        "path": "2024-10-M0.json",
+        "sequence": 27,
+        "sha256": "ce1867d6e602ada2e04e27b2daad214544d3f69f40f14be84e5b25fb1bcd32b4"
+      },
+      {
+        "arm": "M1",
+        "bytes": 121290,
+        "fold": "2024-10",
+        "path": "2024-10-M1.json",
+        "sequence": 28,
+        "sha256": "9118ab221a252b62f36998baf9595921e910c1bd00a3cddbdd2e850464451759"
+      },
+      {
+        "arm": "M2",
+        "bytes": 122450,
+        "fold": "2024-10",
+        "path": "2024-10-M2.json",
+        "sequence": 29,
+        "sha256": "589e7a93ff5c7bdf3be109ac5361837a956fa2509d4abecf9486bd69cb13f079"
+      },
+      {
+        "arm": "M0",
+        "bytes": 121900,
+        "fold": "2024-11",
+        "path": "2024-11-M0.json",
+        "sequence": 30,
+        "sha256": "712d3e0ba220e585ee5b19806072604524f5febc8e109364644f27665a6bdd6e"
+      },
+      {
+        "arm": "M1",
+        "bytes": 122259,
+        "fold": "2024-11",
+        "path": "2024-11-M1.json",
+        "sequence": 31,
+        "sha256": "6df5ccc6d65ee118a9b393713cb6e46d2962d792cc92db73a6a0425cd3379949"
+      },
+      {
+        "arm": "M2",
+        "bytes": 125576,
+        "fold": "2024-11",
+        "path": "2024-11-M2.json",
+        "sequence": 32,
+        "sha256": "b0d43cd79e2d4820f2de0cf4e0418106f2143d976cc2fb0b265407da5478546b"
+      },
+      {
+        "arm": "M0",
+        "bytes": 122913,
+        "fold": "2024-12",
+        "path": "2024-12-M0.json",
+        "sequence": 33,
+        "sha256": "784f2c787e588f95e8201d239f5e5a53e14e5d0c8cadd81442eaee4fd8ee9cba"
+      },
+      {
+        "arm": "M1",
+        "bytes": 125968,
+        "fold": "2024-12",
+        "path": "2024-12-M1.json",
+        "sequence": 34,
+        "sha256": "08bf2aefae9ab40cf46dbb2dda6951d5e4fda316ce5cfd447c7f435fbf8e9bc7"
+      },
+      {
+        "arm": "M2",
+        "bytes": 126283,
+        "fold": "2024-12",
+        "path": "2024-12-M2.json",
+        "sequence": 35,
+        "sha256": "b317bc33ff7cf4a16e05bdaa7fceb72063ff6685e9fbae0b6328f8b7b5132ca1"
+      }
+    ],
+    "pending_files": [],
+    "present": true,
+    "saved_models_replayed": false
+  },
+  "fit_count": 36,
+  "historical_availability_verified": false,
+  "inference_status": "available",
+  "new_network_requests": 0,
+  "numerical_validation_performed": true,
+  "output_sha256": {
+    "evaluation.json": "2b07b5ef4e836886aad8d1ae22cfa89a19d479059583a356a711d5577eb13a72",
+    "fits.json": "d7f11b4a3e548cb2f09d5b70d80286775e86004a8ef3701b21b11e70a6590259",
+    "graph.json": "01876aee7aa4392a1de8017f22317a743814e22f72586802b120417622e68c1f",
+    "inputs-admission.json": "948a69ffb164d0f3b094d76a324485294635404249a49b2fe7649b60e7c17e4f",
+    "market.json": "a7c5a90b28442b439a327a7a6d18dbe7c50abc5f59d155e2aebaa4625aeacf73",
+    "panel.json": "69e9d62edfd98b577aa69aa133df5679ba4fd358543c6b41536658420be482f8",
+    "predictions.json": "3f1a54ed7cc1a6eb359cc5ce689bc640d8a1415cf95f17c1bc6191aa2b371405",
+    "summary.json": "17c37647df163ae280bf8f8d1d6b9ee1d17aebffcbf94c8df3ad3d5bd19e11de"
+  },
+  "partial_fit_count": 36,
+  "passed": true,
+  "passing_complete_comparison": true,
+  "prediction_rows": 366,
+  "qualification": "Independent input/feature/clock/mask, saved-model replay and inference consistency checks. Saved Booster replay does not independently prove the historical training operation. Retrospective assumed availability; no PnL, execution, strategy validation or fresh confirmation.",
+  "reviewed_at": "2026-09-24T07:53:13.393213+00:00",
+  "reviewer_script_sha256": "3474ec8eb0f783e8f8dee22d074a36c422bfa88240db920893814f62b5125f23",
+  "screening": {
+    "negative_months": 6,
+    "status": "available",
+    "supported": false
+  },
+  "source": "baa8129ed58096a202f5b909777eacc736c8631c",
+  "structural_verification": {
+    "cell_count": 77,
+    "experiment": "eth-matched-direction-20260924",
+    "output_count": 8,
+    "status": "complete",
+    "unavailable_count": 0,
+    "verification": "structural hashes and denominators only; no scientific validation"
+  },
+  "terminal_sha256": "87a6c8799b8c492616ac99a689ac3b627d6f8cf0688cef405b31c7184bb47e4a"
+}

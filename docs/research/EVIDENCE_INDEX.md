@@ -48,3 +48,19 @@ without tracked counterparts are unavailable in a clean clone unless separately
 restored. Detailed pre-preparation instruction copies were saved locally under
 the workspace's `.readiness-backups/`; they are not an independent backup or a
 replacement for authoritative result artifacts.
+
+
+## Ethereum graph feasibility and matched direction screen — September 24, 2026
+
+[Graph preservation closure](../../research/onchain-graph-2026-09-16/fullpanel_resume2/CLOSURE.md)
+records the independently verified full-history reconstruction: 1,096 source
+days, 1,094 graph days and 1,221,389,903 unique transaction identities. The raw
+and hash stores remain preserved; full off-device raw backup is unverified.
+
+[Matched comparison result](../../research/onchain-graph-2026-09-16/comparison/evaluation-20260924/RESULT.md)
+records the single fixed, independently checked 2024 direction screen: all 36
+fits/366 predictions complete. Accuracy M0/M1/M2 is 53.01%/55.19%/50.27%; primary
+M2−M1 log loss is +0.007387, paired 95% CI [−0.009289,+0.019717], with six negative
+months. The frozen follow-up criterion fails. This is an exploratory result
+for the fixed motif summaries, not replication of the paper's neural model or
+financial validation. All prior claims and failures remain retained.
