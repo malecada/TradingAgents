@@ -121,8 +121,14 @@ in the authorized scope. The historical negative screen is unchanged.
   sampled bytes, child0 and cleanup verified. All downloaded members/markers
   matched. Independent review also checked all149 original member hashes and
   the current remote archive hash. `BULK_RELEASE.json` releases one finite
-  controller for194remaining bundles/58934files. No job is currently active;
-  full raw preservation remains incomplete. Never relaunch01.
+  controller for194remaining bundles/58934files. **The all-bulk controller is
+  ACTIVE from commit `8eba73c2`**; its first phase is `bulk01`. Controller
+  reservation: `storage/raw-preservation-2026-09-24-02/bulk-controller/intent.json`;
+  phase receipts: `bulk01/guard/` through `bulk13/guard/` as they are created.
+  The finite controller stops on first failure, enforces8h per phase and48h
+  cumulatively, and never retries a terminal identity. Point duration estimate
+  28.69h (43.04h with1.5margin), not a completion guarantee. Full raw preservation
+  remains incomplete until every batch and final controller receipt verify. Never relaunch01.
 - **Population integration implemented:** `full_sources/population-preparation-01/`
   binds the metadata-only calendar producer, same-claim population publication,
   and exact input/output binding preflight. Fifty-three focused tests passed,
@@ -131,8 +137,11 @@ in the authorized scope. The historical negative screen is unchanged.
   Prior387-test evidence stays tied to its older snapshot; it is not a new full
   suite run for this increment. Independent review is complete.
 
-Next safe action: start the independently released continuation02 all-bulk
-controller once, then observe its checkpoints without concurrent heavy tests.
+Next safe action: inspect the existing all-bulk controller and latest phase
+receipts; never launch a duplicate or rerun a terminal phase. Keep this host awake
+and connected for transfer. Avoid concurrent heavy tests on this constrained host.
+After terminal completion/failure, independently reconcile every completed and
+partial bundle before any new continuation or full-raw-backup claim.
 A feasible compute/local-scratch allocation is still needed to finish
 raw-to-graph/population integration and prepare/review its exact source, phase,
 reuse, ownership and cumulative admission contract before execution. All 1,420
