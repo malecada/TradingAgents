@@ -6,7 +6,9 @@ independent checking. Its statistical screen is negative. Execution source is
 baa8129ed58096a202f5b909777eacc736c8631c. Read RESULT.md, independent-report.json,
 evidence-manifest.json and the terminal resource receipts. Historical launch
 instructions below describe the completed attempt and supply no new allowance.
-Only reviewed preservation/remote-backup closure and monitor retirement remain.
+Reviewed preservation/remote-backup closure is complete, recorded in backup.json.
+All62manifest artifacts match remotely verified commitb0936674e6f2913b2805c1ea769293c2b439bf69.
+The completed monitor was deleted; no automatic continuation remains.
 
 Graph computation, global identity reconstruction and independent full-panel
 review are terminal and never replayed. Full retained graph evidence is backed

@@ -15,8 +15,11 @@ manifest/report. The claim consumes cumulative17/17; no rerun, tuning or neural
 experiment follows. Full graph reconstruction was computationally feasible;
 these fixed summaries did not demonstrate incremental predictive value.
 Historical availability remains assumed and the sample remains exploratory.
-Preservation/remote-backup closure and monitor retirement are the final steps;
-all earlier running/preclaim status below is historical and superseded.
+Preservation closure is complete: all62evidence files match commit
+`b0936674e6f2913b2805c1ea769293c2b439bf69`, pushed with exact remote-head
+verification. The completed30-minute monitor was deleted; no follow-up is
+scheduled. See comparison/evaluation-20260924/backup.json. All earlier running
+and preclaim status below is historical and superseded.
 
 **September24 — single matched comparison running.**
 Read-only admission passed and exact source
