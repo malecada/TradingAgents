@@ -32,3 +32,19 @@ pre-result precision amendment preserves original protocol bytes and declares
 float64 internal matching with float32 outputs.44 focused checks now pass,1 CUDA
 check remains skipped. No objective or tolerance was changed. Active matching
 configuration: config/matching-stable.json via protocol-freeze-v2.json.
+
+Task5 independent review found mutable nested sampling/dictionary metadata and
+partitioned clustering ties resolved by chunk order instead of original sample
+order. Immutable nested records, content-bound dictionary identities, stable
+original-ID ties and expanded memberships now have retained regression checks.
+Task5 small synthetic tests pass; whole-graph sampling storage and speed still
+require measurement and cannot be inferred from these fixtures.
+
+Task6 independent two-head directed GAT scalar calculation (including mixed-sign
+logits) agrees within1.39e-16. The frozen full architecture and initialization
+match implementation. Two retained failing regressions caught an entirely masked
+batch graph disappearing at pooling and NaN padding poisoning MLP gradients.
+Both were corrected before fits: contiguous original batch IDs remain required,
+empty admitted graphs reject, and masked inputs are zeroed before the MLP.
+53 focused tests passed,1 CUDA parity check skipped at this checkpoint. Full
+post-change offline validation and empirical scale checks remain pending.

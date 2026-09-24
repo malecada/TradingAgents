@@ -8,7 +8,7 @@ import re
 
 
 def canonical_bytes(value) -> bytes:
-    return json.dumps(value, sort_keys=True, separators=(',', ':'), ensure_ascii=False,
+    return json.dumps(thaw(value), sort_keys=True, separators=(',', ':'), ensure_ascii=False,
                       allow_nan=False).encode('utf-8')
 
 
@@ -60,3 +60,18 @@ def durable_mkdir(path: Path) -> None:
     for directory in reversed(missing):
         directory.mkdir(exist_ok=True)
         sync_directory(directory.parent)
+
+
+def thaw(value):
+    from collections.abc import Mapping
+    if isinstance(value,Mapping):return {key:thaw(item) for key,item in value.items()}
+    if isinstance(value,(tuple,list)):return [thaw(item) for item in value]
+    return value
+
+
+def freeze(value):
+    from collections.abc import Mapping
+    from types import MappingProxyType
+    if isinstance(value,Mapping):return MappingProxyType({key:freeze(item) for key,item in value.items()})
+    if isinstance(value,(tuple,list)):return tuple(freeze(item) for item in value)
+    return value
