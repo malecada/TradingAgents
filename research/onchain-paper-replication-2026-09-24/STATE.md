@@ -109,8 +109,22 @@ in the authorized scope. The historical negative screen is unchanged.
   raw contents were not freshly hashed or uploaded. Full transaction-raw backup
   remains incomplete. No originals were removed and no financial run started.
 
-Next safe action: prepare a bounded, checkpointed raw-preservation transfer and
-obtain a feasible compute/local-scratch allocation, then finish
+- **Unblocked preservation preparation:** `storage/raw-preservation-2026-09-24-01/`
+  binds all 59,083 retained ETH raw files into 195 finite bundles. Fifteen synthetic
+  preservation tests pass, including corruption, interruption and bounded
+  retrieval. Independent prelaunch review is underway; no transaction bytes have
+  been uploaded by this new job yet. The pilot is batch zero, with a separate
+  measured release before the 194-batch bulk phase. No historical job is reopened.
+- **Population integration in progress:** a metadata-only graph-calendar adapter
+  and population producer passed 13 focused synthetic checks with the existing
+  dataset tests. It preserves complete date/week denominators, missing/late-week
+  exclusions, training-only scaling and exact source/configuration identities.
+  Registered same-claim publication and broader verification remain pending;
+  no actual financial population was assembled and no fit was launched.
+
+Next safe action: finish raw-preservation release review, execute its finite pilot,
+review measured evidence before bulk transfer, and complete population integration.
+A feasible compute/local-scratch allocation is still needed to finish
 raw-to-graph/population integration and prepare/review its exact source, phase,
 reuse, ownership and cumulative admission contract before execution. All 1,420
 financial fits remain pending; no empirical process is active.

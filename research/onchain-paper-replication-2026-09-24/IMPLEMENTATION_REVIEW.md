@@ -2206,3 +2206,87 @@ pilot graph/MCM/scratch backup, real raw-to-prediction replay and empirical stud
 completion remain unverified. No unresolved material finding remains for this
 specific compact-backup operation; future raw transfer needs its own finite
 manifest, capacity/retention contract and verification.
+
+
+### Independent retained-raw preservation prelaunch review — initial findings
+
+The exact compressed inventory and batch metadata were read without opening any
+transaction body. Independent arithmetic confirms 59083 unique resolved paths,
+103524489043 raw bytes and 195 contiguous, exhaustive batches with at most
+4096 members/512 MiB raw each. USTAR framing implies 103571036160 archive bytes
+in total and a maximum 537282560-byte archive; two concurrent generated copies
+require at most 1074565120 bytes, below the declared 2 GiB allowance. Pilot batch0
+covers indices [0,149) and 517291351 raw bytes. Bulk [1,195) retains the remainder;
+no source/date is removed by the batching. This is byte preservation, not a
+financial fit or new transaction-data admission.
+
+Before freezing and launching, the following concrete issues were reported:
+
+- transfer.py:87,90 parses fresh inventory/batch reads after load_contract has
+  verified earlier reads. Hash the exact compressed inventory and exact batch
+  JSON buffers that are subsequently parsed, preserving the frozen denominator.
+- preservation.py transfer_bundle's exclusive work.mkdir and transfer.py:143's
+  phase mkdir do not fsync the parent. _immutable fsyncs the child directory,
+  which does not make its own parent entry durable. Persist reservations before
+  remote side effects and fsync the directory after temporary archive deletion.
+- Transport.get at transfer.py:60–64 reserves the expected size, runs SCP without
+  a receive bound, then checks actual size. An independent synthetic transport
+  fixture charged one byte, wrote two bytes and only then raised ValueError;
+  no remote command was involved. Consequently the stated network-payload bound
+  is currently reservation accounting, not a strict receive cap. A bounded
+  receiver or an explicit reviewed distinction is needed before the hard-cap
+  claim is used for release.
+- transfer.py:101–102 checks free space against the remote floor without reserving
+  the bytes the phase will add. Floor+one-byte free space passes and is then
+  consumed below the floor. Account for remaining planned occupancy or check
+  floor plus the next upload before each batch. The earlier observed 5 TB
+  capacity is ample for this scope but does not repair the boundary condition.
+- Include lifecycle.py, which supplies _immutable, in the frozen source closure.
+
+The no-retry/exclusive-directory rules prevent same-identity overwrites, and
+per-batch source hashing, full download member checks and completion-marker
+roundtrip are substantive integrity protections. Removing only generated tar
+copies after verified completion preserves originals. A worker killed outside
+Python's exception path leaves partial files plus a failed guard; a bounded
+post-death disposition record should make completed, interrupted and unstarted
+batches explicit without replay. Bulk remains separately conditional on a clean,
+reviewed pilot. No network request, private-key/config inspection, transaction
+body read, deletion or transfer was performed by this review. Initial release
+is pending correction/review of the bounds and durability issues above.
+
+
+Retained-raw pilot preflight follow-up: all five reported corrections were
+independently reread. Inventory and batch buffers are hashed immediately before
+parsing; exclusive phase/batch parent entries are fsynced, as is post-verification
+temporary-copy removal. Downloads now use a finite remote dd count and a local
+nonblocking bounded receiver. The entire possible dd payload is charged before
+request; excess bytes are rejected before writing, and stalled/failed children
+are killed and reaped. Original expected hashes are still checked for every
+recovered member, independently of the archive hash. Remote admission now
+reserves the phase's raw bytes plus 1 GiB for framing/metadata above the 256 GiB
+floor. lifecycle.py and provenance.py are included in the frozen source set.
+The controller publishes a failed phase record after a failed/refused guard
+when no worker terminal exists; immutable partial artifacts remain available.
+
+The reviewer independently ran only the focused tiny synthetic preservation
+suite: 15 tests passed in 0.29 seconds, including oversized/short downloads and
+a stalled child. No external command, source body, real transfer or financial
+experiment was executed. All five source hashes and three input hashes match
+contract SHA256
+bc35b31404b4144c24ff6e9e47f482e33b41cdfac2a08a20ff2f069b7ec5953d.
+Transfer source SHA256
+7161c7c656780c3f9dc791b27615e560b81e51bf51feaa08884c6c3ec80392cb;
+preservation helper SHA256
+2849670dcf847a97274cf590a2c6732cd7749e0e9e3e64e802cb2e415f08a410.
+The two phase payload allowances sum exactly to the declared aggregate limit;
+network accounting explicitly excludes SSH protocol overhead and charges finite
+upper bounds rather than claiming exact observed payload usage.
+
+One execution of pilot batch0 under this exact contract is cleared, conditional
+on the live guard and remote-capacity checks. It preserves 149 original files /
+517291351 raw bytes and measures actual bounded transfer behavior. Bulk batches
+1–194 are not released by this review: they require the successful pilot's
+member/marker/cleanup evidence and a measured time/resource forecast within the
+frozen eight-hour bulk window. Any failed or interrupted identity stays closed;
+no implicit retry, source deletion, decoding, fitting or reduced denominator is
+authorized. This is preservation-only approval, not full raw backup completion.

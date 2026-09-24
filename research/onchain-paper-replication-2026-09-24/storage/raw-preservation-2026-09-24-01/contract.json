@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "scope": "byte preservation only; no new transaction decoding or experiment",
+  "inventory_path": "research/onchain-paper-replication-2026-09-24/storage/storage-box-2026-09-24-01/raw-source-inventory.json.gz",
+  "connection_path": "research/onchain-paper-replication-2026-09-24/storage/storage-box-2026-09-24-01/connection.json",
+  "input_sha256": {
+    "research/onchain-paper-replication-2026-09-24/storage/storage-box-2026-09-24-01/raw-source-inventory.json.gz": "8bcaab6b23a1d4e6540286300a16fd7e1af7f9b466ad8e7186aaf29f7523c420",
+    "research/onchain-paper-replication-2026-09-24/storage/storage-box-2026-09-24-01/connection.json": "d79023381eb9f2788709a7a4c043046d8998c30bb4abab678cb41caaf4dc70ef",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-01/batches.json": "ff91998022f756187a5baac14176c437f8e98103da3abe300c14188663c97965"
+  },
+  "source_sha256": {
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-01/transfer.py": "7161c7c656780c3f9dc791b27615e560b81e51bf51feaa08884c6c3ec80392cb",
+    "tradingagents/research/onchain_replication/preservation.py": "2849670dcf847a97274cf590a2c6732cd7749e0e9e3e64e802cb2e415f08a410",
+    "tradingagents/research/onchain_replication/resources.py": "bc4676f3ad566d68bad9c66a7e7dd0b8e630c3a79b5a10b9200959ecea029791",
+    "tradingagents/research/lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+    "tradingagents/research/onchain_replication/provenance.py": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471"
+  },
+  "expected_files": 59083,
+  "expected_raw_bytes": 103524489043,
+  "maximum_batch_raw_bytes": 536870912,
+  "maximum_batch_members": 4096,
+  "maximum_concurrent_batches": 1,
+  "maximum_temporary_bytes": 2147483648,
+  "scp_kbit_per_second": 65536,
+  "remote_free_floor_bytes": 274877906944,
+  "maximum_network_bytes": 268435456000,
+  "allowed_source_roots": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "/home/malecada/Data/onchain-research"
+  ],
+  "remote_parent": "research-backups/onchain-paper-replication-2026-09-24/raw-retained-ETH-01",
+  "phases": {
+    "pilot": {
+      "start": 0,
+      "stop": 1,
+      "wall_seconds": 1800,
+      "maximum_network_payload_bytes": 2147483648
+    },
+    "bulk": {
+      "start": 1,
+      "stop": 195,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 266287972352
+    }
+  },
+  "failure_rule": "stop; retain partial bytes/receipts; no same-identity relaunch; successor must reconcile completed batches",
+  "cleanup_rule": "only generated bundle.tar and recovered.tar after whole-archive/member/marker verification; originals never deleted",
+  "release_rule": "independent code/contract review before pilot; measured pilot review before bulk",
+  "maximum_network_bytes_qualification": "File payload upper bounds reserved before each operation. Upload size exact; remote dd emits at most one extra 32768-byte block and local receiver refuses excess before writing. SSH protocol overhead excluded.",
+  "download_protocol": "SSH dd bounded count, streamed receiver with byte/rate/time limits; port23 direct dd documented by Hetzner",
+  "remote_floor_rule": "Require phase raw bytes +1GiB metadata/padding reserve above256GiB floor before any upload"
+}
