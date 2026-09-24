@@ -38,3 +38,10 @@ def test_duplicates_even_excluded_fail(tmp_path):
 def test_partial_week_requires_explicit_disposition(tmp_path):
     with pytest.raises(ValueError,match='complete week'):
         list(build_weekly([tx(1)],config(),coverage=[('2024-01-02T00:00:00Z','2024-01-08T00:00:00Z')],scratch=tmp_path))
+
+
+def test_declared_empty_week_is_not_silently_omitted(tmp_path):
+    with pytest.raises(ValueError,match='empty expected week'):
+        list(build_weekly([tx(1)],config(),coverage=[('2024-01-01T00:00:00Z','2024-01-15T00:00:00Z')],scratch=tmp_path))
+    with pytest.raises(ValueError,match='empty source stream'):
+        list(build_weekly([],config(),coverage=[('2024-01-01T00:00:00Z','2024-01-08T00:00:00Z')],scratch=tmp_path))

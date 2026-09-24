@@ -5,7 +5,7 @@ import json
 import os
 import shutil
 import tempfile
-from .provenance import canonical_bytes, digest, file_hash, require_hash
+from .provenance import canonical_bytes, digest, file_hash, require_hash, durable_mkdir, sync_directory
 
 
 def cache_key(fields) -> str:
@@ -27,11 +27,12 @@ def publish(root: Path, key: str, members: dict[str, bytes], provenance: dict) -
             raise ValueError('artifact members must be bytes')
     canonical_bytes(provenance)
     root = Path(root)
-    root.mkdir(parents=True, exist_ok=True)
+    durable_mkdir(root)
     destination = root / key
     # Reserve identity atomically. Failed publications retain a visible claim;
     # never recycle an artifact ID after a crash.
     destination.mkdir()
+    sync_directory(root)
     temp = Path(tempfile.mkdtemp(prefix='.publish-', dir=root))
     try:
         manifest = {'schema_version': 1, 'key': key, 'provenance': provenance,

@@ -60,7 +60,7 @@ def capture_prices(contract,root,identity,*,fetch=_fetch):
     from urllib.parse import urlsplit,parse_qs
     import os
     from .cache import publish
-    from .provenance import canonical_bytes,require_hash
+    from .provenance import canonical_bytes,require_hash,durable_mkdir,sync_directory
     require_hash(identity)
     url=contract['url'];target=urlsplit(url);query=parse_qs(target.query)
     if (target.scheme!='https' or target.netloc!='query1.finance.yahoo.com'
@@ -68,10 +68,11 @@ def capture_prices(contract,root,identity,*,fetch=_fetch):
         or set(query)!={'period1','period2','interval'} or query['interval']!=['1d']
         or target.fragment):raise ValueError('unregistered public price endpoint')
     if not 0<contract['timeout_seconds']<=30 or not 0<contract['max_bytes']<=8*1024**2:raise ValueError('capture bounds')
-    root=Path(root);root.mkdir(parents=True,exist_ok=True)
+    root=Path(root);durable_mkdir(root)
     intent={'contract':contract,'started_at':datetime.now(timezone.utc).isoformat()}
     with (root/(identity+'.intent.json')).open('xb') as stream:
         stream.write(canonical_bytes(intent));stream.flush();os.fsync(stream.fileno())
+    sync_directory(root)
     result=dict(intent,status='unavailable',http_status=None,response_headers={})
     body=b''
     try:

@@ -39,3 +39,24 @@ def utc(value: str) -> datetime:
     if result.tzinfo is None or result.utcoffset() != timedelta(0):
         raise ValueError('explicit UTC required')
     return result
+
+
+def sync_directory(path: Path) -> None:
+    import os
+    fd = os.open(path, os.O_RDONLY | os.O_DIRECTORY)
+    try:
+        os.fsync(fd)
+    finally:
+        os.close(fd)
+
+
+def durable_mkdir(path: Path) -> None:
+    """Make missing ancestors durable before reserving child identities."""
+    path=Path(path)
+    missing=[]
+    cursor=path
+    while not cursor.exists():
+        missing.append(cursor);cursor=cursor.parent
+    for directory in reversed(missing):
+        directory.mkdir(exist_ok=True)
+        sync_directory(directory.parent)

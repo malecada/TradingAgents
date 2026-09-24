@@ -33,3 +33,13 @@ def test_invalid_graph_rejected(changes):
 def test_unknown_fields_rejected():
     with pytest.raises(ValueError,match='unknown'):
         graph_from_dict({'unexpected':12})
+
+
+def test_graph_arrays_cannot_reenable_writes():
+    g=graph()
+    with pytest.raises(ValueError):g.node_features.setflags(write=True)
+
+
+def test_btc_projection_can_have_more_edges_than_transactions():
+    g=graph(asset='BTC',edge_index=np.array([[0,1],[1,0]]),edge_features=np.ones((2,2)),raw_count=1,admitted_count=1,exclusion_counts={})
+    validate_graph(g)

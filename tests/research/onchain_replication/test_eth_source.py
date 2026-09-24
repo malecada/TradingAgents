@@ -8,7 +8,7 @@ from tradingagents.research.onchain_replication.eth_source import decode_eth
 def test_verified_stream_keeps_precision_and_filter_inputs(tmp_path):
     table=pa.table({'hash':['0x'+'1'*64], 'block_timestamp':pa.array([1704153600000000000],type=pa.timestamp('ns')), 'from_address':['0x'+'a'*40], 'to_address':['None'],'value':[1e18], 'receipt_status':pa.array([1],type=pa.int64())})
     path=tmp_path/'source.parquet';pq.write_table(table,path)
-    m={'members':[{'path':str(path),'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'format':'parquet'}],'start_utc':'2024-01-01T00:00:00Z','end_utc':'2024-01-08T00:00:00Z'}
+    m={'status':'complete','expected_members':1,'expected_rows':1,'members':[{'path':str(path),'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'format':'parquet','expected_rows':1}],'start_utc':'2024-01-01T00:00:00Z','end_utc':'2024-01-08T00:00:00Z'}
     schema={f.name:str(f.type) for f in table.schema}
     rows=list(decode_eth(m,schema));assert len(rows)==1
     assert rows[0].recipient is None and rows[0].value==1 and rows[0].precision=='approximate_ETH'
@@ -35,3 +35,8 @@ def test_projected_archive_columns_are_decoded_without_missing_byte_fill(tmp_pat
     with projected_parquet(bad,tmp_path) as reader:
         reader.seek(4)
         with pytest.raises(ValueError,match='unacquired'):reader.read(10)
+
+
+def test_empty_source_member_inventory_rejected():
+    with pytest.raises(ValueError,match='source member'):
+        list(decode_eth({'members':[],'start_utc':'2024-01-01T00:00:00Z','end_utc':'2024-01-08T00:00:00Z'},{}))

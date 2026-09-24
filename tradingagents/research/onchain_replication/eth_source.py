@@ -26,7 +26,11 @@ def address(value, nullable=False):
 def decode_eth(manifest: dict, schema: dict):
     start,end=utc(manifest['start_utc']),utc(manifest['end_utc'])
     if start>=end:raise ValueError('source interval')
+    if not manifest.get('members'):raise ValueError('source member inventory empty')
+    if manifest.get('status')!='complete' or manifest.get('expected_members')!=len(manifest['members']):raise ValueError('source inventory status/count')
+    if len({m['sha256'] for m in manifest['members']})!=len(manifest['members']):raise ValueError('duplicate source member')
     if not set(COLUMNS)<=set(schema):raise ValueError('required ETH schema fields missing')
+    total=0
     for member in manifest['members']:
         require_hash(member['sha256'])
         path=Path(member['path'])
@@ -38,11 +42,18 @@ def decode_eth(manifest: dict, schema: dict):
         else:
             raise ValueError('unavailable source encoding')
         with context as source:
-            yield from _decode_member(source,member,schema,start,end)
+            count=0
+            for row in _decode_member(source,member,schema,start,end):
+                count+=1
+                yield row
+            if count!=member['expected_rows']:raise ValueError('decoded member row count mismatch')
+            total+=count
+    if total!=manifest['expected_rows']:raise ValueError('decoded source row count mismatch')
 
 
 def _decode_member(source,member,schema,start,end):
         parquet=pq.ParquetFile(source,metadata=getattr(source,'parquet_metadata',None),pre_buffer=False)
+        if parquet.metadata.num_rows!=member['expected_rows']:raise ValueError('declared member row count mismatch')
         actual={f.name:str(f.type) for f in parquet.schema_arrow}
         if any(actual.get(k)!=v for k,v in schema.items()):raise ValueError('source schema mismatch')
         for batch in parquet.iter_batches(batch_size=8192,columns=list(COLUMNS),use_threads=False):

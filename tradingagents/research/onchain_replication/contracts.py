@@ -26,7 +26,7 @@ class GraphSnapshot:
     def __post_init__(self):
         for name in ('node_features', 'edge_index', 'edge_features'):
             array = np.array(getattr(self, name), copy=True)
-            array.setflags(write=False)
+            array = np.frombuffer(array.tobytes(), dtype=array.dtype).reshape(array.shape)
             object.__setattr__(self, name, array)
         object.__setattr__(self, 'node_ids', tuple(self.node_ids))
         object.__setattr__(self, 'source_hashes', tuple(self.source_hashes))
@@ -109,7 +109,7 @@ def validate_graph(g: GraphSnapshot) -> None:
         raise ValueError('invalid counts')
     if g.raw_count != g.admitted_count + sum(g.exclusion_counts.values()):
         raise ValueError('event conservation failed')
-    if e > g.admitted_count:
+    if g.asset == 'ETH' and e > g.admitted_count:
         raise ValueError('more aggregate edges than admitted events')
 
 
