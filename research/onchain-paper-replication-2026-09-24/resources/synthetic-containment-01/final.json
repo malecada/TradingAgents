@@ -1,0 +1,54 @@
+{
+  "boot_id": "df1f8c6b-0492-497f-8d23-bb55c45d37f6",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-b0babd9f3dac4b11adf44ad071ab9f74.service",
+  "child_exit_code": null,
+  "cleanup_stop_returncode": 0,
+  "cleanup_unit_properties": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "dead"
+  },
+  "cleanup_verified": true,
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "-c",
+    "import os; print(\"synthetic child CPUs\",sorted(os.sched_getaffinity(0)))"
+  ],
+  "cpus": [
+    0,
+    1
+  ],
+  "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+  "disk_floor_bytes": 21474836480,
+  "disk_free_bytes": {
+    "/home/malecada/Data": 23975342080,
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes": 34487144448
+  },
+  "disk_paths": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "/home/malecada/Data"
+  ],
+  "elapsed_seconds": 0.05001531000016257,
+  "elapsed_time_kill": false,
+  "host_mem_available_bytes": 9770614784,
+  "lease_seconds": 15.0,
+  "limit_reason": "FileNotFoundError: [Errno 2] No such file or directory: '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-b0babd9f3dac4b11adf44ad071ab9f74.service/cpu.max'",
+  "memory_high_bytes": 5368709120,
+  "memory_max_bytes": 6442450944,
+  "memory_swap_max_bytes": 0,
+  "monitor_pid": 1293179,
+  "monotonic_seconds": 46329.635621342,
+  "peak_sampled_memory_current_bytes": 0,
+  "phase": "failed",
+  "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/resources/synthetic-containment-01",
+  "reserve_bytes": 3221225472,
+  "retry": false,
+  "sample_seconds": 0.25,
+  "start_reserve_bytes": 9663676416,
+  "unit": "onchain-replication-b0babd9f3dac4b11adf44ad071ab9f74.service",
+  "wait_seconds": 0,
+  "wall_seconds": 30
+}

@@ -43,7 +43,9 @@ def decode_eth(manifest: dict, schema: dict):
             raise ValueError('unavailable source encoding')
         with context as source:
             count=0
-            for row in _decode_member(source,member,schema,start,end):
+            member_start=utc(member.get('start_utc',manifest['start_utc']));member_end=utc(member.get('end_utc',manifest['end_utc']))
+            if not start<=member_start<member_end<=end:raise ValueError('member coverage outside source')
+            for row in _decode_member(source,member,schema,member_start,member_end):
                 count+=1
                 yield row
             if count!=member['expected_rows']:raise ValueError('decoded member row count mismatch')
@@ -119,8 +121,15 @@ def projected_parquet(manifest,scratch):
             if not 0<span['stored_bytes']<=65*1024**2:raise ValueError('stored range limit')
             with Path(span['path']).open('rb') as stream:stored=stream.read(span['stored_bytes']+1)
             if len(stored)!=span['stored_bytes'] or digest(stored)!=span['stored_sha256']:raise ValueError('stored range hash')
-            if zstandard.frame_content_size(stored)!=b-a:raise ValueError('range decompression length')
-            raw=zstandard.ZstdDecompressor().decompress(stored,max_output_size=b-a,allow_extra_data=False)
+            codec=span.get('codec','zstd')
+            if codec=='zstd':
+                if zstandard.frame_content_size(stored)!=b-a:raise ValueError('range decompression length')
+                raw=zstandard.ZstdDecompressor().decompress(stored,max_output_size=b-a,allow_extra_data=False)
+            elif codec=='receipt_base64':
+                import base64
+                receipt=json.loads(stored);raw=base64.b64decode(receipt['body_base64'],validate=True)
+                if len(raw)!=b-a or receipt['sha256']!=span['raw_sha256']:raise ValueError('receipt body framing')
+            else:raise ValueError('unregistered range codec')
             if digest(raw)!=span['raw_sha256']:raise ValueError('raw range hash')
             file.seek(a);file.write(raw);intervals.append((a,b))
         file.flush();file.seek(0)

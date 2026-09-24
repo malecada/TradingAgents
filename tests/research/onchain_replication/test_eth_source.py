@@ -16,7 +16,8 @@ def test_verified_stream_keeps_precision_and_filter_inputs(tmp_path):
     with pytest.raises(ValueError,match='hash'):list(decode_eth(m,schema))
 
 
-def test_projected_archive_columns_are_decoded_without_missing_byte_fill(tmp_path):
+@pytest.mark.parametrize('footer_codec',['zstd','receipt_base64'])
+def test_projected_archive_columns_are_decoded_without_missing_byte_fill(tmp_path,footer_codec):
     import json,struct,zstandard
     from tradingagents.research.onchain_replication.eth_source import projected_parquet
     table=pa.table({'hash':['0x'+'1'*64], 'block_timestamp':pa.array([1704153600000000000],type=pa.timestamp('ns')), 'from_address':['0x'+'a'*40], 'to_address':['0x'+'b'*40],'value':[1e18], 'receipt_status':pa.array([1],type=pa.int64())})
@@ -28,6 +29,9 @@ def test_projected_archive_columns_are_decoded_without_missing_byte_fill(tmp_pat
         raw=body[a:b];stored=zstandard.ZstdCompressor(write_content_size=True).compress(raw)
         path=tmp_path/f'{i}.zst';path.write_bytes(stored)
         spans.append(dict(path=str(path),start=a,end=b,stored_sha256=hashlib.sha256(stored).hexdigest(),raw_sha256=hashlib.sha256(raw).hexdigest(),raw_bytes=len(raw),stored_bytes=len(stored)))
+    if footer_codec=='receipt_base64':
+        import base64
+        span=spans[-1];receipt=tmp_path/'footer.json';receipt.write_text(json.dumps({'sha256':span['raw_sha256'],'body_base64':base64.b64encode(body[chunks[-1][0]:]).decode()}));span.update(path=str(receipt),codec='receipt_base64',stored_sha256=hashlib.sha256(receipt.read_bytes()).hexdigest(),stored_bytes=receipt.stat().st_size)
     m={'size':len(body),'spans':spans}
     with projected_parquet(m,tmp_path) as reader:
         assert pq.ParquetFile(reader,pre_buffer=False).read().to_pydict()==table.to_pydict()

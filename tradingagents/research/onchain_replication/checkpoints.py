@@ -53,3 +53,16 @@ def load_checkpoint(path,model,optimizer,rng,expected_provenance):
     rng.bit_generator.state=state['rng']['pcg64'];torch.set_rng_state(state['rng']['torch_cpu'])
     if torch.cuda.is_available():torch.cuda.set_rng_state_all(state['rng']['torch_cuda'])
     return state
+
+
+def capture_rng(rng):
+    state=np.random.get_state()
+    return {'python':random.getstate(),'numpy_global':(state[0],state[1].tolist(),*state[2:]),'pcg64':rng.bit_generator.state,'torch_cpu':torch.get_rng_state(),'torch_cuda':torch.cuda.get_rng_state_all() if torch.cuda.is_available() else []}
+
+
+def restore_rng(state,rng):
+    if set(state)!=RNG_REQUIRED:raise ValueError('incomplete RNG state')
+    if len(state['torch_cuda'])!=(torch.cuda.device_count() if torch.cuda.is_available() else 0):raise ValueError('RNG device topology differs')
+    random.setstate(state['python']);n=state['numpy_global'];np.random.set_state((n[0],np.asarray(n[1],dtype=np.uint32),*n[2:]))
+    rng.bit_generator.state=state['pcg64'];torch.set_rng_state(state['torch_cpu'])
+    if torch.cuda.is_available():torch.cuda.set_rng_state_all(state['torch_cuda'])

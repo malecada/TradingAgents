@@ -1,0 +1,1 @@
+Metadata mapping preparation failed before transaction decoding: special-day receipt binds pilot/plan.json, which references prototype/plan.json; direct receipt-to-prototype comparison was incorrect. Partial maps retained. Corrected preparation uses source-maps-v2. No ResearchRun claim was created.

@@ -27,23 +27,36 @@ The previous summary-feature study remains closed and unchanged.
   interrupted/replayed weights and logs match, including the final-checkpoint case.
 - Task8 resource guard and source metadata bindings in progress. Tiny real
   synthetic process/thread probe03 passed; probes01/02 failures remain preserved.
-  CPU quota controller is absent; explicit reviewed affinity amendment pending.
+  CPU quota controller is absent; explicit reviewed affinity amendment v3 is frozen.
+  Real signal, lost-monitor and widened-mask probes terminate all descendants.
+  Source-index maps63days/73,049,185 declared rows; no transaction bodies decoded.
 - Task9 price baselines/metrics implemented and independently checked; no fits.
-- Tasks10–13 pending; all source, resource, comparison and empirical scope remains
+- Task10 exact BTC projection software passes rational conservation tests; broad
+  BTC/ETH history capture and BTC floating-source precision admission remain pending.
+- Task11 graph comparators/subsets implemented and independently numerically checked;
+  mid-epoch embedding recovery passes synthetic fixtures. Temporal assembly and
+  actual graph/full-history comparisons remain pending. Original fund cohort absent.
+- Task12 exact1420-cell ledger enumeration implemented; financial runs pending.
+- Task13 final reproduction/coverage/backup review pending. All source and empirical scope remains
   required. No measured predictive performance or completed empirical milestone.
 
 Named pre-change offline baseline:2746tests+97subtests passed;6 inherited cleanup
 warnings; log `.superpowers/sdd/2026-09-24-onchain-paper-replication/baseline.log`.
 Focused synthetic results and review findings: IMPLEMENTATION_REVIEW.md. Full
-post-change offline check still required before empirical release.
+post-change offline check is active under the new guard at
+`resources/offline-postchange-01/` (terminal session22888). Never duplicate it.
+Focused suite:176passed,1CUDA skip. Independent checker:43synthetic tests.
 
 Known external requirements: exact original data/config/folds unrecovered;
 65-entity historical fund address cohort absent; CUDA unavailable; full-resource
 feasibility unmeasured. Pinned Python3.13.13 / torch2.10.0+cu128 supports CPU tests.
 Full raw off-device backup remains unverified. No active empirical jobs.
 
-Next safe action: finish resource shutdown checks, freeze the affinity amendment;
-prepare and independently review exact source/resource registrations, then commit
-before any empirical pilot. Continue independently executable software work if
+Next safe action: finish independent release review of109-cell pilot, preserve
+the initial draft gate and bind a reviewed successor revision; commit before
+empirical execution and wait for the active named offline verification. Release
+review fixes include exact worker input binding, durable MCM prefixes and external
+post-death reconciliation. Model registry/evaluation is synthetic-tested, with
+review corrections pending before financial-run release. Continue independently executable software work if
 capacity or source coverage blocks a milestone. Never relaunch historical jobs.
 All1420 planned one-lane fits remain pending. M0 ready; M1–M4 incomplete.

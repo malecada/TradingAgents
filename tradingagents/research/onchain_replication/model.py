@@ -42,14 +42,17 @@ class ReplicationModel(nn.Module):
     def forward(self,graph_sequences,prices,mask=None):
         if prices.ndim!=3 or len(graph_sequences)!=len(prices):raise ValueError('graph/price sequence batch mismatch')
         valid=torch.ones(prices.shape[:2],dtype=torch.bool,device=prices.device) if mask is None else mask
-        rows=[]
+        rows=[];encoded_graphs={}
         for b,sequence in enumerate(graph_sequences):
             if len(sequence)!=prices.shape[1]:raise ValueError('graph/price lookback mismatch')
             vectors=[]
             for t,graph in enumerate(sequence):
                 if not valid[b,t]:vectors.append(prices.new_zeros(self.config['graph_vector_width']))
                 elif graph is None:raise ValueError('missing valid graph step')
-                else:vectors.append(self.graph(**graph))
+                else:
+                    key=id(graph)
+                    if key not in encoded_graphs:encoded_graphs[key]=self.graph(**graph)
+                    vectors.append(encoded_graphs[key])
             rows.append(torch.stack(vectors))
         embeddings=torch.stack(rows)
         return self.temporal(torch.cat([embeddings,prices],dim=-1),valid)

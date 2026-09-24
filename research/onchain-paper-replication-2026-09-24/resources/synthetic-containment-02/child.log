@@ -1,0 +1,4 @@
+  File "<string>", line 1
+    import os,subprocess,sys,threading,time; print("parent",os.getpid(),sorted(os.sched_getaffinity(0)),flush=True); p=subprocess.Popen([sys.executable,"-c","import os,time; print("child",os.getpid(),sorted(os.sched_getaffinity(0)),flush=True); time.sleep(1)"]); ts=[threading.Thread(target=lambda:time.sleep(1)) for i in range(3)]; [t.start() for t in ts]; [t.join() for t in ts]; p.wait()
+                                                                                                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: invalid syntax. Perhaps you forgot a comma?

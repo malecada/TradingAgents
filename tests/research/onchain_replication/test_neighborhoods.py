@@ -23,3 +23,17 @@ def test_overlap_probabilities_reproducible_and_future_invariant():
     w=np.array([0 if i==selected else .5 if str(i) in neighbors else 1 for i in range(4)])
     assert a.records[0]['probability']==.25
     assert a.records[1]['probability']==pytest.approx(w[a.records[1]['center_index']]/w.sum())
+
+
+def test_indexed_neighborhood_matches_original_directed_induction():
+    from tradingagents.research.onchain_replication.neighborhoods import NeighborhoodIndex,neighborhood
+    from tradingagents.research.onchain_replication.contracts import GraphSnapshot
+    import numpy as np
+    g=GraphSnapshot('ETH','2022-01-03T00:00:00Z','2022-01-10T00:00:00Z','2022-01-11T00:00:00Z',('a'*64,),'b'*64,('a','b','c','d'),np.arange(16).reshape(4,4),np.array([[2,0,1,3],[0,1,2,3]]),np.ones((4,2)),4,4,{})
+    cfg={'hop_depth':1,'maximum_neighborhood_nodes':10}
+    index=NeighborhoodIndex(g)
+    for center in range(4):
+        expected=neighborhood(g,center,cfg);actual=index.neighborhood(center,cfg)
+        assert actual.node_ids==expected.node_ids
+        np.testing.assert_array_equal(actual.edge_index,expected.edge_index)
+        np.testing.assert_array_equal(actual.edge_features,expected.edge_features)

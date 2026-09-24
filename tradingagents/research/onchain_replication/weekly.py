@@ -84,7 +84,7 @@ def build_weekly(events,graph_config,*,coverage,scratch):
                     edges.append((a,b));attributes.append((count,value))
                     nodes[a,1]+=count;nodes[a,3]+=value;nodes[b,0]+=count;nodes[b,2]+=value
                 sources=tuple(r[0] for r in db.execute('SELECT DISTINCT source FROM events WHERE asset=? AND week=? ORDER BY source',params))
-                g=GraphSnapshot(asset,start,stamp(end),stamp(end+timedelta(days=1)),sources,cache_key(graph_config),tuple(ids),np.log1p(nodes),np.asarray(edges,dtype=np.int64).reshape(-1,2).T,np.log1p(np.asarray(attributes,dtype=np.float64).reshape(-1,2)),admitted+sum(counts.values()),admitted,counts)
+                g=GraphSnapshot(asset,start,stamp(end),stamp(end+timedelta(days=1)),sources,cache_key(graph_config),tuple(ids),np.log1p(nodes),np.asarray(edges,dtype=np.int64).reshape(-1,2).T,np.log1p(np.asarray(attributes,dtype=np.float64).reshape(-1,2)),admitted+sum(counts.values()),admitted,counts,np.asarray(attributes,dtype=np.float64).reshape(-1,2))
                 validate_graph(g)
                 yield g
         finally:db.close()

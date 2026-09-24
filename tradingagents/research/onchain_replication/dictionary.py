@@ -1,6 +1,7 @@
 """Average-linkage motif dictionaries with deterministic medoids and partitions."""
 from __future__ import annotations
 from dataclasses import dataclass,replace
+import time
 import numpy as np
 from scipy.cluster.hierarchy import linkage,cut_tree
 from scipy.spatial.distance import squareform
@@ -49,9 +50,29 @@ class Dictionary:
         object.__setattr__(self,'hierarchy',freeze(self.hierarchy))
 
 
-def fit_dictionary(samples,matching_config,dictionary_config):
+def fit_dictionary(samples,matching_config,dictionary_config,*,checkpoint=None,resume_state=None,checkpoint_seconds=600.):
     k=dictionary_config['size'];graphs=samples.graphs
     if len(graphs)<k:raise ValueError('insufficient dictionary samples')
+    if not 0<checkpoint_seconds<=600:raise ValueError('checkpoint interval exceeds protocol')
+    identity=cache_key({'sample':samples.identity,'matching':matching_config,'dictionary':dictionary_config})
+    matrices={};last=time.monotonic()
+    if resume_state is not None:
+        if resume_state['identity']!=identity:raise ValueError('dictionary checkpoint identity mismatch')
+        matrices={tuple(item['indices']):np.array([[np.nan if v is None else v for v in row] for row in item['matrix']],dtype=float) for item in resume_state['distances']}
+    def distances(indices):
+        nonlocal last
+        key=tuple(indices);n=len(indices)
+        matrix=matrices.setdefault(key,np.full((n,n),np.nan));np.fill_diagonal(matrix,0.)
+        if matrix.shape!=(n,n):raise ValueError('dictionary checkpoint dimensions')
+        for i in range(n):
+            for j in range(i):
+                if np.isfinite(matrix[i,j]):continue
+                a,b=graphs[indices[i]],graphs[indices[j]]
+                score=(match_reference(a,b,matching_config).score+match_reference(b,a,matching_config).score)/2
+                matrix[i,j]=matrix[j,i]=1-score
+                if checkpoint and time.monotonic()-last>=checkpoint_seconds:
+                    checkpoint({'identity':identity,'distances':[{'indices':k,'matrix':[[None if not np.isfinite(v) else float(v) for v in row] for row in m]} for k,m in matrices.items()]});last=time.monotonic()
+        return matrix
     rng=np.random.Generator(np.random.PCG64(samples.seed));hierarchy=[]
     def fit(indices,owners):
         indices=sorted(indices) # original sample order controls linkage/medoid ties
@@ -61,13 +82,13 @@ def fit_dictionary(samples,matching_config,dictionary_config):
             shuffled=list(rng.permutation(indices));representatives=[];next_owners={}
             for start in range(0,len(shuffled),chunk):
                 part=sorted(map(int,shuffled[start:start+chunk]))
-                centers,groups=cluster_medoids(_distance([graphs[i] for i in part],matching_config),min(k,len(part)))
+                centers,groups=cluster_medoids(distances(part),min(k,len(part)))
                 selected=[part[i] for i in centers]
                 expanded=[sorted(j for i in group for j in owners[part[i]]) for group in groups]
                 representatives.extend(selected);next_owners.update(zip(selected,expanded,strict=True))
                 hierarchy.append({'samples':part,'representatives':selected,'original_memberships':expanded})
             return fit(representatives,next_owners)
-        centers,groups=cluster_medoids(_distance([graphs[i] for i in indices],matching_config),k)
+        centers,groups=cluster_medoids(distances(indices),k)
         return [indices[i] for i in centers],[sorted(j for i in group for j in owners[indices[i]]) for group in groups]
     centers,groups=fit(list(range(len(graphs))),{i:[i] for i in range(len(graphs))})
     dictionary=Dictionary(tuple(graphs[i] for i in centers),tuple(tuple(x) for x in groups),samples.identity,samples.source_hashes,dict(dictionary_config),cache_key(matching_config),'',tuple(hierarchy))

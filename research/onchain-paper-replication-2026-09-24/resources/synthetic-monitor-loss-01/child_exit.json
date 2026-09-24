@@ -1,0 +1,36 @@
+{
+  "exit_code": 125,
+  "reason": "monitor lease lost during workload",
+  "snapshot_error": null,
+  "terminal_memory_snapshot": {
+    "memory_current_bytes": 20930560,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 20111360,
+        "file_bytes": 8192,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-f59cdeac7d984ad0b47b3a1219e82684.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 4349915136,
+        "file_bytes": 6491889664,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=12494780\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=12192564",
+        "swap_current_bytes": 2066427904,
+        "unavailable": {}
+      }
+    }
+  },
+  "workload_pid": 1303930
+}

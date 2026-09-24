@@ -1,0 +1,110 @@
+{
+  "boot_id": "df1f8c6b-0492-497f-8d23-bb55c45d37f6",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-264f02fd75e54e78beb52e28a00eabde.service",
+  "child_exit_code": null,
+  "cleanup_stop_returncode": 0,
+  "cleanup_unit_properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "1",
+    "Result": "exit-code",
+    "SubState": "failed"
+  },
+  "cleanup_verified": true,
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/resources/fixtures/liveness_worker.py",
+    "widen"
+  ],
+  "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+  "cpu_quota_controller_available": false,
+  "cpu_thread_readback": {
+    "1303971": [
+      0,
+      1
+    ]
+  },
+  "cpus": [
+    0,
+    1
+  ],
+  "cwd": "/home/malecada/master_thesis",
+  "disk_floor_bytes": 21474836480,
+  "disk_free_bytes": {
+    "/home/malecada/Data": 23975342080,
+    "/home/malecada/master_thesis": 34443358208
+  },
+  "disk_paths": [
+    "/home/malecada/master_thesis",
+    "/home/malecada/Data"
+  ],
+  "elapsed_seconds": 0.3888993400032632,
+  "elapsed_time_kill": false,
+  "host_mem_available_bytes": 9891495936,
+  "initial_memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "kernel_controls": {
+    "memory.high": "5368709120",
+    "memory.max": "6442450944",
+    "memory.swap.max": "0"
+  },
+  "lease_seconds": 5,
+  "limit_reason": "RuntimeError: thread widened CPU affinity beyond registered two CPUs",
+  "memory_current_bytes": 8192000,
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "memory_high_bytes": 5368709120,
+  "memory_max_bytes": 6442450944,
+  "memory_swap_max_bytes": 0,
+  "monitor_pid": 1303968,
+  "monotonic_seconds": 47685.65733522,
+  "optional_memory_telemetry": {
+    "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+    "unit": {
+      "anon_bytes": 8015872,
+      "file_bytes": 4096,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-264f02fd75e54e78beb52e28a00eabde.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+      "swap_current_bytes": 0,
+      "unavailable": {}
+    },
+    "user_ancestor": {
+      "anon_bytes": 4349067264,
+      "file_bytes": 6491918336,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=12494780\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=12192564",
+      "swap_current_bytes": 2066427904,
+      "unavailable": {}
+    }
+  },
+  "peak_sampled_memory_current_bytes": 8192000,
+  "phase": "failed",
+  "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/resources/synthetic-affinity-widen-01",
+  "reserve_bytes": 3221225472,
+  "retry": false,
+  "sample_seconds": 0.25,
+  "start_reserve_bytes": 9663676416,
+  "unit": "onchain-replication-264f02fd75e54e78beb52e28a00eabde.service",
+  "unit_properties": {
+    "ActiveState": "active",
+    "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-264f02fd75e54e78beb52e28a00eabde.service",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "running"
+  },
+  "wait_seconds": 0,
+  "wall_seconds": 40
+}

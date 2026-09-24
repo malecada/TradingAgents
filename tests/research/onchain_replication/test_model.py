@@ -45,3 +45,14 @@ def test_pool_rejects_wholly_masked_graph():
     from tradingagents.research.onchain_replication.pooling import mean_pool
     with pytest.raises(ValueError,match='empty'):
         mean_pool(torch.ones(4,2),torch.tensor([True,True,False,False]),torch.tensor([0,0,1,1]))
+
+
+def test_shared_graph_reuse_keeps_joint_gradients_and_is_local_to_forward():
+    from unittest.mock import patch
+    model=ReplicationModel(cfg(),'classification');graph={'mcm':torch.rand(3,32),'edge_index':torch.tensor([[0],[1]])}
+    with patch.object(model.graph,'forward',wraps=model.graph.forward) as forward:
+        model([[graph,graph]],torch.zeros(1,2,1)).sum().backward()
+        assert forward.call_count==1
+        assert all(p.grad is not None for p in model.graph.parameters())
+        model([[graph,graph]],torch.zeros(1,2,1))
+        assert forward.call_count==2

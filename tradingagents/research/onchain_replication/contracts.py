@@ -22,9 +22,11 @@ class GraphSnapshot:
     raw_count: int
     admitted_count: int
     exclusion_counts: Mapping[str, int]
+    edge_aggregates: np.ndarray | None = None
 
     def __post_init__(self):
-        for name in ('node_features', 'edge_index', 'edge_features'):
+        for name in ('node_features', 'edge_index', 'edge_features', 'edge_aggregates'):
+            if getattr(self,name) is None:continue
             array = np.array(getattr(self, name), copy=True)
             array = np.frombuffer(array.tobytes(), dtype=array.dtype).reshape(array.shape)
             object.__setattr__(self, name, array)
@@ -104,6 +106,9 @@ def validate_graph(g: GraphSnapshot) -> None:
     for array in (g.node_features, g.edge_features):
         if not np.issubdtype(array.dtype, np.number) or not np.isfinite(array).all():
             raise ValueError('nonfinite or nonnumeric attributes')
+    if g.edge_aggregates is not None:
+        if g.edge_aggregates.shape!=(e,2) or not np.isfinite(g.edge_aggregates).all() or (g.edge_aggregates<0).any():raise ValueError('invalid raw aggregate attributes')
+        if not np.allclose(np.log1p(g.edge_aggregates),g.edge_features,rtol=1e-12,atol=1e-12):raise ValueError('raw/log aggregate mismatch')
     counts = [g.raw_count, g.admitted_count, *g.exclusion_counts.values()]
     if any(type(c) is not int or c < 0 for c in counts):
         raise ValueError('invalid counts')
@@ -117,7 +122,7 @@ def graph_from_dict(value: dict) -> GraphSnapshot:
     names = {f.name for f in fields(GraphSnapshot)}
     if set(value) - names:
         raise ValueError('unknown graph fields')
-    if names - set(value):
+    if names - set(value) - {'edge_aggregates'}:
         raise ValueError('missing graph fields')
     g = GraphSnapshot(**value)
     validate_graph(g)
