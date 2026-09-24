@@ -2106,3 +2106,103 @@ recovered checkpoint chain. This does not claim an off-device copy of large
 raw transaction stores, graph/MCM arrays or SQLite scratch, real raw-to-prediction
 replay, full-workload feasibility or overall study completion. Later review,
 state and recovery-receipt additions are outside the pinned bundle's bytes.
+
+
+### Independent Storage Box compact-backup preflight review
+
+Read-only review of storage/storage-box-2026-09-24-01/compact_backup.py and its
+contract found three corrections before launch. Local complete.json is written
+before the final SCP of that marker, so a failed final transfer would enter the
+exception handler and also write failed.json. Use a nonterminal marker-upload
+payload and publish local completion only after the required operation, or
+separately qualify marker-upload failure without contradictory terminal states.
+The connection record is parsed at module import but verified by hashing a later
+read; bind the exact parsed byte buffer so the validated endpoint is the endpoint
+actually used. Likewise compute the intent contract hash from its parsed buffer.
+Finally raw_files_uploaded=0 is too broad: the scoped committed evidence includes
+raw price-response bodies. The zero count and unverified-backup flag should
+specifically refer to large transaction raw files, not all raw source responses.
+
+The scoped pinned commit dfe646f084c1d05f4837ba06ece6c7a41baa9bab contains exactly
+16110 selected blob members totaling 72643513 bytes; the largest selected blob
+is 2888745 bytes. Local Git metadata was read with lazy fetching disabled. This
+fits the declared member/uncompressed bounds and includes four retained raw
+price response.bin objects, not large transaction stores. The archive is limited
+to the committed study source/tests/evidence, four closed price claims and the
+closed pilot claim; the separate retained ETH inventory explicitly states that
+fresh raw-content verification and raw upload have not occurred. Inventory-only
+backup does not provide raw-data recovery.
+
+The script's finite six-file roundtrip, per-file hash comparison, exclusive remote
+leaf-directory creation, no delete command, exact pinned source, strict host-key
+checking, batch-only key authentication and guarded 512/384 MiB/zero-swap limits
+are consistent with the requested scope. Remote endpoint metadata was inspected;
+no private key, credential contents or SSH config was read, and no remote call
+or transfer was made by this review. Root's prior verified host fingerprint and
+authentication are prerequisites, not independently repeated connection claims.
+No full transaction-data backup or standalone complete environment is established
+by this compact source/evidence archive. Conditional release awaits the three
+specific corrections and their updated exact script/input bindings.
+
+
+Storage Box preflight corrections independently reread: connection and contract
+identities now hash the exact parsed byte buffers; the completion payload is
+uploaded and downloaded with hash verification before local complete.json is
+published; output flags explicitly say transaction_raw_files_uploaded=0 and
+raw_transaction_backup_verified=false. The six data/metadata files plus the
+completion-marker roundtrip are finite and remain within the same overall guard.
+Current script SHA256
+b0515aedee43fef9effa177e0918ef273c146443cb25fc4878c292430d32d1d4
+matches contract SHA256
+7fed5cbd3985ba1622d7b4a5fe0ccfb2a1eccdd82be471baafa4985458f99382;
+all three input hashes and the resource-guard source hash match. The three
+reported blockers are closed. One execution of this exact scoped compact backup
+is cleared, conditional on the already verified endpoint/key setup and live
+resource guard admission. It does not authorize raw transaction transfer,
+deletions, an empirical rerun or a full raw-backup claim. Actual recovery success
+must still be established from its retained roundtrip and guard evidence.
+
+
+### Independent Storage Box compact roundtrip verification
+
+The completed bounded upload/download was independently checked from retained
+local recovered bytes; no additional remote call or credential inspection was
+performed. All six recovered payloads match their per-file receipts and exact
+original bytes. The recovered completion marker equals both completion-payload.json
+and local complete.json, with SHA256
+e37b247054ed6a4525f6553b1e220f26c7845358619fb534d8d6afc637899ba7.
+There is no failed.json contradiction. The reviewed script/contract identities
+remain those cleared above.
+
+The recovered compact archive is 21313138 bytes, SHA256
+f8e803327b25173b643669bef8b227cff9292d81615468e55cc94f1da314224c;
+the recovered manifest is 3769176 bytes, SHA256
+2ab9bfeef9d65b1e16f2efc15df1a8b165ce5f712fd274728424437442683ded.
+All 16110 unique regular members and all 72643513 uncompressed bytes were
+independently checked against manifest entries and byte-for-byte against the
+pinned local Git blobs at dfe646f084c1d05f4837ba06ece6c7a41baa9bab.
+The selected Git-prefix membership is exact. Git lazy fetching was disabled;
+no archive extraction, market-data parsing or model recomputation occurred.
+The recovered raw-source inventory gzip also matches its original hash; streamed
+decompression yields exactly 31718999 inventory bytes with the recorded SHA256
+f36dfe326639468e02b65b82da5b5aba319568d36281a64e98206d7efd4cc234.
+Its summary explicitly retains fresh-content-verification=false and raw-upload=false.
+This checks the inventory's bytes, not the 59083 raw transaction files it lists.
+
+Guard final SHA256
+c7167137ec20313ab5670d7c538b8863b54135f57aaa5ae4fc4290077772dc4e
+records 45.802813614 seconds, 118751232-byte sampled peak, child zero, verified
+cleanup, no triggered limit and zero memory-event counters. Readback is
+512 MiB maximum/384 MiB high/zero swap, two CPUs, 3 GiB host reserve,
+3.5 GiB startup reserve, 20 GiB disk floor and 900-second ceiling. Its cgroup,
+monitor, wrapper and workload PIDs are absent at independent inspection.
+
+The scoped committed source/tests/closed-evidence archive and inventory have a
+verified remote roundtrip to the user's Storage Box. Original stores remain in
+place and no delete operation was issued. The archive includes retained closed
+price response bodies; transaction_raw_files_uploaded=0 correctly excludes the
+large transaction stores from this claim. Full raw transaction backup, large
+pilot graph/MCM/scratch backup, real raw-to-prediction replay and empirical study
+completion remain unverified. No unresolved material finding remains for this
+specific compact-backup operation; future raw transfer needs its own finite
+manifest, capacity/retention contract and verification.

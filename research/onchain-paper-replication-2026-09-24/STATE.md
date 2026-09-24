@@ -96,14 +96,29 @@ in the authorized scope. The historical negative screen is unchanged.
   Source checkpoint 288363ea and supplemental commit 6552f435 were pushed.
   Full raw-data off-device backup remains unverified.
 
-Next safe action: obtain a feasible existing host/storage allocation, then finish
+- **Storage Box setup and compact preservation complete:** key authentication and
+  strict host-key checking succeeded; initial capacity check reported 5.0 TB free.
+  Checkpoint `storage/storage-box-2026-09-24-01/` uploaded and retrieved six
+  payloads plus the completion marker with matching hashes. The pinned
+  `dfe646f0` archive contains 16,110 blobs / 72,643,513 uncompressed bytes.
+  Guard completed in 45.803 seconds, peak 118,751,232 bytes, child zero and
+  verified cleanup. Independent review matched every recovered archive member
+  against the pinned Git blobs and verified all payloads and the final marker.
+  A separate metadata/stat inventory identifies 59,083 distinct retained ETH
+  files/inodes totaling 103,524,489,043 bytes. Their expected hashes are retained;
+  raw contents were not freshly hashed or uploaded. Full transaction-raw backup
+  remains incomplete. No originals were removed and no financial run started.
+
+Next safe action: prepare a bounded, checkpointed raw-preservation transfer and
+obtain a feasible compute/local-scratch allocation, then finish
 raw-to-graph/population integration and prepare/review its exact source, phase,
 reuse, ownership and cumulative admission contract before execution. All 1,420
 financial fits remain pending; no empirical process is active.
 Further empirical admission needs a feasible host/storage contract, complete
 source/graph/population accounting and a reviewed cumulative allocation for any
-successor. The optional question about already available compute/storage remains
-unanswered; no paid resource, author contact or new experiment is assumed.
+successor. The user supplied the existing Storage Box; feasible compute and local scratch
+remain unresolved. No additional paid resource, author contact or new experiment
+is assumed.
 Original fund cohort/vintage remains a separate full-paper blocker. Keep every
 closed identity, failed attempt, raw member and spent window preserved.
 
