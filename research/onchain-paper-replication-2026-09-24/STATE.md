@@ -85,3 +85,13 @@ Pilot release review is satisfied; current host startup prerequisite is not:
 9GiB MemAvailable required, approximately6.6GiB observed. See resources/pilot-preflight-01.json.
 No guard/owner identity or empirical claim has been created. Continue independent
 source/software work and launch once only when the unchanged reserve is met.
+
+External compact recovery verified: branch commitf276b4a942ee24894df8fd3c48accda391f72351
+was pushed, fetched independently into /tmp/onchain-paper-remote-recovery-20260924-01,
+and its saved synthetic checkpoint replayed in the fresh locked interpreter with
+network denied (2predictions,0difference). replay/remote-recovery-01.json records
+the bounded recovery; raw stores and empirical-model backups remain unverified.
+BTC exact weekly assembly now independently reviewed after phantom-output
+correction;10targetedtests pass, with exact rational incident sidecars. Metadata
+source release is under review at full_sources/metadata-01/gate-v3.json; no HTTP
+acquisition or claim yet.72source slots retain85,488value/price cells as unavailable.

@@ -314,3 +314,63 @@ is now satisfied for one launch of the exact registered109-cell resource-only
 pilot, subject to the launcher's live admission/resource checks. A later compact
 evidence commit must retain these bound bytes. This is not financial-run approval,
 a resource feasibility conclusion, or empirical replication completion.
+
+BTC weekly correction verified (September24): the full-stream join now checks each
+spent index against every observed creator's declared output count before any
+weekly graph is yielded. This closes the reproduced phantom-output defect in both
+stream orders. Independent targeted verification passed all10 BTC-weekly tests,
+including observed creator amount disagreement, missing prevouts, cross-week double
+spends and incomplete/empty coverage. No remaining defect was identified within
+the normalized-input aggregator's reviewed scope. The earlier chain-order,
+prevout-source, decoder completeness and exact-sidecar persistence requirements
+remain admission gates; synthetic aggregation success does not admit BTC data.
+
+Full-history metadata release review (September24; pending corrections): the
+proposed gate retains the pilot's exact mechanism/family object,17 prior attempts
+and cumulative ceiling51. The source reallocation is arithmetically consistent:
+1 aggregate metadata claim+15 missing asset/year body claims+2 asset-price claims
+=18 source claims. Reusing existing ETH2022–2024 bodies does not reset exposure.
+Independent enumeration confirms72 distinct catalogue/footer slots and85,488
+required asset/date/field cells. All transaction-value/price cells remain
+unavailable under this metadata stage; this is not financial admission. Current
+registered source/input hashes match their files. The1GiB metadata cap is separate
+from the unchanged6GiB neural pilot; inability to start the latter does not itself
+justify reducing its architecture or source scope.
+
+Corrections required before metadata release:
+
+- `full_sources/metadata-01/launch.py:104–107` uses one process as guard monitor and
+  sole post-death observer. Killing that monitor leaves lease-based child shutdown
+  but no surviving actor to retain the72-cell terminal ledger and close the claim.
+  Use separate durable ownership/supervision and exact monitor identity, with
+  idempotent observer-only recovery and an interrupted-artifact hash index.
+- `source_footers.py:51` parses a generated catalogue without checking the
+  catalogue hash already retained by the worker. Bind and verify the exact parsed
+  catalogue bytes before selecting or requesting any footer object.
+- The worker's RuntimeError shutdown signal can be caught as an ordinary source
+  failure inside capture_catalogue/capture_footer, allowing later requests to
+  start. Shutdown must escape those request-error catches or be checked before
+  every subsequent acquisition.
+- The charter's no-transaction-values wording needs qualification. An independent
+  synthetic Parquet fixture demonstrates that footer bytes alone contain value
+  statistics (min17,max42 in the fixture), without any data page. No data-page or
+  transaction-row decoding is an accurate bound; incidental footer statistics
+  must be recorded as metadata exposure and must not enter fitting or selection.
+
+Range/ETag checks, deterministic first/largest/last object selection, finite
+request/byte maxima, no retries and retention of failed returned bodies are
+present. Real endpoint behavior, current public inventory, schema compatibility,
+raw/prevout completeness and source vintage were not tested. No empirical HTTP
+request, transaction payload read, registration edit or acquisition occurred in
+this review, and no metadata release approval is recorded at this checkpoint.
+
+Metadata controller revision review (September24; release still blocked): separate
+owner/monitor/worker/observer files, escaping shutdown exceptions, exact parsed
+catalogue-byte hashing and the incidental-footer-statistics qualification address
+the original design defects. A new namespace mismatch was found in the copied
+controller: metadata `launch.py:15` and `monitor.py:21` still name `pilot-01-guard`,
+while `monitor.py:16` reads `pilot-01-supervisor`; the metadata worker correctly
+expects `source-metadata-01-guard`. This prevents startup and risks consuming or
+interfering with the separate pilot identity. All controller paths must use the
+metadata namespace; verify cross-file agreement and disjointness from pilot before
+freezing a successor to the preserved gate-v2. No metadata launch is approved.
