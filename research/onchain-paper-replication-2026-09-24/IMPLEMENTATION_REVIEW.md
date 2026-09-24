@@ -374,3 +374,36 @@ expects `source-metadata-01-guard`. This prevents startup and risks consuming or
 interfering with the separate pilot identity. All controller paths must use the
 metadata namespace; verify cross-file agreement and disjointness from pilot before
 freezing a successor to the preserved gate-v2. No metadata launch is approved.
+
+Metadata release correction approval (September24): no remaining critical blocker
+was found in the revised bounded stage. All owner/monitor/worker paths now agree
+on `source-metadata-01-guard` and `source-metadata-01-supervisor`, disjoint from the
+neural pilot. The reviewed active gate-v3 SHA256 is
+`7f528bfd1af7c43abcb068df46fd5222b525064caa20fd965be9d6b1aa8f7318`.
+All10 source hashes,25 input hashes, charter/runtime hashes and the environment
+inventory matched independently. Original gate/controller drafts remain retained.
+The original allocation proposal points to its original draft; this review applies
+the same1+15+2=18 source allocation to active gate-v3, without changing the exact
+pilot family,17 prior attempts,51 cumulative ceiling, fit count or retry allowance.
+
+The recorded source suite has20 passes, zero failures/errors/skips; XML SHA256:
+`ae8d7af74550d0dfb1826ee746c42939745cb45ac8387943957344669aea274e`.
+An additional independent synthetic observer exercise verifies that wrong ownership
+causes no stop, expired monitoring targets only the recorded synthetic unit,
+reconciliation retains all72 cells (one preserved completed cell and71 unavailable
+cells), and repeated observation preserves identical terminal bytes. The process
+stop was mocked; no real unit or empirical acquisition was signaled. Shared guard
+parent-death/lease behavior retains its prior separate synthetic-process evidence.
+Exact catalogue-byte binding, escaping shutdown exceptions, partial artifact hashes,
+observer recovery and incidental-footer-statistics qualification close the prior
+review findings.
+
+Approval is limited to one execution of this72-slot unsigned catalogue/footer
+metadata stage after committing the reviewed gate/source/charter and retaining
+these bytes through live admission. The1GiB cap,768MiB high watermark,zero swap,
+two CPUs,3GiB reserve,20GiB disk floor and30-minute limit remain mandatory.
+No transaction data pages, prices, fits, retries, provider contact or paid capacity
+are admitted by this review. All85,488 transaction-value/price requirement cells
+remain unavailable pending their own source releases. The unchanged6GiB pilot
+still needs its own host reserve. No HTTP request or empirical claim was made by
+the reviewer.

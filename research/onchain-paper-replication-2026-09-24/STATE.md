@@ -95,3 +95,11 @@ BTC exact weekly assembly now independently reviewed after phantom-output
 correction;10targetedtests pass, with exact rational incident sidecars. Metadata
 source release is under review at full_sources/metadata-01/gate-v3.json; no HTTP
 acquisition or claim yet.72source slots retain85,488value/price cells as unavailable.
+
+Full-source metadata gate-v3 independently approved (10sources25inputs72slots),
+committed source d7ac2b5d4bc10e1adbd944f62342f0534ecb9d76; admissionready.
+Source allocation remains18claims:1metadata+15missingasset/year bodies+2prices.
+No retries/newfits/secondlane allowed. Metadata startup requires4GiB available
+(1GiBcap+3GiBreserve), separate from unchanged9GiB neural-pilot prerequisite.
+Next safe action: launch full_sources/metadata-01/launch.py once after release
+evidence commit, record ownership/job state, retain all failed/unavailable cells.
