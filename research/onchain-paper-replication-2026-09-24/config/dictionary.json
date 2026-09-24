@@ -1,0 +1,19 @@
+{
+  "capacity_action": "raise explicit capacity error, no truncation",
+  "hop_depth": 1,
+  "insufficient_samples": "explicit unavailable if fewer than dictionary size",
+  "linkage": "average pairwise distance",
+  "maximum_neighborhood_nodes": 10000,
+  "neighborhood": "weak one-hop induced subgraph retaining directed edges and center",
+  "partition": "seeded permutation chunks; min(32,chunk size) medoids each; recursively cluster medoids to 32",
+  "partition_size": 512,
+  "partition_threshold": 2048,
+  "representative": "medoid minimizing within-cluster sum distance; ties sample index",
+  "rng": "numpy PCG64",
+  "sample_count": 512,
+  "sampling": "without replacement over (training week,center); equal initial mass per candidate; after selection halve weights of remaining centers inside sampled neighborhood in that week",
+  "schema_version": 1,
+  "seed_scope": "one dictionary per asset/fold/seed/variant",
+  "size": 32,
+  "training_scope": "only graph snapshots fully available inside training interval"
+}

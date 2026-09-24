@@ -1,0 +1,93 @@
+{
+  "boundaries": "no pre-2016 graph required: training warmup excluded. Acquire prices through 2025-01-01 exclusive; weekly coverage starts first complete Monday",
+  "causal_audit": "identical clock assumptions; reuse predictions, no second fits; historical source vintage unverified",
+  "decision": "d+1 day at 00:00 UTC after bar close, assumed availability",
+  "evaluation_mask": "intersection of admitted required source/label dates, frozen before fits; failed model cannot shrink mask",
+  "field": "unadjusted daily Close",
+  "fold_membership": "test by decision time; train label_end strictly before test_start; test requires label_end <= test_end; explicit end-boundary exclusion",
+  "folds": [
+    {
+      "id": "2018",
+      "test_end": "2019-01-01T00:00:00Z",
+      "test_start": "2018-01-01T00:00:00Z",
+      "train_end": "2018-01-01T00:00:00Z",
+      "train_start": "2016-01-01T00:00:00Z",
+      "validation_end": null,
+      "validation_start": null
+    },
+    {
+      "id": "2019",
+      "test_end": "2020-01-01T00:00:00Z",
+      "test_start": "2019-01-01T00:00:00Z",
+      "train_end": "2019-01-01T00:00:00Z",
+      "train_start": "2017-01-01T00:00:00Z",
+      "validation_end": null,
+      "validation_start": null
+    },
+    {
+      "id": "2020",
+      "test_end": "2021-01-01T00:00:00Z",
+      "test_start": "2020-01-01T00:00:00Z",
+      "train_end": "2020-01-01T00:00:00Z",
+      "train_start": "2018-01-01T00:00:00Z",
+      "validation_end": null,
+      "validation_start": null
+    },
+    {
+      "id": "2021",
+      "test_end": "2022-01-01T00:00:00Z",
+      "test_start": "2021-01-01T00:00:00Z",
+      "train_end": "2021-01-01T00:00:00Z",
+      "train_start": "2019-01-01T00:00:00Z",
+      "validation_end": null,
+      "validation_start": null
+    },
+    {
+      "id": "2022",
+      "test_end": "2023-01-01T00:00:00Z",
+      "test_start": "2022-01-01T00:00:00Z",
+      "train_end": "2022-01-01T00:00:00Z",
+      "train_start": "2020-01-01T00:00:00Z",
+      "validation_end": null,
+      "validation_start": null
+    },
+    {
+      "id": "2023",
+      "test_end": "2024-01-01T00:00:00Z",
+      "test_start": "2023-01-01T00:00:00Z",
+      "train_end": "2023-01-01T00:00:00Z",
+      "train_start": "2021-01-01T00:00:00Z",
+      "validation_end": null,
+      "validation_start": null
+    },
+    {
+      "id": "2024",
+      "test_end": "2025-01-01T00:00:00Z",
+      "test_start": "2024-01-01T00:00:00Z",
+      "train_end": "2024-01-01T00:00:00Z",
+      "train_start": "2022-01-01T00:00:00Z",
+      "validation_end": null,
+      "validation_start": null
+    }
+  ],
+  "graph_available": "week end + 1 day",
+  "graph_join": "last fully closed complete week available at each sequence timestamp; no fill across a missing expected week",
+  "horizon_days": 1,
+  "initial_fold": "2024",
+  "instruments": {
+    "BTC": "BTC-USD",
+    "ETH": "ETH-USD"
+  },
+  "label": "Close[d+1] > Close[d]; ties class 0",
+  "lanes": [
+    "paper_reconstruction"
+  ],
+  "lookback_days": 28,
+  "price_available": "bar end",
+  "price_bar": "[d,d+1 day)",
+  "provider": "Yahoo Finance",
+  "regression_target": "Close[d+1] USD",
+  "schema_version": 1,
+  "timezone": "UTC",
+  "warmup": "exclude initial training examples lacking 28 prices and complete available graph per timestamp; retain reasons; test context may use training dates"
+}

@@ -1,0 +1,46 @@
+{
+  "assets": [
+    "ETH",
+    "BTC"
+  ],
+  "availability": "week end + 1 day; retrospective assumption, historical publication unverified",
+  "btc_projection": {
+    "change": "retain",
+    "coinbase": "exclude and count",
+    "fees": "sum(inputs)-sum(outputs), do not allocate as transferred value",
+    "input_merge": "sum repeated addresses before projection",
+    "missing_prevout": "reject as unavailable, no zero fill",
+    "non_address_scripts": "exclude entire transaction if any input/output cannot map to one address; count",
+    "rule": "for each resolved address input amount a_i and output b_j: rational a_i*b_j/sum(inputs)"
+  },
+  "direction": "directed",
+  "edge_features": [
+    "log1p(count)",
+    "log1p(native_volume)"
+  ],
+  "edge_order": "source then destination",
+  "eth_filters": {
+    "duplicates": "reject duplicate transaction identity before filtering",
+    "receipt_status": 1,
+    "recipient": "valid address required; null/None excluded",
+    "value": "strictly positive"
+  },
+  "event_universe": "confirmed native top-level transfers only; no token logs/internal calls",
+  "node_features": [
+    "log1p(in_count)",
+    "log1p(out_count)",
+    "log1p(in_native_volume)",
+    "log1p(out_native_volume)"
+  ],
+  "node_order": "lexicographic address bytes",
+  "parallel_edges": "aggregate ordered pair: count and sum native value",
+  "partial_weeks": "exclude with explicit missing-source intervals; never fabricate partial graphs",
+  "raw_units": {
+    "BTC": "integer satoshis; rational projection; /1e8 for features",
+    "ETH": "stored float64 wei / 1e18; approximate ETH"
+  },
+  "schema_version": 1,
+  "self_loops": "retain observed self transfers; GAT adds one self-neighbor",
+  "timezone": "UTC",
+  "week_anchor": "MON"
+}

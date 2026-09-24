@@ -1,0 +1,144 @@
+{
+  "common_temporal": "same attention LSTM and training settings as full model",
+  "funds": {
+    "filter": "induced graph on explicitly admitted address cohort only; independent assumption pending actual source",
+    "never_synthesize_addresses": true,
+    "status": "blocked: exact 65-entity address mapping and historical vintage not recovered"
+  },
+  "graph": {
+    "gin": {
+      "activation": "relu",
+      "aggregation": "sum neighbors",
+      "epsilon": "trainable initialized 0",
+      "input_width": 4,
+      "layers": 2,
+      "mlp": "32 relu 32",
+      "pooling": "mean",
+      "self_policy": "(1+epsilon)*self + sum incoming non-self neighbors",
+      "training": "joint with common attention LSTM",
+      "width": 32
+    },
+    "graphwave": {
+      "approximation": "exact sparse matrix exponential actions, capacity failure before unbounded dense materialization",
+      "evaluation_points": [
+        0.0,
+        0.5,
+        1.0,
+        1.5,
+        2.0
+      ],
+      "heat": "matrix exponential on bounded fixtures, sparse approximation must pass oracle",
+      "laplacian": "combinatorial weak undirected",
+      "output_width": 30,
+      "readout": "real and imaginary empirical characteristic function over heat wavelet column for each scale/time, mean over nodes",
+      "scales": [
+        0.1,
+        1.0,
+        10.0
+      ]
+    },
+    "node2vec": {
+      "batch_size": 256,
+      "context": 5,
+      "dimensions": 32,
+      "embedding_alignment": "training-only anchor basis; test only aligned to immediately preceding available snapshot",
+      "epochs": 5,
+      "initialization": "uniform(-0.5/32,0.5/32)",
+      "learning_rate": 0.025,
+      "learning_rate_schedule": "constant",
+      "loss": "skipgram negative-sampling sum positive and five negative logsigmoid terms, mean over positive pairs",
+      "negative_distribution": "degree^0.75 normalized",
+      "negative_samples": 5,
+      "optimizer": "SGD",
+      "p": 1.0,
+      "q": 1.0,
+      "readout": "input embeddings",
+      "transition": "unweighted weak undirected; isolated walk stops",
+      "walk_length": 40,
+      "walks_per_node": 10,
+      "window": "fixed symmetric distance<=5; no dynamic window"
+    },
+    "watchyourstep": {
+      "attention": "softmax learned context-length weights",
+      "attention_l2": 0.01,
+      "batching": "exact blockwise pair objective, no negative subsampling",
+      "dimensions": 32,
+      "epochs": 100,
+      "initialization": "normal std0.1 for embeddings; zeros for attention logits",
+      "learning_rate": 0.001,
+      "loss_reduction": "sum",
+      "objective": "Eq12 arXiv:1710.09599v2: beta*L2(q)^2 + sum(-E[D]*logsigmoid(LR^T) - indicator(A=0)*logsigmoid(-LR^T)); E[D]=10*I*sum softmax(q)_k*T^k",
+      "optimizer": "Adam",
+      "representation": "concatenate L,R each width16",
+      "transition": "unweighted directed outgoing, isolates self-absorbing",
+      "walk_horizon": 10,
+      "walks_per_node": 10
+    }
+  },
+  "graph_alignment": "node2vec/WatchYourStep: align successive embeddings with orthogonal Procrustes on common addresses only, no future graph; first orientation fixed by seed. No anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.",
+  "metrics": {
+    "aggregation": "annual metrics averaged equally across seven folds; seed mean/range separately; pooled date results also retained",
+    "log_loss_epsilon": 1e-15,
+    "primary": "binary_up",
+    "regression": [
+      "MAE",
+      "MSE",
+      "RMSE",
+      "MAPE_percent"
+    ],
+    "secondary": [
+      "macro",
+      "weighted",
+      "balanced_accuracy",
+      "brier",
+      "log_loss"
+    ],
+    "zero_division": "0 for undefined precision/recall/F1; MAPE undefined if true price <=0"
+  },
+  "price": {
+    "gru": {
+      "depth": 1,
+      "dropout": 0.0,
+      "readout": "last valid state",
+      "width": 64
+    },
+    "hlstm": {
+      "chunk_days": 7,
+      "chunks": 4,
+      "dropout": 0.0,
+      "implementation": "independent temporal adaptation of Hou et al. 2020 Fig2/Eqs3-4",
+      "lower_depth": 1,
+      "lower_lstm_width": 128,
+      "readout": "shared lower final state per chunk, upper final state to task head",
+      "training": "common frozen training.json, not Hou cyberattack training settings",
+      "upper_depth": 1,
+      "upper_lstm_width": 128
+    },
+    "lstm": {
+      "depth": 1,
+      "dropout": 0.0,
+      "readout": "last valid state",
+      "width": 64
+    },
+    "svm": {
+      "cache_size_MiB": 200,
+      "classification": "SVC C=1 kernel=rbf gamma=scale class_weight=None probability=False tol=0.001 max_iter=-1; sigmoid(decision_function) is uncalibrated diagnostic score, threshold 0",
+      "implementation": "scikit-learn 1.7.2",
+      "input": "flattened 28 standardized closes",
+      "regression": "SVR C=1 epsilon=0.1 kernel=rbf gamma=scale tol=0.001 max_iter=-1"
+    }
+  },
+  "schema_version": 1,
+  "uncertainty": {
+    "block_days": 14,
+    "method": "paired moving-block bootstrap within year",
+    "missing_daily_runs": "unavailable interval until pre-result gap-aware amendment",
+    "replicates": 2000,
+    "seed": 20260924
+  },
+  "whales": {
+    "filter": "drop every edge incident to whale, rebuild derived features",
+    "threshold": "strictly greater than 0.9*max wallet volume within same week",
+    "volume": "per-week incoming+outgoing native value; self transfer counted twice"
+  }
+}
