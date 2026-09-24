@@ -2499,3 +2499,89 @@ hash, and the complete517416960-byte archive hash. Buffers were bounded at1MiB;
 no extraction, transaction decoding, source-file mutation or extra download
 was performed. All149 members /517291351 raw bytes passed. This also preserves
 the distinction between failed01 transfer status and its intact local tar.
+
+
+### Independent successor02 bulk-controller closure: refused before release
+
+Bulk-controller02 is terminal failed, with zero completed phases and all13
+failed/pending phases retained. Controller failed SHA256
+1b90d4f6b881dbae270c97c190b33a767934cd37fd8beec96be40cf51a650afb
+and bulk01 failed SHA256
+833f9ad56b5ffa549b626cdd18f6f40ce7a555fefd22e42900064169e885303b
+match the retained refusal. Guard final SHA256
+31432c103abc45b178d4d99ee7b4a5598b2c45bb04e9d5928efebfbbfc286b7b
+records14.566214898 seconds and8495104-byte sampled peak. Host available
+memory3481640960 bytes was8019968 bytes below the3489660928-byte startup
+threshold during cgroup setup; the3-GiB runtime reserve was not relaxed.
+All memory-event counters were zero. The child wrapper reports exit125,
+'signal before release', and workload_pid null. No release.json, worker
+intent, batch directory or later bulk-phase directory exists. Inspection of
+the wrapper confirms workload creation occurs only after release. Therefore
+this attempt performed zero bulk worker transfers or remote commands.
+
+The monitor/observed wrapper PID and owned cgroup are absent, the boot identity
+matches, and guard cleanup is verified. The controller intent binds the exact
+released contract and BULK_RELEASE hash
+7dee7f269b53d0644ace011a840bbf09d55a4e883b50e29767616da4165d86d0.
+The independently verified149-file pilot completion remains unchanged at
+2e28731a334d6095eaec137033385b9455737bd3250efa0f40cd4ea9deade6d8.
+The remaining58934 files /194 bundles have not gained verified preservation
+from this bulk attempt. The failed controller/phase identities are closed and
+must not be relaunched. A prospective reconciled successor needs separately
+reviewed identity/resource admission and stable host headroom; the proposed
+at-least4-GiB available-memory admission margin would leave the existing
+3-GiB runtime floor intact, but this review does not release a successor.
+No tests, network checks, large payload reads or process-control actions were
+performed for this closure.
+
+
+### Independent metadata import refactor and checkpoint08 review
+
+The example_binding function moved from evaluation.py to dataset.py is
+byte-for-byte identical when compared with the committed evaluator function.
+The evaluator imports/re-exports the same helper, preserving existing callers;
+population_assembly now imports its helper through dataset and its remaining
+module-level job_payload dependency contains no eager neural import. No binding
+field, canonical hash input, clock, membership or scaler convention changed.
+The fresh-subprocess regression exercises real synthetic metadata assembly
+and checks torch absence, rather than only checking a superficial import.
+No material static correctness issue was found. Current test execution belongs
+to the root agent and was not duplicated by this review.
+
+Proposed checkpoint08 SHA256
+9d69bb85e717f187940104d1ed0edd043920247822338c3020268996e6f090b2
+retains all18 statuses and four conservative completion flags and correctly
+binds its prior checkpoint07 hash. Every evidence path exists. Its149-file
+verified pilot, zero bulk transfers before startup refusal,58934 remaining
+files /103007197692 bytes and no active transfer agree with the independent
+terminal review. It does not imply full backup or empirical completion.
+The prior preparation01 verification remains valid for its prior53-test source
+snapshot; dataset.py, population_assembly.py and their changed test currently
+differ from that snapshot. Preserve that evidence and add a separately bound
+refactor verification receipt when the in-progress tests finish before claiming
+latest-source test coverage. The terminal storage dispositions are cleared;
+latest-refactor test completion was not yet inspected.
+
+
+### Independent final lightweight runtime/checkpoint08 receipt closeout
+
+The new population-runtime-01.json receipt SHA256
+513c4686a446d1ed2a04eafca83297132f42a615a2ff6ff2be65d24fcc842c02
+matches all ten current source/test hashes. Its XML SHA256
+716b5a84fd56a6b2c9ebce801c47022e22b1d4847d5e7bc1e6b7bfdabbf5eaed
+was independently checked and records46 tests, zero failures/errors/skips.
+The receipt distinguishes reported command duration72.17 seconds from the
+XML suite duration69.709 seconds; six old temporary-directory cleanup warnings
+are disclosed and no cleanup mutation is claimed. This is a separately bound
+focused regression, not a new full-suite or financial result.
+
+Adopted checkpoint08 SHA256
+92606f4a7f590537b7da2162a1bd620099a7ad110b959ebcc9d7bd0708dad462
+is exactly referenced by review/completion.json; its criteria and flags equal
+the pointer's copies. All18 rendered acceptance rows match the matrix.
+Statuses and all four completion flags remain unchanged from07. STATE/RESULT
+distinguish the prior53-test snapshot, current46-test runtime increment,
+verified149-file backup pilot and terminal bulk startup refusal. No remaining
+receipt/pointer inconsistency was found. The increment is cleared for the
+root-owned commit/push; no tests, network requests or job restarts were
+performed by this closeout.

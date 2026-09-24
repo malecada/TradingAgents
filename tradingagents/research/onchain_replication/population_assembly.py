@@ -10,8 +10,7 @@ import json
 from pathlib import Path
 
 from .calendar import expected_week, stamp
-from .dataset import CalendarGraph, build_examples_from_metadata, fit_scaler
-from .evaluation import example_binding
+from .dataset import CalendarGraph, build_examples_from_metadata, fit_scaler, example_binding
 from .job_payload import population_record
 from .provenance import canonical_bytes, digest, require_hash, utc, durable_mkdir, sync_directory
 

@@ -23,9 +23,18 @@ The supplied Storage Box has a verified compact checkpoint with16,110 recovered
 Git blobs. The retained-ETH byte-preservation continuation02 pilot completed149
 files/517,291,351raw bytes in518.699guard seconds, with member-level download
 verification and clean cleanup. The failed first backup attempt remains retained.
-Full103.5GB raw preservation is still incomplete and separate from empirical
-source admission. These byte-copy jobs do not add financial trials or reopen
+Bulk continuation stopped before worker release when startup memory headroom
+fell below its threshold; no transfer process remains active. Exactly149files
+are externally verified;58934files remain. Stable host memory headroom is needed
+for a new reconciled continuation. Full103.5GB raw preservation remains incomplete
+and separate from empirical source admission. These byte-copy jobs do not add financial trials or reopen
 historical claims.
+
+A subsequent metadata-runtime separation preserves the exact binding calculation
+and avoids loading Torch during population preparation. It passed46focused
+regressions; six old pytest temporary-directory cleanup warnings are retained in
+`full_sources/population-runtime-01.json`. This is separate from the prior53-test
+snapshot and does not assert a new full-suite result.
 
 ## Resource and coverage limits
 
@@ -90,4 +99,4 @@ The source audit records Algorithm1/Eq2 ambiguities and inconsistent printed met
 
 Every mapped row retains all seven folds and five seeds. There is no survivor-only mean, signed accuracy difference, uncertainty interval or recovered baseline claim because the required real predictions do not exist. The full finite ledger is retained in `full_sources/table-status-pre-fit-v2.json`.
 
-The criterion-by-criterion checkpoint is `review/completion-interim-07.json`; independent findings are in `IMPLEMENTATION_REVIEW.md`. This is an ongoing checkpoint, not a declaration that all 13 tasks or C01–C18 are complete.
+The criterion-by-criterion checkpoint is `review/completion-interim-08.json`; independent findings are in `IMPLEMENTATION_REVIEW.md`. This is an ongoing checkpoint, not a declaration that all 13 tasks or C01–C18 are complete.

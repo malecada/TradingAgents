@@ -74,7 +74,7 @@ in the authorized scope. The historical negative screen is unchanged.
   approximately6.39GB/2.50GB. This is an arithmetic projection, not measured
   full-MCM/neural capacity; largest-week pilot ended before a durable graph result. See reviewed
   review/capacity-closed-partial-03.json. Full-body acquisition is not released.
-- C01–C18 interim matrix exists in review/completion-interim-07.json; independent
+- C01–C18 interim matrix exists in review/completion-interim-08.json; independent
   review confirmed all18criteria and conservativeflags. Earlier expanded source
   passed387tests/1CUDA skip in the earlier clean locked offline environment with
   unchanged installed distributions; two saved predictionsreplayedexactly. Guard
@@ -121,14 +121,16 @@ in the authorized scope. The historical negative screen is unchanged.
   sampled bytes, child0 and cleanup verified. All downloaded members/markers
   matched. Independent review also checked all149 original member hashes and
   the current remote archive hash. `BULK_RELEASE.json` releases one finite
-  controller for194remaining bundles/58934files. **The all-bulk controller is
-  ACTIVE from commit `8eba73c2`**; its first phase is `bulk01`. Controller
-  reservation: `storage/raw-preservation-2026-09-24-02/bulk-controller/intent.json`;
-  phase receipts: `bulk01/guard/` through `bulk13/guard/` as they are created.
-  The finite controller stops on first failure, enforces8h per phase and48h
-  cumulatively, and never retries a terminal identity. Point duration estimate
-  28.69h (43.04h with1.5margin), not a completion guarantee. Full raw preservation
-  remains incomplete until every batch and final controller receipt verify. Never relaunch01.
+  controller for194remaining bundles/58934files, but **that controller is now
+  terminal FAILED**. `bulk01` stopped during cgroup setup after14.566s: host
+  available3481640960bytes fell below the3489660928-byte startup threshold.
+  No worker release or bulk upload occurred; sampled peak8495104bytes, no memory
+  events, cleanup verified. All13 bulk phases remain pending/failed in
+  `bulk-controller/failed.json`. The earlier active record is superseded.
+  No transfer job is active. Never relaunch either terminal controller/phase.
+  Exactly149files/517291351raw bytes have verified external preservation;
+  58934files/103007197692bytes remain. Point transfer estimate28.69h is conditional
+  on a stable host, not an active job or completion guarantee.
 - **Population integration implemented:** `full_sources/population-preparation-01/`
   binds the metadata-only calendar producer, same-claim population publication,
   and exact input/output binding preflight. Fifty-three focused tests passed,
@@ -137,11 +139,23 @@ in the authorized scope. The historical negative screen is unchanged.
   Prior387-test evidence stays tied to its older snapshot; it is not a new full
   suite run for this increment. Independent review is complete.
 
-Next safe action: inspect the existing all-bulk controller and latest phase
-receipts; never launch a duplicate or rerun a terminal phase. Keep this host awake
-and connected for transfer. Avoid concurrent heavy tests on this constrained host.
-After terminal completion/failure, independently reconcile every completed and
-partial bundle before any new continuation or full-raw-backup claim.
+- **Metadata runtime separation verified:** the unchanged example-binding calculation
+  now resides in the dataset layer and remains available through the evaluator.
+  Fresh-process synthetic population assembly avoids importing Torch. Forty-six
+  focused regressions passed in72.17s; six old pytest temporary-directory cleanup
+  warnings are recorded in `full_sources/population-runtime-01.json`. This is a
+  separate source-bound increment; the earlier53-test evidence remains intact.
+  Independent static review found no issue.
+
+Next safe action: obtain stable host memory headroom before any new backup
+successor: at least4GiB MemAvailable is the operational target, above the existing
+3.25GiB admission threshold; retain the3GiB runtime floor. Close unnecessary apps
+or use a host with that available capacity. Then prepare/review a new continuation
+identity that reuses the verified149-file pilot and reconciles both failed
+controllers; do not upload that verified pilot again or rerun either identity.
+Further synthetic/engineering work must be scheduled without competing with a
+memory-constrained transfer. The53-test population integration is complete for
+its stated component scope; actual source-to-graph preparation and fits remain.
 A feasible compute/local-scratch allocation is still needed to finish
 raw-to-graph/population integration and prepare/review its exact source, phase,
 reuse, ownership and cumulative admission contract before execution. All 1,420

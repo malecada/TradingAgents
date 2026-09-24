@@ -10,6 +10,7 @@ import torch
 from scipy.special import expit
 from ..lifecycle import _immutable,_lock,ResearchRun
 from .provenance import canonical_bytes,digest,file_hash,durable_mkdir,sync_directory
+from .dataset import example_binding
 from .contracts import Prediction
 from .model_registry import build_model,PRICE_ARMS,VECTOR_WIDTHS
 from .training import fit_cell,predict_cell,_reserve
@@ -175,12 +176,6 @@ def validate_cell_admission(run,cell_id,provenance):
         run._active();run._check_source()
         if cell_id not in run.admission.experiment['cells']:raise ValueError('unregistered evaluation cell')
         if provenance['cell_id']!=cell_id or provenance['source_commit']!=run.admission.source:raise ValueError('evaluation source/cell mismatch')
-
-
-def example_binding(examples,scaler):
-    return {'train_hash':examples.train_hash,'test_mask_hash':examples.test_mask_hash,
-            'test_examples_hash':digest(canonical_bytes([asdict(x) for x in examples.test])),
-            'source_hashes':list(examples.source_hashes),'fold_hash':examples.fold_hash,'scaler':asdict(scaler)}
 
 
 def validate_manifest(run,input_name,output_name,expected):

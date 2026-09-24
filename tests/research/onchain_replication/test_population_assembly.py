@@ -41,6 +41,26 @@ def assemble(parts):
     return assemble_population(refs,prices,fold,config,weeks,admission)
 
 
+def test_metadata_preparation_does_not_load_neural_runtime():
+    """An eager evaluator import must not consume training memory during preparation."""
+    import subprocess
+    import sys
+    code = '''
+import sys
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from tests.research.onchain_replication.test_population_assembly import setup, assemble
+with TemporaryDirectory() as directory:
+    result = assemble(setup(Path(directory)))
+    assert result['population']['examples']['train']
+    assert result['provenance']['array_bytes_reverified'] is False
+assert 'torch' not in sys.modules, 'metadata preparation loaded the neural runtime'
+'''
+    result = subprocess.run([sys.executable, '-B', '-c', code], capture_output=True,
+                            text=True, timeout=60)
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
 def test_metadata_assembly_matches_full_graph_population_and_roundtrips(tmp_path,monkeypatch):
     parts=setup(tmp_path);graphs,prices,fold,config,*_=parts
     expected=build_examples(graphs,prices,fold,config)

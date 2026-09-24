@@ -111,3 +111,9 @@ def fit_scaler(examples,prices,fold):
     mean=float(values.mean());std=float(values.std(ddof=0))
     if not np.isfinite(mean) or not np.isfinite(std) or std<=0:raise ValueError('invalid scaler population')
     return Scaler(mean,std,dates,examples.train_hash)
+
+
+def example_binding(examples,scaler):
+    return {'train_hash':examples.train_hash,'test_mask_hash':examples.test_mask_hash,
+            'test_examples_hash':digest(canonical_bytes([asdict(x) for x in examples.test])),
+            'source_hashes':list(examples.source_hashes),'fold_hash':examples.fold_hash,'scaler':asdict(scaler)}
