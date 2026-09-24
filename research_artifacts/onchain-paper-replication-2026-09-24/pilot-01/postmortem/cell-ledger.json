@@ -1,0 +1,684 @@
+[
+  {
+    "elapsed_seconds": 0.00020421500084921718,
+    "id": "decode_graph-2022-01-03",
+    "peak_sampled_cgroup_bytes": 642502656,
+    "peak_worker_rss_bytes": 593616896,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2022-01-03",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2022-01-03",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2022-01-03/decode_graph",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "id": "matching-2022-01-03",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2022-01-03/neighborhoods",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "id": "neural_checkpoint-2022-01-03",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2022-01-03/decode_graph",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "id": "dictionary-2022-01-03",
+    "phase": "dictionary",
+    "reason": "unavailable prerequisite: 2022-01-03/neighborhoods",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "id": "mcm-2022-01-03",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2022-01-03"
+  },
+  {
+    "elapsed_seconds": 0.00025568799901520833,
+    "id": "decode_graph-2022-06-13",
+    "peak_sampled_cgroup_bytes": 595013632,
+    "peak_worker_rss_bytes": 593514496,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2022-06-13",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2022-06-13",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2022-06-13/decode_graph",
+    "status": "unavailable",
+    "week": "2022-06-13"
+  },
+  {
+    "id": "matching-2022-06-13",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2022-06-13/neighborhoods",
+    "status": "unavailable",
+    "week": "2022-06-13"
+  },
+  {
+    "id": "neural_checkpoint-2022-06-13",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2022-06-13/decode_graph",
+    "status": "unavailable",
+    "week": "2022-06-13"
+  },
+  {
+    "id": "mcm-2022-06-13",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2022-06-13"
+  },
+  {
+    "elapsed_seconds": 0.0002144820027751848,
+    "id": "decode_graph-2022-07-25",
+    "peak_sampled_cgroup_bytes": 646610944,
+    "peak_worker_rss_bytes": 593514496,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2022-07-25",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2022-07-25",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2022-07-25/decode_graph",
+    "status": "unavailable",
+    "week": "2022-07-25"
+  },
+  {
+    "id": "matching-2022-07-25",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2022-07-25/neighborhoods",
+    "status": "unavailable",
+    "week": "2022-07-25"
+  },
+  {
+    "id": "neural_checkpoint-2022-07-25",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2022-07-25/decode_graph",
+    "status": "unavailable",
+    "week": "2022-07-25"
+  },
+  {
+    "id": "mcm-2022-07-25",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2022-07-25"
+  },
+  {
+    "elapsed_seconds": 0.0001843110003392212,
+    "id": "decode_graph-2022-11-07",
+    "peak_sampled_cgroup_bytes": 606617600,
+    "peak_worker_rss_bytes": 593375232,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2022-11-07",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2022-11-07",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2022-11-07/decode_graph",
+    "status": "unavailable",
+    "week": "2022-11-07"
+  },
+  {
+    "id": "matching-2022-11-07",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2022-11-07/neighborhoods",
+    "status": "unavailable",
+    "week": "2022-11-07"
+  },
+  {
+    "id": "neural_checkpoint-2022-11-07",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2022-11-07/decode_graph",
+    "status": "unavailable",
+    "week": "2022-11-07"
+  },
+  {
+    "id": "mcm-2022-11-07",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2022-11-07"
+  },
+  {
+    "elapsed_seconds": 0.0001961840025614947,
+    "id": "decode_graph-2023-06-05",
+    "peak_sampled_cgroup_bytes": 647200768,
+    "peak_worker_rss_bytes": 593612800,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2023-06-05",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2023-06-05",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2023-06-05/decode_graph",
+    "status": "unavailable",
+    "week": "2023-06-05"
+  },
+  {
+    "id": "matching-2023-06-05",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2023-06-05/neighborhoods",
+    "status": "unavailable",
+    "week": "2023-06-05"
+  },
+  {
+    "id": "neural_checkpoint-2023-06-05",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2023-06-05/decode_graph",
+    "status": "unavailable",
+    "week": "2023-06-05"
+  },
+  {
+    "id": "mcm-2023-06-05",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2023-06-05"
+  },
+  {
+    "elapsed_seconds": 0.0002771989966277033,
+    "id": "decode_graph-2024-01-01",
+    "peak_sampled_cgroup_bytes": 636194816,
+    "peak_worker_rss_bytes": 593477632,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2024-01-01",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2024-01-01",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2024-01-01/decode_graph",
+    "status": "unavailable",
+    "week": "2024-01-01"
+  },
+  {
+    "id": "matching-2024-01-01",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2024-01-01/neighborhoods",
+    "status": "unavailable",
+    "week": "2024-01-01"
+  },
+  {
+    "id": "neural_checkpoint-2024-01-01",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2024-01-01/decode_graph",
+    "status": "unavailable",
+    "week": "2024-01-01"
+  },
+  {
+    "id": "mcm-2024-01-01",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2024-01-01"
+  },
+  {
+    "elapsed_seconds": 0.0002146219994756393,
+    "id": "decode_graph-2024-03-11",
+    "peak_sampled_cgroup_bytes": 650240000,
+    "peak_worker_rss_bytes": 593358848,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2024-03-11",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2024-03-11",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2024-03-11/decode_graph",
+    "status": "unavailable",
+    "week": "2024-03-11"
+  },
+  {
+    "id": "matching-2024-03-11",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2024-03-11/neighborhoods",
+    "status": "unavailable",
+    "week": "2024-03-11"
+  },
+  {
+    "id": "neural_checkpoint-2024-03-11",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2024-03-11/decode_graph",
+    "status": "unavailable",
+    "week": "2024-03-11"
+  },
+  {
+    "id": "mcm-2024-03-11",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2024-03-11"
+  },
+  {
+    "elapsed_seconds": 0.0002012819968513213,
+    "id": "decode_graph-2024-08-05",
+    "peak_sampled_cgroup_bytes": 623845376,
+    "peak_worker_rss_bytes": 593580032,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2024-08-05",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2024-08-05",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2024-08-05/decode_graph",
+    "status": "unavailable",
+    "week": "2024-08-05"
+  },
+  {
+    "id": "matching-2024-08-05",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2024-08-05/neighborhoods",
+    "status": "unavailable",
+    "week": "2024-08-05"
+  },
+  {
+    "id": "neural_checkpoint-2024-08-05",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2024-08-05/decode_graph",
+    "status": "unavailable",
+    "week": "2024-08-05"
+  },
+  {
+    "id": "mcm-2024-08-05",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2024-08-05"
+  },
+  {
+    "elapsed_seconds": 0.00018857100076274946,
+    "id": "decode_graph-2024-12-23",
+    "peak_sampled_cgroup_bytes": 632184832,
+    "peak_worker_rss_bytes": 593522688,
+    "phase": "decode_graph",
+    "reason": "AttributeError: 'str' object has no attribute 'open'",
+    "status": "failed",
+    "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+    "week": "2024-12-23",
+    "worker_exit_code": 1
+  },
+  {
+    "id": "neighborhoods-2024-12-23",
+    "phase": "neighborhoods",
+    "reason": "unavailable prerequisite: 2024-12-23/decode_graph",
+    "status": "unavailable",
+    "week": "2024-12-23"
+  },
+  {
+    "id": "matching-2024-12-23",
+    "phase": "matching",
+    "reason": "unavailable prerequisite: 2024-12-23/neighborhoods",
+    "status": "unavailable",
+    "week": "2024-12-23"
+  },
+  {
+    "id": "neural_checkpoint-2024-12-23",
+    "phase": "neural_checkpoint",
+    "reason": "unavailable prerequisite: 2024-12-23/decode_graph",
+    "status": "unavailable",
+    "week": "2024-12-23"
+  },
+  {
+    "id": "mcm-2024-12-23",
+    "phase": "mcm",
+    "reason": "unavailable prerequisite: 2022-01-03/dictionary",
+    "status": "unavailable",
+    "week": "2024-12-23"
+  },
+  {
+    "id": "source-2022-01-03",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-01-04",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-01-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-01-06",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-01-07",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-01-08",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-01-09",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-06-13",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-06-14",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-06-15",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-06-16",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-06-17",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-06-18",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-06-19",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-07-25",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-07-26",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-07-27",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-07-28",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-07-29",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-07-30",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-07-31",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-11-07",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-11-08",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-11-09",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-11-10",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-11-11",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-11-12",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2022-11-13",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2023-06-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2023-06-06",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2023-06-07",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2023-06-08",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2023-06-09",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2023-06-10",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2023-06-11",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-01-01",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-01-02",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-01-03",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-01-04",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-01-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-01-06",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-01-07",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-03-11",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-03-12",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-03-13",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-03-14",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-03-15",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-03-16",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-03-17",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-08-05",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-08-06",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-08-07",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-08-08",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-08-09",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-08-10",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-08-11",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-12-23",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-12-24",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-12-25",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-12-26",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-12-27",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-12-28",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  },
+  {
+    "id": "source-2024-12-29",
+    "reason": "workload terminated before durable cell disposition; no retry",
+    "status": "unavailable"
+  }
+]

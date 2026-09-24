@@ -1,0 +1,12 @@
+{
+  "elapsed_seconds": 0.0002771989966277033,
+  "id": "decode_graph-2024-01-01",
+  "peak_sampled_cgroup_bytes": 636194816,
+  "peak_worker_rss_bytes": 593477632,
+  "phase": "decode_graph",
+  "reason": "AttributeError: 'str' object has no attribute 'open'",
+  "status": "failed",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 117, in main\n    try:result=perform(intent['phase'],intent['week'],directory,Path(intent['artifacts']),load(STUDY/'pilot/source-index.json'),intent['bindings'])\n               ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/pilot/phase.py\", line 41, in perform\n    if file_hash(path)!=sha:raise ValueError(\"upstream artifact bytes differ: \"+path)\n       ~~~~~~~~~^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/provenance.py\", line 21, in file_hash\n    with path.open('rb') as stream:\n         ^^^^^^^^^\nAttributeError: 'str' object has no attribute 'open'\n",
+  "week": "2024-01-01",
+  "worker_exit_code": 1
+}
