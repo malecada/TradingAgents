@@ -10,6 +10,10 @@ def check(root):
     freeze=json.loads((study/'protocol-freeze.json').read_text())
     for path,digest in freeze['files'].items():
         assert hashlib.sha256((study/path).read_bytes()).hexdigest()==digest,path
+    v2=json.loads((study/'protocol-freeze-v2.json').read_text())
+    assert hashlib.sha256((study/'protocol-freeze.json').read_bytes()).hexdigest()==v2['parent_sha256']
+    for path,digest in v2['files'].items():
+        assert hashlib.sha256((study/path).read_bytes()).hexdigest()==digest,path
     history=json.loads((study/'history.json').read_text())
     assert len(history['lineage'])==len(set(history['lineage']))==17
     for path,digest in history['metadata_hashes'].items():

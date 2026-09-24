@@ -25,3 +25,10 @@ four nodes; literal one-step half coefficient and48-step schedule tested. CPU
 float32 tensor scores and soft matrices match within C06 tolerances on current
 fixtures. GPU check skips explicitly because CUDA is unavailable; C06 GPU evidence
 and full-size execution remain pending. Independent math review in progress.
+
+Task4 independent review found a float32 iterative-roundoff failure outside the
+initial fixture corpus. The retained regression failed before correction. A new
+pre-result precision amendment preserves original protocol bytes and declares
+float64 internal matching with float32 outputs.44 focused checks now pass,1 CUDA
+check remains skipped. No objective or tolerance was changed. Active matching
+configuration: config/matching-stable.json via protocol-freeze-v2.json.

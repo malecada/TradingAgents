@@ -153,3 +153,37 @@ class PricePanel:
     source_hash: str
     retrieved_at: str
     historical_vintage_verified: bool = False
+
+
+@dataclass(frozen=True)
+class AttributedGraph:
+    """A local slice, deliberately without weekly raw-transaction counters."""
+    node_ids: tuple[str, ...]
+    node_features: np.ndarray
+    edge_index: np.ndarray
+    edge_features: np.ndarray
+    parent_hash: str
+    center_id: str
+
+    def __post_init__(self):
+        for name in ('node_features','edge_index','edge_features'):
+            array=np.asarray(getattr(self,name))
+            object.__setattr__(self,name,np.frombuffer(array.tobytes(),dtype=array.dtype).reshape(array.shape))
+        object.__setattr__(self,'node_ids',tuple(self.node_ids))
+
+
+def validate_attributed(g):
+    if isinstance(g,GraphSnapshot):
+        validate_graph(g)
+        return
+    if not isinstance(g,AttributedGraph):raise ValueError('unknown graph contract')
+    require_hash(g.parent_hash)
+    n=len(g.node_ids)
+    if len(set(g.node_ids))!=n or g.center_id not in g.node_ids:raise ValueError('invalid local identities')
+    if g.node_features.ndim!=2 or g.node_features.shape[0]!=n:raise ValueError('local node dimensions')
+    if g.edge_index.ndim!=2 or g.edge_index.shape[0]!=2 or not np.issubdtype(g.edge_index.dtype,np.integer):raise ValueError('local edge dimensions')
+    e=g.edge_index.shape[1]
+    if e and (g.edge_index.min()<0 or g.edge_index.max()>=n):raise ValueError('local endpoint')
+    if g.edge_features.ndim!=2 or g.edge_features.shape[0]!=e:raise ValueError('local feature dimensions')
+    if len(set(map(tuple,g.edge_index.T)))!=e:raise ValueError('local duplicate edges')
+    if not np.isfinite(g.node_features).all() or not np.isfinite(g.edge_features).all():raise ValueError('local nonfinite features')
