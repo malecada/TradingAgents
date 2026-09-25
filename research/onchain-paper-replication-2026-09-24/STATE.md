@@ -156,16 +156,19 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
-**Backup continuation04 prepared after local space was freed:** approximately
-40.0 GB free at initial check; the same 20 GiB floor plus 2 GiB scratch fits.
-All 59,083 retained sources match inventory size/mtime. Reconciled pilot02 and
-33 completed03 bundles preserve 5,832 files / 18,052,844,567 raw bytes. The new
-identity targets only global batches34–194: 161 bundles / 53,251 files /
-85,471,644,476 raw bytes. Parent03 remains terminal with partials preserved.
-The focused 36-test preservation suite passed, including 13 new reuse/scratch
-checks. Shared source and prior attempts are unchanged. Independent review cleared the exact candidate; `BULK_RELEASE.json` is frozen.
-Commit and a single launch remain pending. See
-`storage/raw-preservation-2026-09-25-04/README.md` and its candidate/reconciliation.
+**Active backup continuation04:** released, independently reviewed and launched
+once from `b0c57453` after local space was freed. Initial free space was about
+40.0 GB; the unchanged20 GiB floor plus2 GiB working allowance fits. All59,083
+retained sources matched inventory size/mtime before launch. Pilot02 plus33
+completed03 bundles preserve5,832 files /18,052,844,567 raw bytes. The new identity
+covers only global batches34–194:161 bundles /53,251 files /85,471,644,476 bytes.
+Parent03 remains terminal with failed partials retained. Thirty-six focused
+synthetic tests passed before launch; no tests are running alongside transfer.
+Controller/monitor PID41712, phasebulk01, fresh running guard with kernel
+controls verified, worker source/contract intent accepted and remote capacity
+passed. Startup evidence: `storage/raw-preservation-2026-09-25-04/startup-observation.json`.
+No new raw-bundle completion is claimed by this startup checkpoint.
+See that directory's README, contract, exact release and independent review.
 
 **Throughput diagnostic closed:** probe01 is terminalFAILED (parallel upload
 timeout after a verified128MiB single roundtrip); its partials remain preserved.
@@ -178,7 +181,7 @@ small comparison with the active backup competing; it does not establish isolate
 link capacity or whole-backup time savings. Backup03 source/limits remain unchanged; its later disk-floor failure is recorded below.
 See `storage/throughput-probe-2026-09-25-02/RESULT.json` and `RESULT.md`.
 No diagnostic process is active. No financial fit/claim was added.
-Latest backup status: continuation03 terminal FAILED at the 20 GiB local disk
+Predecessor backup status: continuation03 terminal FAILED at the 20 GiB local disk
 floor; guard recorded 21,473,370,112 available bytes, cleanup verified. Controller
 and owned cgroup are absent. Verified totals including pilot remain 5,832 files /
 18,052,844,567 raw bytes; 85,471,644,476 raw bytes remain. Batch0034 partials
@@ -224,14 +227,16 @@ node-week. GPU device transfer is not yet wired into the admitted fit path; the
 old neural capacity estimates are not measured VRAM requirements. Acceptance statuses,
 financial fit counts and the24/51claim accounting remain unchanged.
 
-Next safe action: restore sufficient local working space above the unchanged
-20 GiB floor plus bounded packing/readback scratch; preserve originals and all
-failed partials. Reconcile the 33 verified continuation03 bundles and reused
-pilot, then prepare and independently review a fresh continuation identity with
-remaining inventory and cumulative spent-resource allowances. Never relaunch03
-or rerun its completed bundles. No backup, diagnostic or empirical job is active.
-No scheduled assistant wakeup is configured. Full raw-to-graph admission,
+Next safe action: inspect the existing04 controller, current phase guard and
+per-batch completion receipts. Do not launch another process or relaunch any
+predecessor. Keep all bound source/inputs unchanged; no concurrent synthetic
+tests. On failure, preserve partials and reconcile a reviewed new identity with
+spent budgets retained. On completion, independently verify combined pilot02,
+completed03 and04 recovery against all59,083files/103,524,489,043raw bytes.
+No scheduled assistant wakeup is configured. The finite backup process continues
+on the host; no automatic notification is promised. Full raw-to-graph admission,
 compute/local scratch and all1,420financial fits remain separate and pending.
+No empirical job is active.
 Further empirical admission needs a feasible host/storage contract, complete
 source/graph/population accounting and a reviewed cumulative allocation for any
 successor. The user supplied the existing Storage Box; feasible compute and local scratch
