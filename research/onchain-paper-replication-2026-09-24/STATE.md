@@ -156,14 +156,20 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
-**User-authorized throughput diagnostic prepared:**
-`storage/throughput-probe-2026-09-25-01/` defines one bounded random-byte
-single/dual/single connection test alongside backup03. This explicit request
-supersedes the earlier blanket no-concurrent-test instruction only for this probe.
-No historical raw data is used; active backup limits/source/identity stay fixed.
-The probe allows<=1.25GiB payload,<=512MiB RAM/generated files,900seconds,2probe
-connections,4GiB host runtime reserve and20GiB disk floor. It needs a committed
-independently reviewed release before launch; no transport result is yet claimed.
+**Throughput probe01 terminal FAILED; successor02 prepared:**
+The first128MiB single-connection roundtrip verified successfully:165.454s upload,
+52.693s download. Parallel upload0 reached the180s per-command timeout; no parallel
+roundtrip or finalsingle measurement completed. Guard402.892s,child1,cleanup
+verified and owned cgroup absent. Generated local/remote partials and all receipts
+are retained under `storage/throughput-probe-2026-09-25-01/`; never relaunch it.
+Read-only remote closure found131,727,360bytes forparallel0 and134,217,728bytes
+forparallel1; listing alone does not prove completed/verified transfer.
+The separately named `throughput-probe-2026-09-25-02/` prepares the same transport
+and single/dual/single comparison with32MiB payloads. Its0.375GiB allowance and
+900s ceiling retain all prior spent/allocated diagnostic resources. No speedup or
+backup change is claimed. Backup03 remains running; its source/limits are unchanged.
+The user's specific probe authorization overrides no-concurrent-testing only for
+this bounded diagnostic, not arbitrary tests or financial execution.
 
 **Read-only speed check (September25 08:58UTC):** active bulk02 averaged5.16%
 of one CPU core over its lifetime. A10-second upload sample used2.26% of one

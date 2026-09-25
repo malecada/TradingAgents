@@ -1,0 +1,44 @@
+{"stage": "single_before", "connections": 1, "bytes_each": 134217728, "upload_seconds": 165.45443880600033, "download_seconds": 52.69302989099924, "upload_aggregate_MiB_s": 0.7736268722901013, "download_aggregate_MiB_s": 2.4291637862688993, "individual_upload_seconds": [165.45406062300026], "individual_download_seconds": [52.69229971599998], "verified_sha256": ["5d8a2c83b6013b08ff22caad34942356f3cc905b59ee8b8bf14b914d651bc6d0"], "remote_paths": ["research-backups/onchain-paper-replication-2026-09-24/throughput-probe-20260925-01/single_before-0.bin"], "background_backup_snapshots": [[{"phase": "bulk03", "guard_phase": "running", "host_mem_available_bytes": 7484706816, "process_types": ["python", "python", "scp", "ssh"]}], [{"phase": "bulk03", "guard_phase": "running", "host_mem_available_bytes": 7382048768, "process_types": ["python", "python", "scp", "ssh"]}], [{"phase": "bulk03", "guard_phase": "running", "host_mem_available_bytes": 7327281152, "process_types": ["python", "python", "scp", "ssh"]}]]}
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/throughput-probe-2026-09-25-01/probe.py", line 132, in <module>
+    if sys.argv[1:]==['--worker']:worker()
+                                  ~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/throughput-probe-2026-09-25-01/probe.py", line 101, in worker
+    began=time.monotonic();up=list(pool.map(timed_upload,range(n)));upload=time.monotonic()-began
+                              ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ~~~~~~~~~~^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/throughput-probe-2026-09-25-01/probe.py", line 96, in timed_upload
+    began=time.monotonic();transports[i].put(sources[i],remotes[i]);return time.monotonic()-began
+                           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/transfer.py", line 78, in put
+    self.run([*self.scp,str(source),self.host+':'+self.remote_path(path)])
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/throughput-probe-2026-09-25-01/probe.py", line 53, in run
+    return subprocess.run(args,check=True,capture_output=True,timeout=180)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 1222, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 2155, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 1269, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['scp', '-q', '-l', '524288', '-P', '23', '-i', '/home/malecada/.ssh/id_ed25519_storagebox_u676273', '-o', 'IdentitiesOnly=yes', '-o', 'BatchMode=yes', '-o', 'UserKnownHostsFile=/home/malecada/.ssh/known_hosts_storagebox_u676273', '-o', 'StrictHostKeyChecking=yes', '-o', 'ConnectTimeout=15', '-o', 'ServerAliveInterval=15', '-o', 'ServerAliveCountMax=2', '-o', 'ControlMaster=no', '-o', 'ControlPath=none', '-o', 'Compression=no', '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/throughput-probe-2026-09-25-01/run/payload-0.bin', 'u676273@u676273.your-storagebox.de:research-backups/onchain-paper-replication-2026-09-24/throughput-probe-20260925-01/parallel-0.bin']' timed out after 180 seconds
