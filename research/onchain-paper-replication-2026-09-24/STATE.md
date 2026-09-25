@@ -1,4 +1,4 @@
-# Current execution checkpoint — September 24, 2026
+# Current execution checkpoint — September 25, 2026
 
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
@@ -147,19 +147,20 @@ in the authorized scope. The historical negative screen is unchanged.
   separate source-bound increment; the earlier53-test evidence remains intact.
   Independent static review found no issue.
 
-Next safe action: obtain stable host memory headroom before any new backup
-successor: at least4GiB MemAvailable is the operational target, above the existing
-3.25GiB admission threshold; retain the3GiB runtime floor. Close unnecessary apps
-or use a host with that available capacity. Then prepare/review a new continuation
-identity that reuses the verified149-file pilot and reconciles both failed
-controllers; do not upload that verified pilot again or rerun either identity.
-Further synthetic/engineering work must be scheduled without competing with a
-memory-constrained transfer. The53-test population integration is complete for
-its stated component scope; actual source-to-graph preparation and fits remain.
-A feasible compute/local-scratch allocation is still needed to finish
-raw-to-graph/population integration and prepare/review its exact source, phase,
-reuse, ownership and cumulative admission contract before execution. All 1,420
-financial fits remain pending; no empirical process is active.
+Next safe action: finish release and launch the fresh byte-preservation continuation
+`storage/raw-preservation-2026-09-25-03/transfer.py all-bulk` exactly once after the
+reviewed release is committed. Initial and subsequent checks found about10.1–10.4GiB
+MemAvailable, a new boot, absent prior owned cgroups and no backup script process.
+The original149-file pilot02 is reused; the current remote archive SHA256 matches.
+New03 prepares194remaining bundles/58934files, with the same256/192MiB memory
+limits, zero swap,3GiB runtime floor,20GiB disk floor and a stricter4GiB startup
+floor. Thirteen finite phases retain8h each and48h cumulative ceilings; no retry.
+All prior spent time and payload allowances are retained in the cumulative budget
+amendment. The new reuse-admission/preservation increment passed23synthetic tests.
+After launch inspect this identity's existing receipts; never launch a duplicate.
+Do not run concurrent synthetic tests while the memory-limited transfer is active.
+Full raw-to-graph production/admission, compute/local scratch and financial fits
+remain separate. All1,420financial fits remain pending; no empirical job is active.
 Further empirical admission needs a feasible host/storage contract, complete
 source/graph/population accounting and a reviewed cumulative allocation for any
 successor. The user supplied the existing Storage Box; feasible compute and local scratch
