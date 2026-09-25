@@ -1,9 +1,13 @@
 # Remaining raw-to-population admission requirements
 
 This is an interface and admission checkpoint, not an executable release. The
-existing fit controller consumes immutable prepared populations. It does not yet
-decode the entire raw study history or freeze those populations itself. A passed
+existing fit controller can consume immutable prepared populations or invoke the
+registered metadata population producer using already admitted weekly graph and
+price inputs. It does not yet produce/admit the full raw-to-graph history. A passed
 synthetic controller test therefore does not establish full empirical integration.
+The September25 static integration and memory review is retained in
+`concurrent-readiness-2026-09-25/`; it identifies the remaining producer, scratch,
+cross-partition validation and loading work without changing the active backup.
 
 Every proposed preparation registration must fix its exact source identities,
 asset/date/field denominator, graph configuration, complete-week boundaries,

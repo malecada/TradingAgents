@@ -1,0 +1,56 @@
+{
+  "observed_utc": "2026-09-25T06:46:52.051640+00:00",
+  "source_head": "3a92e59c12caa0f4eedc29453270f914273f1496",
+  "scope": "read-only static source and small receipt review; no synthetic test or empirical execution",
+  "source_sha256": {
+    "tradingagents/research/onchain_replication/job.py": "ce3aa010033e0de5d1adb22f79a71eb42ad16244e45c409fb0a7d7e0325a0723",
+    "tradingagents/research/onchain_replication/weekly.py": "99df9c97685fe7c56702db7583af2d6b18342e657e2f13c53337c03c64e5e0a3",
+    "tradingagents/research/onchain_replication/btc_weekly.py": "36d37d39566ab0786d7da3252e3cdc1764fad7178e68c76b92cccc75debf66a9",
+    "tradingagents/research/onchain_replication/btc_store.py": "79f78d1bfc46d3e975f506407f3fcea102835235b5aa5b68cf6b1d7674c10452",
+    "tradingagents/research/onchain_replication/eth_source.py": "78e0731e16d2751534e3530dde7313e94950bd852f99b30cec4661dbf7db1487",
+    "tradingagents/research/onchain_replication/graph_store.py": "bf10aae3b1532e7b687b5febc5803cbf3e9f695c8b086294bcc92fcd811be379",
+    "tradingagents/research/onchain_replication/population_assembly.py": "da65f5168c9d03cf8518f8dac1717482ff48c047ac451563f8728a7afe5c528f",
+    "research/onchain-paper-replication-2026-09-24/pilot_successor_02/phase.py": "0bc95f7e33d97485cd9e2fba6802dde168c26aa162b987ef762f9e28ee3a1522",
+    "research/onchain-paper-replication-2026-09-24/full_sources/ASSEMBLY_ADMISSION_REQUIREMENTS.md": "5138e58bb1673518ed076b9b5946053464d015dd3183531c016041a1f1b55385",
+    "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/closure.json": "dc305bbbc9b76de6eab1e6b9015ca78f5be787c70225f635c918d482a7ac7c54"
+  },
+  "active_backup_binding_checks": {
+    "tradingagents/research/onchain_replication/preservation.py": true,
+    "tradingagents/research/onchain_replication/resources.py": true,
+    "tradingagents/research/lifecycle.py": true,
+    "tradingagents/research/onchain_replication/provenance.py": true,
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/transfer.py": true,
+    "research/onchain-paper-replication-2026-09-24/storage/storage-box-2026-09-24-01/raw-source-inventory.json.gz": true,
+    "research/onchain-paper-replication-2026-09-24/storage/storage-box-2026-09-24-01/connection.json": true,
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-01/contract.json": true,
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-01/pilot/failed.json": true,
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-01/pilot/guard/final.json": true,
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-01/pilot/remote-partial.json": true,
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/batches.json": true,
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/contract.json": true,
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/BULK_RELEASE.json": true,
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/pilot/complete.json": true,
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/pilot/guard/final.json": true,
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/bulk-controller/failed.json": true,
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/bulk01/guard/final.json": true,
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/bulk01/guard/child_exit.json": true,
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/reconciliation.json": true
+  },
+  "backup_progress_observation": {
+    "guard_phase": "running",
+    "guard_elapsed_seconds": 818.62906365,
+    "host_mem_available_bytes": 11136507904,
+    "completed_new_batches": 2,
+    "new_files": 321,
+    "new_raw_bytes": 1066992290,
+    "qualification": "per-bundle completion receipts, not terminal whole-phase or whole-backup verification"
+  },
+  "research_claims_consumed_by_review": 0,
+  "acceptance_status_changes": false,
+  "source_head_qualification": "Base HEAD before this documentation-only increment; exact reviewed working-file hashes are authoritative.",
+  "report_sha256": {
+    "RAW_GRAPH_REVIEW.md": "490e1c79031d6aacf8b1c1ce12387ccf90be23e9f7e4e182ce4ff9571b131382",
+    "GRAPH_MEMORY_REVIEW.md": "1b7bc6e028b5df9773bb3d40bd7f2c721b3875be453c98bcb7ba160e9a9be281"
+  },
+  "independent_review": "GRAPH_MEMORY_REVIEW.md authored independently; companion raw-graph factual cross-check found no material contradiction, with line references and chain-position condition corrected."
+}

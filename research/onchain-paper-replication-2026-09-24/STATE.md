@@ -160,6 +160,20 @@ Thirteen phases have8h each and48h cumulative limits. First failure stops the
 controller; no automatic retry. All prior failures/time/payload remain accounted.
 Independent prelaunch review and23synthetic passes are recorded in the new03 path.
 
+**Concurrent static integration review:** `full_sources/concurrent-readiness-2026-09-25/`
+records raw-to-graph and graph-memory findings while backup03 remains running.
+No tests, real-data decoding or fitting ran. The active backup source/input hashes
+were checked unchanged. At818.629guard seconds, two new bundles had completed:
+321files/1,066,992,290raw bytes, in addition to the149-file pilot. This is per-bundle
+progress, not whole-backup completion. Missing work includes registered graph
+production, durable failure scratch, cross-partition source validation and memory
+residency changes that preserve graph contents and gradients. Static review found
+that GraphSnapshot copies mapped arrays, all-fold graphs/features accumulate, journal
+verification duplicates features, and the sampler allocates over every training
+node-week. GPU device transfer is not yet wired into the admitted fit path; the
+old neural capacity estimates are not measured VRAM requirements. Acceptance statuses,
+financial fit counts and the24/51claim accounting remain unchanged.
+
 Next safe action: inspect the existing03 controller, phase guard and per-batch
 receipts for progress or terminal completion. **Do not launch another process.**
 Do not run synthetic tests concurrently or change bound source/input files.
