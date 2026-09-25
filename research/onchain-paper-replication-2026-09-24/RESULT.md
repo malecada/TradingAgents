@@ -30,6 +30,13 @@ for a new reconciled continuation. Full103.5GB raw preservation remains incomple
 and separate from empirical source admission. These byte-copy jobs do not add financial trials or reopen
 historical claims.
 
+September25 continuation03 supersedes the earlier no-active-backup state: a fresh
+reviewed controller is running from91f09a0e with approximately10GiB available RAM.
+It reuses the149-file pilot and starts at bundle0001; startup release and remote
+capacity were verified. No new bundle completion is claimed by the startup
+checkpoint. The remaining103.0GB transfer has a48h ceiling and stops on failure.
+The previous two failed identities remain closed and their artifacts preserved.
+
 A subsequent metadata-runtime separation preserves the exact binding calculation
 and avoids loading Torch during population preparation. It passed46focused
 regressions; six old pytest temporary-directory cleanup warnings are retained in

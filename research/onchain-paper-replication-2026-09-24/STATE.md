@@ -147,20 +147,29 @@ in the authorized scope. The historical negative screen is unchanged.
   separate source-bound increment; the earlier53-test evidence remains intact.
   Independent static review found no issue.
 
-Next safe action: finish release and launch the fresh byte-preservation continuation
-`storage/raw-preservation-2026-09-25-03/transfer.py all-bulk` exactly once after the
-reviewed release is committed. Initial and subsequent checks found about10.1–10.4GiB
-MemAvailable, a new boot, absent prior owned cgroups and no backup script process.
-The original149-file pilot02 is reused; the current remote archive SHA256 matches.
-New03 prepares194remaining bundles/58934files, with the same256/192MiB memory
-limits, zero swap,3GiB runtime floor,20GiB disk floor and a stricter4GiB startup
-floor. Thirteen finite phases retain8h each and48h cumulative ceilings; no retry.
-All prior spent time and payload allowances are retained in the cumulative budget
-amendment. The new reuse-admission/preservation increment passed23synthetic tests.
-After launch inspect this identity's existing receipts; never launch a duplicate.
-Do not run concurrent synthetic tests while the memory-limited transfer is active.
-Full raw-to-graph production/admission, compute/local scratch and financial fits
-remain separate. All1,420financial fits remain pending; no empirical job is active.
+**Active backup continuation03:** released and launched once from `91f09a0e` on
+September25. `storage/raw-preservation-2026-09-25-03/startup-observation.json`
+records the running guard, verified kernel-control release, worker intent and
+remote-capacity check. First bundle0001 is packed; upload/download verification
+is in progress. No new bundle completion is claimed by this startup observation.
+Controller/monitor PID 14574; consult recorded boot/start identity before acting.
+The original149-file pilot02 remains verified and reused. Current host headroom
+is about10GiB. New03 covers194remaining bundles/58934files, retaining256/192MiB
+memory limits, zero swap,3GiB runtime floor,20GiB disk floor and4GiB startup floor.
+Thirteen phases have8h each and48h cumulative limits. First failure stops the
+controller; no automatic retry. All prior failures/time/payload remain accounted.
+Independent prelaunch review and23synthetic passes are recorded in the new03 path.
+
+Next safe action: inspect the existing03 controller, phase guard and per-batch
+receipts for progress or terminal completion. **Do not launch another process.**
+Do not run synthetic tests concurrently or change bound source/input files.
+The conditional28.69h estimate covers the remaining transfer; laptop uptime and
+network access are required. On failure, preserve partials and reconcile a new
+identity; on completion independently verify combined pilot02/new03 recovery.
+No scheduled assistant wakeup is configured. The finite process continues on the
+host; it is not a promise of automatic notification. Full raw-to-graph admission,
+compute/local scratch and all1,420financial fits remain separate and pending.
+No empirical job is active.
 Further empirical admission needs a feasible host/storage contract, complete
 source/graph/population accounting and a reviewed cumulative allocation for any
 successor. The user supplied the existing Storage Box; feasible compute and local scratch
