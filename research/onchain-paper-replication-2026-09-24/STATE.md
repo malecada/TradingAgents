@@ -156,15 +156,18 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
-**Continuation05 prepared under the explicit resume instruction:** the fresh
-SSH capacity check passed. Local resources and all59,083 source size/mtime checks
-passed; no new raw transfer has started. The successor preserves04 and all earlier
-attempts, reuses5,832 verified files and targets only batches34–194. Its local
-receiver now retains bounded stderr/exit diagnostics while preserving size, rate,
-time, memory, disk and single-transfer limits. Forty-two focused synthetic tests
-passed. Independent review passed; the exact release is frozen. Commit and one launch
-remain pending. See
-`storage/raw-preservation-2026-09-25-05/README.md` and its frozen candidate.
+**Active backup continuation05:** independently reviewed and launched once
+from `782cb2c7` under the explicit resume instruction. Controller/monitor
+PID107150; phasebulk01 has a fresh running guard, verified kernel release,
+accepted source/contract intent and successful remote capacity check. All three
+recovery metadata downloads completed with new transport diagnostics. Startup
+snapshot: `storage/raw-preservation-2026-09-25-05/startup-observation.json`.
+No new raw-bundle completion is claimed yet. The5,832 files /18,052,844,567 bytes
+verified in pilot02/03 remain credited;05 covers only remaining batches34–194.
+Bounded stderr capture was added in05 alone; prior failure remains unexplained.
+All42 focused tests passed before launch; none is competing with the backup.
+Source, budgets, release and review are frozen in the05 directory. All04 and
+older partials/outcomes remain preserved. Financial fits remain pending.
 
 **Backup continuation04 terminal FAILED:** the first batch0034 archive readback
 exited unsuccessfully after971.044 guard seconds. No new bundle was verified.
@@ -236,14 +239,14 @@ node-week. GPU device transfer is not yet wired into the admitted fit path; the
 old neural capacity estimates are not measured VRAM requirements. Acceptance statuses,
 financial fit counts and the24/51claim accounting remain unchanged.
 
-Next safe action: diagnose the failed readback and preserve bounded transport
-error evidence in a separately reviewed successor before another transfer.
-Reconcile failed04 payload/time with prior allocations and reuse the verified
-pilot02/03 prefix. Never relaunch04 or overwrite its partials. Local space is
-currently sufficient; the latest interruption has an unresolved transport cause.
-No backup, diagnostic or empirical job is active. No scheduled assistant wakeup
+Next safe action: inspect the existing05 controller, current phase guard,
+per-download transport diagnostics and completed-bundle receipts. Never invoke
+the launcher again, restart any closed identity, change bound source/inputs or
+run concurrent synthetic tests. On failure retain partials and reconcile a
+reviewed successor with cumulative budgets; on success independently reconcile
+the combined pilot02/03/05 recovery denominator. No recurring assistant wakeup
 is configured. Full raw-to-graph admission, compute/local scratch and all1,420
-financial fits remain separate and pending.
+financial fits remain separate and pending. No empirical job is active.
 Further empirical admission needs a feasible host/storage contract, complete
 source/graph/population accounting and a reviewed cumulative allocation for any
 successor. The user supplied the existing Storage Box; feasible compute and local scratch
