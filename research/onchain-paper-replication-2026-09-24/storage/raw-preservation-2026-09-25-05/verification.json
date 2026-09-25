@@ -1,0 +1,23 @@
+{
+  "tests_passed": 42,
+  "new_red_cases_observed": 6,
+  "red_reason": "missing local diagnostic receiver before implementation",
+  "command": ".venv/bin/python -B -m pytest -q -p no:cacheprovider tests/research/onchain_replication/test_preservation_diagnostics.py tests/research/onchain_replication/test_preservation_prefix.py tests/research/onchain_replication/test_preservation_continuation.py tests/research/onchain_replication/test_preservation.py",
+  "source_sha256": {
+    "tradingagents/research/onchain_replication/preservation.py": "2849670dcf847a97274cf590a2c6732cd7749e0e9e3e64e802cb2e415f08a410",
+    "tradingagents/research/onchain_replication/resources.py": "bc4676f3ad566d68bad9c66a7e7dd0b8e630c3a79b5a10b9200959ecea029791",
+    "tradingagents/research/lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+    "tradingagents/research/onchain_replication/provenance.py": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-04/transfer.py": "f4a7105d80e29b90b51ac1716ddc174b298fb2996571283125ba40e0a24c6470",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/transfer.py": "217671b9199c3d8f0abbe956c8cccfacfafbe3e09a569d8a4a993940db08860f",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-05/transfer.py": "c07745682d5d4879a801d02934a4040719ae26f18bcdfde614eb8877099a2d82"
+  },
+  "test_sha256": {
+    "tests/research/onchain_replication/test_preservation_diagnostics.py": "a249e9417b027ad76119e21eec797707cccc8d4197203cadc9efd7163f39f5a5",
+    "tests/research/onchain_replication/test_preservation_prefix.py": "33f7e7092fa44ade8898ae5c05af6d0b539f70ff0068d258e647bf0dfe11deb3",
+    "tests/research/onchain_replication/test_preservation_continuation.py": "e4c1304034bafcfa4124632e8d8778c0b32cff5b9517aecd0f998381d4c1d40c",
+    "tests/research/onchain_replication/test_preservation.py": "3bb1c1e7ca6f9762073cf61ae606cd6f18fa4fa29ab37092123b0a67b70fe297"
+  },
+  "junit_sha256": "7649fd87a844cd222aed4326fcd0eb9545f030003bb98104749631e1f6a10851",
+  "scope": "Focused synthetic preservation tests with real tiny local subprocesses; no external transfer or real-data decode. No full offline-suite rerun."
+}

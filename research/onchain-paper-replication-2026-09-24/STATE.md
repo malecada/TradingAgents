@@ -156,6 +156,16 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
+**Continuation05 prepared under the explicit resume instruction:** the fresh
+SSH capacity check passed. Local resources and all59,083 source size/mtime checks
+passed; no new raw transfer has started. The successor preserves04 and all earlier
+attempts, reuses5,832 verified files and targets only batches34–194. Its local
+receiver now retains bounded stderr/exit diagnostics while preserving size, rate,
+time, memory, disk and single-transfer limits. Forty-two focused synthetic tests
+passed. Independent review passed; the exact release is frozen. Commit and one launch
+remain pending. See
+`storage/raw-preservation-2026-09-25-05/README.md` and its frozen candidate.
+
 **Backup continuation04 terminal FAILED:** the first batch0034 archive readback
 exited unsuccessfully after971.044 guard seconds. No new bundle was verified.
 The recorded error is `RuntimeError: bounded download process failed`; underlying
