@@ -156,6 +156,16 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
+**Read-only speed check (September25 08:58UTC):** active bulk02 averaged5.16%
+of one CPU core over its lifetime. A10-second upload sample used2.26% of one
+core and sent about3.7MB/s; an earlier5-second download sample moved about4.9MB/s.
+Both observations are below the8MiB/s transfer cap. More CPU/GPU is not indicated
+as the current bottleneck. Connection/link throughput appears limiting; these
+short observations do not distinguish per-connection from shared-link limits.
+A separately reviewed pipeline/concurrency successor could test overlap, but no
+speedup is established and no active resource/source setting was changed.
+Receipt: `storage/raw-preservation-2026-09-25-03/performance-readonly-01.json`.
+
 **Active backup continuation03:** released and launched once from `91f09a0e` on
 September25. `storage/raw-preservation-2026-09-25-03/startup-observation.json`
 records the running guard, verified kernel-control release, worker intent and

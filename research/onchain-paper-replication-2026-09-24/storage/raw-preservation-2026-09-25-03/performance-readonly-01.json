@@ -1,0 +1,176 @@
+{
+  "observed_utc": "2026-09-25T08:58:52.512815+00:00",
+  "scope": "read-only telemetry of already active backup; no new transfers or resource mutations",
+  "phase": "bulk02",
+  "duration_seconds": 10.000544873999388,
+  "cpu_single_core_utilization_percent": 2.262846703366673,
+  "phase_lifetime_cpu_single_core_percent": 5.1608790550387456,
+  "process_io_deltas": {
+    "144707": {
+      "comm": "python",
+      "rchar": 357006,
+      "wchar": 0,
+      "read_bytes": 0,
+      "write_bytes": 0
+    },
+    "144712": {
+      "comm": "python",
+      "rchar": 0,
+      "wchar": 0,
+      "read_bytes": 0,
+      "write_bytes": 0
+    },
+    "231074": {
+      "comm": "scp",
+      "rchar": 37044224,
+      "wchar": 37060608,
+      "read_bytes": 24961024,
+      "write_bytes": 0
+    },
+    "231075": {
+      "comm": "ssh",
+      "rchar": 37111488,
+      "wchar": 37034496,
+      "read_bytes": 0,
+      "write_bytes": 0
+    }
+  },
+  "memory_high_events_delta": 96,
+  "host_mem_available_bytes": 9491685376,
+  "samples": [
+    {
+      "monotonic": 9426.667809799,
+      "cpu": {
+        "usage_usec": 172317341,
+        "user_usec": 52225213,
+        "system_usec": 120092127,
+        "core_sched.force_idle_usec": 0
+      },
+      "processes": {
+        "144707": {
+          "comm": "python",
+          "io": {
+            "rchar": 120597387,
+            "wchar": 58,
+            "syscr": 66599,
+            "syscw": 3,
+            "read_bytes": 638976,
+            "write_bytes": 4096,
+            "cancelled_write_bytes": 0
+          }
+        },
+        "144712": {
+          "comm": "python",
+          "io": {
+            "rchar": 60260939056,
+            "wchar": 27205970620,
+            "syscr": 4214223,
+            "syscw": 1267453,
+            "read_bytes": 43373244416,
+            "write_bytes": 11192184832,
+            "cancelled_write_bytes": 0
+          }
+        },
+        "231074": {
+          "comm": "scp",
+          "io": {
+            "rchar": 141235006,
+            "wchar": 141197339,
+            "syscr": 8640,
+            "syscw": 10150,
+            "read_bytes": 141393920,
+            "write_bytes": 0,
+            "cancelled_write_bytes": 0
+          }
+        },
+        "231075": {
+          "comm": "ssh",
+          "io": {
+            "rchar": 141245681,
+            "wchar": 141313248,
+            "syscr": 5614,
+            "syscw": 1176,
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "cancelled_write_bytes": 0
+          }
+        }
+      },
+      "memory_events": {
+        "low": 0,
+        "high": 143608,
+        "max": 0,
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0
+      }
+    },
+    {
+      "monotonic": 9436.668354673,
+      "cpu": {
+        "usage_usec": 172543638,
+        "user_usec": 52306732,
+        "system_usec": 120236906,
+        "core_sched.force_idle_usec": 0
+      },
+      "processes": {
+        "144707": {
+          "comm": "python",
+          "io": {
+            "rchar": 120954393,
+            "wchar": 58,
+            "syscr": 66797,
+            "syscw": 3,
+            "read_bytes": 638976,
+            "write_bytes": 4096,
+            "cancelled_write_bytes": 0
+          }
+        },
+        "144712": {
+          "comm": "python",
+          "io": {
+            "rchar": 60260939056,
+            "wchar": 27205970620,
+            "syscr": 4214223,
+            "syscw": 1267453,
+            "read_bytes": 43373244416,
+            "write_bytes": 11192184832,
+            "cancelled_write_bytes": 0
+          }
+        },
+        "231074": {
+          "comm": "scp",
+          "io": {
+            "rchar": 178279230,
+            "wchar": 178257947,
+            "syscr": 10901,
+            "syscw": 12957,
+            "read_bytes": 166354944,
+            "write_bytes": 0,
+            "cancelled_write_bytes": 0
+          }
+        },
+        "231075": {
+          "comm": "ssh",
+          "io": {
+            "rchar": 178357169,
+            "wchar": 178347744,
+            "syscr": 7062,
+            "syscw": 1463,
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "cancelled_write_bytes": 0
+          }
+        }
+      },
+      "memory_events": {
+        "low": 0,
+        "high": 143704,
+        "max": 0,
+        "oom": 0,
+        "oom_kill": 0,
+        "oom_group_kill": 0
+      }
+    }
+  ]
+}
