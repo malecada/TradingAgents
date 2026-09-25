@@ -156,6 +156,15 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
+**User-authorized throughput diagnostic prepared:**
+`storage/throughput-probe-2026-09-25-01/` defines one bounded random-byte
+single/dual/single connection test alongside backup03. This explicit request
+supersedes the earlier blanket no-concurrent-test instruction only for this probe.
+No historical raw data is used; active backup limits/source/identity stay fixed.
+The probe allows<=1.25GiB payload,<=512MiB RAM/generated files,900seconds,2probe
+connections,4GiB host runtime reserve and20GiB disk floor. It needs a committed
+independently reviewed release before launch; no transport result is yet claimed.
+
 **Read-only speed check (September25 08:58UTC):** active bulk02 averaged5.16%
 of one CPU core over its lifetime. A10-second upload sample used2.26% of one
 core and sent about3.7MB/s; an earlier5-second download sample moved about4.9MB/s.
