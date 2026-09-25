@@ -1,0 +1,217 @@
+{
+  "observed_utc": "2026-09-25T09:53:44.155352+00:00",
+  "status": "failed",
+  "reason": "RuntimeError: disk floor breached",
+  "guard_cleanup_verified": true,
+  "cgroup_present": false,
+  "controller_pid_present": false,
+  "disk_free_bytes": 21471903744,
+  "disk_floor_bytes": 21474836480,
+  "verified_files_with_pilot": 5832,
+  "verified_raw_bytes_with_pilot": 18052844567,
+  "raw_bytes_remaining": 85471644476,
+  "receipts": {
+    "bulk-controller/failed.json": {
+      "sha256": "8f3752ebc4a3a4219aef91f5f0338a52fcba3a2b1dee3a391d6e890b6351dc92",
+      "content": {
+        "completed_phases": [
+          "bulk01",
+          "bulk02"
+        ],
+        "error_type": "RuntimeError",
+        "partial_outputs_preserved": true,
+        "pending_or_failed_phases": [
+          "bulk03",
+          "bulk04",
+          "bulk05",
+          "bulk06",
+          "bulk07",
+          "bulk08",
+          "bulk09",
+          "bulk10",
+          "bulk11",
+          "bulk12",
+          "bulk13"
+        ],
+        "retry": false,
+        "status": "failed"
+      }
+    },
+    "bulk03/failed.json": {
+      "sha256": "8f9ce1c011268f5223e9f039a6f4ebc9e32998eaee8ab08c5145fd3e169ed3c4",
+      "content": {
+        "guard_reason": "RuntimeError: disk floor breached",
+        "partial_outputs_preserved": true,
+        "phase": "bulk03",
+        "reason": "guard terminated or refused worker",
+        "retry": false,
+        "status": "failed"
+      }
+    },
+    "bulk03/guard/final.json": {
+      "sha256": "25a8a391a3b390bb8ac98e565572aa08164024f60671738b9078fc2b27bcda33",
+      "content": {
+        "boot_id": "1d6b920a-8f99-4eab-9a6b-008ae91ac93b",
+        "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-af24e6ccc3f24acc873c0cca9d83f442.service",
+        "child_exit_code": null,
+        "cleanup_stop_returncode": 0,
+        "cleanup_unit_properties": {
+          "ActiveState": "failed",
+          "ControlGroup": "",
+          "ExecMainStatus": "1",
+          "Result": "exit-code",
+          "SubState": "failed"
+        },
+        "cleanup_verified": true,
+        "command": [
+          "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+          "-B",
+          "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/transfer.py",
+          "--worker",
+          "bulk03"
+        ],
+        "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+        "cpu_quota_controller_available": false,
+        "cpu_thread_readback": {
+          "305961": [
+            0,
+            1
+          ],
+          "305966": [
+            0,
+            1
+          ],
+          "326654": [
+            0,
+            1
+          ]
+        },
+        "cpus": [
+          0,
+          1
+        ],
+        "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+        "disk_floor_bytes": 21474836480,
+        "disk_free_bytes": {
+          "/home/malecada/master_thesis/TradingAgents-audit-fixes": 21473370112
+        },
+        "disk_paths": [
+          "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+        ],
+        "elapsed_seconds": 1050.4547542149994,
+        "elapsed_time_kill": false,
+        "host_mem_available_bytes": 5444005888,
+        "initial_memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0
+        },
+        "kernel_controls": {
+          "memory.high": "201326592",
+          "memory.max": "268435456",
+          "memory.swap.max": "0"
+        },
+        "lease_seconds": 15.0,
+        "limit_reason": "RuntimeError: disk floor breached",
+        "memory_current_bytes": 200953856,
+        "memory_events": {
+          "high": 21789,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0
+        },
+        "memory_high_bytes": 201326592,
+        "memory_max_bytes": 268435456,
+        "memory_swap_max_bytes": 0,
+        "monitor_pid": 14574,
+        "monotonic_seconds": 12483.760847315,
+        "optional_memory_telemetry": {
+          "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+          "unit": {
+            "anon_bytes": 79069184,
+            "file_bytes": 115179520,
+            "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-af24e6ccc3f24acc873c0cca9d83f442.service",
+            "pressure": "some avg10=0.00 avg60=0.00 avg300=0.01 total=1033300\nfull avg10=0.00 avg60=0.00 avg300=0.01 total=1029527",
+            "swap_current_bytes": 0,
+            "unavailable": {}
+          },
+          "user_ancestor": {
+            "anon_bytes": 9055035392,
+            "file_bytes": 3922300928,
+            "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+            "pressure": "some avg10=0.46 avg60=0.51 avg300=0.22 total=34340352\nfull avg10=0.46 avg60=0.51 avg300=0.22 total=33809398",
+            "swap_current_bytes": 2072559616,
+            "unavailable": {}
+          }
+        },
+        "owner_identity": null,
+        "peak_sampled_memory_current_bytes": 201818112,
+        "phase": "failed",
+        "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk03/guard",
+        "reserve_bytes": 3221225472,
+        "retry": false,
+        "sample_seconds": 0.25,
+        "start_reserve_bytes": 4294967296,
+        "unit": "onchain-replication-af24e6ccc3f24acc873c0cca9d83f442.service",
+        "unit_properties": {
+          "ActiveState": "active",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-af24e6ccc3f24acc873c0cca9d83f442.service",
+          "ExecMainStatus": "0",
+          "Result": "success",
+          "SubState": "running"
+        },
+        "wait_seconds": 30.0,
+        "wall_seconds": 28800
+      }
+    },
+    "bulk03/guard/child_exit.json": {
+      "sha256": "b402c10c5107041f734fbe24c99f52dcd01eab629342f368f2ecd74df962bf94",
+      "content": {
+        "exit_code": -15,
+        "reason": "workload exited",
+        "snapshot_error": null,
+        "terminal_memory_snapshot": {
+          "memory_current_bytes": 130584576,
+          "memory_events": {
+            "high": 21795,
+            "low": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_group_kill": 0,
+            "oom_kill": 0
+          },
+          "optional_memory_telemetry": {
+            "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+            "unit": {
+              "anon_bytes": 8904704,
+              "file_bytes": 115343360,
+              "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-af24e6ccc3f24acc873c0cca9d83f442.service",
+              "pressure": "some avg10=0.00 avg60=0.00 avg300=0.01 total=1033465\nfull avg10=0.00 avg60=0.00 avg300=0.01 total=1029692",
+              "swap_current_bytes": 0,
+              "unavailable": {}
+            },
+            "user_ancestor": {
+              "anon_bytes": 8985264128,
+              "file_bytes": 3922464768,
+              "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+              "pressure": "some avg10=0.38 avg60=0.49 avg300=0.22 total=34340509\nfull avg10=0.38 avg60=0.49 avg300=0.22 total=33809554",
+              "swap_current_bytes": 2072559616,
+              "unavailable": {}
+            }
+          }
+        },
+        "workload_pid": 305966
+      }
+    }
+  },
+  "retained_partial_sizes": {
+    "recovered.tar": 482181120,
+    "bundle.tar": 536811520
+  },
+  "qualification": "Supersedes earlier running-status statements. No restart. Batch0034 is incomplete and excluded from verified totals. Disk growth cause not established; probe01 failed payloads remain preserved."
+}

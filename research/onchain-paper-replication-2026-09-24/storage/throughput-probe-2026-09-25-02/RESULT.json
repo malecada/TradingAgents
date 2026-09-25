@@ -1,0 +1,60 @@
+{
+  "observed_utc": "2026-09-25T09:48:10.578452+00:00",
+  "status": "complete bounded diagnostic; original128MiB attempt failed and preserved",
+  "stage_summary": [
+    {
+      "stage": "single_before",
+      "connections": 1,
+      "bytes_each": 33554432,
+      "upload_seconds": 32.64632006099964,
+      "download_seconds": 13.095249986001363,
+      "upload_aggregate_MiB_s": 0.9802023609462875,
+      "download_aggregate_MiB_s": 2.4436341447629903
+    },
+    {
+      "stage": "parallel",
+      "connections": 2,
+      "bytes_each": 33554432,
+      "upload_seconds": 57.51369067500127,
+      "download_seconds": 21.111820283998895,
+      "upload_aggregate_MiB_s": 1.112778527144982,
+      "download_aggregate_MiB_s": 3.0314771127768165
+    },
+    {
+      "stage": "single_after",
+      "connections": 1,
+      "bytes_each": 33554432,
+      "upload_seconds": 32.737798554999245,
+      "download_seconds": 14.065077986000688,
+      "upload_aggregate_MiB_s": 0.9774634035407191,
+      "download_aggregate_MiB_s": 2.2751384693245478
+    }
+  ],
+  "pooled_single_upload_MiB_s": 0.9788309662147804,
+  "pooled_single_download_MiB_s": 2.3563780255515967,
+  "parallel_upload_gain_percent": 13.684442519037553,
+  "parallel_download_gain_percent": 28.649863472869043,
+  "single_transport_roundtrip_MiB_s": 0.6915595949795011,
+  "parallel_transport_roundtrip_MiB_s": 0.8139851712171798,
+  "parallel_transport_roundtrip_gain_percent": 17.70282375177046,
+  "guard_seconds": 176.33803952699964,
+  "guard_peak_bytes": 166707200,
+  "cleanup_verified": true,
+  "all_measured_download_hashes_verified": true,
+  "limitations": [
+    "One bracketed32MiB comparison with active background backup; not isolated or statistically replicated.",
+    "Connection setup included; random payload generation/local hash verification excluded from transfer timings.",
+    "Parallel bytes are aggregate across two connections; individual connections got slower.",
+    "Transport improvement does not establish full backup time saving or the ISP link ceiling.",
+    "Prior128MiB parallel phase timed out before complete comparison and remains a separate failed attempt."
+  ],
+  "decision": "No active backup resource/source/concurrency change; no large speedup or CPU/GPU upgrade requirement established.",
+  "receipt_sha256": {
+    "run/complete.json": "7d07acca89da63e920d27f722ba26fcd047caab81c1da8fe93707c55dc784c1b",
+    "run/cleanup.json": "cc63b0238a33785e630cdecbc9a4d4c0e5d7493ec07c7d25d639efb3d94254e7",
+    "run/guard/final.json": "465c0e78edc5d72dfa5e8aadf079dc5141b40c8d80c8c1ff50fa9257dbf4194b",
+    "run/single_before.json": "035a782f50d5284ba844cb694b421090a20f1be3134430a3589b70f604f0a2c0",
+    "run/parallel.json": "95c49d97af4420ebedde926f00bd2d66eb12dd6a9e023a108756e1f056c4b9d2",
+    "run/single_after.json": "8d610b567feb46cfa4771de3b31c56e7383e009490a84035039f4816df9f5b7f"
+  }
+}

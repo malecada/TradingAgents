@@ -147,7 +147,7 @@ in the authorized scope. The historical negative screen is unchanged.
   separate source-bound increment; the earlier53-test evidence remains intact.
   Independent static review found no issue.
 
-**Latest backup observation (2026-09-25 08:56 UTC):** bulk01 completed
+**Earlier backup observation (2026-09-25 08:56 UTC; superseded below):** bulk01 completed
 with verified cleanup; bulk02 is running with a fresh guard heartbeat and no
 reported limit violation. 25 new bundles are verified. Including the reused
 pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
@@ -156,20 +156,25 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
-**Throughput probe01 terminal FAILED; successor02 prepared:**
-The first128MiB single-connection roundtrip verified successfully:165.454s upload,
-52.693s download. Parallel upload0 reached the180s per-command timeout; no parallel
-roundtrip or finalsingle measurement completed. Guard402.892s,child1,cleanup
-verified and owned cgroup absent. Generated local/remote partials and all receipts
-are retained under `storage/throughput-probe-2026-09-25-01/`; never relaunch it.
-Read-only remote closure found131,727,360bytes forparallel0 and134,217,728bytes
-forparallel1; listing alone does not prove completed/verified transfer.
-The separately named `throughput-probe-2026-09-25-02/` prepares the same transport
-and single/dual/single comparison with32MiB payloads. Its0.375GiB allowance and
-900s ceiling retain all prior spent/allocated diagnostic resources. No speedup or
-backup change is claimed. Backup03 remains running; its source/limits are unchanged.
-The user's specific probe authorization overrides no-concurrent-testing only for
-this bounded diagnostic, not arbitrary tests or financial execution.
+**Throughput diagnostic closed:** probe01 is terminalFAILED (parallel upload
+timeout after a verified128MiB single roundtrip); its partials remain preserved.
+Fresh32MiB probe02 COMPLETE:176.338s,166707200-byte sampled peak,child0,cleanup
+verified,no memory events. All generated probe02 payloads were verified and removed.
+Single-before/parallel/single-after aggregate upload:0.980/1.113/0.977MiB/s;
+download:2.444/3.031/2.275MiB/s. Parallel transport gains are13.7% upload,28.6%
+download and17.7% combined roundtrip versus pooled single timings. This is one
+small comparison with the active backup competing; it does not establish isolated
+link capacity or whole-backup time savings. Backup03 source/limits remain unchanged; its later disk-floor failure is recorded below.
+See `storage/throughput-probe-2026-09-25-02/RESULT.json` and `RESULT.md`.
+No diagnostic process is active. No financial fit/claim was added.
+Latest backup status: continuation03 terminal FAILED at the 20 GiB local disk
+floor; guard recorded 21,473,370,112 available bytes, cleanup verified. Controller
+and owned cgroup are absent. Verified totals including pilot remain 5,832 files /
+18,052,844,567 raw bytes; 85,471,644,476 raw bytes remain. Batch0034 partials
+are retained and excluded from verified totals. The earlier after-probe snapshot
+had no active backup process and did not establish a running state. See
+`storage/throughput-probe-2026-09-25-02/backup-terminal-after-probe.json`.
+Disk-growth cause is not established. No process was restarted.
 
 **Read-only speed check (September25 08:58UTC):** active bulk02 averaged5.16%
 of one CPU core over its lifetime. A10-second upload sample used2.26% of one
@@ -181,7 +186,7 @@ A separately reviewed pipeline/concurrency successor could test overlap, but no
 speedup is established and no active resource/source setting was changed.
 Receipt: `storage/raw-preservation-2026-09-25-03/performance-readonly-01.json`.
 
-**Active backup continuation03:** released and launched once from `91f09a0e` on
+**Backup continuation03 startup (now terminal FAILED):** released and launched once from `91f09a0e` on
 September25. `storage/raw-preservation-2026-09-25-03/startup-observation.json`
 records the running guard, verified kernel-control release, worker intent and
 remote-capacity check. First bundle0001 is packed; upload/download verification
@@ -195,7 +200,7 @@ controller; no automatic retry. All prior failures/time/payload remain accounted
 Independent prelaunch review and23synthetic passes are recorded in the new03 path.
 
 **Concurrent static integration review:** `full_sources/concurrent-readiness-2026-09-25/`
-records raw-to-graph and graph-memory findings while backup03 remains running.
+records raw-to-graph and graph-memory findings made while backup03 was running.
 No tests, real-data decoding or fitting ran. The active backup source/input hashes
 were checked unchanged. At818.629guard seconds, two new bundles had completed:
 321files/1,066,992,290raw bytes, in addition to the149-file pilot. This is per-bundle
@@ -208,16 +213,14 @@ node-week. GPU device transfer is not yet wired into the admitted fit path; the
 old neural capacity estimates are not measured VRAM requirements. Acceptance statuses,
 financial fit counts and the24/51claim accounting remain unchanged.
 
-Next safe action: inspect the existing03 controller, phase guard and per-batch
-receipts for progress or terminal completion. **Do not launch another process.**
-Do not run synthetic tests concurrently or change bound source/input files.
-The conditional28.69h estimate covers the remaining transfer; laptop uptime and
-network access are required. On failure, preserve partials and reconcile a new
-identity; on completion independently verify combined pilot02/new03 recovery.
-No scheduled assistant wakeup is configured. The finite process continues on the
-host; it is not a promise of automatic notification. Full raw-to-graph admission,
+Next safe action: restore sufficient local working space above the unchanged
+20 GiB floor plus bounded packing/readback scratch; preserve originals and all
+failed partials. Reconcile the 33 verified continuation03 bundles and reused
+pilot, then prepare and independently review a fresh continuation identity with
+remaining inventory and cumulative spent-resource allowances. Never relaunch03
+or rerun its completed bundles. No backup, diagnostic or empirical job is active.
+No scheduled assistant wakeup is configured. Full raw-to-graph admission,
 compute/local scratch and all1,420financial fits remain separate and pending.
-No empirical job is active.
 Further empirical admission needs a feasible host/storage contract, complete
 source/graph/population accounting and a reviewed cumulative allocation for any
 successor. The user supplied the existing Storage Box; feasible compute and local scratch

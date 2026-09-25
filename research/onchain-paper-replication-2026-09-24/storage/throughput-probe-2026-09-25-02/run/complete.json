@@ -1,0 +1,197 @@
+{
+  "contract_sha256": "65640889af02ca795882073f97617c126132a97e3eb9596d0acf65a34a01724d",
+  "qualification": "Backup remains active; shared-link traffic/cache/time effects confound absolute isolated throughput.",
+  "stages": [
+    {
+      "background_backup_snapshots": [
+        [
+          {
+            "guard_phase": "running",
+            "host_mem_available_bytes": 7436562432,
+            "phase": "bulk03",
+            "process_types": [
+              "python",
+              "python",
+              "scp",
+              "ssh"
+            ]
+          }
+        ],
+        [
+          {
+            "guard_phase": "running",
+            "host_mem_available_bytes": 7393357824,
+            "phase": "bulk03",
+            "process_types": [
+              "python",
+              "python",
+              "scp",
+              "ssh"
+            ]
+          }
+        ],
+        [
+          {
+            "guard_phase": "running",
+            "host_mem_available_bytes": 7109836800,
+            "phase": "bulk03",
+            "process_types": [
+              "python",
+              "python",
+              "scp",
+              "ssh"
+            ]
+          }
+        ]
+      ],
+      "bytes_each": 33554432,
+      "connections": 1,
+      "download_aggregate_MiB_s": 2.4436341447629903,
+      "download_seconds": 13.095249986001363,
+      "individual_download_seconds": [
+        13.095090959999652
+      ],
+      "individual_upload_seconds": [
+        32.64606884600107
+      ],
+      "remote_paths": [
+        "research-backups/onchain-paper-replication-2026-09-24/throughput-probe-20260925-02/single_before-0.bin"
+      ],
+      "stage": "single_before",
+      "upload_aggregate_MiB_s": 0.9802023609462875,
+      "upload_seconds": 32.64632006099964,
+      "verified_sha256": [
+        "856cd90a32afceef47d7b229c2d2761461263cbb99560d8323582dc6b73d041e"
+      ]
+    },
+    {
+      "background_backup_snapshots": [
+        [
+          {
+            "guard_phase": "running",
+            "host_mem_available_bytes": 7109836800,
+            "phase": "bulk03",
+            "process_types": [
+              "python",
+              "python",
+              "scp",
+              "ssh"
+            ]
+          }
+        ],
+        [
+          {
+            "guard_phase": "running",
+            "host_mem_available_bytes": 7218192384,
+            "phase": "bulk03",
+            "process_types": [
+              "python",
+              "python",
+              "scp",
+              "ssh"
+            ]
+          }
+        ],
+        [
+          {
+            "guard_phase": "running",
+            "host_mem_available_bytes": 7186448384,
+            "phase": "bulk03",
+            "process_types": [
+              "python",
+              "python",
+              "scp",
+              "ssh"
+            ]
+          }
+        ]
+      ],
+      "bytes_each": 33554432,
+      "connections": 2,
+      "download_aggregate_MiB_s": 3.0314771127768165,
+      "download_seconds": 21.111820283998895,
+      "individual_download_seconds": [
+        20.983364691001043,
+        21.111706375000722
+      ],
+      "individual_upload_seconds": [
+        57.513515167998776,
+        53.75587289300165
+      ],
+      "remote_paths": [
+        "research-backups/onchain-paper-replication-2026-09-24/throughput-probe-20260925-02/parallel-0.bin",
+        "research-backups/onchain-paper-replication-2026-09-24/throughput-probe-20260925-02/parallel-1.bin"
+      ],
+      "stage": "parallel",
+      "upload_aggregate_MiB_s": 1.112778527144982,
+      "upload_seconds": 57.51369067500127,
+      "verified_sha256": [
+        "856cd90a32afceef47d7b229c2d2761461263cbb99560d8323582dc6b73d041e",
+        "ce242e0605ffc709acaa08536b4ff92cbc55f28c5f8db3fd48f3a44514e7b1d2"
+      ]
+    },
+    {
+      "background_backup_snapshots": [
+        [
+          {
+            "guard_phase": "running",
+            "host_mem_available_bytes": 7186448384,
+            "phase": "bulk03",
+            "process_types": [
+              "python",
+              "python",
+              "scp",
+              "ssh"
+            ]
+          }
+        ],
+        [
+          {
+            "guard_phase": "running",
+            "host_mem_available_bytes": 7157727232,
+            "phase": "bulk03",
+            "process_types": [
+              "python",
+              "python",
+              "scp",
+              "ssh"
+            ]
+          }
+        ],
+        [
+          {
+            "guard_phase": "running",
+            "host_mem_available_bytes": 7237873664,
+            "phase": "bulk03",
+            "process_types": [
+              "python",
+              "python",
+              "scp",
+              "ssh"
+            ]
+          }
+        ]
+      ],
+      "bytes_each": 33554432,
+      "connections": 1,
+      "download_aggregate_MiB_s": 2.2751384693245478,
+      "download_seconds": 14.065077986000688,
+      "individual_download_seconds": [
+        14.064946266998959
+      ],
+      "individual_upload_seconds": [
+        32.73762730799899
+      ],
+      "remote_paths": [
+        "research-backups/onchain-paper-replication-2026-09-24/throughput-probe-20260925-02/single_after-0.bin"
+      ],
+      "stage": "single_after",
+      "upload_aggregate_MiB_s": 0.9774634035407191,
+      "upload_seconds": 32.737798554999245,
+      "verified_sha256": [
+        "856cd90a32afceef47d7b229c2d2761461263cbb99560d8323582dc6b73d041e"
+      ]
+    }
+  ],
+  "status": "complete"
+}
