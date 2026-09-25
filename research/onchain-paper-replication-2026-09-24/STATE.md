@@ -147,6 +147,15 @@ in the authorized scope. The historical negative screen is unchanged.
   separate source-bound increment; the earlier53-test evidence remains intact.
   Independent static review found no issue.
 
+**Latest backup observation (2026-09-25 08:56 UTC):** bulk01 completed
+with verified cleanup; bulk02 is running with a fresh guard heartbeat and no
+reported limit violation. 25 new bundles are verified. Including the reused
+pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
+(13.3% by bytes); 89,732,940,668 bytes remain. Current available RAM is
+8.79GiB. Snapshot: `storage/raw-preservation-2026-09-25-03/progress-20260925T085635Z.json`.
+The current pace implies about16 more hours, conditional on unchanged throughput.
+This supersedes earlier progress counts; full backup closure remains pending.
+
 **Active backup continuation03:** released and launched once from `91f09a0e` on
 September25. `storage/raw-preservation-2026-09-25-03/startup-observation.json`
 records the running guard, verified kernel-control release, worker intent and
