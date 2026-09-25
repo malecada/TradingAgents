@@ -156,6 +156,17 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
+**Backup continuation04 prepared after local space was freed:** approximately
+40.0 GB free at initial check; the same 20 GiB floor plus 2 GiB scratch fits.
+All 59,083 retained sources match inventory size/mtime. Reconciled pilot02 and
+33 completed03 bundles preserve 5,832 files / 18,052,844,567 raw bytes. The new
+identity targets only global batches34–194: 161 bundles / 53,251 files /
+85,471,644,476 raw bytes. Parent03 remains terminal with partials preserved.
+The focused 36-test preservation suite passed, including 13 new reuse/scratch
+checks. Shared source and prior attempts are unchanged. Independent review cleared the exact candidate; `BULK_RELEASE.json` is frozen.
+Commit and a single launch remain pending. See
+`storage/raw-preservation-2026-09-25-04/README.md` and its candidate/reconciliation.
+
 **Throughput diagnostic closed:** probe01 is terminalFAILED (parallel upload
 timeout after a verified128MiB single roundtrip); its partials remain preserved.
 Fresh32MiB probe02 COMPLETE:176.338s,166707200-byte sampled peak,child0,cleanup
