@@ -1,0 +1,475 @@
+{
+  "schema_version": 1,
+  "scope": "byte preservation only; no new transaction decoding or experiment",
+  "inventory_path": "research/onchain-paper-replication-2026-09-24/storage/storage-box-2026-09-24-01/raw-source-inventory.json.gz",
+  "connection_path": "research/onchain-paper-replication-2026-09-24/storage/storage-box-2026-09-24-01/connection.json",
+  "input_sha256": {
+    "research/onchain-paper-replication-2026-09-24/storage/storage-box-2026-09-24-01/raw-source-inventory.json.gz": "8bcaab6b23a1d4e6540286300a16fd7e1af7f9b466ad8e7186aaf29f7523c420",
+    "research/onchain-paper-replication-2026-09-24/storage/storage-box-2026-09-24-01/connection.json": "d79023381eb9f2788709a7a4c043046d8998c30bb4abab678cb41caaf4dc70ef",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-01/contract.json": "bc35b31404b4144c24ff6e9e47f482e33b41cdfac2a08a20ff2f069b7ec5953d",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-01/pilot/failed.json": "c3413f239b6389b27e2cc0929e69ab707037622e6e735aca1d514be5c59acd15",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-01/pilot/guard/final.json": "7cc10f3aab769c002da0c463b9691c618d58dcd6de3552588170bcfb807e8e04",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-01/pilot/remote-partial.json": "27990ea53cd72bb093144853c7c16b2475e9d37c927b022d31ff0c6422358f82",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/batches.json": "ff91998022f756187a5baac14176c437f8e98103da3abe300c14188663c97965",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/contract.json": "a009822b0b44c19a91e7dfe83c6ac7a91d284bdf4280a76284a292ab5d591d73",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/BULK_RELEASE.json": "7dee7f269b53d0644ace011a840bbf09d55a4e883b50e29767616da4165d86d0",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/pilot/complete.json": "2e28731a334d6095eaec137033385b9455737bd3250efa0f40cd4ea9deade6d8",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/pilot/guard/final.json": "4251770de6476c3d552d1e823f733254ef81fc50afac01aecdb5818dfbb78df7",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/bulk-controller/failed.json": "1b90d4f6b881dbae270c97c190b33a767934cd37fd8beec96be40cf51a650afb",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/bulk01/guard/final.json": "31432c103abc45b178d4d99ee7b4a5598b2c45bb04e9d5928efebfbbfc286b7b",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/bulk01/guard/child_exit.json": "4ac384b089465cdf846d39d94894ec934181f638a205276a08e41d98eb517c49",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/reconciliation.json": "6c90d818e5d7d7faba373aac0a51c0db443f07adf77bea808337829c92148a7b",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0001/complete.json": "85b2cbaf9dc9068f288516aa2807ac123c10dafaccc0759a59aff117ef27cc51",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0001/manifest.json": "5b24be4b1e58174003594d613ffd8560fffe25cbd079f668e41a5d38b7d5122b",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0001/recovered-manifest.json": "5b24be4b1e58174003594d613ffd8560fffe25cbd079f668e41a5d38b7d5122b",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0001/completion-payload.json": "85b2cbaf9dc9068f288516aa2807ac123c10dafaccc0759a59aff117ef27cc51",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0001/recovered-complete.json": "85b2cbaf9dc9068f288516aa2807ac123c10dafaccc0759a59aff117ef27cc51",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0001/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0002/complete.json": "92091049d29bbfbeaa60ca9c6f8d5ef0714b90ce461cb9b8fe9b77bfc832a6d5",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0002/manifest.json": "25c98b9da90a32a585e46ee1623889cf5b4a725a2decf300c012b7b20936a947",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0002/recovered-manifest.json": "25c98b9da90a32a585e46ee1623889cf5b4a725a2decf300c012b7b20936a947",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0002/completion-payload.json": "92091049d29bbfbeaa60ca9c6f8d5ef0714b90ce461cb9b8fe9b77bfc832a6d5",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0002/recovered-complete.json": "92091049d29bbfbeaa60ca9c6f8d5ef0714b90ce461cb9b8fe9b77bfc832a6d5",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0002/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0003/complete.json": "da9beccfc402e920b3f081b4b4cd40b3e51511d8df4d770440af2a955bc89c13",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0003/manifest.json": "80db0c70603a3e9ba32dad69e1e65ff6898de299576ca370e4e9334a2050ced0",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0003/recovered-manifest.json": "80db0c70603a3e9ba32dad69e1e65ff6898de299576ca370e4e9334a2050ced0",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0003/completion-payload.json": "da9beccfc402e920b3f081b4b4cd40b3e51511d8df4d770440af2a955bc89c13",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0003/recovered-complete.json": "da9beccfc402e920b3f081b4b4cd40b3e51511d8df4d770440af2a955bc89c13",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0003/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0004/complete.json": "fe1a4a32a4c55711281507e870040d4fed9dc080fdb4c264205243d43dfeff66",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0004/manifest.json": "60d66e4f47b2923b88b1f7baef4a68c7f1cb153195d2336182aadf6229311722",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0004/recovered-manifest.json": "60d66e4f47b2923b88b1f7baef4a68c7f1cb153195d2336182aadf6229311722",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0004/completion-payload.json": "fe1a4a32a4c55711281507e870040d4fed9dc080fdb4c264205243d43dfeff66",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0004/recovered-complete.json": "fe1a4a32a4c55711281507e870040d4fed9dc080fdb4c264205243d43dfeff66",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0004/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0005/complete.json": "e15b25a5744596d9db1a9b9b4bd14b8dac23cf58a2ffec0fb90671dff9e6d579",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0005/manifest.json": "1475dbcb4afff69e9d6a2a5e459df8b6fb2c59d9a869cfbf2be73937cdd6a877",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0005/recovered-manifest.json": "1475dbcb4afff69e9d6a2a5e459df8b6fb2c59d9a869cfbf2be73937cdd6a877",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0005/completion-payload.json": "e15b25a5744596d9db1a9b9b4bd14b8dac23cf58a2ffec0fb90671dff9e6d579",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0005/recovered-complete.json": "e15b25a5744596d9db1a9b9b4bd14b8dac23cf58a2ffec0fb90671dff9e6d579",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0005/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0006/complete.json": "c7e31d0c52c4547852683683e3d9151faaaa25cbec45b129cc3e15b0ed0ad395",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0006/manifest.json": "c0e23713ab6f778a25dbf117abf86a1d198a764984767e5d360dc1faffb2b433",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0006/recovered-manifest.json": "c0e23713ab6f778a25dbf117abf86a1d198a764984767e5d360dc1faffb2b433",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0006/completion-payload.json": "c7e31d0c52c4547852683683e3d9151faaaa25cbec45b129cc3e15b0ed0ad395",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0006/recovered-complete.json": "c7e31d0c52c4547852683683e3d9151faaaa25cbec45b129cc3e15b0ed0ad395",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0006/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0007/complete.json": "1706c0a2cfe670b42e05a8131e7c963de005a8a35fadd5a99a695e51c4c05a9e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0007/manifest.json": "4c66321aa356e2f4a7164af727c3a6771a47b171fa969ed94bf0fc2403c1f9e8",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0007/recovered-manifest.json": "4c66321aa356e2f4a7164af727c3a6771a47b171fa969ed94bf0fc2403c1f9e8",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0007/completion-payload.json": "1706c0a2cfe670b42e05a8131e7c963de005a8a35fadd5a99a695e51c4c05a9e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0007/recovered-complete.json": "1706c0a2cfe670b42e05a8131e7c963de005a8a35fadd5a99a695e51c4c05a9e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0007/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0008/complete.json": "d89d1ce3497d2163c92a3dd94ecc0d8a2adaa13bc216aad657e3ca90f9b8841a",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0008/manifest.json": "304070c55d143aeca144d6397ccede18b807b89a21d4c3bc36eff8ddcf301aa5",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0008/recovered-manifest.json": "304070c55d143aeca144d6397ccede18b807b89a21d4c3bc36eff8ddcf301aa5",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0008/completion-payload.json": "d89d1ce3497d2163c92a3dd94ecc0d8a2adaa13bc216aad657e3ca90f9b8841a",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0008/recovered-complete.json": "d89d1ce3497d2163c92a3dd94ecc0d8a2adaa13bc216aad657e3ca90f9b8841a",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0008/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0009/complete.json": "303691bbfb03fc67cd113b952eb6386c20383b8826e275bcc0835d6b24356753",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0009/manifest.json": "f73fce4b96beb7ba4fea38a1d5cc8668c51440b5a1adbbe2f974c2e36f1f1a10",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0009/recovered-manifest.json": "f73fce4b96beb7ba4fea38a1d5cc8668c51440b5a1adbbe2f974c2e36f1f1a10",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0009/completion-payload.json": "303691bbfb03fc67cd113b952eb6386c20383b8826e275bcc0835d6b24356753",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0009/recovered-complete.json": "303691bbfb03fc67cd113b952eb6386c20383b8826e275bcc0835d6b24356753",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0009/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0010/complete.json": "e3ce76cd968ebf6fb9291c16022af5d050a9f4a6f94ec07ccca9852c141dff68",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0010/manifest.json": "45b90b441abf55634d6027210caacc5e0e2a3b456072915580ee65fd300ca000",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0010/recovered-manifest.json": "45b90b441abf55634d6027210caacc5e0e2a3b456072915580ee65fd300ca000",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0010/completion-payload.json": "e3ce76cd968ebf6fb9291c16022af5d050a9f4a6f94ec07ccca9852c141dff68",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0010/recovered-complete.json": "e3ce76cd968ebf6fb9291c16022af5d050a9f4a6f94ec07ccca9852c141dff68",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0010/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0011/complete.json": "589adfa94575d80b95b1fef7f67ce4ff755203ae35cf88dca69a72fd1990fb97",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0011/manifest.json": "df5913462f218c1a26e76c190b676f65002549abdadf357ee63e22fa58bd0103",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0011/recovered-manifest.json": "df5913462f218c1a26e76c190b676f65002549abdadf357ee63e22fa58bd0103",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0011/completion-payload.json": "589adfa94575d80b95b1fef7f67ce4ff755203ae35cf88dca69a72fd1990fb97",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0011/recovered-complete.json": "589adfa94575d80b95b1fef7f67ce4ff755203ae35cf88dca69a72fd1990fb97",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0011/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0012/complete.json": "7296635b5495d50510fc36fe6a8c71379b25a0d9635ea55c375b6e1dd59664d5",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0012/manifest.json": "930723c33d6220ac252a08bd0bb6bc2a7af0acbfbfecaa3be4013b15dc01ed9b",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0012/recovered-manifest.json": "930723c33d6220ac252a08bd0bb6bc2a7af0acbfbfecaa3be4013b15dc01ed9b",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0012/completion-payload.json": "7296635b5495d50510fc36fe6a8c71379b25a0d9635ea55c375b6e1dd59664d5",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0012/recovered-complete.json": "7296635b5495d50510fc36fe6a8c71379b25a0d9635ea55c375b6e1dd59664d5",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0012/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0013/complete.json": "463d798f0fd51b3a0b1e640c8dcddc5502202564b13adec649eb81e1fc5be7fb",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0013/manifest.json": "e8c5c7f4ee935b96a033e9b0574a9bd033c19085679bcb5dca69362a8d3b72db",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0013/recovered-manifest.json": "e8c5c7f4ee935b96a033e9b0574a9bd033c19085679bcb5dca69362a8d3b72db",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0013/completion-payload.json": "463d798f0fd51b3a0b1e640c8dcddc5502202564b13adec649eb81e1fc5be7fb",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0013/recovered-complete.json": "463d798f0fd51b3a0b1e640c8dcddc5502202564b13adec649eb81e1fc5be7fb",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0013/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0014/complete.json": "ed2aef4cbbadad56ac584453afb1a48842b4e412f09ee728183c8f90afaacc48",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0014/manifest.json": "9a9281634d8df9b52529ff532ad11726189e004cae24c1cf357d1cbca4c3dedc",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0014/recovered-manifest.json": "9a9281634d8df9b52529ff532ad11726189e004cae24c1cf357d1cbca4c3dedc",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0014/completion-payload.json": "ed2aef4cbbadad56ac584453afb1a48842b4e412f09ee728183c8f90afaacc48",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0014/recovered-complete.json": "ed2aef4cbbadad56ac584453afb1a48842b4e412f09ee728183c8f90afaacc48",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0014/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0015/complete.json": "2b0733c7a3d8a54074e4991ac23db24698b3c4c3fe234cd1a181e7cfe8275fc6",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0015/manifest.json": "37a8707cc3c1dbf89baf9f8a5910ade610c00b0346125cc19927784c8b079c4e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0015/recovered-manifest.json": "37a8707cc3c1dbf89baf9f8a5910ade610c00b0346125cc19927784c8b079c4e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0015/completion-payload.json": "2b0733c7a3d8a54074e4991ac23db24698b3c4c3fe234cd1a181e7cfe8275fc6",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0015/recovered-complete.json": "2b0733c7a3d8a54074e4991ac23db24698b3c4c3fe234cd1a181e7cfe8275fc6",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0015/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0016/complete.json": "dee67b1c61c282b35c2e46b2565d7e8a4eb585477229fb6072cf0db742b52cf9",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0016/manifest.json": "c63db3e40f85e630638149fb70fba2a7e7b663fda856fcc6fd9c651f16716b46",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0016/recovered-manifest.json": "c63db3e40f85e630638149fb70fba2a7e7b663fda856fcc6fd9c651f16716b46",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0016/completion-payload.json": "dee67b1c61c282b35c2e46b2565d7e8a4eb585477229fb6072cf0db742b52cf9",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0016/recovered-complete.json": "dee67b1c61c282b35c2e46b2565d7e8a4eb585477229fb6072cf0db742b52cf9",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0016/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0017/complete.json": "94f6851d27675f65f40d52fa4e6b818481b34a0e8569e0ace5b9d69b8d2d40c4",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0017/manifest.json": "39191e334da3858748665e6b83bfde2fde7927fee624f4f0f4bb6f41c02fa160",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0017/recovered-manifest.json": "39191e334da3858748665e6b83bfde2fde7927fee624f4f0f4bb6f41c02fa160",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0017/completion-payload.json": "94f6851d27675f65f40d52fa4e6b818481b34a0e8569e0ace5b9d69b8d2d40c4",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0017/recovered-complete.json": "94f6851d27675f65f40d52fa4e6b818481b34a0e8569e0ace5b9d69b8d2d40c4",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0017/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0018/complete.json": "453c404c9a3cd89a07f2072d93fbf05a44bd6d2d5590597227a5a5f273a54b78",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0018/manifest.json": "1802919375e203511d2503afec9b4a9284b41145ae0e8307eddbc24754d87115",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0018/recovered-manifest.json": "1802919375e203511d2503afec9b4a9284b41145ae0e8307eddbc24754d87115",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0018/completion-payload.json": "453c404c9a3cd89a07f2072d93fbf05a44bd6d2d5590597227a5a5f273a54b78",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0018/recovered-complete.json": "453c404c9a3cd89a07f2072d93fbf05a44bd6d2d5590597227a5a5f273a54b78",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0018/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0019/complete.json": "c62d47f66cdef68ac765855c7196c2adb39751369bd66e98c85ea0d11d9a6b1b",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0019/manifest.json": "fea9cd4d45d7519dc0e020c9bb92141011d731337a25c5dbbf890b50919e330e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0019/recovered-manifest.json": "fea9cd4d45d7519dc0e020c9bb92141011d731337a25c5dbbf890b50919e330e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0019/completion-payload.json": "c62d47f66cdef68ac765855c7196c2adb39751369bd66e98c85ea0d11d9a6b1b",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0019/recovered-complete.json": "c62d47f66cdef68ac765855c7196c2adb39751369bd66e98c85ea0d11d9a6b1b",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0019/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0020/complete.json": "ce56e812ec8f0113d9fb1f1496a71805ab164b43f59d109827d1ecab2052137c",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0020/manifest.json": "e69a69328f64cbf317010347bfe7f0ac2d4ee56644d8f7615f5fa6a1f5e5f40e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0020/recovered-manifest.json": "e69a69328f64cbf317010347bfe7f0ac2d4ee56644d8f7615f5fa6a1f5e5f40e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0020/completion-payload.json": "ce56e812ec8f0113d9fb1f1496a71805ab164b43f59d109827d1ecab2052137c",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0020/recovered-complete.json": "ce56e812ec8f0113d9fb1f1496a71805ab164b43f59d109827d1ecab2052137c",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0020/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0021/complete.json": "f7d37bbccbb285f37452e03ea73fe5d683163acd753bed101acc951f9b44e295",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0021/manifest.json": "67943e7fa021917c191fd501a2f260efea94706124601f17aa3c6b638c1dfa0e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0021/recovered-manifest.json": "67943e7fa021917c191fd501a2f260efea94706124601f17aa3c6b638c1dfa0e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0021/completion-payload.json": "f7d37bbccbb285f37452e03ea73fe5d683163acd753bed101acc951f9b44e295",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0021/recovered-complete.json": "f7d37bbccbb285f37452e03ea73fe5d683163acd753bed101acc951f9b44e295",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0021/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0022/complete.json": "1af30edfb5d89d6301b46b3404f4017ac1fc3c2349ce5efa9bce5a958e461a13",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0022/manifest.json": "26b027bfc8cfa199eaa5fe1764c881534e75b8f36905d3c62adb89145adf6485",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0022/recovered-manifest.json": "26b027bfc8cfa199eaa5fe1764c881534e75b8f36905d3c62adb89145adf6485",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0022/completion-payload.json": "1af30edfb5d89d6301b46b3404f4017ac1fc3c2349ce5efa9bce5a958e461a13",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0022/recovered-complete.json": "1af30edfb5d89d6301b46b3404f4017ac1fc3c2349ce5efa9bce5a958e461a13",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0022/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0023/complete.json": "4940d0fff4b83ae0018f59e9349873aae9f41558f9f144d36b97323c5de4c6b8",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0023/manifest.json": "bae17de77ca0c5d95f61fec26d3cedbe2fe927059e4cf864269744fd6bc4bcd8",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0023/recovered-manifest.json": "bae17de77ca0c5d95f61fec26d3cedbe2fe927059e4cf864269744fd6bc4bcd8",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0023/completion-payload.json": "4940d0fff4b83ae0018f59e9349873aae9f41558f9f144d36b97323c5de4c6b8",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0023/recovered-complete.json": "4940d0fff4b83ae0018f59e9349873aae9f41558f9f144d36b97323c5de4c6b8",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0023/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0024/complete.json": "65304a097a2f53a345e6f61db75da0ed5bb67b88c03c2184a9a93d922aaf064c",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0024/manifest.json": "15a8f3ea909e976d0537688f860e50fa1fa3253fba6be0205a47fe10f7e1a419",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0024/recovered-manifest.json": "15a8f3ea909e976d0537688f860e50fa1fa3253fba6be0205a47fe10f7e1a419",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0024/completion-payload.json": "65304a097a2f53a345e6f61db75da0ed5bb67b88c03c2184a9a93d922aaf064c",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0024/recovered-complete.json": "65304a097a2f53a345e6f61db75da0ed5bb67b88c03c2184a9a93d922aaf064c",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0024/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0025/complete.json": "7b1ce076d5f8067eec7ae85547b70b0208b95705cfa58470ce65eb811e890ec6",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0025/manifest.json": "c08f556ed553d0f38020ea67fd1531c18222934d83009e47a4be33de3b3ade90",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0025/recovered-manifest.json": "c08f556ed553d0f38020ea67fd1531c18222934d83009e47a4be33de3b3ade90",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0025/completion-payload.json": "7b1ce076d5f8067eec7ae85547b70b0208b95705cfa58470ce65eb811e890ec6",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0025/recovered-complete.json": "7b1ce076d5f8067eec7ae85547b70b0208b95705cfa58470ce65eb811e890ec6",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0025/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0026/complete.json": "3ef8b979a81620cd519c5e4bd01dc559fb44015e182a37242862234925ef2f21",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0026/manifest.json": "bf774c1af84456bbf5119adbf3ecc8768e47d53b0265e0dc0ca9a4afcae7a029",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0026/recovered-manifest.json": "bf774c1af84456bbf5119adbf3ecc8768e47d53b0265e0dc0ca9a4afcae7a029",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0026/completion-payload.json": "3ef8b979a81620cd519c5e4bd01dc559fb44015e182a37242862234925ef2f21",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0026/recovered-complete.json": "3ef8b979a81620cd519c5e4bd01dc559fb44015e182a37242862234925ef2f21",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0026/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0027/complete.json": "5bd4a0fed79a1fe9f836535ce912282b443757b38f58ffb63b543b832a012dd0",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0027/manifest.json": "54ff221911713f39d25928a8c73c4cb85c981ec077647c5ac72dfc23ec503e0b",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0027/recovered-manifest.json": "54ff221911713f39d25928a8c73c4cb85c981ec077647c5ac72dfc23ec503e0b",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0027/completion-payload.json": "5bd4a0fed79a1fe9f836535ce912282b443757b38f58ffb63b543b832a012dd0",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0027/recovered-complete.json": "5bd4a0fed79a1fe9f836535ce912282b443757b38f58ffb63b543b832a012dd0",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0027/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0028/complete.json": "65f6b7cabd2fab7c07823b29b71ca906ef4b5ec1f4490276a6fe69b1cf6e591c",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0028/manifest.json": "df5ec8936e52fb1c63539164c898c8d5f25053725802b7ca523cd568149cacdc",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0028/recovered-manifest.json": "df5ec8936e52fb1c63539164c898c8d5f25053725802b7ca523cd568149cacdc",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0028/completion-payload.json": "65f6b7cabd2fab7c07823b29b71ca906ef4b5ec1f4490276a6fe69b1cf6e591c",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0028/recovered-complete.json": "65f6b7cabd2fab7c07823b29b71ca906ef4b5ec1f4490276a6fe69b1cf6e591c",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0028/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0029/complete.json": "72d2f37036d61d95e2a2fdad54ce61c586798aaa05b0bcb7fbf2f494db0d4ccd",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0029/manifest.json": "3d622b8dd41751baacdf91c52821fe31cdcfbee37476792e4390f1a2b99c4681",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0029/recovered-manifest.json": "3d622b8dd41751baacdf91c52821fe31cdcfbee37476792e4390f1a2b99c4681",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0029/completion-payload.json": "72d2f37036d61d95e2a2fdad54ce61c586798aaa05b0bcb7fbf2f494db0d4ccd",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0029/recovered-complete.json": "72d2f37036d61d95e2a2fdad54ce61c586798aaa05b0bcb7fbf2f494db0d4ccd",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0029/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0030/complete.json": "01b31eadb5a838ae4d76f27d36a3ca7c46879e65e77aca3cd04ad3810660f38e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0030/manifest.json": "c49ff2423f54087bdb4721f9b57da50f0103e40bd1ba0781fe2700e896b9bb2d",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0030/recovered-manifest.json": "c49ff2423f54087bdb4721f9b57da50f0103e40bd1ba0781fe2700e896b9bb2d",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0030/completion-payload.json": "01b31eadb5a838ae4d76f27d36a3ca7c46879e65e77aca3cd04ad3810660f38e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0030/recovered-complete.json": "01b31eadb5a838ae4d76f27d36a3ca7c46879e65e77aca3cd04ad3810660f38e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0030/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0031/complete.json": "f28bca47baa58764adc8a630e1192787ae0668a21ae4732f54b4bb2c08676d95",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0031/manifest.json": "f1a9c786eaf488e204f5dbad8c84ace281a3d952310ee6df9df7a8b614dfb983",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0031/recovered-manifest.json": "f1a9c786eaf488e204f5dbad8c84ace281a3d952310ee6df9df7a8b614dfb983",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0031/completion-payload.json": "f28bca47baa58764adc8a630e1192787ae0668a21ae4732f54b4bb2c08676d95",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0031/recovered-complete.json": "f28bca47baa58764adc8a630e1192787ae0668a21ae4732f54b4bb2c08676d95",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0031/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0032/complete.json": "913c93cdfaa3dfeb4e61cf55455a9b64150f1454a6deb909006372f1eb1ad227",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0032/manifest.json": "86fe09b4aa76dcc9dd6140e9849685a98c9c576c71b7b5ee5282de3b7d1d0a2f",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0032/recovered-manifest.json": "86fe09b4aa76dcc9dd6140e9849685a98c9c576c71b7b5ee5282de3b7d1d0a2f",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0032/completion-payload.json": "913c93cdfaa3dfeb4e61cf55455a9b64150f1454a6deb909006372f1eb1ad227",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0032/recovered-complete.json": "913c93cdfaa3dfeb4e61cf55455a9b64150f1454a6deb909006372f1eb1ad227",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0032/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk03/batch-0033/complete.json": "4d4272b004c2f7ee8945c8a39b5036039eb42ca3ac356b93114242da719614cf",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk03/batch-0033/manifest.json": "5bb397ad45298176ab4baceaa2ed8c57c8b341ec72d747c331e328d29fc87d13",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk03/batch-0033/recovered-manifest.json": "5bb397ad45298176ab4baceaa2ed8c57c8b341ec72d747c331e328d29fc87d13",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk03/batch-0033/completion-payload.json": "4d4272b004c2f7ee8945c8a39b5036039eb42ca3ac356b93114242da719614cf",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk03/batch-0033/recovered-complete.json": "4d4272b004c2f7ee8945c8a39b5036039eb42ca3ac356b93114242da719614cf",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk03/batch-0033/cleanup.json": "613d0aa20b53b2065a8709fc5779a57e5a9110d658481329e991b1ae0a7f528e",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/guard/final.json": "ed9ebcecf34d70687294361f84a9e1d3772925138bcda0669d0a120fd5a4763c",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/guard/final.json": "2d0dc31aeed19c4e1697ea8e32e362d7d3b2c860d36f836df9750fb8c89cbf87",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk03/guard/final.json": "25a8a391a3b390bb8ac98e565572aa08164024f60671738b9078fc2b27bcda33",
+    "research/onchain-paper-replication-2026-09-24/storage/throughput-probe-2026-09-25-01/run/guard/final.json": "81b476139a3bb2dd807cceefc32ab29da9a0cd00be1afb04d5f8682edc72d9df",
+    "research/onchain-paper-replication-2026-09-24/storage/throughput-probe-2026-09-25-02/run/guard/final.json": "465c0e78edc5d72dfa5e8aadf079dc5141b40c8d80c8c1ff50fa9257dbf4194b",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/contract.json": "9541dbc4e3dadd203cbd17aaad12c4b8f9e6612383583cabf07f680e3b767464",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/BULK_RELEASE.json": "ee0cf613c4905ad1d9607e1ac8068650f6fdca33c55b33aa4755a320d05e347f",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk-controller/failed.json": "8f3752ebc4a3a4219aef91f5f0338a52fcba3a2b1dee3a391d6e890b6351dc92",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk03/failed.json": "8f9ce1c011268f5223e9f039a6f4ebc9e32998eaee8ab08c5145fd3e169ed3c4",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-04/batches.json": "ff91998022f756187a5baac14176c437f8e98103da3abe300c14188663c97965",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-04/reconciliation.json": "773f92fd66c61a11474a6fabd576a49f90ae9a2ae192ec0aaa10edf7213057ce"
+  },
+  "source_sha256": {
+    "tradingagents/research/onchain_replication/preservation.py": "2849670dcf847a97274cf590a2c6732cd7749e0e9e3e64e802cb2e415f08a410",
+    "tradingagents/research/onchain_replication/resources.py": "bc4676f3ad566d68bad9c66a7e7dd0b8e630c3a79b5a10b9200959ecea029791",
+    "tradingagents/research/lifecycle.py": "2d15a74935f251edd3dea19d2bf72b0e0477de01495f6c79670ce9c1da813364",
+    "tradingagents/research/onchain_replication/provenance.py": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-04/transfer.py": "f4a7105d80e29b90b51ac1716ddc174b298fb2996571283125ba40e0a24c6470",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/transfer.py": "217671b9199c3d8f0abbe956c8cccfacfafbe3e09a569d8a4a993940db08860f"
+  },
+  "expected_files": 59083,
+  "expected_raw_bytes": 103524489043,
+  "maximum_batch_raw_bytes": 536870912,
+  "maximum_batch_members": 4096,
+  "maximum_concurrent_batches": 1,
+  "maximum_temporary_bytes": 2147483648,
+  "scp_kbit_per_second": 65536,
+  "remote_free_floor_bytes": 274877906944,
+  "maximum_network_bytes": 220117073920,
+  "allowed_source_roots": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+    "/home/malecada/Data/onchain-research"
+  ],
+  "remote_parent": "research-backups/onchain-paper-replication-2026-09-24/raw-retained-ETH-04",
+  "phases": {
+    "bulk01": {
+      "start": 34,
+      "stop": 50,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk02": {
+      "start": 50,
+      "stop": 66,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk03": {
+      "start": 66,
+      "stop": 82,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk04": {
+      "start": 82,
+      "stop": 98,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk05": {
+      "start": 98,
+      "stop": 114,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk06": {
+      "start": 114,
+      "stop": 130,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk07": {
+      "start": 130,
+      "stop": 146,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk08": {
+      "start": 146,
+      "stop": 162,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk09": {
+      "start": 162,
+      "stop": 178,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk10": {
+      "start": 178,
+      "stop": 194,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 21474836480
+    },
+    "bulk11": {
+      "start": 194,
+      "stop": 195,
+      "wall_seconds": 28800,
+      "maximum_network_payload_bytes": 3221225472
+    }
+  },
+  "failure_rule": "Preserve01/02/03 and diagnostics unchanged; reuse pilot02 and verified03 batches1..33. Exclusive04 controller/phase identity; stop first failure, no automatic retry.",
+  "cleanup_rule": "only generated bundle.tar and recovered.tar after whole-archive/member/marker verification; originals never deleted",
+  "release_rule": "Independent reconciliation, source and cumulative-budget review; exact committed BULK_RELEASE before one new04 all-bulk launch.",
+  "maximum_network_bytes_qualification": "File payload upper bounds reserved before each operation. Upload size exact; remote dd emits at most one extra 32768-byte block and local receiver refuses excess before writing. SSH protocol overhead excluded.",
+  "download_protocol": "SSH dd bounded count, streamed receiver with byte/rate/time limits; port23 direct dd documented by Hetzner",
+  "remote_floor_rule": "Require phase raw bytes +1GiB metadata/padding reserve above256GiB floor before any upload",
+  "parent_failed_attempt": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk-controller",
+  "resource_amendment": "Existing256MiB max/192MiB high/0swap,3GiB runtime reserve,4GiB startup;20GiB runtime diskfloor plus2GiB available scratch preflight per phase. No concurrent synthetic tests after launch.",
+  "bulk_cumulative_wall_seconds": 172800,
+  "bulk_phase_sizing": "11phases, at most16bundles each, <=8h/phase and<=48h cumulative; only global batches34..194. Stop first failure; no retry.",
+  "reused_pilot": {
+    "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/pilot/complete.json",
+    "guard_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-02/pilot/guard/final.json",
+    "contract_sha256": "a009822b0b44c19a91e7dfe83c6ac7a91d284bdf4280a76284a292ab5d591d73",
+    "files": 149,
+    "raw_bytes": 517291351
+  },
+  "cumulative_budget_qualification": "New04 <=48h/205GiB payload; per-phase ceilings total203GiB. Preserve all prior conservative allocations: backup01/02/03 249GiB; diagnostics01/02 1.625GiB. Combined conservative all-attempt payload ceiling455.625GiB. Measured prior guard elapsed 13141.744918814s plus new172800s = 185941.744918814s. SSH overhead excluded; elapsed excludes idle review/preparation and is not the prior reservation sum. Prior48h backup03 reservation remains retained, not reset.",
+  "reused_batches": [
+    {
+      "index": 1,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0001/complete.json"
+    },
+    {
+      "index": 2,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0002/complete.json"
+    },
+    {
+      "index": 3,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0003/complete.json"
+    },
+    {
+      "index": 4,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0004/complete.json"
+    },
+    {
+      "index": 5,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0005/complete.json"
+    },
+    {
+      "index": 6,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0006/complete.json"
+    },
+    {
+      "index": 7,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0007/complete.json"
+    },
+    {
+      "index": 8,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0008/complete.json"
+    },
+    {
+      "index": 9,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0009/complete.json"
+    },
+    {
+      "index": 10,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0010/complete.json"
+    },
+    {
+      "index": 11,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0011/complete.json"
+    },
+    {
+      "index": 12,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0012/complete.json"
+    },
+    {
+      "index": 13,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0013/complete.json"
+    },
+    {
+      "index": 14,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0014/complete.json"
+    },
+    {
+      "index": 15,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0015/complete.json"
+    },
+    {
+      "index": 16,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk01/batch-0016/complete.json"
+    },
+    {
+      "index": 17,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0017/complete.json"
+    },
+    {
+      "index": 18,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0018/complete.json"
+    },
+    {
+      "index": 19,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0019/complete.json"
+    },
+    {
+      "index": 20,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0020/complete.json"
+    },
+    {
+      "index": 21,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0021/complete.json"
+    },
+    {
+      "index": 22,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0022/complete.json"
+    },
+    {
+      "index": 23,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0023/complete.json"
+    },
+    {
+      "index": 24,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0024/complete.json"
+    },
+    {
+      "index": 25,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0025/complete.json"
+    },
+    {
+      "index": 26,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0026/complete.json"
+    },
+    {
+      "index": 27,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0027/complete.json"
+    },
+    {
+      "index": 28,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0028/complete.json"
+    },
+    {
+      "index": 29,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0029/complete.json"
+    },
+    {
+      "index": 30,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0030/complete.json"
+    },
+    {
+      "index": 31,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0031/complete.json"
+    },
+    {
+      "index": 32,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk02/batch-0032/complete.json"
+    },
+    {
+      "index": 33,
+      "complete_path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-03/bulk03/batch-0033/complete.json"
+    }
+  ],
+  "local_free_floor_bytes": 21474836480
+}

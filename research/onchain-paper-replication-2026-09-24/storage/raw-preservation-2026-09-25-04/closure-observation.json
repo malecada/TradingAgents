@@ -1,0 +1,43 @@
+{
+  "observed_utc": "2026-09-25T20:15:25.676975+00:00",
+  "status": "failed",
+  "recorded_error": "RuntimeError: bounded download process failed",
+  "failure_stage": "first batch0034 archive download/readback",
+  "underlying_transport_cause": "unknown; receive_bounded discards subprocess stderr",
+  "elapsed_seconds": 971.0437055320003,
+  "cleanup_verified": true,
+  "controller_pid_present": false,
+  "workload_pid_present": false,
+  "cgroup_present": false,
+  "new_verified_bundles": 0,
+  "total_verified_files": 5832,
+  "total_verified_raw_bytes": 18052844567,
+  "remaining_raw_bytes": 85471644476,
+  "disk_free_now": 39008178176,
+  "failure_host_mem_available_bytes": 5932101632,
+  "failure_disk_free_bytes": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes": 39008759808
+  },
+  "memory_events": {
+    "high": 8254,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "partial_files": {
+    "recovered.tar": 212402176,
+    "manifest.json": 95061,
+    "failed.json": 106,
+    "bundle.tar": 536811520
+  },
+  "receipt_sha256": {
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-04/bulk-controller/failed.json": "d6af4609f66b4ab1a181a0d3d6546ef54e3dd70a3c72e00397f84e9227901d00",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-04/bulk01/failed.json": "3adc38d3e6c2334e0e8703e9a2bd41a6932e1799563bbf67af7ff8015cf6acb7",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-04/bulk01/guard/final.json": "6e02c2f3e9205ea32bdaeb949c6b1755e14379146e74ed1fa9111ebc46800e3d",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-04/bulk01/guard/child_exit.json": "bbb335acf3cfe61b3e0d009797c26ae7066bc2c10026b5f38a540674ce71b827",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-04/bulk01/guard/child.log": "eb1d8a5cb5dc40ed541e06fd480ad74377f1c6f8836d16b822de90800dcc409d"
+  },
+  "qualification": "No retry or new transfer launched. Originals, failed partials, earlier successful bundles and budgets retained. No attribution to DNS, ISP, provider or resource exhaustion is established."
+}

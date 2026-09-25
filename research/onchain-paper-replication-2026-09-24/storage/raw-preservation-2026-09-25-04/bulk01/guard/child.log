@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-04/transfer.py", line 211, in <module>
+    if len(sys.argv)==3 and sys.argv[1]=='--worker':worker(sys.argv[2]);raise SystemExit(0)
+                                                    ~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-04/transfer.py", line 172, in worker
+    result=transfer_bundle(rows[batch['start']:batch['stop']],bwork,
+           remote=remote+f'/batch-{index:04d}',transport=transport,
+           allowed_roots=c['allowed_source_roots'],start_index=batch['start'])
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/preservation.py", line 145, in transfer_bundle
+    transport.get(remote+'/'+remote_name, recovered)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-04/transfer.py", line 115, in get
+    receive_bounded([*self.ssh,'dd','if='+self.remote_path(path),'bs=32768','count='+str(count)],
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    destination,expected_bytes=size,max_seconds=1800,bytes_per_second=self.rate_bytes)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/preservation.py", line 212, in receive_bounded
+    raise RuntimeError('bounded download process failed')
+RuntimeError: bounded download process failed

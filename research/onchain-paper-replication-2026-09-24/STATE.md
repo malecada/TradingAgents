@@ -156,19 +156,18 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
-**Active backup continuation04:** released, independently reviewed and launched
-once from `b0c57453` after local space was freed. Initial free space was about
-40.0 GB; the unchanged20 GiB floor plus2 GiB working allowance fits. All59,083
-retained sources matched inventory size/mtime before launch. Pilot02 plus33
-completed03 bundles preserve5,832 files /18,052,844,567 raw bytes. The new identity
-covers only global batches34–194:161 bundles /53,251 files /85,471,644,476 bytes.
-Parent03 remains terminal with failed partials retained. Thirty-six focused
-synthetic tests passed before launch; no tests are running alongside transfer.
-Controller/monitor PID41712, phasebulk01, fresh running guard with kernel
-controls verified, worker source/contract intent accepted and remote capacity
-passed. Startup evidence: `storage/raw-preservation-2026-09-25-04/startup-observation.json`.
-No new raw-bundle completion is claimed by this startup checkpoint.
-See that directory's README, contract, exact release and independent review.
+**Backup continuation04 terminal FAILED:** the first batch0034 archive readback
+exited unsuccessfully after971.044 guard seconds. No new bundle was verified.
+The recorded error is `RuntimeError: bounded download process failed`; underlying
+SSH/download stderr was discarded, so a DNS, connection or provider cause is not
+established. At failure39.01 GB disk and5.93 GB available RAM exceeded the floors;
+no max/OOM event occurred. Memory.high throttling was recorded, without an OOM.
+Cleanup is verified; controller/workload PIDs and owned cgroup are absent.
+Verified preservation remains5,832 files /18,052,844,567 raw bytes (17.4%);
+85,471,644,476 raw bytes remain. The failed04 archives and all prior attempts are
+preserved. No relaunch or new transfer occurred during the status check.
+See `storage/raw-preservation-2026-09-25-04/closure-observation.json` and terminal
+receipts. Its independently reviewed release/source remain frozen at `b0c57453`.
 
 **Throughput diagnostic closed:** probe01 is terminalFAILED (parallel upload
 timeout after a verified128MiB single roundtrip); its partials remain preserved.
@@ -227,16 +226,14 @@ node-week. GPU device transfer is not yet wired into the admitted fit path; the
 old neural capacity estimates are not measured VRAM requirements. Acceptance statuses,
 financial fit counts and the24/51claim accounting remain unchanged.
 
-Next safe action: inspect the existing04 controller, current phase guard and
-per-batch completion receipts. Do not launch another process or relaunch any
-predecessor. Keep all bound source/inputs unchanged; no concurrent synthetic
-tests. On failure, preserve partials and reconcile a reviewed new identity with
-spent budgets retained. On completion, independently verify combined pilot02,
-completed03 and04 recovery against all59,083files/103,524,489,043raw bytes.
-No scheduled assistant wakeup is configured. The finite backup process continues
-on the host; no automatic notification is promised. Full raw-to-graph admission,
-compute/local scratch and all1,420financial fits remain separate and pending.
-No empirical job is active.
+Next safe action: diagnose the failed readback and preserve bounded transport
+error evidence in a separately reviewed successor before another transfer.
+Reconcile failed04 payload/time with prior allocations and reuse the verified
+pilot02/03 prefix. Never relaunch04 or overwrite its partials. Local space is
+currently sufficient; the latest interruption has an unresolved transport cause.
+No backup, diagnostic or empirical job is active. No scheduled assistant wakeup
+is configured. Full raw-to-graph admission, compute/local scratch and all1,420
+financial fits remain separate and pending.
 Further empirical admission needs a feasible host/storage contract, complete
 source/graph/population accounting and a reviewed cumulative allocation for any
 successor. The user supplied the existing Storage Box; feasible compute and local scratch
