@@ -1,0 +1,91 @@
+{
+  "observed_utc": "2026-09-26T06:27:17.538580+00:00",
+  "status": "failed",
+  "reason": "RuntimeError: host runtime memory reserve breached",
+  "terminal_receipt_mtime_utc": "2026-09-25T22:22:18.606011+00:00",
+  "elapsed_seconds": 6735.413494186,
+  "cleanup_verified": true,
+  "controller_pid_present": false,
+  "workload_pid_present": false,
+  "cgroup_present": false,
+  "child_exit_code": -15,
+  "failure_host_mem_available_bytes": 3165048832,
+  "host_reserve_bytes": 3221225472,
+  "peak_sampled_backup_memory_bytes": 202502144,
+  "memory_events": {
+    "high": 115631,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "completed_new_batches": [
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-05/bulk01/batch-0034/complete.json",
+      "sha256": "d9547cbf42e79e2ced0af1b79c112ca13352b57583ddffa4d29b9e76f844bf77",
+      "files": 168,
+      "raw_bytes": 536680155
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-05/bulk01/batch-0035/complete.json",
+      "sha256": "4c5d35c19bc2ec569dd1ec54fee86107e8d789f5deb47c9bd1d37e333c691d9a",
+      "files": 168,
+      "raw_bytes": 535255638
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-05/bulk01/batch-0036/complete.json",
+      "sha256": "6bad637c682550c6dfb58388b601b14d6e2ece997c9059f57131942db811ac03",
+      "files": 188,
+      "raw_bytes": 523487968
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-05/bulk01/batch-0037/complete.json",
+      "sha256": "8ea646112add03614c65b5fcc40ecb86883fb83cdc8db5c9d2fe9815f9fa3ba5",
+      "files": 194,
+      "raw_bytes": 536252794
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-05/bulk01/batch-0038/complete.json",
+      "sha256": "736f5fb1344f22fb06dfdd5d0a4bbfeb29d35dee81dd7331b3c2236c0f62e862",
+      "files": 176,
+      "raw_bytes": 534970738
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-05/bulk01/batch-0039/complete.json",
+      "sha256": "dbcfda207361255e9150e5ca919f80c0dd8f33e52755ced67a25fbf08e7871bc",
+      "files": 185,
+      "raw_bytes": 530859830
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-05/bulk01/batch-0040/complete.json",
+      "sha256": "095993152a60f4349b7f3e036dbd3fe94687165e4d8b9413ee057a68951c8e08",
+      "files": 190,
+      "raw_bytes": 536798754
+    },
+    {
+      "path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-05/bulk01/batch-0041/complete.json",
+      "sha256": "2553e92c5fd73732f7294e3c67787319cd9b23d021d5684808acbf06b1b53179",
+      "files": 208,
+      "raw_bytes": 527229521
+    }
+  ],
+  "new_verified_raw_bytes": 4261535398,
+  "total_verified_files": 7309,
+  "total_verified_raw_bytes": 22314379965,
+  "remaining_raw_bytes": 81210109078,
+  "current_disk_free_bytes": 35435642880,
+  "current_host_mem_available_bytes": 8269090816,
+  "partial_files": {
+    "recovered.tar": 180748288,
+    "manifest.json": 120677,
+    "bundle.tar": 532828160
+  },
+  "terminal_receipt_sha256": {
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-05/bulk-controller/failed.json": "d6af4609f66b4ab1a181a0d3d6546ef54e3dd70a3c72e00397f84e9227901d00",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-05/bulk01/failed.json": "daee58517d3b2a225d81f02caae82ca9283a1b439947e0029e9511395162e16d",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-05/bulk01/guard/final.json": "eb7592a4357f736a8ee3ec12adf5fbb8996a63f102d7a51145b320b61215e332",
+    "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-05/bulk01/guard/child_exit.json": "9db8c8ce6aae7c08de285d55e33dcc1619aef795d3e63256c82c5c6740f852a7"
+  },
+  "qualification": "Status/closure only. No new transfer or old-identity restart. Batch0042 interrupted by guard; no completed diagnostic receipt for its killed readback. Which other host workload consumed memory is not established."
+}

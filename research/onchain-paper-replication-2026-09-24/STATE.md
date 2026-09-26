@@ -156,18 +156,20 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
-**Active backup continuation05:** independently reviewed and launched once
-from `782cb2c7` under the explicit resume instruction. Controller/monitor
-PID107150; phasebulk01 has a fresh running guard, verified kernel release,
-accepted source/contract intent and successful remote capacity check. All three
-recovery metadata downloads completed with new transport diagnostics. Startup
-snapshot: `storage/raw-preservation-2026-09-25-05/startup-observation.json`.
-No new raw-bundle completion is claimed yet. The5,832 files /18,052,844,567 bytes
-verified in pilot02/03 remain credited;05 covers only remaining batches34–194.
-Bounded stderr capture was added in05 alone; prior failure remains unexplained.
-All42 focused tests passed before launch; none is competing with the backup.
-Source, budgets, release and review are frozen in the05 directory. All04 and
-older partials/outcomes remain preserved. Financial fits remain pending.
+**Continuation05 terminal FAILED after eight verified bundles:** at approximately
+September26 00:22 Prague time, the host available-memory reserve was breached:
+3,165,048,832 bytes available versus3,221,225,472 required (3 GiB). Guard elapsed
+6,735.413494s; child exit-15, cleanup verified and controller/worker/cgroup absent.
+No OOM/max event was recorded; sampled backup peak was202,502,144 bytes. The host
+workload responsible for reduced available RAM is not established. Disk remained
+above35 GB. This stop differs from04's transport failure.
+New05 batches34–41 verified1,477 files /4,261,535,398 raw bytes. Combined with
+pilot02/03,7,309 files /22,314,379,965 bytes are preserved (21.6%);81,210,109,078
+raw bytes remain. Incomplete batch42 packed532,828,160bytes and recovered
+180,748,288bytes remain retained. No new transfer was started by the status check.
+Current point-in-time RAM has recovered above the startup floor; sustained
+headroom remains necessary. Exact closure: `storage/raw-preservation-2026-09-25-05/closure-observation-20260926.json`.
+All prior releases, attempts, partials and financial exposure remain unchanged.
 
 **Backup continuation04 terminal FAILED:** the first batch0034 archive readback
 exited unsuccessfully after971.044 guard seconds. No new bundle was verified.
@@ -239,14 +241,14 @@ node-week. GPU device transfer is not yet wired into the admitted fit path; the
 old neural capacity estimates are not measured VRAM requirements. Acceptance statuses,
 financial fit counts and the24/51claim accounting remain unchanged.
 
-Next safe action: inspect the existing05 controller, current phase guard,
-per-download transport diagnostics and completed-bundle receipts. Never invoke
-the launcher again, restart any closed identity, change bound source/inputs or
-run concurrent synthetic tests. On failure retain partials and reconcile a
-reviewed successor with cumulative budgets; on success independently reconcile
-the combined pilot02/03/05 recovery denominator. No recurring assistant wakeup
+Next safe action: reconcile the additional verified05 prefix through batch41,
+retain interrupted42 and spent05 resources, then prepare an independently reviewed
+new continuation only with adequate sustained host memory and disk headroom.
+Never relaunch05 or repeat verified batches. Do not lower the memory reserve
+silently. Future complete recovery requires pilot02/03/05 and any successor.
+No backup, diagnostic or empirical job is active; no recurring assistant wakeup
 is configured. Full raw-to-graph admission, compute/local scratch and all1,420
-financial fits remain separate and pending. No empirical job is active.
+financial fits remain separate and pending.
 Further empirical admission needs a feasible host/storage contract, complete
 source/graph/population accounting and a reviewed cumulative allocation for any
 successor. The user supplied the existing Storage Box; feasible compute and local scratch
