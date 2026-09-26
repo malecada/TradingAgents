@@ -1,0 +1,218 @@
+{
+  "observed_utc": "2026-09-26T06:41:51.515469+00:00",
+  "status": "running",
+  "source_commit": "171d8a99b8ef5a60c9f08524757308505d2aec98",
+  "monitor_pid": 521764,
+  "controller_present": true,
+  "cgroup_present": true,
+  "records": {
+    "bulk-controller/intent.json": {
+      "sha256": "fae861ab5cce0000aa1378b74fbeb5d1e95b3229fe9e15758cb98dfbdd758a46",
+      "content": {
+        "contract_sha256": "ba666be21e07b0d2fe07c7def6e239e1db94302589c377bfbb2fc1800dbc1b06",
+        "maximum_wall_seconds": 172800,
+        "phases": [
+          "bulk01",
+          "bulk02",
+          "bulk03",
+          "bulk04",
+          "bulk05",
+          "bulk06",
+          "bulk07",
+          "bulk08",
+          "bulk09",
+          "bulk10"
+        ],
+        "release_sha256": "3e830929887cf137a016e6739c82f65a2d022e6c1dcdf0157957cde701cb93ae"
+      }
+    },
+    "bulk01/guard/live.json": {
+      "sha256": "5060d3feb41c1702df9056dd3d2c976de0c283ae80eaa62a82b48fd70a98d65f",
+      "content": {
+        "boot_id": "f7c0d50b-a73c-4fe0-9a7f-f51b9b5056ea",
+        "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-9541a5fe2d174e7881a9b5cb15e285ce.service",
+        "child_exit_code": null,
+        "command": [
+          "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+          "-B",
+          "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-26-06/transfer.py",
+          "--worker",
+          "bulk01"
+        ],
+        "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+        "cpu_quota_controller_available": false,
+        "cpu_thread_readback": {
+          "521768": [
+            0,
+            1
+          ],
+          "521774": [
+            0,
+            1
+          ],
+          "521971": [
+            0,
+            1
+          ],
+          "521972": [
+            0,
+            1
+          ]
+        },
+        "cpus": [
+          0,
+          1
+        ],
+        "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+        "disk_floor_bytes": 21474836480,
+        "disk_free_bytes": {
+          "/home/malecada/master_thesis/TradingAgents-audit-fixes": 34859802624
+        },
+        "disk_paths": [
+          "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+        ],
+        "elapsed_seconds": 55.696469280999736,
+        "elapsed_time_kill": false,
+        "host_mem_available_bytes": 8116518912,
+        "initial_memory_events": {
+          "high": 0,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0
+        },
+        "kernel_controls": {
+          "memory.high": "201326592",
+          "memory.max": "268435456",
+          "memory.swap.max": "0"
+        },
+        "lease_seconds": 15.0,
+        "limit_reason": null,
+        "memory_current_bytes": 201117696,
+        "memory_events": {
+          "high": 5917,
+          "low": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_group_kill": 0,
+          "oom_kill": 0
+        },
+        "memory_high_bytes": 201326592,
+        "memory_max_bytes": 268435456,
+        "memory_swap_max_bytes": 0,
+        "monitor_pid": 521764,
+        "monotonic_seconds": 43658.569961158,
+        "optional_memory_telemetry": {
+          "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+          "unit": {
+            "anon_bytes": 81244160,
+            "file_bytes": 113938432,
+            "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-9541a5fe2d174e7881a9b5cb15e285ce.service",
+            "pressure": "some avg10=0.04 avg60=0.20 avg300=0.06 total=289047\nfull avg10=0.04 avg60=0.20 avg300=0.06 total=288969",
+            "swap_current_bytes": 0,
+            "unavailable": {}
+          },
+          "user_ancestor": {
+            "anon_bytes": 6387253248,
+            "file_bytes": 5412937728,
+            "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+            "pressure": "some avg10=0.03 avg60=0.22 avg300=0.15 total=12702760\nfull avg10=0.03 avg60=0.22 avg300=0.15 total=12436456",
+            "swap_current_bytes": 2092040192,
+            "unavailable": {}
+          }
+        },
+        "owner_identity": null,
+        "peak_sampled_memory_current_bytes": 201801728,
+        "phase": "running",
+        "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-26-06/bulk01/guard",
+        "reserve_bytes": 3221225472,
+        "retry": false,
+        "sample_seconds": 0.25,
+        "start_reserve_bytes": 4294967296,
+        "unit": "onchain-replication-9541a5fe2d174e7881a9b5cb15e285ce.service",
+        "unit_properties": {
+          "ActiveState": "active",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-9541a5fe2d174e7881a9b5cb15e285ce.service",
+          "ExecMainStatus": "0",
+          "Result": "success",
+          "SubState": "running"
+        },
+        "wait_seconds": 30.0,
+        "wall_seconds": 28800
+      }
+    },
+    "bulk01/guard/release.json": {
+      "sha256": "82560e2694628ad002f9cc4b76fe2cd7b1b545cc825269f01057f04c6fe268b5",
+      "content": {
+        "kernel_controls_verified": true
+      }
+    },
+    "bulk01/intent.json": {
+      "sha256": "9054adf939ea77daec04ef00cc7d4fd85fd3f8551f143e57a1d77e3f1bd73398",
+      "content": {
+        "contract_sha256": "ba666be21e07b0d2fe07c7def6e239e1db94302589c377bfbb2fc1800dbc1b06",
+        "no_financial_computation": true,
+        "phase": "bulk01",
+        "source_commit": "171d8a99b8ef5a60c9f08524757308505d2aec98",
+        "start_batch": 42,
+        "stop_batch": 58
+      }
+    },
+    "bulk01/capacity.json": {
+      "sha256": "1728910c36d2de7d2ae2b0a5d20891893d7d056a2dcc694b56408d50b7b3c7ef",
+      "content": {
+        "available_bytes": 5457887494144,
+        "floor_bytes": 274877906944,
+        "reserved_upload_bytes": 9594700738
+      }
+    },
+    "bulk01/recovered-batches.json.transport.json": {
+      "sha256": "adbdf989c76e25c45e08b0e82ecf3f2704781f58bd7805ff48cadfbc17801791",
+      "content": {
+        "elapsed_seconds": 0.7819739080005093,
+        "error_type": null,
+        "expected_bytes": 17904,
+        "pid": 521893,
+        "received_bytes": 17904,
+        "returncode": 0,
+        "status": "complete",
+        "stderr_bytes_seen": 90,
+        "stderr_tail": "0+1 records in\n0+1 records out\n17904 bytes (18 kB, 17 KiB) copied, 4.0984e-05 s, 437 MB/s\n",
+        "stderr_truncated": false
+      }
+    },
+    "bulk01/recovered-contract.json.transport.json": {
+      "sha256": "d107d8442e08523ed876c193bece73048024126dc96c5f0a938db2a14b587840",
+      "content": {
+        "elapsed_seconds": 0.8572147500017309,
+        "error_type": null,
+        "expected_bytes": 76604,
+        "pid": 521873,
+        "received_bytes": 76604,
+        "returncode": 0,
+        "status": "complete",
+        "stderr_bytes_seen": 90,
+        "stderr_tail": "2+1 records in\n2+1 records out\n76604 bytes (77 kB, 75 KiB) copied, 9.9397e-05 s, 771 MB/s\n",
+        "stderr_truncated": false
+      }
+    },
+    "bulk01/recovered-inventory.json.gz.transport.json": {
+      "sha256": "41eb91f76594f10077f4ea60b012617aa15be9439fbf5deab4efe604675a088f",
+      "content": {
+        "elapsed_seconds": 1.848220236999623,
+        "error_type": null,
+        "expected_bytes": 3596603,
+        "pid": 521847,
+        "received_bytes": 3596603,
+        "returncode": 0,
+        "status": "complete",
+        "stderr_bytes_seen": 96,
+        "stderr_tail": "109+1 records in\n109+1 records out\n3596603 bytes (3.6 MB, 3.4 MiB) copied, 0.553638 s, 6.5 MB/s\n",
+        "stderr_truncated": false
+      }
+    }
+  },
+  "new_completed_bundles": 0,
+  "qualification": "One06 launch. Kernel controls, source/contract intent and remote capacity passed. Recovery metadata downloads succeeded. No new raw-bundle completion claimed at startup."
+}

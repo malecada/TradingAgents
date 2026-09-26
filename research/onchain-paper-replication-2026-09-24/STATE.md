@@ -156,16 +156,18 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
-**Continuation06 prepared under the September26 resume instruction:** current
-resources exceed the unchanged startup memory and disk/scratch floors. Completed
-pilot02/03/05 batches0–41 reconcile to7,309 files /22,314,379,965 raw bytes.
-The new identity targets only batches42–194:153 bundles /51,774 files /
-81,210,109,078 bytes. Parent05 remains closed and its42 partials remain retained.
-Source is byte-identical to reviewed05, inheriting its42-test evidence; exact
-configuration/hash/prefix admission passed without rerunning tests or raw data.
-Independent review passed; the exact release is frozen. Commit and one launch
-remain pending.
-See `storage/raw-preservation-2026-09-26-06/README.md` and its candidate.
+**Active backup continuation06:** independently reviewed and launched once
+from `171d8a99` under the September26 resume instruction. Controller/monitor
+PID521764; phasebulk01 has a fresh running guard, verified kernel controls,
+accepted source/contract intent and successful remote capacity check. All three
+recovery metadata downloads succeeded. Startup evidence:
+`storage/raw-preservation-2026-09-26-06/startup-observation.json`.
+No new raw-bundle completion is claimed yet. The7,309 verified files /
+22,314,379,965 bytes from pilot02/03/05 remain credited. New06 covers only
+batches42–194:153 bundles /51,774 files /81,210,109,078 raw bytes. Source is
+byte-identical to reviewed05 and inherits its42-test evidence; no tests ran
+alongside transfer. Original memory/disk reserves and bounded diagnostics remain.
+All predecessors and partials remain retained; no financial fits were started.
 
 **Continuation05 terminal FAILED after eight verified bundles:** at approximately
 September26 00:22 Prague time, the host available-memory reserve was breached:
@@ -252,14 +254,14 @@ node-week. GPU device transfer is not yet wired into the admitted fit path; the
 old neural capacity estimates are not measured VRAM requirements. Acceptance statuses,
 financial fit counts and the24/51claim accounting remain unchanged.
 
-Next safe action: reconcile the additional verified05 prefix through batch41,
-retain interrupted42 and spent05 resources, then prepare an independently reviewed
-new continuation only with adequate sustained host memory and disk headroom.
-Never relaunch05 or repeat verified batches. Do not lower the memory reserve
-silently. Future complete recovery requires pilot02/03/05 and any successor.
-No backup, diagnostic or empirical job is active; no recurring assistant wakeup
-is configured. Full raw-to-graph admission, compute/local scratch and all1,420
-financial fits remain separate and pending.
+Next safe action: inspect the existing06 controller, current guard, transport
+diagnostics and completed-bundle receipts. Never invoke the launcher again or
+restart any closed identity. Keep bound source/inputs unchanged and do not run
+concurrent synthetic tests. On failure retain partials and reconcile a reviewed
+successor with cumulative budgets; on success independently verify combined
+pilot02/03/05/06 recovery against the full59,083-file inventory. No recurring
+assistant wakeup is configured. Full raw-to-graph admission, compute/local scratch
+and all1,420financial fits remain separate and pending. No empirical job is active.
 Further empirical admission needs a feasible host/storage contract, complete
 source/graph/population accounting and a reviewed cumulative allocation for any
 successor. The user supplied the existing Storage Box; feasible compute and local scratch
