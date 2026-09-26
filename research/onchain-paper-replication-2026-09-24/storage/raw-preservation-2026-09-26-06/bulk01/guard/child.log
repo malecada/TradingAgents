@@ -1,0 +1,25 @@
+{"phase": "bulk01", "completed_batches": 1, "planned_batches": 16, "files": 213, "raw_bytes": 532652813, "elapsed_seconds": 591.3291291239948}
+{"phase": "bulk01", "completed_batches": 2, "planned_batches": 16, "files": 412, "raw_bytes": 1062297036, "elapsed_seconds": 1172.0046765169973}
+{"phase": "bulk01", "completed_batches": 3, "planned_batches": 16, "files": 634, "raw_bytes": 1593323300, "elapsed_seconds": 1747.7716825489988}
+{"transport_error_type": "CalledProcessError", "returncode": 1, "stderr_tail": "lost connection\n"}
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-26-06/transfer.py", line 287, in <module>
+    if len(sys.argv)==3 and sys.argv[1]=='--worker':worker(sys.argv[2]);raise SystemExit(0)
+                                                    ~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-26-06/transfer.py", line 248, in worker
+    result=transfer_bundle(rows[batch['start']:batch['stop']],bwork,
+           remote=remote+f'/batch-{index:04d}',transport=transport,
+           allowed_roots=c['allowed_source_roots'],start_index=batch['start'])
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/preservation.py", line 144, in transfer_bundle
+    transport.put(original, remote+'/'+remote_name)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-26-06/transfer.py", line 184, in put
+    self.run([*self.scp,str(source),self.host+':'+self.remote_path(path)])
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-26-06/transfer.py", line 167, in run
+    return subprocess.run(args,check=True,capture_output=True,timeout=1800)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['scp', '-q', '-l', '65536', '-P', '23', '-i', '/home/malecada/.ssh/id_ed25519_storagebox_u676273', '-o', 'IdentitiesOnly=yes', '-o', 'BatchMode=yes', '-o', 'UserKnownHostsFile=/home/malecada/.ssh/known_hosts_storagebox_u676273', '-o', 'StrictHostKeyChecking=yes', '-o', 'ConnectTimeout=15', '-o', 'ServerAliveInterval=15', '-o', 'ServerAliveCountMax=2', '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-26-06/bulk01/batch-0045/bundle.tar', 'u676273@u676273.your-storagebox.de:research-backups/onchain-paper-replication-2026-09-24/raw-retained-ETH-06/bulk01/batch-0045/bundle.tar']' returned non-zero exit status 1.

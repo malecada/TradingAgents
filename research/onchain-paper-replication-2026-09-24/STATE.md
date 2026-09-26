@@ -156,18 +156,22 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
-**Active backup continuation06:** independently reviewed and launched once
-from `171d8a99` under the September26 resume instruction. Controller/monitor
-PID521764; phasebulk01 has a fresh running guard, verified kernel controls,
-accepted source/contract intent and successful remote capacity check. All three
-recovery metadata downloads succeeded. Startup evidence:
-`storage/raw-preservation-2026-09-26-06/startup-observation.json`.
-No new raw-bundle completion is claimed yet. The7,309 verified files /
-22,314,379,965 bytes from pilot02/03/05 remain credited. New06 covers only
-batches42–194:153 bundles /51,774 files /81,210,109,078 raw bytes. Source is
-byte-identical to reviewed05 and inherits its42-test evidence; no tests ran
-alongside transfer. Original memory/disk reserves and bounded diagnostics remain.
-All predecessors and partials remain retained; no financial fits were started.
+**Continuation07 prepared after explicit connection-loss/resume instruction:**
+SSH capacity preflight passed; local memory and disk exceed unchanged startup
+floors. All59,083 source size/mtime checks passed. The new identity excludes the
+verified0–44 prefix and targets only150 remaining batches45–194. Source is
+byte-identical to05/06 with inherited42-test evidence and bounded diagnostics.
+Configuration/hash/prefix admission and independent review passed. The exact
+release is frozen; commit and a single launch remain pending. See `storage/raw-preservation-2026-09-26-07/README.md`.
+
+**Continuation06 terminal FAILED:** SCP upload exited1 with `lost connection`
+during batch45. Cleanup is verified, controller/worker/cgroup absent; guard
+elapsed2,022.109623s. Three new batches42–44 verified634files/1,593,323,300bytes.
+Combined pilot02/03/05/06 preservation is7,943files/23,907,703,265bytes (23.1%);
+79,616,785,778bytes remain. The failed45 local bundle535,347,200bytes and all
+failure evidence are retained; no incomplete transfer receives verified credit.
+Exact closure: `storage/raw-preservation-2026-09-26-06/closure-observation-20260926.json`.
+The closed06 identity was not restarted. No financial computation occurred.
 
 **Continuation05 terminal FAILED after eight verified bundles:** at approximately
 September26 00:22 Prague time, the host available-memory reserve was breached:
