@@ -156,6 +156,17 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
+**Continuation06 prepared under the September26 resume instruction:** current
+resources exceed the unchanged startup memory and disk/scratch floors. Completed
+pilot02/03/05 batches0–41 reconcile to7,309 files /22,314,379,965 raw bytes.
+The new identity targets only batches42–194:153 bundles /51,774 files /
+81,210,109,078 bytes. Parent05 remains closed and its42 partials remain retained.
+Source is byte-identical to reviewed05, inheriting its42-test evidence; exact
+configuration/hash/prefix admission passed without rerunning tests or raw data.
+Independent review passed; the exact release is frozen. Commit and one launch
+remain pending.
+See `storage/raw-preservation-2026-09-26-06/README.md` and its candidate.
+
 **Continuation05 terminal FAILED after eight verified bundles:** at approximately
 September26 00:22 Prague time, the host available-memory reserve was breached:
 3,165,048,832 bytes available versus3,221,225,472 required (3 GiB). Guard elapsed
