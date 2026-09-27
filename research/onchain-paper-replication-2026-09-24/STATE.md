@@ -156,13 +156,17 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
-**Continuation08 prepared under the explicit resume instruction:** connectivity,
-source size/mtime and resource checks passed. The unchanged source inherits its
-42-test evidence; exact hash/prefix/configuration admission passed. The new
-identity excludes verified0–53 and covers only141remaining batches54–194.
-Independent review passed and the exact release is frozen; commit and one
-launch remain pending. See
-`storage/raw-preservation-2026-09-27-08/README.md` and its candidate.
+**Active backup continuation08:** independently reviewed and launched once
+from `700a7ba5` under the September27 resume instruction. Controller/monitor
+PID662792; phasebulk01 has a fresh running guard, verified kernel controls,
+accepted source/contract intent and successful remote capacity check. All three
+recovery metadata downloads passed. Startup evidence:
+`storage/raw-preservation-2026-09-27-08/startup-observation.json`.
+No new raw-bundle completion is claimed yet. The9,766 verified files /
+28,705,634,654bytes from pilot02/03/05/06/07 remain credited. New08 covers only
+batches54–194:141 bundles /49,317files /74,818,854,389bytes. Source is unchanged,
+with inherited42-test evidence and bounded diagnostics. No concurrent synthetic
+tests or financial fits were started. Resource reserves and all partials remain.
 
 **Continuation07 terminal FAILED:** batch54 SSH readback exited255 with
 `server not responding` after487,915,520 of527,196,160 archive bytes. Guard
@@ -267,14 +271,14 @@ node-week. GPU device transfer is not yet wired into the admitted fit path; the
 old neural capacity estimates are not measured VRAM requirements. Acceptance statuses,
 financial fit counts and the24/51claim accounting remain unchanged.
 
-Next safe action: inspect the existing07 controller, current guard, transport
+Next safe action: inspect the existing08 controller, current guard, transport
 diagnostics and completed-bundle receipts. Never invoke its launcher again,
 restart a closed identity or change bound source/inputs. No concurrent synthetic
-tests. On failure retain partials and reconcile a reviewed successor with
-cumulative budgets; on completion independently verify combined pilot02/03/05/06/07
-recovery against all59,083files. No recurring assistant wakeup is configured.
-Full raw-to-graph admission, compute/local scratch and all1,420financial fits
-remain separate and pending. No empirical job is active.
+tests. On failure preserve partials and reconcile a reviewed successor with all
+spent/allocated resources retained; on completion independently verify combined
+pilot02/03/05/06/07/08 recovery against all59,083files. No recurring assistant
+wakeup is configured. Full raw-to-graph admission, compute/local scratch and
+all1,420financial fits remain separate and pending. No empirical job is active.
 Further empirical admission needs a feasible host/storage contract, complete
 source/graph/population accounting and a reviewed cumulative allocation for any
 successor. The user supplied the existing Storage Box; feasible compute and local scratch
