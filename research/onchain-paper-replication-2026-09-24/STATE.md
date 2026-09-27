@@ -156,17 +156,22 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
-**Active backup continuation07:** independently reviewed and launched once
-from `3445af49` after the explicit connection-loss/resume instruction.
-Controller/monitor PID569064; phasebulk01 has a fresh running guard,
-verified kernel controls, accepted source/contract intent and successful remote
-capacity check. All recovery metadata downloads passed. Startup evidence:
-`storage/raw-preservation-2026-09-26-07/startup-observation.json`.
-No new raw-bundle completion is claimed yet. The7,943 verified files /
-23,907,703,265bytes from pilot02/03/05/06 remain credited. New07 covers only
-batches45–194:150 bundles /51,140files /79,616,785,778bytes. Source is unchanged
-with inherited42-test evidence and bounded diagnostics. No concurrent tests or
-financial fits were started. Resource reserves and all prior partials remain.
+**Continuation08 prepared under the explicit resume instruction:** connectivity,
+source size/mtime and resource checks passed. The unchanged source inherits its
+42-test evidence; exact hash/prefix/configuration admission passed. The new
+identity excludes verified0–53 and covers only141remaining batches54–194.
+Independent review passed and the exact release is frozen; commit and one
+launch remain pending. See
+`storage/raw-preservation-2026-09-27-08/README.md` and its candidate.
+
+**Continuation07 terminal FAILED:** batch54 SSH readback exited255 with
+`server not responding` after487,915,520 of527,196,160 archive bytes. Guard
+elapsed6,738.660674s; cleanup verified and controller/worker/cgroup absent.
+Nine new verified batches45–53 add1,823files/4,797,931,389bytes. Combined verified
+preservation is9,766files/28,705,634,654bytes (27.7%);74,818,854,389bytes remain.
+Batch54 partials and all predecessor evidence are preserved; closed07 was not
+restarted. Exact closure: `storage/raw-preservation-2026-09-26-07/closure-observation-20260927.json`.
+No financial computation occurred.
 
 **Continuation06 terminal FAILED:** SCP upload exited1 with `lost connection`
 during batch45. Cleanup is verified, controller/worker/cgroup absent; guard

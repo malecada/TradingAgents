@@ -1,0 +1,28 @@
+{"phase": "bulk01", "completed_batches": 1, "planned_batches": 16, "files": 196, "raw_bytes": 535189766, "elapsed_seconds": 686.1285112159967}
+{"phase": "bulk01", "completed_batches": 2, "planned_batches": 16, "files": 399, "raw_bytes": 1069691160, "elapsed_seconds": 1423.6267824649985}
+{"phase": "bulk01", "completed_batches": 3, "planned_batches": 16, "files": 584, "raw_bytes": 1605114086, "elapsed_seconds": 2144.2314211539997}
+{"phase": "bulk01", "completed_batches": 4, "planned_batches": 16, "files": 800, "raw_bytes": 2132812652, "elapsed_seconds": 2775.8724796949973}
+{"phase": "bulk01", "completed_batches": 5, "planned_batches": 16, "files": 1013, "raw_bytes": 2662114807, "elapsed_seconds": 3383.0006435159958}
+{"phase": "bulk01", "completed_batches": 6, "planned_batches": 16, "files": 1212, "raw_bytes": 3197526051, "elapsed_seconds": 4001.0494563839966}
+{"phase": "bulk01", "completed_batches": 7, "planned_batches": 16, "files": 1406, "raw_bytes": 3734255252, "elapsed_seconds": 4620.505298543998}
+{"phase": "bulk01", "completed_batches": 8, "planned_batches": 16, "files": 1601, "raw_bytes": 4263380370, "elapsed_seconds": 5277.348395367997}
+{"phase": "bulk01", "completed_batches": 9, "planned_batches": 16, "files": 1823, "raw_bytes": 4797931389, "elapsed_seconds": 6116.326102984}
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-26-07/transfer.py", line 287, in <module>
+    if len(sys.argv)==3 and sys.argv[1]=='--worker':worker(sys.argv[2]);raise SystemExit(0)
+                                                    ~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-26-07/transfer.py", line 248, in worker
+    result=transfer_bundle(rows[batch['start']:batch['stop']],bwork,
+           remote=remote+f'/batch-{index:04d}',transport=transport,
+           allowed_roots=c['allowed_source_roots'],start_index=batch['start'])
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/preservation.py", line 145, in transfer_bundle
+    transport.get(remote+'/'+remote_name, recovered)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-26-07/transfer.py", line 191, in get
+    receive_diagnostic([*self.ssh,'dd','if='+self.remote_path(path),'bs=32768','count='+str(count)],
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    destination,expected_bytes=size,max_seconds=1800,bytes_per_second=self.rate_bytes)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-26-07/transfer.py", line 124, in receive_diagnostic
+    raise RuntimeError('bounded download process failed; see transport receipt')
+RuntimeError: bounded download process failed; see transport receipt
