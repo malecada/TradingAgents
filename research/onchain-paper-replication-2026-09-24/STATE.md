@@ -156,17 +156,24 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
-**Active backup continuation08:** independently reviewed and launched once
-from `700a7ba5` under the September27 resume instruction. Controller/monitor
-PID662792; phasebulk01 has a fresh running guard, verified kernel controls,
-accepted source/contract intent and successful remote capacity check. All three
-recovery metadata downloads passed. Startup evidence:
-`storage/raw-preservation-2026-09-27-08/startup-observation.json`.
-No new raw-bundle completion is claimed yet. The9,766 verified files /
-28,705,634,654bytes from pilot02/03/05/06/07 remain credited. New08 covers only
-batches54–194:141 bundles /49,317files /74,818,854,389bytes. Source is unchanged,
-with inherited42-test evidence and bounded diagnostics. No concurrent synthetic
-tests or financial fits were started. Resource reserves and all partials remain.
+**Continuation09 prepared after user-reported PC sleep and explicit resume:**
+connectivity, source size/mtime and resource checks passed. The unchanged source
+inherits42-test evidence; exact hash/prefix/configuration admission passed. The
+new identity excludes verified0–57 and covers only137remaining batches58–194.
+Independent review passed; the exact release is frozen. Commit and one launch
+remain pending. Current
+local32.6 GB free exceeds22 GiB floor+scratch; remote about5.45 TB free exceeds
+remaining72.69 GB plus overhead/reserve. This is backup capacity, not later
+full graph/MCM scratch admission. See `storage/raw-preservation-2026-09-28-09/README.md`.
+
+**Continuation08 terminal FAILED:** batch58 SCP upload exited1 with `lost
+connection`. Guard elapsed3,927.763397s; cleanup verified, controller/worker/
+cgroup absent. Four new verified batches54–57 add1,077files/2,129,704,225bytes.
+Combined preserved total is10,843files/30,835,338,879bytes (29.8%);72,689,150,164
+raw bytes remain. Failed58 bundle534,609,920bytes and all evidence are retained.
+Closed08 was not restarted. Exact closure:
+`storage/raw-preservation-2026-09-27-08/closure-observation-20260928.json`.
+No financial computation occurred.
 
 **Continuation07 terminal FAILED:** batch54 SSH readback exited255 with
 `server not responding` after487,915,520 of527,196,160 archive bytes. Guard
