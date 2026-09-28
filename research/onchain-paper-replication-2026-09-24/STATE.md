@@ -156,15 +156,21 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
-**Continuation09 prepared after user-reported PC sleep and explicit resume:**
-connectivity, source size/mtime and resource checks passed. The unchanged source
-inherits42-test evidence; exact hash/prefix/configuration admission passed. The
-new identity excludes verified0–57 and covers only137remaining batches58–194.
-Independent review passed; the exact release is frozen. Commit and one launch
-remain pending. Current
-local32.6 GB free exceeds22 GiB floor+scratch; remote about5.45 TB free exceeds
-remaining72.69 GB plus overhead/reserve. This is backup capacity, not later
-full graph/MCM scratch admission. See `storage/raw-preservation-2026-09-28-09/README.md`.
+**Active backup continuation09:** independently reviewed and launched once
+from `555c30d1` under the September28 resume instruction after PC sleep.
+Controller/monitor PID894430; phasebulk01 has a fresh running guard,
+verified kernel controls, accepted source/contract intent and remote capacity
+check. All recovery metadata downloads passed. Startup evidence:
+`storage/raw-preservation-2026-09-28-09/startup-observation.json`.
+No new raw bundle is claimed complete yet. The10,843 verified files /
+30,835,338,879bytes from pilot02/03/05/06/07/08 remain credited. New09 covers only
+batches58–194:137 bundles /48,240files /72,689,150,164bytes. Source is unchanged,
+with inherited42-test evidence and bounded diagnostics. Resource reserves and
+all partials remain; no concurrent tests or financial fits were started.
+Current local and remote capacity supports this bounded backup: about32 GB free
+locally after packing versus22 GiB startup floor+scratch, and about5.45 TB remote.
+Only one bundle's temporary copies are retained at a time and removed after
+verification. This does not admit later full graph/MCM scratch requirements.
 
 **Continuation08 terminal FAILED:** batch58 SCP upload exited1 with `lost
 connection`. Guard elapsed3,927.763397s; cleanup verified, controller/worker/
@@ -278,12 +284,12 @@ node-week. GPU device transfer is not yet wired into the admitted fit path; the
 old neural capacity estimates are not measured VRAM requirements. Acceptance statuses,
 financial fit counts and the24/51claim accounting remain unchanged.
 
-Next safe action: inspect the existing08 controller, current guard, transport
+Next safe action: inspect the existing09 controller, current guard, transport
 diagnostics and completed-bundle receipts. Never invoke its launcher again,
 restart a closed identity or change bound source/inputs. No concurrent synthetic
 tests. On failure preserve partials and reconcile a reviewed successor with all
 spent/allocated resources retained; on completion independently verify combined
-pilot02/03/05/06/07/08 recovery against all59,083files. No recurring assistant
+pilot02/03/05/06/07/08/09 recovery against all59,083files. No recurring assistant
 wakeup is configured. Full raw-to-graph admission, compute/local scratch and
 all1,420financial fits remain separate and pending. No empirical job is active.
 Further empirical admission needs a feasible host/storage contract, complete
