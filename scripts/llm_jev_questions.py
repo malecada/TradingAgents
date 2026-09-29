@@ -176,8 +176,9 @@ def build_questions(cands: list[str], *, reverse: bool, with_asset: bool = True)
 def questions_sha256() -> str:
     payload = {"classes": CLASSES, "general": GENERAL_RULES, "definitions": CLASS_DEFINITIONS,
                "v2": V2_RULES, "noul": {c: noul_instruction(c) for c in CLASSES},
-               "asset": ASSET_INSTRUCTIONS, "none": NONE_OPTION, "dictionary": DICTIONARY,
-               "stopwords": sorted(STOPWORDS), "content_limit": CONTENT_LIMIT,
-               "max_candidates": MAX_CANDIDATES, "max_span": MAX_SPAN}
+               "asset": ASSET_INSTRUCTIONS, "none": NONE_OPTION, "none_key": NONE_KEY,
+               "dictionary": DICTIONARY, "stopwords": sorted(STOPWORDS),
+               "content_limit": CONTENT_LIMIT, "max_candidates": MAX_CANDIDATES,
+               "max_span": MAX_SPAN}
     blob = json.dumps(payload, sort_keys=True, ensure_ascii=False).encode("utf-8")
     return hashlib.sha256(blob).hexdigest()

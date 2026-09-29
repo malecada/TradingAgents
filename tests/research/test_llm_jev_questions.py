@@ -65,6 +65,8 @@ def test_build_state_fields():
     upper = build_state(row, str.upper)
     assert upper == {"headline": "HÉADLINE 한국", "content": "X" * 4000}
     assert build_state({"headline": None, "summary": "S"}) == {"headline": "", "summary": "S"}
+    doubled = build_state({"headline": "h", "content": "x" * 5000}, lambda s: s.replace("x", "xx"))
+    assert doubled["content"] == "xx" * 4000  # truncate to 4,000 first, then transform
 
 
 def test_build_questions_shape():
@@ -80,7 +82,7 @@ def test_build_questions_shape():
     assert "asset" not in build_questions(["X"], reverse=False, with_asset=False)
 
 
-QUESTIONS_SHA256 = "ffa974f9d61bce16553cb56cdc392737c544c962e68d08261cf6c1765ed630d0"
+QUESTIONS_SHA256 = "5204286177c37570653da49d476129533474db67143e8d7c613986cf01c784a0"
 
 
 def test_questions_hash_pinned():
