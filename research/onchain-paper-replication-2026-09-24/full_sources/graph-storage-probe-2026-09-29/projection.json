@@ -1,0 +1,27 @@
+{
+  "asof_utc": "2026-09-29T11:16:59.765262+00:00",
+  "status": "projection for independent review; not proof of fit or release",
+  "synthetic_rows": 250000,
+  "target_rows": 8841688,
+  "scale": 35.366752,
+  "sampled_peak_including_main_journal_index_sort_graph_bytes": 244158464,
+  "projected_peak_bytes": 8635091845,
+  "projected_parquet_page_bytes": 215748608,
+  "planning_margin_fraction": 0.3,
+  "planning_margin_bytes": 2590527554,
+  "extra_metadata_guard_reserve_bytes": 268435456,
+  "projected_incremental_disk_requirement_bytes": 11709803463,
+  "disk_floor_bytes": 21474836480,
+  "workspace_free_bytes": 33525592064,
+  "headroom_above_floor_bytes": 12050755584,
+  "headroom_after_projected_requirement_bytes": 340952121,
+  "sampled_synthetic_memory_peak_bytes": 617586688,
+  "synthetic_memory_is_not_full_week_bound": true,
+  "not_measured": [
+    "Real source parsing",
+    "Full-size B-tree/sort behavior",
+    "Actual admitted node/edge counts",
+    "Concurrent filesystem usage"
+  ],
+  "qualification": "30% scaling allowance and256MiB metadata allowance are explicit planning assumptions, not measured upper bounds. The20GiB runtime disk stop remains independent. Existing raw, old partial databases and synthetic outputs remain allocated; current free excludes them. No empirical job started."
+}

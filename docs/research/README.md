@@ -63,6 +63,7 @@ Schema version 1 has these fields:
 | `selection` | Confirmation requires committed `{path, sha256}` freezing the selected rule/thresholds; otherwise null is permitted. |
 | `source_files` | Every runner/implementation/configuration dependency mapped from path to SHA-256. |
 | `runtime_hashes` | Exact result of `tradingagents.research.runtime_hashes()` for these helper sources. |
+| `cumulative_budget_extension` | Optional explicit `{extension: {path, sha256}, review: {path, sha256}}`; see the reviewed ceiling contract below. |
 | `inputs` | Named inputs `{path, sha256, dataset}` matching registered windows; prospective hashes may initially be null. |
 | `cells` | Complete nonempty unique cell-ID denominator, including cases that might be unavailable. |
 | `outputs` | Complete unique JSON basenames written inside the new run's `outputs/` directory. |
@@ -81,9 +82,30 @@ root. Another family key with the same mechanism cannot reset the budget.
 Previously recorded family budget/history fields cannot change through ordinary
 admission. Exhausted unrelated families remain legal registry history. Budget
 extensions require a separately reviewed engineering/policy amendment that
-preserves the old limit and cumulative count; this helper deliberately does not
-offer an implicit reset or extension switch. Result-informed children must name
+preserves the old limit and cumulative count. Result-informed children must name
 a terminal parent whose original registration is unchanged.
+
+The optional `cumulative_budget_extension` field binds the exact extension,
+accepted independent review and allocation as committed `source_files`. Its
+version-1 extension contains `program_id`, the unchanged `base_family`, a larger
+`cumulative_ceiling`, `consumed_before`, `initial_experiment`, an allocation
+`{path, sha256}`, `reason`, and the complete closed-claim snapshot. Each snapshot
+entry binds `experiment`, `claim_sha256`, `terminal_status` and `terminal_sha256`.
+The version-1 review contains `decision: accepted`, the exact `extension_sha256`,
+and nonempty `reviewer` and `scope` strings. Independent substantive review must
+check the allocation and authority; JSON fields alone establish neither.
+
+First adoption requires every same-mechanism claim to be included and terminal.
+The consumed count remains historical attempts plus all claimed starts; failed
+claims are never refunded. Later claims carry the accepted extension, and a later
+amendment cannot lower an adopted ceiling or omit prior claims. Admission is
+repeated under the existing claim lock. Claims retain the original family object
+and separately record `effective_attempt_budget`. Historical claims lacking that
+field retain their original ceiling. The old custom `budget_extension` field is
+not interpreted by this mechanism, preserving earlier certificate contracts.
+The independent verifier reconstructs the bound ceiling; full snapshot/adopter
+history enforcement remains an admission check, not a second verifier algorithm.
+No budget amendment supplies scientific, data, resource or operational admission.
 
 ## Prospective data: freeze first, bind bytes later
 

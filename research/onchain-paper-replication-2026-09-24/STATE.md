@@ -4,6 +4,47 @@ This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
 
+**September29 prelaunch checkpoint — cumulative extension verified:** corrected
+`cumulative_budget_extension` preserves old certificate metadata. Named offline02
+completed3293tests plus97subtests,2CUDA skips; guard1571.46seconds,2,569,056,256peak
+sampled bytes,child0,verified cleanup and zero memory-limit events. All seven
+source bindings match. The earlier namespace-collision failure and stopped
+partial offline01 remain preserved. Independent review closed the material
+finding and full-suite prerequisite. No verification or empirical job is active.
+Evidence: `full_sources/budget-extension-2026-09-29/`.
+
+The exact52ceiling has independent budget-only acceptance and a conditionally
+reviewed gate at `full_sources/resource-successor-03/`. No claim has adopted it:
+24claims are spent and all1420fits remain pending. The successor binds the
+unchanged parent, seven original source days,8,841,688rows and eight cells.
+A completed250,000row synthetic storage probe supports an explicitly uncertain
+11,709,803,463byte planning estimate including30%/256MiB allowances; this is not
+an upper bound. Fresh committed admission, service temp-volume, exclusive-owner,
+9GiB startup RAM and20GiB-plus-projection disk checks remain before launch.
+
+**Local space preservation:** four inactive failed-transfer archives totaling
+1,768,206,336bytes were copied, fsynced and hash-verified on the Data volume,
+then their original paths were atomically replaced with links to the verified
+copies. All raw sources, graphs, SQLite databases and historical receipts remain
+unchanged. Relocation guard completed25.59seconds,child0/verified cleanup;
+13,488memory.high events (throttling), zero max/OOM events. Root free afterward
+33,662,976,000bytes; Data22,207,119,360bytes. This is local preservation, not a new
+external backup. Evidence and destination mapping:
+`storage/graph-preservation-preparation-2026-09-29/relocation-complete.json`.
+Do not remove the destination while those original paths depend on it.
+
+The two completedgraph stores have a12file/1,037,095,664byte metadata-only backup
+inventory; no graph upload has happened. After relocation, the former512MiB
+archive-plus-recovery staging plan does not fit above the Data-volume20GiB floor;
+it requires a reviewed smaller-batch/streaming arrangement or additional capacity.
+The larger interrupted SQLite likewise needs chunked preservation. C16 stays
+partial. All13tasks and the broader paper scope remain required.
+
+Next safe action: commit/push the verified implementation and exact gate, perform
+fresh checks, then start the new finite graph pilot once if admitted. Preserve
+its source HEAD and all source/input bytes throughout execution. No old identity
+may be relaunched. The generic runbook specifies status and failure reconciliation.
+
 **September29 feature-residency increment verified:** completed fixed features
 remain as verified disk references and load once per unique batch graph; streamed
 production and registered continuation/reuse preserve scientific identities.

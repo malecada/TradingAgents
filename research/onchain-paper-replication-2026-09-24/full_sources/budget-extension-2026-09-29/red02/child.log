@@ -1,0 +1,291 @@
+FFFFFFFFFFFF                                                             [100%]
+=================================== FAILURES ===================================
+_____ test_reviewed_extension_preserves_family_and_spends_failed_allowance _____
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-32/test_reviewed_extension_preser0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '7c97c3801449bf8b8051e5a61ca0b748813a4392')
+
+    def test_reviewed_extension_preserves_family_and_spends_failed_allowance(registered):
+        fixture=extension(closed(registered));root,spec,source=fixture
+        frozen={p: p.read_bytes() for p in (root/'research_runs').glob('*/*.json')}
+        with pytest.raises(RuntimeError,match='synthetic failure'):
+>           with start(fixture,experiment='example-d') as run:
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_budget_extensions.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_lifecycle.py:62: in start
+    return Run.start(root=root, registration="registration.json", experiment=experiment, source=source)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/lifecycle.py:72: in start
+    admitted = admit(**arguments)
+               ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-32/test_reviewed_extension_preser0')
+registration = 'registration.json', experiment = 'example-d'
+source = '877212f2961206e947fe0baf1897a8a2c659ab08'
+design_source = '877212f2961206e947fe0baf1897a8a2c659ab08', bindings = None
+_own_claim = None
+
+    def admit(*, root, registration, experiment, source, design_source=None, bindings=None,
+              _own_claim=None) -> Admission:
+        """Read only registration, source and prior receipts; no empirical input bytes.
+    
+        `ready=False` admits a prospective design while refusing its execution until
+        all declared sample windows have ended. Input hashing occurs in start().
+        """
+        root = Path(root).resolve()
+        if _git(root, "rev-parse", "HEAD").decode().strip() != source:
+            raise ValueError("source must equal the full current HEAD")
+        raw = _committed(root, source, registration)
+        design_source = design_source or source
+        _git(root, "merge-base", "--is-ancestor", design_source, source)
+        frozen = _git(root, "show", f"{design_source}:{Path(registration).as_posix()}")
+        if raw != frozen:
+            raise ValueError("design registration changed between freeze and execution")
+        spec = json.loads(raw)
+        if spec.get("schema_version") != 1:
+            raise ValueError("unsupported registration schema")
+        identity(spec["program_id"], "program")
+        identity(experiment, "experiment")
+        experiments = spec["experiments"]
+        exp = experiments[experiment]
+        charter = exp["charter"]
+        _committed(root, source, charter["path"], charter["sha256"])
+        if digest(_git(root, "show", f"{design_source}:{charter['path']}")) != charter["sha256"]:
+            raise ValueError("charter differs from design freeze")
+        family = spec["families"][exp["family"]]
+        mechanisms = []
+        for name, info in spec["families"].items():
+            identity(name, "family")
+            mechanisms.append(identity(info["mechanism_id"], "mechanism"))
+            for field in ("attempt_budget", "prior_attempts"):
+                if type(info[field]) is not int or info[field] < 0:
+                    raise ValueError("family budget and prior attempts must be nonnegative integers")
+            if name == exp["family"] and info["attempt_budget"] <= info["prior_attempts"]:
+                raise ValueError("family budget has no remaining attempts")
+            if not info.get("history_reference"):
+                raise ValueError("family history reference is required")
+        if len(mechanisms) != len(set(mechanisms)):
+            raise ValueError("same mechanism cannot reset budget under another family")
+        seen = set()
+        parent = experiment
+        while parent is not None:
+            if parent in seen or parent not in experiments:
+                raise ValueError("invalid parent ancestry")
+            seen.add(parent)
+            ancestor = experiments[parent]
+            if ancestor["family"] != exp["family"]:
+                raise ValueError("parent ancestry cannot move into another family budget")
+            parent = ancestor["parent"]
+        if not exp.get("question"):
+            raise ValueError("experiment question is required")
+        if exp["stage"] not in {"discovery", "development", "confirmation"}:
+            raise ValueError("unrecognized research stage")
+        if exp["reuse"] not in {"exploratory", "fresh"}:
+            raise ValueError("reuse must be exploratory or fresh")
+        if exp["stage"] == "confirmation":
+            if not exp.get("selection"):
+                raise ValueError("confirmation requires a committed selection freeze")
+            selection = exp["selection"]
+            _committed(root, source, selection["path"], selection["sha256"])
+            if digest(_git(root, "show", f"{design_source}:{selection['path']}")) != selection["sha256"]:
+                raise ValueError("selection differs from design freeze")
+        if not exp["source_files"] or exp["runtime_hashes"] != runtime_hashes():
+            raise ValueError("source files/runtime hashes are missing or changed")
+        for name, expected in exp["source_files"].items():
+            _committed(root, source, name, expected)
+            if digest(_git(root, "show", f"{design_source}:{name}")) != expected:
+                raise ValueError("source differs from design freeze")
+        for key in ("cells", "outputs"):
+            names = exp[key]
+            if not names or len(names) != len(set(names)):
+                raise ValueError(f"registered {key} must be nonempty and unique")
+            for name in names:
+                identity(name, "output" if key == "outputs" else "cell")
+        if any(not name.endswith(".json") for name in exp["outputs"]):
+            raise ValueError("this narrow helper accepts JSON outputs only")
+        if not exp["windows"] or not exp["inputs"]:
+            raise ValueError("registered sample windows and inputs required")
+        datasets = spec["datasets"]
+        history = []
+        for info in datasets.values():
+            identity(info["identity"], "dataset")
+            if not info.get("history_reference"):
+                raise ValueError("dataset exposure history reference is required")
+            for exposure in info["exposures"]:
+                _window(exposure)
+                if exposure["state"] not in {"exposed", "spent"}:
+                    raise ValueError("invalid prior exposure state")
+                history.append({**exposure, "identity": info["identity"]})
+        prior = claims(root)
+        if any(c["experiment_id"] == experiment for c in prior if c["experiment_id"] != _own_claim):
+            raise ValueError("repeat run prohibited; use a separately justified registration")
+        relevant = [c for c in prior if c["family"]["mechanism_id"] == family["mechanism_id"]]
+        for claim in relevant:
+            if claim["family"] != family:
+                raise ValueError("family budget/history changed; explicit extension process required")
+        used = len([c for c in relevant if c["experiment_id"] != _own_claim]) + family["prior_attempts"]
+        if used >= family["attempt_budget"]:
+>           raise ValueError("cumulative family attempt budget exhausted")
+E           ValueError: cumulative family attempt budget exhausted
+
+tradingagents/research/admission.py:220: ValueError
+_ test_bad_extensions_refused_even_before_original_budget_is_spent[missing_claim] _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-32/test_bad_extensions_refused_ev0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'b496d6cfa6297259d0e1f3b8c71b25a16040acc3')
+fault = 'missing_claim'
+
+    @pytest.mark.parametrize('fault',['missing_claim','claim_hash','terminal_hash','history','boolean_ceiling','wrong_adopter','rejected_review','review_hash','unpinned'])
+    def test_bad_extensions_refused_even_before_original_budget_is_spent(registered,fault):
+        fixture=extension(closed(registered,1),fault=fault);root,_,_=fixture
+>       with pytest.raises(ValueError,match='extension|review|snapshot|budget'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/test_budget_extensions.py:76: Failed
+_ test_bad_extensions_refused_even_before_original_budget_is_spent[claim_hash] _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-32/test_bad_extensions_refused_ev1'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'b496d6cfa6297259d0e1f3b8c71b25a16040acc3')
+fault = 'claim_hash'
+
+    @pytest.mark.parametrize('fault',['missing_claim','claim_hash','terminal_hash','history','boolean_ceiling','wrong_adopter','rejected_review','review_hash','unpinned'])
+    def test_bad_extensions_refused_even_before_original_budget_is_spent(registered,fault):
+        fixture=extension(closed(registered,1),fault=fault);root,_,_=fixture
+>       with pytest.raises(ValueError,match='extension|review|snapshot|budget'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/test_budget_extensions.py:76: Failed
+_ test_bad_extensions_refused_even_before_original_budget_is_spent[terminal_hash] _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-32/test_bad_extensions_refused_ev2'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'b496d6cfa6297259d0e1f3b8c71b25a16040acc3')
+fault = 'terminal_hash'
+
+    @pytest.mark.parametrize('fault',['missing_claim','claim_hash','terminal_hash','history','boolean_ceiling','wrong_adopter','rejected_review','review_hash','unpinned'])
+    def test_bad_extensions_refused_even_before_original_budget_is_spent(registered,fault):
+        fixture=extension(closed(registered,1),fault=fault);root,_,_=fixture
+>       with pytest.raises(ValueError,match='extension|review|snapshot|budget'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/test_budget_extensions.py:76: Failed
+__ test_bad_extensions_refused_even_before_original_budget_is_spent[history] ___
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-32/test_bad_extensions_refused_ev3'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '163668990b7a684dbde6a254f961c9b677d0988a')
+fault = 'history'
+
+    @pytest.mark.parametrize('fault',['missing_claim','claim_hash','terminal_hash','history','boolean_ceiling','wrong_adopter','rejected_review','review_hash','unpinned'])
+    def test_bad_extensions_refused_even_before_original_budget_is_spent(registered,fault):
+        fixture=extension(closed(registered,1),fault=fault);root,_,_=fixture
+>       with pytest.raises(ValueError,match='extension|review|snapshot|budget'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/test_budget_extensions.py:76: Failed
+_ test_bad_extensions_refused_even_before_original_budget_is_spent[boolean_ceiling] _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-32/test_bad_extensions_refused_ev4'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '163668990b7a684dbde6a254f961c9b677d0988a')
+fault = 'boolean_ceiling'
+
+    @pytest.mark.parametrize('fault',['missing_claim','claim_hash','terminal_hash','history','boolean_ceiling','wrong_adopter','rejected_review','review_hash','unpinned'])
+    def test_bad_extensions_refused_even_before_original_budget_is_spent(registered,fault):
+        fixture=extension(closed(registered,1),fault=fault);root,_,_=fixture
+>       with pytest.raises(ValueError,match='extension|review|snapshot|budget'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/test_budget_extensions.py:76: Failed
+_ test_bad_extensions_refused_even_before_original_budget_is_spent[wrong_adopter] _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-32/test_bad_extensions_refused_ev5'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '163668990b7a684dbde6a254f961c9b677d0988a')
+fault = 'wrong_adopter'
+
+    @pytest.mark.parametrize('fault',['missing_claim','claim_hash','terminal_hash','history','boolean_ceiling','wrong_adopter','rejected_review','review_hash','unpinned'])
+    def test_bad_extensions_refused_even_before_original_budget_is_spent(registered,fault):
+        fixture=extension(closed(registered,1),fault=fault);root,_,_=fixture
+>       with pytest.raises(ValueError,match='extension|review|snapshot|budget'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/test_budget_extensions.py:76: Failed
+_ test_bad_extensions_refused_even_before_original_budget_is_spent[rejected_review] _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-32/test_bad_extensions_refused_ev6'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '163668990b7a684dbde6a254f961c9b677d0988a')
+fault = 'rejected_review'
+
+    @pytest.mark.parametrize('fault',['missing_claim','claim_hash','terminal_hash','history','boolean_ceiling','wrong_adopter','rejected_review','review_hash','unpinned'])
+    def test_bad_extensions_refused_even_before_original_budget_is_spent(registered,fault):
+        fixture=extension(closed(registered,1),fault=fault);root,_,_=fixture
+>       with pytest.raises(ValueError,match='extension|review|snapshot|budget'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/test_budget_extensions.py:76: Failed
+_ test_bad_extensions_refused_even_before_original_budget_is_spent[review_hash] _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-32/test_bad_extensions_refused_ev7'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '163668990b7a684dbde6a254f961c9b677d0988a')
+fault = 'review_hash'
+
+    @pytest.mark.parametrize('fault',['missing_claim','claim_hash','terminal_hash','history','boolean_ceiling','wrong_adopter','rejected_review','review_hash','unpinned'])
+    def test_bad_extensions_refused_even_before_original_budget_is_spent(registered,fault):
+        fixture=extension(closed(registered,1),fault=fault);root,_,_=fixture
+>       with pytest.raises(ValueError,match='extension|review|snapshot|budget'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/test_budget_extensions.py:76: Failed
+__ test_bad_extensions_refused_even_before_original_budget_is_spent[unpinned] __
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-32/test_bad_extensions_refused_ev8'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'a0ea3bce5d24756c96fa002f4cbba5de4149c558')
+fault = 'unpinned'
+
+    @pytest.mark.parametrize('fault',['missing_claim','claim_hash','terminal_hash','history','boolean_ceiling','wrong_adopter','rejected_review','review_hash','unpinned'])
+    def test_bad_extensions_refused_even_before_original_budget_is_spent(registered,fault):
+        fixture=extension(closed(registered,1),fault=fault);root,_,_=fixture
+>       with pytest.raises(ValueError,match='extension|review|snapshot|budget'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/test_budget_extensions.py:76: Failed
+_______ test_snapshot_cannot_omit_new_closed_claim_before_first_adoption _______
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-32/test_snapshot_cannot_omit_new_0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'a0ea3bce5d24756c96fa002f4cbba5de4149c558')
+
+    def test_snapshot_cannot_omit_new_closed_claim_before_first_adoption(registered):
+        fixture=extension(closed(registered,1));root,spec,_=fixture
+        spec['experiments']['example-b']=deepcopy(spec['experiments']['example-a']);source=commit(root,spec)
+        with start((root,spec,source),experiment='example-b') as run:complete(run)
+>       with pytest.raises(ValueError,match='snapshot'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/test_budget_extensions.py:85: Failed
+_ test_later_claims_must_carry_extension_and_verifier_checks_effective_ceiling _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-32/test_later_claims_must_carry_e0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'a0ea3bce5d24756c96fa002f4cbba5de4149c558')
+
+    def test_later_claims_must_carry_extension_and_verifier_checks_effective_ceiling(registered):
+        fixture=extension(closed(registered,1));root,spec,source=fixture
+        with start(fixture,experiment='example-d') as run:complete(run)
+        p=root/'research_runs/example-d/claim.json';original=p.read_bytes();claim=json.loads(original);claim['effective_attempt_budget']=500;p.write_text(json.dumps(claim))
+>       with pytest.raises(ValueError,match='budget|ceiling'):verify_claim(p.parent)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/test_budget_extensions.py:94: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/test_budget_extensions.py::test_reviewed_extension_preserves_family_and_spends_failed_allowance
+FAILED tests/research/test_budget_extensions.py::test_bad_extensions_refused_even_before_original_budget_is_spent[missing_claim]
+FAILED tests/research/test_budget_extensions.py::test_bad_extensions_refused_even_before_original_budget_is_spent[claim_hash]
+FAILED tests/research/test_budget_extensions.py::test_bad_extensions_refused_even_before_original_budget_is_spent[terminal_hash]
+FAILED tests/research/test_budget_extensions.py::test_bad_extensions_refused_even_before_original_budget_is_spent[history]
+FAILED tests/research/test_budget_extensions.py::test_bad_extensions_refused_even_before_original_budget_is_spent[boolean_ceiling]
+FAILED tests/research/test_budget_extensions.py::test_bad_extensions_refused_even_before_original_budget_is_spent[wrong_adopter]
+FAILED tests/research/test_budget_extensions.py::test_bad_extensions_refused_even_before_original_budget_is_spent[rejected_review]
+FAILED tests/research/test_budget_extensions.py::test_bad_extensions_refused_even_before_original_budget_is_spent[review_hash]
+FAILED tests/research/test_budget_extensions.py::test_bad_extensions_refused_even_before_original_budget_is_spent[unpinned]
+FAILED tests/research/test_budget_extensions.py::test_snapshot_cannot_omit_new_closed_claim_before_first_adoption
+FAILED tests/research/test_budget_extensions.py::test_later_claims_must_carry_extension_and_verifier_checks_effective_ceiling
+12 failed in 22.23s

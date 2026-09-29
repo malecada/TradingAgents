@@ -44,6 +44,29 @@ def verify_claim(directory) -> dict:
     exp = registered["experiments"][claim["experiment_id"]]
     if exp != claim["experiment"] or registered["families"][exp["family"]] != claim["family"]:
         raise ValueError("claim contract differs from committed registration")
+    # Independently check the saved ceiling, without importing admission logic.
+    ceiling = claim["family"]["attempt_budget"]
+    if exp.get("cumulative_budget_extension") is not None:
+        reference = exp["cumulative_budget_extension"]
+        bodies = {}
+        for kind in ("extension", "review"):
+            ref = reference[kind]
+            body = _blob(root, claim["source"], ref["path"])
+            if (hashlib.sha256(body).hexdigest() != ref["sha256"]
+                    or exp["source_files"].get(ref["path"]) != ref["sha256"]):
+                raise ValueError("saved budget extension metadata differs")
+            bodies[kind] = json.loads(body)
+        extension, review = bodies["extension"], bodies["review"]
+        if (extension["base_family"] != claim["family"] or extension["program_id"] != claim["program_id"]
+                or type(extension["cumulative_ceiling"]) is not int or extension["cumulative_ceiling"] <= ceiling
+                or review["decision"] != "accepted" or review["extension_sha256"] != reference["extension"]["sha256"]):
+            raise ValueError("saved budget extension/review ceiling differs")
+        allocation = extension["allocation"]
+        if exp["source_files"].get(allocation["path"]) != allocation["sha256"]:
+            raise ValueError("saved budget allocation is not pinned")
+        ceiling = extension["cumulative_ceiling"]
+    if type(claim.get("effective_attempt_budget", ceiling)) is not int or claim.get("effective_attempt_budget", claim["family"]["attempt_budget"]) != ceiling:
+        raise ValueError("saved effective budget ceiling differs")
     windows = [{**w, "identity": registered["datasets"][w["dataset"]]["identity"],
                 "state": "spent" if exp["stage"] == "confirmation" else "exposed"} for w in exp["windows"]]
     exposures = [{**item, "identity": info["identity"]} for info in registered["datasets"].values()

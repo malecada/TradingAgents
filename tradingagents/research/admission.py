@@ -115,6 +115,7 @@ class Admission:
     bindings: str | None
     bindings_sha256: str | None
     inputs: dict
+    effective_attempt_budget: int
 
 
 def admit(*, root, registration, experiment, source, design_source=None, bindings=None,
@@ -215,8 +216,21 @@ def admit(*, root, registration, experiment, source, design_source=None, binding
     for claim in relevant:
         if claim["family"] != family:
             raise ValueError("family budget/history changed; explicit extension process required")
+    def extension_metadata(reference):
+        if (not isinstance(reference, dict) or set(reference) != {"path", "sha256"}
+                or not isinstance(reference["path"], str)
+                or not isinstance(reference["sha256"], str)
+                or not re.fullmatch(r"[0-9a-f]{64}", reference["sha256"])
+                or exp["source_files"].get(reference["path"]) != reference["sha256"]):
+            raise ValueError("budget extension metadata must be source-pinned")
+        value = _committed(root, source, reference["path"], reference["sha256"])
+        if _git(root, "show", f"{design_source}:{reference['path']}") != value:
+            raise ValueError("budget extension metadata differs from design freeze")
+        return value
+    from .budget_extensions import effective_budget
+    ceiling = effective_budget(root, spec["program_id"], experiment, exp, family, relevant, extension_metadata)
     used = len([c for c in relevant if c["experiment_id"] != _own_claim]) + family["prior_attempts"]
-    if used >= family["attempt_budget"]:
+    if used >= ceiling:
         raise ValueError("cumulative family attempt budget exhausted")
     if exp["parent"] is not None:
         parent_dir = root / "research_runs" / exp["parent"]
@@ -289,4 +303,4 @@ def admit(*, root, registration, experiment, source, design_source=None, binding
         bindings_sha256 = digest(bound_raw)
     ready = ready and all(item["sha256"] is not None for item in resolved_inputs.values())
     return Admission(root, registration, experiment, source, digest(raw), spec, exp, family, windows, ready,
-                     design_source, bindings, bindings_sha256, resolved_inputs)
+                     design_source, bindings, bindings_sha256, resolved_inputs, ceiling)

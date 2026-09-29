@@ -1,0 +1,54 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_historical_custom_certificate_remains_readable ______________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-36/test_historical_custom_certifi0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'a4af5c145bab9f43cedb0c3590769ba6523339f9')
+
+    def test_historical_custom_certificate_remains_readable(registered):
+        root,spec,_=registered
+        # Same shape as the separately implemented dated-mark historical certificate.
+        # This pre-existing metadata field does not opt in to the new generic ceiling.
+        p=root/'legacy-certificate.json';p.write_text('{"status":"synthetic legacy certificate"}')
+        spec['experiments']['example-a']['budget_extension']={'path':p.name,'sha256':sha(p)}
+        spec['experiments']['example-a']['source_files'][p.name]=sha(p)
+        git(root,'add',p.name)
+        fixture=(root,spec,commit(root,spec))
+>       with start(fixture) as run:complete(run)
+             ^^^^^^^^^^^^^^
+
+tests/research/test_budget_extensions.py:186: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_lifecycle.py:62: in start
+    return Run.start(root=root, registration="registration.json", experiment=experiment, source=source)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/lifecycle.py:72: in start
+    admitted = admit(**arguments)
+               ^^^^^^^^^^^^^^^^^^
+tradingagents/research/admission.py:231: in admit
+    ceiling = effective_budget(root, spec["program_id"], experiment, exp, family, relevant, extension_metadata)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-36/test_historical_custom_certifi0')
+program = 'synthetic-program', experiment_id = 'example-a'
+experiment = {'family': 'family-a', 'parent': None, 'charter': {'path': 'charter.md', 'sha256': 'e95c68e44ad15055def6128558d17d77050bcdfe41acb2434d244f7cf5107866'}, 'question': 'synthetic sum', ...}
+family = {'mechanism_id': 'synthetic-mechanism', 'attempt_budget': 3, 'prior_attempts': 0, 'history_reference': 'synthetic; no prior market research'}
+relevant = []
+read_bound = <function admit.<locals>.extension_metadata at 0x795d4a4318a0>
+
+    def effective_budget(root, program, experiment_id, experiment, family, relevant, read_bound):
+        base=family['attempt_budget']
+        previous=max([base]+[c.get('effective_attempt_budget',base) for c in relevant])
+        reference=experiment.get('budget_extension')
+        if reference is None:
+            if previous>base:raise ValueError('adopted budget extension must be carried forward')
+            return base
+        if not isinstance(reference,dict) or set(reference)!={'extension','review'}:
+>           raise ValueError('budget extension reference differs')
+E           ValueError: budget extension reference differs
+
+tradingagents/research/budget_extensions.py:19: ValueError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/test_budget_extensions.py::test_historical_custom_certificate_remains_readable
+1 failed in 0.78s

@@ -85,6 +85,7 @@ class ResearchRun:
                      "design_source": admitted.design_source, "bindings": admitted.bindings,
                      "bindings_sha256": admitted.bindings_sha256, "inputs": admitted.inputs,
                      "family": admitted.family, "experiment": admitted.experiment,
+                     "effective_attempt_budget": admitted.effective_attempt_budget,
                      "windows": admitted.windows, "prior_exposures": exposures}
             _immutable(run.directory / "claim.json", claim)
             run._claim_sha256 = digest((run.directory / "claim.json").read_bytes())

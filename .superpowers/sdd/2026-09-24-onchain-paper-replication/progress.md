@@ -56,3 +56,14 @@ index/sort peak remain prerequisites. All failures, raw data and spent samples
 remain preserved; STATE tracks live verification and next safe action.
 
 September29 feature-residency terminal verification: Named offline01 completed:3,272 tests plus97 subtests passed,2 CUDA skips; standard2,747/1114.07s,neural525/422.10s. Guard1540.02s,2,133,311,488bytes sampled peak,child0 and verified cleanup; no memory-limit events. All10 frozen source hashes match. No active verification or empirical job remains.
+
+September29 cumulative-extension increment: corrected legacy certificate field
+collision with distinct cumulative_budget_extension;58focused passes and all
+61historicalclaims/121receipt hashes preserved. Named offline02 completed3293tests
++97subtests,2CUDA skips,child0/cleanup,zero memory-limit events. Independent code
+and source-gate review closed; exact52ceiling accepted for one resource successor
+without changing24spentclaims or1420fits. Synthetic250k-row production-storage
+measurement supplies an uncertain11709803463byte planning estimate. Four inactive
+failed transport archives (1768206336bytes) copied/fsynced/hash-verified to Data,
+original paths preserved as symlinks; no raw/graph/SQLite/claim bytes changed.
+Final fresh admission/resource checks and committed source precede empirical launch.

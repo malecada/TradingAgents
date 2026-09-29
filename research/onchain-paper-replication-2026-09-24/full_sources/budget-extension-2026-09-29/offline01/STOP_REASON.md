@@ -1,0 +1,1 @@
+Stopped after discovering collision with historical budget_extension certificate format in dated-mark-20260911. Preserve partial suite; no passing attribution. New field name and regression required before a new frozen verification. No empirical execution occurred.
