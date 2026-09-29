@@ -1,0 +1,37 @@
+{
+  "observed_at": "2026-09-29T22:46:12.347856+00:00",
+  "source_commit": "58ec1181a7bbe5d3d982401973f85acb0484f1a4",
+  "bindings_checked": 139,
+  "all_match": true,
+  "standard_passed": 2768,
+  "subtests_passed": 97,
+  "neural_passed": 680,
+  "neural_skipped": 2,
+  "total_passed": 3448,
+  "phase": "complete",
+  "child_exit_code": 0,
+  "cleanup_verified": true,
+  "monitor_absent": true,
+  "cgroup_absent": true,
+  "elapsed_seconds": 1548.3560683660035,
+  "peak_sampled_memory_current_bytes": 2415431680,
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "evidence_sha256": {
+    "source-bindings.json": "993a32054d4134464717b8e6c2e02509653a09db3e243abf2e752937c16e1ee3",
+    "offline01/final.json": "785167aba7d7302f8aea7254a6b3fc992128242b9ac50704496c131a81fbb050",
+    "offline01/child.log": "64f00e66b7c4995c7afbfe44235ded5d1db84c6491444b170e58380c9ba76a08"
+  },
+  "limitations": [
+    "Named reviewed profile only.",
+    "Optional component not yet integrated with registered sampling/MCM.",
+    "Numeric buffer allowance is not whole-workload RSS bound.",
+    "No empirical claim or fit."
+  ]
+}

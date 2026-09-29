@@ -1,0 +1,36 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_live_extraction_refuses_reentrant_use_or_close ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74cc6262f360>
+
+    def test_live_extraction_refuses_reentrant_use_or_close(monkeypatch):
+        with index(graph([[0],[1]],[(0,1,1)])) as idx:
+            original=idx._select
+            def select(center,cfg):
+                with pytest.raises(ValueError,match='busy'):idx.close()
+                with pytest.raises(ValueError,match='busy'):idx.neighborhood(center,cfg)
+                return original(center,cfg)
+            monkeypatch.setattr(idx,'_select',select)
+>           local=idx.neighborhood(0,{'hop_depth':1,'maximum_neighborhood_nodes':2})
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_array_neighborhoods.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/array_neighborhoods.py:92: in neighborhood
+    indices,selected=self._select(center,config); g=self.graph
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+center = 0, cfg = {'hop_depth': 1, 'maximum_neighborhood_nodes': 2}
+
+    def select(center,cfg):
+>       with pytest.raises(ValueError,match='busy'):idx.close()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_array_neighborhoods.py:93: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_live_extraction_refuses_reentrant_use_or_close
+1 failed, 16 deselected in 0.24s

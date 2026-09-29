@@ -1,0 +1,15 @@
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+_____________ test_selected_indices_survive_other_calls_and_close ______________
+
+    def test_selected_indices_survive_other_calls_and_close():
+        with index(graph([[0],[1],[2]],[(0,2,1)])) as idx:
+>           selected=idx.selected(0,{'hop_depth':1,'maximum_neighborhood_nodes':3})
+                     ^^^^^^^^^^^^
+E           AttributeError: 'ArrayNeighborhoodIndex' object has no attribute 'selected'
+
+tests/research/onchain_replication/test_array_neighborhoods.py:122: AttributeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_selected_indices_survive_other_calls_and_close
+1 failed, 1 passed, 18 deselected in 0.25s

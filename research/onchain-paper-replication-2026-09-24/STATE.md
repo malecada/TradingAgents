@@ -3,6 +3,82 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Array-neighborhood full verification COMPLETE — September 29, 22:47 UTC:**
+The named offline01 passed 3,448 tests plus 97 subtests with two CUDA skips:
+standard 2,768 in 1,027.66 seconds, neural 680 in 517.18 seconds. Guard duration
+1,548.36 seconds, child exit zero, cleanup verified, peak sampled memory
+2,415,431,680 bytes and zero memory.high/max/OOM events. All 139 bindings and
+frozen HEAD match. PID 2277975 and cgroup are absent. Independent terminal review
+accepted the optional component. Exact closure: `full_sources/array-neighborhood-2026-09-29/closure-check01.json`.
+No active job/freeze remains. Commit/push follows, then registered integration
+across sampling and MCM with explicit per-index and retained-sample array bounds.
+No existing study capacity or scientific identity is silently changed.
+
+The independent census budget review accepted exactly one prospective claim,
+ceiling 52 to 53, preserving 25 spent claims, 12 body and 15 fit allocations and
+all 1,420 pending fits. Exact certificate and review are in
+`full_sources/neighborhood-census-preparation-2026-09-30/`. Effective budget stays
+52 until adoption through a committed gate. Census source/checkpoint implementation,
+resource/source review, full ancestor registration and fresh admission remain
+pending; no graph body or census outcome was read. The census cannot substitute
+for full-neighborhood induction, pair workspace/checkpoints, dictionary/MCM/neural
+feasibility or broader paper coverage. Historical live snapshots below are superseded.
+
+**Independent resource preparation — 2026-09-29T22:24:24.679384+00:00:**
+While array-neighborhood offline01 continues with all 139 bindings/HEAD unchanged,
+a proposed one-claim extension (52 to 53) and resource-only complete-neighborhood
+census charter were prepared in
+`full_sources/neighborhood-census-preparation-2026-09-30/`. All eight current
+claim/terminal pairs were rehashed; with 17 historical attempts the consumed count
+remains 25. The 12 body and 15 fit allocations and all 1,420 fits are preserved.
+The exact already-completed largest training-week graph manifest is pinned using
+compact metadata only. No graph body, neighborhood outcome or financial label was
+opened; no lifecycle claim or empirical run was created. Independent budget-only
+review is pending. The effective budget remains 52 until a reviewed extension is
+adopted through a committed exact gate. Source/checkpoint implementation, finite
+resource release and fresh runtime checks remain prerequisites to this census.
+This preparation does not replace array-neighborhood integration or full matching,
+dictionary, MCM, neural, broader-data and paper-comparison requirements.
+
+**ACTIVE array-neighborhood offline01 — 2026-09-29T22:04:55.286655+00:00:**
+Final focused verification passed 55 tests in 14.23 seconds; independent source
+and launcher review accepted this optional component for bounded full verification.
+A single named offline01 is running. Monitor PID 2277975, start ticks 4774051; unit
+`onchain-replication-57c20c89c830468e8bd024979cfea1cb.service`; tool session 88274.
+Receipts: `full_sources/array-neighborhood-2026-09-29/offline01/`.
+Freeze the exact 139 files in source-bindings.json and HEAD
+58ec1181a7bbe5d3d982401973f85acb0484f1a4 until terminal cleanup/closure.
+Limits: 3 GiB max/2.75 high, zero swap, 3 GiB host reserve, 6 GiB startup,
+10 GiB disk reserve, two CPU affinity and 3,600 seconds. No limit reason at check.
+Do not duplicate the process, rerun a terminal identity, modify bound files or
+move HEAD while this guard is active.
+
+Next safe action: collect terminal summaries, verify all hashes and owner cleanup,
+obtain independent release review, then commit/push. Next implementation is explicit
+registered array-neighborhood integration across sampling and MCM, preserving
+scientific/sample identities and existing ceilings until a prospective capacity
+lineage is separately reviewed. Continue full-size pair workspace/checkpoint work
+and prepare reviewed resource-budget amendments before empirical execution.
+The buffer allowance is per index/invocation, excludes caller-retained outputs,
+Python metadata and validation internals, and is not a total-RSS guarantee.
+No empirical or storage process is active; budget remains 25/52 and all 1,420
+financial fits remain pending. Prior matching-policy release is pushed as 58ec1181.
+
+**Array-neighborhood engineering underway — September 29, 22:03 UTC:**
+Registered matching-policy closure was committed and pushed as 58ec1181. The next
+optional ArrayNeighborhoodIndex component is implemented with array membership,
+sparse adjacency, bounded gathers and explicit numeric buffer/output admission.
+It preserves full weak-hop induction and source node/edge order; the 10,002-node
+synthetic hub is complete under an explicit synthetic capacity. No study capacity
+or empirical plan is changed. Per-call numeric allowances do not establish RSS
+or aggregate-workload bounds. Context ownership and immutable output lifetime are
+covered by focused checks. Current evidence and pending independent final review
+are in `full_sources/array-neighborhood-2026-09-29/`. No long job is active.
+Next safe action: finish exact focused verification/review, freeze sources and run
+one guarded full offline check, then integrate the component through separately
+admitted execution policy/lineage before empirical use. Pair-capacity/checkpoints
+remain subsequent engineering. Budget 25/52; all 1,420 financial fits pending.
+
 **Registered matching-policy verification COMPLETE — September 29, 21:55 UTC:**
 The full named offline01 passed 3,428 tests plus 97 subtests with two CUDA skips:
 standard 2,768 in 1,027.42 seconds; neural 660 in 488.13 seconds. Guard duration

@@ -1,0 +1,492 @@
+FFFFFFFFFFFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+______ test_literal_directed_induction_preserves_source_order_and_isolate ______
+
+    def test_literal_directed_induction_preserves_source_order_and_isolate():
+        g=graph([[0],[1],[2],[3],[4]],[(2,1,7),(0,1,8),(2,0,9),(3,3,10)])
+>       with index(g) as idx:
+             ^^^^^^^^
+
+tests/research/onchain_replication/test_array_neighborhoods.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_array_neighborhoods.py:10: in index
+    module=importlib.import_module('tradingagents.research.onchain_replication.array_neighborhoods')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.array_neighborhoods'
+import_ = <function _gcd_import at 0x76de7ffd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.array_neighborhoods'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+______________ test_all_centers_match_scalar_full_neighborhood[0] ______________
+
+hops = 0
+
+    @pytest.mark.parametrize('hops',[0,1,2,3])
+    def test_all_centers_match_scalar_full_neighborhood(hops):
+        g=graph(np.arange(18).reshape(6,3),[(4,1,2),(2,0,3),(1,2,4),(3,3,5),(0,4,6)])
+        cfg={'hop_depth':hops,'maximum_neighborhood_nodes':6}
+>       with index(g,edge_chunk=1) as idx:
+             ^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_array_neighborhoods.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_array_neighborhoods.py:10: in index
+    module=importlib.import_module('tradingagents.research.onchain_replication.array_neighborhoods')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.array_neighborhoods'
+import_ = <function _gcd_import at 0x76de7ffd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.array_neighborhoods'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+______________ test_all_centers_match_scalar_full_neighborhood[1] ______________
+
+hops = 1
+
+    @pytest.mark.parametrize('hops',[0,1,2,3])
+    def test_all_centers_match_scalar_full_neighborhood(hops):
+        g=graph(np.arange(18).reshape(6,3),[(4,1,2),(2,0,3),(1,2,4),(3,3,5),(0,4,6)])
+        cfg={'hop_depth':hops,'maximum_neighborhood_nodes':6}
+>       with index(g,edge_chunk=1) as idx:
+             ^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_array_neighborhoods.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_array_neighborhoods.py:10: in index
+    module=importlib.import_module('tradingagents.research.onchain_replication.array_neighborhoods')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.array_neighborhoods'
+import_ = <function _gcd_import at 0x76de7ffd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.array_neighborhoods'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+______________ test_all_centers_match_scalar_full_neighborhood[2] ______________
+
+hops = 2
+
+    @pytest.mark.parametrize('hops',[0,1,2,3])
+    def test_all_centers_match_scalar_full_neighborhood(hops):
+        g=graph(np.arange(18).reshape(6,3),[(4,1,2),(2,0,3),(1,2,4),(3,3,5),(0,4,6)])
+        cfg={'hop_depth':hops,'maximum_neighborhood_nodes':6}
+>       with index(g,edge_chunk=1) as idx:
+             ^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_array_neighborhoods.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_array_neighborhoods.py:10: in index
+    module=importlib.import_module('tradingagents.research.onchain_replication.array_neighborhoods')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.array_neighborhoods'
+import_ = <function _gcd_import at 0x76de7ffd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.array_neighborhoods'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+______________ test_all_centers_match_scalar_full_neighborhood[3] ______________
+
+hops = 3
+
+    @pytest.mark.parametrize('hops',[0,1,2,3])
+    def test_all_centers_match_scalar_full_neighborhood(hops):
+        g=graph(np.arange(18).reshape(6,3),[(4,1,2),(2,0,3),(1,2,4),(3,3,5),(0,4,6)])
+        cfg={'hop_depth':hops,'maximum_neighborhood_nodes':6}
+>       with index(g,edge_chunk=1) as idx:
+             ^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_array_neighborhoods.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_array_neighborhoods.py:10: in index
+    module=importlib.import_module('tradingagents.research.onchain_replication.array_neighborhoods')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.array_neighborhoods'
+import_ = <function _gcd_import at 0x76de7ffd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.array_neighborhoods'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+___ test_complete_synthetic_hub_above_old_cap_and_refusal_without_truncation ___
+
+    def test_complete_synthetic_hub_above_old_cap_and_refusal_without_truncation():
+        n=10002;g=graph(np.zeros((n,1)),[(0,i,1) for i in range(1,n)])
+>       with index(g,edge_chunk=256) as idx:
+             ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_array_neighborhoods.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_array_neighborhoods.py:10: in index
+    module=importlib.import_module('tradingagents.research.onchain_replication.array_neighborhoods')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.array_neighborhoods'
+import_ = <function _gcd_import at 0x76de7ffd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.array_neighborhoods'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_____ test_bad_or_insufficient_allowance_rejected_before_index_build[True] _____
+
+budget = True
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76de7da47230>
+
+    @pytest.mark.parametrize('budget',[True,0,-1,1.5,1])
+    def test_bad_or_insufficient_allowance_rejected_before_index_build(budget,monkeypatch):
+        g=graph([[0],[1]],[(0,1,1)])
+        monkeypatch.setattr(np,'argsort',lambda *a,**k:pytest.fail('allocated index before admission'))
+>       with pytest.raises(ValueError,match='buffer'):index(g,max_buffer_bytes=budget)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_array_neighborhoods.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_array_neighborhoods.py:10: in index
+    module=importlib.import_module('tradingagents.research.onchain_replication.array_neighborhoods')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.array_neighborhoods'
+import_ = <function _gcd_import at 0x76de7ffd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.array_neighborhoods'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+______ test_bad_or_insufficient_allowance_rejected_before_index_build[0] _______
+
+budget = 0
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76de749dbce0>
+
+    @pytest.mark.parametrize('budget',[True,0,-1,1.5,1])
+    def test_bad_or_insufficient_allowance_rejected_before_index_build(budget,monkeypatch):
+        g=graph([[0],[1]],[(0,1,1)])
+        monkeypatch.setattr(np,'argsort',lambda *a,**k:pytest.fail('allocated index before admission'))
+>       with pytest.raises(ValueError,match='buffer'):index(g,max_buffer_bytes=budget)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_array_neighborhoods.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_array_neighborhoods.py:10: in index
+    module=importlib.import_module('tradingagents.research.onchain_replication.array_neighborhoods')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.array_neighborhoods'
+import_ = <function _gcd_import at 0x76de7ffd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.array_neighborhoods'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+______ test_bad_or_insufficient_allowance_rejected_before_index_build[-1] ______
+
+budget = -1
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76de7477d7f0>
+
+    @pytest.mark.parametrize('budget',[True,0,-1,1.5,1])
+    def test_bad_or_insufficient_allowance_rejected_before_index_build(budget,monkeypatch):
+        g=graph([[0],[1]],[(0,1,1)])
+        monkeypatch.setattr(np,'argsort',lambda *a,**k:pytest.fail('allocated index before admission'))
+>       with pytest.raises(ValueError,match='buffer'):index(g,max_buffer_bytes=budget)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_array_neighborhoods.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_array_neighborhoods.py:10: in index
+    module=importlib.import_module('tradingagents.research.onchain_replication.array_neighborhoods')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.array_neighborhoods'
+import_ = <function _gcd_import at 0x76de7ffd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.array_neighborhoods'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_____ test_bad_or_insufficient_allowance_rejected_before_index_build[1.5] ______
+
+budget = 1.5
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76de747c5260>
+
+    @pytest.mark.parametrize('budget',[True,0,-1,1.5,1])
+    def test_bad_or_insufficient_allowance_rejected_before_index_build(budget,monkeypatch):
+        g=graph([[0],[1]],[(0,1,1)])
+        monkeypatch.setattr(np,'argsort',lambda *a,**k:pytest.fail('allocated index before admission'))
+>       with pytest.raises(ValueError,match='buffer'):index(g,max_buffer_bytes=budget)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_array_neighborhoods.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_array_neighborhoods.py:10: in index
+    module=importlib.import_module('tradingagents.research.onchain_replication.array_neighborhoods')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.array_neighborhoods'
+import_ = <function _gcd_import at 0x76de7ffd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.array_neighborhoods'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+______ test_bad_or_insufficient_allowance_rejected_before_index_build[1] _______
+
+budget = 1
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76de747c57b0>
+
+    @pytest.mark.parametrize('budget',[True,0,-1,1.5,1])
+    def test_bad_or_insufficient_allowance_rejected_before_index_build(budget,monkeypatch):
+        g=graph([[0],[1]],[(0,1,1)])
+        monkeypatch.setattr(np,'argsort',lambda *a,**k:pytest.fail('allocated index before admission'))
+>       with pytest.raises(ValueError,match='buffer'):index(g,max_buffer_bytes=budget)
+                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_array_neighborhoods.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_array_neighborhoods.py:10: in index
+    module=importlib.import_module('tradingagents.research.onchain_replication.array_neighborhoods')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.array_neighborhoods'
+import_ = <function _gcd_import at 0x76de7ffd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.array_neighborhoods'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_ test_output_admission_precedes_output_construction_and_failure_keeps_index_usable _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76de7478ed50>
+
+    def test_output_admission_precedes_output_construction_and_failure_keeps_index_usable(monkeypatch):
+        g=graph(np.zeros((12,40)),[(i,j,1) for i in range(12) for j in range(12) if i!=j])
+>       with index(g,edge_chunk=1) as idx:
+             ^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_array_neighborhoods.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_array_neighborhoods.py:10: in index
+    module=importlib.import_module('tradingagents.research.onchain_replication.array_neighborhoods')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.array_neighborhoods'
+import_ = <function _gcd_import at 0x76de7ffd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.array_neighborhoods'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+________________ test_invalid_selection_contract_refused[cfg0] _________________
+
+cfg = {'hop_depth': True, 'maximum_neighborhood_nodes': 4}
+
+    @pytest.mark.parametrize('cfg',[{'hop_depth':True,'maximum_neighborhood_nodes':4},
+        {'hop_depth':-1,'maximum_neighborhood_nodes':4},{'hop_depth':1,'maximum_neighborhood_nodes':False}])
+    def test_invalid_selection_contract_refused(cfg):
+>       with index(graph([[0],[1]],[(0,1,1)])) as idx:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_array_neighborhoods.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_array_neighborhoods.py:10: in index
+    module=importlib.import_module('tradingagents.research.onchain_replication.array_neighborhoods')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.array_neighborhoods'
+import_ = <function _gcd_import at 0x76de7ffd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.array_neighborhoods'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+________________ test_invalid_selection_contract_refused[cfg1] _________________
+
+cfg = {'hop_depth': -1, 'maximum_neighborhood_nodes': 4}
+
+    @pytest.mark.parametrize('cfg',[{'hop_depth':True,'maximum_neighborhood_nodes':4},
+        {'hop_depth':-1,'maximum_neighborhood_nodes':4},{'hop_depth':1,'maximum_neighborhood_nodes':False}])
+    def test_invalid_selection_contract_refused(cfg):
+>       with index(graph([[0],[1]],[(0,1,1)])) as idx:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_array_neighborhoods.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_array_neighborhoods.py:10: in index
+    module=importlib.import_module('tradingagents.research.onchain_replication.array_neighborhoods')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.array_neighborhoods'
+import_ = <function _gcd_import at 0x76de7ffd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.array_neighborhoods'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+________________ test_invalid_selection_contract_refused[cfg2] _________________
+
+cfg = {'hop_depth': 1, 'maximum_neighborhood_nodes': False}
+
+    @pytest.mark.parametrize('cfg',[{'hop_depth':True,'maximum_neighborhood_nodes':4},
+        {'hop_depth':-1,'maximum_neighborhood_nodes':4},{'hop_depth':1,'maximum_neighborhood_nodes':False}])
+    def test_invalid_selection_contract_refused(cfg):
+>       with index(graph([[0],[1]],[(0,1,1)])) as idx:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_array_neighborhoods.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_array_neighborhoods.py:10: in index
+    module=importlib.import_module('tradingagents.research.onchain_replication.array_neighborhoods')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.array_neighborhoods'
+import_ = <function _gcd_import at 0x76de7ffd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.array_neighborhoods'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_literal_directed_induction_preserves_source_order_and_isolate
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_all_centers_match_scalar_full_neighborhood[0]
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_all_centers_match_scalar_full_neighborhood[1]
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_all_centers_match_scalar_full_neighborhood[2]
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_all_centers_match_scalar_full_neighborhood[3]
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_complete_synthetic_hub_above_old_cap_and_refusal_without_truncation
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_bad_or_insufficient_allowance_rejected_before_index_build[True]
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_bad_or_insufficient_allowance_rejected_before_index_build[0]
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_bad_or_insufficient_allowance_rejected_before_index_build[-1]
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_bad_or_insufficient_allowance_rejected_before_index_build[1.5]
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_bad_or_insufficient_allowance_rejected_before_index_build[1]
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_output_admission_precedes_output_construction_and_failure_keeps_index_usable
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_invalid_selection_contract_refused[cfg0]
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_invalid_selection_contract_refused[cfg1]
+FAILED tests/research/onchain_replication/test_array_neighborhoods.py::test_invalid_selection_contract_refused[cfg2]
+15 failed in 0.35s
