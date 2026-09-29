@@ -1357,7 +1357,7 @@ CLASS_VERDICTS = frozenset({"A", "B", "NO EVENTS"})
 CHECK_VERDICTS = frozenset({"BOTH", "NO EVENTS"})
 HEADER = """# Jev P0 blind review — llm-jev-p0-label-20260929
 
-Judge only from the article text shown. Do not open `review_key.json`.
+Judge only from the article text shown. Do not open any file under `research_runs/llm-jev-p0-label-20260929/outputs/` until the review is committed.
 Classes: hack, regulatory, listing_delisting, unlock_emission, upgrade_partnership, insolvency_halt.
 
 - `class` rows: VERDICT is `A`, `B`, `NO EVENTS`, or `NEITHER: class/asset; class/asset`.
@@ -2250,7 +2250,7 @@ if __name__ == "__main__":
 Run: `.venv/bin/python -m pytest tests/research/test_llm_jev_runner.py --import-mode=importlib -q`
 Expected: `4 passed`.
 Then run all probe tests: `.venv/bin/python -m pytest tests/research/test_llm_jev_*.py --import-mode=importlib -q`
-Expected: `50 passed`.
+Expected: `72 passed`.
 
 - [ ] **Step 7: Commit**
 
@@ -2295,7 +2295,7 @@ Expected: `calls=6` with no `JevError`. That confirms the dated ID is accepted a
 
 Edit `scripts/llm_jev_event_p0.py`, replacing `PINNED_MODEL: str | None = None  # set from the smoke-test response before registration` with `PINNED_MODEL: str | None = "<DATED>"  # smoke test 2026-09-29, invented headlines`.
 Run: `.venv/bin/python -m pytest tests/research/test_llm_jev_*.py --import-mode=importlib -q`
-Expected: `50 passed`.
+Expected: `72 passed`.
 
 - [ ] **Step 5: Commit**
 
@@ -2369,6 +2369,9 @@ and is not reviewed.
   text masked by C1's `anonymize()`.
 - Retries: at most 5 per call. Any drift, malformed answer, exhausted retry
   or spend over the cap fails the run.
+- Candidate spans are 1–3 tokens (the design said 1–4; 4 added no measured
+  coverage and raises 30-cap pressure) and dictionary matches follow
+  dictionary order.
 
 ## 5. Gates (all required; union of 400 articles)
 | Gate | Floor |
@@ -2432,8 +2435,8 @@ Create `research/llm-jev-event-2026-09-29/STATE.md`:
 - Status: E1 registered, not started.
 - Next action: run `.venv/bin/python scripts/llm_jev_event_p0.py label` at the pushed
   registration commit; then `render` and hand the sheet to the reviewer.
-- Do not open `research_runs/llm-jev-p0-label-20260929/outputs/review_key.json`
-  before the review is committed.
+- Do not open any file under `research_runs/llm-jev-p0-label-20260929/outputs/`
+  until the review is committed.
 ```
 
 - [ ] **Step 3: Commit the charter and state, then generate the registration**
@@ -2457,7 +2460,7 @@ Expected: the admission report succeeds with `ready` true and no exception.
 - If it fails, fix the cause, delete the uncommitted/last registration commit only if it was never pushed (`git reset --soft HEAD~1`), rebuild with the register script, then recommit and recheck.
 
 Run: `.venv/bin/python -B scripts/verify_offline.py`
-Expected: pass, with the 50 new probe tests included under `tests/research`.
+Expected: pass, with the 72 new probe tests included under `tests/research`.
 
 - [ ] **Step 5: Independent review**
 
@@ -2491,7 +2494,7 @@ Expected: no modified tracked files, and HEAD equal to the pushed commit.
 
 - [ ] **Step 2: Run E1 in the background**
 
-Run with Bash `run_in_background: true`: `cd /home/malecada/master_thesis/TradingAgents-jev-probe && .venv/bin/python scripts/llm_jev_event_p0.py label > "$SCRATCH/jev-e1.log" 2>&1`
+Launch detached so a session interruption cannot orphan the claim: `cd /home/malecada/master_thesis/TradingAgents-jev-probe && export SCRATCH=/tmp/claude-1000/-home-malecada-master-thesis/42982101-1028-4d98-a0e8-4d3846e0149c/scratchpad && setsid nohup .venv/bin/python -u scripts/llm_jev_event_p0.py label > "$SCRATCH/jev-e1.log" 2>&1 < /dev/null &`. Until `complete.json` or `failed.json` exists, make no commits, checkouts, edits or file writes in this worktree: every lifecycle write re-checks HEAD and source bytes. A preflight failure exits before any claim and consumes nothing.
 Expected on completion: `research_runs/llm-jev-p0-label-20260929/complete.json` exists, and the log shows progress lines with `spent=` below 5.
 - **If `failed.json` appears:** do not retry. Record the reason in `STATE.md`, commit the failed receipt and report to the user. A retry needs a recorded decision and a new experiment ID (charter §7).
 
@@ -2520,7 +2523,7 @@ git push
 
 - [ ] **Step 5: Hand off to the reviewer**
 
-Tell the user the sheet path, the row count, the verdict formats (from the sheet header), and not to open `review_key.json`. Stop until the user reports the sheet filled.
+Tell the user the sheet path, the row count, the verdict formats (from the sheet header), and not to open any file under `research_runs/llm-jev-p0-label-20260929/outputs/` until the review is committed. Stop until the user reports the sheet filled.
 
 ---
 
