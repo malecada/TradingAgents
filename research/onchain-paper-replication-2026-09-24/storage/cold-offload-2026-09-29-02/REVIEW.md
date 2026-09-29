@@ -29,3 +29,17 @@ All **ten non-connection entries** in the eleven-file binding manifest were inde
 - `green01.log`: `389e01ee0077dce7ff8ae1df1438b65e14d6292ee9b9d485b644cb488f507f64`
 
 No substantive new finding blocks this successor. Preserve its own terminal identity, partial transfers and per-file outcomes on any failure; do not silently retry either attempt. Final closure must establish which exact files completed remote restoration verification before local eviction. Historical source jobs and the first offload remain failed, and no empirical claim, financial fit or broader storage eviction is included in this acceptance.
+
+## Terminal admission-layer failure and review correction
+
+The attempt **failed before manifest/transport processing or eviction**. The saved traceback identifies `resources.py:375`: `assert_guarded_worker` required `live['disk_floor_bytes'] >= 20*GIB` despite the outer guard's explicitly declared 10 GiB floor. The worker raised `RuntimeError: guard reserve below protocol` as its first admission operation. Actual final free disk was **23,675,568,128 bytes**, so this was a guard-contract mismatch, not a physical disk-reserve breach.
+
+The earlier pre-execution review checked the outer limit change and preservation helpers but missed the inner assertion's hardcoded 20 GiB requirement. Its statement that no new finding blocked the successor was therefore incomplete. The unchanged eight helper tests did not exercise real guard-to-worker admission; their passing result did not validate that route. This failure and the missed review condition are preserved explicitly rather than relabeled as transfer failure.
+
+`guard01/final.json` records failed phase, child exit **1**, verified cleanup after **0.422396 seconds**, sampled peak **8,769,536 bytes**, zero memory events and no elapsed-time kill. Cleanup properties show a stopped/failed unit with empty control-group path. The recorded cgroup and monitor are absent at independent review. No intent, per-file verified/evicted receipts or completion marker exist; all nine original stat identities still match. No remote operation is reachable before the failed first assertion, so this attempt establishes neither a transfer nor any eviction/reclaimed space. Prior partial remote evidence from attempt01 remains outside this attempt and untouched.
+
+- `guard01/final.json` SHA-256: `e90076dfea27be2032d1005208ef27ca600edff2673651636442c0078bd0096d`
+- `guard01/child.log` SHA-256: `0ce675d91529f821489975bfa3213d1162cfc15eb7375c58fc52f3254198c404`
+- Unchanged manifest SHA-256: `4abf11a0860b54923cf83e007f614fd299b19a9397931d2bd8584b49d7f8621d`
+
+**Failed-attempt closure accepted; no successful offload is claimed.** Preserve this terminal identity without restart. The proposed guard correction requires its own review: retain 20 GiB as the default worker requirement, permit the separately authorized lower floor only through an explicit validated argument, test default rejection/explicit acceptance/below-declared rejection/invalid arguments, and execute a small separately retained real guard/worker probe before another transfer. A future worker must validate and bind its disk policy before supplying the reduced requirement. No correction, probe, successor or source mutation was performed by this closure review.

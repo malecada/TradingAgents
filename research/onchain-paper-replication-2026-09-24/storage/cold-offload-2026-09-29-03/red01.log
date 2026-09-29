@@ -1,0 +1,29 @@
+E........
+======================================================================
+ERROR: test_bound_policy_is_checked_before_reduced_guard_contract (__main__.Preservation.test_bound_policy_is_checked_before_reduced_guard_contract) (valid=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/cold-offload-2026-09-29-03/test_offload.py", line 113, in test_bound_policy_is_checked_before_reduced_guard_contract
+    with self.assertRaisesRegex(ValueError,'unexpected prospective disk policy'):module.worker()
+                                                                                 ~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/cold-offload-2026-09-29-03/offload.py", line 106, in worker
+    assert_guarded_worker(HERE/'guard01', sys.orig_argv, required_paths=[ROOT],
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          wall_seconds=7200, memory_max_bytes=256*1024**2,
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          memory_high_bytes=192*1024**2,disk_floor_bytes=10*GIB)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1234, in _execute_mock_call
+    raise effect
+RuntimeError: guard sentinel
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.031s
+
+FAILED (errors=1)

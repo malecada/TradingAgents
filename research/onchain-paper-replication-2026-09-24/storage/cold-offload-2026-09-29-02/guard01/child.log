@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/cold-offload-2026-09-29-02/offload.py", line 180, in <module>
+    worker()
+    ~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/cold-offload-2026-09-29-02/offload.py", line 106, in worker
+    assert_guarded_worker(HERE/'guard01', sys.orig_argv, required_paths=[ROOT],
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          wall_seconds=7200, memory_max_bytes=256*1024**2,
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          memory_high_bytes=192*1024**2)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/resources.py", line 375, in assert_guarded_worker
+    if live['reserve_bytes']<3*GIB or live['disk_floor_bytes']<20*GIB:raise RuntimeError('guard reserve below protocol')
+                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: guard reserve below protocol

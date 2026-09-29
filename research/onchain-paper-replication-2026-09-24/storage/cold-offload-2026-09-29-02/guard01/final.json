@@ -1,0 +1,139 @@
+{
+  "boot_id": "9a0147d4-78ab-4515-ae9e-2bcc3e866385",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-4f04f7ada7394566b44cea83818d20d9.service",
+  "child_exit_code": 1,
+  "cleanup_stop_returncode": 0,
+  "cleanup_unit_properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "1",
+    "Result": "exit-code",
+    "SubState": "failed"
+  },
+  "cleanup_verified": true,
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/cold-offload-2026-09-29-02/offload.py",
+    "--worker"
+  ],
+  "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+  "cpu_quota_controller_available": false,
+  "cpu_thread_readback": {
+    "1278983": [
+      0,
+      1
+    ]
+  },
+  "cpus": [
+    0,
+    1
+  ],
+  "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+  "disk_floor_bytes": 10737418240,
+  "disk_free_bytes": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes": 23675568128
+  },
+  "disk_paths": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+  ],
+  "elapsed_seconds": 0.4223963459953666,
+  "elapsed_time_kill": false,
+  "host_mem_available_bytes": 10544386048,
+  "initial_memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "kernel_controls": {
+    "memory.high": "201326592",
+    "memory.max": "268435456",
+    "memory.swap.max": "0"
+  },
+  "lease_seconds": 15.0,
+  "limit_reason": "RuntimeError: child or unit failed: {'Result': 'exit-code', 'ExecMainStatus': '1', 'ControlGroup': '', 'ActiveState': 'failed', 'SubState': 'failed'}",
+  "memory_current_bytes": 8769536,
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "memory_high_bytes": 201326592,
+  "memory_max_bytes": 268435456,
+  "memory_swap_max_bytes": 0,
+  "monitor_pid": 1278979,
+  "monotonic_seconds": 40156.54086092,
+  "optional_memory_telemetry": {
+    "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+    "unit": {
+      "anon_bytes": 8077312,
+      "file_bytes": 8192,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-4f04f7ada7394566b44cea83818d20d9.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+      "swap_current_bytes": 0,
+      "unavailable": {}
+    },
+    "user_ancestor": {
+      "anon_bytes": 3810443264,
+      "file_bytes": 5118324736,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=97329890\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=94477056",
+      "swap_current_bytes": 2025295872,
+      "unavailable": {}
+    }
+  },
+  "owner_identity": null,
+  "peak_sampled_memory_current_bytes": 8769536,
+  "phase": "failed",
+  "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/cold-offload-2026-09-29-02/guard01",
+  "reserve_bytes": 3221225472,
+  "retry": false,
+  "sample_seconds": 0.25,
+  "start_reserve_bytes": 3758096384,
+  "terminal_memory_snapshot": {
+    "memory_current_bytes": 8769536,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 8077312,
+        "file_bytes": 8192,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-4f04f7ada7394566b44cea83818d20d9.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 3810443264,
+        "file_bytes": 5118324736,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=97329890\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=94477056",
+        "swap_current_bytes": 2025295872,
+        "unavailable": {}
+      }
+    }
+  },
+  "unit": "onchain-replication-4f04f7ada7394566b44cea83818d20d9.service",
+  "unit_properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "1",
+    "Result": "exit-code",
+    "SubState": "failed"
+  },
+  "wait_seconds": 30.0,
+  "wall_seconds": 7200
+}

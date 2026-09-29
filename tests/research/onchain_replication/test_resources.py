@@ -129,6 +129,34 @@ def test_bad_readback_keeps_gate_closed_and_stops_unit(tmp_path, monkeypatch):
     assert any('stop' in call for call in calls)
 
 
+@pytest.mark.parametrize('declared,actual,accepted', [
+    (None,10,False),(10,10,True),(10,9,False),(20,10,False),(10,20,True)])
+def test_worker_explicit_disk_floor_preserves_default(tmp_path,monkeypatch,declared,actual,accepted):
+    import time
+    receipt=tmp_path/'receipt';receipt.mkdir();cg=tmp_path/'cg';cg.mkdir()
+    command=['true'];cpus=set(guard.os.sched_getaffinity(0))
+    live={'command':command,'phase':'running','boot_id':Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
+        'monotonic_seconds':time.monotonic(),'lease_seconds':15,'cgroup':str(cg),'cpus':list(cpus),
+        'disk_paths':[str(tmp_path)],'wall_seconds':100,'reserve_bytes':3*guard.GIB,
+        'disk_floor_bytes':actual*guard.GIB,'start_reserve_bytes':6*guard.GIB}
+    (receipt/'live.json').write_text(json.dumps(live));(receipt/'release.json').write_text('{"kernel_controls_verified":true}')
+    monkeypatch.setattr(guard,'_own_cgroup',lambda:cg);monkeypatch.setattr(guard,'verify_cpu_tree',lambda *a:None)
+    monkeypatch.setattr(guard,'_read_controls',lambda _:{'memory.max':str(3*guard.GIB),'memory.high':str(5*guard.GIB//2),'memory.swap.max':'0'})
+    kwargs=dict(required_paths=[tmp_path],wall_seconds=100,memory_max_bytes=3*guard.GIB,memory_high_bytes=5*guard.GIB//2)
+    if declared is not None:kwargs['disk_floor_bytes']=declared*guard.GIB
+    if accepted:assert guard.assert_guarded_worker(receipt,command,**kwargs)==live
+    else:
+        with pytest.raises(RuntimeError,match='reserve below protocol'):
+            guard.assert_guarded_worker(receipt,command,**kwargs)
+
+
+@pytest.mark.parametrize('floor',[True,False,0,9*guard.GIB,10.0*guard.GIB,'10 GiB'])
+def test_worker_rejects_invalid_declared_disk_floor_before_io(tmp_path,floor):
+    with pytest.raises(ValueError,match='disk contract'):
+        guard.assert_guarded_worker(tmp_path/'absent',['true'],required_paths=[tmp_path],
+                                   wall_seconds=100,disk_floor_bytes=floor)
+
+
 def test_runtime_host_pressure_stops_entire_unit(tmp_path, monkeypatch):
     receipt, calls = mock_unit(tmp_path, monkeypatch, memory=[20*guard.GIB, 20*guard.GIB, guard.GIB])
     result = guard.guarded_run(['true'], cwd=tmp_path, receipt_dir=receipt)

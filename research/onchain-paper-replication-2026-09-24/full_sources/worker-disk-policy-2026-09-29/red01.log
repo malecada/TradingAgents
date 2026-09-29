@@ -1,0 +1,201 @@
+.FFFFFFFFFF                                                              [100%]
+=================================== FAILURES ===================================
+________ test_worker_explicit_disk_floor_preserves_default[10-10-True] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-137/test_worker_explicit_disk_floo1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7356c64168b0>
+declared = 10, actual = 10, accepted = True
+
+    @pytest.mark.parametrize('declared,actual,accepted', [
+        (None,10,False),(10,10,True),(10,9,False),(20,10,False),(10,20,True)])
+    def test_worker_explicit_disk_floor_preserves_default(tmp_path,monkeypatch,declared,actual,accepted):
+        import time
+        receipt=tmp_path/'receipt';receipt.mkdir();cg=tmp_path/'cg';cg.mkdir()
+        command=['true'];cpus=set(guard.os.sched_getaffinity(0))
+        live={'command':command,'phase':'running','boot_id':Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
+            'monotonic_seconds':time.monotonic(),'lease_seconds':15,'cgroup':str(cg),'cpus':list(cpus),
+            'disk_paths':[str(tmp_path)],'wall_seconds':100,'reserve_bytes':3*guard.GIB,
+            'disk_floor_bytes':actual*guard.GIB,'start_reserve_bytes':6*guard.GIB}
+        (receipt/'live.json').write_text(json.dumps(live));(receipt/'release.json').write_text('{"kernel_controls_verified":true}')
+        monkeypatch.setattr(guard,'_own_cgroup',lambda:cg);monkeypatch.setattr(guard,'verify_cpu_tree',lambda *a:None)
+        monkeypatch.setattr(guard,'_read_controls',lambda _:{'memory.max':str(3*guard.GIB),'memory.high':str(5*guard.GIB//2),'memory.swap.max':'0'})
+        kwargs=dict(required_paths=[tmp_path],wall_seconds=100,memory_max_bytes=3*guard.GIB,memory_high_bytes=5*guard.GIB//2)
+        if declared is not None:kwargs['disk_floor_bytes']=declared*guard.GIB
+>       if accepted:assert guard.assert_guarded_worker(receipt,command,**kwargs)==live
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: assert_guarded_worker() got an unexpected keyword argument 'disk_floor_bytes'
+
+tests/research/onchain_replication/test_resources.py:147: TypeError
+________ test_worker_explicit_disk_floor_preserves_default[10-9-False] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-137/test_worker_explicit_disk_floo2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7356c60427b0>
+declared = 10, actual = 9, accepted = False
+
+    @pytest.mark.parametrize('declared,actual,accepted', [
+        (None,10,False),(10,10,True),(10,9,False),(20,10,False),(10,20,True)])
+    def test_worker_explicit_disk_floor_preserves_default(tmp_path,monkeypatch,declared,actual,accepted):
+        import time
+        receipt=tmp_path/'receipt';receipt.mkdir();cg=tmp_path/'cg';cg.mkdir()
+        command=['true'];cpus=set(guard.os.sched_getaffinity(0))
+        live={'command':command,'phase':'running','boot_id':Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
+            'monotonic_seconds':time.monotonic(),'lease_seconds':15,'cgroup':str(cg),'cpus':list(cpus),
+            'disk_paths':[str(tmp_path)],'wall_seconds':100,'reserve_bytes':3*guard.GIB,
+            'disk_floor_bytes':actual*guard.GIB,'start_reserve_bytes':6*guard.GIB}
+        (receipt/'live.json').write_text(json.dumps(live));(receipt/'release.json').write_text('{"kernel_controls_verified":true}')
+        monkeypatch.setattr(guard,'_own_cgroup',lambda:cg);monkeypatch.setattr(guard,'verify_cpu_tree',lambda *a:None)
+        monkeypatch.setattr(guard,'_read_controls',lambda _:{'memory.max':str(3*guard.GIB),'memory.high':str(5*guard.GIB//2),'memory.swap.max':'0'})
+        kwargs=dict(required_paths=[tmp_path],wall_seconds=100,memory_max_bytes=3*guard.GIB,memory_high_bytes=5*guard.GIB//2)
+        if declared is not None:kwargs['disk_floor_bytes']=declared*guard.GIB
+        if accepted:assert guard.assert_guarded_worker(receipt,command,**kwargs)==live
+        else:
+            with pytest.raises(RuntimeError,match='reserve below protocol'):
+>               guard.assert_guarded_worker(receipt,command,**kwargs)
+E               TypeError: assert_guarded_worker() got an unexpected keyword argument 'disk_floor_bytes'
+
+tests/research/onchain_replication/test_resources.py:150: TypeError
+________ test_worker_explicit_disk_floor_preserves_default[20-10-False] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-137/test_worker_explicit_disk_floo3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7356c61e5ae0>
+declared = 20, actual = 10, accepted = False
+
+    @pytest.mark.parametrize('declared,actual,accepted', [
+        (None,10,False),(10,10,True),(10,9,False),(20,10,False),(10,20,True)])
+    def test_worker_explicit_disk_floor_preserves_default(tmp_path,monkeypatch,declared,actual,accepted):
+        import time
+        receipt=tmp_path/'receipt';receipt.mkdir();cg=tmp_path/'cg';cg.mkdir()
+        command=['true'];cpus=set(guard.os.sched_getaffinity(0))
+        live={'command':command,'phase':'running','boot_id':Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
+            'monotonic_seconds':time.monotonic(),'lease_seconds':15,'cgroup':str(cg),'cpus':list(cpus),
+            'disk_paths':[str(tmp_path)],'wall_seconds':100,'reserve_bytes':3*guard.GIB,
+            'disk_floor_bytes':actual*guard.GIB,'start_reserve_bytes':6*guard.GIB}
+        (receipt/'live.json').write_text(json.dumps(live));(receipt/'release.json').write_text('{"kernel_controls_verified":true}')
+        monkeypatch.setattr(guard,'_own_cgroup',lambda:cg);monkeypatch.setattr(guard,'verify_cpu_tree',lambda *a:None)
+        monkeypatch.setattr(guard,'_read_controls',lambda _:{'memory.max':str(3*guard.GIB),'memory.high':str(5*guard.GIB//2),'memory.swap.max':'0'})
+        kwargs=dict(required_paths=[tmp_path],wall_seconds=100,memory_max_bytes=3*guard.GIB,memory_high_bytes=5*guard.GIB//2)
+        if declared is not None:kwargs['disk_floor_bytes']=declared*guard.GIB
+        if accepted:assert guard.assert_guarded_worker(receipt,command,**kwargs)==live
+        else:
+            with pytest.raises(RuntimeError,match='reserve below protocol'):
+>               guard.assert_guarded_worker(receipt,command,**kwargs)
+E               TypeError: assert_guarded_worker() got an unexpected keyword argument 'disk_floor_bytes'
+
+tests/research/onchain_replication/test_resources.py:150: TypeError
+________ test_worker_explicit_disk_floor_preserves_default[10-20-True] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-137/test_worker_explicit_disk_floo4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7356c61e5d00>
+declared = 10, actual = 20, accepted = True
+
+    @pytest.mark.parametrize('declared,actual,accepted', [
+        (None,10,False),(10,10,True),(10,9,False),(20,10,False),(10,20,True)])
+    def test_worker_explicit_disk_floor_preserves_default(tmp_path,monkeypatch,declared,actual,accepted):
+        import time
+        receipt=tmp_path/'receipt';receipt.mkdir();cg=tmp_path/'cg';cg.mkdir()
+        command=['true'];cpus=set(guard.os.sched_getaffinity(0))
+        live={'command':command,'phase':'running','boot_id':Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
+            'monotonic_seconds':time.monotonic(),'lease_seconds':15,'cgroup':str(cg),'cpus':list(cpus),
+            'disk_paths':[str(tmp_path)],'wall_seconds':100,'reserve_bytes':3*guard.GIB,
+            'disk_floor_bytes':actual*guard.GIB,'start_reserve_bytes':6*guard.GIB}
+        (receipt/'live.json').write_text(json.dumps(live));(receipt/'release.json').write_text('{"kernel_controls_verified":true}')
+        monkeypatch.setattr(guard,'_own_cgroup',lambda:cg);monkeypatch.setattr(guard,'verify_cpu_tree',lambda *a:None)
+        monkeypatch.setattr(guard,'_read_controls',lambda _:{'memory.max':str(3*guard.GIB),'memory.high':str(5*guard.GIB//2),'memory.swap.max':'0'})
+        kwargs=dict(required_paths=[tmp_path],wall_seconds=100,memory_max_bytes=3*guard.GIB,memory_high_bytes=5*guard.GIB//2)
+        if declared is not None:kwargs['disk_floor_bytes']=declared*guard.GIB
+>       if accepted:assert guard.assert_guarded_worker(receipt,command,**kwargs)==live
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: assert_guarded_worker() got an unexpected keyword argument 'disk_floor_bytes'
+
+tests/research/onchain_replication/test_resources.py:147: TypeError
+_______ test_worker_rejects_invalid_declared_disk_floor_before_io[True] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-137/test_worker_rejects_invalid_de0')
+floor = True
+
+    @pytest.mark.parametrize('floor',[True,False,0,9*guard.GIB,10.0*guard.GIB,'10 GiB'])
+    def test_worker_rejects_invalid_declared_disk_floor_before_io(tmp_path,floor):
+        with pytest.raises(ValueError,match='disk contract'):
+>           guard.assert_guarded_worker(tmp_path/'absent',['true'],required_paths=[tmp_path],
+                                       wall_seconds=100,disk_floor_bytes=floor)
+E           TypeError: assert_guarded_worker() got an unexpected keyword argument 'disk_floor_bytes'
+
+tests/research/onchain_replication/test_resources.py:156: TypeError
+_______ test_worker_rejects_invalid_declared_disk_floor_before_io[False] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-137/test_worker_rejects_invalid_de1')
+floor = False
+
+    @pytest.mark.parametrize('floor',[True,False,0,9*guard.GIB,10.0*guard.GIB,'10 GiB'])
+    def test_worker_rejects_invalid_declared_disk_floor_before_io(tmp_path,floor):
+        with pytest.raises(ValueError,match='disk contract'):
+>           guard.assert_guarded_worker(tmp_path/'absent',['true'],required_paths=[tmp_path],
+                                       wall_seconds=100,disk_floor_bytes=floor)
+E           TypeError: assert_guarded_worker() got an unexpected keyword argument 'disk_floor_bytes'
+
+tests/research/onchain_replication/test_resources.py:156: TypeError
+_________ test_worker_rejects_invalid_declared_disk_floor_before_io[0] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-137/test_worker_rejects_invalid_de2')
+floor = 0
+
+    @pytest.mark.parametrize('floor',[True,False,0,9*guard.GIB,10.0*guard.GIB,'10 GiB'])
+    def test_worker_rejects_invalid_declared_disk_floor_before_io(tmp_path,floor):
+        with pytest.raises(ValueError,match='disk contract'):
+>           guard.assert_guarded_worker(tmp_path/'absent',['true'],required_paths=[tmp_path],
+                                       wall_seconds=100,disk_floor_bytes=floor)
+E           TypeError: assert_guarded_worker() got an unexpected keyword argument 'disk_floor_bytes'
+
+tests/research/onchain_replication/test_resources.py:156: TypeError
+____ test_worker_rejects_invalid_declared_disk_floor_before_io[9663676416] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-137/test_worker_rejects_invalid_de3')
+floor = 9663676416
+
+    @pytest.mark.parametrize('floor',[True,False,0,9*guard.GIB,10.0*guard.GIB,'10 GiB'])
+    def test_worker_rejects_invalid_declared_disk_floor_before_io(tmp_path,floor):
+        with pytest.raises(ValueError,match='disk contract'):
+>           guard.assert_guarded_worker(tmp_path/'absent',['true'],required_paths=[tmp_path],
+                                       wall_seconds=100,disk_floor_bytes=floor)
+E           TypeError: assert_guarded_worker() got an unexpected keyword argument 'disk_floor_bytes'
+
+tests/research/onchain_replication/test_resources.py:156: TypeError
+___ test_worker_rejects_invalid_declared_disk_floor_before_io[10737418240.0] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-137/test_worker_rejects_invalid_de4')
+floor = 10737418240.0
+
+    @pytest.mark.parametrize('floor',[True,False,0,9*guard.GIB,10.0*guard.GIB,'10 GiB'])
+    def test_worker_rejects_invalid_declared_disk_floor_before_io(tmp_path,floor):
+        with pytest.raises(ValueError,match='disk contract'):
+>           guard.assert_guarded_worker(tmp_path/'absent',['true'],required_paths=[tmp_path],
+                                       wall_seconds=100,disk_floor_bytes=floor)
+E           TypeError: assert_guarded_worker() got an unexpected keyword argument 'disk_floor_bytes'
+
+tests/research/onchain_replication/test_resources.py:156: TypeError
+______ test_worker_rejects_invalid_declared_disk_floor_before_io[10 GiB] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-137/test_worker_rejects_invalid_de5')
+floor = '10 GiB'
+
+    @pytest.mark.parametrize('floor',[True,False,0,9*guard.GIB,10.0*guard.GIB,'10 GiB'])
+    def test_worker_rejects_invalid_declared_disk_floor_before_io(tmp_path,floor):
+        with pytest.raises(ValueError,match='disk contract'):
+>           guard.assert_guarded_worker(tmp_path/'absent',['true'],required_paths=[tmp_path],
+                                       wall_seconds=100,disk_floor_bytes=floor)
+E           TypeError: assert_guarded_worker() got an unexpected keyword argument 'disk_floor_bytes'
+
+tests/research/onchain_replication/test_resources.py:156: TypeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_resources.py::test_worker_explicit_disk_floor_preserves_default[10-10-True]
+FAILED tests/research/onchain_replication/test_resources.py::test_worker_explicit_disk_floor_preserves_default[10-9-False]
+FAILED tests/research/onchain_replication/test_resources.py::test_worker_explicit_disk_floor_preserves_default[20-10-False]
+FAILED tests/research/onchain_replication/test_resources.py::test_worker_explicit_disk_floor_preserves_default[10-20-True]
+FAILED tests/research/onchain_replication/test_resources.py::test_worker_rejects_invalid_declared_disk_floor_before_io[True]
+FAILED tests/research/onchain_replication/test_resources.py::test_worker_rejects_invalid_declared_disk_floor_before_io[False]
+FAILED tests/research/onchain_replication/test_resources.py::test_worker_rejects_invalid_declared_disk_floor_before_io[0]
+FAILED tests/research/onchain_replication/test_resources.py::test_worker_rejects_invalid_declared_disk_floor_before_io[9663676416]
+FAILED tests/research/onchain_replication/test_resources.py::test_worker_rejects_invalid_declared_disk_floor_before_io[10737418240.0]
+FAILED tests/research/onchain_replication/test_resources.py::test_worker_rejects_invalid_declared_disk_floor_before_io[10 GiB]
+10 failed, 1 passed, 28 deselected in 0.29s

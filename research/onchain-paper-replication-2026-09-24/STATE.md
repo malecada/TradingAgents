@@ -3,6 +3,27 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Cold continuation 02 admission failure; correction verified — September 29:**
+Continuation 02 guard01 failed in 0.42 seconds, child exit 1, verified cleanup,
+before manifest processing, network transfer or local eviction. The outer guard
+used the authorized 10 GiB disk floor, but assert_guarded_worker still hardcoded
+20 GiB. The failed identity, child traceback and source at f8451235 are retained;
+independent failure review is recorded. No original file was removed.
+
+The prospective worker API now accepts an explicit disk_floor_bytes contract,
+retaining the 20 GiB default and rejecting values below the authorized 10 GiB
+minimum. All 39 resource tests pass. A finite real guard/worker probe completed
+with child exit 0 and verified cleanup at 10 GiB, with RAM reserve unchanged.
+Exact evidence: `full_sources/worker-disk-policy-2026-09-29/`.
+
+New `storage/cold-offload-2026-09-29-03/` binds the corrected worker contract,
+new remote/local identity and exact failed predecessor. All nine preservation/policy-ordering checks pass. The resource correction
+and the exact continuation are independently accepted for one bounded execution
+after fresh checks. Commit/push and launch follow; no job is currently active. Next safe action: close correction/continuation review, commit
+and push compact evidence, freshly admit one 03 transfer. Never rerun 01 or 02.
+The successful 3,390-test graph-residency result remains valid for its frozen
+source snapshot; no new whole-suite claim is made for the later guard edit.
+
 **Cold-file continuation 02 reviewed; launch pending — September 29:**
 Graph-residency implementation and full offline evidence were committed/pushed
 as 0973ba64. The user's unfinished storage move now has a separately reviewed

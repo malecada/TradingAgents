@@ -356,9 +356,12 @@ def guarded_run(command, *, cwd, receipt_dir, memory_max_bytes=6 * GIB,
 
 
 def assert_guarded_worker(receipt,command,*,required_paths,wall_seconds,
-                          memory_max_bytes=6*GIB,memory_high_bytes=5*GIB):
+                          memory_max_bytes=6*GIB,memory_high_bytes=5*GIB,
+                          disk_floor_bytes=20*GIB):
     if not 0<memory_high_bytes<=memory_max_bytes<=6*GIB:
         raise ValueError('worker memory contract outside admitted ceiling')
+    if isinstance(disk_floor_bytes,bool) or not isinstance(disk_floor_bytes,int) or disk_floor_bytes<10*GIB:
+        raise ValueError('worker disk contract below admitted 10 GiB floor')
     receipt=Path(receipt).resolve(strict=True)
     live=json.loads((receipt/'live.json').read_bytes())
     if live['command']!=command or live['phase']!='running':raise RuntimeError('guard command identity differs')
@@ -372,7 +375,7 @@ def assert_guarded_worker(receipt,command,*,required_paths,wall_seconds,
     covered={Path(p).stat().st_dev for p in live['disk_paths']}
     if not {Path(p).stat().st_dev for p in required_paths}<=covered:raise RuntimeError('guard misses required volume')
     if not 0<live['wall_seconds']<=wall_seconds<=28800:raise RuntimeError('guard wall limit differs')
-    if live['reserve_bytes']<3*GIB or live['disk_floor_bytes']<20*GIB:raise RuntimeError('guard reserve below protocol')
+    if live['reserve_bytes']<3*GIB or live['disk_floor_bytes']<disk_floor_bytes:raise RuntimeError('guard reserve below protocol')
     if live['start_reserve_bytes']<memory_max_bytes+live['reserve_bytes']:raise RuntimeError('guard startup reserve below contract')
     return live
 
