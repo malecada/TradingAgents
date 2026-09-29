@@ -23,7 +23,8 @@ HEADER = """# Jev P0 blind review — llm-jev-p0-label-20260929
 Judge only from the article text shown. Do not open `review_key.json`.
 Classes: hack, regulatory, listing_delisting, unlock_emission, upgrade_partnership, insolvency_halt.
 
-- `class` rows: VERDICT is `A`, `B`, `NO EVENTS`, or `NEITHER: class/asset; class/asset`.
+- `class` rows: A and B list event classes only. `ENTITY` lines show affected names (one per disputed class).
+  VERDICT is `A`, `B`, `NO EVENTS`, or `NEITHER: class/asset; class/asset`.
 - `check` rows: VERDICT is `BOTH` (labels correct), `NO EVENTS`, or `NEITHER: class/asset; ...`.
 - `SAME (class)` lines: `Y` if the two names refer to the same affected entity, else `N`.
 """
@@ -51,12 +52,15 @@ def class_set(events: list[dict]) -> tuple[str, ...]:
 def label_string(events: list[dict]) -> str:
     if not events:
         return "NO EVENTS"
-    ordered = sorted(events, key=lambda e: (e["class"], str(e.get("asset"))))
-    return "; ".join(f"{e['class']}/{e.get('asset') or 'none'}" for e in ordered)
+    return "; ".join(class_set(events))
 
 
 def _entity_pairs(truth_events: list[dict], jev_events: list[dict]):
-    """Same-class pairs whose names fail the automatic rule; one per class."""
+    """Same-class pairs whose names fail the automatic rule; one per class.
+
+    Jev emits at most one event per class (llm_jev_labels.aggregate), so one
+    pair per class covers every Jev prediction.
+    """
     pairs, _, _ = match_events(truth_events, jev_events)
     out, seen = [], set()
     for p, t in pairs:
@@ -96,11 +100,11 @@ def build_review(rounds: dict, jev: dict, seed: int = SEED, n_checks: int = N_CH
                "entity_class": cls, "same": []}
         if kind == "entity":
             row[jev_side], row[other] = j_name, t_name
-            row["same"] = [{"class": cls}]
+            row["same"] = [{"class": cls, jev_side: j_name, other: t_name}]
         else:
             row[jev_side], row[other] = label_string(mine), label_string(stored)
             if kind == "class":
-                row["same"] = [{"class": c} for c, _, _ in _entity_pairs(stored, mine)]
+                row["same"] = [{"class": c, jev_side: j, other: t} for c, j, t in _entity_pairs(stored, mine)]
         rows.append(row)
         key[str(number)] = {"kind": kind, "sample_idx": idx, "entity_class": cls,
                             jev_side: "jev", other: "stored"}
@@ -112,10 +116,11 @@ def render_markdown(rows: list[dict]) -> str:
     for row in rows:
         out.append(f"### row {row['row']} ({row['store']}, {row['date']}, {row['kind']})\n")
         text = row["text"]
-        out.append(f"**{text.get('headline', '')}**\n")
+        headline = text.get('headline', '').replace("\n", " ")
+        out.append(f"**{headline}**\n")
         for name in ("summary", "content"):
             if text.get(name):
-                out.append(text[name].replace("\n", " ") + "\n")
+                out.append("> " + text[name].replace("\n", " ") + "\n")
         if row["kind"] == "entity":
             out.append(f"- Event class: {row['entity_class']}")
         out.append(f"- A: {row['A']}")
@@ -123,6 +128,7 @@ def render_markdown(rows: list[dict]) -> str:
         if row["kind"] != "entity":
             out.append("- VERDICT: ")
         for pair in row["same"]:
+            out.append(f"- ENTITY ({pair['class']}): A = {pair['A']} | B = {pair['B']}")
             out.append(f"- SAME ({pair['class']}): ")
         out.append("")
     return "\n".join(out) + "\n"

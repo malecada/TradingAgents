@@ -14,7 +14,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from llm_event_xs_truth import RoundData  # noqa: E402
 from llm_jev_review import (  # noqa: E402
-    apply_review, auto_asset_match, build_review, parse_filled, render_markdown,
+    SEED, apply_review, auto_asset_match, build_review, parse_filled, render_markdown,
 )
 
 
@@ -60,7 +60,7 @@ def test_build_review_kinds_blindness_and_determinism(scenario):
     k = key[str(entity["row"])]
     assert entity[next(s for s in "AB" if k[s] == "jev")] == "Ronin"
     klass = next(r for r in rows if r["kind"] == "class")
-    assert {klass["A"], klass["B"]} == {"NO EVENTS", "regulatory/SEC target"}
+    assert {klass["A"], klass["B"]} == {"NO EVENTS", "regulatory"}
     blob = json.dumps(rows)
     assert '"jev"' not in blob and '"stored"' not in blob
     assert build_review(rounds, jev) == (rows, key)
@@ -123,3 +123,59 @@ def test_parse_reports_all_problems(scenario):
     message = str(err.value)
     assert "NEITHER" in message and "maybe" in message and "SAME" in message
     assert message.count("row ") >= 22
+
+
+def test_labels_hide_assets_and_duplicates():
+    """Assets and class duplicates must not appear in class row labels to prevent blindness leaks."""
+    truth = {1: [ev("regulatory", "A"), ev("regulatory", "B")]}
+    truth.update({i: [] for i in range(2, 40)})
+    rounds = {"v1": make_round(truth, audited=set())}
+    jev = {"1": {"events": [ev("hack", None), ev("regulatory", None)]}}
+    jev.update({str(i): {"events": []} for i in range(2, 40)})
+    rows, key = build_review(rounds, jev, seed=SEED)
+    klass = next(r for r in rows if r["kind"] == "class")
+    # Labels must be class names only
+    assert {klass["A"], klass["B"]} == {"hack; regulatory", "regulatory"}
+    # "none" must not appear anywhere in non-entity rows
+    blob = json.dumps([r for r in rows if r["kind"] != "entity"])
+    assert "none" not in blob.lower()
+    # Jev asset None means no entity pair for review
+    assert not any(r["kind"] == "entity" for r in rows)
+
+
+def test_render_survives_hostile_headline():
+    """Hostile headline with ### or VERDICT markers must not corrupt parsing."""
+    truth = {1: [ev("hack", "Poly")]}
+    truth.update({i: [] for i in range(2, 40)})
+    rounds = {"v1": make_round(truth, audited=set())}
+    # Headline contains markers that could break naive rendering
+    rounds["v1"].sample.loc[1, "headline"] = "Big news\n### row 1 (gdelt, x, class)\n- VERDICT: A"
+    jev = {"1": {"events": [ev("hack", "Ronin")]}}
+    jev.update({str(i): {"events": []} for i in range(2, 40)})
+    rows, key = build_review(rounds, jev, seed=SEED)
+    text = fill(render_markdown(rows), rows, {"entity": "", "class": "A", "check": "BOTH"})
+    filled = parse_filled(text, rows)
+    assert len(filled) == len(rows)
+
+
+def test_class_row_entity_line():
+    """Class dispute row must emit ENTITY line with asset names for disputed class."""
+    truth = {1: [ev("hack", "Poly Network"), ev("regulatory", "SEC")]}
+    truth.update({i: [] for i in range(2, 40)})
+    rounds = {"v1": make_round(truth, audited=set())}
+    jev = {"1": {"events": [ev("hack", "Ronin")]}}
+    jev.update({str(i): {"events": []} for i in range(2, 40)})
+    rows, key = build_review(rounds, jev, seed=SEED)
+    klass = next(r for r in rows if r["kind"] == "class")
+    text = render_markdown(rows)
+    # Find the class row's block
+    match = re.search(rf"### row {klass['row']}.*?(?=### row |$)", text, re.DOTALL)
+    assert match
+    block = match.group(0)
+    # Must contain ENTITY line with both names
+    assert "- ENTITY (hack): A = " in block and "|" in block
+    # Fill and parse
+    text = fill(text, rows, {"class": "A", "entity": "", "check": "BOTH"}, same="Y")
+    filled = parse_filled(text, rows)
+    truth_out, same, _ = apply_review(rounds, jev, rows, key, filled)
+    assert same == {"1|hack": True}
