@@ -1,6 +1,7 @@
 """Aggregation of two Jev calls and article labeling with a scripted client."""
 from __future__ import annotations
 
+import json
 from pathlib import Path
 import sys
 
@@ -9,7 +10,8 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from llm_jev_labels import aggregate, label_article  # noqa: E402
+from llm_event_xs_truth import dir_reader, load_rounds  # noqa: E402
+from llm_jev_labels import aggregate, label_article, label_rounds  # noqa: E402
 from llm_jev_questions import CLASSES  # noqa: E402
 
 
@@ -86,3 +88,34 @@ def test_label_article_anon_masks_and_skips_asset():
         assert "Binance" not in state["headline"] and "ENTITY_12" in state["headline"]
         assert "asset" not in questions
     assert out["candidates"] == [] and out["asset"] is None
+
+
+class UniformClient:
+    """decide() answers exactly the asked questions: noul 0.2, uniform choice probs."""
+
+    def __init__(self):
+        self.spent_usd = 0.0
+
+    def decide(self, state, questions):
+        answers = {}
+        for key, question in questions.items():
+            if question["type"] == "noul":
+                answers[key] = {"type": "noul", "noul": 0.2}
+            else:
+                p = 1.0 / len(question["criteria"])
+                answers[key] = {"type": "choice", "choice": next(iter(question["criteria"])),
+                                "probabilities": {c: p for c in question["criteria"]}}
+        return {"id": "gen-uniform", "model": "m", "provider": "TypeSafe", "answers": answers,
+                "usage": {"cost": 0.0}, "_latency_s": 0.01}
+
+
+def test_label_rounds_real_data_json_safe():
+    """Full label_rounds pass over the committed C1 corpus must be JSON-safe."""
+    rounds = load_rounds(dir_reader(ROOT))
+    client = UniformClient()
+    named, anon = label_rounds(rounds, client, progress=lambda s: None)
+    assert len(named) == 400
+    assert len(anon) == 100
+    assert all(label["asset"] is None for label in anon.values())
+    json.dumps(named, allow_nan=False, sort_keys=True)
+    json.dumps(anon, allow_nan=False, sort_keys=True)
