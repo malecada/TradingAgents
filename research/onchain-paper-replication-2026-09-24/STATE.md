@@ -156,6 +156,16 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
+**Latest backup progress (2026-09-29 06:23 UTC):** original09
+controller PID894430 remains running with a fresh guard inbulk08.
+Seven phases are complete with verified cleanup. 123 new09 bundles plus the
+reused prefix verify57,051 files /96,419,673,675 raw bytes (93.1%).
+Remaining:14 bundles /7,104,815,368 raw bytes. No recorded transport failure or
+resource-floor breach; current available memory is about7.42 GB and free disk
+about33.02 GB. Roughly1.1 hours remain if observed pace persists.
+Snapshot: `storage/raw-preservation-2026-09-28-09/progress-20260929T062330Z.json`.
+No process was restarted; whole-backup closure and independent audit are pending.
+
 **Active backup continuation09:** independently reviewed and launched once
 from `555c30d1` under the September28 resume instruction after PC sleep.
 Controller/monitor PID894430; phasebulk01 has a fresh running guard,
