@@ -7,6 +7,22 @@ from .cache import cache_key
 from .provenance import utc,freeze
 
 
+def node_order_hash(node_ids):
+    """Exact legacy JSON-list hash without expanding an entire mapped ID array."""
+    import hashlib
+    from .provenance import canonical_bytes
+    h = hashlib.sha256(b'[')
+    for start in range(0, len(node_ids), 1024):
+        if start:
+            h.update(b',')
+        chunk = node_ids[start:start + 1024]
+        if isinstance(chunk, np.ndarray):
+            chunk = chunk.tolist()
+        h.update(canonical_bytes(chunk)[1:-1])
+    h.update(b']')
+    return h.hexdigest()
+
+
 def graph_hash(graph):
     # Exact canonical JSON identity, streamed so weekly arrays need no giant list copy.
     from dataclasses import fields

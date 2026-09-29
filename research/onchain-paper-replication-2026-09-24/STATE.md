@@ -3,6 +3,90 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Mapped-graph full offline verification COMPLETE — September 29:**
+Named offline01 passed 3,366 tests plus 97 subtests, with two CUDA skips
+(standard 2,768; neural 598). The guard completed in 1484.10 seconds, child
+exit 0, verified cleanup, sampled peak 2,475,028,480 bytes and zero memory
+high/max/OOM events. All 130 frozen source bindings match. The owned monitor
+and cgroup are absent; no job from this increment remains active. Evidence:
+`full_sources/mapped-graph-2026-09-29/offline01/`.
+
+The optional loader preserves read-only mapped numeric arrays and Unicode IDs,
+exact graph/node-order identities and derived sample/dictionary/MCM/feature
+outputs. The eager loader remains unchanged. Both cleanup findings were fixed
+with retained counterexamples. Independent terminal review accepted this optional
+API for engineering release. No empirical gate enables the loader.
+
+Next safe work: add explicitly admitted aggregate graph-residency and context
+lifetime integration, following `full_sources/mapped-graph-2026-09-29/NEXT_INTEGRATION.md`.
+Then address full-neighborhood matching and prepare/review the cumulative
+resource amendment and finite full-size MCM/neural pilot. Per-context mapped
+file limits do not prove full-fold RSS, matching or model feasibility.
+Budget remains 25/52; all 1,420 financial fits are pending. Earlier running
+and blocked snapshots below are historical and superseded.
+
+**ACTIVE mapped-graph offline verification — 2026-09-29T15:43:05.866825+00:00:**
+Fresh available RAM increased to 7,409,405,952 bytes, exceeding the unchanged
+6 GiB startup threshold. Workspace free space was 24,911,486,976 bytes, above
+the 20 GiB floor. The prepared named offline01 verification was launched once
+and is running under its resource guard. Monitor PID 2636564, start ticks 2483400;
+unit `onchain-replication-0b08ad55939240328af60fbb7d9bd521.service`; tool session 49607.
+Durable receipts are `full_sources/mapped-graph-2026-09-29/offline01/`.
+All 130 source bindings were checked by the launcher. Keep HEAD 08b99513 and
+all bound files unchanged; do not duplicate the process or reuse its identity.
+
+Limits remain 3 GiB memory maximum, 2.75 GiB high, zero job swap, 3 GiB host
+reserve, 6 GiB startup availability, 20 GiB disk floor, two-CPU affinity and
+3600 seconds. No limit reason is currently recorded. Prior full verification
+took 28.6 minutes; approximately 25–35 minutes is an estimate, not a deadline.
+No empirical job, new claim or financial fit was launched. Next safe action:
+collect this exact job's terminal result, cleanup, test summaries and unchanged
+hashes; obtain independent closure before explicit commit/push. Earlier blocked
+and running snapshots below are historical and superseded.
+
+**Current status — 2026-09-29T15:40:00.899262+00:00:** mapped-graph focused verification
+passed 96 checks and independent review accepted frozen-source offline testing.
+No process from this increment is running. The broad job has not been launched:
+fresh available RAM is 5,137,907,712 bytes versus the unchanged
+6,442,450,944-byte startup requirement. Disk has 24,910,192,640 bytes
+free versus the 21,474,836,480-byte floor. All 130 frozen source bindings match.
+Exact admission snapshot: `full_sources/mapped-graph-2026-09-29/admission-check01.json`.
+No offline01 identity has been reserved. Keep HEAD 08b99513 and bound files frozen;
+recheck capacity before the single prepared launch when sufficient RAM is available.
+Prospective aggregate graph-residency/lifetime integration requirements were
+recorded in `full_sources/mapped-graph-2026-09-29/NEXT_INTEGRATION.md` while waiting.
+No empirical claims, new data or financial fits; budget 25/52 unchanged.
+
+**Mapped-graph focused verification accepted; broad admission pending:**
+Expanded green02 passed 96 tests in 56.73 seconds, and independent review closed
+both cleanup findings. All graph module/test source files, runtime lockfiles and
+launcher are now frozen in `full_sources/mapped-graph-2026-09-29/source-bindings.json`
+at HEAD 08b99513. No broad job has been launched yet. A fresh resource check
+observed 6,158,532,608 available RAM bytes, below the unchanged 6 GiB startup
+threshold; workspace free space was 24,914,558,976 bytes above the 20 GiB floor.
+Do not weaken limits or treat this temporary admission failure as empirical data.
+Next safe action: recheck available capacity; launch the prepared finite offline01
+only if its unchanged admission checks pass and no owner/receipt exists.
+Until then independent design/documentation can continue.
+
+**Mapped-graph engineering in progress — September 29:**
+Optional context-owned read-only graph loading now preserves numeric arrays and
+Unicode node IDs as maps instead of eager copies. Exact canonical graph and
+node-order identities are preserved; the ordinary eager loader is unchanged.
+Initial focused green01 passed 42 checks. Both review-discovered cleanup findings
+have retained red counterexamples and corrections. Expanded green02 is running
+(tool session 4922); broad offline verification and independent release review
+remain pending. Evidence: `full_sources/mapped-graph-2026-09-29/`.
+
+No empirical job is active or enabled by this component. Its mapped-file bound
+is per context and does not bound validation, adjacency, matching or neural
+working memory. Registered aggregate residency/lifetime integration remains next,
+alongside large-neighborhood matching and full-size resource measurements.
+No new source sample, claim or fit; budget 25/52 and 1,420 pending fits unchanged.
+The preceding sampling-policy increment was committed and pushed as 08b99513.
+Next safe action: close focused evidence/review, freeze exact sources and run the
+named offline target once under a fresh finite engineering receipt identity.
+
 **Sampling-policy full offline verification COMPLETE — September 29:**
 The named offline01 suite passed 3,334 tests plus 97 subtests, with two CUDA
 skips: standard 2,768 in 1082.10 seconds; neural 566 in 628.49 seconds.

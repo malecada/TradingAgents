@@ -1,0 +1,42 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_non_npy_rejected_before_numpy_loader_opens_archive ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-63/test_non_npy_rejected_before_n0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f01c8510640>
+
+    def test_non_npy_rejected_before_numpy_loader_opens_archive(tmp_path, monkeypatch):
+        _, path, _ = saved(tmp_path)
+        member = path.parent / 'node_features.npy'
+        with member.open('wb') as f:
+            np.savez(f, data=np.zeros((4, 4)))
+        manifest = json.loads(path.read_bytes())
+        manifest['arrays']['node_features'].update(sha256=file_hash(member), bytes=member.stat().st_size)
+        path.write_bytes(canonical_bytes(manifest))
+        monkeypatch.setattr(store.np, 'load', lambda *a, **k: pytest.fail('NPZ reached numpy loader'))
+        with pytest.raises(ValueError):
+>           with store.open_mapped_graph(path, file_hash(path),
+                    max_mapped_bytes=sum(v['bytes'] for v in manifest['arrays'].values())):
+
+tests/research/onchain_replication/test_mapped_graph.py:235: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/contextlib.py:141: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/mapped_graph.py:100: in open_mapped_graph
+    value = np.load(member, allow_pickle=False, mmap_mode='r', max_header_size=10000)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (PosixPath('/tmp/pytest-of-malecada/pytest-63/test_non_npy_rejected_before_n0/graph/edge_aggregates.npy'),)
+k = {'allow_pickle': False, 'mmap_mode': 'r', 'max_header_size': 10000}
+
+>   monkeypatch.setattr(store.np, 'load', lambda *a, **k: pytest.fail('NPZ reached numpy loader'))
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: NPZ reached numpy loader
+
+tests/research/onchain_replication/test_mapped_graph.py:233: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_non_npy_rejected_before_numpy_loader_opens_archive
+1 failed, 30 deselected in 7.99s

@@ -11,7 +11,7 @@ import numpy as np
 import torch
 from .cache import cache_key
 from .contracts import validate_graph
-from .neighborhoods import graph_hash,sample_neighborhoods
+from .neighborhoods import graph_hash,sample_neighborhoods,node_order_hash
 from .dictionary import fit_dictionary
 from .mcm import mcm_features
 from .serialization import samples_to_record,dictionary_to_record,samples_from_record,dictionary_from_record
@@ -72,7 +72,7 @@ def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpo
         return {'input_graph_hash':identity,'asset':by_hash[identity].asset,
         'source_hashes':list(by_hash[identity].source_hashes),'start_utc':by_hash[identity].start_utc,
         'end_utc':by_hash[identity].end_utc,'available_at':by_hash[identity].available_at,
-        'node_order_hash':cache_key(by_hash[identity].node_ids),'edge_index_hash':feature_hash(by_hash[identity].edge_index)}
+        'node_order_hash':node_order_hash(by_hash[identity].node_ids),'edge_index_hash':feature_hash(by_hash[identity].edge_index)}
     lineage={identity:graph_lineage(identity) for identity in sorted(required)}
     needs_mcm=arm in {'proposed','training_label_permutation','mcm_without_gat'}
     if needs_mcm:

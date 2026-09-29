@@ -1,0 +1,540 @@
+FFFFFFFFFFFFFFFFF.F                                                      [100%]
+=================================== FAILURES ===================================
+_______ test_mapped_storage_preserves_exact_graph_and_closes_owned_maps ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_mapped_storage_preserves_0')
+
+    def test_mapped_storage_preserves_exact_graph_and_closes_owned_maps(tmp_path):
+        original = replace(fixture(), node_ids=('a"', 'b\\', 'c\n', 'é'))
+        graph, path, size = saved(tmp_path, original)
+        expected = hashlib.sha256(canonical_bytes(graph_to_dict(graph))).hexdigest()
+>       with store.open_mapped_graph(path, file_hash(path), max_mapped_bytes=size) as mapped:
+             ^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:28: AttributeError
+__________________ test_budget_refused_before_any_mapping[0] ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_budget_refused_before_any0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6a1478fe10>
+limit = 0
+
+    @pytest.mark.parametrize('limit', [0, -1, True, 1])
+    def test_budget_refused_before_any_mapping(tmp_path, monkeypatch, limit):
+        _, path, _ = saved(tmp_path)
+        def forbidden(*args, **kwargs):
+            pytest.fail('budget refusal must precede mapping')
+        monkeypatch.setattr(store.np, 'load', forbidden)
+        with pytest.raises(ValueError, match='bound|budget'):
+>           with store.open_mapped_graph(path, file_hash(path), max_mapped_bytes=limit):
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:49: AttributeError
+__________________ test_budget_refused_before_any_mapping[-1] __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_budget_refused_before_any1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6a170168b0>
+limit = -1
+
+    @pytest.mark.parametrize('limit', [0, -1, True, 1])
+    def test_budget_refused_before_any_mapping(tmp_path, monkeypatch, limit):
+        _, path, _ = saved(tmp_path)
+        def forbidden(*args, **kwargs):
+            pytest.fail('budget refusal must precede mapping')
+        monkeypatch.setattr(store.np, 'load', forbidden)
+        with pytest.raises(ValueError, match='bound|budget'):
+>           with store.open_mapped_graph(path, file_hash(path), max_mapped_bytes=limit):
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:49: AttributeError
+_________________ test_budget_refused_before_any_mapping[True] _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_budget_refused_before_any2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6a143315b0>
+limit = True
+
+    @pytest.mark.parametrize('limit', [0, -1, True, 1])
+    def test_budget_refused_before_any_mapping(tmp_path, monkeypatch, limit):
+        _, path, _ = saved(tmp_path)
+        def forbidden(*args, **kwargs):
+            pytest.fail('budget refusal must precede mapping')
+        monkeypatch.setattr(store.np, 'load', forbidden)
+        with pytest.raises(ValueError, match='bound|budget'):
+>           with store.open_mapped_graph(path, file_hash(path), max_mapped_bytes=limit):
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:49: AttributeError
+__________________ test_budget_refused_before_any_mapping[1] ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_budget_refused_before_any3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6a143586b0>
+limit = 1
+
+    @pytest.mark.parametrize('limit', [0, -1, True, 1])
+    def test_budget_refused_before_any_mapping(tmp_path, monkeypatch, limit):
+        _, path, _ = saved(tmp_path)
+        def forbidden(*args, **kwargs):
+            pytest.fail('budget refusal must precede mapping')
+        monkeypatch.setattr(store.np, 'load', forbidden)
+        with pytest.raises(ValueError, match='bound|budget'):
+>           with store.open_mapped_graph(path, file_hash(path), max_mapped_bytes=limit):
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:49: AttributeError
+__________ test_bad_manifest_or_member_refused_before_mapping[bytes] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_bad_manifest_or_member_re0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6a143588d0>
+fault = 'bytes'
+
+    @pytest.mark.parametrize('fault', ['bytes', 'boolean_bytes', 'member_hash', 'manifest_hash', 'symlink', 'missing'])
+    def test_bad_manifest_or_member_refused_before_mapping(tmp_path, monkeypatch, fault):
+        _, path, size = saved(tmp_path)
+        data = json.loads(path.read_bytes())
+        if fault == 'bytes':
+            data['arrays']['edge_features']['bytes'] -= 1
+        elif fault == 'boolean_bytes':
+            data['arrays']['edge_features']['bytes'] = True
+        elif fault == 'member_hash':
+            data['arrays']['edge_features']['sha256'] = '0' * 64
+        elif fault == 'missing':
+            del data['arrays']['edge_features']
+        elif fault == 'symlink':
+            member = path.parent / 'edge_features.npy'
+            target = tmp_path / 'retained.npy'
+            member.rename(target)
+            member.symlink_to(target)
+        path.write_bytes(canonical_bytes(data))
+        expected = '0' * 64 if fault == 'manifest_hash' else file_hash(path)
+        monkeypatch.setattr(store.np, 'load', lambda *a, **k: pytest.fail('invalid files reached mapping'))
+        with pytest.raises(ValueError):
+>           with store.open_mapped_graph(path, expected, max_mapped_bytes=size):
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:74: AttributeError
+______ test_bad_manifest_or_member_refused_before_mapping[boolean_bytes] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_bad_manifest_or_member_re1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6a14321b50>
+fault = 'boolean_bytes'
+
+    @pytest.mark.parametrize('fault', ['bytes', 'boolean_bytes', 'member_hash', 'manifest_hash', 'symlink', 'missing'])
+    def test_bad_manifest_or_member_refused_before_mapping(tmp_path, monkeypatch, fault):
+        _, path, size = saved(tmp_path)
+        data = json.loads(path.read_bytes())
+        if fault == 'bytes':
+            data['arrays']['edge_features']['bytes'] -= 1
+        elif fault == 'boolean_bytes':
+            data['arrays']['edge_features']['bytes'] = True
+        elif fault == 'member_hash':
+            data['arrays']['edge_features']['sha256'] = '0' * 64
+        elif fault == 'missing':
+            del data['arrays']['edge_features']
+        elif fault == 'symlink':
+            member = path.parent / 'edge_features.npy'
+            target = tmp_path / 'retained.npy'
+            member.rename(target)
+            member.symlink_to(target)
+        path.write_bytes(canonical_bytes(data))
+        expected = '0' * 64 if fault == 'manifest_hash' else file_hash(path)
+        monkeypatch.setattr(store.np, 'load', lambda *a, **k: pytest.fail('invalid files reached mapping'))
+        with pytest.raises(ValueError):
+>           with store.open_mapped_graph(path, expected, max_mapped_bytes=size):
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:74: AttributeError
+_______ test_bad_manifest_or_member_refused_before_mapping[member_hash] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_bad_manifest_or_member_re2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6a14321e50>
+fault = 'member_hash'
+
+    @pytest.mark.parametrize('fault', ['bytes', 'boolean_bytes', 'member_hash', 'manifest_hash', 'symlink', 'missing'])
+    def test_bad_manifest_or_member_refused_before_mapping(tmp_path, monkeypatch, fault):
+        _, path, size = saved(tmp_path)
+        data = json.loads(path.read_bytes())
+        if fault == 'bytes':
+            data['arrays']['edge_features']['bytes'] -= 1
+        elif fault == 'boolean_bytes':
+            data['arrays']['edge_features']['bytes'] = True
+        elif fault == 'member_hash':
+            data['arrays']['edge_features']['sha256'] = '0' * 64
+        elif fault == 'missing':
+            del data['arrays']['edge_features']
+        elif fault == 'symlink':
+            member = path.parent / 'edge_features.npy'
+            target = tmp_path / 'retained.npy'
+            member.rename(target)
+            member.symlink_to(target)
+        path.write_bytes(canonical_bytes(data))
+        expected = '0' * 64 if fault == 'manifest_hash' else file_hash(path)
+        monkeypatch.setattr(store.np, 'load', lambda *a, **k: pytest.fail('invalid files reached mapping'))
+        with pytest.raises(ValueError):
+>           with store.open_mapped_graph(path, expected, max_mapped_bytes=size):
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:74: AttributeError
+______ test_bad_manifest_or_member_refused_before_mapping[manifest_hash] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_bad_manifest_or_member_re3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6a1433e300>
+fault = 'manifest_hash'
+
+    @pytest.mark.parametrize('fault', ['bytes', 'boolean_bytes', 'member_hash', 'manifest_hash', 'symlink', 'missing'])
+    def test_bad_manifest_or_member_refused_before_mapping(tmp_path, monkeypatch, fault):
+        _, path, size = saved(tmp_path)
+        data = json.loads(path.read_bytes())
+        if fault == 'bytes':
+            data['arrays']['edge_features']['bytes'] -= 1
+        elif fault == 'boolean_bytes':
+            data['arrays']['edge_features']['bytes'] = True
+        elif fault == 'member_hash':
+            data['arrays']['edge_features']['sha256'] = '0' * 64
+        elif fault == 'missing':
+            del data['arrays']['edge_features']
+        elif fault == 'symlink':
+            member = path.parent / 'edge_features.npy'
+            target = tmp_path / 'retained.npy'
+            member.rename(target)
+            member.symlink_to(target)
+        path.write_bytes(canonical_bytes(data))
+        expected = '0' * 64 if fault == 'manifest_hash' else file_hash(path)
+        monkeypatch.setattr(store.np, 'load', lambda *a, **k: pytest.fail('invalid files reached mapping'))
+        with pytest.raises(ValueError):
+>           with store.open_mapped_graph(path, expected, max_mapped_bytes=size):
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:74: AttributeError
+_________ test_bad_manifest_or_member_refused_before_mapping[symlink] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_bad_manifest_or_member_re4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6a1433d9a0>
+fault = 'symlink'
+
+    @pytest.mark.parametrize('fault', ['bytes', 'boolean_bytes', 'member_hash', 'manifest_hash', 'symlink', 'missing'])
+    def test_bad_manifest_or_member_refused_before_mapping(tmp_path, monkeypatch, fault):
+        _, path, size = saved(tmp_path)
+        data = json.loads(path.read_bytes())
+        if fault == 'bytes':
+            data['arrays']['edge_features']['bytes'] -= 1
+        elif fault == 'boolean_bytes':
+            data['arrays']['edge_features']['bytes'] = True
+        elif fault == 'member_hash':
+            data['arrays']['edge_features']['sha256'] = '0' * 64
+        elif fault == 'missing':
+            del data['arrays']['edge_features']
+        elif fault == 'symlink':
+            member = path.parent / 'edge_features.npy'
+            target = tmp_path / 'retained.npy'
+            member.rename(target)
+            member.symlink_to(target)
+        path.write_bytes(canonical_bytes(data))
+        expected = '0' * 64 if fault == 'manifest_hash' else file_hash(path)
+        monkeypatch.setattr(store.np, 'load', lambda *a, **k: pytest.fail('invalid files reached mapping'))
+        with pytest.raises(ValueError):
+>           with store.open_mapped_graph(path, expected, max_mapped_bytes=size):
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:74: AttributeError
+_________ test_bad_manifest_or_member_refused_before_mapping[missing] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_bad_manifest_or_member_re5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6a1435d470>
+fault = 'missing'
+
+    @pytest.mark.parametrize('fault', ['bytes', 'boolean_bytes', 'member_hash', 'manifest_hash', 'symlink', 'missing'])
+    def test_bad_manifest_or_member_refused_before_mapping(tmp_path, monkeypatch, fault):
+        _, path, size = saved(tmp_path)
+        data = json.loads(path.read_bytes())
+        if fault == 'bytes':
+            data['arrays']['edge_features']['bytes'] -= 1
+        elif fault == 'boolean_bytes':
+            data['arrays']['edge_features']['bytes'] = True
+        elif fault == 'member_hash':
+            data['arrays']['edge_features']['sha256'] = '0' * 64
+        elif fault == 'missing':
+            del data['arrays']['edge_features']
+        elif fault == 'symlink':
+            member = path.parent / 'edge_features.npy'
+            target = tmp_path / 'retained.npy'
+            member.rename(target)
+            member.symlink_to(target)
+        path.write_bytes(canonical_bytes(data))
+        expected = '0' * 64 if fault == 'manifest_hash' else file_hash(path)
+        monkeypatch.setattr(store.np, 'load', lambda *a, **k: pytest.fail('invalid files reached mapping'))
+        with pytest.raises(ValueError):
+>           with store.open_mapped_graph(path, expected, max_mapped_bytes=size):
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:74: AttributeError
+_________ test_failed_validation_or_consumer_closes_all_maps[unsorted] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_failed_validation_or_cons0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6a1435d0f0>
+fault = 'unsorted'
+
+    @pytest.mark.parametrize('fault', ['unsorted', 'duplicate', 'empty_id', 'nonfinite', 'identity', 'consumer'])
+    def test_failed_validation_or_consumer_closes_all_maps(tmp_path, monkeypatch, fault):
+        graph, path, size = saved(tmp_path)
+        data = json.loads(path.read_bytes())
+        if fault in {'unsorted', 'duplicate', 'empty_id'}:
+            ids = {'unsorted': ['b', 'a', 'c', 'd'], 'duplicate': ['a', 'a', 'c', 'd'],
+                   'empty_id': ['', 'b', 'c', 'd']}[fault]
+            np.save(path.parent / 'node_ids.npy', np.asarray(ids), allow_pickle=False)
+            data['arrays']['node_ids']['sha256'] = file_hash(path.parent / 'node_ids.npy')
+        elif fault == 'nonfinite':
+            values = np.array(graph.node_features)
+            values[0, 0] = np.nan
+            np.save(path.parent / 'node_features.npy', values, allow_pickle=False)
+            data['arrays']['node_features']['sha256'] = file_hash(path.parent / 'node_features.npy')
+        elif fault == 'identity':
+            data['graph_hash'] = '0' * 64
+        path.write_bytes(canonical_bytes(data))
+        opened = []
+        original_load = store.np.load
+        def tracked(*args, **kwargs):
+            array = original_load(*args, **kwargs)
+            opened.append(array._mmap)
+            return array
+        monkeypatch.setattr(store.np, 'load', tracked)
+        with pytest.raises(ValueError):
+>           with store.open_mapped_graph(path, file_hash(path), max_mapped_bytes=size):
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:103: AttributeError
+________ test_failed_validation_or_consumer_closes_all_maps[duplicate] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_failed_validation_or_cons1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6a147acef0>
+fault = 'duplicate'
+
+    @pytest.mark.parametrize('fault', ['unsorted', 'duplicate', 'empty_id', 'nonfinite', 'identity', 'consumer'])
+    def test_failed_validation_or_consumer_closes_all_maps(tmp_path, monkeypatch, fault):
+        graph, path, size = saved(tmp_path)
+        data = json.loads(path.read_bytes())
+        if fault in {'unsorted', 'duplicate', 'empty_id'}:
+            ids = {'unsorted': ['b', 'a', 'c', 'd'], 'duplicate': ['a', 'a', 'c', 'd'],
+                   'empty_id': ['', 'b', 'c', 'd']}[fault]
+            np.save(path.parent / 'node_ids.npy', np.asarray(ids), allow_pickle=False)
+            data['arrays']['node_ids']['sha256'] = file_hash(path.parent / 'node_ids.npy')
+        elif fault == 'nonfinite':
+            values = np.array(graph.node_features)
+            values[0, 0] = np.nan
+            np.save(path.parent / 'node_features.npy', values, allow_pickle=False)
+            data['arrays']['node_features']['sha256'] = file_hash(path.parent / 'node_features.npy')
+        elif fault == 'identity':
+            data['graph_hash'] = '0' * 64
+        path.write_bytes(canonical_bytes(data))
+        opened = []
+        original_load = store.np.load
+        def tracked(*args, **kwargs):
+            array = original_load(*args, **kwargs)
+            opened.append(array._mmap)
+            return array
+        monkeypatch.setattr(store.np, 'load', tracked)
+        with pytest.raises(ValueError):
+>           with store.open_mapped_graph(path, file_hash(path), max_mapped_bytes=size):
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:103: AttributeError
+_________ test_failed_validation_or_consumer_closes_all_maps[empty_id] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_failed_validation_or_cons2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6a14316090>
+fault = 'empty_id'
+
+    @pytest.mark.parametrize('fault', ['unsorted', 'duplicate', 'empty_id', 'nonfinite', 'identity', 'consumer'])
+    def test_failed_validation_or_consumer_closes_all_maps(tmp_path, monkeypatch, fault):
+        graph, path, size = saved(tmp_path)
+        data = json.loads(path.read_bytes())
+        if fault in {'unsorted', 'duplicate', 'empty_id'}:
+            ids = {'unsorted': ['b', 'a', 'c', 'd'], 'duplicate': ['a', 'a', 'c', 'd'],
+                   'empty_id': ['', 'b', 'c', 'd']}[fault]
+            np.save(path.parent / 'node_ids.npy', np.asarray(ids), allow_pickle=False)
+            data['arrays']['node_ids']['sha256'] = file_hash(path.parent / 'node_ids.npy')
+        elif fault == 'nonfinite':
+            values = np.array(graph.node_features)
+            values[0, 0] = np.nan
+            np.save(path.parent / 'node_features.npy', values, allow_pickle=False)
+            data['arrays']['node_features']['sha256'] = file_hash(path.parent / 'node_features.npy')
+        elif fault == 'identity':
+            data['graph_hash'] = '0' * 64
+        path.write_bytes(canonical_bytes(data))
+        opened = []
+        original_load = store.np.load
+        def tracked(*args, **kwargs):
+            array = original_load(*args, **kwargs)
+            opened.append(array._mmap)
+            return array
+        monkeypatch.setattr(store.np, 'load', tracked)
+        with pytest.raises(ValueError):
+>           with store.open_mapped_graph(path, file_hash(path), max_mapped_bytes=size):
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:103: AttributeError
+________ test_failed_validation_or_consumer_closes_all_maps[nonfinite] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_failed_validation_or_cons3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6a14316210>
+fault = 'nonfinite'
+
+    @pytest.mark.parametrize('fault', ['unsorted', 'duplicate', 'empty_id', 'nonfinite', 'identity', 'consumer'])
+    def test_failed_validation_or_consumer_closes_all_maps(tmp_path, monkeypatch, fault):
+        graph, path, size = saved(tmp_path)
+        data = json.loads(path.read_bytes())
+        if fault in {'unsorted', 'duplicate', 'empty_id'}:
+            ids = {'unsorted': ['b', 'a', 'c', 'd'], 'duplicate': ['a', 'a', 'c', 'd'],
+                   'empty_id': ['', 'b', 'c', 'd']}[fault]
+            np.save(path.parent / 'node_ids.npy', np.asarray(ids), allow_pickle=False)
+            data['arrays']['node_ids']['sha256'] = file_hash(path.parent / 'node_ids.npy')
+        elif fault == 'nonfinite':
+            values = np.array(graph.node_features)
+            values[0, 0] = np.nan
+            np.save(path.parent / 'node_features.npy', values, allow_pickle=False)
+            data['arrays']['node_features']['sha256'] = file_hash(path.parent / 'node_features.npy')
+        elif fault == 'identity':
+            data['graph_hash'] = '0' * 64
+        path.write_bytes(canonical_bytes(data))
+        opened = []
+        original_load = store.np.load
+        def tracked(*args, **kwargs):
+            array = original_load(*args, **kwargs)
+            opened.append(array._mmap)
+            return array
+        monkeypatch.setattr(store.np, 'load', tracked)
+        with pytest.raises(ValueError):
+>           with store.open_mapped_graph(path, file_hash(path), max_mapped_bytes=size):
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:103: AttributeError
+_________ test_failed_validation_or_consumer_closes_all_maps[identity] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_failed_validation_or_cons4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6a14376150>
+fault = 'identity'
+
+    @pytest.mark.parametrize('fault', ['unsorted', 'duplicate', 'empty_id', 'nonfinite', 'identity', 'consumer'])
+    def test_failed_validation_or_consumer_closes_all_maps(tmp_path, monkeypatch, fault):
+        graph, path, size = saved(tmp_path)
+        data = json.loads(path.read_bytes())
+        if fault in {'unsorted', 'duplicate', 'empty_id'}:
+            ids = {'unsorted': ['b', 'a', 'c', 'd'], 'duplicate': ['a', 'a', 'c', 'd'],
+                   'empty_id': ['', 'b', 'c', 'd']}[fault]
+            np.save(path.parent / 'node_ids.npy', np.asarray(ids), allow_pickle=False)
+            data['arrays']['node_ids']['sha256'] = file_hash(path.parent / 'node_ids.npy')
+        elif fault == 'nonfinite':
+            values = np.array(graph.node_features)
+            values[0, 0] = np.nan
+            np.save(path.parent / 'node_features.npy', values, allow_pickle=False)
+            data['arrays']['node_features']['sha256'] = file_hash(path.parent / 'node_features.npy')
+        elif fault == 'identity':
+            data['graph_hash'] = '0' * 64
+        path.write_bytes(canonical_bytes(data))
+        opened = []
+        original_load = store.np.load
+        def tracked(*args, **kwargs):
+            array = original_load(*args, **kwargs)
+            opened.append(array._mmap)
+            return array
+        monkeypatch.setattr(store.np, 'load', tracked)
+        with pytest.raises(ValueError):
+>           with store.open_mapped_graph(path, file_hash(path), max_mapped_bytes=size):
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:103: AttributeError
+_________ test_failed_validation_or_consumer_closes_all_maps[consumer] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_failed_validation_or_cons5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6a14376620>
+fault = 'consumer'
+
+    @pytest.mark.parametrize('fault', ['unsorted', 'duplicate', 'empty_id', 'nonfinite', 'identity', 'consumer'])
+    def test_failed_validation_or_consumer_closes_all_maps(tmp_path, monkeypatch, fault):
+        graph, path, size = saved(tmp_path)
+        data = json.loads(path.read_bytes())
+        if fault in {'unsorted', 'duplicate', 'empty_id'}:
+            ids = {'unsorted': ['b', 'a', 'c', 'd'], 'duplicate': ['a', 'a', 'c', 'd'],
+                   'empty_id': ['', 'b', 'c', 'd']}[fault]
+            np.save(path.parent / 'node_ids.npy', np.asarray(ids), allow_pickle=False)
+            data['arrays']['node_ids']['sha256'] = file_hash(path.parent / 'node_ids.npy')
+        elif fault == 'nonfinite':
+            values = np.array(graph.node_features)
+            values[0, 0] = np.nan
+            np.save(path.parent / 'node_features.npy', values, allow_pickle=False)
+            data['arrays']['node_features']['sha256'] = file_hash(path.parent / 'node_features.npy')
+        elif fault == 'identity':
+            data['graph_hash'] = '0' * 64
+        path.write_bytes(canonical_bytes(data))
+        opened = []
+        original_load = store.np.load
+        def tracked(*args, **kwargs):
+            array = original_load(*args, **kwargs)
+            opened.append(array._mmap)
+            return array
+        monkeypatch.setattr(store.np, 'load', tracked)
+        with pytest.raises(ValueError):
+>           with store.open_mapped_graph(path, file_hash(path), max_mapped_bytes=size):
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:103: AttributeError
+____ test_mapped_pipeline_matches_eager_dictionary_samples_mcm_and_binding _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-61/test_mapped_pipeline_matches_e0')
+
+    def test_mapped_pipeline_matches_eager_dictionary_samples_mcm_and_binding(tmp_path):
+        from tests.research.onchain_replication.test_feature_pipeline import population, configs
+        from tradingagents.research.onchain_replication.feature_pipeline import prepare_features
+        graphs, fold, examples = population()
+        config = configs()
+        config['dictionary'] = {**config['dictionary'], 'sample_count': 2, 'size': 2}
+        events = []
+        eager = prepare_features(graphs, examples, fold, 'proposed', 11, config,
+            max_entries=100000, checkpoint=lambda *args: events.append(args))
+        with ExitStack() as stack:
+            mapped = []
+            for i, graph in enumerate(graphs):
+                path = store.save_graph(tmp_path / str(i), graph)
+                size = sum(v['bytes'] for v in json.loads(path.read_bytes())['arrays'].values())
+>               mapped.append(stack.enter_context(store.open_mapped_graph(
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^
+                    path, file_hash(path), max_mapped_bytes=size)))
+E               AttributeError: module 'tradingagents.research.onchain_replication.graph_store' has no attribute 'open_mapped_graph'
+
+tests/research/onchain_replication/test_mapped_graph.py:137: AttributeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_mapped_storage_preserves_exact_graph_and_closes_owned_maps
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_budget_refused_before_any_mapping[0]
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_budget_refused_before_any_mapping[-1]
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_budget_refused_before_any_mapping[True]
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_budget_refused_before_any_mapping[1]
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_bad_manifest_or_member_refused_before_mapping[bytes]
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_bad_manifest_or_member_refused_before_mapping[boolean_bytes]
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_bad_manifest_or_member_refused_before_mapping[member_hash]
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_bad_manifest_or_member_refused_before_mapping[manifest_hash]
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_bad_manifest_or_member_refused_before_mapping[symlink]
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_bad_manifest_or_member_refused_before_mapping[missing]
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_failed_validation_or_consumer_closes_all_maps[unsorted]
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_failed_validation_or_consumer_closes_all_maps[duplicate]
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_failed_validation_or_consumer_closes_all_maps[empty_id]
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_failed_validation_or_consumer_closes_all_maps[nonfinite]
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_failed_validation_or_consumer_closes_all_maps[identity]
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_failed_validation_or_consumer_closes_all_maps[consumer]
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_mapped_pipeline_matches_eager_dictionary_samples_mcm_and_binding
+18 failed, 1 passed in 5.03s

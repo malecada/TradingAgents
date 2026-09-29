@@ -99,7 +99,16 @@ def validate_graph(g: GraphSnapshot) -> None:
     for value in g.source_hashes:
         require_hash(value)
     n = len(g.node_ids)
-    if any(not isinstance(x, str) or not x for x in g.node_ids) or any(a==b for a,b in pairwise(sorted(g.node_ids))):
+    if isinstance(g.node_ids, np.memmap):
+        if g.node_ids.ndim != 1 or g.node_ids.dtype.kind != 'U':
+            raise ValueError('invalid mapped node identities')
+        # Mapped storage requires existing sorted IDs; never sort/materialize
+        # millions of Python strings on repeated graph validation/hash calls.
+        for start in range(0, n, 65536):
+            block = g.node_ids[max(0, start - 1):start + 65536]
+            if np.any(block == '') or np.any(block[1:] <= block[:-1]):
+                raise ValueError('mapped node identities must be nonempty sorted unique strings')
+    elif any(not isinstance(x, str) or not x for x in g.node_ids) or any(a==b for a,b in pairwise(sorted(g.node_ids))):
         raise ValueError('duplicate or invalid node identities')
     if g.node_features.ndim != 2 or g.node_features.shape[0] != n:
         raise ValueError('node feature dimensions')

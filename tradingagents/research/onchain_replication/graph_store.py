@@ -6,6 +6,7 @@ import numpy as np
 from .contracts import GraphSnapshot,validate_graph
 from .neighborhoods import graph_hash
 from .provenance import canonical_bytes,file_hash,sync_directory,durable_mkdir
+from .mapped_graph import open_mapped_graph
 
 
 def save_graph(directory,graph):

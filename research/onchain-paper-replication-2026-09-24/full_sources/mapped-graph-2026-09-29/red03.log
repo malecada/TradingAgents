@@ -1,0 +1,51 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_normal_context_exit_does_not_hide_cleanup_failure_in_ambient_exception __
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-64/test_normal_context_exit_does_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73680a74c640>
+
+    def test_normal_context_exit_does_not_hide_cleanup_failure_in_ambient_exception(tmp_path, monkeypatch):
+        import tradingagents.research.onchain_replication.mapped_graph as module
+        _, path, size = saved(tmp_path)
+        original_close = module._close_maps
+        class CloseFailure:
+            def close(self):
+                raise OSError('injected close failure')
+        def inject(mappings, **kwargs):
+            return original_close([*mappings, CloseFailure()], **kwargs)
+        monkeypatch.setattr(module, '_close_maps', inject)
+        try:
+>           raise LookupError('unrelated handled exception')
+E           LookupError: unrelated handled exception
+E           graph mapping cleanup failed: OSError('injected close failure')
+
+tests/research/onchain_replication/test_mapped_graph.py:293: LookupError
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-64/test_normal_context_exit_does_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73680a74c640>
+
+    def test_normal_context_exit_does_not_hide_cleanup_failure_in_ambient_exception(tmp_path, monkeypatch):
+        import tradingagents.research.onchain_replication.mapped_graph as module
+        _, path, size = saved(tmp_path)
+        original_close = module._close_maps
+        class CloseFailure:
+            def close(self):
+                raise OSError('injected close failure')
+        def inject(mappings, **kwargs):
+            return original_close([*mappings, CloseFailure()], **kwargs)
+        monkeypatch.setattr(module, '_close_maps', inject)
+        try:
+            raise LookupError('unrelated handled exception')
+        except LookupError:
+>           with pytest.raises(RuntimeError, match='cleanup failed'):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE RuntimeError
+
+tests/research/onchain_replication/test_mapped_graph.py:295: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_mapped_graph.py::test_normal_context_exit_does_not_hide_cleanup_failure_in_ambient_exception
+1 failed, 31 deselected in 0.22s
