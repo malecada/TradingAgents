@@ -97,8 +97,10 @@ def run_score(root: Path, registration: str, source: str) -> dict:
         filled = parse_filled(run.read_input("review_filled").decode("utf-8"), rows)
         truth, same, stats = apply_review(rounds, named, rows, key, filled)
         jev_events = {int(k): v["events"] for k, v in named.items()}
-        verdict = {**evaluate(truth, jev_events, same, named, anon), "review": stats,
-                   "model": meta["model"], "questions_sha256": meta["questions_sha256"]}
+        verdict = {**evaluate(truth, jev_events, same, named, anon,
+                              jev_adopted=frozenset(stats["jev_adopted_rows"])),
+                   "review": stats, "model": meta["model"],
+                   "questions_sha256": meta["questions_sha256"]}
         run.write_json("p0_verdict.json", verdict)
         run.write_json("p0_diagnostics.json", diagnostics(rounds, truth, named, meta))
         run.finish([{"id": cell, "status": "complete"} for cell in E2_CELLS])

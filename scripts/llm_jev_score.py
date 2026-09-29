@@ -45,16 +45,34 @@ def gate_rows(counts: dict) -> dict:
     return rows
 
 
-def asset_link(truth: dict, pred: dict, same: dict) -> dict:
-    hits = total = 0
+def asset_link(truth: dict, pred: dict, same: dict, jev_adopted: frozenset = frozenset()) -> dict:
+    """For idx in ``jev_adopted``, the pred asset is Jev's own claim copied into truth, so an
+    automatic match would be tautological: the class-row SAME verification is required
+    instead, and a missing verification is excluded from the gated denominator (counted as
+    ``unverified``, with a ``lenient_value`` that credits unverified non-empty pred assets)."""
+    hits = total = unverified = lenient_extra = 0
     for idx, events in truth.items():
         pairs, _, _ = match_events(events, pred[idx])
         for p, t in pairs:
+            key = f"{idx}|{p['class']}"
+            if idx in jev_adopted:
+                if key not in same:
+                    unverified += 1
+                    if p.get("asset"):
+                        lenient_extra += 1
+                    continue
+                total += 1
+                if p.get("asset") and same[key] is True:
+                    hits += 1
+                continue
             total += 1
             if p.get("asset") and (auto_asset_match(p["asset"], t.get("asset"))
-                                   or same.get(f"{idx}|{p['class']}") is True):
+                                   or same.get(key) is True):
                 hits += 1
-    return {"hits": hits, "pairs": total, "value": hits / total if total else 0.0}
+    denom = total + unverified
+    return {"hits": hits, "pairs": total, "value": hits / total if total else 0.0,
+            "unverified": unverified,
+            "lenient_value": (hits + lenient_extra) / denom if denom else 0.0}
 
 
 def anon_agreement(named: dict, anon: dict) -> dict:
@@ -62,9 +80,10 @@ def anon_agreement(named: dict, anon: dict) -> dict:
     return {"agree": agree, "n": len(anon), "value": agree / len(anon) if anon else 0.0}
 
 
-def evaluate(truth: dict, jev_events: dict, same: dict, named: dict, anon: dict) -> dict:
+def evaluate(truth: dict, jev_events: dict, same: dict, named: dict, anon: dict,
+            jev_adopted: frozenset = frozenset()) -> dict:
     rows = gate_rows(class_counts(truth, jev_events))
-    link = asset_link(truth, jev_events, same)
+    link = asset_link(truth, jev_events, same, jev_adopted)
     anon_res = anon_agreement(named, anon)
     gates = {
         "precision": {"min": FLOORS["precision"],

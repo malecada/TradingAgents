@@ -109,6 +109,36 @@ def test_render_parse_apply_roundtrip(scenario):
     assert truth[1] == [ev("hack", "Poly Network")]
 
 
+def test_apply_review_tracks_jev_adopted_and_drops_same_on_neither():
+    """apply_review must record which idx adopted Jev's own events via a class-row A/B
+    verdict (asset link needs to know these were never independently asset-verified), and
+    must discard SAME answers for a row whose verdict is NEITHER (neither side was chosen,
+    so the entity SAME judgment tied to that dispute is not meaningful)."""
+    truth = {1: [ev("hack", "Poly Network"), ev("regulatory", "SEC")]}
+    truth.update({i: [] for i in range(2, 40)})
+    rounds = {"v1": make_round(truth, audited=set())}
+    jev = {"1": {"events": [ev("hack", "Ronin")]}}
+    jev.update({str(i): {"events": []} for i in range(2, 40)})
+    rows, key = build_review(rounds, jev, seed=SEED)
+    klass = next(r for r in rows if r["kind"] == "class")
+    jev_letter = next(s for s in "AB" if key[str(klass["row"])][s] == "jev")
+
+    # Adopt Jev's side: SAME answer retained, idx recorded as jev-adopted.
+    text = fill(render_markdown(rows), rows, {"class": jev_letter, "check": "BOTH"}, same="Y")
+    filled = parse_filled(text, rows)
+    _, same, stats = apply_review(rounds, jev, rows, key, filled)
+    assert stats["jev_adopted_rows"] == [1]
+    assert same == {"1|hack": True}
+
+    # NEITHER verdict: SAME answer for that idx is discarded, idx is not jev-adopted.
+    text = fill(render_markdown(rows), rows,
+               {"class": "NEITHER: hack/Ronin", "check": "BOTH"}, same="Y")
+    filled = parse_filled(text, rows)
+    _, same2, stats2 = apply_review(rounds, jev, rows, key, filled)
+    assert stats2["jev_adopted_rows"] == []
+    assert same2 == {}
+
+
 def test_neither_and_no_events_on_checks(scenario):
     rounds, jev = scenario
     rows, key = build_review(rounds, jev)

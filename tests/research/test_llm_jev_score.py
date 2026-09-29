@@ -54,6 +54,27 @@ def test_asset_link_uses_review_and_rejects_none():
     assert asset_link(truth, pred, {})["value"] == 0.0
 
 
+def test_asset_link_jev_adopted_requires_verification():
+    """When a class-row verdict adopted Jev's own events (asset == pred asset, trivially),
+    the hit must depend on the human SAME verification, not on the automatic asset match --
+    and an unverified jev-adopted pair must be excluded from the gated denominator."""
+    truth = {1: [ev("hack", "Ronin")], 2: [ev("hack", "Ronin")], 3: [ev("hack", "Ronin")]}
+    pred = {1: [ev("hack", "Ronin")], 2: [ev("hack", "Ronin")], 3: [ev("hack", "Ronin")]}
+    jev_adopted = frozenset({1, 2, 3})
+
+    # No SAME answer recorded (discarded on NEITHER, or never asked) -> unverified, excluded.
+    unverified = asset_link(truth, pred, {}, jev_adopted)
+    assert unverified == {"hits": 0, "pairs": 0, "value": 0.0, "unverified": 3,
+                          "lenient_value": pytest.approx(1.0)}
+
+    # SAME True -> hit; SAME False -> miss; both count toward the gated denominator.
+    truth2 = {1: [ev("hack", "Ronin")], 2: [ev("hack", "Ronin")]}
+    pred2 = {1: [ev("hack", "Ronin")], 2: [ev("hack", "Ronin")]}
+    mixed = asset_link(truth2, pred2, {"1|hack": True, "2|hack": False}, jev_adopted={1, 2})
+    assert mixed["hits"] == 1 and mixed["pairs"] == 2 and mixed["value"] == 0.5
+    assert mixed["unverified"] == 0 and mixed["lenient_value"] == 0.5
+
+
 def test_anon_agreement():
     named = {"1": {"events": [ev("hack", "X")]}, "2": {"events": []}}
     anon = {"1": {"events": [ev("hack", None)]}, "2": {"events": [ev("regulatory", None)]}}

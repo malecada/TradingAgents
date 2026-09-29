@@ -230,17 +230,23 @@ def parse_filled(text: str, rows: list[dict]) -> dict[int, dict]:
 def apply_review(rounds: dict, jev: dict, rows: list[dict], key: dict, filled: dict):
     truth = {int(i): list(e) for data in rounds.values() for i, e in data.truth.items()}
     stored = dict(truth)
-    same, checks, check_errors = {}, 0, 0
+    same, jev_adopted, checks, check_errors = {}, set(), 0, 0
     for row in rows:
         info, entry = key[str(row["row"])], filled[row["row"]]
         idx = info["sample_idx"]
-        for cls, answer in entry["same"].items():
-            same[f"{idx}|{cls}"] = answer
         if row["kind"] == "entity":
+            for cls, answer in entry["same"].items():
+                same[f"{idx}|{cls}"] = answer
             continue
         verdict = entry["verdict"]
+        if verdict != "NEITHER":
+            for cls, answer in entry["same"].items():
+                same[f"{idx}|{cls}"] = answer
         if verdict in ("A", "B"):
-            truth[idx] = list(jev[str(idx)]["events"]) if info[verdict] == "jev" else stored[idx]
+            adopted_jev = info[verdict] == "jev"
+            truth[idx] = list(jev[str(idx)]["events"]) if adopted_jev else stored[idx]
+            if row["kind"] == "class" and adopted_jev:
+                jev_adopted.add(idx)
         elif verdict == "NO EVENTS":
             truth[idx] = []
         elif verdict == "NEITHER":
@@ -250,5 +256,6 @@ def apply_review(rounds: dict, jev: dict, rows: list[dict], key: dict, filled: d
             check_errors += verdict != "BOTH" and truth[idx] != stored[idx]
     stats = {"rows": len(rows), "class_rows": sum(r["kind"] == "class" for r in rows),
              "check_rows": checks, "entity_rows": sum(r["kind"] == "entity" for r in rows),
-             "check_error_rate": check_errors / checks if checks else None}
+             "check_error_rate": check_errors / checks if checks else None,
+             "jev_adopted_rows": sorted(jev_adopted)}
     return truth, same, stats
