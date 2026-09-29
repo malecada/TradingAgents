@@ -86,3 +86,4 @@ def test_diagnostics_shape():
     assert out["cost"]["per_article_usd"] == pytest.approx(0.0004)
     assert out["prefilter_negative_recall"]["value"] is None
     assert len(out["reliability"]["hack"]) == 10
+    assert "v1" in out["pre_review_per_round"]

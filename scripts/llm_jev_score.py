@@ -133,6 +133,9 @@ def diagnostics(rounds: dict, truth: dict, named: dict, meta: dict) -> dict:
         "pre_review_vs_stored_labels": _pr(class_counts(stored, jev_events)),
         "per_round": {name: _pr(class_counts({i: truth[i] for i in d.truth}, jev_events))
                       for name, d in rounds.items()},
+        "pre_review_per_round": {name: _pr(class_counts({i: stored[i] for i in d.truth},
+                                                        jev_events))
+                                 for name, d in rounds.items()},
         "asset_candidate_coverage": {"covered": covered, "pairs": pairs_n,
                                      "value": covered / pairs_n if pairs_n else None},
         "reliability": reliability,
