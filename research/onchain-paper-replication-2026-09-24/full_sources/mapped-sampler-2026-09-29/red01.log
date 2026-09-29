@@ -1,0 +1,190 @@
+FFFFFFFFFFFFFF                                                           [100%]
+=================================== FAILURES ===================================
+__________ test_mapped_sampling_preserves_complete_graph_manifest[11] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-46/test_mapped_sampling_preserves0')
+seed = 11
+
+    @pytest.mark.parametrize('seed',[11,23,37,53,71])
+    def test_mapped_sampling_preserves_complete_graph_manifest(tmp_path,seed):
+        graphs=population();config=cfg()|{'sample_count':50}
+        eager=sample_neighborhoods(graphs,config,seed)
+        out=tmp_path/'scratch'
+>       mapped=sample_neighborhoods(graphs,config,seed,weight_workspace=out,max_weight_bytes=100000)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: sample_neighborhoods() got an unexpected keyword argument 'weight_workspace'
+
+tests/research/onchain_replication/test_mapped_sampling.py:24: TypeError
+__________ test_mapped_sampling_preserves_complete_graph_manifest[23] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-46/test_mapped_sampling_preserves1')
+seed = 23
+
+    @pytest.mark.parametrize('seed',[11,23,37,53,71])
+    def test_mapped_sampling_preserves_complete_graph_manifest(tmp_path,seed):
+        graphs=population();config=cfg()|{'sample_count':50}
+        eager=sample_neighborhoods(graphs,config,seed)
+        out=tmp_path/'scratch'
+>       mapped=sample_neighborhoods(graphs,config,seed,weight_workspace=out,max_weight_bytes=100000)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: sample_neighborhoods() got an unexpected keyword argument 'weight_workspace'
+
+tests/research/onchain_replication/test_mapped_sampling.py:24: TypeError
+__________ test_mapped_sampling_preserves_complete_graph_manifest[37] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-46/test_mapped_sampling_preserves2')
+seed = 37
+
+    @pytest.mark.parametrize('seed',[11,23,37,53,71])
+    def test_mapped_sampling_preserves_complete_graph_manifest(tmp_path,seed):
+        graphs=population();config=cfg()|{'sample_count':50}
+        eager=sample_neighborhoods(graphs,config,seed)
+        out=tmp_path/'scratch'
+>       mapped=sample_neighborhoods(graphs,config,seed,weight_workspace=out,max_weight_bytes=100000)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: sample_neighborhoods() got an unexpected keyword argument 'weight_workspace'
+
+tests/research/onchain_replication/test_mapped_sampling.py:24: TypeError
+__________ test_mapped_sampling_preserves_complete_graph_manifest[53] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-46/test_mapped_sampling_preserves3')
+seed = 53
+
+    @pytest.mark.parametrize('seed',[11,23,37,53,71])
+    def test_mapped_sampling_preserves_complete_graph_manifest(tmp_path,seed):
+        graphs=population();config=cfg()|{'sample_count':50}
+        eager=sample_neighborhoods(graphs,config,seed)
+        out=tmp_path/'scratch'
+>       mapped=sample_neighborhoods(graphs,config,seed,weight_workspace=out,max_weight_bytes=100000)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: sample_neighborhoods() got an unexpected keyword argument 'weight_workspace'
+
+tests/research/onchain_replication/test_mapped_sampling.py:24: TypeError
+__________ test_mapped_sampling_preserves_complete_graph_manifest[71] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-46/test_mapped_sampling_preserves4')
+seed = 71
+
+    @pytest.mark.parametrize('seed',[11,23,37,53,71])
+    def test_mapped_sampling_preserves_complete_graph_manifest(tmp_path,seed):
+        graphs=population();config=cfg()|{'sample_count':50}
+        eager=sample_neighborhoods(graphs,config,seed)
+        out=tmp_path/'scratch'
+>       mapped=sample_neighborhoods(graphs,config,seed,weight_workspace=out,max_weight_bytes=100000)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: sample_neighborhoods() got an unexpected keyword argument 'weight_workspace'
+
+tests/research/onchain_replication/test_mapped_sampling.py:24: TypeError
+___________ test_weight_budget_refused_before_workspace_reservation ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-46/test_weight_budget_refused_bef0')
+
+    def test_weight_budget_refused_before_workspace_reservation(tmp_path):
+        out=tmp_path/'small'
+        with pytest.raises(ValueError,match='budget'):
+>           sample_neighborhoods(population(),cfg(),11,weight_workspace=out,max_weight_bytes=1)
+E           TypeError: sample_neighborhoods() got an unexpected keyword argument 'weight_workspace'
+
+tests/research/onchain_replication/test_mapped_sampling.py:45: TypeError
+____ test_workspace_requires_explicit_budget_and_budget_requires_workspace _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-46/test_workspace_requires_explic0')
+
+    def test_workspace_requires_explicit_budget_and_budget_requires_workspace(tmp_path):
+        with pytest.raises(ValueError,match='budget'):
+>           sample_neighborhoods(population(),cfg(),11,weight_workspace=tmp_path/'missing')
+E           TypeError: sample_neighborhoods() got an unexpected keyword argument 'weight_workspace'
+
+tests/research/onchain_replication/test_mapped_sampling.py:51: TypeError
+_____________ test_neighborhood_failure_preserves_reserved_arrays ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-46/test_neighborhood_failure_pres0')
+
+    def test_neighborhood_failure_preserves_reserved_arrays(tmp_path):
+        out=tmp_path/'failed'
+        with pytest.raises(ValueError,match='capacity'):
+>           sample_neighborhoods(population(),cfg()|{'maximum_neighborhood_nodes':1},11,
+                                 weight_workspace=out,max_weight_bytes=100000)
+E           TypeError: sample_neighborhoods() got an unexpected keyword argument 'weight_workspace'
+
+tests/research/onchain_replication/test_mapped_sampling.py:59: TypeError
+___________ test_invalid_weight_mass_refused_before_random_draw[0.0] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-46/test_invalid_weight_mass_refus0')
+bad = 0.0
+
+    @pytest.mark.parametrize('bad',[0.,-1.,np.nan,np.inf])
+    def test_invalid_weight_mass_refused_before_random_draw(tmp_path,bad):
+>       from tradingagents.research.onchain_replication.sampling_weights import MappedWeights
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.sampling_weights'
+
+tests/research/onchain_replication/test_mapped_sampling.py:68: ModuleNotFoundError
+__________ test_invalid_weight_mass_refused_before_random_draw[-1.0] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-46/test_invalid_weight_mass_refus1')
+bad = -1.0
+
+    @pytest.mark.parametrize('bad',[0.,-1.,np.nan,np.inf])
+    def test_invalid_weight_mass_refused_before_random_draw(tmp_path,bad):
+>       from tradingagents.research.onchain_replication.sampling_weights import MappedWeights
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.sampling_weights'
+
+tests/research/onchain_replication/test_mapped_sampling.py:68: ModuleNotFoundError
+___________ test_invalid_weight_mass_refused_before_random_draw[nan] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-46/test_invalid_weight_mass_refus2')
+bad = nan
+
+    @pytest.mark.parametrize('bad',[0.,-1.,np.nan,np.inf])
+    def test_invalid_weight_mass_refused_before_random_draw(tmp_path,bad):
+>       from tradingagents.research.onchain_replication.sampling_weights import MappedWeights
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.sampling_weights'
+
+tests/research/onchain_replication/test_mapped_sampling.py:68: ModuleNotFoundError
+___________ test_invalid_weight_mass_refused_before_random_draw[inf] ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-46/test_invalid_weight_mass_refus3')
+bad = inf
+
+    @pytest.mark.parametrize('bad',[0.,-1.,np.nan,np.inf])
+    def test_invalid_weight_mass_refused_before_random_draw(tmp_path,bad):
+>       from tradingagents.research.onchain_replication.sampling_weights import MappedWeights
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.sampling_weights'
+
+tests/research/onchain_replication/test_mapped_sampling.py:68: ModuleNotFoundError
+_____________ test_valid_zero_weights_match_numpy_choice_and_state _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-46/test_valid_zero_weights_match_0')
+
+    def test_valid_zero_weights_match_numpy_choice_and_state(tmp_path):
+>       from tradingagents.research.onchain_replication.sampling_weights import MappedWeights
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.sampling_weights'
+
+tests/research/onchain_replication/test_mapped_sampling.py:78: ModuleNotFoundError
+__________________ test_low_disk_refusal_creates_no_workspace __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-46/test_low_disk_refusal_creates_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x74c3f000f5c0>
+
+    def test_low_disk_refusal_creates_no_workspace(tmp_path,monkeypatch):
+>       from tradingagents.research.onchain_replication import sampling_weights
+E       ImportError: cannot import name 'sampling_weights' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_mapped_sampling.py:93: ImportError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_mapped_sampling_preserves_complete_graph_manifest[11]
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_mapped_sampling_preserves_complete_graph_manifest[23]
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_mapped_sampling_preserves_complete_graph_manifest[37]
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_mapped_sampling_preserves_complete_graph_manifest[53]
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_mapped_sampling_preserves_complete_graph_manifest[71]
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_weight_budget_refused_before_workspace_reservation
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_workspace_requires_explicit_budget_and_budget_requires_workspace
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_neighborhood_failure_preserves_reserved_arrays
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_invalid_weight_mass_refused_before_random_draw[0.0]
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_invalid_weight_mass_refused_before_random_draw[-1.0]
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_invalid_weight_mass_refused_before_random_draw[nan]
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_invalid_weight_mass_refused_before_random_draw[inf]
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_valid_zero_weights_match_numpy_choice_and_state
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_low_disk_refusal_creates_no_workspace
+14 failed in 0.58s

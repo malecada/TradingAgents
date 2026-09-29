@@ -1,0 +1,56 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+________________ test_flush_failure_still_closes_every_mapping _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-49/test_flush_failure_still_close0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78021d71e190>
+
+    def test_flush_failure_still_closes_every_mapping(tmp_path,monkeypatch):
+        from tradingagents.research.onchain_replication.sampling_weights import MappedWeights
+        store=MappedWeights(tmp_path/'flush',9,100000,{})
+        def fail():raise OSError('synthetic flush failure')
+        with pytest.raises(OSError,match='flush failure'):
+            with store:monkeypatch.setattr(store.arrays[0],'flush',fail)
+>       assert all(a._mmap.closed for a in store.arrays)
+E       assert False
+E        +  where False = all(<generator object test_flush_failure_still_closes_every_mapping.<locals>.<genexpr> at 0x78021d57de40>)
+
+tests/research/onchain_replication/test_mapped_sampling.py:151: AssertionError
+________ test_large_allocation_blocks_include_separate_metadata_blocks _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-49/test_large_allocation_blocks_i0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78025dd1a8b0>
+
+    def test_large_allocation_blocks_include_separate_metadata_blocks(tmp_path,monkeypatch):
+        from tradingagents.research.onchain_replication import sampling_weights
+        from types import SimpleNamespace
+        monkeypatch.setattr(sampling_weights.os,'statvfs',lambda _:SimpleNamespace(f_frsize=65536))
+        with pytest.raises(ValueError,match='budget'):
+>           sampling_weights.MappedWeights(tmp_path/'large_blocks',9,300000,{})
+
+tests/research/onchain_replication/test_mapped_sampling.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/sampling_weights.py:37: in __init__
+    if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/tmp/pytest-of-malecada/pytest-49/test_large_allocation_blocks_i0')
+
+    def disk_usage(path):
+        """Return disk usage statistics about the given path.
+    
+        Returned value is a named tuple with attributes 'total', 'used' and
+        'free', which are the amount of total, used and free space, in bytes.
+        """
+        st = os.statvfs(path)
+>       free = st.f_bavail * st.f_frsize
+               ^^^^^^^^^^^
+E       AttributeError: 'types.SimpleNamespace' object has no attribute 'f_bavail'
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/shutil.py:1378: AttributeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_flush_failure_still_closes_every_mapping
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_large_allocation_blocks_include_separate_metadata_blocks
+2 failed, 18 deselected in 0.39s

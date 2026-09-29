@@ -3,6 +3,64 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Mapped sampler full verification COMPLETE — September29:** named offline01
+passed3,316tests plus97subtests,2CUDA skips (standard2,768;neural548).
+Guard1496.89seconds,2,678,321,152sampled peak bytes,child0,verified cleanup,
+zero memory.high/max/OOM events. All eight frozen source hashes match; owned
+cgroup is absent. No engineering or empirical job is currently active from this
+increment. Exact receipts: `full_sources/mapped-sampler-2026-09-29/offline01/`.
+
+Optional mapped-weight sampling preserves the scientific configuration and exact
+sample identities/probabilities/RNG states in focused tests. Independent code
+findings were corrected and initial failures retained. This component remains
+opt-in; the registered feature pipeline has not enabled it. Fullgraph/node-ID
+residency, oversized-neighborhood matching and full MCM/neural feasibility remain
+unresolved. Budget25/52 and all1,420pending fits are unchanged. Independent
+terminal review accepts this optional component release. Next safe work: implement
+an explicitly admitted sampling scratch policy at the registered feature-production
+boundary before any empirical use. Earlier active snapshot
+below is historical and superseded by this completed checkpoint.
+
+**ACTIVE engineering verification — 2026-09-29T13:34:26.722198+00:00:**
+named offline01 for mapped-sampler integration is running. Monitor PID1623326,
+start ticks1707431; cgroup `onchain-replication-631d925d6a9544f58d4eae6e13938519.service`.
+Command is pinned Python `-B scripts/verify_offline.py`, launched through
+`full_sources/mapped-sampler-2026-09-29/run_offline.py`. Tool session85241
+can collect output while available; durable status is `offline01/live.json`,
+`offline01/final.json` and `offline01/child.log` in that directory.
+Do not duplicate this job or reuse its receipt directory. Keep HEAD9f6dbf45
+and all eight `source-bindings.json` files unchanged during verification;
+production sampler changes are still uncommitted pending this release check.
+Limits:3GiB max,2.75GiB high,zero swap,3GiB runtime reserve,6GiB startup available,
+20GiB disk floor,two-CPU affinity,3600seconds. Latest phaserunning,
+elapsed61.68s,peak554876928bytes,
+limit reasonNone. No financial/source empirical job is active.
+
+Independent code review closed the flush-error mapping leak and large-block
+metadata accounting findings. Red02's incomplete disk mock is explicitly
+qualified; corrected green05 passed. Focused graph/journal checks passed38,
+all23mapped-sampler cases passed, including five-seed graph identity/probability/
+RNG parity and skewed arrays up to131,071weights. Default scientific behavior
+and empirical policy remain unchanged. The named suite is not yet reported
+passing. Next safe action: inspect its exact terminal/cleanup/test summaries,
+check all frozen hashes and independent review, then commit/push this engineering
+increment. Afterwards integrate a registered scratch policy before empirical use;
+raw graph residency and oversized-neighborhood matching remain separate work.
+
+**Mapped-sampler engineering in progress — September29:** the optional
+production sampling component has disk-backed float64 weights/probabilities/CDF,
+with exact graph-level sample/probability/RNG parity, exclusive retained scratch,
+budget/disk checks and failure receipts. Default scientific behavior is unchanged;
+registered feature production is not yet enabled for this policy. Red01 and both
+review-discovered failure cases remain preserved; focused green03 passed38checks
+and green04 passed23mapped-sampler cases. Full named offline verification and
+final independent review remain before release. No empirical claim was created;
+budget25/52 and all1,420pending fits are unchanged. Evidence:
+`full_sources/mapped-sampler-2026-09-29/`. Raw graph residency, oversized-neighborhood
+matching and full model capacity remain open. The next safe action is independent
+code review, frozen-source named offline verification, then explicit registered
+scratch-policy integration before empirical use.
+
 **Saved graph verified — September29:** independent saved-array verification
 completed once under a finite guard:47.91seconds,child0,verified cleanup,
 264,568,832sampled peak bytes and zero memory events. The measured memory is not

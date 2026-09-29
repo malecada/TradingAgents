@@ -103,7 +103,9 @@ class SampleManifest:
         object.__setattr__(self,'rng_state',freeze(self.rng_state))
 
 
-def sample_neighborhoods(graphs,config,seed):
+def sample_neighborhoods(graphs,config,seed,*,weight_workspace=None,max_weight_bytes=None):
+    if weight_workspace is None and max_weight_bytes is not None:
+        raise ValueError("weight budget requires a workspace")
     start,end=utc(config['train_start']),utc(config['train_end'])
     training=[]
     for g in graphs:
@@ -115,19 +117,29 @@ def sample_neighborhoods(graphs,config,seed):
     offsets=np.cumsum([0]+[len(g.node_ids) for g in training])
     total=int(offsets[-1])
     if total<config['sample_count']:raise ValueError('insufficient unique centers')
-    weights=np.ones(total,dtype=np.float64)
-    rng=np.random.Generator(np.random.PCG64(seed));records=[];samples=[]
-    active_gi=None;index=None
-    for _ in range(config['sample_count']):
-        probability=weights/weights.sum()
-        chosen=int(rng.choice(total,p=probability))
-        gi=int(np.searchsorted(offsets,chosen,side='right')-1);center=chosen-int(offsets[gi])
-        g=training[gi]
-        if gi!=active_gi:index=NeighborhoodIndex(g);active_gi=gi
-        sub=index.neighborhood(center,config)
-        records.append({'graph_hash':hashes[gi],'center_id':g.node_ids[center],'center_index':center,'probability':float(probability[chosen]),'node_count':len(sub.node_ids),'edge_count':sub.edge_index.shape[1]})
-        samples.append(sub);weights[chosen]=0
-        weights[int(offsets[gi])+np.asarray(index.selected(center,config),dtype=np.int64)]*=.5
-    state=rng.bit_generator.state
-    identity=cache_key({'training_graphs':hashes,'config':config,'seed':seed,'records':records,'rng_state':state})
-    return SampleManifest(tuple(samples),tuple(records),hashes,state,seed,identity)
+    from contextlib import ExitStack
+    from .sampling_weights import MappedWeights
+    with ExitStack() as stack:
+        storage = (stack.enter_context(MappedWeights(weight_workspace,total,max_weight_bytes,
+                   {"training_graphs":hashes,"config":config,"seed":seed}))
+                   if weight_workspace is not None else None)
+        weights = storage.weights if storage is not None else np.ones(total,dtype=np.float64)
+        rng=np.random.Generator(np.random.PCG64(seed));records=[];samples=[]
+        active_gi=None;index=None
+        for _ in range(config['sample_count']):
+            if storage is None:
+                probability=weights/weights.sum()
+                chosen=int(rng.choice(total,p=probability));chosen_probability=float(probability[chosen])
+            else:
+                chosen,chosen_probability=storage.draw(rng)
+            gi=int(np.searchsorted(offsets,chosen,side='right')-1);center=chosen-int(offsets[gi])
+            g=training[gi]
+            if gi!=active_gi:index=NeighborhoodIndex(g);active_gi=gi
+            sub=index.neighborhood(center,config)
+            records.append({'graph_hash':hashes[gi],'center_id':g.node_ids[center],'center_index':center,'probability':chosen_probability,'node_count':len(sub.node_ids),'edge_count':sub.edge_index.shape[1]})
+            samples.append(sub);weights[chosen]=0
+            weights[int(offsets[gi])+np.asarray(index.selected(center,config),dtype=np.int64)]*=.5
+        state=rng.bit_generator.state
+        identity=cache_key({'training_graphs':hashes,'config':config,'seed':seed,'records':records,'rng_state':state})
+        if storage is not None:storage.sample_identity=identity
+        return SampleManifest(tuple(samples),tuple(records),hashes,state,seed,identity)
