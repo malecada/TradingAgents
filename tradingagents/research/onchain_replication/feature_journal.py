@@ -1,7 +1,7 @@
 """Durable representation events; loading never authorizes empirical continuation."""
 from pathlib import Path
 import json
-from .component_store import save_component,load_component
+from .component_store import save_component,load_component,reference_bytes,materialize_component
 from .provenance import file_hash,durable_mkdir,sync_directory,canonical_bytes,require_hash,utc
 from .cache import cache_key
 from ..lifecycle import _immutable
@@ -70,8 +70,9 @@ class FeatureJournal:
         self.sealed=True;return path
 
 
-def read_feature_journal(path,expected_hash,expected_owner,*,required_graphs,max_array_bytes,_ancestors=()):
+def read_feature_journal(path,expected_hash,expected_owner,*,required_graphs,max_array_bytes,lazy_features=False,_ancestors=()):
     """Reconstruct retained state only; caller must admit a new successor separately."""
+    if type(lazy_features) is not bool:raise ValueError('journal feature residency policy must be boolean')
     path=Path(path)
     if path.resolve() in _ancestors or len(_ancestors)>=8:raise ValueError('journal parent cycle/depth')
     if path.is_symlink() or file_hash(path)!=expected_hash:raise ValueError('journal manifest hash differs')
@@ -85,7 +86,7 @@ def read_feature_journal(path,expected_hash,expected_owner,*,required_graphs,max
     if parent is not None:
         prior=Path(parent['path'])
         if not prior.is_absolute() or prior.name!='failed.json' or prior.parent.parent.resolve()!=path.parent.parent.resolve():raise ValueError('journal parent must be failed sibling')
-        state,binding=read_feature_journal(prior,parent['sha256'],parent['owner'],required_graphs=required,max_array_bytes=max_array_bytes,_ancestors=(*_ancestors,path.resolve()))
+        state,binding=read_feature_journal(prior,parent['sha256'],parent['owner'],required_graphs=required,max_array_bytes=max_array_bytes,lazy_features=lazy_features,_ancestors=(*_ancestors,path.resolve()))
         if state['identity'] is None:
             if state['completed_graphs'] or state['graph_progress']:raise ValueError('empty parent has numerical state')
             state['identity']=manifest['workflow_identity']
@@ -102,12 +103,14 @@ def read_feature_journal(path,expected_hash,expected_owner,*,required_graphs,max
             graph=context['graph_hash'];require_hash(graph)
             if graph in state['completed_graphs']:raise ValueError('completed graph cannot be replaced')
             state['graph_progress'].pop(graph,None)
-        payload=load_component(path.parent/event['path'],event['sha256'],expected,max_array_bytes=max_array_bytes)
+        payload=load_component(path.parent/event['path'],event['sha256'],expected,max_array_bytes=max_array_bytes,materialize_arrays=False)
         if stage=='graph_complete' and payload.get('aligned_vectors') is not None:
             # Only the last completed basis is necessary to continue the causal
             # chain; old graph readouts remain. Full vector bytes stay on disk.
             for old in state['completed_graphs'].values():old['aligned_vectors']=None
-        if array_bytes(state)+array_bytes(payload)>max_array_bytes:raise ValueError('retained representation array budget exceeded')
+        if not (lazy_features and stage=='graph_complete'):
+            if array_bytes(state)+reference_bytes(payload)>max_array_bytes:raise ValueError('retained representation array budget exceeded before loading')
+            payload=materialize_component(payload,max_array_bytes=max_array_bytes)
         if stage=='samples_complete':state['samples']=payload
         elif stage=='dictionary_progress':state['dictionary_progress']=payload
         elif stage=='dictionary_complete':state['dictionary']=payload

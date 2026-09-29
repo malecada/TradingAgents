@@ -1,0 +1,222 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+___ test_registered_streaming_production_reuse_and_joint_updates_match_eager ___
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-23/test_registered_streaming_prod0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '4db39c1c0b17b4320ebcddae42b3cc69f2093047')
+
+    def test_registered_streaming_production_reuse_and_joint_updates_match_eager(registered):
+        from tradingagents.research.onchain_replication.feature_residency import FixedFeatureMap
+        from tradingagents.research.onchain_replication.feature_pipeline import prepare_features
+        from tradingagents.research.onchain_replication.model_registry import build_model
+        from tests.research.onchain_replication.test_model import cfg
+        fixture,args,descriptor=setup(registered)
+        expected=prepare_features(*args,max_entries=100000,checkpoint=lambda *a:None)
+        with start(fixture) as run:
+>           result,path=produce(run,args,residency_input='residency')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_registered_feature_residency.py:33: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x760394fc6a50>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {'residency_input': 'residency'}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'gin11',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2,**kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'residency_input'
+
+tests/research/onchain_replication/test_registered_features.py:24: TypeError
+___ test_bad_residency_policy_fails_before_representation_claim[undeclared] ____
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-23/test_bad_residency_policy_fail0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '806dedba29721c7e8222aa9f6bd26900bda72c4f')
+fault = 'undeclared'
+
+    @pytest.mark.parametrize('fault',['undeclared','negative_bound','wrong_mode'])
+    def test_bad_residency_policy_fails_before_representation_claim(registered,fault):
+        policy={'schema_version':1,'mode':'batch','max_batch_array_bytes':-1 if fault=='negative_bound' else 1024**2}
+        if fault=='wrong_mode':policy['mode']='anything'
+        fixture,args,_=setup(registered,policy);root,_,_=fixture
+        with start(fixture) as run:
+            with pytest.raises(ValueError,match='residency|batch|policy'):
+>               produce(run,args,residency_input=None if fault=='undeclared' else 'residency')
+
+tests/research/onchain_replication/test_registered_feature_residency.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x760394fe39d0>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {'residency_input': None}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'gin11',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2,**kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'residency_input'
+
+tests/research/onchain_replication/test_registered_features.py:24: TypeError
+_ test_bad_residency_policy_fails_before_representation_claim[negative_bound] __
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-23/test_bad_residency_policy_fail1'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '3d03318bfdfa9227e41af9426d057608d125ac41')
+fault = 'negative_bound'
+
+    @pytest.mark.parametrize('fault',['undeclared','negative_bound','wrong_mode'])
+    def test_bad_residency_policy_fails_before_representation_claim(registered,fault):
+        policy={'schema_version':1,'mode':'batch','max_batch_array_bytes':-1 if fault=='negative_bound' else 1024**2}
+        if fault=='wrong_mode':policy['mode']='anything'
+        fixture,args,_=setup(registered,policy);root,_,_=fixture
+        with start(fixture) as run:
+            with pytest.raises(ValueError,match='residency|batch|policy'):
+>               produce(run,args,residency_input=None if fault=='undeclared' else 'residency')
+
+tests/research/onchain_replication/test_registered_feature_residency.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x760394fe3d90>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {'residency_input': 'residency'}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'gin11',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2,**kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'residency_input'
+
+tests/research/onchain_replication/test_registered_features.py:24: TypeError
+___ test_bad_residency_policy_fails_before_representation_claim[wrong_mode] ____
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-23/test_bad_residency_policy_fail2'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '3d03318bfdfa9227e41af9426d057608d125ac41')
+fault = 'wrong_mode'
+
+    @pytest.mark.parametrize('fault',['undeclared','negative_bound','wrong_mode'])
+    def test_bad_residency_policy_fails_before_representation_claim(registered,fault):
+        policy={'schema_version':1,'mode':'batch','max_batch_array_bytes':-1 if fault=='negative_bound' else 1024**2}
+        if fault=='wrong_mode':policy['mode']='anything'
+        fixture,args,_=setup(registered,policy);root,_,_=fixture
+        with start(fixture) as run:
+            with pytest.raises(ValueError,match='residency|batch|policy'):
+>               produce(run,args,residency_input=None if fault=='undeclared' else 'residency')
+
+tests/research/onchain_replication/test_registered_feature_residency.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x760394b13360>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {'residency_input': 'residency'}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'gin11',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2,**kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'residency_input'
+
+tests/research/onchain_replication/test_registered_features.py:24: TypeError
+___ test_failed_streamed_parent_reuses_completed_graph_without_republication ___
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-23/test_failed_streamed_parent_re0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '9458cee1f8cec8af049ecbf51b96e33bc9ba7fdc')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x760394b136f0>
+
+    def test_failed_streamed_parent_reuses_completed_graph_without_republication(registered,monkeypatch):
+        import tradingagents.research.onchain_replication.registered_features as module
+        fixture,args,descriptor=setup(registered);root,spec,_=fixture;original=module.prepare_features
+        def interrupted(*args,checkpoint,**kwargs):
+            def callback(stage,context,payload):
+                checkpoint(stage,context,payload)
+                if stage=='graph_complete':raise InterruptedError('synthetic streaming interruption')
+            return original(*args,checkpoint=callback,**kwargs)
+        monkeypatch.setattr(module,'prepare_features',interrupted)
+        with start(fixture) as run:
+>           with pytest.raises(InterruptedError):produce(run,args,residency_input='residency')
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_registered_feature_residency.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x760394b13820>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {'residency_input': 'residency'}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'gin11',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2,**kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'residency_input'
+
+tests/research/onchain_replication/test_registered_features.py:24: TypeError
+___ test_engine_releases_previous_input_before_requesting_next_batch[False] ____
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-23/test_engine_releases_previous_0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '9458cee1f8cec8af049ecbf51b96e33bc9ba7fdc')
+training = False
+
+    @pytest.mark.parametrize('training',[False,True])
+    def test_engine_releases_previous_input_before_requesting_next_batch(registered,training):
+        from tests.research.onchain_replication.test_training import P,CFG
+        from tradingagents.research.onchain_replication.training import fit_cell,predict_cell
+        refs=[]
+        def batch(indices):
+            assert all(ref() is None for ref in refs), 'previous batch remains live while next batch loads'
+            x=torch.ones(len(indices),2);refs.append(weakref.ref(x))
+            return {'input':x},torch.ones(len(indices),1)
+        if training:
+            with start(registered) as run:
+                fit_cell(run,'sum',{**P,'source_commit':run.admission.source},lambda:torch.nn.Linear(2,1),batch,4,'regression',11,{**CFG,'epochs':2})
+>       else:predict_cell(torch.nn.Linear(2,1),batch,4,2)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_registered_feature_residency.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/training.py:102: in predict_cell
+    inputs,_=batch_factory(list(range(start,min(start+batch_size,n_examples))))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+indices = [2, 3]
+
+    def batch(indices):
+>       assert all(ref() is None for ref in refs), 'previous batch remains live while next batch loads'
+E       AssertionError: previous batch remains live while next batch loads
+E       assert False
+E        +  where False = all(<generator object test_engine_releases_previous_input_before_requesting_next_batch.<locals>.batch.<locals>.<genexpr> at 0x7603947ec6c0>)
+
+tests/research/onchain_replication/test_registered_feature_residency.py:95: AssertionError
+____ test_engine_releases_previous_input_before_requesting_next_batch[True] ____
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-23/test_engine_releases_previous_1'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '9458cee1f8cec8af049ecbf51b96e33bc9ba7fdc')
+training = True
+
+    @pytest.mark.parametrize('training',[False,True])
+    def test_engine_releases_previous_input_before_requesting_next_batch(registered,training):
+        from tests.research.onchain_replication.test_training import P,CFG
+        from tradingagents.research.onchain_replication.training import fit_cell,predict_cell
+        refs=[]
+        def batch(indices):
+            assert all(ref() is None for ref in refs), 'previous batch remains live while next batch loads'
+            x=torch.ones(len(indices),2);refs.append(weakref.ref(x))
+            return {'input':x},torch.ones(len(indices),1)
+        if training:
+            with start(registered) as run:
+>               fit_cell(run,'sum',{**P,'source_commit':run.admission.source},lambda:torch.nn.Linear(2,1),batch,4,'regression',11,{**CFG,'epochs':2})
+
+tests/research/onchain_replication/test_registered_feature_residency.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/training.py:74: in fit_cell
+    inputs,targets=batch_factory(indices);optimizer.zero_grad(set_to_none=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+indices = [2, 3]
+
+    def batch(indices):
+>       assert all(ref() is None for ref in refs), 'previous batch remains live while next batch loads'
+E       AssertionError: previous batch remains live while next batch loads
+E       assert False
+E        +  where False = all(<generator object test_engine_releases_previous_input_before_requesting_next_batch.<locals>.batch.<locals>.<genexpr> at 0x760394bfe330>)
+
+tests/research/onchain_replication/test_registered_feature_residency.py:95: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_registered_feature_residency.py::test_registered_streaming_production_reuse_and_joint_updates_match_eager
+FAILED tests/research/onchain_replication/test_registered_feature_residency.py::test_bad_residency_policy_fails_before_representation_claim[undeclared]
+FAILED tests/research/onchain_replication/test_registered_feature_residency.py::test_bad_residency_policy_fails_before_representation_claim[negative_bound]
+FAILED tests/research/onchain_replication/test_registered_feature_residency.py::test_bad_residency_policy_fails_before_representation_claim[wrong_mode]
+FAILED tests/research/onchain_replication/test_registered_feature_residency.py::test_failed_streamed_parent_reuses_completed_graph_without_republication
+FAILED tests/research/onchain_replication/test_registered_feature_residency.py::test_engine_releases_previous_input_before_requesting_next_batch[False]
+FAILED tests/research/onchain_replication/test_registered_feature_residency.py::test_engine_releases_previous_input_before_requesting_next_batch[True]
+7 failed in 8.35s

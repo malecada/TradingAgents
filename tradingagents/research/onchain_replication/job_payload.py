@@ -43,6 +43,7 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
     from .run import execute_batch, preflight_batch
     from .feature_pipeline import representation_arm
     from .cache import cache_key
+    from .feature_residency import read_feature_policy
     registered = json.loads(run.read_input(job_input))
     if registered['kind'] != 'fit' or canonical_bytes(registered['payload']) != canonical_bytes(payload):
         raise ValueError('fit job payload differs from registration')
@@ -77,6 +78,7 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
             raise ValueError('representation job science differs from cell/population before fitting')
     for name, job in payload['representation_jobs'].items():
         reference = batch_plan['representations'][name]
+        read_feature_policy(run,job.get('residency_input'))
         if 'output' not in reference or not reference.get('failure_output') or not {reference['output'], reference['failure_output']} <= set(run.admission.experiment['outputs']):
             raise ValueError('job binding/failure outputs must be registered before fitting')
         if job['operation'] == 'produce':
@@ -86,6 +88,7 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
             if source_examples.train_hash != descriptor['train_hash'] or source_examples.fold_hash != descriptor['fold']['member_hash'] or descriptor['required_graphs'] != required:
                 raise ValueError('producer population differs from descriptor before fitting')
             producer = json.loads(run.read_input(job['plan_input']))['producers'][job['producer']]
+            if producer.get('residency_input')!=job.get('residency_input'):raise ValueError('producer feature residency policy differs before fitting')
             if canonical_bytes(producer['descriptor']) != canonical_bytes(job['descriptor']) or producer['binding_output'] != reference['output'] or producer['journal_output'] not in run.admission.experiment['outputs']:
                 raise ValueError('producer descriptor/output differs before fitting')
         elif job['operation'] == 'reuse':
@@ -101,7 +104,7 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
             descriptor = job['descriptor']
             if job['operation'] == 'reuse':
                 value = reuse_registered_features(run, job['journal_input'], descriptor,
-                                                 max_array_bytes=job['max_array_bytes'])
+                                                 max_array_bytes=job['max_array_bytes'],residency_input=job.get('residency_input'))
                 run.write_json(reference['output'], value.binding)
             elif job['operation'] == 'produce':
                 plan = json.loads(run.read_input(job['plan_input']))
@@ -126,7 +129,7 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
                 value, _ = prepare_registered_features(run, job['producer'], graphs, examples,
                     Fold(**descriptor['fold']), descriptor['arm'], descriptor['seed'], descriptor['configs'],
                     plan_input=job['plan_input'], max_entries=producer['max_entries'],
-                    max_array_bytes=producer['max_array_bytes'], continuation_input=job.get('continuation_input'))
+                    max_array_bytes=producer['max_array_bytes'], continuation_input=job.get('continuation_input'),residency_input=job.get('residency_input'))
                 del graphs
             else:
                 raise ValueError('unknown representation operation')

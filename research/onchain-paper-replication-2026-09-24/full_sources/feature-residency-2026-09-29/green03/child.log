@@ -1,0 +1,42 @@
+.............F....                                                       [100%]
+=================================== FAILURES ===================================
+_ test_failed_streamed_parent_reuses_completed_graph_without_republication[watchyourstep] _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-27/test_failed_streamed_parent_re1'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '9686b30825672c24c57ad24211361e27c7f97076')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x783201b718c0>
+arm = 'watchyourstep'
+
+    @pytest.mark.parametrize('arm',['gin','watchyourstep'])
+    def test_failed_streamed_parent_reuses_completed_graph_without_republication(registered,monkeypatch,arm):
+        import tradingagents.research.onchain_replication.registered_features as module
+        fixture,args,descriptor=setup(registered,arm=arm);root,spec,_=fixture;original=module.prepare_features
+        expected=original(*args,max_entries=100000,checkpoint=lambda *a:None)
+        def interrupted(*args,checkpoint,**kwargs):
+            def callback(stage,context,payload):
+                checkpoint(stage,context,payload)
+                if stage=='graph_complete':raise InterruptedError('synthetic streaming interruption')
+            return original(*args,checkpoint=callback,**kwargs)
+        monkeypatch.setattr(module,'prepare_features',interrupted)
+        with start(fixture) as run:
+            with pytest.raises(InterruptedError):produce(run,args,residency_input='residency')
+        path=next((root/'research_artifacts/onchain_representations').glob('*/example-a/failed.json'))
+        prior=json.loads(path.read_bytes())['events'][0]['context']['graph_hash']
+        child=copy.deepcopy(spec['experiments']['example-a']);child['parent']='example-a'
+        child['inputs']['prior-features']={'path':str(path.relative_to(root)),'sha256':file_hash(path),'dataset':'sample'}
+        spec['experiments']['example-b']=child;source=commit(root,spec)
+        monkeypatch.setattr(module,'prepare_features',original)
+        with start((root,spec,source),experiment='example-b') as run:
+            result,path=produce(run,args,residency_input='residency',continuation_input='prior-features')
+            events=json.loads(path.read_bytes())['events']
+            written=[e['context']['graph_hash'] for e in events if e['stage']=='graph_complete']
+>           assert prior not in written and len(written)==len(result.features)-1
+E           AssertionError: assert ('fb8a940c08966b7458642f1ad4ccd60cdd4b4bcb6a4f30a6210a45055c729dad' not in ['4c2a29cdc931dbc1b9f578a7fdba7737eaa9c179a7456a04d411d65a1310492c', '4e2063144bbbd1a9d6974bf86fa27f047b145388dadb7fed...98f1dc7ae9470e813c8e449c6363bfe48da5b218e15d', '511a2bebb64795ce3b705b255f15c89cd1529b05be7f8f7fc743946891321c6d', ...] and 103 == (10 - 1))
+E            +  where 103 = len(['4c2a29cdc931dbc1b9f578a7fdba7737eaa9c179a7456a04d411d65a1310492c', '4e2063144bbbd1a9d6974bf86fa27f047b145388dadb7fed...98f1dc7ae9470e813c8e449c6363bfe48da5b218e15d', '511a2bebb64795ce3b705b255f15c89cd1529b05be7f8f7fc743946891321c6d', ...])
+E            +  and   10 = len(<tradingagents.research.onchain_replication.feature_residency.FixedFeatureMap object at 0x7831f52a4950>)
+E            +    where <tradingagents.research.onchain_replication.feature_residency.FixedFeatureMap object at 0x7831f52a4950> = PreparedFeatures(features=<tradingagents.research.onchain_replication.feature_residency.FixedFeatureMap object at 0x78...'alignment_order_policy': 'available_at,start_utc,graph_hash; start at earliest required event week'}, dictionary=None).features
+
+tests/research/onchain_replication/test_registered_feature_residency.py:97: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_registered_feature_residency.py::test_failed_streamed_parent_reuses_completed_graph_without_republication[watchyourstep]
+1 failed, 17 passed in 93.34s (0:01:33)

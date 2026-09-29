@@ -1,0 +1,100 @@
+{
+  "asof_utc": "2026-09-29T10:40:54.497301+00:00",
+  "scope": "metadata/stat-only; no raw-body, graph-array or SQLite content read",
+  "source_days": [
+    {
+      "start_utc": "2022-07-25T00:00:00Z",
+      "rows": 1275861,
+      "mapping_sha256": "37c81e6ffa8ab59b3f9410a0d1ae43055f633a89bede81baafab74c46b051094",
+      "spans": 37,
+      "stored_bytes": 108881826,
+      "projected_range_bytes": 149245068,
+      "projected_4096byte_page_coverage": 149315584,
+      "logical_parquet_bytes": 416859617
+    },
+    {
+      "start_utc": "2022-07-26T00:00:00Z",
+      "rows": 1679068,
+      "mapping_sha256": "bc27304dd19aa7064a806539dc7181a3ad4b00dc68018af68884677c4aefc4ec",
+      "spans": 37,
+      "stored_bytes": 161978043,
+      "projected_range_bytes": 215674849,
+      "projected_4096byte_page_coverage": 215748608,
+      "logical_parquet_bytes": 483627004
+    },
+    {
+      "start_utc": "2022-07-27T00:00:00Z",
+      "rows": 1197448,
+      "mapping_sha256": "13c45eb3b1d17a7925d2446ec9193f06e8df22de484ae18a1b88704ece5f27a6",
+      "spans": 37,
+      "stored_bytes": 101512288,
+      "projected_range_bytes": 139309949,
+      "projected_4096byte_page_coverage": 139378688,
+      "logical_parquet_bytes": 423859678
+    },
+    {
+      "start_utc": "2022-07-28T00:00:00Z",
+      "rows": 1158611,
+      "mapping_sha256": "7d73c1e1bfd4fc1bed57fc7438495b7836e7028c4947c07c8262d8502a6f326d",
+      "spans": 37,
+      "stored_bytes": 98931111,
+      "projected_range_bytes": 135695896,
+      "projected_4096byte_page_coverage": 135766016,
+      "logical_parquet_bytes": 439172581
+    },
+    {
+      "start_utc": "2022-07-29T00:00:00Z",
+      "rows": 1192330,
+      "mapping_sha256": "b9aabfb8b4c5bd710031abaf6177947e4fcdf053c65a295ddfa22b1344403c9a",
+      "spans": 37,
+      "stored_bytes": 101237471,
+      "projected_range_bytes": 139046559,
+      "projected_4096byte_page_coverage": 139112448,
+      "logical_parquet_bytes": 446424174
+    },
+    {
+      "start_utc": "2022-07-30T00:00:00Z",
+      "rows": 1179749,
+      "mapping_sha256": "4477c69239e4288d56c7e332e57c18e35d0014a60338ad6185c962ece2b52b56",
+      "spans": 37,
+      "stored_bytes": 100922528,
+      "projected_range_bytes": 138483178,
+      "projected_4096byte_page_coverage": 138551296,
+      "logical_parquet_bytes": 429360186
+    },
+    {
+      "start_utc": "2022-07-31T00:00:00Z",
+      "rows": 1158621,
+      "mapping_sha256": "7ee7e4a16bbb66a4d68a3ff13ebd651522ea7891040cc5bb4503aead3ac88d8f",
+      "spans": 37,
+      "stored_bytes": 98607880,
+      "projected_range_bytes": 135360778,
+      "projected_4096byte_page_coverage": 135417856,
+      "logical_parquet_bytes": 409849215
+    }
+  ],
+  "rows": 8841688,
+  "workspace_free_bytes": 33481240576,
+  "disk_floor_bytes": 21474836480,
+  "existing_partial_sqlite": {
+    "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-07-25/decode_graph/weekly-g_35n27n/events.sqlite",
+    "logical_bytes": 3755212800,
+    "allocated_bytes": 3755302912,
+    "qualification": "already occupies disk; unknown committed row count; neither upper bound nor admitted recovery prefix"
+  },
+  "graph_array_upper_bound_from_rows": {
+    "max_nodes": 17683376,
+    "max_edges": 8841688,
+    "numeric_and_id_payload_bytes": {
+      "unicode42_node_ids": 2970807168,
+      "float64_node_features4": 565868032,
+      "int64_edge_index2": 141467008,
+      "float64_edge_features2": 141467008,
+      "float64_edge_aggregates2": 141467008
+    },
+    "total_payload_bytes": 3961076224,
+    "qualification": "ETH length42 address strings, two distinct endpoints per raw row and at most one edge per raw row; excludes headers/JSON/Python/node-map/sort/SQLite/temp copies and is not RAM bound"
+  },
+  "new_sqlite_index_sort_peak_bytes": null,
+  "release_sufficient": false
+}

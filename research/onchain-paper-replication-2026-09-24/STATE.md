@@ -4,6 +4,30 @@ This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
 
+**September29 feature-residency increment verified:** completed fixed features
+remain as verified disk references and load once per unique batch graph; streamed
+production and registered continuation/reuse preserve scientific identities.
+Independent scalar-hash finding corrected; proposed-model post-Adam parameter
+parity and alignment-prefix recovery passed. Named offline01 completed3,272tests
+plus97subtests,2CUDA skips;1540.02seconds,2,133,311,488sampled peak bytes,child0,
+verified cleanup and no memory-limit events. All10source bindings match. No
+engineering or empirical job remains active. Evidence:
+`full_sources/feature-residency-2026-09-29/`. Raw graph/sampler residency and
+large-neighborhood matching remain unresolved; no empirical configuration was
+changed to enable the new policy.
+
+**September29 next resource preparation:** the two completed pilot graphs have
+independently reviewed legacy source-coverage wrappers; no graph was rebuilt.
+The largest unfinished week has a concrete7day/8cell source-only successor draft
+and a proposed51→52 allocation, preserving all24spent claims and1420plannedfits.
+This is not admitted: explicit budget-extension support, quantified new SQLite/
+index/sort peak, committed gate/environment/source bindings and fresh checks are
+still required. Preparation: `full_sources/resource-successor-preparation-2026-09-29/`.
+Next safe action: implement/review cumulative extension admission without changing
+historical family/claim objects, finish the successor resource contract, then
+commit/admit before a new finite claim. Continue independent raw-graph/sampler/
+matching work where that dependency is blocked. No old identity may be relaunched.
+
 **Retained ETH raw backup COMPLETE (September29):** all59,083files /
 103,524,489,043raw bytes are preserved in195verified remote bundles spanning
 pilot02/03/05/06/07/08/09. Final09 completed all9phases with child0 and verified
@@ -682,3 +706,22 @@ capacity refusal preserving independent SVM, and prediction-only parent recovery
 without another fit claim. XML02 collection failure from a transient import
 indentation error is preserved; it performed no tests or empirical work.
 No actual predictive fit or new transaction acquisition has occurred.
+
+September29 ongoing preparation: two metadata-only legacy graph coverage wrappers
+were reconstructed under full_sources/legacy-graph-coverage-2026-09-29/ from24
+compact source/claim/phase/closure files. Original graph bytes and identities are
+unchanged; no body or array read, graph rebuild, pilot retry or empirical claim.
+Independent review pending. Actual reuse still requires prospective admission and
+fresh bounded array verification; cross-cohort identity validation is separate.
+
+September29 preparation while feature offline01 runs: legacy coverage wrappers
+passed independent compact-evidence review. A separate synthetic sampling probe
+matched6400chosen-center/probability/RNG steps using disk-backed float64 work
+arrays; this is feasibility evidence, not production sampling integration.
+`full_sources/sampler-choice-probe-2026-09-29/` records its source and limitations.
+A concrete largest-week graph successor draft (7source days/8cells/8,841,688rows)
+is prepared at `full_sources/resource-successor-preparation-2026-09-29/` with a
+proposed one-slot51→52 cumulative extension. No gate/claim/launch exists. Current
+admission cannot accept changed family budgets; reviewed extension support and
+quantified scratch/output bounds are required before release. The original
+9week/109cell resource scope, all1420fits and all earlier outcomes remain required.

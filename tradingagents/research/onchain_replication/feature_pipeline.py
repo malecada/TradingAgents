@@ -6,6 +6,7 @@ checkpoint callback; completed representations must be reused by identity.
 Trainable GAT/GIN/MLP weights remain in the temporal model, never cached here.
 """
 from dataclasses import dataclass,asdict
+from collections.abc import Mapping
 import numpy as np
 import torch
 from .cache import cache_key
@@ -21,7 +22,7 @@ from .provenance import utc
 
 @dataclass(frozen=True)
 class PreparedFeatures:
-    features: dict
+    features: Mapping
     binding: dict
     dictionary: object = None
 
@@ -31,7 +32,9 @@ def representation_arm(arm):
     return 'proposed' if arm in {'proposed','training_label_permutation','mcm_without_gat'} else arm
 
 
-def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpoint,resume_state=None):
+def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpoint,resume_state=None,retain_features=True,max_array_bytes=None):
+    if type(retain_features) is not bool:raise ValueError('feature retention policy must be boolean')
+    if not retain_features and (type(max_array_bytes) is not int or max_array_bytes<=0):raise ValueError('streamed features require explicit array bound')
     if not callable(checkpoint):raise ValueError('explicit durable checkpoint callback required')
     if type(max_entries) is not int or max_entries<=0:raise ValueError('explicit resource-derived allocation ceiling required')
     if examples.fold_hash!=fold.member_hash:raise ValueError('fold membership differs')
@@ -83,7 +86,7 @@ def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpo
         dictionary_hash=dictionary.identity
         for identity in dictionary.training_graph_hashes:
             lineage.setdefault(identity,graph_lineage(identity))
-    features={};prior_nodes=None;prior_vectors=None;prior_hash=None
+    features={};feature_hashes={};prior_nodes=None;prior_vectors=None;prior_hash=None
     # Historical intermediate snapshots participate in static embedding alignment,
     # even if no scored day refers to them. Process publication order, not event
     # order: an earlier week can be published after a scored later week. This
@@ -105,6 +108,9 @@ def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpo
         progress=resume_state.get('graph_progress',{}).get(identity,{})
         vectors=None
         if completed is not None:
+            if not retain_features:
+                from .component_store import materialize_component
+                completed=materialize_component(completed,max_array_bytes=max_array_bytes)
             feature=completed['feature'];vectors=completed.get('aligned_vectors')
             if arm in {'node2vec','watchyourstep'}:
                 if vectors is None and identity!=selected_ids[len(completed_ids)-1]:pass
@@ -122,6 +128,7 @@ def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpo
                 output=output,start_node=cursor,
                 checkpoint=lambda cursor,prefix:checkpoint('mcm_progress',{**context,'next_node':cursor},prefix.copy()))
             feature={'mcm':torch.tensor(values,dtype=torch.float32),'edge_index':torch.tensor(np.array(graph.edge_index),dtype=torch.long)}
+            del values
         elif arm in {'gin','gat_without_mcm'}:
             feature={'mcm':torch.tensor(np.array(graph.node_features),dtype=torch.float32),'edge_index':torch.tensor(np.array(graph.edge_index),dtype=torch.long)}
         else:
@@ -141,13 +148,16 @@ def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpo
             alignment_order.append(identity)
             prior_nodes=graph.node_ids;prior_vectors=vectors;prior_hash=identity
         if completed is None:checkpoint('graph_complete',context,{'feature':feature,'aligned_vectors':vectors if arm in {'node2vec','watchyourstep'} else None})
-        if identity in required:features[identity]=feature
+        if identity in required:
+            feature_hashes[identity]=feature_hash(feature)
+            if retain_features:features[identity]=feature
+        del feature,completed
     representation='motif_mcm' if needs_mcm else arm
     binding={'schema_version':3,'workflow_identity':workflow_identity,'representation':representation,'asset':asset,'fold_id':fold.id,
         'fold_hash':examples.fold_hash,'train_hash':examples.train_hash,'seed':seed,
         'dictionary_hash':dictionary_hash,'dictionary_training_graph_hashes':[] if dictionary is None else list(dictionary.training_graph_hashes),
         'configuration_hash':cache_key({'dictionary':fitting_config,'matching':configs['matching'],'baselines':configs['baselines']}),
-        'feature_hashes':{h:feature_hash(value) for h,value in features.items()},'lineage':lineage,
+        'feature_hashes':feature_hashes,'lineage':lineage,
         'alignment_order':alignment_order,'alignment_order_policy':'available_at,start_utc,graph_hash; start at earliest required event week'}
     checkpoint('representation_complete',{'binding_hash':cache_key(binding)},binding)
     return PreparedFeatures(features,binding,dictionary)

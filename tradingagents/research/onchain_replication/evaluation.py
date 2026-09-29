@@ -27,12 +27,15 @@ def batch_factory(arm,task,examples,scaler,features,*,permuted=False):
     targets=torch.tensor(labels,dtype=torch.long) if task=='direction' else torch.tensor(scaler.transform([x.target_price for x in examples]),dtype=torch.float32).reshape(-1,1)
     def batch(indices):
         prices=values[indices]
+        from .feature_residency import FixedFeatureMap
+        selected=(features.load_batch(h for i in indices for h in examples[i].graph_hashes)
+                  if isinstance(features,FixedFeatureMap) and arm not in PRICE_ARMS|{'constant_graph'} else features)
         if arm in PRICE_ARMS:inputs={'x':prices}
         elif arm=='constant_graph':inputs={'prices':prices}
         elif arm in VECTOR_WIDTHS:
-            vectors=np.asarray([[features[h] for h in examples[i].graph_hashes] for i in indices])
+            vectors=np.asarray([[selected[h] for h in examples[i].graph_hashes] for i in indices])
             inputs={'prices':prices,'graph_vectors':torch.tensor(vectors,dtype=torch.float32)}
-        else:inputs={'prices':prices,'graph_sequences':[[features[h] for h in examples[i].graph_hashes] for i in indices]}
+        else:inputs={'prices':prices,'graph_sequences':[[selected[h] for h in examples[i].graph_hashes] for i in indices]}
         return inputs,targets[indices]
     return batch
 
@@ -63,7 +66,9 @@ def evaluate_cell(run,cell,examples,scaler,features,model_config,training_config
             if run._published_outputs.get(feature_binding_output)!=digest(raw):raise ValueError('feature output not published by this run')
             bound=json.loads(raw)
         if canonical_bytes(bound)!=canonical_bytes(feature_binding):raise ValueError('feature binding differs from admitted artifact')
-        if feature_binding.get('feature_hashes')!={h:feature_hash(v) for h,v in features.items()}:raise ValueError('feature tensor bytes differ')
+        from .feature_residency import FixedFeatureMap
+        actual_hashes=features.verified_hashes() if isinstance(features,FixedFeatureMap) else {h:feature_hash(v) for h,v in features.items()}
+        if feature_binding.get('feature_hashes')!=actual_hashes:raise ValueError('feature tensor bytes differ')
         required={h for x in (*examples.train,*examples.test) for h in x.graph_hashes}
         if set(features)!=required:raise ValueError('graph feature membership differs from common population')
     config_identity=digest(canonical_bytes({'model':model_config,'training':training_config,'cell':{k:cell[k] for k in ('id','lane','asset','arm','task','seed','fold','variant')},'feature_binding':feature_binding,'scaler':asdict(scaler)}))
@@ -133,8 +138,10 @@ def prediction_directory(run,registered_id):
 
 
 def feature_hash(value):
+    from .component_store import ArrayReference
     h=hashlib.sha256()
     def feed(item):
+        if isinstance(item,ArrayReference):item.feed_hash(h);return
         if isinstance(item,torch.Tensor):item=item.detach().cpu().numpy()
         if isinstance(item,np.ndarray):
             array=np.ascontiguousarray(item)

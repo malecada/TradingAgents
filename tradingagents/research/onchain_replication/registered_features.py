@@ -13,6 +13,7 @@ from .feature_pipeline import prepare_features,PreparedFeatures,representation_a
 from .feature_journal import FeatureJournal,read_feature_journal
 from .serialization import dictionary_from_record
 from .provenance import canonical_bytes,digest,file_hash,durable_mkdir
+from .feature_residency import FixedFeatureMap,read_feature_policy
 
 
 def representation_descriptor(graphs,examples,fold,arm,seed,configs):
@@ -25,7 +26,7 @@ def representation_descriptor(graphs,examples,fold,arm,seed,configs):
 
 
 def prepare_registered_features(run,producer,graphs,examples,fold,arm,seed,configs,*,
-        plan_input,max_entries,max_array_bytes,continuation_input=None):
+        plan_input,max_entries,max_array_bytes,continuation_input=None,residency_input=None):
     if not isinstance(run,ResearchRun):raise ValueError('admitted representation run required')
     graphs=tuple(graphs)
     descriptor=representation_descriptor(graphs,examples,fold,arm,seed,configs)
@@ -34,6 +35,8 @@ def prepare_registered_features(run,producer,graphs,examples,fold,arm,seed,confi
     plan=json.loads(run.read_input(plan_input))
     if plan.get('schema_version')!=1 or producer not in plan['producers']:raise ValueError('unregistered representation producer')
     item=plan['producers'][producer]
+    if item.get('residency_input')!=residency_input:raise ValueError('registered feature residency input differs')
+    residency=read_feature_policy(run,residency_input)
     if canonical_bytes(item['descriptor'])!=canonical_bytes(descriptor):raise ValueError('registered representation science differs')
     if item['max_entries']!=max_entries or item['max_array_bytes']!=max_array_bytes:raise ValueError('registered representation resource bounds differ')
     output=item['binding_output']
@@ -75,17 +78,22 @@ def prepare_registered_features(run,producer,graphs,examples,fold,arm,seed,confi
                 if ancestor.parent.resolve() in chain or ancestor.parent.parent.resolve()!=root.resolve() or file_hash(ancestor)!=cursor['sha256']:raise ValueError('unreviewed representation ancestry')
                 chain.add(ancestor.parent.resolve());cursor=json.loads(ancestor.read_bytes()).get('parent')
             if chain!={p.resolve() for p in prior}:raise ValueError('continuation would omit a prior representation attempt')
-            state,_=read_feature_journal(path,info['sha256'],parent['owner'],required_graphs=descriptor['required_graphs'],max_array_bytes=max_array_bytes)
+            state,_=read_feature_journal(path,info['sha256'],parent['owner'],required_graphs=descriptor['required_graphs'],max_array_bytes=max_array_bytes,lazy_features=residency is not None)
         elif continuation_input is not None:raise ValueError('continuation has no representation owner')
         journal=FeatureJournal(root/run.admission.experiment_id,owner,required_graphs=descriptor['required_graphs'],parent=parent)
         _immutable(journal.directory/'claim.json',{'owner':owner,'descriptor':descriptor,'plan_input':plan_input,
-                   'binding_output':output,'registration_sha256':run.admission.registration_sha256})
+                   'binding_output':output,'registration_sha256':run.admission.registration_sha256,'residency_input':residency_input})
     try:
-        result=prepare_features(graphs,examples,fold,arm,seed,configs,max_entries=max_entries,checkpoint=journal,resume_state=state)
+        result=prepare_features(graphs,examples,fold,arm,seed,configs,max_entries=max_entries,checkpoint=journal,resume_state=state,retain_features=residency is None,max_array_bytes=max_array_bytes)
+        state=None
         path=journal.seal('complete')
         # Re-read persisted bytes before publishing the binding used by fitting.
-        _,binding=read_feature_journal(path,file_hash(path),owner,required_graphs=descriptor['required_graphs'],max_array_bytes=max_array_bytes)
+        persisted,binding=read_feature_journal(path,file_hash(path),owner,required_graphs=descriptor['required_graphs'],max_array_bytes=max_array_bytes,lazy_features=residency is not None)
         if canonical_bytes(binding)!=canonical_bytes(result.binding):raise ValueError('persisted representation binding differs')
+        if residency is not None:
+            features=FixedFeatureMap({h:persisted['completed_graphs'][h]['feature'] for h in descriptor['required_graphs']},
+                                     binding['feature_hashes'],max_unique_feature_bytes=residency['max_unique_feature_bytes'])
+            result=PreparedFeatures(features,binding,result.dictionary)
         run.write_json(output,binding)
         run.write_json(journal_output,{'path':str(path.relative_to(run.admission.root)),
             'sha256':file_hash(path),'owner':owner,'workflow_identity':identity})
@@ -98,10 +106,11 @@ def prepare_registered_features(run,producer,graphs,examples,fold,arm,seed,confi
         raise
 
 
-def reuse_registered_features(run,journal_input,expected_descriptor,*,max_array_bytes,journal_output=None):
+def reuse_registered_features(run,journal_input,expected_descriptor,*,max_array_bytes,journal_output=None,residency_input=None):
     """Registered completed bytes only; no producer claim, sampler or optimizer."""
     if not isinstance(run,ResearchRun):raise ValueError('admitted representation run required')
     run._active();run._check_source()
+    residency=read_feature_policy(run,residency_input)
     if (journal_input is None)==(journal_output is None):raise ValueError('one admitted journal reference required')
     if journal_input is not None:
         raw=run.read_input(journal_input);info=run.admission.inputs[journal_input]
@@ -116,7 +125,8 @@ def reuse_registered_features(run,journal_input,expected_descriptor,*,max_array_
     root=run.admission.root/'research_artifacts/onchain_representations'/identity
     if not path.resolve().is_relative_to(root.resolve()) or path.name!='complete.json' or record['status']!='complete' or record['workflow_identity']!=identity:raise ValueError('completed representation identity differs')
     if record['owner']['workflow_identity']!=identity or path.parent.name!=record['owner']['experiment']:raise ValueError('completed representation owner differs')
-    state,binding=read_feature_journal(path,info['sha256'],record['owner'],required_graphs=expected_descriptor['required_graphs'],max_array_bytes=max_array_bytes)
+    state,binding=read_feature_journal(path,info['sha256'],record['owner'],required_graphs=expected_descriptor['required_graphs'],max_array_bytes=max_array_bytes,lazy_features=residency is not None)
     features={h:state['completed_graphs'][h]['feature'] for h in expected_descriptor['required_graphs']}
+    if residency is not None:features=FixedFeatureMap(features,binding['feature_hashes'],max_unique_feature_bytes=residency['max_unique_feature_bytes'])
     dictionary=None if 'dictionary' not in state else dictionary_from_record(state['dictionary'])
     return PreparedFeatures(features,binding,dictionary)

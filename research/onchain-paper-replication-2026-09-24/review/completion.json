@@ -1,7 +1,7 @@
 {
   "status": "incomplete",
-  "latest_checkpoint": "completion-interim-08.json",
-  "checkpoint_sha256": "92606f4a7f590537b7da2162a1bd620099a7ad110b959ebcc9d7bd0708dad462",
+  "latest_checkpoint": "completion-interim-09.json",
+  "checkpoint_sha256": "c45d137f95c279dec8d5aa8919f02b91e6d5d927bbc7de9fa0910b5c916aac6d",
   "flags": {
     "implementation_complete": false,
     "paper_scope_complete": false,
@@ -12,7 +12,7 @@
     {
       "id": "C01",
       "status": "partial",
-      "disposition": "All34F/Urecords retain prior387pass/1CUDA skip snapshot evidence. Current population/preservation increment passes53focused tests and independent review. Real source-to-graph integration and consolidated completion remain pending. Subsequent neural-runtime import separation passed46focused regressions; prior53-test receipt remains source-pinned.",
+      "disposition": "Registered source-to-graph integration, bounded graph hashing/duplicate checks, activation checkpointing and fixed-feature residency are implemented and independently reviewed. Current source bindings and focused parity evidence are retained; named offline01 completed3272tests/97subtests/2CUDA skips. Consolidated empirical completion remains pending.",
       "evidence": [
         "fidelity.json",
         "DECISIONS.md",
@@ -22,9 +22,16 @@
         "full_sources/population-preparation-01/verification.json",
         "full_sources/population-integration-02.xml",
         "full_sources/population-runtime-01.json",
-        "full_sources/population-runtime-01.xml"
+        "full_sources/population-runtime-01.xml",
+        "full_sources/graph-production-2026-09-29/",
+        "full_sources/activation-checkpointing-2026-09-29/",
+        "full_sources/graph-validation-memory-2026-09-29/",
+        "full_sources/feature-residency-2026-09-29/source-bindings.json",
+        "full_sources/feature-residency-2026-09-29/REVIEW.md",
+        "full_sources/feature-residency-2026-09-29/offline01/final.json",
+        "full_sources/feature-residency-2026-09-29/offline01/child.log"
       ],
-      "reviewer_disposition": "Prior criterion/status retained; terminal storage closure and unchanged flags independently confirmed."
+      "reviewer_disposition": "Prior criterion status retained; final offline closure addendum pending."
     },
     {
       "id": "C02",
@@ -55,13 +62,15 @@
     {
       "id": "C04",
       "status": "partial",
-      "disposition": "ETH/BTC conservation and exclusion fixtures reviewed; real pilot graph counts retained. Independent full real raw-to-graph reconciliation across required history remains pending.",
+      "disposition": "ETH/BTC conservation fixtures and registered whole-stream graph production are reviewed. Two original completed pilot graphs now have independently reconstructed source-coverage metadata without rebuilding either graph. Fresh bounded array checks at reuse and independent full-history reconciliation remain pending.",
       "evidence": [
         "IMPLEMENTATION_REVIEW.md",
         "implementation-coverage-v4.json",
-        "replay/fresh-expanded-02.xml"
+        "replay/fresh-expanded-02.xml",
+        "full_sources/graph-production-2026-09-29/REVIEW.md",
+        "full_sources/legacy-graph-coverage-2026-09-29/REVIEW.md"
       ],
-      "reviewer_disposition": "Prior criterion/status retained; terminal storage closure and unchanged flags independently confirmed."
+      "reviewer_disposition": "September29 checkpoint synthesis pending independent reconciliation; existing criterion status retained."
     },
     {
       "id": "C05",
@@ -77,36 +86,42 @@
     {
       "id": "C06",
       "status": "partial",
-      "disposition": "BatchedCPUfloat32/reference checks passed; CUDA parity unavailable on this host and full-scale acceleration not established.",
+      "disposition": "CPU synthetic parity remains established within frozen tolerances. Checkpointed eager versus batch-loaded proposed-model outputs, gradients and Adam updates match exactly in the added fixture. CUDA checks remain unavailable; no full-size acceleration claim.",
       "evidence": [
         "replay/fresh-expanded-02.xml",
-        "sources/runtime-inventory.json"
+        "sources/runtime-inventory.json",
+        "full_sources/feature-residency-2026-09-29/green03/child.log",
+        "full_sources/activation-checkpointing-2026-09-29/"
       ],
-      "reviewer_disposition": "Prior criterion/status retained; terminal storage closure and unchanged flags independently confirmed."
+      "reviewer_disposition": "September29 checkpoint synthesis pending independent reconciliation; existing criterion status retained."
     },
     {
       "id": "C07",
       "status": "met_synthetic",
-      "disposition": "Deterministic sampled dictionary identity and train-only/future-mutation checks passed; actual first pilot512sample/32dictionary retained.",
+      "disposition": "Prior training-only dictionary and future-mutation checks retained. Reference-loaded feature identities match eager arrays including scalar and Fortran layouts; proposed motif/MCM production and exact reuse match. A separate6400-draw mapped-weight probe is limited synthetic feasibility evidence, not a new production sampler or empirical dictionary.",
       "evidence": [
         "IMPLEMENTATION_REVIEW.md",
         "implementation-coverage-v4.json",
         "replay/fresh-expanded-02.xml",
         "full_sources/population-preparation-01/verification.json",
-        "full_sources/population-integration-02.xml"
+        "full_sources/population-integration-02.xml",
+        "full_sources/feature-residency-2026-09-29/REVIEW.md",
+        "full_sources/sampler-choice-probe-2026-09-29/REVIEW.md"
       ],
-      "reviewer_disposition": "Prior criterion/status retained; terminal storage closure and unchanged flags independently confirmed."
+      "reviewer_disposition": "September29 checkpoint synthesis pending independent reconciliation; existing criterion status retained."
     },
     {
       "id": "C08",
       "status": "met_synthetic",
-      "disposition": "All intended trainable blocks have finite nonzero gradients; fixed nondegenerate fixture reduces loss\u226580percent within500updates. Synthetic controller03 retains neural optimizer/RNG checkpoint.",
+      "disposition": "Prior finite nonzero gradient and80percent-loss-reduction fixture remains the criterion evidence. Added registered full motif/MCM with checkpointed GAT/temporal training matches eager outputs, every gradient and post-Adam model parameters exactly; no real predictive fit.",
       "evidence": [
         "IMPLEMENTATION_REVIEW.md",
         "implementation-coverage-v4.json",
-        "replay/fresh-expanded-02.xml"
+        "replay/fresh-expanded-02.xml",
+        "full_sources/feature-residency-2026-09-29/green03/child.log",
+        "full_sources/feature-residency-2026-09-29/REVIEW.md"
       ],
-      "reviewer_disposition": "Prior criterion/status retained; terminal storage closure and unchanged flags independently confirmed."
+      "reviewer_disposition": "September29 checkpoint synthesis pending independent reconciliation; existing criterion status retained."
     },
     {
       "id": "C09",
@@ -122,7 +137,7 @@
     {
       "id": "C10",
       "status": "partial",
-      "disposition": "Metadata-based population producer preserves complete week/date denominators, missing/late exclusions, purge and training-only scaling; same-claim publication and exact binding preflight pass53focused tests. Real prediction lineage remains pending. Subsequent neural-runtime import separation passed46focused regressions; prior53-test receipt remains source-pinned.",
+      "disposition": "Prior clock, purge, population and training-only scaling checks retained. Added WatchYourStep recovery reproduces uninterrupted feature binding over104causal snapshots while returning10scored snapshots; no earlier completed graph is republished. Real prediction lineage remains pending.",
       "evidence": [
         "IMPLEMENTATION_REVIEW.md",
         "implementation-coverage-v4.json",
@@ -130,21 +145,25 @@
         "full_sources/population-preparation-01/verification.json",
         "full_sources/population-integration-02.xml",
         "full_sources/population-runtime-01.json",
-        "full_sources/population-runtime-01.xml"
+        "full_sources/population-runtime-01.xml",
+        "full_sources/feature-residency-2026-09-29/green04/child.log",
+        "full_sources/feature-residency-2026-09-29/REVIEW.md"
       ],
-      "reviewer_disposition": "Prior criterion/status retained; terminal storage closure and unchanged flags independently confirmed."
+      "reviewer_disposition": "September29 checkpoint synthesis pending independent reconciliation; existing criterion status retained."
     },
     {
       "id": "C11",
       "status": "partial",
-      "disposition": "1420unique fits predeclared with all44table rows; all claim attempts/cells retained. Full empirical denominator has not executed.",
+      "disposition": "All1420unique fit cells and44table rows remain predeclared and pending. Cumulative24/51claims consumed, all terminal; remaining27slots allocated. Proposed52ceiling adds one unfinished-largest-week graph resource claim but is not admitted. Prior109pilot cell dispositions preserved.",
       "evidence": [
         "full_sources/fit-allocation-v1.json",
         "full_sources/table-status-pre-fit-v2.json",
         "full_sources/population-preparation-01/verification.json",
-        "full_sources/population-integration-02.xml"
+        "full_sources/population-integration-02.xml",
+        "full_sources/resource-admission-next-2026-09-29/REVIEW.md",
+        "full_sources/resource-successor-preparation-2026-09-29/REVIEW.md"
       ],
-      "reviewer_disposition": "Prior criterion/status retained; terminal storage closure and unchanged flags independently confirmed."
+      "reviewer_disposition": "September29 checkpoint synthesis pending independent reconciliation; existing criterion status retained."
     },
     {
       "id": "C12",
@@ -173,7 +192,7 @@
     {
       "id": "C14",
       "status": "partial",
-      "disposition": "Prior387pass/1CUDA skip suite and two saved synthetic predictions replayed exactly in the earlier clean locked environment. Current increment has53focused passes; no new full fresh-environment run or real raw-to-prediction example is claimed. Subsequent neural-runtime import separation passed46focused regressions; prior53-test receipt remains source-pinned.",
+      "disposition": "Prior clean locked-environment synthetic/checkpoint replay evidence retained. September29 graph-production named offline suite passed3220tests/97subtests/1CUDA skip; subsequent memory increments have focused evidence and feature-residency named offline01 completed3272tests/97subtests/2CUDA skips. No new clean environment or real raw-to-prediction replay is claimed.",
       "evidence": [
         "replay/fresh-environment-01.json",
         "replay/fresh-synthetic-suite-01.xml",
@@ -183,14 +202,18 @@
         "full_sources/population-preparation-01/verification.json",
         "full_sources/population-integration-02.xml",
         "full_sources/population-runtime-01.json",
-        "full_sources/population-runtime-01.xml"
+        "full_sources/population-runtime-01.xml",
+        "full_sources/graph-production-2026-09-29/",
+        "full_sources/feature-residency-2026-09-29/",
+        "full_sources/feature-residency-2026-09-29/offline01/final.json",
+        "full_sources/feature-residency-2026-09-29/offline01/child.log"
       ],
-      "reviewer_disposition": "Prior criterion/status retained; terminal storage closure and unchanged flags independently confirmed."
+      "reviewer_disposition": "Prior criterion status retained; final offline closure addendum pending."
     },
     {
       "id": "C15",
       "status": "partial",
-      "disposition": "Pilot 02 failed under independently verified systemd-oomd ancestor memory pressure. All 109 cells and 69 artifact hashes verified; 7 complete, 102 unavailable. Owners are dead and cleanup verified. Fourteen source-days are decoded and a third week was attempted despite unavailable source-day finalization. Full-size MCM/neural/worst-week feasibility remains unavailable.",
+      "disposition": "Pilot02 terminal failure and109dispositions remain unchanged. Subsequent engineering guards retain enforcement/cleanup receipts; feature-residency named offline01 completed with child0, verified cleanup and no memory-limit events; no active job remains. Full-sized MCM/neural and largest-week feasibility are unresolved. The concrete8cell largest-week successor is preparation only; budget-extension admission and SQLite/index/sort peak remain release requirements.",
       "evidence": [
         "pilot_successor_02/gate-v3.json",
         "review/capacity-interim-02.json",
@@ -198,14 +221,19 @@
         "pilot_successor_02/closure-01/closure.json",
         "review/capacity-closed-partial-03.json",
         "pilot_successor_02/closure-01/hash-audit-01-complete.json",
-        "pilot_successor_02/closure-01/hash-audit-01-guard/final.json"
+        "pilot_successor_02/closure-01/hash-audit-01-guard/final.json",
+        "full_sources/feature-residency-2026-09-29/",
+        "full_sources/resource-successor-preparation-2026-09-29/REVIEW.md",
+        "full_sources/resource-successor-preparation-2026-09-29/storage-preflight.json",
+        "full_sources/feature-residency-2026-09-29/offline01/final.json",
+        "full_sources/feature-residency-2026-09-29/offline01/child.log"
       ],
-      "reviewer_disposition": "Prior criterion/status retained; terminal storage closure and unchanged flags independently confirmed."
+      "reviewer_disposition": "Prior criterion status retained; final offline closure addendum pending."
     },
     {
       "id": "C16",
       "status": "partial",
-      "disposition": "Storage Box compact checkpoint independently recovered16110Git blobs/72643513uncompressed bytes. Retained ETH raw pilot verified149files/517291351bytes. Bulk controller stopped before worker release on host startup reserve;58934files/103007197692bytes remain. Failed attempts retained; no active transfer. Large graph/scratch backup remains incomplete.",
+      "disposition": "Retained ETH raw backup completed:59083files/103524489043raw bytes across195remotely roundtrip-verified bundles. Independent final reconciliation reused saved recovery receipts; it was not another complete remote download. Original raw, failed attempts and prior compact replay evidence retained. Large graph/scratch preservation and new bounded real raw-to-prediction recovery remain incomplete.",
       "evidence": [
         "replay/preparation-recovery-02-complete.json",
         "replay/controller-synthetic-03-bundle.json",
@@ -219,9 +247,12 @@
         "storage/raw-preservation-2026-09-24-02/contract.json",
         "storage/raw-preservation-2026-09-24-02/pilot/complete.json",
         "storage/raw-preservation-2026-09-24-02/bulk-controller/failed.json",
-        "storage/raw-preservation-2026-09-24-02/bulk01/guard/final.json"
+        "storage/raw-preservation-2026-09-24-02/bulk01/guard/final.json",
+        "storage/raw-preservation-complete-2026-09-29/RESULT.md",
+        "storage/raw-preservation-complete-2026-09-29/recovery-index.json",
+        "storage/raw-preservation-complete-2026-09-29/REVIEW.md"
       ],
-      "reviewer_disposition": "Prior criterion/status retained; terminal storage closure and unchanged flags independently confirmed."
+      "reviewer_disposition": "September29 checkpoint synthesis pending independent reconciliation; existing criterion status retained."
     },
     {
       "id": "C17",
@@ -236,11 +267,15 @@
     {
       "id": "C18",
       "status": "pending",
-      "disposition": "Incremental independent reviews recorded; full experiment/metric/resource closure and final review are not complete.",
+      "disposition": "Current bounded implementation reviews close material findings, including scalar identity and checkpoint RNG-device handling. Legacy graph metadata and resource-successor preparation are independently reviewed. Final empirical, metric, resource and overall completion review remains pending.",
       "evidence": [
-        "IMPLEMENTATION_REVIEW.md"
+        "IMPLEMENTATION_REVIEW.md",
+        "full_sources/feature-residency-2026-09-29/REVIEW.md",
+        "full_sources/legacy-graph-coverage-2026-09-29/REVIEW.md",
+        "full_sources/resource-successor-preparation-2026-09-29/REVIEW.md"
       ],
-      "reviewer_disposition": "Prior criterion/status retained; terminal storage closure and unchanged flags independently confirmed."
+      "reviewer_disposition": "September29 checkpoint synthesis pending independent reconciliation; existing criterion status retained."
     }
-  ]
+  ],
+  "review": "completion-interim-09-REVIEW.md"
 }

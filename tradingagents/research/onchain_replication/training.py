@@ -80,6 +80,7 @@ def fit_cell(run,cell_id,provenance,model_factory,batch_factory,n_examples,task,
             if not torch.isfinite(loss):raise ValueError('nonfinite training loss')
             loss.backward();torch.nn.utils.clip_grad_norm_(model.parameters(),training_config['gradient_clip_norm'],error_if_nonfinite=True);optimizer.step()
             loss_sum+=float(loss.detach())*len(indices);count+=len(indices);batch+=1
+            del inputs,targets,output,loss
             epoch_end=batch==batches
             if epoch_end:
                 logs.append({'epoch':epoch,'loss':loss_sum/count,'examples':count,'seed':seed})
@@ -104,4 +105,5 @@ def predict_cell(model,batch_factory,n_examples,batch_size):
             if output.shape[0]!=min(batch_size,n_examples-start):raise ValueError('prediction population changed')
             if not torch.isfinite(output).all():raise ValueError('nonfinite prediction')
             outputs.append(output.detach().cpu())
+            del inputs,output
     return torch.cat(outputs)

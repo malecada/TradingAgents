@@ -1,0 +1,39 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_________ test_scalar_reference_retains_eager_feature_identity[value0] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-26/test_scalar_reference_retains_0')
+value = array(1.)
+
+    @pytest.mark.parametrize('value',[np.array(1.,dtype=np.float64),torch.tensor(1.)])
+    def test_scalar_reference_retains_eager_feature_identity(tmp_path,value):
+        path,context=saved(tmp_path,'scalar',value)
+        reference=load_component(path,file_hash(path),context,max_array_bytes=4096,materialize_arrays=False)
+>       assert feature_hash(reference['feature'])==feature_hash(value)
+E       AssertionError: assert 'b1df817fd820...18b1695e7de3b' == '2dfb56b27273...03f0905e283d5'
+E         
+E         - 2dfb56b27273561fe54a966c6b37996778959fda3767ca3e60403f0905e283d5
+E         + b1df817fd8206e4443139640c5a0565b8647f38edf996dc9ca918b1695e7de3b
+
+tests/research/onchain_replication/test_feature_residency.py:48: AssertionError
+_________ test_scalar_reference_retains_eager_feature_identity[value1] _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-26/test_scalar_reference_retains_1')
+value = tensor(1.)
+
+    @pytest.mark.parametrize('value',[np.array(1.,dtype=np.float64),torch.tensor(1.)])
+    def test_scalar_reference_retains_eager_feature_identity(tmp_path,value):
+        path,context=saved(tmp_path,'scalar',value)
+        reference=load_component(path,file_hash(path),context,max_array_bytes=4096,materialize_arrays=False)
+>       assert feature_hash(reference['feature'])==feature_hash(value)
+E       AssertionError: assert 'f4d2b126beaa...0f1d5b6302a2b' == 'e15be37b22bd...afb13c09b3b84'
+E         
+E         - e15be37b22bd4ea154d70d9cc8b210eb81a37b8c6abff38f274afb13c09b3b84
+E         + f4d2b126beaafeb43005eb912765384e3b2de278c869d94b87f0f1d5b6302a2b
+
+tests/research/onchain_replication/test_feature_residency.py:48: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_feature_residency.py::test_scalar_reference_retains_eager_feature_identity[value0]
+FAILED tests/research/onchain_replication/test_feature_residency.py::test_scalar_reference_retains_eager_feature_identity[value1]
+2 failed, 5 deselected in 2.34s

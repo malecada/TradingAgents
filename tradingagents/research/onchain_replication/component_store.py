@@ -4,6 +4,8 @@ Publication does not grant a research lease or permit restarting a terminal job.
 The registered producer owns directories and binds manifest hashes externally.
 """
 from pathlib import Path
+from dataclasses import dataclass
+from math import prod
 import json,os
 import numpy as np
 import torch
@@ -37,7 +39,62 @@ def save_component(directory,payload,context):
     return directory/'manifest.json'
 
 
-def load_component(manifest_path,expected_hash,expected_context,*,max_array_bytes):
+@dataclass(frozen=True)
+class ArrayReference:
+    """Verified descriptor, never a retained mmap or a grant to run research."""
+    path: Path
+    sha256: str
+    file_bytes: int
+    shape: tuple
+    dtype: str
+    tensor: bool
+
+    @property
+    def nbytes(self):return prod(self.shape)*np.dtype(self.dtype).itemsize
+
+    def _open(self):
+        if self.path.is_symlink() or self.path.stat().st_size!=self.file_bytes or file_hash(self.path)!=self.sha256:raise ValueError('component array hash/size differs')
+        array=np.load(self.path,allow_pickle=False,mmap_mode='r')
+        if array.dtype.hasobject or array.dtype.kind not in 'biuf' or tuple(array.shape)!=self.shape or str(array.dtype)!=self.dtype:raise ValueError('component array dimensions/type differ')
+        return array
+
+    def load(self):
+        array=self._open();copied=np.array(array,copy=True)
+        if file_hash(self.path)!=self.sha256:raise ValueError('component array changed during load')
+        return torch.from_numpy(copied) if self.tensor else copied
+
+    def feed_hash(self,hasher):
+        array=self._open()
+        # The eager identity uses ascontiguousarray, which promotes 0-D to (1,).
+        hasher.update(canonical_bytes({'shape':array.shape or (1,),'dtype':str(array.dtype)}))
+        # Stored arrays may be Fortran ordered. Feature identities use C order.
+        with np.nditer(array,flags=['external_loop','buffered','zerosize_ok'],
+                       op_flags=['readonly'],order='C',buffersize=65536) as chunks:
+            for chunk in chunks:hasher.update(chunk.tobytes(order='C'))
+        if file_hash(self.path)!=self.sha256:raise ValueError('component array changed during hashing')
+
+
+def reference_bytes(value):
+    if isinstance(value,ArrayReference):return value.nbytes
+    if isinstance(value,np.ndarray):return value.nbytes
+    if isinstance(value,torch.Tensor):return value.numel()*value.element_size()
+    if isinstance(value,dict):return sum(reference_bytes(x) for x in value.values())
+    if isinstance(value,(list,tuple)):return sum(map(reference_bytes,value))
+    return 0
+
+
+def materialize_component(value,*,max_array_bytes):
+    if type(max_array_bytes) is not int or max_array_bytes<=0 or reference_bytes(value)>max_array_bytes:raise ValueError('component materialization bound exceeded')
+    def load(item):
+        if isinstance(item,ArrayReference):return item.load()
+        if isinstance(item,dict):return {k:load(v) for k,v in item.items()}
+        if isinstance(item,(list,tuple)):return type(item)(load(x) for x in item)
+        return item
+    return load(value)
+
+
+def load_component(manifest_path,expected_hash,expected_context,*,max_array_bytes,materialize_arrays=True):
+    if type(materialize_arrays) is not bool:raise ValueError('component materialization policy must be boolean')
     if type(max_array_bytes) is not int or max_array_bytes<=0:raise ValueError('explicit component allocation bound required')
     path=Path(manifest_path);raw=path.read_bytes()
     if path.is_symlink() or digest(raw)!=expected_hash:raise ValueError('component manifest hash differs')
@@ -57,9 +114,12 @@ def load_component(manifest_path,expected_hash,expected_context,*,max_array_byte
             if array.dtype.hasobject or array.dtype.kind not in 'biuf' or list(array.shape)!=info['shape'] or str(array.dtype)!=info['dtype']:raise ValueError('component array dimensions/type differ')
             allocated[0]+=array.nbytes
             if allocated[0]>max_array_bytes:raise ValueError('component total allocation bound exceeded')
-            # Return independent, writable bytes; callers may restore optimizer state.
-            copied=np.array(array,copy=True)
+            reference=ArrayReference(member,info['sha256'],info['bytes'],tuple(array.shape),str(array.dtype),kind=='tensor')
+            # The descriptor retains no mapped array. Eager callers still receive
+            # independent writable bytes, including optimizer restoration state.
+            copied=np.array(array,copy=True) if materialize_arrays else None
             if file_hash(member)!=info['sha256']:raise ValueError('component array changed during load')
+            if not materialize_arrays:return reference
             return torch.from_numpy(copied) if kind=='tensor' else copied
         if kind=='scalar':
             if set(node)!={'kind','value'} or (node['value'] is not None and type(node['value']) not in (bool,str,int,float)):raise ValueError('component scalar differs')
