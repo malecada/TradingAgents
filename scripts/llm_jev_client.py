@@ -15,7 +15,7 @@ ENDPOINT = "https://openrouter.ai/api/alpha/decisions"
 PROVIDER_SLUG = "typesafe"
 PROVIDER_NAME = "TypeSafe"
 KEY_NAMES = ("OPENROUTER_API_KEY", "OPENROUTER_API")
-RETRY_STATUS = frozenset({429, 500, 502, 503, 524, 529})
+RETRY_STATUS = frozenset({429, 500, 502, 503, 504, 524, 529})
 
 
 class JevError(RuntimeError):
@@ -63,7 +63,10 @@ class JevClient:
                 self.sleep(min(2 ** attempt, 30))
                 continue
             if response.status_code == 200:
-                data = response.json()
+                try:
+                    data = response.json()
+                except ValueError:
+                    raise JevError("malformed JSON in 200 response") from None
                 self._check(data, questions)
                 cost = float(data["usage"]["cost"])
                 self.spent_usd += cost
@@ -78,7 +81,8 @@ class JevClient:
                 is_number = retry_after.replace(".", "", 1).isdigit()
                 self.sleep(float(retry_after) if is_number else min(2 ** attempt, 30))
                 continue
-            raise JevError(f"HTTP {response.status_code}: {str(response.text)[:300]}")
+            text = str(response.text).replace(self.api_key, "[redacted]")[:300]
+            raise JevError(f"HTTP {response.status_code}: {text}")
         raise JevError("retry loop exited without a response")
 
     def _check(self, data: dict, questions: dict) -> None:
@@ -92,13 +96,18 @@ class JevClient:
             raise JevError("answers do not cover exactly the asked questions")
         for name, question in questions.items():
             answer = answers[name]
+            if not isinstance(answer, dict):
+                raise JevError(f"answer for {name} is not an object")
             if answer.get("type") != question["type"]:
                 raise JevError(f"answer type mismatch for {name}")
-            if question["type"] == "noul" and not isinstance(answer.get("noul"), (int, float)):
-                raise JevError(f"noul probability missing for {name}")
+            if question["type"] == "noul":
+                v = answer.get("noul")
+                if not isinstance(v, (int, float)) or isinstance(v, bool):
+                    raise JevError(f"noul probability missing for {name}")
             if question["type"] == "choice":
                 probs = answer.get("probabilities")
                 if not isinstance(probs, dict) or set(probs) != set(question["criteria"]):
                     raise JevError(f"choice probabilities incomplete for {name}")
-        if "cost" not in (data.get("usage") or {}):
-            raise JevError("usage.cost missing from response")
+        cost = (data.get("usage") or {}).get("cost")
+        if isinstance(cost, bool) or not isinstance(cost, (int, float)):
+            raise JevError("usage.cost missing or not numeric")

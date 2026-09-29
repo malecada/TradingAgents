@@ -35,6 +35,12 @@ class FakeResponse:
         return self._payload
 
 
+class BadJsonResponse(FakeResponse):
+    """FakeResponse that raises ValueError on json()."""
+    def json(self):
+        raise ValueError("invalid JSON")
+
+
 class FakeSession:
     def __init__(self, responses):
         self.responses, self.bodies, self.headers = list(responses), [], []
@@ -142,3 +148,51 @@ def test_key_loading_and_repr(tmp_path):
     with pytest.raises(JevError, match="no OpenRouter key"):
         load_api_key(env)
     assert "sk-test" not in repr(client([])[0])
+
+
+def test_504_retried_then_success():
+    c, sleeps = client([FakeResponse(504), FakeResponse(200, ok_payload())])
+    c.decide({}, QUESTIONS)
+    assert len(sleeps) == 1 and c.calls == 1
+
+
+def test_malformed_json_in_200_response():
+    c, _ = client([BadJsonResponse(200)])
+    with pytest.raises(JevError, match="malformed JSON"):
+        c.decide({}, QUESTIONS)
+
+
+def test_usage_cost_none():
+    payload = ok_payload()
+    payload["usage"]["cost"] = None
+    c, _ = client([FakeResponse(200, payload)])
+    with pytest.raises(JevError, match="usage.cost"):
+        c.decide({}, QUESTIONS)
+
+
+def test_answer_value_not_dict():
+    answers = {"ev_hack": "not a dict",
+               "asset": {"type": "choice", "choice": "c00", "confidence": 0.8,
+                         "probabilities": {"c00": 0.8, "none": 0.2}}}
+    c, _ = client([FakeResponse(200, ok_payload(answers=answers))])
+    with pytest.raises(JevError, match="not an object"):
+        c.decide({}, QUESTIONS)
+
+
+def test_noul_value_is_bool():
+    answers = {"ev_hack": {"type": "noul", "noul": True},
+               "asset": {"type": "choice", "choice": "c00", "confidence": 0.8,
+                         "probabilities": {"c00": 0.8, "none": 0.2}}}
+    c, _ = client([FakeResponse(200, ok_payload(answers=answers))])
+    with pytest.raises(JevError, match="noul probability"):
+        c.decide({}, QUESTIONS)
+
+
+def test_api_key_scrubbed_in_error_message():
+    c, _ = client([FakeResponse(401, text="bad key sk-test here")])
+    with pytest.raises(JevError) as exc_info:
+        c.decide({}, QUESTIONS)
+    msg = str(exc_info.value)
+    assert "401" in msg
+    assert "[redacted]" in msg
+    assert "sk-test" not in msg
