@@ -32,7 +32,10 @@ def representation_arm(arm):
     return 'proposed' if arm in {'proposed','training_label_permutation','mcm_without_gat'} else arm
 
 
-def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpoint,resume_state=None,retain_features=True,max_array_bytes=None,weight_workspace=None,max_weight_bytes=None):
+def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpoint,resume_state=None,retain_features=True,max_array_bytes=None,weight_workspace=None,max_weight_bytes=None,score_only=False):
+    from .matching_policy import require_matching_arm
+    if type(score_only) is not bool:raise ValueError('matching score-only option must be boolean')
+    require_matching_arm(arm,True if score_only else None)
     from .sampling_policy import require_sampling_arm
     if (weight_workspace is None)!=(max_weight_bytes is None):raise ValueError('sampling workspace and budget must be paired')
     if max_weight_bytes is not None and (type(max_weight_bytes) is not int or max_weight_bytes<=0):raise ValueError('sampling budget must be positive')
@@ -131,7 +134,7 @@ def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpo
                 if type(cursor) is not int or not 0<=cursor<=n or prefix.shape!=(cursor,len(dictionary.representatives)) or prefix.dtype!=np.float32 or not np.isfinite(prefix).all():raise ValueError('resumed MCM dimensions/cursor')
                 output=np.zeros((n,len(dictionary.representatives)),dtype=np.float32);output[:cursor]=prefix
             values=mcm_features(graph,dictionary,configs['matching'],
-                output=output,start_node=cursor,
+                output=output,start_node=cursor,score_only=score_only,
                 checkpoint=lambda cursor,prefix:checkpoint('mcm_progress',{**context,'next_node':cursor},prefix.copy()))
             feature={'mcm':torch.tensor(values,dtype=torch.float32),'edge_index':torch.tensor(np.array(graph.edge_index),dtype=torch.long)}
             del values

@@ -1,0 +1,533 @@
+FFFFFFFFFFFFFFFFFF                                                       [100%]
+=================================== FAILURES ===================================
+______ test_admitted_score_only_preserves_binding_and_avoids_diagnostics _______
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-146/test_admitted_score_only_prese0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '975bfeba3db4ca7fa486e11162b94500d00b3919')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x787d2f72f100>
+
+    def test_admitted_score_only_preserves_binding_and_avoids_diagnostics(registered,monkeypatch):
+        import tradingagents.research.onchain_replication.matching as matching
+        fixture,args=setup(registered)
+        baseline=prepare_features(*args,max_entries=100000,checkpoint=lambda *a:None)
+        monkeypatch.setattr(matching,'MatchResult',lambda *a,**k:pytest.fail('score-only retained diagnostics'))
+        with start(fixture) as run:
+>           result,path=produce(run,args)
+                        ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_matching_policy.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x787d2f77e3c0>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+            max_entries=100000,max_array_bytes=1024**2,matching_input='matching',**kwargs)
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'matching_input'. Did you mean 'sampling_input'?
+
+tests/research/onchain_replication/test_matching_policy.py:29: TypeError
+______________ test_invalid_policy_rejected_before_claim[policy0] ______________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-146/test_invalid_policy_rejected_b0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '975bfeba3db4ca7fa486e11162b94500d00b3919')
+policy = {}
+
+    @pytest.mark.parametrize('policy',[{}, {'schema_version':True,'mode':'score_only'},
+        {'schema_version':2,'mode':'score_only'}, {'schema_version':1,'mode':'other'},
+        {'schema_version':1,'mode':'score_only','max_pair_entries':99999999}])
+    def test_invalid_policy_rejected_before_claim(registered,policy):
+        fixture,args=setup(registered,policy); root,_,_=fixture
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='matching'):produce(run,args)
+                                                            ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_matching_policy.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x787bc840b890>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+            max_entries=100000,max_array_bytes=1024**2,matching_input='matching',**kwargs)
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'matching_input'. Did you mean 'sampling_input'?
+
+tests/research/onchain_replication/test_matching_policy.py:29: TypeError
+______________ test_invalid_policy_rejected_before_claim[policy1] ______________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-146/test_invalid_policy_rejected_b1'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'cfb21a24f5c26826406a20a14bd7f4eae4e45f25')
+policy = {'schema_version': True, 'mode': 'score_only'}
+
+    @pytest.mark.parametrize('policy',[{}, {'schema_version':True,'mode':'score_only'},
+        {'schema_version':2,'mode':'score_only'}, {'schema_version':1,'mode':'other'},
+        {'schema_version':1,'mode':'score_only','max_pair_entries':99999999}])
+    def test_invalid_policy_rejected_before_claim(registered,policy):
+        fixture,args=setup(registered,policy); root,_,_=fixture
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='matching'):produce(run,args)
+                                                            ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_matching_policy.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x787bc840b9d0>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+            max_entries=100000,max_array_bytes=1024**2,matching_input='matching',**kwargs)
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'matching_input'. Did you mean 'sampling_input'?
+
+tests/research/onchain_replication/test_matching_policy.py:29: TypeError
+______________ test_invalid_policy_rejected_before_claim[policy2] ______________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-146/test_invalid_policy_rejected_b2'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'e6fbad4982eb9390f94d712742418a7c252a2177')
+policy = {'schema_version': 2, 'mode': 'score_only'}
+
+    @pytest.mark.parametrize('policy',[{}, {'schema_version':True,'mode':'score_only'},
+        {'schema_version':2,'mode':'score_only'}, {'schema_version':1,'mode':'other'},
+        {'schema_version':1,'mode':'score_only','max_pair_entries':99999999}])
+    def test_invalid_policy_rejected_before_claim(registered,policy):
+        fixture,args=setup(registered,policy); root,_,_=fixture
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='matching'):produce(run,args)
+                                                            ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_matching_policy.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x787bc8233950>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+            max_entries=100000,max_array_bytes=1024**2,matching_input='matching',**kwargs)
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'matching_input'. Did you mean 'sampling_input'?
+
+tests/research/onchain_replication/test_matching_policy.py:29: TypeError
+______________ test_invalid_policy_rejected_before_claim[policy3] ______________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-146/test_invalid_policy_rejected_b3'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'e6fbad4982eb9390f94d712742418a7c252a2177')
+policy = {'schema_version': 1, 'mode': 'other'}
+
+    @pytest.mark.parametrize('policy',[{}, {'schema_version':True,'mode':'score_only'},
+        {'schema_version':2,'mode':'score_only'}, {'schema_version':1,'mode':'other'},
+        {'schema_version':1,'mode':'score_only','max_pair_entries':99999999}])
+    def test_invalid_policy_rejected_before_claim(registered,policy):
+        fixture,args=setup(registered,policy); root,_,_=fixture
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='matching'):produce(run,args)
+                                                            ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_matching_policy.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x787bc8233ce0>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+            max_entries=100000,max_array_bytes=1024**2,matching_input='matching',**kwargs)
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'matching_input'. Did you mean 'sampling_input'?
+
+tests/research/onchain_replication/test_matching_policy.py:29: TypeError
+______________ test_invalid_policy_rejected_before_claim[policy4] ______________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-146/test_invalid_policy_rejected_b4'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '9f6a5488221be6965a6f1378082bc293ce24782c')
+policy = {'schema_version': 1, 'mode': 'score_only', 'max_pair_entries': 99999999}
+
+    @pytest.mark.parametrize('policy',[{}, {'schema_version':True,'mode':'score_only'},
+        {'schema_version':2,'mode':'score_only'}, {'schema_version':1,'mode':'other'},
+        {'schema_version':1,'mode':'score_only','max_pair_entries':99999999}])
+    def test_invalid_policy_rejected_before_claim(registered,policy):
+        fixture,args=setup(registered,policy); root,_,_=fixture
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='matching'):produce(run,args)
+                                                            ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_matching_policy.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x787c7ab06e70>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+            max_entries=100000,max_array_bytes=1024**2,matching_input='matching',**kwargs)
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'matching_input'. Did you mean 'sampling_input'?
+
+tests/research/onchain_replication/test_matching_policy.py:29: TypeError
+____________________ test_planned_policy_cannot_be_omitted _____________________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-146/test_planned_policy_cannot_be_0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '5ffe8ef798232e9895f186880a02c8a17e3efe37')
+
+    def test_planned_policy_cannot_be_omitted(registered):
+        fixture,args=setup(registered); root,_,_=fixture
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='matching'):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_matching_policy.py:60: Failed
+_________________ test_policy_hash_drift_rejected_before_claim _________________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-146/test_policy_hash_drift_rejecte0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '1375f6032c100c274484a69515bbdb41a3f083cc')
+
+    def test_policy_hash_drift_rejected_before_claim(registered):
+        fixture,args=setup(registered); root,_,_=fixture
+        with start(fixture) as run:
+            (root/'matching-policy.json').write_bytes(canonical_bytes({'schema_version':1,'mode':'other'}))
+>           with pytest.raises(ValueError):produce(run,args)
+                                           ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_matching_policy.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x787bc389c9e0>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+            max_entries=100000,max_array_bytes=1024**2,matching_input='matching',**kwargs)
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'matching_input'. Did you mean 'sampling_input'?
+
+tests/research/onchain_replication/test_matching_policy.py:29: TypeError
+_ test_component_rejects_invalid_or_unused_score_option_before_graph_access[1] _
+
+option = 1
+
+    @pytest.mark.parametrize('option',[1,'yes',True])
+    def test_component_rejects_invalid_or_unused_score_option_before_graph_access(option):
+        with pytest.raises(ValueError,match='matching'):
+>           prepare_features(None,None,None,'gin',11,{},max_entries=10,checkpoint=lambda *a:None,score_only=option)
+E           TypeError: prepare_features() got an unexpected keyword argument 'score_only'
+
+tests/research/onchain_replication/test_matching_policy.py:76: TypeError
+_ test_component_rejects_invalid_or_unused_score_option_before_graph_access[yes] _
+
+option = 'yes'
+
+    @pytest.mark.parametrize('option',[1,'yes',True])
+    def test_component_rejects_invalid_or_unused_score_option_before_graph_access(option):
+        with pytest.raises(ValueError,match='matching'):
+>           prepare_features(None,None,None,'gin',11,{},max_entries=10,checkpoint=lambda *a:None,score_only=option)
+E           TypeError: prepare_features() got an unexpected keyword argument 'score_only'
+
+tests/research/onchain_replication/test_matching_policy.py:76: TypeError
+_ test_component_rejects_invalid_or_unused_score_option_before_graph_access[True] _
+
+option = True
+
+    @pytest.mark.parametrize('option',[1,'yes',True])
+    def test_component_rejects_invalid_or_unused_score_option_before_graph_access(option):
+        with pytest.raises(ValueError,match='matching'):
+>           prepare_features(None,None,None,'gin',11,{},max_entries=10,checkpoint=lambda *a:None,score_only=option)
+E           TypeError: prepare_features() got an unexpected keyword argument 'score_only'
+
+tests/research/onchain_replication/test_matching_policy.py:76: TypeError
+_____ test_job_matching_preflight_precedes_population_production[invalid] ______
+
+fault = 'invalid'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x787bc36503e0>
+
+    @pytest.mark.parametrize('fault',['invalid','mismatch','omitted','reuse','non_mcm','later_job'])
+    def test_job_matching_preflight_precedes_population_production(fault,monkeypatch):
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        job={'operation':'reuse' if fault=='reuse' else 'produce','matching_input':'matching',
+             'plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+        if fault=='omitted':job.pop('matching_input')
+        jobs={'p':job}
+        if fault=='later_job':jobs={'first':{**job,'matching_input':None,'producer':'first'},'p':job}
+        payload={'population_inputs':{'whole':{'producer_input':'population-plan'}},'batch_plan_input':'batch','representation_jobs':jobs}
+        values={'execution_job':{'kind':'fit','payload':payload},
+            'matching':{'schema_version':1,'mode':'invalid' if fault in {'invalid','later_job'} else 'score_only'},
+            'plan':{'producers':{'p':{'matching_input':'other' if fault=='mismatch' else 'matching'},'first':{}}}}
+        class Run:
+            def read_input(self,name):return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+>       with pytest.raises(ValueError,match='matching'):execute_fit_payload(Run(),payload)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_matching_policy.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:73: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_matching_policy.test_job_matching_preflight_precedes_population_production.<locals>.Run object at 0x787d2f77e3c0>, 'population-plan')
+
+>   monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population executed before policy preflight
+
+tests/research/onchain_replication/test_matching_policy.py:94: Failed
+_____ test_job_matching_preflight_precedes_population_production[mismatch] _____
+
+fault = 'mismatch'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x787d2f651a30>
+
+    @pytest.mark.parametrize('fault',['invalid','mismatch','omitted','reuse','non_mcm','later_job'])
+    def test_job_matching_preflight_precedes_population_production(fault,monkeypatch):
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        job={'operation':'reuse' if fault=='reuse' else 'produce','matching_input':'matching',
+             'plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+        if fault=='omitted':job.pop('matching_input')
+        jobs={'p':job}
+        if fault=='later_job':jobs={'first':{**job,'matching_input':None,'producer':'first'},'p':job}
+        payload={'population_inputs':{'whole':{'producer_input':'population-plan'}},'batch_plan_input':'batch','representation_jobs':jobs}
+        values={'execution_job':{'kind':'fit','payload':payload},
+            'matching':{'schema_version':1,'mode':'invalid' if fault in {'invalid','later_job'} else 'score_only'},
+            'plan':{'producers':{'p':{'matching_input':'other' if fault=='mismatch' else 'matching'},'first':{}}}}
+        class Run:
+            def read_input(self,name):return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+>       with pytest.raises(ValueError,match='matching'):execute_fit_payload(Run(),payload)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_matching_policy.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:73: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_matching_policy.test_job_matching_preflight_precedes_population_production.<locals>.Run object at 0x787bc844e510>, 'population-plan')
+
+>   monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population executed before policy preflight
+
+tests/research/onchain_replication/test_matching_policy.py:94: Failed
+_____ test_job_matching_preflight_precedes_population_production[omitted] ______
+
+fault = 'omitted'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x787bc389ee00>
+
+    @pytest.mark.parametrize('fault',['invalid','mismatch','omitted','reuse','non_mcm','later_job'])
+    def test_job_matching_preflight_precedes_population_production(fault,monkeypatch):
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        job={'operation':'reuse' if fault=='reuse' else 'produce','matching_input':'matching',
+             'plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+        if fault=='omitted':job.pop('matching_input')
+        jobs={'p':job}
+        if fault=='later_job':jobs={'first':{**job,'matching_input':None,'producer':'first'},'p':job}
+        payload={'population_inputs':{'whole':{'producer_input':'population-plan'}},'batch_plan_input':'batch','representation_jobs':jobs}
+        values={'execution_job':{'kind':'fit','payload':payload},
+            'matching':{'schema_version':1,'mode':'invalid' if fault in {'invalid','later_job'} else 'score_only'},
+            'plan':{'producers':{'p':{'matching_input':'other' if fault=='mismatch' else 'matching'},'first':{}}}}
+        class Run:
+            def read_input(self,name):return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+>       with pytest.raises(ValueError,match='matching'):execute_fit_payload(Run(),payload)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_matching_policy.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:73: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_matching_policy.test_job_matching_preflight_precedes_population_production.<locals>.Run object at 0x787bc844e120>, 'population-plan')
+
+>   monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population executed before policy preflight
+
+tests/research/onchain_replication/test_matching_policy.py:94: Failed
+______ test_job_matching_preflight_precedes_population_production[reuse] _______
+
+fault = 'reuse'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x787bc389e7a0>
+
+    @pytest.mark.parametrize('fault',['invalid','mismatch','omitted','reuse','non_mcm','later_job'])
+    def test_job_matching_preflight_precedes_population_production(fault,monkeypatch):
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        job={'operation':'reuse' if fault=='reuse' else 'produce','matching_input':'matching',
+             'plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+        if fault=='omitted':job.pop('matching_input')
+        jobs={'p':job}
+        if fault=='later_job':jobs={'first':{**job,'matching_input':None,'producer':'first'},'p':job}
+        payload={'population_inputs':{'whole':{'producer_input':'population-plan'}},'batch_plan_input':'batch','representation_jobs':jobs}
+        values={'execution_job':{'kind':'fit','payload':payload},
+            'matching':{'schema_version':1,'mode':'invalid' if fault in {'invalid','later_job'} else 'score_only'},
+            'plan':{'producers':{'p':{'matching_input':'other' if fault=='mismatch' else 'matching'},'first':{}}}}
+        class Run:
+            def read_input(self,name):return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+>       with pytest.raises(ValueError,match='matching'):execute_fit_payload(Run(),payload)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_matching_policy.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:73: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_matching_policy.test_job_matching_preflight_precedes_population_production.<locals>.Run object at 0x787bc844dfd0>, 'population-plan')
+
+>   monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population executed before policy preflight
+
+tests/research/onchain_replication/test_matching_policy.py:94: Failed
+_____ test_job_matching_preflight_precedes_population_production[non_mcm] ______
+
+fault = 'non_mcm'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x787bc37c5350>
+
+    @pytest.mark.parametrize('fault',['invalid','mismatch','omitted','reuse','non_mcm','later_job'])
+    def test_job_matching_preflight_precedes_population_production(fault,monkeypatch):
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        job={'operation':'reuse' if fault=='reuse' else 'produce','matching_input':'matching',
+             'plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+        if fault=='omitted':job.pop('matching_input')
+        jobs={'p':job}
+        if fault=='later_job':jobs={'first':{**job,'matching_input':None,'producer':'first'},'p':job}
+        payload={'population_inputs':{'whole':{'producer_input':'population-plan'}},'batch_plan_input':'batch','representation_jobs':jobs}
+        values={'execution_job':{'kind':'fit','payload':payload},
+            'matching':{'schema_version':1,'mode':'invalid' if fault in {'invalid','later_job'} else 'score_only'},
+            'plan':{'producers':{'p':{'matching_input':'other' if fault=='mismatch' else 'matching'},'first':{}}}}
+        class Run:
+            def read_input(self,name):return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+>       with pytest.raises(ValueError,match='matching'):execute_fit_payload(Run(),payload)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_matching_policy.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:73: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_matching_policy.test_job_matching_preflight_precedes_population_production.<locals>.Run object at 0x787bc844e3c0>, 'population-plan')
+
+>   monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population executed before policy preflight
+
+tests/research/onchain_replication/test_matching_policy.py:94: Failed
+____ test_job_matching_preflight_precedes_population_production[later_job] _____
+
+fault = 'later_job'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x787bc8293e50>
+
+    @pytest.mark.parametrize('fault',['invalid','mismatch','omitted','reuse','non_mcm','later_job'])
+    def test_job_matching_preflight_precedes_population_production(fault,monkeypatch):
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        job={'operation':'reuse' if fault=='reuse' else 'produce','matching_input':'matching',
+             'plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+        if fault=='omitted':job.pop('matching_input')
+        jobs={'p':job}
+        if fault=='later_job':jobs={'first':{**job,'matching_input':None,'producer':'first'},'p':job}
+        payload={'population_inputs':{'whole':{'producer_input':'population-plan'}},'batch_plan_input':'batch','representation_jobs':jobs}
+        values={'execution_job':{'kind':'fit','payload':payload},
+            'matching':{'schema_version':1,'mode':'invalid' if fault in {'invalid','later_job'} else 'score_only'},
+            'plan':{'producers':{'p':{'matching_input':'other' if fault=='mismatch' else 'matching'},'first':{}}}}
+        class Run:
+            def read_input(self,name):return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+>       with pytest.raises(ValueError,match='matching'):execute_fit_payload(Run(),payload)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_matching_policy.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:73: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_matching_policy.test_job_matching_preflight_precedes_population_production.<locals>.Run object at 0x787d2f77e3c0>, 'population-plan')
+
+>   monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population executed before policy preflight
+
+tests/research/onchain_replication/test_matching_policy.py:94: Failed
+____ test_failed_default_checkpoint_continues_score_only_without_resampling ____
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-146/test_failed_default_checkpoint0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'e3fd38311d97f1cacb2ca3da35edbb4ca0740b83')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x787bc38a9e50>
+
+    def test_failed_default_checkpoint_continues_score_only_without_resampling(registered,monkeypatch):
+        import tradingagents.research.onchain_replication.registered_features as module
+        import tradingagents.research.onchain_replication.feature_pipeline as pipeline
+        fixture,args=setup(registered); root,spec,_=fixture
+        baseline=prepare_features(*args,max_entries=100000,checkpoint=lambda *a:None)
+        plan_path=root/'feature-plan.json'; plan=json.loads(plan_path.read_bytes())
+        plan['producers']['proposed11'].pop('matching_input'); plan_path.write_bytes(canonical_bytes(plan))
+        spec['experiments']['example-a']['inputs']['feature-plan']['sha256']=file_hash(plan_path)
+        source=commit(root,spec); original=module.prepare_features
+        def interrupted(*a,checkpoint,**kw):
+            def save(stage,context,payload):
+                checkpoint(stage,context,payload)
+                if stage=='graph_complete':raise InterruptedError('after durable completed graph')
+            return original(*a,checkpoint=save,**kw)
+        monkeypatch.setattr(module,'prepare_features',interrupted)
+        with start((root,spec,source)) as run:
+            with pytest.raises(InterruptedError):
+                prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2)
+        failed,=list((root/'research_artifacts/onchain_representations').glob('*/example-a/failed.json'))
+        failed_hash=file_hash(failed)
+        child=copy.deepcopy(spec['experiments']['example-a']); child['parent']='example-a'
+        child['inputs']['prior']={'path':str(failed.relative_to(root)),'sha256':failed_hash,'dataset':'sample'}
+        plan['producers']['proposed11']['matching_input']='matching'
+        new_plan=root/'feature-plan-b.json';new_plan.write_bytes(canonical_bytes(plan))
+        child['inputs']['feature-plan']={'path':str(new_plan.relative_to(root)),'sha256':file_hash(new_plan),'dataset':'sample'}
+        spec['experiments']['example-b']=child; source=commit(root,spec)
+        monkeypatch.setattr(module,'prepare_features',original)
+        monkeypatch.setattr(pipeline,'sample_neighborhoods',lambda *a,**k:pytest.fail('resampled'))
+        monkeypatch.setattr(pipeline,'fit_dictionary',lambda *a,**k:pytest.fail('dictionary refitted'))
+        with start((root,spec,source),experiment='example-b') as run:
+>           result,path=produce(run,args,continuation_input='prior')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_matching_policy.py:128: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x787bc8293e50>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {'continuation_input': 'prior'}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+            max_entries=100000,max_array_bytes=1024**2,matching_input='matching',**kwargs)
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'matching_input'. Did you mean 'sampling_input'?
+
+tests/research/onchain_replication/test_matching_policy.py:29: TypeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_admitted_score_only_preserves_binding_and_avoids_diagnostics
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_invalid_policy_rejected_before_claim[policy0]
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_invalid_policy_rejected_before_claim[policy1]
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_invalid_policy_rejected_before_claim[policy2]
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_invalid_policy_rejected_before_claim[policy3]
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_invalid_policy_rejected_before_claim[policy4]
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_planned_policy_cannot_be_omitted
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_policy_hash_drift_rejected_before_claim
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_component_rejects_invalid_or_unused_score_option_before_graph_access[1]
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_component_rejects_invalid_or_unused_score_option_before_graph_access[yes]
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_component_rejects_invalid_or_unused_score_option_before_graph_access[True]
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_job_matching_preflight_precedes_population_production[invalid]
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_job_matching_preflight_precedes_population_production[mismatch]
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_job_matching_preflight_precedes_population_production[omitted]
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_job_matching_preflight_precedes_population_production[reuse]
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_job_matching_preflight_precedes_population_production[non_mcm]
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_job_matching_preflight_precedes_population_production[later_job]
+FAILED tests/research/onchain_replication/test_matching_policy.py::test_failed_default_checkpoint_continues_score_only_without_resampling
+18 failed in 17.93s

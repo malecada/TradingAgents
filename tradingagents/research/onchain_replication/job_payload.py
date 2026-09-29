@@ -51,16 +51,22 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
     # Validate execution policy before population production, graph loading or
     # numerical work. A missing caller reference must not bypass a planned policy.
     from .sampling_policy import read_sampling_policy,require_sampling_arm
+    from .matching_policy import read_matching_policy,require_matching_arm
     for job in payload['representation_jobs'].values():
+        matching_input=job.get('matching_input')
         sampling_input=job.get('sampling_input')
         graph_input=job.get('graph_residency_input')
         if job['operation']=='produce':
             producer=json.loads(run.read_input(job['plan_input']))['producers'][job['producer']]
+            if producer.get('matching_input')!=matching_input:raise ValueError('producer matching policy differs before fitting')
             if producer.get('sampling_input')!=sampling_input:raise ValueError('producer sampling policy differs before fitting')
             if producer.get('graph_residency_input')!=graph_input:raise ValueError('producer graph residency policy differs before fitting')
         elif sampling_input is not None:
             raise ValueError('sampling policy is unused for completed reuse')
         if job['operation']!='produce' and graph_input is not None:raise ValueError('graph residency policy unused for completed reuse')
+        if job['operation']!='produce' and matching_input is not None:raise ValueError('matching policy unused for completed reuse')
+        matching=read_matching_policy(run,matching_input)
+        require_matching_arm(job['descriptor']['arm'],matching)
         read_graph_policy(run,graph_input)
         sampling=read_sampling_policy(run,sampling_input)
         require_sampling_arm(job['descriptor']['arm'],sampling)
@@ -135,7 +141,7 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
                         plan_input=job['plan_input'], max_entries=producer['max_entries'],
                         max_array_bytes=producer['max_array_bytes'], continuation_input=job.get('continuation_input'),
                         residency_input=job.get('residency_input'),sampling_input=job.get('sampling_input'),
-                        graph_residency_input=job.get('graph_residency_input'))
+                        graph_residency_input=job.get('graph_residency_input'),matching_input=job.get('matching_input'))
                 graph_policy=read_graph_policy(run,job.get('graph_residency_input'))
                 if graph_policy is not None:
                     manifests=registered_graph_manifests(run,producer)

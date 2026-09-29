@@ -3,6 +3,63 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Registered matching-policy verification COMPLETE — September 29, 21:55 UTC:**
+The full named offline01 passed 3,428 tests plus 97 subtests with two CUDA skips:
+standard 2,768 in 1,027.42 seconds; neural 660 in 488.13 seconds. Guard duration
+1,518.56 seconds, child exit zero, cleanup verified, peak sampled memory
+2,520,174,592 bytes, zero memory.high/max/OOM events. All 137 source bindings and
+frozen HEAD match. PID 1816851 and its cgroup are absent. Independent terminal
+review accepted this engineering increment; exact evidence is in
+`full_sources/matching-policy-2026-09-29/closure-check01.json` and REVIEW.md.
+No active job/freeze remains. Commit/push follows, then bounded complete-neighborhood
+extraction engineering. Existing configurations/capacity identities remain frozen;
+no policy is silently enabled in an empirical gate. Full-size pair workspace,
+intra-pair checkpointing, partial-prefix integration coverage and GPU parity remain
+pending. Budget stays 25/52; all 1,420 financial fits remain pending. Earlier live
+snapshots below are historical and superseded.
+
+Last live check 2026-09-29T21:30:31.299866+00:00: exact monitor/start
+ticks and cgroup are present; all 137 bindings and frozen HEAD match. No guard
+limit reason or memory.high/max/OOM event. Verification remains in progress;
+no terminal result or new execution is inferred.
+
+**ACTIVE registered matching-policy offline01 — 2026-09-29T21:14:01.036893+00:00:**
+Focused checks passed 55 tests in green01 and 48 overlapping tests in green02,
+including positive job delivery, completed-graph continuation and graph residency.
+Independent review accepted the source and finite verification launcher. A single
+full named offline run is active; monitor PID 1816851, start ticks 4468563, unit
+`onchain-replication-ad3c3d76733d47deabe978259a56ed7c.service`, tool session 96300.
+Receipts: `full_sources/matching-policy-2026-09-29/offline01/`.
+Freeze all 137 entries in source-bindings.json and HEAD
+9a5ef56ed93610c545e1ea55670a179c01e2ce96 while this owner runs.
+Admission observed 10,051,522,560 bytes available RAM and 27,404,840,960 bytes
+free disk. Limits remain 3 GiB max/2.75 high, zero swap, 3 GiB host reserve,
+6 GiB startup, 10 GiB disk floor, two-CPU affinity and 3,600 seconds.
+Do not dispatch a duplicate, edit frozen files or move HEAD during this run.
+
+Next safe action: inspect this exact guard/log, close terminal counts, cleanup
+and source hashes, obtain independent terminal review and commit/push the reviewed
+increment. Then continue bounded full-neighborhood/pair capacity and checkpoint
+engineering; prepare/review cumulative budget and exact resource registrations
+before any empirical work. Partial MCM-prefix switching is not specifically
+covered by registered integration tests; completed-graph/sample/dictionary reuse
+is. GPU parity and full-size feasibility remain unresolved. Both earlier jobs
+are complete and preserved in pushed commit 9a5ef56e. Budget remains 25/52;
+all 1,420 financial fits pending. No empirical or storage job is active.
+
+**Registered matching-policy integration underway — September 29, 21:12 UTC:**
+The completed optional consumer and cold-storage closure were committed and
+pushed as 9a5ef56e. A separately hash-admitted score-only execution policy is
+implemented in matching_policy.py, feature_pipeline.py, registered_features.py
+and job_payload.py. Frozen scientific configurations remain unchanged. Red01
+retains 18 expected missing-feature failures; focused verification and independent
+source review are underway in `full_sources/matching-policy-2026-09-29/`.
+This increment is not yet broadly verified or released. No empirical job is
+running. Next safe action: finish focused tests/review, freeze exact sources and
+launch one finite guarded named offline verification after fresh capacity checks.
+Then continue full-neighborhood/pair capacity and checkpoint engineering. Budget
+remains 25/52, all 1,420 financial fits pending. The prior jobs remain terminal.
+
 **Both overnight jobs COMPLETE — September 29, 21:05 UTC:**
 The optional score-only matching increment passed the full named offline profile:
 2,768 standard tests plus 97 subtests, and 641 neural tests with two CUDA skips

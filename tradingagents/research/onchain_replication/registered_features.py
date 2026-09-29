@@ -15,6 +15,7 @@ from .serialization import dictionary_from_record
 from .provenance import canonical_bytes,digest,file_hash,durable_mkdir
 from .feature_residency import FixedFeatureMap,read_feature_policy
 from .sampling_policy import read_sampling_policy,require_sampling_arm
+from .matching_policy import read_matching_policy,require_matching_arm
 from .graph_residency import read_graph_policy,registered_graph_manifests,MappedGraphPopulation
 from .mapped_graph import _MappedGraphSnapshot
 
@@ -29,12 +30,15 @@ def representation_descriptor(graphs,examples,fold,arm,seed,configs):
 
 
 def prepare_registered_features(run,producer,graphs,examples,fold,arm,seed,configs,*,
-        plan_input,max_entries,max_array_bytes,continuation_input=None,residency_input=None,sampling_input=None,graph_residency_input=None):
+        plan_input,max_entries,max_array_bytes,continuation_input=None,residency_input=None,sampling_input=None,graph_residency_input=None,matching_input=None):
     if not isinstance(run,ResearchRun):raise ValueError('admitted representation run required')
     run._active();run._check_source()
     plan=json.loads(run.read_input(plan_input))
     if plan.get('schema_version')!=1 or producer not in plan['producers']:raise ValueError('unregistered representation producer')
     item=plan['producers'][producer]
+    if item.get('matching_input')!=matching_input:raise ValueError('registered matching policy input differs')
+    matching=read_matching_policy(run,matching_input)
+    require_matching_arm(arm,matching)
     if item.get('graph_residency_input')!=graph_residency_input:raise ValueError('registered graph residency input differs')
     graph_policy=read_graph_policy(run,graph_residency_input)
     if graph_policy is not None:
@@ -104,6 +108,7 @@ def prepare_registered_features(run,producer,graphs,examples,fold,arm,seed,confi
         journal=FeatureJournal(root/run.admission.experiment_id,owner,required_graphs=descriptor['required_graphs'],parent=parent)
         _immutable(journal.directory/'claim.json',{'owner':owner,'descriptor':descriptor,'plan_input':plan_input,
                    'binding_output':output,'registration_sha256':run.admission.registration_sha256,'residency_input':residency_input,
+                   **({'matching_input':matching_input,'matching_policy_sha256':run.admission.inputs[matching_input]['sha256']} if matching is not None else {}),
                    **({'sampling_input':sampling_input,'sampling_policy_sha256':run.admission.inputs[sampling_input]['sha256']} if sampling is not None else {}),
                    **({'graph_residency_input':graph_residency_input,'graph_residency_policy_sha256':run.admission.inputs[graph_residency_input]['sha256']} if graph_policy is not None else {})})
     try:
@@ -113,7 +118,7 @@ def prepare_registered_features(run,producer,graphs,examples,fold,arm,seed,confi
                     or journal.directory.stat().st_dev!=run.admission.root.stat().st_dev):
                 raise ValueError('sampling scratch must stay on registered root filesystem')
             sampling_options={'weight_workspace':journal.directory/'sampling-weights','max_weight_bytes':sampling['max_weight_bytes']}
-        result=prepare_features(graphs,examples,fold,arm,seed,configs,max_entries=max_entries,checkpoint=journal,resume_state=state,retain_features=residency is None,max_array_bytes=max_array_bytes,**sampling_options)
+        result=prepare_features(graphs,examples,fold,arm,seed,configs,max_entries=max_entries,checkpoint=journal,resume_state=state,retain_features=residency is None,max_array_bytes=max_array_bytes,score_only=matching is not None,**sampling_options)
         state=None
         path=journal.seal('complete')
         # Re-read persisted bytes before publishing the binding used by fitting.
