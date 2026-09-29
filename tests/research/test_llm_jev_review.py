@@ -90,7 +90,8 @@ def fill(text: str, rows: list[dict], verdicts: dict[str, str], same: str = "Y")
             kind = kinds[int(head.group(1))]
             if kind in verdicts:
                 block = block.replace("- VERDICT: \n", f"- VERDICT: {verdicts[kind]}\n")
-            block = re.sub(r"(?m)^(- SAME \([a-z_]+\):) $", rf"\1 {same}", block)
+            block = re.sub(r"(?m)^(- SAME \([a-z_]+\):) $",
+                          lambda m: f"{m.group(1)} {same}", block)
         out.append(block)
     return "".join(out)
 
@@ -165,6 +166,25 @@ def test_check_error_counts_real_changes():
     _, _, stats = apply_review(rounds, jev, rows, key, filled)
     assert stats["check_rows"] == 20
     assert stats["check_error_rate"] == 1.0
+
+
+def test_parse_tolerates_markdown_backslash_escaping(scenario):
+    """A markdown editor may leave stray leading backslashes on VERDICT/SAME values, and may
+    escape underscores inside a NEITHER label's class name (e.g. unlock_emission). Both must
+    be tolerated: the sheet is unescaped before block-splitting, and any leftover leading
+    backslash is stripped from the extracted VERDICT/SAME values."""
+    rounds, jev = scenario
+    rows, key = build_review(rounds, jev)
+    text = fill(render_markdown(rows), rows,
+               {"class": "NEITHER: unlock\\_emission/Token", "check": "\\NO EVENTS"}, same="\\Y")
+    filled = parse_filled(text, rows)
+    klass = next(r for r in rows if r["kind"] == "class")
+    assert filled[klass["row"]]["verdict"] == "NEITHER"
+    assert filled[klass["row"]]["labels"] == [{"class": "unlock_emission", "asset": "Token"}]
+    check_row = next(r for r in rows if r["kind"] == "check")
+    assert filled[check_row["row"]]["verdict"] == "NO EVENTS"
+    entity_row = next(r for r in rows if r["kind"] == "entity")
+    assert filled[entity_row["row"]]["same"] == {"hack": True}
 
 
 def test_parse_normalizes_case_and_yes_no(scenario):

@@ -173,6 +173,7 @@ def render_markdown(rows: list[dict]) -> str:
 
 
 def parse_filled(text: str, rows: list[dict]) -> dict[int, dict]:
+    text = text.replace("\\_", "_")
     blocks = {}
     for block in re.split(r"(?m)^(?=### row )", text):
         head = re.match(r"### row (\d+)", block)
@@ -188,7 +189,7 @@ def parse_filled(text: str, rows: list[dict]) -> dict[int, dict]:
         entry = {"verdict": None, "labels": None, "same": {}}
         if row["kind"] != "entity":
             match = re.search(r"(?m)^- VERDICT:[ \t]*(.*)$", block)
-            raw = (match.group(1) if match else "").strip()
+            raw = (match.group(1) if match else "").strip().lstrip("\\").strip()
             upper = raw.upper()
             allowed = CLASS_VERDICTS if row["kind"] == "class" else CHECK_VERDICTS
             if upper in allowed:
@@ -214,7 +215,7 @@ def parse_filled(text: str, rows: list[dict]) -> dict[int, dict]:
                                 f"or 'NEITHER: labels'")
         for pair in row["same"]:
             match = re.search(rf"(?m)^- SAME \({re.escape(pair['class'])}\):[ \t]*(.*)$", block)
-            answer = (match.group(1) if match else "").strip().upper()
+            answer = (match.group(1) if match else "").strip().lstrip("\\").strip().upper()
             if answer in ("Y", "YES"):
                 entry["same"][pair["class"]] = True
             elif answer in ("N", "NO"):
