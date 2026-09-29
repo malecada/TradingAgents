@@ -67,3 +67,5 @@ measurement supplies an uncertain11709803463byte planning estimate. Four inactiv
 failed transport archives (1768206336bytes) copied/fsynced/hash-verified to Data,
 original paths preserved as symlinks; no raw/graph/SQLite/claim bytes changed.
 Final fresh admission/resource checks and committed source precede empirical launch.
+
+September29 largest-week successor03 completed8/8cells,8,841,688raw rows,4,685,413admitted. Independent saved-array verification passed:2,764,221nodes/3,504,159edges,all5hashes/canonicalidentity and zero node-feature errors. Finite verification47.91s/child0/cleanup/zeroevents; pilot30.76min/3312high throttles/zero maxOOM.36compact closure copies retained; original bodies untouched. Budget25/52;all1420fits pending.109requirement mapping retains7prior+8successor receipts and94remaining without changing historical dispositions. No activejob; exact next engineering and resource-admission blockers in current STATE/readiness.

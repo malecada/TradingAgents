@@ -1,0 +1,42 @@
+{
+  "environment": {
+    "SQLITE_TMPDIR": null,
+    "TMPDIR": null
+  },
+  "pragma_temp_store_directory": [],
+  "sqlite_version": "3.50.4",
+  "workspace_device": 66310,
+  "candidates": [
+    {
+      "path": "/var/tmp",
+      "resolved": "/var/tmp",
+      "exists": true,
+      "writable": true,
+      "device": 66310
+    },
+    {
+      "path": "/usr/tmp",
+      "resolved": "/usr/tmp",
+      "exists": false,
+      "writable": false,
+      "device": null
+    },
+    {
+      "path": "/tmp",
+      "resolved": "/tmp",
+      "exists": true,
+      "writable": true,
+      "device": 66310
+    },
+    {
+      "path": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+      "resolved": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+      "exists": true,
+      "writable": true,
+      "device": 66310
+    }
+  ],
+  "all_writable_candidates_on_guarded_volume": true,
+  "reference": "https://www.sqlite.org/tempfiles.html#temporary_file_storage_locations",
+  "scope": "Observed service environment and built-in Unix VFS directory candidates; repeat fresh before empirical launch; no empirical database opened."
+}

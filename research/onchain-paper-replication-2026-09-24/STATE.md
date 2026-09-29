@@ -3,55 +3,138 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Saved graph verified — September29:** independent saved-array verification
+completed once under a finite guard:47.91seconds,child0,verified cleanup,
+264,568,832sampled peak bytes and zero memory events. The measured memory is not
+a cold-cache requirement. All five array SHA-256 values and canonical graph
+identity match;2,764,221nodes/3,504,159directed edges,721,044,472array bytes.
+Independent four-column node feature recomputation has zero absolute error;
+positive integer edge counts sum4,685,413admitted transactions. Registered
+compact plan/config/mapping/wrapper coverage was freshly hashed and linked.
+No raw transaction/SQLite replay, new sample, fit or empirical claim occurred.
+Original exclusion classification and raw uniqueness remain producer evidence.
+Verification and independently accepted review:
+`full_sources/graph-verification-2026-09-29/`.
 
-**September29 prelaunch checkpoint — cumulative extension verified:** corrected
-`cumulative_budget_extension` preserves old certificate metadata. Named offline02
-completed3293tests plus97subtests,2CUDA skips; guard1571.46seconds,2,569,056,256peak
-sampled bytes,child0,verified cleanup and zero memory-limit events. All seven
-source bindings match. The earlier namespace-collision failure and stopped
-partial offline01 remain preserved. Independent review closed the material
-finding and full-suite prerequisite. No verification or empirical job is active.
-Evidence: `full_sources/budget-extension-2026-09-29/`.
+**No active job remains from this increment.** The completed pilot's36compact
+receipt files were copied byte-exactly under
+`full_sources/resource-successor-03/closure/`; original arrays and SQLite stay
+untouched locally. Independent metadata closure is accepted. No external graph
+body backup is implied. Budget remains25of52; the remaining27allowances remain
+allocated to12body/15fit batches, so another empirical resource claim needs a
+reviewed allocation amendment. All1,420financial fits remain pending.
 
-The exact52ceiling has independent budget-only acceptance and a conditionally
-reviewed gate at `full_sources/resource-successor-03/`. No claim has adopted it:
-24claims are spent and all1420fits remain pending. The successor binds the
-unchanged parent, seven original source days,8,841,688rows and eight cells.
-A completed250,000row synthetic storage probe supports an explicitly uncertain
-11,709,803,463byte planning estimate including30%/256MiB allowances; this is not
-an upper bound. Fresh committed admission, service temp-volume, exclusive-owner,
-9GiB startup RAM and20GiB-plus-projection disk checks remain before launch.
+**Next safe work:** mapped-sampler production integration and graph-level parity,
+raw graph residency reduction, and bounded faithful oversized-neighborhood/
+matching engineering. The10,000-node neighborhood and4,000,000assignment-entry
+ceilings remain frozen until an explicit prospective resource amendment.
+Then register finite full-size MCM/neural resource measurements, including any
+activation-checkpoint setting change, before financial execution. Retained
+closed samples/dictionaries/graphs must be reused only under exact verified
+bindings; terminal identities must never be relaunched. The original109resource
+requirements now have7prior and8successor completed receipts;94still require
+completion or explicit evidence admission. This map does not rewrite the old
+7complete/102unavailable ledger. Exact mapping and requirements:
+`full_sources/resource-next-readiness-2026-09-29/`. Six remaining pilot graph
+weeks, full model feasibility, both assets/history and fund cohorts stay in scope.
+`review/completion-interim-11.json` preserves all acceptance statuses and false
+completion flags; numerical agreement remains unevaluated.
 
-**Local space preservation:** four inactive failed-transfer archives totaling
-1,768,206,336bytes were copied, fsynced and hash-verified on the Data volume,
-then their original paths were atomically replaced with links to the verified
-copies. All raw sources, graphs, SQLite databases and historical receipts remain
-unchanged. Relocation guard completed25.59seconds,child0/verified cleanup;
-13,488memory.high events (throttling), zero max/OOM events. Root free afterward
-33,662,976,000bytes; Data22,207,119,360bytes. This is local preservation, not a new
-external backup. Evidence and destination mapping:
+**COMPLETE graph resource pilot — checked September29 at13:04UTC:**
+`eth-paper-graph-resource-20260929-03` closed at12:26:31UTC with all eight cells
+complete (seven daily partitions and one weekly graph), zero unavailable cells.
+All8,841,688raw rows are accounted for:4,685,413admitted transactions,
+265,309failed,6,598null-recipient and3,884,368zero-value exclusions.
+The graph was published; independent bounded graph-content/source verification
+is still required before downstream use. No model fitting occurred.
+
+Final guard:1845.39seconds (30.76minutes),5,368,791,040sampled peak bytes,
+3,312memory.high throttles,zero max/OOM events,child0 and verified cleanup.
+Final recorded free workspace disk30,706,520,064bytes. Observer reports complete,
+all cells complete and empty cgroup; the cgroup is absent at this check.
+Observer bindings to terminal and final guard hashes were checked. No pilot
+process remains in its owned cgroup. Budget remains25of52; all1,420fits pending.
+Terminal: `research_runs/eth-paper-graph-resource-20260929-03/complete.json`.
+Resource closure: corresponding `research_artifacts/onchain-paper-replication-2026-09-24/runs/`
+job directory, `guard/final.json` and `observer.json`.
+
+Next safe action: preserve compact closure evidence and independently verify
+published graph arrays, canonical graph hash, source coverage and exclusions
+under a finite resource guard. Then review remaining original9week/109cell
+resource requirements and MCM/neural feasibility before any financial fit.
+A successful graph does not establish full-model memory feasibility or complete
+Task8/C01–C18. This terminal identity must never be relaunched. The running
+snapshot below is historical and superseded by this completed checkpoint.
+
+**ACTIVE finite graph resource pilot — checkpoint 2026-09-29T12:01:03.681140+00:00:**
+`eth-paper-graph-resource-20260929-03` is running under its single recorded owner.
+Supervisor PID1526230/start ticks1120613; monitor PID1527853/start ticks1121125.
+Source/design HEAD is `ebe900afda7bb7d06cb2c890ca0c7ff607d0d870`, committed
+and pushed. Keep HEAD and all gated source/input bytes unchanged while active.
+Registration: `full_sources/resource-successor-03/gate-v2.json`, SHA-256
+`0be5bcccea82d5ee05d718bd38f997c4a677bf79ef2caafb8154d20c9e7dcdfa`.
+The new claim binds the original largest training week (July25–August1,2022),
+seven source days,8,841,688raw rows and eight cells. No old identity was rerun.
+
+Latest guard snapshot: phase `running`, elapsed316.54seconds,
+sampled peak2,461,761,536bytes,
+root free33,043,148,800bytes, no recorded limit reason.
+Memory event counters: {"high": 0, "low": 0, "max": 0, "oom": 0, "oom_group_kill": 0, "oom_kill": 0}.
+These changing observations do not establish a completed graph. No terminal
+claim or graph publication has been verified. Limits remain6GiB memory.max,
+5GiB memory.high,zero swap,two-CPU affinity,3GiB host reserve,20GiB disk floor
+and28,800seconds. Startup required9GiB available RAM and20GiB plus the explicit
+11,709,803,463byte uncertain disk planning estimate; the latter is not an upper bound.
+
+**Budget and admission:** the independently accepted cumulative extension is
+now adopted. Consumption is25of52 (17historical plus eight current claims),
+including the active successor; failures remain spent. Remaining27allocations
+retain12body and15fit batches. All1,420financial fits remain pending. Original
+family metadata and both terminal failed pilot identities remain unchanged.
+The first gate's missing grandfather caused metadata-only refusal without a claim
+or launch reservation; gate-v2 preserves and corrects it. The later pre-dispatch
+memory assertion also created no identity. Its retained receipt recorded a
+post-refusal value, not the missing instantaneous failing reading; no failure-time
+memory value is inferred. Independent live review verifies exact ownership,
+70source pins,30compact inputs,ancestry and budget:
+`full_sources/resource-successor-03/LIVE_REVIEW.md`.
+
+**Verification completed before launch:** corrected cumulative-extension offline02
+passed3,293tests plus97subtests,with2CUDA skips; guard1571.46seconds,
+2,569,056,256peak sampled bytes,child0,verified cleanup and zero memory-limit
+events. All seven source bindings match. Earlier collision failure and stopped
+partial offline01 remain preserved. Evidence:
+`full_sources/budget-extension-2026-09-29/`. Fresh temp-volume03 and successful
+admission-preflight-02 bind the dispatched source and same guarded filesystem.
+
+**Local preservation:** four inactive failed-transfer archives totaling
+1,768,206,336bytes were copied,fsynced and hash-verified on the Data volume;
+original paths now link to those verified copies. Raw sources,graphs,SQLite
+and historical receipts remain unchanged. Destination:
+`/home/malecada/Data/onchain-research/preserved-failed-transports-2026-09-29-01/`.
+Keep that volume mounted and those copies protected. This is local preservation,
+not a new external backup. Relocation completed with13,488memory.high throttles
+and zero max/OOM events. Evidence:
 `storage/graph-preservation-preparation-2026-09-29/relocation-complete.json`.
-Do not remove the destination while those original paths depend on it.
+The two completed graphs have a12file/1,037,095,664byte metadata-only inventory;
+no graph upload occurred. Smaller reviewed backup batches/streaming or additional
+scratch capacity are still needed; the interrupted SQLite needs chunked
+preservation. Do not compete with the active pilot's reserved root capacity.
 
-The two completedgraph stores have a12file/1,037,095,664byte metadata-only backup
-inventory; no graph upload has happened. After relocation, the former512MiB
-archive-plus-recovery staging plan does not fit above the Data-volume20GiB floor;
-it requires a reviewed smaller-batch/streaming arrangement or additional capacity.
-The larger interrupted SQLite likewise needs chunked preservation. C16 stays
-partial. All13tasks and the broader paper scope remain required.
-
-Engineering/source preparation was committed and pushed as86796bf6. The first
-metadata-only admission refused gate.json because its parent ancestor was omitted;
-no claim or launch reservation was created. That gate and failed preflight are
-preserved. Gate-v2.json adds the original grandfather experiment verbatim, with
-preflight-v2.py pointing to it. The original parent and new scientific/resource
-contract stay unchanged. Review and committed admission of this correction remain
-required; no closed identity is retried.
-
-Next safe action: commit/push the reviewed gate-v2 correction, perform fresh
-checks, then start the new finite graph pilot once if admitted. Preserve
-its source HEAD and all source/input bytes throughout execution. No old identity
-may be relaunched. The generic runbook specifies status and failure reconciliation.
+**Next safe action:** inspect compact receipts through the existing owner only:
+`research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260929-03/`
+(owner.json,guard/live.json,guard/final.json,observer.json), lifecycle
+`research_runs/eth-paper-graph-resource-20260929-03/`, and corresponding `sources/eth-paper-graph-resource-20260929-03/`
+sealed source boundaries. Do not reopen active SQLite or arrays for status.
+Do not relaunch this identity. If interrupted, prove owner/cgroup death before
+using the original source/gate with `--mode reconcile`; preserve all partials and
+eight dispositions. After success, independently verify graph/source contents
+under a bounded guard before downstream use. Follow
+`full_sources/resource-successor-03/RUNBOOK.md`. Commit/push the current checkpoint
+and compact closure evidence only after the active job closes, retaining its HEAD
+until then. The full original9week/109cell pilot, MCM/neural feasibility, broader
+asset/history/comparison coverage and all1,420fits remain required. C01–C18 are
+not complete; completion-interim-10 is the latest prelaunch assessment.
 
 **September29 feature-residency increment verified:** completed fixed features
 remain as verified disk references and load once per unique batch graph; streamed

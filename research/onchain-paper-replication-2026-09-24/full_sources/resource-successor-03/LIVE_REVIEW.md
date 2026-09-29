@@ -1,0 +1,23 @@
+# Independent active-claim review
+
+Snapshot: September 29, 2026, **11:58:47 UTC**. The successor is **active**, not complete. Review was read-only except this new report: no gated input/source, HEAD, raw body, SQLite or array was changed or opened; no test, new job or network request was run.
+
+## Source, ancestry and budget
+
+Claim `eth-paper-graph-resource-20260929-03` has SHA-256 **`75c6e406624a24ab575fdf5fc9702054e8113726ff98e9747fc1f4de52cab3d4`**, started at `2026-09-29T11:56:01.749241+00:00`. Source and design_source both equal **`ebe900afda7bb7d06cb2c890ca0c7ff607d0d870`**, which is also the inspected local HEAD. The committed gate-v2 blob hashes to **`0be5bcccea82d5ee05d718bd38f997c4a677bf79ef2caafb8154d20c9e7dcdfa`** and matches the claim registration binding. The experiment equals its registered object. All **70 source pins** match both committed source blobs and current files; all **30 compact input pins** match current bytes. Remote push success was reported separately and was not independently queried here.
+
+The registered ancestry is `03 → 02 → original → None`; the two ancestors retain their original experiment definitions. The base family still records ceiling 51 and prior_attempts 17. The new claim separately records effective_attempt_budget **52** and carries the exact reviewed cumulative extension. Metadata enumeration finds eight current same-mechanism claims: five previously complete, two previously failed and this one active. Cumulative consumption is therefore **17 + 8 = 25 of 52**, with 27 slots retaining their allocation to 12 body and 15 fit batches. Neither earlier failure was refunded. This review does not change any financial-fit or original pilot denominator.
+
+## Dispatch and ownership
+
+The retained preflight-02 command returned 0 and binds this source/gate with effective ceiling 52, observed startup available memory **9,723,990,016 bytes** and free disk **35,292,008,448 bytes**, above the declared planning requirement **33,184,639,943 bytes**. Its referenced temp-volume03 final hash is `1fcbd6e9d37353a4982d9f08b9e609c2f7746fcde82c795f2cdd48cb76a71c0f`; that receipt closes complete, child 0, cleanup verified, with the expected check command/cwd. Its saved SQLite candidate check again places all writable candidates on guarded device 66310.
+
+The single dispatch receipt identifies supervisor **1526230**, start ticks **1120613**. Current `/proc` metadata matches those ticks. Owner.json and guard owner_identity agree on monitor **1527853**, ticks **1121125**, the same supervisor/source/experiment and nonce `34a3b3ea7e194c2ca53cc8c3b6d4e51c`. The monitor's current parent PID is the recorded supervisor. The named guard cgroup is `onchain-replication-ad746ca1177c45c08c0ba51cc6c7e9f1.service`; it contains the resource child wrapper **1529491** and its one worker **1529494**, whose command uses this exact experiment, gate and source. This verifies the recorded owned process tree; it is not an exhaustive audit of every unrelated host process.
+
+The earlier dispatch-refusal-01 is retained and reports no process, claim or reservation created. Its saved available-memory number (**9,836,908,544**) is actually above its saved required number (**9,663,676,416**), so that observation alone does **not** reconstruct the reported instantaneous failed assertion; the failed instantaneous reading was not captured in this receipt. The subsequent three recorded samples are each above 9 GiB plus 128 MiB and precede the successful single dispatch. This qualification preserves the refusal evidence without inventing a failing value or counting a nonexistent extra claim.
+
+## Active phase and limits
+
+At the stated snapshot the guard is `running`, with **179.843 seconds** elapsed, **1,765,490,688 bytes** current and sampled peak memory, and zero recorded high/max/OOM events. Readback of the owned cgroup is memory.max **6,442,450,944**, memory.high **5,368,709,120**, memory.swap.max **0**. Saved live workspace free space is **33,970,679,808 bytes**. These are changing observations, not future guarantees or completion evidence.
+
+Neither complete.json nor failed.json exists for the claim, no guard final exists at the reviewed phase, and no source result.json exists. No completed source count, graph publication, row reconciliation or successful full-week fit is inferred from a living worker or growing memory. Continue observation through the existing owner only; do not relaunch the identity, mutate pinned code/inputs or move HEAD while active. Final claim/cell/source/resource closure and independent graph verification remain required before any downstream use.
