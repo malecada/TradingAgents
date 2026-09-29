@@ -1,6 +1,7 @@
 """Frozen boundary objects for the independently specified pipeline."""
 from __future__ import annotations
 from dataclasses import dataclass, fields
+from itertools import pairwise
 from types import MappingProxyType
 from typing import Mapping
 import numpy as np
@@ -77,6 +78,16 @@ class ArtifactKey:
     weight_hash: str
 
 
+def _duplicate_edges(edges):
+    # Sorting retains a linear integer index, not one Python tuple per edge.
+    # Overlap one endpoint pair across blocks so boundary duplicates are caught.
+    order=np.lexsort((edges[1],edges[0]))
+    for start in range(0,len(order)-1,65536):
+        block=edges[:,order[start:start+65537]]
+        if np.any(np.all(block[:,1:]==block[:,:-1],axis=0)):return True
+    return False
+
+
 def validate_graph(g: GraphSnapshot) -> None:
     if g.asset not in {'ETH', 'BTC'}:
         raise ValueError('unsupported asset')
@@ -88,7 +99,7 @@ def validate_graph(g: GraphSnapshot) -> None:
     for value in g.source_hashes:
         require_hash(value)
     n = len(g.node_ids)
-    if any(not isinstance(x, str) or not x for x in g.node_ids) or len(set(g.node_ids)) != n:
+    if any(not isinstance(x, str) or not x for x in g.node_ids) or any(a==b for a,b in pairwise(sorted(g.node_ids))):
         raise ValueError('duplicate or invalid node identities')
     if g.node_features.ndim != 2 or g.node_features.shape[0] != n:
         raise ValueError('node feature dimensions')
@@ -101,7 +112,7 @@ def validate_graph(g: GraphSnapshot) -> None:
         raise ValueError('edge feature dimensions')
     if e and (g.edge_index.min() < 0 or g.edge_index.max() >= n):
         raise ValueError('invalid endpoint')
-    if len(set(map(tuple, g.edge_index.T))) != e:
+    if _duplicate_edges(g.edge_index):
         raise ValueError('duplicate aggregated edges')
     for array in (g.node_features, g.edge_features):
         if not np.issubdtype(array.dtype, np.number) or not np.isfinite(array).all():

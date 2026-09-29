@@ -34,13 +34,24 @@ and `full_sources/bounded-graph-hash-2026-09-29/`. Checkpointing remains off in
 frozen configs; GPU parity and full-sized memory feasibility remain unverified.
 Initial review-discovered device/RNG defect and stopped neural01 are preserved.
 
-**Current engineering work:** exact duplicate-validation memory reduction, with
-red evidence in `full_sources/graph-validation-memory-2026-09-29/`. A budget
-audit confirms24/51used and all27remaining claims allocated to12body captures
-and15fit batches; new graph/resource claims need prospective amendment.
-Partial database continuation, full-fold residency, large-neighborhood matching,
-working storage and measured resource admission remain pending. Completed backup
-and historical empirical identities stay closed; all1,420financial fits pending.
+**September29 duplicate validation verified:** exact sorted node/edge checks
+remove full Python identity/edge sets; graph contents and canonical identities
+are unchanged.81 focused tests passed with independent review. The200,000-edge
+synthetic diagnostic reduced peak traced duplicate-check allocations29.18MB to
+3.70MB, excluding graph construction and all other pipeline work. Evidence:
+`full_sources/graph-validation-memory-2026-09-29/`. Sorting still uses linear
+memory; this is not full-size feasibility. All engineering guards are terminal
+with verified cleanup; no active engineering or empirical job remains.
+
+**Admission checkpoint:** independent compact reconstruction confirms24/51used;
+all27remaining slots are allocated to12body captures and15fit batches. No pending
+concrete graph/resource experiment identity exists. Before a new pilot, prepare
+and review an allocation amendment and exact successor/source/resource contract;
+merely raising the family's budget field fails current lineage admission.
+`full_sources/resource-admission-next-2026-09-29/REVIEW.md` records the ledger,
+original reusable graph hashes, missing legacy coverage proofs and requirements.
+All1,420financial fits remain pending; full paper scope/numerical agreement are
+incomplete/unevaluated. Completed backups and terminal identities stay closed.
 
 - **No active empirical jobs.** `eth-paper-resource-pilot-20260924-02` is
   terminal FAILED; never relaunch this identity. The local systemd journal
@@ -334,19 +345,28 @@ node-week. GPU device transfer is not yet wired into the admitted fit path; the
 old neural capacity estimates are not measured VRAM requirements. Acceptance statuses,
 financial fit counts and the24/51claim accounting remain unchanged.
 
-Next safe action: continue ordinary implementation of registered raw-to-graph
-production and bounded graph/model memory integration using the concurrent
-readiness findings. The full retained-raw recovery index is complete; never
-relaunch09 or any closed transfer identity. No backup or empirical job is active.
-No recurring assistant wakeup is configured. Full raw-to-graph admission, compute/local scratch and
-all1,420financial fits remain separate and pending. No empirical job is active.
-Further empirical admission needs a feasible host/storage contract, complete
-source/graph/population accounting and a reviewed cumulative allocation for any
-successor. The user supplied the existing Storage Box; feasible compute and local scratch
-remain unresolved. No additional paid resource, author contact or new experiment
-is assumed.
-Original fund cohort/vintage remains a separate full-paper blocker. Keep every
-closed identity, failed attempt, raw member and spent window preserved.
+Next safe action: continue bounded full-fold graph/feature loading, journal
+verification without duplicate resident arrays, and exact sampler residency work.
+The registered graph producer, activation checkpoint option, canonical hash
+streaming and duplicate-validation reductions are implemented; do not recreate
+those components or rerun their closed jobs. A separate reviewed successor-copy
+protocol is still needed for partial SQLite prefixes. Large-neighborhood matching
+and the largest-week resource measurement remain unresolved.
+
+Before empirical execution, bind the tested source and unchanged scientific
+criteria (or explicit prospective execution amendment), complete source/graph/
+population accounting, a reviewed cumulative allocation and feasible working
+storage/RAM/wall contract. Old graphs need reviewed coverage wrappers rather than
+rebuilding to obtain new-format metadata. Population assembly can be registered
+inside a fit claim; no gratuitous population-only claim is needed. Exact next
+admission requirements are in `full_sources/resource-admission-next-2026-09-29/`.
+
+No backup, verification or empirical job is active. No recurring assistant wakeup
+is configured. The Storage Box preserves raw data; it does not establish fast
+working-disk or full-model capacity. Original fund cohort/vintage and missing
+BTC/earlier ETH history remain separate full-paper requirements. No paid resource,
+author/provider contact, trading or deployment is authorized. Preserve all raw
+members, failed attempts, spent windows and completed outputs.
 
 ## Historical checkpoints (preserved; newer entries supersede older statements)
 

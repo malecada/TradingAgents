@@ -1,0 +1,33 @@
+F........                                                                [100%]
+=================================== FAILURES ===================================
+_______ test_valid_graph_does_not_allocate_python_identity_or_edge_sets ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a747e73b360>
+
+    def test_valid_graph_does_not_allocate_python_identity_or_edge_sets(monkeypatch):
+        from tradingagents.research.onchain_replication import contracts
+        g=fixture(nodes=257,edges=66049)
+        def forbidden(*args,**kwargs):
+            raise AssertionError('whole graph Python set allocation')
+        monkeypatch.setattr(contracts,'set',forbidden,raising=False)
+>       validate_graph(g)
+
+tests/research/onchain_replication/test_graph_validation_memory.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/contracts.py:91: in validate_graph
+    if any(not isinstance(x, str) or not x for x in g.node_ids) or len(set(g.node_ids)) != n:
+                                                                       ^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (('node-Č-"-\\-\n-0', 'node-Č-"-\\-\n-1', 'node-Č-"-\\-\n-2', 'node-Č-"-\\-\n-3', 'node-Č-"-\\-\n-4', 'node-Č-"-\\-\n-5', ...),)
+kwargs = {}
+
+    def forbidden(*args,**kwargs):
+>       raise AssertionError('whole graph Python set allocation')
+E       AssertionError: whole graph Python set allocation
+
+tests/research/onchain_replication/test_graph_validation_memory.py:14: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_graph_validation_memory.py::test_valid_graph_does_not_allocate_python_identity_or_edge_sets
+1 failed, 8 passed in 0.39s
