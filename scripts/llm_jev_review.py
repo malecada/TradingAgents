@@ -12,22 +12,46 @@ import re
 
 from llm_event_xs_p0_score import norm_asset
 from llm_event_xs_truth import match_events, parse_labels
-from llm_jev_questions import CLASSES, build_state
+from llm_jev_questions import CLASS_DEFINITIONS, CLASSES, GENERAL_RULES, V2_RULES, build_state
 
 SEED = 20260929
 N_CHECKS = 20
 CLASS_VERDICTS = frozenset({"A", "B", "NO EVENTS"})
 CHECK_VERDICTS = frozenset({"BOTH", "NO EVENTS"})
-HEADER = """# Jev P0 blind review — llm-jev-p0-label-20260929
 
-Judge only from the article text shown. Do not open any file under `research_runs/llm-jev-p0-label-20260929/outputs/` until the review is committed.
-Classes: hack, regulatory, listing_delisting, unlock_emission, upgrade_partnership, insolvency_halt.
 
-- `class` rows: A and B list event classes only. `ENTITY` lines show affected names (one per disputed class).
-  VERDICT is `A`, `B`, `NO EVENTS`, or `NEITHER: class/asset; class/asset`.
-- `check` rows: VERDICT is `BOTH` (labels correct), `NO EVENTS`, or `NEITHER: class/asset; ...`.
-- `SAME (class)` lines: `Y` if the two names refer to the same affected entity, else `N`.
-"""
+def header() -> str:
+    """Reviewer header rendered from the frozen question wording (charter §3.2/§4)."""
+    lines = [
+        "# Jev P0 blind review — llm-jev-p0-label-20260929",
+        "",
+        "Judge only from the article text shown.",
+        "",
+        "Do not consult, until the filled sheet is committed: anything under "
+        "`research_runs/llm-jev-p0-label-20260929/outputs/`, anything under "
+        "`data/llm_event_xs/` (C1 labels and sheets), or any git/GitHub view of those files.",
+        "",
+        GENERAL_RULES,
+    ]
+    for cls in CLASSES:
+        bullet = f"- {cls}: {CLASS_DEFINITIONS[cls]}"
+        if cls in V2_RULES:
+            bullet += f" Additional rule: {V2_RULES[cls]}"
+        lines.append(bullet)
+    lines.append("The additional rules apply to every row.")
+    lines.append("")
+    lines.append("- `class` rows: A and B list event classes only. Write `A` or `B` only if "
+                 "that class set is exactly right; `NO EVENTS` if the article reports no "
+                 "qualifying event; otherwise `NEITHER: class/asset; class/asset` with the "
+                 "correct events.")
+    lines.append("- `check` rows: `BOTH` if the shown class set is right, `NO EVENTS`, or "
+                 "`NEITHER: class/asset; ...`.")
+    lines.append("- `ENTITY (class)` lines appear for classes present on both sides whose "
+                 "affected-entity names differ; answer the following `SAME (class)` line with "
+                 "`Y` if both names denote the same affected entity, else `N`.")
+    lines.append("- `entity` rows: A and B are two names for the affected entity of the stated "
+                 "class; answer `SAME` with `Y` or `N`.")
+    return "\n".join(lines) + "\n"
 
 
 def _tokens(name: str) -> list[str]:
@@ -121,7 +145,7 @@ def _flat(value) -> str:
 
 
 def render_markdown(rows: list[dict]) -> str:
-    out = [HEADER]
+    out = [header()]
     for row in rows:
         out.append(f"### row {row['row']} ({row['store']}, {row['date']}, {row['kind']})\n")
         text = row["text"]

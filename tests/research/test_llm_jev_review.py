@@ -13,8 +13,9 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from llm_event_xs_truth import RoundData  # noqa: E402
+from llm_jev_questions import CLASS_DEFINITIONS, GENERAL_RULES, V2_RULES  # noqa: E402
 from llm_jev_review import (  # noqa: E402
-    SEED, apply_review, auto_asset_match, build_review, parse_filled, render_markdown,
+    SEED, apply_review, auto_asset_match, build_review, header, parse_filled, render_markdown,
 )
 
 
@@ -39,6 +40,20 @@ def scenario():
     jev = {"1": {"events": [ev("hack", "Ronin")]}, "2": {"events": []}}
     jev.update({str(i): {"events": []} for i in range(3, 40)})
     return rounds, jev
+
+
+def test_header_contains_frozen_wording():
+    """The reviewer header must be generated from the frozen question wording, not a static
+    copy, and must warn against consulting the outputs/labels before the sheet is committed."""
+    text = header()
+    assert text.startswith("# Jev P0 blind review — llm-jev-p0-label-20260929")
+    assert GENERAL_RULES in text
+    for definition in CLASS_DEFINITIONS.values():
+        assert definition in text
+    for rule in V2_RULES.values():
+        assert rule in text
+    assert "data/llm_event_xs/" in text
+    assert "research_runs/llm-jev-p0-label-20260929/outputs/" in text
 
 
 def test_auto_asset_match_rules():
