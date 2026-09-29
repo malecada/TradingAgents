@@ -12,7 +12,7 @@ import re
 
 from llm_event_xs_p0_score import norm_asset
 from llm_event_xs_truth import match_events, parse_labels
-from llm_jev_questions import build_state
+from llm_jev_questions import CLASSES, build_state
 
 SEED = 20260929
 N_CHECKS = 20
@@ -20,7 +20,7 @@ CLASS_VERDICTS = frozenset({"A", "B", "NO EVENTS"})
 CHECK_VERDICTS = frozenset({"BOTH", "NO EVENTS"})
 HEADER = """# Jev P0 blind review — llm-jev-p0-label-20260929
 
-Judge only from the article text shown. Do not open `review_key.json`.
+Judge only from the article text shown. Do not open any file under `research_runs/llm-jev-p0-label-20260929/outputs/` until the review is committed.
 Classes: hack, regulatory, listing_delisting, unlock_emission, upgrade_partnership, insolvency_halt.
 
 - `class` rows: A and B list event classes only. `ENTITY` lines show affected names (one per disputed class).
@@ -111,24 +111,28 @@ def build_review(rounds: dict, jev: dict, seed: int = SEED, n_checks: int = N_CH
     return rows, key
 
 
+def _flat(value) -> str:
+    return " ".join(str(value).split())
+
+
 def render_markdown(rows: list[dict]) -> str:
     out = [HEADER]
     for row in rows:
         out.append(f"### row {row['row']} ({row['store']}, {row['date']}, {row['kind']})\n")
         text = row["text"]
-        headline = text.get('headline', '').replace("\n", " ")
+        headline = _flat(text.get('headline', ''))
         out.append(f"**{headline}**\n")
         for name in ("summary", "content"):
             if text.get(name):
-                out.append("> " + text[name].replace("\n", " ") + "\n")
+                out.append("> " + _flat(text[name]) + "\n")
         if row["kind"] == "entity":
             out.append(f"- Event class: {row['entity_class']}")
-        out.append(f"- A: {row['A']}")
-        out.append(f"- B: {row['B']}")
+        out.append(f"- A: {_flat(row['A'])}")
+        out.append(f"- B: {_flat(row['B'])}")
         if row["kind"] != "entity":
             out.append("- VERDICT: ")
         for pair in row["same"]:
-            out.append(f"- ENTITY ({pair['class']}): A = {pair['A']} | B = {pair['B']}")
+            out.append(f"- ENTITY ({pair['class']}): A = {_flat(pair['A'])} | B = {_flat(pair['B'])}")
             out.append(f"- SAME ({pair['class']}): ")
         out.append("")
     return "\n".join(out) + "\n"
@@ -157,9 +161,20 @@ def parse_filled(text: str, rows: list[dict]) -> dict[int, dict]:
                 entry["verdict"] = upper
             elif upper.startswith("NEITHER") and ":" in raw:
                 try:
-                    entry["verdict"], entry["labels"] = "NEITHER", parse_labels(raw.split(":", 1)[1])
+                    labels = parse_labels(raw.split(":", 1)[1])
                 except ValueError as exc:
                     problems.append(f"row {number}: bad NEITHER labels ({exc})")
+                else:
+                    entry["verdict"], entry["labels"] = "NEITHER", labels
+                    if not labels:
+                        problems.append(f"row {number}: NEITHER needs at least one label; "
+                                        f"use NO EVENTS")
+                    for label in labels:
+                        if label["class"] not in CLASSES:
+                            problems.append(f"row {number}: NEITHER class "
+                                            f"{label['class']!r} not recognized")
+                        if not label.get("asset", "").strip():
+                            problems.append(f"row {number}: NEITHER asset is empty")
             else:
                 problems.append(f"row {number}: verdict {raw!r} not in {sorted(allowed)} "
                                 f"or 'NEITHER: labels'")
@@ -198,7 +213,7 @@ def apply_review(rounds: dict, jev: dict, rows: list[dict], key: dict, filled: d
             truth[idx] = entry["labels"]
         if row["kind"] == "check":
             checks += 1
-            check_errors += verdict != "BOTH"
+            check_errors += verdict != "BOTH" and truth[idx] != stored[idx]
     stats = {"rows": len(rows), "class_rows": sum(r["kind"] == "class" for r in rows),
              "check_rows": checks, "entity_rows": sum(r["kind"] == "entity" for r in rows),
              "check_error_rate": check_errors / checks if checks else None}

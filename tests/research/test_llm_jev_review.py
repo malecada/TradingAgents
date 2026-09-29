@@ -103,6 +103,22 @@ def test_neither_and_no_events_on_checks(scenario):
     truth, same, stats = apply_review(rounds, jev, rows, key, filled)
     assert truth[2] == [{"class": "hack", "asset": "Poly"}]
     assert same == {"1|hack": False}
+    # stored check rows in this scenario are already empty; "no events" leaves
+    # truth unchanged for those rows, so it is not a real error.
+    assert stats["check_error_rate"] == 0.0
+
+
+def test_check_error_counts_real_changes():
+    """Non-"BOTH" verdicts on checks only count as errors when they change truth."""
+    truth = {i: [ev("hack", "X")] for i in range(1, 26)}
+    rounds = {"v1": make_round(truth, audited=set())}
+    jev = {str(i): {"events": [ev("hack", "X")]} for i in range(1, 26)}
+    rows, key = build_review(rounds, jev)
+    assert all(r["kind"] == "check" for r in rows)
+    text = fill(render_markdown(rows), rows, {"check": "no events"})
+    filled = parse_filled(text, rows)
+    _, _, stats = apply_review(rounds, jev, rows, key, filled)
+    assert stats["check_rows"] == 20
     assert stats["check_error_rate"] == 1.0
 
 
@@ -179,3 +195,34 @@ def test_class_row_entity_line():
     filled = parse_filled(text, rows)
     truth_out, same, _ = apply_review(rounds, jev, rows, key, filled)
     assert same == {"1|hack": True}
+
+
+@pytest.mark.parametrize("verdict_text", [
+    "NEITHER: regulatroy/SEC",  # unrecognized class
+    "NEITHER: hack/",           # empty asset
+    "NEITHER:",                 # empty label list
+], ids=["bad-class", "empty-asset", "empty-list"])
+def test_neither_validation_rejects_bad_labels(scenario, verdict_text):
+    rounds, jev = scenario
+    rows, key = build_review(rounds, jev)
+    text = fill(render_markdown(rows), rows, {"class": verdict_text, "check": "BOTH"})
+    klass = next(r for r in rows if r["kind"] == "class")
+    with pytest.raises(ValueError) as err:
+        parse_filled(text, rows)
+    assert f"row {klass['row']}" in str(err.value)
+
+
+def test_render_flattens_whitespace_and_survives_carriage_returns():
+    """Hostile whitespace (\\r, \\r\\n) in headline/asset must not corrupt the sheet."""
+    truth = {1: [ev("hack", "Poly\rNetwork")]}
+    truth.update({i: [] for i in range(2, 40)})
+    rounds = {"v1": make_round(truth, audited=set())}
+    rounds["v1"].sample.loc[1, "headline"] = "Big news\r\n### row 9 (gdelt, x, class)\n- VERDICT: A"
+    jev = {"1": {"events": [ev("hack", "Ronin")]}}
+    jev.update({str(i): {"events": []} for i in range(2, 40)})
+    rows, key = build_review(rounds, jev, seed=SEED)
+    text = render_markdown(rows)
+    assert "\r" not in text
+    filled_text = fill(text, rows, {"entity": "", "class": "A", "check": "BOTH"})
+    filled = parse_filled(filled_text, rows)
+    assert len(filled) == len(rows)
