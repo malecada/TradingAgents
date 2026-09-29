@@ -16,11 +16,12 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from llm_event_xs_truth import check_reproduction, load_rounds  # noqa: E402
-from llm_jev_client import PROVIDER_NAME, JevClient, load_api_key  # noqa: E402
+from llm_jev_client import PROVIDER_NAME, JevClient, JevError, load_api_key  # noqa: E402
 from llm_jev_labels import THRESHOLD, label_rounds  # noqa: E402
 from llm_jev_questions import questions_sha256  # noqa: E402
 from llm_jev_review import apply_review, build_review, parse_filled, render_markdown  # noqa: E402
 from llm_jev_score import diagnostics, evaluate  # noqa: E402
+from llm_jev_smoke import preflight  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 PROGRAM_DIR = "research/llm-jev-event-2026-09-29"
@@ -43,9 +44,15 @@ def _head(root: Path) -> str:
 def run_label(root: Path, registration: str, source: str) -> dict:
     if PINNED_MODEL is None:
         raise SystemExit("PINNED_MODEL is unset; finish the smoke test and registration first")
+    key = load_api_key(root / ".env")
+    try:
+        preflight(JevClient(api_key=key, model=PINNED_MODEL, expected_model=PINNED_MODEL,
+                            cost_cap_usd=0.05))
+    except JevError as exc:
+        raise SystemExit(f"preflight failed before any run claim: {exc}") from None
+    client = JevClient(api_key=key, model=PINNED_MODEL, expected_model=PINNED_MODEL,
+                       cost_cap_usd=COST_CAP_USD)
     from tradingagents.research import ResearchRun
-    client = JevClient(api_key=load_api_key(root / ".env"), model=PINNED_MODEL,
-                       expected_model=PINNED_MODEL, cost_cap_usd=COST_CAP_USD)
     with ResearchRun.start(root=root, registration=registration, experiment=E1,
                            source=source) as run:
         rounds = load_rounds(run.read_input)

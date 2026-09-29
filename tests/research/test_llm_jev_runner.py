@@ -13,12 +13,48 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 import llm_jev_event_p0 as p0  # noqa: E402
 import llm_jev_register as reg  # noqa: E402
+from llm_jev_client import JevError  # noqa: E402
 
 
 def test_label_refuses_without_pinned_model(monkeypatch, tmp_path):
     monkeypatch.setattr(p0, "PINNED_MODEL", None)
     with pytest.raises(SystemExit, match="PINNED_MODEL"):
         p0.run_label(tmp_path, "gates.json", "0" * 40)
+
+
+class RecordingClient:
+    def __init__(self):
+        self.calls = []
+
+    def decide(self, state, questions):
+        self.calls.append((state, questions))
+        return {}
+
+
+def test_preflight_covers_worst_case_shapes():
+    from llm_jev_smoke import preflight
+
+    client = RecordingClient()
+    preflight(client)
+    assert len(client.calls) == 2
+
+    state1, questions1 = client.calls[0]
+    assert "asset" in questions1 and len(questions1["asset"]["criteria"]) == 31
+    assert len(state1["content"]) == 4000
+    assert any(ord(ch) > 127 for ch in state1["content"])
+
+    state2, questions2 = client.calls[1]
+    assert "asset" not in questions2
+    assert sum(1 for k in questions2 if k.startswith("ev_")) == 6
+
+
+def test_label_preflight_failure_creates_no_claim(monkeypatch, tmp_path):
+    monkeypatch.setattr(p0, "PINNED_MODEL", "m")
+    monkeypatch.setattr(p0, "load_api_key", lambda root: "k")
+    monkeypatch.setattr(p0, "preflight", lambda client: (_ for _ in ()).throw(JevError("boom")))
+    with pytest.raises(SystemExit, match="preflight failed"):
+        p0.run_label(tmp_path, "gates.json", "0" * 40)
+    assert not (tmp_path / "research_runs").exists()
 
 
 def test_render_refuses_overwrite(tmp_path):
