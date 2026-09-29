@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import math
 
+from llm_event_xs_p0_score import norm_asset
 from llm_event_xs_truth import class_counts, match_events
 from llm_jev_questions import CLASSES
 from llm_jev_review import auto_asset_match, class_set
@@ -118,6 +119,20 @@ def _quantile(values: list[float], q: float):
     return ordered[min(len(ordered) - 1, int(q * len(ordered)))] if ordered else None
 
 
+def _asset_link_c1_exact(truth: dict, jev_events: dict) -> dict:
+    """Share of Jev TP pairs (against final truth) where the C1 normalized pred asset is
+    exactly equal to the normalized truth asset (a None pred asset is always a miss)."""
+    hits = total = 0
+    for idx, events in truth.items():
+        pairs, _, _ = match_events(events, jev_events[idx])
+        for p, t in pairs:
+            total += 1
+            pred_asset = p.get("asset")
+            if pred_asset and norm_asset(pred_asset) == norm_asset(t.get("asset")):
+                hits += 1
+    return {"hits": hits, "pairs": total, "value": hits / total if total else 0.0}
+
+
 def diagnostics(rounds: dict, truth: dict, named: dict, meta: dict) -> dict:
     jev_events = {int(k): v["events"] for k, v in named.items()}
     stored = {i: e for d in rounds.values() for i, e in d.truth.items()}
@@ -162,6 +177,7 @@ def diagnostics(rounds: dict, truth: dict, named: dict, meta: dict) -> dict:
         "pre_review_per_round": {name: _pr(class_counts({i: stored[i] for i in d.truth},
                                                         jev_events))
                                  for name, d in rounds.items()},
+        "asset_link_c1_exact": _asset_link_c1_exact(truth, jev_events),
         "asset_candidate_coverage": {"covered": covered, "pairs": pairs_n,
                                      "value": covered / pairs_n if pairs_n else None},
         "reliability": reliability,

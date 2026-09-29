@@ -115,6 +115,7 @@ def test_diagnostics_shape():
     named = {"1": lab([ev("hack", "X")]), "2": lab([])}
     meta = {"spent_usd": 0.0008, "calls": 4}
     out = diagnostics(rounds, truth, named, meta)
+    assert out["asset_link_c1_exact"] == {"hits": 1, "pairs": 1, "value": 1.0}
     assert out["asset_candidate_coverage"]["value"] == 1.0
     assert out["stability"]["flip_rate"] == 0.0
     assert out["threshold_sweep"]["0.5"]["hack"]["tp"] == 1
