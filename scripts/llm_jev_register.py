@@ -26,7 +26,7 @@ SOURCE_FILES = (
     "scripts/llm_event_xs_truth.py", "scripts/llm_jev_questions.py", "scripts/llm_jev_client.py",
     "scripts/llm_jev_labels.py", "scripts/llm_jev_review.py", "scripts/llm_jev_score.py",
     "scripts/llm_jev_event_p0.py", "scripts/llm_jev_smoke.py", "scripts/llm_event_xs_extract.py",
-    "scripts/llm_event_xs_p0_score.py", "uv.lock",
+    "scripts/llm_event_xs_p0_score.py", "uv.lock", "tradingagents/__init__.py",
 )
 FAMILY_KEY = "llm-news-event-extraction"
 FAMILY = {
