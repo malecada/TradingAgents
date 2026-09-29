@@ -65,10 +65,24 @@ def test_evaluate_pass_and_fail():
     named = {str(i): {"events": [ev("hack", "BTC")]} for i in range(12)}
     events = {i: named[str(i)]["events"] for i in range(12)}
     result = evaluate(truth, events, {}, named, dict(named))
-    assert result["verdict"] == "PASS"
+    assert result["primary"]["verdict"] == "PASS"
+    assert result["secondary"]["verdict"] == "PASS"
     assert result["gates"]["prefilter_recall"]["status"] == "not_applicable"
     worse = {i: events[i] + [ev("regulatory", "BTC")] for i in range(12)}
-    assert evaluate(truth, worse, {}, named, dict(named))["verdict"] == "FAIL"
+    worse_result = evaluate(truth, worse, {}, named, dict(named))
+    assert worse_result["primary"]["verdict"] == "FAIL"
+    assert worse_result["secondary"]["verdict"] == "FAIL"
+
+
+def test_asset_failure_affects_only_secondary():
+    truth = {i: [ev("hack", "Bitcoin")] for i in range(12)}
+    events = {i: [ev("hack", "Ronin")] for i in range(12)}
+    named = {str(i): {"events": events[i]} for i in range(12)}
+    anon = dict(named)
+    result = evaluate(truth, events, {}, named, anon)
+    assert result["primary"]["verdict"] == "PASS"
+    assert result["secondary"]["verdict"] == "FAIL"
+    assert result["gates"]["asset_link"]["value"] == 0.0
 
 
 def test_diagnostics_shape():

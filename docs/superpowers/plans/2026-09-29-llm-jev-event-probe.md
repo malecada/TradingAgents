@@ -1570,7 +1570,7 @@ Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>"
   - `gate_rows(counts) -> dict`
   - `asset_link(truth, pred, same) -> dict`
   - `anon_agreement(named, anon) -> dict`
-  - `evaluate(truth, jev_events, same, named, anon) -> {"verdict", "gate_rows", "gates"}`
+  - `evaluate(truth, jev_events, same, named, anon) -> {"primary", "secondary", "gate_rows", "gates"}`
   - `diagnostics(rounds, truth, named, meta) -> dict`
 
 - [ ] **Step 1: Write the failing tests**
@@ -2250,7 +2250,7 @@ if __name__ == "__main__":
 Run: `.venv/bin/python -m pytest tests/research/test_llm_jev_runner.py --import-mode=importlib -q`
 Expected: `4 passed`.
 Then run all probe tests: `.venv/bin/python -m pytest tests/research/test_llm_jev_*.py --import-mode=importlib -q`
-Expected: `72 passed`.
+Expected: `73 passed`.
 
 - [ ] **Step 7: Commit**
 
@@ -2295,7 +2295,7 @@ Expected: `calls=6` with no `JevError`. That confirms the dated ID is accepted a
 
 Edit `scripts/llm_jev_event_p0.py`, replacing `PINNED_MODEL: str | None = None  # set from the smoke-test response before registration` with `PINNED_MODEL: str | None = "<DATED>"  # smoke test 2026-09-29, invented headlines`.
 Run: `.venv/bin/python -m pytest tests/research/test_llm_jev_*.py --import-mode=importlib -q`
-Expected: `72 passed`.
+Expected: `73 passed`.
 
 - [ ] **Step 5: Commit**
 
@@ -2373,7 +2373,7 @@ and is not reviewed.
   coverage and raises 30-cap pressure) and dictionary matches follow
   dictionary order.
 
-## 5. Gates (all required; union of 400 articles)
+## 5. Gates (union of 400 articles; two verdicts)
 | Gate | Floor |
 |---|---|
 | Per-class precision (classes with < 10 final true events pooled) | >= 0.8 |
@@ -2381,6 +2381,10 @@ and is not reviewed.
 | Asset-link accuracy on TP pairs | >= 0.9 |
 | Anonymization class-set agreement (100 rows) | >= 0.8 |
 C1's prefilter-recall gate is not applicable.
+Primary verdict — class extraction: precision, recall and anonymization gates all
+pass. Secondary verdict — full C1 P0 equivalence: all four gates pass. The split
+was decided 2026-09-29, after a truth-only candidate-coverage profile (83/96 truth
+assets reachable) and before any Jev output (design spec §5.2 amendment).
 
 ## 6. Diagnostics (never gated or used for selection)
 - Wilson 95% intervals.
@@ -2400,7 +2404,7 @@ C1's prefilter-recall gate is not applicable.
 - An E1 infrastructure failure consumes an attempt; any retry requires a
   recorded review decision and a new experiment ID.
 - An asset-link failure with candidate coverage below 0.9 is recorded as a
-  candidate-generator (measurement) defect. It is still FAIL.
+  candidate-generator (measurement) defect; the secondary verdict is still FAIL.
 - PASS authorizes nothing further. Any P1–P3 work requires a new charter
   using data after 2026-09-15 only.
 
@@ -2460,7 +2464,7 @@ Expected: the admission report succeeds with `ready` true and no exception.
 - If it fails, fix the cause, delete the uncommitted/last registration commit only if it was never pushed (`git reset --soft HEAD~1`), rebuild with the register script, then recommit and recheck.
 
 Run: `.venv/bin/python -B scripts/verify_offline.py`
-Expected: pass, with the 72 new probe tests included under `tests/research`.
+Expected: pass, with the 73 new probe tests included under `tests/research`.
 
 - [ ] **Step 5: Independent review**
 
@@ -2569,13 +2573,13 @@ Expected: verification passes.
 Dispatch a fresh reviewer subagent. Its tasks:
 - Recompute the per-class counts, asset link and anonymization agreement independently from the raw E1 outputs, the filled sheet and `review_key.json`, with its own short script. It must not import `scripts/llm_jev_score.py`.
 - Confirm they equal `p0_verdict.json`.
-- Classify any FAIL per charter §7: Jev failure, candidate-generator defect, or label-quality concern bounded by the spot-check error rate.
+- Classify any FAIL of either verdict per charter §7: Jev failure, candidate-generator defect, or label-quality concern bounded by the spot-check error rate.
 - Report discrepancies.
 
 - [ ] **Step 5: Record the result**
 
 Write `research/llm-jev-event-2026-09-29/RESULT.md` in impersonal prose, with:
-- the verdict;
+- both verdicts (primary class extraction, secondary full C1 P0);
 - the gate table with Wilson intervals;
 - the review statistics (rows, spot-check error rate);
 - the gpt-5.4-mini head-to-head, with its bias disclosure;

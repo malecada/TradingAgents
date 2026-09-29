@@ -197,6 +197,13 @@ articles are pooled into `pooled_small` for gates.
 
 C1's prefilter-recall gate is not applicable (no prefilter).
 
+> **Amendment 2026-09-29 (user decision, before any Jev output).** Two verdicts are
+> reported. Primary (class extraction, the C1 failure point): precision, recall and
+> anonymization agreement. Secondary (full C1 P0 equivalence): all four gates. Decided
+> after a truth-only profile showed 83 of 96 pre-review truth assets reachable by the
+> frozen candidate generator, which makes the asset-link floor largely a
+> candidate-generator measurement; no Jev output existed at the time.
+
 ### 5.3 Asset match rule
 
 After C1's `norm_asset` (lowercase, strip, alias map), a pair matches when the
@@ -236,8 +243,8 @@ as a match.
 ### 7.2 Attribution (governance: distinguish failure types)
 
 - Asset-link failure with candidate coverage < 0.9 is recorded as a
-  candidate-generator (measurement) defect, not a Jev failure; the verdict is
-  still FAIL.
+  candidate-generator (measurement) defect, not a Jev failure; the secondary
+  verdict is still FAIL; the primary verdict does not use asset link.
 - Label-quality concerns are bounded by the spot-check error rate and
   reported alongside the verdict.
 

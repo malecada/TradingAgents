@@ -8,6 +8,8 @@ from llm_jev_questions import CLASSES
 from llm_jev_review import auto_asset_match, class_set
 
 FLOORS = {"precision": 0.8, "recall": 0.6, "asset_link": 0.9, "anon_agreement": 0.8}
+PRIMARY_GATES = ("precision", "recall", "anon_agreement")
+SECONDARY_GATES = ("precision", "recall", "asset_link", "anon_agreement")
 POOL_BELOW = 10
 CORPUS_ARTICLES = 57076 + 320749  # C1 frozen corpus counts (llm_event_xs_p0_score)
 Z95 = 1.959963984540054
@@ -77,8 +79,13 @@ def evaluate(truth: dict, jev_events: dict, same: dict, named: dict, anon: dict)
                            "pass": anon_res["value"] >= FLOORS["anon_agreement"]},
         "prefilter_recall": {"status": "not_applicable", "reason": "no keyword prefilter"},
     }
-    passed = all(g["pass"] for g in gates.values() if "pass" in g)
-    return {"verdict": "PASS" if passed else "FAIL", "gate_rows": rows, "gates": gates}
+    def verdict(names):
+        return "PASS" if all(gates[n]["pass"] for n in names) else "FAIL"
+    return {"primary": {"name": "class_extraction", "gates": list(PRIMARY_GATES),
+                        "verdict": verdict(PRIMARY_GATES)},
+            "secondary": {"name": "full_c1_p0", "gates": list(SECONDARY_GATES),
+                          "verdict": verdict(SECONDARY_GATES)},
+            "gate_rows": rows, "gates": gates}
 
 
 def _pr(counts: dict) -> dict:
