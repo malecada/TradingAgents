@@ -1,0 +1,12 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "research/onchain-paper-replication-2026-09-24/full_sources/resource-successor-03/preflight.py",
+    "--temp-check",
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-storage-probe-2026-09-29/temp-volume02"
+  ],
+  "returncode": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/resource-successor-03/preflight.py\", line 27, in <module>\n    admission,job=_admitted(SimpleNamespace(root=root,registration=str(gate.relative_to(root)),\n                  ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                                         experiment=name,source=source))\n                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/job.py\", line 86, in _admitted\n    admitted = admit(root=args.root, registration=args.registration,\n                     experiment=args.experiment, source=args.source)\n  File \"/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/admission.py\", line 166, in admit\n    raise ValueError(\"invalid parent ancestry\")\nValueError: invalid parent ancestry\n"
+}

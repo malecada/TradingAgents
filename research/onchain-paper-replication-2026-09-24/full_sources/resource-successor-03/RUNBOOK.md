@@ -15,7 +15,7 @@ resource guard receipt directory. Inspect that receipt's exact command, cwd,
 current service environment, completion and verified cleanup. Every writable
 candidate must be on a guarded filesystem. An old receipt is not a fresh check.
 
-Run this directory's `preflight.py --temp-check <fresh-receipt-directory>` using
+Run this directory's `preflight-v2.py --temp-check <fresh-receipt-directory>` using
 the pinned Python from the repository root. Preserve its JSON output outside
 the frozen gate inputs. It checks committed admission, all compact input hashes,
 environment, absent claim/launch/output paths,52effective ceiling,9GiB startup
@@ -28,7 +28,7 @@ The reviewed generic entry point is:
 .venv/bin/python -B -m tradingagents.research.onchain_replication.job
   --mode launch
   --root /home/malecada/master_thesis/TradingAgents-audit-fixes
-  --registration research/onchain-paper-replication-2026-09-24/full_sources/resource-successor-03/gate.json
+  --registration research/onchain-paper-replication-2026-09-24/full_sources/resource-successor-03/gate-v2.json
   --experiment eth-paper-graph-resource-20260929-03
   --source <the exact committed full HEAD>
 ```
@@ -58,3 +58,9 @@ before any downstream population use. Neither a successful graph nor a resource
 failure closes the remaining original9week/109cell pilot, full MCM/neural resource
 work,1420fits, broader history or paper comparisons. Record the result, active
 owner or exact next requirement in STATE.md before handing off.
+
+The initial gate.json and failed admission-preflight-01.json are preserved.
+Gate-v2 adds the original grandfather experiment verbatim from its historical
+claim so the complete parent chain is present. It changes no new-experiment
+scientific/resource setting or ancestry identity. No claim or launch reservation
+was created by the failed metadata-only check.

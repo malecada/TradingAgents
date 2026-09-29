@@ -40,8 +40,16 @@ it requires a reviewed smaller-batch/streaming arrangement or additional capacit
 The larger interrupted SQLite likewise needs chunked preservation. C16 stays
 partial. All13tasks and the broader paper scope remain required.
 
-Next safe action: commit/push the verified implementation and exact gate, perform
-fresh checks, then start the new finite graph pilot once if admitted. Preserve
+Engineering/source preparation was committed and pushed as86796bf6. The first
+metadata-only admission refused gate.json because its parent ancestor was omitted;
+no claim or launch reservation was created. That gate and failed preflight are
+preserved. Gate-v2.json adds the original grandfather experiment verbatim, with
+preflight-v2.py pointing to it. The original parent and new scientific/resource
+contract stay unchanged. Review and committed admission of this correction remain
+required; no closed identity is retried.
+
+Next safe action: commit/push the reviewed gate-v2 correction, perform fresh
+checks, then start the new finite graph pilot once if admitted. Preserve
 its source HEAD and all source/input bytes throughout execution. No old identity
 may be relaunched. The generic runbook specifies status and failure reconciliation.
 
