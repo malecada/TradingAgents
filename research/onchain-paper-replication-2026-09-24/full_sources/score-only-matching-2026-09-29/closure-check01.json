@@ -1,0 +1,36 @@
+{
+  "observed_at": "2026-09-29T21:03:51.361841+00:00",
+  "source_commit": "8465d7f7ef565d959c0af836ac449fc5612748c7",
+  "bindings_checked": 135,
+  "all_match": true,
+  "phase": "complete",
+  "child_exit_code": 0,
+  "cleanup_verified": true,
+  "monitor_absent": true,
+  "cgroup_absent": true,
+  "standard_passed": 2768,
+  "standard_subtests": 97,
+  "neural_passed": 641,
+  "neural_skipped": 2,
+  "total_passed": 3409,
+  "elapsed_seconds": 1784.1883576190012,
+  "peak_sampled_memory_current_bytes": 2221502464,
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "evidence_sha256": {
+    "source-bindings.json": "c24e71f927ad1af137cf778c81d7b776e24adc74978c504cfd68e7f49be49ecd",
+    "offline01/final.json": "75e5e1c03e4d70e2e1b572eeab02ec3e7f3e523f1f6f1c2ca3d81bb898da58b6",
+    "offline01/child.log": "5eb1ce8556fb60e4ee5ae4d7ba66e4d250ac1d440681cca6008518cf46c7fb12"
+  },
+  "limitations": [
+    "Named reviewed offline profile, not all legacy tests.",
+    "Two legacy CUDA skips; score-only CUDA parity untested.",
+    "No empirical fitting or full-size feasibility established."
+  ]
+}

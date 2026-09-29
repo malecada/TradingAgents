@@ -5,10 +5,11 @@ from .cache import cache_key
 from .dictionary import dictionary_hash
 from .neighborhoods import NeighborhoodIndex
 from .matching_reference import match_reference
-from .matching import match_batch
+from .matching import match_batch,match_scores
 
 
-def mcm_features(graph,dictionary,matching_config,*,reference=False,device='cpu',checkpoint=None,checkpoint_seconds=600.,output=None,start_node=0):
+def mcm_features(graph,dictionary,matching_config,*,reference=False,device='cpu',checkpoint=None,checkpoint_seconds=600.,output=None,start_node=0,score_only=False):
+    if type(score_only) is not bool or (score_only and reference):raise ValueError('score-only mode requires an explicit accelerated boolean option')
     if dictionary_hash(dictionary)!=dictionary.identity:raise ValueError('dictionary identity mismatch')
     if cache_key(matching_config)!=dictionary.matching_config_hash:raise ValueError('dictionary/matching configuration mismatch')
     if not 0<checkpoint_seconds<=600:raise ValueError('checkpoint interval exceeds protocol')
@@ -21,7 +22,8 @@ def mcm_features(graph,dictionary,matching_config,*,reference=False,device='cpu'
     for center in range(start_node,len(graph.node_ids)):
         local=index.neighborhood(center,dictionary.config)
         pairs=[(local,motif) for motif in dictionary.representatives]
-        scores=([match_reference(a,b,matching_config) for a,b in pairs] if reference else match_batch(pairs,matching_config,device))
+        scores=([match_reference(a,b,matching_config) for a,b in pairs] if reference else
+                (match_scores if score_only else match_batch)(pairs,matching_config,device))
         result[center]=[s.score for s in scores]
         if checkpoint and (center+1==len(graph.node_ids) or time.monotonic()-last>=checkpoint_seconds):checkpoint(center+1,result[:center+1]);last=time.monotonic()
     return result

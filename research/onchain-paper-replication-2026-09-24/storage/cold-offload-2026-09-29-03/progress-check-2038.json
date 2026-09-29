@@ -1,0 +1,82 @@
+{
+  "observed_at": "2026-09-29T20:38:51.384637+00:00",
+  "qualification": "Partial progress only; both guards remain active; not a whole-job closure or independent re-download. Frozen sources unchanged.",
+  "jobs": [
+    {
+      "job": "storage/cold-offload-2026-09-29-03",
+      "phase": "running",
+      "limit_reason": null,
+      "binding_count": 11,
+      "all_bindings_match": true,
+      "monitor_alive": true,
+      "cgroup_present": true,
+      "elapsed_seconds": 1852.9473797160026,
+      "memory_events": {
+        "high": 33486,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0
+      }
+    },
+    {
+      "job": "full_sources/score-only-matching-2026-09-29",
+      "phase": "running",
+      "limit_reason": null,
+      "binding_count": 135,
+      "all_bindings_match": true,
+      "monitor_alive": true,
+      "cgroup_present": true,
+      "elapsed_seconds": 1258.0932614159974,
+      "memory_events": {
+        "high": 0,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0
+      }
+    }
+  ],
+  "verified_evictions": [
+    {
+      "index": 0,
+      "path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-24-01/pilot/batch-0000/bundle.tar",
+      "bytes": 517416960,
+      "sha256": "a7f3cacdb3f4f3cdb55262dd97b1b9b9da4f1ab57d5c6ce3f28825b53d718568",
+      "receipts_consistent": true,
+      "original_absent": true,
+      "restoration_sidecar_present": true
+    },
+    {
+      "index": 1,
+      "path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-05/bulk01/batch-0042/bundle.tar",
+      "bytes": 532828160,
+      "sha256": "3973df8beb2e56901aef5a925c37bbf487590cdfab769353fb7af08509ee8c98",
+      "receipts_consistent": true,
+      "original_absent": true,
+      "restoration_sidecar_present": true
+    },
+    {
+      "index": 2,
+      "path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-25-05/bulk01/batch-0042/recovered.tar",
+      "bytes": 180748288,
+      "sha256": "736ec489488d9d74af3049f9155f293fa4d76224e666ad726a247342f19dc559",
+      "receipts_consistent": true,
+      "original_absent": true,
+      "restoration_sidecar_present": true
+    },
+    {
+      "index": 3,
+      "path": "research/onchain-paper-replication-2026-09-24/storage/raw-preservation-2026-09-26-06/bulk01/batch-0045/bundle.tar",
+      "bytes": 535347200,
+      "sha256": "d1f9acac211ff0d15d0074c71937c33e544162c33d0dda42801f73bfc795b95d",
+      "receipts_consistent": true,
+      "original_absent": true,
+      "restoration_sidecar_present": true
+    }
+  ],
+  "verified_evicted_bytes": 1766340608,
+  "disk_free_bytes": 24292610048
+}

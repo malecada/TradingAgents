@@ -6,6 +6,7 @@ tied assignments are judged by objective and feasibility, never bit identity.
 """
 from __future__ import annotations
 from collections import defaultdict
+from dataclasses import dataclass
 import numpy as np
 from .matching_reference import MatchResult,harden,validate_pair
 
@@ -24,7 +25,27 @@ def _chunks(a,b,config,device):
             yield int(u),int(v),dest[0],dest[1],affinity
 
 
+@dataclass(frozen=True)
+class MatchScore:
+    """Small result without retained hard/soft assignment diagnostics."""
+    score: float
+    convergence: str
+    iterations: int
+
+
 def match_batch(pairs,config,device='cpu'):
+    return _match_batch(pairs,config,device,scores_only=False)
+
+
+def match_scores(pairs,config,device='cpu'):
+    """Preserve solver/batching semantics while releasing per-pair diagnostics.
+
+    This bounds retained results, not the dense workspace of an individual solve.
+    """
+    return _match_batch(pairs,config,device,scores_only=True)
+
+
+def _match_batch(pairs,config,device,*,scores_only):
     import torch
     if config.get('internal_precision')!='float64':raise ValueError('unverified float32 solve; select registered stable precision configuration')
     groups=defaultdict(list)
@@ -59,5 +80,10 @@ def match_batch(pairs,config,device='cpu'):
                     l1,l2=a.edge_index.shape[1],b.edge_index.shape[1]
                     if l1*l2:edge=edge/(2*(l1*l2)**.5)
                     score=float(((edge+config['alpha']*node)/(1+config['alpha'])).float().cpu())
-                    results[index]=MatchResult(assignment,score,'temperature_complete' if beta>config['beta_final'] else 'iteration_cap',iterations,M[k].float().cpu().numpy().copy())
+                    convergence='temperature_complete' if beta>config['beta_final'] else 'iteration_cap'
+                    if scores_only:
+                        results[index]=MatchScore(score,convergence,iterations)
+                        del assignment,H
+                    else:
+                        results[index]=MatchResult(assignment,score,convergence,iterations,M[k].float().cpu().numpy().copy())
     return results

@@ -1,0 +1,102 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+________ test_score_only_matches_legacy_and_reference_across_groups[8] _________
+
+limit = 8
+
+    @pytest.mark.parametrize('limit',[8,4000000])
+    def test_score_only_matches_legacy_and_reference_across_groups(limit):
+>       assert hasattr(matching,'match_scores'),'score-only consumer is missing'
+E       AssertionError: score-only consumer is missing
+E       assert False
+E        +  where False = hasattr(matching, 'match_scores')
+
+tests/research/onchain_replication/test_matching_scores.py:25: AssertionError
+_____ test_score_only_matches_legacy_and_reference_across_groups[4000000] ______
+
+limit = 4000000
+
+    @pytest.mark.parametrize('limit',[8,4000000])
+    def test_score_only_matches_legacy_and_reference_across_groups(limit):
+>       assert hasattr(matching,'match_scores'),'score-only consumer is missing'
+E       AssertionError: score-only consumer is missing
+E       assert False
+E        +  where False = hasattr(matching, 'match_scores')
+
+tests/research/onchain_replication/test_matching_scores.py:25: AssertionError
+____ test_score_only_releases_assignments_and_never_constructs_diagnostics _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7772d1b00fc0>
+
+    def test_score_only_releases_assignments_and_never_constructs_diagnostics(monkeypatch):
+>       assert hasattr(matching,'match_scores'),'score-only consumer is missing'
+E       AssertionError: score-only consumer is missing
+E       assert False
+E        +  where False = hasattr(matching, 'match_scores')
+
+tests/research/onchain_replication/test_matching_scores.py:39: AssertionError
+___________ test_score_only_retains_iteration_cap_and_input_refusals ___________
+
+    def test_score_only_retains_iteration_cap_and_input_refusals():
+>       assert hasattr(matching,'match_scores'),'score-only consumer is missing'
+E       AssertionError: score-only consumer is missing
+E       assert False
+E        +  where False = hasattr(matching, 'match_scores')
+
+tests/research/onchain_replication/test_matching_scores.py:57: AssertionError
+______ test_mcm_score_only_preserves_features_order_and_checkpoint_resume ______
+
+    def test_mcm_score_only_preserves_features_order_and_checkpoint_resume():
+        g=graph([[0],[1],[2],[3]],[(0,1,1),(2,1,2)])
+        samples=sample_neighborhoods([g],cfg(),11)
+        d=fit_dictionary(samples,config(),dict(size=2,partition_threshold=20,partition_size=10,hop_depth=1,maximum_neighborhood_nodes=20))
+        expected=mcm.mcm_features(g,d,config())
+>       actual=mcm.mcm_features(g,d,config(),score_only=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: mcm_features() got an unexpected keyword argument 'score_only'
+
+tests/research/onchain_replication/test_matching_scores.py:72: TypeError
+__ test_mcm_rejects_ambiguous_score_only_mode_before_graph_access[True-True] ___
+
+reference = True, option = True
+
+    @pytest.mark.parametrize('reference,option',[(True,True),(False,'yes'),(False,1)])
+    def test_mcm_rejects_ambiguous_score_only_mode_before_graph_access(reference,option):
+        with pytest.raises(ValueError,match='score-only'):
+>           mcm.mcm_features(None,None,None,reference=reference,score_only=option)
+E           TypeError: mcm_features() got an unexpected keyword argument 'score_only'
+
+tests/research/onchain_replication/test_matching_scores.py:87: TypeError
+__ test_mcm_rejects_ambiguous_score_only_mode_before_graph_access[False-yes] ___
+
+reference = False, option = 'yes'
+
+    @pytest.mark.parametrize('reference,option',[(True,True),(False,'yes'),(False,1)])
+    def test_mcm_rejects_ambiguous_score_only_mode_before_graph_access(reference,option):
+        with pytest.raises(ValueError,match='score-only'):
+>           mcm.mcm_features(None,None,None,reference=reference,score_only=option)
+E           TypeError: mcm_features() got an unexpected keyword argument 'score_only'
+
+tests/research/onchain_replication/test_matching_scores.py:87: TypeError
+___ test_mcm_rejects_ambiguous_score_only_mode_before_graph_access[False-1] ____
+
+reference = False, option = 1
+
+    @pytest.mark.parametrize('reference,option',[(True,True),(False,'yes'),(False,1)])
+    def test_mcm_rejects_ambiguous_score_only_mode_before_graph_access(reference,option):
+        with pytest.raises(ValueError,match='score-only'):
+>           mcm.mcm_features(None,None,None,reference=reference,score_only=option)
+E           TypeError: mcm_features() got an unexpected keyword argument 'score_only'
+
+tests/research/onchain_replication/test_matching_scores.py:87: TypeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_matching_scores.py::test_score_only_matches_legacy_and_reference_across_groups[8]
+FAILED tests/research/onchain_replication/test_matching_scores.py::test_score_only_matches_legacy_and_reference_across_groups[4000000]
+FAILED tests/research/onchain_replication/test_matching_scores.py::test_score_only_releases_assignments_and_never_constructs_diagnostics
+FAILED tests/research/onchain_replication/test_matching_scores.py::test_score_only_retains_iteration_cap_and_input_refusals
+FAILED tests/research/onchain_replication/test_matching_scores.py::test_mcm_score_only_preserves_features_order_and_checkpoint_resume
+FAILED tests/research/onchain_replication/test_matching_scores.py::test_mcm_rejects_ambiguous_score_only_mode_before_graph_access[True-True]
+FAILED tests/research/onchain_replication/test_matching_scores.py::test_mcm_rejects_ambiguous_score_only_mode_before_graph_access[False-yes]
+FAILED tests/research/onchain_replication/test_matching_scores.py::test_mcm_rejects_ambiguous_score_only_mode_before_graph_access[False-1]
+8 failed in 1.89s

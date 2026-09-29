@@ -19,3 +19,22 @@ All **10 non-connection entries of the 11 frozen bindings** were independently r
 - `green02.log`: `ac8b06dea51b5113d82503d86fca79b85930a43fe6e2f945b781c6dd1f26fe08`
 
 No remaining material issue was identified in this corrected bounded continuation. Fresh owner absence, local/remote capacity, source identities and admission remain execution-time conditions. Synthetic tests and the tiny real admission probe do not establish transfer throughput, durable future remote availability or a full-workload memory guarantee. The earlier 3,390-pass broad suite predates the guard edit and is not a whole-current-branch result. No source-body hash was independently repeated during this review, no original has been evicted by the reviewer, and no financial fit or raw-data acquisition is admitted.
+
+## Terminal preservation audit
+
+Cold03 closure is accepted on the retained execution and restoration evidence. Exactly **9 of 9 files totaling 3,584,497,664 bytes** occur in the original manifest, verified receipts, evicted receipts and aggregate completion. Independent local reconciliation finds each record's original path, byte count, SHA, original stat identity and owner binding equal to the admitted row. Each verified record equals its eviction receipt, restoration metadata, recovered restoration metadata, original-path sidecar and corresponding aggregate entry. Each remote object uses the correct 03 prefix and file number. All nine original names are absent, including no dangling symlink at those names; successful body-recovery scratch is also absent.
+
+The recovered manifest is byte-identical to the admitted manifest. `completion-candidate.json`, `recovered-complete.json` and `complete.json` are byte-identical. All 20 saved download transport receipts report complete, return code 0 and exact expected/received byte counts; retained metadata sizes also match those counts. The nine body download receipts match the admitted body sizes. The reviewed worker's source ordering establishes SHA checks before durable verification/sidecar publication and unlink. This independent review audits local receipts and metadata; it did **not** perform a second network download or independently rehash removed archive bodies. Full body round-trip verification is the completed guarded worker's evidence, not a claim of current remote immutability or permanent availability.
+
+Guard closure records phase **complete**, child exit **0**, verified cleanup and elapsed **3,357.994749 seconds**. Sampled cgroup peak is **203,436,032 bytes**. There were **55,453 memory.high events**, and zero max/OOM/OOM-kill events; this was a throttled successful run, not a zero-pressure result. The declared 256/192 MiB maximum/high, zero swap, 3 GiB runtime reserve, 3.5 GiB startup reserve, 10 GiB disk floor and 7,200-second wall limit remain intact. Monitor PID 1285286, last workload PID 1285290 and the cgroup are absent at review. Old per-file owners still have matching failed/cleanup-verified receipts and absent cgroups. Earlier cold01/02 attempts remain failed.
+
+All 10 non-connection frozen bindings independently rehash correctly; the unchanged connection pin agrees with the manifest without inspecting connection contents. Saved parent closure-check01 reports all 11 checked. The child log progresses through all nine cumulative totals and terminates at the exact manifest sum. Independent checks agree with closure-check01. Its observed free-space value **27,066,093,568 bytes** is a timestamped host observation, not an assertion that the free-space delta exactly equals payload bytes.
+
+Terminal evidence hashes:
+
+- `guard01/final.json`: `7f11d16f4bf8345fc37da8eb041e02d78cf4f072cc5b6707ec17eb7de7da41f2`
+- `guard01/child.log`: `87fa6d317c6633956953323ab939dbbbc2eeaf02e7086e8123c2a80e22798910`
+- `complete.json`: `b0983914bea427037a755d10dd2e1ff99e45c1f84d6f05a83e51ecaad8733649`
+- `closure-check01.json`: `caa0e93f0b099f1dd196d28cdd120c3ddd12dc48e4012537d6b773515623f3bc`
+
+This closure covers only the nine named cold transport/probe artifacts. It does not imply raw-source, graph or SQLite eviction, wider backup coverage, a successful historical experiment or permission to resume a terminal identity. No reviewer transfer, deletion, source change or HEAD change occurred.

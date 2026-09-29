@@ -3,6 +3,110 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Both overnight jobs COMPLETE — September 29, 21:05 UTC:**
+The optional score-only matching increment passed the full named offline profile:
+2,768 standard tests plus 97 subtests, and 641 neural tests with two CUDA skips
+(3,409 total passes). Guard elapsed 1,784.19 seconds, child exit 0, cleanup
+verified, peak sampled memory 2,221,502,464 bytes, zero memory.high/max/OOM events.
+All 135 frozen source bindings match; monitor PID 1300385 and cgroup are absent.
+Independent terminal review accepted the engineering increment in
+`full_sources/score-only-matching-2026-09-29/CODE_REVIEW.md`; compact closure is
+`closure-check01.json` in that directory. Score-only CUDA parity, large-pair
+capacity/checkpointing and registered execution-policy integration remain pending.
+
+Cold offload continuation 03 completed all nine files: 3,584,497,664 bytes
+(3.34 GiB) roundtrip-verified and removed from local cold storage. Restoration
+sidecars, per-file receipts and remote completion metadata are preserved.
+Guard elapsed 3,357.99 seconds, child exit 0, cleanup verified; peak sampled
+memory 203,436,032 bytes, 55,453 memory.high events, zero max/OOM events.
+All eleven bindings and historical owner receipts match; PID 1285286 and cgroup
+are absent. Local free space at closure was 27,066,093,568 bytes (25.21 GiB),
+including concurrent filesystem changes; it is not a pure eviction delta.
+Evidence: `storage/cold-offload-2026-09-29-03/closure-check01.json` and raw
+per-file/guard receipts. Independent terminal storage review accepted the exact completed transfer.
+Failed predecessors remain closed. Raw transaction, graph and SQLite inputs
+were not evicted. Neither exact completed identity may be launched again.
+
+No active job/freeze remains. Next safe action: commit/push independently reviewed
+implementation and compact preservation evidence, then
+implement registered score-only matching policy with synthetic parity/admission
+checks. Continue bounded full-neighborhood/pair checkpoint engineering and
+prepare reviewed budget amendments/resource registrations before empirical work.
+Budget remains 25/52, all 1,420 financial fits pending. Overnight continuation
+remains authorized. Historical active-owner snapshots below are superseded.
+
+**Partial storage milestone — 2026-09-29T20:38:51.384637+00:00:**
+Cold continuation 03 has roundtrip-verified and evicted 4/9 files,
+1,766,340,608 bytes (1.65 GiB). Per-file verification/eviction receipts,
+restoration sidecars, recovered metadata and original-path absence agree with
+the manifest. Compact check: `storage/cold-offload-2026-09-29-03/progress-check-2038.json`.
+Both guards remain running without a limit reason; all 11 storage and 135
+offline source bindings still match. Current local free space is 24,292,610,048 bytes
+(22.62 GiB), a transient observation during active transfer/testing.
+Neither aggregate completion nor test success is inferred. Keep both freezes
+and continue the exact active jobs; no new empirical claim or fit was launched.
+
+**Overnight autonomous continuation; TWO active owners — 2026-09-29T20:18:21.887458+00:00:**
+The user explicitly authorized overnight continuation from one completed part to
+the next without further prompts. The existing paper-replication-progress
+heartbeat now runs every 15 minutes, with meaningful-change notifications only.
+No extra task or duplicate automation was created. Local execution requires the
+host/app to remain available; interruptions require receipt reconciliation.
+
+1. Cold-file offload continuation 03 remains active under its recorded owner
+   below. Do not touch its eleven bound files or duplicate its remote work.
+2. Score-only matching offline01 is now active after independent focused review
+   and fresh RAM/disk admission. Monitor PID 1300385, start ticks 4134241; unit
+   `onchain-replication-3816f6e84b454bb7bba7644d74cd929f.service`; tool session 44964.
+   Receipts: `full_sources/score-only-matching-2026-09-29/offline01/`.
+   Freeze all 135 files in that increment's source-bindings.json and HEAD
+   8465d7f7ef565d959c0af836ac449fc5612748c7 until BOTH owners are terminal.
+   Limits: 3 GiB max/2.75 GiB high, zero swap, 3 GiB host reserve, 6 GiB startup,
+   10 GiB disk floor, two-CPU affinity, 3600 seconds.
+
+The optional match_scores consumer and MCM score_only argument are implemented.
+Legacy diagnostic defaults and the exact shape-grouped solver remain unchanged;
+per-pair assignment/tensor diagnostics are released instead of retained. Expanded
+focused tests passed 69 checks with one CUDA skip; exact pre-edit CPU diagnostics
+and new scores match on twelve saved synthetic cases. Full-size pair workspace,
+large-neighborhood capacity, intra-pair checkpointing, score-only CUDA parity and
+registered execution-policy integration remain pending. No empirical gate uses
+the optional consumer yet. Guard correction is included in this broad run.
+
+Next safe actions: close each exact job's terminal/cleanup/hashes independently,
+retain every failed attempt, record actual moved files and disk reclamation,
+and obtain independent terminal reviews. Do not commit/move HEAD while either
+freeze is live. After both close and reviewed changes are backed up, continue
+registered score-only integration and bounded full-neighborhood/matching work;
+prepare/review cumulative budget and exact registrations before empirical pilots.
+If one dependency is blocked, continue independent unbound work. No purchased
+resources/provider contact/trading/deployment. Budget remains 25/52 and all 1,420
+financial fits remain pending. Earlier single-owner snapshots below are historical.
+
+**ACTIVE cold-file offload continuation 03 — 2026-09-29T20:08:23.170335+00:00:**
+The corrected guard and exact continuation were independently reviewed,
+committed and pushed as 8465d7f7. A single new guard01 is running from
+`storage/cold-offload-2026-09-29-03/offload.py`. Monitor PID 1285286, start ticks
+4074769; unit `onchain-replication-875bf88e73dd41be86850a9c530ba519.service`; tool session 5852.
+Keep HEAD 8465d7f7 and all eleven bound source/input files unchanged while owned.
+Never duplicate this process or relaunch either failed predecessor.
+
+The same nine inactive transport/probe bodies total 3,584,497,664 bytes. Each
+local removal requires full remote body and metadata recovery verification,
+unchanged-source checks and durable restoration records. Current phase is
+running; no completion or reclaimed space is inferred from that status.
+Limits: 10 GiB disk floor in both guard and worker, 256/192 MiB memory max/high,
+zero swap, 3 GiB host reserve, 3.5 GiB startup requirement, two-CPU affinity,
+7200 seconds, 8 GiB transfer allowance and 512 MiB maximum body recovery scratch.
+
+Next safe action: inspect exact guard/per-file receipts, retain all partial state,
+then close actual moves, cleanup and fresh disk recovery independently. The prior
+01/02 failures remain terminal. Graph-residency verification passed 3,390 tests
+plus 97 subtests/two CUDA skips before the later guard edit; that narrow edit has
+39 focused checks and a successful real admission probe. No financial fit or
+empirical resource claim was launched; budget remains 25/52. Large-neighborhood
+matching remains subsequent engineering work. Earlier snapshots are historical.
+
 **Cold continuation 02 admission failure; correction verified — September 29:**
 Continuation 02 guard01 failed in 0.42 seconds, child exit 1, verified cleanup,
 before manifest processing, network transfer or local eviction. The outer guard

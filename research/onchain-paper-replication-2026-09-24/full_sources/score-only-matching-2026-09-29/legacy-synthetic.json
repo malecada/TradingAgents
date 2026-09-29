@@ -1,0 +1,333 @@
+{
+  "qualification": "Synthetic pre-edit legacy outputs only; no empirical sample or fit.",
+  "matching_source_sha256": "8198d3505bf250152e7f6949372efb38b7d83837c1067194b862958e17923280",
+  "settings": {
+    "alpha": 1.0,
+    "amendment": "matching-precision-v2.md",
+    "beta0": 1.0,
+    "beta_final": 30.0,
+    "beta_rate": 0.075,
+    "beta_update": "beta *= (1+beta_rate)",
+    "convergence": "temperature termination; no additional fixed-point stopping",
+    "edge_agreement_chunk_pairs": 65536,
+    "empty_nodes": "reject",
+    "hardening": "greedy global maximum; ties row-major; remove row and column; stop after min(n,m) matches",
+    "initialization": "node agreement s2 (Algorithm1 s1 symbol corrected by argument type)",
+    "internal_precision": "float64",
+    "max_iterations": 50,
+    "max_pair_entries": 4000000,
+    "normalization": "row then column, log-domain stable",
+    "normalization_iterations": 1,
+    "objective": "paper Eq1 literal including factor 2 in edge denominator",
+    "precision_accelerated": "float32 output with float64 affinity and annealing",
+    "precision_reference": "float64",
+    "rectangular": "un-padded rectangular one-pass normalization; soft row/column sums need not both equal 1; hard assignment must be injective",
+    "s1": "edge RBF exp(-mean squared feature difference); zero if either edge absent",
+    "s2": "node RBF exp(-mean squared feature difference)",
+    "schema_version": 1,
+    "solver": "algorithm1_literal",
+    "symmetric_dictionary_distance": "1 - (S(A,B)+S(B,A))/2",
+    "update": "Q_ui=0.5*sum_vj(edge_agreement_uvij*M_vj)+alpha*node_agreement_ui; literal Algorithm1, not claimed Eq2 derivative",
+    "zero_edges": "edge contribution zero if either graph has zero edges; retain node contribution divided by (1+alpha)"
+  },
+  "results": [
+    {
+      "max_pair_entries": 8,
+      "pairs": [
+        {
+          "score": 0.7450249195098877,
+          "assignment": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "soft_assignment": [
+            [
+              0.9999876022338867,
+              2.6203518521672464e-13
+            ],
+            [
+              1.2389289622660726e-05,
+              1.0
+            ]
+          ],
+          "iterations": 48,
+          "convergence": "temperature_complete"
+        },
+        {
+          "score": 0.3610651195049286,
+          "assignment": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "soft_assignment": [
+            [
+              0.9999703764915466,
+              9.671502994024195e-07,
+              2.3607786658885743e-07
+            ],
+            [
+              2.9620028726640157e-05,
+              0.9999990463256836,
+              0.9999997615814209
+            ]
+          ],
+          "iterations": 48,
+          "convergence": "temperature_complete"
+        },
+        {
+          "score": 0.5,
+          "assignment": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "soft_assignment": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "iterations": 48,
+          "convergence": "temperature_complete"
+        },
+        {
+          "score": 0.7450249195098877,
+          "assignment": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "soft_assignment": [
+            [
+              0.9999990463256836,
+              3.3712837209376456e-12
+            ],
+            [
+              9.62976400842308e-07,
+              1.0
+            ]
+          ],
+          "iterations": 48,
+          "convergence": "temperature_complete"
+        },
+        {
+          "score": 0.5,
+          "assignment": [
+            [
+              1
+            ]
+          ],
+          "soft_assignment": [
+            [
+              1.0
+            ]
+          ],
+          "iterations": 48,
+          "convergence": "temperature_complete"
+        },
+        {
+          "score": 0.75,
+          "assignment": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "soft_assignment": [
+            [
+              0.9999908208847046,
+              2.9048053025448883e-12
+            ],
+            [
+              9.197831786877941e-06,
+              1.0
+            ]
+          ],
+          "iterations": 48,
+          "convergence": "temperature_complete"
+        }
+      ]
+    },
+    {
+      "max_pair_entries": 4000000,
+      "pairs": [
+        {
+          "score": 0.7450249195098877,
+          "assignment": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "soft_assignment": [
+            [
+              0.9999876022338867,
+              2.6203518521672464e-13
+            ],
+            [
+              1.2389289622660726e-05,
+              1.0
+            ]
+          ],
+          "iterations": 48,
+          "convergence": "temperature_complete"
+        },
+        {
+          "score": 0.3610651195049286,
+          "assignment": [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          "soft_assignment": [
+            [
+              0.9999703764915466,
+              9.671502994024195e-07,
+              2.3607786658885743e-07
+            ],
+            [
+              2.9620028726640157e-05,
+              0.9999990463256836,
+              0.9999997615814209
+            ]
+          ],
+          "iterations": 48,
+          "convergence": "temperature_complete"
+        },
+        {
+          "score": 0.5,
+          "assignment": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "soft_assignment": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "iterations": 48,
+          "convergence": "temperature_complete"
+        },
+        {
+          "score": 0.7450249195098877,
+          "assignment": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "soft_assignment": [
+            [
+              0.9999990463256836,
+              3.3712837209376456e-12
+            ],
+            [
+              9.62976400842308e-07,
+              1.0
+            ]
+          ],
+          "iterations": 48,
+          "convergence": "temperature_complete"
+        },
+        {
+          "score": 0.5,
+          "assignment": [
+            [
+              1
+            ]
+          ],
+          "soft_assignment": [
+            [
+              1.0
+            ]
+          ],
+          "iterations": 48,
+          "convergence": "temperature_complete"
+        },
+        {
+          "score": 0.75,
+          "assignment": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "soft_assignment": [
+            [
+              0.9999908208847046,
+              2.9048053025448883e-12
+            ],
+            [
+              9.197831786877941e-06,
+              1.0
+            ]
+          ],
+          "iterations": 48,
+          "convergence": "temperature_complete"
+        }
+      ]
+    }
+  ]
+}
