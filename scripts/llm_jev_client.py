@@ -16,7 +16,7 @@ ENDPOINT = "https://openrouter.ai/api/alpha/decisions"
 PROVIDER_SLUG = "typesafe"
 PROVIDER_NAME = "TypeSafe"
 KEY_NAMES = ("OPENROUTER_API_KEY", "OPENROUTER_API")
-RETRY_STATUS = frozenset({408, 429, 500, 502, 503, 504, 524, 529})
+RETRY_STATUS = frozenset({408, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524, 529})
 
 
 class JevError(RuntimeError):
@@ -80,7 +80,7 @@ class JevClient:
             if response.status_code in RETRY_STATUS and attempt < self.max_attempts:
                 retry_after = str(response.headers.get("retry-after") or "")
                 is_number = retry_after.replace(".", "", 1).isdigit()
-                self.sleep(float(retry_after) if is_number
+                self.sleep(min(float(retry_after), 120.0) if is_number
                           else min(10 * 2 ** (attempt - 1), 120))
                 continue
             text = str(response.text).replace(self.api_key, "[redacted]")[:300]

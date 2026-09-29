@@ -156,6 +156,19 @@ def test_504_retried_then_success():
     assert len(sleeps) == 1 and c.calls == 1
 
 
+def test_522_retried_then_success():
+    c, sleeps = client([FakeResponse(522), FakeResponse(200, ok_payload())])
+    c.decide({}, QUESTIONS)
+    assert len(sleeps) == 1 and c.calls == 1
+
+
+def test_retry_after_capped_at_120():
+    c, sleeps = client([FakeResponse(429, headers={"retry-after": "999"}),
+                        FakeResponse(200, ok_payload())])
+    c.decide({}, QUESTIONS)
+    assert sleeps == [120.0] and c.calls == 1
+
+
 def test_408_retried_then_success():
     c, sleeps = client([FakeResponse(408), FakeResponse(200, ok_payload())])
     c.decide({}, QUESTIONS)
