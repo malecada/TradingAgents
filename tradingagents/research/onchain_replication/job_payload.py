@@ -44,6 +44,7 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
     from .feature_pipeline import representation_arm
     from .cache import cache_key
     from .feature_residency import read_feature_policy
+    from .graph_residency import read_graph_policy,registered_graph_manifests,open_graph_population,GraphPopulationCleanupError
     registered = json.loads(run.read_input(job_input))
     if registered['kind'] != 'fit' or canonical_bytes(registered['payload']) != canonical_bytes(payload):
         raise ValueError('fit job payload differs from registration')
@@ -52,11 +53,15 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
     from .sampling_policy import read_sampling_policy,require_sampling_arm
     for job in payload['representation_jobs'].values():
         sampling_input=job.get('sampling_input')
+        graph_input=job.get('graph_residency_input')
         if job['operation']=='produce':
             producer=json.loads(run.read_input(job['plan_input']))['producers'][job['producer']]
             if producer.get('sampling_input')!=sampling_input:raise ValueError('producer sampling policy differs before fitting')
+            if producer.get('graph_residency_input')!=graph_input:raise ValueError('producer graph residency policy differs before fitting')
         elif sampling_input is not None:
             raise ValueError('sampling policy is unused for completed reuse')
+        if job['operation']!='produce' and graph_input is not None:raise ValueError('graph residency policy unused for completed reuse')
+        read_graph_policy(run,graph_input)
         sampling=read_sampling_policy(run,sampling_input)
         require_sampling_arm(job['descriptor']['arm'],sampling)
     populations = {}
@@ -124,25 +129,20 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
                 if canonical_bytes(producer['descriptor']) != canonical_bytes(descriptor) or producer['binding_output'] != reference['output']:
                     raise ValueError('job representation descriptor/output differs')
                 examples, _ = populations[job['population']]
-                manifests = []
-                declared_bytes = 0
-                for h in descriptor['graph_population']:
-                    graph_reference = producer['graphs'][h]
-                    if set(graph_reference) != {'input'}:
-                        raise ValueError('job graph loader requires admitted immutable graph input')
-                    input_name = graph_reference['input']
-                    metadata = json.loads(run.read_input(input_name))
-                    declared_bytes += sum(x['bytes'] for x in metadata['arrays'].values())
-                    info = run.admission.inputs[input_name]
-                    manifests.append((run.admission.root/info['path'], info['sha256']))
-                if type(job['max_graph_payload_bytes']) is not int or not 0 < declared_bytes <= job['max_graph_payload_bytes']:
-                    raise ValueError('registered aggregate graph payload capacity exceeded; Python/temporary overhead needs outer guard')
-                graphs = tuple(load_graph(path, sha) for path, sha in manifests)
-                value, _ = prepare_registered_features(run, job['producer'], graphs, examples,
-                    Fold(**descriptor['fold']), descriptor['arm'], descriptor['seed'], descriptor['configs'],
-                    plan_input=job['plan_input'], max_entries=producer['max_entries'],
-                    max_array_bytes=producer['max_array_bytes'], continuation_input=job.get('continuation_input'),residency_input=job.get('residency_input'),sampling_input=job.get('sampling_input'))
-                del graphs
+                def produce(graphs):
+                    return prepare_registered_features(run, job['producer'], graphs, examples,
+                        Fold(**descriptor['fold']), descriptor['arm'], descriptor['seed'], descriptor['configs'],
+                        plan_input=job['plan_input'], max_entries=producer['max_entries'],
+                        max_array_bytes=producer['max_array_bytes'], continuation_input=job.get('continuation_input'),
+                        residency_input=job.get('residency_input'),sampling_input=job.get('sampling_input'),
+                        graph_residency_input=job.get('graph_residency_input'))
+                graph_policy=read_graph_policy(run,job.get('graph_residency_input'))
+                if graph_policy is not None:
+                    manifests=registered_graph_manifests(run,producer)
+                    with open_graph_population(manifests,graph_policy,max_graph_payload_bytes=job['max_graph_payload_bytes']) as population:
+                        value,_=produce(population)
+                else:
+                    value=_produce_eager_graphs(run,descriptor,producer,job,produce,load_graph)
             else:
                 raise ValueError('unknown representation operation')
             if value.binding['workflow_identity'] != cache_key(descriptor):
@@ -150,6 +150,9 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
             run.write_json(reference['failure_output'], {'status': 'complete', 'representation': name,
                 'reason': 'fixed representation available; no failure', 'workflow_identity': value.binding['workflow_identity']})
             prepared[name] = value
+        except GraphPopulationCleanupError:
+            # Cannot mark this merely unavailable and proceed with live maps.
+            raise
         except (ValueError, RuntimeError, OSError) as error:
             reason = type(error).__name__+': '+str(error)
             # Completed numerical journals/partial outputs remain untouched.
@@ -161,3 +164,23 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
                 if producer['journal_output'] not in run._published_outputs:
                     run.write_json(producer['journal_output'], {'status': 'unavailable', 'reason': reason})
     return execute_batch(run, populations, prepared, plan_input=payload['batch_plan_input'])
+
+
+def _produce_eager_graphs(run,descriptor,producer,job,produce,load_graph):
+    # Existing eager admission/loading remains the default path.
+    manifests = []
+    declared_bytes = 0
+    for h in descriptor['graph_population']:
+        graph_reference = producer['graphs'][h]
+        if set(graph_reference) != {'input'}:
+            raise ValueError('job graph loader requires admitted immutable graph input')
+        input_name = graph_reference['input']
+        metadata = json.loads(run.read_input(input_name))
+        declared_bytes += sum(x['bytes'] for x in metadata['arrays'].values())
+        info = run.admission.inputs[input_name]
+        manifests.append((run.admission.root/info['path'], info['sha256']))
+    if type(job['max_graph_payload_bytes']) is not int or not 0 < declared_bytes <= job['max_graph_payload_bytes']:
+        raise ValueError('registered aggregate graph payload capacity exceeded; Python/temporary overhead needs outer guard')
+    graphs = tuple(load_graph(path, sha) for path, sha in manifests)
+    value,_=produce(graphs)
+    return value

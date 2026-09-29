@@ -1,0 +1,144 @@
+{
+  "boot_id": "9a0147d4-78ab-4515-ae9e-2bcc3e866385",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-e70fd6918390431fba13ef1fbc6a47ed.service",
+  "child_exit_code": null,
+  "cleanup_stop_returncode": 0,
+  "cleanup_unit_properties": {
+    "ActiveState": "failed",
+    "ControlGroup": "",
+    "ExecMainStatus": "1",
+    "Result": "exit-code",
+    "SubState": "failed"
+  },
+  "cleanup_verified": true,
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "scripts/verify_offline.py"
+  ],
+  "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+  "cpu_quota_controller_available": false,
+  "cpu_thread_readback": {
+    "3178489": [
+      0,
+      1
+    ],
+    "3178493": [
+      0,
+      1
+    ],
+    "3575327": [
+      0,
+      1
+    ],
+    "3575337": [
+      0,
+      1
+    ],
+    "3575366": [
+      0,
+      1
+    ],
+    "3575371": [
+      0,
+      1
+    ],
+    "3575377": [
+      0,
+      1
+    ],
+    "3575412": [
+      0,
+      1
+    ],
+    "3576988": [
+      0,
+      1
+    ],
+    "3576989": [
+      0,
+      1
+    ]
+  },
+  "cpus": [
+    0,
+    1
+  ],
+  "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+  "disk_floor_bytes": 21474836480,
+  "disk_free_bytes": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes": 21443002368
+  },
+  "disk_paths": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+  ],
+  "elapsed_seconds": 1505.371987196002,
+  "elapsed_time_kill": false,
+  "host_mem_available_bytes": 7178850304,
+  "initial_memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "kernel_controls": {
+    "memory.high": "2952790016",
+    "memory.max": "3221225472",
+    "memory.swap.max": "0"
+  },
+  "lease_seconds": 15.0,
+  "limit_reason": "RuntimeError: disk floor breached",
+  "memory_current_bytes": 591646720,
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "memory_high_bytes": 2952790016,
+  "memory_max_bytes": 3221225472,
+  "memory_swap_max_bytes": 0,
+  "monitor_pid": 3178481,
+  "monotonic_seconds": 29811.853807846,
+  "optional_memory_telemetry": {
+    "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+    "unit": {
+      "anon_bytes": 499183616,
+      "file_bytes": 57991168,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-e70fd6918390431fba13ef1fbc6a47ed.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=4396\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=4396",
+      "swap_current_bytes": 0,
+      "unavailable": {}
+    },
+    "user_ancestor": {
+      "anon_bytes": 7332196352,
+      "file_bytes": 5903425536,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+      "pressure": "some avg10=0.01 avg60=0.09 avg300=0.03 total=68170905\nfull avg10=0.01 avg60=0.09 avg300=0.03 total=67039827",
+      "swap_current_bytes": 2083315712,
+      "unavailable": {}
+    }
+  },
+  "owner_identity": null,
+  "peak_sampled_memory_current_bytes": 1899073536,
+  "phase": "failed",
+  "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-residency-2026-09-29/offline01",
+  "reserve_bytes": 3221225472,
+  "retry": false,
+  "sample_seconds": 0.25,
+  "start_reserve_bytes": 6442450944,
+  "unit": "onchain-replication-e70fd6918390431fba13ef1fbc6a47ed.service",
+  "unit_properties": {
+    "ActiveState": "active",
+    "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-e70fd6918390431fba13ef1fbc6a47ed.service",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "running"
+  },
+  "wait_seconds": 30.0,
+  "wall_seconds": 3600
+}

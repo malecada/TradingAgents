@@ -1,0 +1,23 @@
+EE......
+======================================================================
+ERROR: test_completion_metadata_failure_has_no_complete_marker (__main__.Preservation.test_completion_metadata_failure_has_no_complete_marker)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/cold-offload-2026-09-29-01/test_offload.py", line 89, in test_completion_metadata_failure_has_no_complete_marker
+    module.finish(here,{'bytes_moved':123},'new-remote',Transport(remote,fail_metadata=True))
+    ^^^^^^^^^^^^^
+AttributeError: module 'offload' has no attribute 'finish'
+
+======================================================================
+ERROR: test_completion_success_waits_for_remote_roundtrip (__main__.Preservation.test_completion_success_waits_for_remote_roundtrip)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/storage/cold-offload-2026-09-29-01/test_offload.py", line 97, in test_completion_success_waits_for_remote_roundtrip
+    module.finish(here,{'bytes_moved':123},'new-remote',Transport(remote))
+    ^^^^^^^^^^^^^
+AttributeError: module 'offload' has no attribute 'finish'
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.026s
+
+FAILED (errors=2)

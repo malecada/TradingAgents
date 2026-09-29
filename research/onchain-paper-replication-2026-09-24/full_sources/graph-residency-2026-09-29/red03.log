@@ -1,0 +1,67 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_________ test_foreign_mappings_cannot_be_relabelled_as_admitted_lease _________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-77/test_foreign_mappings_cannot_b0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '558182ae2023c969aa67b8305ff5530500d90735')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f26d1ce2780>
+
+    def test_foreign_mappings_cannot_be_relabelled_as_admitted_lease(registered, monkeypatch):
+        from dataclasses import replace
+        module = importlib.import_module('tradingagents.research.onchain_replication.graph_residency')
+        import tradingagents.research.onchain_replication.registered_features as features
+        registration, _, args, manifests = setup_job(registered)
+        foreign = []
+        for i, graph in enumerate(args[0]):
+            path = save_graph(registration[0] / 'foreign' / str(i), graph)
+            foreign.append((path, file_hash(path), graph_hash(graph)))
+        admitted = tuple((str(p.resolve()), sha, h) for p, sha, h in manifests)
+        with start(registration) as run:
+            with module.open_graph_population(foreign, POLICY) as lease:
+                forged = replace(lease, manifests=admitted)
+                reached_hash = []
+                def mark_hash(*args):
+                    reached_hash.append(True)
+                    raise ValueError('population hash sentinel')
+                monkeypatch.setattr(features, 'representation_descriptor', mark_hash)
+                with pytest.raises(ValueError, match='population|ownership'):
+                    prepare_registered_features(run, 'proposed-11', forged, *args[1:],
+                        plan_input='representation_plan', max_entries=100000,
+                        max_array_bytes=1024**2, graph_residency_input='graph_policy')
+>           assert not reached_hash, 'foreign maps reached descriptor hashing'
+E           AssertionError: foreign maps reached descriptor hashing
+E           assert not [True]
+
+tests/research/onchain_replication/test_graph_residency.py:217: AssertionError
+__________ test_closed_graph_metadata_repr_is_safe_in_error_reporting __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-77/test_closed_graph_metadata_rep0')
+
+    def test_closed_graph_metadata_repr_is_safe_in_error_reporting(tmp_path):
+        import subprocess
+        import sys
+        # Isolate the old unsafe NumPy repr in a bounded child, with core dumps off.
+        script = '''
+    import resource,sys,json
+    from pathlib import Path
+    resource.setrlimit(resource.RLIMIT_CORE,(0,0))
+    from tests.research.onchain_replication.test_subsets import fixture
+    from tradingagents.research.onchain_replication.graph_store import save_graph,open_mapped_graph
+    from tradingagents.research.onchain_replication.provenance import file_hash
+    path=save_graph(Path(sys.argv[1])/'graph',fixture())
+    size=sum(x['bytes'] for x in json.loads(path.read_bytes())['arrays'].values())
+    with open_mapped_graph(path,file_hash(path),max_mapped_bytes=size) as graph: pass
+    print(repr(graph))
+    '''
+        result = subprocess.run([sys.executable, '-B', '-c', script, str(tmp_path)],
+                                capture_output=True, text=True, timeout=30)
+>       assert result.returncode == 0, f'metadata repr child failed: {result.returncode}'
+E       AssertionError: metadata repr child failed: -11
+E       assert -11 == 0
+E        +  where -11 = CompletedProcess(args=['/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python', '-B', '-c', "\nimpor...graph))\n", '/tmp/pytest-of-malecada/pytest-77/test_closed_graph_metadata_rep0'], returncode=-11, stdout='', stderr='').returncode
+
+tests/research/onchain_replication/test_graph_residency.py:281: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_foreign_mappings_cannot_be_relabelled_as_admitted_lease
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_closed_graph_metadata_repr_is_safe_in_error_reporting
+2 failed, 22 deselected in 4.25s

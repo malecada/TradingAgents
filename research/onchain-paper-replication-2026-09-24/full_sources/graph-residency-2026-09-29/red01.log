@@ -1,0 +1,648 @@
+FFFFFFFFFFFFFFFF                                                         [100%]
+=================================== FAILURES ===================================
+_________ test_real_registered_job_maps_graphs_and_closes_before_batch _________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-74/test_real_registered_job_maps_0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '917702134b1c2114f280ccef75c991a07e0a7121')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e7828442780>
+
+    def test_real_registered_job_maps_graphs_and_closes_before_batch(registered, monkeypatch):
+        import tradingagents.research.onchain_replication.run as runner
+        registration, payload, args, _ = setup_job(registered)
+        eager = prepare_features(*args, max_entries=100000, checkpoint=lambda *a: None)
+        opened = []
+        load = np.load
+        def tracked(path, **kwargs):
+            value = load(path, **kwargs)
+            if 'graphs' in Path(path).parts:
+                assert isinstance(value, np.memmap)
+                opened.append(value._mmap)
+            return value
+        monkeypatch.setattr(np, 'load', tracked)
+        def batch(run, populations, prepared, **kwargs):
+            assert opened and all(m.closed for m in opened)
+            result = prepared['proposed-11']
+            assert result.binding == eager.binding
+            assert result.dictionary.identity == eager.dictionary.identity
+            for h in eager.features:
+                np.testing.assert_array_equal(result.features[h]['mcm'], eager.features[h]['mcm'])
+            return prepared
+        monkeypatch.setattr(runner, 'execute_batch', batch)
+        with start(registration) as run:
+>           execute_fit_payload(run, payload)
+
+tests/research/onchain_replication/test_graph_residency.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:163: in execute_fit_payload
+    return execute_batch(run, populations, prepared, plan_input=payload['batch_plan_input'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x7e76bbf31fd0>
+populations = {'whole': (ExampleManifest(train=(Example(decision_at='2022-02-07T00:00:00Z', label_start='2022-02-07T00:00:00Z', labe...2-03-15', '2022-03-16', '2022-03-17'), train_hash='87a1fb6d427804e9eb23b608947ea72e71db271951e1cdd1625c0e220d15395c'))}
+prepared = {'proposed-11': PreparedFeatures(features={'fb8a940c08966b7458642f1ad4ccd60cdd4b4bcb6a4f30a6210a45055c729dad': {'mcm':...e22f041e2fcc3a89b4d6d379', identity='b2401bde17ef5712ed20c4eb36e0ed72ae0fb59940fbdf1a76a3ae2be7b06a9b', hierarchy=()))}
+kwargs = {'plan_input': 'batch_plan'}
+
+    def batch(run, populations, prepared, **kwargs):
+>       assert opened and all(m.closed for m in opened)
+E       assert ([<mmap.mmap closed=False, access=ACCESS_READ, length=144, pos=0, offset=0>, <mmap.mmap closed=False, access=ACCESS_REA...ESS_READ, length=144, pos=0, offset=0>, <mmap.mmap closed=False, access=ACCESS_READ, length=144, pos=0, offset=0>, ...] and False)
+E        +  where False = all(<generator object test_real_registered_job_maps_graphs_and_closes_before_batch.<locals>.batch.<locals>.<genexpr> at 0x7e76bbef7640>)
+
+tests/research/onchain_replication/test_graph_residency.py:77: AssertionError
+_________ test_all_graph_policies_preflight_before_population[schema] __________
+
+fault = 'schema'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e76bbee96e0>
+
+    @pytest.mark.parametrize('fault', ['schema', 'bool_limit', 'mode', 'extra', 'mismatch', 'reuse', 'later'])
+    def test_all_graph_policies_preflight_before_population(fault, monkeypatch):
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        policy = dict(POLICY)
+        if fault == 'schema': policy['schema_version'] = True
+        if fault == 'bool_limit': policy['max_open_arrays'] = True
+        if fault == 'mode': policy['mode'] = 'eager'
+        if fault == 'extra': policy['path'] = '/tmp/foreign'
+        if fault == 'later': policy['max_graph_file_bytes'] = 0
+        job = {'operation': 'reuse' if fault == 'reuse' else 'produce', 'graph_residency_input': 'graph',
+               'plan_input': 'plan', 'producer': 'p', 'descriptor': {'arm': 'proposed'}}
+        jobs = {'p': job}
+        if fault == 'later': jobs = {'earlier': {**job, 'graph_residency_input': 'valid', 'producer': 'earlier'}, **jobs}
+        payload = {'population_inputs': {'whole': {'producer_input': 'population'}}, 'representation_jobs': jobs}
+        values = {'execution_job': {'kind': 'fit', 'payload': payload}, 'graph': policy, 'valid': POLICY,
+                  'plan': {'producers': {'p': {'graph_residency_input': 'other' if fault == 'mismatch' else 'graph'},
+                                         'earlier': {'graph_residency_input': 'valid'}}}}
+        class Run:
+            def read_input(self, name): return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly, 'produce_registered_population', lambda *a: pytest.fail('population before policy admission'))
+>       with pytest.raises(ValueError, match='graph'): execute_fit_payload(Run(), payload)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_graph_residency.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:68: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_graph_residency.test_all_graph_policies_preflight_before_population.<locals>.Run object at 0x7e76bbf32cf0>, 'population')
+
+>   monkeypatch.setattr(assembly, 'produce_registered_population', lambda *a: pytest.fail('population before policy admission'))
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population before policy admission
+
+tests/research/onchain_replication/test_graph_residency.py:112: Failed
+_______ test_all_graph_policies_preflight_before_population[bool_limit] ________
+
+fault = 'bool_limit'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e76bbdb04d0>
+
+    @pytest.mark.parametrize('fault', ['schema', 'bool_limit', 'mode', 'extra', 'mismatch', 'reuse', 'later'])
+    def test_all_graph_policies_preflight_before_population(fault, monkeypatch):
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        policy = dict(POLICY)
+        if fault == 'schema': policy['schema_version'] = True
+        if fault == 'bool_limit': policy['max_open_arrays'] = True
+        if fault == 'mode': policy['mode'] = 'eager'
+        if fault == 'extra': policy['path'] = '/tmp/foreign'
+        if fault == 'later': policy['max_graph_file_bytes'] = 0
+        job = {'operation': 'reuse' if fault == 'reuse' else 'produce', 'graph_residency_input': 'graph',
+               'plan_input': 'plan', 'producer': 'p', 'descriptor': {'arm': 'proposed'}}
+        jobs = {'p': job}
+        if fault == 'later': jobs = {'earlier': {**job, 'graph_residency_input': 'valid', 'producer': 'earlier'}, **jobs}
+        payload = {'population_inputs': {'whole': {'producer_input': 'population'}}, 'representation_jobs': jobs}
+        values = {'execution_job': {'kind': 'fit', 'payload': payload}, 'graph': policy, 'valid': POLICY,
+                  'plan': {'producers': {'p': {'graph_residency_input': 'other' if fault == 'mismatch' else 'graph'},
+                                         'earlier': {'graph_residency_input': 'valid'}}}}
+        class Run:
+            def read_input(self, name): return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly, 'produce_registered_population', lambda *a: pytest.fail('population before policy admission'))
+>       with pytest.raises(ValueError, match='graph'): execute_fit_payload(Run(), payload)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_graph_residency.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:68: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_graph_residency.test_all_graph_policies_preflight_before_population.<locals>.Run object at 0x7e76bbf32120>, 'population')
+
+>   monkeypatch.setattr(assembly, 'produce_registered_population', lambda *a: pytest.fail('population before policy admission'))
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population before policy admission
+
+tests/research/onchain_replication/test_graph_residency.py:112: Failed
+__________ test_all_graph_policies_preflight_before_population[mode] ___________
+
+fault = 'mode'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e76bbae6ad0>
+
+    @pytest.mark.parametrize('fault', ['schema', 'bool_limit', 'mode', 'extra', 'mismatch', 'reuse', 'later'])
+    def test_all_graph_policies_preflight_before_population(fault, monkeypatch):
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        policy = dict(POLICY)
+        if fault == 'schema': policy['schema_version'] = True
+        if fault == 'bool_limit': policy['max_open_arrays'] = True
+        if fault == 'mode': policy['mode'] = 'eager'
+        if fault == 'extra': policy['path'] = '/tmp/foreign'
+        if fault == 'later': policy['max_graph_file_bytes'] = 0
+        job = {'operation': 'reuse' if fault == 'reuse' else 'produce', 'graph_residency_input': 'graph',
+               'plan_input': 'plan', 'producer': 'p', 'descriptor': {'arm': 'proposed'}}
+        jobs = {'p': job}
+        if fault == 'later': jobs = {'earlier': {**job, 'graph_residency_input': 'valid', 'producer': 'earlier'}, **jobs}
+        payload = {'population_inputs': {'whole': {'producer_input': 'population'}}, 'representation_jobs': jobs}
+        values = {'execution_job': {'kind': 'fit', 'payload': payload}, 'graph': policy, 'valid': POLICY,
+                  'plan': {'producers': {'p': {'graph_residency_input': 'other' if fault == 'mismatch' else 'graph'},
+                                         'earlier': {'graph_residency_input': 'valid'}}}}
+        class Run:
+            def read_input(self, name): return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly, 'produce_registered_population', lambda *a: pytest.fail('population before policy admission'))
+>       with pytest.raises(ValueError, match='graph'): execute_fit_payload(Run(), payload)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_graph_residency.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:68: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_graph_residency.test_all_graph_policies_preflight_before_population.<locals>.Run object at 0x7e76bbf32e40>, 'population')
+
+>   monkeypatch.setattr(assembly, 'produce_registered_population', lambda *a: pytest.fail('population before policy admission'))
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population before policy admission
+
+tests/research/onchain_replication/test_graph_residency.py:112: Failed
+__________ test_all_graph_policies_preflight_before_population[extra] __________
+
+fault = 'extra'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e76bbae7680>
+
+    @pytest.mark.parametrize('fault', ['schema', 'bool_limit', 'mode', 'extra', 'mismatch', 'reuse', 'later'])
+    def test_all_graph_policies_preflight_before_population(fault, monkeypatch):
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        policy = dict(POLICY)
+        if fault == 'schema': policy['schema_version'] = True
+        if fault == 'bool_limit': policy['max_open_arrays'] = True
+        if fault == 'mode': policy['mode'] = 'eager'
+        if fault == 'extra': policy['path'] = '/tmp/foreign'
+        if fault == 'later': policy['max_graph_file_bytes'] = 0
+        job = {'operation': 'reuse' if fault == 'reuse' else 'produce', 'graph_residency_input': 'graph',
+               'plan_input': 'plan', 'producer': 'p', 'descriptor': {'arm': 'proposed'}}
+        jobs = {'p': job}
+        if fault == 'later': jobs = {'earlier': {**job, 'graph_residency_input': 'valid', 'producer': 'earlier'}, **jobs}
+        payload = {'population_inputs': {'whole': {'producer_input': 'population'}}, 'representation_jobs': jobs}
+        values = {'execution_job': {'kind': 'fit', 'payload': payload}, 'graph': policy, 'valid': POLICY,
+                  'plan': {'producers': {'p': {'graph_residency_input': 'other' if fault == 'mismatch' else 'graph'},
+                                         'earlier': {'graph_residency_input': 'valid'}}}}
+        class Run:
+            def read_input(self, name): return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly, 'produce_registered_population', lambda *a: pytest.fail('population before policy admission'))
+>       with pytest.raises(ValueError, match='graph'): execute_fit_payload(Run(), payload)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_graph_residency.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:68: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_graph_residency.test_all_graph_policies_preflight_before_population.<locals>.Run object at 0x7e76bbf32f90>, 'population')
+
+>   monkeypatch.setattr(assembly, 'produce_registered_population', lambda *a: pytest.fail('population before policy admission'))
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population before policy admission
+
+tests/research/onchain_replication/test_graph_residency.py:112: Failed
+________ test_all_graph_policies_preflight_before_population[mismatch] _________
+
+fault = 'mismatch'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e76bbf26750>
+
+    @pytest.mark.parametrize('fault', ['schema', 'bool_limit', 'mode', 'extra', 'mismatch', 'reuse', 'later'])
+    def test_all_graph_policies_preflight_before_population(fault, monkeypatch):
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        policy = dict(POLICY)
+        if fault == 'schema': policy['schema_version'] = True
+        if fault == 'bool_limit': policy['max_open_arrays'] = True
+        if fault == 'mode': policy['mode'] = 'eager'
+        if fault == 'extra': policy['path'] = '/tmp/foreign'
+        if fault == 'later': policy['max_graph_file_bytes'] = 0
+        job = {'operation': 'reuse' if fault == 'reuse' else 'produce', 'graph_residency_input': 'graph',
+               'plan_input': 'plan', 'producer': 'p', 'descriptor': {'arm': 'proposed'}}
+        jobs = {'p': job}
+        if fault == 'later': jobs = {'earlier': {**job, 'graph_residency_input': 'valid', 'producer': 'earlier'}, **jobs}
+        payload = {'population_inputs': {'whole': {'producer_input': 'population'}}, 'representation_jobs': jobs}
+        values = {'execution_job': {'kind': 'fit', 'payload': payload}, 'graph': policy, 'valid': POLICY,
+                  'plan': {'producers': {'p': {'graph_residency_input': 'other' if fault == 'mismatch' else 'graph'},
+                                         'earlier': {'graph_residency_input': 'valid'}}}}
+        class Run:
+            def read_input(self, name): return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly, 'produce_registered_population', lambda *a: pytest.fail('population before policy admission'))
+>       with pytest.raises(ValueError, match='graph'): execute_fit_payload(Run(), payload)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_graph_residency.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:68: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_graph_residency.test_all_graph_policies_preflight_before_population.<locals>.Run object at 0x7e76bbf32e40>, 'population')
+
+>   monkeypatch.setattr(assembly, 'produce_registered_population', lambda *a: pytest.fail('population before policy admission'))
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population before policy admission
+
+tests/research/onchain_replication/test_graph_residency.py:112: Failed
+__________ test_all_graph_policies_preflight_before_population[reuse] __________
+
+fault = 'reuse'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e76bbf27d50>
+
+    @pytest.mark.parametrize('fault', ['schema', 'bool_limit', 'mode', 'extra', 'mismatch', 'reuse', 'later'])
+    def test_all_graph_policies_preflight_before_population(fault, monkeypatch):
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        policy = dict(POLICY)
+        if fault == 'schema': policy['schema_version'] = True
+        if fault == 'bool_limit': policy['max_open_arrays'] = True
+        if fault == 'mode': policy['mode'] = 'eager'
+        if fault == 'extra': policy['path'] = '/tmp/foreign'
+        if fault == 'later': policy['max_graph_file_bytes'] = 0
+        job = {'operation': 'reuse' if fault == 'reuse' else 'produce', 'graph_residency_input': 'graph',
+               'plan_input': 'plan', 'producer': 'p', 'descriptor': {'arm': 'proposed'}}
+        jobs = {'p': job}
+        if fault == 'later': jobs = {'earlier': {**job, 'graph_residency_input': 'valid', 'producer': 'earlier'}, **jobs}
+        payload = {'population_inputs': {'whole': {'producer_input': 'population'}}, 'representation_jobs': jobs}
+        values = {'execution_job': {'kind': 'fit', 'payload': payload}, 'graph': policy, 'valid': POLICY,
+                  'plan': {'producers': {'p': {'graph_residency_input': 'other' if fault == 'mismatch' else 'graph'},
+                                         'earlier': {'graph_residency_input': 'valid'}}}}
+        class Run:
+            def read_input(self, name): return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly, 'produce_registered_population', lambda *a: pytest.fail('population before policy admission'))
+>       with pytest.raises(ValueError, match='graph'): execute_fit_payload(Run(), payload)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_graph_residency.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:68: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_graph_residency.test_all_graph_policies_preflight_before_population.<locals>.Run object at 0x7e76bbf32120>, 'population')
+
+>   monkeypatch.setattr(assembly, 'produce_registered_population', lambda *a: pytest.fail('population before policy admission'))
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population before policy admission
+
+tests/research/onchain_replication/test_graph_residency.py:112: Failed
+__________ test_all_graph_policies_preflight_before_population[later] __________
+
+fault = 'later'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e76c05ced50>
+
+    @pytest.mark.parametrize('fault', ['schema', 'bool_limit', 'mode', 'extra', 'mismatch', 'reuse', 'later'])
+    def test_all_graph_policies_preflight_before_population(fault, monkeypatch):
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        policy = dict(POLICY)
+        if fault == 'schema': policy['schema_version'] = True
+        if fault == 'bool_limit': policy['max_open_arrays'] = True
+        if fault == 'mode': policy['mode'] = 'eager'
+        if fault == 'extra': policy['path'] = '/tmp/foreign'
+        if fault == 'later': policy['max_graph_file_bytes'] = 0
+        job = {'operation': 'reuse' if fault == 'reuse' else 'produce', 'graph_residency_input': 'graph',
+               'plan_input': 'plan', 'producer': 'p', 'descriptor': {'arm': 'proposed'}}
+        jobs = {'p': job}
+        if fault == 'later': jobs = {'earlier': {**job, 'graph_residency_input': 'valid', 'producer': 'earlier'}, **jobs}
+        payload = {'population_inputs': {'whole': {'producer_input': 'population'}}, 'representation_jobs': jobs}
+        values = {'execution_job': {'kind': 'fit', 'payload': payload}, 'graph': policy, 'valid': POLICY,
+                  'plan': {'producers': {'p': {'graph_residency_input': 'other' if fault == 'mismatch' else 'graph'},
+                                         'earlier': {'graph_residency_input': 'valid'}}}}
+        class Run:
+            def read_input(self, name): return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly, 'produce_registered_population', lambda *a: pytest.fail('population before policy admission'))
+>       with pytest.raises(ValueError, match='graph'): execute_fit_payload(Run(), payload)
+                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_graph_residency.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:68: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_graph_residency.test_all_graph_policies_preflight_before_population.<locals>.Run object at 0x7e76bbf32cf0>, 'population')
+
+>   monkeypatch.setattr(assembly, 'produce_registered_population', lambda *a: pytest.fail('population before policy admission'))
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population before policy admission
+
+tests/research/onchain_replication/test_graph_residency.py:112: Failed
+__________ test_whole_population_admission_precedes_first_map[bytes] ___________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-74/test_whole_population_admissio0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'ad514e19be88a5fca3b35394be142d99cd842e7d')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e76c05ce5d0>
+fault = 'bytes'
+
+    @pytest.mark.parametrize('fault', ['bytes', 'arrays', 'late_file'])
+    def test_whole_population_admission_precedes_first_map(registered, monkeypatch, fault):
+        import tradingagents.research.onchain_replication.run as runner
+        policy = dict(POLICY)
+        if fault == 'bytes': policy['max_graph_file_bytes'] = 1
+        if fault == 'arrays': policy['max_open_arrays'] = 1
+        registration, payload, _, manifests = setup_job(registered, policy)
+        if fault == 'late_file':
+            (manifests[-1][0].parent / 'node_features.npy').write_bytes(b'corrupted')
+        monkeypatch.setattr(np, 'load', lambda *a, **k: pytest.fail('invalid population reached first map'))
+        monkeypatch.setattr(runner, 'execute_batch', lambda run, populations, prepared, **kw: prepared)
+        with start(registration) as run:
+>           assert execute_fit_payload(run, payload) == {}
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_graph_residency.py:128: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:140: in execute_fit_payload
+    graphs = tuple(load_graph(path, sha) for path, sha in manifests)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/job_payload.py:140: in <genexpr>
+    graphs = tuple(load_graph(path, sha) for path, sha in manifests)
+                   ^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/graph_store.py:33: in load_graph
+    arrays[name]=np.load(member,allow_pickle=False,mmap_mode='r')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (PosixPath('/tmp/pytest-of-malecada/pytest-74/test_whole_population_admissio0/graphs/9/edge_features.npy'),)
+k = {'allow_pickle': False, 'mmap_mode': 'r'}
+
+>   monkeypatch.setattr(np, 'load', lambda *a, **k: pytest.fail('invalid population reached first map'))
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: invalid population reached first map
+
+tests/research/onchain_replication/test_graph_residency.py:125: Failed
+__________ test_whole_population_admission_precedes_first_map[arrays] __________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-74/test_whole_population_admissio1'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '52cd03ccbdc979c845de7e36a509bf8fa26dd19a')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e78280b4d70>
+fault = 'arrays'
+
+    @pytest.mark.parametrize('fault', ['bytes', 'arrays', 'late_file'])
+    def test_whole_population_admission_precedes_first_map(registered, monkeypatch, fault):
+        import tradingagents.research.onchain_replication.run as runner
+        policy = dict(POLICY)
+        if fault == 'bytes': policy['max_graph_file_bytes'] = 1
+        if fault == 'arrays': policy['max_open_arrays'] = 1
+        registration, payload, _, manifests = setup_job(registered, policy)
+        if fault == 'late_file':
+            (manifests[-1][0].parent / 'node_features.npy').write_bytes(b'corrupted')
+        monkeypatch.setattr(np, 'load', lambda *a, **k: pytest.fail('invalid population reached first map'))
+        monkeypatch.setattr(runner, 'execute_batch', lambda run, populations, prepared, **kw: prepared)
+        with start(registration) as run:
+>           assert execute_fit_payload(run, payload) == {}
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_graph_residency.py:128: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:140: in execute_fit_payload
+    graphs = tuple(load_graph(path, sha) for path, sha in manifests)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/job_payload.py:140: in <genexpr>
+    graphs = tuple(load_graph(path, sha) for path, sha in manifests)
+                   ^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/graph_store.py:33: in load_graph
+    arrays[name]=np.load(member,allow_pickle=False,mmap_mode='r')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (PosixPath('/tmp/pytest-of-malecada/pytest-74/test_whole_population_admissio1/graphs/9/edge_features.npy'),)
+k = {'allow_pickle': False, 'mmap_mode': 'r'}
+
+>   monkeypatch.setattr(np, 'load', lambda *a, **k: pytest.fail('invalid population reached first map'))
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: invalid population reached first map
+
+tests/research/onchain_replication/test_graph_residency.py:125: Failed
+________ test_whole_population_admission_precedes_first_map[late_file] _________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-74/test_whole_population_admissio2'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '5c4dfc09397340d382ba13b4769e6b386a8d6997')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e78280b5e10>
+fault = 'late_file'
+
+    @pytest.mark.parametrize('fault', ['bytes', 'arrays', 'late_file'])
+    def test_whole_population_admission_precedes_first_map(registered, monkeypatch, fault):
+        import tradingagents.research.onchain_replication.run as runner
+        policy = dict(POLICY)
+        if fault == 'bytes': policy['max_graph_file_bytes'] = 1
+        if fault == 'arrays': policy['max_open_arrays'] = 1
+        registration, payload, _, manifests = setup_job(registered, policy)
+        if fault == 'late_file':
+            (manifests[-1][0].parent / 'node_features.npy').write_bytes(b'corrupted')
+        monkeypatch.setattr(np, 'load', lambda *a, **k: pytest.fail('invalid population reached first map'))
+        monkeypatch.setattr(runner, 'execute_batch', lambda run, populations, prepared, **kw: prepared)
+        with start(registration) as run:
+>           assert execute_fit_payload(run, payload) == {}
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_graph_residency.py:128: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:140: in execute_fit_payload
+    graphs = tuple(load_graph(path, sha) for path, sha in manifests)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/job_payload.py:140: in <genexpr>
+    graphs = tuple(load_graph(path, sha) for path, sha in manifests)
+                   ^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/graph_store.py:33: in load_graph
+    arrays[name]=np.load(member,allow_pickle=False,mmap_mode='r')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (PosixPath('/tmp/pytest-of-malecada/pytest-74/test_whole_population_admissio2/graphs/9/edge_features.npy'),)
+k = {'allow_pickle': False, 'mmap_mode': 'r'}
+
+>   monkeypatch.setattr(np, 'load', lambda *a, **k: pytest.fail('invalid population reached first map'))
+                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: invalid population reached first map
+
+tests/research/onchain_replication/test_graph_residency.py:125: Failed
+__ test_direct_producer_requires_live_bound_population_before_hashing[closed] __
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-74/test_direct_producer_requires_0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'e129f4230001a0b2d41185059b4822ba983a0c4e')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e76bbde5e60>
+fault = 'closed'
+
+    @pytest.mark.parametrize('fault', ['closed', 'eager', 'omitted', 'foreign'])
+    def test_direct_producer_requires_live_bound_population_before_hashing(registered, monkeypatch, fault):
+>       module = importlib.import_module('tradingagents.research.onchain_replication.graph_residency')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_graph_residency.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.graph_residency'
+import_ = <function _gcd_import at 0x7e7828fd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.graph_residency'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+__ test_direct_producer_requires_live_bound_population_before_hashing[eager] ___
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-74/test_direct_producer_requires_1'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'e129f4230001a0b2d41185059b4822ba983a0c4e')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e76bbf4fa10>
+fault = 'eager'
+
+    @pytest.mark.parametrize('fault', ['closed', 'eager', 'omitted', 'foreign'])
+    def test_direct_producer_requires_live_bound_population_before_hashing(registered, monkeypatch, fault):
+>       module = importlib.import_module('tradingagents.research.onchain_replication.graph_residency')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_graph_residency.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.graph_residency'
+import_ = <function _gcd_import at 0x7e7828fd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.graph_residency'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_ test_direct_producer_requires_live_bound_population_before_hashing[omitted] __
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-74/test_direct_producer_requires_2'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'e129f4230001a0b2d41185059b4822ba983a0c4e')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e78281f0410>
+fault = 'omitted'
+
+    @pytest.mark.parametrize('fault', ['closed', 'eager', 'omitted', 'foreign'])
+    def test_direct_producer_requires_live_bound_population_before_hashing(registered, monkeypatch, fault):
+>       module = importlib.import_module('tradingagents.research.onchain_replication.graph_residency')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_graph_residency.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.graph_residency'
+import_ = <function _gcd_import at 0x7e7828fd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.graph_residency'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_ test_direct_producer_requires_live_bound_population_before_hashing[foreign] __
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-74/test_direct_producer_requires_3'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'e129f4230001a0b2d41185059b4822ba983a0c4e')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e76bbe0f960>
+fault = 'foreign'
+
+    @pytest.mark.parametrize('fault', ['closed', 'eager', 'omitted', 'foreign'])
+    def test_direct_producer_requires_live_bound_population_before_hashing(registered, monkeypatch, fault):
+>       module = importlib.import_module('tradingagents.research.onchain_replication.graph_residency')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_graph_residency.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+<frozen importlib._bootstrap>:1395: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1360: in _find_and_load
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'tradingagents.research.onchain_replication.graph_residency'
+import_ = <function _gcd_import at 0x7e7828fd04a0>
+
+>   ???
+E   ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.graph_residency'
+
+<frozen importlib._bootstrap>:1324: ModuleNotFoundError
+_______ test_failed_numerical_producer_closes_maps_and_preserves_journal _______
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-74/test_failed_numerical_producer0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'e129f4230001a0b2d41185059b4822ba983a0c4e')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e76bbe0fb70>
+
+    def test_failed_numerical_producer_closes_maps_and_preserves_journal(registered, monkeypatch):
+        import tradingagents.research.onchain_replication.registered_features as features
+        import tradingagents.research.onchain_replication.run as runner
+        registration, payload, _, _ = setup_job(registered)
+        opened = []
+        original = features.prepare_features
+        def interrupted(graphs, *args, checkpoint, **kwargs):
+            opened.extend(g.node_features._mmap for g in graphs)
+            def save(stage, context, data):
+                checkpoint(stage, context, data)
+                if stage == 'samples_complete': raise InterruptedError('after durable samples')
+            return original(graphs, *args, checkpoint=save, **kwargs)
+        monkeypatch.setattr(features, 'prepare_features', interrupted)
+        def batch(run, populations, prepared, **kwargs):
+            assert opened and all(m.closed for m in opened)
+            assert prepared == {}
+        monkeypatch.setattr(runner, 'execute_batch', batch)
+        with start(registration) as run:
+>           execute_fit_payload(run, payload)
+
+tests/research/onchain_replication/test_graph_residency.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:141: in execute_fit_payload
+    value, _ = prepare_registered_features(run, job['producer'], graphs, examples,
+tradingagents/research/onchain_replication/registered_features.py:104: in prepare_registered_features
+    result=prepare_features(graphs,examples,fold,arm,seed,configs,max_entries=max_entries,checkpoint=journal,resume_state=state,retain_features=residency is None,max_array_bytes=max_array_bytes,**sampling_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_graph_residency.py:169: in interrupted
+    opened.extend(g.node_features._mmap for g in graphs)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <tuple_iterator object at 0x7e76c051aa70>
+
+>   opened.extend(g.node_features._mmap for g in graphs)
+                  ^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: 'numpy.ndarray' object has no attribute '_mmap'
+
+tests/research/onchain_replication/test_graph_residency.py:169: AttributeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_real_registered_job_maps_graphs_and_closes_before_batch
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_all_graph_policies_preflight_before_population[schema]
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_all_graph_policies_preflight_before_population[bool_limit]
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_all_graph_policies_preflight_before_population[mode]
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_all_graph_policies_preflight_before_population[extra]
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_all_graph_policies_preflight_before_population[mismatch]
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_all_graph_policies_preflight_before_population[reuse]
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_all_graph_policies_preflight_before_population[later]
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_whole_population_admission_precedes_first_map[bytes]
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_whole_population_admission_precedes_first_map[arrays]
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_whole_population_admission_precedes_first_map[late_file]
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_direct_producer_requires_live_bound_population_before_hashing[closed]
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_direct_producer_requires_live_bound_population_before_hashing[eager]
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_direct_producer_requires_live_bound_population_before_hashing[omitted]
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_direct_producer_requires_live_bound_population_before_hashing[foreign]
+FAILED tests/research/onchain_replication/test_graph_residency.py::test_failed_numerical_producer_closes_maps_and_preserves_journal
+16 failed in 21.91s

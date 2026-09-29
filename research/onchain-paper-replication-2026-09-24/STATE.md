@@ -3,6 +3,199 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Graph-residency full verification COMPLETE — September 29, 19:52 UTC:**
+The separately identified offline02 successor passed the complete named profile:
+3,390 tests plus 97 subtests, with two CUDA skips. Standard phase: 2,768 tests in
+1345.68 seconds; neural phase: 622 tests in 519.14 seconds. Guard duration
+1868.96 seconds, child exit 0, cleanup verified, peak sampled memory
+2,657,550,336 bytes and zero memory.high/max/OOM events. All 136 frozen bindings
+match. Monitor PID 780052 and its cgroup are absent; no verification job remains
+active. Evidence: `full_sources/graph-residency-2026-09-29/offline02/`.
+Independent terminal review accepted this engineering increment for release;
+explicit commit/push follows.
+
+The optional admitted graph-residency integration now has focused and broad
+engineering evidence. It does not establish full-neighborhood matching or
+full-size neural feasibility. Next engineering requirements remain in
+`full_sources/graph-residency-2026-09-29/NEXT_MATCHING.md`.
+The failed offline01 result is unchanged. The failed cold-file offload also
+remains closed with zero evictions; all originals and partial remote evidence
+are retained. Its separately reviewed continuation remains needed to satisfy
+the authorized storage move. Prospective disk reserve is 10 GiB; RAM limits
+are unchanged. Budget stays 25/52, with all 1,420 financial fits pending.
+Earlier running/blocked snapshots below are historical and superseded.
+
+**ACTIVE graph-residency offline02 successor — 2026-09-29T19:21:05.868590+00:00:**
+Fresh available RAM recovered to 10,204,639,232 bytes (9.50 GiB), above the
+unchanged 6 GiB verification startup requirement; disk free was 23,319,998,464
+bytes. All 136 successor bindings match. The independently reviewed successor
+was launched once with the user-authorized 10 GiB disk floor. No failed identity
+was retried. Both failed predecessors and all partial storage objects remain.
+
+Monitor PID 780052, start ticks 3791402; unit `onchain-replication-4fc6338420cc4e538d0dcb88cbde979e.service`;
+tool session 33477. Exact receipts: `full_sources/graph-residency-2026-09-29/offline02/`.
+Freeze HEAD 7f5b67359ea44074c86dff8e4eee09b7676982c2 and every file in
+`offline02-bindings.json` while this owner runs. Limits: memory max 3 GiB,
+high 2.75 GiB, zero swap, host reserve 3 GiB, two-CPU affinity and 3600 seconds.
+The complete named offline profile is running, with no recorded limit reason.
+
+Next safe action: collect this exact terminal result, test summaries, source
+hashes and owner cleanup, then obtain independent closure. The cold-file offload
+is still failed with zero evictions; its independent preservation continuation
+requires its own new reviewed identity. No storage transfer or empirical job is
+running under this launch. Budget remains 25/52; all 1,420 financial fits pending.
+Older no-running/blocked snapshots below are historical and superseded.
+
+**Cold-offload guard01 FAILED on host memory reserve — 2026-09-29T18:15:58.538991+00:00:**
+The storage job stopped after 484.79 seconds because available
+host RAM fell below the unchanged 3 GiB runtime reserve. Cleanup is verified;
+monitor PID 3665680 and its cgroup are absent. No verified or evicted file receipt
+exists: all nine original files remain local and independently rehash to their
+manifest values. The remote partial upload remains preserved. Exact closure:
+`storage/cold-offload-2026-09-29-01/closure-check01.json` and guard01/final.json.
+All nine frozen source/input bindings match. No job from this increment remains
+active; no offline02 verification successor has been launched. Never retry guard01.
+
+Independent failure closure is accepted in the offload REVIEW.md. The aggregate
+guard has a null child exit field, while child_exit.json records SIGTERM (-15).
+There were 6,642 memory.high events and zero max/OOM events. Inventory metadata
+roundtrip succeeded, but no archive body has verified remote recovery.
+
+The 10 GiB prospective disk policy does not lower the memory reserve. A fresh
+18:52 UTC check found 3,484,000,256 available RAM bytes: below both the storage
+startup threshold (3.5 GiB) and verification threshold (6 GiB). No job was
+launched. Next safe action: inspect fresh available RAM and prepare a separately
+identified preservation continuation if capacity permits. Retain its partial remote object and original receipts; verify unchanged
+sources and fresh disk/scratch capacity before admission. The reviewed offline02
+successor remains unlaunched pending safe storage disposition and capacity.
+Research budget remains 25/52 with 1,420 fits pending. Older ACTIVE snapshots
+below are historical and superseded.
+
+**User-authorized prospective disk reserve — September 29:**
+The user requested lowering the disk-space limit to 10 gb. The prospective policy
+`storage/disk-reserve-2026-09-29.json` sets 10 GiB (10,737,418,240 bytes), matching
+the guard's existing binary units. This applies to subsequent engineering/storage
+jobs; empirical successors must bind it through their reviewed registration.
+The currently running cold offload remains frozen at its admitted 20 GiB limit.
+No active source or old receipt was edited, and no process was restarted.
+
+Prepared `full_sources/graph-residency-2026-09-29/run_offline02.py` uses the new
+policy under a distinct identity after verifying the failed predecessor's closure.
+All 136 successor source/input hashes match. The complete offline profile and
+all memory/CPU/wall limits are unchanged. Narrow independent review accepted
+the prospective successor in CODE_REVIEW.md; no offline02 identity has been
+launched or reserved. After cold-offload closure,
+review and fresh capacity checks, the successor can complete broad verification.
+No raw data/failed evidence deletion is enabled by lowering the disk reserve.
+
+**ACTIVE reviewed cold-file offload — 2026-09-29T17:49:10.682255+00:00:**
+The user authorized moving data to the existing Storage Box to free working
+space. Independent review accepted exactly nine inactive failed-transport archives
+and synthetic payloads totaling 3,584,497,664 bytes. Eight synthetic preservation
+checks passed. No raw transaction, graph or SQLite input is selected.
+
+One finite guard01 is running from `storage/cold-offload-2026-09-29-01/offload.py`.
+Monitor PID 3665680, start ticks 3239860; unit `onchain-replication-6d1d7b002898497a88f4ef917a019e1a.service`;
+tool session 41391. Inspect that exact receipt; never duplicate or retry identity.
+Sources/manifest/transport are frozen in bindings.json. Each local body is removed
+only after full remote body and restoration-metadata round-trips, stable source
+hash checks and durable verified/sidecar receipts. Interrupted per-file work must
+be reconciled. Limits: 256/192 MiB memory, zero swap, 20 GiB local disk floor,
+3 GiB host reserve, 512 MiB body recovery scratch, 8 GiB transfer allowance,
+32 MiB/s transfer ceiling and 3600 seconds. The guard owns its finite worker.
+
+Next safe action: collect per-file eviction/restoration evidence, terminal guard
+cleanup, actual reclaimed disk space and independent closure. Graph-residency
+verification remains failed/incomplete; no successor test or empirical job has
+been launched. Research budget 25/52 and 1,420 pending fits are unchanged.
+
+**Graph-residency offline01 FAILED on disk reserve — 2026-09-29T17:32 UTC:**
+The exact engineering job stopped after 1505.37 seconds when available workspace
+space reached 21,443,002,368 bytes, below the unchanged 20 GiB floor
+(21,474,836,480 bytes). Standard verification passed 2,768 tests plus 97 subtests
+in 1098.56 seconds. The neural phase reached beyond its 69% marker but has no
+terminal summary; full offline verification is INCOMPLETE, not passed.
+
+Cleanup is verified; monitor PID 3178481 and its cgroup are absent. All 132 frozen
+bindings match. Sampled peak memory was 1,899,073,536 bytes with zero memory
+high/max/OOM events. The child exit code is unrecorded/null, not zero. Receipts
+and partial outputs are retained under `full_sources/graph-residency-2026-09-29/offline01/`,
+including `closure-check01.json`. Independent failure closure is recorded in
+CODE_REVIEW.md; broad verification and engineering release are not accepted.
+No job from this increment remains running. Never relaunch offline01.
+
+Current free space recovered to approximately 24.47 GB decimal after cleanup;
+the writer responsible for the transient disk use has not been established.
+Recovery alone is not evidence that another full suite fits. Next safe action:
+finish failure review, establish sufficient scratch headroom and prepare a
+separate finite successor verification identity with the original attempt
+preserved. Do not lower the safety floor or delete raw/results/failed evidence.
+Keep source bindings unchanged until successor scope is reviewed. No empirical
+claim, new sample or financial fit occurred; budget remains 25/52 and all 1,420
+fits remain pending. Earlier ACTIVE snapshots below are historical.
+
+**Independent work while verification runs — 2026-09-29T16:48:32.003918+00:00:**
+Completed a source-only matching readiness assessment in
+`full_sources/graph-residency-2026-09-29/NEXT_MATCHING.md`; independent source
+review closed with no substantive finding in CODE_REVIEW.md. Backend parity
+and the active precision amendment are explicit. Dictionary fitting still uses
+the scalar solver in both directions:
+512 samples imply 261,632 directional solves, without partitioning at the frozen
+2,048 threshold. Large atomic solves can exceed the 600-second checkpoint
+interval; score-only consumption, bounded full neighborhoods/pairs and explicit
+capacity-policy identity handling remain engineering requirements. These are
+code-derived facts, not measured runtimes. No empirical registration or budget
+was changed. All 132 active source bindings were rechecked unchanged.
+At this observation offline01 was running after 474.8 seconds,
+with no limit reason and sampled peak 773369856 bytes.
+The exact owner, freeze and next closure action below remain operative.
+
+**ACTIVE registered graph-residency offline verification — 2026-09-29T16:41:02.008577+00:00:**
+Independent review accepted the corrected source and focused evidence. One named
+offline01 suite is now running under the unchanged finite engineering guard.
+Monitor PID 3178481, start ticks 2830637; unit `onchain-replication-e70fd6918390431fba13ef1fbc6a47ed.service`;
+tool session 43670. Receipts: `full_sources/graph-residency-2026-09-29/offline01/`.
+HEAD remains 7f5b67359ea44074c86dff8e4eee09b7676982c2, and 132 source/test/runtime/
+launcher files are frozen in this increment's `source-bindings.json`. Do not
+modify bound files, move HEAD, duplicate the process or reuse this job identity.
+
+Limits: 3 GiB memory maximum, 2.75 GiB high, zero job swap, 3 GiB host reserve,
+6 GiB startup available RAM, 20 GiB disk floor, two-CPU affinity and 3600 seconds.
+Latest phase is running with no recorded limit reason. Previous broad suites
+took approximately 25–29 minutes; this is not a full-study runtime estimate.
+No source capture, empirical claim or financial fit was launched. Next safe action:
+collect this exact job's terminal/cleanup/test summaries, recheck all frozen
+hashes and obtain independent closure before explicit commit/push. Raw mapping
+integration does not resolve full-neighborhood matching or full-size model
+feasibility; those remain subsequent requirements. Earlier snapshots below
+are historical and superseded where incompatible.
+
+**Graph-residency focused verification complete — September 29:**
+Expanded green02 passed 83 tests in 106.57 seconds. Green03 passed all 24
+graph-residency tests in 32.22 seconds, including a registered failed-parent
+successor with a newly bound storage allowance, no resampling, exact full feature
+binding/dictionary parity and preserved failed-parent bytes. Both independent
+review findings are corrected; final focused review is being closed before
+frozen-source named offline verification. Latest available RAM 7,465,631,744 bytes
+and disk free 24,784,510,976 bytes meet the unchanged 6 GiB startup and 20 GiB
+disk floor checks. No broad offline job has started yet. No empirical gate
+enables this policy and all 1,420 financial fits remain pending.
+
+**Registered graph-residency integration in progress — September 29:**
+The optional mapped loader is now wired through an admitted aggregate file-byte/
+array-count policy, complete-population preflight and context ownership through
+representation construction. The producer verifies a live issued owner against
+admitted graph inputs before hashing. Unsafe cleanup aborts before model fitting.
+Initial focused green01 passed 57 tests; expanded green02 is running (session
+96126) after review-driven provenance and error-reporting fixes. Red01, the red02
+pytest diagnostic crash, and two isolated red03 counterexamples are retained in
+`full_sources/graph-residency-2026-09-29/`. Independent code review and full named
+offline verification remain pending. No empirical gate is enabled and no source
+claim, new real sample or financial fit occurred. Budget 25/52 unchanged.
+Next safe action: close expanded focused tests/review, including failed-parent
+checkpoint continuation, then freeze sources and admit one finite offline suite.
+The preceding mapped-graph API increment was committed and pushed as 7f5b6735.
+
 **Mapped-graph full offline verification COMPLETE — September 29:**
 Named offline01 passed 3,366 tests plus 97 subtests, with two CUDA skips
 (standard 2,768; neural 598). The guard completed in 1484.10 seconds, child

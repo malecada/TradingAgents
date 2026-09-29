@@ -20,6 +20,11 @@ from .provenance import file_hash, require_hash
 
 class _MappedGraphSnapshot(GraphSnapshot):
     # No new dataclass fields: canonical scientific identity stays unchanged.
+    def __repr__(self):
+        # Error reporters can retain the object after its owner closes maps.
+        # Never ask NumPy to format borrowed numeric buffers here.
+        return f'_MappedGraphSnapshot(asset={self.asset!r}, start_utc={self.start_utc!r}, borrowed=True)'
+
     def __post_init__(self):
         for name in ('node_ids', 'node_features', 'edge_index', 'edge_features', 'edge_aggregates'):
             value = getattr(self, name)
@@ -50,9 +55,8 @@ def _close_maps(mappings, *, primary=None):
             raise RuntimeError('graph mapping cleanup failed') from errors[0]
 
 
-@contextmanager
-def open_mapped_graph(manifest_path, expected_hash, *, max_mapped_bytes):
-    """Verify and borrow all graph arrays without making eager RAM copies."""
+def preflight_mapped_graph(manifest_path, expected_hash, *, max_mapped_bytes):
+    """Verify complete storage admission without opening any array mapping."""
     if type(max_mapped_bytes) is not int or max_mapped_bytes <= 0:
         raise ValueError('positive graph mapping byte bound required')
     path = Path(manifest_path)
@@ -94,6 +98,14 @@ def open_mapped_graph(manifest_path, expected_hash, *, max_mapped_bytes):
         with member.open('rb') as stream:
             if np.lib.format.read_magic(stream) not in {(1, 0), (2, 0), (3, 0)}:
                 raise ValueError('unsupported graph NPY version')
+    return manifest, members, total
+
+
+@contextmanager
+def open_mapped_graph(manifest_path, expected_hash, *, max_mapped_bytes, _map_observer=None):
+    """Borrow verified arrays; optional owner observes even partially opened maps."""
+    manifest, members, _ = preflight_mapped_graph(manifest_path, expected_hash,
+                                                 max_mapped_bytes=max_mapped_bytes)
     opened = []
     failure = None
     try:
@@ -103,6 +115,8 @@ def open_mapped_graph(manifest_path, expected_hash, *, max_mapped_bytes):
             if not isinstance(value, np.memmap):
                 raise ValueError('graph member is not a mapped NPY array')
             opened.append(value._mmap)
+            if _map_observer is not None:
+                _map_observer(value._mmap)
             if value.offset + value.nbytes != info['bytes']:
                 raise ValueError('graph member data extent differs')
             arrays[name] = value
