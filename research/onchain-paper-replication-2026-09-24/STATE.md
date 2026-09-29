@@ -1,7 +1,20 @@
-# Current execution checkpoint — September 25, 2026
+# Current execution checkpoint — September 29, 2026
 
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
+
+
+**Retained ETH raw backup COMPLETE (September29):** all59,083files /
+103,524,489,043raw bytes are preserved in195verified remote bundles spanning
+pilot02/03/05/06/07/08/09. Final09 completed all9phases with child0 and verified
+cleanup; controller894430 and its cgroups are absent. No backup job is active.
+Saved manifests and roundtrip receipts cover every frozen inventory row exactly
+once. Final reconciliation does not constitute a second fresh remote-body
+recovery. Recovery index, terminal reconciliation and independent review:
+`storage/raw-preservation-complete-2026-09-29/`. Originals, failed partials and
+all historical attempts remain preserved. Local free space is about33.7GB;
+full graph/MCM scratch and compute admission remain unresolved. Earlier backup
+progress and incomplete statements below are historical and superseded.
 
 - **No active empirical jobs.** `eth-paper-resource-pilot-20260924-02` is
   terminal FAILED; never relaunch this identity. The local systemd journal
@@ -94,7 +107,8 @@ in the authorized scope. The historical negative screen is unchanged.
   Together they preserve all 52 compact closure copies, journals and audit
   receipts; both recoveries are terminal, independently checked and clean.
   Source checkpoint 288363ea and supplemental commit 6552f435 were pushed.
-  Full raw-data off-device backup remains unverified.
+  At that historical checkpoint, full raw-data off-device backup remained unverified;
+  the September29 closure above supersedes that preservation status.
 
 - **Storage Box setup and compact preservation complete:** key authentication and
   strict host-key checking succeeded; initial capacity check reported 5.0 TB free.
@@ -106,8 +120,8 @@ in the authorized scope. The historical negative screen is unchanged.
   against the pinned Git blobs and verified all payloads and the final marker.
   A separate metadata/stat inventory identifies 59,083 distinct retained ETH
   files/inodes totaling 103,524,489,043 bytes. Their expected hashes are retained;
-  raw contents were not freshly hashed or uploaded. Full transaction-raw backup
-  remains incomplete. No originals were removed and no financial run started.
+  raw contents had not yet been freshly hashed or uploaded at setup. Full raw
+  backup was incomplete then; the September29 closure supersedes this status. No originals were removed and no financial run started.
 
 - **Raw preservation attempt01 terminal FAILED:** its guard stopped at242.813s
   when host available memory3213705216bytes crossed the3GiB reserve during
@@ -156,7 +170,7 @@ pilot, 4,273 files / 13,791,548,375 raw bytes are preserved
 The current pace implies about16 more hours, conditional on unchanged throughput.
 This supersedes earlier progress counts; full backup closure remains pending.
 
-**Latest backup progress (2026-09-29 06:23 UTC):** original09
+**Earlier backup progress (2026-09-29 06:23 UTC; superseded by completion):** original09
 controller PID894430 remains running with a fresh guard inbulk08.
 Seven phases are complete with verified cleanup. 123 new09 bundles plus the
 reused prefix verify57,051 files /96,419,673,675 raw bytes (93.1%).
@@ -166,7 +180,7 @@ about33.02 GB. Roughly1.1 hours remain if observed pace persists.
 Snapshot: `storage/raw-preservation-2026-09-28-09/progress-20260929T062330Z.json`.
 No process was restarted; whole-backup closure and independent audit are pending.
 
-**Active backup continuation09:** independently reviewed and launched once
+**Historical continuation09 startup (now COMPLETE):** independently reviewed and launched once
 from `555c30d1` under the September28 resume instruction after PC sleep.
 Controller/monitor PID894430; phasebulk01 has a fresh running guard,
 verified kernel controls, accepted source/contract intent and remote capacity
@@ -294,13 +308,11 @@ node-week. GPU device transfer is not yet wired into the admitted fit path; the
 old neural capacity estimates are not measured VRAM requirements. Acceptance statuses,
 financial fit counts and the24/51claim accounting remain unchanged.
 
-Next safe action: inspect the existing09 controller, current guard, transport
-diagnostics and completed-bundle receipts. Never invoke its launcher again,
-restart a closed identity or change bound source/inputs. No concurrent synthetic
-tests. On failure preserve partials and reconcile a reviewed successor with all
-spent/allocated resources retained; on completion independently verify combined
-pilot02/03/05/06/07/08/09 recovery against all59,083files. No recurring assistant
-wakeup is configured. Full raw-to-graph admission, compute/local scratch and
+Next safe action: continue ordinary implementation of registered raw-to-graph
+production and bounded graph/model memory integration using the concurrent
+readiness findings. The full retained-raw recovery index is complete; never
+relaunch09 or any closed transfer identity. No backup or empirical job is active.
+No recurring assistant wakeup is configured. Full raw-to-graph admission, compute/local scratch and
 all1,420financial fits remain separate and pending. No empirical job is active.
 Further empirical admission needs a feasible host/storage contract, complete
 source/graph/population accounting and a reviewed cumulative allocation for any
