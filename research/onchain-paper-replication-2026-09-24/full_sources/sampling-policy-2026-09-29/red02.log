@@ -1,0 +1,153 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_____ test_job_sampling_preflight_precedes_population_production[invalid] ______
+
+fault = 'invalid'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f8d12216780>
+
+    @pytest.mark.parametrize('fault',['invalid','mismatch','reuse','non_mcm'])
+    def test_job_sampling_preflight_precedes_population_production(fault,monkeypatch):
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        job={'operation':'reuse' if fault=='reuse' else 'produce','sampling_input':'sampling',
+             'plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+        payload={'population_inputs':{'whole':{'producer_input':'population-plan'}},
+                 'batch_plan_input':'batch','representation_jobs':{'p':job}}
+        values={'execution_job':{'kind':'fit','payload':payload},
+                'sampling':{'schema_version':1,'mode':'mapped','max_weight_bytes':0 if fault=='invalid' else 100000},
+                'plan':{'producers':{'p':{'sampling_input':'other' if fault=='mismatch' else 'sampling'}}}}
+        class Run:
+            def read_input(self,name):return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+>       with pytest.raises(ValueError,match='sampling'):execute_fit_payload(Run(),payload)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_sampling_policy.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:56: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_sampling_policy.test_job_sampling_preflight_precedes_population_production.<locals>.Run object at 0x7f8ba62cd940>, 'population-plan')
+
+>   monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population executed before policy preflight
+
+tests/research/onchain_replication/test_sampling_policy.py:121: Failed
+_____ test_job_sampling_preflight_precedes_population_production[mismatch] _____
+
+fault = 'mismatch'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f8ba5fb48a0>
+
+    @pytest.mark.parametrize('fault',['invalid','mismatch','reuse','non_mcm'])
+    def test_job_sampling_preflight_precedes_population_production(fault,monkeypatch):
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        job={'operation':'reuse' if fault=='reuse' else 'produce','sampling_input':'sampling',
+             'plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+        payload={'population_inputs':{'whole':{'producer_input':'population-plan'}},
+                 'batch_plan_input':'batch','representation_jobs':{'p':job}}
+        values={'execution_job':{'kind':'fit','payload':payload},
+                'sampling':{'schema_version':1,'mode':'mapped','max_weight_bytes':0 if fault=='invalid' else 100000},
+                'plan':{'producers':{'p':{'sampling_input':'other' if fault=='mismatch' else 'sampling'}}}}
+        class Run:
+            def read_input(self,name):return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+>       with pytest.raises(ValueError,match='sampling'):execute_fit_payload(Run(),payload)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_sampling_policy.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:56: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_sampling_policy.test_job_sampling_preflight_precedes_population_production.<locals>.Run object at 0x7f8d11f7aba0>, 'population-plan')
+
+>   monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population executed before policy preflight
+
+tests/research/onchain_replication/test_sampling_policy.py:121: Failed
+______ test_job_sampling_preflight_precedes_population_production[reuse] _______
+
+fault = 'reuse'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f8ba635af90>
+
+    @pytest.mark.parametrize('fault',['invalid','mismatch','reuse','non_mcm'])
+    def test_job_sampling_preflight_precedes_population_production(fault,monkeypatch):
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        job={'operation':'reuse' if fault=='reuse' else 'produce','sampling_input':'sampling',
+             'plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+        payload={'population_inputs':{'whole':{'producer_input':'population-plan'}},
+                 'batch_plan_input':'batch','representation_jobs':{'p':job}}
+        values={'execution_job':{'kind':'fit','payload':payload},
+                'sampling':{'schema_version':1,'mode':'mapped','max_weight_bytes':0 if fault=='invalid' else 100000},
+                'plan':{'producers':{'p':{'sampling_input':'other' if fault=='mismatch' else 'sampling'}}}}
+        class Run:
+            def read_input(self,name):return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+>       with pytest.raises(ValueError,match='sampling'):execute_fit_payload(Run(),payload)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_sampling_policy.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:56: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_sampling_policy.test_job_sampling_preflight_precedes_population_production.<locals>.Run object at 0x7f8d11f7b4d0>, 'population-plan')
+
+>   monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population executed before policy preflight
+
+tests/research/onchain_replication/test_sampling_policy.py:121: Failed
+_____ test_job_sampling_preflight_precedes_population_production[non_mcm] ______
+
+fault = 'non_mcm'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f8ba5f46ad0>
+
+    @pytest.mark.parametrize('fault',['invalid','mismatch','reuse','non_mcm'])
+    def test_job_sampling_preflight_precedes_population_production(fault,monkeypatch):
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        job={'operation':'reuse' if fault=='reuse' else 'produce','sampling_input':'sampling',
+             'plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+        payload={'population_inputs':{'whole':{'producer_input':'population-plan'}},
+                 'batch_plan_input':'batch','representation_jobs':{'p':job}}
+        values={'execution_job':{'kind':'fit','payload':payload},
+                'sampling':{'schema_version':1,'mode':'mapped','max_weight_bytes':0 if fault=='invalid' else 100000},
+                'plan':{'producers':{'p':{'sampling_input':'other' if fault=='mismatch' else 'sampling'}}}}
+        class Run:
+            def read_input(self,name):return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+>       with pytest.raises(ValueError,match='sampling'):execute_fit_payload(Run(),payload)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_sampling_policy.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:56: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_sampling_policy.test_job_sampling_preflight_precedes_population_production.<locals>.Run object at 0x7f8ba62cdfd0>, 'population-plan')
+
+>   monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population executed before policy preflight
+
+tests/research/onchain_replication/test_sampling_policy.py:121: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_job_sampling_preflight_precedes_population_production[invalid]
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_job_sampling_preflight_precedes_population_production[mismatch]
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_job_sampling_preflight_precedes_population_production[reuse]
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_job_sampling_preflight_precedes_population_production[non_mcm]
+4 failed, 9 deselected in 2.82s

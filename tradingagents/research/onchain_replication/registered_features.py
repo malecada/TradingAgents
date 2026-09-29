@@ -14,6 +14,7 @@ from .feature_journal import FeatureJournal,read_feature_journal
 from .serialization import dictionary_from_record
 from .provenance import canonical_bytes,digest,file_hash,durable_mkdir
 from .feature_residency import FixedFeatureMap,read_feature_policy
+from .sampling_policy import read_sampling_policy,require_sampling_arm
 
 
 def representation_descriptor(graphs,examples,fold,arm,seed,configs):
@@ -26,7 +27,7 @@ def representation_descriptor(graphs,examples,fold,arm,seed,configs):
 
 
 def prepare_registered_features(run,producer,graphs,examples,fold,arm,seed,configs,*,
-        plan_input,max_entries,max_array_bytes,continuation_input=None,residency_input=None):
+        plan_input,max_entries,max_array_bytes,continuation_input=None,residency_input=None,sampling_input=None):
     if not isinstance(run,ResearchRun):raise ValueError('admitted representation run required')
     graphs=tuple(graphs)
     descriptor=representation_descriptor(graphs,examples,fold,arm,seed,configs)
@@ -35,6 +36,9 @@ def prepare_registered_features(run,producer,graphs,examples,fold,arm,seed,confi
     plan=json.loads(run.read_input(plan_input))
     if plan.get('schema_version')!=1 or producer not in plan['producers']:raise ValueError('unregistered representation producer')
     item=plan['producers'][producer]
+    if item.get('sampling_input')!=sampling_input:raise ValueError('registered sampling policy input differs')
+    sampling=read_sampling_policy(run,sampling_input)
+    require_sampling_arm(arm,sampling)
     if item.get('residency_input')!=residency_input:raise ValueError('registered feature residency input differs')
     residency=read_feature_policy(run,residency_input)
     if canonical_bytes(item['descriptor'])!=canonical_bytes(descriptor):raise ValueError('registered representation science differs')
@@ -57,6 +61,12 @@ def prepare_registered_features(run,producer,graphs,examples,fold,arm,seed,confi
     with _lock(run.admission.root):
         run._active();run._check_source()
         root=run.admission.root/'research_artifacts/onchain_representations'/identity
+        if sampling is not None:
+            ancestor=root
+            while not ancestor.exists():ancestor=ancestor.parent
+            if (not root.resolve().is_relative_to(run.admission.root.resolve())
+                    or ancestor.stat().st_dev!=run.admission.root.stat().st_dev):
+                raise ValueError('sampling scratch must stay on registered root filesystem')
         durable_mkdir(root);prior=sorted(root.iterdir());parent=None;state=None
         owner={'experiment':run.admission.experiment_id,'source_commit':run.admission.source,
                'producer':producer,'workflow_identity':identity}
@@ -82,9 +92,16 @@ def prepare_registered_features(run,producer,graphs,examples,fold,arm,seed,confi
         elif continuation_input is not None:raise ValueError('continuation has no representation owner')
         journal=FeatureJournal(root/run.admission.experiment_id,owner,required_graphs=descriptor['required_graphs'],parent=parent)
         _immutable(journal.directory/'claim.json',{'owner':owner,'descriptor':descriptor,'plan_input':plan_input,
-                   'binding_output':output,'registration_sha256':run.admission.registration_sha256,'residency_input':residency_input})
+                   'binding_output':output,'registration_sha256':run.admission.registration_sha256,'residency_input':residency_input,
+                   **({'sampling_input':sampling_input,'sampling_policy_sha256':run.admission.inputs[sampling_input]['sha256']} if sampling is not None else {})})
     try:
-        result=prepare_features(graphs,examples,fold,arm,seed,configs,max_entries=max_entries,checkpoint=journal,resume_state=state,retain_features=residency is None,max_array_bytes=max_array_bytes)
+        sampling_options={}
+        if sampling is not None:
+            if (not journal.directory.resolve().is_relative_to(run.admission.root.resolve())
+                    or journal.directory.stat().st_dev!=run.admission.root.stat().st_dev):
+                raise ValueError('sampling scratch must stay on registered root filesystem')
+            sampling_options={'weight_workspace':journal.directory/'sampling-weights','max_weight_bytes':sampling['max_weight_bytes']}
+        result=prepare_features(graphs,examples,fold,arm,seed,configs,max_entries=max_entries,checkpoint=journal,resume_state=state,retain_features=residency is None,max_array_bytes=max_array_bytes,**sampling_options)
         state=None
         path=journal.seal('complete')
         # Re-read persisted bytes before publishing the binding used by fitting.

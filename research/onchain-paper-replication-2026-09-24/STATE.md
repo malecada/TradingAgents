@@ -3,6 +3,57 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Sampling-policy full offline verification COMPLETE — September 29:**
+The named offline01 suite passed 3,334 tests plus 97 subtests, with two CUDA
+skips: standard 2,768 in 1082.10 seconds; neural 566 in 628.49 seconds.
+The guard completed in 1714.36 seconds (28.57 minutes), child exit 0, verified
+cleanup, peak sampled memory 1,934,086,144 bytes, and zero memory.high/max/OOM
+events. All 16 frozen source/test/runtime/launcher hashes remain unchanged.
+The monitor PID and owned cgroup are absent. No job from this increment remains
+active. Exact evidence: `full_sources/sampling-policy-2026-09-29/offline01/`.
+
+The registered mapped-sampler option passed focused integration and broad offline
+verification, including sample-checkpoint continuation without resampling and
+policy admission before population/graph production. Default scientific behavior
+is unchanged. Independent terminal review accepted this engineering increment for release.
+No actual-data gate has enabled this policy and no new empirical claim or
+financial fit occurred. Budget remains 25/52 with all 1,420 fits pending.
+Next safe work after release: reduce graph/node-ID residency and implement bounded
+full-neighborhood matching without truncation, then prepare/review the allocation
+amendment and exact resource registration for full-size MCM/neural measurements.
+Current tests do not establish full-size feasibility or numerical agreement.
+Earlier running snapshots below are historical and superseded.
+
+**ACTIVE sampling-policy offline verification — 2026-09-29T14:39:32.531713+00:00:**
+The registered mapped-sampler policy integration passed 37 focused tests in
+90.60 seconds. Independent review closed the workspace-containment defect and
+both integration-test gaps, and accepted frozen-source named offline verification.
+The full suite is now running once under
+`full_sources/sampling-policy-2026-09-29/offline01/`; no empirical job or financial
+fit is active. Monitor PID 2131535, start ticks 2100890, tool session 28091;
+cgroup `onchain-replication-eb41960b91c44f14a7230c6cdc675539.service`. HEAD remains
+`075674f0675a165fd4446376033e5a5e32374b2e`; 16 source/test/runtime/launcher files
+are frozen in that increment's `source-bindings.json`. Do not modify bound
+files, move HEAD, duplicate the process or reuse the receipt identity.
+
+Limits: 3 GiB memory maximum, 2.75 GiB high, zero job swap, 3 GiB host reserve,
+6 GiB startup availability, 20 GiB disk floor, two-CPU affinity, 3600 seconds.
+Fresh admission had approximately 30.1 GB disk free and 7.3 GB RAM available.
+Current phase is running; no limit reason is recorded. The previous named
+suite took approximately 25 minutes; this is an estimate, not a deadline.
+Durable status is `offline01/live.json`, `final.json`, and `child.log`.
+
+The policy preserves scientific identities and supports verified sample-checkpoint
+reuse. Completed weight scratch alone does not establish recoverable samples.
+No real gate enables this policy yet. Budget remains 25/52; all 1,420 financial
+fits remain pending. Full graph residency, oversized-neighborhood matching,
+full-size MCM/neural feasibility and broader data coverage remain open.
+Next safe action: collect this exact job's terminal receipt, cleanup result,
+test summaries and unchanged source hashes; obtain independent closure, then
+explicitly commit/push this engineering increment. Independent documentation
+work may continue while source remains frozen. Earlier snapshots below are
+historical and superseded where incompatible with this checkpoint.
+
 **Mapped sampler full verification COMPLETE — September29:** named offline01
 passed3,316tests plus97subtests,2CUDA skips (standard2,768;neural548).
 Guard1496.89seconds,2,678,321,152sampled peak bytes,child0,verified cleanup,

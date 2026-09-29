@@ -1,0 +1,219 @@
+"""Admitted execution policy without changing sample/scientific identities."""
+import copy
+import json
+import numpy as np
+import pytest
+
+from tests.research.test_lifecycle import registered,start,commit
+from tests.research.onchain_replication.test_registered_features import prepared_registration
+from tradingagents.research.onchain_replication.registered_features import representation_descriptor,prepare_registered_features
+from tradingagents.research.onchain_replication.feature_pipeline import prepare_features
+from tradingagents.research.onchain_replication.provenance import canonical_bytes,file_hash
+
+
+def setup(registered,policy=None):
+    fixture,args,_=prepared_registration(registered);root,spec,_=fixture
+    graphs,examples,fold,_,seed,configs=args
+    configs=copy.deepcopy(configs);configs['dictionary'].update(sample_count=2,size=2)
+    args=(graphs,examples,fold,'proposed',seed,configs)
+    descriptor=representation_descriptor(graphs,examples,fold,'proposed',seed,configs)
+    path=root/'feature-plan.json';plan=json.loads(path.read_bytes())
+    item=plan['producers'].pop('gin11');item['descriptor']=descriptor
+    item['sampling_input']='sampling'
+    plan['producers']['proposed11']=item
+    path.write_bytes(canonical_bytes(plan));spec['experiments']['example-a']['inputs']['feature-plan']['sha256']=file_hash(path)
+    path=root/'sampling-policy.json';path.write_bytes(canonical_bytes(policy or {'schema_version':1,'mode':'mapped','max_weight_bytes':1024**2}))
+    spec['experiments']['example-a']['inputs']['sampling']={'path':str(path.relative_to(root)),'sha256':file_hash(path),'dataset':'sample'}
+    return (root,spec,commit(root,spec)),args,descriptor
+
+
+def produce(run,args,**kwargs):
+    return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+        max_entries=100000,max_array_bytes=1024**2,sampling_input='sampling',**kwargs)
+
+
+def test_registered_mapped_policy_keeps_complete_feature_binding(registered):
+    fixture,args,_=setup(registered);root,_,_=fixture
+    eager=prepare_features(*args,max_entries=100000,checkpoint=lambda *a:None)
+    with start(fixture) as run:
+        result,path=produce(run,args)
+        assert result.binding==eager.binding and result.dictionary.identity==eager.dictionary.identity
+        scratch=path.parent/'sampling-weights'
+        assert (scratch/'complete.json').exists()
+        claim=json.loads((path.parent/'claim.json').read_bytes())
+        assert claim['sampling_input']=='sampling'
+        assert claim['sampling_policy_sha256']==run.admission.inputs['sampling']['sha256']
+        assert json.loads((scratch/'complete.json').read_text())['sample_identity']==result.dictionary.sample_hash
+
+
+@pytest.mark.parametrize('policy',[
+    {'schema_version':1,'mode':'mapped','max_weight_bytes':0},
+    {'schema_version':1,'mode':'mapped','max_weight_bytes':True},
+    {'schema_version':True,'mode':'mapped','max_weight_bytes':100000},
+    {'schema_version':1,'mode':'other','max_weight_bytes':100000},
+    {'schema_version':1,'mode':'mapped','max_weight_bytes':100000,'path':'/tmp/arbitrary'},
+])
+def test_invalid_policy_refused_before_representation_claim(registered,policy,monkeypatch):
+    import tradingagents.research.onchain_replication.registered_features as module
+    fixture,args,_=setup(registered,policy);root,_,_=fixture
+    monkeypatch.setattr(module,'prepare_features',lambda *a,**k:pytest.fail('invalid policy reached numerics'))
+    with start(fixture) as run:
+        with pytest.raises(ValueError,match='sampling'):produce(run,args)
+        assert not (root/'research_artifacts/onchain_representations').exists()
+
+
+def test_omitted_admitted_policy_cannot_silently_use_eager_mode(registered):
+    fixture,args,_=setup(registered);root,_,_=fixture
+    with start(fixture) as run:
+        with pytest.raises(ValueError,match='sampling'):
+            prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2)
+        assert not (root/'research_artifacts/onchain_representations').exists()
+
+
+def test_checkpointed_samples_survive_policy_change_without_resampling(registered,monkeypatch):
+    import tradingagents.research.onchain_replication.registered_features as module
+    import tradingagents.research.onchain_replication.feature_pipeline as pipeline
+    fixture,args,_=setup(registered);root,spec,_=fixture;original=module.prepare_features
+    uninterrupted=prepare_features(*args,max_entries=100000,checkpoint=lambda *a:None)
+    def interrupt(*a,checkpoint,**kw):
+        def save(stage,context,payload):
+            checkpoint(stage,context,payload)
+            if stage=='samples_complete':raise InterruptedError('after durable samples')
+        return original(*a,checkpoint=save,**kw)
+    monkeypatch.setattr(module,'prepare_features',interrupt)
+    with start(fixture) as run:
+        with pytest.raises(InterruptedError):produce(run,args)
+    failed,=list((root/'research_artifacts/onchain_representations').glob('*/example-a/failed.json'))
+    child=copy.deepcopy(spec['experiments']['example-a']);child['parent']='example-a'
+    child['inputs']['prior']={'path':str(failed.relative_to(root)),'sha256':file_hash(failed),'dataset':'sample'}
+    new_policy=root/'sampling-policy-b.json';new_policy.write_bytes(canonical_bytes({'schema_version':1,'mode':'mapped','max_weight_bytes':2*1024**2}))
+    child['inputs']['sampling']={'path':str(new_policy.relative_to(root)),'sha256':file_hash(new_policy),'dataset':'sample'}
+    spec['experiments']['example-b']=child;source=commit(root,spec)
+    monkeypatch.setattr(module,'prepare_features',original)
+    monkeypatch.setattr(pipeline,'sample_neighborhoods',lambda *a,**k:pytest.fail('checkpointed samples recomputed'))
+    with start((root,spec,source),experiment='example-b') as run:
+        result,path=produce(run,args,continuation_input='prior')
+        assert result.dictionary is not None and not (path.parent/'sampling-weights').exists()
+        assert result.binding==uninterrupted.binding
+        assert result.dictionary.identity==uninterrupted.dictionary.identity
+    assert (failed.parent/'sampling-weights/complete.json').exists()
+
+
+def test_non_mcm_component_rejects_unused_sampling_workspace(tmp_path):
+    from tests.research.onchain_replication.test_feature_pipeline import population,configs
+    graphs,fold,examples=population()
+    with pytest.raises(ValueError,match='sampling'):
+        prepare_features(graphs,examples,fold,'gin',11,configs(),max_entries=100000,
+                         checkpoint=lambda *a:None,weight_workspace=tmp_path/'unused',max_weight_bytes=100000)
+    assert not (tmp_path/'unused').exists()
+
+
+@pytest.mark.parametrize('fault',['invalid','mismatch','reuse','non_mcm'])
+def test_job_sampling_preflight_precedes_population_production(fault,monkeypatch):
+    from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+    import tradingagents.research.onchain_replication.population_assembly as assembly
+    job={'operation':'reuse' if fault=='reuse' else 'produce','sampling_input':'sampling',
+         'plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+    payload={'population_inputs':{'whole':{'producer_input':'population-plan'}},
+             'batch_plan_input':'batch','representation_jobs':{'p':job}}
+    values={'execution_job':{'kind':'fit','payload':payload},
+            'sampling':{'schema_version':1,'mode':'mapped','max_weight_bytes':0 if fault=='invalid' else 100000},
+            'plan':{'producers':{'p':{'sampling_input':'other' if fault=='mismatch' else 'sampling'}}}}
+    class Run:
+        def read_input(self,name):return canonical_bytes(values[name])
+    monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population executed before policy preflight'))
+    with pytest.raises(ValueError,match='sampling'):execute_fit_payload(Run(),payload)
+
+
+def test_policy_drift_refused_before_claim(registered):
+    fixture,args,_=setup(registered);root,_,_=fixture
+    with start(fixture) as run:
+        (root/'sampling-policy.json').write_bytes(canonical_bytes({'schema_version':1,'mode':'mapped','max_weight_bytes':2*1024**2}))
+        with pytest.raises(ValueError):produce(run,args)
+        assert not (root/'research_artifacts/onchain_representations').exists()
+
+
+def test_sampling_root_escape_refused_before_journal_writes(registered):
+    fixture,args,_=setup(registered);root,_,_=fixture
+    foreign=root.parent/'foreign-sampling';foreign.mkdir()
+    (root/'research_artifacts').mkdir()
+    (root/'research_artifacts/onchain_representations').symlink_to(foreign,target_is_directory=True)
+    with start(fixture) as run:
+        with pytest.raises(ValueError,match='sampling'):produce(run,args)
+        assert list(foreign.iterdir())==[]
+
+
+def test_completed_scratch_is_not_a_persisted_samples_checkpoint(registered,monkeypatch):
+    import tradingagents.research.onchain_replication.registered_features as module
+    fixture,args,_=setup(registered);root,_,_=fixture;original=module.prepare_features
+    def interrupt(*a,checkpoint,**kw):
+        def reject(stage,context,payload):
+            if stage=='samples_complete':raise OSError('synthetic before sample publication')
+            checkpoint(stage,context,payload)
+        return original(*a,checkpoint=reject,**kw)
+    monkeypatch.setattr(module,'prepare_features',interrupt)
+    with start(fixture) as run:
+        with pytest.raises(OSError,match='sample publication'):produce(run,args)
+        failed,=list((root/'research_artifacts/onchain_representations').glob('*/example-a/failed.json'))
+        assert json.loads(failed.read_bytes())['events']==[]
+        assert (failed.parent/'sampling-weights/complete.json').exists()
+        with pytest.raises(FileExistsError):produce(run,args)
+
+
+def test_all_job_policies_preflight_before_any_population(monkeypatch):
+    from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+    import tradingagents.research.onchain_replication.population_assembly as assembly
+    jobs={name:{'operation':'produce','sampling_input':name,'plan_input':'plan','producer':name,
+                'descriptor':{'arm':'proposed'}} for name in ('valid','invalid')}
+    payload={'population_inputs':{'whole':{'producer_input':'population-plan'}},
+             'batch_plan_input':'batch','representation_jobs':jobs}
+    values={'execution_job':{'kind':'fit','payload':payload},
+            'valid':{'schema_version':1,'mode':'mapped','max_weight_bytes':100000},
+            'invalid':{'schema_version':1,'mode':'mapped','max_weight_bytes':0},
+            'plan':{'producers':{name:{'sampling_input':name} for name in jobs}}}
+    class Run:
+        def read_input(self,name):return canonical_bytes(values[name])
+    monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('valid producer ran before invalid-policy admission'))
+    with pytest.raises(ValueError,match='sampling'):execute_fit_payload(Run(),payload)
+
+
+def test_job_forwards_policy_to_real_registered_sampler(registered,monkeypatch):
+    from tests.research.onchain_replication.test_run import setup as run_setup,register_plan
+    from tests.research.onchain_replication.test_dataset import fixture
+    from tests.research.onchain_replication.test_feature_pipeline import configs
+    from tradingagents.research.onchain_replication.job_payload import execute_fit_payload,population_record
+    from tradingagents.research.onchain_replication.graph_store import save_graph
+    from tradingagents.research.onchain_replication.neighborhoods import graph_hash
+    import tradingagents.research.onchain_replication.run as runner
+    registered,populations,plan=run_setup(registered);root,spec,_=registered
+    graphs,_,fold,_=fixture();examples,_=populations['whole'];config=configs()
+    config['dictionary'].update(sample_count=2,size=2)
+    required={h for row in (*examples.train,*examples.test) for h in row.graph_hashes}
+    graphs=[g for g in graphs if graph_hash(g) in required]
+    descriptor=representation_descriptor(graphs,examples,fold,'proposed',11,config)
+    references={}
+    for i,g in enumerate(graphs):
+        path=save_graph(root/'graphs'/str(i),g);name='graph_'+str(i)
+        spec['experiments']['example-a']['inputs'][name]={'path':str(path.relative_to(root)),'sha256':file_hash(path),'dataset':'sample'}
+        references[graph_hash(g)]={'input':name}
+    producer={'descriptor':descriptor,'graphs':references,'max_entries':100000,'max_array_bytes':1024**2,
+              'binding_output':'proposed-binding.json','journal_output':'proposed-journal.json','sampling_input':'sampling'}
+    plan['cells'][0]['cell']['arm']='proposed';plan['cells'][0]['representation']='proposed-11'
+    plan['representations']['proposed-11']={'output':'proposed-binding.json','failure_output':'proposed-failed.json'}
+    spec['experiments']['example-a']['outputs']+=['proposed-binding.json','proposed-journal.json','proposed-failed.json']
+    payload={'population_inputs':{'whole':'population'},'batch_plan_input':'batch_plan',
+             'representation_jobs':{'proposed-11':{'operation':'produce','descriptor':descriptor,
+                 'plan_input':'representation_plan','producer':'proposed-11','population':'whole',
+                 'max_graph_payload_bytes':10*1024**2,'sampling_input':'sampling'}}}
+    registered=register_plan((root,spec,None),plan,[('population',population_record(*populations['whole'])),
+        ('representation_plan',{'schema_version':1,'producers':{'proposed-11':producer}}),
+        ('sampling',{'schema_version':1,'mode':'mapped','max_weight_bytes':1024**2}),
+        ('execution_job',{'kind':'fit','payload':payload})])
+    # Exercise actual admission, graph loading, sampler, dictionary and MCM;
+    # model fitting is separate from this policy-forwarding contract.
+    monkeypatch.setattr(runner,'execute_batch',lambda run,populations,prepared,**kw:prepared)
+    with start(registered) as run:
+        values=execute_fit_payload(run,payload)
+        assert values['proposed-11'].dictionary is not None
+        scratch,=list((root/'research_artifacts/onchain_representations').glob('*/example-a/sampling-weights/complete.json'))
+        assert json.loads(scratch.read_bytes())['sample_identity']==values['proposed-11'].dictionary.sample_hash

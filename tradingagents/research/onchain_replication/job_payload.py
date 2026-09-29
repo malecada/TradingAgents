@@ -47,6 +47,18 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
     registered = json.loads(run.read_input(job_input))
     if registered['kind'] != 'fit' or canonical_bytes(registered['payload']) != canonical_bytes(payload):
         raise ValueError('fit job payload differs from registration')
+    # Validate execution policy before population production, graph loading or
+    # numerical work. A missing caller reference must not bypass a planned policy.
+    from .sampling_policy import read_sampling_policy,require_sampling_arm
+    for job in payload['representation_jobs'].values():
+        sampling_input=job.get('sampling_input')
+        if job['operation']=='produce':
+            producer=json.loads(run.read_input(job['plan_input']))['producers'][job['producer']]
+            if producer.get('sampling_input')!=sampling_input:raise ValueError('producer sampling policy differs before fitting')
+        elif sampling_input is not None:
+            raise ValueError('sampling policy is unused for completed reuse')
+        sampling=read_sampling_policy(run,sampling_input)
+        require_sampling_arm(job['descriptor']['arm'],sampling)
     populations = {}
     for name, reference in payload['population_inputs'].items():
         if isinstance(reference, str):
@@ -129,7 +141,7 @@ def execute_fit_payload(run, payload, *, job_input='execution_job'):
                 value, _ = prepare_registered_features(run, job['producer'], graphs, examples,
                     Fold(**descriptor['fold']), descriptor['arm'], descriptor['seed'], descriptor['configs'],
                     plan_input=job['plan_input'], max_entries=producer['max_entries'],
-                    max_array_bytes=producer['max_array_bytes'], continuation_input=job.get('continuation_input'),residency_input=job.get('residency_input'))
+                    max_array_bytes=producer['max_array_bytes'], continuation_input=job.get('continuation_input'),residency_input=job.get('residency_input'),sampling_input=job.get('sampling_input'))
                 del graphs
             else:
                 raise ValueError('unknown representation operation')

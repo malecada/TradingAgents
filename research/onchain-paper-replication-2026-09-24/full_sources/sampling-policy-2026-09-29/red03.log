@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_sampling_root_escape_refused_before_journal_writes ____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-57/test_sampling_root_escape_refu0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '4bd899e6a6652679214e0a6281eb9b5c6bf49f6b')
+
+    def test_sampling_root_escape_refused_before_journal_writes(registered):
+        fixture,args,_=setup(registered);root,_,_=fixture
+        foreign=root.parent/'foreign-sampling';foreign.mkdir()
+        (root/'research_artifacts').mkdir()
+        (root/'research_artifacts/onchain_representations').symlink_to(foreign,target_is_directory=True)
+        with start(fixture) as run:
+            with pytest.raises(ValueError,match='sampling'):produce(run,args)
+>           assert list(foreign.iterdir())==[]
+E           AssertionError: assert [PosixPath('/...b898e42e638')] == []
+E             
+E             Left contains one more item: PosixPath('/tmp/pytest-of-malecada/pytest-57/foreign-sampling/02f6a19c180e279b668d0a0ee241d46bb52e490623cd4031996c0b898e42e638')
+E             Use -v to get more diff
+
+tests/research/onchain_replication/test_sampling_policy.py:140: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_sampling_root_escape_refused_before_journal_writes
+1 failed, 16 deselected in 14.82s

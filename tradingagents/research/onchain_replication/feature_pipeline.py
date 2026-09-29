@@ -32,7 +32,11 @@ def representation_arm(arm):
     return 'proposed' if arm in {'proposed','training_label_permutation','mcm_without_gat'} else arm
 
 
-def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpoint,resume_state=None,retain_features=True,max_array_bytes=None):
+def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpoint,resume_state=None,retain_features=True,max_array_bytes=None,weight_workspace=None,max_weight_bytes=None):
+    from .sampling_policy import require_sampling_arm
+    if (weight_workspace is None)!=(max_weight_bytes is None):raise ValueError('sampling workspace and budget must be paired')
+    if max_weight_bytes is not None and (type(max_weight_bytes) is not int or max_weight_bytes<=0):raise ValueError('sampling budget must be positive')
+    require_sampling_arm(arm,max_weight_bytes)
     if type(retain_features) is not bool:raise ValueError('feature retention policy must be boolean')
     if not retain_features and (type(max_array_bytes) is not int or max_array_bytes<=0):raise ValueError('streamed features require explicit array bound')
     if not callable(checkpoint):raise ValueError('explicit durable checkpoint callback required')
@@ -74,7 +78,9 @@ def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpo
     if needs_mcm:
         if 'samples' in resume_state:samples=samples_from_record(resume_state['samples'])
         else:
-            samples=sample_neighborhoods(graphs,fitting_config,seed)
+            sampling_options=({} if weight_workspace is None else
+                              {'weight_workspace':weight_workspace,'max_weight_bytes':max_weight_bytes})
+            samples=sample_neighborhoods(graphs,fitting_config,seed,**sampling_options)
             checkpoint('samples_complete',{'sample_hash':samples.identity},samples_to_record(samples))
         if 'dictionary' in resume_state:dictionary=dictionary_from_record(resume_state['dictionary'])
         else:

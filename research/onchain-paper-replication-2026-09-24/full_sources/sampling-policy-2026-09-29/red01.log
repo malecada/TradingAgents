@@ -1,0 +1,265 @@
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+_________ test_registered_mapped_policy_keeps_complete_feature_binding _________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-55/test_registered_mapped_policy_0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'aad1c7c2c716c870a0bbe643ed576157ab68346a')
+
+    def test_registered_mapped_policy_keeps_complete_feature_binding(registered):
+        fixture,args,_=setup(registered);root,_,_=fixture
+        eager=prepare_features(*args,max_entries=100000,checkpoint=lambda *a:None)
+        with start(fixture) as run:
+>           result,path=produce(run,args)
+                        ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_sampling_policy.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x762c5d5292b0>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+            max_entries=100000,max_array_bytes=1024**2,sampling_input='sampling',**kwargs)
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'sampling_input'
+
+tests/research/onchain_replication/test_sampling_policy.py:31: TypeError
+_______ test_invalid_policy_refused_before_representation_claim[policy0] _______
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-55/test_invalid_policy_refused_be0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'aad1c7c2c716c870a0bbe643ed576157ab68346a')
+policy = {'schema_version': 1, 'mode': 'mapped', 'max_weight_bytes': 0}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x762c5d1ac3e0>
+
+    @pytest.mark.parametrize('policy',[
+        {'schema_version':1,'mode':'mapped','max_weight_bytes':0},
+        {'schema_version':1,'mode':'mapped','max_weight_bytes':True},
+        {'schema_version':True,'mode':'mapped','max_weight_bytes':100000},
+        {'schema_version':1,'mode':'other','max_weight_bytes':100000},
+        {'schema_version':1,'mode':'mapped','max_weight_bytes':100000,'path':'/tmp/arbitrary'},
+    ])
+    def test_invalid_policy_refused_before_representation_claim(registered,policy,monkeypatch):
+        import tradingagents.research.onchain_replication.registered_features as module
+        fixture,args,_=setup(registered,policy);root,_,_=fixture
+        monkeypatch.setattr(module,'prepare_features',lambda *a,**k:pytest.fail('invalid policy reached numerics'))
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='sampling'):produce(run,args)
+                                                            ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_sampling_policy.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x762dc51ddf90>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+            max_entries=100000,max_array_bytes=1024**2,sampling_input='sampling',**kwargs)
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'sampling_input'
+
+tests/research/onchain_replication/test_sampling_policy.py:31: TypeError
+_______ test_invalid_policy_refused_before_representation_claim[policy1] _______
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-55/test_invalid_policy_refused_be1'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '9bfcbe2e974763cc204cb964ad3280dfe0364e4f')
+policy = {'schema_version': 1, 'mode': 'mapped', 'max_weight_bytes': True}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x762c5d1acd60>
+
+    @pytest.mark.parametrize('policy',[
+        {'schema_version':1,'mode':'mapped','max_weight_bytes':0},
+        {'schema_version':1,'mode':'mapped','max_weight_bytes':True},
+        {'schema_version':True,'mode':'mapped','max_weight_bytes':100000},
+        {'schema_version':1,'mode':'other','max_weight_bytes':100000},
+        {'schema_version':1,'mode':'mapped','max_weight_bytes':100000,'path':'/tmp/arbitrary'},
+    ])
+    def test_invalid_policy_refused_before_representation_claim(registered,policy,monkeypatch):
+        import tradingagents.research.onchain_replication.registered_features as module
+        fixture,args,_=setup(registered,policy);root,_,_=fixture
+        monkeypatch.setattr(module,'prepare_features',lambda *a,**k:pytest.fail('invalid policy reached numerics'))
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='sampling'):produce(run,args)
+                                                            ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_sampling_policy.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x762dc51dda90>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+            max_entries=100000,max_array_bytes=1024**2,sampling_input='sampling',**kwargs)
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'sampling_input'
+
+tests/research/onchain_replication/test_sampling_policy.py:31: TypeError
+_______ test_invalid_policy_refused_before_representation_claim[policy2] _______
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-55/test_invalid_policy_refused_be2'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'f66ed93d0578866da3a7c9ad5bc19024040d64ad')
+policy = {'schema_version': True, 'mode': 'mapped', 'max_weight_bytes': 100000}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x762c5d4eb770>
+
+    @pytest.mark.parametrize('policy',[
+        {'schema_version':1,'mode':'mapped','max_weight_bytes':0},
+        {'schema_version':1,'mode':'mapped','max_weight_bytes':True},
+        {'schema_version':True,'mode':'mapped','max_weight_bytes':100000},
+        {'schema_version':1,'mode':'other','max_weight_bytes':100000},
+        {'schema_version':1,'mode':'mapped','max_weight_bytes':100000,'path':'/tmp/arbitrary'},
+    ])
+    def test_invalid_policy_refused_before_representation_claim(registered,policy,monkeypatch):
+        import tradingagents.research.onchain_replication.registered_features as module
+        fixture,args,_=setup(registered,policy);root,_,_=fixture
+        monkeypatch.setattr(module,'prepare_features',lambda *a,**k:pytest.fail('invalid policy reached numerics'))
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='sampling'):produce(run,args)
+                                                            ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_sampling_policy.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x762c5d1ace90>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+            max_entries=100000,max_array_bytes=1024**2,sampling_input='sampling',**kwargs)
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'sampling_input'
+
+tests/research/onchain_replication/test_sampling_policy.py:31: TypeError
+_______ test_invalid_policy_refused_before_representation_claim[policy3] _______
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-55/test_invalid_policy_refused_be3'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'f66ed93d0578866da3a7c9ad5bc19024040d64ad')
+policy = {'schema_version': 1, 'mode': 'other', 'max_weight_bytes': 100000}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x762c5cb60f30>
+
+    @pytest.mark.parametrize('policy',[
+        {'schema_version':1,'mode':'mapped','max_weight_bytes':0},
+        {'schema_version':1,'mode':'mapped','max_weight_bytes':True},
+        {'schema_version':True,'mode':'mapped','max_weight_bytes':100000},
+        {'schema_version':1,'mode':'other','max_weight_bytes':100000},
+        {'schema_version':1,'mode':'mapped','max_weight_bytes':100000,'path':'/tmp/arbitrary'},
+    ])
+    def test_invalid_policy_refused_before_representation_claim(registered,policy,monkeypatch):
+        import tradingagents.research.onchain_replication.registered_features as module
+        fixture,args,_=setup(registered,policy);root,_,_=fixture
+        monkeypatch.setattr(module,'prepare_features',lambda *a,**k:pytest.fail('invalid policy reached numerics'))
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='sampling'):produce(run,args)
+                                                            ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_sampling_policy.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x762dc54368b0>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+            max_entries=100000,max_array_bytes=1024**2,sampling_input='sampling',**kwargs)
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'sampling_input'
+
+tests/research/onchain_replication/test_sampling_policy.py:31: TypeError
+_______ test_invalid_policy_refused_before_representation_claim[policy4] _______
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-55/test_invalid_policy_refused_be4'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'b4664a98a21a3c55f5e5d4f9392ef77f73962481')
+policy = {'schema_version': 1, 'mode': 'mapped', 'max_weight_bytes': 100000, 'path': '/tmp/arbitrary'}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x762c5cbdb350>
+
+    @pytest.mark.parametrize('policy',[
+        {'schema_version':1,'mode':'mapped','max_weight_bytes':0},
+        {'schema_version':1,'mode':'mapped','max_weight_bytes':True},
+        {'schema_version':True,'mode':'mapped','max_weight_bytes':100000},
+        {'schema_version':1,'mode':'other','max_weight_bytes':100000},
+        {'schema_version':1,'mode':'mapped','max_weight_bytes':100000,'path':'/tmp/arbitrary'},
+    ])
+    def test_invalid_policy_refused_before_representation_claim(registered,policy,monkeypatch):
+        import tradingagents.research.onchain_replication.registered_features as module
+        fixture,args,_=setup(registered,policy);root,_,_=fixture
+        monkeypatch.setattr(module,'prepare_features',lambda *a,**k:pytest.fail('invalid policy reached numerics'))
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='sampling'):produce(run,args)
+                                                            ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_sampling_policy.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x762cdf33ccb0>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+            max_entries=100000,max_array_bytes=1024**2,sampling_input='sampling',**kwargs)
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'sampling_input'
+
+tests/research/onchain_replication/test_sampling_policy.py:31: TypeError
+_________ test_omitted_admitted_policy_cannot_silently_use_eager_mode __________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-55/test_omitted_admitted_policy_c0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'c4835ebc965db07314e9ddc23050de3f6d378baf')
+
+    def test_omitted_admitted_policy_cannot_silently_use_eager_mode(registered):
+        fixture,args,_=setup(registered);root,_,_=fixture
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='sampling'):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_sampling_policy.py:68: Failed
+______ test_checkpointed_samples_survive_policy_change_without_resampling ______
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-55/test_checkpointed_samples_surv0'), {'schema_version': 1, 'program_id': '...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '062fb9c61342292474f174e63f252a3aa32add21')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x762c5cadcd50>
+
+    def test_checkpointed_samples_survive_policy_change_without_resampling(registered,monkeypatch):
+        import tradingagents.research.onchain_replication.registered_features as module
+        import tradingagents.research.onchain_replication.feature_pipeline as pipeline
+        fixture,args,_=setup(registered);root,spec,_=fixture;original=module.prepare_features
+        def interrupt(*a,checkpoint,**kw):
+            def save(stage,context,payload):
+                checkpoint(stage,context,payload)
+                if stage=='samples_complete':raise InterruptedError('after durable samples')
+            return original(*a,checkpoint=save,**kw)
+        monkeypatch.setattr(module,'prepare_features',interrupt)
+        with start(fixture) as run:
+>           with pytest.raises(InterruptedError):produce(run,args)
+                                                 ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_sampling_policy.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x762c5d4929c0>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kwargs = {}
+
+    def produce(run,args,**kwargs):
+>       return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+            max_entries=100000,max_array_bytes=1024**2,sampling_input='sampling',**kwargs)
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'sampling_input'
+
+tests/research/onchain_replication/test_sampling_policy.py:31: TypeError
+___________ test_non_mcm_component_rejects_unused_sampling_workspace ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-55/test_non_mcm_component_rejects0')
+
+    def test_non_mcm_component_rejects_unused_sampling_workspace(tmp_path):
+        from tests.research.onchain_replication.test_feature_pipeline import population,configs
+        graphs,fold,examples=population()
+        with pytest.raises(ValueError,match='sampling'):
+>           prepare_features(graphs,examples,fold,'gin',11,configs(),max_entries=100000,
+                             checkpoint=lambda *a:None,weight_workspace=tmp_path/'unused',max_weight_bytes=100000)
+E           TypeError: prepare_features() got an unexpected keyword argument 'weight_workspace'
+
+tests/research/onchain_replication/test_sampling_policy.py:103: TypeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_registered_mapped_policy_keeps_complete_feature_binding
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_invalid_policy_refused_before_representation_claim[policy0]
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_invalid_policy_refused_before_representation_claim[policy1]
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_invalid_policy_refused_before_representation_claim[policy2]
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_invalid_policy_refused_before_representation_claim[policy3]
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_invalid_policy_refused_before_representation_claim[policy4]
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_omitted_admitted_policy_cannot_silently_use_eager_mode
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_checkpointed_samples_survive_policy_change_without_resampling
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_non_mcm_component_rejects_unused_sampling_workspace
+9 failed in 13.23s
