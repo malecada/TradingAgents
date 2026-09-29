@@ -64,8 +64,10 @@ def resource_policy(value, root):
 
 
 def job_schema(job):
-    if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices'):
+    if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs'):
         raise ValueError('execution job schema/kind differs')
+    if job['kind'] == 'graphs' and (not isinstance(job['payload'], dict) or set(job['payload']) != {'plan_input'} or not isinstance(job['payload']['plan_input'], str) or not job['payload']['plan_input']):
+        raise ValueError('graph job requires an explicit registered plan input')
     if job['kind'] == 'ranges' and job['payload'] != {}:
         raise ValueError('range job has no implicit payload overrides')
     if job['kind'] in ('prices', 'coinmetrics_prices') and (not isinstance(job['payload'], dict) or set(job['payload']) != {'asset'} or job['payload']['asset'] not in ('BTC', 'ETH')):
@@ -190,7 +192,10 @@ def monitor(args):
 
 
 def execute_source_job(run, kind, payload):
-    if kind == 'ranges':
+    if kind == 'graphs':
+        from .graph_production import produce_registered_graphs
+        cells, summary, directory = produce_registered_graphs(run, payload['plan_input'])
+    elif kind == 'ranges':
         from .range_source import capture_ranges
         cells, summary, directory = capture_ranges(run)
     elif kind == 'prices':
@@ -228,7 +233,7 @@ def worker(args):
         from .environment import inventory
         if inventory(root, include_torch=job['kind'] == 'fit') != json.loads(run.read_input(job['environment_input'])):
             raise ValueError('registered execution environment differs')
-        if job['kind'] in ('ranges', 'prices', 'coinmetrics_prices'):
+        if job['kind'] in ('ranges', 'prices', 'coinmetrics_prices', 'graphs'):
             cells = execute_source_job(run, job['kind'], job['payload'])
         else:
             import torch

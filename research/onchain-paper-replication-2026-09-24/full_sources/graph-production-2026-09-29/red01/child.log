@@ -1,0 +1,138 @@
+FFFFFF.......................                                            [100%]
+=================================== FAILURES ===================================
+_ test_failed_decoder_retains_only_committed_source_boundary_and_refuses_reopen[ETH] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_failed_decoder_retains_on0')
+asset = 'ETH'
+
+    @pytest.mark.parametrize('asset',['ETH','BTC'])
+    def test_failed_decoder_retains_only_committed_source_boundary_and_refuses_reopen(tmp_path,asset):
+>       Boundary=api();directory=tmp_path/'owned'
+                 ^^^^^
+
+tests/research/onchain_replication/test_aggregation_workspace.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.aggregation'), 'durable aggregation missing'
+E       AssertionError: durable aggregation missing
+E       assert None
+E        +  where None = <function find_spec at 0x73d7517ec860>('tradingagents.research.onchain_replication.aggregation')
+E        +    where <function find_spec at 0x73d7517ec860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_aggregation_workspace.py:18: AssertionError
+_ test_failed_decoder_retains_only_committed_source_boundary_and_refuses_reopen[BTC] _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_failed_decoder_retains_on1')
+asset = 'BTC'
+
+    @pytest.mark.parametrize('asset',['ETH','BTC'])
+    def test_failed_decoder_retains_only_committed_source_boundary_and_refuses_reopen(tmp_path,asset):
+>       Boundary=api();directory=tmp_path/'owned'
+                 ^^^^^
+
+tests/research/onchain_replication/test_aggregation_workspace.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.aggregation'), 'durable aggregation missing'
+E       AssertionError: durable aggregation missing
+E       assert None
+E        +  where None = <function find_spec at 0x73d7517ec860>('tradingagents.research.onchain_replication.aggregation')
+E        +    where <function find_spec at 0x73d7517ec860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_aggregation_workspace.py:18: AssertionError
+___ test_cross_week_duplicate_remains_rejected_after_committed_boundary[ETH] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_cross_week_duplicate_rema0')
+asset = 'ETH'
+
+    @pytest.mark.parametrize('asset',['ETH','BTC'])
+    def test_cross_week_duplicate_remains_rejected_after_committed_boundary(tmp_path,asset):
+>       Boundary=api()
+                 ^^^^^
+
+tests/research/onchain_replication/test_aggregation_workspace.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.aggregation'), 'durable aggregation missing'
+E       AssertionError: durable aggregation missing
+E       assert None
+E        +  where None = <function find_spec at 0x73d7517ec860>('tradingagents.research.onchain_replication.aggregation')
+E        +    where <function find_spec at 0x73d7517ec860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_aggregation_workspace.py:18: AssertionError
+___ test_cross_week_duplicate_remains_rejected_after_committed_boundary[BTC] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_cross_week_duplicate_rema1')
+asset = 'BTC'
+
+    @pytest.mark.parametrize('asset',['ETH','BTC'])
+    def test_cross_week_duplicate_remains_rejected_after_committed_boundary(tmp_path,asset):
+>       Boundary=api()
+                 ^^^^^
+
+tests/research/onchain_replication/test_aggregation_workspace.py:49: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.aggregation'), 'durable aggregation missing'
+E       AssertionError: durable aggregation missing
+E       assert None
+E        +  where None = <function find_spec at 0x73d7517ec860>('tradingagents.research.onchain_replication.aggregation')
+E        +    where <function find_spec at 0x73d7517ec860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_aggregation_workspace.py:18: AssertionError
+_ test_boundary_wrong_count_cannot_commit_and_success_preserves_graph_semantics _
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_boundary_wrong_count_cann0')
+
+    def test_boundary_wrong_count_cannot_commit_and_success_preserves_graph_semantics(tmp_path):
+>       Boundary=api()
+                 ^^^^^
+
+tests/research/onchain_replication/test_aggregation_workspace.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.aggregation'), 'durable aggregation missing'
+E       AssertionError: durable aggregation missing
+E       assert None
+E        +  where None = <function find_spec at 0x73d7517ec860>('tradingagents.research.onchain_replication.aggregation')
+E        +    where <function find_spec at 0x73d7517ec860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_aggregation_workspace.py:18: AssertionError
+_____ test_closed_generator_retains_scratch_but_does_not_claim_completion ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_closed_generator_retains_0')
+
+    def test_closed_generator_retains_scratch_but_does_not_claim_completion(tmp_path):
+>       api()
+
+tests/research/onchain_replication/test_aggregation_workspace.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.aggregation'), 'durable aggregation missing'
+E       AssertionError: durable aggregation missing
+E       assert None
+E        +  where None = <function find_spec at 0x73d7517ec860>('tradingagents.research.onchain_replication.aggregation')
+E        +    where <function find_spec at 0x73d7517ec860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_aggregation_workspace.py:18: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_aggregation_workspace.py::test_failed_decoder_retains_only_committed_source_boundary_and_refuses_reopen[ETH]
+FAILED tests/research/onchain_replication/test_aggregation_workspace.py::test_failed_decoder_retains_only_committed_source_boundary_and_refuses_reopen[BTC]
+FAILED tests/research/onchain_replication/test_aggregation_workspace.py::test_cross_week_duplicate_remains_rejected_after_committed_boundary[ETH]
+FAILED tests/research/onchain_replication/test_aggregation_workspace.py::test_cross_week_duplicate_remains_rejected_after_committed_boundary[BTC]
+FAILED tests/research/onchain_replication/test_aggregation_workspace.py::test_boundary_wrong_count_cannot_commit_and_success_preserves_graph_semantics
+FAILED tests/research/onchain_replication/test_aggregation_workspace.py::test_closed_generator_retains_scratch_but_does_not_claim_completion
+6 failed, 23 passed in 0.60s

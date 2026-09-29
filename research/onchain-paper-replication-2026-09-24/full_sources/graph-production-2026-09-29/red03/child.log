@@ -1,0 +1,123 @@
+FF.                                                                      [100%]
+=================================== FAILURES ===================================
+___ test_admitted_graph_reuse_verifies_original_arrays_without_decoding[ETH] ___
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-4/test_admitted_graph_reuse_veri0'), {'schema_version': 1, 'program_id': 's...2-25T00:00:00Z', 'end': '2024-01-08T00:00:00Z', 'state': 'spent'}]}}, ...}, '127380caf27a406a74778b0c087894c15c04c858')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77e08b85c510>
+asset = 'ETH'
+
+    @pytest.mark.parametrize('asset',['ETH','BTC'])
+    def test_admitted_graph_reuse_verifies_original_arrays_without_decoding(registered,monkeypatch,asset):
+        fixture=prepare(registered,asset=asset);root,spec,_=fixture
+        with start(fixture) as run:
+            cells=execute_source_job(run,'graphs',{'plan_input':'graph_plan'});run.finish(cells)
+            summary=json.loads((run.directory/'outputs/source-summary.json').read_text())
+        import copy
+        exp=copy.deepcopy(spec['experiments']['example-a']);spec['experiments']['example-b']=exp
+        exp['parent']='example-a';exp['cells']=['graph-'+w[:10] for w in WEEKS]
+        refs={}
+        for i,(week,ref) in enumerate(summary['graphs'].items()):
+            name=f'graph_{i}'
+            exp['inputs'][name]={'path':ref['manifest_path'],'sha256':ref['manifest_sha256'],'dataset':'sample'}
+            refs[week]={'input':name,'source_hashes':ref['source_hashes']}
+        plan={'schema_version':1,'mode':'reuse','asset':asset,'graph_config_input':'graph_config',
+              'coverage':[[WEEKS[0],END]],'expected_weeks':WEEKS,'graphs':refs}
+        path=root/'reuse.json';path.write_text(json.dumps(plan))
+        exp['inputs']['reuse']={'path':path.name,'sha256':file_hash(path),'dataset':'sample'}
+        # This sentinel detects accidental decoding; every output assertion checks
+        # the real graph store and registered producer, not the sentinel itself.
+        import tradingagents.research.onchain_replication.eth_source as eth
+        import tradingagents.research.onchain_replication.btc_source as btc
+        monkeypatch.setattr(eth,'decode_eth',lambda *a,**k:pytest.fail('reused graph decoded again'))
+        monkeypatch.setattr(btc,'decode_parquet',lambda *a,**k:pytest.fail('reused graph decoded again'))
+        with start((root,spec,commit(root,spec)),experiment='example-b') as run:
+>           cells=execute_source_job(run,'graphs',{'plan_input':'reuse'})
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_graph_production.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job.py:197: in execute_source_job
+    cells, summary, directory = produce_registered_graphs(run, payload['plan_input'])
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/graph_production.py:63: in produce_registered_graphs
+    plan, identity = _plan(run, plan_input)
+                     ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x77e089225590>
+name = 'reuse'
+
+    def _plan(run, name):
+        raw = run.read_input(name)
+        plan = json.loads(raw)
+        base = {'schema_version', 'mode', 'asset', 'graph_config_input', 'coverage', 'expected_weeks'}
+        if (not isinstance(plan, dict) or plan.get('schema_version') != 1
+                or plan.get('mode') != 'build' or plan.get('asset') not in ('ETH', 'BTC')
+                or set(plan) != base | {'source_inputs', 'decoder'}):
+>           raise ValueError('graph production plan schema differs')
+E           ValueError: graph production plan schema differs
+
+tradingagents/research/onchain_replication/graph_production.py:27: ValueError
+___ test_admitted_graph_reuse_verifies_original_arrays_without_decoding[BTC] ___
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-4/test_admitted_graph_reuse_veri1'), {'schema_version': 1, 'program_id': 's...2-25T00:00:00Z', 'end': '2024-01-08T00:00:00Z', 'state': 'spent'}]}}, ...}, '127380caf27a406a74778b0c087894c15c04c858')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x77e099523100>
+asset = 'BTC'
+
+    @pytest.mark.parametrize('asset',['ETH','BTC'])
+    def test_admitted_graph_reuse_verifies_original_arrays_without_decoding(registered,monkeypatch,asset):
+        fixture=prepare(registered,asset=asset);root,spec,_=fixture
+        with start(fixture) as run:
+            cells=execute_source_job(run,'graphs',{'plan_input':'graph_plan'});run.finish(cells)
+            summary=json.loads((run.directory/'outputs/source-summary.json').read_text())
+        import copy
+        exp=copy.deepcopy(spec['experiments']['example-a']);spec['experiments']['example-b']=exp
+        exp['parent']='example-a';exp['cells']=['graph-'+w[:10] for w in WEEKS]
+        refs={}
+        for i,(week,ref) in enumerate(summary['graphs'].items()):
+            name=f'graph_{i}'
+            exp['inputs'][name]={'path':ref['manifest_path'],'sha256':ref['manifest_sha256'],'dataset':'sample'}
+            refs[week]={'input':name,'source_hashes':ref['source_hashes']}
+        plan={'schema_version':1,'mode':'reuse','asset':asset,'graph_config_input':'graph_config',
+              'coverage':[[WEEKS[0],END]],'expected_weeks':WEEKS,'graphs':refs}
+        path=root/'reuse.json';path.write_text(json.dumps(plan))
+        exp['inputs']['reuse']={'path':path.name,'sha256':file_hash(path),'dataset':'sample'}
+        # This sentinel detects accidental decoding; every output assertion checks
+        # the real graph store and registered producer, not the sentinel itself.
+        import tradingagents.research.onchain_replication.eth_source as eth
+        import tradingagents.research.onchain_replication.btc_source as btc
+        monkeypatch.setattr(eth,'decode_eth',lambda *a,**k:pytest.fail('reused graph decoded again'))
+        monkeypatch.setattr(btc,'decode_parquet',lambda *a,**k:pytest.fail('reused graph decoded again'))
+        with start((root,spec,commit(root,spec)),experiment='example-b') as run:
+>           cells=execute_source_job(run,'graphs',{'plan_input':'reuse'})
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_graph_production.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job.py:197: in execute_source_job
+    cells, summary, directory = produce_registered_graphs(run, payload['plan_input'])
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/graph_production.py:63: in produce_registered_graphs
+    plan, identity = _plan(run, plan_input)
+                     ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x77e0890dc9d0>
+name = 'reuse'
+
+    def _plan(run, name):
+        raw = run.read_input(name)
+        plan = json.loads(raw)
+        base = {'schema_version', 'mode', 'asset', 'graph_config_input', 'coverage', 'expected_weeks'}
+        if (not isinstance(plan, dict) or plan.get('schema_version') != 1
+                or plan.get('mode') != 'build' or plan.get('asset') not in ('ETH', 'BTC')
+                or set(plan) != base | {'source_inputs', 'decoder'}):
+>           raise ValueError('graph production plan schema differs')
+E           ValueError: graph production plan schema differs
+
+tradingagents/research/onchain_replication/graph_production.py:27: ValueError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_graph_production.py::test_admitted_graph_reuse_verifies_original_arrays_without_decoding[ETH]
+FAILED tests/research/onchain_replication/test_graph_production.py::test_admitted_graph_reuse_verifies_original_arrays_without_decoding[BTC]
+2 failed, 1 passed, 7 deselected in 1.80s

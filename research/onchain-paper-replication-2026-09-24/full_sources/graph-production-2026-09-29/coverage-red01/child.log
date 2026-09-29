@@ -1,0 +1,49 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_registered_parquet_graph_production_retains_exact_weeks_counts_and_sidecars[ETH] _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-10/test_registered_parquet_graph_0'), {'schema_version': 1, 'program_id': '...2-25T00:00:00Z', 'end': '2024-01-08T00:00:00Z', 'state': 'spent'}]}}, ...}, '527598fc0bd5828cd7dc712447f904b1df533101')
+asset = 'ETH'
+
+    @pytest.mark.parametrize('asset',['ETH','BTC'])
+    def test_registered_parquet_graph_production_retains_exact_weeks_counts_and_sidecars(registered,asset):
+        api();fixture=prepare(registered,asset=asset)
+        with start(fixture) as run:
+            cells=execute_source_job(run,'graphs',{'plan_input':'graph_plan'})
+            terminal=run.finish(cells)
+            assert terminal['cell_count']==(4 if asset=='ETH' else 16) and terminal['unavailable_count']==0
+            summary=json.loads((run.directory/'outputs/source-summary.json').read_text())
+            assert summary['asset']==asset and list(summary['graphs'])==WEEKS
+            for week,ref in summary['graphs'].items():
+                path=fixture[0]/ref['manifest_path']
+>               proof=json.loads((fixture[0]/ref['coverage_path']).read_text())
+                                             ^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'coverage_path'
+
+tests/research/onchain_replication/test_graph_production.py:77: KeyError
+_ test_registered_parquet_graph_production_retains_exact_weeks_counts_and_sidecars[BTC] _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-10/test_registered_parquet_graph_1'), {'schema_version': 1, 'program_id': '...2-25T00:00:00Z', 'end': '2024-01-08T00:00:00Z', 'state': 'spent'}]}}, ...}, '5a28e6aaaaf0dad1ac0803afb567a3083805fdf2')
+asset = 'BTC'
+
+    @pytest.mark.parametrize('asset',['ETH','BTC'])
+    def test_registered_parquet_graph_production_retains_exact_weeks_counts_and_sidecars(registered,asset):
+        api();fixture=prepare(registered,asset=asset)
+        with start(fixture) as run:
+            cells=execute_source_job(run,'graphs',{'plan_input':'graph_plan'})
+            terminal=run.finish(cells)
+            assert terminal['cell_count']==(4 if asset=='ETH' else 16) and terminal['unavailable_count']==0
+            summary=json.loads((run.directory/'outputs/source-summary.json').read_text())
+            assert summary['asset']==asset and list(summary['graphs'])==WEEKS
+            for week,ref in summary['graphs'].items():
+                path=fixture[0]/ref['manifest_path']
+>               proof=json.loads((fixture[0]/ref['coverage_path']).read_text())
+                                             ^^^^^^^^^^^^^^^^^^^^
+E               KeyError: 'coverage_path'
+
+tests/research/onchain_replication/test_graph_production.py:77: KeyError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_graph_production.py::test_registered_parquet_graph_production_retains_exact_weeks_counts_and_sidecars[ETH]
+FAILED tests/research/onchain_replication/test_graph_production.py::test_registered_parquet_graph_production_retains_exact_weeks_counts_and_sidecars[BTC]
+2 failed, 14 deselected in 1.64s

@@ -16,6 +16,21 @@ all historical attempts remain preserved. Local free space is about33.7GB;
 full graph/MCM scratch and compute admission remain unresolved. Earlier backup
 progress and incomplete statements below are historical and superseded.
 
+**September29 graph-production integration complete:** retained SQLite source
+boundaries, ETH/BTC registered graph dispatch, exact-week reuse with coverage
+proofs, and synthetic raw-to-population handoff are implemented. Independent
+review findings P1/P2 are corrected and independently closed. Named offline02
+completed:3,220tests and97subtests passed, one CUDA skip, child0 and verified
+cleanup, no memory-limit events. Evidence and exact source bindings:
+`full_sources/graph-production-2026-09-29/`. No verification job remains active
+from that increment. This is not an empirical release.
+
+**Current engineering work:** optional graph-encoder activation checkpointing;
+red tests are retained in `full_sources/activation-checkpointing-2026-09-29/`.
+No frozen scientific configuration has changed. Partial-database continuation,
+bounded data residency and measured resource admission remain pending. Completed
+backup and historical empirical identities stay closed; all1,420fits pending.
+
 - **No active empirical jobs.** `eth-paper-resource-pilot-20260924-02` is
   terminal FAILED; never relaunch this identity. The local systemd journal
   identifies a systemd-oomd kill at15:28:59UTC during the2022-07-25largest-week

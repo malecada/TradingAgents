@@ -1,0 +1,154 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_ test_registered_parquet_graph_production_retains_exact_weeks_counts_and_sidecars[ETH] _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-2/test_registered_parquet_graph_0'), {'schema_version': 1, 'program_id': 's...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '3bb18517014a0ff51dbfb92534dbddc1e009a54f')
+asset = 'ETH'
+
+    @pytest.mark.parametrize('asset',['ETH','BTC'])
+    def test_registered_parquet_graph_production_retains_exact_weeks_counts_and_sidecars(registered,asset):
+>       api();fixture=prepare(registered,asset=asset)
+        ^^^^^
+
+tests/research/onchain_replication/test_graph_production.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.graph_production'), 'registered graph producer missing'
+E       AssertionError: registered graph producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x72ccef1ac860>('tradingagents.research.onchain_replication.graph_production')
+E        +    where <function find_spec at 0x72ccef1ac860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_graph_production.py:25: AssertionError
+_ test_registered_parquet_graph_production_retains_exact_weeks_counts_and_sidecars[BTC] _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-2/test_registered_parquet_graph_1'), {'schema_version': 1, 'program_id': 's...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '3bb18517014a0ff51dbfb92534dbddc1e009a54f')
+asset = 'BTC'
+
+    @pytest.mark.parametrize('asset',['ETH','BTC'])
+    def test_registered_parquet_graph_production_retains_exact_weeks_counts_and_sidecars(registered,asset):
+>       api();fixture=prepare(registered,asset=asset)
+        ^^^^^
+
+tests/research/onchain_replication/test_graph_production.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.graph_production'), 'registered graph producer missing'
+E       AssertionError: registered graph producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x72ccef1ac860>('tradingagents.research.onchain_replication.graph_production')
+E        +    where <function find_spec at 0x72ccef1ac860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_graph_production.py:25: AssertionError
+_ test_cross_partition_corruption_accounts_for_all_weeks_without_publishing_graphs[ETH] _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-2/test_cross_partition_corruptio0'), {'schema_version': 1, 'program_id': 's...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '3bb18517014a0ff51dbfb92534dbddc1e009a54f')
+asset = 'ETH'
+
+    @pytest.mark.parametrize('asset',['ETH','BTC'])
+    def test_cross_partition_corruption_accounts_for_all_weeks_without_publishing_graphs(registered,asset):
+>       api();fixture=prepare(registered,asset=asset,duplicate=True)
+        ^^^^^
+
+tests/research/onchain_replication/test_graph_production.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.graph_production'), 'registered graph producer missing'
+E       AssertionError: registered graph producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x72ccef1ac860>('tradingagents.research.onchain_replication.graph_production')
+E        +    where <function find_spec at 0x72ccef1ac860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_graph_production.py:25: AssertionError
+_ test_cross_partition_corruption_accounts_for_all_weeks_without_publishing_graphs[BTC] _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-2/test_cross_partition_corruptio1'), {'schema_version': 1, 'program_id': 's...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '3bb18517014a0ff51dbfb92534dbddc1e009a54f')
+asset = 'BTC'
+
+    @pytest.mark.parametrize('asset',['ETH','BTC'])
+    def test_cross_partition_corruption_accounts_for_all_weeks_without_publishing_graphs(registered,asset):
+>       api();fixture=prepare(registered,asset=asset,duplicate=True)
+        ^^^^^
+
+tests/research/onchain_replication/test_graph_production.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.graph_production'), 'registered graph producer missing'
+E       AssertionError: registered graph producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x72ccef1ac860>('tradingagents.research.onchain_replication.graph_production')
+E        +    where <function find_spec at 0x72ccef1ac860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_graph_production.py:25: AssertionError
+__ test_missing_week_remains_unavailable_and_source_body_changes_fail_closed ___
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-2/test_missing_week_remains_unav0'), {'schema_version': 1, 'program_id': 's...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '3bb18517014a0ff51dbfb92534dbddc1e009a54f')
+
+    def test_missing_week_remains_unavailable_and_source_body_changes_fail_closed(registered):
+>       api();fixture=prepare(registered,missing=True)
+        ^^^^^
+
+tests/research/onchain_replication/test_graph_production.py:103: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.graph_production'), 'registered graph producer missing'
+E       AssertionError: registered graph producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x72ccef1ac860>('tradingagents.research.onchain_replication.graph_production')
+E        +    where <function find_spec at 0x72ccef1ac860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_graph_production.py:25: AssertionError
+____________ test_graph_dispatch_requires_explicit_registered_plan _____________
+
+    def test_graph_dispatch_requires_explicit_registered_plan():
+>       api()
+
+tests/research/onchain_replication/test_graph_production.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.graph_production'), 'registered graph producer missing'
+E       AssertionError: registered graph producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x72ccef1ac860>('tradingagents.research.onchain_replication.graph_production')
+E        +    where <function find_spec at 0x72ccef1ac860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_graph_production.py:25: AssertionError
+_______________ test_graph_preparation_imports_no_neural_runtime _______________
+
+    def test_graph_preparation_imports_no_neural_runtime():
+>       api()
+
+tests/research/onchain_replication/test_graph_production.py:120: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.graph_production'), 'registered graph producer missing'
+E       AssertionError: registered graph producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x72ccef1ac860>('tradingagents.research.onchain_replication.graph_production')
+E        +    where <function find_spec at 0x72ccef1ac860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_graph_production.py:25: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_graph_production.py::test_registered_parquet_graph_production_retains_exact_weeks_counts_and_sidecars[ETH]
+FAILED tests/research/onchain_replication/test_graph_production.py::test_registered_parquet_graph_production_retains_exact_weeks_counts_and_sidecars[BTC]
+FAILED tests/research/onchain_replication/test_graph_production.py::test_cross_partition_corruption_accounts_for_all_weeks_without_publishing_graphs[ETH]
+FAILED tests/research/onchain_replication/test_graph_production.py::test_cross_partition_corruption_accounts_for_all_weeks_without_publishing_graphs[BTC]
+FAILED tests/research/onchain_replication/test_graph_production.py::test_missing_week_remains_unavailable_and_source_body_changes_fail_closed
+FAILED tests/research/onchain_replication/test_graph_production.py::test_graph_dispatch_requires_explicit_registered_plan
+FAILED tests/research/onchain_replication/test_graph_production.py::test_graph_preparation_imports_no_neural_runtime
+7 failed in 0.43s
