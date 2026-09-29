@@ -1,0 +1,35 @@
+test_cleanup_attempts_every_map_and_keeps_primary_failure (__main__.CensusTests.test_cleanup_attempts_every_map_and_keeps_primary_failure) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_attempts_every_map_and_keeps_primary_failure (__main__.CensusTests.test_cleanup_attempts_every_map_and_keeps_primary_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neighborhood-census-engineering-2026-09-30/census_engine.py", line 95, in census
+    _flush(counts,countpath);record(2,'cardinalities',['cardinalities.npy'])
+                             ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neighborhood-census-engineering-2026-09-30/census_engine.py", line 68, in record
+    if checkpoint is not None:checkpoint(phase)
+                              ~~~~~~~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neighborhood-census-engineering-2026-09-30/test_census_engine.py", line 85, in checkpoint
+    if phase=='cardinalities':raise RuntimeError('primary phase failure')
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: primary phase failure
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neighborhood-census-engineering-2026-09-30/test_census_engine.py", line 88, in test_cleanup_attempts_every_map_and_keeps_primary_failure
+    engine.census(np.array([[0,1],[1,2]]),3,Path(temporary)/'census',identity={'graph':'synthetic'},checkpoint=checkpoint)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neighborhood-census-engineering-2026-09-30/census_engine.py", line 115, in census
+    if isinstance(array,np.memmap):array._mmap.close()
+                                   ~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neighborhood-census-engineering-2026-09-30/test_census_engine.py", line 81, in close
+    if self.name=='cardinalities.npy':raise OSError('injected close failure')
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: injected close failure
+
+----------------------------------------------------------------------
+Ran 1 test in 0.015s
+
+FAILED (errors=1)

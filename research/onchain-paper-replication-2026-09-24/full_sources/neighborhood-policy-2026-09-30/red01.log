@@ -1,0 +1,490 @@
+FFFFFFFFFFFFFFFFF                                                        [100%]
+=================================== FAILURES ===================================
+_____ test_registered_array_consumers_preserve_complete_binding_and_close ______
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-156/test_registered_array_consumer0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '4c9377e399fb34bdf0af8235565f104a4fe335c2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a2c59a2f100>
+
+    def test_registered_array_consumers_preserve_complete_binding_and_close(registered,monkeypatch):
+        from tradingagents.research.onchain_replication.array_neighborhoods import ArrayNeighborhoodIndex
+        import tradingagents.research.onchain_replication.neighborhoods as sampling
+        import tradingagents.research.onchain_replication.mcm as mcm
+        fixture,args=setup(registered);baseline=prepare_features(*args,max_entries=100000,checkpoint=lambda *a:None)
+        owners=[];original=ArrayNeighborhoodIndex.__init__
+        def track(self,*a,**kw):original(self,*a,**kw);owners.append(self)
+        monkeypatch.setattr(ArrayNeighborhoodIndex,'__init__',track)
+        monkeypatch.setattr(sampling,'NeighborhoodIndex',lambda *a:pytest.fail('legacy sampling index'))
+        monkeypatch.setattr(mcm,'NeighborhoodIndex',lambda *a:pytest.fail('legacy MCM index'))
+        with start(fixture) as run:
+>           result,path=produce(run,args)
+                        ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neighborhood_policy.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x7a2c59a7e3c0>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kw = {}
+
+    def produce(run,args,**kw):
+>       return prepare_registered_features(run,'p',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2,neighborhood_input='neighborhood',**kw)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'neighborhood_input'
+
+tests/research/onchain_replication/test_neighborhood_policy.py:30: TypeError
+__________________ test_bad_policy_refused_before_claim[bad0] __________________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-156/test_bad_policy_refused_before0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'f4ab31c7a42309b01a1d90513d727718de7e00b7')
+bad = {}
+
+    @pytest.mark.parametrize('bad',[{}, {'schema_version':True,'mode':'array','max_buffer_bytes':1024,'edge_chunk':1,'max_sample_array_bytes':1024},
+        policy()|{'edge_chunk':0},policy()|{'max_sample_array_bytes':True},policy()|{'mode':'other'},policy()|{'maximum_neighborhood_nodes':99999}])
+    def test_bad_policy_refused_before_claim(registered,bad):
+        fixture,args=setup(registered,bad);root,_,_=fixture
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='neighborhood'):produce(run,args)
+                                                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neighborhood_policy.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x7a2b297e3b10>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kw = {}
+
+    def produce(run,args,**kw):
+>       return prepare_registered_features(run,'p',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2,neighborhood_input='neighborhood',**kw)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'neighborhood_input'
+
+tests/research/onchain_replication/test_neighborhood_policy.py:30: TypeError
+__________________ test_bad_policy_refused_before_claim[bad1] __________________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-156/test_bad_policy_refused_before1'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '79a95575be2612d1a7bac01a660ca017eca442c4')
+bad = {'schema_version': True, 'mode': 'array', 'max_buffer_bytes': 1024, 'edge_chunk': 1, ...}
+
+    @pytest.mark.parametrize('bad',[{}, {'schema_version':True,'mode':'array','max_buffer_bytes':1024,'edge_chunk':1,'max_sample_array_bytes':1024},
+        policy()|{'edge_chunk':0},policy()|{'max_sample_array_bytes':True},policy()|{'mode':'other'},policy()|{'maximum_neighborhood_nodes':99999}])
+    def test_bad_policy_refused_before_claim(registered,bad):
+        fixture,args=setup(registered,bad);root,_,_=fixture
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='neighborhood'):produce(run,args)
+                                                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neighborhood_policy.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x7a2b297e3c50>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kw = {}
+
+    def produce(run,args,**kw):
+>       return prepare_registered_features(run,'p',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2,neighborhood_input='neighborhood',**kw)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'neighborhood_input'
+
+tests/research/onchain_replication/test_neighborhood_policy.py:30: TypeError
+__________________ test_bad_policy_refused_before_claim[bad2] __________________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-156/test_bad_policy_refused_before2'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '79a95575be2612d1a7bac01a660ca017eca442c4')
+bad = {'schema_version': 1, 'mode': 'array', 'max_buffer_bytes': 1048576, 'edge_chunk': 0, ...}
+
+    @pytest.mark.parametrize('bad',[{}, {'schema_version':True,'mode':'array','max_buffer_bytes':1024,'edge_chunk':1,'max_sample_array_bytes':1024},
+        policy()|{'edge_chunk':0},policy()|{'max_sample_array_bytes':True},policy()|{'mode':'other'},policy()|{'maximum_neighborhood_nodes':99999}])
+    def test_bad_policy_refused_before_claim(registered,bad):
+        fixture,args=setup(registered,bad);root,_,_=fixture
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='neighborhood'):produce(run,args)
+                                                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neighborhood_policy.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x7a2b29567a80>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kw = {}
+
+    def produce(run,args,**kw):
+>       return prepare_registered_features(run,'p',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2,neighborhood_input='neighborhood',**kw)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'neighborhood_input'
+
+tests/research/onchain_replication/test_neighborhood_policy.py:30: TypeError
+__________________ test_bad_policy_refused_before_claim[bad3] __________________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-156/test_bad_policy_refused_before3'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '8cfc5a94d4240e739d26cdfb394bff9934102ccd')
+bad = {'schema_version': 1, 'mode': 'array', 'max_buffer_bytes': 1048576, 'edge_chunk': 2, ...}
+
+    @pytest.mark.parametrize('bad',[{}, {'schema_version':True,'mode':'array','max_buffer_bytes':1024,'edge_chunk':1,'max_sample_array_bytes':1024},
+        policy()|{'edge_chunk':0},policy()|{'max_sample_array_bytes':True},policy()|{'mode':'other'},policy()|{'maximum_neighborhood_nodes':99999}])
+    def test_bad_policy_refused_before_claim(registered,bad):
+        fixture,args=setup(registered,bad);root,_,_=fixture
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='neighborhood'):produce(run,args)
+                                                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neighborhood_policy.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x7a2b29567e10>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kw = {}
+
+    def produce(run,args,**kw):
+>       return prepare_registered_features(run,'p',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2,neighborhood_input='neighborhood',**kw)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'neighborhood_input'
+
+tests/research/onchain_replication/test_neighborhood_policy.py:30: TypeError
+__________________ test_bad_policy_refused_before_claim[bad4] __________________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-156/test_bad_policy_refused_before4'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '724e36cbc40d3f86ad59d661f0ee31a4c385d4f1')
+bad = {'schema_version': 1, 'mode': 'other', 'max_buffer_bytes': 1048576, 'edge_chunk': 2, ...}
+
+    @pytest.mark.parametrize('bad',[{}, {'schema_version':True,'mode':'array','max_buffer_bytes':1024,'edge_chunk':1,'max_sample_array_bytes':1024},
+        policy()|{'edge_chunk':0},policy()|{'max_sample_array_bytes':True},policy()|{'mode':'other'},policy()|{'maximum_neighborhood_nodes':99999}])
+    def test_bad_policy_refused_before_claim(registered,bad):
+        fixture,args=setup(registered,bad);root,_,_=fixture
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='neighborhood'):produce(run,args)
+                                                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neighborhood_policy.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x7a2bc07ff0b0>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kw = {}
+
+    def produce(run,args,**kw):
+>       return prepare_registered_features(run,'p',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2,neighborhood_input='neighborhood',**kw)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'neighborhood_input'
+
+tests/research/onchain_replication/test_neighborhood_policy.py:30: TypeError
+__________________ test_bad_policy_refused_before_claim[bad5] __________________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-156/test_bad_policy_refused_before5'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '724e36cbc40d3f86ad59d661f0ee31a4c385d4f1')
+bad = {'schema_version': 1, 'mode': 'array', 'max_buffer_bytes': 1048576, 'edge_chunk': 2, ...}
+
+    @pytest.mark.parametrize('bad',[{}, {'schema_version':True,'mode':'array','max_buffer_bytes':1024,'edge_chunk':1,'max_sample_array_bytes':1024},
+        policy()|{'edge_chunk':0},policy()|{'max_sample_array_bytes':True},policy()|{'mode':'other'},policy()|{'maximum_neighborhood_nodes':99999}])
+    def test_bad_policy_refused_before_claim(registered,bad):
+        fixture,args=setup(registered,bad);root,_,_=fixture
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='neighborhood'):produce(run,args)
+                                                                ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neighborhood_policy.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+run = <tradingagents.research.lifecycle.ResearchRun object at 0x7a2b289c88d0>
+args = ([GraphSnapshot(asset='ETH', start_utc='2022-01-03T00:00:00+00:00', end_utc='2022-01-10T00:00:00+00:00', available_at=...o anchors => unavailable. Mean node pooling. GraphWave coordinates intrinsically fixed by frozen times/scales.', ...}})
+kw = {}
+
+    def produce(run,args,**kw):
+>       return prepare_registered_features(run,'p',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2,neighborhood_input='neighborhood',**kw)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: prepare_registered_features() got an unexpected keyword argument 'neighborhood_input'
+
+tests/research/onchain_replication/test_neighborhood_policy.py:30: TypeError
+___________ test_omitted_policy_and_changed_policy_bytes_are_refused ___________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-156/test_omitted_policy_and_change0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'a7e7362e781923e8f25a6620dc67b0ee4be4e3c5')
+
+    def test_omitted_policy_and_changed_policy_bytes_are_refused(registered):
+        fixture,args=setup(registered);root,_,_=fixture
+        with start(fixture) as run:
+>           with pytest.raises(ValueError,match='neighborhood'):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_neighborhood_policy.py:64: Failed
+___ test_all_job_neighborhood_policies_preflight_before_population[invalid] ____
+
+fault = 'invalid'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a2b28bdc2b0>
+
+    @pytest.mark.parametrize('fault',['invalid','mismatch','omitted','reuse','non_mcm','later_job'])
+    def test_all_job_neighborhood_policies_preflight_before_population(fault,monkeypatch):
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        job={'operation':'reuse' if fault=='reuse' else 'produce','neighborhood_input':'neighborhood','plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+        if fault=='omitted':job.pop('neighborhood_input')
+        jobs={'p':job} if fault!='later_job' else {'first':{**job,'neighborhood_input':None,'producer':'first'},'p':job}
+        payload={'population_inputs':{'whole':{'producer_input':'population'}},'batch_plan_input':'batch','representation_jobs':jobs}
+        values={'execution_job':{'kind':'fit','payload':payload},'neighborhood':policy()|({'edge_chunk':0} if fault in {'invalid','later_job'} else {}),
+            'plan':{'producers':{'p':{'neighborhood_input':'other' if fault=='mismatch' else 'neighborhood'},'first':{}}}}
+        class Run:
+            def read_input(self,name):return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population ran before policy preflight'))
+>       with pytest.raises(ValueError,match='neighborhood'):execute_fit_payload(Run(),payload)
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neighborhood_policy.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:79: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_neighborhood_policy.test_all_job_neighborhood_policies_preflight_before_population.<locals>.Run object at 0x7a2c59a7e3c0>, 'population')
+
+>   monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population ran before policy preflight'))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population ran before policy preflight
+
+tests/research/onchain_replication/test_neighborhood_policy.py:83: Failed
+___ test_all_job_neighborhood_policies_preflight_before_population[mismatch] ___
+
+fault = 'mismatch'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a2c599503b0>
+
+    @pytest.mark.parametrize('fault',['invalid','mismatch','omitted','reuse','non_mcm','later_job'])
+    def test_all_job_neighborhood_policies_preflight_before_population(fault,monkeypatch):
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        job={'operation':'reuse' if fault=='reuse' else 'produce','neighborhood_input':'neighborhood','plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+        if fault=='omitted':job.pop('neighborhood_input')
+        jobs={'p':job} if fault!='later_job' else {'first':{**job,'neighborhood_input':None,'producer':'first'},'p':job}
+        payload={'population_inputs':{'whole':{'producer_input':'population'}},'batch_plan_input':'batch','representation_jobs':jobs}
+        values={'execution_job':{'kind':'fit','payload':payload},'neighborhood':policy()|({'edge_chunk':0} if fault in {'invalid','later_job'} else {}),
+            'plan':{'producers':{'p':{'neighborhood_input':'other' if fault=='mismatch' else 'neighborhood'},'first':{}}}}
+        class Run:
+            def read_input(self,name):return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population ran before policy preflight'))
+>       with pytest.raises(ValueError,match='neighborhood'):execute_fit_payload(Run(),payload)
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neighborhood_policy.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:79: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_neighborhood_policy.test_all_job_neighborhood_policies_preflight_before_population.<locals>.Run object at 0x7a2b29556120>, 'population')
+
+>   monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population ran before policy preflight'))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population ran before policy preflight
+
+tests/research/onchain_replication/test_neighborhood_policy.py:83: Failed
+___ test_all_job_neighborhood_policies_preflight_before_population[omitted] ____
+
+fault = 'omitted'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a2b28c52030>
+
+    @pytest.mark.parametrize('fault',['invalid','mismatch','omitted','reuse','non_mcm','later_job'])
+    def test_all_job_neighborhood_policies_preflight_before_population(fault,monkeypatch):
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        job={'operation':'reuse' if fault=='reuse' else 'produce','neighborhood_input':'neighborhood','plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+        if fault=='omitted':job.pop('neighborhood_input')
+        jobs={'p':job} if fault!='later_job' else {'first':{**job,'neighborhood_input':None,'producer':'first'},'p':job}
+        payload={'population_inputs':{'whole':{'producer_input':'population'}},'batch_plan_input':'batch','representation_jobs':jobs}
+        values={'execution_job':{'kind':'fit','payload':payload},'neighborhood':policy()|({'edge_chunk':0} if fault in {'invalid','later_job'} else {}),
+            'plan':{'producers':{'p':{'neighborhood_input':'other' if fault=='mismatch' else 'neighborhood'},'first':{}}}}
+        class Run:
+            def read_input(self,name):return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population ran before policy preflight'))
+>       with pytest.raises(ValueError,match='neighborhood'):execute_fit_payload(Run(),payload)
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neighborhood_policy.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:79: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_neighborhood_policy.test_all_job_neighborhood_policies_preflight_before_population.<locals>.Run object at 0x7a2b29556510>, 'population')
+
+>   monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population ran before policy preflight'))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population ran before policy preflight
+
+tests/research/onchain_replication/test_neighborhood_policy.py:83: Failed
+____ test_all_job_neighborhood_policies_preflight_before_population[reuse] _____
+
+fault = 'reuse'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a2b28c51e10>
+
+    @pytest.mark.parametrize('fault',['invalid','mismatch','omitted','reuse','non_mcm','later_job'])
+    def test_all_job_neighborhood_policies_preflight_before_population(fault,monkeypatch):
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        job={'operation':'reuse' if fault=='reuse' else 'produce','neighborhood_input':'neighborhood','plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+        if fault=='omitted':job.pop('neighborhood_input')
+        jobs={'p':job} if fault!='later_job' else {'first':{**job,'neighborhood_input':None,'producer':'first'},'p':job}
+        payload={'population_inputs':{'whole':{'producer_input':'population'}},'batch_plan_input':'batch','representation_jobs':jobs}
+        values={'execution_job':{'kind':'fit','payload':payload},'neighborhood':policy()|({'edge_chunk':0} if fault in {'invalid','later_job'} else {}),
+            'plan':{'producers':{'p':{'neighborhood_input':'other' if fault=='mismatch' else 'neighborhood'},'first':{}}}}
+        class Run:
+            def read_input(self,name):return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population ran before policy preflight'))
+>       with pytest.raises(ValueError,match='neighborhood'):execute_fit_payload(Run(),payload)
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neighborhood_policy.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:79: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_neighborhood_policy.test_all_job_neighborhood_policies_preflight_before_population.<locals>.Run object at 0x7a2b295563c0>, 'population')
+
+>   monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population ran before policy preflight'))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population ran before policy preflight
+
+tests/research/onchain_replication/test_neighborhood_policy.py:83: Failed
+___ test_all_job_neighborhood_policies_preflight_before_population[non_mcm] ____
+
+fault = 'non_mcm'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a2b28f44d50>
+
+    @pytest.mark.parametrize('fault',['invalid','mismatch','omitted','reuse','non_mcm','later_job'])
+    def test_all_job_neighborhood_policies_preflight_before_population(fault,monkeypatch):
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        job={'operation':'reuse' if fault=='reuse' else 'produce','neighborhood_input':'neighborhood','plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+        if fault=='omitted':job.pop('neighborhood_input')
+        jobs={'p':job} if fault!='later_job' else {'first':{**job,'neighborhood_input':None,'producer':'first'},'p':job}
+        payload={'population_inputs':{'whole':{'producer_input':'population'}},'batch_plan_input':'batch','representation_jobs':jobs}
+        values={'execution_job':{'kind':'fit','payload':payload},'neighborhood':policy()|({'edge_chunk':0} if fault in {'invalid','later_job'} else {}),
+            'plan':{'producers':{'p':{'neighborhood_input':'other' if fault=='mismatch' else 'neighborhood'},'first':{}}}}
+        class Run:
+            def read_input(self,name):return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population ran before policy preflight'))
+>       with pytest.raises(ValueError,match='neighborhood'):execute_fit_payload(Run(),payload)
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neighborhood_policy.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:79: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_neighborhood_policy.test_all_job_neighborhood_policies_preflight_before_population.<locals>.Run object at 0x7a2b29555a90>, 'population')
+
+>   monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population ran before policy preflight'))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population ran before policy preflight
+
+tests/research/onchain_replication/test_neighborhood_policy.py:83: Failed
+__ test_all_job_neighborhood_policies_preflight_before_population[later_job] ___
+
+fault = 'later_job'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a2b28f45450>
+
+    @pytest.mark.parametrize('fault',['invalid','mismatch','omitted','reuse','non_mcm','later_job'])
+    def test_all_job_neighborhood_policies_preflight_before_population(fault,monkeypatch):
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+        import tradingagents.research.onchain_replication.population_assembly as assembly
+        job={'operation':'reuse' if fault=='reuse' else 'produce','neighborhood_input':'neighborhood','plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+        if fault=='omitted':job.pop('neighborhood_input')
+        jobs={'p':job} if fault!='later_job' else {'first':{**job,'neighborhood_input':None,'producer':'first'},'p':job}
+        payload={'population_inputs':{'whole':{'producer_input':'population'}},'batch_plan_input':'batch','representation_jobs':jobs}
+        values={'execution_job':{'kind':'fit','payload':payload},'neighborhood':policy()|({'edge_chunk':0} if fault in {'invalid','later_job'} else {}),
+            'plan':{'producers':{'p':{'neighborhood_input':'other' if fault=='mismatch' else 'neighborhood'},'first':{}}}}
+        class Run:
+            def read_input(self,name):return canonical_bytes(values[name])
+        monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population ran before policy preflight'))
+>       with pytest.raises(ValueError,match='neighborhood'):execute_fit_payload(Run(),payload)
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neighborhood_policy.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job_payload.py:79: in execute_fit_payload
+    record = produce_registered_population(run, reference['producer_input'])['population']
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (<tests.research.onchain_replication.test_neighborhood_policy.test_all_job_neighborhood_policies_preflight_before_population.<locals>.Run object at 0x7a2b295567b0>, 'population')
+
+>   monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population ran before policy preflight'))
+                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: population ran before policy preflight
+
+tests/research/onchain_replication/test_neighborhood_policy.py:83: Failed
+________ test_sampler_budget_failure_closes_index_and_does_not_truncate ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a2b28c41f40>
+
+    def test_sampler_budget_failure_closes_index_and_does_not_truncate(monkeypatch):
+        from tests.research.onchain_replication.test_neighborhoods import cfg
+        from tests.research.onchain_replication.test_matching_reference import graph
+        from tradingagents.research.onchain_replication.array_neighborhoods import ArrayNeighborhoodIndex
+        owners=[];original=ArrayNeighborhoodIndex.__init__
+        def track(self,*a,**kw):original(self,*a,**kw);owners.append(self)
+        monkeypatch.setattr(ArrayNeighborhoodIndex,'__init__',track)
+        g=graph([[0],[1],[2]],[(0,1,1),(1,2,1)])
+        with pytest.raises(ValueError,match='sample array'):
+>           sample_neighborhoods([g],cfg(),11,neighborhood_policy=policy()|{'max_sample_array_bytes':1})
+E           TypeError: sample_neighborhoods() got an unexpected keyword argument 'neighborhood_policy'
+
+tests/research/onchain_replication/test_neighborhood_policy.py:96: TypeError
+___ test_sampler_exact_records_rng_and_sample_identity_across_graph_switches ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a2b28c41310>
+
+    def test_sampler_exact_records_rng_and_sample_identity_across_graph_switches(monkeypatch):
+        from dataclasses import replace
+        from tests.research.onchain_replication.test_neighborhoods import cfg
+        from tests.research.onchain_replication.test_matching_reference import graph
+        from tradingagents.research.onchain_replication.serialization import samples_to_record
+        from tradingagents.research.onchain_replication.array_neighborhoods import ArrayNeighborhoodIndex
+        g=graph([[0],[1],[2]],[(0,1,1),(1,2,1)]);other=replace(g,start_utc='2024-01-08T00:00:00Z',end_utc='2024-01-15T00:00:00Z',available_at='2024-01-16T00:00:00Z')
+        config=cfg()|{'sample_count':6};expected=sample_neighborhoods([g,other],config,11)
+        owners=[];original=ArrayNeighborhoodIndex.__init__
+        def track(self,*a,**kw):
+            assert all(i.closed for i in owners)
+            original(self,*a,**kw);owners.append(self)
+        monkeypatch.setattr(ArrayNeighborhoodIndex,'__init__',track)
+>       actual=sample_neighborhoods([g,other],config,11,neighborhood_policy=policy())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: sample_neighborhoods() got an unexpected keyword argument 'neighborhood_policy'
+
+tests/research/onchain_replication/test_neighborhood_policy.py:113: TypeError
+______________ test_resumed_sample_budget_checked_before_decoder _______________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-156/test_resumed_sample_budget_che0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '30291d546835479b1e742ee0b100cb160b4211f8')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a2c599582f0>
+
+    def test_resumed_sample_budget_checked_before_decoder(registered,monkeypatch):
+        import tradingagents.research.onchain_replication.feature_pipeline as pipeline
+        fixture,args=setup(registered);events={}
+        def capture(stage,context,payload):
+            if stage=='samples_complete':events['samples']=payload
+        prepare_features(*args,max_entries=100000,checkpoint=capture)
+        # Over-budget saved bytes must not be decoded merely to discover their size.
+        monkeypatch.setattr(pipeline,'samples_from_record',lambda *a:pytest.fail('over-budget sample decoder called'))
+        with pytest.raises(ValueError,match='sample array'):
+>           prepare_features(*args,max_entries=100000,checkpoint=lambda *a:None,
+                resume_state={'identity':None,'samples':events['samples']},neighborhood_policy=policy()|{'max_sample_array_bytes':1})
+E           TypeError: prepare_features() got an unexpected keyword argument 'neighborhood_policy'
+
+tests/research/onchain_replication/test_neighborhood_policy.py:127: TypeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_registered_array_consumers_preserve_complete_binding_and_close
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_bad_policy_refused_before_claim[bad0]
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_bad_policy_refused_before_claim[bad1]
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_bad_policy_refused_before_claim[bad2]
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_bad_policy_refused_before_claim[bad3]
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_bad_policy_refused_before_claim[bad4]
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_bad_policy_refused_before_claim[bad5]
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_omitted_policy_and_changed_policy_bytes_are_refused
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_all_job_neighborhood_policies_preflight_before_population[invalid]
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_all_job_neighborhood_policies_preflight_before_population[mismatch]
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_all_job_neighborhood_policies_preflight_before_population[omitted]
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_all_job_neighborhood_policies_preflight_before_population[reuse]
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_all_job_neighborhood_policies_preflight_before_population[non_mcm]
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_all_job_neighborhood_policies_preflight_before_population[later_job]
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_sampler_budget_failure_closes_index_and_does_not_truncate
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_sampler_exact_records_rng_and_sample_identity_across_graph_switches
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_resumed_sample_budget_checked_before_decoder
+17 failed in 13.10s

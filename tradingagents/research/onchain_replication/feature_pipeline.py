@@ -32,7 +32,10 @@ def representation_arm(arm):
     return 'proposed' if arm in {'proposed','training_label_permutation','mcm_without_gat'} else arm
 
 
-def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpoint,resume_state=None,retain_features=True,max_array_bytes=None,weight_workspace=None,max_weight_bytes=None,score_only=False):
+def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpoint,resume_state=None,retain_features=True,max_array_bytes=None,weight_workspace=None,max_weight_bytes=None,score_only=False,neighborhood_policy=None):
+    from .neighborhood_policy import validate_neighborhood_policy,require_neighborhood_arm,check_sample_records
+    neighborhood_policy=validate_neighborhood_policy(neighborhood_policy)
+    require_neighborhood_arm(arm,neighborhood_policy)
     from .matching_policy import require_matching_arm
     if type(score_only) is not bool:raise ValueError('matching score-only option must be boolean')
     require_matching_arm(arm,True if score_only else None)
@@ -79,11 +82,13 @@ def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpo
     lineage={identity:graph_lineage(identity) for identity in sorted(required)}
     needs_mcm=arm in {'proposed','training_label_permutation','mcm_without_gat'}
     if needs_mcm:
-        if 'samples' in resume_state:samples=samples_from_record(resume_state['samples'])
+        if 'samples' in resume_state:
+            check_sample_records(resume_state['samples'],neighborhood_policy)
+            samples=samples_from_record(resume_state['samples'])
         else:
             sampling_options=({} if weight_workspace is None else
                               {'weight_workspace':weight_workspace,'max_weight_bytes':max_weight_bytes})
-            samples=sample_neighborhoods(graphs,fitting_config,seed,**sampling_options)
+            samples=sample_neighborhoods(graphs,fitting_config,seed,neighborhood_policy=neighborhood_policy,**sampling_options)
             checkpoint('samples_complete',{'sample_hash':samples.identity},samples_to_record(samples))
         if 'dictionary' in resume_state:dictionary=dictionary_from_record(resume_state['dictionary'])
         else:
@@ -134,7 +139,7 @@ def prepare_features(graphs,examples,fold,arm,seed,configs,*,max_entries,checkpo
                 if type(cursor) is not int or not 0<=cursor<=n or prefix.shape!=(cursor,len(dictionary.representatives)) or prefix.dtype!=np.float32 or not np.isfinite(prefix).all():raise ValueError('resumed MCM dimensions/cursor')
                 output=np.zeros((n,len(dictionary.representatives)),dtype=np.float32);output[:cursor]=prefix
             values=mcm_features(graph,dictionary,configs['matching'],
-                output=output,start_node=cursor,score_only=score_only,
+                output=output,start_node=cursor,score_only=score_only,neighborhood_policy=neighborhood_policy,
                 checkpoint=lambda cursor,prefix:checkpoint('mcm_progress',{**context,'next_node':cursor},prefix.copy()))
             feature={'mcm':torch.tensor(values,dtype=torch.float32),'edge_index':torch.tensor(np.array(graph.edge_index),dtype=torch.long)}
             del values

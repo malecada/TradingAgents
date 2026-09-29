@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-09-29T23:27:11.851538+00:00",
+  "status": "complete",
+  "head": "af9c82c1ec56a0d68dc4add3a92c9b78aed8079a",
+  "bindings_verified": 7,
+  "owner_and_cgroup_absent": true,
+  "guard": {
+    "elapsed_seconds": 5.751070359998266,
+    "peak_sampled_memory_current_bytes": 198012928,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "child_exit_code": 0,
+    "cleanup_verified": true
+  },
+  "verification": {
+    "status": "complete",
+    "fixture": "synthetic-only ring; no empirical feasibility claim",
+    "nodes": 3000000,
+    "edges": 4000000,
+    "elapsed_seconds": 5.205720570003905,
+    "census_elapsed_seconds": 1.3840609569961089,
+    "logical_bytes": 80002799,
+    "allocated_bytes": 80039936,
+    "all_cardinalities_and_maxima_checked": true,
+    "registered_empirical_execution": false
+  },
+  "evidence": {
+    "scale-bindings.json": "9b99fdf14ee880fb07de1e11fab21e5a44cb3cf7a89bb09c25d76c74a73bf548",
+    "scale_guard01/final.json": "29dd0cd2d8200882427feec5fff8d5e7e03b34044fe4f1229d6b3d1b71bc5d45",
+    "scale_guard01/child.log": "74b41bd192ddf72c7ede3859d1e08afb8509f79f1eaad38b1d6774d624263d99",
+    "synthetic01/verification.json": "5b8dd79bb4a99c77d0342483a638b1962c88677256d831ad760b19d96293306d"
+  }
+}

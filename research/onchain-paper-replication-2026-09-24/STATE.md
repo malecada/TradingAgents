@@ -3,6 +3,96 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Registered neighborhood-policy full verification COMPLETE — 2026-09-29T23:30:44.536303+00:00:**
+The named offline01 passed 3,474 tests plus 97 subtests with two CUDA skips:
+standard 2,768 in 1,060.37 seconds; neural 706 in 561.38 seconds. Guard 1,625.725651
+seconds, child zero, cleanup verified, peak 2,239,954,944 bytes and zero memory events.
+All 141 bindings and HEAD af9c82c1 match. PID 2799571 and cgroup are absent.
+Exact closure: `full_sources/neighborhood-policy-2026-09-30/closure-check01.json`.
+Independent terminal review accepted. Commit/push now includes the reviewed
+integration and separately reviewed census prototype/compact synthetic evidence.
+No active job or source freeze remains. Never rerun either terminal identity.
+Next implementation: integrate the exact census engine into the package with
+registered producer/job-kind and explicit 10 GiB floor forwarding, then focused
+and independent verification, exact gate/source/runtime/budget adoption review
+and committed admission before any real-graph measurement. Prototype and draft
+objects are in `full_sources/neighborhood-census-engineering-2026-09-30/`.
+Budget 25/52, census ceiling 53 not yet adopted, all 1,420 fits pending; all 13 tasks remain in scope.
+
+**Independent census prototype and synthetic scale COMPLETE — 2026-09-29T23:29:27.270930+00:00:**
+While neighborhood-policy offline01 remains active with all 141 bindings/HEAD
+unchanged, an isolated census prototype was implemented under
+`full_sources/neighborhood-census-engineering-2026-09-30/`. No graph body was read.
+Ten focused tests pass, including independent neighbor-set counts, reciprocal/
+duplicate/loop/isolate handling, chunk invariance, 10,002-node full hub, failure
+ownership and maximal identity metadata. Review corrections retain red evidence.
+The finite synthetic01 uses a shuffled 3,000,000-node ring with 4,000,000 columns;
+every cardinality/maxima entry and exact histogram pass the independent oracle.
+Guard 5.751070 seconds, peak 198,012,928 bytes, zero memory events, child zero,
+cleanup verified; all seven bindings/HEAD match and owner/cgroup are absent.
+Independent review accepted this synthetic result. Exact scale-closure01.json
+records receipts. Do not rerun the closed scale identity. Its 1.384061-second
+internal engine snapshot excludes final hashing/publication/cleanup; the worker
+5.205721-second duration includes the full fixture and oracle. Census artifacts
+used 80,002,799 logical/80,039,936 allocated bytes before verification metadata.
+This fixture does not establish empirical full-graph or full-model feasibility.
+
+The original neighborhood-policy offline01 still owns PID 2799571/start ticks 5121084,
+unit onchain-replication-33ca20d7cd1542dfb95f79e9e83ed1dc.service and frozen HEAD
+af9c82c1ec56a0d68dc4add3a92c9b78aed8079a. Its standard phase passed 2,768 tests
+plus 97 subtests; neural phase remains active. No duplicate or HEAD/source change.
+Next safe action: finish/close this exact full suite with independent review and
+commit/push reviewed work. Then integrate the census engine and registered
+producer/job dispatch. Explicit generic-job 10 GiB policy support and worker
+forwarding require tests (the generic job still enforces 20 GiB); historical gates
+stay unchanged. Draft plan/job objects specify exact metadata and a stricter
+540-second whole-job cap, but no empirical gate exists yet. Review complete
+runtime/graph/output/resource bindings, ancestor chain and accepted budget
+extension, commit and freshly admit before measuring the real graph. Budget
+remains 25/52; all 1,420 financial fits remain pending. Continue pair-workspace and
+checkpoint work afterwards; all original 109 resource requirements remain explicit.
+
+**ACTIVE registered neighborhood-policy offline01 — 2026-09-29T23:02:55.720095+00:00:**
+Independent source/launcher review accepted the 89-test focused result. Fresh
+admission verified all 141 bindings, no running replication unit, 10,081,812,480
+bytes available RAM and 27,238,330,368 bytes free disk. One named full verification
+is now running: monitor PID 2799571, start ticks 5121084; unit
+`onchain-replication-33ca20d7cd1542dfb95f79e9e83ed1dc.service`; tool session 1377.
+Receipts: `full_sources/neighborhood-policy-2026-09-30/offline01/`.
+First live check confirms phase running, no limit reason and zero memory events.
+Freeze all 141 source-bindings.json entries and HEAD
+af9c82c1ec56a0d68dc4add3a92c9b78aed8079a until verified terminal cleanup. Do not
+relaunch this identity, duplicate its owner, edit bound files or move HEAD.
+Limits: 3 GiB max/2.75 high, zero swap, 3 GiB host reserve, 6 GiB startup,
+10 GiB disk reserve, two CPUs and 3,600 seconds.
+Next safe action: inspect this exact guard/log; reconcile terminal test summaries,
+all hashes and cleanup, obtain independent terminal review, then commit/push.
+Continue census implementation/registration preparation outside the live bindings;
+no graph-body census is admitted yet. Afterwards proceed to pair workspace and
+checkpoint requirements. Overnight heartbeat is active every 15 minutes and
+follows this checkpoint; no further user instruction is needed to continue.
+Budget remains 25/52; census ceiling53 is allocation-reviewed but unadopted;
+all 1,420 financial fits remain pending. No empirical or storage job is running.
+
+**Registered neighborhood-policy focused checks COMPLETE — 2026-09-29T23:01:38.788251+00:00:**
+The optional array index is integrated through registered sampling and MCM with
+exact admitted policy hashes, unchanged scientific/sample identities and separate
+numeric buffer/sample allowances. Independent review identified previous-center
+MCM retention; red02 reproduced both modes and explicit release resolves it.
+Final green03 passed 89 focused tests in 144.84 seconds, including true failed-parent
+reuse, mapped/eager exact record parity and predecode/cleanup rejection checks.
+Evidence: `full_sources/neighborhood-policy-2026-09-30/`.
+Final independent source/launcher acceptance is pending before one guarded full
+verification. All 141 sources are bound to HEAD af9c82c1ec56a0d68dc4add3a92c9b78aed8079a.
+No empirical/storage or long verification job is active at this checkpoint.
+Next safe action: finish review, fresh owner/capacity checks, launch offline01 once,
+freeze HEAD/bindings, then close exact terminal evidence before commit/push.
+The user explicitly authorized overnight step-to-step continuation; the existing
+15-minute heartbeat was updated to follow latest STATE and meaningful changes.
+Continue independent census implementation/registration preparation outside live
+bindings, then pair workspace/checkpoints. Budget remains 25/52; census extension
+53 is reviewed for allocation only, not yet adopted; all 1,420 fits remain pending.
+
 **Array-neighborhood full verification COMPLETE — September 29, 22:47 UTC:**
 The named offline01 passed 3,448 tests plus 97 subtests with two CUDA skips:
 standard 2,768 in 1,027.66 seconds, neural 680 in 517.18 seconds. Guard duration

@@ -1,0 +1,266 @@
+"""Admitted array neighborhoods preserve science, ownership and sample bounds."""
+import copy
+import json
+import numpy as np
+import pytest
+from tests.research.test_lifecycle import registered,start,commit
+from tests.research.onchain_replication.test_registered_features import prepared_registration
+from tradingagents.research.onchain_replication.registered_features import representation_descriptor,prepare_registered_features
+from tradingagents.research.onchain_replication.feature_pipeline import prepare_features
+from tradingagents.research.onchain_replication.neighborhoods import sample_neighborhoods
+from tradingagents.research.onchain_replication.provenance import canonical_bytes,file_hash
+
+
+def policy():return {'schema_version':1,'mode':'array','max_buffer_bytes':1024**2,'edge_chunk':2,'max_sample_array_bytes':1024**2}
+
+
+def setup(registered,options=None):
+    fixture,args,_=prepared_registration(registered);root,spec,_=fixture
+    graphs,examples,fold,_,seed,configs=args;configs=copy.deepcopy(configs);configs['dictionary'].update(sample_count=2,size=2)
+    args=(graphs,examples,fold,'proposed',seed,configs);descriptor=representation_descriptor(*args)
+    path=root/'feature-plan.json';plan=json.loads(path.read_bytes());item=plan['producers'].pop('gin11')
+    item.update(descriptor=descriptor,neighborhood_input='neighborhood');plan['producers']['p']=item
+    path.write_bytes(canonical_bytes(plan));spec['experiments']['example-a']['inputs']['feature-plan']['sha256']=file_hash(path)
+    path=root/'neighborhood-policy.json';path.write_bytes(canonical_bytes(policy() if options is None else options))
+    spec['experiments']['example-a']['inputs']['neighborhood']={'path':str(path.relative_to(root)),'sha256':file_hash(path),'dataset':'sample'}
+    return (root,spec,commit(root,spec)),args
+
+
+def produce(run,args,**kw):
+    return prepare_registered_features(run,'p',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2,neighborhood_input='neighborhood',**kw)
+
+
+def test_registered_array_consumers_preserve_complete_binding_and_close(registered,monkeypatch):
+    from tradingagents.research.onchain_replication.array_neighborhoods import ArrayNeighborhoodIndex
+    import tradingagents.research.onchain_replication.neighborhoods as sampling
+    import tradingagents.research.onchain_replication.mcm as mcm
+    fixture,args=setup(registered);baseline=prepare_features(*args,max_entries=100000,checkpoint=lambda *a:None)
+    owners=[];original=ArrayNeighborhoodIndex.__init__
+    def track(self,*a,**kw):original(self,*a,**kw);owners.append(self)
+    monkeypatch.setattr(ArrayNeighborhoodIndex,'__init__',track)
+    monkeypatch.setattr(sampling,'NeighborhoodIndex',lambda *a:pytest.fail('legacy sampling index'))
+    monkeypatch.setattr(mcm,'NeighborhoodIndex',lambda *a:pytest.fail('legacy MCM index'))
+    with start(fixture) as run:
+        result,path=produce(run,args)
+        assert result.binding==baseline.binding and result.dictionary.identity==baseline.dictionary.identity
+        claim=json.loads((path.parent/'claim.json').read_bytes())
+        assert claim['neighborhood_input']=='neighborhood'
+        assert claim['neighborhood_policy_sha256']==run.admission.inputs['neighborhood']['sha256']
+    assert owners and all(i.closed and i.graph is None for i in owners)
+
+
+@pytest.mark.parametrize('bad',[{}, {'schema_version':True,'mode':'array','max_buffer_bytes':1024,'edge_chunk':1,'max_sample_array_bytes':1024},
+    policy()|{'edge_chunk':0},policy()|{'max_sample_array_bytes':True},policy()|{'mode':'other'},policy()|{'maximum_neighborhood_nodes':99999}])
+def test_bad_policy_refused_before_claim(registered,bad):
+    fixture,args=setup(registered,bad);root,_,_=fixture
+    with start(fixture) as run:
+        with pytest.raises(ValueError,match='neighborhood'):produce(run,args)
+        assert not (root/'research_artifacts/onchain_representations').exists()
+
+
+def test_omitted_policy_and_changed_policy_bytes_are_refused(registered):
+    fixture,args=setup(registered);root,_,_=fixture
+    with start(fixture) as run:
+        with pytest.raises(ValueError,match='neighborhood'):
+            prepare_registered_features(run,'p',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2)
+        (root/'neighborhood-policy.json').write_bytes(canonical_bytes(policy()|{'edge_chunk':3}))
+        with pytest.raises(ValueError):produce(run,args)
+        assert not (root/'research_artifacts/onchain_representations').exists()
+
+
+@pytest.mark.parametrize('fault',['invalid','mismatch','omitted','reuse','non_mcm','later_job'])
+def test_all_job_neighborhood_policies_preflight_before_population(fault,monkeypatch):
+    from tradingagents.research.onchain_replication.job_payload import execute_fit_payload
+    import tradingagents.research.onchain_replication.population_assembly as assembly
+    job={'operation':'reuse' if fault=='reuse' else 'produce','neighborhood_input':'neighborhood','plan_input':'plan','producer':'p','descriptor':{'arm':'gin' if fault=='non_mcm' else 'proposed'}}
+    if fault=='omitted':job.pop('neighborhood_input')
+    jobs={'p':job} if fault!='later_job' else {'first':{**job,'neighborhood_input':None,'producer':'first'},'p':job}
+    payload={'population_inputs':{'whole':{'producer_input':'population'}},'batch_plan_input':'batch','representation_jobs':jobs}
+    values={'execution_job':{'kind':'fit','payload':payload},'neighborhood':policy()|({'edge_chunk':0} if fault in {'invalid','later_job'} else {}),
+        'plan':{'producers':{'p':{'neighborhood_input':'other' if fault=='mismatch' else 'neighborhood'},'first':{}}}}
+    class Run:
+        def read_input(self,name):return canonical_bytes(values[name])
+    monkeypatch.setattr(assembly,'produce_registered_population',lambda *a:pytest.fail('population ran before policy preflight'))
+    with pytest.raises(ValueError,match='neighborhood'):execute_fit_payload(Run(),payload)
+
+
+def test_sampler_budget_failure_closes_index_and_does_not_truncate(monkeypatch):
+    from tests.research.onchain_replication.test_neighborhoods import cfg
+    from tests.research.onchain_replication.test_matching_reference import graph
+    from tradingagents.research.onchain_replication.array_neighborhoods import ArrayNeighborhoodIndex
+    owners=[];original=ArrayNeighborhoodIndex.__init__
+    def track(self,*a,**kw):original(self,*a,**kw);owners.append(self)
+    monkeypatch.setattr(ArrayNeighborhoodIndex,'__init__',track)
+    g=graph([[0],[1],[2]],[(0,1,1),(1,2,1)])
+    with pytest.raises(ValueError,match='sample array'):
+        sample_neighborhoods([g],cfg(),11,neighborhood_policy=policy()|{'max_sample_array_bytes':1})
+    assert owners and all(i.closed for i in owners)
+
+
+@pytest.mark.parametrize('mapped',[False,True])
+def test_sampler_exact_records_rng_and_sample_identity_across_graph_switches(monkeypatch,tmp_path,mapped):
+    from dataclasses import replace
+    from tests.research.onchain_replication.test_neighborhoods import cfg
+    from tests.research.onchain_replication.test_matching_reference import graph
+    from tradingagents.research.onchain_replication.serialization import samples_to_record
+    from tradingagents.research.onchain_replication.array_neighborhoods import ArrayNeighborhoodIndex
+    g=graph([[0],[1],[2]],[(0,1,1),(1,2,1)]);other=replace(g,start_utc='2024-01-08T00:00:00Z',end_utc='2024-01-15T00:00:00Z',available_at='2024-01-16T00:00:00Z')
+    config=cfg()|{'sample_count':6}
+    before={'weight_workspace':tmp_path/'before','max_weight_bytes':1024**2} if mapped else {}
+    after={'weight_workspace':tmp_path/'after','max_weight_bytes':1024**2} if mapped else {}
+    expected=sample_neighborhoods([g,other],config,11,**before)
+    owners=[];original=ArrayNeighborhoodIndex.__init__
+    def track(self,*a,**kw):
+        assert all(i.closed for i in owners)
+        original(self,*a,**kw);owners.append(self)
+    monkeypatch.setattr(ArrayNeighborhoodIndex,'__init__',track)
+    actual=sample_neighborhoods([g,other],config,11,neighborhood_policy=policy(),**after)
+    assert canonical_bytes(samples_to_record(actual))==canonical_bytes(samples_to_record(expected))
+    assert len(owners)>1 and all(i.closed for i in owners)
+
+
+def test_resumed_sample_budget_checked_before_decoder(registered,monkeypatch):
+    import tradingagents.research.onchain_replication.feature_pipeline as pipeline
+    fixture,args=setup(registered);events={}
+    def capture(stage,context,payload):
+        if stage=='samples_complete':events['samples']=payload
+    baseline=prepare_features(*args,max_entries=100000,checkpoint=capture)
+    # Over-budget saved bytes must not be decoded merely to discover their size.
+    monkeypatch.setattr(pipeline,'samples_from_record',lambda *a:pytest.fail('over-budget sample decoder called'))
+    with pytest.raises(ValueError,match='sample array'):
+        prepare_features(*args,max_entries=100000,checkpoint=lambda *a:None,
+            resume_state={'identity':baseline.binding['workflow_identity'],'samples':events['samples']},neighborhood_policy=policy()|{'max_sample_array_bytes':1})
+
+
+def test_mcm_checkpoint_failure_closes_array_index(monkeypatch):
+    from tests.research.onchain_replication.test_matching_reference import graph,config
+    from tests.research.onchain_replication.test_neighborhoods import cfg
+    from tradingagents.research.onchain_replication.dictionary import fit_dictionary
+    from tradingagents.research.onchain_replication.mcm import mcm_features
+    from tradingagents.research.onchain_replication.array_neighborhoods import ArrayNeighborhoodIndex
+    g=graph([[0],[1],[2]],[(0,1,1),(1,2,1)])
+    samples=sample_neighborhoods([g],cfg(),11)
+    dictionary=fit_dictionary(samples,config(),dict(size=2,partition_threshold=20,partition_size=10,hop_depth=1,maximum_neighborhood_nodes=20))
+    owners=[];original=ArrayNeighborhoodIndex.__init__
+    def track(self,*a,**kw):original(self,*a,**kw);owners.append(self)
+    def failed(*a):raise OSError('synthetic checkpoint failure')
+    monkeypatch.setattr(ArrayNeighborhoodIndex,'__init__',track)
+    with pytest.raises(OSError,match='checkpoint'):
+        mcm_features(g,dictionary,config(),neighborhood_policy=policy(),checkpoint=failed)
+    assert owners and all(i.closed and i.graph is None for i in owners)
+
+
+@pytest.mark.parametrize('score_only',[False,True])
+def test_mcm_releases_previous_neighborhood_before_next_extraction(monkeypatch,score_only):
+    import weakref
+    from tests.research.onchain_replication.test_matching_reference import graph,config
+    from tests.research.onchain_replication.test_neighborhoods import cfg
+    from tradingagents.research.onchain_replication.dictionary import fit_dictionary
+    from tradingagents.research.onchain_replication.mcm import mcm_features
+    from tradingagents.research.onchain_replication.array_neighborhoods import ArrayNeighborhoodIndex
+    g=graph([[0],[1],[2]],[(0,1,1),(1,2,1)])
+    samples=sample_neighborhoods([g],cfg(),11)
+    dictionary=fit_dictionary(samples,config(),dict(size=2,partition_threshold=20,partition_size=10,hop_depth=1,maximum_neighborhood_nodes=20))
+    refs=[];original=ArrayNeighborhoodIndex.neighborhood
+    def extract(self,*a,**kw):
+        assert all(r() is None for r in refs),'prior MCM local still retained'
+        value=original(self,*a,**kw);refs.append(weakref.ref(value));return value
+    def checkpoint(*a):assert all(r() is None for r in refs)
+    monkeypatch.setattr(ArrayNeighborhoodIndex,'neighborhood',extract)
+    result=mcm_features(g,dictionary,config(),neighborhood_policy=policy(),score_only=score_only,checkpoint=checkpoint)
+    assert result.shape==(3,2) and np.isfinite(result).all()
+
+
+@pytest.mark.parametrize('fault',['ragged','width','decoder_cap'])
+def test_resumed_record_shape_and_decoder_peak_checks(fault):
+    from tradingagents.research.onchain_replication.neighborhood_policy import check_sample_records
+    value={'graphs':[{'node_ids':['a','b'],'node_features':[[1.],[2.]],'edge_index':[[0],[1]],'edge_features':[[1.]],'edge_width':1}]}
+    options=policy()
+    if fault=='ragged':value['graphs'][0]['node_features'][1].append(3.)
+    elif fault=='width':value['graphs'][0]['edge_width']=2
+    else:options['max_buffer_bytes']=79  # Payload=40 bytes, simultaneous immutable copy requires 80.
+    with pytest.raises(ValueError,match='sample array'):check_sample_records(value,options)
+
+
+def test_valid_job_delivers_array_neighborhood_features_to_batch(registered,monkeypatch):
+    from tests.research.onchain_replication.test_run import setup as batch_setup, register_plan
+    from tests.research.onchain_replication.test_dataset import fixture as dataset_fixture
+    from tests.research.onchain_replication.test_feature_pipeline import configs
+    from tradingagents.research.onchain_replication.job_payload import population_record, execute_fit_payload
+    from tradingagents.research.onchain_replication.graph_store import save_graph
+    from tradingagents.research.onchain_replication.neighborhoods import graph_hash
+    import tradingagents.research.onchain_replication.run as batch
+    import tradingagents.research.onchain_replication.neighborhoods as sampling
+    import tradingagents.research.onchain_replication.mcm as mcm
+    fixture,populations,plan=batch_setup(registered);root,spec,_=fixture
+    graphs,_,fold,_=dataset_fixture();examples,scaler=populations['whole']
+    needed={h for row in (*examples.train,*examples.test) for h in row.graph_hashes}
+    graphs=[g for g in graphs if graph_hash(g) in needed]
+    config=configs();config['dictionary'].update(sample_count=2,size=2)
+    descriptor=representation_descriptor(graphs,examples,fold,'proposed',11,config)
+    expected=prepare_features(graphs,examples,fold,'proposed',11,config,max_entries=100000,checkpoint=lambda *a:None)
+    refs={}
+    for i,g in enumerate(graphs):
+        path=save_graph(root/'graphs'/str(i),g);name='graph_'+str(i)
+        spec['experiments']['example-a']['inputs'][name]={'path':str(path.relative_to(root)),'sha256':file_hash(path),'dataset':'sample'}
+        refs[graph_hash(g)]={'input':name}
+    producer={'descriptor':descriptor,'graphs':refs,'max_entries':100000,'max_array_bytes':1024**2,
+              'binding_output':'binding.json','journal_output':'journal.json','neighborhood_input':'neighborhood'}
+    plan['cells'][0]['cell']['arm']='proposed';plan['cells'][0]['representation']='p'
+    plan['representations']['p']={'output':'binding.json','failure_output':'failure.json'}
+    spec['experiments']['example-a']['outputs']+=['binding.json','journal.json','failure.json']
+    payload={'population_inputs':{'whole':'population'},'batch_plan_input':'batch_plan',
+        'representation_jobs':{'p':{'operation':'produce','descriptor':descriptor,'plan_input':'representation_plan',
+            'producer':'p','population':'whole','max_graph_payload_bytes':10*1024**2,'neighborhood_input':'neighborhood'}}}
+    fixture=register_plan((root,spec,None),plan,[('population',population_record(examples,scaler)),
+        ('representation_plan',{'schema_version':1,'producers':{'p':producer}}),
+        ('neighborhood',policy()),('execution_job',{'kind':'fit','payload':payload})])
+    # Stop at the batch boundary; real admission, graph loading, journals and
+    # numerical representation remain exercised. This test never fits a model.
+    monkeypatch.setattr(batch,'execute_batch',lambda run,populations,prepared,**kw:prepared)
+    monkeypatch.setattr(sampling,'NeighborhoodIndex',lambda *a:pytest.fail('job used legacy sampling index'))
+    monkeypatch.setattr(mcm,'NeighborhoodIndex',lambda *a:pytest.fail('job used legacy MCM index'))
+    with start(fixture) as run:
+        prepared=execute_fit_payload(run,payload)
+        assert prepared['p'].binding==expected.binding
+        assert json.loads((run.directory/'outputs/failure.json').read_bytes())['status']=='complete'
+        claim,=list((root/'research_artifacts/onchain_representations').glob('*/example-a/claim.json'))
+        assert json.loads(claim.read_bytes())['neighborhood_policy_sha256']==run.admission.inputs['neighborhood']['sha256']
+
+
+def test_failed_default_checkpoint_continues_array_policy_without_resampling(registered,monkeypatch):
+    import tradingagents.research.onchain_replication.registered_features as module
+    import tradingagents.research.onchain_replication.feature_pipeline as pipeline
+    fixture,args=setup(registered); root,spec,_=fixture
+    baseline=prepare_features(*args,max_entries=100000,checkpoint=lambda *a:None)
+    plan_path=root/'feature-plan.json'; plan=json.loads(plan_path.read_bytes())
+    plan['producers']['p'].pop('neighborhood_input'); plan_path.write_bytes(canonical_bytes(plan))
+    spec['experiments']['example-a']['inputs']['feature-plan']['sha256']=file_hash(plan_path)
+    source=commit(root,spec); original=module.prepare_features
+    def interrupted(*a,checkpoint,**kw):
+        def save(stage,context,payload):
+            checkpoint(stage,context,payload)
+            if stage=='graph_complete':raise InterruptedError('after durable completed graph')
+        return original(*a,checkpoint=save,**kw)
+    monkeypatch.setattr(module,'prepare_features',interrupted)
+    with start((root,spec,source)) as run:
+        with pytest.raises(InterruptedError):
+            prepare_registered_features(run,'p',*args,plan_input='feature-plan',max_entries=100000,max_array_bytes=1024**2)
+    failed,=list((root/'research_artifacts/onchain_representations').glob('*/example-a/failed.json'))
+    failed_hash=file_hash(failed)
+    child=copy.deepcopy(spec['experiments']['example-a']); child['parent']='example-a'
+    child['inputs']['prior']={'path':str(failed.relative_to(root)),'sha256':failed_hash,'dataset':'sample'}
+    plan['producers']['p']['neighborhood_input']='neighborhood'
+    new_plan=root/'feature-plan-b.json';new_plan.write_bytes(canonical_bytes(plan))
+    child['inputs']['feature-plan']={'path':str(new_plan.relative_to(root)),'sha256':file_hash(new_plan),'dataset':'sample'}
+    spec['experiments']['example-b']=child; source=commit(root,spec)
+    monkeypatch.setattr(module,'prepare_features',original)
+    monkeypatch.setattr(pipeline,'sample_neighborhoods',lambda *a,**k:pytest.fail('resampled'))
+    monkeypatch.setattr(pipeline,'fit_dictionary',lambda *a,**k:pytest.fail('dictionary refitted'))
+    with start((root,spec,source),experiment='example-b') as run:
+        result,path=produce(run,args,continuation_input='prior')
+        assert result.binding==baseline.binding and result.dictionary.identity==baseline.dictionary.identity
+        events=json.loads(path.read_bytes())['events']
+        assert sum(e['stage']=='graph_complete' for e in events)==len(result.features)-1
+        assert file_hash(failed)==failed_hash
+

@@ -1,0 +1,93 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____ test_mcm_releases_previous_neighborhood_before_next_extraction[False] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a749c24b100>
+score_only = False
+
+    @pytest.mark.parametrize('score_only',[False,True])
+    def test_mcm_releases_previous_neighborhood_before_next_extraction(monkeypatch,score_only):
+        import weakref
+        from tests.research.onchain_replication.test_matching_reference import graph,config
+        from tests.research.onchain_replication.test_neighborhoods import cfg
+        from tradingagents.research.onchain_replication.dictionary import fit_dictionary
+        from tradingagents.research.onchain_replication.mcm import mcm_features
+        from tradingagents.research.onchain_replication.array_neighborhoods import ArrayNeighborhoodIndex
+        g=graph([[0],[1],[2]],[(0,1,1),(1,2,1)])
+        samples=sample_neighborhoods([g],cfg(),11)
+        dictionary=fit_dictionary(samples,config(),dict(size=2,partition_threshold=20,partition_size=10,hop_depth=1,maximum_neighborhood_nodes=20))
+        refs=[];original=ArrayNeighborhoodIndex.neighborhood
+        def extract(self,*a,**kw):
+            assert all(r() is None for r in refs),'prior MCM local still retained'
+            value=original(self,*a,**kw);refs.append(weakref.ref(value));return value
+        def checkpoint(*a):assert all(r() is None for r in refs)
+        monkeypatch.setattr(ArrayNeighborhoodIndex,'neighborhood',extract)
+>       result=mcm_features(g,dictionary,config(),neighborhood_policy=policy(),score_only=score_only,checkpoint=checkpoint)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neighborhood_policy.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/mcm.py:28: in mcm_features
+    local=index.neighborhood(center,dictionary.config)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.array_neighborhoods.ArrayNeighborhoodIndex object at 0x7a7367d8e3c0>
+a = (1, mappingproxy({'size': 2, 'partition_threshold': 20, 'partition_size': 10, 'hop_depth': 1, 'maximum_neighborhood_nodes': 20}))
+kw = {}
+
+    def extract(self,*a,**kw):
+>       assert all(r() is None for r in refs),'prior MCM local still retained'
+E       AssertionError: prior MCM local still retained
+E       assert False
+E        +  where False = all(<generator object test_mcm_releases_previous_neighborhood_before_next_extraction.<locals>.extract.<locals>.<genexpr> at 0x7a7496534c70>)
+
+tests/research/onchain_replication/test_neighborhood_policy.py:166: AssertionError
+_____ test_mcm_releases_previous_neighborhood_before_next_extraction[True] _____
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a7367d03a80>
+score_only = True
+
+    @pytest.mark.parametrize('score_only',[False,True])
+    def test_mcm_releases_previous_neighborhood_before_next_extraction(monkeypatch,score_only):
+        import weakref
+        from tests.research.onchain_replication.test_matching_reference import graph,config
+        from tests.research.onchain_replication.test_neighborhoods import cfg
+        from tradingagents.research.onchain_replication.dictionary import fit_dictionary
+        from tradingagents.research.onchain_replication.mcm import mcm_features
+        from tradingagents.research.onchain_replication.array_neighborhoods import ArrayNeighborhoodIndex
+        g=graph([[0],[1],[2]],[(0,1,1),(1,2,1)])
+        samples=sample_neighborhoods([g],cfg(),11)
+        dictionary=fit_dictionary(samples,config(),dict(size=2,partition_threshold=20,partition_size=10,hop_depth=1,maximum_neighborhood_nodes=20))
+        refs=[];original=ArrayNeighborhoodIndex.neighborhood
+        def extract(self,*a,**kw):
+            assert all(r() is None for r in refs),'prior MCM local still retained'
+            value=original(self,*a,**kw);refs.append(weakref.ref(value));return value
+        def checkpoint(*a):assert all(r() is None for r in refs)
+        monkeypatch.setattr(ArrayNeighborhoodIndex,'neighborhood',extract)
+>       result=mcm_features(g,dictionary,config(),neighborhood_policy=policy(),score_only=score_only,checkpoint=checkpoint)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neighborhood_policy.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/mcm.py:28: in mcm_features
+    local=index.neighborhood(center,dictionary.config)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.array_neighborhoods.ArrayNeighborhoodIndex object at 0x7a73675e8a50>
+a = (1, mappingproxy({'size': 2, 'partition_threshold': 20, 'partition_size': 10, 'hop_depth': 1, 'maximum_neighborhood_nodes': 20}))
+kw = {}
+
+    def extract(self,*a,**kw):
+>       assert all(r() is None for r in refs),'prior MCM local still retained'
+E       AssertionError: prior MCM local still retained
+E       assert False
+E        +  where False = all(<generator object test_mcm_releases_previous_neighborhood_before_next_extraction.<locals>.extract.<locals>.<genexpr> at 0x7a73676dca00>)
+
+tests/research/onchain_replication/test_neighborhood_policy.py:166: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_mcm_releases_previous_neighborhood_before_next_extraction[False]
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_mcm_releases_previous_neighborhood_before_next_extraction[True]
+2 failed, 24 deselected in 2.85s

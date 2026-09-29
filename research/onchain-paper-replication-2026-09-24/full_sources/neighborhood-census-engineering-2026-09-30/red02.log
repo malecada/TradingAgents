@@ -1,0 +1,17 @@
+test_maximal_admitted_identity_fits_metadata_reserve (__main__.CensusTests.test_maximal_admitted_identity_fits_metadata_reserve) ... ERROR
+
+======================================================================
+ERROR: test_maximal_admitted_identity_fits_metadata_reserve (__main__.CensusTests.test_maximal_admitted_identity_fits_metadata_reserve)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neighborhood-census-engineering-2026-09-30/test_census_engine.py", line 58, in test_maximal_admitted_identity_fits_metadata_reserve
+    result=engine.census(np.empty((2,0),dtype=np.int64),1,out,identity={'graph':'x'*16350})
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/neighborhood-census-engineering-2026-09-30/census_engine.py", line 111, in census
+    if actual>required:raise RuntimeError('output accounting envelope exceeded')
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: output accounting envelope exceeded
+
+----------------------------------------------------------------------
+Ran 1 test in 0.186s
+
+FAILED (errors=1)

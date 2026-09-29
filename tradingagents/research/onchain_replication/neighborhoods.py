@@ -119,7 +119,9 @@ class SampleManifest:
         object.__setattr__(self,'rng_state',freeze(self.rng_state))
 
 
-def sample_neighborhoods(graphs,config,seed,*,weight_workspace=None,max_weight_bytes=None):
+def sample_neighborhoods(graphs,config,seed,*,weight_workspace=None,max_weight_bytes=None,neighborhood_policy=None):
+    from .neighborhood_policy import validate_neighborhood_policy,open_array_index,sample_array_bytes
+    neighborhood_policy=validate_neighborhood_policy(neighborhood_policy)
     if weight_workspace is None and max_weight_bytes is not None:
         raise ValueError("weight budget requires a workspace")
     start,end=utc(config['train_start']),utc(config['train_end'])
@@ -141,7 +143,8 @@ def sample_neighborhoods(graphs,config,seed,*,weight_workspace=None,max_weight_b
                    if weight_workspace is not None else None)
         weights = storage.weights if storage is not None else np.ones(total,dtype=np.float64)
         rng=np.random.Generator(np.random.PCG64(seed));records=[];samples=[]
-        active_gi=None;index=None
+        active_gi=None;index=None;retained_bytes=0
+        index_stack=stack.enter_context(ExitStack())
         for _ in range(config['sample_count']):
             if storage is None:
                 probability=weights/weights.sum()
@@ -150,8 +153,15 @@ def sample_neighborhoods(graphs,config,seed,*,weight_workspace=None,max_weight_b
                 chosen,chosen_probability=storage.draw(rng)
             gi=int(np.searchsorted(offsets,chosen,side='right')-1);center=chosen-int(offsets[gi])
             g=training[gi]
-            if gi!=active_gi:index=NeighborhoodIndex(g);active_gi=gi
+            if gi!=active_gi:
+                index_stack.close()
+                index=(index_stack.enter_context(open_array_index(g,neighborhood_policy))
+                       if neighborhood_policy is not None else NeighborhoodIndex(g))
+                active_gi=gi
             sub=index.neighborhood(center,config)
+            if neighborhood_policy is not None:
+                retained_bytes+=sample_array_bytes(sub)
+                if retained_bytes>neighborhood_policy['max_sample_array_bytes']:raise ValueError('retained sample array allowance exceeded')
             records.append({'graph_hash':hashes[gi],'center_id':g.node_ids[center],'center_index':center,'probability':chosen_probability,'node_count':len(sub.node_ids),'edge_count':sub.edge_index.shape[1]})
             samples.append(sub);weights[chosen]=0
             weights[int(offsets[gi])+np.asarray(index.selected(center,config),dtype=np.int64)]*=.5
