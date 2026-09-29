@@ -95,8 +95,13 @@ def build_e2(root: Path) -> dict:
         inputs[name] = {"path": path, "sha256": _sha(root, path), "dataset": DATASET}
     inputs["review_filled"] = {"path": SHEET_PATH, "sha256": _sha(root, SHEET_PATH),
                                "dataset": DATASET}
-    spec["experiments"][E2] = experiment(root, parent=E1, question=E2_QUESTION, inputs=inputs,
-                                         cells=E2_CELLS, outputs=E2_OUTPUTS)
+    e2 = experiment(root, parent=E1, question=E2_QUESTION, inputs=inputs,
+                    cells=E2_CELLS, outputs=E2_OUTPUTS)
+    e1 = spec["experiments"][E1]
+    if (e2["source_files"] != e1["source_files"]
+            or e2["runtime_hashes"] != e1["runtime_hashes"]):
+        raise SystemExit("source files or runtime hashes changed since E1 registration")
+    spec["experiments"][E2] = e2
     return spec
 
 
