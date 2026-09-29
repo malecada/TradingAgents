@@ -99,21 +99,26 @@ the chosen truth and Jev's events share a class but name different entities.
 ### 4.1 Client and access
 
 - Plain `requests` (declared dependency); no SDK, no lockfile change.
-- Route chosen by which variable is present in the checkout's `.env`:
-  `TYPESAFE_API_KEY` (native `POST https://api.typesafe.ai/v1/systemone`,
-  preferred) or `AI_GATEWAY_API_KEY` (Vercel,
-  `POST https://ai-gateway.vercel.sh/typesafe/v1/systemone`). OpenRouter is
-  excluded until its typed-question endpoint is verified.
+- Route (user decision, 2026-09-29): OpenRouter Decisions API,
+  `POST https://openrouter.ai/api/alpha/decisions`, bearer key from the
+  checkout's `.env` (`OPENROUTER_API_KEY`, or `OPENROUTER_API` as the user
+  named it). Request body `{model, state, questions, provider}`; the question
+  wire format matches TypeSafe's (`type` noul/choice/score, `instructions`,
+  `criteria`). The endpoint is labelled alpha by OpenRouter (disclosed).
+- `provider = {"only": ["TypeSafe"], "allow_fallbacks": false}` so no other
+  provider can answer.
 - Credentials are never read or printed by the assistant; the client loads
   them through `dotenv`.
-- The model identifier is pinned to an immutable version ID chosen at the
-  smoke test (§8 step 4) and frozen in the charter. Every response's `model`
-  field and usage are stored. A response naming a different resolved version
-  fails the run. If the route only echoes an alias, that is disclosed.
-- Retry on HTTP 429/5xx with exponential backoff honoring `retry-after`, at
-  most 5 attempts per call; exhaustion fails the run (no silent unknown rows).
-- Spend cap USD 5 of tracked usage (input tokens × published price); the run
-  aborts when projected spend would exceed it.
+- The model is pinned to a dated immutable ID (form
+  `typesafe/jev-1.13-20260917`) taken from the smoke-test response's `model`
+  field (§8 step 4) and frozen in the charter. Every response's `id`,
+  `model`, `provider` and `usage` are stored. A response naming a different
+  model or provider fails the run.
+- Retry on HTTP 429/5xx/524/529 with exponential backoff honoring
+  `retry-after`, at most 5 attempts per call; exhaustion fails the run (no
+  silent unknown rows). HTTP 402 (credits) fails immediately.
+- Spend cap USD 5, summed from each response's `usage.cost`; the run aborts
+  before a call when the next call's projected cost would exceed it.
 
 ### 4.2 State
 
@@ -170,7 +175,7 @@ are therefore unreachable; the coverage diagnostic (§6) measures this.
 
 Question strings, candidate generator code and lists, threshold 0.5, model
 version, seeds. The only permitted pre-registration calls are a smoke test on
-invented headlines (not corpus text) and the provider's model-list endpoint.
+invented headlines (not corpus text).
 
 ## 5. Scoring and gates
 
@@ -264,7 +269,7 @@ as a match.
 | File | Responsibility |
 |---|---|
 | `scripts/llm_event_xs_truth.py` | Rebuild C1 truth from committed artifacts; C1 matching/scoring helpers |
-| `scripts/llm_jev_client.py` | Jev REST client: route selection, pinning, retries, usage and cost cap |
+| `scripts/llm_jev_client.py` | OpenRouter Decisions client: pinning, provider lock, retries, usage and cost cap |
 | `scripts/llm_jev_questions.py` | Frozen question strings, candidate generator, request builder |
 | `scripts/llm_jev_event_p0.py` | `label` (E1) and `score` (E2) runners via `ResearchRun`; sheet render/parse |
 | `research/llm-jev-event-2026-09-29/` | `gates.json`, later `gates_e2.json`, `STATE.md` |
@@ -288,9 +293,9 @@ as a match.
 
 1. Truth rebuild + reproduction test; stop if it does not match.
 2. Remaining code and offline tests.
-3. User adds the key to this worktree's `.env`.
-4. Smoke test on invented headlines + model-list call; fix client issues; pick
-   and freeze the immutable model version. *(Moved before the design commit
+3. User adds the OpenRouter key to this worktree's `.env` (done 2026-09-29).
+4. Smoke test on invented headlines; fix client issues; take the dated model ID
+   from the response `model` field and freeze it. *(Moved before the design commit
    relative to the conversation outline, because the version pin and client
    source hashes must be final at registration.)*
 5. Charter + E1 registration + `tradingagents.research check`; independent
