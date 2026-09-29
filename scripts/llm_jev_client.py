@@ -6,6 +6,7 @@ malformed answers, exhausted retries, missing credits or the spend cap.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import math
 from pathlib import Path
 import time
 
@@ -15,7 +16,7 @@ ENDPOINT = "https://openrouter.ai/api/alpha/decisions"
 PROVIDER_SLUG = "typesafe"
 PROVIDER_NAME = "TypeSafe"
 KEY_NAMES = ("OPENROUTER_API_KEY", "OPENROUTER_API")
-RETRY_STATUS = frozenset({429, 500, 502, 503, 504, 524, 529})
+RETRY_STATUS = frozenset({408, 429, 500, 502, 503, 504, 524, 529})
 
 
 class JevError(RuntimeError):
@@ -60,7 +61,7 @@ class JevClient:
                 if attempt == self.max_attempts:
                     raise JevError(f"network failure after {attempt} attempts: "
                                    f"{type(exc).__name__}") from None
-                self.sleep(min(2 ** attempt, 30))
+                self.sleep(min(10 * 2 ** (attempt - 1), 120))
                 continue
             if response.status_code == 200:
                 try:
@@ -79,7 +80,8 @@ class JevClient:
             if response.status_code in RETRY_STATUS and attempt < self.max_attempts:
                 retry_after = str(response.headers.get("retry-after") or "")
                 is_number = retry_after.replace(".", "", 1).isdigit()
-                self.sleep(float(retry_after) if is_number else min(2 ** attempt, 30))
+                self.sleep(float(retry_after) if is_number
+                          else min(10 * 2 ** (attempt - 1), 120))
                 continue
             text = str(response.text).replace(self.api_key, "[redacted]")[:300]
             raise JevError(f"HTTP {response.status_code}: {text}")
@@ -102,12 +104,17 @@ class JevClient:
                 raise JevError(f"answer type mismatch for {name}")
             if question["type"] == "noul":
                 v = answer.get("noul")
-                if not isinstance(v, (int, float)) or isinstance(v, bool):
-                    raise JevError(f"noul probability missing for {name}")
+                if (isinstance(v, bool) or not isinstance(v, (int, float))
+                        or not math.isfinite(v) or not (0 <= v <= 1)):
+                    raise JevError(f"noul probability invalid for {name}")
             if question["type"] == "choice":
                 probs = answer.get("probabilities")
                 if not isinstance(probs, dict) or set(probs) != set(question["criteria"]):
                     raise JevError(f"choice probabilities incomplete for {name}")
+                for v in probs.values():
+                    if (isinstance(v, bool) or not isinstance(v, (int, float))
+                            or not math.isfinite(v) or not (0 <= v <= 1)):
+                        raise JevError(f"choice probabilities invalid for {name}")
         cost = (data.get("usage") or {}).get("cost")
         if isinstance(cost, bool) or not isinstance(cost, (int, float)):
             raise JevError("usage.cost missing or not numeric")

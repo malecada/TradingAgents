@@ -156,6 +156,19 @@ def test_504_retried_then_success():
     assert len(sleeps) == 1 and c.calls == 1
 
 
+def test_408_retried_then_success():
+    c, sleeps = client([FakeResponse(408), FakeResponse(200, ok_payload())])
+    c.decide({}, QUESTIONS)
+    assert len(sleeps) == 1 and c.calls == 1
+
+
+def test_backoff_schedule():
+    c, sleeps = client([FakeResponse(503)] * 5)
+    with pytest.raises(JevError, match="HTTP 503"):
+        c.decide({}, QUESTIONS)
+    assert sleeps == [10, 20, 40, 80]
+
+
 def test_malformed_json_in_200_response():
     c, _ = client([BadJsonResponse(200)])
     with pytest.raises(JevError, match="malformed JSON"):
@@ -185,6 +198,33 @@ def test_noul_value_is_bool():
                          "probabilities": {"c00": 0.8, "none": 0.2}}}
     c, _ = client([FakeResponse(200, ok_payload(answers=answers))])
     with pytest.raises(JevError, match="noul probability"):
+        c.decide({}, QUESTIONS)
+
+
+def test_noul_value_nan():
+    answers = {"ev_hack": {"type": "noul", "noul": float("nan")},
+               "asset": {"type": "choice", "choice": "c00", "confidence": 0.8,
+                         "probabilities": {"c00": 0.8, "none": 0.2}}}
+    c, _ = client([FakeResponse(200, ok_payload(answers=answers))])
+    with pytest.raises(JevError, match="noul probability"):
+        c.decide({}, QUESTIONS)
+
+
+def test_noul_value_out_of_range():
+    answers = {"ev_hack": {"type": "noul", "noul": 1.5},
+               "asset": {"type": "choice", "choice": "c00", "confidence": 0.8,
+                         "probabilities": {"c00": 0.8, "none": 0.2}}}
+    c, _ = client([FakeResponse(200, ok_payload(answers=answers))])
+    with pytest.raises(JevError, match="noul probability"):
+        c.decide({}, QUESTIONS)
+
+
+def test_choice_probability_not_numeric():
+    answers = {"ev_hack": {"type": "noul", "noul": 0.9},
+               "asset": {"type": "choice", "choice": "c00", "confidence": 0.8,
+                         "probabilities": {"c00": "x", "none": 0.2}}}
+    c, _ = client([FakeResponse(200, ok_payload(answers=answers))])
+    with pytest.raises(JevError, match="choice probabilities"):
         c.decide({}, QUESTIONS)
 
 
