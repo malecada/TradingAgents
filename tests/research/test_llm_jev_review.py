@@ -175,7 +175,8 @@ def test_render_survives_hostile_headline():
 
 
 def test_class_row_entity_line():
-    """Class dispute row must emit ENTITY line with asset names for disputed class."""
+    """Class dispute row must emit an ENTITY line with both names, in X/Y form (not A/B:
+    class-row entity pairs must not reuse the class verdict's A/B letters)."""
     truth = {1: [ev("hack", "Poly Network"), ev("regulatory", "SEC")]}
     truth.update({i: [] for i in range(2, 40)})
     rounds = {"v1": make_round(truth, audited=set())}
@@ -188,13 +189,37 @@ def test_class_row_entity_line():
     match = re.search(rf"### row {klass['row']}.*?(?=### row |$)", text, re.DOTALL)
     assert match
     block = match.group(0)
-    # Must contain ENTITY line with both names
-    assert "- ENTITY (hack): A = " in block and "|" in block
+    # Must contain ENTITY line with both names, flattened, under X/Y (not A/B)
+    entity_match = re.search(r"^- ENTITY \(hack\): X = (.*) \| Y = (.*)$", block, re.MULTILINE)
+    assert entity_match
+    assert {entity_match.group(1), entity_match.group(2)} == {"Ronin", "Poly Network"}
+    assert "- ENTITY (hack): A = " not in block
     # Fill and parse
     text = fill(text, rows, {"class": "A", "entity": "", "check": "BOTH"}, same="Y")
     filled = parse_filled(text, rows)
     truth_out, same, _ = apply_review(rounds, jev, rows, key, filled)
     assert same == {"1|hack": True}
+
+
+def test_class_row_entity_pairs_independently_ordered():
+    """Across many class-dispute rows sharing a class, the Jev name must not always land
+    under X: each ENTITY sub-pair draws its own order independent of the row's A/B verdict
+    letters, so both orders occur."""
+    truth = {i: [ev("hack", "Poly Network"), ev("regulatory", "SEC")] for i in range(1, 41)}
+    rounds = {"v1": make_round(truth, audited=set())}
+    jev = {str(i): {"events": [ev("hack", "Ronin")]} for i in range(1, 41)}
+    rows, key = build_review(rounds, jev, seed=SEED)
+    class_rows = [r for r in rows if r["kind"] == "class"]
+    assert len(class_rows) == 40
+    text = render_markdown(rows)
+    x_values = set()
+    for row in class_rows:
+        block = re.search(rf"### row {row['row']}.*?(?=### row |$)", text, re.DOTALL).group(0)
+        entity_match = re.search(r"^- ENTITY \(hack\): X = (.*) \| Y = (.*)$", block, re.MULTILINE)
+        assert entity_match
+        assert {entity_match.group(1), entity_match.group(2)} == {"Ronin", "Poly Network"}
+        x_values.add(entity_match.group(1))
+    assert x_values == {"Ronin", "Poly Network"}
 
 
 @pytest.mark.parametrize("verdict_text", [

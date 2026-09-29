@@ -104,7 +104,12 @@ def build_review(rounds: dict, jev: dict, seed: int = SEED, n_checks: int = N_CH
         else:
             row[jev_side], row[other] = label_string(mine), label_string(stored)
             if kind == "class":
-                row["same"] = [{"class": c, jev_side: j, other: t} for c, j, t in _entity_pairs(stored, mine)]
+                same = []
+                for c, j, t in _entity_pairs(stored, mine):
+                    first_jev = rng.random() < 0.5
+                    names = (j, t) if first_jev else (t, j)
+                    same.append({"class": c, "X": names[0], "Y": names[1]})
+                row["same"] = same
         rows.append(row)
         key[str(number)] = {"kind": kind, "sample_idx": idx, "entity_class": cls,
                             jev_side: "jev", other: "stored"}
@@ -132,7 +137,12 @@ def render_markdown(rows: list[dict]) -> str:
         if row["kind"] != "entity":
             out.append("- VERDICT: ")
         for pair in row["same"]:
-            out.append(f"- ENTITY ({pair['class']}): A = {_flat(pair['A'])} | B = {_flat(pair['B'])}")
+            if "X" in pair:
+                out.append(f"- ENTITY ({pair['class']}): X = {_flat(pair['X'])} | "
+                          f"Y = {_flat(pair['Y'])}")
+            else:
+                out.append(f"- ENTITY ({pair['class']}): A = {_flat(pair['A'])} | "
+                          f"B = {_flat(pair['B'])}")
             out.append(f"- SAME ({pair['class']}): ")
         out.append("")
     return "\n".join(out) + "\n"
