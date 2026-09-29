@@ -15,11 +15,21 @@ def graph_hash(graph):
     import hashlib
     validate_graph(graph);h=hashlib.sha256()
     def feed(value):
-        if isinstance(value,np.ndarray):
+        if isinstance(value,np.ndarray) and value.ndim>1:
             h.update(b'[')
             for i,row in enumerate(value):
                 if i:h.update(b',')
-                h.update(canonical_bytes(row.tolist()))
+                feed(row)
+            h.update(b']')
+        elif isinstance(value,(np.ndarray,tuple,list)):
+            # Preserve the legacy JSON bytes while limiting row/ID-list copies.
+            # Graph arrays are two-dimensional; their rows and ID tuples are flat.
+            h.update(b'[')
+            for start in range(0,len(value),1024):
+                if start:h.update(b',')
+                chunk=value[start:start+1024]
+                if isinstance(chunk,np.ndarray):chunk=chunk.tolist()
+                h.update(canonical_bytes(chunk)[1:-1])
             h.update(b']')
         elif isinstance(value,Mapping):
             h.update(b'{')

@@ -1,0 +1,58 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________ test_checkpoint_exposes_tensor_devices_to_rng_discovery ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x760ab153b360>
+
+    def test_checkpoint_exposes_tensor_devices_to_rng_discovery(monkeypatch):
+        from tradingagents.research.onchain_replication import model as module
+        original=module.checkpoint
+        model,graphs,prices,_=fixture(True)
+        seen=[]
+        def checked(function,*args,**kwargs):
+            assert len(args)>=2 and isinstance(args[0],torch.Tensor) and isinstance(args[1],torch.Tensor), 'tensor devices hidden from checkpoint RNG discovery'
+            seen.append(id(args[0]))
+            return original(function,*args,**kwargs)
+        monkeypatch.setattr(module,'checkpoint',checked)
+>       model(graphs,prices).sum().backward()
+        ^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_activation_checkpointing.py:114: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.13/site-packages/torch/nn/modules/module.py:1776: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/torch/nn/modules/module.py:1787: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/model.py:65: in forward
+    encoded_graphs[key]=checkpoint(self.graph,use_reentrant=False,preserve_rng_state=True,**graph)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+function = GraphEncoder(
+  (mlp): Sequential(
+    (0): Linear(in_features=32, out_features=64, bias=True)
+    (1): ReLU()
+    (2)...features=64, out_features=32, bias=True)
+    (3): ReLU()
+  )
+  (gat): ModuleList(
+    (0-1): 2 x GraphAttention()
+  )
+)
+args = ()
+kwargs = {'use_reentrant': False, 'preserve_rng_state': True, 'mcm': tensor([[6.2558e-01, 8.8001e-01, 3.2572e-01, 9.5030e-01, 8...13, 15, 18,  0,  2,  3,  5,  6,  8,  9, 11, 12, 14, 15, 18,
+          1,  2,  4,  5,  7,  8, 10, 11, 13, 14, 16, 17]])}
+
+    def checked(function,*args,**kwargs):
+>       assert len(args)>=2 and isinstance(args[0],torch.Tensor) and isinstance(args[1],torch.Tensor), 'tensor devices hidden from checkpoint RNG discovery'
+E       AssertionError: tensor devices hidden from checkpoint RNG discovery
+E       assert (0 >= 2)
+E        +  where 0 = len(())
+
+tests/research/onchain_replication/test_activation_checkpointing.py:110: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_activation_checkpointing.py::test_checkpoint_exposes_tensor_devices_to_rng_discovery
+1 failed, 11 deselected in 1.56s

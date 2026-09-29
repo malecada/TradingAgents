@@ -24,7 +24,7 @@ class VectorTemporal(nn.Module):
 
 class AlternativeGraphTemporal(ReplicationModel):
     def __init__(self,config,task,arm):
-        nn.Module.__init__(self);self.config=dict(config);self.task=task
+        nn.Module.__init__(self);self._configure(config,task)
         self.graph=GINEncoder() if arm=='gin' else DiagnosticGraph(config,arm)
         self.temporal=TemporalHead(33,config['lstm_width'],config['attention_width'],task,config['lstm_depth'])
 

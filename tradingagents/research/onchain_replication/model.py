@@ -2,6 +2,7 @@
 from __future__ import annotations
 import torch
 from torch import nn
+from torch.utils.checkpoint import checkpoint
 from .gat import GraphAttention
 from .pooling import mean_pool
 from .temporal import TemporalHead,initialize_linear
@@ -35,9 +36,23 @@ class GraphEncoder(nn.Module):
 
 class ReplicationModel(nn.Module):
     def __init__(self,config,task):
-        super().__init__();self.config=dict(config);self.task=task
+        super().__init__();self._configure(config,task)
         self.graph=GraphEncoder(config)
         self.temporal=TemporalHead(config['graph_vector_width']+config['price_input_width'],config['lstm_width'],config['attention_width'],task,config['lstm_depth'])
+
+    def _configure(self,config,task):
+        self.config=dict(config);self.task=task
+        policy=config.get('graph_activation_checkpointing',False)
+        if type(policy) is not bool:raise ValueError('graph activation checkpointing must be boolean')
+        self.graph_activation_checkpointing=policy
+
+    def _encode_graph(self,mcm,edge_index,node_mask=None,batch=None):
+        if self.graph_activation_checkpointing and self.training and torch.is_grad_enabled():
+            # Non-reentrant mode trains parameters with fixed MCM inputs. Tensor
+            # args expose accelerator devices to checkpoint's RNG preservation.
+            return checkpoint(self.graph,mcm,edge_index,node_mask,batch,
+                              use_reentrant=False,preserve_rng_state=True)
+        return self.graph(mcm,edge_index,node_mask,batch)
 
     def forward(self,graph_sequences,prices,mask=None):
         if prices.ndim!=3 or len(graph_sequences)!=len(prices):raise ValueError('graph/price sequence batch mismatch')
@@ -51,7 +66,8 @@ class ReplicationModel(nn.Module):
                 elif graph is None:raise ValueError('missing valid graph step')
                 else:
                     key=id(graph)
-                    if key not in encoded_graphs:encoded_graphs[key]=self.graph(**graph)
+                    if key not in encoded_graphs:
+                        encoded_graphs[key]=self._encode_graph(**graph)
                     vectors.append(encoded_graphs[key])
             rows.append(torch.stack(vectors))
         embeddings=torch.stack(rows)

@@ -1,0 +1,202 @@
+{
+  "boot_id": "9a0147d4-78ab-4515-ae9e-2bcc3e866385",
+  "cgroup": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-455ededaeb544d998af8f9e1df6da161.service",
+  "child_exit_code": 0,
+  "cleanup_stop_returncode": 5,
+  "cleanup_unit_properties": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "dead"
+  },
+  "cleanup_verified": true,
+  "command": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes/.venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--import-mode=importlib",
+    "tests/research/onchain_replication/test_activation_checkpointing.py",
+    "tests/research/onchain_replication/test_aggregation_workspace.py",
+    "tests/research/onchain_replication/test_bounded_graph_hash.py",
+    "tests/research/onchain_replication/test_btc.py",
+    "tests/research/onchain_replication/test_btc_source.py",
+    "tests/research/onchain_replication/test_btc_store.py",
+    "tests/research/onchain_replication/test_btc_subsets.py",
+    "tests/research/onchain_replication/test_btc_weekly.py",
+    "tests/research/onchain_replication/test_cache.py",
+    "tests/research/onchain_replication/test_cells.py",
+    "tests/research/onchain_replication/test_checkpoint.py",
+    "tests/research/onchain_replication/test_coinmetrics_prices.py",
+    "tests/research/onchain_replication/test_comparison.py",
+    "tests/research/onchain_replication/test_component_store.py",
+    "tests/research/onchain_replication/test_contracts.py",
+    "tests/research/onchain_replication/test_dataset.py",
+    "tests/research/onchain_replication/test_dictionary.py",
+    "tests/research/onchain_replication/test_eth_source.py",
+    "tests/research/onchain_replication/test_evaluation.py",
+    "tests/research/onchain_replication/test_feature_journal.py",
+    "tests/research/onchain_replication/test_feature_pipeline.py",
+    "tests/research/onchain_replication/test_gat.py",
+    "tests/research/onchain_replication/test_graph_baselines.py",
+    "tests/research/onchain_replication/test_graph_production.py",
+    "tests/research/onchain_replication/test_graph_store.py",
+    "tests/research/onchain_replication/test_job.py",
+    "tests/research/onchain_replication/test_job_payload.py",
+    "tests/research/onchain_replication/test_journal_recovery.py",
+    "tests/research/onchain_replication/test_matching_accelerated.py",
+    "tests/research/onchain_replication/test_matching_reference.py",
+    "tests/research/onchain_replication/test_mcm.py",
+    "tests/research/onchain_replication/test_metrics_baselines.py",
+    "tests/research/onchain_replication/test_model.py",
+    "tests/research/onchain_replication/test_neighborhoods.py",
+    "tests/research/onchain_replication/test_parquet_ranges.py",
+    "tests/research/onchain_replication/test_pilot.py",
+    "tests/research/onchain_replication/test_pilot_successor.py",
+    "tests/research/onchain_replication/test_population_assembly.py",
+    "tests/research/onchain_replication/test_preservation.py",
+    "tests/research/onchain_replication/test_preservation_continuation.py",
+    "tests/research/onchain_replication/test_preservation_diagnostics.py",
+    "tests/research/onchain_replication/test_preservation_prefix.py",
+    "tests/research/onchain_replication/test_price_scripts.py",
+    "tests/research/onchain_replication/test_price_source.py",
+    "tests/research/onchain_replication/test_prices.py",
+    "tests/research/onchain_replication/test_range_source.py",
+    "tests/research/onchain_replication/test_registered_features.py",
+    "tests/research/onchain_replication/test_registry.py",
+    "tests/research/onchain_replication/test_replay.py",
+    "tests/research/onchain_replication/test_resources.py",
+    "tests/research/onchain_replication/test_run.py",
+    "tests/research/onchain_replication/test_source_controller.py",
+    "tests/research/onchain_replication/test_source_footers.py",
+    "tests/research/onchain_replication/test_source_inventory.py",
+    "tests/research/onchain_replication/test_subsets.py",
+    "tests/research/onchain_replication/test_temporal.py",
+    "tests/research/onchain_replication/test_training.py",
+    "tests/research/onchain_replication/test_verification.py",
+    "tests/research/onchain_replication/test_weekly.py"
+  ],
+  "cpu_enforcement": "inherited two-CPU affinity with per-thread cgroup readback",
+  "cpu_quota_controller_available": false,
+  "cpu_thread_readback": {
+    "491720": [
+      0,
+      1
+    ]
+  },
+  "cpus": [
+    0,
+    1
+  ],
+  "cwd": "/home/malecada/master_thesis/TradingAgents-audit-fixes",
+  "disk_floor_bytes": 21474836480,
+  "disk_free_bytes": {
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes": 33841868800
+  },
+  "disk_paths": [
+    "/home/malecada/master_thesis/TradingAgents-audit-fixes"
+  ],
+  "elapsed_seconds": 328.90326107500005,
+  "elapsed_time_kill": false,
+  "host_mem_available_bytes": 10640969728,
+  "initial_memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "kernel_controls": {
+    "memory.high": "1610612736",
+    "memory.max": "2147483648",
+    "memory.swap.max": "0"
+  },
+  "lease_seconds": 15.0,
+  "limit_reason": null,
+  "memory_current_bytes": 329920512,
+  "memory_events": {
+    "high": 0,
+    "low": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_group_kill": 0,
+    "oom_kill": 0
+  },
+  "memory_high_bytes": 1610612736,
+  "memory_max_bytes": 2147483648,
+  "memory_swap_max_bytes": 0,
+  "monitor_pid": 491718,
+  "monotonic_seconds": 3797.828335913,
+  "optional_memory_telemetry": {
+    "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+    "unit": {
+      "anon_bytes": 8593408,
+      "file_bytes": 236683264,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-455ededaeb544d998af8f9e1df6da161.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+      "swap_current_bytes": 0,
+      "unavailable": {}
+    },
+    "user_ancestor": {
+      "anon_bytes": 4002463744,
+      "file_bytes": 6458339328,
+      "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+      "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=6133\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=6130",
+      "swap_current_bytes": 0,
+      "unavailable": {}
+    }
+  },
+  "owner_identity": null,
+  "peak_sampled_memory_current_bytes": 821239808,
+  "phase": "complete",
+  "receipt_dir": "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/activation-checkpointing-2026-09-29/neural02",
+  "reserve_bytes": 3221225472,
+  "retry": false,
+  "sample_seconds": 0.25,
+  "start_reserve_bytes": 5368709120,
+  "terminal_memory_snapshot": {
+    "memory_current_bytes": 329920512,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 8593408,
+        "file_bytes": 236683264,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-455ededaeb544d998af8f9e1df6da161.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 4002463744,
+        "file_bytes": 6458339328,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=6133\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=6130",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      }
+    }
+  },
+  "unit": "onchain-replication-455ededaeb544d998af8f9e1df6da161.service",
+  "unit_properties": {
+    "ActiveState": "inactive",
+    "ControlGroup": "",
+    "ExecMainStatus": "0",
+    "Result": "success",
+    "SubState": "dead"
+  },
+  "wait_seconds": 30.0,
+  "wall_seconds": 900
+}

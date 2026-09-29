@@ -1,0 +1,137 @@
+..........FFF.                                                           [100%]
+=================================== FAILURES ===================================
+__ test_serializer_never_receives_a_whole_large_row_or_identity_list[shape0] ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72862a623100>
+shape = (4097, 0, 4)
+
+    @pytest.mark.parametrize('shape',[(4097,0,4),(100,3000,4),(2,1,4097)])
+    def test_serializer_never_receives_a_whole_large_row_or_identity_list(monkeypatch,shape):
+        from tradingagents.research.onchain_replication import provenance
+        g=fixture(*shape)
+        expected=hashlib.sha256(canonical_bytes(graph_to_dict(g))).hexdigest()
+        calls=[]
+        def bounded(value):
+            if isinstance(value,(list,tuple)):
+                calls.append(len(value))
+                assert len(value)<=1024, 'whole large graph row/list reached serializer'
+            return canonical_bytes(value)
+        monkeypatch.setattr(provenance,'canonical_bytes',bounded)
+>       assert graph_hash(g)==expected
+               ^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_bounded_graph_hash.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/neighborhoods.py:31: in graph_hash
+    feed({f.name:getattr(graph,f.name) for f in fields(graph)})
+tradingagents/research/onchain_replication/neighborhoods.py:28: in feed
+    h.update(canonical_bytes(key));h.update(b':');feed(value[key])
+                                                  ^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/neighborhoods.py:30: in feed
+    else:h.update(canonical_bytes(value))
+                  ^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = ('node-Č-"-\\-\n-0', 'node-Č-"-\\-\n-1', 'node-Č-"-\\-\n-2', 'node-Č-"-\\-\n-3', 'node-Č-"-\\-\n-4', 'node-Č-"-\\-\n-5', ...)
+
+    def bounded(value):
+        if isinstance(value,(list,tuple)):
+            calls.append(len(value))
+>           assert len(value)<=1024, 'whole large graph row/list reached serializer'
+E           AssertionError: whole large graph row/list reached serializer
+E           assert 4097 <= 1024
+E            +  where 4097 = len(('node-Č-"-\\-\n-0', 'node-Č-"-\\-\n-1', 'node-Č-"-\\-\n-2', 'node-Č-"-\\-\n-3', 'node-Č-"-\\-\n-4', 'node-Č-"-\\-\n-5', ...))
+
+tests/research/onchain_replication/test_bounded_graph_hash.py:41: AssertionError
+__ test_serializer_never_receives_a_whole_large_row_or_identity_list[shape1] ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x728627b5f5c0>
+shape = (100, 3000, 4)
+
+    @pytest.mark.parametrize('shape',[(4097,0,4),(100,3000,4),(2,1,4097)])
+    def test_serializer_never_receives_a_whole_large_row_or_identity_list(monkeypatch,shape):
+        from tradingagents.research.onchain_replication import provenance
+        g=fixture(*shape)
+        expected=hashlib.sha256(canonical_bytes(graph_to_dict(g))).hexdigest()
+        calls=[]
+        def bounded(value):
+            if isinstance(value,(list,tuple)):
+                calls.append(len(value))
+                assert len(value)<=1024, 'whole large graph row/list reached serializer'
+            return canonical_bytes(value)
+        monkeypatch.setattr(provenance,'canonical_bytes',bounded)
+>       assert graph_hash(g)==expected
+               ^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_bounded_graph_hash.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/neighborhoods.py:31: in graph_hash
+    feed({f.name:getattr(graph,f.name) for f in fields(graph)})
+tradingagents/research/onchain_replication/neighborhoods.py:28: in feed
+    h.update(canonical_bytes(key));h.update(b':');feed(value[key])
+                                                  ^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/neighborhoods.py:22: in feed
+    h.update(canonical_bytes(row.tolist()))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = [0, 0, 0, 0, 0, 0, ...]
+
+    def bounded(value):
+        if isinstance(value,(list,tuple)):
+            calls.append(len(value))
+>           assert len(value)<=1024, 'whole large graph row/list reached serializer'
+E           AssertionError: whole large graph row/list reached serializer
+E           assert 3000 <= 1024
+E            +  where 3000 = len([0, 0, 0, 0, 0, 0, ...])
+
+tests/research/onchain_replication/test_bounded_graph_hash.py:41: AssertionError
+__ test_serializer_never_receives_a_whole_large_row_or_identity_list[shape2] ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72862a333890>
+shape = (2, 1, 4097)
+
+    @pytest.mark.parametrize('shape',[(4097,0,4),(100,3000,4),(2,1,4097)])
+    def test_serializer_never_receives_a_whole_large_row_or_identity_list(monkeypatch,shape):
+        from tradingagents.research.onchain_replication import provenance
+        g=fixture(*shape)
+        expected=hashlib.sha256(canonical_bytes(graph_to_dict(g))).hexdigest()
+        calls=[]
+        def bounded(value):
+            if isinstance(value,(list,tuple)):
+                calls.append(len(value))
+                assert len(value)<=1024, 'whole large graph row/list reached serializer'
+            return canonical_bytes(value)
+        monkeypatch.setattr(provenance,'canonical_bytes',bounded)
+>       assert graph_hash(g)==expected
+               ^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_bounded_graph_hash.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/neighborhoods.py:31: in graph_hash
+    feed({f.name:getattr(graph,f.name) for f in fields(graph)})
+tradingagents/research/onchain_replication/neighborhoods.py:28: in feed
+    h.update(canonical_bytes(key));h.update(b':');feed(value[key])
+                                                  ^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/neighborhoods.py:22: in feed
+    h.update(canonical_bytes(row.tolist()))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = [-0.0, 1e-300, -1000000000000000.0, 3.141592653589793, -0.0, 1e-300, ...]
+
+    def bounded(value):
+        if isinstance(value,(list,tuple)):
+            calls.append(len(value))
+>           assert len(value)<=1024, 'whole large graph row/list reached serializer'
+E           AssertionError: whole large graph row/list reached serializer
+E           assert 4097 <= 1024
+E            +  where 4097 = len([-0.0, 1e-300, -1000000000000000.0, 3.141592653589793, -0.0, 1e-300, ...])
+
+tests/research/onchain_replication/test_bounded_graph_hash.py:41: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_bounded_graph_hash.py::test_serializer_never_receives_a_whole_large_row_or_identity_list[shape0]
+FAILED tests/research/onchain_replication/test_bounded_graph_hash.py::test_serializer_never_receives_a_whole_large_row_or_identity_list[shape1]
+FAILED tests/research/onchain_replication/test_bounded_graph_hash.py::test_serializer_never_receives_a_whole_large_row_or_identity_list[shape2]
+3 failed, 11 passed in 1.23s

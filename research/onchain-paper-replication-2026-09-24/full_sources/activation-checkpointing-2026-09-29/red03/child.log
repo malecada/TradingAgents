@@ -1,0 +1,53 @@
+saved_tensor_reference_bytes: ordinary=1444104, checkpointed=1444104
+FFFF...
+=================================== FAILURES ===================================
+____ test_checkpointing_reduces_saved_tensors_without_changing_joint_update ____
+
+    def test_checkpointing_reduces_saved_tensors_without_changing_joint_update():
+        ordinary=measured_step(False);bounded=measured_step(True)
+        print(f'saved_tensor_reference_bytes: ordinary={ordinary[4]}, checkpointed={bounded[4]}')
+>       assert bounded[4]<ordinary[4], 'checkpoint flag did not reduce saved activation bytes'
+E       AssertionError: checkpoint flag did not reduce saved activation bytes
+E       assert 1444104 < 1444104
+
+tests/research/onchain_replication/test_activation_checkpointing.py:40: AssertionError
+_____ test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored[1] _____
+
+value = 1
+
+    @pytest.mark.parametrize('value',[1,'true',None])
+    def test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored(value):
+>       with pytest.raises(ValueError,match='checkpoint'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_activation_checkpointing.py:53: Failed
+___ test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored[true] ____
+
+value = 'true'
+
+    @pytest.mark.parametrize('value',[1,'true',None])
+    def test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored(value):
+>       with pytest.raises(ValueError,match='checkpoint'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_activation_checkpointing.py:53: Failed
+___ test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored[None] ____
+
+value = None
+
+    @pytest.mark.parametrize('value',[1,'true',None])
+    def test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored(value):
+>       with pytest.raises(ValueError,match='checkpoint'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_activation_checkpointing.py:53: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_activation_checkpointing.py::test_checkpointing_reduces_saved_tensors_without_changing_joint_update
+FAILED tests/research/onchain_replication/test_activation_checkpointing.py::test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored[1]
+FAILED tests/research/onchain_replication/test_activation_checkpointing.py::test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored[true]
+FAILED tests/research/onchain_replication/test_activation_checkpointing.py::test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored[None]
+4 failed, 3 passed in 36.69s

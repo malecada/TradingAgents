@@ -25,11 +25,22 @@ cleanup, no memory-limit events. Evidence and exact source bindings:
 `full_sources/graph-production-2026-09-29/`. No verification job remains active
 from that increment. This is not an empirical release.
 
-**Current engineering work:** optional graph-encoder activation checkpointing;
-red tests are retained in `full_sources/activation-checkpointing-2026-09-29/`.
-No frozen scientific configuration has changed. Partial-database continuation,
-bounded data residency and measured resource admission remain pending. Completed
-backup and historical empirical identities stay closed; all1,420fits pending.
+**September29 memory increments verified:** optional graph-encoder activation
+checkpointing and bounded canonical graph serialization are implemented and
+independently reviewed. Combined neural02 completed498tests/2CUDA skips,
+child0/cleanup verified, no memory-limit events. No job remains active from
+those increments. Evidence: `full_sources/activation-checkpointing-2026-09-29/`
+and `full_sources/bounded-graph-hash-2026-09-29/`. Checkpointing remains off in
+frozen configs; GPU parity and full-sized memory feasibility remain unverified.
+Initial review-discovered device/RNG defect and stopped neural01 are preserved.
+
+**Current engineering work:** exact duplicate-validation memory reduction, with
+red evidence in `full_sources/graph-validation-memory-2026-09-29/`. A budget
+audit confirms24/51used and all27remaining claims allocated to12body captures
+and15fit batches; new graph/resource claims need prospective amendment.
+Partial database continuation, full-fold residency, large-neighborhood matching,
+working storage and measured resource admission remain pending. Completed backup
+and historical empirical identities stay closed; all1,420financial fits pending.
 
 - **No active empirical jobs.** `eth-paper-resource-pilot-20260924-02` is
   terminal FAILED; never relaunch this identity. The local systemd journal

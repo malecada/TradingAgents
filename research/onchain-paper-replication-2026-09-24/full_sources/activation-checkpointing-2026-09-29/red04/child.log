@@ -1,0 +1,41 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_____ test_inherited_graph_comparators_preserve_gradients_and_updates[gin] _____
+
+arm = 'gin'
+
+    @pytest.mark.parametrize('arm',['gin','gat_without_mcm','mcm_without_gat'])
+    def test_inherited_graph_comparators_preserve_gradients_and_updates(arm):
+        ordinary=measured_step(False,arm);bounded=measured_step(True,arm)
+>       assert bounded[4]<ordinary[4]
+E       assert 358048 < 358048
+
+tests/research/onchain_replication/test_activation_checkpointing.py:96: AssertionError
+_ test_inherited_graph_comparators_preserve_gradients_and_updates[gat_without_mcm] _
+
+arm = 'gat_without_mcm'
+
+    @pytest.mark.parametrize('arm',['gin','gat_without_mcm','mcm_without_gat'])
+    def test_inherited_graph_comparators_preserve_gradients_and_updates(arm):
+        ordinary=measured_step(False,arm);bounded=measured_step(True,arm)
+>       assert bounded[4]<ordinary[4]
+E       assert 1364606 < 1364606
+
+tests/research/onchain_replication/test_activation_checkpointing.py:96: AssertionError
+_ test_inherited_graph_comparators_preserve_gradients_and_updates[mcm_without_gat] _
+
+arm = 'mcm_without_gat'
+
+    @pytest.mark.parametrize('arm',['gin','gat_without_mcm','mcm_without_gat'])
+    def test_inherited_graph_comparators_preserve_gradients_and_updates(arm):
+        ordinary=measured_step(False,arm);bounded=measured_step(True,arm)
+>       assert bounded[4]<ordinary[4]
+E       assert 255140 < 255140
+
+tests/research/onchain_replication/test_activation_checkpointing.py:96: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_activation_checkpointing.py::test_inherited_graph_comparators_preserve_gradients_and_updates[gin]
+FAILED tests/research/onchain_replication/test_activation_checkpointing.py::test_inherited_graph_comparators_preserve_gradients_and_updates[gat_without_mcm]
+FAILED tests/research/onchain_replication/test_activation_checkpointing.py::test_inherited_graph_comparators_preserve_gradients_and_updates[mcm_without_gat]
+3 failed, 7 deselected in 6.79s

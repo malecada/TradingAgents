@@ -1,0 +1,171 @@
+saved_tensor_reference_bytes: ordinary=1444104, checkpointed=1444104
+FFFF.FF
+=================================== FAILURES ===================================
+____ test_checkpointing_reduces_saved_tensors_without_changing_joint_update ____
+
+    def test_checkpointing_reduces_saved_tensors_without_changing_joint_update():
+        ordinary=measured_step(False);bounded=measured_step(True)
+        print(f'saved_tensor_reference_bytes: ordinary={ordinary[4]}, checkpointed={bounded[4]}')
+>       assert bounded[4]<ordinary[4], 'checkpoint flag did not reduce saved activation bytes'
+E       AssertionError: checkpoint flag did not reduce saved activation bytes
+E       assert 1444104 < 1444104
+
+tests/research/onchain_replication/test_activation_checkpointing.py:40: AssertionError
+_____ test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored[1] _____
+
+value = 1
+
+    @pytest.mark.parametrize('value',[1,'true',None])
+    def test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored(value):
+>       with pytest.raises(ValueError,match='checkpoint'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_activation_checkpointing.py:53: Failed
+___ test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored[true] ____
+
+value = 'true'
+
+    @pytest.mark.parametrize('value',[1,'true',None])
+    def test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored(value):
+>       with pytest.raises(ValueError,match='checkpoint'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_activation_checkpointing.py:53: Failed
+___ test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored[None] ____
+
+value = None
+
+    @pytest.mark.parametrize('value',[1,'true',None])
+    def test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored(value):
+>       with pytest.raises(ValueError,match='checkpoint'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_activation_checkpointing.py:53: Failed
+___ test_checkpoint_option_preserves_inference_and_masked_steps[True-False] ____
+
+evaluation = True, no_grad = False
+
+    @pytest.mark.parametrize('evaluation,no_grad',[(True,False),(False,True)])
+    def test_checkpoint_option_preserves_inference_and_masked_steps(evaluation,no_grad):
+        model,graphs,prices,_=fixture(True,dropout=0.)
+        reference,_,_,_=fixture(False,dropout=0.)
+        if evaluation:model.eval();reference.eval()
+        mask=torch.tensor([[True,False,True],[True,True,False]])
+        graphs[0][1]=None;graphs[1][2]=None
+        with torch.set_grad_enabled(not no_grad):
+>           actual=model(graphs,prices,mask)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_activation_checkpointing.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.13/site-packages/torch/nn/modules/module.py:1776: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/torch/nn/modules/module.py:1787: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/model.py:58: in forward
+    return self.temporal(torch.cat([embeddings,prices],dim=-1),valid)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/torch/nn/modules/module.py:1776: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/torch/nn/modules/module.py:1787: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = TemporalHead(
+  (lstm): LSTM(33, 64, batch_first=True)
+  (query): Linear(in_features=64, out_features=32, bias=True)
+ ...nt): Linear(in_features=32, out_features=1, bias=False)
+  (output): Linear(in_features=64, out_features=2, bias=True)
+)
+x = tensor([[[-1.2666e-01,  1.2512e-01, -3.7752e-02,  9.3091e-02,  3.7016e-01,
+           3.4030e-01, -4.5491e-01, -2.9849...+00,  0.0000e+00,  0.0000e+00,  0.0000e+00,
+           0.0000e+00,  0.0000e+00,  1.5046e+00]]], grad_fn=<CatBackward0>)
+mask = tensor([[ True, False,  True],
+        [ True,  True, False]])
+return_attention = False
+
+    def forward(self,x,mask=None,*,return_attention=False):
+        if x.ndim!=3:raise ValueError('temporal input dimensions')
+        valid=torch.ones(x.shape[:2],dtype=torch.bool,device=x.device) if mask is None else mask
+        if valid.shape!=x.shape[:2] or valid.dtype!=torch.bool:raise ValueError('temporal mask dimensions')
+        lengths=valid.sum(1)
+        prefix=torch.arange(x.shape[1],device=x.device)[None,:]<lengths[:,None]
+>       if not torch.equal(prefix,valid) or (lengths==0).any():raise ValueError('nonempty valid prefixes required')
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: nonempty valid prefixes required
+
+tradingagents/research/onchain_replication/temporal.py:35: ValueError
+___ test_checkpoint_option_preserves_inference_and_masked_steps[False-True] ____
+
+evaluation = False, no_grad = True
+
+    @pytest.mark.parametrize('evaluation,no_grad',[(True,False),(False,True)])
+    def test_checkpoint_option_preserves_inference_and_masked_steps(evaluation,no_grad):
+        model,graphs,prices,_=fixture(True,dropout=0.)
+        reference,_,_,_=fixture(False,dropout=0.)
+        if evaluation:model.eval();reference.eval()
+        mask=torch.tensor([[True,False,True],[True,True,False]])
+        graphs[0][1]=None;graphs[1][2]=None
+        with torch.set_grad_enabled(not no_grad):
+>           actual=model(graphs,prices,mask)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_activation_checkpointing.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.13/site-packages/torch/nn/modules/module.py:1776: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/torch/nn/modules/module.py:1787: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/model.py:58: in forward
+    return self.temporal(torch.cat([embeddings,prices],dim=-1),valid)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/torch/nn/modules/module.py:1776: in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.13/site-packages/torch/nn/modules/module.py:1787: in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = TemporalHead(
+  (lstm): LSTM(33, 64, batch_first=True)
+  (query): Linear(in_features=64, out_features=32, bias=True)
+ ...nt): Linear(in_features=32, out_features=1, bias=False)
+  (output): Linear(in_features=64, out_features=2, bias=True)
+)
+x = tensor([[[-1.2666e-01,  1.2512e-01, -3.7752e-02,  9.3091e-02,  3.7016e-01,
+           3.4030e-01, -4.5491e-01, -2.9849...    0.0000e+00,  0.0000e+00,  0.0000e+00,  0.0000e+00,  0.0000e+00,
+           0.0000e+00,  0.0000e+00,  1.5046e+00]]])
+mask = tensor([[ True, False,  True],
+        [ True,  True, False]])
+return_attention = False
+
+    def forward(self,x,mask=None,*,return_attention=False):
+        if x.ndim!=3:raise ValueError('temporal input dimensions')
+        valid=torch.ones(x.shape[:2],dtype=torch.bool,device=x.device) if mask is None else mask
+        if valid.shape!=x.shape[:2] or valid.dtype!=torch.bool:raise ValueError('temporal mask dimensions')
+        lengths=valid.sum(1)
+        prefix=torch.arange(x.shape[1],device=x.device)[None,:]<lengths[:,None]
+>       if not torch.equal(prefix,valid) or (lengths==0).any():raise ValueError('nonempty valid prefixes required')
+                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       ValueError: nonempty valid prefixes required
+
+tradingagents/research/onchain_replication/temporal.py:35: ValueError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_activation_checkpointing.py::test_checkpointing_reduces_saved_tensors_without_changing_joint_update
+FAILED tests/research/onchain_replication/test_activation_checkpointing.py::test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored[1]
+FAILED tests/research/onchain_replication/test_activation_checkpointing.py::test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored[true]
+FAILED tests/research/onchain_replication/test_activation_checkpointing.py::test_invalid_checkpoint_policy_is_not_silently_enabled_or_ignored[None]
+FAILED tests/research/onchain_replication/test_activation_checkpointing.py::test_checkpoint_option_preserves_inference_and_masked_steps[True-False]
+FAILED tests/research/onchain_replication/test_activation_checkpointing.py::test_checkpoint_option_preserves_inference_and_masked_steps[False-True]
+6 failed, 1 passed in 7.66s
