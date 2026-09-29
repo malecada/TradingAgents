@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PROGRAM_DIR = "research/llm-jev-event-2026-09-29"
 E1 = "llm-jev-p0-label-20260929"
 E2 = "llm-jev-p0-score-20260929"
-PINNED_MODEL: str | None = None  # set from the smoke-test response before registration
+PINNED_MODEL: str | None = "typesafe/jev-1.13-20260917"  # smoke test 2026-09-29, invented headlines
 COST_CAP_USD = 5.0
 E1_OUTPUTS = ("jev_labels.json", "jev_labels_anon.json", "review_sheet.json",
               "review_key.json", "run_meta.json")
