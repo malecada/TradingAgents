@@ -3,6 +3,17 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Cold-file continuation 02 reviewed; launch pending — September 29:**
+Graph-residency implementation and full offline evidence were committed/pushed
+as 0973ba64. The user's unfinished storage move now has a separately reviewed
+continuation in `storage/cold-offload-2026-09-29-02/`. All nine original files
+remain selected, with unchanged preservation logic and eleven frozen bindings.
+Eight synthetic checks passed. New local/remote identities preserve the failed
+01 attempt and its remote partial. New limits: 10 GiB disk reserve, 7200 seconds;
+RAM remains 256/192 MiB job max/high, 3 GiB reserve, 3.5 GiB startup threshold.
+Independent review accepted one bounded execution after fresh runtime checks.
+No claim or financial fit is created. Never rerun continuation 01.
+
 **Graph-residency full verification COMPLETE — September 29, 19:52 UTC:**
 The separately identified offline02 successor passed the complete named profile:
 3,390 tests plus 97 subtests, with two CUDA skips. Standard phase: 2,768 tests in
