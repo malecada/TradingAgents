@@ -1,0 +1,48 @@
+{
+  "connection_path": "research/onchain-paper-replication-2026-09-24/storage/storage-box-2026-09-24-01/connection.json",
+  "connection_sha256": "d79023381eb9f2788709a7a4c043046d8998c30bb4abab678cb41caaf4dc70ef",
+  "transport_path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/transport.py",
+  "transport_sha256": "ee551abbb81bec2b42355ce073c2a570d6ed0b37bd763b047b539f8c1148de16",
+  "disk_policy": "research/onchain-paper-replication-2026-09-24/storage/disk-reserve-2026-09-29.json",
+  "disk_policy_sha256": "fa093b7c683687e98b09533fbbd363c8fdca8f91406a80f1169c51fbdf8e44d0",
+  "schema_version": 1,
+  "scope": "Preserve exactly the closed graph04 SQLite ledger by full byte and restoration-metadata roundtrip before eviction. No raw or graph array moves, no graph05 ledger access, no historical rerun. Preparation only until independent review, graph05 closure and fresh checks.",
+  "files": [
+    {
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-04/aggregation/ledger.sqlite",
+      "bytes": 3370971136,
+      "sha256": "926020b6171496b001ebf5fb9957469094ef1b2bc7b5251206441254ab9add38",
+      "stat_identity": [
+        66310,
+        7920340,
+        3370971136,
+        1790735803592800404,
+        1790735803592800404
+      ]
+    }
+  ],
+  "total_bytes": 3370971136,
+  "remote": "research-backups/onchain-paper-replication-2026-09-24/closed-ledger-offload-2026-09-30-02",
+  "closure": {
+    "guard": {
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-04/guard/final.json",
+      "sha256": "3152b4067fbf76a5b66a799567984671e7a1b649ba5a40850108b398bf81c844"
+    },
+    "owner": {
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-04/owner.json",
+      "sha256": "a90765cc702cc6c7dd75d8e60cb3f05cab60e16599d9e54ae2034f17dbd1335f"
+    },
+    "claim": {
+      "path": "research_runs/eth-paper-graph-resource-20260930-04/claim.json",
+      "sha256": "96154400415dc72276201c549a6dc1de1269e3daedec91df66f169786e6a19d3"
+    },
+    "terminal": {
+      "path": "research_runs/eth-paper-graph-resource-20260930-04/complete.json",
+      "sha256": "7452e27e74ae8b30b48400b830c0715acd973d67cf1b04aa3f578ba7607268ba"
+    },
+    "artifact_index": {
+      "path": "research_runs/eth-paper-graph-resource-20260930-04/outputs/artifact-index.json",
+      "sha256": "0cceff4f150dab022195d5b9f66e2a60bfde0c31959dcbf8e5cb9790682cfc3d"
+    }
+  }
+}

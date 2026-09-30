@@ -1,0 +1,21 @@
+..E....
+======================================================================
+ERROR: test_chain_requires_all_three_exact_preservation_identities (__main__.RequirementTests.test_chain_requires_all_three_exact_preservation_identities)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-07-2026-09-30/test_preservation_requirement.py", line 83, in test_chain_requires_all_three_exact_preservation_identities
+    m.verify_chain(self.root)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-07-2026-09-30/preservation_requirement.py", line 80, in verify_chain
+    records = [{'path': str(storage), **verify(root, storage=storage)}
+                                        ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-07-2026-09-30/preservation_requirement.py", line 26, in verify
+    review_bytes = compact(here/'closure-review.json')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-07-2026-09-30/preservation_requirement.py", line 19, in compact
+    raise ValueError('compact regular evidence required: '+str(path))
+ValueError: compact regular evidence required: /tmp/tmprm733odj/research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/closure-review.json
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.027s
+
+FAILED (errors=1)

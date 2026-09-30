@@ -3,6 +3,150 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Preservation02 accepted; preservation03 released for fresh checks — 2026-09-30T05:38:30.978879+00:00:**
+Independent storage02 closure acceptance now binds its exact ten completed
+evidence files. All 34 original/contextual hashes, complete roundtrips, source
+sidecar/absence and owner cleanup reconcile. Its identity is terminal and cannot
+be relaunched. Storage03 RELEASE_REVIEW.md accepts one sequential launch after
+commit/push and fresh admission checks. All 22 original plus 26 contextual hashes
+match (48 unique files), including actual accepted02 closure and accepted05/06
+array verifications. Expected source remains only the closed graph05 ledger.
+
+At the release snapshot, 20,417,359,872 free bytes left a 1,979,162,141-byte graph07
+shortfall; recheck actual capacity before execution. Full recovery scratch needs
+14,019,497,984 free bytes. Only exact bound local connection metadata may remain
+untracked; never read/print or commit its contents. No active unit or03 identity
+existed at release review. Freeze the next committed HEAD and all 48 bindings once
+launched. Observe the new exact owner; never rerun any prior transfer.
+
+Resource coverage addendum02 is prepared independently: only 16 original unmet
+source/graph requirements gain actual closed 05/06 evidence, producing 53 supported
+and 56 remaining out of 109. All original historical dispositions (7 complete,
+102 unavailable) are preserved. Its independent review remains pending; no raw
+bodies were replayed and no financial fitting occurred. Remaining stages are
+3 graphs, 21 source days, 7 neighborhood, 7 matching, 9 MCM and 9 neural checks.
+
+Next: commit/push reviewed storage02 closure and graph07 registration preparation,
+then fresh storage03 resource/hash/identity checks and one launch if still needed.
+Keep the unreviewed coverage addendum outside this commit until accepted. Graph07
+has no gate or claim; budget 58 remains a proposal, effective 30/57. Continue toward
+actual 03 closure, then final graph07 gate preparation/review/admission. Full paper
+scope and 1,420 financial fits remain required.
+
+**Preservation02 complete; independent closure pending — 2026-09-30T05:34:17.849982+00:00:**
+The graph04 ledger preservation completed once: 3,370,971,136 bytes fully uploaded,
+downloaded and hash-verified, with restoration metadata and completion metadata
+roundtrips. Durable verified receipt and source sidecar preceded local removal.
+Original graph04 artifact-index bytes remain unchanged; future local-path body
+verification requires verified restoration. No raw data or graph arrays moved.
+
+Guard completed in 2,092.030 seconds, sampled peak 203,169,792 bytes, 51,668
+memory.high events, zero max/OOM, child zero and cleanup verified. Monitor 809178
+and its cgroup are absent; session 56718 completed. All 22 original and 12
+contextual hashes still match frozen HEAD 0a8a0b664c6291a7b87a2263f15c2785d3e88909.
+closure01.json reconciles body/metadata producer receipts, original source absence,
+matching sidecar and successful scratch removal without repeating remote body
+reads. Independent CLOSURE_REVIEW.md and closure-review.json are requested.
+This identity is terminal; never relaunch it.
+
+Fresh free disk is 20420706304 bytes against graph07's 22396522013-byte planning
+requirement, leaving 1975815709 bytes short. Preservation03 therefore remains necessary
+at this snapshot. It targets only closed graph05 ledger, 3,265,302,528 bytes.
+After accepted02 closure, bind its actual evidence plus accepted graph06 verifier
+and current storage requirement into03 release evidence. Independently review,
+commit/push all compact closure/preparation, then fresh hashes, owner/identity,
+exact source stat, dependency, RAM and full recovery scratch checks. Launch03
+once only if the deficit still exists; retain its failures and never duplicate.
+
+Graph07 charter/helper/generator/preflight preparation passed independent review
+and seven synthetic boundary tests; exact gate still does not exist. Its budget58
+proposal is accepted but not adopted; effective accounting remains 30/57. Preserve
+all 109 resource requirements and 1,420 fits. After actual03 closure and review,
+prepare/review/commit the exact gate before any empirical launch. All future
+capacity remains prospective until measured. No financial fit was performed.
+
+**Graph07 registration preparation during preservation02 — 2026-09-30T05:04:21.874780+00:00:**
+The exact preservation02 owner remains active under frozen HEAD
+0a8a0b664c6291a7b87a2263f15c2785d3e88909; all 34 bound files still match.
+No completed, verified or evicted transfer receipt is yet present. Do not start
+another transfer or graph, and do not commit while this freeze is active.
+
+Independent preparation continued outside frozen files. Graph07 now has a draft
+CHARTER.md, RUNBOOK.md, registration generator, preflight, graph06 prerequisite,
+temp-check launcher and chained preservation prerequisite. No gate was generated,
+and no temp check, admission or empirical job was executed. The new chain requires
+actual accepted01/02/03 preservation closures before this drafted path can run.
+Storage03 remains conditional: if actual free space after02 suffices, skip03 and
+revise/review the unreleased prerequisite draft before generating the gate.
+Never execute an unnecessary transfer to satisfy a draft assumption.
+
+Seven synthetic preservation boundary tests pass in preservation-green02.log.
+The missing chain API failures remain in red01. The misnamed green01 also remains:
+one test expected FileNotFoundError where the existing helper deliberately raises
+ValueError for missing compact evidence; only that expectation was corrected.
+These tests read synthetic temporary fixtures only. All original five single-
+preservation tests remain, with two new chain completeness/rejection cases.
+Independent REGISTRATION_PREPARATION_REVIEW.md accepts this draft for preparation
+only: identities, budget, inherited source coverage and prerequisites reconcile.
+All 34 active storage bindings and HEAD remain unchanged. Generated exact gate
+and actual preservation outcomes still need separate review and admission.
+
+Next safe action remains preservation02 terminal reconciliation and independent
+closure, followed by actual space measurement and conditional03. Graph07 budget58
+is accepted only as a proposal; 30/57 remains effective. All wider requirements
+and financial fits remain unchanged. No remote recovery is claimed yet.
+
+**ACTIVE closed-ledger preservation02 — 2026-09-30T04:43:29.716256+00:00:**
+Graph06 and its independent saved-array verification are complete and accepted.
+Reviewed compact receipts and storage preparation were committed and pushed as
+f8f80a75c45b88d8e6146c2c9c1ecb151e98d1ae. The outer storage preflight initially
+stopped before guard/network/body access because it incorrectly required local
+connection metadata to be tracked in Git. That failure is preserved as
+storage/closed-ledger-offload-2026-09-30-02/preflight01-failed.json. Independent
+PREFLIGHT_CORRECTION_REVIEW.md accepted checking all hashes while allowing only
+the exact manifest connection path to remain local. Correction and continuation
+were committed and pushed as 0a8a0b664c6291a7b87a2263f15c2785d3e88909.
+
+Fresh preflight02 passed: all 22 original and 12 contextual hashes; 33 committed
+paths match HEAD, and the sole local connection metadata hash matches without
+printing or committing its contents. Graph06 producer/verifier owners are absent,
+independent closures accepted, exact closed graph04 ledger eligible, no other
+active unit or prior preservation02 identity. Available RAM 10,023,653,376 bytes;
+free disk 17,111,171,072 versus 14,125,166,592 required for the full recovery scratch.
+Graph07 still requires 22,396,522,013, so preservation is necessary.
+
+Preservation02 launched once: monitor 809178, start ticks 7162253, unit
+onchain-replication-01bf2c415ebb4ce1b7929d21e7474575.service, tool session 56718.
+Freeze HEAD 0a8a0b664c6291a7b87a2263f15c2785d3e88909 and all 34 bound files.
+Never duplicate this process or relaunch this reserved identity. The sole target
+is graph04's closed aggregation ledger, 3,370,971,136 bytes, expected SHA-256
+926020b6171496b001ebf5fb9957469094ef1b2bc7b5251206441254ab9add38.
+The original index remains unchanged. Full body upload/download/hash, restoration
+metadata and durable verified receipt/sidecar must precede any local unlink.
+
+Guard: 256 MiB maximum, 192 MiB high, zero swap, two CPU affinity, 3 GiB host
+reserve, 3.5 GiB startup, 10 GiB disk floor, 14,400 seconds. Initial readback at
+11.52 seconds shows peak 201,805,824 bytes, 1,484 memory.high events, zero max/OOM.
+Throttling is present; no completion or remote recovery is claimed yet.
+Independent LIVE_REVIEW.md accepted the exact monitor/start ticks, single active
+unit, kernel controls and all 34 bindings. At review the original ledger remained
+present, with no verified/evicted receipt; no transfer completion is claimed.
+All raw bodies and graph arrays remain. Live/preflight receipts and this active
+checkpoint await the next safe commit after the freeze lifts.
+
+Next safe action: observe this exact owner and compact receipts. After terminal,
+reconcile every body/metadata roundtrip receipt, source sidecar/absence, scratch,
+all bound hashes and exact owner cleanup; obtain independent closure review.
+Preserve failures and partial scratch; never rerun. Then remeasure actual free
+space. Preservation03 may run once only if still needed after accepted02 closure,
+new committed release evidence and fresh checks. Do not run the transfers together.
+Graph07 budget-only ceiling58 proposal is accepted but not adopted; effective
+budget remains 30/57. No graph07 gate exists. Prepare exact registration after
+actual preservation evidence, review/commit it, perform fresh temp/admission and
+launch the original March week once if eligible. All 109 resource requirements,
+1,420 fits, broader assets/history/comparators and architecture remain required.
+The 15-minute autonomous continuation remains ACTIVE and reads this checkpoint.
+
 **Graph06 fully checked; preservation02 ready for fresh launch — 2026-09-30T04:38:35.926693+00:00:**
 The one bounded verifier completed and its independent terminal review is accepted:
 1,832,447 nodes, 2,559,152 edges, 489,329,336 array bytes, all four node-feature
