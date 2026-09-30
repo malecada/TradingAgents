@@ -1,0 +1,27 @@
+test_accepts_complete_reviewed_preservation (test_preservation_requirement.RequirementTests.test_accepts_complete_reviewed_preservation) ... ok
+test_chain_refuses_failed_middle_preservation (test_preservation_requirement.RequirementTests.test_chain_refuses_failed_middle_preservation) ... ok
+test_chain_requires_all_six_exact_preservation_identities (test_preservation_requirement.RequirementTests.test_chain_requires_all_six_exact_preservation_identities) ... FAIL
+test_rejects_incomplete_roundtrip_or_wrong_remote (test_preservation_requirement.RequirementTests.test_rejects_incomplete_roundtrip_or_wrong_remote) ... ok
+test_rejects_live_owner_or_failed_terminal (test_preservation_requirement.RequirementTests.test_rejects_live_owner_or_failed_terminal) ... ok
+test_rejects_retained_source_or_sidecar_disagreement (test_preservation_requirement.RequirementTests.test_rejects_retained_source_or_sidecar_disagreement) ... ok
+test_rejects_unreviewed_or_drifted_evidence (test_preservation_requirement.RequirementTests.test_rejects_unreviewed_or_drifted_evidence) ... ok
+
+======================================================================
+FAIL: test_chain_requires_all_six_exact_preservation_identities (test_preservation_requirement.RequirementTests.test_chain_requires_all_six_exact_preservation_identities)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-09-2026-09-30/test_preservation_requirement.py", line 79, in test_chain_requires_all_six_exact_preservation_identities
+    self.assertEqual([x['path'] for x in result['preservations']], [str(p) for p in paths])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['res[454 chars]0-05'] != ['res[454 chars]0-05', 'research/onchain-paper-replication-202[48 chars]-06']
+
+Second list contains 1 additional elements.
+First extra element 5:
+'research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06'
+
+Diff is 866 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.033s
+
+FAILED (failures=1)

@@ -2,9 +2,8 @@
 
 1. Require actual accepted graph08 producer and saved-array verification, absent
    owners, and all required accepted preservation closures.
-2. Recheck free capacity against 22,103,159,134 bytes. Storage05 is terminal;
-   storage06 may proceed only through its separate conditional release after
-   accepted05 closure and a fresh deficit. If skipped or insufficient, revise
+2. Recheck free capacity against 22,103,159,134 bytes. Storage05 may proceed only
+   through its separate conditional release. If skipped or insufficient, revise
    and review the unreleased preservation prerequisite; never infer freed space.
 3. Obtain independent budget60 and registration-preparation reviews. Generate
    gate.json and verification-reuse.json once from actual evidence with pinned
@@ -31,10 +30,3 @@ path; neither proves the intended missing-fifth refusal. After correcting the
 fixture, green02.log records all seven tests passing, including removal of the
 fifth acceptance receipt and rejection of an unsuccessful middle preservation.
 No real body, transfer, registration generator or empirical job ran in these tests.
-
-The five-preservation preparation was subsequently retained byte-for-byte under
-prerequisite-five-original before revision for the observed post05 disk deficit.
-The updated helper requires all six exact acceptances. Red02 records one intended
-missing-sixth assertion failure and six passes; green03 records seven passes
-after extending the tuple. These checks do not execute the actual prerequisite
-chain or substitute synthetic recovery for actual06 closure. No gate exists.

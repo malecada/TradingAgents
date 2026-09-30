@@ -70,20 +70,20 @@ class RequirementTests(unittest.TestCase):
         self.refresh()
         with self.assertRaises(ValueError):self.check()
 
-    def test_chain_requires_all_six_exact_preservation_identities(self):
+    def test_chain_requires_all_five_exact_preservation_identities(self):
         paths = [m.STORAGE.with_name('closed-ledger-offload-2026-09-30-'+suffix)
-                 for suffix in ('01','02','03','04','05','06')]
+                 for suffix in ('01','02','03','04','05')]
         for p in paths[1:]:
             shutil.copytree(self.storage, self.root/p)
         result = m.verify_chain(self.root)
         self.assertEqual([x['path'] for x in result['preservations']], [str(p) for p in paths])
-        self.assertEqual(result['total_bytes_preserved'], 72)
+        self.assertEqual(result['total_bytes_preserved'], 60)
         (self.root/paths[-1]/'closure-review.json').unlink()
         with self.assertRaises(ValueError):
             m.verify_chain(self.root)
     def test_chain_refuses_failed_middle_preservation(self):
         paths = [m.STORAGE.with_name('closed-ledger-offload-2026-09-30-'+suffix)
-                 for suffix in ('02','03','04','05','06')]
+                 for suffix in ('02','03','04','05')]
         for p in paths:
             shutil.copytree(self.storage, self.root/p)
         review_path = self.root/paths[0]/'closure-review.json'

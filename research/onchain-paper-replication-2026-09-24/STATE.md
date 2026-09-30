@@ -3,6 +3,187 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Storage06 release and synthetic concurrency independently accepted — 2026-09-30T09:42:07.672265+00:00:**
+Storage05 ten-evidence closure acceptance SHA-256 is
+9307d98eb158e55fc9610d15669236bc5ecddbe25da5856c4c0227a81f37f798.
+Original graph07 ledger is externally recoverable and locally absent. Five closed
+preservations total17,360,572,416 historical bytes, not current free capacity.
+
+Storage06 RELEASE_REVIEW.md accepts30 original plus32 contextual references,
+55 unique paths (54 committed dependencies and the exact local connection hash).
+The observed deficit persists; commit/push and a fresh deficit/scratch/RAM/owner
+check remain mandatory before one preservation. No process is active currently.
+Graph09's six-preservation preparation is independently accepted, with original
+five-preparation bytes retained. No09 gate or adopted budget60 exists.
+
+CONCURRENT_REVIEW.md accepts a prospective protocol-only amendment for the
+unexecuted complete synthetic matcher profile. It may run beside only the exact
+released storage06 owner, after live PID/start ticks/unit/kernel verification,
+common frozen HEAD, all55 storage and102 profile hashes, no other units, at least
+4GiB current available RAM and14,528,634,880 free bytes. Hard memory ceilings total
+1.25GiB; both retain3GiB host reserve and zero swap. Algorithm, fixture, full48
+iterations,4M pair cap and guard are unchanged. Original exclusive preparation
+is preserved in exclusive-original. Record actual overlap and qualify timings
+for contention. This supersedes the earlier after-December queue only when these
+concrete concurrency conditions pass. No profile execution has occurred.
+
+Next: commit/push accepted compact work, fresh06 preflight and one launch if still
+necessary. Record exact owner, independently verify live controls, then dispatch
+one synthetic profile only if all amended conditions still pass. Freeze the new
+HEAD/bindings through both closures; no graph09 job may overlap either operation.
+
+**Storage05 completed; actual capacity requires conditional06 — 2026-09-30T09:36:58.150558+00:00:**
+Storage05 completed once in 2,209.592753 seconds, sampled peak 203,071,488 bytes,
+48,438 high events, zero max/OOM, child zero and cleanup verified. Exact owner
+1054259 and unit8b4f55068c054baf90610a90d5242a49 are absent; session26231 completed.
+All62 original/contextual hashes and the original graph07 index match. Compact
+closure01 reconciles the full 3,760,664,576-byte body recovery, restoration and
+completion roundtrips, matching sidecar, absent source and removed successful
+scratch. No repeated body transfer or hash occurred in closure reconciliation.
+Independent exact ten-evidence closure acceptance is requested. Never rerun05.
+
+Fresh disk was22,061,625,344 bytes,41,533,790 below December's22,103,159,134
+planning threshold. Complete the previously reviewed06 conditional release only
+after accepted05 closure. Fresh preflight must still confirm a deficit and full
+recovery scratch13,991,763,968; skip if unnecessary. Keep10GiB floor unchanged.
+
+Graph09's unexecuted five-preservation draft has been preserved byte-for-byte
+under prerequisite-five-original with source commit f07509f6 and hashes. Revised
+charter/runbook/helper require accepted06 as well. Focused red02 records the
+intended missing-sixth failure plus six passes; green03 has seven passes in
+0.036seconds. Independent updated preparation review is requested. No09gate or
+admission exists, and budget60 proposal is unchanged. Effective accounting32/59.
+
+No process is active. Next: accepted05 closure and revised09 preparation, actual06
+release bindings/review, commit/push reviewed compact work, fresh06preflight and
+one guarded preservation if still necessary. Then actual06closure acceptance and
+fresh capacity release09gate generation. All1,420 financial fits remain pending.
+
+**Fallback06 preparation independently accepted — 2026-09-30T09:11:38.737279+00:00:**
+Storage06 REVIEW.md accepts the prospective exact graph08 ledger identity,
+30 preparation bindings, unchanged transport and eligibility behavior, plus the
+added static preflight/helper. No operation is released. Full recovery scratch
+would require 13,991,763,968 bytes above the retained source, including the 10 GiB
+floor. Actual accepted05 evidence and both helper hashes must enter the future
+contextual release. Fresh-check the December deficit and skip06 if sufficient.
+If06 is needed, revise/review the unexecuted graph09 prerequisite before generation.
+
+Storage05 remains the only active operation. Latest guard phase running,
+elapsed 1782.4 seconds, sampled peak 202,317,824 bytes,
+memory events {'high': 20461, 'low': 0, 'max': 0, 'oom': 0, 'oom_group_kill': 0, 'oom_kill': 0}. No completion is inferred. Keep session26231,
+monitor1054259/start8598554 and frozen HEADf07509f6303f5449912673b0f433335b610f8eb6.
+All62 active bindings were independently rechecked during fallback review.
+
+Next safe action: inspect actual05 terminal/cleanup and reconcile full recovery
+receipts, then independent ten-evidence closure acceptance and real capacity.
+Proceed to graph09 gate if sufficient; otherwise complete the now prepared06
+conditional release. No financial fits or new research claims were started.
+
+**Conditional fallback06 prepared while05 continues — 2026-09-30T09:09:32.572676+00:00:**
+Prepared storage/closed-ledger-offload-2026-09-30-06 for independent review only.
+It names exactly the already closed graph08 ledger, 3,237,568,512 bytes, original
+artifact-index SHA-256 be331be3ea8ee90357dd29ab67d29521d0afa1fc6c737e1a32a52c4440d3d11f.
+Only file stats and compact evidence were read. Worker/test changes from05 are
+exact graph07 to graph08 substitutions; transport is unchanged. Four eligibility
+checks passed in 0.015 seconds; 30 original compact bindings are frozen for review.
+
+This is a fallback only: wait for actual independently accepted05 closure, then
+check December's real deficit. Skip06 if space suffices. A provisional future
+preflight and unchanged graph08 prerequisite helper are present; actual release,
+contextual bindings and release review are absent, so no execution is admitted.
+Actual05 evidence must be bound before final review, commit/push and fresh checks.
+If needed, revise and review graph09's still-unreleased preservation prerequisite
+to include accepted06 before generating its gate. Do not silently bypass either
+review or the 10 GiB floor. No graph09 gate, new claim or transfer was launched.
+
+The sole active process remains05 monitor1054259/start8598554, session26231, at
+frozen HEAD f07509f6303f5449912673b0f433335b610f8eb6 and its unchanged62 bindings.
+Keep all queued empirical and synthetic jobs stopped until the current owner
+closes. Continue from actual terminal receipts; never rerun the closed histories.
+
+**Preservation05 remains active; coverage04 accepted — 2026-09-30T09:07:24.298122+00:00:**
+Exact monitor 1054259/start ticks 8598554 remains active at frozen HEAD
+f07509f6303f5449912673b0f433335b610f8eb6; all 62 bindings rehash unchanged.
+Guard elapsed 1528.1 seconds, sampled peak 201,818,112
+bytes, memory events {'high': 15204, 'low': 0, 'max': 0, 'oom': 0, 'oom_group_kill': 0, 'oom_kill': 0}. No terminal receipt exists. Original
+source remains present; only compact manifest recovery is published. Existing
+session 26231 remains the sole operation; no relaunch or duplicate is permitted.
+
+Coverage04 independent review accepts all 109 historical dispositions/reasons,
+exactly eight August changes, 101 unchanged requirement records and 83 compact
+references. Current support is 69/109; 40 remain. All 1,420 fits are pending.
+Effective accounting is 32/59; graph09 proposal 60 remains unadopted.
+
+Actual free disk at check 18,330,865,664 bytes. Adding the prospective 3,760,664,576-byte
+reclaim is arithmetic only, not a backup or capacity proof, and is now near the
+22,103,159,134-byte December threshold. Prepare a separately reviewed conditional
+fallback if needed, but do not execute it before actual accepted05 closure and a
+fresh deficit check. Never reduce the 10 GiB floor or delete unverified evidence.
+
+**Preservation05 live review accepted — 2026-09-30T08:45:49.046508+00:00:**
+Independent storage05 LIVE_REVIEW.md accepts monitor 1054259, start ticks
+8598554, kernel controls, all 62 hashes and 61 committed dependencies at frozen
+HEAD f07509f6303f5449912673b0f433335b610f8eb6. The source ledger was still present
+at review; no verified-recovery, eviction or reclaimed-space claim follows.
+The single active operation remains session 26231. Do not duplicate it.
+
+Future graph09 verifier preparation is independently accepted with exactly five
+identity/date/count substitutions and an unchanged launcher. Actual graph09
+closure, ownership, array hashes, complete bindings and fresh final review remain
+required before its verification. The coverage04 mapping is still under review.
+No new gate, resource claim or fit was started by this preparation.
+
+Continue actual storage05 closure and independent review, then fresh December
+capacity checks and the prepared registration sequence. Keep the 10 GiB floor.
+Full synthetic matching is retained in the queue after December's graph so its
+new checkpoints do not consume the narrow current planning margin.
+
+**Preservation05 continues; independent preparation retained — 2026-09-30T08:44:32.410915+00:00:**
+The same storage05 monitor1054259/start8598554 remains active, with all62 bindings
+and HEADf07509f6303f5449912673b0f433335b610f8eb6 unchanged. At156.0seconds,
+sampled peak201,818,112bytes; memory events
+{'high': 5925, 'low': 0, 'max': 0, 'oom': 0, 'oom_group_kill': 0, 'oom_kill': 0}. No terminal or reclaimed capacity is inferred. Preserve the
+single process and original source until its own verified recovery ordering permits
+removal. Session26231 is the existing owner; never launch it again.
+
+Prepared future graph-verification-09 source/protocol only; independent preparation
+review requested. There is no future owner, actual array hash, binding manifest,
+reconciler or execution. Resource-coverage-04 mapping is also under review:69 of109
+original requirements have supporting evidence,40 remain. Exactly8 August source/
+graph requirements changed; all109 historical dispositions remain immutable.
+Remaining:1 December graph,7 source days,7 neighborhood and7 matching phases,
+9 MCM and9 neural phases. Census and synthetic prototypes satisfy none of these
+remaining phases. All1,420 financial fits and broader paper scope remain required.
+
+Next safe action stays actual storage05 terminal reconciliation and independent
+acceptance, fresh disk capacity, then one reviewed09gate generation/release and
+admission after commit/push. Full synthetic matcher stays queued after December.
+
+**Preservation05 launched once after fresh checks — 2026-09-30T08:42:26.451686+00:00:**
+Accepted August closure/verifier, December preparation/budget, full synthetic
+profile preparation and exact storage05 release were committed and pushed as
+f07509f6303f5449912673b0f433335b610f8eb6. Fresh preflight at08:41:43 checked all
+62 unique hashes and61 committed dependencies, exact local connection hash,
+accepted04/08 closures, source stat/eligibility, absent identities and no units.
+RAM10,006,376,448 and free18,384,154,624 bytes passed recovery scratch14,514,860,032.
+The actual December planning shortfall was3,719,004,510 bytes, so05 was necessary.
+
+Single storage05 process is active in session26231, monitor1054259/startticks8598554,
+unit onchain-replication-8b4f55068c054baf90610a90d5242a49.service. Freeze HEAD f07509f6303f5449912673b0f433335b610f8eb6 and all62
+bindings until terminal closure. Limits256MiB maximum/192MiB high/zero swap,
+two CPUs,3GiB reserve,3.5GiB startup,10GiB disk,14,400seconds remain unchanged.
+It preserves only the closed graph07 ledger3,760,664,576bytes. Full recovery and
+restoration verification plus durable sidecar precede local deletion. No reclaimed
+space or successful backup is claimed yet. Never duplicate or relaunch this owner.
+
+Next: independent live review; follow actual completion, compact closure and
+independent exact10-evidence preservation acceptance. Then check real capacity
+against22,103,159,134 before generating the reviewed09gate once. Expected margin
+is narrow; retain the10GiB floor and all checkpoints. If insufficient, prepare a
+specific additional preservation/remedy with review. Full synthetic matching
+profile remains queued after December to avoid allocating192MB now. No financial
+fit, budget60adoption or graph09claim occurred. Effective accounting remains32/59.
+
 **Storage05 release accepted; committing exact evidence — 2026-09-30T08:41:29.934034+00:00:**
 Independent RELEASE_REVIEW.md accepts the conditional storage05 release and its
 62 unique bindings: 61 committed dependencies plus the exact local connection

@@ -72,7 +72,7 @@ def verify(root, *, storage=STORAGE):
 
 
 STORAGES = tuple(STORAGE.with_name('closed-ledger-offload-2026-09-30-'+suffix)
-                 for suffix in ('01', '02', '03', '04', '05', '06'))
+                 for suffix in ('01', '02', '03', '04', '05'))
 
 
 def verify_chain(root):

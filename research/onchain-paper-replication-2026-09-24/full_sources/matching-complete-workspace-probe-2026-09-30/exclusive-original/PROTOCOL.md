@@ -27,37 +27,12 @@ The previous small scalar parity tests remain separate evidence.
 One guard: 1 GiB maximum, 768 MiB high, zero swap, two CPUs, 3 GiB host reserve,
 4 GiB startup memory, 10 GiB disk floor and 1,800 seconds. Launch only after
 independent protocol/source review, fresh exact bindings/runtime/HEAD checks,
-at least the disk floor plus 512 MiB free, and no active replication unit except
-the specifically admitted storage06 owner under the conditions below.
-Do not run alongside a graph producer, saved-array verifier or other operation.
+at least the disk floor plus 512 MiB free, and no active replication unit.
+In particular, do not run alongside graph08, a saved-array verifier or storage.
 Use exclusive guard, started, checkpoint and result paths. Preserve every failure
 and partial; never retry this identity or increase limits following an outcome.
 The two retained synthetic checkpoints occupy about 192 MB plus metadata; no
 original raw, SQLite, graph array, financial input or remote body is read.
-
-Conditional concurrency amendment: this still-unexecuted profile may run beside
-the separately reviewed storage06 preservation only after its release, one actual
-launch and exact live owner/kernel verification. Confirm storage06 monitor PID
-and process start ticks, unit, all 55 original/contextual hashes and frozen HEAD
-before dispatch; keep them and all 102 profile bindings unchanged until both
-owners close. No other replication unit may exist. Require at least 4 GiB current
-available RAM and 14,528,634,880 free disk bytes: storage06's entire recovery
-scratch requirement including its 10 GiB floor, plus another 512 MiB for this
-profile. This conservatively reserves the full recovery file even if part exists.
-The two hard memory limits total 1.25 GiB; both keep the 3 GiB host reserve,
-zero swap and their existing independent limits. This is an admission condition,
-not a measured combined-memory or elapsed-time guarantee. If storage06 has already
-closed, run only after its terminal/cleanup reconciliation and no active units,
-using the ordinary standalone floor plus 512 MiB check.
-
-This amendment is prospective and needs independent review before dispatch.
-Algorithm, fixture, full schedule, pair cap, checkpoint extents and both guards
-remain unchanged. The original exclusive preparation and its review are retained
-byte-for-byte in exclusive-original and commit f07509f6. No profile execution has
-occurred. Storage06 is needed because actual post05 capacity missed the December
-threshold; the extra fallback reclaim permits retaining these checkpoints without
-the earlier narrow-margin assumption. Actual December capacity is still checked
-after both closures. No recovery success or reclaimed space is presumed here.
 
 The profile measures zero-edge full-schedule matching at the current pair cap.
 Nonzero edge cross-products, real hubs, full dictionaries, MCM, neural training,

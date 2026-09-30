@@ -7,8 +7,8 @@ Build the final unfinished original stress-week graph, ETH December 23 through
 December 30, 2024 UTC. Seven original source mappings declare 8,617,920 rows in
 232 retained spans. Selection follows original chronological requirements and
 completed dispositions, without prices or prediction outcomes. Eight original
-graph weeks now have completed producer cells; graph08 saved-array verification
-has independent acceptance. No completed graph is rebuilt. All remaining sampling,
+graph weeks now have completed producer cells; graph08 array verification is
+pending at preparation. No completed graph is rebuilt. All remaining sampling,
 matching, dictionary, MCM, neural, broader source and comparison requirements,
 and all 1,420 financial fits remain required. Ethereum is an intermediate scope.
 
@@ -32,17 +32,12 @@ No failures are refunded, fits added or exposed samples made fresh. Independent
 budget review and later valid admission are required; effective ceiling remains
 59 in preparation. An intervening claim invalidates this adoption snapshot.
 
-The prospective prerequisite chain requires accepted preservations01 through06
-and actual graph08 producer and saved-array verification. Storage06 has separate
+The prospective prerequisite chain requires accepted preservations01 through05
+and actual graph08 producer and saved-array verification. Storage05 has separate
 conditional scope: skip transfer if fresh space suffices, then revise and review
 this unreleased prerequisite draft before generation. Do not transfer merely to
-satisfy a draft. Storage05 completed with 3,760,664,576 bytes preserved; a fresh
-post-completion check measured 22,061,625,344 free bytes, 41,533,790 below the
-December requirement. Its independent closure review is now accepted; the
-separate06 release and actual accepted06 closure remain prerequisites. The earlier five-preservation draft
-is retained in prerequisite-five-original and commit f07509f6. If 06 is skipped
-or insufficient, review the exact revised remedy before execution. Historical
-reclaimed totals are not current
+satisfy a draft. If 05 is insufficient, preserve this draft and review the exact
+additional remedy before execution. Historical reclaimed totals are not current
 free space. No active ledger, raw file or graph array eviction is admitted here.
 
 Review preparation and budget, generate the exact gate/reuse once only after
