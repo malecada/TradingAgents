@@ -3,6 +3,31 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Next component and budget-only review accepted — 2026-09-30T00:32:11.875666+00:00:**
+Independent review accepted the exact induced-edge component for synthetic
+integration, and accepted the exact prospective extension to 54: 26 spent +
+12 missing-body batches + 15 fit batches + one new resource measurement. All
+nine current claim/terminal hashes were checked. See hub-edge-census-engineering-
+2026-09-30/REVIEW.md and hub-edge-census-preparation-2026-09-30/extension-review.json.
+Current effective budget is still 53; no new claim or execution gate exists.
+No active empirical/storage/test process. The completed census/verifier and
+compact receipts are committed/pushed as cf57899f; numeric arrays stay local.
+
+Immediate next implementation: copy the reviewed hub_edges.py into the package;
+add registered hub_edge_census producer/dispatch with strict bounded plan, exact
+closed-census/graph identity and all 35 selected centers in a fixed denominator.
+Pin the closed census claim/terminal/result/cardinalities and reject changed
+selection before measuring. Keep complete neighborhood membership without
+modifying scientific capacity. Publish each center checkpoint/disposition durably
+under its registered cell ID, preserve all failures/unavailable rows, close maps
+on every path, enforce output containment and final physical/logical accounting.
+Reuse the reviewed generic guard with 540-second whole-job cap and 10 GiB floor.
+Test actual lifecycle/observer recovery and bounded refusal, obtain independent
+review, freeze all sources/inputs for one new named offline run, then commit exact
+gate with full ancestry and all three budget metadata source pins before fresh
+admission. Continue exact pair-memory/checkpoint work independently. No closed
+identity may be relaunched; no author/provider contact or paid resources.
+
 **Real-graph census and bounded verification COMPLETE — 2026-09-30T00:30:23.622644+00:00:**
 Claim eth-paper-neighborhood-census-20260930-01 completed its single registered
 cell. Guard 135.082446 seconds, peak sampled 899,379,200 bytes, zero memory events,
