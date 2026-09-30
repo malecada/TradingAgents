@@ -3,6 +3,17 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Release committed; preflight01 refused missing committed compact inputs**:
+Reviewed verifier release is pushed atcf9b582d73002dd4178530ed1ce3db150dcd2d63.
+Fresh source preflight failed closed because six original manifest/intent/result
+JSONs were pinned and reviewed on disk but previously ignored byGit. No array
+body was read, no guard/worker was launched and verification01 was not reserved.
+`preflight01-failed.json` preserves this failure and exact six-file inventory.
+Those original compact JSONs are staged byte-for-byte against reviewed pins;
+independent COMMIT_INPUT_REVIEW requested. Next: commit/push exact metadata and
+failure evidence, then use freshpreflight02. Source/protocol/binding hashes are
+unchanged; no old producer or terminal verifier identity is being rerun.
+
 **One-off legacy verification accepted for release; awaiting commit/preflight**:
 RELEASE_REVIEW_V2 independently accepts corrected LR1 and all1870bindings,
 SHA a428368c6b888045f8bd006ae7f19bdcab343c587b5ec1f431a618b898f33762.
