@@ -3,6 +3,89 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Corrected ranked checkpoints independently accepted — 2026-09-30T10:45:39.267727+00:00**:
+ranked-hardening-checkpoints-2026-09-30/REVIEW.md independently accepts the isolated
+component and corrected restore cleanup. All14bindings match; six focusedtests
+pass in.950s. Initial source and R1finding, red02 failures and green03 correction
+remain preserved. No blocking issue remains within this synthetic engineering
+scope. Successful mapped states require explicit close before replacement or
+disposal; future consumers must enforce it. Existing parity fixture loops still
+rely on normal disposal except the explicit closure test, as review notes.
+
+Ranking workspace profile is closed/accepted (1.4325s,132,096,000sampledpeak,
+zeroevents); all prior profiles/graphs/storage and failed09launch remain immutable.
+No empirical process is active. LatestRAM9,674,797,056bytes remains123,097,088below
+newgraph10dispatchminimum9,797,894,144. Disk24,996,777,984 exceeds22,103,159,134.
+Graph10gate/source/runtime/budget/verifierpreparation are committed and reviewed;
+no10tempcheck/preflight/claim/launch has executed. Graph09is permanentlyclosed.
+
+Next safe actions:
+1. Commit/push these accepted compact results and checkpoint implementation.
+2. If freshRAM>=9,797,894,144 and disk>=22,103,159,134 with noactiveunits, run
+   graph10's one finite temp check, fresh preflight and one launch under actual
+   committedHEAD. Freeze HEAD/88source/127inputpins throughoutownership; reconcile
+   every terminal and independently verify actual saved arrays afterward.
+3. Otherwise continue independent ranked-checkpoint composition and score-only
+   integration outside frozen production, explicitly closing mapped states,
+   accounting annealing+order numeric state and checkpoint bytes, testing exact
+   reference parity and interruptedrestore. Review new bounded capacitycheckpoint
+   measurements before execution; no existingprofileorjob is rerun.
+4. Production/backend/cachelineage, realgraphmatching, dictionary/MCM/neural
+   resource evidence and broaderpapercoverage remain required. All1,420financial
+   fits pending; currentclaimedbudget32/59, proposal60unadopted.15minuteheartbeat
+   ACTIVE and latestSTATEgoverns continuation. No paidresources/contact/trading.
+
+**Checkpoint restore cleanup correction awaiting review — 2026-09-30T10:41:42.252165+00:00**:
+Independent checkpoint review identified a post-map restore exception that could
+retain its mapping via traceback. Original source/test/docs/bindings were copied
+with originalSHAverification into ranked-hardening-checkpoints-2026-09-30/pre-review.
+red02.log reproduces both premature mapping of badmetadata and mapping-lifetime
+failure. Corrected code validates compactmetadata before mapping, closes an opened
+map on post-open BaseException while preserving the primaryerror, and provides
+explicit close(state) for successful restores under exclusiveownership.
+
+Six focusedtests pass in green03.log(.950s), including actualclosedmap assertions
+for ValueError/KeyboardInterrupt, successfulclose/reuse refusal and before-map
+metadata refusal.14bindings retain all histories; independent re-review pending.
+This remains isolated engineering, without capacity-sizecheckpoint/composite or
+production use. Ranking capacity profile closure is already independentlyaccepted.
+
+Graph10hasnotlaunched. Latest availableRAM9,627,402,240bytes remains below
+9,797,894,144dispatchminimum; disk25,001,865,216passes. No temp/preflight/claim
+identity exists for10. Keep09permanentlyclosed; current32/59 and all1,420fits pending.
+Next: finish checkpointreview, commit/push acceptedcompactevidence, then either
+fresh10dispatch when RAMpermits or independent composition/checkpoint resource
+engineering with separately reviewed finite limits.15minuteheartbeat remainsactive.
+
+**Ranking capacity probe accepted; checkpoint prototype under review — 2026-09-30T10:38:49.395226+00:00**:
+Accepted gate/preparations and graph09failed-launch evidence were committed/pushed
+as a301da699de42ec9d511c58cfeb99bc29ba505b0. Ranking workspace probe ran once after
+all88committed/currentpins, runtime, noowner,4GiBstartup/10GiBdisk checks passed.
+Session46590 is closed: monitor1132611/unit6463876bde9f40e885c5ce41c4b7aa34 absent,
+1.4325229749956634seconds, sampledpeak132,096,000bytes, zeroevents, child0cleanup.
+It completed before live startticks could be observed; none are invented.
+
+Flat and negative-distance2000-square ranking took0.6596642649965361 and
+0.2108011540112784seconds. Both yielded exact2000diagonalpairs and unchangedinput
+hashes. Independently reconstructed pairhash82a3cb2c7fd9b8ee107a87e276fd5b32211db98bf15dbff58b67aa53b9ff20ab.
+CLOSURE_REVIEW.md accepts all88bindings/eightclosurehashes/rawlog-resultjoin and
+ownerabsence. Structuredfixtures do not establish worstcase sortmemory, controlled
+speedup, resumability or fullrealgraph matching. Never rerun this profile.
+
+ranked-hardening-checkpoints-2026-09-30 now implements atomic sorting followed by
+bounded scan checkpoints, readonly order restore, exact manifest/body identity,
+policy checks and poisoned-state recovery. Four tinytests pass in green02.log
+(.129s), preserving initial red01/green01 history. Eightbindings/IMPLEMENTATION
+are recorded; independentreview pending. No production/gate bytes changed.
+Capacity checkpoint measurement and composition/accounting/backendlineage remain.
+
+Graph10 exact committedgate remains ready for fresh checks but unlaunched:
+recentRAM9,700,548,608bytes is below9,797,894,144dispatchminimum. Disk remains
+sufficient around25GB. Do not run temp/preflight/claim until headroom passes;
+then one fresh tempcheck, preflight and launch under actualcommittedHEAD. Never
+relaunch09. No empirical owner is active, accounting32/59 and1,420fitspending.
+Existing15minute heartbeat remainsACTIVE, latestSTATEgoverns nextsafeaction.
+
 **Graph10 release and ranking probe independently accepted — 2026-09-30T10:33:03.289872+00:00**:
 Graph10 exactgate4769eae1d84bb35b175b1604b6982ad67e97f42bc65309f1532d3de2bbea5f46
 is conditionally accepted:88sourcepins/all77required,127inputs/116uniquepaths,

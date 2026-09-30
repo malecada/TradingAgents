@@ -1,0 +1,33 @@
+{
+  "fixtures": [
+    {
+      "fixture": "flat",
+      "shape": [
+        2000,
+        2000
+      ],
+      "input_sha256": "1a100baed95a65f66d01cd08644b28e134783fd0c52ac7e35ad52a452e8b90b2",
+      "elapsed_seconds": 0.6596642649965361,
+      "selected_pairs": 2000,
+      "pair_sha256": "82a3cb2c7fd9b8ee107a87e276fd5b32211db98bf15dbff58b67aa53b9ff20ab",
+      "analytical_diagonal_exact": true,
+      "input_unchanged": true,
+      "explicit_bytes": 68036000
+    },
+    {
+      "fixture": "diagonal_distance",
+      "shape": [
+        2000,
+        2000
+      ],
+      "input_sha256": "e8776b7228e7e05148e28c4389f98118daaa825f8d2cee2c31284bc8fb1741c1",
+      "elapsed_seconds": 0.2108011540112784,
+      "selected_pairs": 2000,
+      "pair_sha256": "82a3cb2c7fd9b8ee107a87e276fd5b32211db98bf15dbff58b67aa53b9ff20ab",
+      "analytical_diagonal_exact": true,
+      "input_unchanged": true,
+      "explicit_bytes": 68036000
+    }
+  ],
+  "qualification": "Fresh isolated ranking fixtures only, no annealing/scoring, checkpoint/resume, production integration or real-graph feasibility. Timing includes native stable sort and Python selection. Actual guard peak includes runtime/input/native workspace; explicit allowance excludes those costs."
+}
