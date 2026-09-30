@@ -1,0 +1,66 @@
+test_historical_inventory_changes_are_refused_on_lease (__main__.Tests.test_historical_inventory_changes_are_refused_on_lease) ... 
+  test_historical_inventory_changes_are_refused_on_lease (__main__.Tests.test_historical_inventory_changes_are_refused_on_lease) (name='complete.json', symlink=False) ... FAIL
+  test_historical_inventory_changes_are_refused_on_lease (__main__.Tests.test_historical_inventory_changes_are_refused_on_lease) (name='complete.json', symlink=True) ... FAIL
+  test_historical_inventory_changes_are_refused_on_lease (__main__.Tests.test_historical_inventory_changes_are_refused_on_lease) (name='event-999999.json', symlink=False) ... FAIL
+test_inherited_publication_drift_and_session_loss_are_refused (__main__.Tests.test_inherited_publication_drift_and_session_loss_are_refused) ... FAIL
+test_guard_expiry_during_locked_reads_prevents_child_creation (__main__.Tests.test_guard_expiry_during_locked_reads_prevents_child_creation) ... FAIL
+test_guard_expiry_during_constructor_replay_prevents_child_creation (__main__.Tests.test_guard_expiry_during_constructor_replay_prevents_child_creation) ... FAIL
+
+======================================================================
+FAIL: test_historical_inventory_changes_are_refused_on_lease (__main__.Tests.test_historical_inventory_changes_are_refused_on_lease) (name='complete.json', symlink=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/test_ownership.py", line 146, in test_historical_inventory_changes_are_refused_on_lease
+    with self.assertRaises(ValueError):owned.lease()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_historical_inventory_changes_are_refused_on_lease (__main__.Tests.test_historical_inventory_changes_are_refused_on_lease) (name='complete.json', symlink=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/test_ownership.py", line 146, in test_historical_inventory_changes_are_refused_on_lease
+    with self.assertRaises(ValueError):owned.lease()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_historical_inventory_changes_are_refused_on_lease (__main__.Tests.test_historical_inventory_changes_are_refused_on_lease) (name='event-999999.json', symlink=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/test_ownership.py", line 146, in test_historical_inventory_changes_are_refused_on_lease
+    with self.assertRaises(ValueError):owned.lease()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_inherited_publication_drift_and_session_loss_are_refused (__main__.Tests.test_inherited_publication_drift_and_session_loss_are_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/test_ownership.py", line 153, in test_inherited_publication_drift_and_session_loss_are_refused
+    with self.assertRaises(ValueError):owned.lease()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_guard_expiry_during_locked_reads_prevents_child_creation (__main__.Tests.test_guard_expiry_during_locked_reads_prevents_child_creation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/test_ownership.py", line 178, in test_guard_expiry_during_locked_reads_prevents_child_creation
+    self.assertFalse((self.parent.owned.journal.root/'example-b').exists())
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_guard_expiry_during_constructor_replay_prevents_child_creation (__main__.Tests.test_guard_expiry_during_constructor_replay_prevents_child_creation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/test_ownership.py", line 195, in test_guard_expiry_during_constructor_replay_prevents_child_creation
+    self.assertFalse((self.parent.owned.journal.root/'example-b').exists())
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 4 tests in 215.928s
+
+FAILED (failures=6)

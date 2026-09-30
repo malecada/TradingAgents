@@ -1,0 +1,15 @@
+test_foreign_session_during_constructor_replay_prevents_creation (__main__.Tests.test_foreign_session_during_constructor_replay_prevents_creation) ... FAIL
+
+======================================================================
+FAIL: test_foreign_session_during_constructor_replay_prevents_creation (__main__.Tests.test_foreign_session_during_constructor_replay_prevents_creation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-route-2026-09-30/test_ownership.py", line 212, in test_foreign_session_during_constructor_replay_prevents_creation
+    self.assertFalse((self.parent.owned.journal.root/'example-b').exists())
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 51.177s
+
+FAILED (failures=1)

@@ -3,6 +3,35 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Pair-journal ownership independently accepted as a bounded component**:
+New isolated full_sources/pair-owner-route-2026-09-30/ joins the accepted workload
+route to actual first/failed pair-journal owners and exact historical references.
+Initial check01:8passes/313.390s; independent INITIAL_REVIEW withheld acceptance
+for historical inventory, inherited session/publication drift and guard expiry.
+red02 reproduced6failures in4cases/215.928s. check02 was deliberately interrupted
+(exit130) when review found a remaining precreation session-inventory gap;
+source/test snapshots, partial log and interruption receipt remain preserved.
+red03 reproduced that gap:1failure/51.177s. All identities are closed.
+
+Corrections revalidate exact historical inventories, bounded compact publication
+manifests, inherited replay state and session presence. A derived local journal
+requires a callback after constructor replay: observed sessions must exactly match
+admitted inherited sessions before a fresh workload lease and owner creation.
+Live leases permit new current sessions only after a recorded reservation.
+check03 is CLOSED exit0:13passes/581.182s; session84291 completed. Final independent
+REVIEW accepts the bounded component, SHA256
+8787200a0b4bf3648e16347c2379cf93919c02dbb4c594ecd9eaefed704b2620.
+All58direct-file bindings match (component provenance, not full empirical
+closure); bindings SHA976fb122a8fb21d1e874ab1e4b5ee14274fcad65f263a73e9b07dcaa9a926c21. Original dated journal and maintained package source unchanged.
+No active test/guarded empirical job, financial fit, budget change or historical
+rerun. All1420financial fits remain pending.
+
+Next safe action: construct Serial from admitted route controls/owned lease and bind exact
+dictionary/MCM artifacts to samples, graph/node/motif order and FeatureJournal.
+Complete-representation reuse must bypass pair APIs. Mapped populations, actual
+sampler publication provenance, full calendar admission, whole-workflow physical
+quota, orphan reconciliation and scalable metadata verification remain required.
+
 **Registered workload/graph route independently accepted as a bounded component**:
 New isolated full_sources/pair-workload-route-2026-09-30/route.py binds actual
 ResearchRun/Binding admission to registered schedule/quota controls, resident
