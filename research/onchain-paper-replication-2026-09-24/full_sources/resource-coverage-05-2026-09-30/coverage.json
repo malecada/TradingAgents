@@ -1,0 +1,2546 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-30T16:20:35.418884+00:00",
+  "head_observed": "e9b67e5fe3498b9762e302e64b280dde1592e494",
+  "scope": "Read-only reconciliation of original resource requirements, not a rewrite of historical cells or empirical admission. No body/array/SQLite read or rerun.",
+  "original_claim": {
+    "path": "research_runs/eth-paper-resource-pilot-20260924-02/claim.json",
+    "sha256": "05d769f6f50a65c2cf3eeed569077eb84e3871b1e7c23ad3504eed461a0565ca"
+  },
+  "original_ledger": {
+    "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/retained/research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/postmortem/cell-ledger.json",
+    "sha256": "09750888389e7bba366818aa4134ae07e72f6fdeeb4af59594e7f0f627cc3e5c"
+  },
+  "original_closure": {
+    "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/closure.json",
+    "sha256": "dc305bbbc9b76de6eab1e6b9015ca78f5be787c70225f635c918d482a7ac7c54"
+  },
+  "source_index": {
+    "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/source-index.json",
+    "sha256": "18f2548bdec2602995935d951075162537b6369b8bf18647cdc7a96962cffc1a"
+  },
+  "legacy_evidence": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-graph-coverage-2026-09-29/evidence.json",
+    "sha256": "c846e58f6cff5ab6363cec45d7782a92101fe8ee18e2230d016975227332e6f4"
+  },
+  "historical_dispositions": {
+    "complete": 7,
+    "unavailable": 102
+  },
+  "current_requirement_counts": {
+    "original_completed_phase": 7,
+    "remaining": 32,
+    "completed_successor": 56,
+    "legacy_source_ingestion_supported": 14
+  },
+  "supported_resource_requirements": 77,
+  "remaining_resource_requirements": 32,
+  "remaining_by_stage": {
+    "neural_checkpoint": [
+      "2022-01-03",
+      "2022-06-13",
+      "2022-07-25",
+      "2022-11-07",
+      "2023-06-05",
+      "2024-01-01",
+      "2024-03-11",
+      "2024-08-05",
+      "2024-12-23"
+    ],
+    "mcm": [
+      "2022-01-03",
+      "2022-06-13",
+      "2022-07-25",
+      "2022-11-07",
+      "2023-06-05",
+      "2024-01-01",
+      "2024-03-11",
+      "2024-08-05",
+      "2024-12-23"
+    ],
+    "neighborhoods": [
+      "2022-07-25",
+      "2022-11-07",
+      "2023-06-05",
+      "2024-01-01",
+      "2024-03-11",
+      "2024-08-05",
+      "2024-12-23"
+    ],
+    "matching": [
+      "2022-07-25",
+      "2022-11-07",
+      "2023-06-05",
+      "2024-01-01",
+      "2024-03-11",
+      "2024-08-05",
+      "2024-12-23"
+    ],
+    "decode_graph": [],
+    "source": []
+  },
+  "requirements": [
+    {
+      "original_id": "decode_graph-2022-01-03",
+      "stage": "decode_graph",
+      "date": "2022-01-03",
+      "original_status": "complete",
+      "original_reason": null,
+      "requirement_evidence": "original_completed_phase",
+      "supported": true,
+      "evidence": [
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/result.json",
+          "sha256": "633568740b817889edf8cd39590ccd772066f4792725d102ff969675e860d3a7"
+        }
+      ],
+      "qualification": "Original bounded resource phase only; not full-study completion."
+    },
+    {
+      "original_id": "neighborhoods-2022-01-03",
+      "stage": "neighborhoods",
+      "date": "2022-01-03",
+      "original_status": "complete",
+      "original_reason": null,
+      "requirement_evidence": "original_completed_phase",
+      "supported": true,
+      "evidence": [
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/neighborhoods/result.json",
+          "sha256": "25f711dc4cd56852df02f1f01ecfd29f3f46d05825eeebb65ac517fc0e5d89a1"
+        }
+      ],
+      "qualification": "Original bounded resource phase only; not full-study completion."
+    },
+    {
+      "original_id": "matching-2022-01-03",
+      "stage": "matching",
+      "date": "2022-01-03",
+      "original_status": "complete",
+      "original_reason": null,
+      "requirement_evidence": "original_completed_phase",
+      "supported": true,
+      "evidence": [
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/matching/result.json",
+          "sha256": "60ddda103f1e64ff2d307c06a33c22fe83937a2b283460bc932f94c8316592b6"
+        }
+      ],
+      "qualification": "Original bounded resource phase only; not full-study completion."
+    },
+    {
+      "original_id": "neural_checkpoint-2022-01-03",
+      "stage": "neural_checkpoint",
+      "date": "2022-01-03",
+      "original_status": "unavailable",
+      "original_reason": "ValueError: capacity: neural intermediate estimate exceeds registered working allowance 1073741824 under cap 3221225472: 10713395200",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "dictionary-2022-01-03",
+      "stage": "dictionary",
+      "date": "2022-01-03",
+      "original_status": "complete",
+      "original_reason": null,
+      "requirement_evidence": "original_completed_phase",
+      "supported": true,
+      "evidence": [
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/dictionary/result.json",
+          "sha256": "a228201bc8b01c652f4b46788692fcf8110f205f8392f8773f7c30faf23c279b"
+        }
+      ],
+      "qualification": "Original bounded resource phase only; not full-study completion."
+    },
+    {
+      "original_id": "mcm-2022-01-03",
+      "stage": "mcm",
+      "date": "2022-01-03",
+      "original_status": "unavailable",
+      "original_reason": "ValueError: neighborhood capacity exceeded, no truncation",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "decode_graph-2022-06-13",
+      "stage": "decode_graph",
+      "date": "2022-06-13",
+      "original_status": "complete",
+      "original_reason": null,
+      "requirement_evidence": "original_completed_phase",
+      "supported": true,
+      "evidence": [
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/result.json",
+          "sha256": "8b9b85b369f9e590fcfb2f02fa4faeae34cacac091b637e57c54ea5004814e18"
+        }
+      ],
+      "qualification": "Original bounded resource phase only; not full-study completion."
+    },
+    {
+      "original_id": "neighborhoods-2022-06-13",
+      "stage": "neighborhoods",
+      "date": "2022-06-13",
+      "original_status": "complete",
+      "original_reason": null,
+      "requirement_evidence": "original_completed_phase",
+      "supported": true,
+      "evidence": [
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/neighborhoods/result.json",
+          "sha256": "3c0515c98690d94b6f95200cdd222633b91bee8bb9b2df4f459fa2404a6910d2"
+        }
+      ],
+      "qualification": "Original bounded resource phase only; not full-study completion."
+    },
+    {
+      "original_id": "matching-2022-06-13",
+      "stage": "matching",
+      "date": "2022-06-13",
+      "original_status": "complete",
+      "original_reason": null,
+      "requirement_evidence": "original_completed_phase",
+      "supported": true,
+      "evidence": [
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/matching/result.json",
+          "sha256": "0bc83075c6bbb046e9558c87e1bc29b17f77e19c69ad3178517ae844afba2d61"
+        }
+      ],
+      "qualification": "Original bounded resource phase only; not full-study completion."
+    },
+    {
+      "original_id": "neural_checkpoint-2022-06-13",
+      "stage": "neural_checkpoint",
+      "date": "2022-06-13",
+      "original_status": "unavailable",
+      "original_reason": "ValueError: capacity: neural intermediate estimate exceeds registered working allowance 1073741824 under cap 3221225472: 8778956800",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "mcm-2022-06-13",
+      "stage": "mcm",
+      "date": "2022-06-13",
+      "original_status": "unavailable",
+      "original_reason": "ValueError: neighborhood capacity exceeded, no truncation",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "decode_graph-2022-07-25",
+      "stage": "decode_graph",
+      "date": "2022-07-25",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "successor_experiment": "eth-paper-graph-resource-20260929-03",
+      "successor_cell": "graph-2022-07-25",
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260929-03/complete.json",
+          "sha256": "4d607d48a8bedce9ab8b8fdb5f88c45c4fc1b2f7826be3dda78beac4528d137b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260929-03/graph-2022-07-25/manifest.json",
+          "sha256": "9db059698fa84a9a3b460c58cdcd0ab35e97db0f4f2f8246504c7241c13b1a49"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260929-03/graph-2022-07-25/coverage.json",
+          "sha256": "66e8c6fe28a4a9bfd02a1da95395b3e1bbfaf31341b14d9601c02e76215474a4"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-2026-09-29/result.json",
+          "sha256": "26155a1d82716880d9343396cfa7f9014729c05c96559049d58c704f31f7285b"
+        }
+      ],
+      "qualification": "Completed successor and bounded saved-array verification; raw semantics not independently replayed."
+    },
+    {
+      "original_id": "neighborhoods-2022-07-25",
+      "stage": "neighborhoods",
+      "date": "2022-07-25",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "matching-2022-07-25",
+      "stage": "matching",
+      "date": "2022-07-25",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "neural_checkpoint-2022-07-25",
+      "stage": "neural_checkpoint",
+      "date": "2022-07-25",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "mcm-2022-07-25",
+      "stage": "mcm",
+      "date": "2022-07-25",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "decode_graph-2022-11-07",
+      "stage": "decode_graph",
+      "date": "2022-11-07",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "successor_experiment": "eth-paper-graph-resource-20260930-04",
+      "successor_cell": "graph-2022-11-07",
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-04/complete.json",
+          "sha256": "7452e27e74ae8b30b48400b830c0715acd973d67cf1b04aa3f578ba7607268ba"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-04/graph-2022-11-07/manifest.json",
+          "sha256": "b031945115b041acf1581c124f19d856e25d445d45a7438322986c13bf61e83c"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-04/graph-2022-11-07/coverage.json",
+          "sha256": "c40795e6c754f00c9118918f3b28976e2e98bf6ed45297f4f9b929b812fd5692"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-04-2026-09-30/result.json",
+          "sha256": "8fcda8fe206cd35fdde384506cd2797e0bcaf8dc655339a4e963987d99253748"
+        }
+      ],
+      "qualification": "Completed successor and bounded saved-array verification; raw semantics not independently replayed."
+    },
+    {
+      "original_id": "neighborhoods-2022-11-07",
+      "stage": "neighborhoods",
+      "date": "2022-11-07",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "matching-2022-11-07",
+      "stage": "matching",
+      "date": "2022-11-07",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "neural_checkpoint-2022-11-07",
+      "stage": "neural_checkpoint",
+      "date": "2022-11-07",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "mcm-2022-11-07",
+      "stage": "mcm",
+      "date": "2022-11-07",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "decode_graph-2023-06-05",
+      "stage": "decode_graph",
+      "date": "2023-06-05",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "successor_experiment": "eth-paper-graph-resource-20260930-05",
+      "successor_cell": "graph-2023-06-05",
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-05/complete.json",
+          "sha256": "4ce33b3ea0f7e23ba46452293e8db40bb70d1b01871136609a0406212dca657b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/graph-2023-06-05/manifest.json",
+          "sha256": "f00ed07085e06fbe048faa06450baf417c72bec298a5e54ea95312b4039d182d"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/graph-2023-06-05/coverage.json",
+          "sha256": "302581200d7c572a0a319a520e0a792917686418ac60313f4bf43f26b59d8df8"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-05-2026-09-30/result.json",
+          "sha256": "18c9f599fc31c572022abd8fc1fce6cd8073295c19083d5886bdaab21429bd48"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-05-2026-09-30/closure-review.json",
+          "sha256": "916078d9e97c7c0619f59e01f77203d8b3fc54d53f465a5962277509b34d04d7"
+        }
+      ],
+      "qualification": "Completed successor and accepted bounded saved-array verification; raw semantics not independently replayed."
+    },
+    {
+      "original_id": "neighborhoods-2023-06-05",
+      "stage": "neighborhoods",
+      "date": "2023-06-05",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "matching-2023-06-05",
+      "stage": "matching",
+      "date": "2023-06-05",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "neural_checkpoint-2023-06-05",
+      "stage": "neural_checkpoint",
+      "date": "2023-06-05",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "mcm-2023-06-05",
+      "stage": "mcm",
+      "date": "2023-06-05",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "decode_graph-2024-01-01",
+      "stage": "decode_graph",
+      "date": "2024-01-01",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "successor_experiment": "eth-paper-graph-resource-20260930-06",
+      "successor_cell": "graph-2024-01-01",
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-06/complete.json",
+          "sha256": "523456af1f24d788b7115ce12e552aaed603479d6a23bae39ed92db8dea501b4"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/graph-2024-01-01/manifest.json",
+          "sha256": "f716708e2dcf026fd230d2c9ba80455ccd25858377c8c6d6a9985c8750a0186d"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/graph-2024-01-01/coverage.json",
+          "sha256": "4cc1667f3ad39cc3415562bc2f628d6d4dbc4dc22190b26f08752f6f5364e355"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-06-2026-09-30/result.json",
+          "sha256": "6fd863f098b5c4f597f361598caee9e8b15e82420113b4103cdc22728e084a4b"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-06-2026-09-30/closure-review.json",
+          "sha256": "4fa4a337dafa25a09f83a6feb7491b651cd4e5ed55c93846aa2db897322602ed"
+        }
+      ],
+      "qualification": "Completed successor and accepted bounded saved-array verification; raw semantics not independently replayed."
+    },
+    {
+      "original_id": "neighborhoods-2024-01-01",
+      "stage": "neighborhoods",
+      "date": "2024-01-01",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "matching-2024-01-01",
+      "stage": "matching",
+      "date": "2024-01-01",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "neural_checkpoint-2024-01-01",
+      "stage": "neural_checkpoint",
+      "date": "2024-01-01",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "mcm-2024-01-01",
+      "stage": "mcm",
+      "date": "2024-01-01",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "decode_graph-2024-03-11",
+      "stage": "decode_graph",
+      "date": "2024-03-11",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "successor_experiment": "eth-paper-graph-resource-20260930-07",
+      "successor_cell": "graph-2024-03-11",
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-07/complete.json",
+          "sha256": "94c5eb0886da7539f54bde856c53174aee9266e37f2cedb35db6e0baf69d8c68"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/graph-2024-03-11/manifest.json",
+          "sha256": "136713c0f63bd9e1e6756dc07c2d4891f563d1193d6cb883cd1d33b34f74aff9"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/graph-2024-03-11/coverage.json",
+          "sha256": "4f4be5b2487ad49ee37ad51bba7f390d08f4818d8974f61cd39168f65fd6c7bd"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-07-2026-09-30/result.json",
+          "sha256": "52a98f0cdb1881e1f9bfa10b50e4acc0808d2733c4890dd912d06cb700fd9c82"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-07-2026-09-30/closure-review.json",
+          "sha256": "7c396c2c3bfc668539c4a423470550eecf344e69c15e6d295d3c3b14b9480160"
+        }
+      ],
+      "qualification": "Completed successor and accepted bounded saved-array verification; raw semantics not independently replayed."
+    },
+    {
+      "original_id": "neighborhoods-2024-03-11",
+      "stage": "neighborhoods",
+      "date": "2024-03-11",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "matching-2024-03-11",
+      "stage": "matching",
+      "date": "2024-03-11",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "neural_checkpoint-2024-03-11",
+      "stage": "neural_checkpoint",
+      "date": "2024-03-11",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "mcm-2024-03-11",
+      "stage": "mcm",
+      "date": "2024-03-11",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "decode_graph-2024-08-05",
+      "stage": "decode_graph",
+      "date": "2024-08-05",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "successor_experiment": "eth-paper-graph-resource-20260930-08",
+      "successor_cell": "graph-2024-08-05",
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-08/complete.json",
+          "sha256": "0712a3c05ba5dfcb14dec22c61aa33e7fd752798d4a53029c15e216ce8faa1f1"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/graph-2024-08-05/manifest.json",
+          "sha256": "4ec80b6ed0d28f4e778745dee44ff7332685b0aed3155f8b2010272a296a97c3"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/graph-2024-08-05/coverage.json",
+          "sha256": "d1ec169ed79fc39d5cc13b44a438027d53614b449894ace9594764795059c80a"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-08-2026-09-30/result.json",
+          "sha256": "4d105bdc992478b46efad1917c250b5ba1fad9772379ab7a01ffa5f111710457"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-08-2026-09-30/closure-review.json",
+          "sha256": "f6faf3938b02f09fdfec1d2cc3e7279413c05a9d9d7dd9b9b7d4ae05e1f76003"
+        }
+      ],
+      "qualification": "Completed successor and accepted bounded saved-array verification; raw semantics not independently replayed."
+    },
+    {
+      "original_id": "neighborhoods-2024-08-05",
+      "stage": "neighborhoods",
+      "date": "2024-08-05",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "matching-2024-08-05",
+      "stage": "matching",
+      "date": "2024-08-05",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "neural_checkpoint-2024-08-05",
+      "stage": "neural_checkpoint",
+      "date": "2024-08-05",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "mcm-2024-08-05",
+      "stage": "mcm",
+      "date": "2024-08-05",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "decode_graph-2024-12-23",
+      "stage": "decode_graph",
+      "date": "2024-12-23",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "successor_experiment": "eth-paper-graph-resource-20260930-10",
+      "successor_cell": "graph-2024-12-23",
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-10/complete.json",
+          "sha256": "26f9a0134d9cd2050dbc4e254ae83158b0d9f41d82db9dd54384ff3b749bd8c9"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/graph-2024-12-23/manifest.json",
+          "sha256": "7cc89f84a22986fa82ecba90755a1ae98c245fdb5f4803dff5c0c49b5dab1690"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/graph-2024-12-23/coverage.json",
+          "sha256": "f058a48846e30f220437b97b6a3b173690bd7cc8476fbf01aafcdfed37feca2b"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-10-2026-09-30/result.json",
+          "sha256": "f2a7bcfb8f385bf3059fdda079139cb8dc5be8172a2cc4108b39311c7eb5862d"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-10-2026-09-30/CLOSURE_REVIEW.md",
+          "sha256": "17285d7585018d4ef96a15a12b20f8877d15092aa84d253f73684d5ce2777144"
+        }
+      ],
+      "qualification": "Completed successor and accepted bounded saved-array verification; raw semantics not independently replayed."
+    },
+    {
+      "original_id": "neighborhoods-2024-12-23",
+      "stage": "neighborhoods",
+      "date": "2024-12-23",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "matching-2024-12-23",
+      "stage": "matching",
+      "date": "2024-12-23",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "neural_checkpoint-2024-12-23",
+      "stage": "neural_checkpoint",
+      "date": "2024-12-23",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "mcm-2024-12-23",
+      "stage": "mcm",
+      "date": "2024-12-23",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "remaining",
+      "supported": false
+    },
+    {
+      "original_id": "source-2022-01-03",
+      "stage": "source",
+      "date": "2022-01-03",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "legacy_source_ingestion_supported",
+      "supported": true,
+      "week": "2022-01-03",
+      "expected_rows": 1209173,
+      "evidence": [
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-graph-coverage-2026-09-29/2022-01-03-coverage.json",
+          "sha256": "9d00af9ddfca34dae4431b0e25cdea676106e74074f865f3ed5f177321409f0b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/result.json",
+          "sha256": "633568740b817889edf8cd39590ccd772066f4792725d102ff969675e860d3a7"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/intent.json",
+          "sha256": "ea4171c34f385d4c11065d9444325a204971706eba5b99aa786f0f02eeba6beb"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json",
+          "sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-03.json",
+          "sha256": "b098614ab0a18199811bbf2040dbbceef8518cc8b8a24e186b1fa1b20fa8f00f"
+        }
+      ],
+      "qualification": "Metadata reconstruction of successful original full decoder consumption; no retroactive historical cell completion or new body read."
+    },
+    {
+      "original_id": "source-2022-01-04",
+      "stage": "source",
+      "date": "2022-01-04",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "legacy_source_ingestion_supported",
+      "supported": true,
+      "week": "2022-01-03",
+      "expected_rows": 1221316,
+      "evidence": [
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-graph-coverage-2026-09-29/2022-01-03-coverage.json",
+          "sha256": "9d00af9ddfca34dae4431b0e25cdea676106e74074f865f3ed5f177321409f0b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/result.json",
+          "sha256": "633568740b817889edf8cd39590ccd772066f4792725d102ff969675e860d3a7"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/intent.json",
+          "sha256": "ea4171c34f385d4c11065d9444325a204971706eba5b99aa786f0f02eeba6beb"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json",
+          "sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-04.json",
+          "sha256": "0e3f9d58ed26f9b29de00cf6d89bb1ba313042f09f04a08311942f40d644eb7b"
+        }
+      ],
+      "qualification": "Metadata reconstruction of successful original full decoder consumption; no retroactive historical cell completion or new body read."
+    },
+    {
+      "original_id": "source-2022-01-05",
+      "stage": "source",
+      "date": "2022-01-05",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "legacy_source_ingestion_supported",
+      "supported": true,
+      "week": "2022-01-03",
+      "expected_rows": 1249628,
+      "evidence": [
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-graph-coverage-2026-09-29/2022-01-03-coverage.json",
+          "sha256": "9d00af9ddfca34dae4431b0e25cdea676106e74074f865f3ed5f177321409f0b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/result.json",
+          "sha256": "633568740b817889edf8cd39590ccd772066f4792725d102ff969675e860d3a7"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/intent.json",
+          "sha256": "ea4171c34f385d4c11065d9444325a204971706eba5b99aa786f0f02eeba6beb"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json",
+          "sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-05.json",
+          "sha256": "cc77d75545687596abd9d3fe1da328edaee2d08360492448a4f8b8ace9be3551"
+        }
+      ],
+      "qualification": "Metadata reconstruction of successful original full decoder consumption; no retroactive historical cell completion or new body read."
+    },
+    {
+      "original_id": "source-2022-01-06",
+      "stage": "source",
+      "date": "2022-01-06",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "legacy_source_ingestion_supported",
+      "supported": true,
+      "week": "2022-01-03",
+      "expected_rows": 1212495,
+      "evidence": [
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-graph-coverage-2026-09-29/2022-01-03-coverage.json",
+          "sha256": "9d00af9ddfca34dae4431b0e25cdea676106e74074f865f3ed5f177321409f0b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/result.json",
+          "sha256": "633568740b817889edf8cd39590ccd772066f4792725d102ff969675e860d3a7"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/intent.json",
+          "sha256": "ea4171c34f385d4c11065d9444325a204971706eba5b99aa786f0f02eeba6beb"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json",
+          "sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-06.json",
+          "sha256": "73f0f8204ef195d6e0167a49ff35a2d10a81a83e372f2f56a20c8291199c70a2"
+        }
+      ],
+      "qualification": "Metadata reconstruction of successful original full decoder consumption; no retroactive historical cell completion or new body read."
+    },
+    {
+      "original_id": "source-2022-01-07",
+      "stage": "source",
+      "date": "2022-01-07",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "legacy_source_ingestion_supported",
+      "supported": true,
+      "week": "2022-01-03",
+      "expected_rows": 1188490,
+      "evidence": [
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-graph-coverage-2026-09-29/2022-01-03-coverage.json",
+          "sha256": "9d00af9ddfca34dae4431b0e25cdea676106e74074f865f3ed5f177321409f0b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/result.json",
+          "sha256": "633568740b817889edf8cd39590ccd772066f4792725d102ff969675e860d3a7"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/intent.json",
+          "sha256": "ea4171c34f385d4c11065d9444325a204971706eba5b99aa786f0f02eeba6beb"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json",
+          "sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-07.json",
+          "sha256": "5825ebb0b91352a7094edbd462aca119069892b895fc883f9b8bd6fb4e2671c8"
+        }
+      ],
+      "qualification": "Metadata reconstruction of successful original full decoder consumption; no retroactive historical cell completion or new body read."
+    },
+    {
+      "original_id": "source-2022-01-08",
+      "stage": "source",
+      "date": "2022-01-08",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "legacy_source_ingestion_supported",
+      "supported": true,
+      "week": "2022-01-03",
+      "expected_rows": 1183873,
+      "evidence": [
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-graph-coverage-2026-09-29/2022-01-03-coverage.json",
+          "sha256": "9d00af9ddfca34dae4431b0e25cdea676106e74074f865f3ed5f177321409f0b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/result.json",
+          "sha256": "633568740b817889edf8cd39590ccd772066f4792725d102ff969675e860d3a7"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/intent.json",
+          "sha256": "ea4171c34f385d4c11065d9444325a204971706eba5b99aa786f0f02eeba6beb"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json",
+          "sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-08.json",
+          "sha256": "5f14077caafc721d527463603cc416f4c9f3c0a67b013b0012ea70912304fcdc"
+        }
+      ],
+      "qualification": "Metadata reconstruction of successful original full decoder consumption; no retroactive historical cell completion or new body read."
+    },
+    {
+      "original_id": "source-2022-01-09",
+      "stage": "source",
+      "date": "2022-01-09",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "legacy_source_ingestion_supported",
+      "supported": true,
+      "week": "2022-01-03",
+      "expected_rows": 1108322,
+      "evidence": [
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-graph-coverage-2026-09-29/2022-01-03-coverage.json",
+          "sha256": "9d00af9ddfca34dae4431b0e25cdea676106e74074f865f3ed5f177321409f0b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/result.json",
+          "sha256": "633568740b817889edf8cd39590ccd772066f4792725d102ff969675e860d3a7"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/intent.json",
+          "sha256": "ea4171c34f385d4c11065d9444325a204971706eba5b99aa786f0f02eeba6beb"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-01-03/decode_graph/graph/manifest.json",
+          "sha256": "bc3bf9a6104ffcb93b8c8b9ba7dd068f1dc0db28b0fca2a74f32cc3a0ba76c98"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-01-09.json",
+          "sha256": "40afba994707cdd5b74f734b822c9dc534b27c419573085a19221b46137926c6"
+        }
+      ],
+      "qualification": "Metadata reconstruction of successful original full decoder consumption; no retroactive historical cell completion or new body read."
+    },
+    {
+      "original_id": "source-2022-06-13",
+      "stage": "source",
+      "date": "2022-06-13",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "legacy_source_ingestion_supported",
+      "supported": true,
+      "week": "2022-06-13",
+      "expected_rows": 1109435,
+      "evidence": [
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-graph-coverage-2026-09-29/2022-06-13-coverage.json",
+          "sha256": "764d3bae2fa292f12c52288242d668a413022d766ba6e34ab2efa1b4e55c5424"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/result.json",
+          "sha256": "8b9b85b369f9e590fcfb2f02fa4faeae34cacac091b637e57c54ea5004814e18"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/intent.json",
+          "sha256": "85501afe7fe78693d0da8a0cff4d0fa8264d0a2e061ca5952bfd6a48183cd836"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+          "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-13.json",
+          "sha256": "89a337e96f886bcf0cc076562d4bbe7ee9f58ee55ce0034e792577911bcf04b3"
+        }
+      ],
+      "qualification": "Metadata reconstruction of successful original full decoder consumption; no retroactive historical cell completion or new body read."
+    },
+    {
+      "original_id": "source-2022-06-14",
+      "stage": "source",
+      "date": "2022-06-14",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "legacy_source_ingestion_supported",
+      "supported": true,
+      "week": "2022-06-13",
+      "expected_rows": 1086757,
+      "evidence": [
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-graph-coverage-2026-09-29/2022-06-13-coverage.json",
+          "sha256": "764d3bae2fa292f12c52288242d668a413022d766ba6e34ab2efa1b4e55c5424"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/result.json",
+          "sha256": "8b9b85b369f9e590fcfb2f02fa4faeae34cacac091b637e57c54ea5004814e18"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/intent.json",
+          "sha256": "85501afe7fe78693d0da8a0cff4d0fa8264d0a2e061ca5952bfd6a48183cd836"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+          "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-14.json",
+          "sha256": "d20442fbcb8b455fed90d1390ec56bc24e5d3b2bd369e96b785c79c789b80ad7"
+        }
+      ],
+      "qualification": "Metadata reconstruction of successful original full decoder consumption; no retroactive historical cell completion or new body read."
+    },
+    {
+      "original_id": "source-2022-06-15",
+      "stage": "source",
+      "date": "2022-06-15",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "legacy_source_ingestion_supported",
+      "supported": true,
+      "week": "2022-06-13",
+      "expected_rows": 1097000,
+      "evidence": [
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-graph-coverage-2026-09-29/2022-06-13-coverage.json",
+          "sha256": "764d3bae2fa292f12c52288242d668a413022d766ba6e34ab2efa1b4e55c5424"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/result.json",
+          "sha256": "8b9b85b369f9e590fcfb2f02fa4faeae34cacac091b637e57c54ea5004814e18"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/intent.json",
+          "sha256": "85501afe7fe78693d0da8a0cff4d0fa8264d0a2e061ca5952bfd6a48183cd836"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+          "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-15.json",
+          "sha256": "238fb121b282dce970ca7cbdaff102769a11817ebe42cfac16b85e5584dfc6f7"
+        }
+      ],
+      "qualification": "Metadata reconstruction of successful original full decoder consumption; no retroactive historical cell completion or new body read."
+    },
+    {
+      "original_id": "source-2022-06-16",
+      "stage": "source",
+      "date": "2022-06-16",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "legacy_source_ingestion_supported",
+      "supported": true,
+      "week": "2022-06-13",
+      "expected_rows": 1100312,
+      "evidence": [
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-graph-coverage-2026-09-29/2022-06-13-coverage.json",
+          "sha256": "764d3bae2fa292f12c52288242d668a413022d766ba6e34ab2efa1b4e55c5424"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/result.json",
+          "sha256": "8b9b85b369f9e590fcfb2f02fa4faeae34cacac091b637e57c54ea5004814e18"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/intent.json",
+          "sha256": "85501afe7fe78693d0da8a0cff4d0fa8264d0a2e061ca5952bfd6a48183cd836"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+          "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-16.json",
+          "sha256": "3c221307faaa331561d8251630874befc885872e1f06e9fed2821141999edc5d"
+        }
+      ],
+      "qualification": "Metadata reconstruction of successful original full decoder consumption; no retroactive historical cell completion or new body read."
+    },
+    {
+      "original_id": "source-2022-06-17",
+      "stage": "source",
+      "date": "2022-06-17",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "legacy_source_ingestion_supported",
+      "supported": true,
+      "week": "2022-06-13",
+      "expected_rows": 1110579,
+      "evidence": [
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-graph-coverage-2026-09-29/2022-06-13-coverage.json",
+          "sha256": "764d3bae2fa292f12c52288242d668a413022d766ba6e34ab2efa1b4e55c5424"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/result.json",
+          "sha256": "8b9b85b369f9e590fcfb2f02fa4faeae34cacac091b637e57c54ea5004814e18"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/intent.json",
+          "sha256": "85501afe7fe78693d0da8a0cff4d0fa8264d0a2e061ca5952bfd6a48183cd836"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+          "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-17.json",
+          "sha256": "42afe182bbf8e9a3689008a01f65ea43e986602c03ad058e89a37c72d3de4151"
+        }
+      ],
+      "qualification": "Metadata reconstruction of successful original full decoder consumption; no retroactive historical cell completion or new body read."
+    },
+    {
+      "original_id": "source-2022-06-18",
+      "stage": "source",
+      "date": "2022-06-18",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "legacy_source_ingestion_supported",
+      "supported": true,
+      "week": "2022-06-13",
+      "expected_rows": 1058336,
+      "evidence": [
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-graph-coverage-2026-09-29/2022-06-13-coverage.json",
+          "sha256": "764d3bae2fa292f12c52288242d668a413022d766ba6e34ab2efa1b4e55c5424"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/result.json",
+          "sha256": "8b9b85b369f9e590fcfb2f02fa4faeae34cacac091b637e57c54ea5004814e18"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/intent.json",
+          "sha256": "85501afe7fe78693d0da8a0cff4d0fa8264d0a2e061ca5952bfd6a48183cd836"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+          "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-18.json",
+          "sha256": "a9eaea951a39f052cfc75dc87b80427ef60688653fb1cdef18fcbbf3426cafe2"
+        }
+      ],
+      "qualification": "Metadata reconstruction of successful original full decoder consumption; no retroactive historical cell completion or new body read."
+    },
+    {
+      "original_id": "source-2022-06-19",
+      "stage": "source",
+      "date": "2022-06-19",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "legacy_source_ingestion_supported",
+      "supported": true,
+      "week": "2022-06-13",
+      "expected_rows": 1018674,
+      "evidence": [
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/full_sources/legacy-graph-coverage-2026-09-29/2022-06-13-coverage.json",
+          "sha256": "764d3bae2fa292f12c52288242d668a413022d766ba6e34ab2efa1b4e55c5424"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/result.json",
+          "sha256": "8b9b85b369f9e590fcfb2f02fa4faeae34cacac091b637e57c54ea5004814e18"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/intent.json",
+          "sha256": "85501afe7fe78693d0da8a0cff4d0fa8264d0a2e061ca5952bfd6a48183cd836"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/pilot-02/2022-06-13/decode_graph/graph/manifest.json",
+          "sha256": "a7599cb4dce5a3d7b01614fe097026e70d48ecd63bb1c25518ccb05f41204d59"
+        },
+        {
+          "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2022-06-19.json",
+          "sha256": "6f97d58f35f84c7e302b22b9076819a5ed14f94175037d6ec57d9d7bf72119a2"
+        }
+      ],
+      "qualification": "Metadata reconstruction of successful original full decoder consumption; no retroactive historical cell completion or new body read."
+    },
+    {
+      "original_id": "source-2022-07-25",
+      "stage": "source",
+      "date": "2022-07-25",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2022-07-25",
+      "successor_experiment": "eth-paper-graph-resource-20260929-03",
+      "successor_cell": "source-000000",
+      "rows": 1275861,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260929-03/complete.json",
+          "sha256": "4d607d48a8bedce9ab8b8fdb5f88c45c4fc1b2f7826be3dda78beac4528d137b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260929-03/graph-2022-07-25/coverage.json",
+          "sha256": "66e8c6fe28a4a9bfd02a1da95395b3e1bbfaf31341b14d9601c02e76215474a4"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; source body not replayed in this review."
+    },
+    {
+      "original_id": "source-2022-07-26",
+      "stage": "source",
+      "date": "2022-07-26",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2022-07-25",
+      "successor_experiment": "eth-paper-graph-resource-20260929-03",
+      "successor_cell": "source-000001",
+      "rows": 1679068,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260929-03/complete.json",
+          "sha256": "4d607d48a8bedce9ab8b8fdb5f88c45c4fc1b2f7826be3dda78beac4528d137b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260929-03/graph-2022-07-25/coverage.json",
+          "sha256": "66e8c6fe28a4a9bfd02a1da95395b3e1bbfaf31341b14d9601c02e76215474a4"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; source body not replayed in this review."
+    },
+    {
+      "original_id": "source-2022-07-27",
+      "stage": "source",
+      "date": "2022-07-27",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2022-07-25",
+      "successor_experiment": "eth-paper-graph-resource-20260929-03",
+      "successor_cell": "source-000002",
+      "rows": 1197448,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260929-03/complete.json",
+          "sha256": "4d607d48a8bedce9ab8b8fdb5f88c45c4fc1b2f7826be3dda78beac4528d137b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260929-03/graph-2022-07-25/coverage.json",
+          "sha256": "66e8c6fe28a4a9bfd02a1da95395b3e1bbfaf31341b14d9601c02e76215474a4"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; source body not replayed in this review."
+    },
+    {
+      "original_id": "source-2022-07-28",
+      "stage": "source",
+      "date": "2022-07-28",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2022-07-25",
+      "successor_experiment": "eth-paper-graph-resource-20260929-03",
+      "successor_cell": "source-000003",
+      "rows": 1158611,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260929-03/complete.json",
+          "sha256": "4d607d48a8bedce9ab8b8fdb5f88c45c4fc1b2f7826be3dda78beac4528d137b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260929-03/graph-2022-07-25/coverage.json",
+          "sha256": "66e8c6fe28a4a9bfd02a1da95395b3e1bbfaf31341b14d9601c02e76215474a4"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; source body not replayed in this review."
+    },
+    {
+      "original_id": "source-2022-07-29",
+      "stage": "source",
+      "date": "2022-07-29",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2022-07-25",
+      "successor_experiment": "eth-paper-graph-resource-20260929-03",
+      "successor_cell": "source-000004",
+      "rows": 1192330,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260929-03/complete.json",
+          "sha256": "4d607d48a8bedce9ab8b8fdb5f88c45c4fc1b2f7826be3dda78beac4528d137b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260929-03/graph-2022-07-25/coverage.json",
+          "sha256": "66e8c6fe28a4a9bfd02a1da95395b3e1bbfaf31341b14d9601c02e76215474a4"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; source body not replayed in this review."
+    },
+    {
+      "original_id": "source-2022-07-30",
+      "stage": "source",
+      "date": "2022-07-30",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2022-07-25",
+      "successor_experiment": "eth-paper-graph-resource-20260929-03",
+      "successor_cell": "source-000005",
+      "rows": 1179749,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260929-03/complete.json",
+          "sha256": "4d607d48a8bedce9ab8b8fdb5f88c45c4fc1b2f7826be3dda78beac4528d137b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260929-03/graph-2022-07-25/coverage.json",
+          "sha256": "66e8c6fe28a4a9bfd02a1da95395b3e1bbfaf31341b14d9601c02e76215474a4"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; source body not replayed in this review."
+    },
+    {
+      "original_id": "source-2022-07-31",
+      "stage": "source",
+      "date": "2022-07-31",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2022-07-25",
+      "successor_experiment": "eth-paper-graph-resource-20260929-03",
+      "successor_cell": "source-000006",
+      "rows": 1158621,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260929-03/complete.json",
+          "sha256": "4d607d48a8bedce9ab8b8fdb5f88c45c4fc1b2f7826be3dda78beac4528d137b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260929-03/graph-2022-07-25/coverage.json",
+          "sha256": "66e8c6fe28a4a9bfd02a1da95395b3e1bbfaf31341b14d9601c02e76215474a4"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; source body not replayed in this review."
+    },
+    {
+      "original_id": "source-2022-11-07",
+      "stage": "source",
+      "date": "2022-11-07",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2022-11-07",
+      "successor_experiment": "eth-paper-graph-resource-20260930-04",
+      "successor_cell": "source-000000",
+      "rows": 1106711,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-04/complete.json",
+          "sha256": "7452e27e74ae8b30b48400b830c0715acd973d67cf1b04aa3f578ba7607268ba"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-04/graph-2022-11-07/coverage.json",
+          "sha256": "c40795e6c754f00c9118918f3b28976e2e98bf6ed45297f4f9b929b812fd5692"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; source body not replayed in this review."
+    },
+    {
+      "original_id": "source-2022-11-08",
+      "stage": "source",
+      "date": "2022-11-08",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2022-11-07",
+      "successor_experiment": "eth-paper-graph-resource-20260930-04",
+      "successor_cell": "source-000001",
+      "rows": 1132048,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-04/complete.json",
+          "sha256": "7452e27e74ae8b30b48400b830c0715acd973d67cf1b04aa3f578ba7607268ba"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-04/graph-2022-11-07/coverage.json",
+          "sha256": "c40795e6c754f00c9118918f3b28976e2e98bf6ed45297f4f9b929b812fd5692"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; source body not replayed in this review."
+    },
+    {
+      "original_id": "source-2022-11-09",
+      "stage": "source",
+      "date": "2022-11-09",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2022-11-07",
+      "successor_experiment": "eth-paper-graph-resource-20260930-04",
+      "successor_cell": "source-000002",
+      "rows": 1219648,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-04/complete.json",
+          "sha256": "7452e27e74ae8b30b48400b830c0715acd973d67cf1b04aa3f578ba7607268ba"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-04/graph-2022-11-07/coverage.json",
+          "sha256": "c40795e6c754f00c9118918f3b28976e2e98bf6ed45297f4f9b929b812fd5692"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; source body not replayed in this review."
+    },
+    {
+      "original_id": "source-2022-11-10",
+      "stage": "source",
+      "date": "2022-11-10",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2022-11-07",
+      "successor_experiment": "eth-paper-graph-resource-20260930-04",
+      "successor_cell": "source-000003",
+      "rows": 1184632,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-04/complete.json",
+          "sha256": "7452e27e74ae8b30b48400b830c0715acd973d67cf1b04aa3f578ba7607268ba"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-04/graph-2022-11-07/coverage.json",
+          "sha256": "c40795e6c754f00c9118918f3b28976e2e98bf6ed45297f4f9b929b812fd5692"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; source body not replayed in this review."
+    },
+    {
+      "original_id": "source-2022-11-11",
+      "stage": "source",
+      "date": "2022-11-11",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2022-11-07",
+      "successor_experiment": "eth-paper-graph-resource-20260930-04",
+      "successor_cell": "source-000004",
+      "rows": 1118967,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-04/complete.json",
+          "sha256": "7452e27e74ae8b30b48400b830c0715acd973d67cf1b04aa3f578ba7607268ba"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-04/graph-2022-11-07/coverage.json",
+          "sha256": "c40795e6c754f00c9118918f3b28976e2e98bf6ed45297f4f9b929b812fd5692"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; source body not replayed in this review."
+    },
+    {
+      "original_id": "source-2022-11-12",
+      "stage": "source",
+      "date": "2022-11-12",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2022-11-07",
+      "successor_experiment": "eth-paper-graph-resource-20260930-04",
+      "successor_cell": "source-000005",
+      "rows": 1033438,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-04/complete.json",
+          "sha256": "7452e27e74ae8b30b48400b830c0715acd973d67cf1b04aa3f578ba7607268ba"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-04/graph-2022-11-07/coverage.json",
+          "sha256": "c40795e6c754f00c9118918f3b28976e2e98bf6ed45297f4f9b929b812fd5692"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; source body not replayed in this review."
+    },
+    {
+      "original_id": "source-2022-11-13",
+      "stage": "source",
+      "date": "2022-11-13",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2022-11-07",
+      "successor_experiment": "eth-paper-graph-resource-20260930-04",
+      "successor_cell": "source-000006",
+      "rows": 1133442,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-04/complete.json",
+          "sha256": "7452e27e74ae8b30b48400b830c0715acd973d67cf1b04aa3f578ba7607268ba"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-04/graph-2022-11-07/coverage.json",
+          "sha256": "c40795e6c754f00c9118918f3b28976e2e98bf6ed45297f4f9b929b812fd5692"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; source body not replayed in this review."
+    },
+    {
+      "original_id": "source-2023-06-05",
+      "stage": "source",
+      "date": "2023-06-05",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2023-06-05",
+      "successor_experiment": "eth-paper-graph-resource-20260930-05",
+      "successor_cell": "source-000000",
+      "rows": 1151611,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-05/complete.json",
+          "sha256": "4ce33b3ea0f7e23ba46452293e8db40bb70d1b01871136609a0406212dca657b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/graph-2023-06-05/coverage.json",
+          "sha256": "302581200d7c572a0a319a520e0a792917686418ac60313f4bf43f26b59d8df8"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/source-000000.json",
+          "sha256": "7c5d783c68b23e30061869bdb19ca6b790bad44af5fa7e4d9271f81224455fc5"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2023-06-06",
+      "stage": "source",
+      "date": "2023-06-06",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2023-06-05",
+      "successor_experiment": "eth-paper-graph-resource-20260930-05",
+      "successor_cell": "source-000001",
+      "rows": 1095144,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-05/complete.json",
+          "sha256": "4ce33b3ea0f7e23ba46452293e8db40bb70d1b01871136609a0406212dca657b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/graph-2023-06-05/coverage.json",
+          "sha256": "302581200d7c572a0a319a520e0a792917686418ac60313f4bf43f26b59d8df8"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/source-000001.json",
+          "sha256": "8a5b28c47e3e1b7fa8a1a8f6c4652351db36ade5ee990148604226b228eca7f7"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2023-06-07",
+      "stage": "source",
+      "date": "2023-06-07",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2023-06-05",
+      "successor_experiment": "eth-paper-graph-resource-20260930-05",
+      "successor_cell": "source-000002",
+      "rows": 1071257,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-05/complete.json",
+          "sha256": "4ce33b3ea0f7e23ba46452293e8db40bb70d1b01871136609a0406212dca657b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/graph-2023-06-05/coverage.json",
+          "sha256": "302581200d7c572a0a319a520e0a792917686418ac60313f4bf43f26b59d8df8"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/source-000002.json",
+          "sha256": "41b746acf554e63e3dd7f545ac39819e48f9dfd49e11e493862afa637ee9a9be"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2023-06-08",
+      "stage": "source",
+      "date": "2023-06-08",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2023-06-05",
+      "successor_experiment": "eth-paper-graph-resource-20260930-05",
+      "successor_cell": "source-000003",
+      "rows": 1008582,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-05/complete.json",
+          "sha256": "4ce33b3ea0f7e23ba46452293e8db40bb70d1b01871136609a0406212dca657b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/graph-2023-06-05/coverage.json",
+          "sha256": "302581200d7c572a0a319a520e0a792917686418ac60313f4bf43f26b59d8df8"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/source-000003.json",
+          "sha256": "e834ad01aa01a375deeb0e110a107ac81c330edbaca1d9c6120c30e623740627"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2023-06-09",
+      "stage": "source",
+      "date": "2023-06-09",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2023-06-05",
+      "successor_experiment": "eth-paper-graph-resource-20260930-05",
+      "successor_cell": "source-000004",
+      "rows": 1046976,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-05/complete.json",
+          "sha256": "4ce33b3ea0f7e23ba46452293e8db40bb70d1b01871136609a0406212dca657b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/graph-2023-06-05/coverage.json",
+          "sha256": "302581200d7c572a0a319a520e0a792917686418ac60313f4bf43f26b59d8df8"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/source-000004.json",
+          "sha256": "8936db7b99e6daaf59f3ab465a4721c1c310721270475e3f7502c41e081c4205"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2023-06-10",
+      "stage": "source",
+      "date": "2023-06-10",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2023-06-05",
+      "successor_experiment": "eth-paper-graph-resource-20260930-05",
+      "successor_cell": "source-000005",
+      "rows": 1204433,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-05/complete.json",
+          "sha256": "4ce33b3ea0f7e23ba46452293e8db40bb70d1b01871136609a0406212dca657b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/graph-2023-06-05/coverage.json",
+          "sha256": "302581200d7c572a0a319a520e0a792917686418ac60313f4bf43f26b59d8df8"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/source-000005.json",
+          "sha256": "b8999ef435999a0bd06425bfd2030a6e1ec181e9108342772f15eb8e5b52b75b"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2023-06-11",
+      "stage": "source",
+      "date": "2023-06-11",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2023-06-05",
+      "successor_experiment": "eth-paper-graph-resource-20260930-05",
+      "successor_cell": "source-000006",
+      "rows": 1106073,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-05/complete.json",
+          "sha256": "4ce33b3ea0f7e23ba46452293e8db40bb70d1b01871136609a0406212dca657b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/graph-2023-06-05/coverage.json",
+          "sha256": "302581200d7c572a0a319a520e0a792917686418ac60313f4bf43f26b59d8df8"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-05/source-000006.json",
+          "sha256": "d24cc6abd0ab7979b649e03966c0eae6b43a886d0505de37c3d5cb2450ba9644"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-01-01",
+      "stage": "source",
+      "date": "2024-01-01",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-01-01",
+      "successor_experiment": "eth-paper-graph-resource-20260930-06",
+      "successor_cell": "source-000000",
+      "rows": 1101465,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-06/complete.json",
+          "sha256": "523456af1f24d788b7115ce12e552aaed603479d6a23bae39ed92db8dea501b4"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/graph-2024-01-01/coverage.json",
+          "sha256": "4cc1667f3ad39cc3415562bc2f628d6d4dbc4dc22190b26f08752f6f5364e355"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/source-000000.json",
+          "sha256": "15d1a683956f3646ccf11d708db17a5ec637a52db3733ef292e9787113072682"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-01-02",
+      "stage": "source",
+      "date": "2024-01-02",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-01-01",
+      "successor_experiment": "eth-paper-graph-resource-20260930-06",
+      "successor_cell": "source-000001",
+      "rows": 1128657,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-06/complete.json",
+          "sha256": "523456af1f24d788b7115ce12e552aaed603479d6a23bae39ed92db8dea501b4"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/graph-2024-01-01/coverage.json",
+          "sha256": "4cc1667f3ad39cc3415562bc2f628d6d4dbc4dc22190b26f08752f6f5364e355"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/source-000001.json",
+          "sha256": "7b449950cb442ab5f09cb3ea19cd5f9d9c9f0fb1a823a02368de0633cdfe771e"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-01-03",
+      "stage": "source",
+      "date": "2024-01-03",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-01-01",
+      "successor_experiment": "eth-paper-graph-resource-20260930-06",
+      "successor_cell": "source-000002",
+      "rows": 1092220,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-06/complete.json",
+          "sha256": "523456af1f24d788b7115ce12e552aaed603479d6a23bae39ed92db8dea501b4"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/graph-2024-01-01/coverage.json",
+          "sha256": "4cc1667f3ad39cc3415562bc2f628d6d4dbc4dc22190b26f08752f6f5364e355"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/source-000002.json",
+          "sha256": "c14c05232dc573385de07e2acf0b755cd6c1c1d1d0286b86077f6df135be3b03"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-01-04",
+      "stage": "source",
+      "date": "2024-01-04",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-01-01",
+      "successor_experiment": "eth-paper-graph-resource-20260930-06",
+      "successor_cell": "source-000003",
+      "rows": 1116573,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-06/complete.json",
+          "sha256": "523456af1f24d788b7115ce12e552aaed603479d6a23bae39ed92db8dea501b4"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/graph-2024-01-01/coverage.json",
+          "sha256": "4cc1667f3ad39cc3415562bc2f628d6d4dbc4dc22190b26f08752f6f5364e355"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/source-000003.json",
+          "sha256": "3694b3921c14b7fc88f7428656e194dd59ab6d46152e04bd3aea2f83f13cc77c"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-01-05",
+      "stage": "source",
+      "date": "2024-01-05",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-01-01",
+      "successor_experiment": "eth-paper-graph-resource-20260930-06",
+      "successor_cell": "source-000004",
+      "rows": 1069252,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-06/complete.json",
+          "sha256": "523456af1f24d788b7115ce12e552aaed603479d6a23bae39ed92db8dea501b4"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/graph-2024-01-01/coverage.json",
+          "sha256": "4cc1667f3ad39cc3415562bc2f628d6d4dbc4dc22190b26f08752f6f5364e355"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/source-000004.json",
+          "sha256": "72baecca4387e93f7f4e0924c4f259420081306c2f20cc130cb03258a7c7eab3"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-01-06",
+      "stage": "source",
+      "date": "2024-01-06",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-01-01",
+      "successor_experiment": "eth-paper-graph-resource-20260930-06",
+      "successor_cell": "source-000005",
+      "rows": 994947,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-06/complete.json",
+          "sha256": "523456af1f24d788b7115ce12e552aaed603479d6a23bae39ed92db8dea501b4"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/graph-2024-01-01/coverage.json",
+          "sha256": "4cc1667f3ad39cc3415562bc2f628d6d4dbc4dc22190b26f08752f6f5364e355"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/source-000005.json",
+          "sha256": "288b105ce4bb3f92419a1d29d88ed5e87f422a5a863af2f0677d38e5cb8d7bb3"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-01-07",
+      "stage": "source",
+      "date": "2024-01-07",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-01-01",
+      "successor_experiment": "eth-paper-graph-resource-20260930-06",
+      "successor_cell": "source-000006",
+      "rows": 1049831,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-06/complete.json",
+          "sha256": "523456af1f24d788b7115ce12e552aaed603479d6a23bae39ed92db8dea501b4"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/graph-2024-01-01/coverage.json",
+          "sha256": "4cc1667f3ad39cc3415562bc2f628d6d4dbc4dc22190b26f08752f6f5364e355"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/source-000006.json",
+          "sha256": "08a70edd3238b315f2b7213cdaef815ea60955771b9f22b258e624a868fbbfc0"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-03-11",
+      "stage": "source",
+      "date": "2024-03-11",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-03-11",
+      "successor_experiment": "eth-paper-graph-resource-20260930-07",
+      "successor_cell": "source-000000",
+      "rows": 1245874,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-07/complete.json",
+          "sha256": "94c5eb0886da7539f54bde856c53174aee9266e37f2cedb35db6e0baf69d8c68"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/graph-2024-03-11/coverage.json",
+          "sha256": "4f4be5b2487ad49ee37ad51bba7f390d08f4818d8974f61cd39168f65fd6c7bd"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/source-000000.json",
+          "sha256": "b139d5eaf9c5be1e7bc2327d10eb912a375e217584c37c261df543919eeb686e"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-03-12",
+      "stage": "source",
+      "date": "2024-03-12",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-03-11",
+      "successor_experiment": "eth-paper-graph-resource-20260930-07",
+      "successor_cell": "source-000001",
+      "rows": 1232719,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-07/complete.json",
+          "sha256": "94c5eb0886da7539f54bde856c53174aee9266e37f2cedb35db6e0baf69d8c68"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/graph-2024-03-11/coverage.json",
+          "sha256": "4f4be5b2487ad49ee37ad51bba7f390d08f4818d8974f61cd39168f65fd6c7bd"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/source-000001.json",
+          "sha256": "7bf357fc9ddb228d4fe8aef04535663c35f1941ce585980030b503d027849efb"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-03-13",
+      "stage": "source",
+      "date": "2024-03-13",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-03-11",
+      "successor_experiment": "eth-paper-graph-resource-20260930-07",
+      "successor_cell": "source-000002",
+      "rows": 1277221,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-07/complete.json",
+          "sha256": "94c5eb0886da7539f54bde856c53174aee9266e37f2cedb35db6e0baf69d8c68"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/graph-2024-03-11/coverage.json",
+          "sha256": "4f4be5b2487ad49ee37ad51bba7f390d08f4818d8974f61cd39168f65fd6c7bd"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/source-000002.json",
+          "sha256": "5ef4cd5792645dfbde19fbfdfe4746a92241d848dd0051c1f96a224bf918117c"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-03-14",
+      "stage": "source",
+      "date": "2024-03-14",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-03-11",
+      "successor_experiment": "eth-paper-graph-resource-20260930-07",
+      "successor_cell": "source-000003",
+      "rows": 1300877,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-07/complete.json",
+          "sha256": "94c5eb0886da7539f54bde856c53174aee9266e37f2cedb35db6e0baf69d8c68"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/graph-2024-03-11/coverage.json",
+          "sha256": "4f4be5b2487ad49ee37ad51bba7f390d08f4818d8974f61cd39168f65fd6c7bd"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/source-000003.json",
+          "sha256": "b270f6982f892378c6276c7b0a2e204dc360192dd2204caad5475d69cb50520e"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-03-15",
+      "stage": "source",
+      "date": "2024-03-15",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-03-11",
+      "successor_experiment": "eth-paper-graph-resource-20260930-07",
+      "successor_cell": "source-000004",
+      "rows": 1312102,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-07/complete.json",
+          "sha256": "94c5eb0886da7539f54bde856c53174aee9266e37f2cedb35db6e0baf69d8c68"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/graph-2024-03-11/coverage.json",
+          "sha256": "4f4be5b2487ad49ee37ad51bba7f390d08f4818d8974f61cd39168f65fd6c7bd"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/source-000004.json",
+          "sha256": "a4ae080e38c4e6b5e9e8f5b751e08dd838bcbbe557ccb7c0d1ddf2b64d099e22"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-03-16",
+      "stage": "source",
+      "date": "2024-03-16",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-03-11",
+      "successor_experiment": "eth-paper-graph-resource-20260930-07",
+      "successor_cell": "source-000005",
+      "rows": 1275332,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-07/complete.json",
+          "sha256": "94c5eb0886da7539f54bde856c53174aee9266e37f2cedb35db6e0baf69d8c68"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/graph-2024-03-11/coverage.json",
+          "sha256": "4f4be5b2487ad49ee37ad51bba7f390d08f4818d8974f61cd39168f65fd6c7bd"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/source-000005.json",
+          "sha256": "466d135c049f4b211b143547f6d1226acd9f71bdfe07b08df8cea4b67be8e0a1"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-03-17",
+      "stage": "source",
+      "date": "2024-03-17",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-03-11",
+      "successor_experiment": "eth-paper-graph-resource-20260930-07",
+      "successor_cell": "source-000006",
+      "rows": 1204019,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-07/complete.json",
+          "sha256": "94c5eb0886da7539f54bde856c53174aee9266e37f2cedb35db6e0baf69d8c68"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/graph-2024-03-11/coverage.json",
+          "sha256": "4f4be5b2487ad49ee37ad51bba7f390d08f4818d8974f61cd39168f65fd6c7bd"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-07/source-000006.json",
+          "sha256": "0be6fc613c12601810a1f7422552ecf05fdfa68c4079bcd8ced4061d20f61016"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-08-05",
+      "stage": "source",
+      "date": "2024-08-05",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-08-05",
+      "successor_experiment": "eth-paper-graph-resource-20260930-08",
+      "successor_cell": "source-000000",
+      "rows": 1133164,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-08/complete.json",
+          "sha256": "0712a3c05ba5dfcb14dec22c61aa33e7fd752798d4a53029c15e216ce8faa1f1"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/graph-2024-08-05/coverage.json",
+          "sha256": "d1ec169ed79fc39d5cc13b44a438027d53614b449894ace9594764795059c80a"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/source-000000.json",
+          "sha256": "5f9a95b9a0387788f4545f881e1cbd468488074dd4fef9ed39d95c5a8a6cc40f"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-08-06",
+      "stage": "source",
+      "date": "2024-08-06",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-08-05",
+      "successor_experiment": "eth-paper-graph-resource-20260930-08",
+      "successor_cell": "source-000001",
+      "rows": 1130468,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-08/complete.json",
+          "sha256": "0712a3c05ba5dfcb14dec22c61aa33e7fd752798d4a53029c15e216ce8faa1f1"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/graph-2024-08-05/coverage.json",
+          "sha256": "d1ec169ed79fc39d5cc13b44a438027d53614b449894ace9594764795059c80a"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/source-000001.json",
+          "sha256": "12b052a5101c9ed746f928e6bc508c313279d2b9fca2f306dca5576a3bca987b"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-08-07",
+      "stage": "source",
+      "date": "2024-08-07",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-08-05",
+      "successor_experiment": "eth-paper-graph-resource-20260930-08",
+      "successor_cell": "source-000002",
+      "rows": 1123175,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-08/complete.json",
+          "sha256": "0712a3c05ba5dfcb14dec22c61aa33e7fd752798d4a53029c15e216ce8faa1f1"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/graph-2024-08-05/coverage.json",
+          "sha256": "d1ec169ed79fc39d5cc13b44a438027d53614b449894ace9594764795059c80a"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/source-000002.json",
+          "sha256": "98480286229f00cfb57e8834bcb5e6196011634e741729e3c5f36b8dccf24cb9"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-08-08",
+      "stage": "source",
+      "date": "2024-08-08",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-08-05",
+      "successor_experiment": "eth-paper-graph-resource-20260930-08",
+      "successor_cell": "source-000003",
+      "rows": 1097066,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-08/complete.json",
+          "sha256": "0712a3c05ba5dfcb14dec22c61aa33e7fd752798d4a53029c15e216ce8faa1f1"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/graph-2024-08-05/coverage.json",
+          "sha256": "d1ec169ed79fc39d5cc13b44a438027d53614b449894ace9594764795059c80a"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/source-000003.json",
+          "sha256": "1c4937b0207bf1e2f1ca7247fca8f75ae7249188091361237591cbeea9cd1443"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-08-09",
+      "stage": "source",
+      "date": "2024-08-09",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-08-05",
+      "successor_experiment": "eth-paper-graph-resource-20260930-08",
+      "successor_cell": "source-000004",
+      "rows": 1100553,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-08/complete.json",
+          "sha256": "0712a3c05ba5dfcb14dec22c61aa33e7fd752798d4a53029c15e216ce8faa1f1"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/graph-2024-08-05/coverage.json",
+          "sha256": "d1ec169ed79fc39d5cc13b44a438027d53614b449894ace9594764795059c80a"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/source-000004.json",
+          "sha256": "15c1adc92ab6f6e996fecb77af3922c6d626f14078ed73eec89dd625bc0f73a6"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-08-10",
+      "stage": "source",
+      "date": "2024-08-10",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-08-05",
+      "successor_experiment": "eth-paper-graph-resource-20260930-08",
+      "successor_cell": "source-000005",
+      "rows": 1051563,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-08/complete.json",
+          "sha256": "0712a3c05ba5dfcb14dec22c61aa33e7fd752798d4a53029c15e216ce8faa1f1"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/graph-2024-08-05/coverage.json",
+          "sha256": "d1ec169ed79fc39d5cc13b44a438027d53614b449894ace9594764795059c80a"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/source-000005.json",
+          "sha256": "b206426243d42566c9a4608be36a910a3bece347fa7a1bb4a09ae61cf599c8bf"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-08-11",
+      "stage": "source",
+      "date": "2024-08-11",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-08-05",
+      "successor_experiment": "eth-paper-graph-resource-20260930-08",
+      "successor_cell": "source-000006",
+      "rows": 985147,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-08/complete.json",
+          "sha256": "0712a3c05ba5dfcb14dec22c61aa33e7fd752798d4a53029c15e216ce8faa1f1"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/graph-2024-08-05/coverage.json",
+          "sha256": "d1ec169ed79fc39d5cc13b44a438027d53614b449894ace9594764795059c80a"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-08/source-000006.json",
+          "sha256": "88b98a479bc89e32d56faf3cdbcc893d4afec84255b85a8e4b1c65d9853f296d"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-12-23",
+      "stage": "source",
+      "date": "2024-12-23",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-12-23",
+      "successor_experiment": "eth-paper-graph-resource-20260930-10",
+      "successor_cell": "source-000000",
+      "rows": 1306194,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-10/complete.json",
+          "sha256": "26f9a0134d9cd2050dbc4e254ae83158b0d9f41d82db9dd54384ff3b749bd8c9"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/graph-2024-12-23/coverage.json",
+          "sha256": "f058a48846e30f220437b97b6a3b173690bd7cc8476fbf01aafcdfed37feca2b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/source-000000.json",
+          "sha256": "545f4b61f0176a3c522504ea957669324f7bb150f663037e5206732a0dcabc7e"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-12-24",
+      "stage": "source",
+      "date": "2024-12-24",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-12-23",
+      "successor_experiment": "eth-paper-graph-resource-20260930-10",
+      "successor_cell": "source-000001",
+      "rows": 1263508,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-10/complete.json",
+          "sha256": "26f9a0134d9cd2050dbc4e254ae83158b0d9f41d82db9dd54384ff3b749bd8c9"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/graph-2024-12-23/coverage.json",
+          "sha256": "f058a48846e30f220437b97b6a3b173690bd7cc8476fbf01aafcdfed37feca2b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/source-000001.json",
+          "sha256": "737813d27f50fc3165ed692f5a0a7d98a895653b5bd78b2d9ca8f1cca139af2b"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-12-25",
+      "stage": "source",
+      "date": "2024-12-25",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-12-23",
+      "successor_experiment": "eth-paper-graph-resource-20260930-10",
+      "successor_cell": "source-000002",
+      "rows": 1206212,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-10/complete.json",
+          "sha256": "26f9a0134d9cd2050dbc4e254ae83158b0d9f41d82db9dd54384ff3b749bd8c9"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/graph-2024-12-23/coverage.json",
+          "sha256": "f058a48846e30f220437b97b6a3b173690bd7cc8476fbf01aafcdfed37feca2b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/source-000002.json",
+          "sha256": "5c86fbacf85d14f9b32844e080762752ce01ff08ba1c7f8f123100cf477be755"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-12-26",
+      "stage": "source",
+      "date": "2024-12-26",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-12-23",
+      "successor_experiment": "eth-paper-graph-resource-20260930-10",
+      "successor_cell": "source-000003",
+      "rows": 1208665,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-10/complete.json",
+          "sha256": "26f9a0134d9cd2050dbc4e254ae83158b0d9f41d82db9dd54384ff3b749bd8c9"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/graph-2024-12-23/coverage.json",
+          "sha256": "f058a48846e30f220437b97b6a3b173690bd7cc8476fbf01aafcdfed37feca2b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/source-000003.json",
+          "sha256": "cd736d1228a5710afacee1a41a2d3d4fe4e17ada9aa694b09d94dbc2ed8aae06"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-12-27",
+      "stage": "source",
+      "date": "2024-12-27",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-12-23",
+      "successor_experiment": "eth-paper-graph-resource-20260930-10",
+      "successor_cell": "source-000004",
+      "rows": 1240371,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-10/complete.json",
+          "sha256": "26f9a0134d9cd2050dbc4e254ae83158b0d9f41d82db9dd54384ff3b749bd8c9"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/graph-2024-12-23/coverage.json",
+          "sha256": "f058a48846e30f220437b97b6a3b173690bd7cc8476fbf01aafcdfed37feca2b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/source-000004.json",
+          "sha256": "e4ebc83e22d3f1a4172a0f126ea48dc8cb47c21cc220dbcd463a36970898d9ef"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-12-28",
+      "stage": "source",
+      "date": "2024-12-28",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-12-23",
+      "successor_experiment": "eth-paper-graph-resource-20260930-10",
+      "successor_cell": "source-000005",
+      "rows": 1193108,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-10/complete.json",
+          "sha256": "26f9a0134d9cd2050dbc4e254ae83158b0d9f41d82db9dd54384ff3b749bd8c9"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/graph-2024-12-23/coverage.json",
+          "sha256": "f058a48846e30f220437b97b6a3b173690bd7cc8476fbf01aafcdfed37feca2b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/source-000005.json",
+          "sha256": "54d2f0dbf714693d4a1fd1c455ccce3f2af9cda2b18ac4904cb3ce30f946950f"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    },
+    {
+      "original_id": "source-2024-12-29",
+      "stage": "source",
+      "date": "2024-12-29",
+      "original_status": "unavailable",
+      "original_reason": "workload terminated before durable cell disposition; no retry",
+      "requirement_evidence": "completed_successor",
+      "supported": true,
+      "week": "2024-12-23",
+      "successor_experiment": "eth-paper-graph-resource-20260930-10",
+      "successor_cell": "source-000006",
+      "rows": 1199862,
+      "evidence": [
+        {
+          "path": "research_runs/eth-paper-graph-resource-20260930-10/complete.json",
+          "sha256": "26f9a0134d9cd2050dbc4e254ae83158b0d9f41d82db9dd54384ff3b749bd8c9"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/graph-2024-12-23/coverage.json",
+          "sha256": "f058a48846e30f220437b97b6a3b173690bd7cc8476fbf01aafcdfed37feca2b"
+        },
+        {
+          "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-10/source-000006.json",
+          "sha256": "93daf47df6050f2b6a803e41d711777ae90c36cc6e0df92e341befa9ba989769"
+        }
+      ],
+      "qualification": "Complete registered daily ingestion receipt in closed successor; original raw body was not replayed for this mapping."
+    }
+  ],
+  "budget": {
+    "consumed": 33,
+    "effective_ceiling": 60,
+    "pending_body_batches": 12,
+    "pending_fit_batches": 15,
+    "unique_fits_pending": 1420,
+    "unallocated_resource_attempts": 0,
+    "latest_adopting_claim": {
+      "path": "research_runs/eth-paper-graph-resource-20260930-10/claim.json",
+      "sha256": "ce28da0e93f619ea78a0512bf99eae6ac2f6f80f37560783ac313e9a089fb91e"
+    }
+  },
+  "qualifications": [
+    "Fourteen legacy source requirements have ingestion evidence from completed original graph phases, not new durable daily completion receipts.",
+    "Two original neighborhood successes concern 512 sampled neighborhoods each; two matching successes concern 32 sampled pairs each; none establishes all-node or hub matching feasibility.",
+    "All nine original MCM and nine neural requirements remain open; census/hub measurements and synthetic engineering satisfy none.",
+    "The original 109 resource cells are only a subset of the full replication scope.",
+    "Fresh bounded integrity/admission checks remain required on actual reuse of old local or cold artifacts.",
+    "Graph03 through graph08 and graph10 successors have accepted producer and saved-array closures. All six ledger preservations are closed. Graph10 ledger and arrays remain local. Preservation satisfies no resource or financial cell.",
+    "Nine original weekly graphs now have producer completion evidence; the first two legacy graphs still need current bounded array checks before actual reuse.",
+    "The remaining 27 cumulative-budget slots are allocated to 12 body batches and 15 fit batches; further empirical resource attempts require a prospective reviewed budget amendment."
+  ],
+  "previous_mapping": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/resource-coverage-04-2026-09-30/coverage.json",
+    "sha256": "8b4833c6703014521d898e47d99e2b24abe4bf751a8295973d03e2747b81c8cc"
+  },
+  "previous_review": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/resource-coverage-04-2026-09-30/REVIEW.md",
+    "sha256": "3a95441783e75d9583b81b056d78afe0077ef3765135fa1ea29830cfc0a4192b"
+  },
+  "changed_requirement_ids": [
+    "decode_graph-2024-12-23",
+    "source-2024-12-23",
+    "source-2024-12-24",
+    "source-2024-12-25",
+    "source-2024-12-26",
+    "source-2024-12-27",
+    "source-2024-12-28",
+    "source-2024-12-29"
+  ]
+}

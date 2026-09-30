@@ -4,6 +4,57 @@ This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
 
+**December graph and saved-array verification CLOSED; local RAM ceiling retained — 2026-09-30T16:21:34.249707+00:00**:
+The user identifies installed RAM as the practical ceiling. Current host snapshot:
+16,135,794,688 bytes total (15.03 GiB), 9,339,478,016 bytes available (8.70 GiB).
+Available memory varies with desktop activity; it is not a guaranteed worker budget.
+Graph10 succeeded under the reviewed 5.5 GiB hard maximum / 5 GiB high / zero
+worker swap, retaining 3 GiB host reserve and 10 GiB disk floor. Its sampled peak
+was 5,368,868,864 bytes, elapsed 1,781.63 seconds, no max/OOM events. This supports
+this graph stage locally; full hub matching, MCM and neural workload feasibility
+remain unestablished. No increased-RAM prerequisite is imposed on independent
+engineering. Further runs require their own measured, reviewed resource envelopes.
+
+Saved-array verification10 executed once under source
+`e9b67e5fe3498b9762e302e64b280dde1592e494` and independently CLOSED as accepted.
+Result: 2,148,017 nodes, 2,795,884 directed edges, 563,806,472 array bytes, matching
+canonical graph identity and zero errors for all four reconstructed node features.
+Guard elapsed 36.846579 seconds, sampled peak 215,527,424 bytes, all memory events
+zero, child exit0 and verified cleanup. Exact monitor96470, workload96477 and
+owned cgroup are absent. No active empirical/numerical job remains; source freeze
+is released. Never rerun Graph10 or verification10.
+
+Evidence: `full_sources/graph-verification-10-2026-09-30/result.json` SHA
+f2a7bcfb8f385bf3059fdda079139cb8dc5be8172a2cc4108b39311c7eb5862d;
+`closure01.json` SHA5fe42c7025818b339b44216a65ce9774efff708a865da36c534b9e38de2ee282;
+`CLOSURE_REVIEW.md` SHA17285d7585018d4ef96a15a12b20f8877d15092aa84d253f73684d5ce2777144.
+All300 compact bindings match current and committed verification-source bytes.
+Raw transaction semantics remain producer evidence; no raw replay or fit occurred.
+
+Resource-coverage05 is independently ACCEPTED: 77 of109 original resource
+requirements supported,32 remaining (7 neighborhoods,7 matching,9 MCM,9 neural).
+Exactly8 December requirements gain successor evidence; all historical dispositions
+and101 other requirement rows remain unchanged. Mapping SHA
+c7a0faf724b2f7507e2113e58dfdd590c254ce550d6b407cd699dc899b308e6f.
+Nine weekly graphs have producer completion evidence; two legacy graphs still
+require fresh bounded array checks before reuse. All1420 financial fits are pending.
+33/60 cumulative attempts spent; remaining27 slots are allocated12 body batches
+and15 fit batches. Further empirical resource attempts require a prospective
+reviewed budget amendment, not a retry or reallocation by implication.
+
+Coverage review: `full_sources/resource-coverage-05-2026-09-30/REVIEW.md` SHA
+be3ad3c7899ad5d7cb5523d0976d6cf6ca8d33d35fadc567484f40b4476facda.
+
+Next safe action: back up reviewed compact evidence, then integrate accepted
+matching ownership/death/checkpoint components with actual
+registered successor ancestry, workload membership, orphan recovery and dictionary/
+MCM consumers. Complete synthetic end-to-end continuation and independent review
+before empirical matching. Prepare legacy-array checks and the necessary cumulative
+resource amendment independently. All six ledger preservations are closed; new
+Graph10 ledger/arrays remain local. No purchase or additional RAM is authorized or
+required for this immediate engineering work. All13 tasks and C01–C18 remain in scope.
+
+
 **Producer closure and array-verification release accepted — 2026-09-30T16:10:35.830060+00:00**:
 Graph10 CLOSURE_REVIEW independently accepts8/8cells, all105source/159inputpins,
 threeJSONoutputs,22compactartifacthashes and6largefileextents (bodies notread), exact

@@ -1,0 +1,58 @@
+{
+  "at": "2026-09-30T16:13:01.278888+00:00",
+  "status": "saved_array_verification_complete",
+  "verification_source": "e9b67e5fe3498b9762e302e64b280dde1592e494",
+  "producer_source": "6c4d9402cb06f135cb799afac1be00708f3b229e",
+  "current_and_committed_bindings_verified": 300,
+  "receipts": {
+    "bindings.json": "d2f8f9da0d86c0556376a2500023c73f8791d7bafd4e6ea6a653d17eae29036a",
+    "preflight01.json": "e31bf11cca619afa6f8ed2ba05f15ba8428c5689a969907112ec207844398328",
+    "started.json": "971b41fe62aef1c56f970dba2d3470852a209a89b885931ffd1d30e66a7280bc",
+    "result.json": "f2a7bcfb8f385bf3059fdda079139cb8dc5be8172a2cc4108b39311c7eb5862d",
+    "guard01/final.json": "9cd622dfaa3973a480559b27c30a266eba1cde6868f7fbd20bcc5275166a4737",
+    "guard01/live.json": "9cd622dfaa3973a480559b27c30a266eba1cde6868f7fbd20bcc5275166a4737",
+    "guard01/child_exit.json": "ad27b57f12efbc6885a9475261c6ee49c06ee34410595b3ee784d32dcc1d1cb9",
+    "guard01/child.log": "4fb01c0d5bd8df7fdc4ce3a701d4791b5c2c0acc945a65eea5d1c2e5aae8847d",
+    "verify.py": "1d63f1fa72ad6910c560da862cc5bfbb27159f854d302fb573a1adc56dc14778",
+    "run_guard.py": "4903bcb9217060c8242570587101d506e0b741e9025f89ec58ce0e838c976257",
+    "RELEASE_REVIEW.md": "ad86fe33aa28553032adaa9874c01852f3fc5de8c612291f9fb26dd396b25839"
+  },
+  "owner_and_cgroup_absent": true,
+  "result": {
+    "admitted_transactions": 4147212,
+    "array_bytes": 563806472,
+    "claim_sha256": "ce28da0e93f619ea78a0512bf99eae6ac2f6f80f37560783ac313e9a089fb91e",
+    "directed_edges": 2795884,
+    "elapsed_seconds": 36.25308134800025,
+    "graph_hash": "f97ef5f6289bfe69397f752d867484dc2b26cfd902ef396bf0409101c158c3b7",
+    "graph_manifest_sha256": "7cc89f84a22986fa82ecba90755a1ae98c245fdb5f4803dff5c0c49b5dab1690",
+    "node_feature_max_absolute_errors": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0
+    },
+    "nodes": 2148017,
+    "qualification": "Independent saved-array identity, structure and aggregate conservation verification. Source/exclusion counts reconcile producer receipts; raw transaction uniqueness, raw values and exclusion classification were not independently re-audited. No fit, sample, graph rebuild or new empirical claim.",
+    "raw_rows": 8617920,
+    "source_claim": "eth-paper-graph-resource-20260930-10",
+    "status": "complete",
+    "terminal_sha256": "26f9a0134d9cd2050dbc4e254ae83158b0d9f41d82db9dd54384ff3b749bd8c9"
+  },
+  "guard": {
+    "phase": "complete",
+    "elapsed_seconds": 36.84657868400018,
+    "peak_sampled_memory_current_bytes": 215527424,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "child_exit_code": 0,
+    "cleanup_verified": true
+  },
+  "qualification": "Closure of the one saved-array verification; no array/body reread in this closure, no source rebuild, no financial fit or new claim."
+}
