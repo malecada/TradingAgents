@@ -3,6 +3,71 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Graph10 release and ranking probe independently accepted — 2026-09-30T10:33:03.289872+00:00**:
+Graph10 exactgate4769eae1d84bb35b175b1604b6982ad67e97f42bc65309f1532d3de2bbea5f46
+is conditionally accepted:88sourcepins/all77required,127inputs/116uniquepaths,
+11inheritedobjects unchanged and7actual09failed-launch refs. All163 prior offline
+files remain unchanged. Proposed60budget only rebinds unused initial adopter10;
+current adopted32/59 remains until claim. Graph09 permanentlynot_admitted.
+
+Graph10 cannot dispatch below9,797,894,144RAMbytes (9GiB+128MiB) or22,103,159,134disk.
+Latest RAM9,568,120,832fails; disk25,017,372,672passes. No10tempcheck/preflight/claim
+or launch exists. Fresh checks, committed/pushed exactgate and no owner overlap
+remain mandatory. No limit is reduced. Verifier10 preparation is also reviewed,
+but waits for actual successful producer closure and reviewed output bindings.
+
+The isolated ranking workspace probe is independently reviewed:88pins, two
+fresh2000-square analyticalfixtures, original4Mpaircap and1GiB/300sfiniteguard.
+Commit/push all accepted compact work, then run this one bounded probe if fresh
+4GiBstartup/10GiBdisk/noactiveowner checks pass while graph10 waits for RAM.
+No production integration, checkpoint/resume or real-graph feasibility is implied.
+Record actual guard/result and independently reconcile; never rerun its identity.
+All1,420financialfits pending and full paper scope remain unchanged.
+
+**Graph09 launch closure accepted; independent work prepared — 2026-09-30T10:29:03.167967+00:00**:
+LAUNCH_CLOSURE_REVIEW.md independently accepts09 not_admitted disposition,
+no worker release/claim/source/cells, failed wrapper exit125 and absent exact
+owner/cgroup. Runtime startup shortfall2,965,504bytes; retain guard sampled
+peak8,359,936 versus terminal wrapper8,531,968bytes as distinct observations.
+All88source/120input pins and15prior terminal family claims remain unchanged.
+Current accounting32/59; proposed60notadopted.09 is permanently closed.
+
+Graph10 charter/budget/preflight/generator preparation preserves original09
+scientific scope/limits and rebinds only the unused allocation. Extra128MiB
+headroom requires9,797,894,144availablebytes; a recent9,689,964,544snapshot fails
+that prospective requirement. No10 gate, temp, claim or launch exists. Independent
+budget/preparation review is pending; do not weaken limits to dispatch.
+
+Additional independent preparation: graph-verification-10 retains the unused09
+verifier with only newtarget identity (09 itself stays unchanged), awaiting
+review and actual future outputs. ranked-hardening-workspace-probe-2026-09-30
+has88pins and two fresh analytical2000-square fixtures (flat/negative absolute
+row-column distance), unchanged4Mpaircap, exact diagonal oracle and1GiB/300second
+guard. It measures atomic ranking only, with no checkpoint, financial or realgraph
+claim. No profile started; source/protocol review and commit/push are required.
+This small profile can execute without loweringgraph10'sRAMrequirements once
+reviewed, with no overlapping research owner. All1,420financialfits pending.
+
+**December09 pre-admission launch failed safely — 2026-09-30T10:26:28.993933+00:00**:
+Committed/pushed HEAD311f698ea406454d2d0bfc46ed1602901c300530. Exact09 preflight
+passed at10:22:53 with9,695,105,024RAM/25,027,903,488disk bytes, all88source and120input
+pins,232spans and finite temp check. One launch session48428 then failed during
+cgroup setup: availableRAM9,660,710,912 fell below9GiB(9,663,676,416). Guard4.534584s,
+peak8,359,936bytes/zeroevents/cleanupverified. Observer statusnot_admitted; no
+worker release, research claim, source directory or empirical cells were created.
+Monitor1124827/start9205662 and supervisor1122456 are absent. An attempted live
+observation encountered the already-exited PID and wrote no observation receipt.
+Preserve all09 launch/owner/observer/guard evidence; never relaunch that identity.
+
+Independent launch-closure review is pending. Effective family accounting remains
+32spent/59ceiling; the proposed60extension was not adopted. New preparation
+full_sources/graph-successor-10-2026-09-30 retains the same original graph scope,
+limits and unused one-graph allowance with a new adopter10. Dispatch additionally
+requires128MiB above9GiBstartup, preserving all runtime reserves. Exact revised
+budget, preparation and generated-gate review are required before commitment and
+fresh admission. No10 gate/claim/launch exists. Do not reduce limits to dispatch.
+Continue independent checkpoint engineering if RAM remains insufficient.
+
 **Exact December gate independently accepted — 2026-09-30T10:22:25.396446+00:00**:
 RELEASE_REVIEW.md accepts gate296f1c61e34e899b89c07c8b540b5aea468ef15c1f2f4733c615f6c7c2d38fd1:
 88sourcepins including77required,120inputs/109uniquepaths, ten inherited objects

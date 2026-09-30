@@ -1,0 +1,13 @@
+# Independent graph10 budget rebind review
+
+September 30, 2026. **Accepted for budget allocation only.** Exact extension SHA-256: `013e3c6a2667f42994c70a7fc52af5db91923f8b391d97e625b24fd75f00fd23`; allocation SHA-256: `d8bfd7b7ec1a1298b55ef2a87f677d5bfd6d879890f49b5867766fa82ae2fdbf`.
+
+The graph10 extension retains graph09's exact 15 current claim/terminal entries and original family object. Every current claim and terminal rehashed correctly; adding 17 historical attempts gives **32 consumed**. The previous adopted extension remains graph08's ceiling 59 and its hash matches. The only extension-field changes are the initial adopter, allocation reference and explanation of the failed pre-admission launch.
+
+Graph09 is durably `not_admitted`: original launch/owner/observer/guard evidence is retained, release absent, child wrapper records no workload PID, and no research claim or source directory exists. Its launch identity is permanently reserved. No consumed empirical claim is refunded or erased. The unused prospective ceiling 60 may therefore be rebound to new identity `eth-paper-graph-resource-20260930-10`, preserving graph09's failed attempt and requiring new exact registration review/admission. Neither this review nor the earlier read-only ready/effective60 calculation adopts the proposal.
+
+Allocation remains **60 = 32 consumed + 12 pending body batches + 15 pending fit batches + 1 original December graph claim**. No extra allowance beyond that one slot is added, no failed claim is reclaimed, and all **1,420 unique financial fits** and original resource requirements remain in scope. Parent remains failed original pilot02. Original ETH December 23–30, 2024, seven source days and one complete untruncated graph are unchanged. This is not a fresh sample or completed graph rerun.
+
+Before first adoption, preserve the complete closed snapshot, all inherited experiment objects, original ancestry and prior09 launch evidence; source-pin the extension, accepted review and allocation. Require the exact committed/pushed gate and charter, independent final release review, six actual accepted preservations and graph08 producer/verifier closure, unchanged source/runtime closure and fresh admission/owners/temp/RAM/disk checks. An intervening claim requires refreshed accounting and review. Registered guard limits remain unchanged; the additional 128 MiB dispatch headroom is a stricter admission condition, not scope reduction or a lower reserve.
+
+This is not empirical launch, capacity or financial approval. Current accounting remains **32/59** until valid claim adoption. Only the budget review and acceptance receipt were written; no admission helper, generator, tests, job, body read, network action or commit was performed.
