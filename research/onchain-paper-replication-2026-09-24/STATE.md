@@ -3,6 +3,125 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Directed-chain profile independently accepted — 2026-09-30T12:11:17.732522+00:00**:
+CLOSURE_REVIEW.md SHA-256 f695953763d9bac41d2c852757cc917eb6a8aff52112c1819f0cad583458f6ef accepts actual terminal evidence:
+100 current/committed bindings,11 top-level/30 nested compact hashes,14 checkpoint
+receipt/log joins,44 NPY extents,1,408,042,757 retained logical bytes, all12
+intermediate annealing cursors, final2,000-pair bijection and independent0.75
+objective. Prefix hardening selected39 pairs; finalcursor3,976,042. Exact
+monitor/worker/cgroup are absent and unit inactive/dead. Guard895.351s,
+805,543,936-byte sampled peak,625 high events and zero max/OOM events are retained.
+No large body replay or scientific/numerical scope expansion is accepted.
+
+Next: commit/push the accepted compact closure and integration audit, then fresh
+graph10 resource checks and finite temp/preflight. No owner remains to freeze HEAD.
+The14 local checkpoint bodies are retained outside Git. Graph10 remains unlaunched;
+claimed32/59 and all1,420 pending fits remain unchanged.
+
+**Full directed-chain profile closed; independent closure pending — 2026-09-30T12:09:36.769103+00:00**:
+Session50890 exited0. Exact monitor1163863/start9655861 and cgroup
+9e948629b8e94d198f10af289ec6eadc are absent. The guard completed in
+895.3510939059925 seconds, sampled peak805,543,936 bytes, memory.high625,
+max/OOM0, child0 and cleanup_verified=true. All limits remained unchanged.
+The reviewed compact-only reconcile.py ran once and wrote closure01.json,
+verifying all100 current/committed bindings against frozen e6417c6f2f59c1ccf9fdb9ffd2af4c5b59020977.
+
+All48 iterations,195,820,096 annealing operations,191,808,048 edge-pair updates
+and49 annealing calls completed. Hardening scanned3,976,042 entries for2,000
+selected pairs; all1,999 chain edges were conserved. Independent metadata
+objective and guarded score both0.75; this is a synthetic objective, not accuracy.
+Fourteen saved/restored checkpoints retain1,408,042,757 logical bytes locally.
+Soft matrix SHA2e2466f839d80c1e8c6041065fb6242c25cc80edc9bcdb31960f0f4c76afab8e;
+column normalization error8.79296635503124e-14. Actual mapped-state closure passed.
+Large-array hash/restoration evidence belongs to the guarded worker; closure
+uses compact joins and stat only. No algorithm or historical profile was rerun.
+Independent terminal review requested in profile/CLOSURE_REVIEW.md.
+
+Fresh host check now shows9,857,597,440 available RAM and23,205,335,040 free disk,
+above graph10's9,797,894,144 and22,103,159,134 minima. No replication unit is active;
+graph10 temp/preflight/launch identities remain absent. After independent closure,
+commit/push compact receipts and metadata only, then fresh checks/temp-volume/
+preflight and one exact graph10 launch if still eligible. No NPY is to be staged.
+All1,420 financial fits remain pending; adopted budget32/59 unchanged. The
+synthetic test does not establish real-hub/full-dictionary/MCM/neural feasibility,
+GPU parity, paper numerical agreement or controlled speedup.
+
+**Integration audit completed; profile still active — 2026-09-30T11:49:33.040476+00:00**:
+The independent production-integration audit is complete at
+full_sources/matching-integration-audit-2026-09-30/INDEPENDENT_AUDIT.md
+(SHA-256 84156c2231b7abb93d8a9e5c5f9c92f34d5f751d2d329dc96e0a590564fa2c5d). It identifies the concrete
+next engineering work: a separately identified scalar backend and owned ordered-
+pair adapter, dictionary directional-score continuation, then MCM partial-row
+continuation with explicit precision/cache lineage and registered journal support.
+No production substitution, empirical release or altered scientific cap is admitted.
+
+Independent review of the unexecuted compact-only reconciliation helper found
+missing final-state/cursor joins and incomplete member-count/per-checkpoint-cap
+checks. These were corrected in reconcile.py outside the 100 frozen bindings;
+syntax compilation passed. RECONCILIATION_HELPER_REVIEW.md independently accepts
+the corrected helper SHA-256
+03ed715812a2d73f495715123c44553b187428e7b2607763986085ee2814dd83.
+Do not run the success-only helper before actual successful terminal cleanup. Preserve any partial/failure. Latest live check: about 634 seconds,
+eight checkpoint receipts, 31 completed iterations, one memory.high event and
+zero max/OOM events. Session50890 remains active; no restart or second owner.
+No HEAD/source changes or commit occurred. Continue actual owner observation at
+the next heartbeat, close and independently review its true terminal evidence,
+then commit/push compact evidence and recheck graph10 admission. If graph10's
+RAM remains insufficient, begin the audited single-pair adapter engineering after
+all frozen owners close. All 1,420 fits remain pending; claimed budget 32/59.
+
+**Directed-chain progress and integration audit — 2026-09-30T11:47:42.739774+00:00**:
+The independent LIVE_REVIEW.md accepts the observed sole owner, kernel controls
+and all 100 current/committed source bindings. Review SHA-256: e24e1ad5a0ab35f7e69721859258727b5c2179d38ff25c0cb30c381b922a728b.
+The original monitor 1163863/start ticks 9655861 remains the only profile owner;
+HEAD e6417c6f2f59c1ccf9fdb9ffd2af4c5b59020977 and all 100 bindings remain unchanged.
+At this observation the guard reports 573.4 seconds and
+7 saved/restored annealing checkpoints; the latest receipt records
+27 completed iterations out of 48. Peak sampled cgroup
+memory is 795820032 bytes. Memory events:
+{"high": 1, "low": 0, "max": 0, "oom": 0, "oom_group_kill": 0, "oom_kill": 0}. No terminal outcome is inferred.
+
+A compact-only reconcile.py was added outside the frozen bindings for terminal
+closure; it has not run. It joins JSONL progress, all 14 expected checkpoint
+receipts, nested metadata, file extents, 100 current/committed pins and the final
+conserved-edge objective without reading NPY bodies or repeating matching.
+Independent helper review is pending. If actual completion is unsuccessful,
+preserve all partials and write a qualified failure closure instead of executing
+this success-only helper or relaunching the identity.
+
+An independent audit of production integration is in progress in
+full_sources/matching-integration-audit-2026-09-30/INDEPENDENT_AUDIT.md. Existing
+scalar dictionary and Torch MCM semantics must not silently change through the
+score_only flag. Explicit backend/output precision/cache lineage and ordered-pair
+checkpoint state are required. No production file or source inventory changed.
+No commit is permitted while this owner is active. Next: actual terminal
+reconciliation and independent review, then commit/push compact receipts and
+fresh graph10 resource/ownership checks. Claimed budget remains 32/59; all 1,420
+financial fits remain pending. The 15-minute continuation heartbeat is active.
+
+**Full directed-chain profile active; preserve sole owner — 2026-09-30T11:38:57.806380+00:00**:
+Reviewedpreparation committed/pushed at e6417c6f2f59c1ccf9fdb9ffd2af4c5b59020977.
+Fresh11:38:01preflight verified100current/committedpins, exactruntime, noowners,
+RAM9,687,330,816 andfree24,673,259,520bytes. Graph10RAMminimum9,797,894,144failed,
+so itsprioritycondition wasnotready; the independentprofile's4GiB/12GiBchecks passed.
+
+Oneprofile active in session50890: monitor1163863/startticks9655861,
+unit onchain-replication-9e948629b8e94d198f10af289ec6eadc.service.
+owner-observation01.json records actuallive identity at11:38:21. Guardrunning at
+12.2s, kernelmax1GiB/high768MiB/swap0 andzeromemoryevents. Independentlive review
+pending. FreezeHEADand100pins while active; no commits, source changes, duplicate
+profile orgraph10overlap. Use existing guard/live.json and immutable checkpoint
+receipts (annealing-04,etc) for progress; never read checkpointbody merelyforstatus.
+
+This is full48iteration constant-chain matching (191,808,048edgeupdates), with
+periodicsave/close/restore everyfourcalls, atmost12intermediate+2latercheckpoints.
+Guardwall1800s/twoCPUs/3GiBhostreserve/10GiBdiskfloor remainsfixed. Preserve any
+failure and everycheckpoint; no successfulresult or empiricalclaim is presumed.
+Next: exactliveownershipreview, then actualguard/resultterminal reconciliation,
+all100pins and compactcheckpointjoins/extents, independentobjective/recovery
+review; commit/push compactreceipts onlyafterclosure. Recheckgraph10freshRAM/disk
+and soleownership afterward. All1,420fits pending; effective32/59unchanged.
+
 **Full directed-chain profile independently reviewed — 2026-09-30T11:37:42.051178+00:00**:
 matching-ranked-edge-workspace-probe-2026-09-30/REVIEW.md conditionally accepts
 all100bindings, unchangedfullschedule/capacity,195,820,096ops/191,808,048edgeupdates/
