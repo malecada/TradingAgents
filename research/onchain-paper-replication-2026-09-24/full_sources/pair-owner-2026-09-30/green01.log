@@ -1,0 +1,189 @@
+EEE.EEE.EE...
+======================================================================
+ERROR: test_actual_claim_owner_and_old_numerical_anchor_are_distinct (test_owner.OwnershipTests.test_actual_claim_owner_and_old_numerical_anchor_are_distinct)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/test_owner.py", line 90, in test_actual_claim_owner_and_old_numerical_anchor_are_distinct
+    bound=self.bind();bound.check()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/test_owner.py", line 85, in bind
+    args.update(kw);return self.module.bind(self.run,**args)
+                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 131, in bind
+    require(equal(read(directory/'owner.json'),owner),'representation owner differs')
+                  ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 130, in read
+    value,h=metadata(path,ad.root);snapshots[path]=h;return value
+            ~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 41, in metadata
+    require(os.fstat(fd)==before and path.stat()==before and len(raw)<=LIMIT,'metadata changed during read')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 26, in require
+    if not condition:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: metadata changed during read
+
+======================================================================
+ERROR: test_changed_guard_metadata_refused (test_owner.OwnershipTests.test_changed_guard_metadata_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/test_owner.py", line 146, in test_changed_guard_metadata_refused
+    bound=self.bind();self.rewrite(self.base/'owner.json',{**self.guard_owner,'nonce':'other'})
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/test_owner.py", line 85, in bind
+    args.update(kw);return self.module.bind(self.run,**args)
+                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 131, in bind
+    require(equal(read(directory/'owner.json'),owner),'representation owner differs')
+                  ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 130, in read
+    value,h=metadata(path,ad.root);snapshots[path]=h;return value
+            ~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 41, in metadata
+    require(os.fstat(fd)==before and path.stat()==before and len(raw)<=LIMIT,'metadata changed during read')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 26, in require
+    if not condition:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: metadata changed during read
+
+======================================================================
+ERROR: test_changed_journal_claim_refused (test_owner.OwnershipTests.test_changed_journal_claim_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/test_owner.py", line 121, in test_changed_journal_claim_refused
+    bound=self.bind();self.claim['owner']={**self.owner,'producer':'foreign'}
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/test_owner.py", line 85, in bind
+    args.update(kw);return self.module.bind(self.run,**args)
+                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 131, in bind
+    require(equal(read(directory/'owner.json'),owner),'representation owner differs')
+                  ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 130, in read
+    value,h=metadata(path,ad.root);snapshots[path]=h;return value
+            ~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 41, in metadata
+    require(os.fstat(fd)==before and path.stat()==before and len(raw)<=LIMIT,'metadata changed during read')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 26, in require
+    if not condition:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: metadata changed during read
+
+======================================================================
+ERROR: test_guard_expiry_and_monitor_death_refused (test_owner.OwnershipTests.test_guard_expiry_and_monitor_death_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/test_owner.py", line 140, in test_guard_expiry_and_monitor_death_refused
+    bound=self.bind();self.mock.side_effect=ValueError('expired guard')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/test_owner.py", line 85, in bind
+    args.update(kw);return self.module.bind(self.run,**args)
+                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 131, in bind
+    require(equal(read(directory/'owner.json'),owner),'representation owner differs')
+                  ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 130, in read
+    value,h=metadata(path,ad.root);snapshots[path]=h;return value
+            ~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 41, in metadata
+    require(os.fstat(fd)==before and path.stat()==before and len(raw)<=LIMIT,'metadata changed during read')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 26, in require
+    if not condition:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: metadata changed during read
+
+======================================================================
+ERROR: test_input_drift_refused (test_owner.OwnershipTests.test_input_drift_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/test_owner.py", line 117, in test_input_drift_refused
+    bound=self.bind();(self.root/'pair_policy.json').write_text('{}')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/test_owner.py", line 85, in bind
+    args.update(kw);return self.module.bind(self.run,**args)
+                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 131, in bind
+    require(equal(read(directory/'owner.json'),owner),'representation owner differs')
+                  ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 130, in read
+    value,h=metadata(path,ad.root);snapshots[path]=h;return value
+            ~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 41, in metadata
+    require(os.fstat(fd)==before and path.stat()==before and len(raw)<=LIMIT,'metadata changed during read')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 26, in require
+    if not condition:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: metadata changed during read
+
+======================================================================
+ERROR: test_source_drift_refused (test_owner.OwnershipTests.test_source_drift_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/test_owner.py", line 113, in test_source_drift_refused
+    bound=self.bind();(self.root/'engine.py').write_text('# changed\n')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/test_owner.py", line 85, in bind
+    args.update(kw);return self.module.bind(self.run,**args)
+                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 131, in bind
+    require(equal(read(directory/'owner.json'),owner),'representation owner differs')
+                  ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 130, in read
+    value,h=metadata(path,ad.root);snapshots[path]=h;return value
+            ~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 41, in metadata
+    require(os.fstat(fd)==before and path.stat()==before and len(raw)<=LIMIT,'metadata changed during read')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 26, in require
+    if not condition:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: metadata changed during read
+
+======================================================================
+ERROR: test_terminal_claim_refused_on_recheck (test_owner.OwnershipTests.test_terminal_claim_refused_on_recheck)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/test_owner.py", line 109, in test_terminal_claim_refused_on_recheck
+    bound=self.bind();self.run.fail('synthetic closure')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/test_owner.py", line 85, in bind
+    args.update(kw);return self.module.bind(self.run,**args)
+                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 131, in bind
+    require(equal(read(directory/'owner.json'),owner),'representation owner differs')
+                  ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 130, in read
+    value,h=metadata(path,ad.root);snapshots[path]=h;return value
+            ~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 41, in metadata
+    require(os.fstat(fd)==before and path.stat()==before and len(raw)<=LIMIT,'metadata changed during read')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 26, in require
+    if not condition:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: metadata changed during read
+
+======================================================================
+ERROR: test_terminal_journal_refused (test_owner.OwnershipTests.test_terminal_journal_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/test_owner.py", line 126, in test_terminal_journal_refused
+    bound=self.bind();self.journal.seal('failed',reason='synthetic')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/test_owner.py", line 85, in bind
+    args.update(kw);return self.module.bind(self.run,**args)
+                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 131, in bind
+    require(equal(read(directory/'owner.json'),owner),'representation owner differs')
+                  ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 130, in read
+    value,h=metadata(path,ad.root);snapshots[path]=h;return value
+            ~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 41, in metadata
+    require(os.fstat(fd)==before and path.stat()==before and len(raw)<=LIMIT,'metadata changed during read')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-owner-2026-09-30/owner.py", line 26, in require
+    if not condition:raise ValueError(message)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: metadata changed during read
+
+----------------------------------------------------------------------
+Ran 13 tests in 37.448s
+
+FAILED (errors=8)

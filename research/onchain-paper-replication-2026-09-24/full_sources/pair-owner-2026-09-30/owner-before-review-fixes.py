@@ -1,0 +1,163 @@
+"""Candidate read-only admission binding; no pair allocation or production routing.
+
+A binding is a checked snapshot, not a lock. Call check at numerical boundaries
+under the outer job's source freeze. Workload membership and failed-owner death
+must still be admitted separately before any continuation or pair allocation.
+"""
+import json
+import os
+from pathlib import Path
+import stat
+import subprocess
+from types import SimpleNamespace
+
+from tradingagents.research.lifecycle import ResearchRun
+from tradingagents.research.onchain_replication import job, resources, matching_pair
+from tradingagents.research.onchain_replication.cache import cache_key
+from tradingagents.research.onchain_replication.environment import inventory
+from tradingagents.research.onchain_replication.provenance import canonical_bytes, digest, file_hash, freeze
+
+ROOT=Path(__file__).resolve().parents[4]
+SELF=str(Path(__file__).resolve().relative_to(ROOT))
+LIMIT=65536
+
+
+def require(condition,message):
+    if not condition:raise ValueError(message)
+
+
+def equal(a,b):return canonical_bytes(a)==canonical_bytes(b)
+
+
+def signature(value):
+    # Reading may update atime; content identity uses modification/change clocks.
+    return tuple(getattr(value,k) for k in ('st_dev','st_ino','st_mode','st_nlink','st_size','st_mtime_ns','st_ctime_ns','st_blocks'))
+
+
+def metadata(path,root):
+    """Compact same-device regular metadata; a sole writer is still required."""
+    require(path.is_absolute() and path.resolve()==path and path.is_relative_to(root),'metadata path containment differs')
+    before=path.stat()
+    require(stat.S_ISREG(before.st_mode) and before.st_nlink==1 and before.st_dev==root.stat().st_dev and before.st_size<=LIMIT,'metadata file extent/type differs')
+    fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW)
+    try:
+        require(signature(os.fstat(fd))==signature(before),'metadata changed before open')
+        with os.fdopen(fd,'rb',closefd=False) as stream:raw=stream.read(LIMIT+1)
+        require(signature(os.fstat(fd))==signature(before) and signature(path.stat())==signature(before) and len(raw)<=LIMIT,'metadata changed during read')
+    finally:os.close(fd)
+    return json.loads(raw),digest(raw)
+
+
+class Binding:
+    def __init__(self,run,record,context,limits,resources_policy,snapshots,guard_owner,base):
+        self._run=run;self.record=freeze(record);self.context=freeze(context);self.limits=freeze(limits)
+        self._resources=freeze(resources_policy);self._snapshots=dict(snapshots)
+        self._owner=freeze(guard_owner);self._base=base
+
+    def _guard(self):
+        run=self._run;ad=run.admission;p=self._resources
+        args=SimpleNamespace(root=ad.root,registration=ad.registration,experiment=ad.experiment_id,source=ad.source)
+        live=resources.assert_guarded_worker(self._base/'guard',job._command(args,'worker'),
+            required_paths=[Path(x) for x in p['disk_paths']],wall_seconds=p['wall_seconds'],
+            memory_max_bytes=p['memory_max_bytes'],memory_high_bytes=p['memory_high_bytes'],disk_floor_bytes=p['disk_floor_bytes'])
+        require(equal(live.get('owner_identity'),self._owner),'guard owner differs from admitted claim')
+        require(all(k in live and equal(live[k],v) for k,v in p.items()),'guard policy differs from registration')
+        require(job.same_process_alive(self._owner['monitor_pid'],self._owner['monitor_start_ticks']),'guard monitor is no longer alive')
+
+    def lease(self):
+        """Cheap active claim/journal/guard check; does NOT recheck source/inputs."""
+        run=self._run;run._active()
+        directory=Path(self.record['journal_directory'])
+        require(list(directory.parent.iterdir())==[directory],'another representation owner appeared')
+        require(not any((directory/name).exists() for name in ('complete.json','failed.json')),'representation journal is terminal')
+        for path,expected in self._snapshots.items():
+            require(metadata(path,run.admission.root)[1]==expected,'owner metadata changed after binding')
+        self._guard()
+
+    def check(self):
+        """Full current-source/input/runtime and lease check; no pair work."""
+        run=self._run;run._active();run._check_source();run._check_inputs()
+        _source(run,self.record['numerical_source'])
+        require(digest(canonical_bytes(inventory(run.admission.root,include_torch=True)))==self.context['runtime_hash'],'registered runtime changed')
+        self.lease()
+
+
+def _source(run,numerical):
+    ad=run.admission;registered=ad.experiment['source_files'];required=job.required_sources()
+    require(required|{SELF}<=set(registered),'complete owner/execution source closure required')
+    require(isinstance(numerical,dict) or hasattr(numerical,'items'),'numerical source mapping required')
+    require(set(numerical)=={'commit','files'} and set(numerical['files'])==required,'numerical source closure differs')
+    matching_pair.hash_string(numerical['commit'],40)
+    for name in sorted(required|{SELF}):
+        require(file_hash(ROOT/name)==registered[name],'imported implementation differs from admitted source')
+    # Explicit exact-byte compatibility. Actual execution commit remains in the
+    # owner; an older anchor is only a numerical context, never a forged owner.
+    for name in sorted(required):
+        expected=numerical['files'][name]
+        require(expected==registered[name],'numerical source differs from current execution')
+        raw=subprocess.check_output(['git','show',numerical['commit']+':'+name],cwd=ad.root,stderr=subprocess.DEVNULL)
+        require(digest(raw)==expected,'numerical anchor committed source differs')
+
+
+def bind(run,*,representation,plan_input,producer,policy_input,journal_directory):
+    require(isinstance(run,ResearchRun),'actual admitted ResearchRun required')
+    run._active();run._check_source()
+    ad=run.admission
+    execution=json.loads(run.read_input('execution_job'));job.job_schema(execution)
+    require(execution['kind']=='fit','matching producer requires admitted fit job')
+    policy_resources=job.resource_policy(execution['resources'],ad.root)
+    jobs=execution['payload'].get('representation_jobs',{})
+    require(representation in jobs,'representation absent from execution job')
+    selected=jobs[representation]
+    require(selected.get('operation')=='produce' and selected.get('plan_input')==plan_input
+            and selected.get('producer')==producer and selected.get('pair_checkpoint_input')==policy_input,'selected producer/policy differs')
+    plan=json.loads(run.read_input(plan_input))
+    require(isinstance(plan,dict) and plan.get('schema_version')==2 and producer in plan.get('producers',{}),'explicit version2 producer plan required')
+    item=plan['producers'][producer]
+    require(item.get('pair_checkpoint_input')==policy_input and equal(item.get('descriptor'),selected.get('descriptor')),'producer policy/descriptor differs')
+    require(item.get('binding_output')!=item.get('journal_output') and {item.get('binding_output'),item.get('journal_output')}<=set(ad.experiment['outputs']),'producer outputs are not admitted')
+    policy=json.loads(run.read_input(policy_input))
+    require(isinstance(policy,dict) and set(policy)=={'schema_version','backend','limits','numerical_source'} and policy['schema_version']==1,'pair execution policy schema differs')
+    require(equal(policy['backend'],matching_pair.BACKEND),'pair numerical backend differs')
+    limits=policy['limits']
+    require(isinstance(limits,dict) and set(limits)==matching_pair.POLICY_FIELDS and all(type(v) is int and v>0 for v in limits.values()),'pair limits differ')
+    require(limits['chunk_edges']<=65536,'pair edge chunk exceeds bound')
+    descriptor=item['descriptor']
+    require(descriptor.get('arm')=='proposed','checkpoint backend requires motif representation')
+    require(equal(descriptor.get('pair_execution'),{'backend':policy['backend'],'policy_sha256':ad.inputs[policy_input]['sha256']}),'explicit backend/policy workflow identity differs')
+    identity=cache_key(descriptor)
+    expected=ad.root/'research_artifacts/onchain_representations'/identity/ad.experiment_id
+    directory=Path(journal_directory)
+    require(directory==expected and directory.resolve()==expected and directory.is_dir() and directory.stat().st_dev==ad.root.stat().st_dev,'exact admitted journal directory required')
+    require(not any((directory/name).exists() for name in ('complete.json','failed.json')),'representation journal is terminal')
+    owner={'experiment':ad.experiment_id,'source_commit':ad.source,'producer':producer,'workflow_identity':identity}
+    snapshots={}
+    def read(path):
+        value,h=metadata(path,ad.root);snapshots[path]=h;return value
+    require(equal(read(directory/'owner.json'),owner),'representation owner differs')
+    start=read(directory/'start.json')
+    require(start.get('schema_version')==1 and equal(start.get('owner'),owner)
+            and equal(start.get('required_graphs'),descriptor['required_graphs']),'journal start differs')
+    # This first binding deliberately refuses continuation. Post-death ancestry
+    # and orphan admission must be implemented before this restriction is lifted.
+    require(start.get('parent') is None and start.get('workflow_identity') is None,'failed-parent admission not implemented by this binding')
+    require(list(directory.parent.iterdir())==[directory],'first owner cannot omit another representation attempt')
+    claim=read(directory/'claim.json')
+    required_claim={'owner':owner,'descriptor':descriptor,'plan_input':plan_input,'binding_output':item['binding_output'],
+        'registration_sha256':ad.registration_sha256,'pair_checkpoint_input':policy_input,'pair_checkpoint_policy_sha256':ad.inputs[policy_input]['sha256']}
+    require(all(k in claim and equal(claim[k],v) for k,v in required_claim.items()),'representation claim differs')
+    _source(run,policy['numerical_source'])
+    env=json.loads(run.read_input(execution['environment_input']))
+    require(equal(env,inventory(ad.root,include_torch=True)),'registered execution environment differs')
+    base=ad.root/job.PREFIX/'runs'/ad.experiment_id
+    launch=read(base/'launch.json');guard_owner=read(base/'owner.json')
+    require(set(launch)=={'experiment','source_commit','supervisor_pid','nonce'} and launch['experiment']==ad.experiment_id and launch['source_commit']==ad.source,'guard launch differs')
+    require(set(guard_owner)==set(launch)|{'monitor_pid','monitor_start_ticks'} and all(equal(guard_owner[k],v) for k,v in launch.items()),'guard owner/launch join differs')
+    record={'experiment':ad.experiment_id,'source_commit':ad.source,'claim_sha256':run._claim_sha256,
+        'registration_sha256':ad.registration_sha256,'representation':representation,'producer':producer,
+        'workflow_identity':identity,'policy_sha256':ad.inputs[policy_input]['sha256'],
+        'journal_directory':str(directory),'numerical_source':policy['numerical_source']}
+    context={'namespace':identity,'source_commit':policy['numerical_source']['commit'],'runtime_hash':digest(canonical_bytes(env))}
+    bound=Binding(run,record,context,limits,policy_resources,snapshots,guard_owner,base)
+    bound.lease()
+    return bound

@@ -3,6 +3,93 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+
+**Reviewed local-memory resource amendment — 2026-09-30T15:32:18.273636+00:00**:
+The user reports that this machine cannot reliably supply more free RAM. No graph
+job is active. The v3 checked sequence passed initialRAM9,916,170,240bytes and
+completed temp02, then preflight03 refused startup headroom BEFORE Graph10 launch,
+claim, source directory or budget adoption. The exact failed-check RAM was not
+printed; post-refusal RAM was9,751,482,368bytes. dispatch-attempt03-refusal.json
+and all successful temp02 receipts are retained. Never rerun temp02/preflight03.
+
+Graph10 gate-v4 is prepared with a prospective5.5GiB hard worker maximum and
+8.5GiB startup reserve. The5GiB throttle point,3GiB host reserve, zero worker swap,
+two CPUs,10GiB free-disk floor and28,800s remain fixed. The unchanged128MiB extra
+startup headroom yields a strict9,261,023,232-byte dispatch threshold. Six completed
+graph guard receipts sampled4.46–5.0001GiB peaks with no max/OOM events; some had
+throttling. These measurements support a bounded attempt, not a guaranteed peak
+for December. No algorithm, truncation, data or scientific scope change occurs.
+
+New CHARTER_V4, execution-job-v4, temp03/preflight04/dispatch04 route and exact
+105-source/159-input gate are independently accepted conditional on the fresh
+checked launch route. PRELAUNCH_V4_REVIEW SHA:ec639feed4237e2a24a164f4405e8d01769545109fc0785dd368507ee6e5e97a.
+All11 inherited
+experiments and family/scientific/budget objects remain unchanged. Only Graph10's
+charter/execution job are replaced, with4source/13input additions. v3/oldcharter/
+oldjob/refusal/evidence are retained and pinned. Gate-v4 SHA:
+76bf4e04c207ab3536ce79bdce0105c139bf7cb15ef40e498f49a4253fad35c6.
+Prepare_registration_v4 ran once; never regenerate or overwrite the gate.
+
+The isolated first-owner candidate is independently accepted with24 passing
+synthetic tests,212verifiedbindings and all83requiredsourcefiles separately checked
+against HEAD. No production consumer or continuation is enabled by that result.
+
+Next: commit/push compact accepted artifacts, fresh capacity/
+owner checks BEFORE unusedtemp03, then checked sequentialtemp03→preflight04→fresh
+HEAD/RAM/disk/owner check→one v4 Graph10 launch. Freeze actualsource on launch.
+Adopted32/59, proposed60stillunadopted;1420fits pending. If capacity stillfails,
+continue independent registered-matching recovery work without changing limits.
+
+
+**First-owner matching binding verified — 2026-09-30T15:13:25Z**:
+No heavy numerical or empirical job is active. Latest available RAM is
+9,598,476,288 bytes, below Graph10's strict 9,797,894,144-byte launch threshold;
+free disk is23,362,998,272 bytes, above22,103,159,134. No active/activating unit,
+pending job/offline/preflight process or Graph10 claim. Its temp02/preflight03/
+dispatch03 remain unused; all101 gate-v3 source pins remain exact.
+
+full_sources/pair-owner-2026-09-30/ now implements a read-only binding of an
+actual ResearchRun claim to its selected fit representation producer, explicit
+schema2 plan, registered pair backend/policy, exact FeatureJournal ownership and
+live guarded worker. The actual execution commit remains distinct from the older
+numerical source anchor; all83 numerical-package files must match the admitted
+current and committed anchor bytes. Runtime is separately pinned. This candidate
+refuses all failed-parent continuation and sibling attempts until their admission
+is implemented. No pair allocation or dictionary/MCM routing is released.
+
+Final green04:24 synthetic tests passed in79.627s. Real temporary Git registration,
+ResearchRun and FeatureJournal are used; the kernel guard assertion is mocked.
+The tests do not prove actual kernel dispatch or empirical feasibility. Earlier
+missing-component failures, atime error, sibling regression and six independently
+identified monitor/schema negative cases remain preserved. Independent O1 live
+monitor join and O2 boolean/float schema aliases are corrected. Independent final REVIEW accepts the corrected first-owner scope.
+bindings.json covers212 exact files, including196 inherited
+unchanged files; maintained package and178-file broad verification are unchanged.
+
+Next safe engineering: exact failed-owner/observer death and ancestry admission,
+registered pair workload membership and bounded orphan reconciliation, then
+connect the accepted owner/reservation/extent layers to dictionary directions and
+MCM partial rows with end-to-end parity/continuation tests. Recheck Graph10 RAM on
+a later heartbeat; only its reviewed unused v3 sequential route is eligible.
+Do not rerun closed profiles/tests under historical identities, lower limits,
+change scientific caps or claim predictive results. Adopted resource attempts
+remain32/59, proposed60 unadopted; all1420 financial fits remain pending.
+
+**Extent component accepted and backed up — 2026-09-30T14:40:09.464742+00:00**:
+Reviewedpolicy-bound extenthelper,13synthetic tests,196bindings andallfailed
+attempts/corrections committed/pushed at149e8639b5fc41618fc35675973df959546ae2b7. Noactive/activatingreplicationunit;
+Graph10temp02/preflight03/dispatch03 remainabsent, all101gate-v3sourcepins exact.
+FreshRAM9623891968 remainsbelow9797894144; disk23386796032 exceeds22103159134.
+
+Next executable engineering: bindactualResearchRunclaim/producer/source andlive
+workerlease to pair ownership/policy; caller mustvalidate workloadpurpose and
+failed-owner ancestry, then integrate the accepted reservation+extentchecked
+journal beforedictionary/MCMnumerical dispatch. Orphan reconciliation remains
+separate andmustnot reruncompletepairs. These datedcomponents have notchanged
+maintainedpackage/defaults/cache/backend or releasedempiricalmatching. Recheck
+Graph10resourceeligibility onlaterheartbeat; useonly reviewedunusedv3route when
+allstrictchecks pass. Budget32/59,proposed60unadopted;all1420fitspending.
+
 **Policy-bound saved-extent verification implemented — 2026-09-30T14:39:08.113900+00:00**:
 Noheavyjobactive. Graph10RAMcheckatstart found9443082240bytes<9797894144;
 disk23401922560>22103159134; noactive/activatingunit. Temp02andGraph10remainunused.

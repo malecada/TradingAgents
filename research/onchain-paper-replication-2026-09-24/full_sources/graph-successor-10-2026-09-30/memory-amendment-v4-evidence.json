@@ -1,0 +1,120 @@
+{
+  "at": "2026-09-30T15:27:19.052950+00:00",
+  "completed_graphs": [
+    {
+      "experiment": "eth-paper-graph-resource-20260929-03",
+      "receipt": {
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260929-03/guard/final.json",
+        "sha256": "bd22359070c134aa6304e7617e4d0cc1d7e303a6ef69f72213853d968ec1412d"
+      },
+      "peak_sampled_memory_current_bytes": 5368791040,
+      "memory_events": {
+        "high": 3312,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0
+      },
+      "elapsed_seconds": 1845.388127043001
+    },
+    {
+      "experiment": "eth-paper-graph-resource-20260930-04",
+      "receipt": {
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-04/guard/final.json",
+        "sha256": "3152b4067fbf76a5b66a799567984671e7a1b649ba5a40850108b398bf81c844"
+      },
+      "peak_sampled_memory_current_bytes": 4924211200,
+      "memory_events": {
+        "high": 0,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0
+      },
+      "elapsed_seconds": 1364.1138639560013
+    },
+    {
+      "experiment": "eth-paper-graph-resource-20260930-05",
+      "receipt": {
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-05/guard/final.json",
+        "sha256": "c7f899412cbfd352aa9a216ce058858681d3369d715ba9f3becb961c60d22de1"
+      },
+      "peak_sampled_memory_current_bytes": 5368401920,
+      "memory_events": {
+        "high": 117,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0
+      },
+      "elapsed_seconds": 1292.0772572139977
+    },
+    {
+      "experiment": "eth-paper-graph-resource-20260930-06",
+      "receipt": {
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-06/guard/final.json",
+        "sha256": "c7bdf53a5abf62eb1506cc96821668061fdaa648fa40c82dbea283f665fcb75d"
+      },
+      "peak_sampled_memory_current_bytes": 4988571648,
+      "memory_events": {
+        "high": 0,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0
+      },
+      "elapsed_seconds": 1427.9192270680069
+    },
+    {
+      "experiment": "eth-paper-graph-resource-20260930-07",
+      "receipt": {
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-07/guard/final.json",
+        "sha256": "89420fa80291de960d786790f569c058a9d5a979949ca4f365b680fef489fd7e"
+      },
+      "peak_sampled_memory_current_bytes": 5368709120,
+      "memory_events": {
+        "high": 2728,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0
+      },
+      "elapsed_seconds": 1580.7068521370093
+    },
+    {
+      "experiment": "eth-paper-graph-resource-20260930-08",
+      "receipt": {
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-08/guard/final.json",
+        "sha256": "b3a2a7e63d979fb0eb4cef40c7879991062453b0bebf09b7c83347d4787c676a"
+      },
+      "peak_sampled_memory_current_bytes": 4790677504,
+      "memory_events": {
+        "high": 0,
+        "low": 0,
+        "max": 0,
+        "oom": 0,
+        "oom_group_kill": 0,
+        "oom_kill": 0
+      },
+      "elapsed_seconds": 1419.7910464840097
+    }
+  ],
+  "sampled_peak_is_not_upper_bound": true,
+  "old_worker_max_bytes": 6442450944,
+  "new_worker_max_bytes": 5905580032,
+  "memory_high_bytes": 5368709120,
+  "host_reserve_bytes": 3221225472,
+  "new_startup_bytes": 9126805504,
+  "dispatch_headroom_bytes": 134217728,
+  "strict_dispatch_bytes": 9261023232,
+  "rationale": "User confirms practical RAM capacity ceiling. Lower worker ceiling while preserving host reserve, numerical method and full data. Old runs constrain plausibility only; December feasibility remains unproven.",
+  "prior_refusal": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/dispatch-attempt03-refusal.json",
+    "sha256": "ba0b44deeefdfba7e387b6faa45873ba6b99f580b5fabd91a27e2980d72aa1d4"
+  }
+}
