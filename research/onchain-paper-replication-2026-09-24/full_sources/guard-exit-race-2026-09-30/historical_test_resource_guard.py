@@ -2,7 +2,7 @@ import importlib.util
 from pathlib import Path
 import sys
 
-PATH=Path(__file__).resolve().parents[2]/'scripts/research_resource_guard.py'
+PATH=Path(__file__).resolve().parents[2]/'research/strategy-search-2026-09-11/resource_guard.py'
 spec=importlib.util.spec_from_file_location('resource_guard', PATH)
 m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 

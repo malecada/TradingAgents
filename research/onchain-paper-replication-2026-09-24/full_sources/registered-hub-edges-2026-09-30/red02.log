@@ -1,0 +1,113 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+____________ test_numeric_policy_refused_before_any_counts_mapping _____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-173/test_numeric_policy_refused_be0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2024-01-08T00:00:00Z', 'state': 'spent'}]}}, ...}, '52264db04378283fcb129f413bdb4d476bc1edeb')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7aa7b2b48510>
+
+    def test_numeric_policy_refused_before_any_counts_mapping(registered,monkeypatch):
+        mod=api();case=prepare(registered,{'max_buffer_bytes':1})
+        monkeypatch.setattr(mod,'_open_counts',lambda *a,**k:pytest.fail('numeric refusal came after mapping'))
+        with start(case) as run:
+>           with pytest.raises(ValueError,match='numeric'):mod.produce_registered_hub_census(run,'hub_plan')
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_registered_hub_edges.py:125: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/hub_census_production.py:82: in produce_registered_hub_census
+    counts=_open_counts(root,ci,descriptor,p['expected_nodes'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (PosixPath('/tmp/pytest-of-malecada/pytest-173/test_numeric_policy_refused_be0'), {'path': 'research_artifacts/onchain... 'dataset': 'sample'}, {'bytes': 184, 'sha256': '24938c8aceab6bd91ca790810b0d656d414fef6b259d806155daf3380aacc4ac'}, 7)
+k = {}
+
+>   monkeypatch.setattr(mod,'_open_counts',lambda *a,**k:pytest.fail('numeric refusal came after mapping'))
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: numeric refusal came after mapping
+
+tests/research/onchain_replication/test_registered_hub_edges.py:123: Failed
+----------------------------- Captured stdout call -----------------------------
+{"allocated_bytes": 73728, "experiment": "prior-census", "files": ["research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census-2024-01-01.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/cardinalities.npy", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/checkpoints/01-sorted_pairs.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/checkpoints/02-cardinalities.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/checkpoints/03-summary.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/histogram.npy", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/maxima_indices.npy", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/sorted_pairs.npy", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/summary.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/intent.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/result.json", "research_runs/prior-census/outputs/artifact-index.json", "research_runs/prior-census/outputs/cell-ledger.json", "research_runs/prior-census/outputs/source-summary.json"], "kind": "census_final_storage_accounting", "logical_bytes": 13787, "maximum_bytes": 1048576, "roots": ["research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census", "research_runs/prior-census/outputs"], "scope": "complete producer directory and three lifecycle outputs, including directory blocks; guard telemetry and lifecycle claim/terminal excluded", "within_allowance": true}
+______________ test_closed_census_must_be_actual_admitted_parent _______________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-173/test_closed_census_must_be_act0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2024-01-08T00:00:00Z', 'state': 'spent'}]}}, ...}, 'd1d44fd6ccee83406c21e0e52ea847c107f8e3ab')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7aa7b552f100>
+
+    def test_closed_census_must_be_actual_admitted_parent(registered,monkeypatch):
+        mod=api();root,spec,_=prepare(registered)
+        spec['experiments']['example-a']['parent']=None;case=root,spec,commit(root,spec)
+        monkeypatch.setattr(mod,'_open_counts',lambda *a,**k:pytest.fail('unrelated census mapped'))
+        with start(case) as run:
+>           with pytest.raises(ValueError,match='parent'):mod.produce_registered_hub_census(run,'hub_plan')
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_registered_hub_edges.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/hub_census_production.py:82: in produce_registered_hub_census
+    counts=_open_counts(root,ci,descriptor,p['expected_nodes'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (PosixPath('/tmp/pytest-of-malecada/pytest-173/test_closed_census_must_be_act0'), {'path': 'research_artifacts/onchain... 'dataset': 'sample'}, {'bytes': 184, 'sha256': '24938c8aceab6bd91ca790810b0d656d414fef6b259d806155daf3380aacc4ac'}, 7)
+k = {}
+
+>   monkeypatch.setattr(mod,'_open_counts',lambda *a,**k:pytest.fail('unrelated census mapped'))
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: unrelated census mapped
+
+tests/research/onchain_replication/test_registered_hub_edges.py:131: Failed
+----------------------------- Captured stdout call -----------------------------
+{"allocated_bytes": 73728, "experiment": "prior-census", "files": ["research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census-2024-01-01.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/cardinalities.npy", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/checkpoints/01-sorted_pairs.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/checkpoints/02-cardinalities.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/checkpoints/03-summary.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/histogram.npy", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/maxima_indices.npy", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/sorted_pairs.npy", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/summary.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/intent.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/result.json", "research_runs/prior-census/outputs/artifact-index.json", "research_runs/prior-census/outputs/cell-ledger.json", "research_runs/prior-census/outputs/source-summary.json"], "kind": "census_final_storage_accounting", "logical_bytes": 13787, "maximum_bytes": 1048576, "roots": ["research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census", "research_runs/prior-census/outputs"], "scope": "complete producer directory and three lifecycle outputs, including directory blocks; guard telemetry and lifecycle claim/terminal excluded", "within_allowance": true}
+_____________ test_unicode_error_reason_has_bounded_encoded_bytes ______________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-173/test_unicode_error_reason_has_0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2024-01-08T00:00:00Z', 'state': 'spent'}]}}, ...}, 'd1d44fd6ccee83406c21e0e52ea847c107f8e3ab')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7aa7b2b51fd0>
+
+    def test_unicode_error_reason_has_bounded_encoded_bytes(registered,monkeypatch):
+        mod=api();case=prepare(registered)
+        def fail(*a,**k):raise ValueError('🔥'*100000)
+        monkeypatch.setattr(mod,'measure',fail)
+        with start(case) as run:
+            rows,summary,_=mod.produce_registered_hub_census(run,'hub_plan')
+>           assert len(json.dumps(rows[0]['reason']).encode())<2304
+E           assert 24590 < 2304
+E            +  where 24590 = len(b'"ValueError: \\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud8...udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25"')
+E            +    where b'"ValueError: \\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud8...udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25"' = <built-in method encode of str object at 0x14204f30>()
+E            +      where <built-in method encode of str object at 0x14204f30> = '"ValueError: \\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83...udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25"'.encode
+E            +        where '"ValueError: \\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83...udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25\\ud83d\\udd25"' = <function dumps at 0x7aa7b74254e0>('ValueError: 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥...🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥')
+E            +          where <function dumps at 0x7aa7b74254e0> = json.dumps
+
+tests/research/onchain_replication/test_registered_hub_edges.py:142: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"allocated_bytes": 73728, "experiment": "prior-census", "files": ["research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census-2024-01-01.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/cardinalities.npy", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/checkpoints/01-sorted_pairs.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/checkpoints/02-cardinalities.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/checkpoints/03-summary.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/histogram.npy", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/maxima_indices.npy", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/sorted_pairs.npy", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/summary.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/intent.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/result.json", "research_runs/prior-census/outputs/artifact-index.json", "research_runs/prior-census/outputs/cell-ledger.json", "research_runs/prior-census/outputs/source-summary.json"], "kind": "census_final_storage_accounting", "logical_bytes": 13788, "maximum_bytes": 1048576, "roots": ["research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census", "research_runs/prior-census/outputs"], "scope": "complete producer directory and three lifecycle outputs, including directory blocks; guard telemetry and lifecycle claim/terminal excluded", "within_allowance": true}
+___________ test_measure_failure_plus_counts_close_failure_is_fatal ____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-173/test_measure_failure_plus_coun0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2024-01-08T00:00:00Z', 'state': 'spent'}]}}, ...}, '8ac8cffe41892f45da070d2c1502813b40a13e55')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7aa7b2f93df0>
+
+    def test_measure_failure_plus_counts_close_failure_is_fatal(registered,monkeypatch):
+        mod=api();case=prepare(registered);original=mod._open_counts
+        class Proxy:
+            def __init__(self,value):self.value=value;self._mmap=self
+            def __len__(self):return len(self.value)
+            def __getitem__(self,key):return self.value[key]
+            def close(self):self.value._mmap.close();raise RuntimeError('synthetic close failure')
+        monkeypatch.setattr(mod,'_open_counts',lambda *a:Proxy(original(*a)))
+        def fail(*a,**k):raise ValueError('measurement failed')
+        monkeypatch.setattr(mod,'measure',fail)
+        with start(case) as run:
+>           with pytest.raises(RuntimeError,match='close failure'):mod.produce_registered_hub_census(run,'hub_plan')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE RuntimeError
+
+tests/research/onchain_replication/test_registered_hub_edges.py:157: Failed
+----------------------------- Captured stdout call -----------------------------
+{"allocated_bytes": 73728, "experiment": "prior-census", "files": ["research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census-2024-01-01.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/cardinalities.npy", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/checkpoints/01-sorted_pairs.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/checkpoints/02-cardinalities.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/checkpoints/03-summary.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/histogram.npy", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/maxima_indices.npy", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/sorted_pairs.npy", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/census/summary.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/intent.json", "research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census/result.json", "research_runs/prior-census/outputs/artifact-index.json", "research_runs/prior-census/outputs/cell-ledger.json", "research_runs/prior-census/outputs/source-summary.json"], "kind": "census_final_storage_accounting", "logical_bytes": 13784, "maximum_bytes": 1048576, "roots": ["research_artifacts/onchain-paper-replication-2026-09-24/sources/prior-census", "research_runs/prior-census/outputs"], "scope": "complete producer directory and three lifecycle outputs, including directory blocks; guard telemetry and lifecycle claim/terminal excluded", "within_allowance": true}
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_registered_hub_edges.py::test_numeric_policy_refused_before_any_counts_mapping
+FAILED tests/research/onchain_replication/test_registered_hub_edges.py::test_closed_census_must_be_actual_admitted_parent
+FAILED tests/research/onchain_replication/test_registered_hub_edges.py::test_unicode_error_reason_has_bounded_encoded_bytes
+FAILED tests/research/onchain_replication/test_registered_hub_edges.py::test_measure_failure_plus_counts_close_failure_is_fatal
+4 failed, 12 deselected in 11.82s

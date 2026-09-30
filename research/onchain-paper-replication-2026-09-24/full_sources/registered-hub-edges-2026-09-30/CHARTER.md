@@ -1,0 +1,67 @@
+# Oversized neighborhood induced-edge sizing
+
+Prospective preparation only. No execution gate or claim is created. This new
+question follows the completed resource-only full-population cardinality census.
+The same retained source-volume-selected ETH week 2022-07-25 to 2022-08-01 has
+35 weak one-hop neighborhoods above 10,000 nodes, maximum 701,309 nodes. The
+closed census counted distinct neighbors; it did not count edges induced among
+those neighbors. Exact induced-edge sizes are necessary to bound extracted
+features and matching edge-product work. Selection uses topology only, not labels.
+
+Measure all 35 centers whose retained cardinality is greater than 10,000, sorted
+by original global node index. Bind the closed cardinalities SHA, graph manifest,
+graph/configuration/node-order identity and all source/runtime/ownership files.
+Require exactly 35 centers before measurement. For each center, scan all source
+edges in chunks to build its complete weak neighbor membership, retain the center,
+verify its cardinality against the closed census, then count every original edge
+whose two endpoints are members. Preserve direction, reciprocal columns and loops.
+No truncation, new sampling or graph reconstruction. Do not change the existing
+10,000-node scientific ceiling or dictionary/cache identity. This standalone
+sizing observation is not admission of a larger scientific configuration.
+
+Retain each completed center as a durable checkpoint with global index, node count,
+induced directed-edge count and elapsed time. A finite 35-center denominator and
+all unavailable/failed rows must survive interruption. The prospective whole-job
+limit is 540 seconds, enforcing an atomic bound below 600 seconds by termination.
+A failed claim is terminal; no relaunch under its identity. Proposed guard is
+6 GiB max / 5 GiB high / zero swap / 3 GiB host reserve / 9 GiB startup / two CPUs /
+10 GiB disk reserve. Numeric scratch 8 MiB excluding validated mapped graph and
+closed census arrays; new compact output/checkpoints <= 1 MiB. Exact wrapper,
+actual full lifecycle/source/input pins and conservative file accounting remain
+implementation/review requirements before admission.
+
+The finite engineering component uses one N-byte boolean membership mask and
+chunk-sized comparisons/gathers. The scalar center list and runtime/input/graph
+validation memory are not covered by its numeric scratch claim; the outer guard
+covers aggregate residency. Feature-array payload arithmetic may be reported from
+bound dimensions, distinguished from measured extraction or matching resources.
+No original dictionary/MCM/neural pilot or financial fit is closed by this census.
+
+Budget amendment proposes 53 to 54, preserving 26 consumed claims, 12 missing-body
+batches and 15 financial-fit batches, 1,420 unique fits, all failure history and
+spent sample labels. One new resource-only slot measures the above fixed question.
+No network, author/provider contact, purchase, trading or deployment. Broader
+asset/history coverage and all original 109 resource requirements remain.
+
+## Exact prospective implementation contract
+
+The final source is hub_edges.py plus hub_census_production.py and the existing
+guarded job lifecycle. Fixed registered cells hub-edge-000 through hub-edge-034
+refer to the complete threshold-selected centers in increasing global-index
+order. Every completed cell JSON is its durable checkpoint; it records center,
+node count, induced directed-edge count and cumulative elapsed seconds. A failed
+center and all remaining unavailable cells are retained, or the observer retains
+the exact durable prefix after process interruption. No same-identity restart.
+
+The plan binds exact 2,764,221 nodes / 3,504,159 edges, the parent census identity,
+its original lifecycle claim/complete/source-summary and cardinalities file, and
+original graph manifest/config/node-order. Input selection is checked before
+measurement. Numerical reservations cover the selector and engine before mapping;
+input residency and graph-validation overhead remain under the aggregate guard.
+The existing final storage accountant checks all producer and three lifecycle
+outputs, including directory blocks, before lifecycle success. Guard telemetry
+and claim/terminal metadata are outside its explicit 1 MiB counted scope.
+
+Full source/runtime/gate review, committed admission and fresh host/owner checks
+remain required. Preparation does not adopt ceiling 54 or create an empirical
+claim. All broader paper scope, attempts and closed results remain unchanged.

@@ -1,0 +1,283 @@
+FFFFFFFFFFFF                                                             [100%]
+=================================== FAILURES ===================================
+_______ test_registered_hub_complete_durable_denominator_and_accounting ________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-171/test_registered_hub_complete_d0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '6d53f008191c696be2f9c66da996226ae8eb3cb5')
+capsys = <_pytest.capture.CaptureFixture object at 0x7e6473a7e3c0>
+
+    def test_registered_hub_complete_durable_denominator_and_accounting(registered,capsys):
+>       api();case=prepare(registered)
+        ^^^^^
+
+tests/research/onchain_replication/test_registered_hub_edges.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.hub_census_production'),'hub producer missing'
+E       AssertionError: hub producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x7e6475ca8860>('tradingagents.research.onchain_replication.hub_census_production')
+E        +    where <function find_spec at 0x7e6475ca8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_hub_edges.py:20: AssertionError
+____________ test_invalid_hub_plan_refused_before_mapping[change0] _____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-171/test_invalid_hub_plan_refused_0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '6d53f008191c696be2f9c66da996226ae8eb3cb5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6473a2f230>
+change = {'expected_centers': 0}
+
+    @pytest.mark.parametrize('change',[{'expected_centers':0},{'expected_centers':65},{'threshold':True},{'max_buffer_bytes':True},{'edge_chunk':65537},{'graph_hash':'0'*64},{'cell_ids':['wrong']},{'extra':1}])
+    def test_invalid_hub_plan_refused_before_mapping(registered,monkeypatch,change):
+>       mod=api();case=prepare(registered,change)
+            ^^^^^
+
+tests/research/onchain_replication/test_registered_hub_edges.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.hub_census_production'),'hub producer missing'
+E       AssertionError: hub producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x7e6475ca8860>('tradingagents.research.onchain_replication.hub_census_production')
+E        +    where <function find_spec at 0x7e6475ca8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_hub_edges.py:20: AssertionError
+____________ test_invalid_hub_plan_refused_before_mapping[change1] _____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-171/test_invalid_hub_plan_refused_1'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'b59ea5006fe886f26d1c1b3953afa4f204be0299')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6470b38c30>
+change = {'expected_centers': 65}
+
+    @pytest.mark.parametrize('change',[{'expected_centers':0},{'expected_centers':65},{'threshold':True},{'max_buffer_bytes':True},{'edge_chunk':65537},{'graph_hash':'0'*64},{'cell_ids':['wrong']},{'extra':1}])
+    def test_invalid_hub_plan_refused_before_mapping(registered,monkeypatch,change):
+>       mod=api();case=prepare(registered,change)
+            ^^^^^
+
+tests/research/onchain_replication/test_registered_hub_edges.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.hub_census_production'),'hub producer missing'
+E       AssertionError: hub producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x7e6475ca8860>('tradingagents.research.onchain_replication.hub_census_production')
+E        +    where <function find_spec at 0x7e6475ca8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_hub_edges.py:20: AssertionError
+____________ test_invalid_hub_plan_refused_before_mapping[change2] _____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-171/test_invalid_hub_plan_refused_2'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'b59ea5006fe886f26d1c1b3953afa4f204be0299')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6470b3d130>
+change = {'threshold': True}
+
+    @pytest.mark.parametrize('change',[{'expected_centers':0},{'expected_centers':65},{'threshold':True},{'max_buffer_bytes':True},{'edge_chunk':65537},{'graph_hash':'0'*64},{'cell_ids':['wrong']},{'extra':1}])
+    def test_invalid_hub_plan_refused_before_mapping(registered,monkeypatch,change):
+>       mod=api();case=prepare(registered,change)
+            ^^^^^
+
+tests/research/onchain_replication/test_registered_hub_edges.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.hub_census_production'),'hub producer missing'
+E       AssertionError: hub producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x7e6475ca8860>('tradingagents.research.onchain_replication.hub_census_production')
+E        +    where <function find_spec at 0x7e6475ca8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_hub_edges.py:20: AssertionError
+____________ test_invalid_hub_plan_refused_before_mapping[change3] _____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-171/test_invalid_hub_plan_refused_3'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'b59ea5006fe886f26d1c1b3953afa4f204be0299')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6471187ce0>
+change = {'max_buffer_bytes': True}
+
+    @pytest.mark.parametrize('change',[{'expected_centers':0},{'expected_centers':65},{'threshold':True},{'max_buffer_bytes':True},{'edge_chunk':65537},{'graph_hash':'0'*64},{'cell_ids':['wrong']},{'extra':1}])
+    def test_invalid_hub_plan_refused_before_mapping(registered,monkeypatch,change):
+>       mod=api();case=prepare(registered,change)
+            ^^^^^
+
+tests/research/onchain_replication/test_registered_hub_edges.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.hub_census_production'),'hub producer missing'
+E       AssertionError: hub producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x7e6475ca8860>('tradingagents.research.onchain_replication.hub_census_production')
+E        +    where <function find_spec at 0x7e6475ca8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_hub_edges.py:20: AssertionError
+____________ test_invalid_hub_plan_refused_before_mapping[change4] _____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-171/test_invalid_hub_plan_refused_4'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'b59ea5006fe886f26d1c1b3953afa4f204be0299')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6470bcc160>
+change = {'edge_chunk': 65537}
+
+    @pytest.mark.parametrize('change',[{'expected_centers':0},{'expected_centers':65},{'threshold':True},{'max_buffer_bytes':True},{'edge_chunk':65537},{'graph_hash':'0'*64},{'cell_ids':['wrong']},{'extra':1}])
+    def test_invalid_hub_plan_refused_before_mapping(registered,monkeypatch,change):
+>       mod=api();case=prepare(registered,change)
+            ^^^^^
+
+tests/research/onchain_replication/test_registered_hub_edges.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.hub_census_production'),'hub producer missing'
+E       AssertionError: hub producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x7e6475ca8860>('tradingagents.research.onchain_replication.hub_census_production')
+E        +    where <function find_spec at 0x7e6475ca8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_hub_edges.py:20: AssertionError
+____________ test_invalid_hub_plan_refused_before_mapping[change5] _____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-171/test_invalid_hub_plan_refused_5'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'b59ea5006fe886f26d1c1b3953afa4f204be0299')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6471173b50>
+change = {'graph_hash': '0000000000000000000000000000000000000000000000000000000000000000'}
+
+    @pytest.mark.parametrize('change',[{'expected_centers':0},{'expected_centers':65},{'threshold':True},{'max_buffer_bytes':True},{'edge_chunk':65537},{'graph_hash':'0'*64},{'cell_ids':['wrong']},{'extra':1}])
+    def test_invalid_hub_plan_refused_before_mapping(registered,monkeypatch,change):
+>       mod=api();case=prepare(registered,change)
+            ^^^^^
+
+tests/research/onchain_replication/test_registered_hub_edges.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.hub_census_production'),'hub producer missing'
+E       AssertionError: hub producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x7e6475ca8860>('tradingagents.research.onchain_replication.hub_census_production')
+E        +    where <function find_spec at 0x7e6475ca8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_hub_edges.py:20: AssertionError
+____________ test_invalid_hub_plan_refused_before_mapping[change6] _____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-171/test_invalid_hub_plan_refused_6'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'b59ea5006fe886f26d1c1b3953afa4f204be0299')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6470bbe650>
+change = {'cell_ids': ['wrong']}
+
+    @pytest.mark.parametrize('change',[{'expected_centers':0},{'expected_centers':65},{'threshold':True},{'max_buffer_bytes':True},{'edge_chunk':65537},{'graph_hash':'0'*64},{'cell_ids':['wrong']},{'extra':1}])
+    def test_invalid_hub_plan_refused_before_mapping(registered,monkeypatch,change):
+>       mod=api();case=prepare(registered,change)
+            ^^^^^
+
+tests/research/onchain_replication/test_registered_hub_edges.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.hub_census_production'),'hub producer missing'
+E       AssertionError: hub producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x7e6475ca8860>('tradingagents.research.onchain_replication.hub_census_production')
+E        +    where <function find_spec at 0x7e6475ca8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_hub_edges.py:20: AssertionError
+____________ test_invalid_hub_plan_refused_before_mapping[change7] _____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-171/test_invalid_hub_plan_refused_7'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'b59ea5006fe886f26d1c1b3953afa4f204be0299')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6471131c70>
+change = {'extra': 1}
+
+    @pytest.mark.parametrize('change',[{'expected_centers':0},{'expected_centers':65},{'threshold':True},{'max_buffer_bytes':True},{'edge_chunk':65537},{'graph_hash':'0'*64},{'cell_ids':['wrong']},{'extra':1}])
+    def test_invalid_hub_plan_refused_before_mapping(registered,monkeypatch,change):
+>       mod=api();case=prepare(registered,change)
+            ^^^^^
+
+tests/research/onchain_replication/test_registered_hub_edges.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.hub_census_production'),'hub producer missing'
+E       AssertionError: hub producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x7e6475ca8860>('tradingagents.research.onchain_replication.hub_census_production')
+E        +    where <function find_spec at 0x7e6475ca8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_hub_edges.py:20: AssertionError
+___________ test_wrong_selected_denominator_fails_before_measurement ___________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-171/test_wrong_selected_denominato0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'b59ea5006fe886f26d1c1b3953afa4f204be0299')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6470b2c500>
+
+    def test_wrong_selected_denominator_fails_before_measurement(registered,monkeypatch):
+>       mod=api();case=prepare(registered,{'threshold':3})
+            ^^^^^
+
+tests/research/onchain_replication/test_registered_hub_edges.py:80: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.hub_census_production'),'hub producer missing'
+E       AssertionError: hub producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x7e6475ca8860>('tradingagents.research.onchain_replication.hub_census_production')
+E        +    where <function find_spec at 0x7e6475ca8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_hub_edges.py:20: AssertionError
+___________ test_partial_failure_retains_rows_and_observer_recovers ____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-171/test_partial_failure_retains_r0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'b59ea5006fe886f26d1c1b3953afa4f204be0299')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7e6470b597f0>
+
+    def test_partial_failure_retains_rows_and_observer_recovers(registered,monkeypatch):
+>       mod=api();case=prepare(registered);original=mod.measure
+            ^^^^^
+
+tests/research/onchain_replication/test_registered_hub_edges.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.hub_census_production'),'hub producer missing'
+E       AssertionError: hub producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x7e6475ca8860>('tradingagents.research.onchain_replication.hub_census_production')
+E        +    where <function find_spec at 0x7e6475ca8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_hub_edges.py:20: AssertionError
+____________________ test_hub_guard_schema_whole_job_bound _____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-171/test_hub_guard_schema_whole_jo0')
+
+    def test_hub_guard_schema_whole_job_bound(tmp_path):
+        value={'schema_version':1,'kind':'hub_edge_census','resources':{**policy(tmp_path),'wall_seconds':540,'disk_floor_bytes':10*1024**3},'environment_input':'environment','payload':{'plan_input':'hub_plan'}}
+>       job.job_schema(value)
+
+tests/research/onchain_replication/test_registered_hub_edges.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+job = {'schema_version': 1, 'kind': 'hub_edge_census', 'resources': {'memory_max_bytes': 536870912, 'memory_high_bytes': 402653184, 'reserve_bytes': 3221225472, 'start_reserve_bytes': 3758096384, ...}, 'environment_input': 'environment', ...}
+
+    def job_schema(job):
+        if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census'):
+>           raise ValueError('execution job schema/kind differs')
+E           ValueError: execution job schema/kind differs
+
+tradingagents/research/onchain_replication/job.py:68: ValueError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_registered_hub_edges.py::test_registered_hub_complete_durable_denominator_and_accounting
+FAILED tests/research/onchain_replication/test_registered_hub_edges.py::test_invalid_hub_plan_refused_before_mapping[change0]
+FAILED tests/research/onchain_replication/test_registered_hub_edges.py::test_invalid_hub_plan_refused_before_mapping[change1]
+FAILED tests/research/onchain_replication/test_registered_hub_edges.py::test_invalid_hub_plan_refused_before_mapping[change2]
+FAILED tests/research/onchain_replication/test_registered_hub_edges.py::test_invalid_hub_plan_refused_before_mapping[change3]
+FAILED tests/research/onchain_replication/test_registered_hub_edges.py::test_invalid_hub_plan_refused_before_mapping[change4]
+FAILED tests/research/onchain_replication/test_registered_hub_edges.py::test_invalid_hub_plan_refused_before_mapping[change5]
+FAILED tests/research/onchain_replication/test_registered_hub_edges.py::test_invalid_hub_plan_refused_before_mapping[change6]
+FAILED tests/research/onchain_replication/test_registered_hub_edges.py::test_invalid_hub_plan_refused_before_mapping[change7]
+FAILED tests/research/onchain_replication/test_registered_hub_edges.py::test_wrong_selected_denominator_fails_before_measurement
+FAILED tests/research/onchain_replication/test_registered_hub_edges.py::test_partial_failure_retains_rows_and_observer_recovers
+FAILED tests/research/onchain_replication/test_registered_hub_edges.py::test_hub_guard_schema_whole_job_bound
+12 failed in 2.02s

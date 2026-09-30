@@ -64,11 +64,11 @@ def resource_policy(value, root):
 
 
 def job_schema(job):
-    if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census'):
+    if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census'):
         raise ValueError('execution job schema/kind differs')
-    if job['kind'] in ('graphs','neighborhood_census') and (not isinstance(job['payload'], dict) or set(job['payload']) != {'plan_input'} or not isinstance(job['payload']['plan_input'], str) or not job['payload']['plan_input']):
+    if job['kind'] in ('graphs','neighborhood_census','hub_edge_census') and (not isinstance(job['payload'], dict) or set(job['payload']) != {'plan_input'} or not isinstance(job['payload']['plan_input'], str) or not job['payload']['plan_input']):
         raise ValueError('graph/census job requires an explicit registered plan input')
-    if job['kind']=='neighborhood_census' and (type(job['resources'].get('wall_seconds')) is not int or not 0<job['resources']['wall_seconds']<=540):
+    if job['kind'] in ('neighborhood_census','hub_edge_census') and (type(job['resources'].get('wall_seconds')) is not int or not 0<job['resources']['wall_seconds']<=540):
         raise ValueError('census whole-job wall limit must not exceed 540 seconds')
     if job['kind'] == 'ranges' and job['payload'] != {}:
         raise ValueError('range job has no implicit payload overrides')
@@ -197,6 +197,9 @@ def execute_source_job(run, kind, payload):
     if kind == 'graphs':
         from .graph_production import produce_registered_graphs
         cells, summary, directory = produce_registered_graphs(run, payload['plan_input'])
+    elif kind == 'hub_edge_census':
+        from .hub_census_production import produce_registered_hub_census
+        cells, summary, directory = produce_registered_hub_census(run, payload['plan_input'])
     elif kind == 'neighborhood_census':
         from .census_production import produce_registered_census
         cells, summary, directory = produce_registered_census(run, payload['plan_input'])
@@ -215,7 +218,7 @@ def execute_source_job(run, kind, payload):
     run.write_json('source-summary.json', summary)
     run.write_json('artifact-index.json', {str(p.relative_to(run.admission.root)): {'sha256': file_hash(p), 'bytes': p.stat().st_size}
         for p in directory.rglob('*') if p.is_file()})
-    if kind=='neighborhood_census':
+    if kind in ('neighborhood_census','hub_edge_census'):
         from .census_production import finalize_registered_storage
         finalize_registered_storage(run,directory,payload['plan_input'])
     return cells
@@ -242,7 +245,7 @@ def worker(args):
         from .environment import inventory
         if inventory(root, include_torch=job['kind'] == 'fit') != json.loads(run.read_input(job['environment_input'])):
             raise ValueError('registered execution environment differs')
-        if job['kind'] in ('ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census'):
+        if job['kind'] in ('ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census', 'hub_edge_census'):
             cells = execute_source_job(run, job['kind'], job['payload'])
         else:
             import torch

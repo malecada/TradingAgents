@@ -3,6 +3,135 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Full verification complete; release review pending — 2026-09-30T01:57Z:**
+Registered-hub offline02 completed: 2,774 standard passes plus 97 subtests,
+766 neural passes and two CUDA skips; 3,540 total passes. Guard 1,594.166966s,
+sampled peak 2,952,871,936 bytes, 157 memory.high throttle events, no max/OOM.
+Child zero, cleanup verified; exact monitor 79528 and cgroup absent. All 163
+bindings and HEAD ee50b11de6aedd0f86efbd45e3a3d3f1602d9efe match.
+closure-check02.json retains checks. Independent terminal review is in progress.
+No empirical claim active; budget 26/53, all 1,420 fits pending. After acceptance,
+commit/push exact source/gate and perform fresh effective54 admission and host
+checks before one registered 35-center hub-edge measurement per RUNBOOK.md.
+
+Isolated matching-checkpoints-2026-09-30 prototype now passes seven synthetic
+checks after two independent review findings: invalid phase acceptance and unsafe
+interruption between mutation/cursor updates. Re-review pending. It preserves
+scalar order at safe checkpoints, retains three dense matrices and leaves atomic
+normalization/finalization and production guard integration unresolved. It is not
+a capacity override or empirical implementation release. All failures retained.
+
+**ACTIVE corrected full verification offline02 — 2026-09-30T01:30:35.284929+00:00:**
+Independent review accepted closure of failed offline01, byte-identical promotion
+of the corrected maintained sampled guard, nine focused tests and the new finite
+launcher. Original dated helper bytes and every failed receipt remain intact.
+A single offline02 is now ACTIVE: monitor PID 79528, start ticks 6007996,
+unit onchain-replication-aae2d7d1cd6b473386e7ef1714df6329.service, tool session 20933. Receipts under
+full_sources/registered-hub-edges-2026-09-30/offline02/. All 163 files in
+source-bindings02.json and HEAD ee50b11de6aedd0f86efbd45e3a3d3f1602d9efe
+match; freeze them and HEAD. Preflight 10,187,591,680 bytes available RAM and
+25,212,829,696 bytes free disk; no active replication unit or prior offline02.
+First live phase running, no limit reason. Same 3 GiB max/2.75 high/zero swap/
+3 GiB reserve/6 startup/10 GiB disk/two CPUs/3,600-second verification bounds.
+Never duplicate this process or relaunch offline01/offline02 under their identities.
+
+Next safe action: close the exact new full run, independently review raw totals,
+all 163 bindings and owner/cgroup cleanup. If successful, explicitly stage compact
+registered-hub evidence, new hub package/tests, current scripts/research_resource_guard.py,
+maintained guard tests and isolated guard-fix provenance (preserving historical
+helper), then commit/push. Follow the revised RUNBOOK.md for effective54 metadata
+admission and fresh 9 GiB startup/resources before one empirical hub-edge census.
+No empirical claim is active; budget26/53, all 1,420 fits pending. Full-model and
+broader paper coverage remain required. Independent arithmetic assessment and
+prototypes outside the frozen sources may continue, but no bound-file/HEAD edits.
+
+**Failed full verification closed; maintained guard correction prepared — 2026-09-30T01:28:09.720466+00:00:**
+Registered-hub offline01 is terminal and preserved: standard 2,767 passed,
+97 subtests and one failed; neural 766 passed/two CUDA skips. Total 3,533 passes
+with one failure. Guard 1,553.721722 seconds, peak 2,028,310,528 bytes, zero memory
+events, child 1 and cleanup verified. All 158 bindings/HEAD match; exact PID
+3807099 and cgroup are absent. closure-check01.json records failure and identities.
+No empirical claim was created; do not relaunch this failed verification identity.
+
+After cleanup, the independently reviewed bounded status recheck was promoted
+byte-for-byte to scripts/research_resource_guard.py. The dated historical helper
+remains unchanged; maintained tests point to the current corrected helper and
+include six deterministic exit-state cases. Nine focused tests pass in 0.29s;
+three isolated live subprocess contracts pass in 0.203s. Exact observed original
+proc transition remains unknown, and persistent missing telemetry still fails.
+
+New finite run_offline02.py and source-bindings02.json (163 files, unchanged HEAD
+ee50b11de6aedd0f86efbd45e3a3d3f1602d9efe) are prepared. Independent closure/
+promotion/launcher review is pending, followed by fresh host/owner checks before
+one offline02 launch. No full verification or empirical process is now active.
+After successful terminal review, commit/push exact hub source/gate plus guard
+correction, freshly admit effective54, and follow RUNBOOK.md for the one 35-center
+hub-edge measurement. Budget remains26/53 and all 1,420 fits remain pending.
+
+**Full verification has one retained failure; neural phase ACTIVE — 2026-09-30T01:22:09.394239+00:00:**
+Registered-hub offline01 standard phase: 2,767 passed, 97 subtests passed and one
+failed in 1,035.23 seconds. The failure is test_resource_guard.py success handling:
+child exit zero, legacy sampled monitor reason "live process has no VmRSS field".
+Raw proc status was not retained; exit race is a supported hypothesis, not proved.
+No OOM/limit breach is indicated by the outer guard. Neural phase remains active
+under PID 3807099/start ticks 5825440, same unit/tool session 43737 and all 158
+unchanged bindings/HEAD ee50b11d. No source changes or empirical release permitted.
+
+An isolated correction at full_sources/guard-exit-race-2026-09-30/ takes at most
+one fresh status/children snapshot after missing RSS, accepts observed exit or a
+real subsequent RSS, and still fails on persistent missing/unknown telemetry.
+Four deterministic counterexample errors are retained; six checks pass. Independent
+review accepted promotion only after the active full run closes. Preserve original
+dated research/strategy-search-2026-09-11/resource_guard.py bytes and old outcomes.
+Proposed current path scripts/research_resource_guard.py; repoint maintained guard
+tests and add deterministic regression cases, then focused checks and a NEW named
+offline02 with refreshed bindings. Do not rerun offline01 or erase its failure.
+
+Outside the frozen sources, pair-capacity-assessment-2026-09-30/ records conditional
+allocation arithmetic from the closed census: the largest neighborhood exceeds
+4 million pairs for any opposite motif larger than five nodes. This is not an
+observed motif distribution, measured peak or proof of a worst-case pair occurring.
+No scientific capacity or model scope changed. Budget stays26/53, no financial fits.
+
+**ACTIVE registered-hub offline01 — 2026-09-30T01:00:37.678673+00:00:**
+One full named offline verification is running after independent source/gate/
+launcher acceptance and fresh host checks. All 158 bindings and HEAD
+ee50b11de6aedd0f86efbd45e3a3d3f1602d9efe match. Preflight observed
+10,179,375,104 bytes available RAM and 26,976,845,824 bytes free disk, no active
+replication unit or prior offline01 directory. Owner monitor PID 3807099, start
+ticks 5825440, unit onchain-replication-5b61916ff5f5471a89d0a7a5fc059e90.service; tool session 43737. Receipts:
+full_sources/registered-hub-edges-2026-09-30/offline01/. First live state is
+running with no limit reason. Freeze HEAD and every source/input in this
+directory's source-bindings.json. Never duplicate or relaunch this identity.
+Limits: 3 GiB max / 2.75 high / zero swap / 3 GiB reserve / 6 startup / two CPUs /
+10 GiB disk floor / 3,600 seconds. Full-suite outcome remains pending.
+
+Next safe action: inspect this exact owner/log/final; after terminal cleanup
+verify all 158 bindings and raw test totals, independently review closure,
+commit/push exact gate/source, then follow RUNBOOK.md for fresh committed admission
+and the single registered 35-center hub-edge census. No empirical claim is active;
+budget 26/53, prospective54 not adopted, all 1,420 fits pending. Continue only
+independent work outside frozen bindings during verification. No scientific cap,
+methodology, paper-scope or prior outcome is changed by this engineering release.
+
+**Registered hub integration verified locally — 2026-09-30T00:59:28.045326+00:00:**
+The accepted hub_edges component is integrated through hub_census_production and
+new guarded job kind hub_edge_census. Four independent source findings have
+retained red counterexamples and corrections: numeric admission before allocation,
+actual original parent evidence, encoded Unicode reason size, and unresolved map
+cleanup reporting. Expanded green03 passed 91 focused tests in 67.51 seconds.
+Independent source/focused/gate review accepted 82 source pins, 12 compact inputs
+and the closed-cardinality pin, plus four unchanged ancestor objects. No empirical
+job has started; current budget remains 26/53 and extension54 is prospective.
+
+Final gate.json and finite full-verification launcher are prepared under
+full_sources/registered-hub-edges-2026-09-30/. Source-bindings.json freezes 158
+files and HEAD ee50b11de6aedd0f86efbd45e3a3d3f1602d9efe for the pending named
+offline01. Launcher/bindings review and fresh resources are the next checks; no
+full verification process has launched yet. Follow RUNBOOK.md for terminal review,
+commit/push, fresh effective54 admission and a single guarded 35-center resource
+job after broad verification. Preserve every closed identity and scientific cap.
+
 **Next component and budget-only review accepted — 2026-09-30T00:32:11.875666+00:00:**
 Independent review accepted the exact induced-edge component for synthetic
 integration, and accepted the exact prospective extension to 54: 26 spent +

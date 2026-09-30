@@ -1,0 +1,67 @@
+test_dead_state_without_rss_is_terminal (__main__.ExitRaceTests.test_dead_state_without_rss_is_terminal) ... ERROR
+test_exit_becomes_zombie_after_status_without_rss (__main__.ExitRaceTests.test_exit_becomes_zombie_after_status_without_rss) ... ERROR
+test_exit_disappears_after_status_without_rss (__main__.ExitRaceTests.test_exit_disappears_after_status_without_rss) ... ERROR
+test_persistent_live_missing_rss_still_fails_closed (__main__.ExitRaceTests.test_persistent_live_missing_rss_still_fails_closed) ... ok
+test_second_status_has_real_rss (__main__.ExitRaceTests.test_second_status_has_real_rss) ... ERROR
+test_unknown_state_and_malformed_rss_are_not_zero (__main__.ExitRaceTests.test_unknown_state_and_malformed_rss_are_not_zero) ... ok
+
+======================================================================
+ERROR: test_dead_state_without_rss_is_terminal (__main__.ExitRaceTests.test_dead_state_without_rss_is_terminal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/guard-exit-race-2026-09-30/test_guard_exit.py", line 27, in test_dead_state_without_rss_is_terminal
+    self.assertEqual(self.sample(['State:\tX (dead)\n']),0)
+                     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/guard-exit-race-2026-09-30/test_guard_exit.py", line 18, in sample
+    with patch.object(m.Path,'read_text',read):return m.tree_rss(123)
+                                                      ~~~~~~~~~~^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/guard-exit-race-2026-09-30/resource_guard.py", line 24, in tree_rss
+    raise RuntimeError('live process has no VmRSS field')
+RuntimeError: live process has no VmRSS field
+
+======================================================================
+ERROR: test_exit_becomes_zombie_after_status_without_rss (__main__.ExitRaceTests.test_exit_becomes_zombie_after_status_without_rss)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/guard-exit-race-2026-09-30/test_guard_exit.py", line 21, in test_exit_becomes_zombie_after_status_without_rss
+    self.assertEqual(self.sample(['State:\tR (running)\n','State:\tZ (zombie)\n']),0)
+                     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/guard-exit-race-2026-09-30/test_guard_exit.py", line 18, in sample
+    with patch.object(m.Path,'read_text',read):return m.tree_rss(123)
+                                                      ~~~~~~~~~~^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/guard-exit-race-2026-09-30/resource_guard.py", line 24, in tree_rss
+    raise RuntimeError('live process has no VmRSS field')
+RuntimeError: live process has no VmRSS field
+
+======================================================================
+ERROR: test_exit_disappears_after_status_without_rss (__main__.ExitRaceTests.test_exit_disappears_after_status_without_rss)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/guard-exit-race-2026-09-30/test_guard_exit.py", line 24, in test_exit_disappears_after_status_without_rss
+    self.assertEqual(self.sample(['State:\tR (running)\n',FileNotFoundError()]),0)
+                     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/guard-exit-race-2026-09-30/test_guard_exit.py", line 18, in sample
+    with patch.object(m.Path,'read_text',read):return m.tree_rss(123)
+                                                      ~~~~~~~~~~^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/guard-exit-race-2026-09-30/resource_guard.py", line 24, in tree_rss
+    raise RuntimeError('live process has no VmRSS field')
+RuntimeError: live process has no VmRSS field
+
+======================================================================
+ERROR: test_second_status_has_real_rss (__main__.ExitRaceTests.test_second_status_has_real_rss)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/guard-exit-race-2026-09-30/test_guard_exit.py", line 30, in test_second_status_has_real_rss
+    self.assertEqual(self.sample(['State:\tR (running)\n','State:\tR (running)\nVmRSS:\t123 kB\n']),123*1024)
+                     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/guard-exit-race-2026-09-30/test_guard_exit.py", line 18, in sample
+    with patch.object(m.Path,'read_text',read):return m.tree_rss(123)
+                                                      ~~~~~~~~~~^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/guard-exit-race-2026-09-30/resource_guard.py", line 24, in tree_rss
+    raise RuntimeError('live process has no VmRSS field')
+RuntimeError: live process has no VmRSS field
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.002s
+
+FAILED (errors=4)
