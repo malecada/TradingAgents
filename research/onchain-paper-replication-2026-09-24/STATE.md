@@ -3,6 +3,19 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Census registration metadata correction — 2026-09-30T00:25 UTC:**
+Verified engineering committed and pushed as 7f9dcd22. Fresh metadata admission
+refused the original gate before any claim because three budget metadata objects
+were not in source_files. Original gate and failure receipt are preserved.
+Independent review accepted gate-v2.json, adding only those exact reviewed pins
+(77 to 80); ancestors and every other field are unchanged. No code change or
+repeat full verification is needed. Fresh 10-input/environment/workspace and
+identity-absence checks pass; host has approximately 10.02 GB available RAM and
+25.37 GB disk. Next: commit/push v2, rerun metadata admission under new HEAD, then
+freshly verify resource/owner bounds and launch once only if ready.
+Sparse-objective S1 independent review also accepted the explicit restricted
+domain for isolated synthetic engineering; no production substitution admitted.
+
 **Registered census full verification COMPLETE — 2026-09-30T00:18 UTC:**
 Offline01 passed 3,509 tests plus 97 subtests, with two CUDA skips. Standard
 2,768 in 1,057.09 seconds; neural 741 in 509.73 seconds. Guard 1,570.629698

@@ -1,0 +1,15 @@
+test_unrepresentable_agreement_domain_is_explicitly_refused (__main__.SparseScoreTests.test_unrepresentable_agreement_domain_is_explicitly_refused) ... FAIL
+
+======================================================================
+FAIL: test_unrepresentable_agreement_domain_is_explicitly_refused (__main__.SparseScoreTests.test_unrepresentable_agreement_domain_is_explicitly_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/bounded-hardening-2026-09-30/test_sparse_objective.py", line 42, in test_unrepresentable_agreement_domain_is_explicitly_refused
+    with self.assertRaisesRegex(ValueError,'agreement arithmetic domain'):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

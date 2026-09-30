@@ -11,7 +11,7 @@ launch reservation or source-output directory may be reused.
 2. Obtain independent terminal/source/resource/gate release review. Commit and
    push the reviewed changes and exact gate. Record the full resulting HEAD.
 3. Use the pinned Python and the generic lifecycle `check` entry point against
-   gate.json and the exact committed HEAD. Admission must be ready and effective
+   gate-v2.json and the exact committed HEAD. Admission must be ready and effective
    budget 53. Reconcile all eight previous current claims plus 17 historical
    claims; no active or omitted claim and no changed terminal is allowed.
 4. Rehash all registered compact inputs and compare the exact environment and
@@ -22,7 +22,7 @@ launch reservation or source-output directory may be reused.
    ancestor must retain admitted containment and device identity. No temp volume
    is used by the census; all new arrays are under its exclusive output directory.
 5. Dispatch the existing tradingagents.research.onchain_replication.job with
-   mode launch, the repository root, this gate.json, the exact identity and HEAD.
+   mode launch, the repository root, this gate-v2.json, the exact identity and HEAD.
    Dispatch once only. The outer guard owns the 6 GiB max/5 GiB high, zero swap,
    3 GiB reserve/9 GiB startup, two CPUs, 10 GiB disk floor and 540-second deadline.
    Freeze HEAD and every registered source/input throughout this claim.
@@ -45,3 +45,8 @@ launch reservation or source-output directory may be reused.
    asset/history or paper-comparison requirement. Update STATE.md and proceed to
    the exact next resource/capacity/checkpoint requirement under a new reviewed
    allocation if needed; no automatic retry, author contact or paid resources.
+
+The original gate.json was preserved after admission01 rejected missing source
+pins for the three budget metadata objects before any claim. gate-v2.json adds
+only those reviewed exact pins; source code, inputs, outcomes and ancestor
+registrations are unchanged. Fresh committed admission remains required.

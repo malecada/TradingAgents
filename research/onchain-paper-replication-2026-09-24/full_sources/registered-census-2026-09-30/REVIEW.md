@@ -75,3 +75,17 @@ All **154 bound files** independently rehash to the frozen manifest, HEAD remain
 - `closure-check01.json`: `9d591e01833c30bf8b7996389b5b3fd6f856e2404aa0a3d013940b5ae43cbece`
 
 **Verdict: the reviewed registered-census engineering increment is accepted for commit and its broad verification requirement is closed.** The source/resource design is acceptable for the single prospective registered resource-only census, conditional on committed exact source/gate/charter/runtime, fresh complete lifecycle and cumulative-extension admission, exclusive ownership, current input identity, and fresh capacity checks under its separate 6 GiB/5 GiB/9 GiB-startup/540-second profile. This review neither creates a claim nor substitutes for those checks. Budget remains 25/52 until actual prospective adoption; no census outcome, matching feasibility, financial fit or broader task completion is inferred. The isolated bounded-hardening/sparse-objective prototypes are outside this frozen verification and outside this release verdict.
+
+## Prospective gate-v2 correction after metadata admission refusal
+
+The first metadata-only admission at committed source `7f9dcd2280facff41e0a884e0e6cf685a9141593` refused the original gate because budget-extension metadata was not also listed in the experiment's source_files. This is a registration completeness gap missed by the preceding static gate review; the earlier conditional verdict did not establish successful admission. The original gate, empty admission stdout and failure receipt remain preserved. At this review, the prospective census claim does not exist.
+
+Independent structural comparison confirms `gate-v2.json` changes **only three additions** to the new census experiment's source_files, from 77 to 80 entries. No existing entry was removed or changed. All other fields, original family object, three ancestor objects, exact inputs, resources, charter, cells, outputs and extension references are unchanged. The added current bytes match the previously reviewed accepted budget identities:
+
+- Extension: `94a2b7b7d3da9e09ac3b70711ffc0ffc8e16079e590e2db091689d1c9e9ed12f`
+- Independent budget review: `82710ca207367c4cf6059928885a58f3dd32e084845515a602549cd3bdaee86b`
+- Allocation: `7cb9239b9c0444f01ce358cf6f9249e64d03fb0026d1c17ab869a6963e801047`
+
+Gate-v2 SHA: `b45ce629813c5a10e605762ae4c11ee6dd76d2015a6ecf510ab411f0da05fd44`. Failure-receipt SHA: `83c44a1e7cf166ffb58288a9727762c9ef8311d5b9cb95f8223ffaca4e68c878`. All 154 files bound by the completed offline run still match their retained hashes; no production code changed and the 3,509-pass evidence retains its original attribution. The new gate is a reviewed metadata correction, not a gate exercised by that old full-run binding.
+
+**Verdict: accept this exact prospective metadata correction for commit and fresh admission.** Successful committed-source admission and current ownership/capacity checks remain required before a first claim or launch. The preserved refusal created no census outcome or budget spend and must not be represented as a failed empirical attempt. No tests, admission command, graph-body access or job was executed by this review.
