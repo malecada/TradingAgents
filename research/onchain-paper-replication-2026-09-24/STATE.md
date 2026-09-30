@@ -3,6 +3,163 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Storage05 release accepted; committing exact evidence — 2026-09-30T08:41:29.934034+00:00:**
+Independent RELEASE_REVIEW.md accepts the conditional storage05 release and its
+62 unique bindings: 61 committed dependencies plus the exact local connection
+metadata hash. No active replication process remains. Reviewed August producer/
+verifier evidence, December preparation and budget proposal, synthetic profile
+preparation and storage05 release are being committed and pushed together.
+Next: fresh storage05 preflight, then one guarded preservation only if a December
+capacity deficit still exists and all resource/owner/identity checks pass. No
+new graph gate or financial claim is admitted by this storage release.
+
+**August independently closed; December preparation accepted — 2026-09-30T08:39:57.627328+00:00:**
+Verifier08 independent CLOSURE_REVIEW.md and exact four-evidence closure-review.json
+are accepted; review receipt SHA-256
+f6faf3938b02f09fdfec1d2cc3e7279413c05a9d9d7dd9b9b7d4ae05e1f76003.
+All217 hashes, saved result/log/claim/manifest joins and absent owner/cgroup agree.
+Graph08 and its verifier are closed. Never rerun either identity.
+
+Graph09 budget60 and REGISTRATION_PREPARATION_REVIEW.md are accepted for preparation
+only. Seven exact original December members,232 stat-only spans,8,617,920rows and
+22,103,159,134-byte planning requirement reconcile. Effective accounting stays
+32/59 until later valid admission. Actual accepted storage05 remains a prerequisite;
+no09gate/reuse generation, temp check, preflight or claim exists.
+
+Actual storage05 RELEASE.md, local previous_graph_requirement.py and preflight.py
+are prepared with37 contextual plus30 original bindings (62 unique paths;61 to
+commit and one exact untracked hash-only connection descriptor). Prior08 helper
+passed using actual accepted closure. Free at release18,390,093,824bytes; needed
+December22,103,159,134; full recovery scratch14,514,860,032. Independent release
+review is pending. No operation is active or yet launched.
+
+Reviewed compact evidence is staged, not yet committed. Await accepted exact05
+release, stage that review and current STATE, commit/push, then execute fresh05
+preflight and one offload if still required and all conditions pass. Freeze new HEAD
+and 62 bindings while active. Do not run the reviewed full synthetic profile before
+December because its 192 MB checkpoints would consume the current narrow margin.
+
+**August saved arrays verified once; December preparation advances — 2026-09-30T08:36:39.867677+00:00:**
+Verifier08 passed under its reviewed guard after 08:33:54 fresh preflight checked
+all217 bindings, exact runtime, absent identities/units, RAM9,867,563,008 and
+free disk18,396,213,248 bytes. Session38947 closed in29.281149 seconds, peak
+303,730,688 bytes, zero high/max/OOM, child zero and cleanup verified. Monitor
+1049875 and unit1321d4b70fc84c7aa131e10bf293a31b are absent. No live start tick was
+captured before the short job completed; none inferred. Compact closure01 joins
+all evidence without another body pass. Independent closure review is requested.
+
+Verified graph:1,705,509 nodes,2,215,129 directed edges,447,428,632 array bytes;
+all four node-feature maximum errors zero. Canonical graph SHA-256
+3a1bd175ab673bc8a9a5df34392c5057b67748a227da0b291501e9596cc3a067.
+Manifest SHA-2564ec80b6ed0d28f4e778745dee44ff7332685b0aed3155f8b2010272a296a97c3.
+Raw uniqueness/value/exclusion semantics remain producer evidence; no fit ran.
+
+Graph09 December budget-only review accepts proposal60:32 spent plus12body,
+15financial and1newgraph. Effective budget remains59 pending valid admission.
+Original December wrappers/plan/232span metadata and finite unchanged execution
+limits are prepared with charter, runbook and prerequisite helpers. Helper review
+is pending; actual05 preservation and08verifier acceptance still gate generation.
+Seven focused tests passed in0.033seconds (green02); initial fixture errors are
+retained and qualified. No09gate, temp check, admission or claim exists.
+
+Resource order changes for capacity: defer the reviewed full synthetic matcher
+profile's approximately192MB new checkpoints until after December graph admission/
+closure. Current free space plus potential05 reclaim only narrowly exceeds the
+December planning threshold. First obtain08verifier closure acceptance, complete
+and review actual05release, commit/push reviewed compact evidence outside freeze,
+then freshcheck and run05once only if still necessary. Check actual post-preservation
+capacity; never infer sufficiency from projected reclaim. If insufficient, prepare
+and review a precise additional remedy rather than reduce the disk floor or graph.
+No current jobs; HEAD remains5befae305d02585bd3b034ddabbc140f780b0d34.
+
+**August graph08 complete; independent verification next — 2026-09-30T08:29:32.877849+00:00:**
+All eight cells completed: 7,621,136 raw rows and 3,649,155 admitted transactions.
+Guard elapsed 1,419.791046 seconds, peak 4,790,677,504 bytes, zero high/max/OOM,
+child zero and cleanup verified. Exact owner979692/start8282363 and cgroup are
+absent; session26570 completed. Frozen HEAD remains5befae305d02585bd3b034ddabbc140f780b0d34.
+Reviewed reconcile_compact.py ran once: all88 source/98 input references,
+22 compact artifacts, six large file extents and lifecycle closure reconcile.
+No raw/SQLite/array body was reread by this compact check. Independent producer
+CLOSURE_REVIEW.md requested. Accounting remains32/59; no financial fit ran.
+
+Next: bind actual accepted closure and all three output receipts for verifier08,
+independent final verification release, fresh resources/identity/owner checks,
+and one guarded array verification. No job is active now. Keep original receipts
+and graph08 identity closed; never rerun. Free disk at check18,410,586,112bytes;
+December still requires22,103,159,134. Conditional storage05 remains prospective.
+
+**Preparation reviews accepted; sole August owner continues — 2026-09-30T07:58:34.716781+00:00:**
+Storage05 preparation REVIEW.md accepts all 30 compact bindings, the original
+closed graph07 ledger identity and current stats. No transfer is admitted yet:
+actual graph08 producer/verifier acceptance, fresh December deficit, exact
+contextual release review, commit/push and resource checks remain prerequisites.
+The full synthetic matcher preparation is also independently accepted and queued
+behind graph08 and its saved-array verification; do not duplicate or overlap jobs.
+The existing paper-replication-progress heartbeat is ACTIVE every 15 minutes.
+Maintain frozen HEAD 5befae305d02585bd3b034ddabbc140f780b0d34 until current closure;
+no new claim or guard was launched by these preparations.
+
+**Graph08 live acceptance and next engineering preparation — 2026-09-30T07:57:47.271351+00:00:**
+Independent LIVE_REVIEW.md accepts exact owner 979692/start 8282363, supervisor
+977452, sole unit92a35de990ae463dbf143f73ed50a9d5, kernel controls and committed
+88 source / 98 input references. Claim is published; accounting is 32/59 with
+12 body and 15 financial allowances reserved. Fresh check confirms frozen HEAD
+5befae305d02585bd3b034ddabbc140f780b0d34 and every binding unchanged. At
+505.1 seconds the guard is running, sampled peak
+3,170,291,712 bytes, memory events {'high': 0, 'low': 0, 'max': 0, 'oom': 0, 'oom_group_kill': 0, 'oom_kill': 0}.
+Published daily source receipts: 4/7. No graph terminal is inferred.
+
+Future verifier08 and actual-owner compact reconciliation helper are independently
+accepted for preparation only. Run reconciliation only after actual producer
+terminal and cleanup; bind all three output receipts before final verifier review.
+
+The new matching-complete-workspace-probe-2026-09-30 is independently accepted
+with 102 bindings. It will measure full 48-iteration zero-edge matching, all
+124,062 hardening chunks, scalar score finalization and two checkpoint restores
+at the unchanged 4,000,000-entry cap. No execution yet. Require no active
+replication units, fresh reviewed source/runtime/HEAD checks, 4 GiB startup,
+10 GiB plus 512 MiB disk, and the 1 GiB/768 MiB/zero-swap/1,800-second guard.
+Retain both approximately 96 MB checkpoints. This cannot establish nonzero-edge,
+real-hub, MCM, neural or financial feasibility. Do not run alongside graph08.
+
+Conditional storage05 preparation targets only already closed graph07 ledger,
+3,760,664,576 bytes from the original index, stat-checked without body reads.
+Four eligibility tests passed in 0.035 seconds; 30 compact bindings prepared.
+Independent preparation review is requested. Actual release/preflight remain
+absent until graph08 producer and verifier close. Transfer only if actual free
+space still misses December's 22,103,159,134-byte requirement; skip if unnecessary.
+Even the prospective reclaim may be insufficient; fresh capacity decides. Never
+move an active ledger or infer recovery from this unexecuted preparation.
+
+Next: follow the sole August owner through terminal, compact review and guarded
+array verification, then commit/push accepted evidence outside the freeze.
+Continue the full synthetic matcher profile, necessary verified preservation and
+December registration/budget review in a resource-safe order. All broader paper
+scope and 1,420 financial fits remain pending; no historical rerun is permitted.
+
+**August graph08 launched once — 2026-09-30T07:49:54.706602+00:00:**
+Reviewed compact preservation, synthetic probes, coverage03 and exact August gate
+were committed and pushed as 5befae305d02585bd3b034ddabbc140f780b0d34. Fresh
+07:49:00 preflight passed all 88 source / 98 input pins, runtime/workspace,
+196 original span stats, four accepted preservations, graph07 verification and
+ready admission at ceiling 59. RAM 9,901,768,704 and free disk 22,137,065,472
+bytes passed; required free is 20,814,869,047. Temp-check01 completed once with
+successful cleanup. Neither identity may be repeated.
+
+One graph08 launch is active in session 26570. Monitor 979692,
+start ticks 8282363, supervisor 977452, unit onchain-replication-92a35de990ae463dbf143f73ed50a9d5.service.
+The initial claim publication is present; accounting becomes 32/59 only on actual claim.
+Freeze this HEAD and all 88/98 bindings while active. Keep 6 GiB maximum,
+5 GiB high, zero swap, 3 GiB host reserve, 10 GiB disk floor, two CPUs and
+28,800 seconds. No parallel empirical process or duplicate launch is authorized.
+
+Independent live review is requested. Future verifier08 algorithm preparation
+is independently accepted; its actual closure bindings and final review remain
+pending. Continue isolated preparation while graph08 owns its outputs. After
+terminal publication, reconcile eight cells and owner cleanup, independently
+review closure, bind and run the finite saved-array verifier once. Then continue
+December, matching/MCM/neural resource work and all 1,420 pending financial fits.
+
 **Graph08 release accepted; committing reviewed evidence — 2026-09-30T07:48:33.196206+00:00:**
 The exact August gate and directed-edge synthetic closure are independently accepted.
 All review conditions remain: commit/push, fresh resource checks, one temp-volume
