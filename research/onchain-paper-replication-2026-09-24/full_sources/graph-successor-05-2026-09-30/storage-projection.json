@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "scope": "planning estimate, not proven upper bound or execution release",
+  "synthetic_result": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-storage-probe-2026-09-29/result.json",
+    "sha256": "c6ff4ac9a2703a1722869a975478e1b0255ed2c1ebc8803063accb9485b15373"
+  },
+  "synthetic_rows": 250000,
+  "synthetic_sampled_peak_allocated_bytes": 244158464,
+  "target_rows": 7684076,
+  "projected_peak_bytes": 7504528774,
+  "planning_margin_fraction": 0.3,
+  "planning_margin_bytes": 2251358633,
+  "projected_parquet_page_bytes": 136450048,
+  "extra_metadata_guard_reserve_bytes": 268435456,
+  "projected_incremental_disk_requirement_bytes": 10160772911,
+  "disk_floor_bytes": 10737418240,
+  "required_free_at_launch_bytes": 20898191151,
+  "qualification": "Same prior reviewed synthetic projection rule, recomputed for new declared rows and range page footprint. No inference that full-size sorting, topology or peak is bounded by this estimate. Runtime disk stop independently enforces10GiB."
+}

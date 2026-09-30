@@ -1,7 +1,159 @@
-# Current execution checkpoint — September 29, 2026
+# Current execution checkpoint — September 30, 2026
 
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
+
+**Graph05 exact release reviewed; commit and fresh checks next — 2026-09-30T03:34Z:**
+Independent storage closure accepted, with exact ten-evidence review receipt.
+Graph05 gate was generated once and independently accepted: 87 source pins,
+42 compact inputs including all eleven preservation objects, seven runtime hashes,
+original ancestry and unchanged scientific graph configuration. All 163 files
+from the previous full offline verification remain identical; new preparation
+scripts have their separate review and synthetic evidence.
+
+Commit/push the reviewed preparation and compact closure next. Then run one new
+finite temp-volume check, fresh preflight with actual free space and RAM, and one
+eth-paper-graph-resource-20260930-05 launch if every admission condition passes.
+Its original June 5–11, 2023 source days declare 7,684,076 rows; seven source cells
+and one whole-week graph are required. Resource policy remains 6 GiB max / 5 GiB
+high / zero swap / 3 GiB reserve / 9 GiB startup / 10 GiB disk floor / 28,800 s.
+Actual free space must exceed 20,898,191,151 bytes; the storage projection is an
+assumption, not an upper bound. No new graph claim or temp check has run yet.
+Freeze committed HEAD and exact input/source bytes after launch. Budget56 becomes
+effective only through valid adoption; all failures and reserved body/fit slots
+remain. Closed storage/graph/verifier identities must never be relaunched.
+
+**Closed-ledger preservation complete; independent closure review pending — 2026-09-30T03:29:40Z:**
+closed-ledger-offload-2026-09-30-01 completed once, with full body and restoration
+metadata roundtrip verification. Exactly 3,755,220,992 bytes from the closed graph03
+SQLite ledger were preserved remotely and evicted locally. Restoration sidecar,
+verified/evicted receipts, source hash and aggregate completion metadata agree.
+The original graph03 artifact index remains unchanged; restore and verify remote
+bytes before any later historical check requiring the old local ledger path.
+No raw transaction store, graph array or newer ledger was moved.
+
+Guard elapsed 2383.507 seconds; sampled peak
+202,407,936 bytes; memory.high events
+58,273, zero max/OOM events, child zero and cleanup verified.
+Monitor 647229 and exact cgroup are absent; session 38264 is complete. All 22 frozen
+bindings and HEAD 7d8c41001a1ff91969782a9425c2f5fcad96739d match. Compact reconciliation
+is saved in storage/closed-ledger-offload-2026-09-30-01/closure01.json. No repeated
+body transfer/hash was used for this independent compact/stat reconciliation.
+
+Next: independent CLOSURE_REVIEW.md plus exact closure-review.json, then generate
+and independently review graph05 gate using prepare_registration.py. Commit/push
+reviewed compact closure, preparations and isolated normalization evidence before
+fresh temp/admission/resource checks and one graph05 launch. No empirical job is
+currently active. Effective budget remains 28/55 until prospective 56 adoption.
+Never rerun the closed preservation identity. All 72 remaining original resource
+requirements and 1,420 financial fits remain required.
+
+**Transfer recovery advancing; normalization engineering reviewed — 2026-09-30T03:25:17Z:**
+The original storage job remains active at the same frozen HEAD and owner. Its
+recovery download has reached 3,031,334,912 of 3,755,220,992 bytes; this is progress,
+not a verified backup or completed eviction. No duplicate transfer or graph was
+launched. Retain the source until the worker completes its full body and metadata
+roundtrip; then reconcile, independently review, and proceed with graph05.
+
+Independent normalization engineering is saved under
+full_sources/normalization-chunking-2026-09-30, outside the storage bindings.
+Naive column chunking produced 28 exact-value mismatches in 288 synthetic cases.
+A C-order singleton-padding candidate eliminated such differences in the tested
+C-order cases, while F-order cases demonstrated why layout must be constrained.
+The implemented isolated state machine provides scale/row/column/exp safe points;
+four tests pass, including 60 final byte-parity cases and postwrite-interruption
+poisoning. Independent IMPLEMENTATION_REVIEW.md accepts only this bounded prototype.
+No durable resume, production integration, changed capacity, empirical feasibility
+or full-study completion is claimed. All probes and failed setup evidence remain.
+Code, results and review await commit after the active HEAD freeze lifts.
+
+**Preservation active; graph05 preparation awaits terminal evidence — 2026-09-30T03:00:38Z:**
+The same storage monitor 647229 (start ticks 6482275) remains active at frozen
+HEAD 7d8c41001a1ff91969782a9425c2f5fcad96739d. All 22 bindings match. Elapsed
+685.5 seconds; sampled peak 201,662,464 bytes; 13,393 memory.high events and zero
+max/OOM events. The 10 GiB disk floor remains enforced. No body-verification,
+eviction or final receipt exists yet; no reclaimed space is claimed.
+
+Graph05 budget-only review is accepted: 28 spent + 12 body + 15 fit + one new
+resource claim = prospective ceiling 56. Effective ceiling remains 55 until
+valid adoption. The seven original June 5–11, 2023 source days and 511 retained
+span stats were reviewed without body reads. No new empirical claim exists.
+
+Graph05 now has preservation_requirement.py and a preflight check that refuses
+launch without independently accepted, hash-bound successful preservation
+closure, matching restoration/eviction/completion receipts and absent owner.
+Five synthetic tests pass; missing-module red evidence is retained. This checks
+compact evidence, not remote bytes. prepare_registration.py will create the
+exact gate and verification-reuse record only after the real closure review
+exists; it has NOT been run. Independent preparation review is accepted in PREPARATION_REVIEW.md; final gate
+and empirical release remain pending actual closure evidence. The five synthetic
+cases do not test generated gate output or every rejection branch.
+No placeholder closure, final gate or empirical launch is claimed.
+
+Next safe action: retain the active storage owner and frozen files/HEAD. Once
+terminal, reconcile all per-file receipts, exact owner/cgroup cleanup and source
+sidecar; obtain independent CLOSURE_REVIEW.md plus closure-review.json using the
+exact schema documented in graph05/RUNBOOK.md. If preservation fails, retain all
+partial receipts and scratch and reconcile explicitly; do not reuse this identity.
+After successful review, generate/review graph05 gate, commit/push compact
+receipts and registration, then fresh temp, admission, resource and identity
+checks before one launch. A separately reviewed preservation failure path is
+required if success-only preflight cannot pass. Expected space is never counted.
+
+Independent reconciliation in full_sources/resource-coverage-2026-09-30 is
+complete: 37 of the original 109 requirements have evidence; 72 remain. These
+comprise five graphs, 35 source days, seven neighborhood and seven matching
+measurements, nine MCM and nine neural-checkpoint measurements. Fourteen legacy
+source requirements are supported by retained full-decoder/graph evidence,
+without invented daily receipts or reruns. Historical failed cells remain failed
+even where successors satisfy a requirement. All 1,420 fits,
+remaining original graphs, matching/MCM/neural work and broader paper coverage
+remain required. The active 15-minute continuation checks are unchanged.
+
+**Preservation live; next graph preparation advances — 2026-09-30T02:52:35.270221+00:00:**
+Same storageowner647229/ticks6482275 andHEAD7d8c41001a1ff91969782a9425c2f5fcad96739d
+remainactive; all22bindings match. Guardelapsed201.7s,
+sampledpeak201662464bytes,memory.high events9004,
+max/OOM events0/0; limitreasonNone.
+Throttling is recorded, not zero pressure. No completedbodyverification/localeviction
+is claimed. Preserve exactowner,bindings andHEAD; no secondpreservationlaunch.
+
+Independent graph-successor-05-2026-09-30 preparation now exists for original
+2023-06-05..12:7,684,076declaredrows/sevendailywrappers/onewholegraph. Proposed
+55→56resourceextension preserves28spent+12body+15fit+1newresource; independent
+budgetreviewrequested. Metadata/stat-only preparation; no empiricalclaim/network.
+Storageprojection10,160,772,911incremental bytes+10GiBfloor is a planning estimate,
+not a bound. Gateawaitsbudgetreviewreceipt. The activeledgerpreservation must
+closeandbeindependentlyreviewed before commit/admission/launch ofgraph05. Expected
+reclaimedspace isnot counted asalreadyfree. Allfivecurrentlymissinggraphs andfull
+matching/MCM/neural/1420fit scope remain; completed graph04 andverifier neverrerun.
+
+**ACTIVE closed-ledger preservation — 2026-09-30T02:49:47.726606+00:00:**
+Graph04 compactclosure and independentarrayverification accepted. Reviewedcode,
+allcompactgraph04/verificationevidence andpreservationprep committed/pushed as
+7d8c41001a1ff91969782a9425c2f5fcad96739d. Largegrapharrays/SQLite remainuntracked.
+One closed-ledger-offload-2026-09-30-01 is nowrunning: monitor647229,
+startticks6482275,unitonchain-replication-4d3c5856e45e40d39ebbabe5cd5cb62d.service,toolsession38264.
+FreezeHEAD andall22bindings.json files untilterminalcleanup. No duplicate, automatic
+retry or terminalidentityrelaunch. Preflight22hashes/exactclosedgraph03eligibility
+passed;10,121,912,320bytes availableRAM and20,962,377,728diskfree against14,509,416,448
+required. Nootheractiveunit. The sole target is completedgraph03ledger3,755,220,992
+bytes. No localeviction or verifiedremotebackup is claimed untilper-filereceipts.
+Guard256MiBmax/192high/0swap/3GiBreserve/3.5startup/10disk/14400seconds; upload and
+download each5400s,8GiBtotalpayload,4GiBmaxrecoveryscratch. Preserve failedscratch.
+
+Nextsafeaction: inspectexactguardandper-fileintent/verified/evicted/complete or
+failedreceipts. Onclosure proveowner/cgroupdeath; independentlyreview fullbody
+roundtrip/restorationmetadata andsidecar before claiming3.5GiBreclaimed. Never
+rerunthisidentity. Originalgraph03artifact-index staysunchanged; restorehashverified
+ledgerbodybeforehistoricalchecks requiringitslocalpath. Rawdata,grapharrays and
+closedgraph04ledger staylocal. Noempiricaljobactive; budget28/55,all1,420fitspending.
+Whilepreservationruns, continueindependentmatchingcheckpoint/capacitylineagework
+andnextoriginalstressweek2023-06-05preparation outsidefrozenfiles. Registration,
+reviewed55→56resourceallocation, commitandfreshhost/diskchecks precedenextgraph;
+27body/fit slots remainreserved. Remainingfivegraphs andfullpapercoverage required.
+Preservation isoperational, consumesno financialclaim, andpermitsno newpurchase,
+providercontact,tradingordeployment. Overnight15-minutecontinuationremainsactive.
 
 **Graph04 independent terminal review accepted — 2026-09-30T02:48:33.180462+00:00:**
 Independent compactterminalreview accepted all63verifierbindings, result/rawlog
