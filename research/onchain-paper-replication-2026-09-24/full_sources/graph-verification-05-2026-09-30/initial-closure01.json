@@ -1,0 +1,51 @@
+{
+  "at": "2026-09-30T04:00:51.139771+00:00",
+  "status": "complete",
+  "source": "9f7401158b3544deefbc4c1b9e995d565880ce50",
+  "bindings_verified": 165,
+  "owner_cgroup_absent": true,
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-05-2026-09-30/result.json": "18c9f599fc31c572022abd8fc1fce6cd8073295c19083d5886bdaab21429bd48",
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-05-2026-09-30/guard01/final.json": "b80d05708913b6ea18b4d1a1fd656ae760f6af2d0b5387f49c878e3f24c31cb8",
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-05-2026-09-30/bindings.json": "c6f0ec43e7a58a60c6c36f2a0ba9e8822358ee525117fde40a86b5a8e2d251a4",
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-05-2026-09-30/started.json": "c08eeaf5eef3bfd099f039a0c287d9f00ee7aa4bb38d405916f0fd51c793f8ca"
+  },
+  "result": {
+    "admitted_transactions": 3719354,
+    "array_bytes": 487897264,
+    "claim_sha256": "081a5a4e74491c2d0590b53f03f0da65dc9327db81bf11ae4b3a15bec0a6157d",
+    "directed_edges": 2509313,
+    "elapsed_seconds": 31.31858714799455,
+    "graph_hash": "cd70b436ed2c62eedbefc5b1a72026b0b313fde759843995fc1dfe3b40cd43fc",
+    "graph_manifest_sha256": "f00ed07085e06fbe048faa06450baf417c72bec298a5e54ea95312b4039d182d",
+    "node_feature_max_absolute_errors": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0
+    },
+    "nodes": 1837248,
+    "qualification": "Independent saved-array identity, structure and aggregate conservation verification. Source/exclusion counts reconcile producer receipts; raw transaction uniqueness, raw values and exclusion classification were not independently re-audited. No fit, sample, graph rebuild or new empirical claim.",
+    "raw_rows": 7684076,
+    "source_claim": "eth-paper-graph-resource-20260930-05",
+    "status": "complete",
+    "terminal_sha256": "4ce33b3ea0f7e23ba46452293e8db40bb70d1b01871136609a0406212dca657b"
+  },
+  "guard": {
+    "monitor_pid": 737664,
+    "unit": "onchain-replication-7110156792844f3abdbdf3720aafb1fd.service",
+    "elapsed_seconds": 31.90521277699736,
+    "peak_sampled_memory_current_bytes": 174194688,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "child_exit_code": 0,
+    "cleanup_verified": true
+  },
+  "qualification": "Compact post-verification reconciliation; arrays were read exactly once by the guarded verifier, not by this closure step."
+}

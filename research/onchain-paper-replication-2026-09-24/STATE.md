@@ -3,6 +3,160 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Graph06 release accepted — 2026-09-30T04:06:15.846748+00:00:**
+The exact January 2024 gate and its new predecessor checks passed independent
+release review. All 88 source pins, 54 compact inputs, seven runtime hashes,
+original ancestry and 163 reused full-verification files match. Graph05 and its
+array verifier remain terminal; no job is currently active. Commit and push the
+reviewed evidence and preparation, then perform one temp check and fresh admission.
+Launch graph06 once only if actual resources and all identity/hash checks pass.
+The conditional ledger transfer remains unexecuted while free space suffices.
+No financial fits or broader paper completion are claimed.
+
+**Graph05 verified; graph06 exact release review pending — 2026-09-30T04:04Z:**
+Independent graph05 array verification completed once:1,837,248nodes,
+2,509,313directed edges,487,897,264arraybytes; graphhash
+cd70b436ed2c62eedbefc5b1a72026b0b313fde759843995fc1dfe3b40cd43fc.
+All four node-feature maximum errors are0. Guard31.905seconds, peak174,194,688bytes,
+zero memory events, childzero/cleanup; monitor737664/unit7110156792844f3abdbdf3720aafb1fd
+are absent. Session61709 completed. All165bindings remain unchanged. Independent
+CLOSURE_REVIEW.md and exact four-evidence closure-review.json accept the terminal.
+No raw uniqueness/value/exclusion replay was claimed. Initial compact receipt
+wording about exactly-once reads is preserved separately and clarified as one
+verification invocation with multiple array passes. Results/hashes are unchanged.
+
+Graph06 budget-only57acceptance and exactgate now exist:88sourcepins/54inputs,
+including12actual graph05 producer/verifier prerequisites. All163oldfull-suite
+bound bytes remain unchanged. New previous_graph_requirement.py refuses missing
+accepted verification review or live/failed predecessor owners; both generator
+and preflight call it. The generator ran once, reading compact metadata only.
+Exact release review is requested; no gate adoption or empirical claim yet.
+
+Next: after exact release acceptance, commit/push graph05 closure, verifier evidence,
+reviewed graph06 metadata/scripts/gate and conditional storage02preparation.
+Then one finite temp-volume check, fresh normal admission,88/54hashes,790rawspan
+stats, actualRAM/disk/owner checks, and one graph06launch if all pass. It needs
+20,718,879,508freebytes. Lastmeasured20,874,653,696exceeds that requirement, so
+storage02muststayunexecuted if freshspace still suffices. If not, execute its
+reviewed one-shot preservation only aftercommit/freshchecks, independently close
+it, then recheck the graphlaunch. No current graph/verifier/storage job is active.
+Budget29/56 until valid nextadoption; all27body/fit allocations and1,420fits remain.
+Five ofnine original graphweeks nowhave completed producer/verification evidence
+(the firsttwo still need current bounded arrayverification beforeactualreuse).
+All remaining features/neural/history/BTC/comparisons stay in scope.
+
+**Graph05 complete; array verification release pending — 2026-09-30T03:57Z:**
+Graph05 is terminal complete: all eight cells, 7,684,076 raw rows and 3,719,354
+admitted transactions. Guard elapsed 1,292.077 seconds, sampled peak
+5,368,401,920 bytes, 117 memory.high events, zero max/OOM events, child zero and
+cleanup verified. Monitor682090/cgroup are absent; session73954 completed.
+The new reviewed compact reconciler ran once:87source pins/42inputs/22artifact
+JSON hashes and6large extents agree; lifecycle/source/observer joins pass.
+Its receipt is graph-successor-05-2026-09-30/empirical-closure01.json.
+Independent terminal closure review is requested. Never rerun this graph.
+
+The new graph-verification-05-2026-09-30/bindings.json now pins165actual compact
+files, including all claimed source/input bytes and actual terminal/artifact
+metadata. No array or SQLite body was read during this preparation. Keep
+HEAD9f7401158b3544deefbc4c1b9e995d565880ce50 frozen through the forthcoming verifier.
+After independent exact binding/plan acceptance, recheck all165hashes, no active
+owner/unit,6GiB availableRAM and10GiB free disk; then launch run_guard.py once.
+Its3GiBmax/2high/0swap/1800s guard checks all five saved arrays, not raw semantics.
+
+Graph06 budget proposal is now constructed from actual12closed+17historical
+claims:29spent+12body+15fit+1newresource=57. No review receipt, final gate or
+adoption yet. Independent metadata preparation is already accepted. Exact
+release must bind graph05 terminal and its actual independent array verification.
+Fresh disk20,878,192,640 presently exceeds graph06required20,718,879,508bytes;
+conditional closed-ledger-offload02 is independently reviewed but stays unexecuted
+if that condition still holds after verification. No second transfer is active.
+After verifier closure/review, finalize/review graph06 registration, commit/push
+compact evidence and source, then fresh temp/admission/host/owner checks before
+one launch. All27body/fit slots and1,420financialfits remain required.
+
+**Graph05 active; next executable stages prepared — 2026-09-30T03:50:34Z:**
+Six of seven source days have completed receipts: 6,578,003 of 7,684,076 rows.
+The same owner remains active; elapsed 973.9 seconds, sampled peak 4,774,924,288
+bytes, zero high/max/OOM events. All 87 source pins, 42 inputs and HEAD9f740115
+remain unchanged. Free disk is 20,478,263,296 bytes, above this run's 10 GiB floor.
+No graph completion or terminal receipt is claimed.
+
+Prepared and independently reviewed outside frozen files:
+- full_sources/graph-successor-06-2026-09-30: seven original January 1–7, 2024
+  wrappers, 7,552,945 declared rows, 790 stat-only spans, unchanged resource policy
+  and a 20,718,879,508-byte free-space planning requirement. No budget extension,
+  final gate, admission or claim yet. The future resource allocation would be57,
+  preserving29spent+12body+15fit+1resource; use actual terminal snapshot first.
+- full_sources/graph-verification-05-2026-09-30: unchanged independent saved-array
+  algorithm retargeted to graph05, same finite guard, plus reviewed compact/stat
+  reconcile_compact.py. Neither has executed; actual successful graph terminal,
+  independent compact review and final bound hashes must precede verification.
+
+Conditional storage/closed-ledger-offload-2026-09-30-02 prepares moving only the
+already closed graph04 SQLite ledger (3,370,971,136 bytes), using the accepted
+full-body/restoration-metadata roundtrip worker under a fresh identity. Six
+synthetic tests pass; 22 bindings and conditional execution are independently
+accepted in its REVIEW.md. Actual closure/disk-shortfall release checks still apply.
+No remote directory, transfer, body hash or eviction exists. Run only if fresh
+post-graph05 space misses the next graph's planning requirement. First close,
+reconcile and independently verify graph05, then obtain preservation review,
+commit/push and fresh host/disk/identity checks. Leave this preparation unexecuted
+if enough space is available. No active graph05 ledger or raw/graph arrays move.
+
+Next safe action: monitor exact graph05 owner through closure, preserving HEAD.
+On complete terminal, run the new compact reconciler once, request independent
+closure review, bind actual evidence for the finite array verifier and execute it
+once under its reviewed guard. Retain any failures and never reopen closed jobs.
+Only then decide conditional preservation and final graph06 budget/registration.
+Do not let preparation status substitute for actual closure, body verification,
+review, committed admission or measured free space. All1,420fits remain pending.
+
+**Live status — 2026-09-30T03:39:43Z:**
+Graph05 remains active under exact monitor 682090/start ticks 6752378. Three of
+seven source days have completed durable receipts, totaling 3,318,012 rows of
+7,684,076 declared rows. This is source-ingestion progress, not completed graph
+construction. Guard elapsed 323.65 seconds; sampled peak 2,653,618,176 bytes;
+zero high/max/OOM events and no limit reason. Free disk is 22,367,150,080 bytes,
+above the 10 GiB floor. No terminal receipt exists. Continue the same owner;
+verify the completed graph before advancing to January 2024. All frozen source
+and input ownership rules below remain in force.
+
+**ACTIVE graph05 — 2026-09-30T03:35:13.843321+00:00:**
+The reviewed registration, storage closure, 109-requirement reconciliation and
+isolated normalization evidence were committed and pushed as
+9f7401158b3544deefbc4c1b9e995d565880ce50. One graph05 process is active:
+eth-paper-graph-resource-20260930-05; monitor 682090, start ticks
+6752378; supervisor 680130; unit
+onchain-replication-77a2be0d275d41258a74ee65f00676f3.service; tool session 73954.
+Freeze HEAD, all 87 source pins and 42 compact input bindings while it is active.
+Never duplicate this process or relaunch its reserved identity.
+
+Fresh temp-volume check completed with child zero and cleanup. Preflight passed
+normal admission at effective ceiling 56, the independent preservation prerequisite,
+all source/input hashes, 511 raw span stats, no prior identity or active unit,
+10,054,623,232 bytes available RAM and 24,664,023,040 bytes free storage against
+20,898,191,151 required. Gate SHA256:
+53b3f2769b0943dcbca8611ef9da56d1f1342779784623ba377162fa27ad083b.
+The original June 5–11, 2023 inputs declare 7,684,076 rows. Seven source cells
+and one complete graph are required. Guard readback enforces 6 GiB max / 5 GiB
+high / zero swap / 3 GiB host reserve / 9 GiB startup / 10 GiB disk / two-CPU
+affinity / 28,800 seconds. The claim exists: 29 attempts spent at effective ceiling 56, leaving the 27 body/fit allocations. This active
+resource attempt is spent regardless of eventual success.
+Independent LIVE_REVIEW.md confirms the exact active claim/owner/kernel limits
+and all 87 source/42 input bindings, with no blocking finding. No graph completion
+is claimed. This live review and startup receipts await commit after closure.
+
+Next safe action: inspect exact owner, live guard and durable cell/checkpoint
+receipts; preserve failed/unavailable outcomes and all raw/SQLite/array artifacts.
+After terminal cleanup, reconcile compact hashes and obtain independent review;
+perform a separately bounded verification of newly completed arrays. No historical
+job is rerun. Then commit/push closure and prepare the next original missing week
+(January 1, 2024), with a fresh reviewed resource allocation; 27 body/fit slots stay
+reserved. Continue independent matching/checkpoint engineering outside frozen files.
+The completed storage transfer must never be relaunched. All remaining original
+requirements and all 1,420 financial fits remain in scope. Fifteen-minute autonomous
+continuation remains active and should proceed to each next executable stage.
+
 **Graph05 exact release reviewed; commit and fresh checks next — 2026-09-30T03:34Z:**
 Independent storage closure accepted, with exact ten-evidence review receipt.
 Graph05 gate was generated once and independently accepted: 87 source pins,
