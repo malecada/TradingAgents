@@ -1,0 +1,128 @@
+test_duplicate_sample_event_is_not_silently_rolled_back (__main__.Tests.test_duplicate_sample_event_is_not_silently_rolled_back) ... FAIL
+test_exact_published_samples_join_current_owner_and_consumer_scope (__main__.Tests.test_exact_published_samples_join_current_owner_and_consumer_scope) ... FAIL
+test_foreign_owner_or_wrong_explicit_event_refuses_before_materialization (__main__.Tests.test_foreign_owner_or_wrong_explicit_event_refuses_before_materialization) ... FAIL
+test_legacy_json_numeric_lists_refuse_before_array_materialization (__main__.Tests.test_legacy_json_numeric_lists_refuse_before_array_materialization) ... FAIL
+test_policy_or_artifact_drift_invalidates_existing_receipt (__main__.Tests.test_policy_or_artifact_drift_invalidates_existing_receipt) ... FAIL
+test_published_same_shape_tampering_fails_actual_induced_sample_check (__main__.Tests.test_published_same_shape_tampering_fails_actual_induced_sample_check) ... FAIL
+test_registered_array_budget_refuses_before_materialization (__main__.Tests.test_registered_array_budget_refuses_before_materialization) ... FAIL
+test_wrong_registered_policy_route_refuses_before_materialization (__main__.Tests.test_wrong_registered_policy_route_refuses_before_materialization) ... FAIL
+
+======================================================================
+FAIL: test_duplicate_sample_event_is_not_silently_rolled_back (__main__.Tests.test_duplicate_sample_event_is_not_silently_rolled_back)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 87, in test_duplicate_sample_event_is_not_silently_rolled_back
+    f=self.fixture();f.journal('samples_complete',self.context,numeric_record(self.samples))
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 31, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 17, in api
+    assert (HERE/'route.py').is_file(),'sample publication admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: sample publication admission missing
+
+======================================================================
+FAIL: test_exact_published_samples_join_current_owner_and_consumer_scope (__main__.Tests.test_exact_published_samples_join_current_owner_and_consumer_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 62, in test_exact_published_samples_join_current_owner_and_consumer_scope
+    f=self.fixture();result=self.admit()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 31, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 17, in api
+    assert (HERE/'route.py').is_file(),'sample publication admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: sample publication admission missing
+
+======================================================================
+FAIL: test_foreign_owner_or_wrong_explicit_event_refuses_before_materialization (__main__.Tests.test_foreign_owner_or_wrong_explicit_event_refuses_before_materialization)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 82, in test_foreign_owner_or_wrong_explicit_event_refuses_before_materialization
+    f=self.fixture()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 31, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 17, in api
+    assert (HERE/'route.py').is_file(),'sample publication admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: sample publication admission missing
+
+======================================================================
+FAIL: test_legacy_json_numeric_lists_refuse_before_array_materialization (__main__.Tests.test_legacy_json_numeric_lists_refuse_before_array_materialization)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 73, in test_legacy_json_numeric_lists_refuse_before_array_materialization
+    self.fixture('legacy')
+    ~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 31, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 17, in api
+    assert (HERE/'route.py').is_file(),'sample publication admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: sample publication admission missing
+
+======================================================================
+FAIL: test_policy_or_artifact_drift_invalidates_existing_receipt (__main__.Tests.test_policy_or_artifact_drift_invalidates_existing_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 94, in test_policy_or_artifact_drift_invalidates_existing_receipt
+    f=self.fixture();result=self.admit();p=f.root/'artifact_read.json';raw=p.read_bytes();p.write_text('{}')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 31, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 17, in api
+    assert (HERE/'route.py').is_file(),'sample publication admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: sample publication admission missing
+
+======================================================================
+FAIL: test_published_same_shape_tampering_fails_actual_induced_sample_check (__main__.Tests.test_published_same_shape_tampering_fails_actual_induced_sample_check)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 90, in test_published_same_shape_tampering_fails_actual_induced_sample_check
+    f=self.fixture('tampered')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 31, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 17, in api
+    assert (HERE/'route.py').is_file(),'sample publication admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: sample publication admission missing
+
+======================================================================
+FAIL: test_registered_array_budget_refuses_before_materialization (__main__.Tests.test_registered_array_budget_refuses_before_materialization)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 76, in test_registered_array_budget_refuses_before_materialization
+    self.fixture('tiny')
+    ~~~~~~~~~~~~^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 31, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 17, in api
+    assert (HERE/'route.py').is_file(),'sample publication admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: sample publication admission missing
+
+======================================================================
+FAIL: test_wrong_registered_policy_route_refuses_before_materialization (__main__.Tests.test_wrong_registered_policy_route_refuses_before_materialization)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 79, in test_wrong_registered_policy_route_refuses_before_materialization
+    self.fixture('wrong_route')
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 31, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 17, in api
+    assert (HERE/'route.py').is_file(),'sample publication admission missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: sample publication admission missing
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.002s
+
+FAILED (failures=8)

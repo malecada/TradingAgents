@@ -1,0 +1,25 @@
+test_live_directory_drift_during_scope_is_refused (__main__.Tests.test_live_directory_drift_during_scope_is_refused) ... FAIL
+test_live_directory_drift_invalidates_existing_receipt (__main__.Tests.test_live_directory_drift_invalidates_existing_receipt) ... FAIL
+
+======================================================================
+FAIL: test_live_directory_drift_during_scope_is_refused (__main__.Tests.test_live_directory_drift_during_scope_is_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 97, in test_live_directory_drift_during_scope_is_refused
+    with patch.object(f.workload,'sample_scope',side_effect=redirect),self.assertRaises(ValueError):self.admit()
+                                                                      ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_live_directory_drift_invalidates_existing_receipt (__main__.Tests.test_live_directory_drift_invalidates_existing_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/sample-artifact-route-2026-10-01/test_route.py", line 100, in test_live_directory_drift_invalidates_existing_receipt
+    with self.assertRaises(ValueError):result.lease()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 15.537s
+
+FAILED (failures=2)
