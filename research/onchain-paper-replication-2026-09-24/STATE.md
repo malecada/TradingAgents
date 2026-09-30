@@ -3,6 +3,30 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Serial pair/journal/workload composition independently accepted; integration pending**:
+New isolated `full_sources/pair-serial-composition-2026-09-30/serial.py` connects
+maintained PairSession with accepted policy-derived extent reservations and
+durable pair publications. It serializes real directional work, reuses exact
+completed scores without solver construction, resumes published progress into
+new owner sessions, retains inherited logical quotas and refuses pending orphan
+reservations. Cleanup failures and the adapter's cleanup-error notes are fatal
+to the worker rather than ordinary unavailable-cell exceptions. Original first
+candidate and failing cleanup-note regression are retained.
+
+green03:10tiny tests pass0.628s, including scalar score parity, full dictionary
+matrix/identity agreement and MCM agreement through actual workload callbacks,
+completed replay with create/resume forbidden, progress continuation, quota and
+publication-gap preservation. These are real tiny pair arrays/journals, but
+lease hooks are synthetic. Actual ResearchRun/Binding/death/ancestry admission,
+whole-workflow physical accounting, orphan certificates and full representation
+reuse remain outstanding. No empirical release or scaled feasibility claim.
+Independent REVIEW accepts the isolated component, SHA256
+f59eb99eb646ef9f8f5cedb811c047626914dd3cae654b84c618bb05ebf66b4e.
+The24direct-file bindings are component provenance, not a full empirical source
+closure. Next: actual registered owner/ancestry integration and bounded synthetic
+parent-failure/child continuation; physical quota/orphan/scaling work remains. No active guarded job or source freeze.
+All earlier graphs/verifiers remain closed, budgets unchanged,1420fits pending.
+
 **Legacy saved-array verification independently CLOSED COMPLETE; freeze released**:
 CLOSURE_REVIEW accepts exact source/receipt/owner/death closure at20:02:05UTC,
 SHA43408e3209caaf774dfd79b28ba1670e675a8d5a59ec0299049fee4b32b72889.

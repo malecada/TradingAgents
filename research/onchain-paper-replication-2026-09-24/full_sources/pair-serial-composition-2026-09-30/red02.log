@@ -1,0 +1,34 @@
+test_actual_pair_score_matches_scalar_and_publication_is_durable (__main__.Tests.test_actual_pair_score_matches_scalar_and_publication_is_durable) ... ok
+test_adapter_cleanup_note_is_fatal_even_without_returned_handle (__main__.Tests.test_adapter_cleanup_note_is_fatal_even_without_returned_handle) ... ERROR
+test_cleanup_failure_is_fatal_and_poisoned (__main__.Tests.test_cleanup_failure_is_fatal_and_poisoned) ... ok
+test_completed_pair_reuse_forbids_every_solver_entry (__main__.Tests.test_completed_pair_reuse_forbids_every_solver_entry) ... ok
+test_cumulative_quota_refuses_before_pair_allocation (__main__.Tests.test_cumulative_quota_refuses_before_pair_allocation) ... ok
+test_partial_checkpoint_new_owner_resumes_and_preserves_parent (__main__.Tests.test_partial_checkpoint_new_owner_resumes_and_preserves_parent) ... ok
+test_pending_publication_refuses_without_solver (__main__.Tests.test_pending_publication_refuses_without_solver) ... ok
+test_publication_gap_stays_pending_and_is_not_rerun (__main__.Tests.test_publication_gap_stays_pending_and_is_not_rerun) ... ok
+test_wrong_workload_or_orientation_refused_before_reservation (__main__.Tests.test_wrong_workload_or_orientation_refused_before_reservation) ... ok
+
+======================================================================
+ERROR: test_adapter_cleanup_note_is_fatal_even_without_returned_handle (__main__.Tests.test_adapter_cleanup_note_is_fatal_even_without_returned_handle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-serial-composition-2026-09-30/test_serial.py", line 84, in test_adapter_cleanup_note_is_fatal_even_without_returned_handle
+    with self.assertRaises(self.m.CleanupFailure):c(self.purpose,self.a,self.b)
+                                                  ~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-serial-composition-2026-09-30/serial.py", line 92, in __call__
+    session=pair.PairSession.create(self.journal.root/'pairs',name,a,b,self.config,**options)
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1234, in _execute_mock_call
+    raise effect
+OSError: construction failed
+Pair cleanup also failed: OSError
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.215s
+
+FAILED (errors=1)
