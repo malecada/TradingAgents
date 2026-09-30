@@ -3,6 +3,52 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Policy-bound saved-extent verification implemented — 2026-09-30T14:39:08.113900+00:00**:
+Noheavyjobactive. Graph10RAMcheckatstart found9443082240bytes<9797894144;
+disk23401922560>22103159134; noactive/activatingunit. Temp02andGraph10remainunused.
+Independent implementation continues withoutchangingmaintainedsource/gate-v3.
+
+full_sources/pair-extent-2026-09-30/ implements reserve_pair andpublish_pair around
+theacceptedartifactjournal. Beforeallocation the publicationreservation isderived
+fromexactPairSessionpolicy(max_checkpoint_bytes+64KiB). Beforejournalevent, bounded
+inventory andmetadatahashjoins validateowner/backend/policy/fixedparent, allsaved
+fileextents andthewholelogicalcheckpointcap. Unexpected/missingfiles,links,foreign
+devices,changedstats andincorrectrootlayout are rejected. NPYbodiesarenotopened;
+array_contents_verified=false, st_blocksfileallocation isseparatefromtotaldisk.
+Solewriter/guard/ResearchRun/workload/deathadmission remainexternalrequirements.
+
+Thirteen tinyrealPairSession tests pass(green05,.215s), includingannealing,
+rankedhardening, completion, journalpublication andunderreservationretention.
+Earlierred/greenresults andsourceversionspreserved. E1wrongrootownerread was
+reproduced(red04) andfixedbeforemetadataaccess; sentinelnowforbidsallopens before
+rootrejection. Exactidentitycomparison also rejectsint/float substitution.
+196source/evidencebindingschecked, including178unchangedfullsuitefiles.
+Independent REVIEW.md accepts corrected extent-only scope, includingall196pins;
+SHAf58c20caea002e83c2fce1b0e51ea1c3ceb09b94c19e2fc23fc59a7c9952f4b7.
+No empiricalreleaseclaimed.
+
+Next: commit/pushacceptedcompactevidence, then bind actualactive
+ResearchRun/producer/source andguardlease to pair ownership andregisteredpolicy;
+add workloadmembership/death/extent admission, bounded orphanreconciliation and
+actualdictionary/MCMrouting. Graph10gate-v3remainsreadyonlywithfreshstrictRAM/
+disk/ownerchecks andcheckedunusedtemp02/preflight03. No repeatedclosedjob.
+Budget32/59unchanged;proposed60unadopted; all1420financialfits remainpending.
+
+**Reviewed pair journal backed up; next integration checkpoint — 2026-09-30T14:12:23.184137+00:00**:
+Accepted artifactjournal code,14tests,17bindings,initialfindings/corrections and
+Graph10resource-refusal evidence are committed/pushed at5a909d144d6979ff3073588d99e08f85db86c665.
+Noheavyjobactive; Graph10temp02/preflight03/dispatch03/run/claim remainabsent.
+All101 gate-v3sourcepins remainexact. AvailableRAM9464258560 <required9797894144;
+free-disk23417978880 >required22103159134 atthischeck. No thresholdwaslowered.
+
+Next autonomouswork: admittedcaller binding actualResearchRun/producer/purpose,
+registeredpairpolicy/declaredextent verification andguard/deathchecks, then
+bounded orphan reconciliation and dictionary/MCMjournal integration. Existing
+artifactjournal isaccepted onlywithinexplicitcallerdeclaredcomponent scope.
+If strictRAM/disk becomeseligiblefirst, Graph10route remainsready under reviewed
+gate-v3 andfreshcheckedtemp02/preflight03 sequence with actualpushedHEAD. Never
+rerunclosedoffline01 orregeneratev3; nofinancialfit ornewempiricalclaim occurred.
+
 **Graph10 safely held; durable pair-journal component implemented — 2026-09-30T14:10:38.313519+00:00**:
 Fullsuite closure and reviewedGraph10gate-v3 committed/pushed at
 ef2b1b8a2f015b94a5940daa17d1c8cdf1d2b4dd. Checked sequential dispatcher refused

@@ -1,0 +1,14 @@
+...F......
+======================================================================
+FAIL: test_numerical_identity_primitive_types_are_exact (__main__.Tests.test_numerical_identity_primitive_types_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-extent-2026-09-30/test_extent.py", line 123, in test_numerical_identity_primitive_types_are_exact
+    with self.assertRaisesRegex(ValueError,'identity'):self.verify(ref)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.169s
+
+FAILED (failures=1)

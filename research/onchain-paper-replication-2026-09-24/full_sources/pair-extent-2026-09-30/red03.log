@@ -1,0 +1,23 @@
+....E......E
+======================================================================
+ERROR: test_policy_bound_reservation_and_verified_journal_publication (__main__.Tests.test_policy_bound_reservation_and_verified_journal_publication)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-extent-2026-09-30/test_extent.py", line 142, in test_policy_bound_reservation_and_verified_journal_publication
+    record=self.m.reserve_pair(j,{'kind':'synthetic','direction':[0,1]},self.identity,POLICY)
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'pair_extent_candidate' has no attribute 'reserve_pair'
+
+======================================================================
+ERROR: test_unverified_or_under_reserved_artifact_never_publishes (__main__.Tests.test_unverified_or_under_reserved_artifact_never_publishes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-extent-2026-09-30/test_extent.py", line 161, in test_unverified_or_under_reserved_artifact_never_publishes
+    self.m.publish_pair(j,ref,identity=self.identity,policy=POLICY)
+    ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'pair_extent_candidate' has no attribute 'publish_pair'
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.184s
+
+FAILED (errors=2)

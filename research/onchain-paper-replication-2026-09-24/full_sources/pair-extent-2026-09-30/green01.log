@@ -1,0 +1,28 @@
+........E
+======================================================================
+ERROR: test_unexpected_file_missing_extent_and_wrong_size_refused (__main__.Tests.test_unexpected_file_missing_extent_and_wrong_size_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-extent-2026-09-30/test_extent.py", line 91, in test_unexpected_file_missing_extent_and_wrong_size_refused
+    with self.assertRaises(ValueError):self.verify(ref)
+                                       ~~~~~~~~~~~^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-extent-2026-09-30/test_extent.py", line 37, in verify
+    args.update(changes);return self.m.verify(ref,**args)
+                                ~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-extent-2026-09-30/extent.py", line 136, in verify
+    and regular(path,device).st_size==info['bytes'],'array extent differs')
+        ~~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-extent-2026-09-30/extent.py", line 42, in regular
+    value=path.lstat()
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_abc.py", line 437, in lstat
+    return self.stat(follow_symlinks=False)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 515, in stat
+    return os.stat(self, follow_symlinks=follow_symlinks)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmp50y4s4s0/session/artifact-000000/state/annealing/V.npy'
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.136s
+
+FAILED (errors=1)
