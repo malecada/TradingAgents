@@ -3,6 +3,32 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Registered workload/graph route independently accepted as a bounded component**:
+New isolated full_sources/pair-workload-route-2026-09-30/route.py binds actual
+ResearchRun/Binding admission to registered schedule/quota controls, resident
+GraphSnapshot population/manifests, configuration/fold/seed, full ExampleManifest
+identity and actual induced sampled neighborhoods. No pair allocation or empirical
+release is implemented by this component. Resident graph checks must still be
+extended to the admitted mapped population before full-fold execution.
+
+Initial check01 passed10cases/55.556s, but independent INITIAL_REVIEW withheld
+acceptance for WR1 (test denominator not pinned) and WR2 (hash-only metadata lease
+lost extent/single-link checks). Original source/tests and all evidence retained.
+red02 reproduces3failures in3cases/18.822s, including two denominator mutations.
+The correction binds the complete example manifest in registered control and
+uses bounded same-device/single-link metadata reads on leases. check02 passed
+all13cases/74.146s, exit0; session49154 closed. Induced sample feature tampering
+is also refused. Final REVIEW independently closes WR1/WR2 and accepts this
+bounded component, SHA1781b509fa832e0af538983fa30efd4dda0bcdc59ac4ddaf58ac35adcd356ac1;
+all36direct-file bindings match. No complete empirical closure is claimed. The red02
+test-source reconstruction is explicitly labeled; original implementation,
+withheld review and logs are preserved. No test process remains active.
+No active guarded empirical job, financial fit, budget change or historical rerun.
+Next: join exact pair journal owners/ancestor references and MCM artifacts to
+this accepted graph/workload route; physical quota/orphan/scaling/mapped work
+remains. The full expected-date/raw-calendar admission and sampler RNG provenance
+are separate requirements. Existing closed jobs must not be rerun.
+
 **Registered-owner numerical integration independently accepted (synthetic scope)**:
 The accepted serial component and review are committed/pushed at e23b9256.
 New isolated full_sources/pair-registered-integration-2026-09-30/check01.log

@@ -1,0 +1,37 @@
+test_test_denominator_cannot_change_while_graph_union_stays_identical (__main__.Tests.test_test_denominator_cannot_change_while_graph_union_stays_identical) ... 
+  test_test_denominator_cannot_change_while_graph_union_stays_identical (__main__.Tests.test_test_denominator_cannot_change_while_graph_union_stays_identical) (count=2) ... FAIL
+  test_test_denominator_cannot_change_while_graph_union_stays_identical (__main__.Tests.test_test_denominator_cannot_change_while_graph_union_stays_identical) (count=3) ... FAIL
+test_hardlink_added_to_admitted_metadata_refuses_on_lease (__main__.Tests.test_hardlink_added_to_admitted_metadata_refuses_on_lease) ... FAIL
+test_sample_feature_tamper_not_covered_by_sample_identity_is_refused (__main__.Tests.test_sample_feature_tamper_not_covered_by_sample_identity_is_refused) ... ok
+
+======================================================================
+FAIL: test_test_denominator_cannot_change_while_graph_union_stays_identical (__main__.Tests.test_test_denominator_cannot_change_while_graph_union_stays_identical) (count=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-route-2026-09-30/test_route.py", line 112, in test_test_denominator_cannot_change_while_graph_union_stays_identical
+    with self.subTest(count=len(rows)),self.assertRaises(ValueError):self.admit(examples=changed)
+                                       ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_test_denominator_cannot_change_while_graph_union_stays_identical (__main__.Tests.test_test_denominator_cannot_change_while_graph_union_stays_identical) (count=3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-route-2026-09-30/test_route.py", line 112, in test_test_denominator_cannot_change_while_graph_union_stays_identical
+    with self.subTest(count=len(rows)),self.assertRaises(ValueError):self.admit(examples=changed)
+                                       ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_hardlink_added_to_admitted_metadata_refuses_on_lease (__main__.Tests.test_hardlink_added_to_admitted_metadata_refuses_on_lease)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-route-2026-09-30/test_route.py", line 116, in test_hardlink_added_to_admitted_metadata_refuses_on_lease
+    with self.assertRaises(ValueError):r.lease()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 18.822s
+
+FAILED (failures=3)
