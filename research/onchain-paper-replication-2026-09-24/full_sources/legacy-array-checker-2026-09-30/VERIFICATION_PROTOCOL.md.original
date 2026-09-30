@@ -1,0 +1,53 @@
+# One fresh read-only legacy graph verification
+
+This release candidate checks the saved five-array graphs for ETH2022-01-03
+and2022-06-13 sequentially. It never starts the original producer, decodes raw
+transactions, samples neighborhoods or fits a model. The original FAILED claim
+and all109historical cells remain unchanged. Existing-output verification spends
+no additional empirical attempt;33/60spent and27fullyallocated remain unchanged.
+
+Before execution, the independent release review and its acceptance record must
+be committed together with exact source-bindings.json. That manifest inherits
+the1798byte bindings closed by the corrected named offline verification, adds
+all current checker/metadata/wrapper sources and retained tests/reviews, and
+binds the31compact metadata files and original preparation. The acceptance
+record binds both manifest and review hashes without a self-referential hash.
+The requested40hex source must match HEAD; all bound current and committed
+bytes must agree. Exact Python3.13.13/NumPy2.3.0 versions are checked. Installed
+library byte identity beyond the locked project files is not asserted.
+
+Run only `PYTHONPATH=. .venv/bin/python -B <this-directory>/run_verification.py
+--source <fresh-reviewed-commit>`. The launcher refuses an existing
+verification01 identity or another active replication guard. It durably reserves
+verification01 before guard startup; a startup failure keeps that reservation.
+No retry is permitted under this identity, including partial or failed startup.
+Guard:3GiBmemory.max/2GiBmemory.high/zero swap/two CPUs via existing reviewed
+guard implementation,3GiBhostreserve/6GiBstartupreserve/10GiBdiskfloor/1800seconds.
+Fresh resource preflight is required before launch; source and HEAD then freeze.
+
+The child reserves exclusive payload receipts, revalidates committed source,
+checks its fresh live monitor lease/boot/owner/cgroup/limits, reads only bounded
+regular single-link compact files through nonsymlink paths, and validates all
+legacy joins before opening an array. Each array verifier receives the exact
+manifest hash and declared graph extent, bounded by562,558,280bytes. Explicit
+mapping cleanup occurs before moving to the next graph. Guard/compact-input
+checks precede and follow each graph; final source is checked again. Any partial
+graph receipt remains preserved on later failure. Resource guardian death/limit
+failure can interrupt verification and is retained as a failed attempt.
+
+Source/stat checks assume no malicious concurrent filesystem writer. Whole
+process memory is enforced by the finite guard, not inferred from array size.
+Verification independently checks saved-array hashes, canonical graph identity,
+structure, counts and aggregate features. Raw transaction uniqueness, values,
+exclusions and provider semantics remain qualified producer evidence. Success
+does not admit future graph reuse or prove paper numerical agreement.
+
+Close only after child/guard result, both graph summaries, source/input hashes,
+mapping cleanup, exact monitor/child death, absent cgroup and independent review
+agree. Preserve every failed attempt; no silent rebuild or replacement.
+
+Component evidence:12tiny synthetic array tests;10compact metadata checks;
+7tiny mocked callback/receipt/guard-boundary tests. The corrected metadata
+denominator and coverage tests propagate dependent hashes and assert their
+specific diagnostics (metadata-green02.log); previous masked tests and review
+are retained. Callback tests do not measure empirical arrays or kernel limits.

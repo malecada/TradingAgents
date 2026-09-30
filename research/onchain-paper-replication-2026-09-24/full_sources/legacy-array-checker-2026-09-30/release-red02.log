@@ -1,0 +1,107 @@
+test_correct_real_boundary (__main__.Tests.test_correct_real_boundary) ... ok
+test_kernel_limit_mismatch_refused (__main__.Tests.test_kernel_limit_mismatch_refused) ... FAIL
+test_monitor_start_tick_mismatch_refused (__main__.Tests.test_monitor_start_tick_mismatch_refused) ... FAIL
+test_reservation_source_mismatch_refused (__main__.Tests.test_reservation_source_mismatch_refused) ... FAIL
+test_resource_limits_refused (__main__.Tests.test_resource_limits_refused) ... 
+  test_resource_limits_refused (__main__.Tests.test_resource_limits_refused) (key='wall_seconds') ... FAIL
+  test_resource_limits_refused (__main__.Tests.test_resource_limits_refused) (key='reserve_bytes') ... FAIL
+  test_resource_limits_refused (__main__.Tests.test_resource_limits_refused) (key='start_reserve_bytes') ... FAIL
+  test_resource_limits_refused (__main__.Tests.test_resource_limits_refused) (key='disk_paths') ... FAIL
+  test_resource_limits_refused (__main__.Tests.test_resource_limits_refused) (key='cpus') ... FAIL
+test_unreleased_worker_refused (__main__.Tests.test_unreleased_worker_refused) ... FAIL
+test_wrong_child_command_refused (__main__.Tests.test_wrong_child_command_refused) ... FAIL
+
+======================================================================
+FAIL: test_kernel_limit_mismatch_refused (__main__.Tests.test_kernel_limit_mismatch_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/test_release.py", line 62, in test_kernel_limit_mismatch_refused
+    with self.assertRaises((ValueError,RuntimeError)):self.check()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'RuntimeError'>) not raised
+
+======================================================================
+FAIL: test_monitor_start_tick_mismatch_refused (__main__.Tests.test_monitor_start_tick_mismatch_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/test_release.py", line 53, in test_monitor_start_tick_mismatch_refused
+    with self.assertRaises((ValueError,RuntimeError)):self.check()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'RuntimeError'>) not raised
+
+======================================================================
+FAIL: test_reservation_source_mismatch_refused (__main__.Tests.test_reservation_source_mismatch_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/test_release.py", line 56, in test_reservation_source_mismatch_refused
+    with self.assertRaises((ValueError,RuntimeError)):self.check()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'RuntimeError'>) not raised
+
+======================================================================
+FAIL: test_resource_limits_refused (__main__.Tests.test_resource_limits_refused) (key='wall_seconds')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/test_release.py", line 71, in test_resource_limits_refused
+    with self.assertRaises((ValueError,RuntimeError)):self.check()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'RuntimeError'>) not raised
+
+======================================================================
+FAIL: test_resource_limits_refused (__main__.Tests.test_resource_limits_refused) (key='reserve_bytes')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/test_release.py", line 71, in test_resource_limits_refused
+    with self.assertRaises((ValueError,RuntimeError)):self.check()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'RuntimeError'>) not raised
+
+======================================================================
+FAIL: test_resource_limits_refused (__main__.Tests.test_resource_limits_refused) (key='start_reserve_bytes')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/test_release.py", line 71, in test_resource_limits_refused
+    with self.assertRaises((ValueError,RuntimeError)):self.check()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'RuntimeError'>) not raised
+
+======================================================================
+FAIL: test_resource_limits_refused (__main__.Tests.test_resource_limits_refused) (key='disk_paths')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/test_release.py", line 71, in test_resource_limits_refused
+    with self.assertRaises((ValueError,RuntimeError)):self.check()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'RuntimeError'>) not raised
+
+======================================================================
+FAIL: test_resource_limits_refused (__main__.Tests.test_resource_limits_refused) (key='cpus')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/test_release.py", line 71, in test_resource_limits_refused
+    with self.assertRaises((ValueError,RuntimeError)):self.check()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'RuntimeError'>) not raised
+
+======================================================================
+FAIL: test_unreleased_worker_refused (__main__.Tests.test_unreleased_worker_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/test_release.py", line 65, in test_unreleased_worker_refused
+    with self.assertRaises((ValueError,RuntimeError)):self.check()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'RuntimeError'>) not raised
+
+======================================================================
+FAIL: test_wrong_child_command_refused (__main__.Tests.test_wrong_child_command_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/test_release.py", line 59, in test_wrong_child_command_refused
+    with self.assertRaises((ValueError,RuntimeError)):self.check()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'ValueError'>, <class 'RuntimeError'>) not raised
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.013s
+
+FAILED (failures=10)

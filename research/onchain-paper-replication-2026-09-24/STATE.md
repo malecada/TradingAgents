@@ -3,6 +3,64 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**One-off legacy verification accepted for release; awaiting commit/preflight**:
+RELEASE_REVIEW_V2 independently accepts corrected LR1 and all1870bindings,
+SHA a428368c6b888045f8bd006ae7f19bdcab343c587b5ec1f431a618b898f33762.
+release-acceptance.json binds that review to finalmanifest f5dcd478...; original
+withheld review and source snapshots remain preserved. Next: commit/push these
+named compact files, fresh exact source/runtime/inputstat/resource/owner check,
+then launch only the unused verification01 and freeze HEAD/bindings. No array
+verification has yet started. Original empirical counts and all1420fits unchanged.
+
+**Legacy verifier review correction prepared; no array execution yet**:
+Initial RELEASE_REVIEW withheld execution forLR1: incomplete exact monitor and
+live kernel admission. All initial source/protocol/binding bytes and withheld
+review are preserved. The corrected boundary uses maintained assert_guarded_worker
+and joins the actual reserved launcherPID/startticks/boot/source/manifest to the
+live monitor; command, release, kernel memory, CPU, cgroup, disk and time/reserve
+contracts are checked. Direct boundary tests reproduce10missing refusals and
+now pass8cases (release-green02). Matching one-CPU affinity was already rejected
+by the maintained CPU-tree check; its additional regression passes unchanged.
+No empirical arrays or kernel settings were touched by these tests.
+
+Final candidate manifest pins1870files, including1798unchanged closed bindings,
+SHA f5dcd478dd159f927e58a2c3798497fa669d4940636fdd7d01df0ea1e2eebd4b.
+Corrected RELEASE_REVIEW_V2 is pending. verification01 remains unused. Source
+and prepared identity are not released until independent acceptance, committed
+review+binding acceptance, and fresh resource/source/owner preflight are complete.
+
+**Legacy two-graph verifier release candidate prepared; no launch — September30,2026**:
+Independent METADATA_REVIEW accepts the pure adapter, SHA
+ce53b744ff2d6b9355e05d82ce6163064026d1874352da7a311d34933993a950.
+Its two masked semantic test cases now propagate dependent in-memory hashes and
+assert denominator/daily-continuity diagnostics; metadata-green02 passes10tests.
+Original tests and first review remain retained. No production adapter change.
+
+New release.py/run_verification.py/verify_saved.py implement exact committed
+bindings, compact input validation, exclusive durable reservation, fresh guard
+identity/lease/cgroup checks, sequential array verification, per-graph partial
+receipts, explicit mapping cleanup and final source validation. Seven tiny mocked
+callback tests pass; no actual arrays have been read. VERIFICATION_PROTOCOL.md
+proposes one new existing-output check, not an empirical attempt or oldjob retry.
+Limits3GiBmax/2GiBhigh/zero swap/two CPUs/3GiBhostreserve/6startup/10disk/1800s.
+
+source-bindings.json pins1856files including1798unchanged closed dependencies,
+all31compact legacy references and new candidate/evidence; SHA
+d0de0e22b27a2798bc7cf5b531c9932645af5c83b842976571d713537a50f002.
+Independent RELEASE_REVIEW requested. No acceptance record, committed release
+or verification01 exists yet. Next safe action: resolve review, bind its exact
+hash+manifest in release-acceptance.json, commit/push named compact files, perform
+fresh current/committed source+runtime+resource/owner preflight, then launch the
+new verifier identity once and freeze HEAD/bindings until independent closure.
+No active replication units observed; free disk19,797,241,856bytes. Raw arrays,
+historical claims and all1420pending fits remain unchanged. Source0x697c08d5 is
+the previously pushed checkpoint, not this as-yet uncommitted verifier release.
+
+The reviewed named-suite closure and independent array checker are committed
+and pushed at `697c08d533b5489d035bfc9f495d9d621dcd5c6d`.
+The next pure metadata adapter and ten passing compact-receipt checks remain
+uncommitted pending independent METADATA_REVIEW. No guarded job is active.
+
 **Corrected named offline verification COMPLETE; source freeze released — September30,2026**:
 Correction offline01 completed with child0/cleanupverified after1810.802s.
 Standard2776passed/97subtests; neural876passed/2skipped/12subtests. Total3652

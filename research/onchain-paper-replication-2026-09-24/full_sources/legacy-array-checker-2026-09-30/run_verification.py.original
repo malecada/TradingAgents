@@ -1,0 +1,40 @@
+"""One newly released existing-array verification; all historical jobs stay closed."""
+import argparse
+import json
+import os
+import subprocess
+import sys
+
+from release import (ROOT, HERE, RECEIPT, KIND, source_check, load_metadata,
+                     require, reserve_dir, write_new)
+from tradingagents.research.onchain_replication.resources import GIB, guarded_run
+
+
+def main(source):
+    binding = source_check(source)
+    load_metadata()  # compact evidence only; no arrays before finite guard
+    require(not RECEIPT.exists(), 'reserved verification identity; never retry')
+    units = subprocess.check_output(['systemctl','--user','list-units',
+        '--state=active,activating','--no-legend','onchain-replication-*.service'],text=True)
+    require(not units.strip(), 'another replication guard is active')
+    # Atomic reservation covers startup refusals as well as running/terminal jobs.
+    reserve_dir(RECEIPT)
+    write_new(RECEIPT/'reservation.json',{'source_commit':source,'bindings_sha256':binding,'pid':os.getpid()})
+    try:
+        result = guarded_run([str(ROOT/'.venv/bin/python'),'-B',str(HERE/'verify_saved.py'),
+            '--source',source],cwd=ROOT,receipt_dir=RECEIPT/'guard',memory_max_bytes=3*GIB,
+            memory_high_bytes=2*GIB,memory_swap_max_bytes=0,reserve_bytes=3*GIB,
+            start_reserve_bytes=6*GIB,disk_paths=[ROOT],disk_floor_bytes=10*GIB,
+            wall_seconds=1800,owner_identity={'kind':KIND,'source_commit':source,'bindings_sha256':binding})
+    except BaseException as exc:
+        write_new(RECEIPT/'launcher-failed.json',{'status':'failed','type':type(exc).__name__,
+                  'reason':str(exc),'source_commit':source})
+        raise
+    print(json.dumps({k:result.get(k) for k in ('phase','child_exit_code','cleanup_verified',
+        'elapsed_seconds','peak_sampled_memory_current_bytes','limit_reason')}),flush=True)
+    return 0 if result['phase']=='complete' and result['child_exit_code']==0 and result['cleanup_verified'] else 1
+
+
+if __name__=='__main__':
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--source',required=True)
+    sys.exit(main(parser.parse_args().source))

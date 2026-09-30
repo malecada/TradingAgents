@@ -1,0 +1,29 @@
+test_correct_real_boundary (__main__.Tests.test_correct_real_boundary) ... ERROR
+test_kernel_limit_mismatch_refused (__main__.Tests.test_kernel_limit_mismatch_refused) ... ok
+test_monitor_start_tick_mismatch_refused (__main__.Tests.test_monitor_start_tick_mismatch_refused) ... ok
+test_reservation_source_mismatch_refused (__main__.Tests.test_reservation_source_mismatch_refused) ... ok
+test_resource_limits_refused (__main__.Tests.test_resource_limits_refused) ... ok
+test_unreleased_worker_refused (__main__.Tests.test_unreleased_worker_refused) ... ok
+test_wrong_child_command_refused (__main__.Tests.test_wrong_child_command_refused) ... ok
+
+======================================================================
+ERROR: test_correct_real_boundary (__main__.Tests.test_correct_real_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/test_release.py", line 42, in test_correct_real_boundary
+    self.assertEqual(self.check()['monitor_pid'],os.getpid())
+                     ~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/test_release.py", line 40, in check
+    def check(self):return release.live_guard(self.source,self.binding)
+                           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/release.py", line 84, in live_guard
+    require(str(Path('/sys/fs/cgroup')/own.lstrip('/')) == live['cgroup'], 'outside guarded cgroup')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/release.py", line 24, in require
+    raise ValueError(message)
+ValueError: outside guarded cgroup
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.012s
+
+FAILED (errors=1)
