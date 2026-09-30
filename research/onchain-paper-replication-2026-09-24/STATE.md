@@ -3,7 +3,68 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
-**Census registration metadata correction — 2026-09-30T00:25 UTC:**
+**Real-graph census and bounded verification COMPLETE — 2026-09-30T00:30:23.622644+00:00:**
+Claim eth-paper-neighborhood-census-20260930-01 completed its single registered
+cell. Guard 135.082446 seconds, peak sampled 899,379,200 bytes, zero memory events,
+child zero and cleanup verified. All 80 source pins and ten inputs match committed
+HEAD 29b0e94b. Exact monitor 3750963 and cgroup are absent; observer complete.
+Storage accounting independently reconciles 50,171,896 logical and 50,233,344
+allocated bytes, including all producer/lifecycle outputs within 512 MiB.
+
+Result: 2,764,221 nodes, 3,504,159 directed edges, 3,443,147 distinct nonself weak
+pairs; cardinalities range 1 to 701,309, with 35 above the unchanged 10,000-node
+ceiling and one maximum. Separate bounded verification hashed all four arrays
+and checked histogram/count totals, maxima, sorted keys and all compact identity
+joins. Guard 0.635731 seconds, peak sampled 26,112,000 bytes, zero memory events,
+child zero/cleanup true; monitor 3776069 and cgroup absent. Short sampling is not
+a required-memory estimate. Independent terminal review accepted. Evidence:
+full_sources/registered-census-2026-09-30/empirical-closure01.json and
+full_sources/census-verification-2026-09-30/. This is aggregate consistency, not a
+source-edge replay or every-node independent reconstruction. Never rerun either
+terminal identity. Numeric arrays (~50 MB) remain local; compact evidence is
+prepared for Git backup, not a claim of off-device array backup.
+
+Budget 26/53; 27 slots remain allocated to 12 body and 15 fit batches. All 1,420
+financial fits pending. No empirical/storage job or freeze is active. The census
+does not close any original dictionary/MCM/neural requirement or relax scope.
+
+Next work has begun: isolated complete-neighborhood induced-edge counting for all
+35 oversized centers. Five synthetic oracle/ownership/budget tests pass in
+0.019 seconds at full_sources/hub-edge-census-engineering-2026-09-30/. Independent
+review is pending. A concrete 53→54 budget-only amendment retains every prior
+claim and all body/fit allocations at hub-edge-census-preparation-2026-09-30/.
+No execution gate or claim yet. Next safe action: close component/budget review,
+implement registered guarded producer with 35-cell denominator and per-center
+durable checkpoints, test/review/freeze/commit and admit before empirical use.
+Keep original scientific 10,000-node/4-million-pair capacities until separately
+reviewed execution/configuration lineage exists. Continue exact pair-workspace
+and intra-solver checkpoint implementation independently. The isolated sparse
+hardening/objective prototypes are reviewed but not production integrated.
+
+**ACTIVE registered real-graph census — 2026-09-30T00:23:05.979922+00:00:**
+Corrected gate-v2 and reviewed engineering are committed/pushed as
+29b0e94b870ad0bcc29aa57a481384074e0a451a. Admission02 ready; fresh execution
+preflight independently confirms effective ceiling 53, ten input hashes, exact
+environment/workspace, output containment/device, no existing identity or active
+unit, 10,207,031,296 available RAM bytes and 25,363,030,016 free disk bytes.
+One census is ACTIVE: eth-paper-neighborhood-census-20260930-01, monitor PID
+3750963/start ticks 5595018, unit onchain-replication-88c22fb19d5d4e07ae5ec17fe18d93b4.service,
+tool session 43799. First live check at 61.52 seconds had peak 899,379,200 bytes,
+zero memory events and no limit reason. Full guard limits: 6 GiB max/5 high,
+zero swap, 3 GiB reserve/9 startup, 10 GiB disk floor, two CPUs, 540 seconds.
+Freeze HEAD and all gate-v2 source/input bindings until terminal cleanup. Never
+relaunch this reserved identity. Follow runs/<identity>/owner.json and guard/live.
+
+Next safe action: close exact guard/lifecycle/observer, check all output hashes,
+single-cell denominator and complete storage log accounting, then run a separately
+bounded read-only artifact consistency verification after its source review.
+Prepared verifier is outside frozen sources at full_sources/census-verification-2026-09-30/;
+no active array reads. Budget becomes 26/53 upon the claim; confirm its receipt.
+All 1,420 fits and original broader resource/history/comparison scope remain.
+Continue independent checkpoint/pair-memory preparation after sizing evidence;
+any next resource claim needs a new reviewed allocation, not a census retry.
+
+**Census registration metadata correction — 2026-09-30T00:20 UTC:**
 Verified engineering committed and pushed as 7f9dcd22. Fresh metadata admission
 refused the original gate before any claim because three budget metadata objects
 were not in source_files. Original gate and failure receipt are preserved.
