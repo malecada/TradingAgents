@@ -3,6 +3,89 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Full verification independently accepted; Graph10 source refresh prepared — 2026-09-30T13:58:06.231116+00:00**:
+CLOSURE_REVIEW.md accepts3559passes+97subtests/2skips,178current/committedbindings,
+ownerdeath/cleanup and high243/maxOOM0; SHA
+e1d157b42374e63f53dcb7399204c3ab19431738f94e4f4581444a71c9d2cc2a.
+No numerical or empirical job isactive. Originalfullsuite and allprofiles remain
+closed; do not rerun them. No financialresults generated.
+
+Graph10 gate-v3 SHA c7a3f2ee7906671a37a77f358c4af6a71d029a51a30b4319db314f8f26a1f8de
+has101source/146inputpins: old91/134 unchanged,6maintainedmatchingmodules and4
+helpers/amendment added,12retained verification/priorgate refs. All11inherited
+experiments, top-level objects and remainingGraph10 fields unchanged. Exact
+requiredsourceclosure nowcomplete. IndependentPRELAUNCH_V3_REVIEW accepted subject to the outer active/activating
+unit and pending-monitor checks stated below.
+prepare_registration_v3 alreadyranonce; neverregenerate or overwrite gate-v3.
+
+Next: acceptedreview, exactcompactcommit/push, then resource/ownershipchecks
+BEFOREunusedtemp02. Checkedsequentialtemp02 -> preflight03 (gate-v3/receipt03)
+->immediate source/RAM/disk/noownercheck->singleGraph10launch. Outerdispatcher
+mustcheck activeANDactivatingunits and pendingmonitors; inheritedpreflight03
+unitquery checksactiveonly. StrictRAM9797894144/disk22103159134 unchanged.
+Neverproceedafterafailedstep. If RAMinsufficient leave temp02 unused, continue
+independent checkpointintegration, preserving exact sourceclosure eligibility.
+Adopted32/59,proposed60unadopted; all1420financialfits pending.
+
+**Maintained-package full verification complete; closure review pending — 2026-09-30T13:52:52.103679+00:00**:
+One offline01 completed3559tests plus97subtests,2skips: standard2774/1059.65s;
+neural785/520.74s. Guard1583.9885s, sampledpeak2952790016bytes, high243,
+max/OOM/OOMkill0, child0 and verifiedcleanup. Exactmonitor1226864/worker1227063
+and ownedcgroup absent. All178 current AND committed sourcebindings match source
+5619467d558f2ff698a8e3084f04920a950245ee. closure01.json retains exactreceipt hashes.
+Independent closure review requested. This is synthetic software verification,
+not empirical matching integration or fullpaper feasibility. Never rerunoffline01.
+
+Sourcefreeze is released after verified ownerdeath; no active numerical job.
+Next: independent closure; immutableGraph10gate-v3 adds sixmaintained modules,
+newpreflight/sourceproof and acceptedfullverification references, with11inherited
+experiments and originalscientific/budgetobjects unchanged. Commit/push thenfresh
+strictRAM/disk check. Graph10claim/temp02 stillabsent;32/59spent,60unadopted.
+If resource eligibility fails, continue admittedpair owner/journal integration.
+All1420financialfits remainpending; fullarchitecture/assets/comparisons unchanged.
+
+**Active broad verification: standard batch passed — 2026-09-30T13:28:37.373816+00:00**:
+The same sole offline01 owner1226864/start10208897 remains alive with a fresh
+lease and existing owned cgroup. HEAD5619467d558f2ff698a8e3084f04920a950245ee and
+all178 current bindings remain exact. No duplicate or successor was launched.
+Standard batch completed2774tests plus97subtests in1059.65seconds. Neural75-module
+batch is nowrunning; overall result PENDING. At elapsed1097.2s, sampledpeak2528284672bytes,
+memory events{"high": 0, "low": 0, "max": 0, "oom": 0, "oom_group_kill": 0, "oom_kill": 0}. Limits and sourcefreeze below remain in force.
+Next: wait for this exact owner's terminal, inspect both summaries/guardcleanup,
+independent closure, then next eligible graph/source or pair-integration action.
+
+**ACTIVE maintained-package full offline verification — 2026-09-30T13:11:19.060584+00:00**:
+Reviewed package, focused tests, exact178-file closure and corrected release
+wrapper are committed and pushed at5619467d558f2ff698a8e3084f04920a950245ee.
+One synthetic verification is ACTIVE in session85843; monitor1226864/startticks
+10208897, unitonchain-replication-0005b04fe8cc429586fb46e8a233ac5f.service.
+Evidence: full_sources/matching-package-integration-2026-09-30/offline01/.
+Guard owner binds that actualHEAD and source-bindings SHA
+2262884a7c96159779cfae45b2c4b2707852471dfed63f8ce25f41b04e355697.
+Named target scripts/verify_offline.py reports261modules (186standard/75neural).
+At this checkpoint phase=running; elapsed58.7s; sampledpeak519172096bytes; events{"high": 0, "low": 0, "max": 0, "oom": 0, "oom_group_kill": 0, "oom_kill": 0}.
+The result is PENDING. No claim of full-suite success from focused tests.
+
+DO NOT edit any source, commit/move HEAD, duplicate this process or relaunch
+this offline01 identity. Source and HEAD freeze until exact owner termination.
+STATE and new compact review/preparation documents may be appended without
+committing. Guard3GiBmax/2.75high/0swap/3GiBruntime reserve/6GiBstartup/10GiBdisk/
+3600s. Startup RAM9484255232, disk23447928832; no competing unit and remoteHEAD
+matched. Runtime check passed. Independent LIVE_REVIEW.md accepted exact monitor/start
+ticks, soleunit, kernel limits, CPU affinity and all178 current/committedbindings.
+ReviewSHA52b605a5a6330f4d0029335090beafc3274984eead5ad54a0bc63d4541ae515b.
+
+Next safe action: inspect compact live/final/child-exit and both test summaries;
+when terminal reconcile exact owner/cgroup death,178current+committedpins and
+allmemory events, independently review closure, then commit/push compact evidence.
+Graph10 remains never launched; gate-v2 incomplete due sixnewmodules. Prepare
+reviewed immutable gate-v3 after broad verification, retaining originalgraph,
+11inheritedexperiments,10GiBfloor and unchanged proposed60. Dispatch only if
+strictRAM9797894144 and disk22103159134 and allowner/sourcechecks pass. Otherwise
+continue admitted pair owner/ancestry/reservation/journal integration afterfreeze.
+No temp02/preflight02/Graph10claim exists; adopted32/59, proposed60unadopted.
+All1420financialfits and broader paper scope remain required.
+
 **Maintained package reviewed; named broad verification prepared — 2026-09-30T13:07:54.421951+00:00**:
 Six maintained matching modules preserve the reviewed typed scalar numerical
 bodies/schemas. PACKAGE_REVIEW.md accepts component promotion only. Historical

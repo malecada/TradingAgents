@@ -1,0 +1,56 @@
+{
+  "original_gate": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/gate-v2.json",
+    "sha256": "74d10f013b07047b09b9e3cf3a8696037abc267fd0b721b38589e3bf7761702c"
+  },
+  "new_gate": {
+    "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/gate-v3.json",
+    "sha256": "c7a3f2ee7906671a37a77f358c4af6a71d029a51a30b4319db314f8f26a1f8de"
+  },
+  "experiment": "eth-paper-graph-resource-20260930-10",
+  "inherited_experiments_unchanged": 11,
+  "source_pins": 101,
+  "input_pins": 146,
+  "added_source_pins": [
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/PRELAUNCH_ROUTE_V3.md",
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/preflight03.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/prepare_registration_v3.py",
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/verification_requirement.py",
+    "tradingagents/research/onchain_replication/matching_annealing.py",
+    "tradingagents/research/onchain_replication/matching_checkpoint.py",
+    "tradingagents/research/onchain_replication/matching_hardening.py",
+    "tradingagents/research/onchain_replication/matching_identity.py",
+    "tradingagents/research/onchain_replication/matching_pair.py",
+    "tradingagents/research/onchain_replication/matching_sparse.py"
+  ],
+  "added_inputs": [
+    "package_verification_CLOSURE_REVIEW_md",
+    "package_verification_LIVE_REVIEW_md",
+    "package_verification_OFFLINE_RELEASE_REVIEW_md",
+    "package_verification_PACKAGE_REVIEW_md",
+    "package_verification_closure01_json",
+    "package_verification_dispatch01_json",
+    "package_verification_offline01_child_exit_json",
+    "package_verification_offline01_child_log",
+    "package_verification_offline01_final_json",
+    "package_verification_source-bindings_json",
+    "prelaunch_v3_amendment",
+    "prelaunch_v3_prior_gate"
+  ],
+  "package_verification": {
+    "verification_source": "5619467d558f2ff698a8e3084f04920a950245ee",
+    "verified_bindings": 178,
+    "closure_sha256": "9cee514b1cadd466ea616d31ac4006acd0ea96f21feb04b67284a29dc34118a7",
+    "review_sha256": "e1d157b42374e63f53dcb7399204c3ab19431738f94e4f4581444a71c9d2cc2a",
+    "bindings_sha256": "2262884a7c96159779cfae45b2c4b2707852471dfed63f8ce25f41b04e355697",
+    "final_sha256": "a6aa4aff5b108b46dcd4ccb1feb2a97e4e2e2a1749101a4a2164ad3db4887872",
+    "memory_high_events": 243,
+    "standard_passes": 2774,
+    "subtests_passed": 97,
+    "neural_passes": 785,
+    "total_passes": 3559,
+    "skipped": 2,
+    "qualification": "Saved named offline verification only; no test, empirical body read or fit rerun."
+  },
+  "qualification": "Source closure preparation only; no admission, budget adoption, temp check or graph launch."
+}

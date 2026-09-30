@@ -1,0 +1,15 @@
+# Independent live review — package offline01
+
+Observed running at 2026-09-30 13:11:33 UTC. No live-ownership or source-freeze mismatch was found. This is an intermediate observation, not a test-success or cleanup verdict.
+
+Actual HEAD is `5619467d558f2ff698a8e3084f04920a950245ee`. All 178 manifest entries independently match both current file bytes and `git show` at that commit. The manifest itself also equals its committed bytes, SHA-256 `2262884a7c96159779cfae45b2c4b2707852471dfed63f8ce25f41b04e355697`. The accepted package and corrected offline-release reviews are committed byte-exact, with hashes `ec96473a0554fc57618fb73457e685f30b4419861c7ed1b6c93747f1b3d9f673` and `ef3daf6efb7e035a7799b8aee1681dcd27681cc893a740848b2ee301e9f36512` respectively.
+
+The live `/proc` monitor identity is PID 1226864, start ticks `10208897`, executing the reviewed launcher with that full `--source` commit. The only active or activating replication unit observed was `onchain-replication-0005b04fe8cc429586fb46e8a233ac5f.service`, with ActiveState active, SubState running, and the exact cgroup recorded in `offline01/live.json`. Its child command is the repository `.venv/bin/python -B scripts/verify_offline.py`. The owner identity binds kind `matching-package-offline01`, the actual source commit and the reviewed manifest hash. No competing replication guard was observed.
+
+Independent kernel reads returned memory.max 3,221,225,472 bytes, memory.high 2,952,790,016 bytes and memory.swap.max 0. All 18 observed cgroup threads had nonempty CPU affinity contained in CPUs 0 and 1. The ready receipt agrees with those CPUs and `release.json` records kernel-control verification. The live lease was approximately 0.265 seconds old against a 15-second limit. Host reserve, startup requirement, disk floor and wall limit remain the registered 3 GiB, 6 GiB, 10 GiB and 3,600 seconds.
+
+At the inspected live sample, elapsed time was 73.014 seconds and sampled cgroup peak was 530,067,456 bytes. Direct kernel memory.high/max/OOM counters were all zero. These are evolving observations; they do not predict terminal usage or exclude later throttling. The child log showed standard-suite progress through approximately 25%, without a terminal summary. `final.json` was absent.
+
+`dispatch01.json` records a 13:10:19 UTC preflight with matching local/remote commit, runtime-check exit 0, no active unit, absent offline01 identity, 9,484,255,232 available RAM bytes and 23,447,928,832 free disk bytes. This review independently checked local committed bytes and live ownership; it did not repeat the runtime check or contact the remote to re-prove push status.
+
+Keep HEAD and all bound files frozen until the guard closes. Terminal acceptance still requires both raw suite summaries, final/child-exit receipts, final counters, exact monitor/cgroup absence, cleanup and post-run hash reconciliation. No empirical claim, financial fit or production matching integration is established. Only compact receipts, source hashes, process and cgroup metadata were read; no test was rerun or numerical artifact body opened. Only this review was written.
