@@ -1,0 +1,109 @@
+test_aggregate_array_and_file_bounds_refuse_before_allocation (__main__.Tests.test_aggregate_array_and_file_bounds_refuse_before_allocation) ... FAIL
+test_changed_late_file_during_load_refuses_and_closes_handles (__main__.Tests.test_changed_late_file_during_load_refuses_and_closes_handles) ... FAIL
+test_guard_loss_before_allocation_and_after_load_closes_every_handle (__main__.Tests.test_guard_loss_before_allocation_and_after_load_closes_every_handle) ... FAIL
+test_late_member_header_or_extent_failure_precedes_first_allocation (__main__.Tests.test_late_member_header_or_extent_failure_precedes_first_allocation) ... FAIL
+test_member_links_and_unpublished_inventory_refuse (__main__.Tests.test_member_links_and_unpublished_inventory_refuse) ... FAIL
+test_rehashed_disguised_npz_is_rejected_without_np_load (__main__.Tests.test_rehashed_disguised_npz_is_rejected_without_np_load) ... FAIL
+test_roundtrip_numeric_bytes_shapes_and_fortran_order_without_np_load (__main__.Tests.test_roundtrip_numeric_bytes_shapes_and_fortran_order_without_np_load) ... FAIL
+test_tree_member_reuse_or_unreferenced_array_refuses (__main__.Tests.test_tree_member_reuse_or_unreferenced_array_refuses) ... FAIL
+
+======================================================================
+FAIL: test_aggregate_array_and_file_bounds_refuse_before_allocation (__main__.Tests.test_aggregate_array_and_file_bounds_refuse_before_allocation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 21, in setUp
+    self.m=api();t=tempfile.TemporaryDirectory();self.addCleanup(t.cleanup);self.root=Path(t.name)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 15, in api
+    assert (HERE/'reader.py').is_file(),'strict numeric component reader missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: strict numeric component reader missing
+
+======================================================================
+FAIL: test_changed_late_file_during_load_refuses_and_closes_handles (__main__.Tests.test_changed_late_file_during_load_refuses_and_closes_handles)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 21, in setUp
+    self.m=api();t=tempfile.TemporaryDirectory();self.addCleanup(t.cleanup);self.root=Path(t.name)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 15, in api
+    assert (HERE/'reader.py').is_file(),'strict numeric component reader missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: strict numeric component reader missing
+
+======================================================================
+FAIL: test_guard_loss_before_allocation_and_after_load_closes_every_handle (__main__.Tests.test_guard_loss_before_allocation_and_after_load_closes_every_handle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 21, in setUp
+    self.m=api();t=tempfile.TemporaryDirectory();self.addCleanup(t.cleanup);self.root=Path(t.name)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 15, in api
+    assert (HERE/'reader.py').is_file(),'strict numeric component reader missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: strict numeric component reader missing
+
+======================================================================
+FAIL: test_late_member_header_or_extent_failure_precedes_first_allocation (__main__.Tests.test_late_member_header_or_extent_failure_precedes_first_allocation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 21, in setUp
+    self.m=api();t=tempfile.TemporaryDirectory();self.addCleanup(t.cleanup);self.root=Path(t.name)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 15, in api
+    assert (HERE/'reader.py').is_file(),'strict numeric component reader missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: strict numeric component reader missing
+
+======================================================================
+FAIL: test_member_links_and_unpublished_inventory_refuse (__main__.Tests.test_member_links_and_unpublished_inventory_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 21, in setUp
+    self.m=api();t=tempfile.TemporaryDirectory();self.addCleanup(t.cleanup);self.root=Path(t.name)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 15, in api
+    assert (HERE/'reader.py').is_file(),'strict numeric component reader missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: strict numeric component reader missing
+
+======================================================================
+FAIL: test_rehashed_disguised_npz_is_rejected_without_np_load (__main__.Tests.test_rehashed_disguised_npz_is_rejected_without_np_load)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 21, in setUp
+    self.m=api();t=tempfile.TemporaryDirectory();self.addCleanup(t.cleanup);self.root=Path(t.name)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 15, in api
+    assert (HERE/'reader.py').is_file(),'strict numeric component reader missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: strict numeric component reader missing
+
+======================================================================
+FAIL: test_roundtrip_numeric_bytes_shapes_and_fortran_order_without_np_load (__main__.Tests.test_roundtrip_numeric_bytes_shapes_and_fortran_order_without_np_load)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 21, in setUp
+    self.m=api();t=tempfile.TemporaryDirectory();self.addCleanup(t.cleanup);self.root=Path(t.name)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 15, in api
+    assert (HERE/'reader.py').is_file(),'strict numeric component reader missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: strict numeric component reader missing
+
+======================================================================
+FAIL: test_tree_member_reuse_or_unreferenced_array_refuses (__main__.Tests.test_tree_member_reuse_or_unreferenced_array_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 21, in setUp
+    self.m=api();t=tempfile.TemporaryDirectory();self.addCleanup(t.cleanup);self.root=Path(t.name)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 15, in api
+    assert (HERE/'reader.py').is_file(),'strict numeric component reader missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: strict numeric component reader missing
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.002s
+
+FAILED (failures=8)

@@ -3,6 +3,32 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Strict resident component reader independently accepted**:
+New isolated full_sources/pair-component-reader-2026-10-01/ preserves the existing
+component_store and preflights every numeric member, exact inventory, header,
+extent/hash and aggregate encoded/resident-array caps before any array allocation.
+It uses no np.load, mmap, archive or pickle. Metadata remains bounded separately;
+these are not whole-process memory or physical workflow quotas.
+Initial check01 passed8cases/0.086s, but independent INITIAL_REVIEW withheld
+acceptance for unbounded EOF hashing, blocking FIFO opens and eager inventory.
+red02 reproduced hashing growth; red03 reproduced FIFO blocking and a test-double
+error; corrected red04 proved early inventory rejection was missing. All originals,
+failed logs and exact test snapshots remain preserved. check02 passed13cases,
+but review found final rehash could miss late inventory/earlier-member changes.
+red05 reproduced both. Corrections bound reads to admitted extent+1, use
+O_NONBLOCK before fstat, scan inventory incrementally and perform final compact
+signature/inventory checks after all hashes. check03 is CLOSED exit0:
+15passes/0.176s; session98951 completed. Independent REVIEW accepts the bounded
+component, SHA162a5183430183ffb91ab170bd09d259c87070c0c6015e99b64f663001bb26da.
+All24direct bindings match, manifest SHA
+68846d7d07cda31d6f6c041546e3b0b42d0208aeff7cc8906df6bdf2712e3a76.
+No active test or empirical job. No financial fit, budget change or historical
+rerun. Next safe action: bind exact current
+FeatureJournal sample events and the registered read policy to the actual owner.
+Sampler source/RNG provenance, historical artifact reuse, dictionary/MCM
+publication, full representation reuse, mapping/scaling and physical quotas
+remain separate mandatory work. All1420financial fits remain pending.
+
 **Admitted dictionary pair-consumer construction independently accepted**:
 New isolated full_sources/pair-consumer-route-2026-10-01/ constructs Serial
 strictly from actual OwnedJournal/Route settings, context, pair policy and derived

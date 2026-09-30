@@ -1,0 +1,17 @@
+test_growth_during_hash_is_bounded_to_admitted_extent_plus_one (__main__.Tests.test_growth_during_hash_is_bounded_to_admitted_extent_plus_one) ... FAIL
+test_non_native_endian_values_preserve_declared_bytes (__main__.Tests.test_non_native_endian_values_preserve_declared_bytes) ... ok
+test_oversized_header_length_refuses_before_header_body_or_array_allocation (__main__.Tests.test_oversized_header_length_refuses_before_header_body_or_array_allocation) ... ok
+
+======================================================================
+FAIL: test_growth_during_hash_is_bounded_to_admitted_extent_plus_one (__main__.Tests.test_growth_during_hash_is_bounded_to_admitted_extent_plus_one)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 107, in test_growth_during_hash_is_bounded_to_admitted_extent_plus_one
+    self.assertLessEqual(observed[0],size+1)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1000176 not less than or equal to 177
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.040s
+
+FAILED (failures=1)

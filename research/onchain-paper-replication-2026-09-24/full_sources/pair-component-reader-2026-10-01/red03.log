@@ -1,0 +1,41 @@
+test_fifo_member_refuses_promptly_in_bounded_child (__main__.Tests.test_fifo_member_refuses_promptly_in_bounded_child) ... FAIL
+test_inventory_stops_at_first_foreign_entry (__main__.Tests.test_inventory_stops_at_first_foreign_entry) ... ERROR
+
+======================================================================
+ERROR: test_inventory_stops_at_first_foreign_entry (__main__.Tests.test_inventory_stops_at_first_foreign_entry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 152, in test_inventory_stops_at_first_foreign_entry
+    with self.assertRaises(ValueError):self.read()
+                                       ~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 30, in read
+    return self.m.read_component(self.path,file_hash(self.path),self.context,**args)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/reader.py", line 185, in read_component
+    value, signatures, headers, expected_files = inspect_component(
+                                                 ~~~~~~~~~~~~~~~~~^
+        path, expected_hash, expected_context, root,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        max_manifest_bytes, max_artifact_bytes, max_array_bytes)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/reader.py", line 143, in inspect_component
+    require(set(path.parent.iterdir()) == expected_files, 'component file inventory differs')
+                ~~~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/pathlib/_local.py", line 576, in iterdir
+    paths = [entry.path for entry in scandir_it]
+             ^^^^^^^^^^
+AttributeError: 'types.SimpleNamespace' object has no attribute 'path'
+
+======================================================================
+FAIL: test_fifo_member_refuses_promptly_in_bounded_child (__main__.Tests.test_fifo_member_refuses_promptly_in_bounded_child)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 139, in test_fifo_member_refuses_promptly_in_bounded_child
+    self.assertIsNotNone(status,'component reader blocked opening FIFO; child stopped and reaped')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : component reader blocked opening FIFO; child stopped and reaped
+
+----------------------------------------------------------------------
+Ran 2 tests in 1.065s
+
+FAILED (failures=1, errors=1)

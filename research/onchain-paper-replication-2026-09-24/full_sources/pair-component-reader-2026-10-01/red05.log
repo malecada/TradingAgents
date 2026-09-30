@@ -1,0 +1,25 @@
+test_foreign_entry_added_during_final_hash_prevents_return (__main__.Tests.test_foreign_entry_added_during_final_hash_prevents_return) ... FAIL
+test_earlier_member_changed_during_last_hash_prevents_return (__main__.Tests.test_earlier_member_changed_during_last_hash_prevents_return) ... FAIL
+
+======================================================================
+FAIL: test_foreign_entry_added_during_final_hash_prevents_return (__main__.Tests.test_foreign_entry_added_during_final_hash_prevents_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 162, in test_foreign_entry_added_during_final_hash_prevents_return
+    with self.assertRaises(ValueError):self.read()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_earlier_member_changed_during_last_hash_prevents_return (__main__.Tests.test_earlier_member_changed_during_last_hash_prevents_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/test_reader.py", line 175, in test_earlier_member_changed_during_last_hash_prevents_return
+    with self.assertRaises(ValueError):self.read()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.026s
+
+FAILED (failures=2)
