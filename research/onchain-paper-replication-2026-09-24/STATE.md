@@ -3,6 +3,52 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Ranked full-size checkpoint profile independently accepted — 2026-09-30T11:14:51.441134+00:00**:
+CLOSURE_REVIEW.md independently accepts96current/committedpins,ninecompacthashes,
+rawlog-resultjoin, exact33/2,000pair lists/cursors, bothnestedcheckpointmetadata
+andextents, and exactowner/cgroupabsence. Guard23.746975636s/334,196,736sampledbytes/
+zeroevents/child0cleanup; retainedcheckpointtotal256,025,959bytes. Full48iteration
+zeroedgeschedule andrankedcheckpointrestore succeeded. NPYbodyhash/restore and
+explicitmappingclosure remain guarded-worker evidence, not repeatedbodychecks.
+No controlledspeedup/nonzeroedge/realhub/production/financialclaim is accepted.
+
+Next: commit/push acceptedcompactreceipts andcheckpointmetadataonly; retainall
+NPYbodieslocally. Then freshgraph10RAM/disk/identitychecks. Launch only after
+9,797,894,144RAM and22,103,159,134diskbytes, one finite tempcheck/preflight and exact
+committedgates pass; preserve all historical failed identities. IfRAMstillfails,
+continue independent fullnonzeroedge synthetic feasibility preparation under the
+unchangedmatchingconfig with reviewedfiniteguard/newidentity, or explicitbackend/
+cachelineage engineering outsideproduction. No run may overlap an existingowner.
+Graph10remainsunlaunched, claimedbudget32/59 and all1,420fits pending.
+
+**Ranked full-matcher capacity probe closed; review pending — 2026-09-30T11:13:33.946950+00:00**:
+Source7b09c9665de23afba5d748f3e8cb69748cc3311a was committed/pushed. Freshpreflight
+verified96currentandcommittedpins, runtime, noowner, RAM9,746,980,864 and free
+24,962,547,712bytes before one newprofile invocation. Session2109 is now terminal:
+monitor1151404/start9496211/unitbf989310d5c64782bdaf5ce371205b26 observedlive and
+nowabsent. Guard23.746975636007846s, peak334,196,736bytes, zeroevents, child0cleanup.
+
+All48iterations/4,012,048annealingoperations/twocalls and4Mrankedentries completed.
+Prefix checkpoint33pairs/cursor65,536; final2,000diagonalpairs/cursor4M. Score0.5,
+temperaturecomplete, softSHAe5f5cd5a84eebc8b61f69f1f590c04ef695f093a382779437ec65014a97f64f8.
+Retainednumericstate128,000,000bytes. Two retained checkpoints128,002,213 and
+128,023,746bytes (256,025,959total). Both restored; actual restoredmapping closure
+assertions passed. LargeNPYhash/restore evidence belongs toguardedworker; local
+closure01 independently joins compactmetadata, all96pins and fileextents only.
+Independentterminalreview pending; no profile or algorithm is repeated.
+
+Ann+atomicrankcreation17.695621932s, rankprefix.050590235s/remainder3.930574051s.
+Wholeprofilepeak includes denseuniformitydiagnostic temporaries. These are fresh
+zeroedgefixture measurements, not controlledspeedup, worstcasesort or nonzeroedge/
+realhub/dictionary/MCM/neural/GPU/financialfeasibility. Production remainsunchanged.
+
+No activeowner remains. Graph10hasnotlaunched: latestRAM9,754,464,256 is43,429,888
+below9,797,894,144dispatchminimum; free24,703,700,992exceeds22,103,159,134required.
+Next: independentprofileclosure, commit/push compactmetadataonly (noNPYbodies),
+then freshgraph10dispatchchecks ifRAMsuffices. Otherwise continue reviewedbackend/
+cachelineage preparation and bounded nonzeroedge evidence withoutchangingcriteria.
+All1,420financialfits pending, effective32/59; no claim orbudgetadoption occurred.
+
 **Ranked composition and capacity profile independently reviewed — 2026-09-30T11:11:04.693613+00:00**:
 matching-ranked-composite-2026-09-30/REVIEW.md accepts isolated composition,
 89bindings and eighttests(1.095s), including explicitmappinglifecycle, matrix

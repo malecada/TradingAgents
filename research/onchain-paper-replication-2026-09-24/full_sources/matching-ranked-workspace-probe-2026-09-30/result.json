@@ -1,0 +1,39 @@
+{
+  "status": "complete_synthetic_ranked_full_match_probe",
+  "nodes_each": 2000,
+  "pair_entries": 4000000,
+  "edges_each": 0,
+  "matching_iterations": 48,
+  "convergence": "temperature_complete",
+  "score": 0.5,
+  "annealing_calls": 2,
+  "annealing_operations": 4012048,
+  "hardening_entries_scanned": 4000000,
+  "selected_pairs": 2000,
+  "retained_numeric_state_bytes": 128000000,
+  "checkpoint_manifest_sha256": {
+    "checkpoint01": "ac1b597f6970ed6f1fa27002c5ed3ba012561eff2fd5f8271da2a413fde57663",
+    "checkpoint02": "d913703735de5f73d214a6fef154e014923b5c6b76e4f0f99488bbf75d718965"
+  },
+  "checkpoint_logical_bytes": {
+    "checkpoint01": 128002213,
+    "checkpoint02": 128023746
+  },
+  "soft_matrix_sha256": "e5f5cd5a84eebc8b61f69f1f590c04ef695f093a382779437ec65014a97f64f8",
+  "uniform_matrix_max_absolute_error": 1.0842021724855044e-19,
+  "timings": {
+    "create_seconds": 0.016682802001014352,
+    "annealing_and_rank_creation_seconds": 17.695621932012727,
+    "hardening_prefix_seconds": 0.05059023499779869,
+    "prefix_save_seconds": 0.33157280799059663,
+    "prefix_load_seconds": 0.21665146500163246,
+    "hardening_remainder_seconds": 3.9305740510026226,
+    "score_seconds": 0.0328290119941812,
+    "final_save_seconds": 0.384058678013389,
+    "final_load_seconds": 0.2225221219996456,
+    "restored_score_seconds": 0.033333617000607774
+  },
+  "matching_complete": true,
+  "qualification": "Fresh zero-edge synthetic graph only. Full schedule/hardening and scalar score completed; no nonzero edge, real-hub, dictionary, MCM, neural, GPU or financial feasibility inference. Production backend and scientific capacity unchanged. No controlled speedup claim relative to earlier runs.",
+  "final_restored_mapping_explicitly_closed": true
+}

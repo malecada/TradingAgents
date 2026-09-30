@@ -1,0 +1,81 @@
+{
+  "at": "2026-09-30T11:12:43.205543+00:00",
+  "source": "7b09c9665de23afba5d748f3e8cb69748cc3311a",
+  "bindings_verified": 96,
+  "evidence": {
+    "bindings.json": "6cf6b39867ae13f7ea976eac2b143bf0f6653f981d430f8b0f19827641ca7c64",
+    "REVIEW.md": "63b97f20e1a700f546a6659695d3cdde2a2730f6c92519c6261b506dc235072d",
+    "preflight01.json": "50f96e3617a1b3679659379b81f1eae4bc2e0200736c7acefae5b82e4d7efd2c",
+    "owner-observation01.json": "ed85879ba85f850dd680d7aba55be0e789563c47f0e4fd74ddacbee6441673cf",
+    "started.json": "80aefa0ba588ada14e11b070434c8855ddd9dc87194e4644f4b556a452b2b0a0",
+    "result.json": "97337848f3ec109e1c69bd30d9d6428ef7cdadf31d4eac09726da26bdbcff550",
+    "guard01/final.json": "ad3ed2c23229218fb5cda95526efa328b1cff48a9a2fc86ca1e720fff6f582f3",
+    "guard01/child.log": "0badff674599d407dc03b13609dd3484646014964ee3b552eedeaddc94ac31cb",
+    "guard01/child_exit.json": "4d07feb4cd418f67cfea90b43c69e57d5b402ce56c3a18cd42ef21f6b63b106b"
+  },
+  "exact_owner_and_cgroup_absent": true,
+  "owner": {
+    "at": "2026-09-30T11:11:44.636349+00:00",
+    "monitor_pid": 1151404,
+    "start_ticks": 9496211,
+    "unit": "onchain-replication-bf989310d5c64782bdaf5ce371205b26.service",
+    "session_id": 2109
+  },
+  "guard_summary": {
+    "elapsed_seconds": 23.746975636007846,
+    "peak_sampled_memory_current_bytes": 334196736,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "child_exit_code": 0,
+    "cleanup_verified": true
+  },
+  "checkpoints": {
+    "checkpoint01": {
+      "metadata_hashes": {
+        "manifest.json": "ac1b597f6970ed6f1fa27002c5ed3ba012561eff2fd5f8271da2a413fde57663",
+        "annealing/manifest.json": "e24c57ec291ceb78146045d76e8111362c2a805732a9918dab34364dd043a742",
+        "hardening/manifest.json": "a3ae38e4b185f6469c1088046b239b2c8237636565d7e00907febc78c8658c24"
+      },
+      "file_extents": {
+        "manifest.json": 430,
+        "hardening/order.npy": 32000128,
+        "hardening/manifest.json": 574,
+        "annealing/M.npy": 32000128,
+        "annealing/Q.npy": 32000128,
+        "annealing/V.npy": 32000128,
+        "annealing/manifest.json": 697
+      },
+      "selected_pairs": 33,
+      "cursor": 65536,
+      "phase": "scan",
+      "order_sha256": "600666bb89c5b69fbcfd323c5b8ceeda2c5a7b6130ee6eeca81122a002fcf35d"
+    },
+    "checkpoint02": {
+      "metadata_hashes": {
+        "manifest.json": "d913703735de5f73d214a6fef154e014923b5c6b76e4f0f99488bbf75d718965",
+        "annealing/manifest.json": "e24c57ec291ceb78146045d76e8111362c2a805732a9918dab34364dd043a742",
+        "hardening/manifest.json": "20c710e6a0ffb85e551edeb0955bdf5d6d5a1cde0cb26167e50bb6e82fa80d47"
+      },
+      "file_extents": {
+        "manifest.json": 425,
+        "hardening/order.npy": 32000128,
+        "hardening/manifest.json": 22112,
+        "annealing/M.npy": 32000128,
+        "annealing/Q.npy": 32000128,
+        "annealing/V.npy": 32000128,
+        "annealing/manifest.json": 697
+      },
+      "selected_pairs": 2000,
+      "cursor": 4000000,
+      "phase": "done",
+      "order_sha256": "600666bb89c5b69fbcfd323c5b8ceeda2c5a7b6130ee6eeca81122a002fcf35d"
+    }
+  },
+  "qualification": "Compact metadata and stat reconciliation only. Large NPY hash/restore and mapping-close success are guarded-worker evidence; no full body rehash or algorithm repetition. Whole-profile peak and isolated fixture timings do not establish controlled speedup, worst-case native sort memory, nonzero-edge/real-graph/GPU/financial feasibility."
+}
