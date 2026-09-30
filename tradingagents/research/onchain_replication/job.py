@@ -53,7 +53,7 @@ def resource_policy(value, root):
         raise ValueError('execution memory ceiling differs')
     if value['reserve_bytes'] < 3*resources.GIB or value['start_reserve_bytes'] < value['memory_max_bytes']+value['reserve_bytes']:
         raise ValueError('execution host reserves below contract')
-    if value['disk_floor_bytes'] < 20*resources.GIB or value['wall_seconds'] > 28800:
+    if value['disk_floor_bytes'] < 10*resources.GIB or value['wall_seconds'] > 28800:
         raise ValueError('execution disk/wall limits differ')
     paths = value['disk_paths']
     if not isinstance(paths, list) or not paths or len(paths) != len(set(paths)) or any(not isinstance(p, str) or not Path(p).is_absolute() for p in paths):
@@ -64,10 +64,12 @@ def resource_policy(value, root):
 
 
 def job_schema(job):
-    if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs'):
+    if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census'):
         raise ValueError('execution job schema/kind differs')
-    if job['kind'] == 'graphs' and (not isinstance(job['payload'], dict) or set(job['payload']) != {'plan_input'} or not isinstance(job['payload']['plan_input'], str) or not job['payload']['plan_input']):
-        raise ValueError('graph job requires an explicit registered plan input')
+    if job['kind'] in ('graphs','neighborhood_census') and (not isinstance(job['payload'], dict) or set(job['payload']) != {'plan_input'} or not isinstance(job['payload']['plan_input'], str) or not job['payload']['plan_input']):
+        raise ValueError('graph/census job requires an explicit registered plan input')
+    if job['kind']=='neighborhood_census' and (type(job['resources'].get('wall_seconds')) is not int or not 0<job['resources']['wall_seconds']<=540):
+        raise ValueError('census whole-job wall limit must not exceed 540 seconds')
     if job['kind'] == 'ranges' and job['payload'] != {}:
         raise ValueError('range job has no implicit payload overrides')
     if job['kind'] in ('prices', 'coinmetrics_prices') and (not isinstance(job['payload'], dict) or set(job['payload']) != {'asset'} or job['payload']['asset'] not in ('BTC', 'ETH')):
@@ -195,6 +197,9 @@ def execute_source_job(run, kind, payload):
     if kind == 'graphs':
         from .graph_production import produce_registered_graphs
         cells, summary, directory = produce_registered_graphs(run, payload['plan_input'])
+    elif kind == 'neighborhood_census':
+        from .census_production import produce_registered_census
+        cells, summary, directory = produce_registered_census(run, payload['plan_input'])
     elif kind == 'ranges':
         from .range_source import capture_ranges
         cells, summary, directory = capture_ranges(run)
@@ -210,6 +215,9 @@ def execute_source_job(run, kind, payload):
     run.write_json('source-summary.json', summary)
     run.write_json('artifact-index.json', {str(p.relative_to(run.admission.root)): {'sha256': file_hash(p), 'bytes': p.stat().st_size}
         for p in directory.rglob('*') if p.is_file()})
+    if kind=='neighborhood_census':
+        from .census_production import finalize_registered_storage
+        finalize_registered_storage(run,directory,payload['plan_input'])
     return cells
 
 
@@ -219,7 +227,8 @@ def worker(args):
     policy = job['resources']
     live = resources.assert_guarded_worker(base/'guard', _command(args, 'worker'),
         required_paths=[Path(p) for p in policy['disk_paths']], wall_seconds=policy['wall_seconds'],
-        memory_max_bytes=policy['memory_max_bytes'], memory_high_bytes=policy['memory_high_bytes'])
+        memory_max_bytes=policy['memory_max_bytes'], memory_high_bytes=policy['memory_high_bytes'],
+        disk_floor_bytes=policy['disk_floor_bytes'])
     owner = json.loads((base/'owner.json').read_bytes())
     if live['owner_identity'] != owner or owner['experiment'] != args.experiment or owner['source_commit'] != args.source:
         raise ValueError('execution worker ownership differs')
@@ -233,7 +242,7 @@ def worker(args):
         from .environment import inventory
         if inventory(root, include_torch=job['kind'] == 'fit') != json.loads(run.read_input(job['environment_input'])):
             raise ValueError('registered execution environment differs')
-        if job['kind'] in ('ranges', 'prices', 'coinmetrics_prices', 'graphs'):
+        if job['kind'] in ('ranges', 'prices', 'coinmetrics_prices', 'graphs', 'neighborhood_census'):
             cells = execute_source_job(run, job['kind'], job['payload'])
         else:
             import torch

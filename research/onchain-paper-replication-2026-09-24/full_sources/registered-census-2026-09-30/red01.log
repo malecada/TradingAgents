@@ -1,0 +1,437 @@
+FFFFFFFFFFFFFFFFFF                                                       [100%]
+=================================== FAILURES ===================================
+___________ test_registered_census_dispatch_and_full_array_identity ____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_registered_census_dispatc0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '13bea143f158804acb74b4e89f13c5c264536d7c')
+
+    def test_registered_census_dispatch_and_full_array_identity(registered):
+>       api();case=prepare(registered)
+        ^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.census_production'),'registered census producer missing'
+E       AssertionError: registered census producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x73b4d57e8860>('tradingagents.research.onchain_replication.census_production')
+E        +    where <function find_spec at 0x73b4d57e8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_census.py:17: AssertionError
+___________ test_bad_plan_refused_before_mapping_or_output[change0] ____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_bad_plan_refused_before_m0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '13bea143f158804acb74b4e89f13c5c264536d7c')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b4d3647230>
+change = {'schema_version': True}
+
+    @pytest.mark.parametrize('change',[{'schema_version':True},{'edge_chunk':True},{'expected_nodes':0},{'expected_edges':-1},{'max_output_bytes':True},{'max_mapped_bytes':0},{'graph_input':''},{'graph_hash':'bad'},{'node_order_sha256':'bad'},{'extra':1}])
+    def test_bad_plan_refused_before_mapping_or_output(registered,monkeypatch,change):
+>       module=api();case=prepare(registered,change)
+               ^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.census_production'),'registered census producer missing'
+E       AssertionError: registered census producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x73b4d57e8860>('tradingagents.research.onchain_replication.census_production')
+E        +    where <function find_spec at 0x73b4d57e8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_census.py:17: AssertionError
+___________ test_bad_plan_refused_before_mapping_or_output[change1] ____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_bad_plan_refused_before_m1'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '13bea143f158804acb74b4e89f13c5c264536d7c')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b4d0758c30>
+change = {'edge_chunk': True}
+
+    @pytest.mark.parametrize('change',[{'schema_version':True},{'edge_chunk':True},{'expected_nodes':0},{'expected_edges':-1},{'max_output_bytes':True},{'max_mapped_bytes':0},{'graph_input':''},{'graph_hash':'bad'},{'node_order_sha256':'bad'},{'extra':1}])
+    def test_bad_plan_refused_before_mapping_or_output(registered,monkeypatch,change):
+>       module=api();case=prepare(registered,change)
+               ^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.census_production'),'registered census producer missing'
+E       AssertionError: registered census producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x73b4d57e8860>('tradingagents.research.onchain_replication.census_production')
+E        +    where <function find_spec at 0x73b4d57e8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_census.py:17: AssertionError
+___________ test_bad_plan_refused_before_mapping_or_output[change2] ____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_bad_plan_refused_before_m2'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '13bea143f158804acb74b4e89f13c5c264536d7c')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b4d075d370>
+change = {'expected_nodes': 0}
+
+    @pytest.mark.parametrize('change',[{'schema_version':True},{'edge_chunk':True},{'expected_nodes':0},{'expected_edges':-1},{'max_output_bytes':True},{'max_mapped_bytes':0},{'graph_input':''},{'graph_hash':'bad'},{'node_order_sha256':'bad'},{'extra':1}])
+    def test_bad_plan_refused_before_mapping_or_output(registered,monkeypatch,change):
+>       module=api();case=prepare(registered,change)
+               ^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.census_production'),'registered census producer missing'
+E       AssertionError: registered census producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x73b4d57e8860>('tradingagents.research.onchain_replication.census_production')
+E        +    where <function find_spec at 0x73b4d57e8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_census.py:17: AssertionError
+___________ test_bad_plan_refused_before_mapping_or_output[change3] ____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_bad_plan_refused_before_m3'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '13bea143f158804acb74b4e89f13c5c264536d7c')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b4d0d978a0>
+change = {'expected_edges': -1}
+
+    @pytest.mark.parametrize('change',[{'schema_version':True},{'edge_chunk':True},{'expected_nodes':0},{'expected_edges':-1},{'max_output_bytes':True},{'max_mapped_bytes':0},{'graph_input':''},{'graph_hash':'bad'},{'node_order_sha256':'bad'},{'extra':1}])
+    def test_bad_plan_refused_before_mapping_or_output(registered,monkeypatch,change):
+>       module=api();case=prepare(registered,change)
+               ^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.census_production'),'registered census producer missing'
+E       AssertionError: registered census producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x73b4d57e8860>('tradingagents.research.onchain_replication.census_production')
+E        +    where <function find_spec at 0x73b4d57e8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_census.py:17: AssertionError
+___________ test_bad_plan_refused_before_mapping_or_output[change4] ____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_bad_plan_refused_before_m4'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '13bea143f158804acb74b4e89f13c5c264536d7c')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b4d0d97ce0>
+change = {'max_output_bytes': True}
+
+    @pytest.mark.parametrize('change',[{'schema_version':True},{'edge_chunk':True},{'expected_nodes':0},{'expected_edges':-1},{'max_output_bytes':True},{'max_mapped_bytes':0},{'graph_input':''},{'graph_hash':'bad'},{'node_order_sha256':'bad'},{'extra':1}])
+    def test_bad_plan_refused_before_mapping_or_output(registered,monkeypatch,change):
+>       module=api();case=prepare(registered,change)
+               ^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.census_production'),'registered census producer missing'
+E       AssertionError: registered census producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x73b4d57e8860>('tradingagents.research.onchain_replication.census_production')
+E        +    where <function find_spec at 0x73b4d57e8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_census.py:17: AssertionError
+___________ test_bad_plan_refused_before_mapping_or_output[change5] ____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_bad_plan_refused_before_m5'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '13bea143f158804acb74b4e89f13c5c264536d7c')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b4d0d87b50>
+change = {'max_mapped_bytes': 0}
+
+    @pytest.mark.parametrize('change',[{'schema_version':True},{'edge_chunk':True},{'expected_nodes':0},{'expected_edges':-1},{'max_output_bytes':True},{'max_mapped_bytes':0},{'graph_input':''},{'graph_hash':'bad'},{'node_order_sha256':'bad'},{'extra':1}])
+    def test_bad_plan_refused_before_mapping_or_output(registered,monkeypatch,change):
+>       module=api();case=prepare(registered,change)
+               ^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.census_production'),'registered census producer missing'
+E       AssertionError: registered census producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x73b4d57e8860>('tradingagents.research.onchain_replication.census_production')
+E        +    where <function find_spec at 0x73b4d57e8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_census.py:17: AssertionError
+___________ test_bad_plan_refused_before_mapping_or_output[change6] ____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_bad_plan_refused_before_m6'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '13bea143f158804acb74b4e89f13c5c264536d7c')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b4d074d250>
+change = {'graph_input': ''}
+
+    @pytest.mark.parametrize('change',[{'schema_version':True},{'edge_chunk':True},{'expected_nodes':0},{'expected_edges':-1},{'max_output_bytes':True},{'max_mapped_bytes':0},{'graph_input':''},{'graph_hash':'bad'},{'node_order_sha256':'bad'},{'extra':1}])
+    def test_bad_plan_refused_before_mapping_or_output(registered,monkeypatch,change):
+>       module=api();case=prepare(registered,change)
+               ^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.census_production'),'registered census producer missing'
+E       AssertionError: registered census producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x73b4d57e8860>('tradingagents.research.onchain_replication.census_production')
+E        +    where <function find_spec at 0x73b4d57e8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_census.py:17: AssertionError
+___________ test_bad_plan_refused_before_mapping_or_output[change7] ____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_bad_plan_refused_before_m7'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '13bea143f158804acb74b4e89f13c5c264536d7c')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b4d0d45d60>
+change = {'graph_hash': 'bad'}
+
+    @pytest.mark.parametrize('change',[{'schema_version':True},{'edge_chunk':True},{'expected_nodes':0},{'expected_edges':-1},{'max_output_bytes':True},{'max_mapped_bytes':0},{'graph_input':''},{'graph_hash':'bad'},{'node_order_sha256':'bad'},{'extra':1}])
+    def test_bad_plan_refused_before_mapping_or_output(registered,monkeypatch,change):
+>       module=api();case=prepare(registered,change)
+               ^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.census_production'),'registered census producer missing'
+E       AssertionError: registered census producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x73b4d57e8860>('tradingagents.research.onchain_replication.census_production')
+E        +    where <function find_spec at 0x73b4d57e8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_census.py:17: AssertionError
+___________ test_bad_plan_refused_before_mapping_or_output[change8] ____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_bad_plan_refused_before_m8'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '13bea143f158804acb74b4e89f13c5c264536d7c')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b4d0774500>
+change = {'node_order_sha256': 'bad'}
+
+    @pytest.mark.parametrize('change',[{'schema_version':True},{'edge_chunk':True},{'expected_nodes':0},{'expected_edges':-1},{'max_output_bytes':True},{'max_mapped_bytes':0},{'graph_input':''},{'graph_hash':'bad'},{'node_order_sha256':'bad'},{'extra':1}])
+    def test_bad_plan_refused_before_mapping_or_output(registered,monkeypatch,change):
+>       module=api();case=prepare(registered,change)
+               ^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.census_production'),'registered census producer missing'
+E       AssertionError: registered census producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x73b4d57e8860>('tradingagents.research.onchain_replication.census_production')
+E        +    where <function find_spec at 0x73b4d57e8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_census.py:17: AssertionError
+___________ test_bad_plan_refused_before_mapping_or_output[change9] ____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_bad_plan_refused_before_m9'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '13bea143f158804acb74b4e89f13c5c264536d7c')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b4d076c2f0>
+change = {'extra': 1}
+
+    @pytest.mark.parametrize('change',[{'schema_version':True},{'edge_chunk':True},{'expected_nodes':0},{'expected_edges':-1},{'max_output_bytes':True},{'max_mapped_bytes':0},{'graph_input':''},{'graph_hash':'bad'},{'node_order_sha256':'bad'},{'extra':1}])
+    def test_bad_plan_refused_before_mapping_or_output(registered,monkeypatch,change):
+>       module=api();case=prepare(registered,change)
+               ^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.census_production'),'registered census producer missing'
+E       AssertionError: registered census producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x73b4d57e8860>('tradingagents.research.onchain_replication.census_production')
+E        +    where <function find_spec at 0x73b4d57e8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_census.py:17: AssertionError
+_______ test_bound_identity_mismatch_refused_before_mapping[graph_hash] ________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_bound_identity_mismatch_r0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '13bea143f158804acb74b4e89f13c5c264536d7c')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b4d076dd30>
+field = 'graph_hash'
+
+    @pytest.mark.parametrize('field',['graph_hash','graph_config_hash','node_order_sha256'])
+    def test_bound_identity_mismatch_refused_before_mapping(registered,monkeypatch,field):
+>       module=api();case=prepare(registered,{field:'0'*64})
+               ^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.census_production'),'registered census producer missing'
+E       AssertionError: registered census producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x73b4d57e8860>('tradingagents.research.onchain_replication.census_production')
+E        +    where <function find_spec at 0x73b4d57e8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_census.py:17: AssertionError
+____ test_bound_identity_mismatch_refused_before_mapping[graph_config_hash] ____
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_bound_identity_mismatch_r1'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '13bea143f158804acb74b4e89f13c5c264536d7c')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b4b2b6fee0>
+field = 'graph_config_hash'
+
+    @pytest.mark.parametrize('field',['graph_hash','graph_config_hash','node_order_sha256'])
+    def test_bound_identity_mismatch_refused_before_mapping(registered,monkeypatch,field):
+>       module=api();case=prepare(registered,{field:'0'*64})
+               ^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.census_production'),'registered census producer missing'
+E       AssertionError: registered census producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x73b4d57e8860>('tradingagents.research.onchain_replication.census_production')
+E        +    where <function find_spec at 0x73b4d57e8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_census.py:17: AssertionError
+____ test_bound_identity_mismatch_refused_before_mapping[node_order_sha256] ____
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_bound_identity_mismatch_r2'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '13bea143f158804acb74b4e89f13c5c264536d7c')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b4d07d01d0>
+field = 'node_order_sha256'
+
+    @pytest.mark.parametrize('field',['graph_hash','graph_config_hash','node_order_sha256'])
+    def test_bound_identity_mismatch_refused_before_mapping(registered,monkeypatch,field):
+>       module=api();case=prepare(registered,{field:'0'*64})
+               ^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.census_production'),'registered census producer missing'
+E       AssertionError: registered census producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x73b4d57e8860>('tradingagents.research.onchain_replication.census_production')
+E        +    where <function find_spec at 0x73b4d57e8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_census.py:17: AssertionError
+___________ test_cell_denominator_and_window_checked_before_mapping ____________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_cell_denominator_and_wind0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '13bea143f158804acb74b4e89f13c5c264536d7c')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b4d07d0650>
+
+    def test_cell_denominator_and_window_checked_before_mapping(registered,monkeypatch):
+>       module=api();case=prepare(registered);root,spec,_=case
+               ^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.census_production'),'registered census producer missing'
+E       AssertionError: registered census producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x73b4d57e8860>('tradingagents.research.onchain_replication.census_production')
+E        +    where <function find_spec at 0x73b4d57e8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_census.py:17: AssertionError
+______________ test_census_shape_mismatch_fails_and_closes_graph _______________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_census_shape_mismatch_fai0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '13bea143f158804acb74b4e89f13c5c264536d7c')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b4d07f5700>
+
+    def test_census_shape_mismatch_fails_and_closes_graph(registered,monkeypatch):
+        from contextlib import contextmanager
+>       module=api();case=prepare(registered,{'expected_nodes':8});original=module.open_mapped_graph;closed=[]
+               ^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       assert importlib.util.find_spec('tradingagents.research.onchain_replication.census_production'),'registered census producer missing'
+E       AssertionError: registered census producer missing
+E       assert None
+E        +  where None = <function find_spec at 0x73b4d57e8860>('tradingagents.research.onchain_replication.census_production')
+E        +    where <function find_spec at 0x73b4d57e8860> = <module 'importlib.util' (frozen)>.find_spec
+E        +      where <module 'importlib.util' (frozen)> = importlib.util
+
+tests/research/onchain_replication/test_registered_census.py:17: AssertionError
+_________________ test_census_job_schema_and_strict_wall_bound _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-162/test_census_job_schema_and_str0')
+
+    def test_census_job_schema_and_strict_wall_bound(tmp_path):
+        resources={**policy(tmp_path),'disk_floor_bytes':10*1024**3,'wall_seconds':540}
+        value={'schema_version':1,'kind':'neighborhood_census','resources':resources,'environment_input':'environment','payload':{'plan_input':'census_plan'}}
+>       job.job_schema(value);assert job.resource_policy(resources,tmp_path)==resources
+        ^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+job = {'schema_version': 1, 'kind': 'neighborhood_census', 'resources': {'memory_max_bytes': 536870912, 'memory_high_bytes': 402653184, 'reserve_bytes': 3221225472, 'start_reserve_bytes': 3758096384, ...}, 'environment_input': 'environment', ...}
+
+    def job_schema(job):
+        if set(job) != {'schema_version', 'kind', 'resources', 'environment_input', 'payload'} or job['schema_version'] != 1 or job['kind'] not in ('fit', 'ranges', 'prices', 'coinmetrics_prices', 'graphs'):
+>           raise ValueError('execution job schema/kind differs')
+E           ValueError: execution job schema/kind differs
+
+tradingagents/research/onchain_replication/job.py:68: ValueError
+_______________ test_worker_forwards_exact_registered_disk_floor _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-162/test_worker_forwards_exact_reg0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73b4d07f66d0>
+
+    def test_worker_forwards_exact_registered_disk_floor(tmp_path,monkeypatch):
+        resources={**policy(tmp_path),'disk_floor_bytes':10*1024**3}
+        args=SimpleNamespace(root=tmp_path,experiment='example-a',source='a'*40,registration='registration.json')
+        monkeypatch.setattr(job,'_admitted',lambda args:(SimpleNamespace(root=tmp_path),{'resources':resources}))
+        class Reached(Exception):pass
+        def guard(*a,**kwargs):
+            assert kwargs['disk_floor_bytes']==resources['disk_floor_bytes'];raise Reached
+        monkeypatch.setattr(job.resources,'assert_guarded_worker',guard)
+>       with pytest.raises(Reached):job.worker(args)
+                                    ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_registered_census.py:114: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/job.py:220: in worker
+    live = resources.assert_guarded_worker(base/'guard', _command(args, 'worker'),
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (PosixPath('/tmp/pytest-of-malecada/pytest-162/test_worker_forwards_exact_reg0/research_artifacts/onchain-paper-replic...-audit-fixes/.venv/bin/python', '-B', '-m', 'tradingagents.research.onchain_replication.job', '--mode', 'worker', ...])
+kwargs = {'required_paths': [PosixPath('/tmp/pytest-of-malecada/pytest-162/test_worker_forwards_exact_reg0')], 'wall_seconds': 300, 'memory_max_bytes': 536870912, 'memory_high_bytes': 402653184}
+
+    def guard(*a,**kwargs):
+>       assert kwargs['disk_floor_bytes']==resources['disk_floor_bytes'];raise Reached
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'disk_floor_bytes'
+
+tests/research/onchain_replication/test_registered_census.py:112: KeyError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_registered_census.py::test_registered_census_dispatch_and_full_array_identity
+FAILED tests/research/onchain_replication/test_registered_census.py::test_bad_plan_refused_before_mapping_or_output[change0]
+FAILED tests/research/onchain_replication/test_registered_census.py::test_bad_plan_refused_before_mapping_or_output[change1]
+FAILED tests/research/onchain_replication/test_registered_census.py::test_bad_plan_refused_before_mapping_or_output[change2]
+FAILED tests/research/onchain_replication/test_registered_census.py::test_bad_plan_refused_before_mapping_or_output[change3]
+FAILED tests/research/onchain_replication/test_registered_census.py::test_bad_plan_refused_before_mapping_or_output[change4]
+FAILED tests/research/onchain_replication/test_registered_census.py::test_bad_plan_refused_before_mapping_or_output[change5]
+FAILED tests/research/onchain_replication/test_registered_census.py::test_bad_plan_refused_before_mapping_or_output[change6]
+FAILED tests/research/onchain_replication/test_registered_census.py::test_bad_plan_refused_before_mapping_or_output[change7]
+FAILED tests/research/onchain_replication/test_registered_census.py::test_bad_plan_refused_before_mapping_or_output[change8]
+FAILED tests/research/onchain_replication/test_registered_census.py::test_bad_plan_refused_before_mapping_or_output[change9]
+FAILED tests/research/onchain_replication/test_registered_census.py::test_bound_identity_mismatch_refused_before_mapping[graph_hash]
+FAILED tests/research/onchain_replication/test_registered_census.py::test_bound_identity_mismatch_refused_before_mapping[graph_config_hash]
+FAILED tests/research/onchain_replication/test_registered_census.py::test_bound_identity_mismatch_refused_before_mapping[node_order_sha256]
+FAILED tests/research/onchain_replication/test_registered_census.py::test_cell_denominator_and_window_checked_before_mapping
+FAILED tests/research/onchain_replication/test_registered_census.py::test_census_shape_mismatch_fails_and_closes_graph
+FAILED tests/research/onchain_replication/test_registered_census.py::test_census_job_schema_and_strict_wall_bound
+FAILED tests/research/onchain_replication/test_registered_census.py::test_worker_forwards_exact_registered_disk_floor
+18 failed in 1.64s

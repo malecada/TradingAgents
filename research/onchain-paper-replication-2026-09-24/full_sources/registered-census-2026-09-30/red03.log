@@ -1,0 +1,67 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_observer_recovers_durable_census_disposition_after_interruption[7-complete] _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-165/test_observer_recovers_durable0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2024-01-08T00:00:00Z', 'state': 'spent'}]}}, ...}, '75f0f5278c908008d2b99c867564922b6260fb1c')
+nodes = 7, status = 'complete'
+
+    @pytest.mark.parametrize('nodes,status',[(7,'complete'),(8,'failed')])
+    def test_observer_recovers_durable_census_disposition_after_interruption(registered,nodes,status):
+        from pathlib import Path
+        import uuid
+        module=api();case=prepare(registered,{'expected_nodes':nodes})
+        with start(case) as run:
+            rows,_,directory=module.produce_registered_census(run,'census_plan')
+            assert rows[0]['status']==status
+        args=SimpleNamespace(root=case[0],registration='registration.json',experiment='example-a',source=case[2])
+        base=job._base(args);(base/'guard').mkdir(parents=True)
+        owner={'experiment':args.experiment,'source_commit':args.source,'nonce':'synthetic','monitor_pid':2000000000,'monitor_start_ticks':'0'}
+        (base/'owner.json').write_text(json.dumps(owner))
+        unit='onchain-replication-'+uuid.uuid4().hex+'.service'
+        live={'owner_identity':owner,'monitor_pid':owner['monitor_pid'],'boot_id':Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
+              'cgroup':'/sys/fs/cgroup/'+unit,'unit':unit,'command':job._command(args,'worker')}
+        (base/'guard/live.json').write_text(json.dumps(live))
+        outcome=job.reconcile(args)
+        assert outcome['status']=='failed'
+>       assert json.loads((base/'postmortem-cells.json').read_text())==rows
+E       AssertionError: assert [{'id': 'cens...unavailable'}] == [{'id': 'cens...2eb246f63b5'}]
+E         
+E         At index 0 diff: {'id': 'census-2024-01-01', 'reason': 'owned worker ended before durable cell disposition; no retry', 'status': 'unavailable'} != {'id': 'census-2024-01-01', 'status': 'complete', 'nodes': 7, 'graph_hash': '1ab0292c514bf1f7ddf86e05018f884e200b58b1eae383a1d04602eb246f63b5'}
+E         Use -v to get more diff
+
+tests/research/onchain_replication/test_registered_census.py:184: AssertionError
+_ test_observer_recovers_durable_census_disposition_after_interruption[8-failed] _
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-165/test_observer_recovers_durable1'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2024-01-08T00:00:00Z', 'state': 'spent'}]}}, ...}, '79141f00a446901715377ba85e72bbd304ced2fc')
+nodes = 8, status = 'failed'
+
+    @pytest.mark.parametrize('nodes,status',[(7,'complete'),(8,'failed')])
+    def test_observer_recovers_durable_census_disposition_after_interruption(registered,nodes,status):
+        from pathlib import Path
+        import uuid
+        module=api();case=prepare(registered,{'expected_nodes':nodes})
+        with start(case) as run:
+            rows,_,directory=module.produce_registered_census(run,'census_plan')
+            assert rows[0]['status']==status
+        args=SimpleNamespace(root=case[0],registration='registration.json',experiment='example-a',source=case[2])
+        base=job._base(args);(base/'guard').mkdir(parents=True)
+        owner={'experiment':args.experiment,'source_commit':args.source,'nonce':'synthetic','monitor_pid':2000000000,'monitor_start_ticks':'0'}
+        (base/'owner.json').write_text(json.dumps(owner))
+        unit='onchain-replication-'+uuid.uuid4().hex+'.service'
+        live={'owner_identity':owner,'monitor_pid':owner['monitor_pid'],'boot_id':Path('/proc/sys/kernel/random/boot_id').read_text().strip(),
+              'cgroup':'/sys/fs/cgroup/'+unit,'unit':unit,'command':job._command(args,'worker')}
+        (base/'guard/live.json').write_text(json.dumps(live))
+        outcome=job.reconcile(args)
+        assert outcome['status']=='failed'
+>       assert json.loads((base/'postmortem-cells.json').read_text())==rows
+E       AssertionError: assert [{'id': 'cens...unavailable'}] == [{'id': 'cens...ape differs'}]
+E         
+E         At index 0 diff: {'id': 'census-2024-01-01', 'reason': 'owned worker ended before durable cell disposition; no retry', 'status': 'unavailable'} != {'id': 'census-2024-01-01', 'status': 'failed', 'reason': 'ValueError: census graph shape differs'}
+E         Use -v to get more diff
+
+tests/research/onchain_replication/test_registered_census.py:184: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_registered_census.py::test_observer_recovers_durable_census_disposition_after_interruption[7-complete]
+FAILED tests/research/onchain_replication/test_registered_census.py::test_observer_recovers_durable_census_disposition_after_interruption[8-failed]
+2 failed, 22 deselected in 0.68s

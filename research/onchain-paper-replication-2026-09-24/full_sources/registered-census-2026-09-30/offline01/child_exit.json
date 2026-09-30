@@ -1,0 +1,36 @@
+{
+  "exit_code": 0,
+  "reason": "workload exited",
+  "snapshot_error": null,
+  "terminal_memory_snapshot": {
+    "memory_current_bytes": 1599078400,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "optional_memory_telemetry": {
+      "qualification": "Optional last observations; unavailable is unknown, not zero. No PSI policy change.",
+      "unit": {
+        "anon_bytes": 8908800,
+        "file_bytes": 1263226880,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/onchain-replication-618a7e658197440595a7b0b7d0189baa.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=45\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=45",
+        "swap_current_bytes": 0,
+        "unavailable": {}
+      },
+      "user_ancestor": {
+        "anon_bytes": 4064718848,
+        "file_bytes": 5957279744,
+        "path": "/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service",
+        "pressure": "some avg10=0.00 avg60=0.00 avg300=0.00 total=99705053\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=96649073",
+        "swap_current_bytes": 2048638976,
+        "unavailable": {}
+      }
+    }
+  },
+  "workload_pid": 3280624
+}

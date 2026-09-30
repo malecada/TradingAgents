@@ -1,0 +1,55 @@
+FFF.                                                                     [100%]
+=================================== FAILURES ===================================
+_________ test_output_symlink_escape_refused_before_any_outside_write __________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-164/test_output_symlink_escape_ref0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2024-01-08T00:00:00Z', 'state': 'spent'}]}}, ...}, 'a50a69632f3c2c3b2eb48be09e59ae6b83b6c7a3')
+
+    def test_output_symlink_escape_refused_before_any_outside_write(registered):
+        module=api();case=prepare(registered);root=case[0]
+        outside=root.parent/(root.name+'-outside');outside.mkdir()
+        owner=root/module.PREFIX;owner.parent.mkdir(parents=True);owner.symlink_to(outside,target_is_directory=True)
+        with start(case) as run:
+>           with pytest.raises(ValueError,match='guarded|volume|root'):module.produce_registered_census(run,'census_plan')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_registered_census.py:122: Failed
+____ test_final_accounting_includes_published_producer_and_lifecycle_files _____
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-164/test_final_accounting_includes0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2024-01-08T00:00:00Z', 'state': 'spent'}]}}, ...}, 'a50a69632f3c2c3b2eb48be09e59ae6b83b6c7a3')
+capsys = <_pytest.capture.CaptureFixture object at 0x755234bf96a0>
+
+    def test_final_accounting_includes_published_producer_and_lifecycle_files(registered,capsys):
+        module=api();case=prepare(registered)
+        with start(case) as run:
+            cells=job.execute_source_job(run,'neighborhood_census',{'plan_input':'census_plan'})
+>           row=json.loads(capsys.readouterr().out.strip().splitlines()[-1])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           IndexError: list index out of range
+
+tests/research/onchain_replication/test_registered_census.py:130: IndexError
+________________ test_large_error_is_bounded_and_hash_preserved ________________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-164/test_large_error_is_bounded_an0'), {'schema_version': 1, 'program_id': ...1-01T00:00:00Z', 'end': '2024-01-08T00:00:00Z', 'state': 'spent'}]}}, ...}, 'a50a69632f3c2c3b2eb48be09e59ae6b83b6c7a3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7552347510f0>
+
+    def test_large_error_is_bounded_and_hash_preserved(registered,monkeypatch):
+        import hashlib
+        module=api();case=prepare(registered)
+        text='unexpected'*100_000
+        def fail(*a,**k):raise RuntimeError(text)
+        monkeypatch.setattr(module,'census',fail)
+        with start(case) as run:
+            cells,summary,directory=module.produce_registered_census(run,'census_plan')
+            assert cells[0]['status']=='failed'
+>           assert summary['reason_truncated'] and summary['reason_sha256']==hashlib.sha256(text.encode()).hexdigest()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'reason_truncated'
+
+tests/research/onchain_replication/test_registered_census.py:151: KeyError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_registered_census.py::test_output_symlink_escape_refused_before_any_outside_write
+FAILED tests/research/onchain_replication/test_registered_census.py::test_final_accounting_includes_published_producer_and_lifecycle_files
+FAILED tests/research/onchain_replication/test_registered_census.py::test_large_error_is_bounded_and_hash_preserved
+3 failed, 1 passed, 18 deselected in 9.26s

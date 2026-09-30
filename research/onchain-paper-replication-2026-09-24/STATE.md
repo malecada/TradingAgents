@@ -3,6 +3,73 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Registered census full verification COMPLETE — 2026-09-30T00:18 UTC:**
+Offline01 passed 3,509 tests plus 97 subtests, with two CUDA skips. Standard
+2,768 in 1,057.09 seconds; neural 741 in 509.73 seconds. Guard 1,570.629698
+seconds, peak 2,183,454,720 bytes, zero memory events, child zero, cleanup true.
+All 154 source/input bindings and HEAD f762b47d match; PID 3280613 and exact
+cgroup are absent. closure-check01.json records hashes. Never rerun offline01.
+Independent terminal release is pending, then commit/push and freshly admit the
+registered census with effective budget 53 before its one guarded launch.
+No empirical/storage job is active; budget remains 25/52, all 1,420 fits pending.
+
+Independent isolated bounded hardening passed eight synthetic tests and review.
+It preserves float64 row-major greedy choices with bounded numeric buffers and
+sparse output; no production integration, capacity change or runtime guarantee.
+Sparse scalar objective review exposed different overflow behavior on discarded
+zero terms. The retained counterexample is corrected with an explicit conservative
+representable-agreement domain, narrower than finite attributes; six synthetic
+checks pass, independent re-review pending. Both prototypes remain outside the
+registered source package at full_sources/bounded-hardening-2026-09-30/.
+
+**ACTIVE registered-census offline01 — 2026-09-29T23:47:12.061933+00:00:**
+Final focused green04 passed 135 tests in 62.66 seconds. Independent source,
+prospective gate/ancestry and finite-launcher review accepted the corrected
+integration. All 154 bindings match; fresh admission observed 10,138,091,520 bytes
+available RAM and 27,086,274,560 bytes free disk, with no running replication unit.
+One full named offline verification is now running: monitor PID 3280613,
+start ticks 5387099; unit `onchain-replication-618a7e658197440595a7b0b7d0189baa.service`;
+tool session 56988. Receipts: `full_sources/registered-census-2026-09-30/offline01/`.
+First live check confirms running with no limit reason. Freeze all 154 files in
+source-bindings.json and HEAD f762b47d3b10b514fec5e7b8122210751b62a61f until
+terminal cleanup/closure. Do not duplicate this process, relaunch its identity,
+change bound files or move HEAD. Limits: 3 GiB max/2.75 high, zero swap, 3 GiB host
+reserve, 6 GiB startup, 10 GiB disk floor, two CPUs and 3,600 seconds.
+
+Next safe action: reconcile exact terminal test counts, hashes and owner cleanup,
+obtain independent terminal release review, commit/push the verified source and
+exact census gate, then follow this directory's RUNBOOK.md for fresh full lifecycle
+admission, effective budget 53, all input/environment/owner/capacity checks and
+one guarded real-graph census if admitted. No census claim is running yet; budget
+remains 25/52 and all 1,420 financial fits remain pending. The actual census job
+has separately reviewed 6 GiB max/5 high, zero swap, 3 GiB reserve/9 startup,
+10 GiB disk floor and 540-second whole-job limit. The empirical gate/77 source
+pins/10 compact inputs/full three-ancestor lineage were reviewed, but broad
+closure, committed admission and fresh adoption checks remain requirements.
+Continue independent pair-workspace/checkpoint preparation outside frozen files
+while verification runs. Do not skip larger paper scope or treat census sizing
+as completion of any original dictionary/MCM/neural resource requirement.
+
+**Registered census integration underway — 2026-09-29T23:42:00.120992+00:00:**
+The previous full verification and isolated census prototype/scale evidence are
+committed and pushed as f762b47d. The reviewed engine is now copied into the
+package; a registered census producer/job kind, exact 540-second whole-job cap,
+prospective 10 GiB job floor and worker forwarding are implemented but unreleased.
+Independent review findings on output containment, final allocation accounting
+and observer recovery have regression counterexamples and corrections. Green02
+passed 75 focused tests; the separate late-quota regression passed and retained
+a failed terminal plus all three published lifecycle outputs. Expanded green04
+is running in tool session 33248. No empirical/storage or long verification job
+is active. Evidence/draft registration: `full_sources/registered-census-2026-09-30/`.
+Next safe action: finish focused checks and independent source/resource/gate review,
+refresh exact source hashes before freezing, then run one guarded full named
+verification. After terminal closure/review, commit/push the exact gate and source,
+freshly admit the full ancestry/budget/input/resource contract, then launch one
+resource-only census claim if all checks pass. Do not treat the current draft as
+execution admission. Budget remains 25/52; census extension 53 is not adopted and
+all 1,420 financial fits remain pending. The larger architecture and original
+109 resource requirements, both assets/history and all comparisons remain in scope.
+
 **Registered neighborhood-policy full verification COMPLETE — 2026-09-29T23:30:44.536303+00:00:**
 The named offline01 passed 3,474 tests plus 97 subtests with two CUDA skips:
 standard 2,768 in 1,060.37 seconds; neural 706 in 561.38 seconds. Guard 1,625.725651
