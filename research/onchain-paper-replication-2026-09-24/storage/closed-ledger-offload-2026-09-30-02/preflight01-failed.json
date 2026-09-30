@@ -1,0 +1,7 @@
+{
+  "at": "2026-09-30T04:40:24.578205+00:00",
+  "status": "preflight_failed_before_guard_or_body",
+  "head": "f8f80a75c45b88d8e6146c2c9c1ecb151e98d1ae",
+  "reason": "Outer preflight incorrectly required the intentionally local connection metadata file to exist in Git, after its existing bound hash had matched. git show refused missing tracked path. No guard, intent, network, body read or empirical claim was started.",
+  "correction": "Require hashes for all original22+contextual12 entries; compare all tracked entries with HEAD. Permit only the exact manifest connection_path as an untracked local transport configuration, with unchanged bound hash, and never print or commit its contents. Preserve this failed preflight; fresh corrected preflight uses02, not overwrite01."
+}
