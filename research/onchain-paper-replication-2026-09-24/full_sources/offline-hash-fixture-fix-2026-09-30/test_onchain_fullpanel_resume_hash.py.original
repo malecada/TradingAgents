@@ -14,16 +14,6 @@ union = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(union)
 
 
-@pytest.fixture(autouse=True)
-def synthetic_disk_space(monkeypatch):
-    # Invented tiny payloads have deterministic space; keep the real _space
-    # check and its negative tests. Do not patch process-wide shutil.
-    from types import SimpleNamespace
-    available=union.frozen.FREE_FLOOR_BYTES+union.frozen.ALLOCATION_MARGIN_BYTES+2**30
-    monkeypatch.setattr(union.frozen,'shutil',SimpleNamespace(
-        disk_usage=lambda path:SimpleNamespace(free=available)))
-
-
 def identity(bucket, number):
     return bytes([bucket]) + number.to_bytes(31, 'big')
 
@@ -176,12 +166,3 @@ def test_receipt_mutation_during_audit_detected(tmp_path, monkeypatch):
     monkeypatch.setattr(union.np, 'empty', changed)
     with pytest.raises(ValueError, match='changed during audit'):
         run(fixture)
-
-
-def test_synthetic_disk_fixture_isolated_from_ambient_disk(tmp_path,monkeypatch):
-    import shutil
-    assert union.frozen.shutil is not shutil, 'synthetic disk fixture must not mutate process-wide shutil'
-    def forbidden(path):raise AssertionError('ambient disk usage leaked into tiny hash fixture')
-    monkeypatch.setattr(shutil,'disk_usage',forbidden)
-    union.frozen.append_day(tmp_path,[identity(0,1)],0)
-    assert union.frozen.audit(tmp_path,{0:1})['admitted']

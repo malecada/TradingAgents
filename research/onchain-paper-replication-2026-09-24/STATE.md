@@ -4,6 +4,144 @@ This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
 
+**Failed verification CLOSED;53 fixture failures corrected — 2026-09-30T18:24:32.030256+00:00**:
+Owner offline01 terminated FAILED after1898.526s (child1), with standard
+35failed/2739passed/97subtests and neural18failed/855passed/2skipped/12subtests.
+Peak2,887,884,800bytes;memoryhigh/max/OOM0;cleanup verified. Independent
+CLOSURE_REVIEW.md accepted exact owner/cgroup/known-child death and1217 declared
+current+committed hashes plus86/265 dynamic inventories at18:17:27UTC. Its SHA
+f6b44fa6054e1b70b97d7004969ad083f030999e1526ed06700922f671efc3c2.
+The source freeze is released. This failed identity remains permanently closed.
+
+All53 failures trace to synthetic fixture construction querying ambient free disk
+against older20GiB inner floors, including a downstream KeyError whose exact
+producer failure JSON is retained. Five admitted test modules now use scoped
+module-local disk observations. Production code and historical20GiB policies are
+unchanged; actual file allocation, numerical work, cleanup and low-disk refusals
+remain tested. Five new regressions failed before the fix. The focused five-module
+run passed112tests in87.06s. Independent FIX_REVIEW.md ACCEPTS, SHA
+98b149b29c68dbb329a179a67b62d206d30ebb93f203776a79193657158f13a3.
+Evidence: `full_sources/offline-hash-fixture-fix-2026-09-30/`.
+
+The accepted isolated workload candidate and metadata-only legacy graph
+preparation from the previous checkpoint are preserved. No empirical job or
+financial fit occurred. The sampler's real20GiB inner threshold still needs an
+explicit prospective policy adaptation or sufficient disk before future sampling;
+synthetic fixture success does not establish10GiB empirical feasibility.
+
+RELEASE_REVIEW.md independently ACCEPTS conditional one-off verification, SHA
+5de792422e6a1efa268a368c529b702083d1007275e970b69d6c8accfcf8619c.
+All1798 current/staged bindings match, with1212 unchanged inherited hashes and
+five explicit reviewed test updates. Expanded1680tracked Python inventory includes
+rootconftest and historical helpers;86package/265named-test inventories match.
+ManifestSHA68b146f63204502c55bf04effcadca906f5e0a30cf54cb3fe34f8c881484af64.
+Next: commit/push exact reviewed compact work, fresh resource/source/ownership preflight,
+then launch only its new offline01 identity and freeze HEAD/source. Earlier
+1217-file closure proves its declared bindings only. New broad success remains
+unverified. After verification, continue registered pair/journal/workload/orphan
+composition and legacy graph array verification. All13tasks/C01–C18 remain open
+as specified;77/109resource requirements supported;33/60spent with27already
+allocated12body/15fit;all1420fits pending. No paid/provider/trading action.
+
+**Standard offline batch FAILED; neural batch ACTIVE — September30,2026**:
+The standard batch completed with35failed/2739passed and97subtests passed in
+1096.39s. All35 failures have the same root cause: historical hash-audit tiny
+fixtures query ambient disk space against their frozen20GiB+1MiB floor, while
+available space dropped below that floor during temporary fixture creation.
+The active replication guard's authorized10GiB floor remains satisfied. Historical
+production source/policies must remain unchanged. Failure nodeIDs, original test
+snapshots and diagnosis are retained in
+`full_sources/offline-hash-fixture-fix-2026-09-30/`.
+
+The neural batch has started; offline01/session54201 and its source/HEAD freeze
+remain ACTIVE. No maintained test/source was changed or job relaunched. Isolated
+copied-test invocation was refused before import by the repository's reviewed
+pytest inventory (red01.log); do not bypass that policy. Its proposed new
+regressions are not yet executed. After full terminal/cleanup/death closure, add
+regressions to the two already admitted maintained test modules, demonstrate
+ambient-disk independence and apply narrowly scoped synthetic disk fixtures while
+retaining real low-floor rejection tests. Independently review, commit and use a
+fresh broad verification identity. Preserve this failed broad attempt permanently.
+
+**Isolated workload implementation accepted; broader verification still ACTIVE — 2026-09-30T17:45:43.266707+00:00**:
+No frozen maintained source, named test membership or HEAD changed. The new
+`full_sources/pair-workload-2026-09-30/workload.py` derives exact dictionary
+partition/direction and MCM center/motif purposes from actual loop membership.
+The scalar oracle's complete distance matrices, hierarchy, expanded memberships,
+medoids and RNG-dependent request order agree in tiny fixtures. Interrupted
+callbacks reuse completed directional scores; partial MCM rows distinguish valid
+zero from missing. Backend/config/workflow/dictionary-order changes have distinct
+identities. It is an isolated callback driver, not an admitted empirical consumer.
+
+Independent W1 identified finite double to float32 overflow. Original source,
+tests, docs, binding manifest, initial review and all counterexamples are retained.
+Corrected boundary requires scalar similarity[0,1] before averaging/casting.
+`green02.log`:12passes0.391s; REVIEW_V2 ACCEPTS this bounded scope, SHA
+6a6a672b63946de0476cfa1892a7f3a87f70635ed34d5fc277fd16dd0e2731b1.
+`bindings-v2.json` pins1232files including1217unchanged frozen dependencies, SHA
+b80886eb7aca6a47d7be31778956e7f7667c0dbe4d8dcc9a94cd88b62429bff0.
+Actual ranked PairSession checkpoint continuation, registered owner/journal
+composition, pending/orphan reconciliation, whole-workflow quotas and complete
+representation reuse remain unverified. No fit, resource pilot or old identity
+was executed by these tests; only tiny synthetic scalar matching was performed.
+
+`full_sources/legacy-graph-array-preparation-2026-09-30/` now binds31compact
+metadata files for2022-01-03 and2022-06-13 plus declared ten-array extents totaling
+1,037,092,456bytes. No array body or hash was read/verified. The original FAILED
+pilot and7complete/102unavailable denominator remain unchanged. New verifier
+implementation, tiny tests, independent code/evidence release and fresh committed
+resource preflight remain required; preparation does not authorize its launch.
+Independent PREPARATION_REVIEW.md ACCEPTS metadata preparation only, SHA
+2033035c91c41962b0aa278155b16f5531e00f435973c06a9f294e36bc25d949.
+It verifies the original failed terminal/cleanup and both complete phase joins;
+array verification and release remain pending.
+
+Owner offline01 remains the sole active guarded verification under source
+`f6aa6d006f026e2d994181fe8beef9b14ea7b6b3`/session54201. At997.2s
+it remained running, sampled peak1814401024bytes;
+all observed memory-high/max/OOM events0. The standard batch has reported failures
+but has not printed final diagnostics. Preserve the entire attempt, await standard
+AND neural completion, then verify exact cleanup/monitor/cgroup death and frozen
+1217bindings. Do not patch frozen files/commit or launch a successor while live.
+Next priority is to diagnose every recorded broad-suite failure; preserve failed
+identity permanently, fix only after closure, and use a freshly reviewed identity
+for any justified future verification. Continue unrelated bounded preparation.
+No broad pass or empirical release is claimed.77/109 resource requirements remain
+supported;33/60spent and27fullyallocated12body/15fit;all1420fits pending.
+
+**Owner integration broad verification ACTIVE — 2026-09-30T17:33:31.904842+00:00**:
+The reviewed source/evidence is committed and pushed at
+`f6aa6d006f026e2d994181fe8beef9b14ea7b6b3`. Fresh preflight01 checked all1217
+current and committed bindings, no active predecessor, sufficient RAM/disk and
+unused receipt identity. The named offline01 was launched exactly once (terminal
+session54201). Source, tracked Python membership, named tests and HEAD are frozen
+until terminal cleanup and exact owner death are verified. STATE and new isolated
+preparation outside the manifest may advance without committing while live.
+
+At a later live observation (elapsed511.974s), the standard batch showed test
+failures. Final diagnostics were not yet printed. Preserve the running attempt
+and source freeze; do not claim broad success or retry the same identity.
+Independent LIVE_REVIEW.md accepted the earlier live ownership/resource/source
+snapshot (SHA5aa3462ddec379be19dedecdf92056f5b09c7a4aab410450836040a470ba5884).
+An isolated pair-workload candidate outside the frozen closure has11 tiny passing
+scalar-oracle/cache tests; actual registered pair/journal composition remains open.
+
+Guard unit `onchain-replication-75a7d87c61cb47a7b3ec3eb4c8eb91d7.service`,
+monitorPID456207, sourcebindingsSHA
+ad1669e2a2fce5354c5ef1b4961bc6e3c8635ba7cc3e0599c1acca5121b74c6a.
+Receipt: `full_sources/owner-integration-2026-09-30/offline01/`.
+Observed running after265.7s; sampled peak814350336bytes,
+no memory-high/max/OOM events, child exit absent. Limits3GiBmax/2.75GiBhigh/
+zero worker swap/two CPUs/3GiBhostreserve/6GiBstartup/10GiBfree disk/3600s.
+This is offline synthetic verification, not a financial fit or resource pilot.
+
+Next safe action: retain the exact live owner, independently review its guard,
+continue isolated workload/registration preparation outside the frozen closure,
+then inspect both suite summaries and terminal/death/source evidence before
+independent closure. Never relaunch this identity. No empirical release follows
+merely from a passing offline suite. All1420 fits remain pending;77/109 resource
+requirements supported;33/60 attempts consumed with remaining27 fully allocated.
+
 **Maintained successor ownership integration;88 focused tests pass — 2026-09-30T17:24:51.129161+00:00**:
 The user explicitly requested continued autonomous execution. Previous ancestry
 work was committed and pushed at `f68a9866`. New maintained modules

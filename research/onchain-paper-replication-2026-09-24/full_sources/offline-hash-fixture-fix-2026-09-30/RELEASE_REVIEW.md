@@ -1,0 +1,28 @@
+# Independent corrected broad offline release review
+
+Accepted conditionally for one new finite named offline invocation after the exact staged preparation and this review are committed/pushed and fresh preflight succeeds. No material release blocker was identified. This is prospective release, not execution, a broad-suite pass or empirical admission. Only this review was written; no tests/jobs, source edits or commits were performed.
+
+## Exact source and evidence closure
+
+All1798 current file hashes independently match the manifest, and every listed file's staged bytes match the same hash. The raw source manifest also matches its staged copy. The prior1217 entries are all retained:1212 are unchanged and precisely five test hashes differ. Each changed before/after pair agrees with changed_inherited_bindings and the accepted fixture diff. No production package, historical implementation, scripts, root harness or dependency-lock change is staged. The maintained diff remains five additive fixture/sentinel corrections with no old assertions removed.
+
+The new tracked inventory independently reconstructs to1680 Python files under tradingagents/tests/scripts/research/docs plus root conftest.py, with the specified secret/dependency directories excluded. Every inventory member is hash-bound. The86 dynamic package sources and265 named offline tests independently reconstruct exactly, and every member is bound. Root conftest.py, all conftest files found within those trees, scripts/verify_offline.py, pyproject.toml and uv.lock are included. No additional pytest.ini/setup.cfg/tox.ini is present. Static inspection found no omitted directly resolvable repository import required by the named profile/harness. The one detected unbound absolute import, cli/utils.py from the excluded legacy test_ticker_symbol_handling.py, is outside named collection and is not represented as covered execution. Static inspection is not a proof of all possible dynamic or external-runtime dependencies.
+
+This strengthens the earlier declared closure. The previous failed run's1217-file reconciliation does not retroactively prove root conftest or every historical helper was pinned then. Its scope remains its stated bindings and inventories. The new manifest preserves that historical manifest, failed-run receipts/closure, correction failures, accepted112-pass fix review, isolated workload evidence and legacy array preparation. Including isolated candidate sources as evidence does not cause their tests to enter the named profile or establish their consumer integration.
+
+Manifest SHA-256: `68b146f63204502c55bf04effcadca906f5e0a30cf54cb3fe34f8c881484af64`.
+Launcher SHA-256: `152e38c9a581943690ec7f041ab1023bf79ca6759e316d53ff12b66e6c9cde4d`.
+Protocol SHA-256: `ffefc5dbf4864a50a976eba6d6ec13a921db532453acfdc2ea5c2507754bf7d9`.
+Accepted fixture review SHA-256: `98b149b29c68dbb329a179a67b62d206d30ebb93f203776a79193657158f13a3`.
+
+Raw pytest logs and original snapshots deliberately retain their whitespace, including trailing spaces and final blank lines reported by full diff --check. Rewriting them for style would destroy exact evidence preservation. These are not executable correction defects.
+
+## Launcher and conditions
+
+Relative to the accepted owner-integration launcher, this wrapper changes its description, distinct owner kind and adds an exact tracked-Python membership comparison. It retains full40-character supplied source validation, matching actual HEAD, raw manifest equality with the supplied commit, exact dynamic package/test inventories, all current/committed file hashes, explicit10GiB disk policy and active/activating replication-unit refusal. The intended child remains repository `.venv/bin/python -B scripts/verify_offline.py` with its separate standard and neural batches. No empirical main or prior verifier identity is selected.
+
+The new receipt directory here/offline01 was absent. Owner kind `synthetic-disk-fixture-correction-offline01` is distinct from the permanently failed predecessor. Guard limits remain3GiB memory.max,2.75GiB memory.high, zero worker swap, two-CPU affinity,3GiB host reserve,6GiB startup available RAM,10GiB disk floor and3,600seconds. Resource limits and refusal behavior are not weakened. The tests' simulated capacity cannot establish actual sampling disk feasibility: the unchanged production MappedWeights20GiB threshold remains a separate requirement for any future empirical route.
+
+Before dispatch, commit and push the exact listed/staged artifacts, manifest and this separate review; verify the actual pushed source and pinned runtime. Require an unused receipt identity and fresh RAM/disk/owner checks with no competing guard or pending owner. The wrapper's unit query supports coordinated sole ownership; it is not a global admission lock against an unrelated simultaneous launch. Freeze HEAD, tracked inventory, all file bindings and dynamic package/test membership until actual terminal cleanup/death. No staging or tracking of new Python membership is allowed during that interval. Preserve any failure and never reuse this identity.
+
+After the one invocation, independently reconcile both raw batch summaries, all failures/skips/subtests, final/live/child-exit identities, resource counters and limit reasons, cleanup, exact monitor/cgroup death and unchanged current/committed bindings. Only that closure can establish broad success. The predecessor remains53failed/3594passed/2skipped/109passed-subtests even if this new attempt succeeds. No research-budget amendment, numerical continuation or financial-fit release follows from this preparation.

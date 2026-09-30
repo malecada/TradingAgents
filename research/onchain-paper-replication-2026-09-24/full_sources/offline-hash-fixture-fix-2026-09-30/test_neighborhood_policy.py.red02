@@ -11,16 +11,6 @@ from tradingagents.research.onchain_replication.neighborhoods import sample_neig
 from tradingagents.research.onchain_replication.provenance import canonical_bytes,file_hash
 
 
-@pytest.fixture(autouse=True)
-def synthetic_mapped_disk_space(monkeypatch):
-    # Only the sampler's disk observation is synthetic. Real file allocation,
-    # numerical work, cleanup and explicit low-space refusals still execute.
-    from types import SimpleNamespace
-    from tradingagents.research.onchain_replication import sampling_weights
-    monkeypatch.setattr(sampling_weights,'shutil',SimpleNamespace(
-        disk_usage=lambda path:SimpleNamespace(free=32*2**30)))
-
-
 def policy():return {'schema_version':1,'mode':'array','max_buffer_bytes':1024**2,'edge_chunk':2,'max_sample_array_bytes':1024**2}
 
 

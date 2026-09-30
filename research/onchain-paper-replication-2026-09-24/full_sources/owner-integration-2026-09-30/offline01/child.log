@@ -1,0 +1,1973 @@
+Reviewed offline profile: 265 modules; legacy/unreviewed modules excluded.
+Isolated standard runtime: 186 modules.
+........................................................................ [  2%]
+.................................................... [  4%]
+........................................................................ [  7%]
+........................................................................ [  9%]
+........................................................................ [ 12%]
+........................................................................ [ 14%]
+........................................................................ [ 17%]
+........................................................................ [ 20%]
+........................................................................ [ 22%]
+........................................................................ [ 25%]
+........................................................................ [ 27%]
+........................................................................ [ 30%]
+........................................................................ [ 33%]
+........................................................................ [ 35%]
+........................................................................ [ 38%]
+........................................................................ [ 40%]
+........................................................................ [ 43%]
+........................................................................ [ 45%]
+........................................................................ [ 48%]
+........................................................................ [ 51%]
+..FFFFFFFFFFFFF....F.................................................... [ 53%]
+........................................................................ [ 56%]
+................................................................FFFFFFFF [ 58%]
+FFFFFFFFFFFFF........................................................... [ 61%]
+........................................................................ [ 64%]
+........................................................................ [ 66%]
+........................................................................ [ 69%]
+........................................................ [ 71%]
+........................................................................ [ 73%]
+........................................................................ [ 76%]
+........................................................................ [ 79%]
+.............................................................. [ 81%]
+........................................................................ [ 83%]
+........................................................................ [ 86%]
+........................................................................ [ 89%]
+............................................................. [ 91%]
+........................................................... [ 93%]
+........................................................................ [ 96%]
+............................................. [ 97%]
+...............................................................          [100%]
+=================================== FAILURES ===================================
+__________ test_exact_nonadjacent_and_withinday_duplicates_preserved ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_exact_nonadjacent_and_wit0')
+
+    def test_exact_nonadjacent_and_withinday_duplicates_preserved(tmp_path):
+        values = [identity(0, 1), identity(255, 2), identity(0, 1)]
+>       one = audit.append_day(tmp_path, [b''.join(values)], 1095)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_hash_audit.py:22: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_exact_nonadjacent_and_wit0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+___________________ test_all_buckets_against_python_counter ____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_all_buckets_against_pytho0')
+
+    def test_all_buckets_against_python_counter(tmp_path):
+        values = [identity(i % 256, i % 1000) for i in range(4000)]
+        values += values[::11]
+        oracle = Counter(values)
+>       audit.append_day(tmp_path, [b''.join(values[:2000])], 9)
+
+tests/research/test_onchain_fullpanel_hash_audit.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_all_buckets_against_pytho0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+_____________________ test_empty_day_and_empty_population ______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_empty_day_and_empty_popul0')
+
+    def test_empty_day_and_empty_population(tmp_path):
+        assert audit.audit(tmp_path, {})['admitted']
+>       receipt = audit.append_day(tmp_path, [b''], 3)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_hash_audit.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_empty_day_and_empty_popul0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+___________ test_duplicate_comparison_boundary_and_zero_sample_limit ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_duplicate_comparison_boun0')
+
+    def test_duplicate_comparison_boundary_and_zero_sample_limit(tmp_path):
+        value = identity(0, 0)
+>       audit.append_day(tmp_path, [value * 40000], 1)
+
+tests/research/test_onchain_fullpanel_hash_audit.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_duplicate_comparison_boun0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+________________ test_duplicate_append_rejected_without_changes ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_duplicate_append_rejected0')
+
+    def test_duplicate_append_rejected_without_changes(tmp_path):
+>       audit.append_day(tmp_path, [identity(0, 1)], 1)
+
+tests/research/test_onchain_fullpanel_hash_audit.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_duplicate_append_rejected0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+___________________ test_partial_failure_retains_and_blocks ____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_partial_failure_retains_a0')
+
+    def test_partial_failure_retains_and_blocks(tmp_path):
+        def failed():
+            yield identity(0, 1)
+            raise RuntimeError('injected')
+        with pytest.raises(RuntimeError, match='injected'):
+>           audit.append_day(tmp_path, failed(), 3)
+
+tests/research/test_onchain_fullpanel_hash_audit.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_partial_failure_retains_a0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+_____________________ test_corruption_rejected[truncated] ______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_corruption_rejected_trunc0')
+bad = 'truncated'
+
+    @pytest.mark.parametrize('bad', ['truncated', 'digest', 'counter', 'unknown_day', 'missing_day', 'span', 'symlink'])
+    def test_corruption_rejected(tmp_path, bad):
+>       audit.append_day(tmp_path, [identity(0, 1)], 1)
+
+tests/research/test_onchain_fullpanel_hash_audit.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_corruption_rejected_trunc0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+_______________________ test_corruption_rejected[digest] _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_corruption_rejected_diges0')
+bad = 'digest'
+
+    @pytest.mark.parametrize('bad', ['truncated', 'digest', 'counter', 'unknown_day', 'missing_day', 'span', 'symlink'])
+    def test_corruption_rejected(tmp_path, bad):
+>       audit.append_day(tmp_path, [identity(0, 1)], 1)
+
+tests/research/test_onchain_fullpanel_hash_audit.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_corruption_rejected_diges0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+______________________ test_corruption_rejected[counter] _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_corruption_rejected_count0')
+bad = 'counter'
+
+    @pytest.mark.parametrize('bad', ['truncated', 'digest', 'counter', 'unknown_day', 'missing_day', 'span', 'symlink'])
+    def test_corruption_rejected(tmp_path, bad):
+>       audit.append_day(tmp_path, [identity(0, 1)], 1)
+
+tests/research/test_onchain_fullpanel_hash_audit.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_corruption_rejected_count0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+____________________ test_corruption_rejected[unknown_day] _____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_corruption_rejected_unkno0')
+bad = 'unknown_day'
+
+    @pytest.mark.parametrize('bad', ['truncated', 'digest', 'counter', 'unknown_day', 'missing_day', 'span', 'symlink'])
+    def test_corruption_rejected(tmp_path, bad):
+>       audit.append_day(tmp_path, [identity(0, 1)], 1)
+
+tests/research/test_onchain_fullpanel_hash_audit.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_corruption_rejected_unkno0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+____________________ test_corruption_rejected[missing_day] _____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_corruption_rejected_missi0')
+bad = 'missing_day'
+
+    @pytest.mark.parametrize('bad', ['truncated', 'digest', 'counter', 'unknown_day', 'missing_day', 'span', 'symlink'])
+    def test_corruption_rejected(tmp_path, bad):
+>       audit.append_day(tmp_path, [identity(0, 1)], 1)
+
+tests/research/test_onchain_fullpanel_hash_audit.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_corruption_rejected_missi0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+________________________ test_corruption_rejected[span] ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_corruption_rejected_span_0')
+bad = 'span'
+
+    @pytest.mark.parametrize('bad', ['truncated', 'digest', 'counter', 'unknown_day', 'missing_day', 'span', 'symlink'])
+    def test_corruption_rejected(tmp_path, bad):
+>       audit.append_day(tmp_path, [identity(0, 1)], 1)
+
+tests/research/test_onchain_fullpanel_hash_audit.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_corruption_rejected_span_0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+______________________ test_corruption_rejected[symlink] _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_corruption_rejected_symli0')
+bad = 'symlink'
+
+    @pytest.mark.parametrize('bad', ['truncated', 'digest', 'counter', 'unknown_day', 'missing_day', 'span', 'symlink'])
+    def test_corruption_rejected(tmp_path, bad):
+>       audit.append_day(tmp_path, [identity(0, 1)], 1)
+
+tests/research/test_onchain_fullpanel_hash_audit.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_corruption_rejected_symli0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+_______________ test_bounds_and_short_chunks_stop_before_payload _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_bounds_and_short_chunks_s0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75cd635941a0>
+
+    def test_bounds_and_short_chunks_stop_before_payload(tmp_path, monkeypatch):
+        with pytest.raises(ValueError, match='width'):
+>           audit.append_day(tmp_path/'short', [b'x'], 0)
+
+tests/research/test_onchain_fullpanel_hash_audit.py:126: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_bounds_and_short_chunks_s0/short')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+_____________ test_cross_root_and_within_day_duplicates_preserved ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_cross_root_and_within_day0')
+
+    def test_cross_root_and_within_day_duplicates_preserved(tmp_path):
+        a, b = identity(0, 1), identity(255, 2)
+>       fixture = make(tmp_path, [{0: [a, b], 205: [a]}, {206: [b], 1095: [identity(7, 3)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_cross_root_and_within_day0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+_________________ test_all_buckets_against_independent_counter _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_all_buckets_against_indep0')
+
+    def test_all_buckets_against_independent_counter(tmp_path):
+        values = [identity(i % 256, i % 1000) for i in range(4200)]
+        values += values[::13]
+>       fixture = make(tmp_path, [{0: values[:2200]}, {206: values[2200:]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_all_buckets_against_indep0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+___________________ test_empty_days_and_comparison_boundary ____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_empty_days_and_comparison0')
+
+    def test_empty_days_and_comparison_boundary(tmp_path):
+>       fixture = make(tmp_path, [{0: [], 205: [identity(0, 0)] * 17000},
+                                  {206: [identity(0, 0)] * 17000, 1095: []}])
+
+tests/research/test_onchain_fullpanel_resume_hash.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_empty_days_and_comparison0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+_______________________ test_unique_and_empty_namespaces _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_unique_and_empty_namespac0')
+
+    def test_unique_and_empty_namespaces(tmp_path):
+>       fixture = make(tmp_path, [{0: []}, {206: [identity(4, 1)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_unique_and_empty_namespac0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+__________________________ test_fail_closed[missing] ___________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_missing_0')
+bad = 'missing'
+
+    @pytest.mark.parametrize('bad', ['missing', 'rows', 'stream', 'missing_stream', 'overlap', 'same_root', 'partial', 'symlink', 'digest', 'route', 'length', 'offset'])
+    def test_fail_closed(tmp_path, bad):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: [identity(0, 2)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_missing_0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+____________________________ test_fail_closed[rows] ____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_rows_0')
+bad = 'rows'
+
+    @pytest.mark.parametrize('bad', ['missing', 'rows', 'stream', 'missing_stream', 'overlap', 'same_root', 'partial', 'symlink', 'digest', 'route', 'length', 'offset'])
+    def test_fail_closed(tmp_path, bad):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: [identity(0, 2)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_rows_0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+___________________________ test_fail_closed[stream] ___________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_stream_0')
+bad = 'stream'
+
+    @pytest.mark.parametrize('bad', ['missing', 'rows', 'stream', 'missing_stream', 'overlap', 'same_root', 'partial', 'symlink', 'digest', 'route', 'length', 'offset'])
+    def test_fail_closed(tmp_path, bad):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: [identity(0, 2)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_stream_0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+_______________________ test_fail_closed[missing_stream] _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_missing_strea0')
+bad = 'missing_stream'
+
+    @pytest.mark.parametrize('bad', ['missing', 'rows', 'stream', 'missing_stream', 'overlap', 'same_root', 'partial', 'symlink', 'digest', 'route', 'length', 'offset'])
+    def test_fail_closed(tmp_path, bad):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: [identity(0, 2)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_missing_strea0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+__________________________ test_fail_closed[overlap] ___________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_overlap_0')
+bad = 'overlap'
+
+    @pytest.mark.parametrize('bad', ['missing', 'rows', 'stream', 'missing_stream', 'overlap', 'same_root', 'partial', 'symlink', 'digest', 'route', 'length', 'offset'])
+    def test_fail_closed(tmp_path, bad):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: [identity(0, 2)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_overlap_0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+_________________________ test_fail_closed[same_root] __________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_same_root_0')
+bad = 'same_root'
+
+    @pytest.mark.parametrize('bad', ['missing', 'rows', 'stream', 'missing_stream', 'overlap', 'same_root', 'partial', 'symlink', 'digest', 'route', 'length', 'offset'])
+    def test_fail_closed(tmp_path, bad):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: [identity(0, 2)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_same_root_0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+__________________________ test_fail_closed[partial] ___________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_partial_0')
+bad = 'partial'
+
+    @pytest.mark.parametrize('bad', ['missing', 'rows', 'stream', 'missing_stream', 'overlap', 'same_root', 'partial', 'symlink', 'digest', 'route', 'length', 'offset'])
+    def test_fail_closed(tmp_path, bad):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: [identity(0, 2)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_partial_0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+__________________________ test_fail_closed[symlink] ___________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_symlink_0')
+bad = 'symlink'
+
+    @pytest.mark.parametrize('bad', ['missing', 'rows', 'stream', 'missing_stream', 'overlap', 'same_root', 'partial', 'symlink', 'digest', 'route', 'length', 'offset'])
+    def test_fail_closed(tmp_path, bad):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: [identity(0, 2)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_symlink_0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+___________________________ test_fail_closed[digest] ___________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_digest_0')
+bad = 'digest'
+
+    @pytest.mark.parametrize('bad', ['missing', 'rows', 'stream', 'missing_stream', 'overlap', 'same_root', 'partial', 'symlink', 'digest', 'route', 'length', 'offset'])
+    def test_fail_closed(tmp_path, bad):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: [identity(0, 2)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_digest_0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+___________________________ test_fail_closed[route] ____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_route_0')
+bad = 'route'
+
+    @pytest.mark.parametrize('bad', ['missing', 'rows', 'stream', 'missing_stream', 'overlap', 'same_root', 'partial', 'symlink', 'digest', 'route', 'length', 'offset'])
+    def test_fail_closed(tmp_path, bad):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: [identity(0, 2)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_route_0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+___________________________ test_fail_closed[length] ___________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_length_0')
+bad = 'length'
+
+    @pytest.mark.parametrize('bad', ['missing', 'rows', 'stream', 'missing_stream', 'overlap', 'same_root', 'partial', 'symlink', 'digest', 'route', 'length', 'offset'])
+    def test_fail_closed(tmp_path, bad):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: [identity(0, 2)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_length_0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+___________________________ test_fail_closed[offset] ___________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_offset_0')
+bad = 'offset'
+
+    @pytest.mark.parametrize('bad', ['missing', 'rows', 'stream', 'missing_stream', 'overlap', 'same_root', 'partial', 'symlink', 'digest', 'route', 'length', 'offset'])
+    def test_fail_closed(tmp_path, bad):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: [identity(0, 2)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_fail_closed_offset_0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+____ test_combined_caps_before_allocation_or_bucket_read[MAX_BUCKET_BYTES] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_combined_caps_before_allo0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75cd0f379fd0>
+limit = 'MAX_BUCKET_BYTES'
+
+    @pytest.mark.parametrize('limit', ['MAX_BUCKET_BYTES', 'MAX_TOTAL_BYTES'])
+    def test_combined_caps_before_allocation_or_bucket_read(tmp_path, monkeypatch, limit):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: [identity(0, 2)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:120: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_combined_caps_before_allo0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+_____ test_combined_caps_before_allocation_or_bucket_read[MAX_TOTAL_BYTES] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_combined_caps_before_allo1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75cd0f3784b0>
+limit = 'MAX_TOTAL_BYTES'
+
+    @pytest.mark.parametrize('limit', ['MAX_BUCKET_BYTES', 'MAX_TOTAL_BYTES'])
+    def test_combined_caps_before_allocation_or_bucket_read(tmp_path, monkeypatch, limit):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: [identity(0, 2)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:120: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_combined_caps_before_allo1/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+__________ test_inventory_metadata_only_and_no_missing_root_creation ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_inventory_metadata_only_a0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75cd0f379470>
+
+    def test_inventory_metadata_only_and_no_missing_root_creation(tmp_path, monkeypatch):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: [identity(0, 2)]}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:134: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_inventory_metadata_only_a0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+______________________ test_free_floor_before_allocation _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_free_floor_before_allocat0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75cd0f37a040>
+
+    def test_free_floor_before_allocation(tmp_path, monkeypatch):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: []}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:150: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_free_floor_before_allocat0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+_________________ test_receipt_mutation_during_audit_detected __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_receipt_mutation_during_a0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75cd63b6bc40>
+
+    def test_receipt_mutation_during_audit_detected(tmp_path, monkeypatch):
+>       fixture = make(tmp_path, [{0: [identity(0, 1)]}, {206: []}])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/test_onchain_fullpanel_resume_hash.py:158: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/test_onchain_fullpanel_resume_hash.py:29: in make
+    union.frozen.append_day(root, [raw], day)
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:147: in append_day
+    _space(root, 0)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/pytest-of-malecada/pytest-0/test_receipt_mutation_during_a0/0')
+amount = 0
+
+    def _space(root, amount):
+        if shutil.disk_usage(root).free < FREE_FLOOR_BYTES + amount + ALLOCATION_MARGIN_BYTES:
+>           raise OSError('hash audit would breach free-space floor plus allocation margin')
+E           OSError: hash audit would breach free-space floor plus allocation margin
+
+research/onchain-graph-2026-09-16/fullpanel/hash_audit.py:59: OSError
+- reviewed profile: 75 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/test_onchain_fullpanel_hash_audit.py::test_exact_nonadjacent_and_withinday_duplicates_preserved
+FAILED tests/research/test_onchain_fullpanel_hash_audit.py::test_all_buckets_against_python_counter
+FAILED tests/research/test_onchain_fullpanel_hash_audit.py::test_empty_day_and_empty_population
+FAILED tests/research/test_onchain_fullpanel_hash_audit.py::test_duplicate_comparison_boundary_and_zero_sample_limit
+FAILED tests/research/test_onchain_fullpanel_hash_audit.py::test_duplicate_append_rejected_without_changes
+FAILED tests/research/test_onchain_fullpanel_hash_audit.py::test_partial_failure_retains_and_blocks
+FAILED tests/research/test_onchain_fullpanel_hash_audit.py::test_corruption_rejected[truncated]
+FAILED tests/research/test_onchain_fullpanel_hash_audit.py::test_corruption_rejected[digest]
+FAILED tests/research/test_onchain_fullpanel_hash_audit.py::test_corruption_rejected[counter]
+FAILED tests/research/test_onchain_fullpanel_hash_audit.py::test_corruption_rejected[unknown_day]
+FAILED tests/research/test_onchain_fullpanel_hash_audit.py::test_corruption_rejected[missing_day]
+FAILED tests/research/test_onchain_fullpanel_hash_audit.py::test_corruption_rejected[span]
+FAILED tests/research/test_onchain_fullpanel_hash_audit.py::test_corruption_rejected[symlink]
+FAILED tests/research/test_onchain_fullpanel_hash_audit.py::test_bounds_and_short_chunks_stop_before_payload
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_cross_root_and_within_day_duplicates_preserved
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_all_buckets_against_independent_counter
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_empty_days_and_comparison_boundary
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_unique_and_empty_namespaces
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_fail_closed[missing]
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_fail_closed[rows]
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_fail_closed[stream]
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_fail_closed[missing_stream]
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_fail_closed[overlap]
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_fail_closed[same_root]
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_fail_closed[partial]
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_fail_closed[symlink]
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_fail_closed[digest]
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_fail_closed[route]
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_fail_closed[length]
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_fail_closed[offset]
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_combined_caps_before_allocation_or_bucket_read[MAX_BUCKET_BYTES]
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_combined_caps_before_allocation_or_bucket_read[MAX_TOTAL_BYTES]
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_inventory_metadata_only_and_no_missing_root_creation
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_free_floor_before_allocation
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_receipt_mutation_during_audit_detected
+35 failed, 2739 passed, 97 subtests passed in 1096.39s (0:18:16)
+Isolated neural runtime: 79 modules.
+...........s............................................................ [  8%]
+........................................................................ [ 16%]
+........................................................................ [ 24%]
+........................................................................ [ 32%]
+................................................FFFFF..F....F...FFF.FFF. [ 41%]
+s............................................................... [ 48%]
+.................................................................... [ 56%]
+..................................................F..................... [ 64%]
+........................................................................ [ 72%]
+........................................................................ [ 80%]
+......................................................................F. [ 89%]
+.....F.......F.F........................................................ [ 97%]
+.......................                                                  [100%]
+=================================== FAILURES ===================================
+__________ test_mapped_sampling_preserves_complete_graph_manifest[11] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_mapped_sampling_preserves0')
+seed = 11
+
+    @pytest.mark.parametrize('seed',[11,23,37,53,71])
+    def test_mapped_sampling_preserves_complete_graph_manifest(tmp_path,seed):
+        graphs=population();config=cfg()|{'sample_count':50}
+        eager=sample_neighborhoods(graphs,config,seed)
+        out=tmp_path/'scratch'
+>       mapped=sample_neighborhoods(graphs,config,seed,weight_workspace=out,max_weight_bytes=100000)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_mapped_sampling.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/neighborhoods.py:141: in sample_neighborhoods
+    storage = (stack.enter_context(MappedWeights(weight_workspace,total,max_weight_bytes,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.sampling_weights.MappedWeights object at 0x736d9554fe00>
+directory = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_mapped_sampling_preserves0/scratch')
+count = 74, max_bytes = 100000
+binding = {'training_graphs': ('458abd9e7e14f17362f51e9d251ea8b0b17353ed3c61ecdaf876a77dff1b9c6b', 'df539df0ba4a746408153537ddd4...pth': 1, 'sample_count': 50, 'maximum_neighborhood_nodes': 20, 'train_start': '2024-01-01T00:00:00Z', ...}, 'seed': 11}
+
+    def __init__(self, directory, count, max_bytes, binding):
+        if np.__version__ != '2.3.0':
+            raise ValueError('mapped choice requires validated NumPy 2.3.0')
+        if type(count) is not int or count <= 0:
+            raise ValueError('weight count must be positive')
+        if type(max_bytes) is not int or max_bytes <= 0:
+            raise ValueError('explicit weight scratch budget required')
+        self.directory = Path(directory)
+        if self.directory.exists() or self.directory.is_symlink():
+            raise FileExistsError('weight workspace is already reserved')
+        block = os.statvfs(self.directory.parent).f_frsize
+        if block <= 0:
+            raise ValueError('unknown weight workspace allocation granularity')
+        self.numeric_bytes = 3 * count * 8
+        # Intent and terminal each have a 32KiB encoded-content ceiling, plus
+        # newline; reserve separate rounded blocks and one directory block.
+        metadata_bytes = 2 * ((32769 + block - 1) // block * block) + block
+        self.reserved_bytes = 3 * ((count * 8 + block - 1) // block * block) + metadata_bytes
+        if self.reserved_bytes > max_bytes:
+            raise ValueError('weight scratch budget insufficient')
+        self.intent = {'schema_version':1, 'count':count, 'dtype':'float64',
+                       'numpy':np.__version__, 'numeric_bytes':self.numeric_bytes,
+                       'reserved_bytes':self.reserved_bytes, 'max_weight_bytes':max_bytes,
+                       'binding':binding, 'resumable':False}
+        if len(canonical_bytes(self.intent)) > 32768:
+            raise ValueError('weight scratch metadata budget exceeded')
+        if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+>           raise ValueError('weight workspace breaches disk reserve')
+E           ValueError: weight workspace breaches disk reserve
+
+tradingagents/research/onchain_replication/sampling_weights.py:43: ValueError
+__________ test_mapped_sampling_preserves_complete_graph_manifest[23] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_mapped_sampling_preserves1')
+seed = 23
+
+    @pytest.mark.parametrize('seed',[11,23,37,53,71])
+    def test_mapped_sampling_preserves_complete_graph_manifest(tmp_path,seed):
+        graphs=population();config=cfg()|{'sample_count':50}
+        eager=sample_neighborhoods(graphs,config,seed)
+        out=tmp_path/'scratch'
+>       mapped=sample_neighborhoods(graphs,config,seed,weight_workspace=out,max_weight_bytes=100000)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_mapped_sampling.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/neighborhoods.py:141: in sample_neighborhoods
+    storage = (stack.enter_context(MappedWeights(weight_workspace,total,max_weight_bytes,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.sampling_weights.MappedWeights object at 0x736d959991d0>
+directory = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_mapped_sampling_preserves1/scratch')
+count = 74, max_bytes = 100000
+binding = {'training_graphs': ('458abd9e7e14f17362f51e9d251ea8b0b17353ed3c61ecdaf876a77dff1b9c6b', 'df539df0ba4a746408153537ddd4...pth': 1, 'sample_count': 50, 'maximum_neighborhood_nodes': 20, 'train_start': '2024-01-01T00:00:00Z', ...}, 'seed': 23}
+
+    def __init__(self, directory, count, max_bytes, binding):
+        if np.__version__ != '2.3.0':
+            raise ValueError('mapped choice requires validated NumPy 2.3.0')
+        if type(count) is not int or count <= 0:
+            raise ValueError('weight count must be positive')
+        if type(max_bytes) is not int or max_bytes <= 0:
+            raise ValueError('explicit weight scratch budget required')
+        self.directory = Path(directory)
+        if self.directory.exists() or self.directory.is_symlink():
+            raise FileExistsError('weight workspace is already reserved')
+        block = os.statvfs(self.directory.parent).f_frsize
+        if block <= 0:
+            raise ValueError('unknown weight workspace allocation granularity')
+        self.numeric_bytes = 3 * count * 8
+        # Intent and terminal each have a 32KiB encoded-content ceiling, plus
+        # newline; reserve separate rounded blocks and one directory block.
+        metadata_bytes = 2 * ((32769 + block - 1) // block * block) + block
+        self.reserved_bytes = 3 * ((count * 8 + block - 1) // block * block) + metadata_bytes
+        if self.reserved_bytes > max_bytes:
+            raise ValueError('weight scratch budget insufficient')
+        self.intent = {'schema_version':1, 'count':count, 'dtype':'float64',
+                       'numpy':np.__version__, 'numeric_bytes':self.numeric_bytes,
+                       'reserved_bytes':self.reserved_bytes, 'max_weight_bytes':max_bytes,
+                       'binding':binding, 'resumable':False}
+        if len(canonical_bytes(self.intent)) > 32768:
+            raise ValueError('weight scratch metadata budget exceeded')
+        if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+>           raise ValueError('weight workspace breaches disk reserve')
+E           ValueError: weight workspace breaches disk reserve
+
+tradingagents/research/onchain_replication/sampling_weights.py:43: ValueError
+__________ test_mapped_sampling_preserves_complete_graph_manifest[37] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_mapped_sampling_preserves2')
+seed = 37
+
+    @pytest.mark.parametrize('seed',[11,23,37,53,71])
+    def test_mapped_sampling_preserves_complete_graph_manifest(tmp_path,seed):
+        graphs=population();config=cfg()|{'sample_count':50}
+        eager=sample_neighborhoods(graphs,config,seed)
+        out=tmp_path/'scratch'
+>       mapped=sample_neighborhoods(graphs,config,seed,weight_workspace=out,max_weight_bytes=100000)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_mapped_sampling.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/neighborhoods.py:141: in sample_neighborhoods
+    storage = (stack.enter_context(MappedWeights(weight_workspace,total,max_weight_bytes,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.sampling_weights.MappedWeights object at 0x736d95999f90>
+directory = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_mapped_sampling_preserves2/scratch')
+count = 74, max_bytes = 100000
+binding = {'training_graphs': ('458abd9e7e14f17362f51e9d251ea8b0b17353ed3c61ecdaf876a77dff1b9c6b', 'df539df0ba4a746408153537ddd4...pth': 1, 'sample_count': 50, 'maximum_neighborhood_nodes': 20, 'train_start': '2024-01-01T00:00:00Z', ...}, 'seed': 37}
+
+    def __init__(self, directory, count, max_bytes, binding):
+        if np.__version__ != '2.3.0':
+            raise ValueError('mapped choice requires validated NumPy 2.3.0')
+        if type(count) is not int or count <= 0:
+            raise ValueError('weight count must be positive')
+        if type(max_bytes) is not int or max_bytes <= 0:
+            raise ValueError('explicit weight scratch budget required')
+        self.directory = Path(directory)
+        if self.directory.exists() or self.directory.is_symlink():
+            raise FileExistsError('weight workspace is already reserved')
+        block = os.statvfs(self.directory.parent).f_frsize
+        if block <= 0:
+            raise ValueError('unknown weight workspace allocation granularity')
+        self.numeric_bytes = 3 * count * 8
+        # Intent and terminal each have a 32KiB encoded-content ceiling, plus
+        # newline; reserve separate rounded blocks and one directory block.
+        metadata_bytes = 2 * ((32769 + block - 1) // block * block) + block
+        self.reserved_bytes = 3 * ((count * 8 + block - 1) // block * block) + metadata_bytes
+        if self.reserved_bytes > max_bytes:
+            raise ValueError('weight scratch budget insufficient')
+        self.intent = {'schema_version':1, 'count':count, 'dtype':'float64',
+                       'numpy':np.__version__, 'numeric_bytes':self.numeric_bytes,
+                       'reserved_bytes':self.reserved_bytes, 'max_weight_bytes':max_bytes,
+                       'binding':binding, 'resumable':False}
+        if len(canonical_bytes(self.intent)) > 32768:
+            raise ValueError('weight scratch metadata budget exceeded')
+        if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+>           raise ValueError('weight workspace breaches disk reserve')
+E           ValueError: weight workspace breaches disk reserve
+
+tradingagents/research/onchain_replication/sampling_weights.py:43: ValueError
+__________ test_mapped_sampling_preserves_complete_graph_manifest[53] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_mapped_sampling_preserves3')
+seed = 53
+
+    @pytest.mark.parametrize('seed',[11,23,37,53,71])
+    def test_mapped_sampling_preserves_complete_graph_manifest(tmp_path,seed):
+        graphs=population();config=cfg()|{'sample_count':50}
+        eager=sample_neighborhoods(graphs,config,seed)
+        out=tmp_path/'scratch'
+>       mapped=sample_neighborhoods(graphs,config,seed,weight_workspace=out,max_weight_bytes=100000)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_mapped_sampling.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/neighborhoods.py:141: in sample_neighborhoods
+    storage = (stack.enter_context(MappedWeights(weight_workspace,total,max_weight_bytes,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.sampling_weights.MappedWeights object at 0x736d9653dba0>
+directory = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_mapped_sampling_preserves3/scratch')
+count = 74, max_bytes = 100000
+binding = {'training_graphs': ('458abd9e7e14f17362f51e9d251ea8b0b17353ed3c61ecdaf876a77dff1b9c6b', 'df539df0ba4a746408153537ddd4...pth': 1, 'sample_count': 50, 'maximum_neighborhood_nodes': 20, 'train_start': '2024-01-01T00:00:00Z', ...}, 'seed': 53}
+
+    def __init__(self, directory, count, max_bytes, binding):
+        if np.__version__ != '2.3.0':
+            raise ValueError('mapped choice requires validated NumPy 2.3.0')
+        if type(count) is not int or count <= 0:
+            raise ValueError('weight count must be positive')
+        if type(max_bytes) is not int or max_bytes <= 0:
+            raise ValueError('explicit weight scratch budget required')
+        self.directory = Path(directory)
+        if self.directory.exists() or self.directory.is_symlink():
+            raise FileExistsError('weight workspace is already reserved')
+        block = os.statvfs(self.directory.parent).f_frsize
+        if block <= 0:
+            raise ValueError('unknown weight workspace allocation granularity')
+        self.numeric_bytes = 3 * count * 8
+        # Intent and terminal each have a 32KiB encoded-content ceiling, plus
+        # newline; reserve separate rounded blocks and one directory block.
+        metadata_bytes = 2 * ((32769 + block - 1) // block * block) + block
+        self.reserved_bytes = 3 * ((count * 8 + block - 1) // block * block) + metadata_bytes
+        if self.reserved_bytes > max_bytes:
+            raise ValueError('weight scratch budget insufficient')
+        self.intent = {'schema_version':1, 'count':count, 'dtype':'float64',
+                       'numpy':np.__version__, 'numeric_bytes':self.numeric_bytes,
+                       'reserved_bytes':self.reserved_bytes, 'max_weight_bytes':max_bytes,
+                       'binding':binding, 'resumable':False}
+        if len(canonical_bytes(self.intent)) > 32768:
+            raise ValueError('weight scratch metadata budget exceeded')
+        if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+>           raise ValueError('weight workspace breaches disk reserve')
+E           ValueError: weight workspace breaches disk reserve
+
+tradingagents/research/onchain_replication/sampling_weights.py:43: ValueError
+__________ test_mapped_sampling_preserves_complete_graph_manifest[71] __________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_mapped_sampling_preserves4')
+seed = 71
+
+    @pytest.mark.parametrize('seed',[11,23,37,53,71])
+    def test_mapped_sampling_preserves_complete_graph_manifest(tmp_path,seed):
+        graphs=population();config=cfg()|{'sample_count':50}
+        eager=sample_neighborhoods(graphs,config,seed)
+        out=tmp_path/'scratch'
+>       mapped=sample_neighborhoods(graphs,config,seed,weight_workspace=out,max_weight_bytes=100000)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_mapped_sampling.py:24: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/neighborhoods.py:141: in sample_neighborhoods
+    storage = (stack.enter_context(MappedWeights(weight_workspace,total,max_weight_bytes,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.sampling_weights.MappedWeights object at 0x736d9653c8a0>
+directory = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_mapped_sampling_preserves4/scratch')
+count = 74, max_bytes = 100000
+binding = {'training_graphs': ('458abd9e7e14f17362f51e9d251ea8b0b17353ed3c61ecdaf876a77dff1b9c6b', 'df539df0ba4a746408153537ddd4...pth': 1, 'sample_count': 50, 'maximum_neighborhood_nodes': 20, 'train_start': '2024-01-01T00:00:00Z', ...}, 'seed': 71}
+
+    def __init__(self, directory, count, max_bytes, binding):
+        if np.__version__ != '2.3.0':
+            raise ValueError('mapped choice requires validated NumPy 2.3.0')
+        if type(count) is not int or count <= 0:
+            raise ValueError('weight count must be positive')
+        if type(max_bytes) is not int or max_bytes <= 0:
+            raise ValueError('explicit weight scratch budget required')
+        self.directory = Path(directory)
+        if self.directory.exists() or self.directory.is_symlink():
+            raise FileExistsError('weight workspace is already reserved')
+        block = os.statvfs(self.directory.parent).f_frsize
+        if block <= 0:
+            raise ValueError('unknown weight workspace allocation granularity')
+        self.numeric_bytes = 3 * count * 8
+        # Intent and terminal each have a 32KiB encoded-content ceiling, plus
+        # newline; reserve separate rounded blocks and one directory block.
+        metadata_bytes = 2 * ((32769 + block - 1) // block * block) + block
+        self.reserved_bytes = 3 * ((count * 8 + block - 1) // block * block) + metadata_bytes
+        if self.reserved_bytes > max_bytes:
+            raise ValueError('weight scratch budget insufficient')
+        self.intent = {'schema_version':1, 'count':count, 'dtype':'float64',
+                       'numpy':np.__version__, 'numeric_bytes':self.numeric_bytes,
+                       'reserved_bytes':self.reserved_bytes, 'max_weight_bytes':max_bytes,
+                       'binding':binding, 'resumable':False}
+        if len(canonical_bytes(self.intent)) > 32768:
+            raise ValueError('weight scratch metadata budget exceeded')
+        if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+>           raise ValueError('weight workspace breaches disk reserve')
+E           ValueError: weight workspace breaches disk reserve
+
+tradingagents/research/onchain_replication/sampling_weights.py:43: ValueError
+_____________ test_neighborhood_failure_preserves_reserved_arrays ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_neighborhood_failure_pres0')
+
+    def test_neighborhood_failure_preserves_reserved_arrays(tmp_path):
+        out=tmp_path/'failed'
+>       with pytest.raises(ValueError,match='capacity'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'capacity'
+E         Actual message: 'weight workspace breaches disk reserve'
+
+tests/research/onchain_replication/test_mapped_sampling.py:58: AssertionError
+_____________ test_valid_zero_weights_match_numpy_choice_and_state _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_valid_zero_weights_match_0')
+
+    def test_valid_zero_weights_match_numpy_choice_and_state(tmp_path):
+        from tradingagents.research.onchain_replication.sampling_weights import MappedWeights
+        expected_rng=np.random.Generator(np.random.PCG64(23));actual_rng=np.random.Generator(np.random.PCG64(23))
+        weights=np.array([0.,2.,0.,.125,1e-50,7.,0.,.3,.7])
+>       with MappedWeights(tmp_path/'zeros',len(weights),100000,{'test':'synthetic'}) as store:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_mapped_sampling.py:81: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.sampling_weights.MappedWeights object at 0x736d963b2890>
+directory = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_valid_zero_weights_match_0/zeros')
+count = 9, max_bytes = 100000, binding = {'test': 'synthetic'}
+
+    def __init__(self, directory, count, max_bytes, binding):
+        if np.__version__ != '2.3.0':
+            raise ValueError('mapped choice requires validated NumPy 2.3.0')
+        if type(count) is not int or count <= 0:
+            raise ValueError('weight count must be positive')
+        if type(max_bytes) is not int or max_bytes <= 0:
+            raise ValueError('explicit weight scratch budget required')
+        self.directory = Path(directory)
+        if self.directory.exists() or self.directory.is_symlink():
+            raise FileExistsError('weight workspace is already reserved')
+        block = os.statvfs(self.directory.parent).f_frsize
+        if block <= 0:
+            raise ValueError('unknown weight workspace allocation granularity')
+        self.numeric_bytes = 3 * count * 8
+        # Intent and terminal each have a 32KiB encoded-content ceiling, plus
+        # newline; reserve separate rounded blocks and one directory block.
+        metadata_bytes = 2 * ((32769 + block - 1) // block * block) + block
+        self.reserved_bytes = 3 * ((count * 8 + block - 1) // block * block) + metadata_bytes
+        if self.reserved_bytes > max_bytes:
+            raise ValueError('weight scratch budget insufficient')
+        self.intent = {'schema_version':1, 'count':count, 'dtype':'float64',
+                       'numpy':np.__version__, 'numeric_bytes':self.numeric_bytes,
+                       'reserved_bytes':self.reserved_bytes, 'max_weight_bytes':max_bytes,
+                       'binding':binding, 'resumable':False}
+        if len(canonical_bytes(self.intent)) > 32768:
+            raise ValueError('weight scratch metadata budget exceeded')
+        if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+>           raise ValueError('weight workspace breaches disk reserve')
+E           ValueError: weight workspace breaches disk reserve
+
+tradingagents/research/onchain_replication/sampling_weights.py:43: ValueError
+______ test_partial_allocation_failure_closes_maps_and_preserves_attempt _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_partial_allocation_failur0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x736d963ca0b0>
+
+    def test_partial_allocation_failure_closes_maps_and_preserves_attempt(tmp_path,monkeypatch):
+        from tradingagents.research.onchain_replication import sampling_weights
+        real=sampling_weights.os.posix_fallocate;calls=[]
+        def fail_second(fd,offset,length):
+            calls.append(length)
+            if len(calls)==2:raise OSError('synthetic allocation refusal')
+            return real(fd,offset,length)
+        monkeypatch.setattr(sampling_weights.os,'posix_fallocate',fail_second)
+>       store=sampling_weights.MappedWeights(tmp_path/'allocation',9,100000,{})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_mapped_sampling.py:126: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.sampling_weights.MappedWeights object at 0x736d9621c710>
+directory = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_partial_allocation_failur0/allocation')
+count = 9, max_bytes = 100000, binding = {}
+
+    def __init__(self, directory, count, max_bytes, binding):
+        if np.__version__ != '2.3.0':
+            raise ValueError('mapped choice requires validated NumPy 2.3.0')
+        if type(count) is not int or count <= 0:
+            raise ValueError('weight count must be positive')
+        if type(max_bytes) is not int or max_bytes <= 0:
+            raise ValueError('explicit weight scratch budget required')
+        self.directory = Path(directory)
+        if self.directory.exists() or self.directory.is_symlink():
+            raise FileExistsError('weight workspace is already reserved')
+        block = os.statvfs(self.directory.parent).f_frsize
+        if block <= 0:
+            raise ValueError('unknown weight workspace allocation granularity')
+        self.numeric_bytes = 3 * count * 8
+        # Intent and terminal each have a 32KiB encoded-content ceiling, plus
+        # newline; reserve separate rounded blocks and one directory block.
+        metadata_bytes = 2 * ((32769 + block - 1) // block * block) + block
+        self.reserved_bytes = 3 * ((count * 8 + block - 1) // block * block) + metadata_bytes
+        if self.reserved_bytes > max_bytes:
+            raise ValueError('weight scratch budget insufficient')
+        self.intent = {'schema_version':1, 'count':count, 'dtype':'float64',
+                       'numpy':np.__version__, 'numeric_bytes':self.numeric_bytes,
+                       'reserved_bytes':self.reserved_bytes, 'max_weight_bytes':max_bytes,
+                       'binding':binding, 'resumable':False}
+        if len(canonical_bytes(self.intent)) > 32768:
+            raise ValueError('weight scratch metadata budget exceeded')
+        if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+>           raise ValueError('weight workspace breaches disk reserve')
+E           ValueError: weight workspace breaches disk reserve
+
+tradingagents/research/onchain_replication/sampling_weights.py:43: ValueError
+____________ test_caught_interruption_is_terminal_and_not_resumable ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_caught_interruption_is_te0')
+
+    def test_caught_interruption_is_terminal_and_not_resumable(tmp_path):
+        from tradingagents.research.onchain_replication.sampling_weights import MappedWeights
+>       store=MappedWeights(tmp_path/'interrupted',9,100000,{})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_mapped_sampling.py:137: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.sampling_weights.MappedWeights object at 0x736d95746570>
+directory = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_caught_interruption_is_te0/interrupted')
+count = 9, max_bytes = 100000, binding = {}
+
+    def __init__(self, directory, count, max_bytes, binding):
+        if np.__version__ != '2.3.0':
+            raise ValueError('mapped choice requires validated NumPy 2.3.0')
+        if type(count) is not int or count <= 0:
+            raise ValueError('weight count must be positive')
+        if type(max_bytes) is not int or max_bytes <= 0:
+            raise ValueError('explicit weight scratch budget required')
+        self.directory = Path(directory)
+        if self.directory.exists() or self.directory.is_symlink():
+            raise FileExistsError('weight workspace is already reserved')
+        block = os.statvfs(self.directory.parent).f_frsize
+        if block <= 0:
+            raise ValueError('unknown weight workspace allocation granularity')
+        self.numeric_bytes = 3 * count * 8
+        # Intent and terminal each have a 32KiB encoded-content ceiling, plus
+        # newline; reserve separate rounded blocks and one directory block.
+        metadata_bytes = 2 * ((32769 + block - 1) // block * block) + block
+        self.reserved_bytes = 3 * ((count * 8 + block - 1) // block * block) + metadata_bytes
+        if self.reserved_bytes > max_bytes:
+            raise ValueError('weight scratch budget insufficient')
+        self.intent = {'schema_version':1, 'count':count, 'dtype':'float64',
+                       'numpy':np.__version__, 'numeric_bytes':self.numeric_bytes,
+                       'reserved_bytes':self.reserved_bytes, 'max_weight_bytes':max_bytes,
+                       'binding':binding, 'resumable':False}
+        if len(canonical_bytes(self.intent)) > 32768:
+            raise ValueError('weight scratch metadata budget exceeded')
+        if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+>           raise ValueError('weight workspace breaches disk reserve')
+E           ValueError: weight workspace breaches disk reserve
+
+tradingagents/research/onchain_replication/sampling_weights.py:43: ValueError
+________________ test_flush_failure_still_closes_every_mapping _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_flush_failure_still_close0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x736d965790f0>
+
+    def test_flush_failure_still_closes_every_mapping(tmp_path,monkeypatch):
+        from tradingagents.research.onchain_replication.sampling_weights import MappedWeights
+>       store=MappedWeights(tmp_path/'flush',9,100000,{})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_mapped_sampling.py:147: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.sampling_weights.MappedWeights object at 0x736d95746780>
+directory = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_flush_failure_still_close0/flush')
+count = 9, max_bytes = 100000, binding = {}
+
+    def __init__(self, directory, count, max_bytes, binding):
+        if np.__version__ != '2.3.0':
+            raise ValueError('mapped choice requires validated NumPy 2.3.0')
+        if type(count) is not int or count <= 0:
+            raise ValueError('weight count must be positive')
+        if type(max_bytes) is not int or max_bytes <= 0:
+            raise ValueError('explicit weight scratch budget required')
+        self.directory = Path(directory)
+        if self.directory.exists() or self.directory.is_symlink():
+            raise FileExistsError('weight workspace is already reserved')
+        block = os.statvfs(self.directory.parent).f_frsize
+        if block <= 0:
+            raise ValueError('unknown weight workspace allocation granularity')
+        self.numeric_bytes = 3 * count * 8
+        # Intent and terminal each have a 32KiB encoded-content ceiling, plus
+        # newline; reserve separate rounded blocks and one directory block.
+        metadata_bytes = 2 * ((32769 + block - 1) // block * block) + block
+        self.reserved_bytes = 3 * ((count * 8 + block - 1) // block * block) + metadata_bytes
+        if self.reserved_bytes > max_bytes:
+            raise ValueError('weight scratch budget insufficient')
+        self.intent = {'schema_version':1, 'count':count, 'dtype':'float64',
+                       'numpy':np.__version__, 'numeric_bytes':self.numeric_bytes,
+                       'reserved_bytes':self.reserved_bytes, 'max_weight_bytes':max_bytes,
+                       'binding':binding, 'resumable':False}
+        if len(canonical_bytes(self.intent)) > 32768:
+            raise ValueError('weight scratch metadata budget exceeded')
+        if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+>           raise ValueError('weight workspace breaches disk reserve')
+E           ValueError: weight workspace breaches disk reserve
+
+tradingagents/research/onchain_replication/sampling_weights.py:43: ValueError
+_______ test_skewed_large_weight_arrays_preserve_probability_bytes[257] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_skewed_large_weight_array0')
+size = 257
+
+    @pytest.mark.parametrize('size',[257,4097,131071])
+    def test_skewed_large_weight_arrays_preserve_probability_bytes(tmp_path,size):
+        from tradingagents.research.onchain_replication.sampling_weights import MappedWeights
+        fixture_rng=np.random.Generator(np.random.PCG64(71))
+        weights=np.exp(-fixture_rng.random(size)*400)
+        weights[::7]=0
+        eager=np.random.Generator(np.random.PCG64(53));mapped=np.random.Generator(np.random.PCG64(53))
+>       with MappedWeights(tmp_path/'skew',size,4*2**20,{'test':'synthetic'}) as store:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_mapped_sampling.py:173: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.sampling_weights.MappedWeights object at 0x736d96223610>
+directory = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_skewed_large_weight_array0/skew')
+count = 257, max_bytes = 4194304, binding = {'test': 'synthetic'}
+
+    def __init__(self, directory, count, max_bytes, binding):
+        if np.__version__ != '2.3.0':
+            raise ValueError('mapped choice requires validated NumPy 2.3.0')
+        if type(count) is not int or count <= 0:
+            raise ValueError('weight count must be positive')
+        if type(max_bytes) is not int or max_bytes <= 0:
+            raise ValueError('explicit weight scratch budget required')
+        self.directory = Path(directory)
+        if self.directory.exists() or self.directory.is_symlink():
+            raise FileExistsError('weight workspace is already reserved')
+        block = os.statvfs(self.directory.parent).f_frsize
+        if block <= 0:
+            raise ValueError('unknown weight workspace allocation granularity')
+        self.numeric_bytes = 3 * count * 8
+        # Intent and terminal each have a 32KiB encoded-content ceiling, plus
+        # newline; reserve separate rounded blocks and one directory block.
+        metadata_bytes = 2 * ((32769 + block - 1) // block * block) + block
+        self.reserved_bytes = 3 * ((count * 8 + block - 1) // block * block) + metadata_bytes
+        if self.reserved_bytes > max_bytes:
+            raise ValueError('weight scratch budget insufficient')
+        self.intent = {'schema_version':1, 'count':count, 'dtype':'float64',
+                       'numpy':np.__version__, 'numeric_bytes':self.numeric_bytes,
+                       'reserved_bytes':self.reserved_bytes, 'max_weight_bytes':max_bytes,
+                       'binding':binding, 'resumable':False}
+        if len(canonical_bytes(self.intent)) > 32768:
+            raise ValueError('weight scratch metadata budget exceeded')
+        if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+>           raise ValueError('weight workspace breaches disk reserve')
+E           ValueError: weight workspace breaches disk reserve
+
+tradingagents/research/onchain_replication/sampling_weights.py:43: ValueError
+_______ test_skewed_large_weight_arrays_preserve_probability_bytes[4097] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_skewed_large_weight_array1')
+size = 4097
+
+    @pytest.mark.parametrize('size',[257,4097,131071])
+    def test_skewed_large_weight_arrays_preserve_probability_bytes(tmp_path,size):
+        from tradingagents.research.onchain_replication.sampling_weights import MappedWeights
+        fixture_rng=np.random.Generator(np.random.PCG64(71))
+        weights=np.exp(-fixture_rng.random(size)*400)
+        weights[::7]=0
+        eager=np.random.Generator(np.random.PCG64(53));mapped=np.random.Generator(np.random.PCG64(53))
+>       with MappedWeights(tmp_path/'skew',size,4*2**20,{'test':'synthetic'}) as store:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_mapped_sampling.py:173: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.sampling_weights.MappedWeights object at 0x736d956e4170>
+directory = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_skewed_large_weight_array1/skew')
+count = 4097, max_bytes = 4194304, binding = {'test': 'synthetic'}
+
+    def __init__(self, directory, count, max_bytes, binding):
+        if np.__version__ != '2.3.0':
+            raise ValueError('mapped choice requires validated NumPy 2.3.0')
+        if type(count) is not int or count <= 0:
+            raise ValueError('weight count must be positive')
+        if type(max_bytes) is not int or max_bytes <= 0:
+            raise ValueError('explicit weight scratch budget required')
+        self.directory = Path(directory)
+        if self.directory.exists() or self.directory.is_symlink():
+            raise FileExistsError('weight workspace is already reserved')
+        block = os.statvfs(self.directory.parent).f_frsize
+        if block <= 0:
+            raise ValueError('unknown weight workspace allocation granularity')
+        self.numeric_bytes = 3 * count * 8
+        # Intent and terminal each have a 32KiB encoded-content ceiling, plus
+        # newline; reserve separate rounded blocks and one directory block.
+        metadata_bytes = 2 * ((32769 + block - 1) // block * block) + block
+        self.reserved_bytes = 3 * ((count * 8 + block - 1) // block * block) + metadata_bytes
+        if self.reserved_bytes > max_bytes:
+            raise ValueError('weight scratch budget insufficient')
+        self.intent = {'schema_version':1, 'count':count, 'dtype':'float64',
+                       'numpy':np.__version__, 'numeric_bytes':self.numeric_bytes,
+                       'reserved_bytes':self.reserved_bytes, 'max_weight_bytes':max_bytes,
+                       'binding':binding, 'resumable':False}
+        if len(canonical_bytes(self.intent)) > 32768:
+            raise ValueError('weight scratch metadata budget exceeded')
+        if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+>           raise ValueError('weight workspace breaches disk reserve')
+E           ValueError: weight workspace breaches disk reserve
+
+tradingagents/research/onchain_replication/sampling_weights.py:43: ValueError
+______ test_skewed_large_weight_arrays_preserve_probability_bytes[131071] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_skewed_large_weight_array2')
+size = 131071
+
+    @pytest.mark.parametrize('size',[257,4097,131071])
+    def test_skewed_large_weight_arrays_preserve_probability_bytes(tmp_path,size):
+        from tradingagents.research.onchain_replication.sampling_weights import MappedWeights
+        fixture_rng=np.random.Generator(np.random.PCG64(71))
+        weights=np.exp(-fixture_rng.random(size)*400)
+        weights[::7]=0
+        eager=np.random.Generator(np.random.PCG64(53));mapped=np.random.Generator(np.random.PCG64(53))
+>       with MappedWeights(tmp_path/'skew',size,4*2**20,{'test':'synthetic'}) as store:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_mapped_sampling.py:173: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.sampling_weights.MappedWeights object at 0x736d958c79d0>
+directory = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_skewed_large_weight_array2/skew')
+count = 131071, max_bytes = 4194304, binding = {'test': 'synthetic'}
+
+    def __init__(self, directory, count, max_bytes, binding):
+        if np.__version__ != '2.3.0':
+            raise ValueError('mapped choice requires validated NumPy 2.3.0')
+        if type(count) is not int or count <= 0:
+            raise ValueError('weight count must be positive')
+        if type(max_bytes) is not int or max_bytes <= 0:
+            raise ValueError('explicit weight scratch budget required')
+        self.directory = Path(directory)
+        if self.directory.exists() or self.directory.is_symlink():
+            raise FileExistsError('weight workspace is already reserved')
+        block = os.statvfs(self.directory.parent).f_frsize
+        if block <= 0:
+            raise ValueError('unknown weight workspace allocation granularity')
+        self.numeric_bytes = 3 * count * 8
+        # Intent and terminal each have a 32KiB encoded-content ceiling, plus
+        # newline; reserve separate rounded blocks and one directory block.
+        metadata_bytes = 2 * ((32769 + block - 1) // block * block) + block
+        self.reserved_bytes = 3 * ((count * 8 + block - 1) // block * block) + metadata_bytes
+        if self.reserved_bytes > max_bytes:
+            raise ValueError('weight scratch budget insufficient')
+        self.intent = {'schema_version':1, 'count':count, 'dtype':'float64',
+                       'numpy':np.__version__, 'numeric_bytes':self.numeric_bytes,
+                       'reserved_bytes':self.reserved_bytes, 'max_weight_bytes':max_bytes,
+                       'binding':binding, 'resumable':False}
+        if len(canonical_bytes(self.intent)) > 32768:
+            raise ValueError('weight scratch metadata budget exceeded')
+        if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+>           raise ValueError('weight workspace breaches disk reserve')
+E           ValueError: weight workspace breaches disk reserve
+
+tradingagents/research/onchain_replication/sampling_weights.py:43: ValueError
+_ test_sampler_exact_records_rng_and_sample_identity_across_graph_switches[True] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x736da25502f0>
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_sampler_exact_records_rng1')
+mapped = True
+
+    @pytest.mark.parametrize('mapped',[False,True])
+    def test_sampler_exact_records_rng_and_sample_identity_across_graph_switches(monkeypatch,tmp_path,mapped):
+        from dataclasses import replace
+        from tests.research.onchain_replication.test_neighborhoods import cfg
+        from tests.research.onchain_replication.test_matching_reference import graph
+        from tradingagents.research.onchain_replication.serialization import samples_to_record
+        from tradingagents.research.onchain_replication.array_neighborhoods import ArrayNeighborhoodIndex
+        g=graph([[0],[1],[2]],[(0,1,1),(1,2,1)]);other=replace(g,start_utc='2024-01-08T00:00:00Z',end_utc='2024-01-15T00:00:00Z',available_at='2024-01-16T00:00:00Z')
+        config=cfg()|{'sample_count':6}
+        before={'weight_workspace':tmp_path/'before','max_weight_bytes':1024**2} if mapped else {}
+        after={'weight_workspace':tmp_path/'after','max_weight_bytes':1024**2} if mapped else {}
+>       expected=sample_neighborhoods([g,other],config,11,**before)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_neighborhood_policy.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/neighborhoods.py:141: in sample_neighborhoods
+    storage = (stack.enter_context(MappedWeights(weight_workspace,total,max_weight_bytes,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.sampling_weights.MappedWeights object at 0x736d954788d0>
+directory = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_sampler_exact_records_rng1/before')
+count = 6, max_bytes = 1048576
+binding = {'training_graphs': ('46ee19d65df2389feab8c6b91a0d8661d561b028cbcac1a5f70c34e78eaecc0d', '0a264fcf6a73134e1364a510c9d5...epth': 1, 'sample_count': 6, 'maximum_neighborhood_nodes': 20, 'train_start': '2024-01-01T00:00:00Z', ...}, 'seed': 11}
+
+    def __init__(self, directory, count, max_bytes, binding):
+        if np.__version__ != '2.3.0':
+            raise ValueError('mapped choice requires validated NumPy 2.3.0')
+        if type(count) is not int or count <= 0:
+            raise ValueError('weight count must be positive')
+        if type(max_bytes) is not int or max_bytes <= 0:
+            raise ValueError('explicit weight scratch budget required')
+        self.directory = Path(directory)
+        if self.directory.exists() or self.directory.is_symlink():
+            raise FileExistsError('weight workspace is already reserved')
+        block = os.statvfs(self.directory.parent).f_frsize
+        if block <= 0:
+            raise ValueError('unknown weight workspace allocation granularity')
+        self.numeric_bytes = 3 * count * 8
+        # Intent and terminal each have a 32KiB encoded-content ceiling, plus
+        # newline; reserve separate rounded blocks and one directory block.
+        metadata_bytes = 2 * ((32769 + block - 1) // block * block) + block
+        self.reserved_bytes = 3 * ((count * 8 + block - 1) // block * block) + metadata_bytes
+        if self.reserved_bytes > max_bytes:
+            raise ValueError('weight scratch budget insufficient')
+        self.intent = {'schema_version':1, 'count':count, 'dtype':'float64',
+                       'numpy':np.__version__, 'numeric_bytes':self.numeric_bytes,
+                       'reserved_bytes':self.reserved_bytes, 'max_weight_bytes':max_bytes,
+                       'binding':binding, 'resumable':False}
+        if len(canonical_bytes(self.intent)) > 32768:
+            raise ValueError('weight scratch metadata budget exceeded')
+        if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+>           raise ValueError('weight workspace breaches disk reserve')
+E           ValueError: weight workspace breaches disk reserve
+
+tradingagents/research/onchain_replication/sampling_weights.py:43: ValueError
+_________ test_registered_mapped_policy_keeps_complete_feature_binding _________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-1/test_registered_mapped_policy_0'), {'schema_version': 1, 'program_id': 's...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '97da3816bd6dc127936893dbbda2ed9614fb08ec')
+
+    def test_registered_mapped_policy_keeps_complete_feature_binding(registered):
+        fixture,args,_=setup(registered);root,_,_=fixture
+        eager=prepare_features(*args,max_entries=100000,checkpoint=lambda *a:None)
+        with start(fixture) as run:
+>           result,path=produce(run,args)
+                        ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_sampling_policy.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_sampling_policy.py:31: in produce
+    return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+tradingagents/research/onchain_replication/registered_features.py:126: in prepare_registered_features
+    result=prepare_features(graphs,examples,fold,arm,seed,configs,max_entries=max_entries,checkpoint=journal,resume_state=state,retain_features=residency is None,max_array_bytes=max_array_bytes,score_only=matching is not None,neighborhood_policy=neighborhood,**sampling_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/feature_pipeline.py:91: in prepare_features
+    samples=sample_neighborhoods(graphs,fitting_config,seed,neighborhood_policy=neighborhood_policy,**sampling_options)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/neighborhoods.py:141: in sample_neighborhoods
+    storage = (stack.enter_context(MappedWeights(weight_workspace,total,max_weight_bytes,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.sampling_weights.MappedWeights object at 0x736d957ff2a0>
+directory = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_registered_mapped_policy_0/research_artifacts/onchain_representations/02f6a19c180e279b668d0a0ee241d46bb52e490623cd4031996c0b898e42e638/example-a/sampling-weights')
+count = 206, max_bytes = 1048576
+binding = {'training_graphs': ('fb8a940c08966b7458642f1ad4ccd60cdd4b4bcb6a4f30a6210a45055c729dad', '4c2a29cdc931dbc1b9f578a7fdba...mples': 'explicit unavailable if fewer than dictionary size', 'linkage': 'average pairwise distance', ...}, 'seed': 11}
+
+    def __init__(self, directory, count, max_bytes, binding):
+        if np.__version__ != '2.3.0':
+            raise ValueError('mapped choice requires validated NumPy 2.3.0')
+        if type(count) is not int or count <= 0:
+            raise ValueError('weight count must be positive')
+        if type(max_bytes) is not int or max_bytes <= 0:
+            raise ValueError('explicit weight scratch budget required')
+        self.directory = Path(directory)
+        if self.directory.exists() or self.directory.is_symlink():
+            raise FileExistsError('weight workspace is already reserved')
+        block = os.statvfs(self.directory.parent).f_frsize
+        if block <= 0:
+            raise ValueError('unknown weight workspace allocation granularity')
+        self.numeric_bytes = 3 * count * 8
+        # Intent and terminal each have a 32KiB encoded-content ceiling, plus
+        # newline; reserve separate rounded blocks and one directory block.
+        metadata_bytes = 2 * ((32769 + block - 1) // block * block) + block
+        self.reserved_bytes = 3 * ((count * 8 + block - 1) // block * block) + metadata_bytes
+        if self.reserved_bytes > max_bytes:
+            raise ValueError('weight scratch budget insufficient')
+        self.intent = {'schema_version':1, 'count':count, 'dtype':'float64',
+                       'numpy':np.__version__, 'numeric_bytes':self.numeric_bytes,
+                       'reserved_bytes':self.reserved_bytes, 'max_weight_bytes':max_bytes,
+                       'binding':binding, 'resumable':False}
+        if len(canonical_bytes(self.intent)) > 32768:
+            raise ValueError('weight scratch metadata budget exceeded')
+        if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+>           raise ValueError('weight workspace breaches disk reserve')
+E           ValueError: weight workspace breaches disk reserve
+
+tradingagents/research/onchain_replication/sampling_weights.py:43: ValueError
+______ test_checkpointed_samples_survive_policy_change_without_resampling ______
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-1/test_checkpointed_samples_surv0'), {'schema_version': 1, 'program_id': 's...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '924ad3afca5d73016d8089574935a3439a969ead')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x736d9631cd70>
+
+    def test_checkpointed_samples_survive_policy_change_without_resampling(registered,monkeypatch):
+        import tradingagents.research.onchain_replication.registered_features as module
+        import tradingagents.research.onchain_replication.feature_pipeline as pipeline
+        fixture,args,_=setup(registered);root,spec,_=fixture;original=module.prepare_features
+        uninterrupted=prepare_features(*args,max_entries=100000,checkpoint=lambda *a:None)
+        def interrupt(*a,checkpoint,**kw):
+            def save(stage,context,payload):
+                checkpoint(stage,context,payload)
+                if stage=='samples_complete':raise InterruptedError('after durable samples')
+            return original(*a,checkpoint=save,**kw)
+        monkeypatch.setattr(module,'prepare_features',interrupt)
+        with start(fixture) as run:
+>           with pytest.raises(InterruptedError):produce(run,args)
+                                                 ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_sampling_policy.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_sampling_policy.py:31: in produce
+    return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+tradingagents/research/onchain_replication/registered_features.py:126: in prepare_registered_features
+    result=prepare_features(graphs,examples,fold,arm,seed,configs,max_entries=max_entries,checkpoint=journal,resume_state=state,retain_features=residency is None,max_array_bytes=max_array_bytes,score_only=matching is not None,neighborhood_policy=neighborhood,**sampling_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_sampling_policy.py:82: in interrupt
+    return original(*a,checkpoint=save,**kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/feature_pipeline.py:91: in prepare_features
+    samples=sample_neighborhoods(graphs,fitting_config,seed,neighborhood_policy=neighborhood_policy,**sampling_options)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/neighborhoods.py:141: in sample_neighborhoods
+    storage = (stack.enter_context(MappedWeights(weight_workspace,total,max_weight_bytes,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.sampling_weights.MappedWeights object at 0x736d955fcec0>
+directory = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_checkpointed_samples_surv0/research_artifacts/onchain_representations/02f6a19c180e279b668d0a0ee241d46bb52e490623cd4031996c0b898e42e638/example-a/sampling-weights')
+count = 206, max_bytes = 1048576
+binding = {'training_graphs': ('fb8a940c08966b7458642f1ad4ccd60cdd4b4bcb6a4f30a6210a45055c729dad', '4c2a29cdc931dbc1b9f578a7fdba...mples': 'explicit unavailable if fewer than dictionary size', 'linkage': 'average pairwise distance', ...}, 'seed': 11}
+
+    def __init__(self, directory, count, max_bytes, binding):
+        if np.__version__ != '2.3.0':
+            raise ValueError('mapped choice requires validated NumPy 2.3.0')
+        if type(count) is not int or count <= 0:
+            raise ValueError('weight count must be positive')
+        if type(max_bytes) is not int or max_bytes <= 0:
+            raise ValueError('explicit weight scratch budget required')
+        self.directory = Path(directory)
+        if self.directory.exists() or self.directory.is_symlink():
+            raise FileExistsError('weight workspace is already reserved')
+        block = os.statvfs(self.directory.parent).f_frsize
+        if block <= 0:
+            raise ValueError('unknown weight workspace allocation granularity')
+        self.numeric_bytes = 3 * count * 8
+        # Intent and terminal each have a 32KiB encoded-content ceiling, plus
+        # newline; reserve separate rounded blocks and one directory block.
+        metadata_bytes = 2 * ((32769 + block - 1) // block * block) + block
+        self.reserved_bytes = 3 * ((count * 8 + block - 1) // block * block) + metadata_bytes
+        if self.reserved_bytes > max_bytes:
+            raise ValueError('weight scratch budget insufficient')
+        self.intent = {'schema_version':1, 'count':count, 'dtype':'float64',
+                       'numpy':np.__version__, 'numeric_bytes':self.numeric_bytes,
+                       'reserved_bytes':self.reserved_bytes, 'max_weight_bytes':max_bytes,
+                       'binding':binding, 'resumable':False}
+        if len(canonical_bytes(self.intent)) > 32768:
+            raise ValueError('weight scratch metadata budget exceeded')
+        if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+>           raise ValueError('weight workspace breaches disk reserve')
+E           ValueError: weight workspace breaches disk reserve
+
+tradingagents/research/onchain_replication/sampling_weights.py:43: ValueError
+_________ test_completed_scratch_is_not_a_persisted_samples_checkpoint _________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-1/test_completed_scratch_is_not_0'), {'schema_version': 1, 'program_id': 's...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, '602fb7a0ac6f2fbdd42d3ce9a9e3de1e71a92823')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x736d951f7150>
+
+    def test_completed_scratch_is_not_a_persisted_samples_checkpoint(registered,monkeypatch):
+        import tradingagents.research.onchain_replication.registered_features as module
+        fixture,args,_=setup(registered);root,_,_=fixture;original=module.prepare_features
+        def interrupt(*a,checkpoint,**kw):
+            def reject(stage,context,payload):
+                if stage=='samples_complete':raise OSError('synthetic before sample publication')
+                checkpoint(stage,context,payload)
+            return original(*a,checkpoint=reject,**kw)
+        monkeypatch.setattr(module,'prepare_features',interrupt)
+        with start(fixture) as run:
+>           with pytest.raises(OSError,match='sample publication'):produce(run,args)
+                                                                   ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_sampling_policy.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_sampling_policy.py:31: in produce
+    return prepare_registered_features(run,'proposed11',*args,plan_input='feature-plan',
+tradingagents/research/onchain_replication/registered_features.py:126: in prepare_registered_features
+    result=prepare_features(graphs,examples,fold,arm,seed,configs,max_entries=max_entries,checkpoint=journal,resume_state=state,retain_features=residency is None,max_array_bytes=max_array_bytes,score_only=matching is not None,neighborhood_policy=neighborhood,**sampling_options)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_sampling_policy.py:153: in interrupt
+    return original(*a,checkpoint=reject,**kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/feature_pipeline.py:91: in prepare_features
+    samples=sample_neighborhoods(graphs,fitting_config,seed,neighborhood_policy=neighborhood_policy,**sampling_options)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/neighborhoods.py:141: in sample_neighborhoods
+    storage = (stack.enter_context(MappedWeights(weight_workspace,total,max_weight_bytes,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <tradingagents.research.onchain_replication.sampling_weights.MappedWeights object at 0x736da2656c80>
+directory = PosixPath('/tmp/pytest-of-malecada/pytest-1/test_completed_scratch_is_not_0/research_artifacts/onchain_representations/02f6a19c180e279b668d0a0ee241d46bb52e490623cd4031996c0b898e42e638/example-a/sampling-weights')
+count = 206, max_bytes = 1048576
+binding = {'training_graphs': ('fb8a940c08966b7458642f1ad4ccd60cdd4b4bcb6a4f30a6210a45055c729dad', '4c2a29cdc931dbc1b9f578a7fdba...mples': 'explicit unavailable if fewer than dictionary size', 'linkage': 'average pairwise distance', ...}, 'seed': 11}
+
+    def __init__(self, directory, count, max_bytes, binding):
+        if np.__version__ != '2.3.0':
+            raise ValueError('mapped choice requires validated NumPy 2.3.0')
+        if type(count) is not int or count <= 0:
+            raise ValueError('weight count must be positive')
+        if type(max_bytes) is not int or max_bytes <= 0:
+            raise ValueError('explicit weight scratch budget required')
+        self.directory = Path(directory)
+        if self.directory.exists() or self.directory.is_symlink():
+            raise FileExistsError('weight workspace is already reserved')
+        block = os.statvfs(self.directory.parent).f_frsize
+        if block <= 0:
+            raise ValueError('unknown weight workspace allocation granularity')
+        self.numeric_bytes = 3 * count * 8
+        # Intent and terminal each have a 32KiB encoded-content ceiling, plus
+        # newline; reserve separate rounded blocks and one directory block.
+        metadata_bytes = 2 * ((32769 + block - 1) // block * block) + block
+        self.reserved_bytes = 3 * ((count * 8 + block - 1) // block * block) + metadata_bytes
+        if self.reserved_bytes > max_bytes:
+            raise ValueError('weight scratch budget insufficient')
+        self.intent = {'schema_version':1, 'count':count, 'dtype':'float64',
+                       'numpy':np.__version__, 'numeric_bytes':self.numeric_bytes,
+                       'reserved_bytes':self.reserved_bytes, 'max_weight_bytes':max_bytes,
+                       'binding':binding, 'resumable':False}
+        if len(canonical_bytes(self.intent)) > 32768:
+            raise ValueError('weight scratch metadata budget exceeded')
+        if shutil.disk_usage(self.directory.parent).free < 20 * 2**30 + self.reserved_bytes:
+>           raise ValueError('weight workspace breaches disk reserve')
+E           ValueError: weight workspace breaches disk reserve
+
+tradingagents/research/onchain_replication/sampling_weights.py:43: ValueError
+_____________ test_job_forwards_policy_to_real_registered_sampler ______________
+
+registered = (PosixPath('/tmp/pytest-of-malecada/pytest-1/test_job_forwards_policy_to_re0'), {'schema_version': 1, 'program_id': 's...1-01T00:00:00Z', 'end': '2001-01-01T00:00:00Z', 'state': 'spent'}]}}, ...}, 'fce20b37013afe64720e03d14f0dba68709d5225')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x736da25502f0>
+
+    def test_job_forwards_policy_to_real_registered_sampler(registered,monkeypatch):
+        from tests.research.onchain_replication.test_run import setup as run_setup,register_plan
+        from tests.research.onchain_replication.test_dataset import fixture
+        from tests.research.onchain_replication.test_feature_pipeline import configs
+        from tradingagents.research.onchain_replication.job_payload import execute_fit_payload,population_record
+        from tradingagents.research.onchain_replication.graph_store import save_graph
+        from tradingagents.research.onchain_replication.neighborhoods import graph_hash
+        import tradingagents.research.onchain_replication.run as runner
+        registered,populations,plan=run_setup(registered);root,spec,_=registered
+        graphs,_,fold,_=fixture();examples,_=populations['whole'];config=configs()
+        config['dictionary'].update(sample_count=2,size=2)
+        required={h for row in (*examples.train,*examples.test) for h in row.graph_hashes}
+        graphs=[g for g in graphs if graph_hash(g) in required]
+        descriptor=representation_descriptor(graphs,examples,fold,'proposed',11,config)
+        references={}
+        for i,g in enumerate(graphs):
+            path=save_graph(root/'graphs'/str(i),g);name='graph_'+str(i)
+            spec['experiments']['example-a']['inputs'][name]={'path':str(path.relative_to(root)),'sha256':file_hash(path),'dataset':'sample'}
+            references[graph_hash(g)]={'input':name}
+        producer={'descriptor':descriptor,'graphs':references,'max_entries':100000,'max_array_bytes':1024**2,
+                  'binding_output':'proposed-binding.json','journal_output':'proposed-journal.json','sampling_input':'sampling'}
+        plan['cells'][0]['cell']['arm']='proposed';plan['cells'][0]['representation']='proposed-11'
+        plan['representations']['proposed-11']={'output':'proposed-binding.json','failure_output':'proposed-failed.json'}
+        spec['experiments']['example-a']['outputs']+=['proposed-binding.json','proposed-journal.json','proposed-failed.json']
+        payload={'population_inputs':{'whole':'population'},'batch_plan_input':'batch_plan',
+                 'representation_jobs':{'proposed-11':{'operation':'produce','descriptor':descriptor,
+                     'plan_input':'representation_plan','producer':'proposed-11','population':'whole',
+                     'max_graph_payload_bytes':10*1024**2,'sampling_input':'sampling'}}}
+        registered=register_plan((root,spec,None),plan,[('population',population_record(*populations['whole'])),
+            ('representation_plan',{'schema_version':1,'producers':{'proposed-11':producer}}),
+            ('sampling',{'schema_version':1,'mode':'mapped','max_weight_bytes':1024**2}),
+            ('execution_job',{'kind':'fit','payload':payload})])
+        # Exercise actual admission, graph loading, sampler, dictionary and MCM;
+        # model fitting is separate from this policy-forwarding contract.
+        monkeypatch.setattr(runner,'execute_batch',lambda run,populations,prepared,**kw:prepared)
+        with start(registered) as run:
+            values=execute_fit_payload(run,payload)
+>           assert values['proposed-11'].dictionary is not None
+                   ^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'proposed-11'
+
+tests/research/onchain_replication/test_sampling_policy.py:217: KeyError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_mapped_sampling_preserves_complete_graph_manifest[11]
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_mapped_sampling_preserves_complete_graph_manifest[23]
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_mapped_sampling_preserves_complete_graph_manifest[37]
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_mapped_sampling_preserves_complete_graph_manifest[53]
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_mapped_sampling_preserves_complete_graph_manifest[71]
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_neighborhood_failure_preserves_reserved_arrays
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_valid_zero_weights_match_numpy_choice_and_state
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_partial_allocation_failure_closes_maps_and_preserves_attempt
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_caught_interruption_is_terminal_and_not_resumable
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_flush_failure_still_closes_every_mapping
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_skewed_large_weight_arrays_preserve_probability_bytes[257]
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_skewed_large_weight_arrays_preserve_probability_bytes[4097]
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_skewed_large_weight_arrays_preserve_probability_bytes[131071]
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_sampler_exact_records_rng_and_sample_identity_across_graph_switches[True]
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_registered_mapped_policy_keeps_complete_feature_binding
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_checkpointed_samples_survive_policy_change_without_resampling
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_completed_scratch_is_not_a_persisted_samples_checkpoint
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_job_forwards_policy_to_real_registered_sampler
+18 failed, 855 passed, 2 skipped, 12 subtests passed in 798.71s (0:13:18)

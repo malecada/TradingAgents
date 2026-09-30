@@ -11,16 +11,6 @@ from tradingagents.research.onchain_replication.feature_pipeline import prepare_
 from tradingagents.research.onchain_replication.provenance import canonical_bytes,file_hash
 
 
-@pytest.fixture(autouse=True)
-def synthetic_mapped_disk_space(monkeypatch):
-    # Only the sampler's disk observation is synthetic. Real file allocation,
-    # numerical work, cleanup and explicit low-space refusals still execute.
-    from types import SimpleNamespace
-    from tradingagents.research.onchain_replication import sampling_weights
-    monkeypatch.setattr(sampling_weights,'shutil',SimpleNamespace(
-        disk_usage=lambda path:SimpleNamespace(free=32*2**30)))
-
-
 def setup(registered,policy=None):
     fixture,args,_=prepared_registration(registered);root,spec,_=fixture
     graphs,examples,fold,_,seed,configs=args
@@ -227,13 +217,3 @@ def test_job_forwards_policy_to_real_registered_sampler(registered,monkeypatch):
         assert values['proposed-11'].dictionary is not None
         scratch,=list((root/'research_artifacts/onchain_representations').glob('*/example-a/sampling-weights/complete.json'))
         assert json.loads(scratch.read_bytes())['sample_identity']==values['proposed-11'].dictionary.sample_hash
-
-
-def test_synthetic_mapped_disk_fixture_isolated_from_ambient_disk(tmp_path,monkeypatch):
-    import shutil
-    from tradingagents.research.onchain_replication import sampling_weights
-    assert sampling_weights.shutil is not shutil, 'mapped scratch fixture must not mutate process-wide shutil'
-    def forbidden(path):raise AssertionError('ambient disk usage leaked into tiny mapped fixture')
-    monkeypatch.setattr(shutil,'disk_usage',forbidden)
-    with sampling_weights.MappedWeights(tmp_path/'synthetic-disk',9,100000,{}):pass
-    assert (tmp_path/'synthetic-disk'/'complete.json').is_file()

@@ -1,0 +1,69 @@
+test_backend_and_capacity_refused_before_pair_call (__main__.Tests.test_backend_and_capacity_refused_before_pair_call) ... ok
+test_changed_sample_identity_or_graph_record_refused (__main__.Tests.test_changed_sample_identity_or_graph_record_refused) ... ok
+test_every_direction_and_partition_has_explicit_distinct_purpose (__main__.Tests.test_every_direction_and_partition_has_explicit_distinct_purpose) ... ok
+test_finite_out_of_range_scores_rejected_before_float32_or_averaging (__main__.Tests.test_finite_out_of_range_scores_rejected_before_float32_or_averaging) ... 
+  test_finite_out_of_range_scores_rejected_before_float32_or_averaging (__main__.Tests.test_finite_out_of_range_scores_rejected_before_float32_or_averaging) (value=-0.01) ... FAIL
+  test_finite_out_of_range_scores_rejected_before_float32_or_averaging (__main__.Tests.test_finite_out_of_range_scores_rejected_before_float32_or_averaging) (value=1.01) ... FAIL
+  test_finite_out_of_range_scores_rejected_before_float32_or_averaging (__main__.Tests.test_finite_out_of_range_scores_rejected_before_float32_or_averaging) (value=1e+100) ... FAIL
+  test_finite_out_of_range_scores_rejected_before_float32_or_averaging (__main__.Tests.test_finite_out_of_range_scores_rejected_before_float32_or_averaging) (value=1e+308) ... FAIL
+test_foreign_callback_reference_rejected (__main__.Tests.test_foreign_callback_reference_rejected) ... ok
+test_foreign_dictionary_backend_or_matching_refused_before_callback (__main__.Tests.test_foreign_dictionary_backend_or_matching_refused_before_callback) ... ok
+test_full_distances_hierarchy_and_medoids_match_scalar_oracle (__main__.Tests.test_full_distances_hierarchy_and_medoids_match_scalar_oracle) ... ok
+test_interruption_after_first_direction_reuses_without_changing_rng_or_partition (__main__.Tests.test_interruption_after_first_direction_reuses_without_changing_rng_or_partition) ... ok
+test_invalid_scores_not_published_as_distance (__main__.Tests.test_invalid_scores_not_published_as_distance) ... ok
+test_mcm_partial_row_and_valid_zero_replay (__main__.Tests.test_mcm_partial_row_and_valid_zero_replay) ... ok
+test_mcm_values_match_scalar_oracle_and_bind_representative_order (__main__.Tests.test_mcm_values_match_scalar_oracle_and_bind_representative_order) ... ok
+test_workflow_and_matching_changes_do_not_hit_old_scores (__main__.Tests.test_workflow_and_matching_changes_do_not_hit_old_scores) ... ok
+
+======================================================================
+FAIL: test_finite_out_of_range_scores_rejected_before_float32_or_averaging (__main__.Tests.test_finite_out_of_range_scores_rejected_before_float32_or_averaging) (value=-0.01)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/test_workload.py", line 129, in test_finite_out_of_range_scores_rejected_before_float32_or_averaging
+    with self.assertRaisesRegex(ValueError,'similarity range'):self.fit(bad)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_finite_out_of_range_scores_rejected_before_float32_or_averaging (__main__.Tests.test_finite_out_of_range_scores_rejected_before_float32_or_averaging) (value=1.01)
+----------------------------------------------------------------------
+ValueError: invalid clustering distance
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/test_workload.py", line 129, in test_finite_out_of_range_scores_rejected_before_float32_or_averaging
+    with self.assertRaisesRegex(ValueError,'similarity range'):self.fit(bad)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "similarity range" does not match "invalid clustering distance"
+
+======================================================================
+FAIL: test_finite_out_of_range_scores_rejected_before_float32_or_averaging (__main__.Tests.test_finite_out_of_range_scores_rejected_before_float32_or_averaging) (value=1e+100)
+----------------------------------------------------------------------
+ValueError: invalid clustering distance
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/test_workload.py", line 129, in test_finite_out_of_range_scores_rejected_before_float32_or_averaging
+    with self.assertRaisesRegex(ValueError,'similarity range'):self.fit(bad)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "similarity range" does not match "invalid clustering distance"
+
+======================================================================
+FAIL: test_finite_out_of_range_scores_rejected_before_float32_or_averaging (__main__.Tests.test_finite_out_of_range_scores_rejected_before_float32_or_averaging) (value=1e+308)
+----------------------------------------------------------------------
+ValueError: invalid clustering distance
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-workload-2026-09-30/test_workload.py", line 129, in test_finite_out_of_range_scores_rejected_before_float32_or_averaging
+    with self.assertRaisesRegex(ValueError,'similarity range'):self.fit(bad)
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "similarity range" does not match "invalid clustering distance"
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.412s
+
+FAILED (failures=4)

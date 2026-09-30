@@ -7,20 +7,10 @@ from pathlib import Path
 
 import pytest
 
-PATH = Path(__file__).resolve().parents[2] / 'research/onchain-graph-2026-09-16/fullpanel/hash_audit.py'
+PATH = Path(__file__).resolve().parents[4] / 'research/onchain-graph-2026-09-16/fullpanel/hash_audit.py'
 SPEC = importlib.util.spec_from_file_location('fullpanel_hash_test', PATH)
 audit = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(audit)
-
-
-@pytest.fixture(autouse=True)
-def synthetic_disk_space(monkeypatch):
-    # Invented tiny payloads have deterministic space; keep the real _space
-    # check and its negative tests. Do not patch process-wide shutil.
-    from types import SimpleNamespace
-    available=audit.FREE_FLOOR_BYTES+audit.ALLOCATION_MARGIN_BYTES+2**30
-    monkeypatch.setattr(audit,'shutil',SimpleNamespace(
-        disk_usage=lambda path:SimpleNamespace(free=available)))
 
 
 def identity(first, number):

@@ -9,16 +9,6 @@ from tests.research.onchain_replication.test_neighborhoods import cfg
 from tradingagents.research.onchain_replication.neighborhoods import sample_neighborhoods
 
 
-@pytest.fixture(autouse=True)
-def synthetic_mapped_disk_space(monkeypatch):
-    # Only the sampler's disk observation is synthetic. Real file allocation,
-    # numerical work, cleanup and explicit low-space refusals still execute.
-    from types import SimpleNamespace
-    from tradingagents.research.onchain_replication import sampling_weights
-    monkeypatch.setattr(sampling_weights,'shutil',SimpleNamespace(
-        disk_usage=lambda path:SimpleNamespace(free=32*2**30)))
-
-
 def population():
     first = graph([[i] for i in range(37)], [(i,(i+1)%37,float(i+1)) for i in range(37)])
     second = replace(first, start_utc='2024-01-08T00:00:00Z',
@@ -190,13 +180,3 @@ def test_skewed_large_weight_arrays_preserve_probability_bytes(tmp_path,size):
             neighbors=np.unique((chosen+np.arange(-17,18))%size)
             weights[chosen]=0;store.weights[chosen]=0
             weights[neighbors]*=.5;store.weights[neighbors]*=.5
-
-
-def test_synthetic_mapped_disk_fixture_isolated_from_ambient_disk(tmp_path,monkeypatch):
-    import shutil
-    from tradingagents.research.onchain_replication import sampling_weights
-    assert sampling_weights.shutil is not shutil, 'mapped scratch fixture must not mutate process-wide shutil'
-    def forbidden(path):raise AssertionError('ambient disk usage leaked into tiny mapped fixture')
-    monkeypatch.setattr(shutil,'disk_usage',forbidden)
-    with sampling_weights.MappedWeights(tmp_path/'synthetic-disk',9,100000,{}):pass
-    assert (tmp_path/'synthetic-disk'/'complete.json').is_file()

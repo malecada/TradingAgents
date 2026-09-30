@@ -1,0 +1,79 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+____________ test_synthetic_disk_fixture_isolated_from_ambient_disk ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-2/test_synthetic_disk_fixture_is0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a85424428b0>
+
+    def test_synthetic_disk_fixture_isolated_from_ambient_disk(tmp_path,monkeypatch):
+        import shutil
+>       assert audit.shutil is not shutil, 'synthetic disk fixture must not mutate process-wide shutil'
+E       AssertionError: synthetic disk fixture must not mutate process-wide shutil
+E       assert <module 'shutil' from '/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/shutil.py'> is not <module 'shutil' from '/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/shutil.py'>
+E        +  where <module 'shutil' from '/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/shutil.py'> = audit.shutil
+
+tests/research/test_onchain_fullpanel_hash_audit.py:145: AssertionError
+____________ test_synthetic_disk_fixture_isolated_from_ambient_disk ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-2/test_synthetic_disk_fixture_is1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a84f81b76f0>
+
+    def test_synthetic_disk_fixture_isolated_from_ambient_disk(tmp_path,monkeypatch):
+        import shutil
+>       assert union.frozen.shutil is not shutil, 'synthetic disk fixture must not mutate process-wide shutil'
+E       AssertionError: synthetic disk fixture must not mutate process-wide shutil
+E       assert <module 'shutil' from '/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/shutil.py'> is not <module 'shutil' from '/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/shutil.py'>
+E        +  where <module 'shutil' from '/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/shutil.py'> = <module 'resume_frozen_hash' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-graph-2026-09-16/fullpanel/hash_audit.py'>.shutil
+E        +    where <module 'resume_frozen_hash' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-graph-2026-09-16/fullpanel/hash_audit.py'> = union.frozen
+
+tests/research/test_onchain_fullpanel_resume_hash.py:173: AssertionError
+________ test_synthetic_mapped_disk_fixture_isolated_from_ambient_disk _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-2/test_synthetic_mapped_disk_fix0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a84111f3890>
+
+    def test_synthetic_mapped_disk_fixture_isolated_from_ambient_disk(tmp_path,monkeypatch):
+        import shutil
+        from tradingagents.research.onchain_replication import sampling_weights
+>       assert sampling_weights.shutil is not shutil, 'mapped scratch fixture must not mutate process-wide shutil'
+E       AssertionError: mapped scratch fixture must not mutate process-wide shutil
+E       assert <module 'shutil' from '/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/shutil.py'> is not <module 'shutil' from '/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/shutil.py'>
+E        +  where <module 'shutil' from '/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/shutil.py'> = <module 'tradingagents.research.onchain_replication.sampling_weights' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/sampling_weights.py'>.shutil
+
+tests/research/onchain_replication/test_mapped_sampling.py:188: AssertionError
+________ test_synthetic_mapped_disk_fixture_isolated_from_ambient_disk _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-2/test_synthetic_mapped_disk_fix1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a84111e5150>
+
+    def test_synthetic_mapped_disk_fixture_isolated_from_ambient_disk(tmp_path,monkeypatch):
+        import shutil
+        from tradingagents.research.onchain_replication import sampling_weights
+>       assert sampling_weights.shutil is not shutil, 'mapped scratch fixture must not mutate process-wide shutil'
+E       AssertionError: mapped scratch fixture must not mutate process-wide shutil
+E       assert <module 'shutil' from '/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/shutil.py'> is not <module 'shutil' from '/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/shutil.py'>
+E        +  where <module 'shutil' from '/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/shutil.py'> = <module 'tradingagents.research.onchain_replication.sampling_weights' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/sampling_weights.py'>.shutil
+
+tests/research/onchain_replication/test_sampling_policy.py:225: AssertionError
+________ test_synthetic_mapped_disk_fixture_isolated_from_ambient_disk _________
+
+tmp_path = PosixPath('/tmp/pytest-of-malecada/pytest-2/test_synthetic_mapped_disk_fix2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7a8538eca250>
+
+    def test_synthetic_mapped_disk_fixture_isolated_from_ambient_disk(tmp_path,monkeypatch):
+        import shutil
+        from tradingagents.research.onchain_replication import sampling_weights
+>       assert sampling_weights.shutil is not shutil, 'mapped scratch fixture must not mutate process-wide shutil'
+E       AssertionError: mapped scratch fixture must not mutate process-wide shutil
+E       assert <module 'shutil' from '/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/shutil.py'> is not <module 'shutil' from '/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/shutil.py'>
+E        +  where <module 'shutil' from '/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/shutil.py'> = <module 'tradingagents.research.onchain_replication.sampling_weights' from '/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/sampling_weights.py'>.shutil
+
+tests/research/onchain_replication/test_neighborhood_policy.py:272: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/test_onchain_fullpanel_hash_audit.py::test_synthetic_disk_fixture_isolated_from_ambient_disk
+FAILED tests/research/test_onchain_fullpanel_resume_hash.py::test_synthetic_disk_fixture_isolated_from_ambient_disk
+FAILED tests/research/onchain_replication/test_mapped_sampling.py::test_synthetic_mapped_disk_fixture_isolated_from_ambient_disk
+FAILED tests/research/onchain_replication/test_sampling_policy.py::test_synthetic_mapped_disk_fixture_isolated_from_ambient_disk
+FAILED tests/research/onchain_replication/test_neighborhood_policy.py::test_synthetic_mapped_disk_fixture_isolated_from_ambient_disk
+5 failed in 2.40s

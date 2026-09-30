@@ -8,20 +8,10 @@ from types import SimpleNamespace
 
 import pytest
 
-PATH = Path(__file__).resolve().parents[2] / 'research/onchain-graph-2026-09-16/fullpanel_resume/hash_union.py'
+PATH = Path(__file__).resolve().parents[4] / 'research/onchain-graph-2026-09-16/fullpanel_resume/hash_union.py'
 SPEC = importlib.util.spec_from_file_location('resume_hash_synthetic', PATH)
 union = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(union)
-
-
-@pytest.fixture(autouse=True)
-def synthetic_disk_space(monkeypatch):
-    # Invented tiny payloads have deterministic space; keep the real _space
-    # check and its negative tests. Do not patch process-wide shutil.
-    from types import SimpleNamespace
-    available=union.frozen.FREE_FLOOR_BYTES+union.frozen.ALLOCATION_MARGIN_BYTES+2**30
-    monkeypatch.setattr(union.frozen,'shutil',SimpleNamespace(
-        disk_usage=lambda path:SimpleNamespace(free=available)))
 
 
 def identity(bucket, number):
