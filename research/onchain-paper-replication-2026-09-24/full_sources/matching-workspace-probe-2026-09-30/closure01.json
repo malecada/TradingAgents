@@ -1,0 +1,59 @@
+{
+  "at": "2026-09-30T07:29:14.647140+00:00",
+  "status": "complete_synthetic_component_probe",
+  "source": "34babb067f65794fbc8c67ed007a836c17cdfb5a",
+  "probe_bindings_verified": 95,
+  "active_storage_bindings_verified": 63,
+  "owner_cgroup_absent": true,
+  "result": {
+    "status": "complete_synthetic_component_probe",
+    "nodes_each": 2000,
+    "pair_entries": 4000000,
+    "edges_each": 0,
+    "matching_iterations": 2,
+    "annealing_calls": 2,
+    "annealing_operations": 4000502,
+    "hardening_chunks": 256,
+    "selected_pairs": 3,
+    "hardening_cursor": 524288,
+    "retained_numeric_state_bytes": 96000000,
+    "checkpoint_logical_bytes": 96001776,
+    "checkpoint_manifest_sha256": "3b1e8f483e2108168b46d6a7e6e500a08e2e20251efffad122acdcef1b467e3b",
+    "soft_matrix_sha256": "e5f5cd5a84eebc8b61f69f1f590c04ef695f093a382779437ec65014a97f64f8",
+    "uniform_fixture_max_absolute_error": 1.0842021724855044e-19,
+    "timings": {
+      "create_seconds": 0.016853512002853677,
+      "annealing_seconds": 9.516660602996126,
+      "hardening_prefix_seconds": 0.20561540800554212,
+      "save_seconds": 0.2605334610125283,
+      "load_seconds": 0.18872460100101307
+    },
+    "matching_complete": false,
+    "qualification": "Single synthetic component profile including atomic validation/hash/native temporaries under outer guard. Full hardening/scoring, nonzero edge cross-products, real neighborhoods, dictionaries, MCM/neural work and financial fits are not measured. Retained checkpoint is synthetic; no scientific capacity or production backend changed."
+  },
+  "guard": {
+    "phase": "complete",
+    "monitor_pid": 962968,
+    "unit": "onchain-replication-4706707ec9694f4a87cef15f7a17076b.service",
+    "elapsed_seconds": 10.97730180900544,
+    "peak_sampled_memory_current_bytes": 237719552,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "child_exit_code": 0,
+    "cleanup_verified": true
+  },
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-workspace-probe-2026-09-30/result.json": "76f7a39404b1ac4beb54e59cd6220f5d348d5d017a25e14951d38f0acf129d38",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-workspace-probe-2026-09-30/guard01/final.json": "30f2132fa0b920600627943b672dc6c3c5ac1f083e92af3b7ccaddf6fbadffb3",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-workspace-probe-2026-09-30/started.json": "5a47408c30aff6259feb3d5e610531c8893639fea78a62a1943788c944c35fa0",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-workspace-probe-2026-09-30/bindings.json": "c949115dcee606c9ae11332a6de721e6223a0e699258860e772a7fd2f8f1ff1f",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-workspace-probe-2026-09-30/checkpoint01/manifest.json": "3b1e8f483e2108168b46d6a7e6e500a08e2e20251efffad122acdcef1b467e3b"
+  },
+  "qualification": "One finite synthetic component profile. Checkpoint matrix restore/hash was performed inside the guarded probe; this closure checks compact files only. Incomplete hardening is retained and no whole-match, empirical or production result follows."
+}

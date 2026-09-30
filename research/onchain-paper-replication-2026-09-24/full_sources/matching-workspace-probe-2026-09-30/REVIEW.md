@@ -1,0 +1,24 @@
+# Independent synthetic matching workspace probe review
+
+September 30, 2026. **Conditionally accepted for one finite synthetic component profile under the stated guard, after fresh scope/hash/identity and concurrent-host checks.** No probe or test was executed by the reviewer. This is not a financial experiment, capacity change, production matcher release or permission to read empirical arrays.
+
+The fixture constructs two references to a fresh 2,000-node graph with constant scalar node features and zero edges. The product is exactly **4,000,000 pair entries**, equal to the unchanged matching-stable capacity. Only the in-memory synthetic max_iterations value changes to two; the scientific configuration file is not edited. The existing scalar annealing and hardening code remains unchanged. Three retained float64 matrices require **96,000,000 bytes**, within the declared 128 MiB retained-state allowance. The 128 MiB checkpoint allowance also accommodates their headers and bounded metadata.
+
+For this fixture, initial node agreements are all one and edge contribution is absent. Each normalization produces the uniform 1/2000 soft matrix within rounding tolerance; asserting maximum absolute error below 1e-14 is an appropriate fixture invariant, not literal-byte equality to a separately run scalar oracle. Selected greedy ties should form the diagonal prefix. The probe checks that prefix and unchanged restored M identity plus hardening phase/cursor/pairs/best candidate.
+
+Independent operation reconstruction gives two expected composite annealing calls: 4,000,000 node-agreement operations, followed by two Q initializations and two groups of 62 scale, 63 row, 63 column and 62 exponentiation blocks, for **4,000,502 counted annealing operations**. Transition/hash work is not counted as an operation. Each full hardening pass needs ceil(4,000,000/65,536) = **62 chunks**. Thus 256 chunks should comprise 62 validation chunks, three complete selection passes and eight chunks of the fourth scan: **three selected diagonal pairs and cursor 524,288**, with hardening still incomplete. The code asserts 256 used chunks, incomplete phase and a nonempty diagonal prefix; it reports the precise count/cursor rather than asserting these reconstructed values. Terminal review should reconcile those exact reported values.
+
+Save uses one new exclusive checkpoint directory. Deleting the in-memory state before restore avoids intentionally retaining both dense states; only small hardening metadata remains referenced. Restore checks the expected outer manifest digest, component policy/hashes and M body identity. Logical file sizes are measured afterward. These are synthetic files retained on success or failure, not real graph observations. Manifest-last component publication and exclusive paths prevent automatic overwrite; no restart or retry of a failed identity is admitted.
+
+The guard is exactly **1 GiB maximum, 768 MiB high, zero swap, two CPUs, 3 GiB runtime reserve, 4 GiB startup availability, 10 GiB disk floor and 180 seconds**. The worker verifies the same guard and all source bindings before creating its started receipt. Required dispatch disk is at least **11,005,853,696 bytes** (10 GiB + 256 MiB). The launcher itself enforces the 10 GiB runtime floor, so the extra dispatch allowance and concurrent-owner checks must be enforced by the outer fresh preflight, as the protocol requires.
+
+Concurrent execution is acceptable only while storage04 retains its reviewed exact owner, HEAD and all 63 bindings, with sufficient current host RAM/disk and no conflicting job. The hard maxima sum to 1.25 GiB, but this excludes other host users and does not promise performance or prevent host contention. The parent must recheck those conditions immediately before dispatch; this source review is not a resource reservation. Frozen HEAD remains `34babb067f65794fbc8c67ed007a836c17cdfb5a`.
+
+All **95 compact bindings** independently rehashed correctly. No guard01, started.json, checkpoint01 or result.json exists at review. No numerical or resource success is yet established. The profile includes full validation/hash/native temporary costs and checkpoint I/O under the guard, but only two annealing iterations and a tiny hardening prefix. It omits nonzero edge cross-products, completed 2,000-pair hardening, scoring, real neighborhood topology, dictionary/MCM/neural work and GPU execution. Measurements cannot be extrapolated to these omitted costs or declared whole-match feasibility. Preserve a limit failure without loosening the bounds or repeating the same identity.
+
+Reviewed SHA-256 identities:
+
+- probe.py: `bb4ed3a9a599f35e3d1fe2aa05a8da5e7070889877207b379d978de1929035fa`
+- run_guard.py: `6cf278441dbb4ea65d5394c7bbcc1009aa312387702562bc7c04e629132e9028`
+- PROTOCOL.md: `4fb21bc957227b7fc7185bf4faf3c74d6cec595ee638c39346b53791936f1c87`
+- bindings.json: `c949115dcee606c9ae11332a6de721e6223a0e699258860e772a7fd2f8f1ff1f`

@@ -1,0 +1,51 @@
+{
+  "at": "2026-09-30T07:39:01.118979+00:00",
+  "source": "34babb067f65794fbc8c67ed007a836c17cdfb5a",
+  "bindings_verified": 30,
+  "contextual_bindings_verified": 37,
+  "unique_bindings_verified": 63,
+  "guard": {
+    "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/guard01/final.json",
+    "sha256": "41493f0d5897b6480bf270176f6f1a1a4e6b52b28b078e937f63abdfd9c8d207"
+  },
+  "complete": {
+    "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/complete.json",
+    "sha256": "ffd04e684b1d2374919cb08caebd5fab8a943c1a9ae7d0fb2c65e46b873fd08e"
+  },
+  "manifest": {
+    "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/manifest.json",
+    "sha256": "3b97e8e627a72a25bd640156fc22d8e5110ae2faf8079b0c9625c3c4ee2519fb"
+  },
+  "verified": {
+    "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/00-verified.json",
+    "sha256": "ec62d2bc9734a9990df7e358d725bc2f0cd72c9a0f43529997599de1a0b1a664"
+  },
+  "evicted": {
+    "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/00-evicted.json",
+    "sha256": "ec62d2bc9734a9990df7e358d725bc2f0cd72c9a0f43529997599de1a0b1a664"
+  },
+  "sidecar": {
+    "path": "research_artifacts/onchain-paper-replication-2026-09-24/sources/eth-paper-graph-resource-20260930-06/aggregation/ledger.sqlite.remote.json",
+    "sha256": "ec62d2bc9734a9990df7e358d725bc2f0cd72c9a0f43529997599de1a0b1a664"
+  },
+  "source_absent": true,
+  "owner_and_cgroup_absent": true,
+  "successful_scratch_removed": true,
+  "bytes_preserved_and_evicted": 3208413184,
+  "guard_summary": {
+    "elapsed_seconds": 1978.642813917002,
+    "peak_sampled_memory_current_bytes": 203157504,
+    "memory_events": {
+      "high": 48402,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "child_exit_code": 0,
+    "cleanup_verified": true
+  },
+  "actual_disk_free_bytes": 22151974912,
+  "qualification": "Compact/stat reconciliation of producer full body and restoration/completion metadata roundtrip evidence. No repeated remote body read or hash. Original index unchanged; historical local-path body checks require hash-verified restoration first."
+}

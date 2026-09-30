@@ -3,6 +3,202 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Graph08 release accepted; committing reviewed evidence — 2026-09-30T07:48:33.196206+00:00:**
+The exact August gate and directed-edge synthetic closure are independently accepted.
+All review conditions remain: commit/push, fresh resource checks, one temp-volume
+check, exact admission and one launch. No jobs are active. Effective accounting
+remains 31/58; proposed ceiling 59 has not yet been admitted. Future verifier08
+source preparation is under separate review and is not included in this commit.
+
+**Storage04 accepted; exact August gate generated for review — 2026-09-30T07:42:42.023113+00:00:**
+Independent preservation04 closure is accepted with exact ten-evidence review
+SHA-256846f794962d3062f3389b7d01a38db7244beaa6f0d076eddf5efb2de6cec1cf7.
+All63 original/context hashes, original index, full recovery/restoration/completion
+receipt joins, absent source, exact sidecar, removed successful scratch and absent
+owner/cgroup reconcile. Recorded48,402 high events remain explicit. No independent
+body retransmission occurred. The operation is closed; never rerun it.
+
+Reviewed graph08 generator ran once after actual04 acceptance. Exact gate SHA-256
+18b8302552a7a54e8f0462499710dbe713d82d56fb935dc83cd607136b8792e2 now exists with verification-reuse.json:
+88 source pins,98 compact input references, four distinct accepted preservations
+(13,599,907,840 historical bytes, not current free space), accepted graph07 producer/
+verifier, and all163 prior broad-suite source bytes unchanged. Budget59 proposal
+and preparation remain accepted; effective budget is still31/58 until admission.
+Independent exact RELEASE_REVIEW.md is requested. No claim, raw read or new graph
+launch occurred during generation. Never rerun this completed generator identity.
+
+The edge synthetic profile is closed and compact-reconciled, with independent
+closure review pending. All original production bytes remain unchanged. No active
+job now; HEAD remains34babb067f65794fbc8c67ed007a836c17cdfb5a. Retain both incomplete
+synthetic checkpoint bodies locally and stage only compact metadata/source/logs.
+
+Next: accepted exact graph08 gate and edge-profile closure review; commit/push all
+reviewed compact storage/coverage/probe/gate evidence. Check fresh RAM/disk before
+spending temp-check01, then run the finite temp check once, exact preflight and one
+August graph launch if all pass. Required free20,814,869,047 bytes,9GiB startup;
+6GiB max/5GiB high/zero swap/3GiB reserve/10GiB disk/28,800s remain. Freeze the new
+committed HEAD and88/98 bindings while active; no closed historical reruns. Continue
+all broader paper requirements and1,420 pending fits independently where possible.
+
+**Preservation04 and directed-edge probe terminal; closure reviews pending — 2026-09-30T07:40:52.097948+00:00:**
+Storage04 completed once in 1,978.642814 seconds, sampled peak 203,157,504 bytes,
+48,402 high events, zero max/OOM, child zero and cleanup verified. Exact monitor
+947069 and cgroup are absent; session 72387 completed. All 63 original/contextual
+hashes match. Compact closure01.json confirms full 3,208,413,184-byte recovery and
+restoration/completion metadata roundtrips, exact sidecar, absent source and
+successful recovery-scratch cleanup; original index unchanged. No repeated remote
+body read occurred in closure. Independent exact CLOSURE_REVIEW.md and ten-evidence
+closure-review.json are requested. Do not rerun this now terminal identity.
+Measured post-closure free space was 22,151,974,912 bytes, above August's requirement;
+fresh launch measurements remain mandatory. Only closed graph06 ledger was removed.
+
+The directed-edge synthetic probe launched after storage04 had already closed:
+fresh preflight01 at 07:37:59 confirms zero concurrent replication units, all 99
+probe / 63 storage hashes, frozen 34babb06, exact runtime, RAM 9,913,737,216 and disk
+22,249,459,712 bytes. It completed one invocation in 46.059585 seconds, peak
+266,305,536 bytes, zero high/max/OOM, child zero and cleanup verified. Session 70619
+completed; monitor 969766 and unit fd1c88aee3e343749ac24abd9468739d absent. No live start
+ticks were captured because it ended before first process readback; none inferred.
+
+Actual profile matches reviewed arithmetic: 11,992,504 operations in 3 annealing
+calls, 7,992,002 edge-pair updates, three pairs/cursor 524,288 after 256 hardening chunks.
+V/M/Q remain 96,000,000 bytes; checkpoint 96,001,788 logical bytes. Annealing 44.3011s,
+save 0.4960s,load 0.2315s; normalized-column maximum error 3.7748e-14. Restore hashes
+and cursors/pairs match. All 99/63 bindings and frozen HEAD still agree. closure01
+records the compact reconciliation; independent review is requested. Two-iteration
+synthetic chains and incomplete hardening do not prove full 48-iteration matching,
+real hubs, dictionary/MCM/neural feasibility or financial performance. Do not rerun.
+
+No active job remains. Next: accepted actual storage04 closure, then run reviewed
+graph08 registration generator once, independently review exact gate/reuse,
+commit/push reviewed compact work including accepted probe/coverage evidence,
+perform one fresh temp check and exact source/runtime/ownership/RAM/disk admission,
+and launch August once. Effective budget 31/58; proposed 59 remains unadopted.
+Maintain full broader scope and all 1,420 pending fits. Preserve all original data,
+failed attempts and closed identities. Keep numerical agreement separate from
+implementation and paper coverage.
+
+**Zero-edge synthetic probe accepted; directed-edge probe prepared — 2026-09-30T07:31:33.003375+00:00:**
+matching-workspace-probe-2026-09-30 completed one guarded invocation and received
+independent CLOSURE_REVIEW.md acceptance. Guard:10.977302 seconds,237,719,552 bytes
+sampled peak,zero high/max/OOM,child zero,cleanup verified. Monitor962968 and its
+4706707ec9694f4a87cef15f7a17076b unit are absent; session 1984 completed. The short
+job had already exited by first owner readback; no live start ticks were captured
+and none are fabricated. All 95 probe and 63 storage bindings and HEAD unchanged.
+
+Actual fixture:4,000,000 pair entries,two annealing calls,4,000,502 operations,
+three diagonal hardening pairs,cursor 524,288 after 256 chunks. Retained V/M/Q total
+96,000,000 bytes; saved checkpoint 96,001,776 logical bytes. Timings:creation0.0169s,
+annealing9.5167s,hardening prefix0.2056s,save 0.2605s,load 0.1887s. Restored matrix and
+cursor/pairs match; uniform-fixture maximum error1.0842e-19. This is a zero-edge,
+two-iteration synthetic prefix with incomplete hardening. It establishes neither
+full matching nor real-hub/edge/GPU/MCM/financial feasibility. Never rerun this
+closed profile; retain its synthetic checkpoint and all receipts.
+
+Prepared matching-edge-workspace-probe-2026-09-30 with99 bindings for independent
+review, not execution. Fresh2,000-node directed chains have1,999 edges each and
+7,992,002 literal edge-pair updates over the same two-iteration prefix. Capacity,
+chunk policies,256 hardening chunks,checkpoint restore and1GiB/768MiB/180s guard
+remain unchanged. New fixture checks normalized columns and injective prefix;
+no uniform-matrix or selected-coordinate assumption carries over. This distinct
+synthetic profile may run only after review and fresh owner/resources/runtime/
+source checks, while exact storage04 continues. No original data body is read.
+
+Preservation04 remains the sole long-running operation at frozen 34babb06. Its
+actual accepted closure still gates graph08 exact generation. Keep all frozen
+bindings and HEAD unchanged, preserve every partial or failed attempt, and commit
+reviewed compact evidence only after preservation closes. No budget adoption or
+financial fit occurred; all 1,420 fits and broader paper requirements remain.
+
+**Synthetic workspace probe dispatched alongside preservation04 — 2026-09-30T07:28:43.479328+00:00:**
+Independent probe REVIEW.md conditionally accepts the exact 95 bound files and
+finite synthetic scope. Fresh preflight01 at 07:28:05 checked those 95 plus all 63
+storage hashes, exact live storage 947069 / start 8015938, sole preexisting unit,
+frozen HEAD34babb067f65794fbc8c67ed007a836c17cdfb5a, exact runtime and absent new
+identity. RAM 9,957,576,704 and disk19,153,928,192 bytes passed prospective limits.
+
+Probe launched once in session 1984, monitor 962968, start ticks already exited,
+unit onchain-replication-4706707ec9694f4a87cef15f7a17076b.service. No result is claimed yet.
+This is a distinct bounded synthetic job, not a duplicate storage process or a new
+research claim. Guard 1 GiB/768MiB,zero swap,3GiB reserve,4GiB startup,10GiB disk,
+180 seconds remains. It may preserve an incomplete synthetic checkpoint; do not
+rerun it or reinterpret that checkpoint as completed matching. Freeze probe95 and
+storage63 bindings plus HEAD through both relevant closures. Source ledger stays
+protected by the independent storage recovery ordering.
+
+Expected reviewed fixture invariants are4,000,502 annealing operations, then three
+diagonal selected pairs and hardening cursor 524,288 after 256chunks. Terminal review
+must verify actual receipts rather than infer them. Remaining full hardening,
+scoring, nonzero edge cross-products and real graph work stay unmeasured.
+
+Next: reconcile the single probe terminal/cleanup and exact bindings, independent
+component-result review, while following storage04 to actual accepted recovery.
+Only that preservation closure releases graph08 preparation/gate sequencing.
+
+**Preservation04 live accepted; synthetic workspace probe prepared — 2026-09-30T07:26:44.144900+00:00:**
+Independent storage04 LIVE_REVIEW.md accepts the exact monitor947069/start ticks
+8015938, sole unit and kernel controls, all 63 hashes and62 committed paths.
+Original source was intact at review; only compact manifest roundtrip was complete.
+Fresh continuation confirms the same owner, frozen HEAD34babb06 and all 63 hashes.
+No terminal, source eviction or reclaimed space is inferred from elapsed progress.
+
+Prepared matching-workspace-probe-2026-09-30 for independent review. This is a
+new synthetic engineering profile at exactly4,000,000 dense pair entries, using
+fresh2,000-by-2,000 constant-feature zero-edge graphs. It retains the original
+pair capacity, runs an explicit two-iteration annealing prefix then 256 hardening
+chunks, and saves/restores one incomplete composite checkpoint. It measures
+component timings and outer-guard peak, not full matching, edge cross-products,
+real hubs or financial performance. It reads no original empirical body.
+
+Proposed guard is1GiB max,768MiB high,zero swap,two CPUs,3GiB reserve,4GiB startup,
+10GiB disk and180 seconds, requiring another256MiB above the disk floor at launch.
+This distinct synthetic job may coexist with storage04 only after exact owner,
+all 63 frozen storage bindings and95 probe bindings, fresh runtime/RAM/disk and
+independent review pass. Combined hard job ceilings would total1.25GiB, not a
+claim about all host RAM. Source/checkpoint artifacts and failures are retained.
+No probe guard or started identity exists yet; no resource result is claimed.
+
+Next: accepted exact synthetic probe review and fresh checks before its one bounded
+invocation, while observing storage04. Never duplicate either process. Actual
+storage04 closure/independent recovery acceptance still gates graph08 generation.
+No HEAD or frozen-source change while storage runs; coverage03 accepted addendum
+awaits next safe commit. All1,420 fits and full paper scope remain required.
+
+**ACTIVE conditional ledger preservation04 — 2026-09-30T07:05:32.643024+00:00:**
+Reviewed March producer/verifier closure, engineering, August preparation and exact
+storage04 release were committed and pushed as 34babb067f65794fbc8c67ed007a836c17cdfb5a.
+Fresh preflight01 passed at 07:04:38 UTC: all 63 unique hashes match, 62 non-connection
+paths match committed bytes, pushed branch HEAD matches, accepted actual03 and07
+closures and absent owners/units reconcile. Only the exact bound local connection
+metadata remains untracked. Disk 19,179,577,344 bytes leaves 1,635,291,703 August
+shortfall; recovery scratch needs 13,962,608,640. Available RAM 9,919,787,008 bytes.
+
+Preservation04 launched once in tool session 72387. Exact monitor 947069,
+start ticks 8015938, unit onchain-replication-ec563a3ff94d4c4b85fc2a58d8c7ac6f.service.
+Freeze HEAD 34babb067f65794fbc8c67ed007a836c17cdfb5a and all 63 original/contextual
+bindings. Never duplicate this owner or relaunch the reserved identity. Sole source
+is closed graph06 ledger 3,208,413,184 bytes, expected SHA-256
+b74170043c357dc5ccf3e40c5ca9aa4be49d73ec28c326e84d0284e2678dd7f2.
+Full body recovery/hash and restoration verification must precede local unlink.
+Original indices, raw data and graph arrays remain protected. No completed backup
+is claimed. Independent live review is requested. Limits remain 256 MiB max, 192 MiB
+high, zero swap, two CPUs, 3 GiB reserve, 3.5 GiB startup, 10 GiB disk and 14,400 seconds.
+
+Resource-coverage03 REVIEW.md now accepts 61 supported and 48 remaining original
+resource requirements; exactly eight March requirements changed and all 109 old
+statuses/reasons remain unchanged. All 78 compact evidence references match. This
+accepted addendum/review await the next safe post-freeze commit. No graph08
+gate, adoption or launch yet; effective budget 31/58 and proposed 59 allocation only.
+All 1,420 fits and full broader paper scope remain required.
+
+Next: observe this exact preservation owner through terminal. Reconcile all 63
+hashes, body/metadata roundtrips, source sidecar/absence, scratch and owner cleanup;
+independent exact closure acceptance, then compact commit/push outside the freeze.
+Run reviewed graph08 prepare_registration.py once only after actual04 acceptance,
+review generated gate/reuse, commit/push and fresh temp/admission/resource checks
+before one August graph launch. Continue independent engineering outside frozen
+paths while this transfer runs; preserve all failures and never reopen closed IDs.
+
 **Storage04 exact release accepted; commit and fresh checks next — 2026-09-30T07:04:08.594658+00:00:**
 Independent storage04 RELEASE_REVIEW.md conditionally accepts one preservation
 of the closed graph06 ledger. All 63 unique original/contextual paths reconcile;
@@ -13,7 +209,7 @@ checks pass. No transfer or recovered backup is claimed yet. The ledger's full
 byte and restoration-metadata verification must precede local removal.
 
 No active job remains. Graph07 and verifier07 are closed and independently accepted;
-never rerun either identity. Effective budget is 31/58; August's proposed59 budget
+never rerun either identity. Effective budget is 31/58; August's proposed 59 budget
 and preparation are accepted, but no gate/adoption exists pending actual04 closure.
 Reviewed composite and score-only engineering remain isolated from production.
 
@@ -22,7 +218,7 @@ graph requirements to accepted07 evidence:61 supported,48 remaining of109. Origi
 7 complete/102 unavailable historical dispositions are preserved; all14 legacy
 source qualifications, seven original neighborhood and matching requirements and
 nine MCM/nine neural requirements remain. Independent review is pending, so leave
-this new addendum outside the immediate reviewed commit. All1,420 fits remain.
+this new addendum outside the immediate reviewed commit. All 1,420 fits remain.
 
 **March saved arrays accepted; conditional storage04 release review pending — 2026-09-30T07:02:20.768961+00:00:**
 Verifier07 completed one guarded invocation in 39.501181 seconds, sampled peak
@@ -62,10 +258,10 @@ review/commit/push and fresh graph admission. All 1,420 fits and wider scope rem
 The verifier206-binding correction is independently accepted; pending review and
 204-entry manifest remain preserved. Fresh preflight01 passed at06:57:53 UTC,
 with all206 hashes and frozen HEAD matching, no prior verifier identity/active
-unit, available RAM9,992,695,808 and disk19,189,825,536 bytes. One verifier invocation
+unit, available RAM 9,992,695,808 and disk19,189,825,536 bytes. One verifier invocation
 is active in tool session 78960, monitor 943140, unit onchain-replication-612f7713d8be432c8edae658a98e6647.service.
 Freeze de91c9e084ad167e26b32effb4788d6f80130ef8 and all206 bindings until terminal.
-Limits remain3GiB max,2GiB high,0swap,3GiB reserve,6GiB startup,10GiB disk,1800s.
+Limits remain3GiB max,2GiB high,0swap, 3 GiB reserve,6GiB startup, 10 GiB disk,1800s.
 Do not duplicate or retry this identity; no successful array result claimed yet.
 
 August budget-only proposal is independently accepted: extension SHA-256
