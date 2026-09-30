@@ -1,0 +1,154 @@
+"""Actual temporary first owner and persisted samples; kernel guard mocked."""
+import importlib.util
+from pathlib import Path
+import shutil
+import unittest
+from unittest.mock import patch
+import numpy as np
+from tradingagents.research.onchain_replication.neighborhoods import sample_neighborhoods
+from tradingagents.research.onchain_replication.provenance import file_hash,thaw
+from tradingagents.research.onchain_replication.serialization import samples_to_record
+
+HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[3]
+def load(name,path):
+    spec=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
+base=load('sample_join_owner_fixture',HERE.parent/'pair-owner-route-2026-09-30/test_ownership.py')
+def api():
+    assert (HERE/'route.py').is_file(),'sample publication admission missing'
+    return load('sample_artifact_candidate',HERE/'route.py')
+
+def numeric_record(samples):
+    value={'graphs':[],'records':thaw(samples.records),'source_hashes':samples.source_hashes,
+        'rng_state':thaw(samples.rng_state),'seed':samples.seed,'identity':samples.identity}
+    for g in samples.graphs:
+        value['graphs'].append({'node_ids':g.node_ids,'node_features':g.node_features,
+            'edge_index':g.edge_index,'edge_features':g.edge_features,'edge_width':g.edge_features.shape[1],
+            'parent_hash':g.parent_hash,'center_id':g.center_id})
+    return value
+
+class Tests(unittest.TestCase):
+    def fixture(self,mode=None):
+        self.m=api();m=self.m
+        class Selected(base.Parent):
+            bridge=m.consumer.ownership;close_pair=False
+            def prepare(self):
+                for name in m.SOURCES:
+                    target=self.root/name;target.parent.mkdir(parents=True,exist_ok=True)
+                    shutil.copyfile(ROOT/name,target);self.exp['source_files'][name]=file_hash(target)
+                    base.first.git(self.root,'add','--',name)
+                self.artifact_policy={'schema_version':1,'max_manifest_bytes':1048576,
+                    'max_artifact_bytes':10485760,'max_array_bytes':2097152,'max_journal_events':10}
+                if mode=='tiny':self.artifact_policy['max_array_bytes']=2
+                self.input('artifact_read',self.artifact_policy)
+                self.item['sample_artifact_input']='artifact_read'
+                self.execution['payload']['representation_jobs']['r']['sample_artifact_input']='wrong' if mode=='wrong_route' else 'artifact_read'
+                super().prepare()
+        f=Selected('test_actual_claim_owner_and_old_numerical_anchor_are_distinct')
+        self.addCleanup(f.doCleanups);f.setUp();self.f=f
+        self.samples=sample_neighborhoods(f.graphs,dict(f.workload.settings),11)
+        value=samples_to_record(self.samples) if mode=='legacy' else numeric_record(self.samples)
+        if mode=='tampered':value['graphs'][0]['node_features']=value['graphs'][0]['node_features']+1
+        if mode=='endian':value['graphs'][0]['node_features']=value['graphs'][0]['node_features'].astype('>f8')
+        if mode=='rank':value['graphs'][0]['edge_index']=value['graphs'][0]['edge_index'].ravel()
+        if mode=='shape':value['graphs'][0]['node_features']=value['graphs'][0]['node_features'][:-1]
+        self.context={'workflow_identity':f.identity,'sample_identity':self.samples.identity,
+            'pair_workload_sha256':f.workload.descriptor['pair_workload']['sha256'],
+            'artifact_policy_sha256':f.exp['inputs']['artifact_read']['sha256']}
+        f.journal('samples_complete',self.context,value)
+        self.event=f.directory/'event-000000.json'
+        return f
+    def admit(self,**kw):
+        args=dict(artifact_input='artifact_read',event_index=0,event_sha256=file_hash(self.event));args.update(kw)
+        return self.m.admit_samples(self.f.owned,self.f.journal,**args)
+    def forbid_arrays(self):return patch.object(self.m.reader.np,'empty',side_effect=AssertionError('materialized before admission'))
+    def test_exact_published_samples_join_current_owner_and_consumer_scope(self):
+        f=self.fixture();result=self.admit()
+        self.assertEqual(result.samples.identity,self.samples.identity)
+        self.assertEqual(result.scope,f.workload.sample_scope(self.samples))
+        self.assertEqual(result.record['event']['sha256'],file_hash(self.event))
+        self.assertEqual(result.record['owner']['claim_sha256'],f.run._claim_sha256)
+        self.assertEqual(f.owned.journal.reservations,0)
+        for actual,expected in zip(result.samples.graphs,self.samples.graphs,strict=True):
+            np.testing.assert_array_equal(actual.node_features,expected.node_features)
+            self.assertFalse(actual.node_features.flags.writeable)
+        result.lease()
+    def test_legacy_json_numeric_lists_refuse_before_array_materialization(self):
+        self.fixture('legacy')
+        with self.forbid_arrays(),self.assertRaises(ValueError):self.admit()
+    def test_registered_array_budget_refuses_before_materialization(self):
+        self.fixture('tiny')
+        with self.forbid_arrays(),self.assertRaises(ValueError):self.admit()
+    def test_wrong_registered_policy_route_refuses_before_materialization(self):
+        self.fixture('wrong_route')
+        with self.forbid_arrays(),self.assertRaises(ValueError):self.admit()
+    def test_foreign_owner_or_wrong_explicit_event_refuses_before_materialization(self):
+        f=self.fixture()
+        with self.forbid_arrays(),self.assertRaises(ValueError):self.admit(event_sha256='a'*64)
+        f.journal.owner['experiment']='foreign'
+        with self.forbid_arrays(),self.assertRaises(ValueError):self.admit()
+    def test_duplicate_sample_event_is_not_silently_rolled_back(self):
+        f=self.fixture();f.journal('samples_complete',self.context,numeric_record(self.samples))
+        with self.forbid_arrays(),self.assertRaises(ValueError):self.admit()
+    def test_published_same_shape_tampering_fails_actual_induced_sample_check(self):
+        f=self.fixture('tampered')
+        with self.assertRaises(ValueError):self.admit()
+        self.assertEqual(f.owned.journal.reservations,0)
+    def test_live_directory_drift_during_scope_is_refused(self):
+        f=self.fixture();original=f.workload.sample_scope
+        def redirect(samples):
+            scope=original(samples);f.journal.directory=f.root/'foreign';return scope
+        with patch.object(f.workload,'sample_scope',side_effect=redirect),self.assertRaises(ValueError):self.admit()
+    def test_live_directory_drift_invalidates_existing_receipt(self):
+        f=self.fixture();result=self.admit();f.journal.directory=f.root/'foreign'
+        with self.assertRaises(ValueError):result.lease()
+    def test_dtype_rank_and_shape_refuse_before_materialization(self):
+        for mode in ('endian','rank','shape'):
+            with self.subTest(mode=mode):
+                self.fixture(mode)
+                with self.forbid_arrays(),self.assertRaises(ValueError):self.admit()
+    def test_parent_or_broken_terminal_refuses_before_materialization(self):
+        f=self.fixture();f.journal.parent={'foreign':True}
+        with self.forbid_arrays(),self.assertRaises(ValueError):self.admit()
+        f.journal.parent=None
+        (f.directory/'failed.json').symlink_to('absent-target')
+        with self.forbid_arrays(),self.assertRaises(ValueError):self.admit()
+    def test_drift_during_loading_or_scope_refuses_receipt(self):
+        for stage in ('loading','scope'):
+            for kind in ('directory','terminal','event','control','inventory','disk_parent'):
+                with self.subTest(stage=stage,kind=kind):
+                    f=self.fixture();hit=[]
+                    def mutate():
+                        hit.append(kind)
+                        if kind=='directory':f.journal.directory=f.root/'foreign'
+                        elif kind=='terminal':(f.directory/'failed.json').write_text('{}')
+                        elif kind=='event':self.event.write_text('{}')
+                        elif kind=='control':(f.root/'artifact_read.json').write_text('{}')
+                        elif kind=='inventory':(f.directory/'checkpoint-000000'/'unexpected').write_text('x')
+                        else:
+                            import json
+                            path=f.directory/'start.json';value=json.loads(path.read_text())
+                            value['parent']={'foreign':True};path.write_text(json.dumps(value))
+                    if stage=='loading':
+                        original=self.m.reader.read_component
+                        def changed(*args,**kwargs):
+                            value=original(*args,**kwargs);mutate();return value
+                        target=self.m.reader;name='read_component'
+                    else:
+                        original=f.workload.sample_scope
+                        def changed(*args,**kwargs):
+                            value=original(*args,**kwargs);mutate();return value
+                        target=f.workload;name='sample_scope'
+                    with patch.object(target,name,side_effect=changed),self.assertRaises(ValueError):self.admit()
+                    self.assertEqual(hit,[kind])
+                    self.assertEqual(f.owned.journal.reservations,0)
+    def test_policy_or_artifact_drift_invalidates_existing_receipt(self):
+        f=self.fixture();result=self.admit();p=f.root/'artifact_read.json';raw=p.read_bytes();p.write_text('{}')
+        with self.assertRaises(ValueError):result.lease()
+        p.write_bytes(raw)
+        # The restored file has a new signature; use a fresh admission, never a
+        # stale signature waiver, before testing independent artifact drift.
+        result=self.admit();member=f.directory/'checkpoint-000000'/'array-000000.npy'
+        raw=bytearray(member.read_bytes());raw[-1]^=1;member.write_bytes(raw)
+        with self.assertRaises(ValueError):result.lease()
+
+if __name__=='__main__':unittest.main(verbosity=2)

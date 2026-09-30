@@ -3,6 +3,31 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Current-owner sample publication join independently accepted**:
+full_sources/sample-artifact-route-2026-10-01/ joins an explicit first
+FeatureJournal samples_complete event to actual OwnedJournal/Route and the
+registered read policy selected by both producer and execution job. Array-backed
+native typed samples are required. Preflight checks shapes/dtypes and reserves
+loaded plus immutable-copy payloads; actual induced neighborhoods and metadata
+membership are checked after bounded loading. Whole-process scratch remains
+under the separate outer resource guard.
+red01 CLOSED8missing-implementation failures/0.002s. check01 CLOSED8passes/63.227s.
+INITIAL_REVIEW withheld for SAR1 (repeated FeatureJournal.directory binding).
+Originals remain preserved; red02 CLOSED2intended failures/15.537s. Correction
+adds the directory to every event lease. check02 CLOSED exit0/session15036:
+13passes/201.698s, including12post-reader/post-scope drift subcases.
+Independent REVIEW SHA295d8d5c4ac93e39aca21fdf83c88261c2eedcbb1039db5bcc3b7ef11b1d909e.
+All107direct/component bindings match manifest SHA
+00c2c320b18439d4e159936bb6e76da41255e0abb89dea8d8ea4d17d143f501f.
+This is not an empirical source closure. No active sample-join test job.
+Next: connect the actual outer dictionary algorithm to admitted sample artifacts
+and pair consumers, deriving all purposes inside the algorithm. New isolated
+dictionary-sample-driver-2026-10-01/ is being prepared; red01 CLOSED exit1,
+4missing-driver failures/0.001s. No financial fit or empirical attempt.
+Sampler RNG/source provenance, bounded producer publication, historical reuse,
+dictionary/MCM publication, mapping/scaling and physical quotas remain due.
+All1420financial fits remain pending; historical jobs and budgets unchanged.
+
 **Strict resident component reader independently accepted**:
 New isolated full_sources/pair-component-reader-2026-10-01/ preserves the existing
 component_store and preflights every numeric member, exact inventory, header,
