@@ -1,7 +1,27 @@
-# Current execution checkpoint — September 30, 2026
+# Current execution checkpoint — October 1, 2026
 
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
+
+**Admitted dictionary pair-consumer construction independently accepted**:
+New isolated full_sources/pair-consumer-route-2026-10-01/ constructs Serial
+strictly from actual OwnedJournal/Route settings, context, pair policy and derived
+sample scope. The constructor and its imported Serial/extent sources must be
+registered byte-for-byte; consumer leases recheck ownership/control/source.
+red01 closed:5missing-implementation failures/0.002s. check01 closed exit1:
+5cases/28.843s,4pass and one test-only failure: a real pair used two checkpoint
+reservations, while the test incorrectly assumed one. Scalar parity passed.
+Original test and failure remain retained. Corrected check02 is CLOSED exit0:5passes/28.747s, session35791 complete.
+It verifies scalar score, no additional reservations on completed replay with
+create/resume forbidden and sample/control/source/owner refusals. Independent
+REVIEW accepts the bounded constructor, SHA256
+e88a7de84ba5bda88b52fc6e3c1bbde822fa5a18484c70e5792d08cce85922c9.
+All71direct-file bindings verify, SHA
+e9237ff1cb10d77d19c2d13ce5cee5165a2edc4e0042f9f7a165f58afe377367;
+this is not a full empirical source closure. No active test job.
+No sampler/dictionary artifact publication admission or empirical release is
+claimed. Next safe action: join exact sample/dictionary/MCM artifact references to the
+representation journal. No empirical attempt or budget change;1420fits pending.
 
 **Pair-journal ownership independently accepted as a bounded component**:
 New isolated full_sources/pair-owner-route-2026-09-30/ joins the accepted workload

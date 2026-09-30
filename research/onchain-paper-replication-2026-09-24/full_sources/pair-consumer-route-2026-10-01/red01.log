@@ -1,0 +1,77 @@
+test_admitted_pair_matches_scalar_and_completed_replay_does_not_allocate (__main__.Tests.test_admitted_pair_matches_scalar_and_completed_replay_does_not_allocate) ... FAIL
+test_altered_samples_refuse_before_any_pair_reservation (__main__.Tests.test_altered_samples_refuse_before_any_pair_reservation) ... FAIL
+test_changed_registered_control_stops_existing_consumer_before_allocation (__main__.Tests.test_changed_registered_control_stops_existing_consumer_before_allocation) ... FAIL
+test_plain_object_cannot_supply_an_owner (__main__.Tests.test_plain_object_cannot_supply_an_owner) ... FAIL
+test_unregistered_constructor_refuses_before_reservation (__main__.Tests.test_unregistered_constructor_refuses_before_reservation) ... FAIL
+
+======================================================================
+FAIL: test_admitted_pair_matches_scalar_and_completed_replay_does_not_allocate (__main__.Tests.test_admitted_pair_matches_scalar_and_completed_replay_does_not_allocate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/test_route.py", line 53, in test_admitted_pair_matches_scalar_and_completed_replay_does_not_allocate
+    f=self.fixture();consumer=self.m.dictionary_consumer(f.owned,self.samples);p,a,b=self.first_pair()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/test_route.py", line 28, in fixture
+    self.m=api();module=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/test_route.py", line 23, in api
+    assert (HERE/'route.py').is_file(),'admitted consumer constructor missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: admitted consumer constructor missing
+
+======================================================================
+FAIL: test_altered_samples_refuse_before_any_pair_reservation (__main__.Tests.test_altered_samples_refuse_before_any_pair_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/test_route.py", line 63, in test_altered_samples_refuse_before_any_pair_reservation
+    f=self.fixture()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/test_route.py", line 28, in fixture
+    self.m=api();module=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/test_route.py", line 23, in api
+    assert (HERE/'route.py').is_file(),'admitted consumer constructor missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: admitted consumer constructor missing
+
+======================================================================
+FAIL: test_changed_registered_control_stops_existing_consumer_before_allocation (__main__.Tests.test_changed_registered_control_stops_existing_consumer_before_allocation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/test_route.py", line 68, in test_changed_registered_control_stops_existing_consumer_before_allocation
+    f=self.fixture();consumer=self.m.dictionary_consumer(f.owned,self.samples);args=self.first_pair()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/test_route.py", line 28, in fixture
+    self.m=api();module=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/test_route.py", line 23, in api
+    assert (HERE/'route.py').is_file(),'admitted consumer constructor missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: admitted consumer constructor missing
+
+======================================================================
+FAIL: test_plain_object_cannot_supply_an_owner (__main__.Tests.test_plain_object_cannot_supply_an_owner)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/test_route.py", line 78, in test_plain_object_cannot_supply_an_owner
+    m=api()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/test_route.py", line 23, in api
+    assert (HERE/'route.py').is_file(),'admitted consumer constructor missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: admitted consumer constructor missing
+
+======================================================================
+FAIL: test_unregistered_constructor_refuses_before_reservation (__main__.Tests.test_unregistered_constructor_refuses_before_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/test_route.py", line 74, in test_unregistered_constructor_refuses_before_reservation
+    f=self.fixture(omit=True)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/test_route.py", line 28, in fixture
+    self.m=api();module=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/test_route.py", line 23, in api
+    assert (HERE/'route.py').is_file(),'admitted consumer constructor missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: admitted consumer constructor missing
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+FAILED (failures=5)

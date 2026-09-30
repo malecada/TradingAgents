@@ -1,0 +1,19 @@
+test_admitted_pair_matches_scalar_and_completed_replay_does_not_allocate (__main__.Tests.test_admitted_pair_matches_scalar_and_completed_replay_does_not_allocate) ... FAIL
+test_altered_samples_refuse_before_any_pair_reservation (__main__.Tests.test_altered_samples_refuse_before_any_pair_reservation) ... ok
+test_changed_registered_control_stops_existing_consumer_before_allocation (__main__.Tests.test_changed_registered_control_stops_existing_consumer_before_allocation) ... ok
+test_plain_object_cannot_supply_an_owner (__main__.Tests.test_plain_object_cannot_supply_an_owner) ... ok
+test_unregistered_constructor_refuses_before_reservation (__main__.Tests.test_unregistered_constructor_refuses_before_reservation) ... ok
+
+======================================================================
+FAIL: test_admitted_pair_matches_scalar_and_completed_replay_does_not_allocate (__main__.Tests.test_admitted_pair_matches_scalar_and_completed_replay_does_not_allocate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-consumer-route-2026-10-01/test_route.py", line 56, in test_admitted_pair_matches_scalar_and_completed_replay_does_not_allocate
+    self.assertEqual(f.owned.journal.reservations,1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 1
+
+----------------------------------------------------------------------
+Ran 5 tests in 28.843s
+
+FAILED (failures=1)
