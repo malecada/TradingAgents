@@ -3,6 +3,42 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Full directed-chain profile independently reviewed — 2026-09-30T11:37:42.051178+00:00**:
+matching-ranked-edge-workspace-probe-2026-09-30/REVIEW.md conditionally accepts
+all100bindings, unchangedfullschedule/capacity,195,820,096ops/191,808,048edgeupdates/
+49calls,12intermediate+2latercheckpoints, and independentconserved-edge scoreoracle.
+Atmost14x128MiB=1.75GiB is below2GiBtotal logicalcap; per-saveheadroom and explicit
+mappedstateclosure were reviewed. No capacity/fullprofile outcome exists yet.
+
+Next: commit/push thisexactpreparation, then fresh runtime/current+committedpins,
+noactiveowner,4GiBstartup and12GiBfreedisk. Graph10takespriority ifits9,797,894,144RAM
+and22,103,159,134diskrequirements nowpass. Otherwise launchthisoneguardedprofile
+under committedHEAD, freezeHEAD/100pins, preserveallcheckpoints and failures, and
+recordexactowner/startticks. Do not overlapgraph10 or reuseanyclosedidentity.
+Allpaper/resource/financialscope and claimed32/59budget remainunchanged.
+
+**Full nonzero-edge synthetic profile prepared — 2026-09-30T11:35:56.202111+00:00**:
+Heartbeat confirms priorrankedprofile receipts are committed/pushed at
+acfed7fd5922c4254be024454672791abf238102. Trackedtree wasclean; noactiveunit.
+Graph10stillunlaunched: RAM9,647,464,448below9,797,894,144dispatchminimum;
+free24,686,227,456passes its22,103,159,134diskrequirement.
+
+New matching-ranked-edge-workspace-probe-2026-09-30 prepares one fresh full48iter
+2000-node/1999-edge constant directed-chain fixture with unchanged4Mpaircap.
+Expected195,820,096annealingops/191,808,048edgeupdates/49calls. Every4calls saves,
+explicitlycloses and restores onecheckpoint (maximum12intermediates), followed by
+hardeningprefix/finalcheckpoints. No completedstage is rerun. Atmost14snapshots,
+128MiBlogicaleach/2GiBtotal; launchdisk10GiB+2GiB, per-save10GiB+144MiB. Guard
+1GiBmax/768MiBhigh/0swap/twoCPUs/3reserve/4startup/10disk/1800s, exclusiveowner.
+
+Independentconstant-chain scoreoracle usesconserved directededges, noforced
+assignment or targetscore. Two tiny tests pass(green01), red01retained.100bindings
+and protocol/sourceexist, independentlyreviewpending. No gate/claim/profileguard/
+started/result orcheckpoint exists for thisnewidentity. Allclosedprofilesremain
+unchanged. Afterreviewcommit/push, freshchecks must givegraph10priority ifitsRAM
+anddisk nowpass; otherwise one lower-memoryprofile mayrun with nooverlap.
+Currentclaimedbudget32/59 and1,420financialfits pending remainunchanged.
+
 **Ranked full-size checkpoint profile independently accepted — 2026-09-30T11:14:51.441134+00:00**:
 CLOSURE_REVIEW.md independently accepts96current/committedpins,ninecompacthashes,
 rawlog-resultjoin, exact33/2,000pair lists/cursors, bothnestedcheckpointmetadata
