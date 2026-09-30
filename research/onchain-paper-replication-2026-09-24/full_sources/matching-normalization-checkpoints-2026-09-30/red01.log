@@ -1,0 +1,49 @@
+test_array_tampering_rejected_before_loading_any_array (__main__.CheckpointTests.test_array_tampering_rejected_before_loading_any_array) ... ok
+test_budget_and_existing_identity_refusals (__main__.CheckpointTests.test_budget_and_existing_identity_refusals) ... ok
+test_configuration_or_input_identity_change_refused (__main__.CheckpointTests.test_configuration_or_input_identity_change_refused) ... ok
+test_every_normalization_return_is_durably_resumable (__main__.CheckpointTests.test_every_normalization_return_is_durably_resumable) ... ERROR
+test_interrupted_matrix_update_poisoned_state_cannot_be_saved (__main__.CheckpointTests.test_interrupted_matrix_update_poisoned_state_cannot_be_saved) ... ok
+test_interrupted_normalization_block_poisoned (__main__.CheckpointTests.test_interrupted_normalization_block_poisoned) ... ERROR
+test_normalization_policy_rejected_before_allocation_or_restore (__main__.CheckpointTests.test_normalization_policy_rejected_before_allocation_or_restore) ... ERROR
+test_rectangular_zero_edge_ties_and_iteration_cap (__main__.CheckpointTests.test_rectangular_zero_edge_ties_and_iteration_cap) ... ok
+test_resume_across_node_edge_normalization_and_iteration_boundaries (__main__.CheckpointTests.test_resume_across_node_edge_normalization_and_iteration_boundaries) ... FAIL
+test_unreachable_phase_states_are_refused_before_checkpoint (__main__.CheckpointTests.test_unreachable_phase_states_are_refused_before_checkpoint) ... ok
+
+======================================================================
+ERROR: test_every_normalization_return_is_durably_resumable (__main__.CheckpointTests.test_every_normalization_return_is_durably_resumable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-normalization-checkpoints-2026-09-30/test_annealing.py", line 118, in test_every_normalization_return_is_durably_resumable
+    state=m.create(a,b,c,max_state_bytes=24*n*k,max_chunk_entries=cap)
+TypeError: create() got an unexpected keyword argument 'max_chunk_entries'
+
+======================================================================
+ERROR: test_interrupted_normalization_block_poisoned (__main__.CheckpointTests.test_interrupted_normalization_block_poisoned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-normalization-checkpoints-2026-09-30/test_annealing.py", line 150, in test_interrupted_normalization_block_poisoned
+    state=m.create(a,b,c,max_state_bytes=1024**2,max_chunk_entries=6)
+TypeError: create() got an unexpected keyword argument 'max_chunk_entries'
+
+======================================================================
+ERROR: test_normalization_policy_rejected_before_allocation_or_restore (__main__.CheckpointTests.test_normalization_policy_rejected_before_allocation_or_restore)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-normalization-checkpoints-2026-09-30/test_annealing.py", line 140, in test_normalization_policy_rejected_before_allocation_or_restore
+    m.create(a,b,c,max_state_bytes=1024**2,max_chunk_entries=5)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: create() got an unexpected keyword argument 'max_chunk_entries'
+
+======================================================================
+FAIL: test_resume_across_node_edge_normalization_and_iteration_boundaries (__main__.CheckpointTests.test_resume_across_node_edge_normalization_and_iteration_boundaries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-normalization-checkpoints-2026-09-30/test_annealing.py", line 41, in test_resume_across_node_edge_normalization_and_iteration_boundaries
+    self.assertTrue({'nodes','outer','edges','normalize_scale'}<=phases)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 10 tests in 2.136s
+
+FAILED (failures=1, errors=3)
