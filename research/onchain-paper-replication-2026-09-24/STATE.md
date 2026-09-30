@@ -3,6 +3,103 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Graph06 fully checked; preservation02 ready for fresh launch — 2026-09-30T04:38:35.926693+00:00:**
+The one bounded verifier completed and its independent terminal review is accepted:
+1,832,447 nodes, 2,559,152 edges, 489,329,336 array bytes, all four node-feature
+maximum errors zero. Guard 32.422 seconds, peak 135,458,816 bytes, zero memory
+events, child zero and cleanup. Monitor 804678 and its cgroup are absent; session
+1058 completed. All 179 bindings are unchanged. No raw uniqueness, values or
+exclusion-classification replay is claimed. Graph hash:
+5f64c66647bd034c9b4c2731b831b1899b9a821b57c4eb690db390381cb8fdff.
+
+Independent CONTINUATION_REVIEW.md accepts preservation02's updated graph07
+shortage context. Independent REVIEW.md accepts preservation03 conditionally.
+Original workers, manifests and 22-bound-file sets remain frozen. The new
+preservation02 continuation-bindings01.json pins 12 actual contextual review and
+closure files, including accepted verifier06. No prospective result is bound.
+
+Next: commit and push reviewed compact evidence and preparation, then fresh
+original/contextual hashes, exact source eligibility, absent identities/owners,
+RAM, full recovery scratch and graph07 shortfall checks. Launch preservation02
+once only if all pass; preserve HEAD and bindings while active. Never start03
+concurrently. After02's actual successful reviewed closure, recheck whether03 is
+still needed, commit its actual release evidence and launch once if admissible.
+The storage jobs consume no financial claims. Graph07 budget58 is still a
+proposal; no gate/admission/graph07 claim exists. All broader requirements remain.
+
+**Graph06 complete; verification and storage continuation pending — 2026-09-30T04:34:56.077607+00:00:**
+All eight January 2024 source/graph cells completed: 7,552,945 raw rows,
+3,679,437 admitted transactions. Guard elapsed 1,427.919 seconds, sampled peak
+4,988,571,648 bytes, zero memory high/max/OOM events, child zero and cleanup
+verified. Exact monitor 746636 and its cgroup are absent; tool session 17036
+completed. The compact reconciler ran once and independent CLOSURE_REVIEW.md
+accepts all 88 source pins, 54 inputs, 22 JSON artifacts and six large file stats.
+Budget remains 30/57 spent. No historical identity may be relaunched.
+
+Graph-verification-06 now binds 179 actual compact files. Exact release review is
+pending; preserve HEAD 02eef1c48292c8cb1fa864bb9803cab92c25d80c until its one finite
+array verification closes. No array body has been independently read yet.
+
+March graph07 metadata preparation passed review: seven days, 8,848,144 declared
+rows, 538 retained spans. Planning requires 22,396,522,013 free bytes including
+the 10 GiB floor, versus approximately 17.125 GB currently. Proposed budget 58
+retains all 30 spent claims, 12 body batches, 15 fit batches and one new resource
+claim; the actual 13 closed current claims plus 17 historical claims are included.
+No gate or launch exists. All 1,420 financial fits and original scope remain.
+
+Preservation02 remains unexecuted. Its new continuation-amendment01.json updates
+the temporal prerequisite to graph07's actual shortage, preserving all existing
+worker/manifest/bindings bytes and acknowledging graph06 needed no offload.
+Preservation03 prepares only the closed graph05 ledger (3,265,302,528 bytes), using
+the same preservation mechanism; four eligibility and two transport tests pass.
+Both preparations require independent release review and fresh checks. Run them
+sequentially after accepted graph06 verification, commit and push; execute the
+second only if actual remaining free space still misses graph07's requirement.
+Full remote recovery and hash checks must precede any local ledger removal.
+
+Next safe action: accepted verifier06 release, fresh 179 hashes/resources/owner
+checks, one guarded verifier invocation, independent closure; then reviewed
+storage release/commit and one preservation02 invocation. Keep active identities,
+failed attempts, raw bodies and arrays intact; never count prospective capacity.
+
+**ACTIVE graph06 — 2026-09-30T04:08:35.604118+00:00:**
+Reviewed graph05 completion and independent array verification, graph06 registration
+and conditional preservation02 preparation were committed and pushed as
+02eef1c48292c8cb1fa864bb9803cab92c25d80c. Graph06 was launched once for the original
+January 1–7, 2024 source days, totaling 7,552,945 declared rows. Seven source cells
+and one complete weekly graph are required.
+
+Exact active owner: monitor 746636, start ticks 6950542, supervisor
+744584; unit onchain-replication-85c1f8dcab254d6da2113957d47f833e.service; tool session 17036.
+Freeze HEAD and all 88 registered source pins and 54 compact inputs. Never duplicate
+this process or relaunch its reserved identity. Guard readback: 6 GiB memory.max,
+5 GiB memory.high, zero swap, two-CPU affinity, 3 GiB host reserve, 9 GiB startup,
+10 GiB disk floor and 28,800 seconds. Initial memory events are zero. Claim present
+at this checkpoint: True. Budget is now 30/57 spent, preserving all 27 body/fit
+allocations; this active resource claim stays spent regardless of its outcome.
+
+Fresh temp-volume check passed with cleanup. Preflight passed normal admission at
+ceiling 57, both independently accepted predecessor checks, 88 source/54 input
+hashes, 790 source-span stats, absent identities and no active unit. Available RAM
+was 10,157,301,760 bytes; disk free was 20,864,540,672 against 20,718,879,508 required.
+Gate SHA256: 202682bbf3d8263ef47ff7a595d40a103836f0176aa4a6b989db39808ece11a1.
+Conditional closed-ledger-offload02 remains UNEXECUTED because fresh space sufficed;
+its exclusive local/remote execution identity has not been reserved. Do not start
+it alongside this graph. Independent LIVE_REVIEW.md confirms the exact claim,
+owner, kernel limits and all 88 source/54 input hashes, with no blocking finding.
+That review and startup receipts will be committed after the active freeze lifts.
+
+Next safe action: monitor this exact owner and durable checkpoints through terminal
+closure. Reconcile hashes and cleanup, obtain independent review, and verify new
+arrays once under a separately bounded execution. Keep all failures and spent
+attempts. Then prepare the original March 11, 2024 week with a fresh reviewed
+resource allocation and actual storage checks. If more space is required after
+closure, use the reviewed conditional preservation path with fresh evidence;
+never count prospective moves as free space or reopen historical jobs. Continue
+independent engineering only outside frozen files. The full architecture, both
+assets/history/comparisons and all 1,420 financial fits remain required. The
+15-minute autonomous continuation is active; proceed to each next executable stage.
+
 **Graph06 release accepted — 2026-09-30T04:06:15.846748+00:00:**
 The exact January 2024 gate and its new predecessor checks passed independent
 release review. All 88 source pins, 54 compact inputs, seven runtime hashes,

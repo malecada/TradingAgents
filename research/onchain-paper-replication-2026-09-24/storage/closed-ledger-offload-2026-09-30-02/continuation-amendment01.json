@@ -1,0 +1,25 @@
+{
+  "at": "2026-09-30T04:33:12.635677+00:00",
+  "status": "conditional_preparation_not_execution_release",
+  "purpose": "Update the temporal prerequisite from the already satisfied graph06 launch to the new graph07 planning shortfall, without changing the preserved graph04 ledger, worker, manifest or original 22 bindings.",
+  "actual_free_at_preparation_bytes": 17125416960,
+  "graph07_required_free_bytes": 22396522013,
+  "shortfall_bytes": 5271105053,
+  "prospective_graph04_ledger_bytes": 3370971136,
+  "prospective_additional_graph05_ledger_bytes": 3265302528,
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-06-2026-09-30/empirical-closure01.json": "6c723cd03e44d68909113f837187c08217d485f554097a42cf853220039e0642",
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-07-2026-09-30/storage-projection.json": "16f74a297e1ed9364cf76c88595c2e7587f4cadebc26b3ca2b4f9891426d461a",
+    "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/bindings.json": "03e46485430c60f931668e00bcab8fd8972db7e28e603aeef04f88659a1a19c9",
+    "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/REVIEW.md": "3e68ce49d6d136709a426182a9f828217f7df44ac98aa7ed7af012f849d55433"
+  },
+  "required_before_execution": [
+    "Actual graph06 producer and saved-array verifier complete, cleanup verified and independent closure accepted",
+    "Independent review of this amendment and current indirect ledger dependencies",
+    "Commit and push reviewed preparation",
+    "Recheck all original 22 bindings plus this amendment release evidence, source stats, absent identities and fresh resources",
+    "Actual free still below graph07 projection; require full recovery scratch above 10 GiB reserve",
+    "No active graph or verifier; execute preservation02 alone; never repeat its identity"
+  ],
+  "qualification": "No retrospective shortage is asserted for graph06. This operation was not launched then because capacity sufficed. No prospective reclaimed capacity counts as actual; preservation03 is a separate conditional identity and may run only after this operation closes and still proves necessary."
+}
