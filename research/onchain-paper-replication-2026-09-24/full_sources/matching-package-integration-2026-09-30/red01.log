@@ -1,0 +1,17 @@
+E
+======================================================================
+ERROR: test_matching_pair_checkpoints (unittest.loader._FailedTest.test_matching_pair_checkpoints)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_matching_pair_checkpoints
+Traceback (most recent call last):
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_pair_checkpoints.py", line 11, in <module>
+    from tradingagents.research.onchain_replication import matching_pair as m
+ImportError: cannot import name 'matching_pair' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

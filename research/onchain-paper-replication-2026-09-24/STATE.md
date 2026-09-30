@@ -3,6 +3,51 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Maintained package reviewed; named broad verification prepared — 2026-09-30T13:07:54.421951+00:00**:
+Six maintained matching modules preserve the reviewed typed scalar numerical
+bodies/schemas. PACKAGE_REVIEW.md accepts component promotion only. Historical
+isolated manifests remain incompatible with maintained component fingerprints;
+no migration, numerical default switch, registered pair admission or fit occurred.
+The normal-import test module passed19 tests; focused01 passed117 with1skip in
+112.50seconds. Original sources/checkpoints and all failures remain preserved.
+
+full_sources/matching-package-integration-2026-09-30 contains implementation,
+derivation, focused logs, package review and the concrete registered integration
+audit. The new run_offline.py/OFFLINE_PROTOCOL.md/source-bindings.json prepare one
+exclusive offline01 named verification with178pins, including all163 unchanged
+old broad-suite bindings and seven new source/test files. Review then commit/push
+before dispatch with actualHEAD. Limits3GiBmax/2.75high/0swap/3GiBruntime reserve,
+6GiBstartup/10GiBdisk/3600s; no competing replication unit. No offline01 exists yet.
+Freeze HEAD and all source during verification. After terminal, reconcile both
+runtime summaries, allpins, guard events and owner/cgroup cleanup independently.
+
+Graph10 gate-v2 remains insufficient after new modules; no temp02/preflight02,
+claim, launch or source exists. Refreshed gate-v3 and reviewed broad verification
+are required before empirical release, plus strict RAM/disk eligibility. Next
+implementation is admitted pair owner/guard/ancestry and cumulative journal
+reservations, then directional dictionary and partial-row MCM continuation.
+Adopted budget32/59, proposed60unadopted; all1420financial fits remain pending.
+
+**Maintained matching package promotion in progress — 2026-09-30T12:56:27.305317+00:00**:
+Fresh check: no activeowner; available RAM9,656,119,296below9,797,894,144required;
+disk23,145,684,992above22,103,159,134required. Graph10temp02/preflight02 and actual
+claim/launch/source remain unused. No heavy job is started.
+
+The accepted typed layer is being promoted into six maintained package modules
+with normal imports and focused synthetic tests. No default consumer/solver
+substitution or empirical release is authorized by this engineering step. Once
+new package files exist, job.required_sources expands: graph10 gate-v2 is NO
+LONGER a complete current source closure. Preserve it; create/review/commit a
+new gate-v3 with appended actual source pins before any later graph10 launch.
+Do not try to launch the old gate while package integration is in progress.
+
+Independent registered owner/parent/journal/resource integration audit requested
+in full_sources/matching-package-integration-2026-09-30/REGISTERED_INTEGRATION_REVIEW.md.
+Original prototypes/profiles/checkpoints and all spent history remain immutable.
+All1,420fits pending; claimed32/59, proposed60unadopted. Next: package promotion,
+focused tests and independent review, then registered pair ownership/journal
+integration, refreshed exact gates and named offline verification before release.
+
 **Accepted typed layer backed up; strict graph dispatch refused safely — 2026-09-30T12:39:03.315456+00:00**:
 Reviewed typed adapter,18tests plus singleton and114bindings are committed/pushed
 at aae90722d7c04555293fb4ca8c72f38eb28d8bfa. The original snapshot layer, all full
