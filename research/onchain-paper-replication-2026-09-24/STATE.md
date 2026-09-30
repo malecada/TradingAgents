@@ -4,6 +4,142 @@ This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
 
+**Producer closure and array-verification release accepted — 2026-09-30T16:10:35.830060+00:00**:
+Graph10 CLOSURE_REVIEW independently accepts8/8cells, all105source/159inputpins,
+threeJSONoutputs,22compactartifacthashes and6largefileextents (bodies notread), exact
+rowaccounting, command/resource joins and actualmonitor/supervisor/cgroupdeath.
+SHA1aadaa26e8c1d1ddb17eecc0af4bf4d19e1130d5209dfc5615a3ed4b5ae8128f.
+
+Graph-verification10 bindings.json contains300currentcompactfiles, SHA
+ d2f8f9da0d86c0556376a2500023c73f8791d7bafd4e6ea6a653d17eae29036a.
+Independent RELEASE_REVIEW accepts exactcoverageandhashes, unchangedaccepted
+verify.py/run_guard.py/protocol, and unusedguard01/started/result identity, subject
+to commit/push and fresh ownership/source/resourcechecks. ReviewSHA
+ad86fe33aa28553032adaa9874c01852f3fc5de8c612291f9fb26dd396b25839.
+No array check has yet run. No active producer remains. Nextsafeaction: back up
+these reviewedcompacts andaccepted20-test deathcandidate, then one3GiBmax/2high/
+0swap/3reserve/6startup/10disk/1800s verifier with frozennewverificationHEAD.
+33/60spent; all1420fits pending. No rawbody/SQLite reread or closedidentity rerun.
+
+
+**December Graph10 COMPLETE; independent saved-array verification next — 2026-09-30T16:06:12.196260+00:00**:
+Actual Graph10 terminal, observer and guard all complete, all8cells complete,
+child0/cleanup verified; exact supervisor21818, monitor24214/start96147,
+wrapper26558, worker26561 and owned cgroup absent. Guard command and all registered
+v4 resource values match actualclaim/source6c4d9402cb06f135cb799afac1be00708f3b229e.
+Elapsed1781.629579s; sampledpeak5,368,868,864bytes; high29/maxOOM0. This establishes
+successful execution of this graph under5.5GiBmax/5GiBhigh, not all future workloads.
+No process or closed identity is to be relaunched. Sourcefreeze released afterdeath;
+HEAD remains producer source until reviewed compact closure/bindings are backed up.
+
+Reviewed reconcile_compact.py executed once: empirical-closure01.json verifies
+105source/159inputpins, lifecyclethreeJSONoutputs,22compact artifacts and statsonly
+for6large artifacts(5NPY+SQLite). Full8,617,920rawrows,4,147,212admitted;
+failed118,761/nullrecipient12,918/zero_value4,339,029 retained. Graph manifestSHA
+7cc89f84a22986fa82ecba90755a1ae98c245fdb5f4803dff5c0c49b5dab1690,
+producer graphidentityf97ef5f6289bfe69397f752d867484dc2b26cfd902ef396bf0409101c158c3b7.
+No saved array, raw body or SQLite was reread by compact closure. Independent
+actual compact closure review is pending; saved-array correctness is still pending.
+
+Next: independentactualclosure, bindactual compact/source/input/output/verifier
+metadata and release review, commit/push reviewedcompactevidence and the accepted
+20-test death-observation candidate, then one fresh guardedgraph-verification10
+under3GiBmax/2GiBhigh/zero swap/3GiBreserve/6GiBstartup/10GiBdisk/1800s. Its guard01,
+started/result/bindings remainunused at thischeckpoint. Never rerun graph10 or any
+oldverifier.33/60 adopted/spent; all1420financialfits remain pending. After verifier
+closure, reconcile the original109resource requirements and next matching work.
+
+
+**Seven December days decoded; failed-owner observation component accepted — 2026-09-30T16:03:50.834312+00:00**:
+Graph10 remains phase=complete under its same sole owner24214/start96147,
+source/HEAD6c4d9402cb06f135cb799afac1be00708f3b229e. There are
+7 of7 completed daily source receipts;
+full graph/terminal completion is not yet established. Latest elapsed
+1781.6s; sampled peak5368868864bytes;
+memory events{"high": 29, "low": 0, "max": 0, "oom": 0, "oom_group_kill": 0, "oom_kill": 0}.
+All105 frozen source bindings remain exact. Source/HEAD freeze remains in force;
+no package file or dynamic source-closure membership was changed.
+
+Per the authorized heartbeat, isolated implementation continued outside frozen
+bindings under full_sources/pair-death-2026-09-30/. The new stdlib metadata-only
+component checks exact failed claim, executor owner/launch/live/observer certificate,
+all observer evidence, same boot, monitor PID/start-tick death, supervisor absence
+and empty/absent owned cgroup. It never signals a process, reads an array, mutates
+a journal or admits continuation. Registered successor/ancestry/workload and actual
+kernel integration remain required. Cross-boot and supervisor PID reuse refuse
+conservatively. It is a checked snapshot, not a persistent process lock.
+
+Twenty synthetic tests passed in0.140s (green03); actual OS death predicates are
+mocked. Independent D1 found omitted optional final metadata appearing during
+validation; two failing counterexamples and original source/tests are retained,
+and final inventory/signatures now recheck after the second death observation.
+REVIEW accepts corrected isolated scope; SHA
+a3e22c08aeaa656c38f1cbfe3f79677f528b2c870ae1f1dbe028d5f0e46b0ea5.
+Current bindings-v2 has223 exact files (212 inherited unchanged +11 additions).
+Original bindings.json is historical and does not claim current candidate hashes.
+No completed profile, empirical sample or financial fit was rerun.
+
+Graph10 saved-array verifier was already prospectively reviewed. Its new compact
+reconciler was prepared from accepted08 with11 literal actual-owner/source/date/
+row/budget substitutions, sourceSHA6ad72916f912d4f5cf5dba8e4da3dd64d1695f1d818471f4aa3c8a79e1b4a2b8;
+independent pre-terminal review requested. It remains unexecuted and refuses
+incomplete/active ownership. No prospective terminal/array hash was invented.
+
+Next: observe exact Graph10 owner until full terminal/cleanup; use reviewed compact
+closure once, independent actual closure review, bind actual compact/verifier/output
+metadata and commit/push when freeze ends, then one guarded saved-array verification.
+Preserve all new candidate/review/launch receipts; commit deferred while live.
+33/60 adopted/spent,69/109 supported at last closed evidence; all1420fits pending.
+
+
+**Graph10 live verification accepted — 2026-09-30T15:37:19.043380+00:00**:
+Independent LIVE_V4_REVIEW accepts the observed sole supervisor21818, monitor24214/
+startticks96147, wrapper26558 and worker26561, fresh guard lease, all105 current AND
+committed source pins, exact gate/claim/dispatch source6c4d9402cb06f135cb799afac1be00708f3b229e,
+and direct kernel5.5GiBmax/5GiBhigh/zero swap with observed threads on CPUs0,1.
+Review SHA1ebd99b196dad40b56507325bde2ce70f0a16b5ef55981ddf78db68b6a6e39f6.
+This is active containment only, not terminal completion or graph correctness.
+Latest receipt: phase=running, elapsed218.6s,
+sampledpeak1719267328bytes;
+events{"high": 0, "low": 0, "max": 0, "oom": 0, "oom_group_kill": 0, "oom_kill": 0}. Graph aggregation state exists.
+Keep source/HEAD frozen, monitor exact owner, then reconcile terminal and admit
+independent saved-array verification. No retry or parallel heavy launch.33/60
+resource attempts nowspent/adopted; all1420financialfits pending. Active session45319.
+
+
+**ACTIVE December graph under reviewed local-memory cap — 2026-09-30T15:35:10.856361+00:00**:
+Accepted first-owner binding, all24 passing tests/212bindings and all retained
+failures; Graph10 v3 refusal/temp02 evidence; and independently accepted v4
+resource charter/gate are committed and pushed at6c4d9402cb06f135cb799afac1be00708f3b229e.
+The v4 exact105source/159input gate and all scientific data/configuration remain
+fixed. No maintained numerical source changed.
+
+One Graph10 launch is ACTIVE in session45319. Actual admitted claim is
+eth-paper-graph-resource-20260930-10, source6c4d9402cb06f135cb799afac1be00708f3b229e, started
+2026-09-30T15:33:58.857559+00:00; effective family budget60 is now adopted and
+this resource claim is spent (33 cumulative attempts including the prior32).
+Monitor24214/startticks96147, unit
+onchain-replication-2806d16c14234f9dbcb97a86280a1070.service.
+Evidence: full_sources/graph-successor-10-2026-09-30/execution-dispatch04.json,
+execution-preflight04.json/log, successful closed temp-check03 and actual run guard.
+Initial RAM10,565,087,232; immediate prelaunch RAM10,755,878,912, both above
+strict9,261,023,232. Disk25,812,426,752 exceeded22,103,159,134 at dispatch.
+
+At this observation phase=running, elapsed90.8s,
+sampled peak83677184bytes; memory events
+{"high": 0, "low": 0, "max": 0, "oom": 0, "oom_group_kill": 0, "oom_kill": 0}. No completion claimed.
+Guard5.5GiBmax/5GiBhigh/zero swap/two CPUs/3GiBhostreserve/8.5GiBstartup/
+10GiBdiskfloor/28,800s. The smaller cap changes resource allocation only; the full
+December23–30,2024 graph and all8registeredcells remain required.
+
+DO NOT change source or HEAD, duplicate this owner, rerun temp03/preflight04 or
+relaunch this identity. Independent LIVE_V4_REVIEW requested. Inspect this exact
+owner's receipts until terminal; then reconcile all cells/guardcleanup and conduct
+separately admitted saved-array verification. If failed, preserve the spent claim
+and register/review any successor; never silently retry. All1420financialfits are
+still pending. Independent read-only preparation may continue during sourcefreeze.
+
+
 **Reviewed local-memory resource amendment — 2026-09-30T15:32:18.273636+00:00**:
 The user reports that this machine cannot reliably supply more free RAM. No graph
 job is active. The v3 checked sequence passed initialRAM9,916,170,240bytes and

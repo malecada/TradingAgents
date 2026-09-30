@@ -1,0 +1,23 @@
+F.F.
+======================================================================
+FAIL: test_broken_final_symlink_refused (test_death.DeathTests.test_broken_final_symlink_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-death-2026-09-30/test_death.py", line 143, in test_broken_final_symlink_refused
+    with self.assertRaises(ValueError):self.verify()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_final_appearing_during_liveness_check_refused (test_death.DeathTests.test_final_appearing_during_liveness_check_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-death-2026-09-30/test_death.py", line 139, in test_final_appearing_during_liveness_check_refused
+    with self.assertRaises(ValueError):self.verify()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.072s
+
+FAILED (failures=2)

@@ -1,0 +1,1792 @@
+{
+  "bindings": null,
+  "bindings_sha256": null,
+  "design_source": "6c4d9402cb06f135cb799afac1be00708f3b229e",
+  "effective_attempt_budget": 60,
+  "experiment": {
+    "cells": [
+      "source-000000",
+      "source-000001",
+      "source-000002",
+      "source-000003",
+      "source-000004",
+      "source-000005",
+      "source-000006",
+      "graph-2024-12-23"
+    ],
+    "charter": {
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/CHARTER_V4.md",
+      "sha256": "d0ba25633fb18f57c4119b4cc4101a6896148935077201e7c8c73701108feb61"
+    },
+    "cumulative_budget_extension": {
+      "extension": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/extension.proposed.json",
+        "sha256": "013e3c6a2667f42994c70a7fc52af5db91923f8b391d97e625b24fd75f00fd23"
+      },
+      "review": {
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/extension-review.json",
+        "sha256": "dc6728591c83ba996a721f83917d5583091275e0d85feecf37b9b0d2bb753e7c"
+      }
+    },
+    "family": "paper",
+    "inputs": {
+      "budget_review": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/BUDGET_REVIEW.md",
+        "sha256": "8fe698f98f73158b7150f0b9a2af3515e8533fbf71535bdddedd12af46c44c6e"
+      },
+      "environment": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/environment.json",
+        "sha256": "f4f0ba42f05f9fda82345a4c5158a53f82225d7d224ce1b8b0fc39e1d9c99c2a"
+      },
+      "eth_schema": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/resource-successor-preparation-2026-09-29/eth-schema.json",
+        "sha256": "424f4855a105cb3c9c428a4027d880bf8e1849d2da3ffdbe8550c13ffa64b9b2"
+      },
+      "execution_job": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/execution-job-v4.json",
+        "sha256": "281d448ed99fc5fe43aeea2b11f33300c2a1e0508eb605db20bd5e03bf8d0aff"
+      },
+      "execution_workspace": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/workspace.json",
+        "sha256": "a3769663a0be2ab64fceb88d60986bd25c463717b70487e103090f5b9ec5be70"
+      },
+      "graph_config": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/config/graph.json",
+        "sha256": "c91f8eeb1d317a310ef0f90f40a78ccf60bdd2437532f5e909f7dfd079d7fc20"
+      },
+      "graph_plan": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/graph-plan.json",
+        "sha256": "e53437583c96347289431691572ce8caeb24d70125f3cce3aa121bdcb827d295"
+      },
+      "history": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/history.json",
+        "sha256": "68e4ea2f328996cef6966f2ec9f35c494b38f38182e33ae0fb7697383750aae0"
+      },
+      "mapping_00_00": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-23.json",
+        "sha256": "442059260ea1ffcecdd22ea00211838716b6327c271b78662a16820e0c36882e"
+      },
+      "mapping_01_00": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-24.json",
+        "sha256": "311460f539374e18998b23521511438e1085fb4518d9d595a34c6da53abe888b"
+      },
+      "mapping_02_00": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-25.json",
+        "sha256": "9d1459468515755dc0f80dbd793c3793ad5a6ffcb1a760193a94cb41c269d055"
+      },
+      "mapping_03_00": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-26.json",
+        "sha256": "45252cb298d717533b42e38ae617c0173a3ff7e3bd5b334424fa58e016aa3e2e"
+      },
+      "mapping_04_00": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-27.json",
+        "sha256": "a788fcf24dc502b8b37ebfb42f7041c46a969fa7cef03027076c84e204b327bb"
+      },
+      "mapping_05_00": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-28.json",
+        "sha256": "e293cb716bd273261ae2837578e62468595661877eab94e7f44ae83a0256cde5"
+      },
+      "mapping_06_00": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-29.json",
+        "sha256": "092504846ccfef9f5e1966d62dfcc7d8e8767cceb82d65620971b010ecb779bb"
+      },
+      "metadata_preparation": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/metadata-preparation.json",
+        "sha256": "1b3d6721c11e37d0bd02ca6862d7ab81d2a6cb7de70ce397802aa9f91d4b7154"
+      },
+      "package_verification_CLOSURE_REVIEW_md": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/CLOSURE_REVIEW.md",
+        "sha256": "e1d157b42374e63f53dcb7399204c3ab19431738f94e4f4581444a71c9d2cc2a"
+      },
+      "package_verification_LIVE_REVIEW_md": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/LIVE_REVIEW.md",
+        "sha256": "52b605a5a6330f4d0029335090beafc3274984eead5ad54a0bc63d4541ae515b"
+      },
+      "package_verification_OFFLINE_RELEASE_REVIEW_md": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/OFFLINE_RELEASE_REVIEW.md",
+        "sha256": "ef3daf6efb7e035a7799b8aee1681dcd27681cc893a740848b2ee301e9f36512"
+      },
+      "package_verification_PACKAGE_REVIEW_md": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/PACKAGE_REVIEW.md",
+        "sha256": "ec96473a0554fc57618fb73457e685f30b4419861c7ed1b6c93747f1b3d9f673"
+      },
+      "package_verification_closure01_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/closure01.json",
+        "sha256": "9cee514b1cadd466ea616d31ac4006acd0ea96f21feb04b67284a29dc34118a7"
+      },
+      "package_verification_dispatch01_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/dispatch01.json",
+        "sha256": "1dfc94bc44ca6e69b4e0820ba9972cc5ba96b63b36ef12494600330dacf45526"
+      },
+      "package_verification_offline01_child_exit_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/offline01/child_exit.json",
+        "sha256": "74af6036d72fb13730da162dfc971ffbf7802470c266c052157a911be636d1ab"
+      },
+      "package_verification_offline01_child_log": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/offline01/child.log",
+        "sha256": "d8226fce45ef7893313bfcbb0227f23224a04a23272225806810d7ced9415278"
+      },
+      "package_verification_offline01_final_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/offline01/final.json",
+        "sha256": "a6aa4aff5b108b46dcd4ccb1feb2a97e4e2e2a1749101a4a2164ad3db4887872"
+      },
+      "package_verification_source-bindings_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/source-bindings.json",
+        "sha256": "2262884a7c96159779cfae45b2c4b2707852471dfed63f8ce25f41b04e355697"
+      },
+      "parent_claim": {
+        "dataset": "eth",
+        "path": "research_runs/eth-paper-resource-pilot-20260924-02/claim.json",
+        "sha256": "05d769f6f50a65c2cf3eeed569077eb84e3871b1e7c23ad3504eed461a0565ca"
+      },
+      "parent_closure": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/closure.json",
+        "sha256": "dc305bbbc9b76de6eab1e6b9015ca78f5be787c70225f635c918d482a7ac7c54"
+      },
+      "parent_failed": {
+        "dataset": "eth",
+        "path": "research_runs/eth-paper-resource-pilot-20260924-02/failed.json",
+        "sha256": "3d318717ff7adecb0f07b9db6f3d1bd2e24e0c77705c3e07062cd4b075f8d7f2"
+      },
+      "parent_source_index": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/source-index.json",
+        "sha256": "18f2548bdec2602995935d951075162537b6369b8bf18647cdc7a96962cffc1a"
+      },
+      "prelaunch_v1_gate": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/gate.json",
+        "sha256": "4769eae1d84bb35b175b1604b6982ad67e97f42bc65309f1532d3de2bbea5f46"
+      },
+      "prelaunch_v2_amendment": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/PRELAUNCH_ROUTE_V2.md",
+        "sha256": "41b94c4704d2225dd9c732cea1a5538993e8d121f55e7c3632486c60583848bb"
+      },
+      "prelaunch_v3_amendment": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/PRELAUNCH_ROUTE_V3.md",
+        "sha256": "627cdd771574198281f96b27ce02ca1201960e92316f85396b19ca322efea1c9"
+      },
+      "prelaunch_v3_prior_gate": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/gate-v2.json",
+        "sha256": "74d10f013b07047b09b9e3cf3a8696037abc267fd0b721b38589e3bf7761702c"
+      },
+      "preservation_00-evicted_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/00-evicted.json",
+        "sha256": "1359a954d9a0b320fe84659c03aef980ad4889de93f286363b90d2d2bc525d73"
+      },
+      "preservation_00-recovered-restore_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/00-recovered-restore.json",
+        "sha256": "1359a954d9a0b320fe84659c03aef980ad4889de93f286363b90d2d2bc525d73"
+      },
+      "preservation_00-restore_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/00-restore.json",
+        "sha256": "1359a954d9a0b320fe84659c03aef980ad4889de93f286363b90d2d2bc525d73"
+      },
+      "preservation_00-verified_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/00-verified.json",
+        "sha256": "1359a954d9a0b320fe84659c03aef980ad4889de93f286363b90d2d2bc525d73"
+      },
+      "preservation_CLOSURE_REVIEW_md": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/CLOSURE_REVIEW.md",
+        "sha256": "54d433ab14944a20f53ef05a7d6ff507ecefe1a9fb54925fa8fdb9ec8d76efba"
+      },
+      "preservation_chain_0_00-evicted_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/00-evicted.json",
+        "sha256": "1359a954d9a0b320fe84659c03aef980ad4889de93f286363b90d2d2bc525d73"
+      },
+      "preservation_chain_0_00-recovered-restore_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/00-recovered-restore.json",
+        "sha256": "1359a954d9a0b320fe84659c03aef980ad4889de93f286363b90d2d2bc525d73"
+      },
+      "preservation_chain_0_00-restore_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/00-restore.json",
+        "sha256": "1359a954d9a0b320fe84659c03aef980ad4889de93f286363b90d2d2bc525d73"
+      },
+      "preservation_chain_0_00-verified_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/00-verified.json",
+        "sha256": "1359a954d9a0b320fe84659c03aef980ad4889de93f286363b90d2d2bc525d73"
+      },
+      "preservation_chain_0_CLOSURE_REVIEW_md": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/CLOSURE_REVIEW.md",
+        "sha256": "54d433ab14944a20f53ef05a7d6ff507ecefe1a9fb54925fa8fdb9ec8d76efba"
+      },
+      "preservation_chain_0_closure-review_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/closure-review.json",
+        "sha256": "b719570fbc74e456193953a6a23b338ed809944cc66d07889e33d1f6f255e86c"
+      },
+      "preservation_chain_0_complete_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/complete.json",
+        "sha256": "73baefc01585b275f2ad8afa53516aa65d3ddb927e8e22b4d741431c8337662e"
+      },
+      "preservation_chain_0_completion-candidate_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/completion-candidate.json",
+        "sha256": "73baefc01585b275f2ad8afa53516aa65d3ddb927e8e22b4d741431c8337662e"
+      },
+      "preservation_chain_0_guard01_final_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/guard01/final.json",
+        "sha256": "122c948fc81ed7d16248f4341259a255ac0f4d5f55a1dbb6634aa3218e5aa955"
+      },
+      "preservation_chain_0_manifest_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/manifest.json",
+        "sha256": "6c484cdafc0413c6971064157b9d809821d5c91264ab039fa7a8b80d7c1a281a"
+      },
+      "preservation_chain_0_recovered-complete_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/recovered-complete.json",
+        "sha256": "73baefc01585b275f2ad8afa53516aa65d3ddb927e8e22b4d741431c8337662e"
+      },
+      "preservation_chain_1_00-evicted_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/00-evicted.json",
+        "sha256": "e312ad1e2815727a510bbe3fe6c053dfe963e2cccc110101357c68acc976c066"
+      },
+      "preservation_chain_1_00-recovered-restore_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/00-recovered-restore.json",
+        "sha256": "e312ad1e2815727a510bbe3fe6c053dfe963e2cccc110101357c68acc976c066"
+      },
+      "preservation_chain_1_00-restore_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/00-restore.json",
+        "sha256": "e312ad1e2815727a510bbe3fe6c053dfe963e2cccc110101357c68acc976c066"
+      },
+      "preservation_chain_1_00-verified_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/00-verified.json",
+        "sha256": "e312ad1e2815727a510bbe3fe6c053dfe963e2cccc110101357c68acc976c066"
+      },
+      "preservation_chain_1_CLOSURE_REVIEW_md": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/CLOSURE_REVIEW.md",
+        "sha256": "6ed7f66c05b6e5831c5b36b47d964d671a86a255fff5b92652c34d3fba991234"
+      },
+      "preservation_chain_1_closure-review_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/closure-review.json",
+        "sha256": "b17106cb3279a5066b6e3a14a87ac672b5b08203717f02a8ca47732d446d5144"
+      },
+      "preservation_chain_1_complete_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/complete.json",
+        "sha256": "f6bfeccc44faa308cf468f12c04482d493723f0c7c4f6c76b341a8d90dff60f5"
+      },
+      "preservation_chain_1_completion-candidate_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/completion-candidate.json",
+        "sha256": "f6bfeccc44faa308cf468f12c04482d493723f0c7c4f6c76b341a8d90dff60f5"
+      },
+      "preservation_chain_1_guard01_final_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/guard01/final.json",
+        "sha256": "483c3b4499e7b3612817180ade2f359d47cb6b52bbc9b4b47e6760ebd317022e"
+      },
+      "preservation_chain_1_manifest_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/manifest.json",
+        "sha256": "bf5f2a8bc5bba1fc71a4ff1f3d8649f2d2a4d8dd8c197ee1a10cc0f2314ae048"
+      },
+      "preservation_chain_1_recovered-complete_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/recovered-complete.json",
+        "sha256": "f6bfeccc44faa308cf468f12c04482d493723f0c7c4f6c76b341a8d90dff60f5"
+      },
+      "preservation_chain_2_00-evicted_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/00-evicted.json",
+        "sha256": "56a2514b3adcd4dce5027614dfbca2885be72496625a1c38ec19adce7ba599f3"
+      },
+      "preservation_chain_2_00-recovered-restore_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/00-recovered-restore.json",
+        "sha256": "56a2514b3adcd4dce5027614dfbca2885be72496625a1c38ec19adce7ba599f3"
+      },
+      "preservation_chain_2_00-restore_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/00-restore.json",
+        "sha256": "56a2514b3adcd4dce5027614dfbca2885be72496625a1c38ec19adce7ba599f3"
+      },
+      "preservation_chain_2_00-verified_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/00-verified.json",
+        "sha256": "56a2514b3adcd4dce5027614dfbca2885be72496625a1c38ec19adce7ba599f3"
+      },
+      "preservation_chain_2_CLOSURE_REVIEW_md": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/CLOSURE_REVIEW.md",
+        "sha256": "b323db5a5700f85a87e34968ae654c272b109a00ccc8490d5fc37436ed97ee2c"
+      },
+      "preservation_chain_2_closure-review_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/closure-review.json",
+        "sha256": "02be58a1244a9d7485a45ee114677a5de19a5fdce4f3a4c2b5563af5a5f55d53"
+      },
+      "preservation_chain_2_complete_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/complete.json",
+        "sha256": "8fe0c53fd89ec925c07bfb80334d2274d7ec13a8d7977488bbacce7055833281"
+      },
+      "preservation_chain_2_completion-candidate_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/completion-candidate.json",
+        "sha256": "8fe0c53fd89ec925c07bfb80334d2274d7ec13a8d7977488bbacce7055833281"
+      },
+      "preservation_chain_2_guard01_final_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/guard01/final.json",
+        "sha256": "e8e0b3cc5e15a53e279dade47083b1a90197db87ff3609e12e1810da1899575a"
+      },
+      "preservation_chain_2_manifest_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/manifest.json",
+        "sha256": "c5c8eaecaed40bf245e91c5fe1fbec2d33ab3676927d295b3c8f5f1c6f0289ae"
+      },
+      "preservation_chain_2_recovered-complete_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/recovered-complete.json",
+        "sha256": "8fe0c53fd89ec925c07bfb80334d2274d7ec13a8d7977488bbacce7055833281"
+      },
+      "preservation_chain_3_00-evicted_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/00-evicted.json",
+        "sha256": "ec62d2bc9734a9990df7e358d725bc2f0cd72c9a0f43529997599de1a0b1a664"
+      },
+      "preservation_chain_3_00-recovered-restore_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/00-recovered-restore.json",
+        "sha256": "ec62d2bc9734a9990df7e358d725bc2f0cd72c9a0f43529997599de1a0b1a664"
+      },
+      "preservation_chain_3_00-restore_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/00-restore.json",
+        "sha256": "ec62d2bc9734a9990df7e358d725bc2f0cd72c9a0f43529997599de1a0b1a664"
+      },
+      "preservation_chain_3_00-verified_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/00-verified.json",
+        "sha256": "ec62d2bc9734a9990df7e358d725bc2f0cd72c9a0f43529997599de1a0b1a664"
+      },
+      "preservation_chain_3_CLOSURE_REVIEW_md": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/CLOSURE_REVIEW.md",
+        "sha256": "5548ea1004b9472eb1a68a465bfa393a530012eaaf19563c243aff3eab0cbe2c"
+      },
+      "preservation_chain_3_closure-review_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/closure-review.json",
+        "sha256": "846f794962d3062f3389b7d01a38db7244beaa6f0d076eddf5efb2de6cec1cf7"
+      },
+      "preservation_chain_3_complete_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/complete.json",
+        "sha256": "ffd04e684b1d2374919cb08caebd5fab8a943c1a9ae7d0fb2c65e46b873fd08e"
+      },
+      "preservation_chain_3_completion-candidate_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/completion-candidate.json",
+        "sha256": "ffd04e684b1d2374919cb08caebd5fab8a943c1a9ae7d0fb2c65e46b873fd08e"
+      },
+      "preservation_chain_3_guard01_final_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/guard01/final.json",
+        "sha256": "41493f0d5897b6480bf270176f6f1a1a4e6b52b28b078e937f63abdfd9c8d207"
+      },
+      "preservation_chain_3_manifest_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/manifest.json",
+        "sha256": "3b97e8e627a72a25bd640156fc22d8e5110ae2faf8079b0c9625c3c4ee2519fb"
+      },
+      "preservation_chain_3_recovered-complete_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/recovered-complete.json",
+        "sha256": "ffd04e684b1d2374919cb08caebd5fab8a943c1a9ae7d0fb2c65e46b873fd08e"
+      },
+      "preservation_chain_4_00-evicted_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/00-evicted.json",
+        "sha256": "105485b73c02ce68fdcabd9bb6e44b496bfda79544d3405e32d6091e68dbac8e"
+      },
+      "preservation_chain_4_00-recovered-restore_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/00-recovered-restore.json",
+        "sha256": "105485b73c02ce68fdcabd9bb6e44b496bfda79544d3405e32d6091e68dbac8e"
+      },
+      "preservation_chain_4_00-restore_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/00-restore.json",
+        "sha256": "105485b73c02ce68fdcabd9bb6e44b496bfda79544d3405e32d6091e68dbac8e"
+      },
+      "preservation_chain_4_00-verified_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/00-verified.json",
+        "sha256": "105485b73c02ce68fdcabd9bb6e44b496bfda79544d3405e32d6091e68dbac8e"
+      },
+      "preservation_chain_4_CLOSURE_REVIEW_md": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/CLOSURE_REVIEW.md",
+        "sha256": "d3db47196b127cdc8b1ab9b081a566365fb754c844d728f7c8c1ef832804dd86"
+      },
+      "preservation_chain_4_closure-review_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/closure-review.json",
+        "sha256": "9307d98eb158e55fc9610d15669236bc5ecddbe25da5856c4c0227a81f37f798"
+      },
+      "preservation_chain_4_complete_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/complete.json",
+        "sha256": "b6713615fc71097832c755d6a2d4cdd877d810e96ae872348c561bee0399bf66"
+      },
+      "preservation_chain_4_completion-candidate_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/completion-candidate.json",
+        "sha256": "b6713615fc71097832c755d6a2d4cdd877d810e96ae872348c561bee0399bf66"
+      },
+      "preservation_chain_4_guard01_final_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/guard01/final.json",
+        "sha256": "30df6082fc81de6c9544eb81a2f707dae8bab2e1e3825d0cdb51e2bb03af3fc1"
+      },
+      "preservation_chain_4_manifest_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/manifest.json",
+        "sha256": "9b1f35a22c620e95a6db696e167f9aae8b02cb8fe2d7db604c4f6b1c7282a5c7"
+      },
+      "preservation_chain_4_recovered-complete_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/recovered-complete.json",
+        "sha256": "b6713615fc71097832c755d6a2d4cdd877d810e96ae872348c561bee0399bf66"
+      },
+      "preservation_chain_5_00-evicted_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/00-evicted.json",
+        "sha256": "311e906958c198b0c41126396afa7b8f898da9665df689ce717760425568e4a0"
+      },
+      "preservation_chain_5_00-recovered-restore_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/00-recovered-restore.json",
+        "sha256": "311e906958c198b0c41126396afa7b8f898da9665df689ce717760425568e4a0"
+      },
+      "preservation_chain_5_00-restore_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/00-restore.json",
+        "sha256": "311e906958c198b0c41126396afa7b8f898da9665df689ce717760425568e4a0"
+      },
+      "preservation_chain_5_00-verified_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/00-verified.json",
+        "sha256": "311e906958c198b0c41126396afa7b8f898da9665df689ce717760425568e4a0"
+      },
+      "preservation_chain_5_CLOSURE_REVIEW_md": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/CLOSURE_REVIEW.md",
+        "sha256": "541fe10246023c4ec738bda4f7470802e7fa1c85a109ae61cacc554c34bf8e26"
+      },
+      "preservation_chain_5_closure-review_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/closure-review.json",
+        "sha256": "2d82c8e2047396587e639aee4fc3736382cbd5c85c13368d9c6e63f6051941c3"
+      },
+      "preservation_chain_5_complete_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/complete.json",
+        "sha256": "7e32a986f2a62aa3f2152923b375fb2de661f5eeb994eae0f74cf3f5f97ecc64"
+      },
+      "preservation_chain_5_completion-candidate_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/completion-candidate.json",
+        "sha256": "7e32a986f2a62aa3f2152923b375fb2de661f5eeb994eae0f74cf3f5f97ecc64"
+      },
+      "preservation_chain_5_guard01_final_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/guard01/final.json",
+        "sha256": "0dcdeb1fb5253f5d6007c6b2a48525310c4b2bc9f8474d7919dd63f459134cd4"
+      },
+      "preservation_chain_5_manifest_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/manifest.json",
+        "sha256": "d72b40660286e2782e9b2967bb97c9666b52f161b5695fc1ea7fa8a2c36e0237"
+      },
+      "preservation_chain_5_recovered-complete_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/recovered-complete.json",
+        "sha256": "7e32a986f2a62aa3f2152923b375fb2de661f5eeb994eae0f74cf3f5f97ecc64"
+      },
+      "preservation_closure-review_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/closure-review.json",
+        "sha256": "b719570fbc74e456193953a6a23b338ed809944cc66d07889e33d1f6f255e86c"
+      },
+      "preservation_complete_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/complete.json",
+        "sha256": "73baefc01585b275f2ad8afa53516aa65d3ddb927e8e22b4d741431c8337662e"
+      },
+      "preservation_completion-candidate_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/completion-candidate.json",
+        "sha256": "73baefc01585b275f2ad8afa53516aa65d3ddb927e8e22b4d741431c8337662e"
+      },
+      "preservation_guard01_final_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/guard01/final.json",
+        "sha256": "122c948fc81ed7d16248f4341259a255ac0f4d5f55a1dbb6634aa3218e5aa955"
+      },
+      "preservation_manifest_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/manifest.json",
+        "sha256": "6c484cdafc0413c6971064157b9d809821d5c91264ab039fa7a8b80d7c1a281a"
+      },
+      "preservation_recovered-complete_json": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/recovered-complete.json",
+        "sha256": "73baefc01585b275f2ad8afa53516aa65d3ddb927e8e22b4d741431c8337662e"
+      },
+      "previous_graph_00": {
+        "dataset": "eth",
+        "path": "research_runs/eth-paper-graph-resource-20260930-08/claim.json",
+        "sha256": "c0d72131556217baf326b6ad9efb65bfc79ab1f6c7269e2d5c4eef5baf8eca7d"
+      },
+      "previous_graph_01": {
+        "dataset": "eth",
+        "path": "research_runs/eth-paper-graph-resource-20260930-08/complete.json",
+        "sha256": "0712a3c05ba5dfcb14dec22c61aa33e7fd752798d4a53029c15e216ce8faa1f1"
+      },
+      "previous_graph_02": {
+        "dataset": "eth",
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-08/owner.json",
+        "sha256": "8425ddca0b5950f96a8cd26c2faf09f7e87b48d4d49126dc4827399125878296"
+      },
+      "previous_graph_03": {
+        "dataset": "eth",
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-08/observer.json",
+        "sha256": "7cc2d3c798980fc5c62ffbbd0b83181926eb3f5f3c8f2219e299a5d09df24909"
+      },
+      "previous_graph_04": {
+        "dataset": "eth",
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-08/guard/final.json",
+        "sha256": "b3a2a7e63d979fb0eb4cef40c7879991062453b0bebf09b7c83347d4787c676a"
+      },
+      "previous_graph_05": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-08-2026-09-30/empirical-closure01.json",
+        "sha256": "b83a4aaf74729c30fe71909c99e724065a1cee1a18502c8be540e1052b9c8e45"
+      },
+      "previous_graph_06": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-08-2026-09-30/CLOSURE_REVIEW.md",
+        "sha256": "f161662a38e2c1ed1327a42e6c982829d525c2cdc1fe2f84c4ba107c112c288e"
+      },
+      "previous_graph_07": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-08-2026-09-30/result.json",
+        "sha256": "4d105bdc992478b46efad1917c250b5ba1fad9772379ab7a01ffa5f111710457"
+      },
+      "previous_graph_08": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-08-2026-09-30/guard01/final.json",
+        "sha256": "3fafd39eae82c62d0cef8f04c37bf7be3f0191c71ad53528cd969898cc300ad9"
+      },
+      "previous_graph_09": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-08-2026-09-30/closure01.json",
+        "sha256": "e1fe09fd8a6c5f8e7e3f0565f3383c61a2aa670ef9e77a04306b6c8e81425cb1"
+      },
+      "previous_graph_10": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-08-2026-09-30/CLOSURE_REVIEW.md",
+        "sha256": "714c179395847f3c0fd1e90f1fb82acf38b49a4295f973e42a47e2939e158a1c"
+      },
+      "previous_graph_11": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-08-2026-09-30/closure-review.json",
+        "sha256": "f6faf3938b02f09fdfec1d2cc3e7279413c05a9d9d7dd9b9b7d4ae05e1f76003"
+      },
+      "prior_unadmitted_launch_00": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-09-2026-09-30/gate.json",
+        "sha256": "296f1c61e34e899b89c07c8b540b5aea468ef15c1f2f4733c615f6c7c2d38fd1"
+      },
+      "prior_unadmitted_launch_01": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-09-2026-09-30/execution-preflight01.json",
+        "sha256": "d186e73db68a94b8e5a07f8e955c9685b251f9405f979f76515e368f26b2d9eb"
+      },
+      "prior_unadmitted_launch_02": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-09-2026-09-30/LAUNCH_CLOSURE_REVIEW.md",
+        "sha256": "968e4fdbea41724d8b17af28330c803e2dfd25a047d80d98d35a4a5faa1b8ca2"
+      },
+      "prior_unadmitted_launch_03": {
+        "dataset": "eth",
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-09/launch.json",
+        "sha256": "ecf79f8301ee1cbb6e0b40030c9f2ae4647d1dab7d1981f56e3d5b4a059c8c7f"
+      },
+      "prior_unadmitted_launch_04": {
+        "dataset": "eth",
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-09/owner.json",
+        "sha256": "811aa5e64752e03500fee565671729a373138929fa28ab1a9a6fca9e878df478"
+      },
+      "prior_unadmitted_launch_05": {
+        "dataset": "eth",
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-09/observer.json",
+        "sha256": "f458c07a097090e40beeb1d1087c2c127631c0478f16fd022b491353b8635361"
+      },
+      "prior_unadmitted_launch_06": {
+        "dataset": "eth",
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-09/guard/final.json",
+        "sha256": "634476cf054b4c3f5423426ec3a2bce394931789ec99bd330c41326124d97385"
+      },
+      "protocol": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/protocol-freeze-v3.json",
+        "sha256": "625918f95b19a2632bf83d3ac2fdd150bc8557cef3cbeeed560120489d991c93"
+      },
+      "resource_v4_amendment": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/PRELAUNCH_ROUTE_V4.md",
+        "sha256": "1bdd881cab499b9fc5e84feb2ac7ce8c1ab1070467f6c34121d0ef217c71ad08"
+      },
+      "resource_v4_closed_temp": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/temp-check02/final.json",
+        "sha256": "13ba35e2e2f07cc325a726bb4b070396ca4ffe3172bcc24cdb1d3b08b6c1b437"
+      },
+      "resource_v4_memory_evidence": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/memory-amendment-v4-evidence.json",
+        "sha256": "50d4690c05754965ff2880e0c844f0f92f9daef5d0d759b458e0e73dbc91b2f3"
+      },
+      "resource_v4_preflight_refusal": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/dispatch-attempt03-refusal.json",
+        "sha256": "ba0b44deeefdfba7e387b6faa45873ba6b99f580b5fabd91a27e2980d72aa1d4"
+      },
+      "resource_v4_prior_charter": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/CHARTER.md",
+        "sha256": "499cf04b0aa85178951ca3d3db3aa3923e340f8a49ee0d526c630e73141a0c45"
+      },
+      "resource_v4_prior_gate": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/gate-v3.json",
+        "sha256": "c7a3f2ee7906671a37a77f358c4af6a71d029a51a30b4319db314f8f26a1f8de"
+      },
+      "resource_v4_prior_graph_guard_00": {
+        "dataset": "eth",
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260929-03/guard/final.json",
+        "sha256": "bd22359070c134aa6304e7617e4d0cc1d7e303a6ef69f72213853d968ec1412d"
+      },
+      "resource_v4_prior_graph_guard_01": {
+        "dataset": "eth",
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-04/guard/final.json",
+        "sha256": "3152b4067fbf76a5b66a799567984671e7a1b649ba5a40850108b398bf81c844"
+      },
+      "resource_v4_prior_graph_guard_02": {
+        "dataset": "eth",
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-05/guard/final.json",
+        "sha256": "c7f899412cbfd352aa9a216ce058858681d3369d715ba9f3becb961c60d22de1"
+      },
+      "resource_v4_prior_graph_guard_03": {
+        "dataset": "eth",
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-06/guard/final.json",
+        "sha256": "c7bdf53a5abf62eb1506cc96821668061fdaa648fa40c82dbea283f665fcb75d"
+      },
+      "resource_v4_prior_graph_guard_04": {
+        "dataset": "eth",
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-07/guard/final.json",
+        "sha256": "89420fa80291de960d786790f569c058a9d5a979949ca4f365b680fef489fd7e"
+      },
+      "resource_v4_prior_graph_guard_05": {
+        "dataset": "eth",
+        "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-08/guard/final.json",
+        "sha256": "b3a2a7e63d979fb0eb4cef40c7879991062453b0bebf09b7c83347d4787c676a"
+      },
+      "resource_v4_prior_job": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/execution-job.json",
+        "sha256": "3ba3e966d2a1aae6686c3d677932f0924f189cceeb0aacb6402e10791845f1c4"
+      },
+      "source_00": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/source-00.json",
+        "sha256": "28f63f221e4cf97557f4a839b5ff2e8873e9e1d06bcb2d18c2bf7a389f047b18"
+      },
+      "source_01": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/source-01.json",
+        "sha256": "bf274e7e430ed76ca4632225335fe644f4dc42cb7af01cebd354c4c5400950c7"
+      },
+      "source_02": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/source-02.json",
+        "sha256": "d187e55d0d301e5a0629832adfea9fc95bb9fa46685368ef72cb7a75deb0e76e"
+      },
+      "source_03": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/source-03.json",
+        "sha256": "b3daeb75f5cec812c9f9319f39f612c1fc444cc7a2b35fc6c1de62136142c8d0"
+      },
+      "source_04": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/source-04.json",
+        "sha256": "292d28ccf35b5c0a7cc4b8518523d47f5e5181170b4b69417241fd77934fbc3c"
+      },
+      "source_05": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/source-05.json",
+        "sha256": "328e34d11769aaca1e0b8e7ee937cb288f978b9663dda8a7fd816762c61cb0ed"
+      },
+      "source_06": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/source-06.json",
+        "sha256": "9496c3d50d845479fb87185a11519d17f18295fef9566b017e468137d369a636"
+      },
+      "storage_projection": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/storage-projection.json",
+        "sha256": "d28bc204e4df1df1f280c5315c065aa13b43149d1ec0dac34749c2add050fce4"
+      },
+      "storage_result": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-storage-probe-2026-09-29/result.json",
+        "sha256": "c6ff4ac9a2703a1722869a975478e1b0255ed2c1ebc8803063accb9485b15373"
+      },
+      "storage_source_bindings": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-storage-probe-2026-09-29/source-bindings.json",
+        "sha256": "d07fe5787b824fb9f93096bb4845259efed8b84b1fdaf7ef6929e3791759b693"
+      },
+      "temp01_child": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/temp-check01/child.log",
+        "sha256": "0d2f6512f771befb819630bbc4bbae22ec4343669e05b50ee3197abc26dd827f"
+      },
+      "temp01_exit": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/temp-check01/child_exit.json",
+        "sha256": "494927653f487ca2c1d8d61c8caa002f3c474350e8e412381df1d4e384452469"
+      },
+      "temp01_final": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/temp-check01/final.json",
+        "sha256": "26535fb20f1154fb1c463b932b377264146aeb1de9caa67b0ba237ec5357c903"
+      },
+      "temp01_no_dispatch": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/dispatch-wait01.jsonl",
+        "sha256": "ed865dfa29f4b211e9001d85e1f05c0c63530cde65e770d0d7bbe875b7a50327"
+      },
+      "temp01_review": {
+        "dataset": "eth",
+        "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/TEMP_CHECK_CLOSURE_REVIEW.md",
+        "sha256": "c113eadbb22c47e779467474e1d8811fb94ab5f0b1d8812c6833d7e2a0410f15"
+      }
+    },
+    "outputs": [
+      "cell-ledger.json",
+      "source-summary.json",
+      "artifact-index.json"
+    ],
+    "parent": "eth-paper-resource-pilot-20260924-02",
+    "question": "Complete the next chronologically unfinished original stress-week ETH graph, 2024-12-23 through 2024-12-30, under unchanged graph semantics and finite local limits.",
+    "reuse": "exploratory",
+    "runtime_hashes": {
+      "__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "admission.py": "61d7f91a331a95c3f00b56ba35daab63d18ab903ee0ea64a0eada3f9a7871e4f",
+      "budget_extensions.py": "59d22880e9ff7909508db6b0c15a7a833df30be365af4e31d643ed64afabb25a",
+      "examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "lifecycle.py": "23d7fef7dbdf1eb4833bcf1b9b2c35df4f88bc9550dcb65f1b31c9fe2d9dfe53",
+      "verify.py": "a520a756ec3fa126f56ec1c694851b6f46416e462228eb51a6954385b449f439"
+    },
+    "selection": null,
+    "source_files": {
+      "pyproject.toml": "fa319e95452e538ac22d78584f87f5f13a24d4b8bb83064b51d015706ef594b9",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-storage-probe-2026-09-29/check_temp_volume.py": "6e3d82b74c37d0a11614fb363257a384fc68e298e188ca4155fc62810780506a",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/PRELAUNCH_ROUTE_V2.md": "41b94c4704d2225dd9c732cea1a5538993e8d121f55e7c3632486c60583848bb",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/PRELAUNCH_ROUTE_V3.md": "627cdd771574198281f96b27ce02ca1201960e92316f85396b19ca322efea1c9",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/PRELAUNCH_ROUTE_V4.md": "1bdd881cab499b9fc5e84feb2ac7ce8c1ab1070467f6c34121d0ef217c71ad08",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/budget-allocation.proposed.json": "d8bfd7b7ec1a1298b55ef2a87f677d5bfd6d879890f49b5867766fa82ae2fdbf",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/extension-review.json": "dc6728591c83ba996a721f83917d5583091275e0d85feecf37b9b0d2bb753e7c",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/extension.proposed.json": "013e3c6a2667f42994c70a7fc52af5db91923f8b391d97e625b24fd75f00fd23",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/preflight.py": "e307a5aed15e78edcaa135e104eb46db868e27332ae18f0f30d6ec2cb8378a6b",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/preflight02.py": "42000aa078c0c4d75f859b3505620cdc158b500b367c9c5fd6a305801718b8fe",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/preflight03.py": "670f74e2ecdf9e78c068f3ccdba3c1cc28281d29909c5c3c63e69e6cbc123111",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/preflight04.py": "9f7917844bbd1ee6489f9df0874b641c3760cb5e8d83f4fdcf7951a1341cefc3",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/prepare_registration.py": "061bee936bff87ca2e7d27d1a183f56104ad9085d351d491177ac498d98d5eda",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/prepare_registration_v3.py": "d0ecbc81117e6bc2e9dada028ca078e94e8ea7a8db9f5fa6c78bf75d2edcec62",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/prepare_registration_v4.py": "9fefee9a9388544ca7e5df6b1b835016cad2c75a2e5e7f9bd3b998ea94ae1abf",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/preservation_requirement.py": "0505c7f027546e626ac07a8082c191ff4a9f543ccf5cd726d5aeed0971735b53",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/previous_graph_requirement.py": "9ee7f1c516c05c2b60f34aeeaf214c02ec904e947a0a7fee1d471829ceac34e7",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/run_temp_check.py": "4dd8bc05fd19341de6edbf4c8f24235aa0b1904df12d19800ae4caa0e826c34c",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/run_temp_check02.py": "abfd5890bde1ac6155fe948da053919c289ef493b7e32311b99cfd275cf894f8",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/run_temp_check03.py": "f0c4bb4e15a62dcb499c436aaa6427b06a6fc68dc7d6bb2f3bb1c50343169658",
+      "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/verification_requirement.py": "0c96359e9948b62c4e9f84e41b12d533eb59cca143f892c17305bb03400465b8",
+      "tradingagents/__init__.py": "f3f6f89f20f49a016e061266fa802b73fa95720d060a2642573d4227646ad4e5",
+      "tradingagents/research/__init__.py": "b34ced6fb4b6dd9dc1ae15645c40d62687ae7fa85f104ff77a6f1f49f874d2af",
+      "tradingagents/research/__main__.py": "d5d7664ed30f9905a4911c70d69a756e5260e534365d68968808d4f5079cd70e",
+      "tradingagents/research/admission.py": "61d7f91a331a95c3f00b56ba35daab63d18ab903ee0ea64a0eada3f9a7871e4f",
+      "tradingagents/research/budget_extensions.py": "59d22880e9ff7909508db6b0c15a7a833df30be365af4e31d643ed64afabb25a",
+      "tradingagents/research/examples.py": "0c4e4e901d14455b6742627a3c0bd42ffe65f5cf8eea7b64afbd0010dcbcbdc1",
+      "tradingagents/research/lifecycle.py": "23d7fef7dbdf1eb4833bcf1b9b2c35df4f88bc9550dcb65f1b31c9fe2d9dfe53",
+      "tradingagents/research/onchain_replication/__init__.py": "905f63046b02552c4d7cd90014328a48d77bcdb336b4a1f3351b453b83878fd1",
+      "tradingagents/research/onchain_replication/aggregation.py": "768c2ca743b2146fcc6bf606e4fa0bf41273ac15d06344d3a25a6aac78e8038f",
+      "tradingagents/research/onchain_replication/array_neighborhoods.py": "514ef8993d962c29b81777791303904f79a31e695cb0b5d152b27bdd02e2cf3f",
+      "tradingagents/research/onchain_replication/baselines.py": "8ad95719b412aa633607f966e72e3246cceeceffb68e6ced90b4289637b3954a",
+      "tradingagents/research/onchain_replication/btc.py": "775838b3fc00534849d747f38c942f13187762b81c35ef5b1af52d67882a2dd0",
+      "tradingagents/research/onchain_replication/btc_source.py": "deb5f4003ab63a69f945756f1e40fdd6212733331b2ef0133bab2ba0f69acead",
+      "tradingagents/research/onchain_replication/btc_store.py": "79f78d1bfc46d3e975f506407f3fcea102835235b5aa5b68cf6b1d7674c10452",
+      "tradingagents/research/onchain_replication/btc_subsets.py": "79f1cc4de5b5bf52e491201d05941bbe0ff29555d814f343294411f4591ed736",
+      "tradingagents/research/onchain_replication/btc_weekly.py": "6d52650e2bc6225c73da9841e51ab03be33ba8f3dd32a5ae504d6b76908c4aed",
+      "tradingagents/research/onchain_replication/cache.py": "5fbbe0df14cfc1802dd1df4da6c8bdbd1153a9fcbb4c89dd202e791d1811ddba",
+      "tradingagents/research/onchain_replication/calendar.py": "c96e984a7d3482500a3a98231d859da1678cae4ca63960f33515a06dbda760f2",
+      "tradingagents/research/onchain_replication/cells.py": "1a15e33377030b6f3c533fd498bf75825778a59c35f2b0b8702cfaf79bb9bcfd",
+      "tradingagents/research/onchain_replication/census_production.py": "37ec0a081edaf2928146fab3984e362f1241809af43009eb05de307f247665b1",
+      "tradingagents/research/onchain_replication/checkpoints.py": "74e7bd16d4331cbac45143884e1f35a52687b19280c214457834b0cf19a457bc",
+      "tradingagents/research/onchain_replication/coinmetrics_prices.py": "5e14eae6fafccdfe562ab07c73ac3854f5e86751d74e468807b82be0a3a0a62f",
+      "tradingagents/research/onchain_replication/comparison.py": "b157f41b2b98517c67152209bac46fbedf3a2eb9471fd27f9c588a41e60c8c23",
+      "tradingagents/research/onchain_replication/component_store.py": "ba0cf44dd7cf5af8c0b99cbe129f107ef7b40833a76b8162ae9d91512b566b68",
+      "tradingagents/research/onchain_replication/contracts.py": "3f88e9e56f2bfca059e2ef9da2b01ae593444b05e1067154653ea6a5479fea1a",
+      "tradingagents/research/onchain_replication/dataset.py": "c8d701b5646395bb94e5037aefcc2d0d29a55de95cca05e019ce35d3f53561df",
+      "tradingagents/research/onchain_replication/dictionary.py": "32e27a4a17dc2aa993d1440d6486c75b0d4dcff341969dbf99bdff412dd7e446",
+      "tradingagents/research/onchain_replication/environment.py": "8b3d09acbce94502f58f5d595c0018e45e9854b8f04241705c50fb21051b8a28",
+      "tradingagents/research/onchain_replication/eth_source.py": "78e0731e16d2751534e3530dde7313e94950bd852f99b30cec4661dbf7db1487",
+      "tradingagents/research/onchain_replication/evaluation.py": "b3af7cf6b71f8adcdd762eb471abb66d8fdd00f20087aeff377447d51a854b29",
+      "tradingagents/research/onchain_replication/feature_journal.py": "d997b27bf3c5d5a1db0c77a6ce5bf9ed696800a4c88300634eec3efed349ff59",
+      "tradingagents/research/onchain_replication/feature_pipeline.py": "19ebe96275095ded92743a1a1bcadc4178f85cd5d39f1ed23786fba279b5fa41",
+      "tradingagents/research/onchain_replication/feature_residency.py": "4ea5370958b65edf0d37950f12d358ab562291c786f28a287514c77c3838ddcd",
+      "tradingagents/research/onchain_replication/gat.py": "c2292bb164869bb4202a2af028a453f547d8e2930cd9d58ee4a59ffcb72913d6",
+      "tradingagents/research/onchain_replication/graph_baselines.py": "f284a85a0ce3aa5dee24c748c6a376d9d44a2d775409b874540215ff0e594907",
+      "tradingagents/research/onchain_replication/graph_production.py": "ef5ee5e2c8f6438e4e334d1a468397ad6f60e176d157e7849b7132737c7c85e8",
+      "tradingagents/research/onchain_replication/graph_residency.py": "1ded72ad7c25135780a718455b430eafa020e8f3de6ca608b04e005b798609a6",
+      "tradingagents/research/onchain_replication/graph_store.py": "a03639a68f8727f422a2567a4737f1e5afcedd3990f36f327ecadd103b3a245d",
+      "tradingagents/research/onchain_replication/hub_census_production.py": "b9c406f19c32f2b78409b9a3260edebcad0ced042e9e4d187ff44e574d763d2a",
+      "tradingagents/research/onchain_replication/hub_edges.py": "e5858170437f6d9f0a994315e2b2aa30d502844cf0a1c1b8ec782a1e693887e9",
+      "tradingagents/research/onchain_replication/job.py": "4aff4c2f71bf9e0285ee4785c12710d39d41ff9b829dd95ad6875047a31d39e6",
+      "tradingagents/research/onchain_replication/job_payload.py": "d8af20331d57d30f36bba3fc750ac0e1725ff1080258f2bb64946c5ba2b35f7e",
+      "tradingagents/research/onchain_replication/journal_recovery.py": "1f5a280789572a01d943e80081930e324e621127b742ef67b6d93b6041ed009d",
+      "tradingagents/research/onchain_replication/mapped_graph.py": "c5e93b325599a82bf65e5b31074e9c76a73b25d479ddea7d3ff3687e75f7b197",
+      "tradingagents/research/onchain_replication/matching.py": "e5a4cb7966a53522532158a13ef7293d4d081a26cffba56c2eb0761a628c72a6",
+      "tradingagents/research/onchain_replication/matching_annealing.py": "c1331bf7fd6bc436c2663c626c69c6bcecffcc16a8e56992c9c6bcf520ab0b47",
+      "tradingagents/research/onchain_replication/matching_checkpoint.py": "de8f7077e513105719fffcf6ea13e96bfb0199056acf0227ecf744df189ee35c",
+      "tradingagents/research/onchain_replication/matching_hardening.py": "c0c4a2eb21ad62d3a966e8619d84370be388e1e4a402f7608fc91abb3f796312",
+      "tradingagents/research/onchain_replication/matching_identity.py": "f011658abf3b56b04a0ec33a7bdfed2c68e2e2e79791aa96c5ca7f8fd1653f89",
+      "tradingagents/research/onchain_replication/matching_pair.py": "3fc8a0666b2b4bf334411a85decd7dbf484b038827255714c6727ffe3846621c",
+      "tradingagents/research/onchain_replication/matching_policy.py": "5d552673fb772f61344d212606a5d9d2c22c91c8de44dfa501d57422c9b4e739",
+      "tradingagents/research/onchain_replication/matching_reference.py": "75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332",
+      "tradingagents/research/onchain_replication/matching_sparse.py": "06f2d312a1527f335decc8e0c4d1283448a28e783d5e64018d70e9bf3416883e",
+      "tradingagents/research/onchain_replication/mcm.py": "d2527cdc34f1032f6ed9a3ff175fd1e7c21412e19e1d449ac53f773bd582f9df",
+      "tradingagents/research/onchain_replication/metrics.py": "03e27c21e87d3a9394c483fc9514c3a223a7c3573b00f2633b8a1f209c216e38",
+      "tradingagents/research/onchain_replication/model.py": "ed4d5417202bb13ebc682d88d56942db74201feddc1b4d20511e54684fc252a0",
+      "tradingagents/research/onchain_replication/model_registry.py": "c0e2202578ae708e2fc0406ece5726541952bf40f29df9dc81812c177c334543",
+      "tradingagents/research/onchain_replication/neighborhood_census.py": "be4704d1b19028c2ce734c35483986d6b49d7eecd6f6bd9048c96208b51c02a9",
+      "tradingagents/research/onchain_replication/neighborhood_policy.py": "f86e19de0bedd4c12ef73fe2ba243990256f592c604c083d8e772ce8131bc12a",
+      "tradingagents/research/onchain_replication/neighborhoods.py": "b53901125dc20dbb8a38b6e0e539866fb04109053afbcba0d75b2a2a8dc38271",
+      "tradingagents/research/onchain_replication/parquet_ranges.py": "482c0686e552aae3157bf6cf12f802e0d284c68ce14d879000253b895450b044",
+      "tradingagents/research/onchain_replication/pooling.py": "054845bed22c44294ce41f2263155df0397c42b0b306755e36791ae5a3960303",
+      "tradingagents/research/onchain_replication/population_assembly.py": "da65f5168c9d03cf8518f8dac1717482ff48c047ac451563f8728a7afe5c528f",
+      "tradingagents/research/onchain_replication/preservation.py": "2849670dcf847a97274cf590a2c6732cd7749e0e9e3e64e802cb2e415f08a410",
+      "tradingagents/research/onchain_replication/price_source.py": "66af531218352999667f2cac88c8393e70ddcf956b8e9f05db16a52c6b2f6e74",
+      "tradingagents/research/onchain_replication/prices.py": "5f44f1e689b614121c4b9cab5da75e17322074a9ec9f2a30a174ac353093798f",
+      "tradingagents/research/onchain_replication/provenance.py": "daf6cc3e72202dff01c50034f6a5ed3d5dcbb339d0e050444f722ce82a353471",
+      "tradingagents/research/onchain_replication/range_source.py": "5f1e004a89e2339d1f21c941415dc3976e9523f509a1d1591f23a8ea7a836bd7",
+      "tradingagents/research/onchain_replication/registered_features.py": "8a79c459336773bd139f377fe44fe1006796378651d30a8eb22c966c72f7b267",
+      "tradingagents/research/onchain_replication/replay.py": "37cb3925ac1e4a453ed385fd560b463e88f1ddb91cf00af338c08230ed244691",
+      "tradingagents/research/onchain_replication/resources.py": "5e2617f2a8112183e610254f42ab9e14b0bc7cf10f8e0940e6c569395251bb16",
+      "tradingagents/research/onchain_replication/run.py": "d44fa28991f05bedf228de22975399847dd97404b1f3dba8390be7bd720f73de",
+      "tradingagents/research/onchain_replication/sampling_policy.py": "79d1253009e6ba5e8815f82fdf3422113d5559b92e5e0e36bfec84fc2963354d",
+      "tradingagents/research/onchain_replication/sampling_weights.py": "5f1837f93fe0523d7c851654390584fc6c04fb803f2025fd027e74a5da8318d1",
+      "tradingagents/research/onchain_replication/serialization.py": "f711a0a931fe9fb91aadf0ad7ba6e68b638f3874e736790e05edd21acdefc65b",
+      "tradingagents/research/onchain_replication/source_footers.py": "65005ceca3072760befb09680f9c7aa469d5aaa5ab3f2af6a741d4ed2fef660e",
+      "tradingagents/research/onchain_replication/source_inventory.py": "6d868efe77d4d84af97fdb1657585ad86fda15866b44541f111656d3e09759db",
+      "tradingagents/research/onchain_replication/subsets.py": "59a17cb12711d8ec518f6f25ec4518f143647b79c3ef3286399dada114b7a22c",
+      "tradingagents/research/onchain_replication/temporal.py": "d8adafb5a50716ce472848df05e8bbb804525ed8003958c7f9a25c82d81ad226",
+      "tradingagents/research/onchain_replication/training.py": "5c0380de62c670d356ea3546c7b81eed4ccab55a886bc27b6a1bbfd75c2c3369",
+      "tradingagents/research/onchain_replication/verification.py": "c492cc9be2eb0956035800c26bde5d6cc2999844cd7466eb151bd3ea82815873",
+      "tradingagents/research/onchain_replication/weekly.py": "079a427f212738759109b31da23933549a8b7751851e3033703cdd03dc5f054a",
+      "tradingagents/research/verify.py": "a520a756ec3fa126f56ec1c694851b6f46416e462228eb51a6954385b449f439",
+      "uv.lock": "f7a1829c0ae554fb00923eb07c3c5e5370c1eadb52698ea657446c64d6c83b9a"
+    },
+    "stage": "development",
+    "windows": [
+      {
+        "availability": "existing",
+        "dataset": "eth",
+        "end": "2024-12-30T00:00:00Z",
+        "start": "2024-12-23T00:00:00Z"
+      }
+    ]
+  },
+  "experiment_id": "eth-paper-graph-resource-20260930-10",
+  "family": {
+    "attempt_budget": 51,
+    "history_reference": "research/onchain-paper-replication-2026-09-24/history.json; correlated earlier screen17claims included; explicit cumulative proposal budget-amendment.proposed.json; no fresh-sample assertion",
+    "mechanism_id": "celik-sefer-transaction-graph-full-neural-replication",
+    "prior_attempts": 17
+  },
+  "inputs": {
+    "budget_review": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/BUDGET_REVIEW.md",
+      "sha256": "8fe698f98f73158b7150f0b9a2af3515e8533fbf71535bdddedd12af46c44c6e"
+    },
+    "environment": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/environment.json",
+      "sha256": "f4f0ba42f05f9fda82345a4c5158a53f82225d7d224ce1b8b0fc39e1d9c99c2a"
+    },
+    "eth_schema": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/resource-successor-preparation-2026-09-29/eth-schema.json",
+      "sha256": "424f4855a105cb3c9c428a4027d880bf8e1849d2da3ffdbe8550c13ffa64b9b2"
+    },
+    "execution_job": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/execution-job-v4.json",
+      "sha256": "281d448ed99fc5fe43aeea2b11f33300c2a1e0508eb605db20bd5e03bf8d0aff"
+    },
+    "execution_workspace": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/workspace.json",
+      "sha256": "a3769663a0be2ab64fceb88d60986bd25c463717b70487e103090f5b9ec5be70"
+    },
+    "graph_config": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/config/graph.json",
+      "sha256": "c91f8eeb1d317a310ef0f90f40a78ccf60bdd2437532f5e909f7dfd079d7fc20"
+    },
+    "graph_plan": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/graph-plan.json",
+      "sha256": "e53437583c96347289431691572ce8caeb24d70125f3cce3aa121bdcb827d295"
+    },
+    "history": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/history.json",
+      "sha256": "68e4ea2f328996cef6966f2ec9f35c494b38f38182e33ae0fb7697383750aae0"
+    },
+    "mapping_00_00": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-23.json",
+      "sha256": "442059260ea1ffcecdd22ea00211838716b6327c271b78662a16820e0c36882e"
+    },
+    "mapping_01_00": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-24.json",
+      "sha256": "311460f539374e18998b23521511438e1085fb4518d9d595a34c6da53abe888b"
+    },
+    "mapping_02_00": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-25.json",
+      "sha256": "9d1459468515755dc0f80dbd793c3793ad5a6ffcb1a760193a94cb41c269d055"
+    },
+    "mapping_03_00": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-26.json",
+      "sha256": "45252cb298d717533b42e38ae617c0173a3ff7e3bd5b334424fa58e016aa3e2e"
+    },
+    "mapping_04_00": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-27.json",
+      "sha256": "a788fcf24dc502b8b37ebfb42f7041c46a969fa7cef03027076c84e204b327bb"
+    },
+    "mapping_05_00": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-28.json",
+      "sha256": "e293cb716bd273261ae2837578e62468595661877eab94e7f44ae83a0256cde5"
+    },
+    "mapping_06_00": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/pilot/source-maps-v2/2024-12-29.json",
+      "sha256": "092504846ccfef9f5e1966d62dfcc7d8e8767cceb82d65620971b010ecb779bb"
+    },
+    "metadata_preparation": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/metadata-preparation.json",
+      "sha256": "1b3d6721c11e37d0bd02ca6862d7ab81d2a6cb7de70ce397802aa9f91d4b7154"
+    },
+    "package_verification_CLOSURE_REVIEW_md": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/CLOSURE_REVIEW.md",
+      "sha256": "e1d157b42374e63f53dcb7399204c3ab19431738f94e4f4581444a71c9d2cc2a"
+    },
+    "package_verification_LIVE_REVIEW_md": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/LIVE_REVIEW.md",
+      "sha256": "52b605a5a6330f4d0029335090beafc3274984eead5ad54a0bc63d4541ae515b"
+    },
+    "package_verification_OFFLINE_RELEASE_REVIEW_md": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/OFFLINE_RELEASE_REVIEW.md",
+      "sha256": "ef3daf6efb7e035a7799b8aee1681dcd27681cc893a740848b2ee301e9f36512"
+    },
+    "package_verification_PACKAGE_REVIEW_md": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/PACKAGE_REVIEW.md",
+      "sha256": "ec96473a0554fc57618fb73457e685f30b4419861c7ed1b6c93747f1b3d9f673"
+    },
+    "package_verification_closure01_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/closure01.json",
+      "sha256": "9cee514b1cadd466ea616d31ac4006acd0ea96f21feb04b67284a29dc34118a7"
+    },
+    "package_verification_dispatch01_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/dispatch01.json",
+      "sha256": "1dfc94bc44ca6e69b4e0820ba9972cc5ba96b63b36ef12494600330dacf45526"
+    },
+    "package_verification_offline01_child_exit_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/offline01/child_exit.json",
+      "sha256": "74af6036d72fb13730da162dfc971ffbf7802470c266c052157a911be636d1ab"
+    },
+    "package_verification_offline01_child_log": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/offline01/child.log",
+      "sha256": "d8226fce45ef7893313bfcbb0227f23224a04a23272225806810d7ced9415278"
+    },
+    "package_verification_offline01_final_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/offline01/final.json",
+      "sha256": "a6aa4aff5b108b46dcd4ccb1feb2a97e4e2e2a1749101a4a2164ad3db4887872"
+    },
+    "package_verification_source-bindings_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/matching-package-integration-2026-09-30/source-bindings.json",
+      "sha256": "2262884a7c96159779cfae45b2c4b2707852471dfed63f8ce25f41b04e355697"
+    },
+    "parent_claim": {
+      "dataset": "eth",
+      "path": "research_runs/eth-paper-resource-pilot-20260924-02/claim.json",
+      "sha256": "05d769f6f50a65c2cf3eeed569077eb84e3871b1e7c23ad3504eed461a0565ca"
+    },
+    "parent_closure": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/closure-01/closure.json",
+      "sha256": "dc305bbbc9b76de6eab1e6b9015ca78f5be787c70225f635c918d482a7ac7c54"
+    },
+    "parent_failed": {
+      "dataset": "eth",
+      "path": "research_runs/eth-paper-resource-pilot-20260924-02/failed.json",
+      "sha256": "3d318717ff7adecb0f07b9db6f3d1bd2e24e0c77705c3e07062cd4b075f8d7f2"
+    },
+    "parent_source_index": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/pilot_successor_02/source-index.json",
+      "sha256": "18f2548bdec2602995935d951075162537b6369b8bf18647cdc7a96962cffc1a"
+    },
+    "prelaunch_v1_gate": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/gate.json",
+      "sha256": "4769eae1d84bb35b175b1604b6982ad67e97f42bc65309f1532d3de2bbea5f46"
+    },
+    "prelaunch_v2_amendment": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/PRELAUNCH_ROUTE_V2.md",
+      "sha256": "41b94c4704d2225dd9c732cea1a5538993e8d121f55e7c3632486c60583848bb"
+    },
+    "prelaunch_v3_amendment": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/PRELAUNCH_ROUTE_V3.md",
+      "sha256": "627cdd771574198281f96b27ce02ca1201960e92316f85396b19ca322efea1c9"
+    },
+    "prelaunch_v3_prior_gate": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/gate-v2.json",
+      "sha256": "74d10f013b07047b09b9e3cf3a8696037abc267fd0b721b38589e3bf7761702c"
+    },
+    "preservation_00-evicted_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/00-evicted.json",
+      "sha256": "1359a954d9a0b320fe84659c03aef980ad4889de93f286363b90d2d2bc525d73"
+    },
+    "preservation_00-recovered-restore_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/00-recovered-restore.json",
+      "sha256": "1359a954d9a0b320fe84659c03aef980ad4889de93f286363b90d2d2bc525d73"
+    },
+    "preservation_00-restore_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/00-restore.json",
+      "sha256": "1359a954d9a0b320fe84659c03aef980ad4889de93f286363b90d2d2bc525d73"
+    },
+    "preservation_00-verified_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/00-verified.json",
+      "sha256": "1359a954d9a0b320fe84659c03aef980ad4889de93f286363b90d2d2bc525d73"
+    },
+    "preservation_CLOSURE_REVIEW_md": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/CLOSURE_REVIEW.md",
+      "sha256": "54d433ab14944a20f53ef05a7d6ff507ecefe1a9fb54925fa8fdb9ec8d76efba"
+    },
+    "preservation_chain_0_00-evicted_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/00-evicted.json",
+      "sha256": "1359a954d9a0b320fe84659c03aef980ad4889de93f286363b90d2d2bc525d73"
+    },
+    "preservation_chain_0_00-recovered-restore_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/00-recovered-restore.json",
+      "sha256": "1359a954d9a0b320fe84659c03aef980ad4889de93f286363b90d2d2bc525d73"
+    },
+    "preservation_chain_0_00-restore_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/00-restore.json",
+      "sha256": "1359a954d9a0b320fe84659c03aef980ad4889de93f286363b90d2d2bc525d73"
+    },
+    "preservation_chain_0_00-verified_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/00-verified.json",
+      "sha256": "1359a954d9a0b320fe84659c03aef980ad4889de93f286363b90d2d2bc525d73"
+    },
+    "preservation_chain_0_CLOSURE_REVIEW_md": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/CLOSURE_REVIEW.md",
+      "sha256": "54d433ab14944a20f53ef05a7d6ff507ecefe1a9fb54925fa8fdb9ec8d76efba"
+    },
+    "preservation_chain_0_closure-review_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/closure-review.json",
+      "sha256": "b719570fbc74e456193953a6a23b338ed809944cc66d07889e33d1f6f255e86c"
+    },
+    "preservation_chain_0_complete_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/complete.json",
+      "sha256": "73baefc01585b275f2ad8afa53516aa65d3ddb927e8e22b4d741431c8337662e"
+    },
+    "preservation_chain_0_completion-candidate_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/completion-candidate.json",
+      "sha256": "73baefc01585b275f2ad8afa53516aa65d3ddb927e8e22b4d741431c8337662e"
+    },
+    "preservation_chain_0_guard01_final_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/guard01/final.json",
+      "sha256": "122c948fc81ed7d16248f4341259a255ac0f4d5f55a1dbb6634aa3218e5aa955"
+    },
+    "preservation_chain_0_manifest_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/manifest.json",
+      "sha256": "6c484cdafc0413c6971064157b9d809821d5c91264ab039fa7a8b80d7c1a281a"
+    },
+    "preservation_chain_0_recovered-complete_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/recovered-complete.json",
+      "sha256": "73baefc01585b275f2ad8afa53516aa65d3ddb927e8e22b4d741431c8337662e"
+    },
+    "preservation_chain_1_00-evicted_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/00-evicted.json",
+      "sha256": "e312ad1e2815727a510bbe3fe6c053dfe963e2cccc110101357c68acc976c066"
+    },
+    "preservation_chain_1_00-recovered-restore_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/00-recovered-restore.json",
+      "sha256": "e312ad1e2815727a510bbe3fe6c053dfe963e2cccc110101357c68acc976c066"
+    },
+    "preservation_chain_1_00-restore_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/00-restore.json",
+      "sha256": "e312ad1e2815727a510bbe3fe6c053dfe963e2cccc110101357c68acc976c066"
+    },
+    "preservation_chain_1_00-verified_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/00-verified.json",
+      "sha256": "e312ad1e2815727a510bbe3fe6c053dfe963e2cccc110101357c68acc976c066"
+    },
+    "preservation_chain_1_CLOSURE_REVIEW_md": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/CLOSURE_REVIEW.md",
+      "sha256": "6ed7f66c05b6e5831c5b36b47d964d671a86a255fff5b92652c34d3fba991234"
+    },
+    "preservation_chain_1_closure-review_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/closure-review.json",
+      "sha256": "b17106cb3279a5066b6e3a14a87ac672b5b08203717f02a8ca47732d446d5144"
+    },
+    "preservation_chain_1_complete_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/complete.json",
+      "sha256": "f6bfeccc44faa308cf468f12c04482d493723f0c7c4f6c76b341a8d90dff60f5"
+    },
+    "preservation_chain_1_completion-candidate_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/completion-candidate.json",
+      "sha256": "f6bfeccc44faa308cf468f12c04482d493723f0c7c4f6c76b341a8d90dff60f5"
+    },
+    "preservation_chain_1_guard01_final_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/guard01/final.json",
+      "sha256": "483c3b4499e7b3612817180ade2f359d47cb6b52bbc9b4b47e6760ebd317022e"
+    },
+    "preservation_chain_1_manifest_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/manifest.json",
+      "sha256": "bf5f2a8bc5bba1fc71a4ff1f3d8649f2d2a4d8dd8c197ee1a10cc0f2314ae048"
+    },
+    "preservation_chain_1_recovered-complete_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-02/recovered-complete.json",
+      "sha256": "f6bfeccc44faa308cf468f12c04482d493723f0c7c4f6c76b341a8d90dff60f5"
+    },
+    "preservation_chain_2_00-evicted_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/00-evicted.json",
+      "sha256": "56a2514b3adcd4dce5027614dfbca2885be72496625a1c38ec19adce7ba599f3"
+    },
+    "preservation_chain_2_00-recovered-restore_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/00-recovered-restore.json",
+      "sha256": "56a2514b3adcd4dce5027614dfbca2885be72496625a1c38ec19adce7ba599f3"
+    },
+    "preservation_chain_2_00-restore_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/00-restore.json",
+      "sha256": "56a2514b3adcd4dce5027614dfbca2885be72496625a1c38ec19adce7ba599f3"
+    },
+    "preservation_chain_2_00-verified_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/00-verified.json",
+      "sha256": "56a2514b3adcd4dce5027614dfbca2885be72496625a1c38ec19adce7ba599f3"
+    },
+    "preservation_chain_2_CLOSURE_REVIEW_md": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/CLOSURE_REVIEW.md",
+      "sha256": "b323db5a5700f85a87e34968ae654c272b109a00ccc8490d5fc37436ed97ee2c"
+    },
+    "preservation_chain_2_closure-review_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/closure-review.json",
+      "sha256": "02be58a1244a9d7485a45ee114677a5de19a5fdce4f3a4c2b5563af5a5f55d53"
+    },
+    "preservation_chain_2_complete_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/complete.json",
+      "sha256": "8fe0c53fd89ec925c07bfb80334d2274d7ec13a8d7977488bbacce7055833281"
+    },
+    "preservation_chain_2_completion-candidate_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/completion-candidate.json",
+      "sha256": "8fe0c53fd89ec925c07bfb80334d2274d7ec13a8d7977488bbacce7055833281"
+    },
+    "preservation_chain_2_guard01_final_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/guard01/final.json",
+      "sha256": "e8e0b3cc5e15a53e279dade47083b1a90197db87ff3609e12e1810da1899575a"
+    },
+    "preservation_chain_2_manifest_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/manifest.json",
+      "sha256": "c5c8eaecaed40bf245e91c5fe1fbec2d33ab3676927d295b3c8f5f1c6f0289ae"
+    },
+    "preservation_chain_2_recovered-complete_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-03/recovered-complete.json",
+      "sha256": "8fe0c53fd89ec925c07bfb80334d2274d7ec13a8d7977488bbacce7055833281"
+    },
+    "preservation_chain_3_00-evicted_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/00-evicted.json",
+      "sha256": "ec62d2bc9734a9990df7e358d725bc2f0cd72c9a0f43529997599de1a0b1a664"
+    },
+    "preservation_chain_3_00-recovered-restore_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/00-recovered-restore.json",
+      "sha256": "ec62d2bc9734a9990df7e358d725bc2f0cd72c9a0f43529997599de1a0b1a664"
+    },
+    "preservation_chain_3_00-restore_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/00-restore.json",
+      "sha256": "ec62d2bc9734a9990df7e358d725bc2f0cd72c9a0f43529997599de1a0b1a664"
+    },
+    "preservation_chain_3_00-verified_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/00-verified.json",
+      "sha256": "ec62d2bc9734a9990df7e358d725bc2f0cd72c9a0f43529997599de1a0b1a664"
+    },
+    "preservation_chain_3_CLOSURE_REVIEW_md": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/CLOSURE_REVIEW.md",
+      "sha256": "5548ea1004b9472eb1a68a465bfa393a530012eaaf19563c243aff3eab0cbe2c"
+    },
+    "preservation_chain_3_closure-review_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/closure-review.json",
+      "sha256": "846f794962d3062f3389b7d01a38db7244beaa6f0d076eddf5efb2de6cec1cf7"
+    },
+    "preservation_chain_3_complete_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/complete.json",
+      "sha256": "ffd04e684b1d2374919cb08caebd5fab8a943c1a9ae7d0fb2c65e46b873fd08e"
+    },
+    "preservation_chain_3_completion-candidate_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/completion-candidate.json",
+      "sha256": "ffd04e684b1d2374919cb08caebd5fab8a943c1a9ae7d0fb2c65e46b873fd08e"
+    },
+    "preservation_chain_3_guard01_final_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/guard01/final.json",
+      "sha256": "41493f0d5897b6480bf270176f6f1a1a4e6b52b28b078e937f63abdfd9c8d207"
+    },
+    "preservation_chain_3_manifest_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/manifest.json",
+      "sha256": "3b97e8e627a72a25bd640156fc22d8e5110ae2faf8079b0c9625c3c4ee2519fb"
+    },
+    "preservation_chain_3_recovered-complete_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04/recovered-complete.json",
+      "sha256": "ffd04e684b1d2374919cb08caebd5fab8a943c1a9ae7d0fb2c65e46b873fd08e"
+    },
+    "preservation_chain_4_00-evicted_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/00-evicted.json",
+      "sha256": "105485b73c02ce68fdcabd9bb6e44b496bfda79544d3405e32d6091e68dbac8e"
+    },
+    "preservation_chain_4_00-recovered-restore_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/00-recovered-restore.json",
+      "sha256": "105485b73c02ce68fdcabd9bb6e44b496bfda79544d3405e32d6091e68dbac8e"
+    },
+    "preservation_chain_4_00-restore_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/00-restore.json",
+      "sha256": "105485b73c02ce68fdcabd9bb6e44b496bfda79544d3405e32d6091e68dbac8e"
+    },
+    "preservation_chain_4_00-verified_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/00-verified.json",
+      "sha256": "105485b73c02ce68fdcabd9bb6e44b496bfda79544d3405e32d6091e68dbac8e"
+    },
+    "preservation_chain_4_CLOSURE_REVIEW_md": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/CLOSURE_REVIEW.md",
+      "sha256": "d3db47196b127cdc8b1ab9b081a566365fb754c844d728f7c8c1ef832804dd86"
+    },
+    "preservation_chain_4_closure-review_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/closure-review.json",
+      "sha256": "9307d98eb158e55fc9610d15669236bc5ecddbe25da5856c4c0227a81f37f798"
+    },
+    "preservation_chain_4_complete_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/complete.json",
+      "sha256": "b6713615fc71097832c755d6a2d4cdd877d810e96ae872348c561bee0399bf66"
+    },
+    "preservation_chain_4_completion-candidate_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/completion-candidate.json",
+      "sha256": "b6713615fc71097832c755d6a2d4cdd877d810e96ae872348c561bee0399bf66"
+    },
+    "preservation_chain_4_guard01_final_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/guard01/final.json",
+      "sha256": "30df6082fc81de6c9544eb81a2f707dae8bab2e1e3825d0cdb51e2bb03af3fc1"
+    },
+    "preservation_chain_4_manifest_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/manifest.json",
+      "sha256": "9b1f35a22c620e95a6db696e167f9aae8b02cb8fe2d7db604c4f6b1c7282a5c7"
+    },
+    "preservation_chain_4_recovered-complete_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-05/recovered-complete.json",
+      "sha256": "b6713615fc71097832c755d6a2d4cdd877d810e96ae872348c561bee0399bf66"
+    },
+    "preservation_chain_5_00-evicted_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/00-evicted.json",
+      "sha256": "311e906958c198b0c41126396afa7b8f898da9665df689ce717760425568e4a0"
+    },
+    "preservation_chain_5_00-recovered-restore_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/00-recovered-restore.json",
+      "sha256": "311e906958c198b0c41126396afa7b8f898da9665df689ce717760425568e4a0"
+    },
+    "preservation_chain_5_00-restore_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/00-restore.json",
+      "sha256": "311e906958c198b0c41126396afa7b8f898da9665df689ce717760425568e4a0"
+    },
+    "preservation_chain_5_00-verified_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/00-verified.json",
+      "sha256": "311e906958c198b0c41126396afa7b8f898da9665df689ce717760425568e4a0"
+    },
+    "preservation_chain_5_CLOSURE_REVIEW_md": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/CLOSURE_REVIEW.md",
+      "sha256": "541fe10246023c4ec738bda4f7470802e7fa1c85a109ae61cacc554c34bf8e26"
+    },
+    "preservation_chain_5_closure-review_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/closure-review.json",
+      "sha256": "2d82c8e2047396587e639aee4fc3736382cbd5c85c13368d9c6e63f6051941c3"
+    },
+    "preservation_chain_5_complete_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/complete.json",
+      "sha256": "7e32a986f2a62aa3f2152923b375fb2de661f5eeb994eae0f74cf3f5f97ecc64"
+    },
+    "preservation_chain_5_completion-candidate_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/completion-candidate.json",
+      "sha256": "7e32a986f2a62aa3f2152923b375fb2de661f5eeb994eae0f74cf3f5f97ecc64"
+    },
+    "preservation_chain_5_guard01_final_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/guard01/final.json",
+      "sha256": "0dcdeb1fb5253f5d6007c6b2a48525310c4b2bc9f8474d7919dd63f459134cd4"
+    },
+    "preservation_chain_5_manifest_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/manifest.json",
+      "sha256": "d72b40660286e2782e9b2967bb97c9666b52f161b5695fc1ea7fa8a2c36e0237"
+    },
+    "preservation_chain_5_recovered-complete_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-06/recovered-complete.json",
+      "sha256": "7e32a986f2a62aa3f2152923b375fb2de661f5eeb994eae0f74cf3f5f97ecc64"
+    },
+    "preservation_closure-review_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/closure-review.json",
+      "sha256": "b719570fbc74e456193953a6a23b338ed809944cc66d07889e33d1f6f255e86c"
+    },
+    "preservation_complete_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/complete.json",
+      "sha256": "73baefc01585b275f2ad8afa53516aa65d3ddb927e8e22b4d741431c8337662e"
+    },
+    "preservation_completion-candidate_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/completion-candidate.json",
+      "sha256": "73baefc01585b275f2ad8afa53516aa65d3ddb927e8e22b4d741431c8337662e"
+    },
+    "preservation_guard01_final_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/guard01/final.json",
+      "sha256": "122c948fc81ed7d16248f4341259a255ac0f4d5f55a1dbb6634aa3218e5aa955"
+    },
+    "preservation_manifest_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/manifest.json",
+      "sha256": "6c484cdafc0413c6971064157b9d809821d5c91264ab039fa7a8b80d7c1a281a"
+    },
+    "preservation_recovered-complete_json": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-01/recovered-complete.json",
+      "sha256": "73baefc01585b275f2ad8afa53516aa65d3ddb927e8e22b4d741431c8337662e"
+    },
+    "previous_graph_00": {
+      "dataset": "eth",
+      "path": "research_runs/eth-paper-graph-resource-20260930-08/claim.json",
+      "sha256": "c0d72131556217baf326b6ad9efb65bfc79ab1f6c7269e2d5c4eef5baf8eca7d"
+    },
+    "previous_graph_01": {
+      "dataset": "eth",
+      "path": "research_runs/eth-paper-graph-resource-20260930-08/complete.json",
+      "sha256": "0712a3c05ba5dfcb14dec22c61aa33e7fd752798d4a53029c15e216ce8faa1f1"
+    },
+    "previous_graph_02": {
+      "dataset": "eth",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-08/owner.json",
+      "sha256": "8425ddca0b5950f96a8cd26c2faf09f7e87b48d4d49126dc4827399125878296"
+    },
+    "previous_graph_03": {
+      "dataset": "eth",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-08/observer.json",
+      "sha256": "7cc2d3c798980fc5c62ffbbd0b83181926eb3f5f3c8f2219e299a5d09df24909"
+    },
+    "previous_graph_04": {
+      "dataset": "eth",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-08/guard/final.json",
+      "sha256": "b3a2a7e63d979fb0eb4cef40c7879991062453b0bebf09b7c83347d4787c676a"
+    },
+    "previous_graph_05": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-08-2026-09-30/empirical-closure01.json",
+      "sha256": "b83a4aaf74729c30fe71909c99e724065a1cee1a18502c8be540e1052b9c8e45"
+    },
+    "previous_graph_06": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-08-2026-09-30/CLOSURE_REVIEW.md",
+      "sha256": "f161662a38e2c1ed1327a42e6c982829d525c2cdc1fe2f84c4ba107c112c288e"
+    },
+    "previous_graph_07": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-08-2026-09-30/result.json",
+      "sha256": "4d105bdc992478b46efad1917c250b5ba1fad9772379ab7a01ffa5f111710457"
+    },
+    "previous_graph_08": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-08-2026-09-30/guard01/final.json",
+      "sha256": "3fafd39eae82c62d0cef8f04c37bf7be3f0191c71ad53528cd969898cc300ad9"
+    },
+    "previous_graph_09": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-08-2026-09-30/closure01.json",
+      "sha256": "e1fe09fd8a6c5f8e7e3f0565f3383c61a2aa670ef9e77a04306b6c8e81425cb1"
+    },
+    "previous_graph_10": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-08-2026-09-30/CLOSURE_REVIEW.md",
+      "sha256": "714c179395847f3c0fd1e90f1fb82acf38b49a4295f973e42a47e2939e158a1c"
+    },
+    "previous_graph_11": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-08-2026-09-30/closure-review.json",
+      "sha256": "f6faf3938b02f09fdfec1d2cc3e7279413c05a9d9d7dd9b9b7d4ae05e1f76003"
+    },
+    "prior_unadmitted_launch_00": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-09-2026-09-30/gate.json",
+      "sha256": "296f1c61e34e899b89c07c8b540b5aea468ef15c1f2f4733c615f6c7c2d38fd1"
+    },
+    "prior_unadmitted_launch_01": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-09-2026-09-30/execution-preflight01.json",
+      "sha256": "d186e73db68a94b8e5a07f8e955c9685b251f9405f979f76515e368f26b2d9eb"
+    },
+    "prior_unadmitted_launch_02": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-09-2026-09-30/LAUNCH_CLOSURE_REVIEW.md",
+      "sha256": "968e4fdbea41724d8b17af28330c803e2dfd25a047d80d98d35a4a5faa1b8ca2"
+    },
+    "prior_unadmitted_launch_03": {
+      "dataset": "eth",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-09/launch.json",
+      "sha256": "ecf79f8301ee1cbb6e0b40030c9f2ae4647d1dab7d1981f56e3d5b4a059c8c7f"
+    },
+    "prior_unadmitted_launch_04": {
+      "dataset": "eth",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-09/owner.json",
+      "sha256": "811aa5e64752e03500fee565671729a373138929fa28ab1a9a6fca9e878df478"
+    },
+    "prior_unadmitted_launch_05": {
+      "dataset": "eth",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-09/observer.json",
+      "sha256": "f458c07a097090e40beeb1d1087c2c127631c0478f16fd022b491353b8635361"
+    },
+    "prior_unadmitted_launch_06": {
+      "dataset": "eth",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-09/guard/final.json",
+      "sha256": "634476cf054b4c3f5423426ec3a2bce394931789ec99bd330c41326124d97385"
+    },
+    "protocol": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/protocol-freeze-v3.json",
+      "sha256": "625918f95b19a2632bf83d3ac2fdd150bc8557cef3cbeeed560120489d991c93"
+    },
+    "resource_v4_amendment": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/PRELAUNCH_ROUTE_V4.md",
+      "sha256": "1bdd881cab499b9fc5e84feb2ac7ce8c1ab1070467f6c34121d0ef217c71ad08"
+    },
+    "resource_v4_closed_temp": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/temp-check02/final.json",
+      "sha256": "13ba35e2e2f07cc325a726bb4b070396ca4ffe3172bcc24cdb1d3b08b6c1b437"
+    },
+    "resource_v4_memory_evidence": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/memory-amendment-v4-evidence.json",
+      "sha256": "50d4690c05754965ff2880e0c844f0f92f9daef5d0d759b458e0e73dbc91b2f3"
+    },
+    "resource_v4_preflight_refusal": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/dispatch-attempt03-refusal.json",
+      "sha256": "ba0b44deeefdfba7e387b6faa45873ba6b99f580b5fabd91a27e2980d72aa1d4"
+    },
+    "resource_v4_prior_charter": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/CHARTER.md",
+      "sha256": "499cf04b0aa85178951ca3d3db3aa3923e340f8a49ee0d526c630e73141a0c45"
+    },
+    "resource_v4_prior_gate": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/gate-v3.json",
+      "sha256": "c7a3f2ee7906671a37a77f358c4af6a71d029a51a30b4319db314f8f26a1f8de"
+    },
+    "resource_v4_prior_graph_guard_00": {
+      "dataset": "eth",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260929-03/guard/final.json",
+      "sha256": "bd22359070c134aa6304e7617e4d0cc1d7e303a6ef69f72213853d968ec1412d"
+    },
+    "resource_v4_prior_graph_guard_01": {
+      "dataset": "eth",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-04/guard/final.json",
+      "sha256": "3152b4067fbf76a5b66a799567984671e7a1b649ba5a40850108b398bf81c844"
+    },
+    "resource_v4_prior_graph_guard_02": {
+      "dataset": "eth",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-05/guard/final.json",
+      "sha256": "c7f899412cbfd352aa9a216ce058858681d3369d715ba9f3becb961c60d22de1"
+    },
+    "resource_v4_prior_graph_guard_03": {
+      "dataset": "eth",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-06/guard/final.json",
+      "sha256": "c7bdf53a5abf62eb1506cc96821668061fdaa648fa40c82dbea283f665fcb75d"
+    },
+    "resource_v4_prior_graph_guard_04": {
+      "dataset": "eth",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-07/guard/final.json",
+      "sha256": "89420fa80291de960d786790f569c058a9d5a979949ca4f365b680fef489fd7e"
+    },
+    "resource_v4_prior_graph_guard_05": {
+      "dataset": "eth",
+      "path": "research_artifacts/onchain-paper-replication-2026-09-24/runs/eth-paper-graph-resource-20260930-08/guard/final.json",
+      "sha256": "b3a2a7e63d979fb0eb4cef40c7879991062453b0bebf09b7c83347d4787c676a"
+    },
+    "resource_v4_prior_job": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/execution-job.json",
+      "sha256": "3ba3e966d2a1aae6686c3d677932f0924f189cceeb0aacb6402e10791845f1c4"
+    },
+    "source_00": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/source-00.json",
+      "sha256": "28f63f221e4cf97557f4a839b5ff2e8873e9e1d06bcb2d18c2bf7a389f047b18"
+    },
+    "source_01": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/source-01.json",
+      "sha256": "bf274e7e430ed76ca4632225335fe644f4dc42cb7af01cebd354c4c5400950c7"
+    },
+    "source_02": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/source-02.json",
+      "sha256": "d187e55d0d301e5a0629832adfea9fc95bb9fa46685368ef72cb7a75deb0e76e"
+    },
+    "source_03": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/source-03.json",
+      "sha256": "b3daeb75f5cec812c9f9319f39f612c1fc444cc7a2b35fc6c1de62136142c8d0"
+    },
+    "source_04": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/source-04.json",
+      "sha256": "292d28ccf35b5c0a7cc4b8518523d47f5e5181170b4b69417241fd77934fbc3c"
+    },
+    "source_05": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/source-05.json",
+      "sha256": "328e34d11769aaca1e0b8e7ee937cb288f978b9663dda8a7fd816762c61cb0ed"
+    },
+    "source_06": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/source-06.json",
+      "sha256": "9496c3d50d845479fb87185a11519d17f18295fef9566b017e468137d369a636"
+    },
+    "storage_projection": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/storage-projection.json",
+      "sha256": "d28bc204e4df1df1f280c5315c065aa13b43149d1ec0dac34749c2add050fce4"
+    },
+    "storage_result": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-storage-probe-2026-09-29/result.json",
+      "sha256": "c6ff4ac9a2703a1722869a975478e1b0255ed2c1ebc8803063accb9485b15373"
+    },
+    "storage_source_bindings": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-storage-probe-2026-09-29/source-bindings.json",
+      "sha256": "d07fe5787b824fb9f93096bb4845259efed8b84b1fdaf7ef6929e3791759b693"
+    },
+    "temp01_child": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/temp-check01/child.log",
+      "sha256": "0d2f6512f771befb819630bbc4bbae22ec4343669e05b50ee3197abc26dd827f"
+    },
+    "temp01_exit": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/temp-check01/child_exit.json",
+      "sha256": "494927653f487ca2c1d8d61c8caa002f3c474350e8e412381df1d4e384452469"
+    },
+    "temp01_final": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/temp-check01/final.json",
+      "sha256": "26535fb20f1154fb1c463b932b377264146aeb1de9caa67b0ba237ec5357c903"
+    },
+    "temp01_no_dispatch": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/dispatch-wait01.jsonl",
+      "sha256": "ed865dfa29f4b211e9001d85e1f05c0c63530cde65e770d0d7bbe875b7a50327"
+    },
+    "temp01_review": {
+      "dataset": "eth",
+      "path": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/TEMP_CHECK_CLOSURE_REVIEW.md",
+      "sha256": "c113eadbb22c47e779467474e1d8811fb94ab5f0b1d8812c6833d7e2a0410f15"
+    }
+  },
+  "prior_exposures": [
+    {
+      "end": "2025-01-01T00:00:00Z",
+      "identity": "ethereum-native-top-level-transactions-chain-1",
+      "start": "2022-01-01T00:00:00Z",
+      "state": "spent"
+    }
+  ],
+  "program_id": "onchain-paper-replication-2026-09-24",
+  "registration": "research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-10-2026-09-30/gate-v4.json",
+  "registration_sha256": "76bf4e04c207ab3536ce79bdce0105c139bf7cb15ef40e498f49a4253fad35c6",
+  "schema_version": 1,
+  "source": "6c4d9402cb06f135cb799afac1be00708f3b229e",
+  "started_at": "2026-09-30T15:33:58.857559+00:00",
+  "windows": [
+    {
+      "availability": "existing",
+      "dataset": "eth",
+      "end": "2024-12-30T00:00:00Z",
+      "identity": "ethereum-native-top-level-transactions-chain-1",
+      "start": "2024-12-23T00:00:00Z",
+      "state": "exposed"
+    }
+  ]
+}
