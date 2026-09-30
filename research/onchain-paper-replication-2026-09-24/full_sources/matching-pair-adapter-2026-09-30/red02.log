@@ -1,0 +1,60 @@
+test_cleanup_failure_preserves_primary_interruption (__main__.Tests.test_cleanup_failure_preserves_primary_interruption) ... ERROR
+test_completed_score_reused_without_solver_or_array_load (__main__.Tests.test_completed_score_reused_without_solver_or_array_load) ... ok
+test_exclusive_names_containment_and_checkpoint_budget (__main__.Tests.test_exclusive_names_containment_and_checkpoint_budget) ... ok
+test_failed_publication_preserved_and_prior_checkpoint_recovers (__main__.Tests.test_failed_publication_preserved_and_prior_checkpoint_recovers) ... ok
+test_orientation_context_owner_policy_and_hash_refused_before_loading (__main__.Tests.test_orientation_context_owner_policy_and_hash_refused_before_loading) ... ok
+test_progress_resume_and_directional_reference_parity (__main__.Tests.test_progress_resume_and_directional_reference_parity) ... ok
+test_successor_publication_keeps_exact_parent_reference (__main__.Tests.test_successor_publication_keeps_exact_parent_reference) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_failure_preserves_primary_interruption (__main__.Tests.test_cleanup_failure_preserves_primary_interruption)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-adapter-2026-09-30/adapter.py", line 176, in step
+    engine.advance(self.state, self.a, self.b, self.config, max_operations=max_operations)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1234, in _execute_mock_call
+    raise effect
+KeyboardInterrupt: primary interruption
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-adapter-2026-09-30/test_adapter.py", line 161, in test_cleanup_failure_preserves_primary_interruption
+    pair.step(max_operations=2)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-adapter-2026-09-30/adapter.py", line 184, in step
+    self.close()
+    ~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-adapter-2026-09-30/adapter.py", line 218, in close
+    engine.close(self.state)
+    ~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1234, in _execute_mock_call
+    raise effect
+RuntimeError: secondary cleanup
+
+======================================================================
+ERROR: test_successor_publication_keeps_exact_parent_reference (__main__.Tests.test_successor_publication_keeps_exact_parent_reference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-pair-adapter-2026-09-30/test_adapter.py", line 149, in test_successor_publication_keeps_exact_parent_reference
+    self.assertEqual(json.loads(Path(next_ref['path']).read_bytes())['parent'], expected)
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+KeyError: 'parent'
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.126s
+
+FAILED (errors=2)

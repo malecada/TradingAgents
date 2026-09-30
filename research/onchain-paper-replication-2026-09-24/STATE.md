@@ -3,6 +3,59 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Graph10 fresh prelaunch route independently accepted — 2026-09-30T12:26:16.035379+00:00**:
+PRELAUNCH_V2_REVIEW.md SHA24ad5e57a6708e7e9f40f90a20618d012b625a298a8bb689223c2ee16b726bff conditionally
+accepts exact gate-v2 SHA74d10f013b07047b09b9e3cf3a8696037abc267fd0b721b38589e3bf7761702c,
+all91sourcepins/134inputs, unchanged inherited experiments and Graph10 graphscope,
+resources and budget. All newtemp/preflight/empirical owner paths remain absent.
+Next commit/push reviewed compact preparation and pair-adapter evidence; then
+check strict resources before any temp02 invocation, use checked sequential
+subprocesses for temp02/preflight02/immediate resources/one graph10 dispatch.
+If RAM refuses, leave temp02 unused and continue typed local-graph engineering.
+Never reuse closedtemp01 or wait01. Adopted budget32/59;60remains unadopted.
+
+**Ordered-pair artifact layer reviewed; graph10 has not dispatched — 2026-09-30T12:25:07.426506+00:00**:
+Accepted full-chain closure and integration audit are committed/pushed at
+ed5aa4865aca7d4cd8d704def3537f89f03bffe5. All48 iterations and14 checkpoint restores
+remain closed historical synthetic evidence; do not rerun them.
+
+Graph10's RAM check failed again after push. A separately sequenced finite
+temp-check01 still ran once under its own4GiB startup requirement and completed
+with0.376419s/8,638,464-byte sampled peak/zero events/cleanup. This was no empirical
+admission. The subsequent checked dispatch wait(PID1189103/session27633) sampled
+RAM18 times and never met9,797,894,144bytes; it ended not_dispatched at12:15:42UTC.
+No graph10 preflight/launch/claim/source identity exists. TEMP_CHECK_CLOSURE_REVIEW.md
+independently confirms cleanup,88unchangedpins and32spent/current59; proposed60
+is unadopted. Do not rerun temp-check01 or use its now-stale launch evidence.
+
+A fresh prelaunch route is prepared but not yet accepted or executed:
+graph-successor-10-2026-09-30/gate-v2.json SHA
+74d10f013b07047b09b9e3cf3a8696037abc267fd0b721b38589e3bf7761702c,
+run_temp_check02.py,preflight02.py,PRELAUNCH_ROUTE_V2.md. It appends3sourcepins
+(91total) and7retained compactinputs(134total), preserving all originalbindings,
+11inherited experiments, Graph10 identity/scope/resources/charter and unchanged
+budget proposal. Independent exact-diff review requested; commit/push and fresh
+resource/ownership checks must precede temp02/preflight02/single graph dispatch.
+Use checked sequential subprocesses so a failed RAM check prevents temp launch.
+
+The isolated matching-pair-adapter-2026-09-30 implements explicit backend/ordered
+pair/source/runtime identity, bounded exclusive checkpoint publication, exact
+parent references and completed-score reuse without solver re-entry. Seven tiny
+tests pass(green02,0.165s); initial failures and pre-correction sources remain.
+REVIEW.md SHA754c8a1af03d3a446bcaba3d225602810bf1b8f71f9dd16741237a924af77df2 accepts only its
+GraphSnapshot artifact-layer scope. Crucial inherited boundary: the annealer's
+identity calls weekly graph_hash; real dictionary/MCM AttributedGraph neighborhoods
+lack weekly metadata and are NOT supported yet. No production integration is
+claimed. Next engineering: a NEW versioned typed local-graph identity including
+parent_hash/center_id, preserved old components, and real neighborhood fixtures;
+then registered owner/journal/cumulative-resource wiring and dictionary/MCM use.
+All100 adapterbindings match; no production source/default or scientific cap changed.
+
+Latest host observation RAM9703944192 and free disk23173169152bytes.
+No active numerical/empirical owner remains. Continue route-v2 review and compact
+backup, then dispatch only if fresh strict RAM/disk thresholds pass. Otherwise
+continue the typed local-graph fix; all1,420 financial fits remain pending.
+
 **Directed-chain profile independently accepted — 2026-09-30T12:11:17.732522+00:00**:
 CLOSURE_REVIEW.md SHA-256 f695953763d9bac41d2c852757cc917eb6a8aff52112c1819f0cad583458f6ef accepts actual terminal evidence:
 100 current/committed bindings,11 top-level/30 nested compact hashes,14 checkpoint
