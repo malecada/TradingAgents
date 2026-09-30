@@ -1,0 +1,20 @@
+..F....
+======================================================================
+FAIL: test_chain_requires_all_four_exact_preservation_identities (__main__.RequirementTests.test_chain_requires_all_four_exact_preservation_identities)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-successor-08-2026-09-30/test_preservation_requirement.py", line 79, in test_chain_requires_all_four_exact_preservation_identities
+    self.assertEqual([x['path'] for x in result['preservations']], [str(p) for p in paths])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['res[268 chars]0-03'] != ['res[268 chars]0-03', 'research/onchain-paper-replication-202[48 chars]-04']
+
+Second list contains 1 additional elements.
+First extra element 3:
+'research/onchain-paper-replication-2026-09-24/storage/closed-ledger-offload-2026-09-30-04'
+
+Diff is 674 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.048s
+
+FAILED (failures=1)

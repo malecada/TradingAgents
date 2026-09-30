@@ -1,0 +1,51 @@
+test_capacity_and_exclusive_publication (__main__.Tests.test_capacity_and_exclusive_publication) ... ERROR
+test_complete_scalar_parity_with_restore_after_every_return (__main__.Tests.test_complete_scalar_parity_with_restore_after_every_return) ... ERROR
+test_poisoned_hardening_retains_prior_valid_checkpoint (__main__.Tests.test_poisoned_hardening_retains_prior_valid_checkpoint) ... ERROR
+test_wrong_policy_and_tampered_hardening_rejected_before_arrays (__main__.Tests.test_wrong_policy_and_tampered_hardening_rejected_before_arrays) ... ERROR
+
+======================================================================
+ERROR: test_capacity_and_exclusive_publication (__main__.Tests.test_capacity_and_exclusive_publication)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-composite-checkpoints-2026-09-30/test_combined.py", line 64, in test_capacity_and_exclusive_publication
+    with patch.object(m.ann.np,'zeros',side_effect=AssertionError('allocated before policy')):
+                      ^^^^^
+AttributeError: module 'combined' has no attribute 'ann'
+
+======================================================================
+ERROR: test_complete_scalar_parity_with_restore_after_every_return (__main__.Tests.test_complete_scalar_parity_with_restore_after_every_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-composite-checkpoints-2026-09-30/test_combined.py", line 25, in test_complete_scalar_parity_with_restore_after_every_return
+    c=config()|{'max_iterations':2};want=match_reference(a,b,c);s=m.create(a,b,c,**POLICY)
+                                                                  ~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-composite-checkpoints-2026-09-30/combined.py", line 3, in create
+    raise NotImplementedError('composite matching checkpoint implementation pending')
+NotImplementedError: composite matching checkpoint implementation pending
+
+======================================================================
+ERROR: test_poisoned_hardening_retains_prior_valid_checkpoint (__main__.Tests.test_poisoned_hardening_retains_prior_valid_checkpoint)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-composite-checkpoints-2026-09-30/test_combined.py", line 52, in test_poisoned_hardening_retains_prior_valid_checkpoint
+    a,b=self.fixture();c=config()|{'max_iterations':1};s=m.create(a,b,c,**POLICY)
+                                                         ~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-composite-checkpoints-2026-09-30/combined.py", line 3, in create
+    raise NotImplementedError('composite matching checkpoint implementation pending')
+NotImplementedError: composite matching checkpoint implementation pending
+
+======================================================================
+ERROR: test_wrong_policy_and_tampered_hardening_rejected_before_arrays (__main__.Tests.test_wrong_policy_and_tampered_hardening_rejected_before_arrays)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-composite-checkpoints-2026-09-30/test_combined.py", line 43, in test_wrong_policy_and_tampered_hardening_rejected_before_arrays
+    a,b=self.fixture();c=config()|{'max_iterations':1};s=m.create(a,b,c,**POLICY)
+                                                         ~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-composite-checkpoints-2026-09-30/combined.py", line 3, in create
+    raise NotImplementedError('composite matching checkpoint implementation pending')
+NotImplementedError: composite matching checkpoint implementation pending
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.004s
+
+FAILED (errors=4)

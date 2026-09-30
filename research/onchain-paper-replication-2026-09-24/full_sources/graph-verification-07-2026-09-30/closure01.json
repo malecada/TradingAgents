@@ -1,0 +1,51 @@
+{
+  "at": "2026-09-30T06:59:03.310014+00:00",
+  "status": "complete",
+  "source": "de91c9e084ad167e26b32effb4788d6f80130ef8",
+  "bindings_verified": 206,
+  "owner_cgroup_absent": true,
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-07-2026-09-30/result.json": "52a98f0cdb1881e1f9bfa10b50e4acc0808d2733c4890dd912d06cb700fd9c82",
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-07-2026-09-30/guard01/final.json": "ab5043d4cb093f87da266e30dcacb9e081da7bc10d80234299af278b95dc2231",
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-07-2026-09-30/bindings.json": "ee0e42b61429b0c0d73cbd9ce46b4e3d6aafaa703933d5ca95567ce5d25d89ef",
+    "research/onchain-paper-replication-2026-09-24/full_sources/graph-verification-07-2026-09-30/started.json": "bd5204211cc99688bc92e3e032ee3df494e2b0eef92f91550c3c7d21bd1400e6"
+  },
+  "result": {
+    "admitted_transactions": 4226769,
+    "array_bytes": 604780512,
+    "claim_sha256": "c2ab1851f04a36a71d710976c1f559a69d74e7b3ace5b9b6e2fd31db0e312284",
+    "directed_edges": 2990664,
+    "elapsed_seconds": 38.806909349994385,
+    "graph_hash": "f2b6131c55a967fe0464bc82648a7ad0b79a927c24033ebffe536fef9f95caea",
+    "graph_manifest_sha256": "136713c0f63bd9e1e6756dc07c2d4891f563d1193d6cb883cd1d33b34f74aff9",
+    "node_feature_max_absolute_errors": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 0.0
+    },
+    "nodes": 2306140,
+    "qualification": "Independent saved-array identity, structure and aggregate conservation verification. Source/exclusion counts reconcile producer receipts; raw transaction uniqueness, raw values and exclusion classification were not independently re-audited. No fit, sample, graph rebuild or new empirical claim.",
+    "raw_rows": 8848144,
+    "source_claim": "eth-paper-graph-resource-20260930-07",
+    "status": "complete",
+    "terminal_sha256": "94c5eb0886da7539f54bde856c53174aee9266e37f2cedb35db6e0baf69d8c68"
+  },
+  "guard": {
+    "monitor_pid": 943140,
+    "unit": "onchain-replication-612f7713d8be432c8edae658a98e6647.service",
+    "elapsed_seconds": 39.501180938008474,
+    "peak_sampled_memory_current_bytes": 134651904,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "child_exit_code": 0,
+    "cleanup_verified": true
+  },
+  "qualification": "One guarded verification invocation, hashing and multiple array passes within it. This compact closure opened no array body. Raw uniqueness, values and exclusion classification remain producer evidence."
+}

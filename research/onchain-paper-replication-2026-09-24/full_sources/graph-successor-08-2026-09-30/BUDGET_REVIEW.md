@@ -1,0 +1,13 @@
+# Independent graph08 budget-only review
+
+September 30, 2026. **Accepted for the exact prospective allocation only.** No charter/gate, empirical admission, resource feasibility or launch is approved. No tests, raw/array/SQLite bodies, remote access or experiment execution occurred.
+
+Extension SHA-256: `483dd7b14a35bfe32ee3763a738a3ecb6ccd40b357f00c88d4664b4a9302b0a9`. Allocation SHA-256: `1bccec3a07b865d438fb9ec8a96a71a70c59825c38a7561b94b454bc5d07f6c5`. Both references and the previous accepted extension hash match actual bytes. The original family object is unchanged, including base ceiling 51 and 17 historical attempts.
+
+The snapshot contains exactly all 14 current family claims. Each original claim and terminal hash independently matches, with no active or omitted current family claim. The previous 13 entries are exactly unchanged; the only addition is the completed graph07 claim and terminal. Current consumption is therefore 17 historical + 14 current = **31**, without refunds. The allocation conserves **31 spent + 12 body batches + 15 financial batches + 1 new resource-only graph claim = 59**. The current adopted ceiling remains 58 until valid new adoption. All 1,420 unique fits and the original 109 resource requirements remain required; no additional financial fit or fresh sample is introduced.
+
+The sole proposed adopter is `eth-paper-graph-resource-20260930-08`, parent original failed pilot02. Its scope is the next original ETH stress week, August 5–12, 2024 UTC: seven retained daily sources and one complete graph. The separately reviewed original-source metadata declares 7,621,136 rows and 196 spans. Selection follows original chronology and incomplete graph coverage, not outcomes. No completed graph rerun, truncation or scientific configuration change is included.
+
+Actual graph07 producer closure is accepted, but its saved-array verification remains a prerequisite. Before execution, prepare and independently review the exact charter/gate, retain complete original ancestry, pin extension/review/allocation and full source/runtime/input closure, then commit/push and obtain fresh admission, ownership, hashes, source stats, RAM, disk and temp-volume checks. The reviewed August planning requirement is 20,814,869,047 free bytes; it is an assumption-based estimate. If conditional storage04 is needed, its separate release and independently accepted actual closure are required before reclaimed bytes count. If capacity already suffices, skip it. Any intervening claim requires a complete revised snapshot and renewed review.
+
+Only BUDGET_REVIEW.md and the exact schema extension-review.json were written. This acceptance does not lower broader study scope or authorize concurrent jobs.

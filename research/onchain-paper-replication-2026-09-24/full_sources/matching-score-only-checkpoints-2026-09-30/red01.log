@@ -1,0 +1,44 @@
+test_domain_and_capacity_are_not_silently_relaxed (__main__.Tests.test_domain_and_capacity_are_not_silently_relaxed) ... FAIL
+test_incomplete_and_insufficient_budget_reject_before_pair_allocation (__main__.Tests.test_incomplete_and_insufficient_budget_reject_before_pair_allocation) ... FAIL
+test_reference_results_without_dense_result_path (__main__.Tests.test_reference_results_without_dense_result_path) ... FAIL
+
+======================================================================
+FAIL: test_domain_and_capacity_are_not_silently_relaxed (__main__.Tests.test_domain_and_capacity_are_not_silently_relaxed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-score-only-checkpoints-2026-09-30/test_result_only.py", line 39, in test_domain_and_capacity_are_not_silently_relaxed
+    self.api();a=graph([[0.],[1.]],[]);c=config()|{'max_iterations':1};s=self.finish(a,a,c)
+    ~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-score-only-checkpoints-2026-09-30/test_result_only.py", line 13, in api
+    self.assertTrue(callable(getattr(m,'score_only',None)),'score_only adapter is not implemented')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : score_only adapter is not implemented
+
+======================================================================
+FAIL: test_incomplete_and_insufficient_budget_reject_before_pair_allocation (__main__.Tests.test_incomplete_and_insufficient_budget_reject_before_pair_allocation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-score-only-checkpoints-2026-09-30/test_result_only.py", line 32, in test_incomplete_and_insufficient_budget_reject_before_pair_allocation
+    self.api();a=graph([[0.],[1.]],[]);c=config()|{'max_iterations':1}
+    ~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-score-only-checkpoints-2026-09-30/test_result_only.py", line 13, in api
+    self.assertTrue(callable(getattr(m,'score_only',None)),'score_only adapter is not implemented')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : score_only adapter is not implemented
+
+======================================================================
+FAIL: test_reference_results_without_dense_result_path (__main__.Tests.test_reference_results_without_dense_result_path)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-score-only-checkpoints-2026-09-30/test_result_only.py", line 19, in test_reference_results_without_dense_result_path
+    self.api()
+    ~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-score-only-checkpoints-2026-09-30/test_result_only.py", line 13, in api
+    self.assertTrue(callable(getattr(m,'score_only',None)),'score_only adapter is not implemented')
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : score_only adapter is not implemented
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (failures=3)

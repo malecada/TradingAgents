@@ -3,6 +3,239 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Storage04 exact release accepted; commit and fresh checks next — 2026-09-30T07:04:08.594658+00:00:**
+Independent storage04 RELEASE_REVIEW.md conditionally accepts one preservation
+of the closed graph06 ledger. All 63 unique original/contextual paths reconcile;
+actual accepted prior closures and absent owners are confirmed. Commit and push
+reviewed compact work, then run one fresh preflight and launch only if the actual
+August deficit, full recovery scratch, RAM, source stat/hash and exclusive owner
+checks pass. No transfer or recovered backup is claimed yet. The ledger's full
+byte and restoration-metadata verification must precede local removal.
+
+No active job remains. Graph07 and verifier07 are closed and independently accepted;
+never rerun either identity. Effective budget is 31/58; August's proposed59 budget
+and preparation are accepted, but no gate/adoption exists pending actual04 closure.
+Reviewed composite and score-only engineering remain isolated from production.
+
+A separate resource-coverage-03 addendum now maps exactly the eight March source/
+graph requirements to accepted07 evidence:61 supported,48 remaining of109. Original
+7 complete/102 unavailable historical dispositions are preserved; all14 legacy
+source qualifications, seven original neighborhood and matching requirements and
+nine MCM/nine neural requirements remain. Independent review is pending, so leave
+this new addendum outside the immediate reviewed commit. All1,420 fits remain.
+
+**March saved arrays accepted; conditional storage04 release review pending — 2026-09-30T07:02:20.768961+00:00:**
+Verifier07 completed one guarded invocation in 39.501181 seconds, sampled peak
+134,651,904 bytes, zero high/max/OOM, child zero and cleanup verified. Exact
+monitor 943140 and unit 612f7713d8be432c8edae658a98e6647 are absent; session 78960
+completed. All 206 bound source/input/compact evidence hashes remain unchanged.
+Independent CLOSURE_REVIEW.md and exact four-evidence closure-review.json accept
+2,306,140 nodes, 2,990,664 directed edges, 604,780,512 array bytes, graph identity
+f2b6131c55a967fe0464bc82648a7ad0b79a927c24033ebffe536fef9f95caea.
+All four independently reconstructed feature maximum errors are zero. Original
+raw uniqueness, values and filtering remain producer evidence. No fit occurred.
+Never rerun graph07 or this closed verifier. No active job now; HEAD remains
+de91c9e084ad167e26b32effb4788d6f80130ef8.
+
+August REGISTRATION_PREPARATION_REVIEW.md and budget-only acceptance are complete.
+No gate or verification-reuse is generated yet. Proposed ceiling 59 is not adopted;
+effective accounting remains 31/58. Prerequisites retain actual accepted01/02/03/04
+preservations and graph07 producer/verifier closure. The fourth preservation is
+still unexecuted and remains conditional on actual capacity.
+
+Storage04 RELEASE.md, preflight.py and 37 contextual bindings now reference actual
+accepted03 and06/07 verification/producer closures. Original 30 bindings unchanged.
+Measured August shortfall was 1,629,790,775 bytes; fresh capacity must repeat this
+before launch. Exact only target is closed graph06 ledger 3,208,413,184 bytes;
+recovery scratch 13,962,608,640. Independent RELEASE_REVIEW.md is requested.
+No ledger/raw/array body was read and no remote action executed in preparation.
+
+Next: independent exact storage04 release acceptance; commit/push all reviewed
+compact closures, engineering and August preparation after this lifted freeze. Then one
+fresh storage04 preflight, enforcing pushed source/committed hashes, actual prior
+closures, source stats, no units/identity, RAM/recovery disk and real August deficit.
+If passed, launch one owned preservation, freeze new HEAD/bindings and continue
+independent work. After actual accepted recovery, generate graph08 gate/reuse once,
+review/commit/push and fresh graph admission. All 1,420 fits and wider scope remain.
+
+**Verifier07 active; August budget-only proposal accepted — 2026-09-30T06:58:30.530993+00:00:**
+The verifier206-binding correction is independently accepted; pending review and
+204-entry manifest remain preserved. Fresh preflight01 passed at06:57:53 UTC,
+with all206 hashes and frozen HEAD matching, no prior verifier identity/active
+unit, available RAM9,992,695,808 and disk19,189,825,536 bytes. One verifier invocation
+is active in tool session 78960, monitor 943140, unit onchain-replication-612f7713d8be432c8edae658a98e6647.service.
+Freeze de91c9e084ad167e26b32effb4788d6f80130ef8 and all206 bindings until terminal.
+Limits remain3GiB max,2GiB high,0swap,3GiB reserve,6GiB startup,10GiB disk,1800s.
+Do not duplicate or retry this identity; no successful array result claimed yet.
+
+August budget-only proposal is independently accepted: extension SHA-256
+483dd7b14a35bfe32ee3763a738a3ecb6ccd40b357f00c88d4664b4a9302b0a9.
+All14 terminal claim pairs match. Proposed59 preserves31 spent+12 body+15 financial
+allocations+one original August graph. Effective budget is still31/58; no gate
+exists. Registration-preparation review is requested; actual04 preservation and
+verifier07 accepted closure remain required before generating gate/reuse once.
+
+Next: exact verifier result/guard/owner and206-binding reconciliation; independent
+saved-array closure review. Then actual fresh August deficit determines whether
+storage04 conditional release is needed. Prepare/review exact contextual release,
+commit/push reviewed compact work after active freeze lifts, then fresh checks
+and at most one preservation04 launch. No historical job reruns.
+
+**March producer accepted; exact verifier release pending — 2026-09-30T06:57:07.348740+00:00:**
+Graph07 CLOSURE_REVIEW.md accepts all eight terminal cells, source/input hashes,
+compact artifacts, large-file extents and exact owner cleanup. Prepared verifier
+bindings initially contained204 entries. Independent release review identified
+missing direct bindings for outputs/source-summary.json and outputs/cell-ledger.json
+(the terminal already bound them transitively). Both are now direct entries:
+bindings.json contains 206. Initial bytes remain in bindings-initial204.json.
+No verifier launch or identity reservation occurred before this correction.
+Wait for exact VERIFY_PLAN_REVIEW.md acceptance, then perform fresh preflight
+and one guarded invocation at unchanged de91c9e0; preserve this source freeze.
+
+Storage04 REVIEW.md accepts conditional preparation only. All 30 bindings and
+exact closed graph06 extent reconcile. Actual graph07 saved-array acceptance,
+updated contextual release, commit/push and a fresh August deficit are required
+before any remote operation. No ledger body has been opened by preparation.
+
+Graph-successor-08-2026-09-30 now contains August source wrappers/plans/projection,
+prospective budget59 allocation/extension, charter/runbook and prerequisite helpers.
+The budget snapshot preserves 17 historical plus 14 actual terminal claims (31),
+12 body and 15 financial allocations and adds one resource slot. Effective budget
+is still 31/58. No gate or budget adoption exists. Independent budget review and
+registration-preparation review are pending. The unreleased helper requires all
+four actual accepted preservations and graph07 producer/verifier closure. If 04
+is unnecessary, revise/review this draft instead of forcing a transfer. Seven
+synthetic tests passed in 0.030 seconds; red01 retains the initial three-versus-four
+chain failure. All original scientific configuration/denominators remain intact.
+
+Next: exact verifier07 release, fresh checks and one bounded saved-array job;
+then independent terminal review. Keep all proposed storage/graph work separate
+from accepted outcomes and commit only reviewed compact work after active freezes.
+
+**March graph07 terminal; independent closure/array verification next — 2026-09-30T06:52:57.932770+00:00:**
+Graph07 completed all eight cells in 1,580.706852 seconds: 8,848,144 raw rows,
+4,226,769 admitted transactions. Guard sampled peak 5,368,709,120 bytes, 2,728
+high events, zero max/OOM, child zero and cleanup verified. Session98720 completed;
+original exact monitor/cgroup are absent. Compact reconciliation verified all
+88 source/87 input hashes, 22 compact artifacts and six large-file extents.
+empirical-closure01.json retains this result; independent CLOSURE_REVIEW.md is
+requested before actual verifier bindings and one guarded saved-array invocation.
+Keep HEAD de91c9e084ad167e26b32effb4788d6f80130ef8 until that verification closes.
+The graph identity is terminal: never rerun it. Budget remains 31/58.
+
+Score-only checkpoint adapter REVIEW.md accepts isolated engineering. All 24
+bindings and unchanged 163 prior suite sources reconcile; no production release,
+Torch precision parity, full memory bound or scoring checkpoint is claimed.
+
+Prepared conditional storage/closed-ledger-offload-2026-09-30-04/ for only the
+already closed graph06 SQLite ledger, 3,208,413,184 bytes, SHA-256
+b74170043c357dc5ccf3e40c5ca9aa4be49d73ec28c326e84d0284e2678dd7f2.
+Original artifact index provides expected bytes/hash; only stats were read now.
+Worker/fixtures copy accepted03 with only target identity changed; transport bytes
+unchanged. Four synthetic eligibility tests pass in 0.020 seconds; 30 bindings saved.
+Independent preparation review is requested. Do not execute before actual graph07
+producer and verifier acceptance, storage03 acceptance, exact contextual release
+review, commit/push and fresh checks. Execute only if actual capacity remains below
+August's 20,814,869,047-byte planning requirement. Full recovery scratch needs
+13,962,608,640 free bytes. Preserve current 10 GiB floor and existing finite limits.
+No remote work, body read, eviction or recovery completion is claimed by this prep.
+
+Next: accepted compact graph07 closure, bind verifier07 actual evidence, independent
+release and fresh resources, then one bounded read-only saved-array verification.
+Continue subsequent storage/registration only from actual accepted closures.
+
+**March still active; score-only checkpoint adapter prepared — 2026-09-30T06:49:57.830417+00:00:**
+Graph07 remains running under the previously recorded exact owner and frozen
+HEAD. At 1,304.131 seconds, peak sampled memory was 5,368,700,928 bytes, with
+566 high-threshold events and zero max/OOM. No terminal or completion is claimed.
+The remaining two graph weeks' metadata now has independent REVIEW.md acceptance:
+all 38 bindings, fourteen original members, 428 span stats, page-union totals and
+integer projection calculations agree. No new claim or gate is admitted.
+
+Independent engineering prepared matching-score-only-checkpoints-2026-09-30/.
+It combines accepted composite states with the accepted sparse scalar objective,
+returning a score without dense hard-assignment output or an M copy. Three focused
+synthetic tests pass in 0.026 seconds; missing-interface red failures are retained.
+The existing conservative agreement domain and original pair capacity remain.
+Scoring/validation are still atomic and component allowances are not total RAM.
+No registered production source changed; all 163 prior full-suite bindings match.
+Independent review is requested before accepting this candidate. No full-suite or
+empirical job was repeated. The active producer freeze remains in effect.
+
+Next safe action: exact graph07 terminal/cleanup reconciliation and independent
+closure, then bind and run the prepared saved-array verifier under finite limits.
+Only after all active work closes may reviewed compact evidence be committed and
+pushed. Prepare August's actual registration and budget from the closed history;
+use fresh capacity to decide whether further reviewed ledger preservation is
+needed. Continue full paper scope and 1,420 pending financial fits.
+
+**Active March claim verified; next-week metadata prepared — 2026-09-30T06:29:52.035263+00:00:**
+Independent graph07 LIVE_REVIEW.md accepts exact published claim, sole active
+unit, owner/start ticks, kernel controls and all 88 source/87 input hashes at
+frozen de91c9e084ad167e26b32effb4788d6f80130ef8. Actual budget is now 31/58 with
+27 allocations reserved. No terminal has been observed and no completion claimed.
+Verifier07 PREPARATION_REVIEW.md accepts the prospective checker, conditional on
+actual complete producer closure, cleanup, independent compact review, final
+bindings and fresh capacity before its one bounded invocation.
+
+Prepared remaining-graph-metadata-2026-09-30 for the two last original stress
+weeks. August 5–12: 7,621,136 rows, 196 span stats, projected launch free requirement
+20,814,869,047 bytes. December 23–30: 8,617,920 rows, 232 spans, 22,103,159,134 bytes.
+Both include the 10 GiB floor and prior 30 percent synthetic margin; neither is a
+proven peak or current capacity claim. Frozen source-index entries and mapping
+hashes match. All seven prior March page-union figures reproduce. Original bodies
+were only statted, never opened. Exclusive generator outputs/source bindings and
+README are retained for independent review; no gate, budget adoption or launch.
+
+At the subsequent live check, 282.347 seconds elapsed, sampled memory peak was
+2,385,702,912 bytes with zero high/max/OOM events. First two daily source receipts
+are complete (1,245,874 and 1,232,719 rows). This is ingestion progress, not graph
+completion. The existing paper-replication-progress heartbeat remains ACTIVE at
+15-minute intervals and instructs continuation after verified closure, with
+notifications only for meaningful changes. No duplicate automation was created.
+
+Next: observe exact active owner and source checkpoints; keep HEAD/source freeze.
+Continue prospective work outside frozen paths. Upon terminal, follow verifier07
+protocol and independent review, then reviewed compact commit/push. Recheck actual
+space before August registration, and use separately reviewed conditional ledger
+preservation only if needed. Never rerun closed jobs. Broader paper scope and
+all 1,420 financial fits remain required and pending.
+
+**ACTIVE March graph07; checkpoint composition accepted — 2026-09-30T06:26:41.431462+00:00:**
+Reviewed release and closure evidence were committed and pushed as
+de91c9e084ad167e26b32effb4788d6f80130ef8. The one finite temp-check01 completed
+with child zero and cleanup. Fresh execution-preflight01 passed at 06:25:08 UTC:
+88 source pins, 87 compact inputs, 538 original span stats, accepted three-ledger
+preservation chain and graph06 verification; no prior graph07 identity or active
+replication unit. Available RAM was 9,909,239,808 bytes; free disk 23,599,153,152
+versus 22,396,522,013 required. Effective ceiling58 admission was ready.
+
+Graph07 launched once, tool session98720. Exact monitor 881577, start ticks 7779197,
+supervisor 879397, unit onchain-replication-8581155c65e44f8587f96e2719910fdc.service.
+At 22.895 seconds the guard was running with peak 54,644,736 bytes and zero
+high/max/OOM events. Claim publication must be observed separately; do not infer
+completed ingestion or graph output from launch. Freeze the committed HEAD and
+all 88/87 bindings. Never duplicate this active process or relaunch its identity.
+Limits remain 6 GiB maximum, 5 GiB high, zero swap, two CPUs, 3 GiB reserve,
+9 GiB startup, 10 GiB disk floor and 28,800 seconds. Independent live review is
+requested. Actual claim accounting becomes31/58 once claim publication completes.
+
+Composite matching REVIEW.md now accepts further isolated synthetic engineering;
+all 13 source/evidence hashes match and green02 records five passing tests.
+No production source changed. Retained limitations include exclusive caller state
+ownership, atomic final scoring/hashes, incomplete total-memory bounds and the
+64 KiB hardening-metadata cap. This is not empirical matching/MCM admission.
+Keep this accepted uncommitted prototype for the next safe post-freeze commit.
+
+Prepared graph-verification-07-2026-09-30 from the accepted unchanged checker,
+with only exact target/week/raw-count/owner/budget values updated. No verifier was
+executed and no future hashes invented. Independent preparation review is next.
+After graph terminal, reconcile compact artifacts and owner cleanup, obtain
+independent closure acceptance, bind actual receipts and execute one finite saved-
+array verification after fresh resources. Then continue remaining resource weeks,
+matching integration and all broader paper requirements. All 1,420 financial fits
+remain pending; no accuracy or economic conclusion is available.
+
 **Exact graph07 release accepted; fresh launch checks next — 2026-09-30T06:20:52.240034+00:00:**
 Independent RELEASE_REVIEW.md accepts exact gate SHA-256
 fbaeb770cacebfee89a3a636de725d73532034867e5b672a3a9b3fdbda727c4c.
