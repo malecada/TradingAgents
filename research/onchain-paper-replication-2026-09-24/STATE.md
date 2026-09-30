@@ -3,6 +3,151 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Exact December gate independently accepted — 2026-09-30T10:22:25.396446+00:00**:
+RELEASE_REVIEW.md accepts gate296f1c61e34e899b89c07c8b540b5aea468ef15c1f2f4733c615f6c7c2d38fd1:
+88sourcepins including77required,120inputs/109uniquepaths, ten inherited objects
+unchanged, all six actual preservations, all15terminal family claims and163offline
+sourcebytes. Original seven December members/8,617,920rows/232stat-onlyspans match.
+No09 identity or active owner exists. Accepted scope remains one graph-only job.
+
+Commit/push this exact gate and compact closure evidence, then require one finite
+temp-volume check and fresh9GiBstartupRAM,22,103,159,134freebytes, identity, source,
+input and runtime admission. Only after passing may one09 job launch under that
+full committed HEAD. Keep that HEAD and88+120pins frozen while it owns work.
+All1,420fits pending. No historical job, storage operation or profile is rerun.
+
+**Storage06 accepted; actual December gate generated — 2026-09-30T10:19:13.719218+00:00**:
+Independent06 CLOSURE_REVIEW.md and exact ten-evidence closure-review.json accept
+all55 bindings, full recovery/restoration/completion receipts, exact sidecar and
+source absence, original index retention and owner/scratch cleanup. Review SHA
+2d82c8e2047396587e639aee4fc3736382cbd5c85c13368d9c6e63f6051941c3.
+Six closed ledgers total20,598,140,928preservedbytes, a historical total rather
+than current free capacity. Their original identities must never be rerun.
+
+The09 preparation generator executed once after actual prerequisites: gate.json
+and verification-reuse.json now exist, with88sourcepins/120compactinputs, six
+accepted preservations and accepted08 saved-array verification. All163 prior
+full-suite file hashes remain unchanged. Exact gate release review is pending;
+no09 claim, temp check or preflight has executed. Budget60 remains proposed until
+admission; effective32/59 and1,420pendingfits unchanged. Fresh capacity around
+25.0GB exceeds22.1GB planning requirement;9GiB startup RAM must still pass.
+Next: accepted exact release, commit/push compact evidence and gate, one temp
+check and fresh preflight, then one graph09 launch under the committed HEAD.
+
+**Storage06 terminal reconciled; independent review pending — 2026-09-30T10:17:03.954727+00:00**:
+Storage06 completed once in2038.5140304139932s, sampled peak202,948,608bytes,
+25,467 high events and zero max/OOM events; child0 and verified cleanup. Exact
+monitor1091757/cgroup are absent. All55 bindings remain frozen at a801772793a033ecacf07e8b2f3646744cabcdaf.
+The3,237,568,512-byte graph08 ledger completed full recovery SHA verification,
+restoration metadata and completion metadata roundtrips; original source is absent
+only after durable sidecar publication and revalidation. Successful scratch was
+removed, sidecar matches all restoration receipts, original artifact index is
+unchanged. closure01.json records compact/stat reconciliation, not repeated body
+hashing. Session12867 is terminal and must never be relaunched.
+
+Actual free capacity25,037,230,080bytes exceeds December's22,103,159,134 requirement.
+Independent06 ten-evidence acceptance is pending. Next: accepted06 closure, single
+09 registration generation, exact release review, commit/push retained compact
+results and gate, fresh temp/RAM/disk/source checks, then one December graph job.
+No current registered graph owner exists. Both synthetic full-profile and isolated
+ranked-hardening reviews are accepted; production unchanged. Accounting32/59 and
+all1,420 financial fits pending remain unchanged until09 admission.
+
+**Complete synthetic profile independently accepted — 2026-09-30T10:13:04.069722+00:00**:
+The full zero-edge2000-square profile completed once: 48 annealing iterations,
+4,012,048 annealing operations, 124,062 hardening chunks and all2,000 diagonal
+pairs. Scalar score0.5 and checkpoint restore passed. Guard257.8847207069921s,
+sampled peak244,670,464bytes, zero memory events, child0 and verified cleanup.
+The exact monitor1093621/cgroup are absent. CLOSURE_REVIEW.md independently
+accepts102+55 bindings, raw-log/result join and both checkpoint metadata/extents;
+192,025,305 checkpoint bytes remain local. Body restore/hash evidence belongs to
+the guarded worker. Actual storage06 overlap qualifies performance timing.
+
+Storage06 remains the sole active owner, monitor1091757/start8962426,
+session12867/unit fe9dcf405aa2484ead11f2ddd3602f35. Keep HEAD a801772793a033ecacf07e8b2f3646744cabcdaf
+and55 storage bindings frozen. It requires its own full recovery, sidecar,
+source-removal ordering and independently accepted ten-evidence closure before
+December gate generation. Do not duplicate or rerun either identity.
+
+Independent engineering produced full_sources/ranked-hardening-2026-09-30: an
+isolated stable-ranking greedy hardener. Four small tests passed (96 parity
+fixtures) and independent REVIEW.md accepted exact cast/tie/order semantics and
+explicit allocation accounting. Six bindings are retained. Native sort workspace,
+input and Python costs are excluded; no process-memory or speedup claim exists.
+The function and sort are atomic, without checkpoint/resume. Capacity-scale
+guarded measurement and checkpoint integration remain required before production.
+No frozen source or scientific capacity changed. All1,420 financial fits remain
+pending; budget32/59 remains effective and proposed60 awaits exact09 admission.
+
+**Both concurrent owners independently accepted — 2026-09-30T09:47:45.583032+00:00:**
+Profile LIVE_REVIEW.md independently confirms actual overlap at09:46:22 UTC:
+profile monitor1093621/start8977092/unit a1d52a6140b34e3cac082e98f6f89616 and
+storage06 monitor1091757/start8962426/unit fe9dcf405aa2484ead11f2ddd3602f35.
+Exactly those two units were present. Kernel limits,102+55 hashes and committed
+dependencies match frozen a801772793a033ecacf07e8b2f3646744cabcdaf. Profile at80.4s
+had peak240,242,688bytes and zero memory events; storage at227.1s had high1424,
+zero max/OOM. No terminal or successful result was inferred. The first synthetic
+checkpoint manifest is present, which alone does not establish full completion.
+
+Keep existing sessions98317(profile) and12867(storage). Do not duplicate either.
+Next: inspect the profile's actual guard/result terminal and reconcile all102
+bindings, recorded live owner, both checkpoint manifests/extents and result/log
+join; independently review the complete synthetic outcome, preserving failures.
+Do not reread large checkpoint bodies outside the guard; successful restore is
+worker evidence. Record overlap so timings are not reported as isolated speed.
+Continue storage06 unchanged through its own full recovery/sidecar/deletion and
+independent ten-evidence closure acceptance. Only then may graph09 gate generation
+advance after real free-space verification. Preserve frozen HEAD through both
+closures. All1,420 financial fits remain pending; no new empirical claim exists.
+
+**Full synthetic matching probe launched alongside exact storage06 — 2026-09-30T09:45:33.243662+00:00:**
+Independent storage06 LIVE_REVIEW.md accepts monitor1091757/start8962426, exact
+unit/kernel bounds and55 bindings at frozen a801772793a033ecacf07e8b2f3646744cabcdaf.
+Fresh synthetic preflight at09:45:01 checked those55 plus102 profile bindings,
+exact runtime/common HEAD, only the storage06 unit, its live start ticks/kernel
+controls, absent new identities, RAM9,806,811,136 and disk22,035,312,640 bytes.
+Disk exceeded the amended14,528,634,880-byte full-scratch-plus-profile threshold.
+
+The full synthetic profile launched once in session98317; monitor1093621,
+start ticks8977092, unit onchain-replication-a1d52a6140b34e3cac082e98f6f89616.service. owner-observation01.json records the live
+identity. Storage06 remains session12867. These are the only two permitted jobs;
+freeze HEAD and55+102 bindings until their respective closures. Combined hard
+limits1.25GiB, separate3GiB host reserves, zero swap and10GiB disk floors remain.
+No graph09 job may overlap them. Do not duplicate either owner.
+
+This fresh zero-edge2000-square fixture executes the unchanged full48-iteration
+schedule, all hardening chunks, scalar score-only finalization and checkpoint
+restore. No result is presumed. Preserve all partials/failures. Actual overlap
+means timings are contention-affected, not isolated performance or real-graph/
+MCM/GPU feasibility. Independently review terminal results before drawing claims.
+
+Next: reconcile the finite synthetic result and exact102/55 bindings/cleanup,
+while retaining storage06's independent recovery ordering. Actual accepted06
+closure still gates December registration generation. Effective budget32/59 and
+all1,420 financial fits remain unchanged.
+
+**Storage06 launched once; synthetic dispatch awaiting live checks — 2026-09-30T09:42:57.700133+00:00:**
+Reviewed05 closure,06 release, six-preservation09 preparation, coverage04 and
+synthetic concurrency amendment were committed and pushed as
+ a801772793a033ecacf07e8b2f3646744cabcdaf. Fresh06 preflight at09:42:24 verified
+all55 bindings/54 committed dependencies, exact local connection hash, accepted
+05/08 closures, source stat/eligibility, absent identities/units and pushed HEAD.
+Available RAM9,673,502,720 and free22,038,650,880 bytes passed recovery requirements;
+actual December deficit64,508,254 justified the conditional operation.
+
+One06 operation is now active in session12867, monitor1091757,
+start ticks8962426, unit onchain-replication-fe9dcf405aa2484ead11f2ddd3602f35.service.
+Freeze this HEAD and55 storage bindings. Preserve the sole owner and all partials;
+no new recovery success, deletion or reclaimed space is inferred. No graph job or
+synthetic profile has started. Limits remain256MiB/192MiB/zero swap/3GiB reserve/
+3.5GiB startup/10GiB disk/14,400seconds, two CPUs and5,400-second operations.
+
+Next: verify exact live owner/kernel controls independently; freshcheck common
+HEAD,55+102 pins, sole storage06 unit, >=4GiB RAM and14,528,634,880 free bytes.
+Only if all amended concurrency conditions pass, launch one full synthetic
+matching profile. Otherwise retain it queued. Graph09 awaits actual accepted06
+closure and exact generated-gate release; effective accounting stays32/59.
+
 **Storage06 release and synthetic concurrency independently accepted — 2026-09-30T09:42:07.672265+00:00:**
 Storage05 ten-evidence closure acceptance SHA-256 is
 9307d98eb158e55fc9610d15669236bc5ecddbe25da5856c4c0227a81f37f798.

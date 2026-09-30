@@ -1,0 +1,23 @@
+# Independent isolated ranked-hardening review
+
+September 30, 2026. **Accepted within the documented isolated synthetic scope; no blocking correctness finding identified.** All six bindings independently match at frozen HEAD `a801772793a033ecacf07e8b2f3646744cabcdaf`. No tests or capacity-scale measurement were rerun, no matrix body was read, and only this review was written.
+
+`ranked.py:28–32` casts the existing real array to a separate C-order float64 copy before comparison, negates in place, then obtains a stable ascending index permutation. Thus candidate order is descending float64 value with ascending original row-major index for equal values. `matching_reference.py:38–47` casts to float64 and repeatedly selects the first row-major maximum, masking used rows and columns. For finite supported inputs, taking the first still-admissible entry of the fixed sorted order gives exactly that next maximum; induction gives the same greedy choice sequence. Float64 rounding ties from integer conversion occur before ranking, as in the reference. Signed zeros compare equally and stable order preserves their original indices. No arithmetic score perturbation or alternative assignment optimizer is introduced.
+
+The row/column masks enforce injectivity. Processing stops after `min(n,m)` selections; empty rectangular inputs have an empty order and return empty pairs without entering `divmod`. The output is an independently allocated int64 pair array in selection order. Input mutation does not occur. The accepted domain is deliberately narrower than the general reference: existing two-dimensional NumPy arrays with bool/integer/real floating dtypes of at most eight bytes, and finite converted values. No broad object, complex, extended-precision or general array-like equivalence is claimed.
+
+`ranked.py:25–27` admits the shape against both explicit limits before key construction. Its formula, **(9 + sizeof(intp)) × n × m + n + m + 16 × min(n,m)**, accounts for the float64 key, intp permutation, conservatively simultaneous finite-check boolean output, axis masks and int64 pair output. On the pinned 64-bit runtime this is **68,036,000 bytes** for 2,000 square. Key deletion precedes mask/output allocation, so that sum is conservative for these explicit arrays. Native stable-sort workspace, input residency, Python iteration/tuple/scalar objects, allocator overhead and process/runtime costs are expressly excluded. It must not be presented as peak RSS or a bound on sort implementation workspace. Input casting and stable sorting are atomic; no checkpoint or interruption-resumption guarantee exists.
+
+Saved `green01.log` reports **four tests passing in 0.015 seconds**. The main parity test contains 96 deterministic/random matrices: ties, negative/signed-zero values, a float64-rounding integer example, rectangles, a reversed-stride view, empty axes and random values. It compares exact dense assignment against the reference and checks unchanged input. Two hand-literal cases check choice order; other tests cover pre-sort rejection, unsupported/nonfinite inputs and the exact explicit-byte boundary. `red01.log` is the retained missing-module failure. The tests do not measure large sorts, native workspace, timing, allocation failure, every accepted dtype/layout or interrupted recovery. The mathematical ordering argument supports the stated finite domain beyond those fixtures; the saved tests alone are not exhaustive proof.
+
+There is no production caller, scientific capacity change, resource claim or empirical result. The explicit caller limit is not itself a new study allowance: any future study caller must retain its registered pair cap. A new capacity-scale synthetic measurement needs its own reviewed finite guard and identity; no performance improvement or process-memory feasibility is established here. Separately reviewed durable checkpoint integration remains necessary before use as a resumable matching path. Existing failed/closed profiles must not be repeated.
+
+Exact identities:
+
+- `ranked.py`: `ec8bd9fdc24fa18d309cb49605342c0958a3b5104dbae0205c3f203e056c0bf8`
+- `test_ranked.py`: `ce72475be3774fd5c7526af8d252e59939215d4f0879570854fd3944667943bf`
+- `IMPLEMENTATION.md`: `a7de70ddfefe0abab014af1edc4d8ee2f24eb2a67697a820ff4b7601fbfd44df`
+- `bindings.json`: `6946c941c4e09a32265731bd616f26a6647d5dd0767b982ff421803acb1653fd`
+- Reference source: `75e3269a94cf0d840c299f52c7b138b58dd138251bde6048e52e6c1149934332`
+
+No production integration, full matching parity, nonzero-edge schedule feasibility, real-hub scale, GPU precision, MCM/neural fitting or financial outcome was tested or accepted. The concurrent storage06 source freeze and HEAD were not changed.

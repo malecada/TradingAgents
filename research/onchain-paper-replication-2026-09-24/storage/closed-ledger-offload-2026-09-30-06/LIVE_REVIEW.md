@@ -1,0 +1,15 @@
+# Independent storage06 live review
+
+Observed September 30, 2026 at 09:43:41 UTC. **Accepted as exact live-owner and frozen-source readback, not preservation completion.** Only this review was written; no body read, remote request, test, launch, guard mutation or commit was performed.
+
+HEAD is `a801772793a033ecacf07e8b2f3646744cabcdaf`. All **55 unique bindings** match; the **54 non-connection paths** also match that commit. The one exact local connection path remains untracked and was hash-checked without inspecting or printing contents. The release review matches preflight's recorded digest `a7d3d314726634051dab46150ab009ac9dccafee784929c46d9468c4f6fd424f`.
+
+Preflight01 at 09:42:24 UTC records pushed HEAD equality, accepted storage05 and graph08 closures, no active unit or reserved identity then, 9,673,502,720 available RAM bytes and 22,038,650,880 free disk bytes. The latter was **64,508,254 bytes below** December's 22,103,159,134-byte requirement but above this transfer's 13,991,763,968-byte full recovery scratch threshold. Preflight SHA-256 is `1de47201ff1f3550daa207292ad8afa6c2b9c28b6bd4c23b276dab4640d799df`.
+
+Actual monitor PID **1091757** has process start ticks **8962426**, and its command is this storage06 launcher. Exactly one active replication unit is present: `onchain-replication-fe9dcf405aa2484ead11f2ddd3602f35.service`. Its wrapper command targets the exact storage06 worker and receipt directory; live cgroup membership is populated. Kernel files independently read back `memory.max=268435456`, `memory.high=201326592`, and `memory.swap.max=0`. Saved live controls retain two-CPU affinity, 3 GiB host reserve, 3.5 GiB startup, 10 GiB disk floor, 14,400-second wall limit and no retry.
+
+The inspected live snapshot was running at **66.049 seconds**, sampled peak **201,580,544 bytes**, with **1,206 high throttle events** and zero max/OOM/OOM-kill events. These are changing observations, not a terminal resource result. No duplicate replication unit was observed.
+
+Intent binds manifest `d72b40660286e2782e9b2967bb97c9666b52f161b5695fc1ea7fa8a2c36e0237`, exact storage06 remote identity and 3,237,568,512 bytes. Intent SHA-256 is `338f9be9157e62ba252e504283aa5a94b36c7b41c6ce7df1896f8ff1f414c388`. The closed graph08 source ledger remains present with unchanged recorded stat identity. Recovered manifest exists; no recovered body, verified receipt, eviction receipt, remote sidecar, complete/failed marker or final guard receipt exists at this observation. No byte recovery, eviction or reclaimed capacity is inferred.
+
+The separate synthetic-profile concurrency review may use this exact owner verification, but profile dispatch still requires its own fresh 55 storage and 102 profile hash checks, common frozen HEAD, only this storage unit, at least 4 GiB available RAM and 14,528,634,880 free disk bytes. This live review does not launch it. Preserve HEAD and all dependencies until both owners, if admitted, close; actual storage06 closure and independent acceptance remain necessary before graph09 gate generation.

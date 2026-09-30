@@ -1,0 +1,125 @@
+{
+  "at": "2026-09-30T10:05:50.894592+00:00",
+  "status": "complete",
+  "source": "a801772793a033ecacf07e8b2f3646744cabcdaf",
+  "profile_bindings_verified": 102,
+  "storage_bindings_verified": 55,
+  "profile_owner_cgroup_absent": true,
+  "storage_still_active": {
+    "monitor_pid": 1091757,
+    "monitor_start_ticks": "8962426",
+    "unit": "onchain-replication-fe9dcf405aa2484ead11f2ddd3602f35.service"
+  },
+  "evidence": {
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-complete-workspace-probe-2026-09-30/result.json": "0a9cadae6c05be72e9194e77f61f7b26943ea464b2aa97b29877fa5e2ff3ce25",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-complete-workspace-probe-2026-09-30/guard01/final.json": "af082c1779ebdfdba5aca57b4c174551ef81367688aa48aea2e7982962ce8c50",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-complete-workspace-probe-2026-09-30/guard01/child.log": "8a377a0885d39b0db098c619baae10b2a53e13988a7fecf5d9aaa4e35c763203",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-complete-workspace-probe-2026-09-30/bindings.json": "e6aa5dbe8779b4e828eab5bb1b9686e6c1a6cf94e5b4bea89c1eb909cdcd0940",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-complete-workspace-probe-2026-09-30/started.json": "03905be81548a3091f8f6e9b598f86a587a2fc69a95251c52830bb912c8fb2c5",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-complete-workspace-probe-2026-09-30/owner-observation01.json": "e09f648461af749594df1e60991f6c3c8a1fc9a2a82bf9651dfc73d5daac708a",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-complete-workspace-probe-2026-09-30/preflight01.json": "6a96093660fe52187340113f7dc5ef2dde5d90c7ce6122ffb5344603408ca1dd",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-complete-workspace-probe-2026-09-30/LIVE_REVIEW.md": "87687bfe05c2025d684a5bbc84b73ddccdca920a1f07c97f3bc23389e8a112bf",
+    "research/onchain-paper-replication-2026-09-24/full_sources/matching-complete-workspace-probe-2026-09-30/CONCURRENT_REVIEW.md": "1d5b2fd0ef9c3b6982bb11c262679be46e074aee31ec30baf73eca17944ec892"
+  },
+  "result": {
+    "status": "complete_synthetic_full_match_probe",
+    "nodes_each": 2000,
+    "pair_entries": 4000000,
+    "edges_each": 0,
+    "matching_iterations": 48,
+    "convergence": "temperature_complete",
+    "score": 0.5,
+    "annealing_calls": 2,
+    "annealing_operations": 4012048,
+    "hardening_chunks": 124062,
+    "selected_pairs": 2000,
+    "retained_numeric_state_bytes": 96000000,
+    "checkpoint_manifest_sha256": {
+      "checkpoint01": "19909633bff7ba91f6629302efcc00b3f158e7bfc454866f221e91e3de8474e6",
+      "checkpoint02": "dabcb3eb2bf97c0b48bbba5da719bd0613d27f9049eed13880c726a21c9f1ce0"
+    },
+    "checkpoint_logical_bytes": {
+      "checkpoint01": 96001785,
+      "checkpoint02": 96023520
+    },
+    "soft_matrix_sha256": "e5f5cd5a84eebc8b61f69f1f590c04ef695f093a382779437ec65014a97f64f8",
+    "uniform_matrix_max_absolute_error": 1.0842021724855044e-19,
+    "timings": {
+      "create_seconds": 0.016957537009147927,
+      "annealing_seconds": 17.822872980992543,
+      "hardening_prefix_seconds": 0.21001718200568575,
+      "prefix_save_seconds": 0.27159206400392577,
+      "prefix_load_seconds": 0.19383383600506932,
+      "hardening_remainder_seconds": 238.22872045899567,
+      "score_seconds": 0.0288811229984276,
+      "final_save_seconds": 0.24607477900281083,
+      "final_load_seconds": 0.1596459629945457,
+      "restored_score_seconds": 0.02809422099380754
+    },
+    "matching_complete": true,
+    "qualification": "Fresh zero-edge synthetic graph only. Full schedule/hardening and scalar score completed; no nonzero edge, real-hub, dictionary, MCM, neural, GPU or financial feasibility inference. Production backend and scientific capacity unchanged."
+  },
+  "checkpoints": {
+    "checkpoint01": {
+      "outer_manifest_sha256": "19909633bff7ba91f6629302efcc00b3f158e7bfc454866f221e91e3de8474e6",
+      "annealing_manifest_sha256": "e24c57ec291ceb78146045d76e8111362c2a805732a9918dab34364dd043a742",
+      "hardening_sha256": "0a1d2cd9d10190fe471fc04c803af11c2c129911a0181d843fe9eff86bbad73b",
+      "phase": "hardening",
+      "selected_pairs": 3,
+      "logical_bytes": 96001785,
+      "array_extents_and_guarded_worker_hashes": {
+        "research/onchain-paper-replication-2026-09-24/full_sources/matching-complete-workspace-probe-2026-09-30/checkpoint01/annealing/M.npy": {
+          "bytes": 32000128,
+          "sha256": "dbeca10f78b7a5e664edd50da75b5e49a022d5427c0bc4f48604e65d97801d6a"
+        },
+        "research/onchain-paper-replication-2026-09-24/full_sources/matching-complete-workspace-probe-2026-09-30/checkpoint01/annealing/Q.npy": {
+          "bytes": 32000128,
+          "sha256": "786eb82ec510bfef2a1932a51e0e997af968eebad17d4c5f4ffc8cbd7bda6c01"
+        },
+        "research/onchain-paper-replication-2026-09-24/full_sources/matching-complete-workspace-probe-2026-09-30/checkpoint01/annealing/V.npy": {
+          "bytes": 32000128,
+          "sha256": "786eb82ec510bfef2a1932a51e0e997af968eebad17d4c5f4ffc8cbd7bda6c01"
+        }
+      }
+    },
+    "checkpoint02": {
+      "outer_manifest_sha256": "dabcb3eb2bf97c0b48bbba5da719bd0613d27f9049eed13880c726a21c9f1ce0",
+      "annealing_manifest_sha256": "e24c57ec291ceb78146045d76e8111362c2a805732a9918dab34364dd043a742",
+      "hardening_sha256": "8eae30414db435460623984868f1bd8abb5467c8bcf2c3d93dca4cddd1822e26",
+      "phase": "done",
+      "selected_pairs": 2000,
+      "logical_bytes": 96023520,
+      "array_extents_and_guarded_worker_hashes": {
+        "research/onchain-paper-replication-2026-09-24/full_sources/matching-complete-workspace-probe-2026-09-30/checkpoint02/annealing/M.npy": {
+          "bytes": 32000128,
+          "sha256": "dbeca10f78b7a5e664edd50da75b5e49a022d5427c0bc4f48604e65d97801d6a"
+        },
+        "research/onchain-paper-replication-2026-09-24/full_sources/matching-complete-workspace-probe-2026-09-30/checkpoint02/annealing/Q.npy": {
+          "bytes": 32000128,
+          "sha256": "786eb82ec510bfef2a1932a51e0e997af968eebad17d4c5f4ffc8cbd7bda6c01"
+        },
+        "research/onchain-paper-replication-2026-09-24/full_sources/matching-complete-workspace-probe-2026-09-30/checkpoint02/annealing/V.npy": {
+          "bytes": 32000128,
+          "sha256": "786eb82ec510bfef2a1932a51e0e997af968eebad17d4c5f4ffc8cbd7bda6c01"
+        }
+      }
+    }
+  },
+  "guard": {
+    "monitor_pid": 1093621,
+    "unit": "onchain-replication-a1d52a6140b34e3cac082e98f6f89616.service",
+    "elapsed_seconds": 257.8847207069921,
+    "peak_sampled_memory_current_bytes": 244670464,
+    "memory_events": {
+      "high": 0,
+      "low": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_group_kill": 0,
+      "oom_kill": 0
+    },
+    "child_exit_code": 0,
+    "cleanup_verified": true
+  },
+  "qualification": "One full zero-edge synthetic match with actual storage06 overlap. Timings are contention-affected, not isolated performance. Compact metadata and array extents checked here; array-body hashes and restore equivalence are guarded-worker evidence, not repeated outside guard. Does not establish nonzero-edge, real-hub, dictionary/MCM/neural/GPU or financial feasibility."
+}
