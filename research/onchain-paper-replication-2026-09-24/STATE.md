@@ -4,6 +4,67 @@ This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
 
+**Maintained successor ownership integration;88 focused tests pass — 2026-09-30T17:24:51.129161+00:00**:
+The user explicitly requested continued autonomous execution. Previous ancestry
+work was committed and pushed at `f68a9866`. New maintained modules
+`matching_owner.py`, `matching_death.py` and `matching_ancestry.py` promote the
+accepted candidates and add actual successor journal ownership. Original dated
+code, failures and reviews remain unchanged. No empirical job is active and no
+source freeze is currently in force. The focused synthetic run has terminated.
+
+`matching_owner.open_successor` verifies the current actual claim/selected fit
+producer/schema2 plan/policy, compatible committed numerical source and runtime,
+full failed ancestry and predecessor death, plus the current live guard. Under
+the lifecycle lock it exclusively creates the actual child FeatureJournal and
+claim; failures preserve any partial directory and refuse recreation. Binding
+lease checks both live child ownership and all ancestor evidence/death. Current
+execution source and older compatible numerical context remain separate.
+
+After initial promotion,72 existing tests passed in90.675s. The first15 successor
+tests passed in202.320s. Independent OI1 then exposed a missing immediate guard
+refresh after ancestry verification; red04 retains that reproduced failure and
+an existing wrong-directory-before-guard regression introduced by the refactor.
+Both were corrected with originals preserved. `green03.log` records88 focused
+tests passing in305.501s, SHA
+85b5a397a1879579b76db9606404a19b7b6be746814b88e8c6cea1a8ecf0c961.
+These are temporary real Git/ResearchRun/FeatureJournal tests with current guard
+assertion and predecessor OS-death predicates mocked. Live numerical continuation
+is not yet established. No closed profile or empirical identity was rerun.
+
+Evidence directory: `full_sources/owner-integration-2026-09-30/`.
+Prospective source-bindings.json pins1217 files, including237 unchanged inherited
+files,86 current required package sources,265 named offline tests, all tracked
+Python under tradingagents/tests/scripts, new maintained files/tests and compact
+integration evidence. SHA
+ad1669e2a2fce5354c5ef1b4961bc6e3c8635ba7cc3e0599c1acca5121b74c6a.
+Independent closure review found31 top-level Python files omitted by the initial
+recursive pathspec. That1185-file manifest is preserved as source-bindings-incomplete.json;
+the corrected inventory includes all1104 currently tracked Python files plus new
+maintained files/tests and existing evidence. Source/tests were unchanged by
+this closure correction, so no test was repeated for it.
+Corrected REVIEW_V2 ACCEPTS bounded ownership integration and conditional one-off
+offline release; SHA66f9bfb45a6d25e18f368acc42f578ebe5cd5d7e7b041fe9651a9b8ab67bfc6c.
+Older broad verification does not cover these newly maintained modules.
+
+Next: commit/push exact independently reviewed source and
+bindings, fresh ownership/resource/source preflight, then execute the new
+owner-integration offline01 once using run_offline.py --source FULL_HEAD with
+PYTHONPATH=. Freeze source and HEAD while its guard owns execution. Limits remain
+3GiB maximum /2.75GiB high /zero swap /two CPUs /3GiB host reserve /6GiB startup /
+10GiB free disk /3600s. All earlier offline identities remain closed. Inspect
+standard and neural summaries, terminal/cleanup, exact source hashes and monitor/
+cgroup death; independently close before claiming broad success.
+
+Further work: connect ownership to pair-journal/extent and exact dictionary/MCM
+workload membership, reconcile pending/orphan artifacts without repeating a
+completed pair, prove full numerical successor parity and complete-representation
+reuse, then reviewed resource pilots. Prepare fresh checks for two legacy graphs
+and cumulative resource amendments independently.77/109 resource requirements
+supported,32 remain;33/60 attempts consumed, remaining27 allocated12 body and15
+fit batches. All1420 fits remain pending. Full architecture, both assets/history/
+comparators and C01–C18 remain required; installed RAM is the local ceiling.
+
+
 **Registered failed-ancestry precheck implemented — 2026-09-30T16:51:05.764053+00:00**:
 Graph10/verifier10 and coverage05 reviewed compact evidence is committed and
 pushed at `2b3bb582f17bf570ab11e1b01457574acfbaaeb7`. No active empirical/numerical

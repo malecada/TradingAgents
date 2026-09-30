@@ -1,0 +1,317 @@
+test_actual_claim_owner_and_old_numerical_anchor_are_distinct (test_matching_owner.OwnershipTests.test_actual_claim_owner_and_old_numerical_anchor_are_distinct) ... FAIL
+test_boolean_execution_version_refused (test_matching_owner.OwnershipTests.test_boolean_execution_version_refused) ... FAIL
+test_boolean_journal_version_refused (test_matching_owner.OwnershipTests.test_boolean_journal_version_refused) ... FAIL
+test_boolean_policy_version_refused (test_matching_owner.OwnershipTests.test_boolean_policy_version_refused) ... FAIL
+test_changed_guard_metadata_refused (test_matching_owner.OwnershipTests.test_changed_guard_metadata_refused) ... FAIL
+test_changed_journal_claim_refused (test_matching_owner.OwnershipTests.test_changed_journal_claim_refused) ... FAIL
+test_failed_parent_not_silently_admitted (test_matching_owner.OwnershipTests.test_failed_parent_not_silently_admitted) ... FAIL
+test_float_plan_version_refused (test_matching_owner.OwnershipTests.test_float_plan_version_refused) ... FAIL
+test_float_policy_version_refused (test_matching_owner.OwnershipTests.test_float_policy_version_refused) ... FAIL
+test_foreign_guard_owner_or_policy_refused (test_matching_owner.OwnershipTests.test_foreign_guard_owner_or_policy_refused) ... FAIL
+test_foreign_sibling_after_binding_refused (test_matching_owner.OwnershipTests.test_foreign_sibling_after_binding_refused) ... FAIL
+test_guard_expiry_and_monitor_death_refused (test_matching_owner.OwnershipTests.test_guard_expiry_and_monitor_death_refused) ... FAIL
+test_input_drift_refused (test_matching_owner.OwnershipTests.test_input_drift_refused) ... FAIL
+test_live_monitor_must_equal_retained_owner_monitor (test_matching_owner.OwnershipTests.test_live_monitor_must_equal_retained_owner_monitor) ... FAIL
+test_numerical_anchor_drift_is_not_execution_commit_compatibility (test_matching_owner.OwnershipTests.test_numerical_anchor_drift_is_not_execution_commit_compatibility) ... FAIL
+test_numerical_anchor_incomplete_closure_refused (test_matching_owner.OwnershipTests.test_numerical_anchor_incomplete_closure_refused) ... FAIL
+test_source_drift_refused (test_matching_owner.OwnershipTests.test_source_drift_refused) ... FAIL
+test_symlink_journal_metadata_refused (test_matching_owner.OwnershipTests.test_symlink_journal_metadata_refused) ... FAIL
+test_terminal_claim_refused_on_recheck (test_matching_owner.OwnershipTests.test_terminal_claim_refused_on_recheck) ... FAIL
+test_terminal_journal_refused (test_matching_owner.OwnershipTests.test_terminal_journal_refused) ... FAIL
+test_unadmitted_run_refused (test_matching_owner.OwnershipTests.test_unadmitted_run_refused) ... FAIL
+test_uncommitted_numerical_anchor_refused (test_matching_owner.OwnershipTests.test_uncommitted_numerical_anchor_refused) ... FAIL
+test_wrong_directory_refused_before_guard (test_matching_owner.OwnershipTests.test_wrong_directory_refused_before_guard) ... FAIL
+test_wrong_producer_policy_or_representation_refused (test_matching_owner.OwnershipTests.test_wrong_producer_policy_or_representation_refused) ... FAIL
+
+======================================================================
+FAIL: test_actual_claim_owner_and_old_numerical_anchor_are_distinct (test_matching_owner.OwnershipTests.test_actual_claim_owner_and_old_numerical_anchor_are_distinct)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_boolean_execution_version_refused (test_matching_owner.OwnershipTests.test_boolean_execution_version_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_boolean_journal_version_refused (test_matching_owner.OwnershipTests.test_boolean_journal_version_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_boolean_policy_version_refused (test_matching_owner.OwnershipTests.test_boolean_policy_version_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_changed_guard_metadata_refused (test_matching_owner.OwnershipTests.test_changed_guard_metadata_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_changed_journal_claim_refused (test_matching_owner.OwnershipTests.test_changed_journal_claim_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_failed_parent_not_silently_admitted (test_matching_owner.OwnershipTests.test_failed_parent_not_silently_admitted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_float_plan_version_refused (test_matching_owner.OwnershipTests.test_float_plan_version_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_float_policy_version_refused (test_matching_owner.OwnershipTests.test_float_policy_version_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_foreign_guard_owner_or_policy_refused (test_matching_owner.OwnershipTests.test_foreign_guard_owner_or_policy_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_foreign_sibling_after_binding_refused (test_matching_owner.OwnershipTests.test_foreign_sibling_after_binding_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_guard_expiry_and_monitor_death_refused (test_matching_owner.OwnershipTests.test_guard_expiry_and_monitor_death_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_input_drift_refused (test_matching_owner.OwnershipTests.test_input_drift_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_live_monitor_must_equal_retained_owner_monitor (test_matching_owner.OwnershipTests.test_live_monitor_must_equal_retained_owner_monitor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_numerical_anchor_drift_is_not_execution_commit_compatibility (test_matching_owner.OwnershipTests.test_numerical_anchor_drift_is_not_execution_commit_compatibility)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_numerical_anchor_incomplete_closure_refused (test_matching_owner.OwnershipTests.test_numerical_anchor_incomplete_closure_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_source_drift_refused (test_matching_owner.OwnershipTests.test_source_drift_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_symlink_journal_metadata_refused (test_matching_owner.OwnershipTests.test_symlink_journal_metadata_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_terminal_claim_refused_on_recheck (test_matching_owner.OwnershipTests.test_terminal_claim_refused_on_recheck)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_terminal_journal_refused (test_matching_owner.OwnershipTests.test_terminal_journal_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_unadmitted_run_refused (test_matching_owner.OwnershipTests.test_unadmitted_run_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_uncommitted_numerical_anchor_refused (test_matching_owner.OwnershipTests.test_uncommitted_numerical_anchor_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_wrong_directory_refused_before_guard (test_matching_owner.OwnershipTests.test_wrong_directory_refused_before_guard)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+======================================================================
+FAIL: test_wrong_producer_policy_or_representation_refused (test_matching_owner.OwnershipTests.test_wrong_producer_policy_or_representation_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 35, in setUp
+    self.module=api()
+                ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 24, in api
+    assert importlib.util.find_spec(name), 'maintained owner component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+AssertionError: maintained owner component missing
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.005s
+
+FAILED (failures=24)
