@@ -3,6 +3,50 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Ranked composition and capacity profile independently reviewed — 2026-09-30T11:11:04.693613+00:00**:
+matching-ranked-composite-2026-09-30/REVIEW.md accepts isolated composition,
+89bindings and eighttests(1.095s), including explicitmappinglifecycle, matrix
+identity, interruptedrecovery and exactscalarparity. No productionchangeaccepted.
+matching-ranked-workspace-probe-2026-09-30/REVIEW.md conditionally accepts one
+freshfiniteprobe,96bindings, full48iterations/4,012,048annealingoperations/twocalls,
+33diagonalpairs after65,536rankedentries and2,000pairs after4Mentries. Wholeprocess
+peak includes denseuniformitydiagnostic temporaries, not ranking-onlycost.
+
+Next: commit/push these exactsources/reviews, verify96currentandcommittedhashes,
+runtime,4GiBavailableRAM,10GiB+512MiBfreeandnoactiveunits, then one guardedprofile.
+FreezeHEADand96pins until actualclosure. Preserve both128MiBmaximum logical
+checkpoints, all failures and guards. Independentterminalreview follows actual
+result/closure. No empiricalclaim or historicalprofile rerun. Graph10is unlaunched
+and cannot overlap; its9GiB+128MiBstartup requirement remains unchanged. All1,420
+financialfits remainpending, effective32/59budget; proposed60unadopted.
+
+**Ranked full-matcher composition implemented; review pending — 2026-09-30T11:08:54.076951+00:00**:
+Heartbeat checked HEADeb5ddb51aa49537ec53fca6b3a3d7f4803d29900, clean trackedtree,
+noactiveunits and availableRAM9,545,568,256below9,797,894,144dispatchrequirement.
+Graph10remainsunlaunched; disk24,983,457,792suffices. No historicalidentityreused.
+
+New isolated matching-ranked-composite-2026-09-30 composes accepted scalarannealing,
+rankedhardeningcheckpoints and sparse score-only finalization. Outer schema2,
+retained32*n*mbytes and separate80MiBrankedexplicitworkspace replace no old bound
+silently. Logicalcheckpoint allowance32*n*m+512+3*65536. Explicit close releases
+rankmapping/denseownership before replacement; loadclosesrankmapping on subsequent
+failure. Creation/hash/sort/finalscore remainatomic; no productiondispatchchanged.
+
+Eight focusedtests pass green02.log(1.095s), after retainedred01/green01. Tests cover
+exactsoftbytes/assignment/score/schedule across everyrestore on3fixturepairs,
+explicitclose, pre-allocationbudgets, corruptedorder/policy/matrix, interrupted
+rankcreation/scanrecovery, actualmapcleanup afterlaterloadfailure and sparse-score
+limits/domain.89bindings/IMPLEMENTATION.md are recorded. Independentreviewpending.
+
+matching-ranked-workspace-probe-2026-09-30 source/protocolpreparation now exists:
+fresh2000-squarezeroedge/full48iterations,65,536entryprefix(33pairs), two explicitly
+closed/restoredcheckpoints, full4Mentryrankscan andscore0.5. Guard1GiB/768MiBhigh/
+0swap/3reserve/4startup/10disk/1800s, nooverlap, retainedstate/checkpoint128MiBeach,
+rankedscratch80MiB. No bindings, review, started, guard or result exists yet.
+After componentacceptance, bind exactsources/config/runtime, independentlyreview,
+commit/push and perform freshchecks before any one capacityprofile execution.
+Currentclaimedbudget32/59 and all1,420financialfits remainpending.
+
 **Corrected ranked checkpoints independently accepted — 2026-09-30T10:45:39.267727+00:00**:
 ranked-hardening-checkpoints-2026-09-30/REVIEW.md independently accepts the isolated
 component and corrected restore cleanup. All14bindings match; six focusedtests
