@@ -3,6 +3,17 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Next graph registration reviewed — 2026-09-30T02:20Z:**
+Independent budget and release review accepted graph-successor-04-2026-09-30:
+exact gate49d60bf1e9007e504b6719bd825d9e405c9a7b8ee72d5857e1c3e1f244ed3ef5,
+85 source pins,31 compact inputs,seven runtime hashes,77required dependency paths,
+unchanged ancestry/history and all163 prior full-suite binding bytes.349 raw spans
+checked by stat only. No new production code or raw body/graph/SQLite read.
+Commit/push registration, run its finite run_temp_check.py once, then preflight.py
+and one generic launch for eth-paper-graph-resource-20260930-04 under committedHEAD.
+Required free21,217,691,325bytes includes10GiBreserve; RAMstartup9GiB. Normal
+admission must be ready/effective55. No claim active yet; budget27/54 untiladoption.
+
 **Hub-edge measurement closed; next original stress week prepared — 2026-09-30T02:08Z:**
 Independent terminal review accepted eth-paper-hub-edge-census-20260930-01:
 35/35 centers complete, guard153.930056s, sampled peak1,048,875,008 bytes,
