@@ -1,0 +1,243 @@
+test_actual_local_soft_assignment_and_score_match_reference (__main__.LocalTests.test_actual_local_soft_assignment_and_score_match_reference) ... ERROR
+test_cleanup_failure_preserves_primary_interruption (__main__.LocalTests.test_cleanup_failure_preserves_primary_interruption) ... ERROR
+test_completed_score_reused_without_solver_or_array_load (__main__.LocalTests.test_completed_score_reused_without_solver_or_array_load) ... ERROR
+test_exclusive_names_containment_and_checkpoint_budget (__main__.LocalTests.test_exclusive_names_containment_and_checkpoint_budget) ... ERROR
+test_failed_publication_preserved_and_prior_checkpoint_recovers (__main__.LocalTests.test_failed_publication_preserved_and_prior_checkpoint_recovers) ... ERROR
+test_local_parent_center_order_and_features_bound_before_load (__main__.LocalTests.test_local_parent_center_order_and_features_bound_before_load) ... ERROR
+test_orientation_context_owner_policy_and_hash_refused_before_loading (__main__.LocalTests.test_orientation_context_owner_policy_and_hash_refused_before_loading) ... ERROR
+test_progress_resume_and_directional_reference_parity (__main__.LocalTests.test_progress_resume_and_directional_reference_parity) ... ERROR
+test_successor_publication_keeps_exact_parent_reference (__main__.LocalTests.test_successor_publication_keeps_exact_parent_reference) ... ERROR
+test_cleanup_failure_preserves_primary_interruption (__main__.Tests.test_cleanup_failure_preserves_primary_interruption) ... ok
+test_completed_score_reused_without_solver_or_array_load (__main__.Tests.test_completed_score_reused_without_solver_or_array_load) ... ok
+test_exclusive_names_containment_and_checkpoint_budget (__main__.Tests.test_exclusive_names_containment_and_checkpoint_budget) ... ok
+test_failed_publication_preserved_and_prior_checkpoint_recovers (__main__.Tests.test_failed_publication_preserved_and_prior_checkpoint_recovers) ... ok
+test_orientation_context_owner_policy_and_hash_refused_before_loading (__main__.Tests.test_orientation_context_owner_policy_and_hash_refused_before_loading) ... ok
+test_progress_resume_and_directional_reference_parity (__main__.Tests.test_progress_resume_and_directional_reference_parity) ... ok
+test_successor_publication_keeps_exact_parent_reference (__main__.Tests.test_successor_publication_keeps_exact_parent_reference) ... ok
+
+======================================================================
+ERROR: test_actual_local_soft_assignment_and_score_match_reference (__main__.LocalTests.test_actual_local_soft_assignment_and_score_match_reference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 194, in test_actual_local_soft_assignment_and_score_match_reference
+    state = m.engine.create(a, b, c, **{k: POLICY[k] for k in m.ENGINE_FIELDS})
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-ranked-composite-2026-09-30/combined.py", line 40, in create
+    inner=ann.create(a,b,c,max_state_bytes=max_state_bytes-8*n*m,max_chunk_entries=normalization_chunk_entries)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-normalization-checkpoints-2026-09-30/annealing.py", line 44, in create
+    return {'max_chunk_entries':max_chunk_entries,'schema_version':2,'safe':True,'identity':identity(a,b,c),'phase':'nodes','cursor':0,'iterations':0,'beta':c['beta0'],'shape':[n,m],
+                                                                                            ~~~~~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-normalization-checkpoints-2026-09-30/annealing.py", line 31, in identity
+    return {'left':graph_hash(a),'right':graph_hash(b),'configuration':hashlib.sha256(body(c)).hexdigest()}
+                   ~~~~~~~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/neighborhoods.py", line 32, in graph_hash
+    validate_graph(graph);h=hashlib.sha256()
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/contracts.py", line 92, in validate_graph
+    if g.asset not in {'ETH', 'BTC'}:
+       ^^^^^^^
+AttributeError: 'AttributedGraph' object has no attribute 'asset'
+
+======================================================================
+ERROR: test_cleanup_failure_preserves_primary_interruption (__main__.LocalTests.test_cleanup_failure_preserves_primary_interruption)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 156, in test_cleanup_failure_preserves_primary_interruption
+    pair = self.create(Path(tmp))
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 33, in create
+    return m.PairSession.create(root, name, a, b, c, **options)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/adapter.py", line 128, in create
+    ident = identity(a, b, config, context)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/adapter.py", line 88, in identity
+    return dict(ordered_pair=engine.ann.identity(a, b, config), context=dict(context),
+                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-normalization-checkpoints-2026-09-30/annealing.py", line 31, in identity
+    return {'left':graph_hash(a),'right':graph_hash(b),'configuration':hashlib.sha256(body(c)).hexdigest()}
+                   ~~~~~~~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/neighborhoods.py", line 32, in graph_hash
+    validate_graph(graph);h=hashlib.sha256()
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/contracts.py", line 92, in validate_graph
+    if g.asset not in {'ETH', 'BTC'}:
+       ^^^^^^^
+AttributeError: 'AttributedGraph' object has no attribute 'asset'
+
+======================================================================
+ERROR: test_completed_score_reused_without_solver_or_array_load (__main__.LocalTests.test_completed_score_reused_without_solver_or_array_load)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 68, in test_completed_score_reused_without_solver_or_array_load
+    pair = self.create(root)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 33, in create
+    return m.PairSession.create(root, name, a, b, c, **options)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/adapter.py", line 128, in create
+    ident = identity(a, b, config, context)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/adapter.py", line 88, in identity
+    return dict(ordered_pair=engine.ann.identity(a, b, config), context=dict(context),
+                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-normalization-checkpoints-2026-09-30/annealing.py", line 31, in identity
+    return {'left':graph_hash(a),'right':graph_hash(b),'configuration':hashlib.sha256(body(c)).hexdigest()}
+                   ~~~~~~~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/neighborhoods.py", line 32, in graph_hash
+    validate_graph(graph);h=hashlib.sha256()
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/contracts.py", line 92, in validate_graph
+    if g.asset not in {'ETH', 'BTC'}:
+       ^^^^^^^
+AttributeError: 'AttributedGraph' object has no attribute 'asset'
+
+======================================================================
+ERROR: test_exclusive_names_containment_and_checkpoint_budget (__main__.LocalTests.test_exclusive_names_containment_and_checkpoint_budget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 124, in test_exclusive_names_containment_and_checkpoint_budget
+    pair = self.create(root, policy=POLICY | {'max_publications': 1})
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 33, in create
+    return m.PairSession.create(root, name, a, b, c, **options)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/adapter.py", line 128, in create
+    ident = identity(a, b, config, context)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/adapter.py", line 88, in identity
+    return dict(ordered_pair=engine.ann.identity(a, b, config), context=dict(context),
+                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-normalization-checkpoints-2026-09-30/annealing.py", line 31, in identity
+    return {'left':graph_hash(a),'right':graph_hash(b),'configuration':hashlib.sha256(body(c)).hexdigest()}
+                   ~~~~~~~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/neighborhoods.py", line 32, in graph_hash
+    validate_graph(graph);h=hashlib.sha256()
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/contracts.py", line 92, in validate_graph
+    if g.asset not in {'ETH', 'BTC'}:
+       ^^^^^^^
+AttributeError: 'AttributedGraph' object has no attribute 'asset'
+
+======================================================================
+ERROR: test_failed_publication_preserved_and_prior_checkpoint_recovers (__main__.LocalTests.test_failed_publication_preserved_and_prior_checkpoint_recovers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 106, in test_failed_publication_preserved_and_prior_checkpoint_recovers
+    pair = self.create(root)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 33, in create
+    return m.PairSession.create(root, name, a, b, c, **options)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/adapter.py", line 128, in create
+    ident = identity(a, b, config, context)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/adapter.py", line 88, in identity
+    return dict(ordered_pair=engine.ann.identity(a, b, config), context=dict(context),
+                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-normalization-checkpoints-2026-09-30/annealing.py", line 31, in identity
+    return {'left':graph_hash(a),'right':graph_hash(b),'configuration':hashlib.sha256(body(c)).hexdigest()}
+                   ~~~~~~~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/neighborhoods.py", line 32, in graph_hash
+    validate_graph(graph);h=hashlib.sha256()
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/contracts.py", line 92, in validate_graph
+    if g.asset not in {'ETH', 'BTC'}:
+       ^^^^^^^
+AttributeError: 'AttributedGraph' object has no attribute 'asset'
+
+======================================================================
+ERROR: test_local_parent_center_order_and_features_bound_before_load (__main__.LocalTests.test_local_parent_center_order_and_features_bound_before_load)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 180, in test_local_parent_center_order_and_features_bound_before_load
+    pair = self.create(root)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 33, in create
+    return m.PairSession.create(root, name, a, b, c, **options)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/adapter.py", line 128, in create
+    ident = identity(a, b, config, context)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/adapter.py", line 88, in identity
+    return dict(ordered_pair=engine.ann.identity(a, b, config), context=dict(context),
+                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-normalization-checkpoints-2026-09-30/annealing.py", line 31, in identity
+    return {'left':graph_hash(a),'right':graph_hash(b),'configuration':hashlib.sha256(body(c)).hexdigest()}
+                   ~~~~~~~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/neighborhoods.py", line 32, in graph_hash
+    validate_graph(graph);h=hashlib.sha256()
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/contracts.py", line 92, in validate_graph
+    if g.asset not in {'ETH', 'BTC'}:
+       ^^^^^^^
+AttributeError: 'AttributedGraph' object has no attribute 'asset'
+
+======================================================================
+ERROR: test_orientation_context_owner_policy_and_hash_refused_before_loading (__main__.LocalTests.test_orientation_context_owner_policy_and_hash_refused_before_loading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 87, in test_orientation_context_owner_policy_and_hash_refused_before_loading
+    pair = self.create(root)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 33, in create
+    return m.PairSession.create(root, name, a, b, c, **options)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/adapter.py", line 128, in create
+    ident = identity(a, b, config, context)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/adapter.py", line 88, in identity
+    return dict(ordered_pair=engine.ann.identity(a, b, config), context=dict(context),
+                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-normalization-checkpoints-2026-09-30/annealing.py", line 31, in identity
+    return {'left':graph_hash(a),'right':graph_hash(b),'configuration':hashlib.sha256(body(c)).hexdigest()}
+                   ~~~~~~~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/neighborhoods.py", line 32, in graph_hash
+    validate_graph(graph);h=hashlib.sha256()
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/contracts.py", line 92, in validate_graph
+    if g.asset not in {'ETH', 'BTC'}:
+       ^^^^^^^
+AttributeError: 'AttributedGraph' object has no attribute 'asset'
+
+======================================================================
+ERROR: test_progress_resume_and_directional_reference_parity (__main__.LocalTests.test_progress_resume_and_directional_reference_parity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 53, in test_progress_resume_and_directional_reference_parity
+    pair = self.create(root)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 33, in create
+    return m.PairSession.create(root, name, a, b, c, **options)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/adapter.py", line 128, in create
+    ident = identity(a, b, config, context)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/adapter.py", line 88, in identity
+    return dict(ordered_pair=engine.ann.identity(a, b, config), context=dict(context),
+                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-normalization-checkpoints-2026-09-30/annealing.py", line 31, in identity
+    return {'left':graph_hash(a),'right':graph_hash(b),'configuration':hashlib.sha256(body(c)).hexdigest()}
+                   ~~~~~~~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/neighborhoods.py", line 32, in graph_hash
+    validate_graph(graph);h=hashlib.sha256()
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/contracts.py", line 92, in validate_graph
+    if g.asset not in {'ETH', 'BTC'}:
+       ^^^^^^^
+AttributeError: 'AttributedGraph' object has no attribute 'asset'
+
+======================================================================
+ERROR: test_successor_publication_keeps_exact_parent_reference (__main__.LocalTests.test_successor_publication_keeps_exact_parent_reference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 143, in test_successor_publication_keeps_exact_parent_reference
+    pair = self.create(root)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/test_adapter.py", line 33, in create
+    return m.PairSession.create(root, name, a, b, c, **options)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/adapter.py", line 128, in create
+    ident = identity(a, b, config, context)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-local-pair-adapter-2026-09-30/adapter.py", line 88, in identity
+    return dict(ordered_pair=engine.ann.identity(a, b, config), context=dict(context),
+                             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-normalization-checkpoints-2026-09-30/annealing.py", line 31, in identity
+    return {'left':graph_hash(a),'right':graph_hash(b),'configuration':hashlib.sha256(body(c)).hexdigest()}
+                   ~~~~~~~~~~^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/neighborhoods.py", line 32, in graph_hash
+    validate_graph(graph);h=hashlib.sha256()
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/contracts.py", line 92, in validate_graph
+    if g.asset not in {'ETH', 'BTC'}:
+       ^^^^^^^
+AttributeError: 'AttributedGraph' object has no attribute 'asset'
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.141s
+
+FAILED (errors=9)

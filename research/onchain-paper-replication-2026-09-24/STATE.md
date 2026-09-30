@@ -3,6 +3,58 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Typed local-neighborhood pair adapter independently accepted — 2026-09-30T12:37:59.364517+00:00**:
+REVIEW.md SHAbd27eb57a143e63556cc013fa55339b5baa2c711ab0e784921dc8a6972e3a714 accepts the isolated
+matching-local-pair-adapter-2026-09-30 layer. All114 bindings match, the original
+112 and historical sourcefiles remain exact, and derivation changes only declared
+identity/import/schema/backend bytes. Eighteen tests plus a separate singleton
+zero-edge test(.028s) pass. The review confirms real AttributedGraph neighborhood
+support, scalar parity, explicit new schemas, preserved old artifacts and actual
+restored mapping closure. Identifier chunks bound count, not arbitrary string
+length; validator/runtime allocations and aggregate resource limits still require
+an outer guard. No registered dictionary/MCM/cache integration is claimed yet.
+
+Next: commit/push reviewed compact typed-layer artifacts and this checkpoint.
+Then fresh strict graph10 eligibility and, only if ready, checked sequential
+run_temp_check02.py -> preflight02.py -> immediate RAM/disk/HEAD check -> one
+job launch using gate-v2 and actual pushed HEAD. If RAM is insufficient, leave
+temp02 unused and continue maintained-package/registered owner-journal wiring.
+No numerical or empirical owner is active. Current spent32/59 and unadopted60,
+original109resource requirements, fullpaper scope and1,420pendingfits unchanged.
+
+**Local-neighborhood identity fix implemented; review pending — 2026-09-30T12:31:31.612063+00:00**:
+Snapshot pair-adapter and graph10 prelaunch-v2 are committed/pushed at
+b5aaf4fd8bd2ed76768b8bff963199cc4b9d401e. The graph10 gate-v2 remains exact
+74d10f013b07047b09b9e3cf3a8696037abc267fd0b721b38589e3bf7761702c. No temp02,
+preflight02 or Graph10 empirical owner exists. Fresh RAM9621422080bytes
+remains subject to9,797,894,144minimum; current disk23164092416bytes
+must remain>=22,103,159,134before dispatch. Never rerun closedtemp01/wait01.
+
+matching-local-pair-adapter-2026-09-30 implements a new typed variant. red02
+reproduces9failures from real NeighborhoodIndex AttributedGraph inputs in the
+old snapshot-only adapter while7snapshot tests pass. Newlocal identity binds
+parent_hash/center_id, exact node/edge order, dtype/shape/bytes and features;
+weekly snapshots use a separate typed namespace around their original digest.
+Derived annealing/composite sources change only identity/import/schema2→3;
+original accepted components remain byte-exact. Adapter declares newbackendv2
+and adds the identity module source to its fingerprint. No numeric schedule,
+matching objective, capacity, production source/default or empirical gate changed.
+
+Eighteen tiny synthetic tests pass(green02,.279s), including actual local
+neighborhood parity for soft bytes/hard assignment/score, checkpoint recovery,
+complete-score reuse, parent/center/order/feature refusal, oldschema rejection,
+and actual restoredmapping closure.112bindings and exactsource derivation are
+retained. Independent review requested in the newdirectory/REVIEW.md. Do not
+claim realgraph/fullpipeline feasibility or production dictionary/MCM integration.
+
+Next: finish independent typed-layer review, commit/push exact compact evidence,
+then fresh graph10 eligibility checks with checked sequential temp02/preflight02/
+immediate resources/one gate-v2 launch if eligible. If still resource-blocked,
+next engineering is maintained-package/registered owner-journal admission wiring,
+then dictionary directional continuation and MCM partial rows. Source edits must
+not invalidate a concurrently live owner's bindings. All1,420fits remain pending;
+claimed32/59 and unadoptedproposal60 unchanged.
+
 **Graph10 fresh prelaunch route independently accepted — 2026-09-30T12:26:16.035379+00:00**:
 PRELAUNCH_V2_REVIEW.md SHA24ad5e57a6708e7e9f40f90a20618d012b625a298a8bb689223c2ee16b726bff conditionally
 accepts exact gate-v2 SHA74d10f013b07047b09b9e3cf3a8696037abc267fd0b721b38589e3bf7761702c,
