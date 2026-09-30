@@ -1,0 +1,19 @@
+test_array_tampering_rejected_before_loading_any_array (__main__.CheckpointTests.test_array_tampering_rejected_before_loading_any_array) ... ok
+test_budget_and_existing_identity_refusals (__main__.CheckpointTests.test_budget_and_existing_identity_refusals) ... ok
+test_configuration_or_input_identity_change_refused (__main__.CheckpointTests.test_configuration_or_input_identity_change_refused) ... ERROR
+test_rectangular_zero_edge_ties_and_iteration_cap (__main__.CheckpointTests.test_rectangular_zero_edge_ties_and_iteration_cap) ... ok
+test_resume_across_node_edge_normalization_and_iteration_boundaries (__main__.CheckpointTests.test_resume_across_node_edge_normalization_and_iteration_boundaries) ... ok
+
+======================================================================
+ERROR: test_configuration_or_input_identity_change_refused (__main__.CheckpointTests.test_configuration_or_input_identity_change_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-checkpoints-2026-09-30/test_annealing.py", line 62, in test_configuration_or_input_identity_change_refused
+    b.node_features[0,0]=9
+    ~~~~~~~~~~~~~~~^^^^^
+ValueError: assignment destination is read-only
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.292s
+
+FAILED (errors=1)

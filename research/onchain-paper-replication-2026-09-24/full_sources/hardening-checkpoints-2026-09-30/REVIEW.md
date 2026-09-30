@@ -1,0 +1,24 @@
+# Independent resumable hardening prototype review
+
+September 30, 2026. Source and saved synthetic evidence only. No tests, empirical arrays or jobs were executed; active empirical source/HEAD bindings were untouched.
+
+**Verdict: accept this isolated prototype for continued synthetic engineering under its explicit caller-owned input identity contract.** No blocking implementation finding was identified. This is not production/empirical release, matching-capacity admission or a full-memory/runtime/checkpoint orchestration proof.
+
+The initial validation phase checks every input value before any pair selection. Subsequent scans flatten in original C/row-major order, convert each chunk to float64 before comparison, mask already selected rows/columns and use the first chunk argmax. Across chunks only a strictly greater value replaces the retained best; ties retain the earliest eligible flat index, matching legacy float64 greedy hardening. A pair is appended only at the end of a complete scan and pairs remain in choice order. Empty dimensions finish with no pairs. Negative values and signed ties are compatible with the same comparison logic.
+
+State checks enforce strict policy integers, real supported dtype, finite chunk cap, injective in-domain pairs, aligned cursor, completion denominator, best-index location within the already scanned prefix and best-entry eligibility. Best-value JSON float roundtripping preserves the float64 comparison value. Successful advance calls end only at scan-chunk boundaries; all escaping BaseExceptions leave safe false, preventing save or continuation. Recovery uses the last fully saved checkpoint, not a partially mutated state. These checks constrain structure; they do not cryptographically prove the numerical history of arbitrary caller-mutated state dictionaries.
+
+The retained numeric reservation **48*min(n,m) + 64*min(chunk_entries,n*m)** is conservative for the reconstructed selected-pair array, sorted selected endpoints, chunk float64 gather/cast, indices, row/column arrays, membership positions and comparison/gather temporaries. Pairs in JSON/Python lists, validation's Python sets, serialized checkpoint bodies, input residency and caller-held old state are excluded exactly as stated. Rebuilding/sorting endpoint arrays every chunk and repeated whole-matrix scans remain computational work; a chunk budget is not a hard wall-time guarantee or asymptotic speedup. File/Python allocation and external owner guards still require integration review.
+
+The caller must independently verify the matrix body against input_sha256 and keep it immutable for the entire operation. The module checks shape, dtype and equality of the supplied identity string; it does not recompute that identity. Passing an unchanged identity string with modified matrix bytes is outside this contract and is not detected. Load restores the checkpoint's pinned chunk/numeric policy rather than accepting a new resource-policy override; future integration must ensure that recorded policy remains admitted. No separate scientific pair-capacity check is supplied by this hardening component.
+
+Checkpoint publication uses exclusive creation, file fsync and directory fsync before returning its digest. Interrupted partial files remain and same-path overwrite/retry is refused. Restore limits file size, refuses a final symlink, verifies the caller-provided manifest hash, then validates the decoded state. It does not provide safe-root/same-filesystem containment or an external lifecycle admission mechanism; those remain caller responsibilities. There is no detached execution or automatic continuation.
+
+Saved green01 reports **five tests passing in 0.100 seconds** (not six). Tests save/load at every chunk for ties, integer-to-float rounding, strided inputs and empty shape; reconstruct dense assignments against the existing scalar hardener; reject identity/hash/resource errors and existing checkpoints; reject nonfinite input before any pair is chosen; and verify poisoned-state refusal plus recovery from an unchanged prior checkpoint. The interruption is injected at argmax, rather than every mutation instruction; the encompassing BaseException poisoning mechanism supports the broader fail-closed reasoning. Literal full choice-order and high-magnitude uint64/signed-zero assertions would broaden coverage, but no source defect is inferred from their absence. Red01 is a missing-module import failure, not five independent executed failing assertions.
+
+SHA-256 identities:
+
+- `resume.py`: `d3303c091bd8d80cbea640cbf8ca2a8d0223aa97b97300f07c3b072eb1a72cac`
+- `test_resume.py`: `760099249e4804735f60f486cbf71094e8e6c5478aadb2f612082451f073c5f1`
+- `red01.log`: `658d7dcdac3aacec4b96f9f9eb51c2232f1cc255cd78b9f64fde0256938c4b08`
+- `green01.log`: `82808e2c3d40d320a22266e2de3fe953f90d78745d8e6cba3bd5eff54c721b19`

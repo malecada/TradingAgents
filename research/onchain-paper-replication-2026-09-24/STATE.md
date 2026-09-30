@@ -3,6 +3,48 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Hub-edge measurement closed; next original stress week prepared — 2026-09-30T02:08Z:**
+Independent terminal review accepted eth-paper-hub-edge-census-20260930-01:
+35/35 centers complete, guard153.930056s, sampled peak1,048,875,008 bytes,
+zero memory events, childzero and exact owner/cgroup cleanup. All82 source and12
+compact input pins, producer/lifecycle hashes and35cell identities reconcile.
+Logical37,067/allocated192,512 output bytes. Largest center447113 has701,309nodes
+and712,125induced directed edges. This is compact consistency, not source-edge
+replay or matching feasibility. Budget27/54 consumed,27body/fit slots reserved.
+All1,420fits remain pending. Never rerun this closed identity.
+
+Isolated annealing and greedy-hardening checkpoint prototypes now independently
+accepted for synthetic engineering only (seven and five checks respectively).
+No scientific capacity change or production checkpoint integration is claimed.
+
+Next independent action is the first chronologically unfinished original stress
+week, ETH2022-11-07..14: graph-successor-04-2026-09-30/ has seven source wrappers
+for7,928,886rows, unchanged graph protocol and proposed54→55 one-resource-slot
+extension. Source metadata/stat preparation only; no bodies decoded/newclaim.
+Planning estimate10,480,273,085 additional bytes plus10GiBfloor fits current free
+space, but is not a guaranteed upper bound. Independent budget/charter review is
+pending; exact gate, commit/push, fresh admission and guarded SQLite temp-volume
+checks precede one graph launch. Five further missing graphs remain in scope.
+
+**ACTIVE registered hub-edge measurement — 2026-09-30T02:00Z:**
+Independent full verification release accepted and committed/pushed at
+fd4d57484e0e8c74d7f85e1a3fc755f62b421e74. Fresh normal admission READY,
+effective ceiling54, all82 source pins and12 compact inputs verified; ninth
+prior claim terminal, cardinalities body deferred to guarded worker. Preflight
+10,332,651,520 bytes RAM available,24,839,282,688 disk free, no active unit or
+reserved identity. One launch eth-paper-hub-edge-census-20260930-01 is ACTIVE:
+monitor548334/start ticks6185731, supervisor546548, unit
+onchain-replication-eec02ffbfe904a8a94bf6a1b59105202.service, tool session5412.
+Freeze HEAD and all registered source/input bytes. Limits6GiB max/5high/0swap/
+3reserve/9startup/10disk/twoCPUs/540seconds. Follow exact guard/observer and35
+registered cells, verify terminal hashes/accounting and independent review.
+Never duplicate this owner or relaunch its terminal identity. Claim adoption
+consumes27/54 when created; all1,420 fits and original broader scope pending.
+
+Checkpoint prototype A1/A2 correction independently accepted for isolated
+synthetic engineering. Seven checks pass; no empirical/production release.
+Continue work outside active bindings and preserve all historical failed files.
+
 **Full verification complete; release review pending — 2026-09-30T01:57Z:**
 Registered-hub offline02 completed: 2,774 standard passes plus 97 subtests,
 766 neural passes and two CUDA skips; 3,540 total passes. Guard 1,594.166966s,

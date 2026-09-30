@@ -1,0 +1,25 @@
+test_unreachable_phase_states_are_refused_before_checkpoint (__main__.CheckpointTests.test_unreachable_phase_states_are_refused_before_checkpoint) ... FAIL
+test_interrupted_matrix_update_poisoned_state_cannot_be_saved (__main__.CheckpointTests.test_interrupted_matrix_update_poisoned_state_cannot_be_saved) ... FAIL
+
+======================================================================
+FAIL: test_unreachable_phase_states_are_refused_before_checkpoint (__main__.CheckpointTests.test_unreachable_phase_states_are_refused_before_checkpoint)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-checkpoints-2026-09-30/test_annealing.py", line 91, in test_unreachable_phase_states_are_refused_before_checkpoint
+    with self.assertRaises(ValueError):m.save(state,Path(tmp)/'invalid',max_checkpoint_bytes=1024**2)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_interrupted_matrix_update_poisoned_state_cannot_be_saved (__main__.CheckpointTests.test_interrupted_matrix_update_poisoned_state_cannot_be_saved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/matching-checkpoints-2026-09-30/test_annealing.py", line 105, in test_interrupted_matrix_update_poisoned_state_cannot_be_saved
+    with self.assertRaises(ValueError):m.save(state,Path(tmp)/'invalid',max_checkpoint_bytes=1024**2)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.112s
+
+FAILED (failures=2)

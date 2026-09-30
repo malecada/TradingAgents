@@ -117,3 +117,24 @@ Terminal identities:
 - `closure-check02.json`: `e1de948249e84ba208aab880f2f446817f6e46b229b3cafeb925e6ab840f9aca`
 - `offline02/final.json`: `d33c4adafefb46bd1e00f1d78d3fedaa77b051cd5fae047ac978c48a13b96aff`
 - `offline02/child.log`: `26416a7214131390a341cd4675d704726af638640bae55121048a0f9b1efe89e`
+
+## Empirical hub-edge census compact terminal review
+
+Independent compact-evidence review confirms the authorized resource-only measurement completed under committed source **fd4d57484e0e8c74d7f85e1a3fc755f62b421e74** and the reviewed gate. All **82 source pins** and **12 compact input pins** independently match. The cardinalities array body was not reread; its hash/shape/selection verification is attributed to the guarded producer, not duplicated by this review.
+
+The complete denominator is **35 durable cells**. Every cell JSON equals its corresponding row in producer result, lifecycle cell ledger and terminal; all statuses are complete, centers are unique and ascending, and no unavailable cell is hidden. All 37 producer artifact-index entries have matching compact bytes/hashes; all three lifecycle output hashes and claim/terminal links match. Observer evidence joins the same owner, launch, guard and terminal, with financial_completion false. The exact worker command names this experiment, source and gate. Monitor **548334** and the recorded cgroup are absent.
+
+Guard closure records **153.930056420 seconds**, child exit 0, cleanup verified, sampled peak **1,048,875,008 bytes**, and zero recorded high/max/OOM events. These observations apply to this bounded measurement, not future matching or cold-cache resource requirements. The raw guard child-log accounting equals the saved accounting object. Independent stat-only reconstruction confirms **37,067 logical bytes / 192,512 allocated bytes** across the exact producer and three lifecycle-output roots including directory blocks, below the 1 MiB allowance; guard/claim/terminal metadata remain excluded as registered.
+
+The largest reported neighborhood is **hub-edge-005, global center 447113: 701,309 nodes and 712,125 induced directed edges**. Its 76.646572003-second cell timestamp is cumulative elapsed time since producer entry, including preparation/loading, not the duration of that center alone. All 35 reported node counts exceed 10,000; elementary connected-neighborhood lower bounds and source-edge upper bounds hold for each reported induced count. These are compact consistency checks, not independent reconstruction of memberships or induced edges from the source graph.
+
+The accepted extension is now adopted at effective ceiling **54**. The nine prior claim/terminal hash pairs remain exact, and the current program inventory contains those nine plus this closed claim: **17 historical + 10 current = 27 consumed**, leaving **27 allocated slots (12 body + 15 fit)**. There is no spare resource grant and no refunded attempt. All 1,420 financial fits remain pending.
+
+**Verdict: accept terminal closure and compact consistency of the registered 35-center resource measurement.** No source-edge replay, empirical array rerun or independent induced-edge oracle was executed in this review. The result informs sizing only; it does not establish extraction/matching throughput, change the scientific capacity ceiling, authorize truncation, close the original broader pilot/full-fold requirements, or validate a financial strategy. Earlier failed engineering verification and empirical attempts remain preserved.
+
+Closure hashes:
+
+- `empirical-closure01.json`: `bfcdacad2e26ecb3d79f04ac1674ff22e4659de965a2148a5bb56f0423a8c5ed`
+- Lifecycle complete: `9ea4b459d0ae293c2c9bf6e364fcea849900d6f3cec17b8a04efbfdb9c7b65ba`
+- Observer: `91a93b0901786a04e565673b3269911ec3a8cc2b2094fba86d928b01ff8be0ed`
+- Guard final: `997bdd6255b7e771976df5207cf03135e4f171b34f9aff417355f214b9ebbf8d`
