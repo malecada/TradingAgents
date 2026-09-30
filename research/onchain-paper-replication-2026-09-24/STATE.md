@@ -3,6 +3,32 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Published samples → actual dictionary execution independently accepted**:
+full_sources/dictionary-sample-driver-2026-10-01/ now joins the accepted sample
+artifact route to the actual dictionary workload and serial pair consumer.
+Settings come only from the registered route; the caller supplies no numerical
+settings, purposes or callback. Every purpose is derived inside the algorithm.
+Sample/source/owner leases precede and follow each pair and precede final return.
+red01 CLOSED4missing-driver failures/0.001s. check01 CLOSED exit0/session32212:
+4passes/43.542s. The actual tiny three-sample dictionary agrees with the scalar
+reference for every matrix, memberships and ordered representative identities.
+Completed replay forbids PairSession.create/resume and adds no reservations.
+Changed sample after the first pair, unregistered driver and invalid sample event
+refuse further work. This fixture is nonpartitioned; partition coverage remains
+in earlier accepted workload/integration evidence. Replay reconstructs matrices
+and clusters from completed pair scores; dictionary artifact reuse is still due.
+Independent REVIEW SHA00120d71d0b43ce7dc4c8a0bafaaeacdc887914d1c9e7ff5185e773d4b235be7.
+All116bindings match manifest SHA
+4d09956f6c955d6b4055f24774f176e18614a1fd86c431fbebb56e440fe8cc18.
+No active test/empirical job or source freeze. Kernel guard observations are
+mocked; this is bounded resident composition, not empirical resource admission.
+Next safe action: implement registered bounded sampler production/publication
+with exact source and weighted RNG provenance, then dictionary publication and
+strict admission of ordered representatives/memberships/hierarchy; continue MCM
+and complete-representation reuse, mapped populations and physical accounting.
+Preserve all closed identities. Prepare/review cumulative resource amendments
+before additional empirical attempts. All1420financial fits remain pending.
+
 **Current-owner sample publication join independently accepted**:
 full_sources/sample-artifact-route-2026-10-01/ joins an explicit first
 FeatureJournal samples_complete event to actual OwnedJournal/Route and the
@@ -20,10 +46,8 @@ Independent REVIEW SHA295d8d5c4ac93e39aca21fdf83c88261c2eedcbb1039db5bcc3b7ef11b
 All107direct/component bindings match manifest SHA
 00c2c320b18439d4e159936bb6e76da41255e0abb89dea8d8ea4d17d143f501f.
 This is not an empirical source closure. No active sample-join test job.
-Next: connect the actual outer dictionary algorithm to admitted sample artifacts
-and pair consumers, deriving all purposes inside the algorithm. New isolated
-dictionary-sample-driver-2026-10-01/ is being prepared; red01 CLOSED exit1,
-4missing-driver failures/0.001s. No financial fit or empirical attempt.
+The subsequent dictionary-sample-driver component above completes the current
+sample→dictionary execution connection, with no dictionary artifact publication.
 Sampler RNG/source provenance, bounded producer publication, historical reuse,
 dictionary/MCM publication, mapping/scaling and physical quotas remain due.
 All1420financial fits remain pending; historical jobs and budgets unchanged.

@@ -1,0 +1,65 @@
+test_changed_sample_after_first_pair_refuses_next_reservation (__main__.Tests.test_changed_sample_after_first_pair_refuses_next_reservation) ... FAIL
+test_full_dictionary_scalar_parity_and_completed_pair_reuse (__main__.Tests.test_full_dictionary_scalar_parity_and_completed_pair_reuse) ... FAIL
+test_invalid_sample_event_refuses_before_dictionary_workload (__main__.Tests.test_invalid_sample_event_refuses_before_dictionary_workload) ... FAIL
+test_unregistered_driver_refuses_before_pair_reservation (__main__.Tests.test_unregistered_driver_refuses_before_pair_reservation) ... FAIL
+
+======================================================================
+FAIL: test_changed_sample_after_first_pair_refuses_next_reservation (__main__.Tests.test_changed_sample_after_first_pair_refuses_next_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-sample-driver-2026-10-01/test_driver.py", line 53, in test_changed_sample_after_first_pair_refuses_next_reservation
+    f=self.fixture();original=self.m.artifacts.consumer.dictionary_consumer;calls=[]
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-sample-driver-2026-10-01/test_driver.py", line 20, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-sample-driver-2026-10-01/test_driver.py", line 15, in api
+    assert (HERE/'driver.py').is_file(),'published-sample dictionary driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: published-sample dictionary driver missing
+
+======================================================================
+FAIL: test_full_dictionary_scalar_parity_and_completed_pair_reuse (__main__.Tests.test_full_dictionary_scalar_parity_and_completed_pair_reuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-sample-driver-2026-10-01/test_driver.py", line 33, in test_full_dictionary_scalar_parity_and_completed_pair_reuse
+    f=self.fixture();actual=self.run_driver()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-sample-driver-2026-10-01/test_driver.py", line 20, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-sample-driver-2026-10-01/test_driver.py", line 15, in api
+    assert (HERE/'driver.py').is_file(),'published-sample dictionary driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: published-sample dictionary driver missing
+
+======================================================================
+FAIL: test_invalid_sample_event_refuses_before_dictionary_workload (__main__.Tests.test_invalid_sample_event_refuses_before_dictionary_workload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-sample-driver-2026-10-01/test_driver.py", line 71, in test_invalid_sample_event_refuses_before_dictionary_workload
+    f=self.fixture();self.f.event.write_text('{}')
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-sample-driver-2026-10-01/test_driver.py", line 20, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-sample-driver-2026-10-01/test_driver.py", line 15, in api
+    assert (HERE/'driver.py').is_file(),'published-sample dictionary driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: published-sample dictionary driver missing
+
+======================================================================
+FAIL: test_unregistered_driver_refuses_before_pair_reservation (__main__.Tests.test_unregistered_driver_refuses_before_pair_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-sample-driver-2026-10-01/test_driver.py", line 67, in test_unregistered_driver_refuses_before_pair_reservation
+    f=self.fixture(omit=True)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-sample-driver-2026-10-01/test_driver.py", line 20, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/dictionary-sample-driver-2026-10-01/test_driver.py", line 15, in api
+    assert (HERE/'driver.py').is_file(),'published-sample dictionary driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: published-sample dictionary driver missing
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=4)
