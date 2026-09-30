@@ -3,6 +3,79 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Legacy saved-array verification independently CLOSED COMPLETE; freeze released**:
+CLOSURE_REVIEW accepts exact source/receipt/owner/death closure at20:02:05UTC,
+SHA43408e3209caaf774dfd79b28ba1670e675a8d5a59ec0299049fee4b32b72889.
+All1870current+committed bindings and11receipt hashes verified; monitor1780342,
+wrapper1782284,payload1782287/thread1782288 absent, cgroup absent, no activeunits.
+Both legacy saved graphs pass independent identity/structure/aggregate checks,
+total1,037,092,456bytes with zero feature reconstruction errors. verification01
+is permanently closed; do not rerun it. Frozen source99b3032a is now released.
+
+This closes the outstanding saved-array checks for the two legacy resource-week
+graphs; later graph03–08/10 checks were already closed. No full history/BTC
+coverage, raw semantic audit or numerical agreement with the paper is implied.
+No new empirical attempt, predictive fit, budget amendment or prospective reuse
+admission occurred. OriginalFAILEDpilot,109cells and7complete/102unavailable
+history remain preserved.77/109resource requirements supported;33/60spent,
+27allocated12body/15fit;all1420financial fits remain pending.
+
+Next safe action after committing/pushing compact closure: connect accepted
+actual owner/ancestry, pair journal/extent and ordered dictionary/MCM workload
+to maintained PairSession in a bounded synthetic serial consumer. Prove genuine
+registered parent-failure/child continuation, completed-direction reuse without
+solver reentry, orphan reconciliation, whole-workflow quota retention and fatal
+cleanup before empirical resource release. Matching policy4M cap versus
+4,207,854hub pairs and sampler20GiB inner floor require prospective reviewed
+amendments, not truncation or silent substitution. Broader asset/history and
+comparison coverage remains mandatory. No guarded jobs active.
+
+**Both legacy saved-array checks COMPLETE; independent final closure pending**:
+verification01 finished child0/cleanupverified in78.319s; measured peak
+1,153,769,472bytes, memoryhigh/max/OOM events0. January03 andJune13 both match
+their original canonical identities and allfive array hashes/structures/counts.
+Allfour node-feature reconstruction errors are0 for each graph; all mappings
+closed between graphs. Total1,037,092,456arraybytes independently checked.
+January2,049,095nodes/3,182,055edges/4,415,050admittedtransactions; June
+1,768,268nodes/2,518,332edges/3,601,893admittedtransactions.
+
+closure01.json at20:00:57UTC verifies1870current+committed bindings, both exact
+payload receipts/summary, original compact joins, guardlive==final/child0,
+absent monitor1780342/wrapper1782284/payload1782287/cgroup, and no active units.
+Independent final CLOSURE_REVIEW requested; freeze remains until accepted.
+LIVE_REVIEW observed a fresh live receipt but completion overtook direct live
+kernel/process readback; no independent direct-live observation is claimed.
+The payload's maintained guard assertion and persisted guard observations remain
+execution evidence. Original FAILED109-cell pilot and7complete/102unavailable
+history are unchanged. No raw-value/exclusion/uniqueness re-audit or financial
+fit occurred. Subsequent empirical graph reuse still needs prospective admission.
+
+**Legacy saved-array verification launched once — 2026-09-30T19:58UTC**:
+Reviewed source and all compact inputs committed/pushed at
+99b3032a31f7e5b61090ec5adf690c94d352712c. Independent COMMIT_INPUT_REVIEW
+accepted the exact six missing original JSON additions; preflight01failure is
+retained. Freshpreflight02 at19:58:37UTC verified1870current+committed bindings,
+all31compact joins, ten array stats without reading bodies, unusedverification01,
+no active units,7,734,468,608bytes available RAM and19,956,088,832bytes disk.
+
+The single reviewed run_verification.py command is now active in session18570.
+Do not relaunch it. Freeze HEAD99b3032a and all1870source/input bindings until
+exact terminal cleanup/death and independent closure. Receipt directory:
+`full_sources/legacy-array-checker-2026-09-30/verification01/`.
+Guarded sequential check only: two saved graphs,3GiBmax/2GiBhigh/zero swap/twoCPUs/
+3GiBhostreserve/6startup/10disk/1800s. No producer retry, new sample or fit.
+Monitor/unit identity should be read from the exclusive reservation and liveguard
+once source preflight inside the launcher completes. SourcebindingSHA
+f5dcd478dd159f927e58a2c3798497fa669d4940636fdd7d01df0ea1e2eebd4b.
+Next: verify live identity, then both graph summaries and terminal/source/cleanup
+closure. Keep all partial/failure evidence; never reuse verification01.
+Live identity observed:monitorPID1780342/startticks1687347, bootda045a9a-
+8050-4716-b784-249c9e822769, unitonchain-replication-df4552aaa20a4859bb7828cfdd72770f.service.
+At52.141s, peak1,146,580,992bytes, all memoryevents0. January03 graph saved-array
+checks complete:2,049,095nodes/3,182,055directededges/4,415,050admittedtransactions,
+562,558,280arraybytes, exact originalgraphhash, allfour node-feature errors0 and
+all mappingsclosed. June13 and full guard/source/independent closure pending.
+
 **Release committed; preflight01 refused missing committed compact inputs**:
 Reviewed verifier release is pushed atcf9b582d73002dd4178530ed1ce3db150dcd2d63.
 Fresh source preflight failed closed because six original manifest/intent/result
