@@ -1,0 +1,97 @@
+"""Invented two-node saved arrays only; no empirical arrays or source bodies."""
+import hashlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import tempfile
+import unittest
+from unittest.mock import patch
+import numpy as np
+
+HERE=Path(__file__).resolve().parent
+
+def encode(v):return json.dumps(v,sort_keys=True,separators=(',',':'),ensure_ascii=False,allow_nan=False).encode()
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def api():
+    assert (HERE/'arrays.py').is_file(),'independent array checker missing'
+    spec=importlib.util.spec_from_file_location('legacy_array_checker',HERE/'arrays.py')
+    m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
+
+class Tests(unittest.TestCase):
+    def setUp(self):
+        self.m=api();self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
+        self.root=Path(self.temp.name);self.path=self.root/'manifest.json'
+        self.meta={'asset':'ETH','raw_count':3,'admitted_count':3,'exclusion_counts':{},'start_utc':'2022-01-03T00:00:00Z',
+            'end_utc':'2022-01-10T00:00:00Z','available_at':'2022-01-11T00:00:00Z','graph_config_hash':'a'*64,'source_hashes':['b'*64]}
+        self.arrays={'node_ids':np.array(['a','b']), 'edge_index':np.array([[0],[1]],dtype=np.int64),
+            'edge_aggregates':np.array([[3.,5.]]),'edge_features':np.log1p([[3.,5.]]),
+            'node_features':np.log1p([[0.,3.,0.,5.],[3.,0.,5.,0.]])}
+        self.save()
+    def save(self):
+        for name,a in self.arrays.items():np.save(self.root/(name+'.npy'),a,allow_pickle=False)
+        self.manifest={'metadata':self.meta,'arrays':{n:{'path':n+'.npy','bytes':(self.root/(n+'.npy')).stat().st_size,'sha256':sha(self.root/(n+'.npy'))} for n in self.arrays},
+            'graph_hash':hashlib.sha256(encode(self.meta|{n:a.tolist() for n,a in self.arrays.items()})).hexdigest()}
+        self.seal()
+    def seal(self):
+        self.path.write_bytes(encode(self.manifest));self.expected=sha(self.path)
+        self.total=sum(x['bytes'] for x in self.manifest['arrays'].values())
+    def verify(self,**kw):
+        return self.m.verify(self.path,expected_manifest_sha256=self.expected,
+            expected_array_bytes=self.total,max_array_bytes=100000,**kw)
+    def test_independent_identity_counts_and_four_features(self):
+        before={p.name:sha(p) for p in self.root.iterdir()};r=self.verify()
+        self.assertEqual(r['graph_hash'],self.manifest['graph_hash']);self.assertEqual(r['nodes'],2)
+        self.assertEqual(r['directed_edges'],1);self.assertEqual(r['admitted_transactions'],3)
+        self.assertEqual(r['node_feature_max_absolute_errors'],dict.fromkeys(map(str,range(4)),0.))
+        self.assertEqual(r['array_bytes'],self.total);self.assertTrue(r['array_mappings_closed'])
+        self.assertEqual(before,{p.name:sha(p) for p in self.root.iterdir()})
+    def test_changed_manifest_hash_refused(self):
+        self.path.write_text('{}')
+        with self.assertRaises(ValueError):self.verify()
+    def test_hash_corruption_and_extra_file_refused(self):
+        f=self.root/'edge_aggregates.npy';raw=f.read_bytes();f.write_bytes(raw[:-1]+bytes([raw[-1]^1]))
+        with self.assertRaises(ValueError):self.verify()
+        f.write_bytes(raw);(self.root/'extra').write_text('unexpected')
+        with self.assertRaises(ValueError):self.verify()
+    def test_rehashed_bad_feature_still_refused_and_maps_closed(self):
+        self.arrays['node_features'][0,0]=.1;self.save();opened=[];load=self.m.np.load
+        def record(*a,**k):
+            v=load(*a,**k);opened.append(v);return v
+        with patch.object(self.m.np,'load',record),self.assertRaises(ValueError):self.verify()
+        self.assertEqual(len(opened),5);self.assertTrue(all(v._mmap.closed for v in opened))
+    def test_admitted_count_and_exclusion_conservation_refused(self):
+        self.meta['admitted_count']=4;self.save()
+        with self.assertRaises(ValueError):self.verify()
+    def test_rehashed_unsorted_nodes_and_invalid_endpoints_refused(self):
+        self.arrays['node_ids']=np.array(['b','a']);self.save()
+        with self.assertRaises(ValueError):self.verify()
+        self.arrays['node_ids']=np.array(['a','b']);self.arrays['edge_index'][0,0]=2;self.save()
+        with self.assertRaises(ValueError):self.verify()
+    def test_rehashed_wrong_dtype_and_fractional_counts_refused(self):
+        self.arrays['node_features']=self.arrays['node_features'].astype(np.float32);self.save()
+        with self.assertRaises(ValueError):self.verify()
+        self.arrays['node_features']=self.arrays['node_features'].astype(np.float64)
+        self.arrays['edge_aggregates'][0,0]=2.5;self.save()
+        with self.assertRaises(ValueError):self.verify()
+    def test_symlink_and_hardlink_are_refused(self):
+        f=self.root/'node_ids.npy';moved=self.root.parent/(self.root.name+'-ids.npy');f.rename(moved);self.addCleanup(moved.unlink)
+        f.symlink_to(moved)
+        with self.assertRaises(ValueError):self.verify()
+        f.unlink();os.link(moved,f)
+        with self.assertRaises(ValueError):self.verify()
+    def test_budget_checked_before_array_load(self):
+        with patch.object(self.m.np,'load',side_effect=AssertionError('array opened')):
+            with self.assertRaises(ValueError):
+                self.m.verify(self.path,expected_manifest_sha256=self.expected,expected_array_bytes=self.total,max_array_bytes=self.total-1)
+    def test_wrong_independent_graph_identity_refused(self):
+        self.manifest['graph_hash']='f'*64;self.seal()
+        with self.assertRaises(ValueError):self.verify()
+    def test_success_explicitly_closes_all_mappings(self):
+        opened=[];load=self.m.np.load
+        def record(*a,**k):
+            v=load(*a,**k);opened.append(v);return v
+        with patch.object(self.m.np,'load',record):self.verify()
+        self.assertEqual(len(opened),5);self.assertTrue(all(v._mmap.closed for v in opened))
+
+if __name__=='__main__':unittest.main(verbosity=2)

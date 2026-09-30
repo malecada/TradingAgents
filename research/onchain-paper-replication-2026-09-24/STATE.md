@@ -3,6 +3,113 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Corrected named offline verification COMPLETE; source freeze released — September30,2026**:
+Correction offline01 completed with child0/cleanupverified after1810.802s.
+Standard2776passed/97subtests; neural876passed/2skipped/12subtests. Total3652
+tests passed plus109subtests. This is the named reviewed offline profile;
+withheld historical files were not tested. Guard peak2,509,381,632bytes with
+memoryhigh/max/OOM events0. The earlier failed attempt and all53failed cells
+remain retained; this fresh success does not replace that historical outcome.
+
+`full_sources/offline-hash-fixture-fix-2026-09-30/closure01.json` records all
+1798current+committed bindings,1680trackedPython/86package/265test inventories,
+six final receipt hashes and unchanged source0c100035. Independent closure at
+19:17:02UTC confirms monitor1115110, wrapper/verifier and knownpytest children
+absent, cgroup absent and no active replication units. The guard stop command
+returned5 after the unit was already inactive/dead; independent absence and
+emptyControlGroup support cleanup rather than the stop return code alone.
+Independent CLOSURE_REVIEW accepts release of the source freeze. Never rerun
+either closed offline01 identity. No empirical execution or fit is released.
+Closure review SHA256:
+b9cccac042899cbe7d807a08e1d59bb338714ce86007649033b5abd37df6bbfd.
+
+The independent legacy saved-array checker is accepted with12passing tiny tests
+and closedAC1 cleanup correction. Preserve its original code/reviews/redlogs.
+Next safe action: commit/push only the reviewed checker and compact closure
+evidence, then implement the legacy failed-claim metadata adapter and bounded
+exclusive verifier wrapper; review and commit the release before reading any
+of the ten real array bodies. The two original graphs remain unverified by
+this new checker. Actual pair/journal/workload/orphan integration also remains
+outstanding. No jobs active at this checkpoint.77/109resource requirements
+supported;33/60spent and27fullyallocated12body/15fit;all1420fits pending.
+
+After closure, the next component was implemented in isolated `metadata.py`:
+pure joins of the31compact receipts, original failed109-cell claim, two complete
+graph phases, seven-day memberships and raw/canonical graph configuration.
+`test_metadata.py` uses retained compact JSON and in-memory invalid variants;
+ten cases pass after ten missing-implementation failures. This reads no array
+or transaction/mapping bodies, claims no new outcomes and does not repeat any
+historical job. Independent METADATA_REVIEW requested. These files are not part
+of the array-only review; filesystem binding and finite wrapper remain required
+before an actual saved-array verification. No verification job has been started.
+
+**Standard verification passed; neural batch and source freeze remain ACTIVE**:
+Correction offline01 standard batch passed2776tests/97subtests in1037.09s.
+The79-module neural batch is still running. At elapsed1393.569s the guard
+reported2,238,922,752bytes peak, no memoryhigh/max/OOM events,20.02GB free disk
+and9.53GB available RAM. This partial observation is not a full-suite pass.
+Independent LIVE_REVIEW.md accepts its earlier exact1798binding/source, live
+owner and kernel-control observation, SHA
+50a16eb72a907ddb7c060105e380b3d71d4b76a29692b23dbf4447e0d86e118f.
+The same monitor1115110/unit9220914c/session40884 remains the only active job;
+HEAD0c100035 and all frozen source/inventories must remain unchanged.
+
+Isolated untracked candidate `full_sources/legacy-array-checker-2026-09-30/`
+now implements independent saved-array numerical/hash/extent checks and explicit
+mapping cleanup. Eleven tiny invented-array unittest cases passed after eleven
+expected pre-implementation failures. Independent review foundAC1: rejected
+NPZ archives disguised asNPY leaked handles. Original candidate bytes retained;
+red02 reproduced the defect, explicit archive cleanup fixes it, green02 passes
+12tests. REVIEW_V2 independently accepts this isolated corrected component, SHA
+6ecd22c740af98e3b6fd786be5be8ba377d8a73dff9bce962cbb9b8f5f370c39.
+No empirical arrays were read. Metadata adapter, guarded release, committed source
+and actual legacy verification remain pending. Work remains outside the active
+frozen closure and must not be staged until that run closes. No ResearchRun or
+financial fit launched; budget and all1420pending fits unchanged.
+
+Later live observation: elapsed1703.630s, peak2,410,348,544bytes, all memory
+events0, neural batch beyond72% with no reported failures and no terminal yet.
+Existing15-minute continuation automation remains ACTIVE. Next safe actions:
+close/review the full verification once terminal and owner-dead, then commit
+and push only named compact evidence and this reviewed checker. Before actual
+legacy-array reads, implement/review the failed-original-claim metadata adapter
+and finite wrapper with committed bindings. No prior historical identity may
+be rerun and no full-suite pass or empirical release is asserted here.
+
+
+**Corrected full offline verification ACTIVE — 2026-09-30T18:30:37.122634+00:00**:
+The independently reviewed fixture corrections, accepted isolated workload,
+legacy metadata preparation and failed prior verification evidence are committed
+and pushed at `0c100035b96b6e50cf9231d8b018eb67d0bcb2c1`. Fresh preflight01 at
+2026-09-30T18:29:24Z verified all1798 current+committed bindings,1680 tracked Python
+files,86requiredpackage/265namedtestfiles and the committed release review.
+Pinned runtimePython3.13.13/NumPy2.3.0/SciPy1.17.1/Torch2.10.0+cu128 observed;
+9,766,760,448bytes available RAM and21,160,837,120bytes disk; no active predecessor
+and unused new receipt confirmed. This does not verify GPU feasibility.
+
+The new correction offline01 was launched exactly once (session40884), under
+unit `onchain-replication-9220914c0ad0439cb1320854e0e6931d.service`,
+monitorPID1115110, owner kindsynthetic-disk-fixture-correction-offline01.
+SourcebindingsSHA68b146f63204502c55bf04effcadca906f5e0a30cf54cb3fe34f8c881484af64.
+Receipt: `full_sources/offline-hash-fixture-fix-2026-09-30/offline01/`.
+Observed running after56.1s, no memoryhigh/max/OOM events.
+Limits3GiBmax/2.75GiBhigh/zero swap/two CPUs/3GiBhostreserve/6GiBstartup/
+10GiBfree disk/3600s. HEAD, all1798 bindings and1680tracked Python/86package/
+265named-test inventories are FROZEN until exact terminal/cleanup/death closure.
+Do not edit frozen files, stage newly tracked Python or commit while live.
+Independent read-only live review is requested; STATE and new isolated untracked
+preparation outside the closure may advance. Never relaunch this identity.
+
+Next: inspect both standard and neural summaries, retain any failure, verify
+source/owner/kernel cleanup and independent closure before broad success. No
+empirical trial or financial fit started. Ordinary engineering can continue in
+new isolated untracked files outside frozen dependencies: actual pair-journal/
+workload composition, orphan reconciliation, complete-feature reuse and legacy
+saved-array checker preparation remain outstanding. Any newpytest module must
+enter reviewed admission only after the freeze; do not bypass the profile.
+The real mapped sampler still requires20GiB internally; later registered10GiB
+policy adaptation or adequate disk remains a separate prerequisite.77/109 resource
+requirements supported;33/60spent,27allocated12body/15fit;all1420fits pending.
 
 **Failed verification CLOSED;53 fixture failures corrected — 2026-09-30T18:24:32.030256+00:00**:
 Owner offline01 terminated FAILED after1898.526s (child1), with standard

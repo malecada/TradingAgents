@@ -1,0 +1,26 @@
+test_admitted_count_and_exclusion_conservation_refused (__main__.Tests.test_admitted_count_and_exclusion_conservation_refused) ... ok
+test_budget_checked_before_array_load (__main__.Tests.test_budget_checked_before_array_load) ... ok
+test_changed_manifest_hash_refused (__main__.Tests.test_changed_manifest_hash_refused) ... ok
+test_disguised_archive_is_closed_on_refusal (__main__.Tests.test_disguised_archive_is_closed_on_refusal) ... FAIL
+test_hash_corruption_and_extra_file_refused (__main__.Tests.test_hash_corruption_and_extra_file_refused) ... ok
+test_independent_identity_counts_and_four_features (__main__.Tests.test_independent_identity_counts_and_four_features) ... ok
+test_rehashed_bad_feature_still_refused_and_maps_closed (__main__.Tests.test_rehashed_bad_feature_still_refused_and_maps_closed) ... ok
+test_rehashed_unsorted_nodes_and_invalid_endpoints_refused (__main__.Tests.test_rehashed_unsorted_nodes_and_invalid_endpoints_refused) ... ok
+test_rehashed_wrong_dtype_and_fractional_counts_refused (__main__.Tests.test_rehashed_wrong_dtype_and_fractional_counts_refused) ... ok
+test_success_explicitly_closes_all_mappings (__main__.Tests.test_success_explicitly_closes_all_mappings) ... ok
+test_symlink_and_hardlink_are_refused (__main__.Tests.test_symlink_and_hardlink_are_refused) ... ok
+test_wrong_independent_graph_identity_refused (__main__.Tests.test_wrong_independent_graph_identity_refused) ... ok
+
+======================================================================
+FAIL: test_disguised_archive_is_closed_on_refusal (__main__.Tests.test_disguised_archive_is_closed_on_refusal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/legacy-array-checker-2026-09-30/test_arrays.py", line 99, in test_disguised_archive_is_closed_on_refusal
+    self.assertIsNone(opened[0].zip)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: <zipfile.ZipFile file=<_io.BufferedReader name='/tmp/tmp671ugfc3/edge_aggregates.npy'> mode='r'> is not None
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.065s
+
+FAILED (failures=1)
