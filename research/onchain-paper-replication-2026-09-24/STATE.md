@@ -3,6 +3,34 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Registered-owner numerical integration independently accepted (synthetic scope)**:
+The accepted serial component and review are committed/pushed at e23b9256.
+New isolated full_sources/pair-registered-integration-2026-09-30/check01.log
+records six tests passing in1011.021s, exit0; session11459 completed and
+PID1808226 is absent. Actual tiny ResearchRun/Binding/failed successor admission
+composed with real PairSession arrays/journals. The seven-sample/two-motif
+partitioned dictionary matches every reference distance matrix, hierarchy,
+membership and medoid center. Partial MCM recovery matches every float32 cell
+and center/motif order. Completed dictionary/MCM replay across a failed run
+forbids PairSession.create/resume and spends no additional pair reservations.
+Failed-owner bytes remain unchanged; logical ancestor charges carry forward.
+Current guard expiry, revived parent cgroup and altered registered parent
+reference refuse before pair creation/replay as tested.
+
+This remains a synthetic integration harness: kernel guard/death observations
+are mocked; pair-root/parent routing is fixture construction; the inherited
+required-graph hash is a placeholder. Production workload/graph/ancestry joins,
+physical quotas, orphan reconciliation, scalable journal/lease verification,
+full representation reuse without pair APIs and mapped MCM remain mandatory.
+Repeated full ancestry/source checks make this tiny integration slow; this is
+not scaled feasibility. No empirical release or complete source-closure claim.
+Independent REVIEW accepted the synthetic fixture scope, SHA256
+ac4b9e39480c1075e0ce9c868e4bed8cdd57f612b562ff01dde4ec5724a08ac0;
+all42direct-file bindings verified. No active test/guarded job, financial fit,
+budget change or historical rerun. Next safe work: production registered pair routing with
+admitted graph/sample/workload identities, then retained physical quota and
+orphan recovery before prospective resource release. All1420fits remain pending.
+
 **Serial pair/journal/workload composition independently accepted; integration pending**:
 New isolated `full_sources/pair-serial-composition-2026-09-30/serial.py` connects
 maintained PairSession with accepted policy-derived extent reservations and
