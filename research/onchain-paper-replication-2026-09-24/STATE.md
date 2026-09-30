@@ -4,6 +4,58 @@ This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
 
+**Registered failed-ancestry precheck implemented — 2026-09-30T16:51:05.764053+00:00**:
+Graph10/verifier10 and coverage05 reviewed compact evidence is committed and
+pushed at `2b3bb582f17bf570ab11e1b01457574acfbaaeb7`. No active empirical/numerical
+job or guarded unit remains; source freeze is released. The installed15.03GiB
+RAM ceiling remains the operational constraint. This heartbeat performed only
+bounded synthetic engineering with temporary Git/ResearchRun fixtures.
+
+New `full_sources/pair-ancestry-2026-09-30/ancestry.py` joins an actual active
+successor claim and its registered selected producer, version2 plan, immediate
+failed journal and ordered death-evidence input to the accepted death checker.
+It verifies at most8 exact failed owners, full sibling coverage, original
+lifecycle claims and historical registered job/plan/continuation path/hash joins.
+Each predecessor must be dead; complete representations require reuse. The full
+chain's death observations, optional terminal inventories and file signatures
+are checked again before return. No directories, journals, arrays or pair state
+are created by this checker. Files are compact, bounded2MiB regular same-device
+nonsymlink metadata. This is a checked snapshot, not a process lock.
+
+Independent initial REVIEW withheld acceptance for A1 parent read preceding
+fixed-path admission, A2 an earlier ancestor's final guard appearing during
+later checks, and A3 erased historical registered continuation. All original
+source/tests and failing counterexamples are retained. The corrected source
+addresses all three. `green02.log` records28 passing real lifecycle/journal
+synthetic tests in10.966s; only OS death predicates are mocked. SourceSHA
+f5975ed17d913a58fe7e5b2776dc56aeb541c06ddb8a0a7604b62f52129a841c,
+testSHAbe81013e3266f37288b853a266873e32b22e13d01496f4874e4b88c89f1d69ae,
+green02SHAcb4bd6512e070ef7e5200be98e344a1ce776c1aa68630e467f869b40f5019f6d.
+`bindings.json` pins237 files (223 inherited unchanged +14 additions), SHA
+76643a08e5bb2ef153ff9a45770cb664ad777090073aa6a6e06847b5b0478cd1.
+Corrected independent REVIEW_V2 ACCEPTS the bounded prerequisite scope; SHA
+5f1476abfb538eedbb5c864a598d0262dc920d83376ed38cabde45991ece93cd.
+
+The maintained numerical package is unchanged and its closed offline profile was
+not rerun. This component is not yet a production consumer. Its explicit flags
+remain continuation_admitted=false, numerical_compatibility_verified=false,
+outputs_verified=false and arrays_read=false. Full active-worker ownership,
+source/runtime compatibility, pair workload membership, checkpoint integrity,
+orphan recovery and whole-workflow quotas remain separate prerequisites.
+
+Next safe action: commit/push the independently accepted bounded addition,
+then compose ancestry checks with the actual successor's live ownership and
+pair-journal/extent layer before dictionary/MCM routing. Add integrated synthetic
+parent-failure/child-continuation and completed-work-no-replay checks. Prepare
+legacy graph array checks and a prospective cumulative resource amendment in
+parallel with independently executable engineering.77/109 resource requirements
+supported,32 remain;33/60 spent and all remaining27 allowances allocated12 body /
+15 fit batches. All1420 fits remain pending. No empirical job, closed profile or
+spent sample was repeated. The heartbeat's stale unfinished-graph instruction
+was updated to this continuation phase without changing its cadence or notification
+intent. All13 tasks, full architecture and C01–C18 remain in scope.
+
+
 **December graph and saved-array verification CLOSED; local RAM ceiling retained — 2026-09-30T16:21:34.249707+00:00**:
 The user identifies installed RAM as the practical ceiling. Current host snapshot:
 16,135,794,688 bytes total (15.03 GiB), 9,339,478,016 bytes available (8.70 GiB).

@@ -1,0 +1,226 @@
+test_bound_death_input_drift_refused (test_ancestry.AncestryTests.test_bound_death_input_drift_refused) ... FAIL
+test_changed_historical_lifecycle_claim_refused (test_ancestry.AncestryTests.test_changed_historical_lifecycle_claim_refused) ... FAIL
+test_changed_historical_representation_claim_refused (test_ancestry.AncestryTests.test_changed_historical_representation_claim_refused) ... FAIL
+test_changed_parent_journal_refused (test_ancestry.AncestryTests.test_changed_parent_journal_refused) ... FAIL
+test_completed_representation_refused (test_ancestry.AncestryTests.test_completed_representation_refused) ... FAIL
+test_current_journal_must_not_exist_before_ancestry_check (test_ancestry.AncestryTests.test_current_journal_must_not_exist_before_ancestry_check) ... FAIL
+test_fake_run_refused (test_ancestry.AncestryTests.test_fake_run_refused) ... FAIL
+test_foreign_sibling_refused (test_ancestry.AncestryTests.test_foreign_sibling_refused) ... FAIL
+test_historical_claim_changing_during_death_check_refused (test_ancestry.AncestryTests.test_historical_claim_changing_during_death_check_refused) ... FAIL
+test_historical_symlink_refused (test_ancestry.AncestryTests.test_historical_symlink_refused) ... FAIL
+test_live_ancestor_monitor_refused (test_ancestry.AncestryTests.test_live_ancestor_monitor_refused) ... FAIL
+test_older_ancestor_live_cannot_hide_behind_dead_parent (test_ancestry.AncestryTests.test_older_ancestor_live_cannot_hide_behind_dead_parent) ... FAIL
+test_real_failed_chain_joins_current_admitted_successor_without_writes (test_ancestry.AncestryTests.test_real_failed_chain_joins_current_admitted_successor_without_writes) ... FAIL
+test_sibling_appearing_during_death_check_refused (test_ancestry.AncestryTests.test_sibling_appearing_during_death_check_refused) ... FAIL
+test_source_drift_refused (test_ancestry.AncestryTests.test_source_drift_refused) ... FAIL
+test_terminal_current_run_refused (test_ancestry.AncestryTests.test_terminal_current_run_refused) ... FAIL
+test_unregistered_routing_refused (test_ancestry.AncestryTests.test_unregistered_routing_refused) ... FAIL
+
+======================================================================
+FAIL: test_bound_death_input_drift_refused (test_ancestry.AncestryTests.test_bound_death_input_drift_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+======================================================================
+FAIL: test_changed_historical_lifecycle_claim_refused (test_ancestry.AncestryTests.test_changed_historical_lifecycle_claim_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+======================================================================
+FAIL: test_changed_historical_representation_claim_refused (test_ancestry.AncestryTests.test_changed_historical_representation_claim_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+======================================================================
+FAIL: test_changed_parent_journal_refused (test_ancestry.AncestryTests.test_changed_parent_journal_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+======================================================================
+FAIL: test_completed_representation_refused (test_ancestry.AncestryTests.test_completed_representation_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+======================================================================
+FAIL: test_current_journal_must_not_exist_before_ancestry_check (test_ancestry.AncestryTests.test_current_journal_must_not_exist_before_ancestry_check)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+======================================================================
+FAIL: test_fake_run_refused (test_ancestry.AncestryTests.test_fake_run_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+======================================================================
+FAIL: test_foreign_sibling_refused (test_ancestry.AncestryTests.test_foreign_sibling_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+======================================================================
+FAIL: test_historical_claim_changing_during_death_check_refused (test_ancestry.AncestryTests.test_historical_claim_changing_during_death_check_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+======================================================================
+FAIL: test_historical_symlink_refused (test_ancestry.AncestryTests.test_historical_symlink_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+======================================================================
+FAIL: test_live_ancestor_monitor_refused (test_ancestry.AncestryTests.test_live_ancestor_monitor_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+======================================================================
+FAIL: test_older_ancestor_live_cannot_hide_behind_dead_parent (test_ancestry.AncestryTests.test_older_ancestor_live_cannot_hide_behind_dead_parent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+======================================================================
+FAIL: test_real_failed_chain_joins_current_admitted_successor_without_writes (test_ancestry.AncestryTests.test_real_failed_chain_joins_current_admitted_successor_without_writes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+======================================================================
+FAIL: test_sibling_appearing_during_death_check_refused (test_ancestry.AncestryTests.test_sibling_appearing_during_death_check_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+======================================================================
+FAIL: test_source_drift_refused (test_ancestry.AncestryTests.test_source_drift_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+======================================================================
+FAIL: test_terminal_current_run_refused (test_ancestry.AncestryTests.test_terminal_current_run_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+======================================================================
+FAIL: test_unregistered_routing_refused (test_ancestry.AncestryTests.test_unregistered_routing_refused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 33, in setUp
+    self.m=api(); self.tmp=tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 25, in api
+    assert (HERE/'ancestry.py').is_file(), 'registered failed ancestry component missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered failed ancestry component missing
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.004s
+
+FAILED (failures=17)

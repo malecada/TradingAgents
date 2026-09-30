@@ -1,0 +1,58 @@
+test_bound_death_input_drift_refused (test_ancestry.AncestryTests.test_bound_death_input_drift_refused) ... ok
+test_changed_historical_lifecycle_claim_refused (test_ancestry.AncestryTests.test_changed_historical_lifecycle_claim_refused) ... ok
+test_changed_historical_representation_claim_refused (test_ancestry.AncestryTests.test_changed_historical_representation_claim_refused) ... ok
+test_changed_parent_journal_refused (test_ancestry.AncestryTests.test_changed_parent_journal_refused) ... ok
+test_completed_representation_refused (test_ancestry.AncestryTests.test_completed_representation_refused) ... ok
+test_current_journal_must_not_exist_before_ancestry_check (test_ancestry.AncestryTests.test_current_journal_must_not_exist_before_ancestry_check) ... ok
+test_earlier_parent_completing_during_later_death_check_refused (test_ancestry.AncestryTests.test_earlier_parent_completing_during_later_death_check_refused) ... ok
+test_fake_run_refused (test_ancestry.AncestryTests.test_fake_run_refused) ... ok
+test_foreign_parent_path_refused_before_read (test_ancestry.AncestryTests.test_foreign_parent_path_refused_before_read) ... FAIL
+test_foreign_sibling_refused (test_ancestry.AncestryTests.test_foreign_sibling_refused) ... ok
+test_historical_claim_changing_during_death_check_refused (test_ancestry.AncestryTests.test_historical_claim_changing_during_death_check_refused) ... ok
+test_historical_symlink_refused (test_ancestry.AncestryTests.test_historical_symlink_refused) ... ok
+test_live_ancestor_monitor_refused (test_ancestry.AncestryTests.test_live_ancestor_monitor_refused) ... ok
+test_older_ancestor_live_cannot_hide_behind_dead_parent (test_ancestry.AncestryTests.test_older_ancestor_live_cannot_hide_behind_dead_parent) ... ok
+test_real_failed_chain_joins_current_admitted_successor_without_writes (test_ancestry.AncestryTests.test_real_failed_chain_joins_current_admitted_successor_without_writes) ... ok
+test_registered_boolean_schema_refused (test_ancestry.AncestryTests.test_registered_boolean_schema_refused) ... ok
+test_registered_duplicate_ancestry_refused (test_ancestry.AncestryTests.test_registered_duplicate_ancestry_refused) ... ok
+test_registered_excessive_depth_refused (test_ancestry.AncestryTests.test_registered_excessive_depth_refused) ... ok
+test_registered_omitted_older_proof_refused (test_ancestry.AncestryTests.test_registered_omitted_older_proof_refused) ... ok
+test_registered_policy_change_refused (test_ancestry.AncestryTests.test_registered_policy_change_refused) ... ok
+test_registered_reversed_ancestry_refused (test_ancestry.AncestryTests.test_registered_reversed_ancestry_refused) ... ok
+test_sibling_appearing_during_death_check_refused (test_ancestry.AncestryTests.test_sibling_appearing_during_death_check_refused) ... ok
+test_source_drift_refused (test_ancestry.AncestryTests.test_source_drift_refused) ... ok
+test_terminal_current_run_refused (test_ancestry.AncestryTests.test_terminal_current_run_refused) ... ok
+test_unregistered_routing_refused (test_ancestry.AncestryTests.test_unregistered_routing_refused) ... ok
+
+======================================================================
+FAIL: test_foreign_parent_path_refused_before_read (test_ancestry.AncestryTests.test_foreign_parent_path_refused_before_read)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 248, in test_foreign_parent_path_refused_before_read
+    with patch.object(self.m,'_read',side_effect=guarded),self.assertRaises(ValueError):self.verify()
+                                                                                        ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 135, in verify
+    args.update(kwargs);return self.m.verify(self.current,**args)
+                               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/ancestry.py", line 166, in verify
+    parent_manifest=read(current,expected)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/ancestry.py", line 61, in read
+    def read(path,expected=None):return _read(root,path,snapshots,expected)[0]
+                                        ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1169, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1173, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/mock.py", line 1240, in _execute_mock_call
+    result = effect(*args, **kwargs)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 246, in guarded
+    self.assertNotEqual(path,self.foreign,'foreign parent metadata was opened')
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PosixPath('/tmp/tmplsjnk21b/unrelated/example-a/failed.json') == PosixPath('/tmp/tmplsjnk21b/unrelated/example-a/failed.json') : foreign parent metadata was opened
+
+----------------------------------------------------------------------
+Ran 25 tests in 9.723s
+
+FAILED (failures=1)

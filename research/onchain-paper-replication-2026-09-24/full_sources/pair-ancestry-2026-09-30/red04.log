@@ -1,0 +1,15 @@
+test_registered_historical_parent_cannot_be_erased (test_ancestry.AncestryTests.test_registered_historical_parent_cannot_be_erased) ... FAIL
+
+======================================================================
+FAIL: test_registered_historical_parent_cannot_be_erased (test_ancestry.AncestryTests.test_registered_historical_parent_cannot_be_erased)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-ancestry-2026-09-30/test_ancestry.py", line 281, in test_registered_historical_parent_cannot_be_erased
+    with self.assertRaises(ValueError):self.verify()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.428s
+
+FAILED (failures=1)
