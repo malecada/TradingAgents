@@ -3,7 +3,105 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
-**Next graph registration reviewed — 2026-09-30T02:20Z:**
+**Graph04 independent terminal review accepted — 2026-09-30T02:48:33.180462+00:00:**
+Independent compactterminalreview accepted all63verifierbindings, result/rawlog
+identities, graphhash andcleanup. Graph04 is complete and independently verified
+within the saved-array scope. No raw-source replay or fitting. Commit/push this
+closure and reviewedpreservationprep next, thenfreshchecks andoneclosed-ledger
+preservationlaunch. Budget28/55; alloriginalremainingwork staysrequired.
+
+**Graph04 array verification complete — 2026-09-30T02:47:46.695741+00:00:**
+The new finite verifier completed once:1,635,871nodes,2,107,009directed edges,
+428,311,272arraybytes,graphhash738f559e780109522baacea87b1cb2310f0d1896b030016ae9fd152210b5cb20.
+Independent graphidentity/ordering/endpoint/count/log1p/nodefeature reconstruction
+passed; allfour nodefeature maxerrors0. Rawuniqueness/values/exclusions remain
+producer evidence, not raw-replayed. Guard27.455860s, sampled168,448,000bytes,
+zeroevents/childzero/cleanup; monitor645253/cgroupabsent; all63bindings andHEAD
+unchanged. closure01.json saved; independentterminalreview requested. Do notrerun.
+No empirical or verification process nowactive. Budget28/55,all1,420fits pending.
+Next: afterterminalreview commit/push graph04compactevidence,newverifierreceipts,
+and approvedclosed-ledgerpreservationpreparation; freshresources/identity/dependency
+checks before one closed-ledger-offload-2026-09-30-01 launch. Freezeitsbindings/HEAD
+whileactive. No sourcebodyhash, remoteupload or localeviction has occurred yet.
+The graph04arrays/SQLite remainlocalonly; oldgraph03ledger gainsremote preservation
+only after fullbody+restorationmetadata roundtrip. Existingrawbackups unchanged.
+
+**Graph04 array verification complete — 2026-09-30T02:46:28.357007+00:00:**
+Independent graph04compactclosure and newarrayverificationplan accepted. Fresh63
+bindings and HEADd76664479712a7713a928fea5f7778869f351106 matched,10,345,107,456bytes
+RAMavailable/20,966,752,256diskfree/noactiveunit. One graph-verification-04-2026-09-30
+is nowcomplete: monitor645253/ticksabsent, unitonchain-replication-4900ac45d0924f5cabb7f1b22592beba.service, toolsession79990.
+Freeze verifierbindings/HEAD untilterminalcleanup; neverrepeatthisverification.
+Limits3GiBmax/2high/0swap/3reserve/6startup/10disk/1800s. Afterclosure verifyall
+hashes/results/owner cleanup and obtainindependentterminalreview. Thencommit/push
+compactgraph04,verificationandreviewedpreservationprep. Proposedclosedgraph03
+ledgeroffloadpassedrealcompact/stateligibility withoutbodyread; its22bindings,
+sourceandtransferdeadlinesreviewaccepted. Freshhost/disk/owner checksstillrequired
+beforeonepreservationlaunch. No storagejob or eviction yet. Budget28/55; allfits
+pending. Keep allclosedempirical/storage identities terminal.
+
+**Graph04 complete; array verification and preservation release next — 2026-09-30T02:43:16.337879+00:00:**
+eth-paper-graph-resource-20260930-04 is terminal COMPLETE: all eight cells, seven
+source days and full2022-11-07graph.7,928,886raw rows→3,097,708admitted; recorded
+exclusions reconcile. Guard1,364.113864s, sampled peak4,924,211,200bytes, zero
+high/max/OOM events, childzero/cleanup. Monitor589991 and exact cgroup absent.
+85source/31compactinputs match at HEADd76664479712a7713a928fea5f7778869f351106;
+22artifactJSONhashes and6largefileextents reconcile. empirical-closure01.json
+preserves compactchecks; independent closure review pending. No active empirical
+job. Budget28/55,27body/fit slots reserved,all1,420fits pending. Never rerun graph04.
+
+full_sources/graph-verification-04-2026-09-30/ prepares one bounded read-only
+verification of the five saved arrays, copying the accepted prior independent
+algorithm with only targetdates/id/count changed and prospective10GiBdiskfloor.
+No SQLite/raw read. Independent verification-plan review pending; before one run
+recheck compactbindings and HEAD,6GiBstartup,3GiBmax/2high/3reserve/0swap/1800s.
+This new verifier cannot reuse or overwrite any earlier verification identity.
+
+storage/closed-ledger-offload-2026-09-30-01/ separately prepares byte-preserving
+Storage Box migration of ONLY closed graph03 ledger3,755,220,992bytes. Four
+eligibility tests pass. Independent review found inherited1800s transfer deadlines
+unsuitable; initialcandidatebytes retained. New preservation-local subclass uses
+5400s per transfer and14400souterguard; two mocked deadline/bytechargechecks pass.
+22bindings and corrected release accepted pendingfreshhost/disk/dependency/owner
+checks. No bodyhash/network/eviction yet. Full body and restoration metadata must
+roundtrip before unlink; local.remote.json mapping and failedscratch preserved.
+No raw or grapharray eviction; restore exactledgerbody before later historical
+local-path verification. Limits256/192MiB,0swap,3GiBreserve/3.5startup/10disk,
+4GiBmaxrecovery scratch and8GiBtransferbudget. Run after arrayverification to keep
+resources serial. Commit/push reviewed compactevidence before longpreservation,
+then freezeactivebindings/HEAD. Use newidentityonce; never rerun oldstoragejobs.
+Remainingfivegraphs and matchingworkspace/capacity/checkpointintegration continue;
+no paper-scope or numericalagreement completion is claimed.
+
+**ACTIVE next original stress-week graph — 2026-09-30T02:16:28.818426+00:00:**
+One authorized eth-paper-graph-resource-20260930-04 is running after independent
+budget/release review, commit/push, guarded temp-volume check and fresh admission.
+Frozen HEAD d76664479712a7713a928fea5f7778869f351106; gate49d60bf1e9007e504b6719bd825d9e405c9a7b8ee72d5857e1c3e1f244ed3ef5.
+Monitor 589991, start ticks 6283279, supervisor 588155,
+unit onchain-replication-e09053197d3d412c88779052d651d895.service, tool session4437.
+Freeze all85source pins,31inputs and HEAD; no duplicate or reserved-identity retry.
+Seven source days /7,928,886declared rows /one full graph for2022-11-07..14.
+Preflight READY/effective55,349spanstats,10,059,370,496bytes available RAM and
+24,804,921,344free disk against21,217,691,325planning requirement. Temp check
+complete/childzero/cleanup, writable SQLite candidates on guarded filesystem.
+Limits6GiBmax/5high/0swap/3reserve/9startup/10disk/twoCPUs/28,800seconds.
+Initial live phase running, no limit reason. Claim creation adopts28/55 consumed;
+27body/fit slots remain reserved. All1,420fits pending; five other missing graphs,
+matching/MCM/neural and broader paper coverage remain required.
+
+Next safe action: follow this exact owner and retained daily-source checkpoints.
+After terminal cleanup, reconcile eight cells and hashes/guard/observer, retain
+all failures and independently review. Then perform a separately bounded current
+array verification before graph reuse. No closed graph/pilot/census reruns.
+Continue matching workspace/capacity-lineage and checkpoint integration only
+outside frozen sources during this job. Reviewed prototypes are isolated, not
+production or empirical release. Updated overnight heartbeat remains active at
+15-minute intervals, proceeding between authorized stages after their checks.
+New compact preflight/temp receipts and this active checkpoint remain local until
+the HEAD freeze lifts. Prior reviewed code, graph registration and hub compact
+results were pushed; no off-device graph-array/SQLite backup is asserted.
+
+**Next graph registration reviewed — 2026-09-30T04:15:12+02:00:**
 Independent budget and release review accepted graph-successor-04-2026-09-30:
 exact gate49d60bf1e9007e504b6719bd825d9e405c9a7b8ee72d5857e1c3e1f244ed3ef5,
 85 source pins,31 compact inputs,seven runtime hashes,77required dependency paths,
@@ -14,7 +112,7 @@ and one generic launch for eth-paper-graph-resource-20260930-04 under committedH
 Required free21,217,691,325bytes includes10GiBreserve; RAMstartup9GiB. Normal
 admission must be ready/effective55. No claim active yet; budget27/54 untiladoption.
 
-**Hub-edge measurement closed; next original stress week prepared — 2026-09-30T02:08Z:**
+**Hub-edge measurement closed; next original stress week prepared — 2026-09-30T04:08:15+02:00:**
 Independent terminal review accepted eth-paper-hub-edge-census-20260930-01:
 35/35 centers complete, guard153.930056s, sampled peak1,048,875,008 bytes,
 zero memory events, childzero and exact owner/cgroup cleanup. All82 source and12
