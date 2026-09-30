@@ -3,6 +3,39 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Graph10 safely held; durable pair-journal component implemented — 2026-09-30T14:10:38.313519+00:00**:
+Fullsuite closure and reviewedGraph10gate-v3 committed/pushed at
+ef2b1b8a2f015b94a5940daa17d1c8cdf1d2b4dd. Checked sequential dispatcher refused
+at2026-09-30T13:59:43Z BEFOREtemp02: availableRAM9424089088 <9797894144;
+free-disk23435567104 >22103159134; zeroactive/activatingunits/pendingmonitors.
+resource-check-v3-01.json records exactrefusal. Temp02/preflight03/dispatch03 and
+Graph10run/claim/source remainunused. No empirical claim or budgetadoption.
+
+Independent engineering continued in full_sources/pair-journal-2026-09-30/.
+The artifact-only journal implements immutable reservation/publication chains,
+ancestor-inclusive declaredbyte/count/event charging, exact latest pair refs,
+sharedpairroot with exclusive owner/purpose sessionnames, same-session multiple
+publications and failed-parent continuation. Pending/orphan reservations block
+normalrecovery pending an admitted checker; no replay is guessed.
+Fourteen tinytests pass(green05,.501s), including actualPairSession checkpoint
+andchildresume, multiplechildpublications, and rejection of actualchildcreate
+impersonatingresume. All earlierred/green logs and precorrection sources retained.
+ReviewJ1 parentjoin fixed; reviewJ2 resolved as explicitcaller-declaredreservation
+contract, NOT enforcedfullnumerical-artifactbytes. bindings-v2 has17currentfiles.
+Independent REVIEW.md accepts the corrected artifact-only scope; J1continuity
+fixed, J2explicitcallerdeclaredlimit remains an admitted-integration requirement.
+ReviewSHAa4687d3f5f3de750c661ee61183e55254120164af116f45a8d8a179d0bf03ff8.
+No new maintainedsources or consumerdefaults changed;
+all178fullsuitebindings and101Graph10sourcepins remainexact.
+
+Next: preserveacceptedcompactcode/evidence withcommitpush;
+continue actual ResearchRun/guard/death/workload-purpose admission and declared
+extent verification, cumulativepairedjournal recovery, dictionarydirections and
+MCMpartialrows. The candidate doesnot establish these missingguarantees or broad
+verification. Graph10 mayproceedonlyonfresh strictresource/ownershipeligibility
+via reviewedgate-v3/temp02/preflight03 route. Do notduplicate orrerunclosedwork.
+Adopted32/59,proposed60unadopted; all1420financialfits pending. Noheavyjob active.
+
 **Full verification independently accepted; Graph10 source refresh prepared — 2026-09-30T13:58:06.231116+00:00**:
 CLOSURE_REVIEW.md accepts3559passes+97subtests/2skips,178current/committedbindings,
 ownerdeath/cleanup and high243/maxOOM0; SHA
