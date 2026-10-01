@@ -1,0 +1,62 @@
+.F......F.                                                               [100%]
+=================================== FAILURES ===================================
+______ test_stage_completion_is_bound_to_current_owner_and_cannot_reopen _______
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7c47276b2710>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7c47276b2990>)
+
+    def test_stage_completion_is_bound_to_current_owner_and_cannot_reopen(admitted):
+>       owner = attach(admitted); stage, ref = finish_zero_dictionary(owner)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_owner.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_owner.py:40: in finish_zero_dictionary
+    log = PairLog(stage.root / 'matching', owner=owner.identity, scope=stage.scope,
+tradingagents/research/onchain_replication/compact_pair_log.py:76: in __init__
+    io._identity(owner); scope = _scope(scope); limits = _limits(limits)
+                                 ^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_pair_log.py:26: in _scope
+    require(isinstance(scope, dict) and set(scope) == FIELDS, 'compact log scope schema')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'compact log scope schema'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: compact log scope schema
+
+tradingagents/research/onchain_replication/score_batches.py:25: ValueError
+_ test_workflow_logical_budget_applies_cumulatively_before_new_stage[6060000] __
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7c4843466650>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7c47276bf050>)
+
+    @pytest.mark.parametrize('admitted', [6060000], indirect=True)
+    def test_workflow_logical_budget_applies_cumulatively_before_new_stage(admitted):
+>       owner = attach(admitted); finish_zero_dictionary(owner)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_owner.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_owner.py:40: in finish_zero_dictionary
+    log = PairLog(stage.root / 'matching', owner=owner.identity, scope=stage.scope,
+tradingagents/research/onchain_replication/compact_pair_log.py:76: in __init__
+    io._identity(owner); scope = _scope(scope); limits = _limits(limits)
+                                 ^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_pair_log.py:26: in _scope
+    require(isinstance(scope, dict) and set(scope) == FIELDS, 'compact log scope schema')
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'compact log scope schema'
+
+    def _require(condition, message):
+        if not condition:
+>           raise ValueError(message)
+E           ValueError: compact log scope schema
+
+tradingagents/research/onchain_replication/score_batches.py:25: ValueError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_stage_completion_is_bound_to_current_owner_and_cannot_reopen
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_workflow_logical_budget_applies_cumulatively_before_new_stage[6060000]
+2 failed, 8 passed in 112.29s (0:01:52)

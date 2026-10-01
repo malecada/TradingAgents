@@ -3,6 +3,60 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Compact registered owner integration verified — October 1 continuation**:
+New compact_owner.py attaches only to an actual fresh matching_owner.Binding.
+Plan/job compact backend and input must agree with the descriptor's policy hash
+and registered numerical pair limits. It creates exclusive dictionary/required-MCM
+stage namespaces, applies cumulative logical reservations, and joins compact
+stage receipts before its own completion. This is not native producer selection
+or representation admission. Live inner checks use Binding.lease under frozen
+source/input ownership; full Binding.check remains at stage boundaries.
+
+Evidence full_sources/compact-owner-2026-10-01/: red01 CLOSED10missing-module
+failures70.01s/session4367exit1. check01 CLOSED2failed8passed112.29s/session64195exit1:
+two synthetic cases passed a frozen mapping into the dict-only PairLog scope;
+fixture corrected by thawing. Independent review also found mutable runtime
+limits/intents, dangling terminal markers, missing wrapper metadata reservation,
+and stale creation lease after scope hashing. Original source/test retained.
+red02 CLOSED4failed10deselected42.16s/session52468exit1 reproduced those issues.
+Corrections reserve2*65536B owner metadata and2*8192B per stage, pin runtime
+configuration/stage intent/cumulative reservations, reject dangling terminal
+markers, recheck before mkdir and serialize transition methods. check02 CLOSED
+14passes152.17s/session14053exit0. Additional red03 CLOSED2failed15deselected26.85s/
+session41321exit1 exposed missing required-graph and iteration-limit joins;
+those are now checked at stage seal and aggregate closure.
+
+check03 CLOSED17passes193.14s/session75500exit0, including full owner completion
+with14actual MCM engine comparisons and a zero-pair dictionary fixture. The latter
+isolates ownership sequencing; it is not proof of sampler/dictionary admission.
+The kernel guard boundary is mocked; ResearchRun, committed registration/source,
+Binding, stage construction, numerical MCM engine and evidence joins are actual.
+
+Independent review then found owner.bound reassignment could redirect live checks
+from the saved claim. red04 CLOSED3failed17deselected34.21s/session77889exit1
+reproduced replacement by another legitimate Binding, changed claim record and
+changed runtime context. Original source/test retained. Exact Binding/run object
+identity and record/context/limits/run-directory/claim snapshot are now checked
+before boundary checks and before/after the live lease. Targeted current-source
+check04 CLOSED4passes16deselected49.65s/session37947exit0 covers all3regressions and
+fresh actual-MCM complete-owner closure. This is distinct from the earlier
+17-case check03 source snapshot; no closed historical check was rerun for context.
+Preserved REVIEW SHA84e4ac3bfd023dc92124d854d631072f09e051f7f3a6f5539bcf10e18518e963.
+FINAL_REVIEW accepted the stated fresh owner/frozen-input contract, SHA
+0def6a296f91cbda23536a52ec545b2c08b4fa44b115b4f83e93272c7e10a1d3.
+
+No engineering check or empirical job remains active. Next connect this owner to
+the explicitly selected compact dictionary/MCM producer/publication and saved
+artifact reader, then representation closure. Its own completed receipt carries
+representation_admitted=false and cannot be treated as an old OwnedJournal seal.
+Scientific sample/scope/count derivation remains with that producer. Only the
+current required-graph/iteration and exact policy/source/owner joins are claimed.
+Whole-workflow reservation is logical retained evidence including wrapper caps;
+it is not physical storage/RSS/time admission. No automatic failed-owner recovery.
+Coverage77/109 and all1420financial fits pending remain unchanged. Physical
+storage/offload/cap amendments and reviewed committed60→61 gate remain before
+full-size resource execution. Disk snapshot21277024256B available, above10GiB floor.
+
 **Compact stage evidence seal implemented — October 1 continuation**:
 Maintained compact_stage.py now joins a completed PairLog to every retained
 progress checkpoint and, for MCM, the exact score-stream/tail/batch chain. The

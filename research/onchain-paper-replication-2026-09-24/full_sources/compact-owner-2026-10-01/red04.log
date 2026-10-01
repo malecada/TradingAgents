@@ -1,0 +1,71 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+______ test_actual_binding_and_its_authority_cannot_be_replaced[binding] _______
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x79eb22d62660>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x79ec3ef26270>)
+field = 'binding'
+
+    @pytest.mark.parametrize('field', ['binding', 'record', 'context'])
+    def test_actual_binding_and_its_authority_cannot_be_replaced(admitted, field):
+        from tradingagents.research.onchain_replication.provenance import freeze
+        owner = attach(admitted)
+        if field == 'binding':
+            owner.bound = matching_owner.bind(admitted[0].run, representation='r', plan_input='plan',
+                producer='p', policy_input='pair_policy', journal_directory=admitted[1].directory)
+        elif field == 'record':
+            owner.bound.record = freeze(thaw(owner.bound.record) | {'source_commit': 'f' * 40})
+        else:
+            owner.bound.context = freeze(thaw(owner.bound.context) | {'runtime_hash': 'f' * 64})
+>       with pytest.raises(ValueError, match='binding'): owner.lease()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_compact_owner.py:224: Failed
+_______ test_actual_binding_and_its_authority_cannot_be_replaced[record] _______
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x79eb22daf110>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x79eb22daf390>)
+field = 'record'
+
+    @pytest.mark.parametrize('field', ['binding', 'record', 'context'])
+    def test_actual_binding_and_its_authority_cannot_be_replaced(admitted, field):
+        from tradingagents.research.onchain_replication.provenance import freeze
+        owner = attach(admitted)
+        if field == 'binding':
+            owner.bound = matching_owner.bind(admitted[0].run, representation='r', plan_input='plan',
+                producer='p', policy_input='pair_policy', journal_directory=admitted[1].directory)
+        elif field == 'record':
+            owner.bound.record = freeze(thaw(owner.bound.record) | {'source_commit': 'f' * 40})
+        else:
+            owner.bound.context = freeze(thaw(owner.bound.context) | {'runtime_hash': 'f' * 64})
+>       with pytest.raises(ValueError, match='binding'): owner.lease()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_compact_owner.py:224: Failed
+______ test_actual_binding_and_its_authority_cannot_be_replaced[context] _______
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x79eb227bc050>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x79ec7f037230>)
+field = 'context'
+
+    @pytest.mark.parametrize('field', ['binding', 'record', 'context'])
+    def test_actual_binding_and_its_authority_cannot_be_replaced(admitted, field):
+        from tradingagents.research.onchain_replication.provenance import freeze
+        owner = attach(admitted)
+        if field == 'binding':
+            owner.bound = matching_owner.bind(admitted[0].run, representation='r', plan_input='plan',
+                producer='p', policy_input='pair_policy', journal_directory=admitted[1].directory)
+        elif field == 'record':
+            owner.bound.record = freeze(thaw(owner.bound.record) | {'source_commit': 'f' * 40})
+        else:
+            owner.bound.context = freeze(thaw(owner.bound.context) | {'runtime_hash': 'f' * 64})
+>       with pytest.raises(ValueError, match='binding'): owner.lease()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_compact_owner.py:224: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_actual_binding_and_its_authority_cannot_be_replaced[binding]
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_actual_binding_and_its_authority_cannot_be_replaced[record]
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_actual_binding_and_its_authority_cannot_be_replaced[context]
+3 failed, 17 deselected in 34.21s

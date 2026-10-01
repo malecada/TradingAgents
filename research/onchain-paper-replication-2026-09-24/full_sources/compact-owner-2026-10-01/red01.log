@@ -1,0 +1,196 @@
+FFFFFFFFFF                                                               [100%]
+=================================== FAILURES ===================================
+_____ test_actual_admission_creates_exclusive_owner_and_binds_stage_policy _____
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4fd5e510>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4fd5ea50>)
+
+    def test_actual_admission_creates_exclusive_owner_and_binds_stage_policy(admitted):
+>       owner = attach(admitted); owner.lease()
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_owner.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4fd5e510>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4fd5ea50>)
+
+    def attach(admitted):
+>       from tradingagents.research.onchain_replication.compact_owner import attach
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_owner'
+
+tests/research/onchain_replication/test_compact_owner.py:32: ModuleNotFoundError
+______ test_stage_completion_is_bound_to_current_owner_and_cannot_reopen _______
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4fdb25d0>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4fdb2850>)
+
+    def test_stage_completion_is_bound_to_current_owner_and_cannot_reopen(admitted):
+>       owner = attach(admitted); stage, ref = finish_zero_dictionary(owner)
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_owner.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4fdb25d0>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4fdb2850>)
+
+    def attach(admitted):
+>       from tradingagents.research.onchain_replication.compact_owner import attach
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_owner'
+
+tests/research/onchain_replication/test_compact_owner.py:32: ModuleNotFoundError
+__________ test_invalid_or_conflicting_owner_stage_refuses[mcm_first] __________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4fdb3250>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4fdb3390>)
+reason = 'mcm_first'
+
+    @pytest.mark.parametrize('reason', ['mcm_first', 'foreign', 'duplicate', 'terminal_run', 'root_extra'])
+    def test_invalid_or_conflicting_owner_stage_refuses(admitted, reason):
+>       owner = attach(admitted)
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_owner.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4fdb3250>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4fdb3390>)
+
+    def attach(admitted):
+>       from tradingagents.research.onchain_replication.compact_owner import attach
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_owner'
+
+tests/research/onchain_replication/test_compact_owner.py:32: ModuleNotFoundError
+___________ test_invalid_or_conflicting_owner_stage_refuses[foreign] ___________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4fb93230>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4fb93360>)
+reason = 'foreign'
+
+    @pytest.mark.parametrize('reason', ['mcm_first', 'foreign', 'duplicate', 'terminal_run', 'root_extra'])
+    def test_invalid_or_conflicting_owner_stage_refuses(admitted, reason):
+>       owner = attach(admitted)
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_owner.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4fb93230>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4fb93360>)
+
+    def attach(admitted):
+>       from tradingagents.research.onchain_replication.compact_owner import attach
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_owner'
+
+tests/research/onchain_replication/test_compact_owner.py:32: ModuleNotFoundError
+__________ test_invalid_or_conflicting_owner_stage_refuses[duplicate] __________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4fb93bb0>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4fb93ce0>)
+reason = 'duplicate'
+
+    @pytest.mark.parametrize('reason', ['mcm_first', 'foreign', 'duplicate', 'terminal_run', 'root_extra'])
+    def test_invalid_or_conflicting_owner_stage_refuses(admitted, reason):
+>       owner = attach(admitted)
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_owner.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4fb93bb0>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4fb93ce0>)
+
+    def attach(admitted):
+>       from tradingagents.research.onchain_replication.compact_owner import attach
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_owner'
+
+tests/research/onchain_replication/test_compact_owner.py:32: ModuleNotFoundError
+________ test_invalid_or_conflicting_owner_stage_refuses[terminal_run] _________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4f7dc290>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4f7dd130>)
+reason = 'terminal_run'
+
+    @pytest.mark.parametrize('reason', ['mcm_first', 'foreign', 'duplicate', 'terminal_run', 'root_extra'])
+    def test_invalid_or_conflicting_owner_stage_refuses(admitted, reason):
+>       owner = attach(admitted)
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_owner.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4f7dc290>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4f7dd130>)
+
+    def attach(admitted):
+>       from tradingagents.research.onchain_replication.compact_owner import attach
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_owner'
+
+tests/research/onchain_replication/test_compact_owner.py:32: ModuleNotFoundError
+_________ test_invalid_or_conflicting_owner_stage_refuses[root_extra] __________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4f885260>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4f885150>)
+reason = 'root_extra'
+
+    @pytest.mark.parametrize('reason', ['mcm_first', 'foreign', 'duplicate', 'terminal_run', 'root_extra'])
+    def test_invalid_or_conflicting_owner_stage_refuses(admitted, reason):
+>       owner = attach(admitted)
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_owner.py:69: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4f885260>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4f885150>)
+
+    def attach(admitted):
+>       from tradingagents.research.onchain_replication.compact_owner import attach
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_owner'
+
+tests/research/onchain_replication/test_compact_owner.py:32: ModuleNotFoundError
+______________ test_stage_foreign_files_are_refused_and_retained _______________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4f884050>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4f884270>)
+
+    def test_stage_foreign_files_are_refused_and_retained(admitted):
+>       owner = attach(admitted); stage = owner.begin('dictionary', workload_sha256='d' * 64, pairs=0)
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_owner.py:78: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4f884050>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4f884270>)
+
+    def attach(admitted):
+>       from tradingagents.research.onchain_replication.compact_owner import attach
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_owner'
+
+tests/research/onchain_replication/test_compact_owner.py:32: ModuleNotFoundError
+______ test_workflow_logical_budget_applies_cumulatively_before_new_stage ______
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4fdc2350>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4fdc2450>)
+
+    def test_workflow_logical_budget_applies_cumulatively_before_new_stage(admitted):
+>       owner = attach(admitted); finish_zero_dictionary(owner)
+                ^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_owner.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4fdc2350>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4fdc2450>)
+
+    def attach(admitted):
+>       from tradingagents.research.onchain_replication.compact_owner import attach
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_owner'
+
+tests/research/onchain_replication/test_compact_owner.py:32: ModuleNotFoundError
+_______________ test_non_binding_and_unregistered_policy_refused _______________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7d3b4fdc3e50>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7d3b4fdc3c50>)
+
+    def test_non_binding_and_unregistered_policy_refused(admitted):
+>       from tradingagents.research.onchain_replication.compact_owner import attach
+E       ModuleNotFoundError: No module named 'tradingagents.research.onchain_replication.compact_owner'
+
+tests/research/onchain_replication/test_compact_owner.py:94: ModuleNotFoundError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_actual_admission_creates_exclusive_owner_and_binds_stage_policy
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_stage_completion_is_bound_to_current_owner_and_cannot_reopen
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_invalid_or_conflicting_owner_stage_refuses[mcm_first]
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_invalid_or_conflicting_owner_stage_refuses[foreign]
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_invalid_or_conflicting_owner_stage_refuses[duplicate]
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_invalid_or_conflicting_owner_stage_refuses[terminal_run]
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_invalid_or_conflicting_owner_stage_refuses[root_extra]
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_stage_foreign_files_are_refused_and_retained
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_workflow_logical_budget_applies_cumulatively_before_new_stage
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_non_binding_and_unregistered_policy_refused
+10 failed in 70.01s (0:01:10)

@@ -1,0 +1,35 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____ test_valid_mcm_stream_for_foreign_required_graph_is_refused[admitted0] ____
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7758ec766660>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7758ec0ce660>)
+
+    @pytest.mark.parametrize('admitted', [{'wrong_graph': True}], indirect=True)
+    def test_valid_mcm_stream_for_foreign_required_graph_is_refused(admitted):
+        owner = attach(admitted); finish_zero_dictionary(owner)
+        stage, log_ref, stream_ref = completed_mcm(owner)
+>       with pytest.raises(ValueError, match='required graph'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_compact_owner.py:197: Failed
+________ test_log_iteration_limit_must_match_registered_matching_config ________
+
+admitted = (<tests.research.onchain_replication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_num...bject at 0x7758ec153250>, <tradingagents.research.onchain_replication.matching_owner.Binding object at 0x7758ec1534d0>)
+
+    def test_log_iteration_limit_must_match_registered_matching_config(admitted):
+        from tradingagents.research.onchain_replication.compact_pair_log import PairLog
+        owner = attach(admitted); stage = owner.begin('dictionary', workload_sha256='d' * 64, pairs=0)
+        log = PairLog(stage.root / 'matching', owner=owner.identity, scope=thaw(stage.scope),
+            limits=thaw(owner.policy['log']), max_iterations=11, lease=stage.lease)
+        (stage.root / 'checkpoints').mkdir()
+>       with pytest.raises(ValueError, match='iteration'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/research/onchain_replication/test_compact_owner.py:208: Failed
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_valid_mcm_stream_for_foreign_required_graph_is_refused[admitted0]
+FAILED tests/research/onchain_replication/test_compact_owner.py::test_log_iteration_limit_must_match_registered_matching_config
+2 failed, 15 deselected in 26.85s
