@@ -1,0 +1,75 @@
+test_late_drift_during_feature_seal_preserves_terminal_evidence (__main__.Tests.test_late_drift_during_feature_seal_preserves_terminal_evidence) ... FAIL
+test_output_routes_require_exact_distinct_registered_names (__main__.Tests.test_output_routes_require_exact_distinct_registered_names) ... FAIL
+test_seals_publishes_receipt_and_old_leases_refuse (__main__.Tests.test_seals_publishes_receipt_and_old_leases_refuse) ... FAIL
+test_second_output_failure_preserves_first_and_no_producer_retry (__main__.Tests.test_second_output_failure_preserves_first_and_no_producer_retry) ... FAIL
+test_unadmitted_owner_refuses (__main__.Tests.test_unadmitted_owner_refuses) ... FAIL
+
+======================================================================
+FAIL: test_late_drift_during_feature_seal_preserves_terminal_evidence (__main__.Tests.test_late_drift_during_feature_seal_preserves_terminal_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/test_seal.py", line 64, in test_late_drift_during_feature_seal_preserves_terminal_evidence
+    f=self.fixture();m=self.m;original=type(f.journal).seal
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/test_seal.py", line 20, in fixture
+    self.m=m=api();f=base.Tests('test_complete_event_proof_and_predecessor_handoff_refuse_relaunch');self.addCleanup(f.doCleanups)
+             ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/test_seal.py", line 15, in api
+    assert (HERE/'seal.py').exists(),'representation seal handoff missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: representation seal handoff missing
+
+======================================================================
+FAIL: test_output_routes_require_exact_distinct_registered_names (__main__.Tests.test_output_routes_require_exact_distinct_registered_names)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/test_seal.py", line 38, in test_output_routes_require_exact_distinct_registered_names
+    m=api();item={'binding_output':'binding.json','journal_output':'journal.json'};allowed=list(item.values())
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/test_seal.py", line 15, in api
+    assert (HERE/'seal.py').exists(),'representation seal handoff missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: representation seal handoff missing
+
+======================================================================
+FAIL: test_seals_publishes_receipt_and_old_leases_refuse (__main__.Tests.test_seals_publishes_receipt_and_old_leases_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/test_seal.py", line 47, in test_seals_publishes_receipt_and_old_leases_refuse
+    f=self.fixture();m=self.m;r=self.finish();r.lease()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/test_seal.py", line 20, in fixture
+    self.m=m=api();f=base.Tests('test_complete_event_proof_and_predecessor_handoff_refuse_relaunch');self.addCleanup(f.doCleanups)
+             ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/test_seal.py", line 15, in api
+    assert (HERE/'seal.py').exists(),'representation seal handoff missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: representation seal handoff missing
+
+======================================================================
+FAIL: test_second_output_failure_preserves_first_and_no_producer_retry (__main__.Tests.test_second_output_failure_preserves_first_and_no_producer_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/test_seal.py", line 75, in test_second_output_failure_preserves_first_and_no_producer_retry
+    f=self.fixture();m=self.m;run=f.owned.workload.bound._run;original=run.write_json
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/test_seal.py", line 20, in fixture
+    self.m=m=api();f=base.Tests('test_complete_event_proof_and_predecessor_handoff_refuse_relaunch');self.addCleanup(f.doCleanups)
+             ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/test_seal.py", line 15, in api
+    assert (HERE/'seal.py').exists(),'representation seal handoff missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: representation seal handoff missing
+
+======================================================================
+FAIL: test_unadmitted_owner_refuses (__main__.Tests.test_unadmitted_owner_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/test_seal.py", line 44, in test_unadmitted_owner_refuses
+    with self.assertRaises(ValueError):api().finish(object(),None,examples=None,fold=None,denominator_input='x',
+                                       ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/test_seal.py", line 15, in api
+    assert (HERE/'seal.py').exists(),'representation seal handoff missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: representation seal handoff missing
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+FAILED (failures=5)

@@ -3,6 +3,50 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Current-owner sealing and registered outputs independently accepted**:
+New isolated full_sources/representation-seal-2026-10-01/ implements a first-owner
+publication-to-terminal handoff and registered binding/journal outputs. It keeps
+old terminal refusals intact, precomputes each writer's actual encoding, and uses
+run/source/runtime/guard plus content/extent and phase-inventory checks afterward.
+Partial output failures preserve numerical completion and record the last phase;
+no producer is retried. Cold/historical reuse and native batch-map admission are
+still separate. Archived kernel state gets inventory/signature checks, not a new
+numerical-payload verification or complete physical/orphan-accounting claim.
+red01 CLOSED5missing failures0.002s, session50666 exit1.
+preflight-check01 CLOSED2passes0.117s, session98335 exit0.
+Independent initial review found RS1–RS3: denominator handoff loss, inventory
+allocation before cap, and post-sync baseline hashes for own transition records.
+Original source/test retained as .review01; initial review unchanged.
+Correction re-admits and transfers exact denominator/route/graph object+hash
+checks, bounds scandir collection before allocation, and shares prebound-record
+writer across seal and a derived publication copy. Original accepted publication
+source remains unchanged; the inherited post-sync baseline pattern is corrected
+only in this new version, with no retroactive verification claim.
+preflight-red02 CLOSED2missing-helper errors0.112s, session68936 exit1.
+preflight-check02 CLOSED2passes0.119s, session10172 exit0: sync-time same-size
+metadata rewrite refused; incremental archive-entry allowance checked.
+Independent supplement accepts correction source; main integration pending.
+SUPPLEMENT_REVIEW SHA8ff8cf92e5f4285ecf4fa9f23eea8000e82d4e982da0d21c7e8c191d86c008ba.
+Full check01 CLOSED8passes741.716s, session24853 exit0, PythonPID1104040 gone.
+All391frozen files verified unchanged, check01-sources.json
+SHAe87e5af95a9127a13f09599242a40f2ddfc29371e97b0f7c645553c947ff99df.
+Four actual publication/seal fixtures pass: successful outputs/terminal receipt,
+post-publication example drift refusal, mutation during feature seal with saved
+terminal evidence, and preserved first output after second-output failure.
+Remaining checks cover output routes, invalid owner, prebound own-record content
+and incremental entry cap. Synthetic marker/pending mutations refuse before
+production; no actual terminal identity is reopened. No active test/source freeze.
+Final394bindings SHA9d69e03b59cee63508c0c99d28b4eee40597f3204ba52888705bdd403356bf07.
+Independent final review accepts current-owner numerical sealing, registered
+outputs and the actually returned in-process receipt, closing RS1–RS3.
+All394bindings,391freeze and376inherited entries independently verified.
+REVIEW SHAc13f1d3ab6f49148202571a08a68360a886ffd39baf16b31b8f781c9b9374a65.
+Next: terminal native-feature batch-map integration via the actual finish call;
+the public Receipt constructor alone is not proof of issuance/admission.
+Cold/historical/mapped and empirical admission remain separate requirements.
+Publication predecessor accepted/pushedb2013dac5284ff41ff9001862cf38d50f5ba005e.
+All1420financial fits remain pending.
+
 **Durable current-owner representation publication independently accepted**:
 New isolated full_sources/representation-publication-2026-10-01/ reserves an
 exclusive publication attempt, invokes actual sequential full-graph closure,

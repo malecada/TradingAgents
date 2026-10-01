@@ -1,0 +1,25 @@
+test_own_record_bytes_are_prebound_before_sync (__main__.Tests.test_own_record_bytes_are_prebound_before_sync) ... ERROR
+test_archive_enumeration_refuses_before_collecting_foreign_inventory (__main__.Tests.test_archive_enumeration_refuses_before_collecting_foreign_inventory) ... ERROR
+
+======================================================================
+ERROR: test_own_record_bytes_are_prebound_before_sync (__main__.Tests.test_own_record_bytes_are_prebound_before_sync)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/test_seal.py", line 45, in test_own_record_bytes_are_prebound_before_sync
+    m.write_metadata(meta,root,'start.json',{'status':'reserved'},1024)
+    ^^^^^^^^^^^^^^^^
+AttributeError: module 'representation_seal_candidate' has no attribute 'write_metadata'
+
+======================================================================
+ERROR: test_archive_enumeration_refuses_before_collecting_foreign_inventory (__main__.Tests.test_archive_enumeration_refuses_before_collecting_foreign_inventory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-seal-2026-10-01/test_seal.py", line 51, in test_archive_enumeration_refuses_before_collecting_foreign_inventory
+    with self.assertRaisesRegex(ValueError,'entry allowance'):m.bounded_children(root,2)
+                                                              ^^^^^^^^^^^^^^^^^^
+AttributeError: module 'representation_seal_candidate' has no attribute 'bounded_children'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.112s
+
+FAILED (errors=2)
