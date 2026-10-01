@@ -1,0 +1,67 @@
+test_added_file_and_changed_directory_refuse (__main__.Tests.test_added_file_and_changed_directory_refuse) ... ERROR
+test_cap_counts_directory_and_each_file (__main__.Tests.test_cap_counts_directory_and_each_file) ... ERROR
+test_false_content_before_capture_cannot_become_the_baseline (__main__.Tests.test_false_content_before_capture_cannot_become_the_baseline) ... ERROR
+test_hardlinks_and_symlink_members_refuse (__main__.Tests.test_hardlinks_and_symlink_members_refuse) ... ERROR
+test_same_size_content_rewrite_refuses (__main__.Tests.test_same_size_content_rewrite_refuses) ... ERROR
+
+======================================================================
+ERROR: test_added_file_and_changed_directory_refuse (__main__.Tests.test_added_file_and_changed_directory_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_snapshot.py", line 32, in test_added_file_and_changed_directory_refuse
+    root,d,p=self.fixture();s=snapshot(root,d,p,3);(d/'extra').write_text('extra')
+                              ~~~~~~~~^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_snapshot.py", line 15, in snapshot
+    def snapshot(root,d,p,cap):return m.Snapshot(root,[d],cap,expected_hashes=expected(p))
+                                      ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Snapshot.__init__() got an unexpected keyword argument 'expected_hashes'
+
+======================================================================
+ERROR: test_cap_counts_directory_and_each_file (__main__.Tests.test_cap_counts_directory_and_each_file)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_snapshot.py", line 24, in test_cap_counts_directory_and_each_file
+    with self.assertRaisesRegex(ValueError,'entry allowance'):snapshot(root,d,p,1)
+                                                              ~~~~~~~~^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_snapshot.py", line 15, in snapshot
+    def snapshot(root,d,p,cap):return m.Snapshot(root,[d],cap,expected_hashes=expected(p))
+                                      ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Snapshot.__init__() got an unexpected keyword argument 'expected_hashes'
+
+======================================================================
+ERROR: test_false_content_before_capture_cannot_become_the_baseline (__main__.Tests.test_false_content_before_capture_cannot_become_the_baseline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_snapshot.py", line 39, in test_false_content_before_capture_cannot_become_the_baseline
+    m.Snapshot(root,[d],2,expected_hashes=pin)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Snapshot.__init__() got an unexpected keyword argument 'expected_hashes'
+
+======================================================================
+ERROR: test_hardlinks_and_symlink_members_refuse (__main__.Tests.test_hardlinks_and_symlink_members_refuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_snapshot.py", line 43, in test_hardlinks_and_symlink_members_refuse
+    with self.assertRaises(ValueError):snapshot(root,d,p,3)
+                                       ~~~~~~~~^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_snapshot.py", line 15, in snapshot
+    def snapshot(root,d,p,cap):return m.Snapshot(root,[d],cap,expected_hashes=expected(p))
+                                      ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Snapshot.__init__() got an unexpected keyword argument 'expected_hashes'
+
+======================================================================
+ERROR: test_same_size_content_rewrite_refuses (__main__.Tests.test_same_size_content_rewrite_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_snapshot.py", line 28, in test_same_size_content_rewrite_refuses
+    root,d,p=self.fixture();s=snapshot(root,d,p,2)
+                              ~~~~~~~~^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_snapshot.py", line 15, in snapshot
+    def snapshot(root,d,p,cap):return m.Snapshot(root,[d],cap,expected_hashes=expected(p))
+                                      ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Snapshot.__init__() got an unexpected keyword argument 'expected_hashes'
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.009s
+
+FAILED (errors=5)

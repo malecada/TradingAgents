@@ -1,0 +1,59 @@
+test_complete_event_proof_and_predecessor_handoff_refuse_relaunch (__main__.Tests.test_complete_event_proof_and_predecessor_handoff_refuse_relaunch) ... FAIL
+test_corrupt_saved_binding_preserves_failed_identity (__main__.Tests.test_corrupt_saved_binding_preserves_failed_identity) ... FAIL
+test_metadata_manifest_matches_actual_scalar_component (__main__.Tests.test_metadata_manifest_matches_actual_scalar_component) ... FAIL
+test_unadmitted_owner_refuses (__main__.Tests.test_unadmitted_owner_refuses) ... FAIL
+
+======================================================================
+FAIL: test_complete_event_proof_and_predecessor_handoff_refuse_relaunch (__main__.Tests.test_complete_event_proof_and_predecessor_handoff_refuse_relaunch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_publication.py", line 54, in test_complete_event_proof_and_predecessor_handoff_refuse_relaunch
+    f=self.fixture();m=self.m;before=len(f.journal.records)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_publication.py", line 22, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_publication.py", line 17, in api
+    assert (HERE/'publication.py').exists(),'durable representation publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: durable representation publication missing
+
+======================================================================
+FAIL: test_corrupt_saved_binding_preserves_failed_identity (__main__.Tests.test_corrupt_saved_binding_preserves_failed_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_publication.py", line 69, in test_corrupt_saved_binding_preserves_failed_identity
+    f=self.fixture();m=self.m;original=m.reader.inspect_component;changed=[]
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_publication.py", line 22, in fixture
+    self.m=api();m=self.m
+           ~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_publication.py", line 17, in api
+    assert (HERE/'publication.py').exists(),'durable representation publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: durable representation publication missing
+
+======================================================================
+FAIL: test_metadata_manifest_matches_actual_scalar_component (__main__.Tests.test_metadata_manifest_matches_actual_scalar_component)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_publication.py", line 48, in test_metadata_manifest_matches_actual_scalar_component
+    m=api();payload={'schema_version':3,'tuple':('a',1),'empty':[],'x':None};context={'owner':'synthetic'}
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_publication.py", line 17, in api
+    assert (HERE/'publication.py').exists(),'durable representation publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: durable representation publication missing
+
+======================================================================
+FAIL: test_unadmitted_owner_refuses (__main__.Tests.test_unadmitted_owner_refuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_publication.py", line 82, in test_unadmitted_owner_refuses
+    m=api()
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_publication.py", line 17, in api
+    assert (HERE/'publication.py').exists(),'durable representation publication missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: durable representation publication missing
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.001s
+
+FAILED (failures=4)

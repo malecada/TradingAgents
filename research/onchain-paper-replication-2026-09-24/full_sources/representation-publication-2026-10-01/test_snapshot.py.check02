@@ -1,0 +1,47 @@
+"""Synthetic drift and resource-cap checks for the explicit publication handoff."""
+import importlib.util
+import hashlib
+import os
+from pathlib import Path
+import tempfile
+import unittest
+
+HERE=Path(__file__).resolve().parent
+spec=importlib.util.spec_from_file_location('publication_snapshot_candidate',HERE/'publication.py')
+m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+
+def expected(path):return {path:hashlib.sha256(path.read_bytes()).hexdigest()}
+
+def snapshot(root,d,p,cap):return m.Snapshot(root,[d],cap,expected_hashes=expected(p))
+
+class Tests(unittest.TestCase):
+    def fixture(self):
+        tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup);root=Path(tmp.name)
+        d=root/'component';d.mkdir();p=d/'array.npy';p.write_bytes(b'original numeric bytes')
+        return root,d,p
+    def test_cap_counts_directory_and_each_file(self):
+        root,d,p=self.fixture()
+        with self.assertRaisesRegex(ValueError,'entry allowance'):snapshot(root,d,p,1)
+        s=snapshot(root,d,p,2);s.check()
+        self.assertEqual(set(s.record()['files']),{str(p)})
+    def test_same_size_content_rewrite_refuses(self):
+        root,d,p=self.fixture();s=snapshot(root,d,p,2)
+        p.write_bytes(b'altered! numeric bytes')
+        with self.assertRaises(ValueError):s.check()
+    def test_added_file_and_changed_directory_refuse(self):
+        root,d,p=self.fixture();s=snapshot(root,d,p,3);(d/'extra').write_text('extra')
+        with self.assertRaises(ValueError):s.check()
+        root2,d2,p2=self.fixture();s2=snapshot(root2,d2,p2,3);d2.rename(root2/'old');d2.mkdir();(d2/p2.name).write_bytes(p.read_bytes())
+        with self.assertRaises(ValueError):s2.check()
+    def test_false_content_before_capture_cannot_become_the_baseline(self):
+        root,d,p=self.fixture();pin=expected(p);p.write_bytes(b'altered! numeric bytes')
+        with self.assertRaisesRegex(ValueError,'content hash'):
+            m.Snapshot(root,[d],2,expected_hashes=pin)
+
+    def test_hardlinks_and_symlink_members_refuse(self):
+        root,d,p=self.fixture();os.link(p,root/'alias')
+        with self.assertRaises(ValueError):snapshot(root,d,p,3)
+        root2,d2,p2=self.fixture();(d2/'alias').symlink_to(p2)
+        with self.assertRaises(ValueError):snapshot(root2,d2,p2,3)
+
+if __name__=='__main__':unittest.main(verbosity=2)

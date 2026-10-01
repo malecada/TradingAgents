@@ -1,0 +1,95 @@
+"""Actual durable representation event and failure-preserving publication."""
+import importlib.util
+import json
+from pathlib import Path
+import tempfile
+import unittest
+from unittest.mock import patch
+from tradingagents.research.onchain_replication.provenance import file_hash,canonical_bytes
+from tradingagents.research.onchain_replication.component_store import save_component
+from tests.research.onchain_replication import test_matching_owner as first
+
+HERE=Path(__file__).resolve().parent
+def load(name,path):
+    spec=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
+base=load('representation_publication_fixture',HERE.parent/'representation-closure-route-2026-10-01/test_closure.py')
+def api():
+    assert (HERE/'publication.py').exists(),'durable representation publication missing'
+    return load('representation_publication_candidate',HERE/'publication.py')
+
+class Tests(unittest.TestCase):
+    def fixture(self,mode=None):
+        self.m=api();m=self.m
+        f=base.Tests('test_all_required_graphs_and_training_only_lineage_close_without_retaining_tensors');self.addCleanup(f.doCleanups)
+        original=first.OwnershipTests.input
+        def configured(instance,name,value):
+            if name=='plan':
+                original(instance,'representation_output',{'schema_version':1,'max_metadata_bytes':2097152,'max_manifest_bytes':1048576,
+                    'max_attempt_bytes':10000000,'max_snapshot_entries':1 if mode=='snapshot_cap' else 100,'max_journal_events':10})
+                value['producers']['p']['representation_output_input']='representation_output'
+            if name=='execution_job':value['payload']['representation_jobs']['r']['representation_output_input']='representation_output'
+            return original(instance,name,value)
+        with patch.object(base,'api',return_value=m.closure),patch.object(m.closure,'SOURCES',m.SOURCES),patch.object(first.OwnershipTests,'input',new=configured):owner=f.fixture()
+        self.f=f;self.owner=owner
+        completed={e['context']['graph_hash'] for e in owner.journal.records if e['stage']=='graph_complete'}
+        saved=m.closure.saved;g=m.closure.graphs;ticket=f.ticket
+        dictionary_proof=saved._issued[ticket]['record']['dictionary_proof']['sha256']
+        for h in sorted(set(owner.workload.descriptor['required_graphs'])-completed):
+            proof=saved.publication.produce(owner.owned,owner.journal,graph_hash=h,sampler_input='sampler_execution',artifact_input='artifact_read',
+                dictionary_output_input='dictionary_output',dictionary_proof_sha256=dictionary_proof,mcm_input='mcm_execution',output_input='mcm_output')
+            g.publication.produce(owner.owned,owner.journal,dictionary_ticket=ticket,graph_hash=h,mcm_input='mcm_execution',mcm_output_input='mcm_output',
+                read_input='mcm_read',mcm_proof_sha256=proof['sha256'],feature_input='feature_tensor',output_input='graph_output')
+        return owner
+    def produce(self):
+        f=self.owner
+        return self.m.produce(f.owned,f.journal,examples=f.examples,fold=f.fold,denominator_input='denominator',
+            dictionary_ticket=self.f.ticket,closure_input='closure',output_input='representation_output')
+    def test_metadata_manifest_matches_actual_scalar_component(self):
+        m=api();payload={'schema_version':3,'tuple':('a',1),'empty':[],'x':None};context={'owner':'synthetic'}
+        with tempfile.TemporaryDirectory() as tmp:
+            path=save_component(Path(tmp)/'component',payload,context)
+            self.assertEqual(m.component_manifest(payload,context),json.loads(path.read_bytes()))
+        with self.assertRaises(ValueError):m.component_manifest({'x':object()},context)
+    def test_complete_event_proof_and_predecessor_handoff_refuse_relaunch(self):
+        f=self.fixture();m=self.m;before=len(f.journal.records)
+        proofref=self.produce();proof=json.loads(Path(proofref['path']).read_bytes())
+        self.assertEqual(proofref['sha256'],file_hash(Path(proofref['path'])))
+        self.assertEqual(proof['status'],'complete');self.assertFalse(proof['resumable']);self.assertFalse(proof['journal_sealed'])
+        self.assertEqual(proof['event_index'],before);self.assertEqual(len(f.journal.records),before+1)
+        event=f.journal.records[-1];self.assertEqual(event['stage'],'representation_complete')
+        payload=m.reader.read_component(f.directory/event['path'],event['sha256'],event['binding'],root=f.root,
+            max_manifest_bytes=1048576,max_artifact_bytes=1048576,max_array_bytes=1,lease=f.owned.lease)
+        self.assertEqual(payload,proof['closure']['binding'])
+        self.assertEqual(set(payload['feature_hashes']),set(f.workload.descriptor['required_graphs']))
+        self.assertEqual(len(payload['dictionary_training_graph_hashes']),3)
+        self.assertEqual(proof['closure']['denominator']['denominator']['calendar_days'],27)
+        pin=m.saved._issued[self.f.ticket]['record']
+        files=proof['predecessor_snapshot']['files']
+        for entry in (pin,pin['sample_provenance']['sample_artifact']):
+            manifest_path=Path(entry['component']['path']);manifest=json.loads(manifest_path.read_bytes())
+            self.assertIn(str(manifest_path),files)
+            self.assertTrue(manifest['arrays'])
+            for name,info in manifest['arrays'].items():
+                actual=files[str(manifest_path.parent/name)]
+                self.assertEqual((actual['sha256'],actual['bytes']),(info['sha256'],info['bytes']))
+
+        with patch.object(m.closure,'admit',side_effect=AssertionError('terminal publication restarted')):
+            with self.assertRaises((ValueError,FileExistsError)):self.produce()
+    def test_late_saved_binding_drift_preserves_complete_failed_conflict(self):
+        f=self.fixture();m=self.m;original=m.sync_directory;changed=[]
+        def corrupt(path):
+            original(path)
+            if (m.attempt_directory(f.owned)/'complete.json').exists() and not changed:
+                target=f.directory/'checkpoint-000006/manifest.json'
+                value=json.loads(target.read_bytes());value['tree']['items'][0][1]['value']=4
+                target.write_bytes(canonical_bytes(value));changed.append(True)
+        with patch.object(m,'sync_directory',side_effect=corrupt),self.assertRaises(ValueError):self.produce()
+        self.assertEqual(changed,[True]);attempt=m.attempt_directory(f.owned)
+        self.assertTrue((attempt/'failed.json').exists());self.assertTrue((attempt/'complete.json').exists())
+        with patch.object(m.closure,'admit',side_effect=AssertionError('failed publication restarted')):
+            with self.assertRaises((ValueError,FileExistsError)):self.produce()
+    def test_unadmitted_owner_refuses(self):
+        m=api()
+        with self.assertRaises(ValueError):m.produce(object(),None,examples=None,fold=None,denominator_input='x',dictionary_ticket=None,closure_input='x',output_input='x')
+
+if __name__=='__main__':unittest.main(verbosity=2)

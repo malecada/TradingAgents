@@ -1,0 +1,101 @@
+test_complete_event_proof_and_predecessor_handoff_refuse_relaunch (__main__.Tests.test_complete_event_proof_and_predecessor_handoff_refuse_relaunch) ... ok
+test_late_saved_binding_drift_preserves_complete_failed_conflict (__main__.Tests.test_late_saved_binding_drift_preserves_complete_failed_conflict) ... Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_publication.py", line 85, in <module>
+    if __name__=='__main__':unittest.main(verbosity=2)
+                            ~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/main.py", line 104, in __init__
+    self.runTests()
+    ~~~~~~~~~~~~~^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/main.py", line 270, in runTests
+    self.result = testRunner.run(self.test)
+                  ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/runner.py", line 240, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/case.py", line 707, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/case.py", line 651, in run
+    self._callTestMethod(testMethod)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/case.py", line 606, in _callTestMethod
+    if method() is not None:
+       ~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_publication.py", line 76, in test_late_saved_binding_drift_preserves_complete_failed_conflict
+    with patch.object(m,'sync_directory',side_effect=corrupt),self.assertRaises(ValueError):self.produce()
+                                                                                            ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_publication.py", line 45, in produce
+    return self.m.produce(f.owned,f.journal,examples=f.examples,fold=f.fold,denominator_input='denominator',
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        dictionary_ticket=self.f.ticket,closure_input='closure',output_input='representation_output')
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/publication.py", line 126, in produce
+    receipt=closure.admit(owned,journal,examples=examples,fold=fold,denominator_input=denominator_input,
+        dictionary_ticket=dictionary_ticket,policy_input=closure_input)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-closure-route-2026-10-01/closure.py", line 110, in admit
+    receipt=graphs.admit(owned,journal,dictionary_ticket=dictionary_ticket,graph_hash=h,proof_sha256=proof_hash,**args)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-artifact-route-2026-10-01/route.py", line 148, in admit
+    payload=reader.read_component(component,event['sha256'],binding,root=ad.root,max_manifest_bytes=output['max_manifest_bytes'],
+        max_artifact_bytes=output['max_artifact_bytes'],max_array_bytes=read['max_array_bytes'],lease=lease)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/pair-component-reader-2026-10-01/reader.py", line 212, in read_component
+    lease()
+    ~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/graph-feature-artifact-route-2026-10-01/route.py", line 144, in lease
+    compact();upstream.lease()
+              ~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/route.py", line 45, in lease
+    def lease(self):self._check();self._lease();self._check()
+                                  ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/route.py", line 203, in lease
+    compact();ticket_lease(dictionary_ticket,owned,journal);compact()
+              ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/route.py", line 101, in ticket_lease
+    actual_owner(owned,journal);source_check(owned);check();pin['lease_function'](r);check()
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-artifact-route-2026-10-01/route.py", line 61, in actual_owner
+    bound=owned.workload.bound;bound.check();owned.lease()
+                               ~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_owner.py", line 92, in check
+    run=self._run;run._active();run._check_source();run._check_inputs()
+                                ~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/lifecycle.py", line 111, in _check_source
+    current = admit(root=self.admission.root, registration=self.admission.registration,
+                    experiment=self.admission.experiment_id, source=self.admission.source,
+                    design_source=self.admission.design_source, bindings=self.admission.bindings,
+                    _own_claim=self.admission.experiment_id)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/admission.py", line 188, in admit
+    _committed(root, source, name, expected)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/admission.py", line 60, in _committed
+    recorded = _git(root, "show", f"{source}:{Path(name).as_posix()}")
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/admission.py", line 53, in _git
+    return subprocess.check_output(["git", *args], cwd=root, stderr=subprocess.PIPE)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 472, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               **kwargs).stdout
+               ^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 1222, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 2154, in _communicate
+    ready = selector.select(timeout)
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/selectors.py", line 398, in select
+    fd_event_list = self._selector.poll(timeout)
+KeyboardInterrupt

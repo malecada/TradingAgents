@@ -3,6 +3,71 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Durable current-owner representation publication independently accepted**:
+New isolated full_sources/representation-publication-2026-10-01/ reserves an
+exclusive publication attempt, invokes actual sequential full-graph closure,
+and snapshots exact graph/MCM proof and component inventories bracketed by the
+old closure lease. Before appending representation_complete, it explicitly hands
+verification to unchanged source/owner/date/dictionary leases, fixed prior events
+and captured file signatures, admitted content hashes and extents. The old
+exact-prefix lease is never weakened.
+Native schema3 binding manifest/event hashes and encoded sizes are fixed before
+writing; completion proof retains full closure and predecessor snapshot evidence.
+Partial/failed/complete identities refuse. Selected output policy bounds logical
+reservation, metadata/component/event sizes and snapshot entry count.
+Journal remains UNSEALED; registered output publication and sealed/historical
+saved reuse are still separate. This is not empirical release or total RSS proof.
+red01 CLOSED4missing failures0.001s, session69998 exit1.
+check01 CLOSED4passes360.496s, session41635 exit0, PID744938 gone.
+All353frozen hashes verified against
+check01-sources.json SHA48682ea17363c57fe8041eb8e172329a40694e4bf3509ba285112c66e1e2f9f0.
+Additional snapshot-check01 CLOSED4methods0.010s with1failure: same-size rapid
+content rewrite escaped file-signature-only checks; cap/link/inventory tests pass.
+Independent RP1 review also identifies the pre-snapshot admission gap and final
+new-manifest stat-only check. Original source/publication/snapshot tests preserved
+as .check01. INITIAL_REVIEW SHA bb05014f6e0794b53cfedcd73217e6c8320284b7eea50211fa4955bd75fa0d5c.
+Correction pins graph/MCM proof/start/component hashes from actual closure and
+per-array hashes/extents from those exact admitted manifests. Snapshot requires
+explicit expected hashes and stream-verifies them (262144-byte read ceiling) at
+capture and every lease. Final scalar manifest is also hash-pinned in Metadata.
+Snapshot-red02 CLOSED5missing-argument errors0.009s (new required hash interface).
+Snapshot-check02 CLOSED5passes0.011s, session30718 exit0, covering pre-capture and
+post-capture false content, entry cap, inventory/directory and link changes.
+Full check02 deliberately INTERRUPTED after review identified a separate size/open
+race; first integration method passed, second interrupted. Session92231 exit130,
+PID866017 gone. All363frozen hashes verified; source/tests preserved as .check02.
+Frozen check02 SHAea384aca29aeab176b9a3204f42004589160636cce1d93638430f77a6144e7be.
+Second correction passes admitted SHA+byte extent pairs; opened-file size mismatch
+refuses before digest_stream and hashing consumes only the admitted extent.
+Includes issued dictionary/sample stored component arrays in the same snapshot;
+the ticket continues to content-check their proof/start/draw metadata.
+snapshot-red03 CLOSED1missing-interface error0.006s, session2408 exit1.
+snapshot-check03 CLOSED6passes0.013s, session53566 exit0, including pre-read growth
+refusal. Full check03 CLOSED4passes383.853s, session26774 exit0, PythonPID966597 gone.
+All371frozen files verified unchanged, check03-sources.json
+SHA2b4ab394a872b002f2210a9495a413d5d456a0d1bbc2802cceadc186e11b4dec.
+No active source freeze/process. Full integration verifies dictionary/sample
+array SHA+extents in snapshot and late scalar-manifest drift preserves conflicting
+complete+failed records; completed/failed identities refuse relaunch.
+Supplement review finds the extent and dictionary/sample correction sound:
+SHA23cb4add4e8fd68829b8b89bd09b727f3642a2e23ed746535b3b45f3aa690550.
+Final376bindings SHA
+c47fbf61924a736c981f38ab29237669057ed21b2e9d9f14b7f812f3e1370073.
+Final independent review accepts this bounded unsealed publication and closes
+RP1 plus extent correction; all376bindings,371freeze and348inherited entries
+independently checked. REVIEW SHA
+7746c5528ab4193f4bc5e8d3f773d16a3de3035557e11b3ee3385cac2dca05b3.
+NEXT_INTERFACE.md
+records exact next seal/output and native batch-reader requirements. Generic
+journal reuse still materializes sample/dictionary/MCM stages; both fitting
+consumer branches dispatch by FixedFeatureMap type. Preserve current terminal
+refusals and perform a new explicit seal handoff. No empirical process active.
+Next: exclusive current-owner seal/output integration with a new terminal
+verification contract; then admitted native batch reuse. No existing terminal
+refusals may be weakened. All unimplemented/unverified scope remains open.
+Closure predecessor accepted/pushed2cf8585527d8356e60c72ded7dec3d269739c114.
+All1420financial fits remain pending; no empirical process active.
+
 **Sequential complete-graph closure independently accepted**:
 New isolated full_sources/representation-closure-route-2026-10-01/ joins accepted
 registered date coverage, an issued dictionary ticket and every required graph's

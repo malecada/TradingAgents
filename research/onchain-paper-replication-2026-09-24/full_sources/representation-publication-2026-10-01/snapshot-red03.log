@@ -1,0 +1,15 @@
+test_wrong_extent_refuses_before_any_content_read (__main__.Tests.test_wrong_extent_refuses_before_any_content_read) ... ERROR
+
+======================================================================
+ERROR: test_wrong_extent_refuses_before_any_content_read (__main__.Tests.test_wrong_extent_refuses_before_any_content_read)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/representation-publication-2026-10-01/test_snapshot.py", line 46, in test_wrong_extent_refuses_before_any_content_read
+    m.Snapshot(root,[d],2,expected_files=pin)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Snapshot.__init__() got an unexpected keyword argument 'expected_files'. Did you mean 'expected_hashes'?
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (errors=1)
