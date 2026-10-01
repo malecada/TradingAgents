@@ -1,0 +1,57 @@
+"""Registered array MCM integration; real tiny pairs, mocked kernel guard."""
+import importlib.util
+from pathlib import Path
+import unittest
+from unittest.mock import patch
+from tests.research.onchain_replication.test_matching_owner import OwnershipTests
+
+HERE=Path(__file__).resolve().parent
+def load(name,path):
+    spec=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
+base=load('bounded_mcm_driver_fixture',HERE.parent/'mcm-dictionary-driver-2026-10-01/test_driver.py')
+def api():
+    assert (HERE/'driver.py').is_file(),'registered bounded MCM driver missing'
+    return load('bounded_mcm_driver',HERE/'driver.py')
+
+class Tests(base.Tests):
+    def fixture(self,mode=None):
+        m=api();original=OwnershipTests.input
+        policy={'schema_version':1,'max_buffer_bytes':100000,'edge_chunk':2,'max_output_bytes':16,'max_numeric_bytes':100016}
+        if mode=='output_cap':policy['max_output_bytes']=15
+        if mode=='combined_cap':policy['max_numeric_bytes']=100015
+        def configured(instance,name,value):
+            if name=='plan':
+                original(instance,'mcm_execution',policy)
+                value['producers']['p']['mcm_execution_input']='mcm_execution'
+            if name=='execution_job':value['payload']['representation_jobs']['r']['mcm_execution_input']='wrong' if mode=='route' else 'mcm_execution'
+            return original(instance,name,value)
+        with patch.object(base,'api',return_value=m),patch.object(OwnershipTests,'input',new=configured):return super().fixture()
+    def run_driver(self,graph_hash=None):
+        f=self.owner
+        return self.m.compute(f.owned,f.journal,graph_hash=graph_hash or self.graph_hash,
+            sampler_input='sampler_execution',artifact_input='artifact_read',output_input='dictionary_output',
+            dictionary_proof_sha256=self.f.receipt['sha256'],mcm_input='mcm_execution')
+    def test_unselected_policy_and_caps_refuse_before_dictionary_loading(self):
+        for mode in ('route','output_cap','combined_cap'):
+            with self.subTest(mode=mode):
+                f=self.fixture(mode);before=f.owned.journal.reservations
+                with patch.object(self.m.artifacts,'admit',side_effect=AssertionError('dictionary before MCM preflight')),self.assertRaises(ValueError):self.run_driver()
+                self.assertEqual(before,f.owned.journal.reservations)
+    def test_admitted_output_records_policy_and_complete_accounting(self):
+        self.fixture();out=self.run_driver()
+        self.assertEqual(out['mcm_policy']['input'],'mcm_execution')
+        self.assertEqual(out['mcm_policy']['sha256'],self.owner.workload.bound._run.admission.inputs['mcm_execution']['sha256'])
+        self.assertEqual(out['completed_rows'],2);self.assertEqual(out['completed_cells'],4)
+        self.assertEqual(out['output_bytes'],16)
+    def test_policy_drift_after_first_pair_stops_before_next_reservation(self):
+        f=self.fixture();original=self.m.serial.Serial.__call__;calls=[]
+        def changed(consumer,purpose,*args):
+            result=original(consumer,purpose,*args)
+            if purpose['kind']=='mcm':
+                calls.append(f.owned.journal.reservations);ad=f.workload.bound._run.admission
+                path=ad.root/ad.inputs['mcm_execution']['path'];path.write_bytes(path.read_bytes()+b' ')
+            return result
+        with patch.object(self.m.serial.Serial,'__call__',new=changed),self.assertRaises(ValueError):self.run_driver()
+        self.assertEqual(len(calls),1);self.assertEqual(f.owned.journal.reservations,calls[0])
+
+if __name__=='__main__':unittest.main(verbosity=2)

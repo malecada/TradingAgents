@@ -3,6 +3,43 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Bounded array MCM independently accepted**:
+New isolated full_sources/mcm-array-kernel-2026-10-01/ preserves scalar cell values,
+node/motif order and internally derived pair purposes while using the reviewed
+ArrayNeighborhoodIndex. Selected registered policy separately bounds neighborhood
+numeric buffers, whole float32 output and their combined reservation. Mandatory
+leases surround extraction/pairs/final return; previous local arrays are released
+before the next extraction. Complete rows/cells are explicitly counted.
+Pure red01 CLOSED7missing-kernel failures0.002s; check01 CLOSED7passes0.200s.
+The integration driver now selects the exact registered policy before loading a
+dictionary and retains its lease/provenance. driver-red01 was interrupted with
+SIGINT (session11691 exit130) because a directly imported unittest class caused
+unintended base-test discovery; its log and source are retained. The import was
+corrected to a module. driver-red02 CLOSED7methods/9missing-driver failures0.003s,
+session55586 exit1. driver-check01 CLOSED7methods/9expanded cases334.324s,session62875 exit0.
+The actual registered tiny fixtures verify independent scalar cell equality,
+completed pair replay without create/resume or additional reservation, exact
+counts/policy provenance, foreign graph/conflicting dictionary refusal and
+post-first-pair dictionary/policy drift stopping further reservations. No active
+job/source freeze. Independent REVIEW SHA
+0d5cb0aeb1a704db2c30bfdc106dd28e889e0591939426b9b621ef4a44d5f9ac.
+All222bindings match manifest SHA
+c497e6a1af92ffcf265cc84260aad99e0cde0855552b1e76274f097a65d29461.
+No empirical jobs, fit results, resource admission or budget changes follow.
+Next safe action: durable MCM publication for one required resident graph, with
+exclusive per-graph attempt reservation, explicit selected output/storage policy,
+pre-write event/component numeric and encoded-byte checks, dictionary/policy/
+owner leases through final publication and failure evidence. Retain a combined
+admitted receipt from the computation rather than reload the sample/dictionary.
+Then admit and reuse that exact saved MCM without sampling, fitting, matching or
+neighborhood reconstruction. Graph/node/motif order, full cell counts, actual
+pair-workload scope and required-graph membership must remain explicit. Existing
+closed, partial or failed attempt identities must never be relaunched. Historical
+continuation, mapped populations, whole-workflow physical accounting, cheaper
+reviewed leases and prospective measured resource/budget admission remain due.
+Available memory at02:55UTC was8666906624bytes; local free disk19769544704bytes.
+These snapshots are headroom observations, not feasibility or peak-RSS proof.
+
 **Admitted dictionary to actual resident MCM independently accepted**:
 New isolated full_sources/mcm-dictionary-driver-2026-10-01/ selects only an exact
 required graph from the admitted resident population, requires the dictionary
