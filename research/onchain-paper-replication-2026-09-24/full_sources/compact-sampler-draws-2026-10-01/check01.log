@@ -1,0 +1,101 @@
+F.....FF                                                                 [100%]
+=================================== FAILURES ===================================
+_ test_actual_draws_equal_existing_sampler_and_durable_current_owner_evidence __
+
+admitted = (<tradingagents.research.onchain_replication.compact_training.Training object at 0x75b5164716a0>, <tests.research.onch...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    def test_actual_draws_equal_existing_sampler_and_durable_current_owner_evidence(admitted):
+        route, t = admitted; m = api()
+        expected = neighborhoods.sample_neighborhoods(route.graphs, thaw(route.settings), route.seed)
+>       result = m.produce(route, input_name='compact_sampler'); result.check()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_sampler.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_sampler.py:221: in produce
+    'sample_fingerprint': _fingerprint(samples), 'sample_identity': samples.identity}
+                          ^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_sampler.py:98: in _fingerprint
+    'graphs': [graph_hash(g) for g in samples.graphs]})
+               ^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/neighborhoods.py:32: in graph_hash
+    validate_graph(graph);h=hashlib.sha256()
+    ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+g = AttributedGraph(node_ids=('a', 'b'), node_features=array([[1., 1., 1., 1.],
+       [1., 1., 1., 1.]]), edge_index=arra...tures=array([[1., 1.]]), parent_hash='4961a28e992d5c67630c62a3d951c4eb8083dd69e73af007b87c992c30037474', center_id='a')
+
+    def validate_graph(g: GraphSnapshot) -> None:
+>       if g.asset not in {'ETH', 'BTC'}:
+           ^^^^^^^
+E       AttributeError: 'AttributedGraph' object has no attribute 'asset'
+
+tradingagents/research/onchain_replication/contracts.py:92: AttributeError
+______________ test_draw_damage_and_resident_sample_drift_refuse _______________
+
+admitted = (<tradingagents.research.onchain_replication.compact_training.Training object at 0x75b5164618c0>, <tests.research.onch...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    def test_draw_damage_and_resident_sample_drift_refuse(admitted):
+>       route, t = admitted; m = api(); result = m.produce(route, input_name='compact_sampler')
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_sampler.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_sampler.py:221: in produce
+    'sample_fingerprint': _fingerprint(samples), 'sample_identity': samples.identity}
+                          ^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_sampler.py:98: in _fingerprint
+    'graphs': [graph_hash(g) for g in samples.graphs]})
+               ^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/neighborhoods.py:32: in graph_hash
+    validate_graph(graph);h=hashlib.sha256()
+    ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+g = AttributedGraph(node_ids=('a', 'b'), node_features=array([[1., 1., 1., 1.],
+       [1., 1., 1., 1.]]), edge_index=arra...tures=array([[1., 1.]]), parent_hash='4961a28e992d5c67630c62a3d951c4eb8083dd69e73af007b87c992c30037474', center_id='a')
+
+    def validate_graph(g: GraphSnapshot) -> None:
+>       if g.asset not in {'ETH', 'BTC'}:
+           ^^^^^^^
+E       AttributeError: 'AttributedGraph' object has no attribute 'asset'
+
+tradingagents/research/onchain_replication/contracts.py:92: AttributeError
+______________ test_last_lease_callback_cannot_hide_changed_draw _______________
+
+admitted = (<tradingagents.research.onchain_replication.compact_training.Training object at 0x75b5158e4050>, <tests.research.onch...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x75b515b28c80>
+
+    def test_last_lease_callback_cannot_hide_changed_draw(admitted, monkeypatch):
+>       route, t = admitted; m = api(); result = m.produce(route, input_name='compact_sampler')
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_sampler.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tradingagents/research/onchain_replication/compact_sampler.py:221: in produce
+    'sample_fingerprint': _fingerprint(samples), 'sample_identity': samples.identity}
+                          ^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/compact_sampler.py:98: in _fingerprint
+    'graphs': [graph_hash(g) for g in samples.graphs]})
+               ^^^^^^^^^^^^^
+tradingagents/research/onchain_replication/neighborhoods.py:32: in graph_hash
+    validate_graph(graph);h=hashlib.sha256()
+    ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+g = AttributedGraph(node_ids=('a', 'b'), node_features=array([[1., 1., 1., 1.],
+       [1., 1., 1., 1.]]), edge_index=arra...tures=array([[1., 1.]]), parent_hash='4961a28e992d5c67630c62a3d951c4eb8083dd69e73af007b87c992c30037474', center_id='a')
+
+    def validate_graph(g: GraphSnapshot) -> None:
+>       if g.asset not in {'ETH', 'BTC'}:
+           ^^^^^^^
+E       AttributeError: 'AttributedGraph' object has no attribute 'asset'
+
+tradingagents/research/onchain_replication/contracts.py:92: AttributeError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_sampler.py::test_actual_draws_equal_existing_sampler_and_durable_current_owner_evidence
+FAILED tests/research/onchain_replication/test_compact_sampler.py::test_draw_damage_and_resident_sample_drift_refuse
+FAILED tests/research/onchain_replication/test_compact_sampler.py::test_last_lease_callback_cannot_hide_changed_draw
+3 failed, 5 passed in 139.27s (0:02:19)

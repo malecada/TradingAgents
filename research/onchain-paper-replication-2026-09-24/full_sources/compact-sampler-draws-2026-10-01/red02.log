@@ -1,0 +1,22 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_actual_draws_equal_existing_sampler_and_durable_current_owner_evidence __
+
+admitted = (<tradingagents.research.onchain_replication.compact_training.Training object at 0x73ace196d6a0>, <tests.research.onch...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+
+    def test_actual_draws_equal_existing_sampler_and_durable_current_owner_evidence(admitted):
+>       route, t = admitted; m = api()
+                                 ^^^^^
+
+tests/research/onchain_replication/test_compact_sampler.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import compact_sampler
+E       ImportError: cannot import name 'compact_sampler' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_compact_sampler.py:51: ImportError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_sampler.py::test_actual_draws_equal_existing_sampler_and_durable_current_owner_evidence
+1 failed, 7 deselected in 15.89s

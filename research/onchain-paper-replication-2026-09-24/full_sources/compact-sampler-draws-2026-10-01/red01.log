@@ -1,0 +1,1117 @@
+EEEEFEEE                                                                 [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_actual_draws_equal_existing_sampler_and_durable_current_owner_evidence _
+
+root = PosixPath('/tmp/tmpef_syzic')
+args = ('show', '91c22748c611bbed98e7371dfcc3c5c6eb85d771:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py')
+
+    def _git(root, *args) -> bytes:
+        try:
+>           return subprocess.check_output(["git", *args], cwd=root, stderr=subprocess.PIPE)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tradingagents/research/admission.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:472: in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'show', '91c22748c611bbed98e7371dfcc3c5c6eb85d771:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py'],)
+kwargs = {'stdout': -1, 'cwd': PosixPath('/tmp/tmpef_syzic'), 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'show', '91c22748c611bbed98e7371dfcc3c5c6eb85d771:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py']' returned non-zero exit status 128.
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:577: CalledProcessError
+
+The above exception was the direct cause of the following exception:
+
+request = <SubRequest 'admitted' for <Function test_actual_draws_equal_existing_sampler_and_durable_current_owner_evidence>>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x700f16a37100>
+
+    @pytest.fixture
+    def admitted(request, monkeypatch):
+        original = training.first.Tests.fixture
+        option = getattr(request, 'param', 'valid')
+        def fixture(helper, mutate):
+            def prepare(t):
+                mutate(t); p = policy()
+                if option == 'budget': p['max_attempt_bytes'] -= 1
+                if option == 'schema': p['schema_version'] = True
+                t.input('compact_sampler', p)
+                for item in (t.item, t.execution['payload']['representation_jobs']['r']):
+                    item['compact_sampler_input'] = 'compact_sampler'
+                if option == 'route': t.item['compact_sampler_input'] = 'sample'
+                target = t.root / CORE; target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / CORE, target)
+                if option != 'source': t.exp['source_files'][CORE] = file_hash(target)
+            return original(helper, prepare)
+        monkeypatch.setattr(training.first.Tests, 'fixture', fixture)
+        fixture_gen = training.admitted.__wrapped__(SimpleNamespace(param='valid'))
+>       owner, args, t = next(fixture_gen)
+                         ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_sampler.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_training.py:53: in admitted
+    t = helper.fixture(prepare); journal, bound = helper.open(t)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_compact_sampler.py:38: in fixture
+    return original(helper, prepare)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_first_owner.py:31: in fixture
+    with patch.object(first.OwnershipTests,'prepare',new=prepare):f.setUp()
+                                                                  ^^^^^^^^^
+tests/research/onchain_replication/test_matching_owner.py:70: in setUp
+    self.prepare()
+tests/research/onchain_replication/test_first_owner.py:22: in prepare
+    f.run=ResearchRun.start(root=f.root,registration='registration.json',experiment='example-a',source=f.source)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/lifecycle.py:72: in start
+    admitted = admit(**arguments)
+               ^^^^^^^^^^^^^^^^^^
+tradingagents/research/admission.py:188: in admit
+    _committed(root, source, name, expected)
+tradingagents/research/admission.py:60: in _committed
+    recorded = _git(root, "show", f"{source}:{Path(name).as_posix()}")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/tmpef_syzic')
+args = ('show', '91c22748c611bbed98e7371dfcc3c5c6eb85d771:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py')
+
+    def _git(root, *args) -> bytes:
+        try:
+            return subprocess.check_output(["git", *args], cwd=root, stderr=subprocess.PIPE)
+        except subprocess.CalledProcessError as exc:
+>           raise ValueError("committed source/registration cannot be verified") from exc
+E           ValueError: committed source/registration cannot be verified
+
+tradingagents/research/admission.py:55: ValueError
+_ ERROR at setup of test_preflight_refuses_before_sampling_or_namespace[budget] _
+
+root = PosixPath('/tmp/tmp02ioo1dn')
+args = ('show', 'e9e801b202bcc53250e891bba7471ca92a56e973:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py')
+
+    def _git(root, *args) -> bytes:
+        try:
+>           return subprocess.check_output(["git", *args], cwd=root, stderr=subprocess.PIPE)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tradingagents/research/admission.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:472: in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'show', 'e9e801b202bcc53250e891bba7471ca92a56e973:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py'],)
+kwargs = {'stdout': -1, 'cwd': PosixPath('/tmp/tmp02ioo1dn'), 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'show', 'e9e801b202bcc53250e891bba7471ca92a56e973:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py']' returned non-zero exit status 128.
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:577: CalledProcessError
+
+The above exception was the direct cause of the following exception:
+
+request = <SubRequest 'admitted' for <Function test_preflight_refuses_before_sampling_or_namespace[budget]>>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x700dab1f7360>
+
+    @pytest.fixture
+    def admitted(request, monkeypatch):
+        original = training.first.Tests.fixture
+        option = getattr(request, 'param', 'valid')
+        def fixture(helper, mutate):
+            def prepare(t):
+                mutate(t); p = policy()
+                if option == 'budget': p['max_attempt_bytes'] -= 1
+                if option == 'schema': p['schema_version'] = True
+                t.input('compact_sampler', p)
+                for item in (t.item, t.execution['payload']['representation_jobs']['r']):
+                    item['compact_sampler_input'] = 'compact_sampler'
+                if option == 'route': t.item['compact_sampler_input'] = 'sample'
+                target = t.root / CORE; target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / CORE, target)
+                if option != 'source': t.exp['source_files'][CORE] = file_hash(target)
+            return original(helper, prepare)
+        monkeypatch.setattr(training.first.Tests, 'fixture', fixture)
+        fixture_gen = training.admitted.__wrapped__(SimpleNamespace(param='valid'))
+>       owner, args, t = next(fixture_gen)
+                         ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_sampler.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_training.py:53: in admitted
+    t = helper.fixture(prepare); journal, bound = helper.open(t)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_compact_sampler.py:38: in fixture
+    return original(helper, prepare)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_first_owner.py:31: in fixture
+    with patch.object(first.OwnershipTests,'prepare',new=prepare):f.setUp()
+                                                                  ^^^^^^^^^
+tests/research/onchain_replication/test_matching_owner.py:70: in setUp
+    self.prepare()
+tests/research/onchain_replication/test_first_owner.py:22: in prepare
+    f.run=ResearchRun.start(root=f.root,registration='registration.json',experiment='example-a',source=f.source)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/lifecycle.py:72: in start
+    admitted = admit(**arguments)
+               ^^^^^^^^^^^^^^^^^^
+tradingagents/research/admission.py:188: in admit
+    _committed(root, source, name, expected)
+tradingagents/research/admission.py:60: in _committed
+    recorded = _git(root, "show", f"{source}:{Path(name).as_posix()}")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/tmp02ioo1dn')
+args = ('show', 'e9e801b202bcc53250e891bba7471ca92a56e973:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py')
+
+    def _git(root, *args) -> bytes:
+        try:
+            return subprocess.check_output(["git", *args], cwd=root, stderr=subprocess.PIPE)
+        except subprocess.CalledProcessError as exc:
+>           raise ValueError("committed source/registration cannot be verified") from exc
+E           ValueError: committed source/registration cannot be verified
+
+tradingagents/research/admission.py:55: ValueError
+_ ERROR at setup of test_preflight_refuses_before_sampling_or_namespace[schema] _
+
+root = PosixPath('/tmp/tmpvldbscxh')
+args = ('show', '39dd7ca596ed2ecf433985306e5db1ed1fc26b61:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py')
+
+    def _git(root, *args) -> bytes:
+        try:
+>           return subprocess.check_output(["git", *args], cwd=root, stderr=subprocess.PIPE)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tradingagents/research/admission.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:472: in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'show', '39dd7ca596ed2ecf433985306e5db1ed1fc26b61:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py'],)
+kwargs = {'stdout': -1, 'cwd': PosixPath('/tmp/tmpvldbscxh'), 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'show', '39dd7ca596ed2ecf433985306e5db1ed1fc26b61:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py']' returned non-zero exit status 128.
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:577: CalledProcessError
+
+The above exception was the direct cause of the following exception:
+
+request = <SubRequest 'admitted' for <Function test_preflight_refuses_before_sampling_or_namespace[schema]>>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x700f16939d90>
+
+    @pytest.fixture
+    def admitted(request, monkeypatch):
+        original = training.first.Tests.fixture
+        option = getattr(request, 'param', 'valid')
+        def fixture(helper, mutate):
+            def prepare(t):
+                mutate(t); p = policy()
+                if option == 'budget': p['max_attempt_bytes'] -= 1
+                if option == 'schema': p['schema_version'] = True
+                t.input('compact_sampler', p)
+                for item in (t.item, t.execution['payload']['representation_jobs']['r']):
+                    item['compact_sampler_input'] = 'compact_sampler'
+                if option == 'route': t.item['compact_sampler_input'] = 'sample'
+                target = t.root / CORE; target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / CORE, target)
+                if option != 'source': t.exp['source_files'][CORE] = file_hash(target)
+            return original(helper, prepare)
+        monkeypatch.setattr(training.first.Tests, 'fixture', fixture)
+        fixture_gen = training.admitted.__wrapped__(SimpleNamespace(param='valid'))
+>       owner, args, t = next(fixture_gen)
+                         ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_sampler.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_training.py:53: in admitted
+    t = helper.fixture(prepare); journal, bound = helper.open(t)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_compact_sampler.py:38: in fixture
+    return original(helper, prepare)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_first_owner.py:31: in fixture
+    with patch.object(first.OwnershipTests,'prepare',new=prepare):f.setUp()
+                                                                  ^^^^^^^^^
+tests/research/onchain_replication/test_matching_owner.py:70: in setUp
+    self.prepare()
+tests/research/onchain_replication/test_first_owner.py:22: in prepare
+    f.run=ResearchRun.start(root=f.root,registration='registration.json',experiment='example-a',source=f.source)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/lifecycle.py:72: in start
+    admitted = admit(**arguments)
+               ^^^^^^^^^^^^^^^^^^
+tradingagents/research/admission.py:188: in admit
+    _committed(root, source, name, expected)
+tradingagents/research/admission.py:60: in _committed
+    recorded = _git(root, "show", f"{source}:{Path(name).as_posix()}")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/tmpvldbscxh')
+args = ('show', '39dd7ca596ed2ecf433985306e5db1ed1fc26b61:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py')
+
+    def _git(root, *args) -> bytes:
+        try:
+            return subprocess.check_output(["git", *args], cwd=root, stderr=subprocess.PIPE)
+        except subprocess.CalledProcessError as exc:
+>           raise ValueError("committed source/registration cannot be verified") from exc
+E           ValueError: committed source/registration cannot be verified
+
+tradingagents/research/admission.py:55: ValueError
+_ ERROR at setup of test_preflight_refuses_before_sampling_or_namespace[route] _
+
+root = PosixPath('/tmp/tmp_v5o0jce')
+args = ('show', '2bb14949dea00affd0a822f45f7387eabff7134b:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py')
+
+    def _git(root, *args) -> bytes:
+        try:
+>           return subprocess.check_output(["git", *args], cwd=root, stderr=subprocess.PIPE)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tradingagents/research/admission.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:472: in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'show', '2bb14949dea00affd0a822f45f7387eabff7134b:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py'],)
+kwargs = {'stdout': -1, 'cwd': PosixPath('/tmp/tmp_v5o0jce'), 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'show', '2bb14949dea00affd0a822f45f7387eabff7134b:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py']' returned non-zero exit status 128.
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:577: CalledProcessError
+
+The above exception was the direct cause of the following exception:
+
+request = <SubRequest 'admitted' for <Function test_preflight_refuses_before_sampling_or_namespace[route]>>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x700dab1599d0>
+
+    @pytest.fixture
+    def admitted(request, monkeypatch):
+        original = training.first.Tests.fixture
+        option = getattr(request, 'param', 'valid')
+        def fixture(helper, mutate):
+            def prepare(t):
+                mutate(t); p = policy()
+                if option == 'budget': p['max_attempt_bytes'] -= 1
+                if option == 'schema': p['schema_version'] = True
+                t.input('compact_sampler', p)
+                for item in (t.item, t.execution['payload']['representation_jobs']['r']):
+                    item['compact_sampler_input'] = 'compact_sampler'
+                if option == 'route': t.item['compact_sampler_input'] = 'sample'
+                target = t.root / CORE; target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / CORE, target)
+                if option != 'source': t.exp['source_files'][CORE] = file_hash(target)
+            return original(helper, prepare)
+        monkeypatch.setattr(training.first.Tests, 'fixture', fixture)
+        fixture_gen = training.admitted.__wrapped__(SimpleNamespace(param='valid'))
+>       owner, args, t = next(fixture_gen)
+                         ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_sampler.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_training.py:53: in admitted
+    t = helper.fixture(prepare); journal, bound = helper.open(t)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_compact_sampler.py:38: in fixture
+    return original(helper, prepare)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_first_owner.py:31: in fixture
+    with patch.object(first.OwnershipTests,'prepare',new=prepare):f.setUp()
+                                                                  ^^^^^^^^^
+tests/research/onchain_replication/test_matching_owner.py:70: in setUp
+    self.prepare()
+tests/research/onchain_replication/test_first_owner.py:22: in prepare
+    f.run=ResearchRun.start(root=f.root,registration='registration.json',experiment='example-a',source=f.source)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/lifecycle.py:72: in start
+    admitted = admit(**arguments)
+               ^^^^^^^^^^^^^^^^^^
+tradingagents/research/admission.py:188: in admit
+    _committed(root, source, name, expected)
+tradingagents/research/admission.py:60: in _committed
+    recorded = _git(root, "show", f"{source}:{Path(name).as_posix()}")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/tmp_v5o0jce')
+args = ('show', '2bb14949dea00affd0a822f45f7387eabff7134b:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py')
+
+    def _git(root, *args) -> bytes:
+        try:
+            return subprocess.check_output(["git", *args], cwd=root, stderr=subprocess.PIPE)
+        except subprocess.CalledProcessError as exc:
+>           raise ValueError("committed source/registration cannot be verified") from exc
+E           ValueError: committed source/registration cannot be verified
+
+tradingagents/research/admission.py:55: ValueError
+_ ERROR at setup of test_interrupted_draw_write_retains_attempt_and_revokes_owner _
+
+root = PosixPath('/tmp/tmpefgx08u_')
+args = ('show', 'bf2038b2b0a8fdd9d577f0eb1933d6e79d9658c1:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py')
+
+    def _git(root, *args) -> bytes:
+        try:
+>           return subprocess.check_output(["git", *args], cwd=root, stderr=subprocess.PIPE)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tradingagents/research/admission.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:472: in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'show', 'bf2038b2b0a8fdd9d577f0eb1933d6e79d9658c1:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py'],)
+kwargs = {'stdout': -1, 'cwd': PosixPath('/tmp/tmpefgx08u_'), 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'show', 'bf2038b2b0a8fdd9d577f0eb1933d6e79d9658c1:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py']' returned non-zero exit status 128.
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:577: CalledProcessError
+
+The above exception was the direct cause of the following exception:
+
+request = <SubRequest 'admitted' for <Function test_interrupted_draw_write_retains_attempt_and_revokes_owner>>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x700daac2c050>
+
+    @pytest.fixture
+    def admitted(request, monkeypatch):
+        original = training.first.Tests.fixture
+        option = getattr(request, 'param', 'valid')
+        def fixture(helper, mutate):
+            def prepare(t):
+                mutate(t); p = policy()
+                if option == 'budget': p['max_attempt_bytes'] -= 1
+                if option == 'schema': p['schema_version'] = True
+                t.input('compact_sampler', p)
+                for item in (t.item, t.execution['payload']['representation_jobs']['r']):
+                    item['compact_sampler_input'] = 'compact_sampler'
+                if option == 'route': t.item['compact_sampler_input'] = 'sample'
+                target = t.root / CORE; target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / CORE, target)
+                if option != 'source': t.exp['source_files'][CORE] = file_hash(target)
+            return original(helper, prepare)
+        monkeypatch.setattr(training.first.Tests, 'fixture', fixture)
+        fixture_gen = training.admitted.__wrapped__(SimpleNamespace(param='valid'))
+>       owner, args, t = next(fixture_gen)
+                         ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_sampler.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_training.py:53: in admitted
+    t = helper.fixture(prepare); journal, bound = helper.open(t)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_compact_sampler.py:38: in fixture
+    return original(helper, prepare)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_first_owner.py:31: in fixture
+    with patch.object(first.OwnershipTests,'prepare',new=prepare):f.setUp()
+                                                                  ^^^^^^^^^
+tests/research/onchain_replication/test_matching_owner.py:70: in setUp
+    self.prepare()
+tests/research/onchain_replication/test_first_owner.py:22: in prepare
+    f.run=ResearchRun.start(root=f.root,registration='registration.json',experiment='example-a',source=f.source)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/lifecycle.py:72: in start
+    admitted = admit(**arguments)
+               ^^^^^^^^^^^^^^^^^^
+tradingagents/research/admission.py:188: in admit
+    _committed(root, source, name, expected)
+tradingagents/research/admission.py:60: in _committed
+    recorded = _git(root, "show", f"{source}:{Path(name).as_posix()}")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/tmpefgx08u_')
+args = ('show', 'bf2038b2b0a8fdd9d577f0eb1933d6e79d9658c1:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py')
+
+    def _git(root, *args) -> bytes:
+        try:
+            return subprocess.check_output(["git", *args], cwd=root, stderr=subprocess.PIPE)
+        except subprocess.CalledProcessError as exc:
+>           raise ValueError("committed source/registration cannot be verified") from exc
+E           ValueError: committed source/registration cannot be verified
+
+tradingagents/research/admission.py:55: ValueError
+_____ ERROR at setup of test_draw_damage_and_resident_sample_drift_refuse ______
+
+root = PosixPath('/tmp/tmpa8g_w4gi')
+args = ('show', '08b2c1b8c310c853e9befc653a689b381d9268fb:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py')
+
+    def _git(root, *args) -> bytes:
+        try:
+>           return subprocess.check_output(["git", *args], cwd=root, stderr=subprocess.PIPE)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tradingagents/research/admission.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:472: in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'show', '08b2c1b8c310c853e9befc653a689b381d9268fb:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py'],)
+kwargs = {'stdout': -1, 'cwd': PosixPath('/tmp/tmpa8g_w4gi'), 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'show', '08b2c1b8c310c853e9befc653a689b381d9268fb:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py']' returned non-zero exit status 128.
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:577: CalledProcessError
+
+The above exception was the direct cause of the following exception:
+
+request = <SubRequest 'admitted' for <Function test_draw_damage_and_resident_sample_drift_refuse>>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x700daac2d050>
+
+    @pytest.fixture
+    def admitted(request, monkeypatch):
+        original = training.first.Tests.fixture
+        option = getattr(request, 'param', 'valid')
+        def fixture(helper, mutate):
+            def prepare(t):
+                mutate(t); p = policy()
+                if option == 'budget': p['max_attempt_bytes'] -= 1
+                if option == 'schema': p['schema_version'] = True
+                t.input('compact_sampler', p)
+                for item in (t.item, t.execution['payload']['representation_jobs']['r']):
+                    item['compact_sampler_input'] = 'compact_sampler'
+                if option == 'route': t.item['compact_sampler_input'] = 'sample'
+                target = t.root / CORE; target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / CORE, target)
+                if option != 'source': t.exp['source_files'][CORE] = file_hash(target)
+            return original(helper, prepare)
+        monkeypatch.setattr(training.first.Tests, 'fixture', fixture)
+        fixture_gen = training.admitted.__wrapped__(SimpleNamespace(param='valid'))
+>       owner, args, t = next(fixture_gen)
+                         ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_sampler.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_training.py:53: in admitted
+    t = helper.fixture(prepare); journal, bound = helper.open(t)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_compact_sampler.py:38: in fixture
+    return original(helper, prepare)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_first_owner.py:31: in fixture
+    with patch.object(first.OwnershipTests,'prepare',new=prepare):f.setUp()
+                                                                  ^^^^^^^^^
+tests/research/onchain_replication/test_matching_owner.py:70: in setUp
+    self.prepare()
+tests/research/onchain_replication/test_first_owner.py:22: in prepare
+    f.run=ResearchRun.start(root=f.root,registration='registration.json',experiment='example-a',source=f.source)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/lifecycle.py:72: in start
+    admitted = admit(**arguments)
+               ^^^^^^^^^^^^^^^^^^
+tradingagents/research/admission.py:188: in admit
+    _committed(root, source, name, expected)
+tradingagents/research/admission.py:60: in _committed
+    recorded = _git(root, "show", f"{source}:{Path(name).as_posix()}")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/tmpa8g_w4gi')
+args = ('show', '08b2c1b8c310c853e9befc653a689b381d9268fb:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py')
+
+    def _git(root, *args) -> bytes:
+        try:
+            return subprocess.check_output(["git", *args], cwd=root, stderr=subprocess.PIPE)
+        except subprocess.CalledProcessError as exc:
+>           raise ValueError("committed source/registration cannot be verified") from exc
+E           ValueError: committed source/registration cannot be verified
+
+tradingagents/research/admission.py:55: ValueError
+_____ ERROR at setup of test_last_lease_callback_cannot_hide_changed_draw ______
+
+root = PosixPath('/tmp/tmp_b__urs0')
+args = ('show', 'd16c603123c9239b3ef411a6d6be12656c2f0de2:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py')
+
+    def _git(root, *args) -> bytes:
+        try:
+>           return subprocess.check_output(["git", *args], cwd=root, stderr=subprocess.PIPE)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tradingagents/research/admission.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:472: in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['git', 'show', 'd16c603123c9239b3ef411a6d6be12656c2f0de2:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py'],)
+kwargs = {'stdout': -1, 'cwd': PosixPath('/tmp/tmp_b__urs0'), 'stderr': -1}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+        with Popen(*popenargs, **kwargs) as process:
+            try:
+                stdout, stderr = process.communicate(input, timeout=timeout)
+            except TimeoutExpired as exc:
+                process.kill()
+                if _mswindows:
+                    # Windows accumulates the output in a single blocking
+                    # read() call run on child threads, with the timeout
+                    # being done in a join() on those threads.  communicate()
+                    # _after_ kill() is required to collect that and add it
+                    # to the exception.
+                    exc.stdout, exc.stderr = process.communicate()
+                else:
+                    # POSIX _communicate already populated the output so
+                    # far into the TimeoutExpired exception.
+                    process.wait()
+                raise
+            except:  # Including KeyboardInterrupt, communicate handled that.
+                process.kill()
+                # We don't call process.wait() as .__exit__ does that for us.
+                raise
+            retcode = process.poll()
+            if check and retcode:
+>               raise CalledProcessError(retcode, process.args,
+                                         output=stdout, stderr=stderr)
+E               subprocess.CalledProcessError: Command '['git', 'show', 'd16c603123c9239b3ef411a6d6be12656c2f0de2:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py']' returned non-zero exit status 128.
+
+../../.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py:577: CalledProcessError
+
+The above exception was the direct cause of the following exception:
+
+request = <SubRequest 'admitted' for <Function test_last_lease_callback_cannot_hide_changed_draw>>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x700daac7f890>
+
+    @pytest.fixture
+    def admitted(request, monkeypatch):
+        original = training.first.Tests.fixture
+        option = getattr(request, 'param', 'valid')
+        def fixture(helper, mutate):
+            def prepare(t):
+                mutate(t); p = policy()
+                if option == 'budget': p['max_attempt_bytes'] -= 1
+                if option == 'schema': p['schema_version'] = True
+                t.input('compact_sampler', p)
+                for item in (t.item, t.execution['payload']['representation_jobs']['r']):
+                    item['compact_sampler_input'] = 'compact_sampler'
+                if option == 'route': t.item['compact_sampler_input'] = 'sample'
+                target = t.root / CORE; target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / CORE, target)
+                if option != 'source': t.exp['source_files'][CORE] = file_hash(target)
+            return original(helper, prepare)
+        monkeypatch.setattr(training.first.Tests, 'fixture', fixture)
+        fixture_gen = training.admitted.__wrapped__(SimpleNamespace(param='valid'))
+>       owner, args, t = next(fixture_gen)
+                         ^^^^^^^^^^^^^^^^^
+
+tests/research/onchain_replication/test_compact_sampler.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/research/onchain_replication/test_compact_training.py:53: in admitted
+    t = helper.fixture(prepare); journal, bound = helper.open(t)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_compact_sampler.py:38: in fixture
+    return original(helper, prepare)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/research/onchain_replication/test_first_owner.py:31: in fixture
+    with patch.object(first.OwnershipTests,'prepare',new=prepare):f.setUp()
+                                                                  ^^^^^^^^^
+tests/research/onchain_replication/test_matching_owner.py:70: in setUp
+    self.prepare()
+tests/research/onchain_replication/test_first_owner.py:22: in prepare
+    f.run=ResearchRun.start(root=f.root,registration='registration.json',experiment='example-a',source=f.source)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tradingagents/research/lifecycle.py:72: in start
+    admitted = admit(**arguments)
+               ^^^^^^^^^^^^^^^^^^
+tradingagents/research/admission.py:188: in admit
+    _committed(root, source, name, expected)
+tradingagents/research/admission.py:60: in _committed
+    recorded = _git(root, "show", f"{source}:{Path(name).as_posix()}")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/tmp/tmp_b__urs0')
+args = ('show', 'd16c603123c9239b3ef411a6d6be12656c2f0de2:research/onchain-paper-replication-2026-09-24/full_sources/sampler-leased-core-2026-10-01/core.py')
+
+    def _git(root, *args) -> bytes:
+        try:
+            return subprocess.check_output(["git", *args], cwd=root, stderr=subprocess.PIPE)
+        except subprocess.CalledProcessError as exc:
+>           raise ValueError("committed source/registration cannot be verified") from exc
+E           ValueError: committed source/registration cannot be verified
+
+tradingagents/research/admission.py:55: ValueError
+=================================== FAILURES ===================================
+_________ test_preflight_refuses_before_sampling_or_namespace[source] __________
+
+admitted = (<tradingagents.research.onchain_replication.compact_training.Training object at 0x700dab16a510>, <tests.research.onch...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x700dab15b350>
+
+    @pytest.mark.parametrize('admitted', ['budget', 'schema', 'route', 'source'], indirect=True)
+    def test_preflight_refuses_before_sampling_or_namespace(admitted, monkeypatch):
+>       route, t = admitted; m = api()
+                                 ^^^^^
+
+tests/research/onchain_replication/test_compact_sampler.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def api():
+>       from tradingagents.research.onchain_replication import compact_sampler
+E       ImportError: cannot import name 'compact_sampler' from 'tradingagents.research.onchain_replication' (/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/__init__.py)
+
+tests/research/onchain_replication/test_compact_sampler.py:49: ImportError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_sampler.py::test_preflight_refuses_before_sampling_or_namespace[source]
+ERROR tests/research/onchain_replication/test_compact_sampler.py::test_actual_draws_equal_existing_sampler_and_durable_current_owner_evidence
+ERROR tests/research/onchain_replication/test_compact_sampler.py::test_preflight_refuses_before_sampling_or_namespace[budget]
+ERROR tests/research/onchain_replication/test_compact_sampler.py::test_preflight_refuses_before_sampling_or_namespace[schema]
+ERROR tests/research/onchain_replication/test_compact_sampler.py::test_preflight_refuses_before_sampling_or_namespace[route]
+ERROR tests/research/onchain_replication/test_compact_sampler.py::test_interrupted_draw_write_retains_attempt_and_revokes_owner
+ERROR tests/research/onchain_replication/test_compact_sampler.py::test_draw_damage_and_resident_sample_drift_refuse
+ERROR tests/research/onchain_replication/test_compact_sampler.py::test_last_lease_callback_cannot_hide_changed_draw
+1 failed, 7 errors in 24.02s

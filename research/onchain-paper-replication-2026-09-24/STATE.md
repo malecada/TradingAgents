@@ -3,6 +3,32 @@
 This section supersedes the chronological snapshots below. All 13 tasks remain
 in the authorized scope. The historical negative screen is unchanged.
 
+**Compact sampler durable draws — October 1 continuation**:
+Implementing the first current-owner bounded sampler adapter using the preserved
+leased core, with exclusive durable per-draw RNG evidence and retained failure
+namespaces. Numeric sample publication and scientific proof admission follow as
+separate interfaces; no arbitrary SampleManifest is admitted by this step.
+Evidence full_sources/compact-sampler-draws-2026-10-01/: red01 CLOSED1missing-module
+failure and7fixture errors24.02s/session71428exit1. The fixture copied the dated
+core but did not stage it before its temporary research registration commit;
+that fixture has been preserved and corrected. Fresh red02 CLOSED1missing-module failure7deselected15.89s/session89668exit1
+reached actual registered admission after fixture correction. Maintained sampler
+adapter check01 CLOSED3failures5passes139.27s/session14365exit1.
+Independent REVIEW_INITIAL identified a weekly-versus-attributed sample hash API
+error and missing callback-free draw acknowledgement checks. Source/test preserved. red03 CLOSED1failed8deselected19.95s/session60622exit1
+reproduced2extra draws after corrupted acknowledgement. Both defects corrected:
+existing bounded attributed graph identity, and callback-free exact written-file
+checks at each inner lease. check02 CLOSED4passed5deselected92.78s/
+session53264exit0 verifies corrected positive sampling, resident/file drift and
+corruption-before-next-draw; no combined current9-case run claimed.
+No engineering process remains active. Independent REVIEW accepted the corrected
+bounded draw adapter, SHA
+e46eaa1fcb68f8a7f38c24e699c8b8bd9eb5ce2afdc7a26cef98253b0e0aad3a.
+Next bounded numeric sample publication and exact draw/artifact provenance join
+for dictionary consumption; representation/native closure remains pending.
+Disk21247488000B available,10GiB floor preserved. Coverage77/109 and all1420
+financial fits pending are unchanged. No empirical/resource/financial job started.
+
 **Compact training-population admission — October 1 heartbeat**:
 Fresh synthetic red01 CLOSED8missing-module failures94.69s/session35372exit1,
 evidence full_sources/compact-training-2026-10-01/. Root is implementing the

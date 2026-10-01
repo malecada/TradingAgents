@@ -1,0 +1,28 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________ test_corrupt_acknowledgement_stops_before_next_draw ______________
+
+admitted = (<tradingagents.research.onchain_replication.compact_training.Training object at 0x7634226516a0>, <tests.research.onch...plication.test_matching_owner.OwnershipTests testMethod=test_actual_claim_owner_and_old_numerical_anchor_are_distinct>)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x76358dc47100>
+
+    def test_corrupt_acknowledgement_stops_before_next_draw(admitted, monkeypatch):
+        route, t = admitted; m = api(); calls = []; original_draw = m._draw; original_lease = route.lease
+        def draw(value, index, *args):
+            calls.append(index); return original_draw(value, index, *args)
+        def corrupt():
+            original_lease(); path = m.directory(route) / 'draw-000000.json'
+            if path.exists(): path.write_bytes(b'{}')
+        monkeypatch.setattr(m, '_draw', draw); monkeypatch.setattr(route, 'lease', corrupt)
+        with pytest.raises(Exception) as caught: m.produce(route, input_name='compact_sampler')
+>       assert calls == [0], 'a later RNG draw occurred after corrupt acknowledgement'
+E       AssertionError: a later RNG draw occurred after corrupt acknowledgement
+E       assert [0, 1, 2] == [0]
+E         
+E         Left contains 2 more items, first extra item: 1
+E         Use -v to get more diff
+
+tests/research/onchain_replication/test_compact_sampler.py:122: AssertionError
+- reviewed profile: 26 encountered files withheld; this is not the full legacy suite -
+=========================== short test summary info ============================
+FAILED tests/research/onchain_replication/test_compact_sampler.py::test_corrupt_acknowledgement_stops_before_next_draw
+1 failed, 8 deselected in 19.95s
