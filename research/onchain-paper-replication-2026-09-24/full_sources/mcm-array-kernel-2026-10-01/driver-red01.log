@@ -1,0 +1,94 @@
+test_actual_claim_owner_and_old_numerical_anchor_are_distinct (tests.research.onchain_replication.test_matching_owner.OwnershipTests.test_actual_claim_owner_and_old_numerical_anchor_are_distinct) ... ok
+test_boolean_execution_version_refused (tests.research.onchain_replication.test_matching_owner.OwnershipTests.test_boolean_execution_version_refused) ... ok
+test_boolean_journal_version_refused (tests.research.onchain_replication.test_matching_owner.OwnershipTests.test_boolean_journal_version_refused) ... ok
+test_boolean_policy_version_refused (tests.research.onchain_replication.test_matching_owner.OwnershipTests.test_boolean_policy_version_refused) ... ok
+test_changed_guard_metadata_refused (tests.research.onchain_replication.test_matching_owner.OwnershipTests.test_changed_guard_metadata_refused) ... ok
+test_changed_journal_claim_refused (tests.research.onchain_replication.test_matching_owner.OwnershipTests.test_changed_journal_claim_refused) ... ok
+test_failed_parent_not_silently_admitted (tests.research.onchain_replication.test_matching_owner.OwnershipTests.test_failed_parent_not_silently_admitted) ... Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 57, in <module>
+    if __name__=='__main__':unittest.main(verbosity=2)
+                            ~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/main.py", line 104, in __init__
+    self.runTests()
+    ~~~~~~~~~~~~~^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/main.py", line 270, in runTests
+    self.result = testRunner.run(self.test)
+                  ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/runner.py", line 240, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/case.py", line 707, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/case.py", line 651, in run
+    self._callTestMethod(testMethod)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/unittest/case.py", line 606, in _callTestMethod
+    if method() is not None:
+       ~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 174, in test_failed_parent_not_silently_admitted
+    with self.assertRaises(ValueError):self.bind()
+                                       ~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tests/research/onchain_replication/test_matching_owner.py", line 97, in bind
+    args.update(kw);return self.module.bind(self.run,**args)
+                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/onchain_replication/matching_owner.py", line 157, in bind
+    env=json.loads(run.read_input(execution['environment_input']))
+                   ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/lifecycle.py", line 125, in read_input
+    self._check_source()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/lifecycle.py", line 111, in _check_source
+    current = admit(root=self.admission.root, registration=self.admission.registration,
+                    experiment=self.admission.experiment_id, source=self.admission.source,
+                    design_source=self.admission.design_source, bindings=self.admission.bindings,
+                    _own_claim=self.admission.experiment_id)
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/admission.py", line 188, in admit
+    _committed(root, source, name, expected)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/admission.py", line 60, in _committed
+    recorded = _git(root, "show", f"{source}:{Path(name).as_posix()}")
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/tradingagents/research/admission.py", line 53, in _git
+    return subprocess.check_output(["git", *args], cwd=root, stderr=subprocess.PIPE)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 472, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               **kwargs).stdout
+               ^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 554, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 1039, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/malecada/.local/share/uv/python/cpython-3.13.13-linux-x86_64-gnu/lib/python3.13/subprocess.py", line 1921, in _execute_child
+    self.pid = _fork_exec(
+               ~~~~~~~~~~^
+            args, executable_list,
+            ^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+            process_group, gid, gids, uid, umask,
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            preexec_fn, _USE_VFORK)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

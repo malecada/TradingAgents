@@ -1,0 +1,133 @@
+test_admitted_output_records_policy_and_complete_accounting (__main__.Tests.test_admitted_output_records_policy_and_complete_accounting) ... FAIL
+test_conflicting_dictionary_proof_refuses_before_pair_consumer (__main__.Tests.test_conflicting_dictionary_proof_refuses_before_pair_consumer) ... FAIL
+test_dictionary_drift_after_first_mcm_pair_stops_next_reservation (__main__.Tests.test_dictionary_drift_after_first_mcm_pair_stops_next_reservation) ... FAIL
+test_every_mcm_cell_matches_scalar_and_completed_pairs_are_reused (__main__.Tests.test_every_mcm_cell_matches_scalar_and_completed_pairs_are_reused) ... FAIL
+test_foreign_graph_refuses_before_dictionary_loading (__main__.Tests.test_foreign_graph_refuses_before_dictionary_loading) ... FAIL
+test_policy_drift_after_first_pair_stops_before_next_reservation (__main__.Tests.test_policy_drift_after_first_pair_stops_before_next_reservation) ... FAIL
+test_unselected_policy_and_caps_refuse_before_dictionary_loading (__main__.Tests.test_unselected_policy_and_caps_refuse_before_dictionary_loading) ... 
+  test_unselected_policy_and_caps_refuse_before_dictionary_loading (__main__.Tests.test_unselected_policy_and_caps_refuse_before_dictionary_loading) (mode='route') ... FAIL
+  test_unselected_policy_and_caps_refuse_before_dictionary_loading (__main__.Tests.test_unselected_policy_and_caps_refuse_before_dictionary_loading) (mode='output_cap') ... FAIL
+  test_unselected_policy_and_caps_refuse_before_dictionary_loading (__main__.Tests.test_unselected_policy_and_caps_refuse_before_dictionary_loading) (mode='combined_cap') ... FAIL
+
+======================================================================
+FAIL: test_admitted_output_records_policy_and_complete_accounting (__main__.Tests.test_admitted_output_records_policy_and_complete_accounting)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 41, in test_admitted_output_records_policy_and_complete_accounting
+    self.fixture();out=self.run_driver()
+    ~~~~~~~~~~~~^^
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 18, in fixture
+    m=api();original=owner_fixture.OwnershipTests.input
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 13, in api
+    assert (HERE/'driver.py').is_file(),'registered bounded MCM driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered bounded MCM driver missing
+
+======================================================================
+FAIL: test_conflicting_dictionary_proof_refuses_before_pair_consumer (__main__.Tests.test_conflicting_dictionary_proof_refuses_before_pair_consumer)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-dictionary-driver-2026-10-01/test_driver.py", line 50, in test_conflicting_dictionary_proof_refuses_before_pair_consumer
+    f=self.fixture();before=f.owned.journal.reservations
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 18, in fixture
+    m=api();original=owner_fixture.OwnershipTests.input
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 13, in api
+    assert (HERE/'driver.py').is_file(),'registered bounded MCM driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered bounded MCM driver missing
+
+======================================================================
+FAIL: test_dictionary_drift_after_first_mcm_pair_stops_next_reservation (__main__.Tests.test_dictionary_drift_after_first_mcm_pair_stops_next_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-dictionary-driver-2026-10-01/test_driver.py", line 55, in test_dictionary_drift_after_first_mcm_pair_stops_next_reservation
+    f=self.fixture();original=self.m.serial.Serial.__call__;calls=[]
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 18, in fixture
+    m=api();original=owner_fixture.OwnershipTests.input
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 13, in api
+    assert (HERE/'driver.py').is_file(),'registered bounded MCM driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered bounded MCM driver missing
+
+======================================================================
+FAIL: test_every_mcm_cell_matches_scalar_and_completed_pairs_are_reused (__main__.Tests.test_every_mcm_cell_matches_scalar_and_completed_pairs_are_reused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-dictionary-driver-2026-10-01/test_driver.py", line 30, in test_every_mcm_cell_matches_scalar_and_completed_pairs_are_reused
+    f=self.fixture();admitted=self.f.admit();dictionary=admitted.dictionary
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 18, in fixture
+    m=api();original=owner_fixture.OwnershipTests.input
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 13, in api
+    assert (HERE/'driver.py').is_file(),'registered bounded MCM driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered bounded MCM driver missing
+
+======================================================================
+FAIL: test_foreign_graph_refuses_before_dictionary_loading (__main__.Tests.test_foreign_graph_refuses_before_dictionary_loading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-dictionary-driver-2026-10-01/test_driver.py", line 46, in test_foreign_graph_refuses_before_dictionary_loading
+    f=self.fixture();before=f.owned.journal.reservations
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 18, in fixture
+    m=api();original=owner_fixture.OwnershipTests.input
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 13, in api
+    assert (HERE/'driver.py').is_file(),'registered bounded MCM driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered bounded MCM driver missing
+
+======================================================================
+FAIL: test_policy_drift_after_first_pair_stops_before_next_reservation (__main__.Tests.test_policy_drift_after_first_pair_stops_before_next_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 47, in test_policy_drift_after_first_pair_stops_before_next_reservation
+    f=self.fixture();original=self.m.serial.Serial.__call__;calls=[]
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 18, in fixture
+    m=api();original=owner_fixture.OwnershipTests.input
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 13, in api
+    assert (HERE/'driver.py').is_file(),'registered bounded MCM driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered bounded MCM driver missing
+
+======================================================================
+FAIL: test_unselected_policy_and_caps_refuse_before_dictionary_loading (__main__.Tests.test_unselected_policy_and_caps_refuse_before_dictionary_loading) (mode='route')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 37, in test_unselected_policy_and_caps_refuse_before_dictionary_loading
+    f=self.fixture(mode);before=f.owned.journal.reservations
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 18, in fixture
+    m=api();original=owner_fixture.OwnershipTests.input
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 13, in api
+    assert (HERE/'driver.py').is_file(),'registered bounded MCM driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered bounded MCM driver missing
+
+======================================================================
+FAIL: test_unselected_policy_and_caps_refuse_before_dictionary_loading (__main__.Tests.test_unselected_policy_and_caps_refuse_before_dictionary_loading) (mode='output_cap')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 37, in test_unselected_policy_and_caps_refuse_before_dictionary_loading
+    f=self.fixture(mode);before=f.owned.journal.reservations
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 18, in fixture
+    m=api();original=owner_fixture.OwnershipTests.input
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 13, in api
+    assert (HERE/'driver.py').is_file(),'registered bounded MCM driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered bounded MCM driver missing
+
+======================================================================
+FAIL: test_unselected_policy_and_caps_refuse_before_dictionary_loading (__main__.Tests.test_unselected_policy_and_caps_refuse_before_dictionary_loading) (mode='combined_cap')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 37, in test_unselected_policy_and_caps_refuse_before_dictionary_loading
+    f=self.fixture(mode);before=f.owned.journal.reservations
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 18, in fixture
+    m=api();original=owner_fixture.OwnershipTests.input
+  File "/home/malecada/master_thesis/TradingAgents-audit-fixes/research/onchain-paper-replication-2026-09-24/full_sources/mcm-array-kernel-2026-10-01/test_driver.py", line 13, in api
+    assert (HERE/'driver.py').is_file(),'registered bounded MCM driver missing'
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+AssertionError: registered bounded MCM driver missing
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.003s
+
+FAILED (failures=9)
